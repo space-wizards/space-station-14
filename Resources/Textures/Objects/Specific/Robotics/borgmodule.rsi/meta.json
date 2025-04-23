@@ -17,9 +17,6 @@
             "name": "generic"
         },
         {
-            "name": "icon-access-breaker"
-        },
-        {
             "name": "icon-anomalies"
         },
         {
@@ -29,16 +26,10 @@
             "name": "icon-artifacts"
         },
         {
-            "name": "icon-basic"
-        },
-        {
             "name": "icon-cables"
         },
         {
             "name": "icon-chemist"
-        },
-        {
-            "name": "icon-cloak"
         },
         {
             "name": "icon-clown"
@@ -71,18 +62,6 @@
             "name": "icon-harvesting"
         },
         {
-            "name": "icon-hypo"
-        },
-        {
-            "name": "icon-jammer"
-        },
-        {
-            "name": "icon-laser"
-        },
-        {
-            "name": "icon-laser2"
-        },
-        {
             "name": "icon-light-replacer"
         },
         {
@@ -101,22 +80,10 @@
             "name": "icon-pen"
         },
         {
-            "name": "icon-projector"
-        },
-        {
             "name": "icon-radiation"
         },
         {
             "name": "icon-rcd"
-        },
-        {
-            "name": "icon-space-movement"
-        },
-        {
-            "name": "icon-sword"
-        },
-        {
-            "name": "icon-sword2"
         },
         {
             "name": "icon-template"
@@ -134,7 +101,40 @@
             "name": "icon-treatment"
         },
         {
+            "name": "icon-xenoborg-access-breaker"
+        },
+        {
+            "name": "icon-xenoborg-basic"
+        },
+        {
+            "name": "icon-xenoborg-cloak"
+        },
+        {
             "name": "icon-xenoborg-fire-extinguisher"
+        },
+        {
+            "name": "icon-xenoborg-hypo"
+        },
+        {
+            "name": "icon-xenoborg-jammer"
+        },
+        {
+            "name": "icon-xenoborg-laser"
+        },
+        {
+            "name": "icon-xenoborg-laser2"
+        },
+        {
+            "name": "icon-xenoborg-projector"
+        },
+        {
+            "name": "icon-xenoborg-space-movement"
+        },
+        {
+            "name": "icon-xenoborg-sword"
+        },
+        {
+            "name": "icon-xenoborg-sword2"
         },
         {
             "name": "icon-xenoborg-tools"
