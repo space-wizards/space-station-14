@@ -23,9 +23,8 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 10
+        Heat: 15
         Slash: 10
-        Structual: 20
     soundHit:
       collection: MetalThud
   - type: Prying
