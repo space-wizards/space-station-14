@@ -1,4 +1,4 @@
-using Content.Server.Holiday;
+using Content.Shared.Holiday;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
