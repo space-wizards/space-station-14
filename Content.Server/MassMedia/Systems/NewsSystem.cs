@@ -23,6 +23,7 @@ using Robust.Server;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.MassMedia.Systems;
@@ -372,7 +373,7 @@ public sealed class NewsSystem : SharedNewsSystem
             var embed = new WebhookEmbed
             {
                 Title = article.Title,
-                Description = article.Content,
+                Description = FormattedMessage.RemoveMarkupPermissive(article.Content),
                 Color = _webhookEmbedColor,
                 Footer = new WebhookEmbedFooter
                 {
