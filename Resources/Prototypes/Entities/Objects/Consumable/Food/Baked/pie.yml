@@ -675,7 +675,7 @@
         - ReagentId: Nutriment
           Quantity: 35 # imp
         - ReagentId: Amatoxin
-          Quantity: 25 # imp - arguably the amatoxin could have cooked down but im down for making it more lethal lol
+          Quantity: 10 # imp
         # - ReagentId: Vitamin # imp
         #  Quantity: 4
 # Tastes like pie, mushrooms.

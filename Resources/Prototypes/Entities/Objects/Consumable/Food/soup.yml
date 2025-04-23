@@ -625,12 +625,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45 # imp
+        maxVol: 50 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 15 # imp
         - ReagentId: Amatoxin
-          Quantity: 25 # imp - this shit killing you
+          Quantity: 30 # imp - this shit killing you
 
 # Soup
 
