@@ -1,4 +1,3 @@
-using Content.Server.Charges.Components;
 using Content.Server.IdentityManagement;
 using Content.Server.Light.Components;
 using Content.Server.Power.Components;
@@ -6,7 +5,6 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
-using Content.Shared.Light.Components;
 using Content.Shared.Prototypes;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -107,14 +105,16 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         {
             proto.TryGetComponent(out ToggleableClothingComponent? newToggleableClothingComponent, _factory);
 
-            if (newToggleableClothingComponent != null) {
+            if (newToggleableClothingComponent != null)
+            {
                 SetSelectedPrototype((EntityUid)toggleableClothingComponent.ClothingUid!, newToggleableClothingComponent?.ClothingPrototype);
                 return;
             }
 
             proto.TryGetComponent(out ChameleonAttachedHelmetComponent? chameleonAttachedHelmetComponent, _factory);
 
-            if (chameleonAttachedHelmetComponent != null) {
+            if (chameleonAttachedHelmetComponent != null)
+            {
                 SetSelectedPrototype((EntityUid)toggleableClothingComponent.ClothingUid!, chameleonAttachedHelmetComponent?.ClothingPrototype);
                 return;
             }
