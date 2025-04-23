@@ -25,6 +25,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -356,7 +357,7 @@ public sealed class NewsSystem : SharedNewsSystem
 
         while (query.MoveNext(out _, out var comp))
         {
-            foreach (var article in comp.Articles)
+            foreach (var article in comp.Articles.OrderBy(article => article.ShareTime))
             {
                 SendDiscordWebhook(article);
             }
