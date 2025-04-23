@@ -23,4 +23,11 @@ public sealed partial class SpawnArtifactComponent : Component
     /// </summary>
     [DataField("maxSpawns")]
     public int MaxSpawns = 10;
+
+    /// <summary>
+    /// #IMP
+    /// Probability that spawned entities will be a ghost role (if they weren't already)
+    /// </summary>
+    [DataField("ghostRoleProb")]
+    public float GhostRoleProb = 0f;
 }

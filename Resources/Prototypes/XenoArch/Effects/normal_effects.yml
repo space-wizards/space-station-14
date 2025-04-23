@@ -340,6 +340,7 @@
   components:
   - type: SpawnArtifact
     maxSpawns: 5
+    ghostRoleProb: 0.1 #IMP
     spawns:
     - id: MobCarpHolo
       orGroup: carp
@@ -353,6 +354,7 @@
   components:
   - type: SpawnArtifact
     maxSpawns: 5
+    ghostRoleProb: 0.1 #IMP
     spawns:
     - id: MobAdultSlimesYellowAngry
       orGroup: fauna

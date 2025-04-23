@@ -103,6 +103,7 @@
   components:
   - type: SpawnArtifact
     maxSpawns: 10
+    ghostRoleProb: 0.1 #IMP
     spawns:
     - id: MobAdultSlimesYellowAngry
       orGroup: fauna
@@ -299,6 +300,7 @@
   components:
   - type: SpawnArtifact
     maxSpawns: 1
+    ghostRoleProb: 0.01 #IMP talking book
     spawns:
     - id: BookRandomStory
       prob: 0.5
@@ -545,19 +547,6 @@
       amount: 10
 
 - type: artifactEffect
-  id: EffectSupermatter
-  targetDepth: 10
-  effectHint: artifact-effect-hint-destruction
-  components:
-  - type: SpawnArtifact
-    range: 0.1
-    maxSpawns: 1
-    spawns:
-    - id: PortalSupermatter
-    - id: SupermatterNoAnnouncementSpawner
-    - id: ArtifactWeakInstantEffectGravityWell
-
-- type: artifactEffect
   id: EffectMindlessClone
   targetDepth: 4
   effectProb: 0.5 # we can change this later if necessary
@@ -574,3 +563,16 @@
     - id: MobMindlessCloneMindswapHostile # ~1 in 20, mindswap + hostile
       orGroup: mindlessclones
       prob: 0.05
+
+- type: artifactEffect
+  id: EffectSupermatter
+  targetDepth: 10
+  effectHint: artifact-effect-hint-destruction
+  components:
+  - type: SpawnArtifact
+    range: 0.1
+    maxSpawns: 1
+    spawns:
+    - id: PortalSupermatter
+    - id: SupermatterNoAnnouncementSpawner
+    - id: ArtifactWeakInstantEffectGravityWell
