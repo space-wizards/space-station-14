@@ -324,7 +324,7 @@
   - type: BorgTransponder
     name: engi xenoborg
     sprite:
-      sprite: sprite: Mobs/Silicon/chassis.rsi
+      sprite: Mobs/Silicon/chassis.rsi
       state: xenoborg_engi
   - type: Sprite
     layers:
