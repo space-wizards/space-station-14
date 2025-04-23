@@ -4,8 +4,8 @@ meta:
   engineVersion: 248.0.2
   forkId: ""
   forkVersion: ""
-  time: 04/09/2025 11:26:24
-  entityCount: 315
+  time: 04/19/2025 22:15:28
+  entityCount: 311
 maps: []
 grids:
 - 1
@@ -27,7 +27,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: grid
+      name: NT-DF Oslo
     - type: Transform
       pos: 1,0.59375
       parent: invalid
@@ -876,24 +876,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -4.8841286,0.49346948
       parent: 1
-  - uid: 313
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -6.7536635,-3.4613883
-      parent: 1
-  - uid: 314
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -6.7692595,-2.1666126
-      parent: 1
-  - uid: 315
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -6.784855,-2.7438023
-      parent: 1
 - proto: ChairFoldingSpawnFolded
   entities:
   - uid: 256
@@ -1516,14 +1498,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,-5.5
-      parent: 1
-- proto: Screen
-  entities:
-  - uid: 316
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -3.5,0.5
       parent: 1
 - proto: ShuttleWindow
   entities:
