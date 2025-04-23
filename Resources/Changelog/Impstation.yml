@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Kandiyaki
-  changes:
-  - message: more players will be assigned as heretics on heretic rounds.
-    type: Tweak
-  id: 1044
-  time: '2025-02-04T02:12:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1553
 - author: formlessnameless
   changes:
   - message: Whale is better now.
@@ -4094,3 +4087,11 @@
   id: 1543
   time: '2025-04-23T09:22:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2301
+- author: Jellvisk
+  changes:
+  - message: Added Tech Walls! These walls come from a Grey civilization... and has
+      a version that glows in the dark!
+    type: Add
+  id: 1544
+  time: '2025-04-23T09:33:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2317
