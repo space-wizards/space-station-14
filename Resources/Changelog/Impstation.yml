@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: Minor rules changes regarding how free agents engage with antagonism.
-    type: Tweak
-  id: 1059
-  time: '2025-02-06T11:14:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1585
-- author: Darkmajia
-  changes:
-  - message: The energy shotgun now has a 30 second delay before recharging, and can
-      fire more wide and disabler shots before emptying its battery. The amount of
-      narrow shots before emptying has been reduced.
-    type: Tweak
-  id: 1060
-  time: '2025-02-06T11:21:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1574
 - author: Darkmajia
   changes:
   - message: Shipyard purchases are now announced over supply radio, rather than command.
@@ -4112,3 +4096,17 @@
   id: 1558
   time: '2025-04-23T20:57:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2321
+- author: Kandiyaki
+  changes:
+  - message: Heretic ghouls will now have a popup sent to them upon their resurrection.
+    type: Add
+  id: 1559
+  time: '2025-04-23T21:01:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2315
+- author: TheGrimbeeper
+  changes:
+  - message: Some mobs spawned by artifacts have a chance of becoming ghost roles.
+    type: Add
+  id: 1560
+  time: '2025-04-23T21:02:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2295
