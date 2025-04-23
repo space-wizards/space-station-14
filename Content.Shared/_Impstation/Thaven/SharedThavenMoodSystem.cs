@@ -21,8 +21,9 @@ public abstract class SharedThavenMoodSystem : EntitySystem
         if (_emag.CheckFlag(ent, EmagType.Interaction))
             return;
 
-        if (ent.Owner == args.UserUid)
-            return;
+        /// yo this is beck. i'm gonna let this ride for a bit to see how it goes. if thaven emagging themselves is bad we can uncomment this
+        //if (ent.Owner == args.UserUid)
+        //    return;
 
         args.Handled = true;
     }
