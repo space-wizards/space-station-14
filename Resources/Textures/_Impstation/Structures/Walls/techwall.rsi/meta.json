@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by Jellvisk.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    }, 
+    {
+      "name": "techwall0",
+        "directions": 4
+    },
+    {
+      "name": "techwall1",
+        "directions": 4
+    },
+    {
+      "name": "techwall2",
+        "directions": 4
+    },
+    {
+      "name": "techwall3",
+        "directions": 4
+    },
+    {
+      "name": "techwall4",
+        "directions": 4
+    },
+    {
+      "name": "techwall5",
+        "directions": 4
+    },
+    {
+      "name": "techwall6",
+        "directions": 4
+    },
+    {
+      "name": "techwall7",
+        "directions": 4
+    },
+    {
+      "name": "techwallunshaded"
+    },
+    {
+      "name": "techwallunshaded0",
+        "directions": 4
+    },
+    {
+      "name": "techwallunshaded1",
+        "directions": 4
+    },
+    {
+      "name": "techwallunshaded2",
+        "directions": 4
+    },
+    {
+      "name": "techwallunshaded3",
+        "directions": 4
+    },
+    {
+      "name": "techwallunshaded4",
+        "directions": 4
+    },
+    {
+      "name": "techwallunshaded5",
+        "directions": 4
+    },
+    {
+      "name": "techwallunshaded6",
+        "directions": 4
+    },
+    {
+      "name": "techwallunshaded7",
+        "directions": 4
+    }
+  ]
+}

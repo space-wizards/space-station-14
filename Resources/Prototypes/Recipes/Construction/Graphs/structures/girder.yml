@@ -554,6 +554,21 @@
               doAfter: 1
             - tool: Welding
               doAfter: 5
+        - to: techWall #imp
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - material: Cable
+              amount: 1
+              doAfter: 1
+            - material: Plasteel
+              amount: 2
+              doAfter: 1
+            - tool: Welding
+              doAfter: 5
 
     - node: diagonalshuttleWall
       entity: WallShuttleDiagonal
@@ -570,6 +585,22 @@
               doAfter: 1
             - tool: Welding
               doAfter: 8
+        - to: diagonalTechWall #imp
+          completed:
+            - !type:SnapToGrid
+              southRotation: false
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - material: Cable
+              amount: 1
+              doAfter: 1
+            - material: Plasteel
+              amount: 2
+              doAfter: 1
+            - tool: Welding
+              doAfter: 8
+
 
         - to: reinforcedGirder
           completed:
@@ -645,3 +676,50 @@
           steps:
             - tool: Derusting #imp edit
               doAfter: 5
+
+    - node: techWall #imp
+      entity: WallTech
+      edges:
+        - to: techWallUnshaded #imp
+          steps:
+          - tag: Glowstick
+            icon:
+              sprite: Objects/Misc/glowstick.rsi
+              state: glowstick_base
+            name: 1x glowstick
+            doAfter: 2
+        - to: shuttleWall
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 4
+            - tool: Cutting
+              doAfter: 1
+
+    - node: techWallUnshaded #imp
+      entity: WallTechUnshaded
+      edges:
+        - to: techWall
+          steps:
+            - tool: Prying
+              doAfter: 1
+
+    - node: diagonalTechWall #imp
+      entity: WallTechDiagonal
+      edges:
+        - to: diagonalshuttleWall
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 4
+            - tool: Cutting
+              doAfter: 1
