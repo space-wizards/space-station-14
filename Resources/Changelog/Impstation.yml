@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Heretic rounds should have more random events.
-    type: Tweak
-  id: 1054
-  time: '2025-02-06T00:36:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1579
 - author: RosySaturniidae
   changes:
   - message: added a few new figurines!
@@ -4108,3 +4101,11 @@
   id: 1553
   time: '2025-04-23T14:30:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2275
+- author: Kandiyaki
+  changes:
+  - message: it is no longer possible to draw a heretic rune on held items, permanently
+      sticking it to the holder.
+    type: Fix
+  id: 1554
+  time: '2025-04-23T14:32:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2316
