@@ -80,7 +80,7 @@ public abstract class SharedActionsSystem : EntitySystem
     {
         var comp = ent.Comp;
         comp.OriginalIconColor = comp.IconColor;
-        DirtyField(ent, nameof(ActionComponent.OriginalIconColor));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.OriginalIconColor));
     }
 
     private void OnActionShutdown(Entity<ActionComponent> ent, ref ComponentShutdown args)
@@ -124,7 +124,7 @@ public abstract class SharedActionsSystem : EntitySystem
             Start = start,
             End = end
         };
-        DirtyField(ent, nameof(ActionComponent.Cooldown));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.Cooldown));
     }
 
     public void RemoveCooldown(Entity<ActionComponent?>? action)
@@ -133,7 +133,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         ent.Comp.Cooldown = null;
-        DirtyField(ent, nameof(ActionComponent.Cooldown));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.Cooldown));
     }
 
     /// <summary>
@@ -158,7 +158,7 @@ public abstract class SharedActionsSystem : EntitySystem
             Start = cooldown.Start,
             End = GameTiming.CurTime
         };
-        DirtyField(ent, nameof(ActionComponent.Cooldown));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.Cooldown));
     }
 
     /// <summary>
@@ -196,7 +196,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         ent.Comp.UseDelay = delay;
         UpdateAction(ent);
-        DirtyField(ent, nameof(ActionComponent.UseDelay));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.UseDelay));
     }
 
     public void ReduceUseDelay(Entity<ActionComponent?>? action, TimeSpan? lowerDelay)
@@ -211,7 +211,7 @@ public abstract class SharedActionsSystem : EntitySystem
             ent.Comp.UseDelay = null;
 
         UpdateAction(ent);
-        DirtyField(ent, nameof(ActionComponent.UseDelay));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.UseDelay));
     }
 
     private void OnRejuventate(Entity<ActionsComponent> ent, ref RejuvenateEvent args)
@@ -235,7 +235,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         ent.Comp.Toggled = toggled;
         UpdateAction(ent);
-        DirtyField(ent, nameof(ActionComponent.Toggled));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.Toggled));
     }
 
     public void SetEnabled(Entity<ActionComponent?>? action, bool enabled)
@@ -245,7 +245,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         ent.Comp.Enabled = enabled;
         UpdateAction(ent);
-        DirtyField(ent, nameof(ActionComponent.Enabled));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.Enabled));
     }
 
     #endregion
@@ -673,7 +673,7 @@ public abstract class SharedActionsSystem : EntitySystem
         DebugTools.AssertOwner(performer, performer.Comp);
         performer.Comp ??= EnsureComp<ActionsComponent>(performer);
         ent.Comp.AttachedEntity = performer;
-        DirtyField(ent, nameof(ActionComponent.AttachedEntity));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.AttachedEntity));
         performer.Comp.Actions.Add(ent);
         Dirty(performer, performer.Comp);
         ActionAdded(performer, (ent, ent));
@@ -832,7 +832,7 @@ public abstract class SharedActionsSystem : EntitySystem
         performer.Comp.Actions.Remove(ent.Owner);
         Dirty(performer, performer.Comp);
         ent.Comp.AttachedEntity = null;
-        DirtyField(ent, nameof(ActionComponent.AttachedEntity));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.AttachedEntity));
         ActionRemoved((performer, performer), ent);
 
         if (ent.Comp.Temporary)
@@ -956,7 +956,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         ent.Comp.EntityIcon = icon;
-        DirtyField(ent, nameof(ActionComponent.EntIcon));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.EntIcon));
     }
 
     public void SetIcon(Entity<ActionComponent?> ent, SpriteSpecifier? icon)
@@ -965,7 +965,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         ent.Comp.Icon = icon;
-        DirtyField(ent, nameof(ActionComponent.Icon));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.Icon));
     }
 
     public void SetIconOn(Entity<ActionComponent?> ent, SpriteSpecifier? iconOn)
@@ -974,7 +974,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         ent.Comp.IconOn = iconOn;
-        DirtyField(ent, nameof(ActionComponent.IconOn));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.IconOn));
     }
 
     public void SetIconColor(Entity<ActionComponent?> ent, Color color)
@@ -983,7 +983,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         ent.Comp.IconColor = color;
-        DirtyField(ent, nameof(ActionComponent.IconColor));
+        DirtyField(ent, ent.Comp, nameof(ActionComponent.IconColor));
     }
 
     /// <summary>
