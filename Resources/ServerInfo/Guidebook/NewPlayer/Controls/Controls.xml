@@ -6,11 +6,11 @@
 
   ## Interface
   At the top left you'll see all the [bold]menu buttons[/bold] with their corresponding hotkeys.
-  Take a look at what they do.
+  Take a look at what they do, especially the emotes menu.
   Notably, the [color=red]Admin Help[/color] ([italic]ahelp[/italic]) menu button will become [color=red][bold]red[/bold][/color] if an admin is trying to contact you.
 
   ### Action bar
-  Below the menu buttons, there's the [bold]action bar[/bold], that shows buttons for generic and equipment-dependent [color=cyan]actions[/color] your character can perform.
+  Below the menu buttons, there's the [bold]action bar[/bold] that shows buttons for generic and equipment-dependent [color=cyan]actions[/color] your character can perform.
   Hover over them to learn their function.
 
   It's also a [bold]hotbar[/bold] — perform those actions by pressing their corresponding [color=yellow][bold]number keys[/bold][/color] on your keyboard.
@@ -23,14 +23,14 @@
   Some of those icons can also be clicked.
   For example, if your character ever [color=orangered]catches on fire[/color], a fire icon will appear.
   You would click [color=yellow][bold][keybind="Use"][/bold][/color] on it to [color=cyan]drop and roll[/color].
-  The same applies to [color=cyan]breaking handcuffs[/color].
+  The same applies to [color=cyan]breaking handcuffs[/color] if you need to escape restraint.
 
   ### Inventory bar
-  Along the bottom you’ll find the [bold]inventory bar[/bold], that contains all the icons related to your equipment and storage, left to right:
+  Along the bottom you’ll find the [bold]inventory bar[/bold] that contains all the icons related to your equipment and storage, left to right:
   - [color=cyan]clothing inventory[/color] (bottom left corner) — opened with [color=yellow][bold][keybind="OpenInventoryMenu"][/bold][/color] — has slots for eyes, head, neck, face, ears, body, external, hands, and shoes,
-  - [bold]PDA[/bold] slot — used to store the PDA that holds an ID and a pen,
+  - [bold]PDA[/bold] slot — used to store a usable PDA that holds an ID and a pen,
   - [bold]belt[/bold] slot — used for toolbelts and jetpacks,
-  - [bold]back[/bold] slot — used for backpacks and duffel bags, but also weapons or air tanks,
+  - [bold]back[/bold] slot — normally used for satchels, backpacks and duffel bags, but it can also store medium to large weapons, and full-sized air tanks.
   - [bold]hand[/bold] slots — you can think of them as transfer slots,
   - [bold]pocket[/bold] slots — useful for storing small items for easy access,
   - [bold]suit storage[/bold] slot — usable only when wearing a space suit, hardsuit or armor.
@@ -147,10 +147,9 @@
   ## Inventory and clothing
   All items can be equipped/unequipped by using [color=yellow][bold][keybind="Use"][/bold][/color] on the appropriate slot.
 
-  The easiest way to [color=cyan]wear[/color] (or equip) a piece of clothing is to [color=cyan]use[/color] it in your active hand with [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] or [color=yellow][bold][keybind="Use"][/bold][/color].
-  But this only applies to clothing items.
+  The easiest way to [color=cyan]wear[/color] (or equip) a piece of clothing is to [color=cyan]use[/color] it in your active hand with [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color].
 
-  Some clothes have internal inventories and behave like containers.
+  [bold]Some clothes have internal inventories and behave like containers.[/bold]
 
   ### Item stacks
   To [color=cyan]halve[/color] a stack of items, use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
