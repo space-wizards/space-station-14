@@ -127,5 +127,5 @@
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
-    component: Mothership
+    component: XenoborgMothership
     targetName: the mothership
