@@ -13,7 +13,7 @@ uptime_restart_minutes = 240
 
 [chat]
 # Message Of The Day
-# motd = "Server whitelist will be enabled at the end of the week! Check the announcement on discord for more information!"
+motd = "Server whitelist will be enabled at the end of the week! Check the announcement on discord for more information!"
 
 [ic]
 flavor_text = true
@@ -29,7 +29,7 @@ restricted_names = false
 rate_limit_count = 20
 
 [infolinks]
-# discord = "https://discord.gg/pisk"
+discord = "https://discord.gg/pisk"
 github = "https://github.com/impstation/imp-station-14"
 website = "https://impstation.gay"
 # wiki = ""
