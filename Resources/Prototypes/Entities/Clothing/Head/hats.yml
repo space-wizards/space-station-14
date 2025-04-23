@@ -194,6 +194,22 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatBeretCommand
+  name: command beret
+  description: A beret with a Command insignia emblazoned on it. It has an aura of authority.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_command.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_command.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBowlerHat
   name: bowler hat
   description: Stylish bowler hat.
@@ -421,15 +437,28 @@
     sprite: Clothing/Head/Hats/redwizard.rsi
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseFoldable]
   id: ClothingHeadHatSantahat
   name: santa hat
-  description: A festive hat worn by Santa Claus.
+  description: A festive hat worn by Santa Claus. Now with a foldable beard.
   components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/santahat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/santahat.rsi
+  - type: Appearance
+  - type: Foldable
+    canFoldInsideContainer: true
+  - type: FoldableClothing
+    foldedEquippedPrefix: nobeard
+    foldedHeldPrefix: nobeard
+  - type: Sprite
+    sprite: Clothing/Head/Hats/santahat.rsi
+    layers:
+    - state: icon
+      map: ["unfoldedLayer"]
+    - state: icon-nobeard
+      map: [ "foldedLayer" ]
+      visible: true
+    
 
 - type: entity
   parent: ClothingHeadBase
@@ -523,6 +552,43 @@
       map: ["foldedLayer"]
       visible: false
 
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCanadaBeanie
+  name: beanie
+  description: Red, white and snug. It radiates a homely feeling, if your home happens to be chilly and filled with coffeehouses.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beanie.rsi
+    layers:
+    - state: body-icon
+    - state: cuffcrown-icon
+      color: "#a60b0b"
+    - state: pompom-icon
+      color: "#a60b0b"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: body-inhand-left
+      - state: cuffcrown-inhand-left
+        color: "#a60b0b"
+      - state: pompom-inhand-left
+        color: "#a60b0b"
+      right:
+      - state: body-inhand-right
+      - state: cuffcrown-inhand-right
+        color: "#a60b0b"
+      - state: pompom-inhand-right
+        color: "#a60b0b"
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beanie.rsi
+    clothingVisuals:
+      head:
+      - state: body-equipped-HELMET
+      - state: cuffcrown-equipped-HELMET
+        color: "#a60b0b"
+      - state: pompom-equipped-HELMET
+        color: "#a60b0b"
 
 - type: entity
   parent: ClothingHeadHatWizardBase
@@ -1148,3 +1214,14 @@
     sprite: Clothing/Head/Hats/beret_medic.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_medic.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSolidHeadband
+  name: solid headband
+  description: "You'll feel like you're Invisible while wearing this! (DISCLAIMER: DOES NOT ACTUALLY MAKE THE WEARER INVISIBLE)"
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/solidheadband.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/solidheadband.rsi

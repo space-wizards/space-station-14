@@ -2,16 +2,12 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
 using Content.Server.Disposal.Tube;
-using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
-using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles;
 using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.Prayer;
 using Content.Server.Station.Systems;
-using Content.Server.Xenoarchaeology.XenoArtifacts;
-using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -26,7 +22,6 @@ using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Shared.Console;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -58,9 +53,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly AdminSystem _adminSystem = default!;
         [Dependency] private readonly DisposalTubeSystem _disposalTubes = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
-        [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
-        [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly PrayerSystem _prayerSystem = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
@@ -151,7 +144,7 @@ namespace Content.Server.Administration.Systems
 
                             var stationUid = _stations.GetOwningStation(args.Target);
 
-                            var profile = _ticker.GetPlayerProfile(targetActor.PlayerSession);
+                            var profile = _gameTicker.GetPlayerProfile(targetActor.PlayerSession);
                             var mobUid = _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
 
                             if (_mindSystem.TryGetMind(args.Target, out var mindId, out var mindComp))
@@ -177,7 +170,7 @@ namespace Content.Server.Administration.Systems
 
                             var stationUid = _stations.GetOwningStation(args.Target);
 
-                            var profile = _ticker.GetPlayerProfile(targetActor.PlayerSession);
+                            var profile = _gameTicker.GetPlayerProfile(targetActor.PlayerSession);
                             _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
                         },
                         ConfirmationPopup = true,
@@ -452,29 +445,6 @@ namespace Content.Server.Administration.Systems
                     ConfirmationPopup = true
                 };
                 args.Verbs.Add(verb);
-            }
-
-            // XenoArcheology
-            if (_adminManager.IsAdmin(player) && TryComp<ArtifactComponent>(args.Target, out var artifact))
-            {
-                // make artifact always active (by adding timer trigger)
-                args.Verbs.Add(new Verb()
-                {
-                    Text = Loc.GetString("artifact-verb-make-always-active"),
-                    Category = VerbCategory.Debug,
-                    Act = () => EntityManager.AddComponent<ArtifactTimerTriggerComponent>(args.Target),
-                    Disabled = EntityManager.HasComponent<ArtifactTimerTriggerComponent>(args.Target),
-                    Impact = LogImpact.High
-                });
-
-                // force to activate artifact ignoring timeout
-                args.Verbs.Add(new Verb()
-                {
-                    Text = Loc.GetString("artifact-verb-activate"),
-                    Category = VerbCategory.Debug,
-                    Act = () => _artifactSystem.ForceActivateArtifact(args.Target, component: artifact),
-                    Impact = LogImpact.High
-                });
             }
 
             // Make Sentient verb
