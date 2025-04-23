@@ -1,6 +1,6 @@
-using Content.Server.Holiday.Interfaces;
+using Content.Shared.Holiday.Interfaces;
 
-namespace Content.Server.Holiday.Greet
+namespace Content.Shared.Holiday.Greet
 {
     [DataDefinition]
     public sealed partial class DefaultHolidayGreet : IHolidayGreet

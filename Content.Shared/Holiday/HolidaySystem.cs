@@ -1,30 +1,29 @@
 using System.Linq;
-using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
 using Content.Shared.CCVar;
-using Content.Shared.Holiday;
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Holiday
+namespace Content.Shared.Holiday
 {
     public sealed class HolidaySystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly INetManager _net = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         [ViewVariables]
         private readonly List<HolidayPrototype> _currentHolidays = new();
+        public List<HolidayPrototype> CurrentHolidays => _currentHolidays;
 
         [ViewVariables]
         private bool _enabled = true;
+        public bool Enabled => _enabled;
 
         public override void Initialize()
         {
             Subs.CVar(_configManager, CCVars.HolidaysEnabled, OnHolidaysEnableChange);
-            SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
             SubscribeLocalEvent<HolidayVisualsComponent, ComponentInit>(OnVisualsInit);
         }
 
@@ -51,19 +50,14 @@ namespace Content.Server.Holiday
             RaiseLocalEvent(new HolidaysRefreshedEvent(_currentHolidays));
         }
 
-        public void DoGreet()
-        {
-            foreach (var holiday in _currentHolidays)
-            {
-                _chatManager.DispatchServerAnnouncement(holiday.Greet());
-            }
-        }
-
         public void DoCelebrate()
         {
             foreach (var holiday in _currentHolidays)
             {
-                holiday.Celebrate();
+                if (_net.IsServer)
+                {
+                    holiday.Celebrate();
+                }
             }
         }
 
@@ -85,24 +79,6 @@ namespace Content.Server.Holiday
             _enabled = enabled;
 
             RefreshCurrentHolidays();
-        }
-
-        private void OnRunLevelChanged(GameRunLevelChangedEvent eventArgs)
-        {
-            if (!_enabled) return;
-
-            switch (eventArgs.New)
-            {
-                case GameRunLevel.PreRoundLobby:
-                    RefreshCurrentHolidays();
-                    break;
-                case GameRunLevel.InRound:
-                    DoGreet();
-                    DoCelebrate();
-                    break;
-                case GameRunLevel.PostRound:
-                    break;
-            }
         }
 
         private void OnVisualsInit(Entity<HolidayVisualsComponent> ent, ref ComponentInit args)

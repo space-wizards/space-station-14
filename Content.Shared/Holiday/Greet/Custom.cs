@@ -1,7 +1,7 @@
-using Content.Server.Holiday.Interfaces;
+using Content.Shared.Holiday.Interfaces;
 using JetBrains.Annotations;
 
-namespace Content.Server.Holiday.Greet
+namespace Content.Shared.Holiday.Greet
 {
     [UsedImplicitly]
     [DataDefinition]

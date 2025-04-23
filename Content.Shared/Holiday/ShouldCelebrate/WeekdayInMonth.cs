@@ -1,7 +1,7 @@
 using System.Globalization;
 using JetBrains.Annotations;
 
-namespace Content.Server.Holiday.ShouldCelebrate
+namespace Content.Shared.Holiday.ShouldCelebrate
 {
     /// <summary>
     ///     For a holiday that happens the first instance of a weekday on a month.

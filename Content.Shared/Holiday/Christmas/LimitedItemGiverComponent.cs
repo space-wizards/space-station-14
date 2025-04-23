@@ -1,13 +1,13 @@
-﻿using Content.Shared.Storage;
+using Content.Shared.Storage;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Holiday.Christmas;
+namespace Content.Shared.Holiday.Christmas;
 
 /// <summary>
 /// This is used for granting items to lucky souls, exactly once.
 /// </summary>
-[RegisterComponent, Access(typeof(LimitedItemGiverSystem))]
+[RegisterComponent]
 public sealed partial class LimitedItemGiverComponent : Component
 {
     /// <summary>
