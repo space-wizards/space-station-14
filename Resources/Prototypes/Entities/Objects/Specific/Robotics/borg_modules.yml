@@ -1020,7 +1020,7 @@
 
 - type: entity
   id: XenoborgModuleAccessBreaker
-  parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
   name: access breaker xenoborg module
   description: module with a access breaker
   components:
@@ -1036,7 +1036,7 @@
 
 - type: entity
   id: XenoborgModuleFireExtinguisher
-  parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
   name: fire extinguisher xenoborg module
   description: module with a fire extinguisher
   components:
