@@ -178,7 +178,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         dungeonOffset = dungeonRotation.RotateVec(dungeonOffset);
         var dungeonMod = _prototypeManager.Index<SalvageDungeonModPrototype>(mission.Dungeon);
         var dungeonConfig = _prototypeManager.Index(dungeonMod.Proto);
-        var dungeons = await WaitAsyncTask(_dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, (Vector2i) dungeonOffset,
+        var dungeons = await WaitAsyncTask(_dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, (Vector2i)dungeonOffset,
             _missionParams.Seed));
 
         var dungeon = dungeons.First();
@@ -314,8 +314,8 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             {
                 var tile = availableTiles.RemoveSwap(random.Next(availableTiles.Count));
 
-                if (!_anchorable.TileFree(grid, tile, (int) CollisionGroup.MachineLayer,
-                        (int) CollisionGroup.MachineLayer))
+                if (!_anchorable.TileFree(grid, tile, (int)CollisionGroup.MachineLayer,
+                        (int)CollisionGroup.MachineLayer))
                 {
                     continue;
                 }
