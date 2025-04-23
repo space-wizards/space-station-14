@@ -1,0 +1,22 @@
+- type: entity
+  id: CartridgePistolStun
+  name: cartridge (.35 auto stun)
+  description: A non-lethal pistol cartridge specially designed for antiquated weapons. Delivers a nasty shock and numbs the muscles.
+  parent: [ BaseCartridge, BaseSecurityContraband ]
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgePistolStun
+  - type: CartridgeAmmo
+    proto: BulletPistolStun
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#4477bc"
+  - type: Appearance
+  - type: SpentAmmoVisuals

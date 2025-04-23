@@ -121,6 +121,73 @@
     Plastic: 150
 
 - type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazinePistolFreelancerEmpty
+  result: MagazinePistolFreelancerEmpty
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolFreelancer
+  result: MagazinePistolFreelancer
+  materials:
+    Steel: 120
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolFreelancerStun
+  result: MagazinePistolFreelancerStun
+  materials:
+    Steel: 60
+    Plastic: 60
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazinePistolP2Empty
+  result: MagazinePistolP2Empty
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolP2
+  result: MagazinePistolP2
+  materials:
+    Steel: 145
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolP2Practice
+  result: MagazinePistolP2Practice
+  materials:
+    Steel: 85
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolP2Uranium
+  result: MagazinePistolP2Uranium
+  materials:
+    Steel: 25
+    Plastic: 65
+    Uranium: 120
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolP2Incendiary
+  result: MagazinePistolP2Incendiary
+  materials:
+    Steel: 25
+    Plastic: 120
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineAmmoPouch
+  result: AmmoPouchEmpty
+  materials:
+    Cloth: 200
+
+- type: latheRecipe
   parent: BaseAmmoRecipe
   id: MagazineBoxLPistol
   result: MagazineBoxLPistol
@@ -148,6 +215,14 @@
   materials:
     Plastic: 500
     Uranium: 1000
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxPistolStun
+  result: MagazineBoxPistolStun
+  materials:
+    Steel: 300
+    Plastic: 300
 
 - type: latheRecipe
   parent: BaseEmptyAmmoRecipe

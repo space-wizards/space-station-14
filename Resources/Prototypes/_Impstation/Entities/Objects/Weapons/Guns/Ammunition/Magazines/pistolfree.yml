@@ -1,0 +1,112 @@
+- type: entity
+  id: BaseMagazinePistolFreelancer
+  name: Freelancer magazine (.35 auto any)
+  description: An 8-round .35 auto pistol magazine.
+  parent: [ BaseItem, BaseSecurityContraband ]
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - MagazinePistolFreelancer
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgePistol
+        - CartridgePistolStun
+    capacity: 8
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/freelancer_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: MagazinePistolFreelancerEmpty
+  name: Freelancer magazine (.35 auto any)
+  description: An 8-round .35 auto pistol magazine with no apparent markings.
+  parent: BaseMagazinePistolFreelancer
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+
+- type: entity
+  id: MagazinePistolFreelancer
+  name: Freelancer magazine (.35 auto)
+  description: An 8-round .35 auto pistol magazine, marked as live-fire ammo.
+  parent: BaseMagazinePistolFreelancer
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolFreelancerIncendiary
+  name: Freelancer magazine (.35 auto incendiary)
+  description: An 8-round .35 auto pistol magazine, marked as incendiary ammo.
+  parent: BaseMagazinePistolFreelancer
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolIncendiary
+
+- type: entity
+  id: MagazinePistolFreelancerPractice
+  name: Freelancer magazine (.35 auto practice)
+  description: An 8-round .35 auto pistol magazine, marked as practice ammo.
+  parent: BaseMagazinePistolFreelancer
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolPractice
+  - type: Sprite
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolFreelancerUranium
+  name: Freelancer magazine (.35 auto uranium)
+  description: An 8-round .35 auto pistol magazine, marked as uranium ammo.
+  parent: BaseMagazinePistolFreelancer
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolUranium
+  - type: Sprite
+    layers:
+    - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolFreelancerStun
+  name: Freelancer magazine (.35 auto stun)
+  description: An 8-round .35 auto pistol magazine, marked as stun ammo.
+  parent: BaseMagazinePistolFreelancer
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolStun
+  - type: Sprite
+    layers:
+    - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]

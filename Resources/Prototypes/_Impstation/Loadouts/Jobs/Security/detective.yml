@@ -22,3 +22,56 @@
   id: ClothingOuterCoatFieldJacket
   equipment:
     outerClothing: ClothingOuterCoatFieldJacket #imp
+
+# Firearms
+- type: loadout
+  id: SecurityRevolverInspector
+  equipment:
+    pocket1: WeaponRevolverInspector
+
+- type: loadout
+  id: SecurityRevolverDerringer
+  equipment:
+    pocket1: WeaponSECDerringer
+
+- type: loadout
+  id: SecurityPistolFreelancer
+  equipment:
+    pocket1: WeaponPistolFreelancer
+
+# Ammunition
+- type: loadout
+  id: SecurityAmmoSpeedloaderLethal
+  storage:
+    back:
+    - SpeedLoaderMagnum
+
+- type: loadout
+  id: SecurityAmmoSpeedloaderStun
+  storage:
+    back:
+    - SpeedLoaderMagnumStun
+
+- type: loadout
+  id: SecurityAmmoPouchLethal
+  storage:
+    back:
+    - AmmoPouch
+
+- type: loadout
+  id: SecurityAmmoPouchStun
+  storage:
+    back:
+    - AmmoPouchStun
+
+- type: loadout
+  id: SecurityAmmoFreelancerLethal
+  storage:
+    back:
+    - MagazinePistolFreelancer
+
+- type: loadout
+  id: SecurityAmmoFreelancerStun
+  storage:
+    back:
+    - MagazinePistolFreelancerStun

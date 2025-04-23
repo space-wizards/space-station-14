@@ -20,3 +20,38 @@
   id: SecPoncho
   equipment:
     neck: ClothingNeckCWPSec
+
+# Firearms
+- type: loadout
+  id: SecurityPistolMk58
+  equipment:
+    pocket1: WeaponPistolMk58
+
+- type: loadout
+  id: SecurityPistolP2
+  equipment:
+    pocket1: WeaponPistolP2
+
+- type: loadout
+  id: SecurityPistolBlaster
+  equipment:
+    pocket1: WeaponBlasterPistol
+
+# Ammunition
+- type: loadout
+  id: SecurityAmmoPistol
+  storage:
+    back:
+    - MagazinePistol
+
+- type: loadout
+  id: SecurityAmmoP2
+  storage:
+    back:
+    - MagazinePistolP2
+
+- type: loadout
+  id: SecurityAmmoBlaster
+  storage:
+    back:
+    - PowerCellBlaster

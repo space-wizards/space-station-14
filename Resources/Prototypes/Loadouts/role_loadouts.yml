@@ -460,6 +460,8 @@
   - GroupTankHarnessCommandWithOuterwear
   - GroupBreathToolDecapoid # imp special
   - GroupTankHarnessCommandWithOuterwearAquatic # imp special
+  - SecurityCommandFirearm # imp
+  - SecurityCommandAmmo # imp
 
 - type: roleLoadout
   id: JobWarden
@@ -480,6 +482,8 @@
   - GroupTankHarnessWithOuterwear
   - GroupBreathToolDecapoid # imp special
   - GroupTankHarnessWithOuterwearAquatic # imp special
+  - SecurityCommandFirearm # imp
+  - SecurityCommandAmmo # imp
 
 - type: roleLoadout
   id: JobSecurityOfficer
@@ -500,6 +504,8 @@
   - GroupTankHarnessWithOuterwear
   - GroupBreathToolDecapoid # imp special
   - GroupTankHarnessWithOuterwearAquatic # imp special
+  - SecurityOfficerFirearm # imp
+  - SecurityOfficerAmmo # imp
 
 - type: roleLoadout
   id: JobDetective
@@ -519,6 +525,8 @@
   - GroupTankHarnessWithOuterwear
   - GroupBreathToolDecapoid # imp special
   - GroupTankHarnessWithOuterwearAquatic # imp special
+  - DetectiveFirearm # imp
+  - DetectiveAmmo # imp
 
 - type: roleLoadout
   id: JobSecurityCadet

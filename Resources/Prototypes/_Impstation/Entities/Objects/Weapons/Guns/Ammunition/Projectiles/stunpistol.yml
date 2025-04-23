@@ -1,0 +1,16 @@
+- type: entity
+  id: BulletPistolStun
+  name: bullet (.35 stun)
+  categories: [ HideSpawnMenu ]
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: rubber
+  - type: Projectile
+    damage:
+      types:
+        Shock: 2
+  - type: StaminaDamageOnCollide
+    damage: 13 # 8 hits to stun

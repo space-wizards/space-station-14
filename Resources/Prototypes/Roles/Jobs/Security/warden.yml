@@ -30,9 +30,9 @@
   equipment:
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetWarden
-    pocket1: WeaponPistolMk58
+    # pocket1: WeaponPistolMk58 imp loadouts
   storage:
     back:
     - Flash
-    - MagazinePistol
+    # - MagazinePistol imp loadouts
 

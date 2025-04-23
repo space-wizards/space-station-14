@@ -51,7 +51,6 @@
   recipeUnlocks:
   - WeaponLaserCarbine
   - WeaponBlasterPistol #imp
-  - PowerCellBlaster #imp
 
 - type: technology
   id: NonlethalAmmunition

@@ -122,15 +122,22 @@ loadout-group-head-of-security-backpack = Head of Security backpack
 loadout-group-head-of-security-headset = Head of Security headset
 loadout-group-head-of-security-belt = Head of Security belt
 
+loadout-group-security-gun-command = Sidearm
+loadout-group-security-ammo-command = Ammunition
+
 loadout-group-warden-neck = Warden neck
 loadout-group-upper-security-shoes = Security shoes
 loadout-group-warden-id = Warden ID
 
 loadout-group-security-mask = Security mask
 loadout-group-security-neck = Security neck
+loadout-group-security-gun = Sidearm
+loadout-group-security-ammo = Ammunition
 
 loadout-group-detective-shoes = Detective shoes
 loadout-group-detective-id = Detective ID
+loadout-group-detective-gun = Sidearm
+loadout-group-detective-ammo = Ammunition
 
 loadout-group-survival-brigmedic = Brigmedic Survival Box
 loadout-group-brigmedic-head = Brigmedic head

@@ -18,6 +18,11 @@
   copyright: "Made by SuperPhat on freesound and edited by DVD Player"
   source: "https://freesound.org/people/SuperPhat/sounds/531861/"
   
+- files: ["blasterrunner"]
+  license: "CC-BY-4.0"
+  copyright: "Made by jerry.berumen on freesound"
+  source: "https://freesound.org/people/jerry.berumen/sounds/584366/"
+  
 - files: ["blasterweak"]
   license: "CC-BY-4.0"
   copyright: "Made by Universfield on Freesound"
@@ -57,12 +62,27 @@
   license: "CC-BY-4.0"
   copyright: "Made by keybal on Freesound and edited by DVD Player"
   source: "https://freesound.org/people/keybal/sounds/564282/"
+
+- files: ["pistolfree"]
+  license: "CC-BY-4.0"
+  copyright: "Made by zreimbach on Freesound"
+  source: "https://freesound.org/people/zreimbach/sounds/615028/"
+
+- files: ["pistolp2"]
+  license: "CC-BY-4.0"
+  copyright: "Made by Lubini on Freesound"
+  source: "https://freesound.org/people/Lubini/sounds/338045/"
   
+- files: ["pistolsturm"]
+  license: "CC-BY-4.0"
+  copyright: "Made by KuraiWolf on opengameart"
+  source: "https://opengameart.org/content/light-machine-gun"
+
 - files: ["stunprojector"]
   license: "CC-BY-3.0"
   copyright: "Made by Little Robot Sound Factory on opengameart"
   source: "https://opengameart.org/content/sci-fi-sound-effects-library"
-  
+
 - files: ["zipper"]
   license: "CC-BY-3.0"
   copyright: "Made by Michael Klier on opengameart"

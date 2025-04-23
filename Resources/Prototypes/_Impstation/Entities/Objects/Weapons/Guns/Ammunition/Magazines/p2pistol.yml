@@ -1,0 +1,96 @@
+- type: entity
+  id: BaseMagazinePistolP2
+  name: P-2 pistol magazine (.22 auto any)
+  description: A 12-round .22 auto pistol magazine.
+  parent: [ BaseItem, BaseSecurityContraband ]
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - MagazinePistolP2
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeLPistol
+    capacity: 12
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/p2_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 7
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: MagazinePistolP2Empty
+  name: P-2 pistol magazine (.22 auto any)
+  description: A 12-round .22 auto pistol magazine with no apparent markings.
+  parent: BaseMagazinePistolP2
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+
+- type: entity
+  id: MagazinePistolP2
+  name: P-2 pistol magazine (.22 auto)
+  description: A 12-round .22 auto pistol magazine, marked as live-fire ammo.
+  parent: BaseMagazinePistolP2
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistol
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolP2Incendiary
+  name: P-2 pistol magazine (.22 auto incendiary)
+  description: A 12-round .22 auto pistol magazine, marked as incendiary ammo.
+  parent: BaseMagazinePistolP2
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistolIncendiary
+
+- type: entity
+  id: MagazinePistolP2Practice
+  name: P-2 pistol magazine (.22 auto practice)
+  description: A 12-round .22 auto pistol magazine, marked as practice ammo.
+  parent: BaseMagazinePistolP2
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistolPractice
+  - type: Sprite
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolP2Uranium
+  name: P-2 pistol magazine (.22 auto uranium)
+  description: A 12-round .22 auto pistol magazine, marked as uranium ammo.
+  parent: BaseMagazineLPistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistolUranium
+  - type: Sprite
+    layers:
+    - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]

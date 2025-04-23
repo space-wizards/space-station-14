@@ -1,0 +1,15 @@
+- type: entity
+  id: MagazineBoxPistolStun
+  parent: BaseMagazineBoxPistol
+  name: ammunition box (.35 auto stun)
+  description: A box made for 60 rounds of .35 auto ammunition, labeled as stun bullets specially tooled for antiquated weapons.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolStun
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: rubber

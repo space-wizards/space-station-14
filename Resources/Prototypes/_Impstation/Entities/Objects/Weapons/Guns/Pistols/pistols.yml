@@ -34,3 +34,45 @@
     autoRecharge: true
     autoRechargeRate: 40
   - type: AmmoCounter
+
+- type: entity
+  name: Freelancer
+  parent: [BaseWeaponPistol, BaseSecurityContraband]
+  id: WeaponPistolFreelancer
+  description: No private investigator would be caught dead without one of these concealed safely on their person, somewhere. Uses .35 auto ammo. 
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/freelancer.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/freelancer.rsi
+  - type: Gun
+    fireRate: 4
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/pistolfree.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolFreelancerStun
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolFreelancer
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistolStun
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+            - CartridgePistolStun

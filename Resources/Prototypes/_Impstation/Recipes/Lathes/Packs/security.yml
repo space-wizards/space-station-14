@@ -9,13 +9,21 @@
 - type: latheRecipePack
   id: SecurityAmmoStaticImp
   recipes:
+  - MagazineAmmoPouch
   - MagazineBoxLPistol
+  - MagazineBoxPistolStun
   - MagazineDMR
   - MagazineDMREmpty
   - MagazineLPistol
   - MagazineLPistolEmpty
   - SpeedLoaderMagnumStun
   - MagazineBoxMagnumStun
+  - MagazinePistolFreelancerEmpty
+  - MagazinePistolFreelancer
+  - MagazinePistolFreelancerStun
+  - MagazinePistolP2Empty
+  - MagazinePistolP2
+  - PowerCellBlaster
 
 - type: latheRecipePack
   id: SteelBriefcaseImp
@@ -39,7 +47,8 @@
   - MagazineDMRUranium
   - MagazineLPistolIncendiary
   - MagazineLPistolUranium
-  - PowerCellBlaster
+  - MagazinePistolP2Incendiary
+  - MagazinePistolP2Uranium
 
 - type: latheRecipePack
   id: SecurityWeaponsImp

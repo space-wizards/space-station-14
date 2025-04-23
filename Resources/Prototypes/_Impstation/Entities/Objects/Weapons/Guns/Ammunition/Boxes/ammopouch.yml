@@ -1,0 +1,101 @@
+- type: entity
+  id: AmmoPouchBase
+  parent: [ BaseStorageItem, BaseBagOpenClose, BaseSecurityContraband ]
+  name: ammunition pouch
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: closed
+      map: ["closeLayer"]
+    - state: open
+      map: ["openLayer"]
+      visible: false
+    - state: cart-1
+      map: ["cart-1"]
+      sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/ammo_pouch.rsi
+      visible: false
+    - state: cart-2
+      map: ["cart-2"]
+      sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/ammo_pouch.rsi
+      visible: false
+    - state: cart-3
+      map: ["cart-3"]
+      sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/ammo_pouch.rsi
+      visible: false
+    - state: cart-4
+      map: ["cart-4"]
+      sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/ammo_pouch.rsi
+      visible: false
+    - state: cart-5
+      map: ["cart-5"]
+      sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/ammo_pouch.rsi
+      visible: false
+    - state: cart-6
+      map: ["cart-6"]
+      sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/ammo_pouch.rsi
+      visible: false
+    size: Tiny
+    shape: # Yes, this is cursed, but it breaks otherwise, dont question it.
+    - 0,0,0,1
+  - type: Storage
+    grid:
+    - 0,0,5,1
+    whitelist:
+      tags:
+        - Cartridge
+  - type: ItemCounter
+    count:
+      tags: [Cartridge]
+    composite: true
+    layerStates:
+    - cart-1
+    - cart-2
+    - cart-3
+    - cart-4
+    - cart-5
+    - cart-6
+  - type: Appearance
+
+- type: entity
+  id: AmmoPouchEmpty
+  suffix: Empty
+  name: ammunition pouch
+  description: A neat leather pouch with little slots to hold 12 rounds of a variety of calibers.
+  parent: AmmoPouchBase
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/ammo_pouch.rsi
+  - type: Item
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/ammo_pouch.rsi
+
+- type: entity
+  id: AmmoPouch
+  name: ammunition pouch (.45 Magnum)
+  description: A neat leather pouch with little slots to hold 12 rounds of a variety of calibers.
+  parent: AmmoPouchBase
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/ammo_pouch.rsi
+  - type: Item
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/ammo_pouch.rsi
+  - type: StorageFill
+    contents:
+    - id: CartridgeMagnum
+      amount: 12
+
+- type: entity
+  id: AmmoPouchStun
+  suffix: Stun
+  name: ammunition pouch (.45 Magnum Stun)
+  description: A neat leather pouch with little slots to hold 12 rounds of a variety of calibers.
+  parent: AmmoPouchBase
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/ammo_pouch.rsi
+  - type: Item
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/ammo_pouch.rsi
+  - type: StorageFill
+    contents:
+    - id: CartridgeMagnumStun
+      amount: 12

@@ -38,3 +38,16 @@
   id: HeadofSecurityJumpskirtGrey
   equipment:
     jumpsuit: ClothingUniformJumpskirtHoSGrey
+
+# Firearms
+- type: loadout
+  id: SecurityPistolSturm
+  equipment:
+    pocket1: WeaponPistolSturm
+
+# Ammunition
+- type: loadout
+  id: SecurityAmmoSturm
+  storage:
+    back:
+    - AmmoPouch

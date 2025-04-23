@@ -28,7 +28,7 @@
   equipment:
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetSecurity
-    belt: ClothingBeltHolsterFilled
+    belt: ClothingBeltHolster # imp
   storage:
     back:
     - Flash

@@ -943,6 +943,26 @@
   - HeadofSecurityShoulderHolster
 
 - type: loadoutGroup
+  id: SecurityCommandFirearm
+  name: loadout-group-security-gun-command
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - SecurityPistolMk58
+  - SecurityPistolP2
+  - SecurityPistolSturm
+
+- type: loadoutGroup
+  id: SecurityCommandAmmo
+  name: loadout-group-security-ammo-command
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - SecurityAmmoPistol
+  - SecurityAmmoP2
+  - SecurityAmmoSturm
+
+- type: loadoutGroup
   id: WardenNeck
   name: loadout-group-warden-neck
   minLimit: 0
@@ -994,6 +1014,29 @@
   loadouts:
   - DetectivePDA
   - SeniorDetectivePDA
+
+- type: loadoutGroup
+  id: DetectiveFirearm
+  name: loadout-group-detective-gun
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - SecurityRevolverInspector
+  - SecurityRevolverDerringer
+  - SecurityPistolFreelancer
+
+- type: loadoutGroup
+  id: DetectiveAmmo
+  name: loadout-group-detective-ammo
+  minLimit: 0
+  maxLimit: 2
+  loadouts:
+  - SecurityAmmoSpeedloaderLethal
+  - SecurityAmmoSpeedloaderStun
+  - SecurityAmmoPouchLethal
+  - SecurityAmmoPouchStun
+  - SecurityAmmoFreelancerLethal
+  - SecurityAmmoFreelancerStun
 
 - type: loadoutGroup
   id: BrigmedicHead
@@ -1058,6 +1101,26 @@
   - EmergencyMeatBrigmedic
   - LoadoutSpeciesAquaticFullTank
   - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
+  id: SecurityOfficerFirearm
+  name: loadout-group-security-gun
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - SecurityPistolMk58
+  - SecurityPistolP2
+  - SecurityPistolBlaster
+
+- type: loadoutGroup
+  id: SecurityOfficerAmmo
+  name: loadout-group-security-ammo
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - SecurityAmmoPistol
+  - SecurityAmmoP2
+  - SecurityAmmoBlaster
 
 - type: loadoutGroup
   id: GroupSpeciesBreathToolMedSec

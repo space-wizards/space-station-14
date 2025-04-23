@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "by DVD Player for Impstation",   
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "closed"
+    },
+    {
+	  "name": "open"
+	},
+	{
+	  "name": "icon"
+	},
+    {
+      "name": "cart-1"
+    },
+    {
+      "name": "cart-2"
+    },
+    {
+      "name": "cart-3"
+    },
+    {
+      "name": "cart-4"
+    },
+    {
+      "name": "cart-5"
+    },
+	{
+      "name": "cart-6"
+    }
+  ]
+}
