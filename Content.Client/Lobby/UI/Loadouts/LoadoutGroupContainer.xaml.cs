@@ -88,17 +88,6 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             var loadoutContainer = new LoadoutContainer(loadoutProto, !enabled, reason);
             loadoutContainer.Select.Pressed = pressed;
 
-            //var ent = loadProto.DummyEntity ?? _entManager.System<LoadoutSystem>().GetFirstOrNull(loadProto);
-
-            //if (ent == null)
-            //    return;
-            //if (!_parsingMan.TryAddMarkup(loadoutContainer.Select, $"<GuideEntityEmbed Entity=\"{ent}\" Caption=\"\"/>"))
-            //{
-            //    // The guidebook will automatically display the in-guidebook error if it 
-            //    _sawmill.Error($"");
-            //}
-            
-
             loadoutContainer.Select.OnPressed += args =>
             {
                 if (args.Button.Pressed)

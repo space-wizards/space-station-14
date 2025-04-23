@@ -72,11 +72,7 @@ public sealed partial class DocumentParsingManager
         {
             foreach (var child in ControlParser.ParseOrThrow(text))
             {
-                if (child != null)
-                {
-                    _sawmill.Debug($"Adding child {child.GetType()}");
-                    control.AddChild(child);
-                }
+                control.AddChild(child);
             }
         }
         catch (Exception e)

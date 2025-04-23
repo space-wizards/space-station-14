@@ -82,10 +82,8 @@ public sealed partial class LoadoutContainer : BoxContainer
             _examineSystem.DoExamine(entity.Value,
                 userOverride: _guidebookSystem.GetGuidebookUser());
             args.Handle();
-            return;
         }
     }
-
 
     protected override void Dispose(bool disposing)
     {
@@ -95,17 +93,5 @@ public sealed partial class LoadoutContainer : BoxContainer
             return;
 
         _entManager.DeleteEntity(_entity);
-    }
-
-    public bool Pressed
-    {
-        get => SelectButton.Pressed;
-        set => SelectButton.Pressed = value;
-    }
-
-    public string? Text
-    {
-        get => SelectButton.Text;
-        set => SelectButton.Text = value;
     }
 }
