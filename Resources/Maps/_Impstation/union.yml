@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 250.0.0
+  engineVersion: 251.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/23/2025 16:53:22
+  time: 04/23/2025 18:18:47
   entityCount: 21502
 maps:
 - 1
@@ -10028,7 +10028,7 @@ entities:
       pos: -36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -102843.95
+      secondsUntilStateChange: -102885.9
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -10368,7 +10368,7 @@ entities:
       pos: 33.5,-43.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -231181.06
+      secondsUntilStateChange: -231223.02
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11073,7 +11073,7 @@ entities:
       pos: 37.5,-46.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -53516.484
+      secondsUntilStateChange: -53558.434
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11707,7 +11707,7 @@ entities:
       pos: -8.5,-0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -45640.11
+      secondsUntilStateChange: -45682.06
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -103643,7 +103643,6 @@ entities:
   - uid: 2735
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -45.5,-60.5
       parent: 2
 - proto: PhoneInstrument
@@ -122191,6 +122190,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -11.5,0.5
       parent: 2
+    - type: Conveyed
 - proto: TargetDarts
   entities:
   - uid: 3132
@@ -122206,6 +122206,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -12.5,-2.5
       parent: 2
+    - type: Conveyed
 - proto: TegCenter
   entities:
   - uid: 17814
