@@ -41,11 +41,10 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         var comp = ent.Comp;
         var originEnt = args.Actor;
         var telePointXForm = Transform(telePointEnt.Value);
-        var destination = _xform.GetWorldPosition(telePointXForm);
 
         SpawnAtPosition(comp.TeleportEffect, Transform(originEnt).Coordinates);
 
-        _xform.SetWorldPosition(originEnt, destination);
+        _xform.SetMapCoordinates(originEnt, _xform.GetMapCoordinates(telePointEnt.Value, telePointXForm));
 
         SpawnAtPosition(comp.TeleportEffect, telePointXForm.Coordinates);
 
