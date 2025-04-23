@@ -67,3 +67,20 @@ trait-transatlantic-desc = You sound like a hardboiled detective, or a peppy new
 
 trait-positivity-name = Relentless positivity
 trait-positivity-desc = You're always making speeches about the power of friendship. Enjoy your shift!
+
+trait-imperfect-clone-name = Imperfect clone
+trait-imperfect-clone-desc = Something went wrong during the cloning process, and you came out a little different.
+                             You will roll 1-3 random quirks or disabilities at the start of each shift.
+
+trait-imperfect-clone-accent-name = Inconsistent accent
+trait-imperfect-clone-accent-desc = For whatever reason, your accent fluctuates from day to day.
+                                    You will roll 0-2 random accents at the start of each shift.
+
+trait-inconsistent-handwriting-name = Inconsistent handwriting
+trait-inconsistent-handwriting-desc = For whatever reason, you just can't keep a signature locked down. 
+                                      Your signature font will be randomized at the start of each round.
+
+trait-chaos-magic-victim-name = Chaos magic victim
+trait-chaos-magic-victim-desc = At the start of each shift, you will roll 5 random traits of any kind, excluding signature fonts.
+
+trait-category-randomizers = Randomizers

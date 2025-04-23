@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: crocodilecarousel
-  changes:
-  - message: Arachnids have all been sent to the dry cleaners and are now substantially
-      more vibrant and colorful.
-    type: Add
-  id: 1042
-  time: '2025-02-02T17:15:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1545
 - author: kipdotnet
   changes:
   - message: Reworked the tck'tck gun to be a unique, lower caliber weapon instead
@@ -4097,3 +4089,11 @@
   id: 1541
   time: '2025-04-22T14:34:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2312
+- author: widgetbeck
+  changes:
+  - message: Added a new category to the traits menu - Randomizer Traits. These will
+      cause you to roll some random traits at the start of each round.
+    type: Add
+  id: 1542
+  time: '2025-04-23T08:59:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2175
