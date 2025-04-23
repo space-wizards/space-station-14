@@ -117,7 +117,7 @@
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSyndicateContraband ]
   id: ClothingOuterArmorRaid
   name: syndicate raid suit
-  description: A somewhat flexible and well-armored suit with a powerful shoulder mounted flashlight manufactured in the Gorlex Marauder's iconic blood-red color scheme, it does not protect its wearer from space.
+  description: A flexible and well-armored suit, made for speed, with a powerful shoulder mounted flashlight manufactured in the Gorlex Marauder's iconic blood-red color scheme, it does not protect its wearer from space.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/syndie-raid.rsi
@@ -133,18 +133,18 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.35
-        Slash: 0.35
+        Blunt: 0.45
+        Slash: 0.45
         Piercing: 0.35
-        Heat: 0.35
+        Heat: 0.3
         Caustic: 0.5
     staminaModifier: 0.1
     ingoreKnockdown: true
   - type: ExplosionResistance
     damageCoefficient: 0.35
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 1.2
+    sprintModifier: 1.2
   #Shoulder mounted flashlight
   - type: ToggleableLightVisuals
     spriteLayer: light
