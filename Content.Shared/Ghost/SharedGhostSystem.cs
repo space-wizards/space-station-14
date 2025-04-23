@@ -37,6 +37,9 @@ namespace Content.Shared.Ghost
                 args.Cancel();
         }
 
+        /// <summary>
+        /// Sets the ghost's time of death.
+        /// </summary>
         public void SetTimeOfDeath(Entity<GhostComponent?> entity, TimeSpan value)
         {
             if (!Resolve(entity, ref entity.Comp))
@@ -55,6 +58,9 @@ namespace Content.Shared.Ghost
             SetTimeOfDeath((uid, component), value);
         }
 
+        /// <summary>
+        /// Sets whether or not the ghost player is allowed to return to their original body.
+        /// </summary>
         public void SetCanReturnToBody(Entity<GhostComponent?> entity, bool value)
         {
             if (!Resolve(entity, ref entity.Comp))
@@ -79,6 +85,10 @@ namespace Content.Shared.Ghost
             SetCanReturnToBody((component.Owner, component), value);
         }
 
+
+        /// <summary>
+        /// Sets whether the ghost is allowed to interact with other entities.
+        /// </summary>
         public void SetCanGhostInteract(Entity<GhostComponent?> entity, bool value)
         {
             if (!Resolve(entity, ref entity.Comp))
