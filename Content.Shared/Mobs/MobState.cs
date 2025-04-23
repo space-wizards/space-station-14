@@ -1,4 +1,5 @@
-﻿using Content.Shared.Mobs.Components;
+﻿using Content.Shared.Inventory;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mobs;
@@ -28,7 +29,10 @@ public enum MobState : byte
 /// <param name="NewMobState">The new MobState</param>
 /// <param name="Origin">The Entity that caused this state change</param>
 public record struct MobStateChangedEvent(EntityUid Target, MobStateComponent Component, MobState OldMobState,
-    MobState NewMobState, EntityUid? Origin = null);
+    MobState NewMobState, EntityUid? Origin = null) : IInventoryRelayEvent
+{
+    public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;
+}
 
 public static class A
 {

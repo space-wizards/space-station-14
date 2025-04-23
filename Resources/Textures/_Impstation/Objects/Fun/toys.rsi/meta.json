@@ -132,6 +132,9 @@
         {
             "name": "doll_hair-inhand-right",
             "directions": 4
+        },
+        {
+            "name": "plushie_mascotgriffy"
         }
     ]
 }

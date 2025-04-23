@@ -32,7 +32,7 @@ public sealed class SignatureSystem : SharedSignatureSystem
         var paperComp = args.Paper.Comp;
         var signatureComp = ent.Comp;
 
-        var signatureName = DetermineEntitySignature(signer);
+        var signatureName = DetermineEntitySignature(signer, pen);
         var signatureColor = signatureComp.Color;
         var signatureFont = "Default"; // Noto Sans as fallback
 

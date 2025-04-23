@@ -21,7 +21,8 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Events;
-using Content.Shared._EE.Overlays.Switchable; // EE edit
+using Content.Shared._EE.Overlays.Switchable;
+using Content.Shared.Mobs; // EE edit
 
 namespace Content.Shared.Inventory;
 
@@ -53,6 +54,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, GetSpeedModifierContactCapEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetSlowedOverSlipperyModifierEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ModifySlowOnDamageSpeedEvent>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, MobStateChangedEvent>(RefRelayInventoryEvent); // imp
 
         // Eye/vision events
         SubscribeLocalEvent<InventoryComponent, CanSeeAttemptEvent>(RelayInventoryEvent);

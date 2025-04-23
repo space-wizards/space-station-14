@@ -69,6 +69,7 @@
       weight: 0.1
     - id: PlushieGiantBear
       weight: 0.5
+    - id: PlushieGriffy
     # imp edit end
 
 - type: entity

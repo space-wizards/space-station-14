@@ -16,3 +16,41 @@
       cyan: "#1a7694"
       purple: "#6a3059"
       magenta: "#a42f6b"
+
+- type: entity
+  id: GriffyPen
+  parent: BaseItem
+  name: griffy's pen 
+  description: The ICONIC pen for Griffy, The Sec Safety Dog! Though simply an oversized pen in function, the legacy this pen carries could change the universe...
+  components: # can't inherit from the base pen because I need to remove embeddable
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/griffy_pen.rsi
+    state: pen
+  - type: Item
+    sprite: _Impstation/Objects/Tools/griffy_pen.rsi
+    heldPrefix: pen
+    size: Normal
+  - type: Tag
+    tags:
+    - Write
+    - Pen
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/pen_click.ogg
+      params:
+        volume: -4
+        maxDistance: 2
+  - type: UseDelay
+    delay: 1.5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 10
+  - type: LandAtCursor
+  - type: SignatureWriter
+    font: Wahroonga
+    color: "#ff0000"
+    nameOverride: "Griffy"

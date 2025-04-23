@@ -619,6 +619,16 @@
     - WoodwindInstrument
 
 - type: entity
+  parent: BasePlushie
+  id: PlushieGriffy
+  name: griffy plushie
+  description: A plush version of Griffy, The Sec Safety Dog! Made of the recycled scraps from Griffy performers that have fallen in the line of duty.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: plushie_mascotgriffy
+
+- type: entity
   parent: BaseItem
   id: PrizeTicketGold
   name: prize ticket (1000)

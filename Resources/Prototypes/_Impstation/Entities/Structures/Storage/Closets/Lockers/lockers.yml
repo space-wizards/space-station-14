@@ -95,3 +95,36 @@
     stateDoorClosed: musician_door
   - type: AccessReader
     access: [["Musician"]]
+
+# Griffy
+- type: entity
+  id: LockerGriffy
+  parent: LockerBaseSecure
+  name: griffy suit locker
+  description: A standard-issue Nanotrasen mascot storage unit.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Storage/closet.rsi
+    noRot: true
+    layers:
+    - state: sec_griffy
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: sec_griffy_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      offset: "-0.065,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: EntityStorageVisuals
+    stateBaseClosed: sec_griffy
+    stateDoorOpen: sec_open
+    stateDoorClosed: sec_griffy_door
+  - type: AccessReader
+    access: [["Security"]]

@@ -27,6 +27,12 @@ public sealed partial class VoiceMaskComponent : Component
     public ProtoId<SpeechVerbPrototype>? VoiceMaskSpeechVerb;
 
     /// <summary>
+    ///     imp. allows disabling of the voice change action - used for the Griffy head
+    /// </summary>
+    [DataField]
+    public bool AddAction = true;
+
+    /// <summary>
     ///     The action that gets displayed when the voice mask is equipped.
     /// </summary>
     [DataField]

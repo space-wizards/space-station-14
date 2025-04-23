@@ -1,0 +1,129 @@
+- type: entity
+  name: griffy suit
+  description: The body of Griffy, the Sec Safety Dog! Comes with padding to defend against attacks from animals or disgruntled children.
+  id: MascotGriffySuit
+  parent: ClothingOuterBase
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/mascotgriffysuit.rsi
+    layers:
+      - state: icon
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Misc/mascotgriffysuit.rsi
+    equippedPrefix: alive
+    slots:
+    - outerClothing
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Heat: 1.2
+        Cold: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HideLayerClothing
+    slots:
+    - Tail
+    - Special
+  - type: ClothingMobStateVisuals
+  - type: EquipmentForceFacing
+
+- type: entity
+  name: griffy head
+  description: The head of Griffy, the Sec Safety Dog! Comes with a friendly face, & absolutely no ventilation.
+  id: MascotGriffyHead
+  parent: ClothingHeadBase
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Misc/mascotgriffyhead.rsi
+  - type: Item
+    size: Normal
+  - type: IngestionBlocker
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Misc/mascotgriffyhead.rsi
+    equipDelay: 2
+    unequipDelay: 2
+  - type: IdentityBlocker
+  - type: VoiceMask
+    voiceMaskName: Griffy
+    addAction: false
+  - type: TemperatureProtection
+    heatingCoefficient: 1.2 # hot in there. 4 times as hot as the base winter coat hood
+  - type: MultiHandedItem
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+  - type: EquipmentHeater
+
+- type: entity
+  id: PaperSecurityGriffyManual
+  name: griffy suit manual
+  parent: Paper
+  components:
+  - type: Paper
+    stampedBy:
+    - stampedColor: "#A32D26"
+      stampedName: NT
+    content: |2
+      [head=3][color=#1b487e]███░███░░░░██░░░░|Griffy, the Sec Safety Dog
+      ░██░█████░░██░░░░|              [/head]User Manual[head=3]
+      ░░█░██░██░░██░█░░|---------------------------------
+      ░░░░██░░██░██░██░|[/head][color=gray][italic]Copies available by mail order.[/color][/italic]
+      [head=3]░░░░██░░░████░███|[/color][/head]
+      ===================================================
+      Hello, and congratulations! If you are reading this then your station has been selected for a [color=red]Griffy, the Sec Safety Dog[/color]™ Costume Kit!                                    
+      
+      Only the best and bravest of the [color=#A32D26]NanoTrasen Security Forces[/color] are considered worthy to represent the beloved character, so take:
+
+      ([color=gray][italic] Five to ten seconds at most.[/color][/italic]    )
+       [bold]‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾[/bold]
+      to celebrate the achevment and consider the future of your team!
+      [bold]--------------------------------------------------------------------------[/bold]
+      [bold]--------------------------------------------------------------------------[/bold]
+      [head=3]Contents:[/head]
+      
+      [bold][bullet/][/bold] ([italic][color=gray]1x[/italic][/color]) [color=red]Griffy, the Sec Safety Dog[/color]™ Costume Head.
+      
+      [bold][bullet/][/bold] ([italic][color=gray]1x[/italic][/color]) [color=red]Griffy, the Sec Safety Dog[/color]™ Costume Body.
+      
+      [bold][bullet/][/bold] ([italic][color=gray]1x[/italic][/color]) [color=red]Griffy, the Sec Safety Dog[/color]™ PDA Device.
+      
+      [bold][bullet/][/bold] ([italic][color=gray]1x[/italic][/color]) Rocket Assisted Sledgehammer.
+      
+      [head=3]The Three [bold][head=2][color=#A32D26]DON'T[/head][/color][/bold]s of [color=red]Griffy, the Sec Safety Dog[/color]™[/head]
+      [bold]--------------------------------------------------------------------------[/bold]
+      [italic][color=gray]The following guidelines dictate what Nanotrasen employees will avoid when using [color=red]Griffy, the Sec Safety Dog[/color]™ under penalty of law.[/italic][/color] 
+      
+      [bold][head=3]1. [color=#A32D26]DON'T[/color][/bold] allow civilians to see Griffy unless the actor is in full costume -[/head] We want to create the illusion that [color=red]Griffy, the Sec Safety Dog[/color]™ is real. 
+      
+      [bold][head=3]2. [color=#A32D26]DON'T[/color][/bold] endorse things that [color=red]Griffy, the Sec Safety Dog[/color]™ wouldn't -[/bold] Griffy is a good boy. He wouldn't support crime, drugs, the Syndicate, unionization, etc. Remember - [bold][color=red]Griffy, the Sec Safety Dog[/color]™ is real.[/bold]
+      
+      [bold][head=3]3. [color=#A32D26]DON'T[/color][/bold] allow the [color=red]Griffy, the Sec Safety Dog[/color]™ costume to fall into the wrong hands -[/bold] In the event that your station falls to enemy forces, use the included Rocket Assisted Sledgehammer to render the [color=red]Griffy, the Sec Safety Dog[/color]™ costume completely unrecognizable. [bold]Failure to do so may result in disciplinary action up to and including [color=#A32D26]capital punishment[/color][/bold].
+      [bold]--------------------------------------------------------------------------[/bold]
+      [italic][color=gray]If any parts of the Griffy, the Sec Safety Dog™ Costume Kit are faulty or missing, please contact the NT Mascot & Party Division using the following hyperphone number: 
+      89054378908-8568094234546-93489734786673
+      
+      NanoTrasen is not liable in the event of shipment errors or wrongful death.[/italic][/color]
+      
+              ════░░░░════
+        ═════▒▒▒▒▒▒═════
+        ════░░░░░░░░════
+                ░░ █░▒▒░█ ░░
+               ░░░░▒██▒░░░░
+                    ░░▒      ▒░░
+                    │░░▒  ▒░░│
+                 ▒▒▒▒▒▒▒▒▒▒▒
+                  ▒▒▒  ▒ ▒▒     ▒▒
+               ▒▒▒▒ ▒  ▒▒▒  ▒▒▒▒
+             │░░▒▒ ▒▒ ▒▒▒  ▒░░│
+          │░░▒▒▒▒▒▒▒▒▒▒▒▒▒░░│
+      ║║║║▒░░░░░░░░░░░▒║║║║
+                 │░░░░░X░░░░░│
+                    │░───────░│
+                     │░░░│  │░░│
+                   |░░░░│  │░░░|       

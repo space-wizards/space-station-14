@@ -1,0 +1,12 @@
+- type: entity
+  id: LockerGriffyFilled
+  suffix: Filled
+  parent: LockerGriffy
+  components:
+  - type: StorageFill
+    contents:
+      - id: MascotGriffySuit
+      - id: MascotGriffyHead
+      - id: GriffyPDA
+      - id: PlushieGriffy
+      - id: PaperSecurityGriffyManual

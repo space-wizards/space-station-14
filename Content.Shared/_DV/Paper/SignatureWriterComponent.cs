@@ -26,4 +26,10 @@ public sealed partial class SignatureWriterComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<string, Color> ColorList = new();
+
+    /// <summary>
+    /// Imp. Replaces the player's name with this string if it isn't null.
+    /// </summary>
+    [DataField]
+    public string? NameOverride = null;
 }

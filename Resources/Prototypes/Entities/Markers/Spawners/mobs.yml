@@ -263,9 +263,11 @@
     layers:
       - state: green
       - state: ai
-  - type: ConditionalSpawner
+  - type: RandomSpawner # imp edit
     prototypes:
       - MobMcGriff
+    rarePrototypes: # imp
+      - MobMascotGriffy # imp
 
 - type: entity
   name: Sloth Paperwork Spawner

@@ -358,3 +358,66 @@
     accentHColor: "#447987"
   - type: Icon
     state: pda-hd
+
+# Griffy
+- type: entity
+  id: GriffyPDA
+  parent: BasePDA
+  name: griffy's PDA
+  description: PDA for Griffy, the Sec Safety Dog! Comes with large buttons & is bone-shaped, so as to be usable by dog mascots.
+  components:
+  - type: Pda
+    id: null
+    paiSlot:
+      priority: -2
+      whitelist:
+        components:
+        - PAI
+    penSlot:
+      startingItem: GriffyPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+    idSlot:
+      name: access-id-card-component-default
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Machines/id_insert.ogg
+      whitelist:
+        components:
+        - IdCard
+  - type: Sprite
+    layers:
+    - map: [ "enum.PdaVisualLayers.Base" ]
+      sprite: _Impstation/Objects/Devices/griffy_pda.rsi
+      state: pda-mascotgriffy
+    - sprite: Objects/Devices/pda.rsi
+      state: "light_overlay"
+      map: [ "enum.PdaVisualLayers.Flashlight" ]
+      shader: "unshaded"
+      visible: false
+    - sprite: Objects/Devices/pda.rsi
+      state: "id_overlay"
+      map: [ "enum.PdaVisualLayers.IdLight" ]
+      shader: "unshaded"
+      visible: false
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-mascotgriffy
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
+    - NanoChatCartridge # DV
+    - SOSCartridge # Imp
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
+  - type: Icon
+    sprite: _Impstation/Objects/Devices/griffy_pda.rsi
+    state: pda-mascotgriffy

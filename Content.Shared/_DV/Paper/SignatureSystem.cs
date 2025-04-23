@@ -58,15 +58,19 @@ public abstract class SharedSignatureSystem : EntitySystem
         return true;
     }
 
-    public string DetermineEntitySignature(EntityUid uid)
+    public string DetermineEntitySignature(EntityUid signer, EntityUid pen)
     {
+        // imp - if there's a signature override, return that.
+        if (TryComp<SignatureWriterComponent>(pen, out var signatureComp) && signatureComp.NameOverride != null)
+            return signatureComp.NameOverride;
+
         // If the entity has an ID, use the name on it.
-        if (_idCard.TryFindIdCard(uid, out var id) && !string.IsNullOrWhiteSpace(id.Comp.FullName))
+        if (_idCard.TryFindIdCard(signer, out var id) && !string.IsNullOrWhiteSpace(id.Comp.FullName))
         {
             return id.Comp.FullName;
         }
 
         // Alternatively, return the entity name
-        return Name(uid);
+        return Name(signer);
     }
 }

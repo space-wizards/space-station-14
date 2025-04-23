@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "pda-mascotgriffy by ThatKidConnor and Sha-Seng",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pda-mascotgriffy",
+      "delays": [
+        [
+          1.2,
+          1.2,
+          1.2,
+          1.2
+        ]
+      ]
+    }
+  ]
+}
