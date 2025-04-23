@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Dead changelings will now automatically go into stasis if they have enough
-      biomass left.
-    type: Fix
-  id: 1053
-  time: '2025-02-05T09:40:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1557
 - author: hivehum
   changes:
   - message: Heretic rounds should have more random events.
@@ -4107,3 +4099,12 @@
   id: 1552
   time: '2025-04-23T14:27:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2297
+- author: RosySaturniidae
+  changes:
+  - message: slightly improved model for flippo lighters!
+    type: Tweak
+  - message: syndicate flippo lighters no longer have cloaking technology.
+    type: Tweak
+  id: 1553
+  time: '2025-04-23T14:30:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2275
