@@ -35,7 +35,7 @@ public sealed class AdminUIController : UIController,
     [Dependency] private readonly VerbMenuUIController _verb = default!;
 
     private AdminMenuWindow? _window;
-    private MenuButton? AdminButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AdminButton;
+    private Controls.MenuButton? AdminButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AdminButton;
     private PanicBunkerStatus? _panicBunker;
 
     public override void Initialize()

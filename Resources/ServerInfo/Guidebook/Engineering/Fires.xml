@@ -7,7 +7,7 @@
     <GuideEntityEmbed Entity="FirelockGlass" Caption=""/>
   </Box>
 
-  They often make high-pressure and high-temperature gases, which can quickly spread throughout the station if firelocks or doors are opened carelessly, even if only for a moment.
+  They often make high-pressure and high-temperature gasses, which can quickly spread throughout the station if firelocks or doors are opened carelessly, even if only for a moment.
 
   If people are caught in a fire, they can quickly become incapacitated, die, and even ash, rendering them unrevivable.
 
@@ -20,6 +20,6 @@
   You can then [textlink="fix" link="ExpandingRepairingStation"] the [textlink="spacing" link="Spacing"] and repressurize the area.
 
   ## Tips
-  - [bold]Know the signs of a future fire.[/bold] If an area is filled with highly flammable gasses, it's only a matter of time before a careless passenger sets it off. Try to isolate the area and scrub the gasses out as quickly as possible.
+  - [bold]Know the signs of a future fire.[/bold] If an area is filled with highly flammable gasses, it's only a matter of time before a careless assistant sets it off. Try to isolate the area and scrub the gasses out as quickly as possible.
   - [bold]Prevent the spread of gasses using a holofan projector.[/bold] Letting gasses through a firelock can make other rooms dangerous, even for a moment. This increases the number of rooms you have to fix.
 </Document>

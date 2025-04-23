@@ -1,4 +1,4 @@
-using Content.Shared.Interaction;
+﻿using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -12,6 +12,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Wieldable;
 using Content.Shared.Wieldable.Components;
 using JetBrains.Annotations;
+using Content.Shared._Starlight.Weapon.Components;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -302,7 +303,7 @@ public partial class SharedGunSystem
                     var uid = Spawn(component.FillPrototype, mapCoordinates);
 
                     if (TryComp<CartridgeAmmoComponent>(uid, out var cartridge))
-                        SetCartridgeSpent(uid, cartridge, !(bool) chamber);
+                        SetCartridgeSpent(uid, cartridge, !(bool)chamber);
 
                     EjectCartridge(uid);
                 }
@@ -388,8 +389,15 @@ public partial class SharedGunSystem
             // Chamber empty or spent
             if (ent == null)
                 continue;
+            //🌟Starlight🌟
+            if (TryComp<HitScanCartridgeAmmoComponent>(ent, out var hitscanCartridge))
+            {
+                if (hitscanCartridge.Spent)
+                    continue;
 
-            if (TryComp<CartridgeAmmoComponent>(ent, out var cartridge))
+                args.Ammo.Add((ent.Value, hitscanCartridge));
+            }
+            else if (TryComp<CartridgeAmmoComponent>(ent, out var cartridge))
             {
                 if (cartridge.Spent)
                     continue;

@@ -1,0 +1,374 @@
+- type: entity
+  name: terror spider
+  parent: [ SimpleMobBase, MobCombat ]
+  id: MobTerrorSpider
+  description: a deadly hybrid of a giant spider and xenomorph.
+  abstract: true
+  components:
+  - type: ThermalVision
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: alive
+      sprite: _Starlight/Mobs/Animals/Spiders/terror_red.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 190
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSpider
+      amount: 4
+  - type: CombatMode
+  - type: Body
+    prototype: AnimalHemocyanin
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: TerrorSpider
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      90: Dead
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 18
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 30
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: Mechanotoxin
+        Quantity: 1
+  - type: MeleeChemicalInjector
+    transferAmount: 0.75
+    solution: melee
+  - type: ReplacementAccent
+    accent: xeno
+  - type: NoSlip
+  - type: Spider
+  - type: IgnoreSpiderWeb
+  - type: Bloodstream
+    bloodMaxVolume: 150
+    bloodReagent: CopperBlood
+  - type: Speech
+    speechVerb: Arachnid
+    speechSounds: Arachnid
+    allowedEmotes: ['Click', 'Chitter']
+  - type: Vocal
+    sounds:
+      Male: UnisexArachnid
+      Female: UnisexArachnid
+      Unsexed: UnisexArachnid
+  - type: TypingIndicator
+    proto: spider
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+  - type: Prying # Open door from xeno.yml.
+    pryPowered: true
+    force: true
+    speedModifier: 1.5
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: PassiveDamage 
+    allowedStates:
+    - Alive
+    damageCap: 89
+    damage:
+      types:
+        Poison: -0.07
+      groups:
+        Brute: -0.07
+        Burn: -0.07
+  - type: NpcFactionMember
+    factions:
+      - Xeno
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-terror-spider-name
+    description: ghost-role-terror-spider-description
+    rules: ghost-role-terror-spider-rules
+    raffle:
+      settings: short
+  - type: GhostTakeoverAvailable
+  - type: Puller
+    needsHands: false
+
+- type: entity
+  name: terror red
+  parent: MobTerrorSpider
+  id: MobTerrorRed
+  components:
+  - type: VentCrawler
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      140: Dead
+  - type: PassiveDamage 
+    allowedStates:
+    - Alive
+    damageCap: 139
+    damage:
+      types:
+        Poison: -0.8
+      groups:
+        Brute: -0.8
+        Burn: -0.8
+        Airloss: -1.5
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 21
+        Structural: 20
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.00
+    baseSprintSpeed : 4.00
+
+- type: entity
+  name: terror gray
+  parent: MobTerrorSpider
+  id: MobTerrorGray
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: alive
+      sprite: _Starlight/Mobs/Animals/Spiders/terror_gray2.rsi
+  - type: VentCrawler
+  - type: StealthOnWeb
+  - type: StaminaDamageOnHit
+    damage: 100
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      80: Dead
+  - type: PassiveDamage 
+    allowedStates:
+    - Alive
+    damageCap: 79
+    damage:
+      types:
+        Poison: -0.5
+      groups:
+        Brute: -0.5
+        Burn: -0.5
+        Airloss: -1.5
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 11
+  - type: Prying
+    pryPowered: false
+    force: true
+    speedModifier: 1.5
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.00
+    baseSprintSpeed : 5
+    
+- type: entity
+  name: terror green
+  parent: MobTerrorSpider
+  id: MobTerrorGreen
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: alive
+      sprite: _Starlight/Mobs/Animals/Spiders/terror_green.rsi
+  - type: VentCrawler
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      80: Dead
+  - type: PassiveDamage 
+    allowedStates:
+    - Alive
+    damageCap: 79
+    damage:
+      types:
+        Poison: -0.5
+      groups:
+        Brute: -0.5
+        Burn: -0.5
+        Airloss: -1.5
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 11
+  - type: MeleeChemicalInjector
+    transferAmount: 2.75
+    solution: melee
+  - type: Prying
+    pryPowered: false
+    force: true
+    speedModifier: 1.5
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.00
+    baseSprintSpeed : 4.75
+  - type: ActionGrant
+    actions:
+    - ActionEggInjection
+
+- type: entity
+  name: princess of terror
+  parent: MobTerrorSpider
+  id: MobTerrorPrincess
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: alive
+      sprite: _Starlight/Mobs/Animals/Spiders/terror_princess.rsi
+  - type: VentCrawler
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      160: Dead
+  - type: PassiveDamage 
+    allowedStates:
+    - Alive
+    damageCap: 179
+    damage:
+      types:
+        Poison: -1
+      groups:
+        Brute: -1
+        Burn: -1
+        Airloss: -2
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 15
+  - type: MeleeChemicalInjector
+    transferAmount: 3.75
+    solution: melee
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 1.5
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.00
+    baseSprintSpeed : 3.75
+  - type: TerrorPrincess
+  - type: ActionGrant
+    actions:
+    - ActionEggsLaying
+  - type: UserInterface
+    interfaces:
+      enum.EggsLayingUiKey.Key:
+        type: EggsLayingBui
+
+- type: entity
+  parent: EggSpider
+  id: TerrorGrayEggSpiderFertilized
+  name: egg spider
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Animals/Spiders/terror_gray2.rsi
+    state: egg
+  - type: Timer
+  - type: TimedSpawner
+    prototypes:
+    - MobTerrorGray
+    intervalSeconds: 180
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn 
+    lifetime: 181
+
+- type: entity
+  parent: EggSpider
+  id: TerrorGreenSpiderFertilized
+  name: egg spider
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Animals/Spiders/terror_green.rsi
+    state: egg
+  - type: Timer
+  - type: TimedSpawner
+    prototypes:
+    - MobTerrorGreen
+    intervalSeconds: 180
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn 
+    lifetime: 181
+    
+- type: entity
+  parent: EggSpider
+  id: TerrorRedEggSpiderFertilized
+  name: egg spider
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Animals/Spiders/terror_red.rsi
+    state: egg
+  - type: Timer
+  - type: TimedSpawner
+    prototypes:
+    - MobTerrorRed
+    intervalSeconds: 180
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn 
+    lifetime: 181

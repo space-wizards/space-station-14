@@ -9,13 +9,19 @@ public sealed partial class SpentAmmoVisualsComponent : Component
     /// Should we do "{_state}-spent" or just "spent"
     /// </summary>
     [DataField("suffix")] public bool Suffix = true;
+    
+    /// <summary>
+    /// Should we remove Tip?
+    /// </summary>
+    [DataField("tip")] public bool Tip = false;
 
     [DataField("state")]
-    public string State = "base";
+    public string? State = "base";
 }
 
 public enum AmmoVisualLayers : byte
 {
     Base,
     Tip,
+    Spent,
 }

@@ -1,0 +1,217 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Paradise Station",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "base"
+        },
+        {
+            "name": "disable"
+        },
+        {
+            "name": "disable-unshaded-0",
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "disable-unshaded-1"
+        },
+        {
+            "name": "disable-unshaded-2"
+        },
+        {
+            "name": "disable-unshaded-3"
+        },
+        {
+            "name": "disable-unshaded-4"
+        },
+        {
+            "name": "disable0-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "disable0-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "disable1-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "disable1-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "disable2-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "disable2-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "disable3-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "disable3-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "disable4-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "disable4-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "kill"
+        },
+        {
+            "name": "kill-unshaded-0",
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "kill-unshaded-1"
+        },
+        {
+            "name": "kill-unshaded-2"
+        },
+        {
+            "name": "kill-unshaded-3"
+        },
+        {
+            "name": "kill-unshaded-4"
+        },
+        {
+            "name": "kill0-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "kill0-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "kill1-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "kill1-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "kill2-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "kill2-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "kill3-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "kill3-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "kill4-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "kill4-inhand-right",
+            "directions": 4
+        }
+    ]
+}

@@ -1,0 +1,147 @@
+﻿- type: entity
+  id: PartCyclorite
+  parent: [BaseItem, BasePart]
+  name: "cyclorite body part"
+  abstract: true
+  components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: CopperBlood
+        Quantity: 10
+
+- type: entity
+  id: TorsoCyclorite
+  name: "cyclorite torso"
+  parent: [PartCyclorite, BaseTorso]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "torso"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "torso"
+    - type: Extractable
+      juiceSolution:
+        reagents:
+        - ReagentId: Fat
+          Quantity: 10
+        - ReagentId: CopperBlood
+          Quantity: 20
+
+- type: entity
+  id: HeadCyclorite
+  name: "cyclorite head"
+  parent: [PartCyclorite, BaseHead]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "head"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "head"
+    - type: Extractable
+      juiceSolution:
+        reagents:
+        - ReagentId: Fat
+          Quantity: 5
+        - ReagentId: CopperBlood
+          Quantity: 10
+
+- type: entity
+  id: LeftArmCyclorite
+  name: "left cyclorite arm"
+  parent: [PartCyclorite, BaseLeftArm]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "l_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "l_arm"
+
+- type: entity
+  id: RightArmCyclorite
+  name: "right cyclorite arm"
+  parent: [PartCyclorite, BaseRightArm]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "r_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "r_arm"
+
+- type: entity
+  id: LeftHandCyclorite
+  name: "left cyclorite hand"
+  parent: [PartCyclorite, BaseLeftHand]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "l_hand"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "l_hand"
+
+- type: entity
+  id: RightHandCyclorite
+  name: "right cyclorite hand"
+  parent: [PartCyclorite, BaseRightHand]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "r_hand"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "r_hand"
+
+- type: entity
+  id: LeftLegCyclorite
+  name: "left cyclorite leg"
+  parent: [PartCyclorite, BaseLeftLeg]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "l_leg"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "l_leg"
+
+- type: entity
+  id: RightLegCyclorite
+  name: "right cyclorite leg"
+  parent: [PartCyclorite, BaseRightLeg]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "r_leg"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "r_leg"
+
+- type: entity
+  id: LeftFootCyclorite
+  name: "left cyclorite foot"
+  parent: [PartCyclorite, BaseLeftFoot]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "l_foot"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "l_foot"
+
+- type: entity
+  id: RightFootCyclorite
+  name: "right cyclorite foot"
+  parent: [PartCyclorite, BaseRightFoot]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "r_foot"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+      state: "r_foot"

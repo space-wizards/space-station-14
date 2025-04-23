@@ -1,0 +1,29 @@
+﻿- type: job
+  id: MiningSpecialist
+  name: job-name-miningspec
+  description: job-description-miningspec
+  playTimeTracker: JobMiningSpecialist
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Cargo
+    time: 10800 # 3 hrs
+  - !type:OverallPlaytimeRequirement
+    time: 36000 #10 hrs
+  icon: "JobIconShaftMiner"
+  startingGear: MiningSpecialistGear
+  supervisors: job-supervisors-qm
+  access:
+  - Cargo
+  - Salvage
+  - Maintenance
+  - External
+#job_id
+- type: startingGear
+  id: MiningSpecialistGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMiningSpecialist
+    id: MiningPDA
+    ears: ClothingHeadsetMining
+    #storage:
+    #back:
+    #- Stuff

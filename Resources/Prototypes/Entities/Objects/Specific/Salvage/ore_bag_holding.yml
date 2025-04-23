@@ -7,10 +7,10 @@
   - type: MagnetPickup
     range: 2
   - type: Sprite
-    sprite: Objects/Specific/Mining/ore_bag_holding.rsi
+    sprite: _Starlight/Objects/Specific/Mining/ore_bag_holding.rsi
     state: icon
   - type: Clothing
-    sprite: Objects/Specific/Mining/ore_bag_holding.rsi
+    sprite: _Starlight/Objects/Specific/Mining/ore_bag_holding.rsi
   - type: Storage
     grid:
     - 0,0,19,9

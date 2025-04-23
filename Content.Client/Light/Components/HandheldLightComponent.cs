@@ -31,6 +31,9 @@ public sealed class HandheldLightStatus : Control
     public HandheldLightStatus(HandheldLightComponent parent)
     {
         _parent = parent;
+        
+        if (!_parent.NeedsCharge)
+            return;
 
         var wrapper = new BoxContainer
         {
@@ -57,6 +60,9 @@ public sealed class HandheldLightStatus : Control
         _timer %= TimerCycle;
 
         var level = _parent.Level;
+        
+        if (!_parent.NeedsCharge)
+            return;
 
         for (var i = 0; i < _sections.Length; i++)
         {

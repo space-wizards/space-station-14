@@ -3,6 +3,10 @@ on: pull_request_target
 jobs:
   size-label:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
     steps:
       - name: size-label
         uses: "pascalgn/size-label-action@v0.5.5"

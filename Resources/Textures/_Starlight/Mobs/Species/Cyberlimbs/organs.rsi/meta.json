@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Paradise Station",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "eyeball-l"
+    },
+    {
+      "name": "eyeball-r"
+    },
+    {
+      "name": "sec-eyeball-l"
+    },
+    {
+      "name": "sec-eyeball-r"
+    },
+    {
+      "name": "omni-eyeball-l"
+    },
+    {
+      "name": "omni-eyeball-r"
+    }
+  ]
+}

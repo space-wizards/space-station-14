@@ -1,0 +1,41 @@
+- type: entity
+  name: magistrate stamp
+  parent: RubberStampBase
+  id: RubberStampMagistrate
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: Magistrate
+    stampedColor: "#FF5297"
+    stampState: "paper_stamp-magistrate"
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/stamps.rsi
+    state: stamp-magistrate
+    
+- type: entity
+  name: NT representative's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampNtrep
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: "NanoTrasen Representative"
+    stampedColor: "#fcc032"
+    stampState: "paper_stamp-ntrep"
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/stamps.rsi
+    state: stamp-ntrep
+    
+- type: entity
+  name: internal affairs agent's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampIAA
+  suffix: DO NOT MAP
+  components:
+    - type: Stamp
+      stampedName: "Internal Affairs Agent"
+      stampedColor: "#33CC33"
+      stampState: "paper_stamp-ok"
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/stamps.rsi
+      state: stamp-iaa

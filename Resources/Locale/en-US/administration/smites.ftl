@@ -56,6 +56,7 @@ admin-smite-vomit-organs-name = Vomit Organs
 admin-smite-ghostkick-name = Ghost Kick
 admin-smite-nyanify-name = Cat Ears
 admin-smite-kill-sign-name = Kill Sign
+admin-smite-pacify-name = Pacify
 admin-smite-omni-accent-name = Omni-Accent
 
 ## Smite descriptions
@@ -100,12 +101,15 @@ admin-smite-super-bonk-description = Slams them on every single table on the Sta
 admin-smite-super-bonk-lite-description= Slams them on every single table on the Station and beyond. Stops when the target is dead.
 admin-smite-terminate-description = Creates a Terminator ghost role with the sole objective of killing them.
 admin-smite-super-slip-description = Slips them really, really hard.
+admin-smite-pacify-description = Makes the target a pacifist.
 admin-smite-omni-accent-description = Makes the target speak with almost every accent available.
 
 ## Tricks descriptions
 
 admin-trick-unbolt-description = Unbolts the targetted airlock.
 admin-trick-bolt-description = Bolts the targetted airlock.
+admin-trick-electrify-description = Electrify the targetted airlock.
+admin-trick-unelectrify-description = Unelectrify the targetted airlock.
 admin-trick-emergency-access-on-description = Turns on emergency access for the targetted airlock.
 admin-trick-emergency-access-off-description = Turns off emergency access for the targetted airlock.
 admin-trick-make-indestructible-description = Makes the given object indestructible, effectively godmode.

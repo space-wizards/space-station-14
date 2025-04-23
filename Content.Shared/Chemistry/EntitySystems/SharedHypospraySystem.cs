@@ -14,6 +14,7 @@ public abstract class SharedHypospraySystem : EntitySystem
     [Dependency] protected readonly SharedSolutionContainerSystem _solutionContainers = default!;
     [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] protected readonly ReactiveSystem _reactiveSystem = default!;
+
     
     public override void Initialize()
     {

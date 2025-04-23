@@ -25,6 +25,9 @@ public sealed partial class ReflectComponent : Component
     [DataField("spread"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public Angle Spread = Angle.FromDegrees(45);
 
+    [DataField("overrideAngle"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public Angle? OverrideAngle = null;
+
     [DataField("soundOnReflect")]
     public SoundSpecifier? SoundOnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
 }

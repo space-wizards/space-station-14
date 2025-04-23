@@ -15,6 +15,9 @@ public sealed partial class AntagLoadProfileRuleComponent : Component
     [DataField]
     public ProtoId<SpeciesPrototype>? SpeciesOverride;
 
+    [DataField]
+    public ProtoId<SpeciesPrototype>? SpeciesHardOverride;
+
     /// <summary>
     /// List of species that trigger the override
     /// </summary>

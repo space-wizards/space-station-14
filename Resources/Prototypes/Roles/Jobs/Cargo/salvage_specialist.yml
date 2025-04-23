@@ -12,11 +12,15 @@
   icon: "JobIconShaftMiner"
   startingGear: SalvageSpecialistGear
   supervisors: job-supervisors-qm
+  canBeAntag: false
   access:
   - Cargo
   - Salvage
   - Maintenance
   - External
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: SalvageSpecialistGear

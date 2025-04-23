@@ -26,6 +26,10 @@ public sealed partial class LockComponent : Component
     [DataField("lockOnClick"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public bool LockOnClick;
+    
+    [DataField("mindShieldLock"), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public bool MindShieldLock = false;
 
     /// <summary>
     /// Whether or not the lock is unlocked by simply clicking.

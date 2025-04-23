@@ -2,10 +2,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural;
 
-[Prototype("salvageDifficulty")]
+[Prototype]
 public sealed partial class SalvageDifficultyPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = string.Empty;
+    [IdDataField] public string ID { get; private set; } = string.Empty;
 
     /// <summary>
     /// Color to be used in UI.
@@ -16,14 +16,17 @@ public sealed partial class SalvageDifficultyPrototype : IPrototype
     /// <summary>
     /// How much loot this difficulty is allowed to spawn.
     /// </summary>
-    [DataField("lootBudget", required : true)]
+    [DataField("lootBudget", required: true)]
     public float LootBudget;
 
     /// <summary>
     /// How many mobs this difficulty is allowed to spawn.
     /// </summary>
-    [DataField("mobBudget", required : true)]
+    [DataField("mobBudget", required: true)]
     public float MobBudget;
+
+    [DataField("lootPrototype")]
+    public string LootPrototypeId = "SalvageLoot";
 
     /// <summary>
     /// Budget allowed for mission modifiers like no light, etc.

@@ -29,11 +29,11 @@
 
 - type: entity
   parent: ClothingHeadset
-  id: ClothingHeadsetGrey
-  name: passenger headset
+  id: ClothingHeadsetAssistant
+  name: assistant headset
   components:
   - type: Sprite
-    sprite: Clothing/Ears/Headsets/base.rsi
+    sprite: Clothing/Ears/Headsets/service.rsi
 
 - type: entity
   parent: ClothingHeadset
@@ -242,7 +242,7 @@
     sprite: Clothing/Ears/Headsets/security.rsi
 
 - type: entity
-  parent: [ClothingHeadset, BaseRestrictedContraband]
+  parent: [ClothingHeadset, BaseSecurityContraband]
   id: ClothingHeadsetBrigmedic
   name: brigmedic headset
   description: A headset that helps to hear the death cries.

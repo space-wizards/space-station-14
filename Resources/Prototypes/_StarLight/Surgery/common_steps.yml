@@ -1,0 +1,72 @@
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepExposeNerves
+  name: Expose Nerves
+  components:
+  - type: SurgeryStep
+    duration: 4
+    tools:
+    - type: Scalpel
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  - type: SurgeryStepEmoteEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepExposeBloodVessels
+  name: Expose Blood Vessels
+  components:
+  - type: SurgeryStep
+    duration: 4
+    tools:
+    - type: Scalpel
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  - type: SurgeryStepEmoteEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepDeepIncision
+  name: Deep Incision
+  components:
+    - type: SurgeryStep
+      duration: 5
+      tools:
+      - type: Scalpel
+    - type: Sprite
+      sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+      state: scalpel
+    - type: SurgeryStepEmoteEffect
+    
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRetractSkin
+  name: Retract the skin
+  components:
+  - type: SurgeryStep
+    tools:
+    - type: Retractor
+    add:
+    - type: SkinRetracted
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    state: retractor
+    
+- type: entity
+  parent: SurgeryStepRetractSkin
+  id: SurgeryStepRetractMembrane
+  name: Retract the membrane
+     
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepCoagulateJellyFlow
+  name: Coagulate Jelly Flow
+  components:
+  - type: SurgeryStep
+    tools:
+      - type: Hemostat
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    state: hemostat

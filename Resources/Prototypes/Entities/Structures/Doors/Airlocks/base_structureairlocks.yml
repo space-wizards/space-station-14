@@ -4,6 +4,10 @@
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
+  - type: Ricochetable
+    chance: 1
+  - type: Pierceable
+    level: HardenedMetal
   - type: StationAiWhitelist
   - type: MeleeSound
     soundGroups:

@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Localizations;
+using Content.Shared.Starlight;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles.Jobs;
 using JetBrains.Annotations;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -25,6 +27,7 @@ public sealed partial class RoleTimeRequirement : JobRequirement
     public TimeSpan Time;
 
     public override bool Check(IEntityManager entManager,
+        ICommonSession? player,
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
         IReadOnlyDictionary<string, TimeSpan> playTimes,
@@ -33,6 +36,10 @@ public sealed partial class RoleTimeRequirement : JobRequirement
         reason = new FormattedMessage();
 
         string proto = Role;
+        //🌟Starlight🌟 start
+        if (player is not null && IoCManager.Resolve<ISharedPlayersRoleManager>().IsAllRolesAvailable(player))
+            return true;
+        //🌟Starlight🌟 end
 
         playTimes.TryGetValue(proto, out var roleTime);
         var roleDiffSpan = Time - roleTime;

@@ -1,4 +1,4 @@
-using Content.Server.Store.Components;
+﻿using Content.Server.Store.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.FixedPoint;
 using Content.Shared.Implants.Components;
@@ -10,7 +10,11 @@ using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Robust.Shared.Timing;
 using Content.Shared.Mind;
+using Content.Shared.Access.Components;
+using Robust.Shared.GameObjects;
+using Content.Shared.Access.Systems;
 
 namespace Content.Server.Store.Systems;
 
@@ -22,12 +26,15 @@ public sealed partial class StoreSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<StoreComponent, ActivatableUIOpenAttemptEvent>(OnStoreOpenAttempt);
+        //SubscribeLocalEvent<AccessReaderComponent, ActivatableUIOpenAttemptEvent>(OnStoreOpenAttempt); //🌟Starlight🌟 This broke all the computers.
         SubscribeLocalEvent<CurrencyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StoreComponent, BeforeActivatableUIOpenEvent>(BeforeActivatableUiOpen);
 
@@ -39,6 +46,12 @@ public sealed partial class StoreSystem : EntitySystem
         InitializeUi();
         InitializeCommand();
         InitializeRefund();
+    }
+    //🌟Starlight🌟
+    private void OnStoreOpenAttempt(Entity<AccessReaderComponent> ent, ref ActivatableUIOpenAttemptEvent args)
+    {
+        if (!_accessReader.IsAllowed(args.User, ent, ent.Comp))
+            args.Cancel();
     }
 
     private void OnMapInit(EntityUid uid, StoreComponent component, MapInitEvent args)

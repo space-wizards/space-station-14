@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Localizations;
+using Content.Shared.Starlight;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -25,6 +27,7 @@ public sealed partial class DepartmentTimeRequirement : JobRequirement
     public TimeSpan Time;
 
     public override bool Check(IEntityManager entManager,
+        ICommonSession? player,
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
         IReadOnlyDictionary<string, TimeSpan> playTimes,
@@ -32,6 +35,11 @@ public sealed partial class DepartmentTimeRequirement : JobRequirement
     {
         reason = new FormattedMessage();
         var playtime = TimeSpan.Zero;
+
+        //🌟Starlight🌟 start
+        if(player is not null && IoCManager.Resolve<ISharedPlayersRoleManager>().IsAllRolesAvailable(player))
+            return true;
+        //🌟Starlight🌟 end
 
         // Check all jobs' departments
         var department = protoManager.Index(Department);

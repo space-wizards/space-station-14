@@ -49,7 +49,7 @@
 
 # Uplinks
 - type: entity
-  parent: [BaseItem, StorePresetUplink, BaseSyndicateContraband]
+  parent: [BaseItem, BaseSyndicateContraband]
   id: BaseUplinkRadio
   name: syndicate uplink
   description: Suspiciously looking old radio...
@@ -71,9 +71,13 @@
   - type: Store
     balance:
       Telecrystal: 0
+      
+- type: entity
+  parent: [BaseUplinkRadio, StorePresetUplink]
+  id: BaseUplinkRadioPreset
 
 - type: entity
-  parent: BaseUplinkRadio
+  parent: BaseUplinkRadioPreset
   id: BaseUplinkRadio20TC
   suffix: 20 TC
   components:
@@ -82,7 +86,7 @@
       Telecrystal: 20
 
 - type: entity
-  parent: BaseUplinkRadio
+  parent: BaseUplinkRadioPreset
   id: BaseUplinkRadio25TC
   suffix: 25 TC
   components:
@@ -92,7 +96,7 @@
 
 #this uplink MUST be used for nukeops, as it has the tag for filtering the listing.
 - type: entity
-  parent: BaseUplinkRadio
+  parent: BaseUplinkRadioPreset
   id: BaseUplinkRadio40TC
   suffix: 40 TC, NukeOps
   components:
@@ -104,7 +108,7 @@
     - NukeOpsUplink
 
 - type: entity
-  parent: BaseUplinkRadio
+  parent: BaseUplinkRadioPreset
   id: BaseUplinkRadio60TC
   suffix: 60 TC, LoneOps
   components:
@@ -116,7 +120,7 @@
     - NukeOpsUplink
 
 - type: entity
-  parent: BaseUplinkRadio
+  parent: BaseUplinkRadioPreset
   id: BaseUplinkRadioDebug
   suffix: DEBUG
   components:

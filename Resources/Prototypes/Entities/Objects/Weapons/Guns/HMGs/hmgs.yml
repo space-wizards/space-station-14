@@ -5,6 +5,16 @@
   description: Spray and pray.
   abstract: true
   components:
+  - type: RestrictByUserTag
+    doestContain:
+    - Abductor
+    messages:
+    - abductor-gun-restricted-1
+  - type: KnockbackByUserTag
+    doestContain:
+      Resomi:
+        knockback: 0.01
+        staminaMultiplier: 100
   - type: Sprite
   - type: Item
     size: Ginormous
@@ -31,7 +41,6 @@
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
     layers:
     - state: icon
-      map: ["enum.GunVisualLayers.Base"]
   - type: Item
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
   - type: Gun
@@ -41,11 +50,6 @@
   - type: BallisticAmmoProvider
     proto: CartridgeMinigun
     capacity: 1000
-  - type: MagazineVisuals
-    magState: mag
-    steps: 4
-    zeroVisible: true
-  - type: Appearance
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container

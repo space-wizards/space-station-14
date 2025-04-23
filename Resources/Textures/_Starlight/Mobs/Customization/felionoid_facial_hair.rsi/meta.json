@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "Custom",
+  "copyright": "Darkrell",
+    "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "colonel_s",
+      "directions": 4
+    },
+    {
+      "name": "fu_s",
+      "directions": 4
+    },
+    {
+      "name": "neck_s",
+      "directions": 4
+    },
+    {
+      "name": "beard_s",
+      "directions": 4
+    },
+    {
+      "name": "mane_s",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'vampire-mutation-menu-ui-window-name'}"
+               MinSize="300 300"
+               SetSize="300 300">
+    <BoxContainer Orientation="Vertical">
+        <ScrollContainer VerticalExpand="True">
+            <GridContainer Name="Grid" Columns="3" Margin="0 5" >
+            </GridContainer>
+        </ScrollContainer>
+    </BoxContainer>
+</DefaultWindow>

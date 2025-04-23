@@ -74,6 +74,10 @@ public sealed partial class IdCardConsoleComponent : Component
         "Security",
         "Service",
         "Theatre",
+        "Ntrep",
+        "Magistrate",
+        "BlueShield",
+        "Brigmedic"
     };
 
     [Serializable, NetSerializable]

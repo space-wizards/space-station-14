@@ -39,13 +39,13 @@ accent-italian-words-replace-10 = pappa
 accent-italian-words-11 = good
 accent-italian-words-replace-11 = molto bene
 
-accent-italian-words-12 = greytide
+accent-italian-words-12 = assist
 accent-italian-words-replace-12 = curvisti
 
-accent-italian-words-13 = greytider
+accent-italian-words-13 = assistant
 accent-italian-words-replace-13 = curvisti
 
-accent-italian-words-14 = greytiders
+accent-italian-words-14 = assistants
 accent-italian-words-replace-14 = curvisti
 
 accent-italian-words-15 = hello
@@ -135,10 +135,10 @@ accent-italian-words-replace-42 = for-a what reason
 accent-italian-words-43 = wine
 accent-italian-words-replace-43 = vino
 
-accent-italian-words-44 = passenger
+accent-italian-words-44 = assistant
 accent-italian-words-replace-44 = goombah
 
-accent-italian-words-45 = passengers
+accent-italian-words-45 = assistants
 accent-italian-words-replace-45 = goombahs
 
 accent-italian-words-46 = i'm

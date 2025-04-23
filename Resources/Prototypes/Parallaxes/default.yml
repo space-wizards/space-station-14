@@ -29,12 +29,18 @@
         id: "hq_wizard_stars_dim_faster"
         configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-2.toml"
       slowness: 0.984352
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/Abyss.png"
+      slowness: 0.987265625
+      scale: "0.6, 0.6"
+      tiled: false
   layersLQ:
     - texture:
         !type:GeneratedParallaxTextureSource
         id: ""
         configPath: "/Prototypes/Parallaxes/parallax_config.toml"
-        slowness: 0.875
+        slowness: 0.999446875
   layersLQUseHQ: false
 
 # Because hyperspace and the menu need their own.

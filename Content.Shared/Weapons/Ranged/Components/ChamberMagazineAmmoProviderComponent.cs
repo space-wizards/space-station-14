@@ -21,6 +21,12 @@ public sealed partial class ChamberMagazineAmmoProviderComponent : MagazineAmmoP
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("autoCycle"), AutoNetworkedField]
     public bool AutoCycle = true;
+    
+    [ViewVariables(VVAccess.ReadWrite), DataField("availablePrefixes")]
+    public List<string> AvailablePrefixes = new();
+    
+    [ViewVariables(VVAccess.ReadOnly), DataField("selectedPrefix"), AutoNetworkedField]
+    public string? SelectedPrefix = null;
 
     /// <summary>
     /// Can the gun be racked, which opens and then instantly closes the bolt to cycle a round.

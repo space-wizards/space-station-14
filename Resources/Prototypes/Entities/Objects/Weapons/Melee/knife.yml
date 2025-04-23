@@ -7,8 +7,6 @@
     tags:
     - Knife
   - type: Sharp
-  - type: Execution
-    doAfterDuration: 4.0
   - type: Utensil
     types:
       - Knife
@@ -27,6 +25,13 @@
       - Slicing
     useSound:
       path: /Audio/Items/Culinary/chop.ogg
+  - type: Scalpel
+  - type: SurgeryTool
+    successRate: 0.9
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
 
 - type: entity
   name: kitchen knife
@@ -77,7 +82,7 @@
 
 - type: entity
   name: combat knife
-  parent: [BaseKnife, BaseRestrictedContraband]
+  parent: [BaseKnife, BaseSecurityContraband]
   id: CombatKnife
   description: A deadly knife intended for melee confrontations.
   components:
@@ -114,7 +119,7 @@
 
 - type: entity
   name: survival knife
-  parent: [CombatKnife, BaseSecurityCargoContraband]
+  parent: [BaseSecurityCargoContraband, CombatKnife]
   id: SurvivalKnife
   description: Weapon of first and last resort for combatting space carp.
   components:
@@ -129,7 +134,7 @@
 
 - type: entity
   name: kukri knife
-  parent: [CombatKnife, BaseSecurityCargoContraband]
+  parent: [BaseSecurityCargoContraband, CombatKnife]
   id: KukriKnife
   description: Professionals have standards. Be polite. Be efficient. Have a plan to kill everyone you meet.
   components:
@@ -210,6 +215,12 @@
     sprite: Objects/Weapons/Melee/shiv.rsi
   - type: DisarmMalus
     malus: 0.225
+  - type: SurgeryTool
+    successRate: 0.7
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
 
 - type: entity
   name: reinforced shiv

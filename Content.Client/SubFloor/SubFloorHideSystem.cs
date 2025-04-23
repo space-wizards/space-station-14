@@ -1,14 +1,20 @@
+using Content.Client.UserInterface.Systems.Sandbox;
+using Content.Shared.Atmos.Components;
 using Content.Shared.DrawDepth;
 using Content.Shared.SubFloor;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
+using Robust.Shared.Player;
 
 namespace Content.Client.SubFloor;
 
 public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     private bool _showAll;
+    private bool _showVentPipe;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public bool ShowAll
@@ -18,6 +24,24 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         {
             if (_showAll == value) return;
             _showAll = value;
+            _ui.GetUIController<SandboxUIController>().SetToggleSubfloors(value);
+
+            var ev = new ShowSubfloorRequestEvent()
+            {
+                Value = value,
+            };
+            RaiseNetworkEvent(ev);
+        }
+    }
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool ShowVentPipe
+    {
+        get => _showVentPipe;
+        set
+        {
+            if (_showVentPipe == value) return;
+            _showVentPipe = value;
 
             UpdateAll();
         }
@@ -28,6 +52,20 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         base.Initialize();
 
         SubscribeLocalEvent<SubFloorHideComponent, AppearanceChangeEvent>(OnAppearanceChanged);
+        SubscribeNetworkEvent<ShowSubfloorRequestEvent>(OnRequestReceived);
+        SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnPlayerDetached);
+    }
+
+    private void OnPlayerDetached(LocalPlayerDetachedEvent ev)
+    {
+        // Vismask resets so need to reset this.
+        ShowAll = false;
+    }
+
+    private void OnRequestReceived(ShowSubfloorRequestEvent ev)
+    {
+        // When client receives request Queue an update on all vis.
+        UpdateAll();
     }
 
     private void OnAppearanceChanged(EntityUid uid, SubFloorHideComponent component, ref AppearanceChangeEvent args)
@@ -40,7 +78,13 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 
         scannerRevealed &= !ShowAll; // no transparency for show-subfloor mode.
 
-        var revealed = !covered || ShowAll || scannerRevealed;
+        var showVentPipe = false;
+        if (HasComp<PipeAppearanceComponent>(uid))
+        {
+            showVentPipe = ShowVentPipe;
+        }
+
+        var revealed = !covered || ShowAll || scannerRevealed || showVentPipe;
 
         // set visibility & color of each layer
         foreach (var layer in args.Sprite.AllLayers)
@@ -64,11 +108,20 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 
         args.Sprite.Visible = hasVisibleLayer || revealed;
 
-        // allows a t-ray to show wires/pipes above carpets/puddles
-        if (scannerRevealed)
+        if (ShowAll)
         {
+            // Allows sandbox mode to make wires visible over other stuff.
             component.OriginalDrawDepth ??= args.Sprite.DrawDepth;
-            args.Sprite.DrawDepth = (int) Shared.DrawDepth.DrawDepth.FloorObjects + 1;
+            args.Sprite.DrawDepth = (int)Shared.DrawDepth.DrawDepth.Overdoors;
+        }
+        else if (scannerRevealed)
+        {
+            // Allows a t-ray to show wires/pipes above carpets/puddles.
+            if (component.OriginalDrawDepth is not null)
+                return;
+            component.OriginalDrawDepth = args.Sprite.DrawDepth;
+            var drawDepthDifference = Shared.DrawDepth.DrawDepth.ThickPipe - Shared.DrawDepth.DrawDepth.Puddles;
+            args.Sprite.DrawDepth -= drawDepthDifference - 1;
         }
         else if (component.OriginalDrawDepth.HasValue)
         {

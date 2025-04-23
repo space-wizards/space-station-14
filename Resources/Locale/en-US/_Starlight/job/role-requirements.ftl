@@ -1,0 +1,1 @@
+any-role-required = You require any of the following roles on Discord to play this role: [color=yellow]{$roles}[/color].

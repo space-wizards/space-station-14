@@ -12,7 +12,7 @@ namespace Content.Client.UserInterface.Systems.Crafting;
 public sealed class CraftingUIController : UIController, IOnStateChanged<GameplayState>
 {
     private ConstructionMenuPresenter? _presenter;
-    private MenuButton? CraftingButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CraftingButton;
+    private Controls.MenuButton? CraftingButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CraftingButton;
 
     public void OnStateEntered(GameplayState state)
     {

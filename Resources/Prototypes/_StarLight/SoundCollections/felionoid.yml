@@ -1,0 +1,53 @@
+- type: soundCollection
+  id: FelionoidScreams
+  files:
+  - /Audio/_Starlight/Voice/Felionoid/cat_scream1.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_scream2.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_scream3.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_scream4.ogg
+
+- type: soundCollection
+  id: FelionoidHisses
+  files:
+  - /Audio/_Starlight/Voice/Felionoid/cat_hiss1.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_hiss2.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_hiss3.ogg
+
+- type: soundCollection
+  id: FelionoidMews
+  files:
+  - /Audio/_Starlight/Voice/Felionoid/cat_mew1.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_mew2.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_mew3.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_mew4.ogg
+
+- type: soundCollection
+  id: FelionoidMeows
+  files:
+  - /Audio/_Starlight/Voice/Felionoid/cat_meow1.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_meow2.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_meow3.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_meow4.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_meow5.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_meow6.ogg
+
+- type: soundCollection
+  id: FelionoidPurrs
+  files:
+  - /Audio/_Starlight/Voice/Felionoid/cat_purr1.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_purr2.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_purr3.ogg
+
+- type: soundCollection
+  id: FelionoidGrowls
+  files:
+  - /Audio/_Starlight/Voice/Felionoid/cat_growl1.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_growl2.ogg
+
+  
+- type: soundCollection
+  id: FelionoidTrills
+  files:
+  - /Audio/_Starlight/Voice/Felionoid/cat_trill1.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_trill2.ogg
+  - /Audio/_Starlight/Voice/Felionoid/cat_trill3.ogg

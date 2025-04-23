@@ -43,6 +43,16 @@
     event: !type:ToggleActionEvent
 
 - type: entity
+  id: ActionToggleDome
+  name: Toggle energy dome
+  description: Turn the energy barrier on or off.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon: { sprite: Objects/Weapons/Melee/e_shield.rsi, state: eshield-on }
+    event: !type:ToggleActionEvent
+
+- type: entity
   id: ActionOpenStorageImplant
   name: Toggle Storage Implant
   description: Opens or closes the storage implant embedded under your skin
@@ -153,6 +163,8 @@
   name: Scramble DNA
   description:  Randomly changes your name and appearance.
   components:
+  - type: ConfirmableAction
+    popup: dna-scrambler-action-popup
   - type: InstantAction
     charges: 1
     itemIconStyle: BigAction
@@ -332,7 +344,7 @@
 - type: entity
   id: FakeMindShieldToggleAction
   name: '[color=green]Toggle Fake Mindshield[/color]'
-  description: Turn the Fake Mindshield implant's transmission on/off
+  description: Turn the Fake Mindshield's transmission on/off
   components:
   - type: InstantAction
     icon: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon }
@@ -340,3 +352,16 @@
     itemIconStyle: NoItem
     useDelay: 1
     event: !type:FakeMindShieldToggleEvent
+
+- type: entity
+  id: ActionToggleParamedicSiren
+  name: Toggle Paramedic Siren
+  description: Toggles the paramedic siren on and off.
+  components:
+  - type: InstantAction 
+    icon:
+      sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+      state: icon-siren
+    useDelay: 1
+    itemIconStyle: BigAction
+    event: !type:ToggleActionEvent

@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, while Argali, Ayrshire, Myrsore and Bighorn are drawn by Ubaser, and Kobold Ears are drawn by Pigeonpeas. Body_underbelly made by Nairod(github) for SS14. Large drawn by Ubaser. Wagging tail by SonicDC. Splotch modified from Sharp by KittenColony(github). Frills neckfull come from: https://github.com/Bubberstation/Bubberstation/commit/8bc6b83404803466a560b694bf22ef3c0ac266a2",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "l_foot_feathers",
+            "directions": 4
+        },
+        {
+            "name": "r_foot_feathers",
+            "directions": 4
+        },
+        {
+            "name": "l_hand_feathers",
+            "directions": 4
+        },
+        {
+            "name": "r_hand_feathers",
+            "directions": 4
+        },
+        {
+            "name": "tail",
+            "directions": 4
+        },
+        {
+            "name": "tail_feathers",
+            "directions": 4
+        },
+        {
+            "name": "fluff",
+            "directions": 4
+        },
+        {
+            "name": "fluff_head",
+            "directions": 4
+        },
+        {
+            "name": "fluff_head_up",
+            "directions": 4
+        }
+    ]
+}

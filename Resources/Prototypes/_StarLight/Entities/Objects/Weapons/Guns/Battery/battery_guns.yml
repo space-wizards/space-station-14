@@ -1,0 +1,731 @@
+- type: entity
+  name: hybrid taser
+  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  id: WeaponAdvancedTaser
+  description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
+  components:
+  - type: Tag
+    tags:
+    - Taser
+    - Sidearm
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/adv_taser.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: disable
+      map: ["enum.FireModesLayers.FireMode"]
+      shader: unshaded
+    - state: disable-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Appearance
+  - type: Item
+    heldPrefix: disable4
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser.ogg
+  - type: MagazineVisuals
+    magState: disable
+    steps: 5
+    zeroVisible: true
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBolt
+    fireCost: 50
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: DisablerBolt
+      fireCost: 50
+      visualState: disable
+      magState: disable
+      heldPrefix: disable4
+    - proto: TaserBolt
+      fireCost: 166
+      visualState: stun
+      magState: stun
+      heldPrefix: stun4
+
+- type: entity
+  name: energy gun
+  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  id: WeaponEnergyGun
+  description: An energy gun capable of switching between lethal and debilitating lasers.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/energy_gun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: disable
+      map: ["enum.FireModesLayers.FireMode"]
+    - state: disable-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    heldPrefix: disable4
+  - type: MagazineVisuals
+    magState: disable
+    steps: 5
+    zeroVisible: true
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBolt
+    fireCost: 100
+  - type: Appearance
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: DisablerBolt
+      fireCost: 100
+      visualState: disable
+      magState: disable
+      heldPrefix: disable4
+    - proto: LaserBolt
+      fireCost: 65
+      visualState: kill
+      magState: kill
+      heldPrefix: kill4
+  
+- type: entity
+  name: miniature energy gun
+  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  id: WeaponMiniEnergyGun
+  description: An energy gun capable of switching between lethal and debilitating lasers.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/mini.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: base-overlay
+      shader: unshaded
+      visible: false
+      map: [ "light" ]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBolt
+    fireCost: 150
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: DisablerBolt
+      fireCost: 150
+    - proto: LaserBolt
+      fireCost: 200
+      conditions:
+      - !type:AlertLevelCondition
+        alertLevels: 
+        - blue
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: PointLight
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 6
+    netsync: false
+  - type: Appearance
+  - type: HandheldLight
+    needsCharge: false
+    addPrefix: false
+    wattage: 0.2
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      id: radiating
+      maxDuration: 2.0
+      startValue: 3.0
+      endValue: 2.0
+      isLooped: true
+      reverseWhenFinished: true
+    - !type:PulseBehaviour
+      id: blinking
+      interpolate: Nearest
+      maxDuration: 1.0
+      minValue: 0.1
+      maxValue: 2.0
+      isLooped: true
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    
+- type: entity
+  name: dominator
+  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  id: WeaponDominator
+  description: A high-tech weapon created by the law enforcement organization Sibyl System, designed specifically to fight crime.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/dominator.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: disable-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: MagazineVisuals
+    magState: disable
+    steps: 4
+    zeroVisible: true
+  - type: Lock
+  - type: AccessReader
+    access: [["Security"]]
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBolt
+    fireCost: 50
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: DisablerBolt
+      fireCost: 50
+      magState: disable
+    - proto: TaserBolt
+      fireCost: 166
+      magState: stun
+      conditions:
+      - !type:AlertLevelCondition
+        alertLevels: 
+        - blue
+        - violet
+        - yellow
+        - red
+        - gamma
+    - proto: LaserBolt
+      fireCost: 66.6
+      magState: lethal
+      conditions:
+      - !type:AlertLevelCondition
+        alertLevels: 
+        - violet
+        - yellow
+        - red
+        - gamma
+        
+- type: entity
+  name: X-01 multiphase energy gun
+  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  id: WeaponMultiphaseGun
+  description: This is an expensive, modern version of the antique laser pistol. This weapon has several unique fire modes. But it don't have ability to slowly reload over time.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/multiphase_gun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: disable-unshaded
+      map: ["enum.FireModesLayers.FireMode"]
+      shader: unshaded
+    - state: disable-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Lock
+    mindShieldLock: true
+  - type: AccessReader
+    access: [["BlueShield"]]
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+  - type: MagazineVisuals
+    magState: disable
+    steps: 5
+    zeroVisible: true
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBolt
+    fireCost: 40
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: DisablerBolt
+      fireCost: 40
+      magState: disable
+      visualState: disable-unshaded
+    - proto: TaserBolt
+      fireCost: 100
+      magState: stun
+      visualState: stun-unshaded
+    - proto: LaserBolt
+      fireCost: 75
+      magState: kill
+      visualState: kill-unshaded
+    - proto: DestroyBolt
+      fireCost: 750
+      magState: destroy
+      visualState: destroy-unshaded
+  - type: Battery
+    maxCharge: 1500
+    startingCharge: 1500
+      
+- type: entity
+  parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]
+  id: WeaponIonRifle
+  name: ion rifle
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/ion_rifle.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Back
+  - type: Gun
+    fireRate: 0.6
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40 #100sec+60Sec Pause
+    autoRechargePause: true
+    autoRechargePauseTime: 60
+  - type: HitscanBatteryAmmoProvider
+    proto: EmpPulse
+    fireCost: 250
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: EmpImmune
+  - type: GunRequiresWield
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 8
+    pvsIncrease: 0.3
+  
+- type: entity
+  parent: BaseWeaponBattery
+  id: WeaponIonCarbine
+  name: ion carbine
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/ion_carbine.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Normal
+    shape:
+    - 0, 0, 3, 1
+  - type: Gun
+    fireRate: 0.6
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40 #100sec+60Sec Pause
+    autoRechargePause: true
+    autoRechargePauseTime: 60
+  - type: HitscanBatteryAmmoProvider
+    proto: EmpPulse
+    fireCost: 250
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: EmpImmune
+  
+- type: entity
+  name: immolator laser gun
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseRestrictedContraband]
+  id: WeaponLaserImmolator
+  description: Favoured by Nanotrasen Security for being cheap and easy to use.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/immolator.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: HitscanBatteryAmmoProvider
+    proto: IgnitionRedLaser
+    fireCost: 62.5
+  - type: StaticPrice
+    price: 300
+    
+- type: entity
+  parent: BaseWeaponBatterySmall
+  id: WeaponDecloner
+  name: decloner
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/decloner.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: normal
+      shader: unshaded
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: HitscanBatteryAmmoProvider
+    proto: DecloneBolt
+    fireCost: 200
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  
+- type: entity
+  name: m1911
+  parent: BaseWeaponBatterySmall
+  id: WeaponM1911
+  description: A compact pulse core in a classic Nanotrasen officer pistol design. It's not the size of the gun, it's the size of the hole it puts in people.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/m1911.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: stun-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 200
+  - type: MagazineVisuals
+    magState: stun
+    steps: 5
+    zeroVisible: true
+  - type: HitscanBatteryAmmoProvider
+    proto: TaserBolt
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: TaserBolt
+      fireCost: 100
+      magState: stun
+    - proto: LaserBolt
+      fireCost: 100
+      magState: kill
+    - proto: DestroyBolt
+      fireCost: 100
+      magState: destroy
+      
+- type: entity
+  name: pulse pistol
+  parent: BaseWeaponBatterySmall 
+  id: WeaponPulsePistol
+  description: An extremely compact version of the pulse carabine.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: stun
+      map: ["enum.FireModesLayers.FireMode"]
+    - state: stun-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+  - type: MagazineVisuals
+    magState: stun
+    steps: 5
+    zeroVisible: true
+  - type: HitscanBatteryAmmoProvider
+    proto: TaserBolt
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: TaserBolt
+      fireCost: 100
+      magState: stun
+      visualState: stun
+    - proto: LaserBolt
+      fireCost: 100
+      magState: kill
+      visualState: kill
+    - proto: DestroyBolt
+      fireCost: 200
+      magState: destroy
+      visualState: destroy
+  - type: Battery
+    maxCharge: 2600
+    startingCharge: 2600
+    
+- type: entity
+  name: PDW-9 taser pistol
+  parent: BaseWeaponBatterySmall
+  id: WeaponPDW9
+  description: A compact pulse core in a classic Nanotrasen officer pistol design. It's not the size of the gun, it's the size of the hole it puts in people.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/pdw9.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: disable
+      map: ["enum.FireModesLayers.FireMode"]
+    - state: disable-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+  - type: MagazineVisuals
+    magState: disable
+    steps: 5
+    zeroVisible: true
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBolt
+    fireCost: 75
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: DisablerBolt
+      fireCost: 75
+      magState: disable
+      visualState: disable
+    - proto: LaserBolt
+      fireCost: 100
+      magState: kill
+      visualState: kill
+  - type: Battery
+    maxCharge: 1500
+    startingCharge: 1500
+    
+- type: entity
+  parent: BaseWeaponBatterySmall
+  id: WeaponAlien
+  name: alien pistol
+  components:
+  - type: RestrictByUserTag
+    doestContain: []
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/alien.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBolt
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: DisablerBolt
+      fireCost: 100
+    - proto: AdvancedTaserBolt
+      fireCost: 100
+    - proto: LaserBolt
+      fireCost: 100
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  
+- type: entity
+  parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]
+  id: WeaponEnergySniper
+  name: LWAP
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/energy_sniper.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Back
+  - type: Gun
+    fireRate: 0.1
+  - type: HitscanBatteryAmmoProvider
+    proto: SniperBolt
+    fireCost: 100
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: GunRequiresWield
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 5
+    pvsIncrease: 0.3
+
+- type: entity
+  name: pulse carbine
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
+  id: WeaponPulseCarbine
+  description: A high tech energy carbine favoured by the NT-ERT operatives.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: stun
+      map: ["enum.FireModesLayers.FireMode"]
+    - state: stun-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+  - type: Item
+    size: Normal
+    shape:
+    - 0, 0, 3, 1
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 3
+    availableModes:
+      - SemiAuto
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: MagazineVisuals
+    magState: stun
+    steps: 5
+    zeroVisible: true
+  - type: HitscanBatteryAmmoProvider
+    proto: TaserBolt
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: TaserBolt
+      fireCost: 100
+      magState: stun
+      visualState: stun
+    - proto: LaserBolt
+      fireCost: 50
+      magState: kill
+      visualState: kill
+    - proto: DestroyBolt
+      fireCost: 100
+      magState: destroy
+      visualState: destroy
+  - type: Battery
+    maxCharge: 3300
+    startingCharge: 3300
+    
+- type: entity
+  name: pulse rifle
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
+  id: WeaponPulseRifle
+  description: A weapon that is almost as infamous as its users.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: stun
+      map: ["enum.FireModesLayers.FireMode"]
+    - state: stun-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse.rsi
+  - type: Item
+    size: Ginormous
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 1.5
+    availableModes:
+      - SemiAuto
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: MagazineVisuals
+    magState: stun
+    steps: 5
+    zeroVisible: true
+  - type: HitscanBatteryAmmoProvider
+    proto: TaserBolt
+    fireCost: 10
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: TaserBolt
+      fireCost: 10
+      magState: stun
+      visualState: stun
+    - proto: LaserBolt
+      fireCost: 5
+      magState: kill
+      visualState: kill
+    - proto: DestroyBolt
+      fireCost: 10
+      magState: destroy
+      visualState: destroy
+  - type: Battery
+    maxCharge: 2640
+    startingCharge: 2640
+    
+- type: entity
+  name: ANNIHILATOR
+  parent: WeaponPulseCarbine
+  id: WeaponANNIHILATOR
+  description: A weapon that is almost as infamous as its users.
+  components:
+  - type: Appearance
+  - type: Gun
+    selectedMode: Burst
+    fireRate: 3
+    shotsPerBurst: 5
+    availableModes:
+      - Burst
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: MagazineVisuals
+    magState: destroy
+    steps: 5
+    zeroVisible: true
+  - type: HitscanBatteryAmmoProvider
+    proto: DestroyBolt
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: DestroyBolt
+      fireCost: 100
+      magState: destroy
+      visualState: destroy
+  - type: Battery
+    maxCharge: 2000
+    startingCharge: 2000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 500

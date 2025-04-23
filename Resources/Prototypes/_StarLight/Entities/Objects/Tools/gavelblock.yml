@@ -1,0 +1,15 @@
+- type: entity
+  id: GavelBlock
+  parent: BaseItem
+  name: gavel block
+  description: This is what they hit.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/gavelhammer.rsi
+    layers:
+    - state: gavelblock
+  - type: GavelBlock
+    hitSound:
+      path: /Audio/_Starlight/Items/gavelhammer.ogg
+  - type: StaticPrice
+    price: 300

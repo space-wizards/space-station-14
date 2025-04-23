@@ -1,16 +1,13 @@
 - type: entity
   id: BaseShellShotgun
   name: shell (.50)
-  parent: [ BaseCartridge, BaseRestrictedContraband ]
+  parent: BaseCartridge
   abstract: true
   components:
   - type: Tag
     tags:
     - Cartridge
     - ShellShotgun
-  - type: CartridgeAmmo
-    soundEject:
-      collection: ShellEject
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     layers:
@@ -18,6 +15,8 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: Appearance
   - type: SpentAmmoVisuals
+    state: null
+    tip: true
 
 - type: entity
   id: ShellShotgunBeanbag
@@ -31,31 +30,43 @@
     - ShellShotgunLight
   - type: Sprite
     layers:
-      - state: beanbag
+      - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunBeanbag
-  - type: SpentAmmoVisuals
-    state: "beanbag"
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#149A1E"
+      - state: spent
+        map: [ "enum.AmmoVisualLayers.Spent" ]
+        visible: false
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: PelletShotgunBeanbagTrace
 
 - type: entity
   id: ShellShotgunSlug
   name: shell (.50 slug)
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityContraband]
   components:
   - type: Sprite
     layers:
       - state: slug
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunSlug
-  - type: SpentAmmoVisuals
-    state: "slug"
+      - state: tip-long
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#252525"
+      - state: spent-long
+        map: [ "enum.AmmoVisualLayers.Spent" ]
+        visible: false
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: PelletShotgunSlugTrace
 
 - type: entity
   id: ShellShotgunFlare
   name: shell (.50 flare)
-  parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
+  parent: BaseShellShotgun
   components:
   - type: Tag
     tags:
@@ -64,57 +75,85 @@
     - ShellShotgunLight
   - type: Sprite
     layers:
-      - state: flare
+      - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#FFFF0B"
+      - state: flare
+      - state: spent
+        map: [ "enum.AmmoVisualLayers.Spent" ]
+        visible: false
   - type: CartridgeAmmo
     proto: PelletShotgunFlare
-  - type: SpentAmmoVisuals
-    state: "flare"
+    soundEject:
+      collection: ShellEject
 
 - type: entity
   id: ShellShotgun
-  name: shell (.50)
-  parent: BaseShellShotgun
+  name: shell (.50 pellet)
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
   components:
   - type: Sprite
     layers:
       - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunSpread
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#F4001F"
+      - state: spent
+        map: [ "enum.AmmoVisualLayers.Spent" ]
+        visible: false
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: PelletShotgunSpreadTrace
 
 - type: entity
   id: ShellShotgunIncendiary
   name: shell (.50 incendiary)
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
   components:
   - type: Sprite
     layers:
-      - state: incendiary
+      - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunIncendiarySpread
-  - type: SpentAmmoVisuals
-    state: "incendiary"
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#FFFF0B"
+      - state: incendiary
+      - state: spent
+        map: [ "enum.AmmoVisualLayers.Spent" ]
+        visible: false
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: ShellShotgunIncendiaryTrace
 
 - type: entity
   id: ShellShotgunPractice
   name: shell (.50 practice)
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
   components:
   - type: Sprite
     layers:
-      - state: practice
+      - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunPracticeSpread
-  - type: SpentAmmoVisuals
-    state: "practice"
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+      - state: practice
+      - state: spent
+        map: [ "enum.AmmoVisualLayers.Spent" ]
+        visible: false
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: PelletShotgunPracticeSpreadTrace
 
 - type: entity
   id: ShellTranquilizer
   name: shell (.50 tranquilizer)
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
   components:
   - type: Tag
     tags:
@@ -123,8 +162,14 @@
     - ShellShotgunLight
   - type: Sprite
     layers:
-      - state: tranquilizer
+      - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#49CECE"
+      - state: spent
+        map: [ "enum.AmmoVisualLayers.Spent" ]
+        visible: false
   - type: CartridgeAmmo
     proto: PelletShotgunTranquilizer
   - type: ChemicalAmmo
@@ -132,18 +177,16 @@
     solutions:
       ammo:
         reagents:
-        - ReagentId: ChloralHydrate
-          Quantity: 7
+        - ReagentId: Nocturine #Starlight
+          Quantity: 5
   - type: SolutionTransfer
-    maxTransferAmount: 7
-  - type: SpentAmmoVisuals
-    state: "tranquilizer"
+    maxTransferAmount: 5
 
 - type: entity
   id: ShellShotgunImprovised
   name: improvised shotgun shell
   description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
   components:
   - type: Tag
     tags:
@@ -154,24 +197,37 @@
     layers:
       - state: improvised
         map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#555555"
+      - state: spent
+        map: [ "enum.AmmoVisualLayers.Spent" ]
+        visible: false
   - type: Construction
     graph: ImprovisedShotgunShellGraph
     node: shell
-  - type: CartridgeAmmo
-    proto: PelletShotgunImprovisedSpread
-  - type: SpentAmmoVisuals
-    state: "improvised"
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: PelletShotgunImprovisedSpreadTrace
 
 - type: entity
   id: ShellShotgunUranium
   name: uranium shotgun shell
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
   components:
-    - type: Sprite
-      layers:
-        - state: depleted-uranium
-          map: [ "enum.AmmoVisualLayers.Base" ]
-    - type: CartridgeAmmo
-      proto: PelletShotgunUraniumSpread
-    - type: SpentAmmoVisuals
-      state: "depleted-uranium"
+  - type: Sprite
+    layers:
+      - state: slug
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip-long
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#252525"
+      - state: depleted-uranium
+      - state: spent-long
+        map: [ "enum.AmmoVisualLayers.Spent" ]
+        visible: false
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: PelletShotgunUraniumSpreadTrace

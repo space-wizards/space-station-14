@@ -40,6 +40,7 @@
   - type: Tag
     tags:
     - ForceFixRotations
+    - Table
 
 - type: entity
   id: CounterBase

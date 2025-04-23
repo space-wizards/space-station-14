@@ -1,0 +1,118 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Paradise Station",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon",
+            "delays": [
+                [
+                0.1,
+                0.1
+                ]
+            ]
+        },
+        {
+            "name": "base",
+            "delays": [
+                [
+                0.1,
+                0.1
+                ]
+            ]
+        },
+        {
+            "name": "mag-0",
+            "delays": [
+                [
+                0.1,
+                0.1
+                ]
+            ]
+        },
+        {
+            "name": "mag-1",
+            "delays": [
+                [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+                ]
+            ]
+        },
+        {
+            "name": "mag-2",
+            "delays": [
+                [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+                ]
+            ]
+        },
+        {
+            "name": "mag-3",
+            "delays": [
+                [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+                ]
+            ]
+        },
+        {
+            "name": "mag-4",
+            "delays": [
+                [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+                ]
+            ]
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-right",
+            "directions": 4
+        }
+    ]
+}

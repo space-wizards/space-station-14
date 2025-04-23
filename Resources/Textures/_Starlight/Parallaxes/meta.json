@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Darkrell",
+  "size": {
+    "x": 1708,
+    "y": 1845
+  },
+  "states": [
+    {
+      "name": "Abyss"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+- type: entity
+  id: WeaponMechDebugMelle
+  parent: [ BaseMechWeaponMelee, DebugMechEquipment ] # Debug equipment dose has all whitelist tags.
+  name: debug bam
+  suffix: Mech Weapon, DEBUG, Melee
+  description: A robust thing.
+  components:
+  - type: Sprite
+    state: paddy_claw
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 0.75
+    damage:
+      types:
+        Blunt: 40
+        Structural: 20
+    soundHit:
+      collection: MetalThud

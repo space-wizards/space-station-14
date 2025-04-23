@@ -6,6 +6,7 @@ using Content.Shared.Dataset;
 using Content.Shared.Tips;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Player;
@@ -28,6 +29,7 @@ public sealed class TipsSystem : EntitySystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IConsoleHost _conHost = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IWatchdogApi _watchdog = default!;
 
     private bool _tipsEnabled;
     private float _tipTimeOutOfRound;
@@ -52,6 +54,14 @@ public sealed class TipsSystem : EntitySystem
         RecalculateNextTipTime();
         _conHost.RegisterCommand("tippy", Loc.GetString("cmd-tippy-desc"), Loc.GetString("cmd-tippy-help"), SendTippy, SendTippyHelper);
         _conHost.RegisterCommand("tip", Loc.GetString("cmd-tip-desc"), "tip", SendTip);
+        
+        _watchdog.UpdateReceived += WatchdogOnUpdateReceived;
+    }
+
+    private void WatchdogOnUpdateReceived()
+    {
+        var message = Loc.GetString("server-updates-received");
+        SendTippyForAll(message, 5f);
     }
 
     private CompletionResult SendTippyHelper(IConsoleShell shell, string[] args)
@@ -139,7 +149,15 @@ public sealed class TipsSystem : EntitySystem
         else
             RaiseNetworkEvent(ev);
     }
-
+    
+    public void SendTippyForAll(string msg, float time = 1f)
+    {
+        var ev = new TippyEvent(msg)
+        {
+            SpeakTime = time + msg.Length * 0.05f
+        };
+        RaiseNetworkEvent(ev);
+    }
 
     public override void Update(float frameTime)
     {

@@ -150,7 +150,7 @@ namespace Content.Client.Ghost
         private void OnGhostState(EntityUid uid, GhostComponent component, ref AfterAutoHandleStateEvent args)
         {
             if (TryComp<SpriteComponent>(uid, out var sprite))
-                sprite.LayerSetColor(0, component.color);
+                sprite.LayerSetColor(0, component.Color);
 
             if (uid != _playerManager.LocalEntity)
                 return;
@@ -194,6 +194,14 @@ namespace Content.Client.Ghost
         public void OpenGhostRoles()
         {
             _console.RemoteExecuteCommand(null, "ghostroles");
+        }
+        public void OpenNewLife() //🌟Starlight🌟
+        {
+            _console.RemoteExecuteCommand(null, "newlife");
+        }
+        public void OpenGhostTheme() //🌟Starlight🌟
+        {
+            _console.RemoteExecuteCommand(null, "ghostTheme");
         }
 
         public void ToggleGhostVisibility(bool? visibility = null)

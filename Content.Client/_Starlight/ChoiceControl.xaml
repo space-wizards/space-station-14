@@ -1,0 +1,17 @@
+﻿<ui:ChoiceControl
+    xmlns="https://spacestation14.io"
+    xmlns:ui="clr-namespace:Content.Client._Starlight">
+    <BoxContainer Orientation="Horizontal">
+        <Button Name="Button" Access="Public"
+                HorizontalExpand="True" VerticalExpand="False"
+                StyleClasses="ButtonSquare" Margin="0">
+            <BoxContainer Orientation="Horizontal" Margin="0">
+                <TextureRect Name="Texture" Access="Public"
+                             HorizontalExpand="False" VerticalExpand="False"
+                             Margin="1"/>
+                <Control MinWidth="5"/>
+                <RichTextLabel Name="NameLabel" Access="Public" VerticalAlignment="Center"/>
+            </BoxContainer>
+        </Button>
+    </BoxContainer>
+</ui:ChoiceControl>

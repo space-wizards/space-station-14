@@ -6,6 +6,7 @@
             Resizable="False">
 
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
+        <Button Access="Public" Name="DiscordButton" Text="{Loc 'ui-escape-connect-discord'}"/>
         <changelog:ChangelogButton Access="Public" Name="ChangelogButton"/>
         <ui:VoteCallMenuButton />
         <Button Access="Public" Name="OptionsButton" Text="{Loc 'ui-escape-options'}" />

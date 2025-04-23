@@ -9,7 +9,7 @@
     whitelist:
       tags:
         - CartridgeLightRifle
-    proto: CartridgeLightRifle
+    proto: CartridgeLightRifleSP
     capacity: 60
   - type: Item
     size: Small
@@ -28,12 +28,45 @@
 - type: entity
   parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRifleBig
-  name: ammunition box (.30 rifle)
-  suffix: Big
+  name: ammunition box (.30 rifle SP)
   components:
   - type: BallisticAmmoProvider
     capacity: 200
-    proto: CartridgeLightRifle
+    proto: CartridgeLightRifleSP
+  - type: Sprite
+    layers:
+    - state: base-b
+      map: ["enum.GunVisualLayers.Base"]
+    - state: magb-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: magb
+    steps: 4
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  parent: BaseMagazineBoxLightRifle
+  id: MagazineBoxLightRifleSP
+  name: ammunition box (.30 rifle SP)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleSP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: sp
+
+- type: entity
+  parent: BaseMagazineBoxLightRifle
+  id: MagazineBoxLightRifleHP
+  name: ammunition box (.30 rifle HP)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleHP
   - type: Sprite
     layers:
     - state: base
@@ -43,17 +76,33 @@
 
 - type: entity
   parent: BaseMagazineBoxLightRifle
-  id: MagazineBoxLightRifle
-  name: ammunition box (.30 rifle)
+  id: MagazineBoxLightRifleFMJ
+  name: ammunition box (.30 rifle FMJ)
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeLightRifle
+    proto: CartridgeLightRifleFMJ
   - type: Sprite
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+    - state: fmj
+
+- type: entity
+  parent: BaseMagazineBoxLightRifle
+  id: MagazineBoxLightRifleAP
+  name: ammunition box (.30 rifle AP)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleAP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: ap
 
 - type: entity
   parent: BaseMagazineBoxLightRifle

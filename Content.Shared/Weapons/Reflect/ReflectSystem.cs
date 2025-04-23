@@ -1,5 +1,6 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared._Starlight.Weapon;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Audio;
@@ -62,7 +63,7 @@ public sealed class ReflectSystem : EntitySystem
 
         foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.All & ~SlotFlags.POCKET))
         {
-            if (!TryReflectHitscan(uid, ent, args.Shooter, args.SourceItem, args.Direction, out var dir))
+            if (!TryReflectHitscan(uid, ent, args.Shooter, args.SourceItem, args.Direction, args.Reflective, out var dir)) //🌟Starlight🌟
                 continue;
 
             args.Direction = dir.Value;
@@ -104,19 +105,36 @@ public sealed class ReflectSystem : EntitySystem
             return false;
         }
 
-        var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
-        var existingVelocity = _physics.GetMapLinearVelocity(projectile, component: physics);
-        var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(user);
-        var newVelocity = rotation.RotateVec(relativeVelocity);
+        if (reflect.OverrideAngle is not null)
+        {
+            var overrideAngle = _transform.GetWorldRotation(reflector) + reflect.OverrideAngle.Value;
 
-        // Have the velocity in world terms above so need to convert it back to local.
-        var difference = newVelocity - existingVelocity;
+            var existingVelocity = _physics.GetMapLinearVelocity(projectile, component: physics);
+            var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(user);
+            var speed = relativeVelocity.Length();
 
-        _physics.SetLinearVelocity(projectile, physics.LinearVelocity + difference, body: physics);
+            var newVelocity = new Vector2((float)Math.Cos(overrideAngle), (float)Math.Sin(overrideAngle)) * speed;
 
-        var locRot = Transform(projectile).LocalRotation;
-        var newRot = rotation.RotateVec(locRot.ToVec());
-        _transform.SetLocalRotation(projectile, newRot.ToAngle());
+            var difference = newVelocity - existingVelocity;
+            _physics.SetLinearVelocity(projectile, physics.LinearVelocity + difference, body: physics);
+            var velocityAngle = (float)Math.Atan2(newVelocity.Y, newVelocity.X);
+            _transform.SetWorldRotation(projectile, velocityAngle - reflect.OverrideAngle.Value);
+        }
+        else
+        {
+            var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
+            var existingVelocity = _physics.GetMapLinearVelocity(projectile, component: physics);
+            var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(user);
+            var newVelocity = rotation.RotateVec(relativeVelocity);
+
+            var difference = newVelocity - existingVelocity;
+
+            _physics.SetLinearVelocity(projectile, physics.LinearVelocity + difference, body: physics);
+
+            var locRot = Transform(projectile).LocalRotation;
+            var newRot = rotation.RotateVec(locRot.ToVec());
+            _transform.SetLocalRotation(projectile, newRot.ToAngle());
+        }
 
         if (_netManager.IsServer)
         {
@@ -142,13 +160,10 @@ public sealed class ReflectSystem : EntitySystem
 
     private void OnReflectHitscan(EntityUid uid, ReflectComponent component, ref HitScanReflectAttemptEvent args)
     {
-        if (args.Reflected ||
-            (component.Reflects & args.Reflective) == 0x0)
-        {
-            return;
-        }
+        if (args.Reflected) //🌟Starlight🌟
+            return;     //🌟Starlight🌟
 
-        if (TryReflectHitscan(uid, uid, args.Shooter, args.SourceItem, args.Direction, out var dir))
+        if (TryReflectHitscan(uid, uid, args.Shooter, args.SourceItem, args.Direction, args.Reflective, out var dir)) //🌟Starlight🌟
         {
             args.Direction = dir.Value;
             args.Reflected = true;
@@ -161,10 +176,12 @@ public sealed class ReflectSystem : EntitySystem
         EntityUid? shooter,
         EntityUid shotSource,
         Vector2 direction,
+        ReflectType reflectType,//🌟Starlight🌟
         [NotNullWhen(true)] out Vector2? newDirection)
     {
         if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
             !_toggle.IsActivated(reflector) ||
+            (reflect.Reflects & reflectType) == 0x0 ||  //🌟Starlight🌟
             !_random.Prob(reflect.ReflectProb))
         {
             newDirection = null;
@@ -176,9 +193,17 @@ public sealed class ReflectSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
             _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
         }
-
-        var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
-        newDirection = -spread.RotateVec(direction);
+        if (reflect.OverrideAngle is not null)
+        {
+            var overrideAngle = _transform.GetWorldRotation(reflector) + reflect.OverrideAngle.Value;
+            newDirection = new Vector2((float)Math.Cos(overrideAngle), (float)Math.Sin(overrideAngle));
+            newDirection = newDirection.Value.Normalized();
+        }
+        else
+        {
+            var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
+            newDirection = -spread.RotateVec(direction);
+        }
 
         if (shooter != null)
             _adminLogger.Add(LogType.HitScanHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected hitscan from {ToPrettyString(shotSource)} shot by {ToPrettyString(shooter.Value)}");
@@ -216,7 +241,7 @@ public sealed class ReflectSystem : EntitySystem
 
     private void OnToggleReflect(EntityUid uid, ReflectComponent comp, ref ItemToggledEvent args)
     {
-        if (args.User is {} user)
+        if (args.User is { } user)
             RefreshReflectUser(user);
     }
 

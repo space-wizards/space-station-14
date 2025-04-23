@@ -1,0 +1,144 @@
+- type: entity
+  id: BaseOrganBrain
+  abstract: true
+  components:
+  - type: OrganBrain
+
+- type: entity
+  id: BaseOrganEyes
+  abstract: true
+  components:
+  - type: OrganEyes
+  - type: OrganDamage
+    damage:
+      types:
+        Poison: 10
+        Cellular: 10
+        Bloodloss: 10
+        Radiation: 10
+        Caustic: 10
+  - type: Damageable
+    damageContainer: Biological
+  - type: OrganVisualization
+    layer: Eyes
+    prototype: MobHumanoidEyes
+
+- type: entity
+  id: BaseOrganTongue
+  abstract: true
+  components:
+  - type: OrganTongue
+  - type: OrganDamage
+    damage:
+      types:
+        Poison: 10
+        Cellular: 10
+        Bloodloss: 10
+        Radiation: 10
+        Caustic: 10
+  - type: Damageable
+    damageContainer: Biological
+
+- type: entity
+  id: BaseOrganAppendix
+  abstract: true
+  components:
+  - type: OrganAppendix
+  - type: OrganDamage
+    damage:
+      types:
+        Poison: 50
+        Cellular: 10
+        Bloodloss: 10
+        Radiation: 10
+  - type: Damageable
+    damageContainer: Biological
+
+- type: entity
+  id: BaseOrganEars
+  abstract: true
+  components:
+  - type: OrganEars
+  - type: OrganDamage
+  - type: Damageable
+    damageContainer: Biological
+
+- type: entity
+  id: BaseOrganLungs
+  abstract: true
+  components:
+  - type: OrganLungs
+  - type: OrganDamage
+    damage:
+      types:
+        Asphyxiation: 130
+        Cellular: 20
+        Bloodloss: 20
+        Radiation: 30
+  - type: Damageable
+    damageContainer: Biological
+
+- type: entity
+  id: BaseOrganHeart
+  abstract: true
+  components:
+  - type: OrganHeart
+  - type: OrganDamage
+    damage:
+      types:
+        Shock: 130
+        Cellular: 20
+        Bloodloss: 20
+        Caustic: 20
+        Radiation: 10
+  - type: Damageable
+    damageContainer: Biological
+
+- type: entity
+  id: BaseOrganStomach
+  abstract: true
+  components:
+  - type: OrganStomach
+  - type: OrganDamage
+    damage:
+      types:
+        Poison: 130
+        Cellular: 20
+        Bloodloss: 20
+        Caustic: 20
+        Radiation: 10
+  - type: Damageable
+    damageContainer: Biological
+
+- type: entity
+  id: BaseOrganLiver
+  abstract: true
+  components:
+  - type: OrganLiver
+  - type: OrganDamage
+    damage:
+      types:
+        Poison: 110
+        Cellular: 20
+        Bloodloss: 20
+        Caustic: 20
+        Radiation: 30
+  - type: Damageable
+    damageContainer: Biological
+
+- type: entity
+  id: BaseOrganKidneys
+  abstract: true
+  components:
+  - type: OrganKidneys
+  - type: OrganDamage
+    damage:
+      types:
+        Poison: 10
+        Cellular: 20
+        Bloodloss: 20
+        Caustic: 20
+        Radiation: 10
+        Cold: 120
+  - type: Damageable
+    damageContainer: Biological

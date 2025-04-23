@@ -1,0 +1,69 @@
+- type: loadoutGroup
+  id: RoboticistJumpsuit
+  name: loadout-group-roboticist-jumpsuit
+  loadouts:
+  - RoboticistJumpsuit
+  - RoboticistJumpskirt
+
+- type: loadoutGroup
+  id: RoboticistOuterClothing
+  name: loadout-group-roboticist-outerclothing
+  minLimit: 0
+  loadouts:
+  - RoboticistLabCoat
+  - RoboticistWintercoat
+
+- type: loadoutGroup
+  id: RoboticistHead
+  name: loadout-group-roboticist-head
+  minLimit: 0
+  loadouts:
+  - RoboticistCap
+  - SkullBandana
+  
+- type: loadoutGroup
+  id: RoboticistBackpack
+  name: loadout-group-roboticist-backpack
+  loadouts:
+  - RoboticistBackpack
+  - RoboticistSatchel
+  - RoboticistDuffel
+  
+- type: loadoutGroup
+  id: NanoTrasenRepresentativeJumpsuit
+  name: loadout-group-nanotrasenrepresentative-jumpsuit
+  loadouts:
+  - NanoTrasenRepresentativeJumpsuit
+  - NanoTrasenRepresentativeJumpskirt
+  - NanoTrasenRepresentativeJumpsuitFormal
+
+- type: loadoutGroup
+  id: NanoTrasenRepresentativeEyewear
+  name: loadout-group-nanotrasenrepresentative-eyewear
+  loadouts:
+  - NanoTrasenRepresentativeGlasses
+  - NanoTrasenRepresentativeHud
+  
+- type: loadoutGroup
+  id: BlueShieldBackpack
+  name: loadout-group-blueshield-backpack
+  loadouts:
+  - BlueShieldBackpack
+  - BlueShieldSatchel
+  - BlueShieldDuffel
+
+- type: loadoutGroup
+  id: BlueShieldJumpsuit
+  name: loadout-group-blueshield-jumpsuit
+  loadouts:
+  - BlueShieldJumpsuit
+  - BlueShieldJumpskirt
+  - EliteBlueShieldJumpsuit
+  - EliteBlueShieldJumpskirt
+
+- type: loadoutGroup
+  id: BlueShieldEyewear
+  name: loadout-group-blueshield-eyewear
+  loadouts:
+  - BlueShieldGlasses
+  - BlueShieldHud

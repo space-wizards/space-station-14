@@ -1,0 +1,16 @@
+<Document>
+  # Felionoid
+
+  <Box>
+    <GuideEntityEmbed Entity="MobFelionoid" Caption=""/>
+  </Box>
+
+  [color=#ffa500]Caution! This species has a severely limiting game mechanic and is not recommended for new players. [/color]
+
+  Their unarmed claw attacks deal 3 points of Slash damage with a hit rate that is 2 times faster than humans.
+
+  Additionally, Felionoids can run 1.3 times faster than humans but are more vulnerable:
+  - They fall into a critical state at 75 points of damage.
+  - They die at 150 points of damage.
+
+</Document>

@@ -1,0 +1,39 @@
+<Document>
+  # Abductors
+
+  <Box>
+    [color=#999999][italic]" ..."[/italic][/color]
+  </Box>
+  Abductors are an alien society set on cataloging and experimenting on the sectors personnel.
+  Its important to note: Abductors, unlike most antagonists are [color=red]NOT set on killing people[/color] and are rather purely interested in completing their experiments.
+
+  Abductors do not possess the ability to speak and therefore communicate through more... mime-like methods.
+
+  ##Abduction
+  Abductors begin on their ship somewhere near the station. Using the [color=#a149bf]"Human Observation Console"[/color] you can seek out victims who are alone and [color=lightblue]warp[/color] near them to begin abduction.
+
+  The wonderprod is the primary tool of an Abductor. It has four modes you will use for abduction:
+  - [color=yellow]{Stun}[/color] Stuns the victim for roughly 5 seconds.
+  - [color=pink]{Restrain}[/color] binds the victims hands in weak cables.
+  - [color=blue]{Sleep}[/color] Induces a sleep-like state in the victim.
+  - [color=red]{Harm}[/color] Burns the target, dealing damage. [bold]ONLY USE IF YOU MUST.[/bold]
+
+  Once a target is immobilized you can use the [italic]gizmo[/italic] to implant them with a nano tracker, return to your ship using the [color=lightblue]return action[/color], then use the gizmo on your [color=#a149bf]Abductor Console[/color].
+
+  ##Experimentation
+  Once you have linked the most recent nano tracker to the console, select [bold]{ATTRACT}[/bold] to warp your victim to your ship.
+  
+  Now that you have your victim aboard, its recommended you:
+  - Buckle them to your surgical table.
+  - Change out their cuffs for a higher grade of handcuffs provided on the ship.
+  - Remove any of their belongings that could damage you or the secrecy of the experiment.
+  - Use your vast surgical knowledge to replace their heart with a gland.
+  - Optionally: Give them back their primitive technology.
+
+  Finally, drag the victim whom you have completed your experiment on into the [color=#a149bf]Experimentator[/color] to confirm the results of the experiment on the [color=#a149bf]Abductor Console[/color] and send them back where you found them.
+
+  ##Getting rid of an Abductor
+  Like [textlink="Changelings" link="Changelings"], Abductors are not protected by [textlink="space law" link="SpaceLaw"] and are able to be executed freely.
+
+  Also, an abductor's ship is a physical object in the world, anyone with access to a space-faring ship such as [textlink="salvage" link="Salvage"] can bump into them in space and dismantle their ship.
+</Document>

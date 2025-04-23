@@ -14,7 +14,9 @@
                 <ui:OptionDropDown Name="DropDownLightingQuality" Title="{Loc 'ui-options-lighting-label'}" />
                 <CheckBox Name="ViewportLowResCheckBox" Text="{Loc 'ui-options-vp-low-res'}" />
                 <CheckBox Name="ParallaxLowQualityCheckBox" Text="{Loc 'ui-options-parallax-low-quality'}" />
-
+                <CheckBox Name="TracesCheckBox"
+                          Text="{Loc 'ui-options-trace'}"
+                          ToolTip="{Loc 'ui-options-trace-tooltip'}" />
                 <!-- Interface -->
                 <Label Text="{Loc 'ui-options-interface-label'}" StyleClasses="LabelKeyText"/>
                 <ui:OptionDropDown Name="DropDownUIScale" Title="{Loc 'ui-options-scale-label'}" />
@@ -27,8 +29,7 @@
                 <CheckBox Name="ViewportVerticalFitCheckBox"
                           Text="{Loc 'ui-options-vp-vertical-fit'}"
                           ToolTip="{Loc 'ui-options-vp-vertical-fit-tooltip'}" />
-
-                <!-- Misc -->
+              <!-- Misc -->
                 <Label Text="{Loc 'ui-options-misc-label'}" StyleClasses="LabelKeyText"/>
                 <CheckBox Name="FpsCounterCheckBox" Text="{Loc 'ui-options-fps-counter'}" />
             </BoxContainer>

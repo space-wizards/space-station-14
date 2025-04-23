@@ -1,0 +1,112 @@
+- type: entity
+  name: cluwnebeast
+  id: MobCluwneBeast
+  parent: SimpleMobBase
+  description: A cluwne beast, nightmare fuel, time to run!
+  components:
+  - type: CombatMode
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
+  - type: Speech
+    speechVerb: Cluwne
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: NpcFactionMember
+    factions:
+      - HonkHostile
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/cluwnebeast.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cluwnebeast
+  - type: Physics
+    bodyType: KinematicController
+  - type: MobState
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: CluwneBeast
+  - type: Hands
+  - type: ComplexInteraction
+  - type: InfectOnMelee
+    cluwnification: true
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Critical
+      200: Dead
+  - type: VentCrawler
+  - type: MeleeWeapon
+    hidden: true
+    altDisarm: false
+    attackRate: 1.5
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Blunt: 10
+        Structural: 5
+  - type: Strippable
+  - type: InventorySlots
+  - type: Inventory
+    templateId: cluwnebeast
+    speciesId: cluwnebeast
+  - type: Stripping
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: cluwnebeast
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-cluwnebeast-name
+    description: ghost-role-information-cluwnebeast-description
+    rules: ghost-role-information-cluwnebeast-rules
+    raffle:
+      settings: default
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: Vocal
+    sounds:
+      Male: CluwneBeast
+      Female: CluwneBeast
+      Unsexed: CluwneBeast
+  - type: StutteringAccent
+  - type: Body
+    prototype: Human
+    requiredLegs: 2
+  - type: Cluwne
+    isCluwne: false
+    emoteId: CluwneBeast
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
+  - type: MobPrice
+    price: 2500
+  - type: RandomMetadata
+    nameSegments:
+    - NamesClown
+  - type: ProtectedFromStepTriggers

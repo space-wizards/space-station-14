@@ -14,6 +14,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Body.Systems;
 
@@ -29,6 +30,7 @@ public partial class SharedBodySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly GibbingSystem _gibbingSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     private const float GibletLaunchImpulse = 8;
     private const float GibletLaunchImpulseVariance = 3;
@@ -92,6 +94,8 @@ public partial class SharedBodySystem
     {
         // Setup the initial container.
         ent.Comp.RootContainer = Containers.EnsureContainer<ContainerSlot>(ent, BodyRootContainerId);
+        
+        ent.Comp.BloodType = _random.Pick(BodyComponent.BloodTypeList);
     }
 
     private void OnBodyMapInit(Entity<BodyComponent> ent, ref MapInitEvent args)
@@ -191,6 +195,8 @@ public partial class SharedBodySystem
         foreach (var (organSlotId, organProto) in organs)
         {
             var slot = CreateOrganSlot((ent, ent), organSlotId);
+            if (organProto == "null")
+                return;
             SpawnInContainerOrDrop(organProto, ent, GetOrganContainerId(organSlotId));
 
             if (slot is null)

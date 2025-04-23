@@ -28,7 +28,7 @@
   - type: SpawnItemsOnUse
     items:
       - id: MysteryFigureBoxTrash
-      - id: ToyFigurinePassenger
+      - id: ToyFigurineAssistant
         orGroup: SpacemenFig
       - id: ToyFigurineClown
         orGroup: SpacemenFig
@@ -97,8 +97,6 @@
       - id: ToyFigurineWizardFake
         orGroup: SpacemenFig
       - id: ToyFigurineSlime
-        orGroup: SpacemenFig
-      - id: ToyFigurineGreytider
         orGroup: SpacemenFig
       - id: ToyFigurineWizard
         prob: 0.50

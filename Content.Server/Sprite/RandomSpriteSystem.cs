@@ -1,6 +1,7 @@
 using Content.Shared.Decals;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Sprite;
+using Content.Shared.Item;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -11,6 +12,7 @@ public sealed class RandomSpriteSystem: SharedRandomSpriteSystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
 
     public override void Initialize()
     {
@@ -60,6 +62,16 @@ public sealed class RandomSpriteSystem: SharedRandomSpriteSystem
                 }
 
                 component.Selected.Add(layer.Key, (selectedState.Key, color));
+                
+                if (component.HeldPrefixes.Count > 0 && component.HeldPrefixes.ContainsKey(selectedState.Key))
+                {
+                    var prefix = component.HeldPrefixes[selectedState.Key];
+                    if (TryComp<ItemComponent>(uid, out var itemComp))
+                    {
+                        _item.SetHeldPrefix(uid, prefix);
+                        Dirty(uid, itemComp);
+                    }
+                }
             }
         }
 

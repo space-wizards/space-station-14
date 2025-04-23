@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/ef7a4d962915cb36b138eeb59663f0053d4906fe/icons/mob/sprite_accessories/vox/vox_body_markings.dmi and modified by Flareguy",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "heart_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "heart_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "hive_s",
+      "directions": 4
+    },
+    {
+      "name": "nightling_s",
+      "directions": 4
+    }
+  ]
+}

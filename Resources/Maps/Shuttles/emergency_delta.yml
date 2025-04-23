@@ -3153,7 +3153,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -9.5,-16.5
       parent: 1
-- proto: MagazinePistol
+- proto: MagazinePistolSP
   entities:
   - uid: 784
     components:

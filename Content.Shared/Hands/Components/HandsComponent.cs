@@ -78,8 +78,23 @@ public sealed partial class HandsComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan ThrowCooldown = TimeSpan.FromSeconds(0.5f);
 
+    /// <summary>
+    ///     Fallback displacement map applied to all sprites in the hand, unless otherwise specified
+    /// </summary>
     [DataField]
     public DisplacementData? HandDisplacement;
+
+    /// <summary>
+    ///     If defined, applies to all sprites in the left hand, ignoring <see cref="HandDisplacement"/>
+    /// </summary>
+    [DataField]
+    public DisplacementData? LeftHandDisplacement;
+
+    /// <summary>
+    ///     If defined, applies to all sprites in the right hand, ignoring <see cref="HandDisplacement"/>
+    /// </summary>
+    [DataField]
+    public DisplacementData? RightHandDisplacement;
 
     /// <summary>
     /// If false, hands cannot be stripped, and they do not show up in the stripping menu.
@@ -142,7 +157,8 @@ public enum HandLocation : byte
 {
     Left,
     Middle,
-    Right
+    Right,
+    Functional
 }
 
 /// <summary>
@@ -153,7 +169,8 @@ public enum HandLocation : byte
 public enum HandUILocation : byte
 {
     Left,
-    Right
+    Right,
+    Functional
 }
 
 /// <summary>
@@ -172,6 +189,7 @@ public static class HandLocationExt
             HandLocation.Left => HandUILocation.Left,
             HandLocation.Middle => HandUILocation.Right,
             HandLocation.Right => HandUILocation.Right,
+            HandLocation.Functional => HandUILocation.Functional,
             _ => throw new ArgumentOutOfRangeException(nameof(location), location, null)
         };
     }

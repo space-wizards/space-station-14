@@ -24,6 +24,9 @@ public sealed partial class HandheldLightComponent : Component
 
     [DataField("turnOffSound")]
     public SoundSpecifier TurnOffSound = new SoundPathSpecifier("/Audio/Items/flashlight_off.ogg");
+    
+    [DataField("needsCharge")]
+    public bool NeedsCharge = true;
 
     /// <summary>
     ///     Whether to automatically set item-prefixes when toggling the flashlight.

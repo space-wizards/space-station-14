@@ -109,7 +109,7 @@
 
 - type: entity
   id: OrganAnimalLiver
-  parent: BaseAnimalOrgan
+  parent: [ BaseAnimalOrgan, BaseOrganLiver]
   name: liver
   categories: [ HideSpawnMenu ]
   components:
@@ -128,7 +128,7 @@
 
 - type: entity
   id: OrganAnimalHeart
-  parent: BaseAnimalOrgan
+  parent: [ BaseAnimalOrgan, BaseOrganHeart]
   name: heart
   categories: [ HideSpawnMenu ]
   components:
@@ -164,3 +164,31 @@
   - type: Item
     size: Small
     heldPrefix: kidneys
+
+# Borgi Animal Body
+
+- type: entity
+  parent: PartAnimal
+  id: LeftHandAdmemeCorgi
+  name: corgi hand
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: l_hand
+  - type: BodyPart
+    partType: Hand
+    symmetry: Left
+
+- type: entity
+  parent: PartAnimal
+  id: RightHandAdmemeCorgi
+  name: corgi hand
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: r_hand
+  - type: BodyPart
+    partType: Hand
+    symmetry: Right

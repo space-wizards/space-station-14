@@ -1,0 +1,68 @@
+- type: roleLoadout
+  id: JobRoboticist
+  groups:
+  - RoboticistHead
+  - RoboticistJumpsuit
+  - RoboticistOuterClothing
+  - RoboticistBackpack
+  - ScientistShoes
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobMagistrate
+  groups:
+  - CommonBackpack
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+  
+- type: roleLoadout
+  id: JobSurgeon
+  groups:
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobNanoTrasenRepresentative
+  groups:
+  - NanoTrasenRepresentativeJumpsuit
+  - NanoTrasenRepresentativeEyewear
+  - CommonBackpack
+  - Trinkets
+  - Survival
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobIAA
+  groups:
+  - LawyerNeck
+  - LawyerJumpsuit
+  - CommonBackpack
+  - Trinkets
+  - Survival
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobBlueShield
+  groups:
+  - BlueShieldJumpsuit
+  - BlueShieldBackpack
+  - BlueShieldEyewear
+  - Trinkets
+  - SurvivalSecurity
+  - GroupSpeciesBreathToolSecurity
+
+- type: roleLoadout
+  id: JobMiningSpecialist
+  groups:
+  - GroupTankHarness
+  - SalvageSpecialistBackpack
+  - SalvageSpecialistOuterClothing
+  - SalvageSpecialistShoes
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool

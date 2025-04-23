@@ -5,6 +5,19 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
+  - type: RestrictByUserTag
+    doestContain:
+    - Abductor
+    messages:
+    - abductor-gun-restricted-1
+  - type: KnockbackByUserTag
+    doestContain:
+      Resomi:
+        knockback: 10
+        staminaMultiplier: 8
+      Felionoid:
+        knockback: 5 #half of what resomi take
+        staminaMultiplier: 8
   - type: Sprite
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -55,10 +68,16 @@
 
 - type: entity
   name: RPG-7
-  parent: [ BaseWeaponLauncher, BaseMajorContraband ]
+  parent: [ BaseWeaponLauncher, BaseMajorContraband]
   id: WeaponLauncherRocket
   description: A modified ancient rocket-propelled grenade launcher.
   components:
+  - type: KnockbackByUserTag
+    doestContain:
+      Resomi:
+        knockback: -5
+      Felionoid:
+        knockback: -2.5 #half of what resomi take
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
     layers:
@@ -88,10 +107,18 @@
 
 - type: entity
   name: multiple rocket launcher
-  parent: BaseWeaponLauncher
+  parent: [BaseWeaponLauncher]
   id: WeaponLauncherMultipleRocket
   description: A modified ancient rocket-propelled grenade launcher.
   components:
+  - type: KnockbackByUserTag
+    doestContain:
+      Resomi:
+        knockback: 10
+        staminaMultiplier: 8
+      Felionoid:
+        knockback: 5 #half of what resomi take
+        staminaMultiplier: 8
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
     layers:
@@ -117,7 +144,7 @@
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: MagazineVisuals
     magState: mag
-    steps: 1
+    steps: 2
     zeroVisible: true
   - type: Appearance
 

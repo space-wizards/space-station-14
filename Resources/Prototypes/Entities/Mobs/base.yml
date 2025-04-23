@@ -8,6 +8,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
+  - type: MobCollision
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -43,6 +44,51 @@
   - type: MovementSpeedModifier
   - type: RequireProjectileTarget
     active: False
+  - type: TextToSpeech
+  - type: CollectiveMind
+  - type: CustomLimbVisualizer
+    displacements:
+      LHand:
+        sizeMaps:
+          32:
+            sprite: _Starlight/CustomLimb/displacement.rsi
+            state: l_hand
+      RHand:
+        sizeMaps:
+          32:
+            sprite: _Starlight/CustomLimb/displacement.rsi
+            state: r_hand
+      LLeg:
+        sizeMaps:
+          32:
+            sprite: _Starlight/CustomLimb/displacement.rsi
+            state: l_leg
+      RLeg:
+        sizeMaps:
+          32:
+            sprite: _Starlight/CustomLimb/displacement.rsi
+            state: r_leg
+      LFoot:
+        sizeMaps:
+          32:
+            sprite: _Starlight/CustomLimb/displacement.rsi
+            state: l_foot
+      RFoot:
+        sizeMaps:
+          32:
+            sprite: _Starlight/CustomLimb/displacement.rsi
+            state: r_foot
+      LArm:
+        sizeMaps:
+          32:
+            sprite: _Starlight/CustomLimb/displacement.rsi
+            state: l_arm
+      RArm:
+        sizeMaps:
+          32:
+            sprite: _Starlight/CustomLimb/displacement.rsi
+            state: r_arm
+
 
 - type: entity
   save: false
@@ -157,7 +203,7 @@
     sweatHeatRegulation: 2000
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
+    thermalRegulationTemperatureThreshold: 2
   - type: MovedByPressure
 
 # Used for mobs that require regular atmospheric conditions.
@@ -173,7 +219,7 @@
     sweatHeatRegulation: 500
     shiveringHeatRegulation: 500
     normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
+    thermalRegulationTemperatureThreshold: 2
   - type: Temperature
     heatDamageThreshold: 325
     coldDamageThreshold: 260

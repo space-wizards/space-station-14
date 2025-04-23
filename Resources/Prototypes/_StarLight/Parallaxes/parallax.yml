@@ -1,0 +1,262 @@
+- type: parallax
+  id: AstroParallax
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/AstroDust.png"
+      scale: "1, 1"
+      scrolling: "-0.1, 0.1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/AstroBackground_stars.png"
+      scale: "0.1, 0.1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/AstroBackground_stars_2.png"
+      scale: "0.1, 0.1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/AstroStars.png"
+      scale: "0.3, 0.3"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/AstroStars2.png"
+      scale: "0.3, 0.3"
+  layersLQ:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+  layersLQUseHQ: false
+
+- type: parallax
+  id: AxiomaParallax
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/AxiomaBackground_space.png"
+      scale: "1, 1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/AxiomaBackground_stars.png"
+      scale: "1, 1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/AxiomaDust.png"
+      scale: "2, 2"
+      scrolling: "-0.1, 0.1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/AxiomaStars.png"
+      scale: "1, 1"
+  layersLQ:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+
+  layersLQUseHQ: false
+
+- type: parallax
+  id: DonutsStation
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/donutspace.png"
+      scale: "1, 1"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim.toml"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_faster"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars-2.toml"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim_faster"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-2.toml"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/planet.png"
+      scale: "1, 1"
+      tiled: false
+  layersLQ:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+
+  layersLQUseHQ: false
+
+- type: parallax
+  id: EclipseParallax
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/EclipseBackground_space.png"
+      scale: "1, 1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/EclipseStars_Background.png"
+      scale: "1, 1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/EclipseDust.png"
+      scale: "1, 1"
+      scrolling: "-0.02, 0.02"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/EclipseNebulae.png"
+      scale: "1, 1"
+      scrolling: "-0.02, 0.02"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/EclipseStars.png"
+      scale: "1, 1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/EclipsePlanets.png"
+      scale: "1, 1"
+      tiled: false
+  layersLQ:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+
+  layersLQUseHQ: false
+
+- type: parallax
+  id: Water
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+      scrolling: "0.1, 0"
+      tiled: true
+      shader: ""
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+      scrolling: "-0.1, 0"
+      tiled: true
+      shader: ""
+  layersLQ:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+      scrolling: "-0.1, 0"
+      tiled: true
+      shader: ""
+  layersLQUseHQ: false
+
+- type: parallax
+  id: IceWater
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+      scrolling: "0.1, 0"
+      tiled: true
+      shader: ""
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+
+      scrolling: "-0.1, 0"
+      tiled: true
+      shader: ""
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/IceParallax.png"
+      scrolling: "0, 0"
+      tiled: true
+      shader: ""
+  layersLQ:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/IceParallax.png"
+      scrolling: "0, 0"
+      tiled: true
+      shader: ""
+  layersLQUseHQ: false
+
+- type: parallax
+  id: Ice
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/Snow/ice.png"
+      scrolling: "0, 0"
+      tiled: true
+      shader: ""
+  layersLQ:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/Snow/ice.png"
+      scrolling: "-0, 0"
+      tiled: true
+      shader: ""
+  layersLQUseHQ: false
+
+- type: parallax
+  id: Lava
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/LavaParallax.png"
+      scrolling: "0.1, 0"
+      tiled: true
+      shader: ""
+  layersLQUseHQ: true
+ 
+- type: parallax
+  id: LavaLight
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/LavaLightParallax.png"
+      scrolling: "0.1, 0"
+      tiled: true
+  layersLQUseHQ: true
+
+- type: parallax
+  id: DeltaStation
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/DeltaParallaxBG.png"
+      scale: "0.5, 0.5"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim.toml"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_faster"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars-2.toml"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim_faster"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-2.toml"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_Starlight/Parallaxes/DeltaParallaxNeb.png"
+      scale: "1, 1"
+      tiled: false
+  layersLQ:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+
+  layersLQUseHQ: false

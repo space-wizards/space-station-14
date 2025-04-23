@@ -1,0 +1,94 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+    "copyright": "Starlight, Menders and Bandaid's taked from Paradise Station",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "redbrutepack"
+		},
+		{
+			"name": "redbrutepack2"
+		},
+		{
+			"name": "redbrutepack3"
+		},
+		{
+			"name": "puncturaseredbrutepack"
+		},
+		{
+			"name": "puncturaseredbrutepack2"
+		},
+		{
+			"name": "puncturaseredbrutepack3"
+		},
+		{
+			"name": "lacerinolbrutepack"
+		},
+		{
+			"name": "lacerinolbrutepack2"
+		},
+		{
+			"name": "lacerinolbrutepack3"
+		},
+		{
+			"name": "bruizinebrutepack"
+		},
+		{
+			"name": "bruizinebrutepack2"
+		},
+		{
+			"name": "bruizinebrutepack3"
+		},
+		{
+			"name": "redointment"
+		},
+		{
+			"name": "redointment2"
+		},
+		{
+			"name": "redointment3"
+		},
+		{
+			"name": "mender"
+		},
+		{
+			"name": "mender1"
+		},
+		{
+			"name": "mender2"
+		},
+		{
+			"name": "mender3"
+		},
+		{
+			"name": "mender-inhand-left",
+            "directions": 4
+		},
+		{
+			"name": "mender-inhand-right",
+            "directions": 4
+		},
+		{
+			"name": "bandaid"
+		},
+		{
+			"name": "bandaid-brute"
+		},
+		{
+			"name": "bandaid-burn"
+		},
+		{
+			"name": "bandaid-burn-small"
+		},
+		{
+			"name": "bandaid-clown"
+		},
+		{
+			"name": "bandaid-med"
+		}
+    ]
+}

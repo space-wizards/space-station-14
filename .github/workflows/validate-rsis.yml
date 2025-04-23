@@ -13,7 +13,7 @@ jobs:
     name: Validate RSIs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v4.2.2
       - name: Setup Submodule
         run: git submodule update --init
       - name: Pull engine updates
@@ -23,4 +23,4 @@ jobs:
           pip3 install --ignore-installed --user pillow jsonschema
       - name: Validate RSIs
         run: |
-          python3 RobustToolbox/Schemas/validate_rsis.py Resources/
+          python3 Tools/Schemas/validate_rsis.py Resources/

@@ -37,7 +37,11 @@ public sealed partial class GunComponent : Component
     public SoundSpecifier? SoundMode = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/selector.ogg");
 
     #endregion
-
+    /// <summary>
+    /// How much the ammo spreads when shot, in degrees. Does nothing if count is 0.
+    /// </summary>
+    [DataField]
+    public Angle Spread = Angle.FromDegrees(5);
     #region Recoil
 
     // These values are very small for now until we get a debug overlay and fine tune it
@@ -62,6 +66,9 @@ public sealed partial class GunComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan LastFire = TimeSpan.Zero;
+    
+    [DataField]
+    public bool Pump = false;
 
     /// <summary>
     /// What the current spread is for shooting. This gets changed every time the gun fires.
@@ -218,7 +225,7 @@ public sealed partial class GunComponent : Component
     /// How fast the projectile moves.
     /// <seealso cref="GunRefreshModifiersEvent"/>
     /// </summary>
-    [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float ProjectileSpeedModified;
 
     /// <summary>

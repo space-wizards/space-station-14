@@ -1,0 +1,71 @@
+﻿- type: entity
+  id: ActionWebball
+  name: Webball
+  description: Fires a webball towards the clicked location.
+  components:
+  - type: WorldTargetAction
+    useDelay: 30
+    itemIconStyle: BigAction
+    checkCanAccess: false
+    raiseOnUser: true
+    range: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+    icon:
+      sprite: _Starlight/Interface/Actions/actions_spider.rsi
+      state: web
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileWebball
+
+- type: entity
+  id: ProjectileWebball
+  name: webball
+  parent: BaseBulletTrigger
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 3
+  - type: Sprite
+    sprite: _Starlight/Interface/Actions/actions_spider.rsi
+    layers:
+    - state: web
+      shader: unshaded
+  - type: SpawnOnCollide
+    prototype: SpiderWeb
+
+- type: entity
+  id: ActionEggInjection
+  name: Egg injection
+  description: Injection of eggs into the body.
+  components:
+  - type: EntityTargetAction
+    useDelay: 3
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - HumanoidAppearance
+    canTargetSelf: false
+    interactOnMiss: false
+    sound: /Audio/Effects/pop.ogg
+    icon:
+      sprite:  _Starlight/Interface/Actions/actions_spider.rsi
+      state: egg
+    event: !type:EggInjectionEvent
+
+- type: entity
+  id: ActionEggsLaying
+  name: Lay the egg.
+  description: Lay the egg.
+  components:
+  - type: InstantAction
+    itemIconStyle: BigAction
+    renewCharges: true
+    charges: 1
+    maxCharges: 3
+    useDelay: 120
+    icon:
+      sprite: _Starlight/Interface/Actions/actions_spider.rsi
+      state: egg
+    event: !type:EggsLayingEvent

@@ -1,0 +1,20 @@
+# If this gets updated, make sure to also update https://github.com/space-wizards/RobustToolboxSpecifications
+
+list(include('attribution'), min=1)
+---
+attribution:
+  files: list(str())
+  license: license()
+  copyright: str()
+  source: url()
+
+# Example
+# - files: ["deprecated.png"]
+#   license: "MIT"
+#   copyright: "created by 20kdc"
+#   source: "https://github.com/ParadiseSS13/Paradise"
+# 
+# - files: ["arcadeblue2.png", "boxing.png", "carpetclown.png", "carpetoffice.png", "gym.png", "metaldiamond.png"]
+#   license: "CC-BY-NC-SA-3.0"
+#   copyright: "by WALPVRGIS for Goonstation, taken at commit 236551b95a5b24917c72f3069223026b2dc4e690 from floors.dmi"
+#   source: "https://github.com/goonstation/goonstation"

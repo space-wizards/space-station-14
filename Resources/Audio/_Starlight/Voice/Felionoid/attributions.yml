@@ -1,0 +1,33 @@
+- files: 
+  - cat_hiss1.ogg
+  - cat_hiss2.ogg
+  - cat_scream1.ogg 
+  - cat_scream2.ogg 
+  - cat_scream3.ogg 
+  - cat_scream4.ogg
+  - cat_mew1.ogg
+  - cat_mew2.ogg
+  - cat_mew3.ogg
+  - cat_mew4.ogg
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Darkrell"
+  source: "https://github.com/ss14Starlight/space-station-14"
+
+- files:
+  - cat_growl1.ogg
+  - cat_growl2.ogg
+  - cat_meow1.ogg
+  - cat_meow2.ogg
+  - cat_meow3.ogg
+  - cat_meow4.ogg
+  - cat_meow5.ogg
+  - cat_meow6.ogg
+  - cat_purr1.ogg
+  - cat_purr2.ogg
+  - cat_purr3.ogg
+  - cat_trill1.ogg
+  - cat_trill2.ogg
+  - cat_trill3.ogg
+  license: "CC0-1.0"
+  copyright: "Taken from https://pixabay.com/"
+  source: "https://github.com/ss14Starlight/space-station-14"

@@ -16,6 +16,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Projectiles;
 using Content.Shared.Throwing;
+using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
@@ -38,6 +39,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
+    [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
@@ -254,11 +256,12 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         }
         else
         {
-            _adminLogger.Add(LogType.Explosion, LogImpact.High,
-                $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not found]")} with intensity {totalIntensity} slope {slope}");
             var alertMinExplosionIntensity = _cfg.GetCVar(CCVars.AdminAlertExplosionMinIntensity);
-            if (alertMinExplosionIntensity > -1 && totalIntensity >= alertMinExplosionIntensity)
-                _chat.SendAdminAlert(user.Value, $"caused {ToPrettyString(uid)} to explode ({typeId}:{totalIntensity}) at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not found]")}");
+            var logImpact = (alertMinExplosionIntensity > -1 && totalIntensity >= alertMinExplosionIntensity)
+                ? LogImpact.Extreme
+                : LogImpact.High;
+            _adminLogger.Add(LogType.Explosion, logImpact,
+                $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not found]")} with intensity {totalIntensity} slope {slope}");
         }
     }
 
@@ -342,10 +345,14 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         var visualEnt = CreateExplosionVisualEntity(pos, queued.Proto.ID, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
 
         // camera shake
-        CameraShake(iterationIntensity.Count * 4f, pos, queued.TotalIntensity);
+        CameraShake(iterationIntensity.Count * 4f, pos, queued.TotalIntensity * 10f);
+        
+        // smoke
+        
+        SpawnSmokeInRadius(iterationIntensity.Count, pos, queued.TotalIntensity);
 
         //For whatever bloody reason, sound system requires ENTITY coordinates.
-        var mapEntityCoords = EntityCoordinates.FromMap(_mapManager.GetMapEntityId(pos.MapId), pos, _transformSystem, EntityManager);
+        var mapEntityCoords = _transformSystem.ToCoordinates(_mapSystem.GetMap(pos.MapId), pos);
 
         // play sound.
         // for the normal audio, we want everyone in pvs range
@@ -392,6 +399,32 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             visualEnt,
             queued.Cause,
             _map);
+    }
+    
+    private void SpawnSmokeInRadius(float range, MapCoordinates epicenter, float totalIntensity)
+    {
+        var smokeCount = (int)(range / 2);
+
+        var xformSystem = IoCManager.Resolve<IEntityManager>().System<SharedTransformSystem>();
+
+        for (int i = 0; i < smokeCount; i++)
+        {
+            var angle = _robustRandom.NextDouble() * 2 * Math.PI;
+
+            var smokeDistance = _robustRandom.NextDouble() * range;
+
+            var offsetX = (float)(Math.Cos(angle) * smokeDistance);
+            var offsetY = (float)(Math.Sin(angle) * smokeDistance);
+
+            var smokePosition = new MapCoordinates(epicenter.Position + new Vector2(offsetX, offsetY), epicenter.MapId);
+
+            var distance = (smokePosition.Position - epicenter.Position).Length();
+
+            if (distance <= range)
+            {
+                EntityManager.SpawnEntity("Smoke", smokePosition);
+            }
+        }
     }
 
     private void CameraShake(float range, MapCoordinates epicenter, float totalIntensity)

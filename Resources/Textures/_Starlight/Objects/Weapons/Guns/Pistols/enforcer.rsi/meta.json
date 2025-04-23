@@ -1,0 +1,103 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from RU Paradise Station, Nerf Dart Tip recolored to Black by Killer Tamashi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "base"
+        },
+        {
+            "name": "bolt-open"
+        },
+        {
+            "name": "icon_redgrip"
+        },
+        {
+            "name": "base_redgrip"
+        },
+        {
+            "name": "bolt-open_redgrip"
+        },
+        {
+            "name": "icon_red"
+        },
+        {
+            "name": "base_red"
+        },
+        {
+            "name": "bolt-open_red"
+        },
+        {
+            "name": "icon_tangrip"
+        },
+        {
+            "name": "base_tangrip"
+        },
+        {
+            "name": "bolt-open_tangrip"
+        },
+        {
+            "name": "icon_green"
+        },
+        {
+            "name": "base_green"
+        },
+        {
+            "name": "bolt-open_green"
+        },
+        {
+            "name": "icon_black"
+        },
+        {
+            "name": "base_black"
+        },
+        {
+            "name": "bolt-open_black"
+        },
+        {
+            "name": "icon_tan"
+        },
+        {
+            "name": "base_tan"
+        },
+        {
+            "name": "bolt-open_tan"
+        },
+        {
+            "name": "icon_grey"
+        },
+        {
+            "name": "base_grey"
+        },
+        {
+            "name": "bolt-open_grey"
+        },
+        {
+            "name": "icon_greengrip"
+        },
+        {
+            "name": "base_greengrip"
+        },
+        {
+            "name": "bolt-open_greengrip"
+        },
+        {
+            "name": "mag-0"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

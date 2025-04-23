@@ -17,6 +17,8 @@ public struct WebhookEmbed
     [JsonPropertyName("footer")]
     public WebhookEmbedFooter? Footer { get; set; } = null;
 
+    [JsonPropertyName("thumbnail")]
+    public WebhookEmbedImage? Thumbnail { get; set; } = null;
 
     [JsonPropertyName("fields")]
     public List<WebhookEmbedField> Fields { get; set; } = default!;

@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "Custom",
+  "copyright": "Darkrell",
+    "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "crestedquills_s",
+      "directions": 4
+    },
+    {
+      "name": "keelquills_s",
+      "directions": 4
+    },
+    {
+      "name": "keetquills_s",
+      "directions": 4
+    },
+    {
+      "name": "kingly_s",
+      "directions": 4
+    },
+    {
+      "name": "nights_s",
+      "directions": 4
+    },
+    {
+      "name": "hawk_s",
+      "directions": 4
+    },
+    {
+      "name": "long_braid_s",
+      "directions": 4
+    },
+    {
+      "name": "mange_s",
+      "directions": 4
+    },
+    {
+      "name": "flowing_s",
+      "directions": 4
+    }
+  ]
+}

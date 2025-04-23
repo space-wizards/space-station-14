@@ -7,6 +7,7 @@
   - CargoTechnician
   - Quartermaster
   - SalvageSpecialist
+  - MiningSpecialist
 
 - type: department
   id: Civilian
@@ -23,11 +24,10 @@
   - Clown
   - HeadOfPersonnel
   - Janitor
-  - Lawyer
   - Librarian
   - Mime
   - Musician
-  - Passenger
+  - Assistant
   - Reporter
   - Visitor
   - Zookeeper
@@ -73,6 +73,8 @@
   - ERTSecurity
   - ERTEngineer
   - DeathSquad
+  - Magistrate
+  - NanoTrasenRepresentative
   primary: false
   weight: 100
 
@@ -99,6 +101,7 @@
   - MedicalIntern
   - Psychologist
   - Paramedic
+  - Surgeon # Starlight-edit
 
 - type: department
   id: Security
@@ -110,6 +113,7 @@
   - HeadOfSecurity
   - SecurityCadet
   - SecurityOfficer
+  - Brigmedic
   - Detective
   - Warden
 
@@ -122,6 +126,7 @@
   - ResearchDirector
   - Scientist
   - ResearchAssistant
+  - Roboticist
 
 - type: department
   id: Silicon

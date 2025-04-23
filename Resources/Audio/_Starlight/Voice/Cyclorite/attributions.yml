@@ -1,0 +1,12 @@
+- files: 
+  - scream_1.ogg
+  - scream_2.ogg
+  - cough_1.ogg
+  - cough_2.ogg
+  - yawn.ogg
+  - scream4.ogg
+  - laugh.ogg
+  - whistle.ogg
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Darkrell"
+  source: "https://github.com/ss14Starlight/space-station-14"

@@ -30,3 +30,33 @@
   components:
     - type: SurplusBundle
       totalPrice: 125
+
+- type: entity
+  id: CrateCybersunDarkGygaxBundle
+  suffix: Filled
+  parent: CrateSyndicate
+  name: Cybersun gygax bundle
+  description: Contains a set of Cybersan light armored mechs.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MechGygaxSyndieFilled
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+      - id: ToolboxSyndicateFilled
+      - id: PlushieNuke
+
+- type: entity
+  id: CrateCybersunMaulerBundle
+  suffix: Filled
+  parent: CrateSyndicate
+  name: Cybersun mauler bundle
+  description: Contains a set of Cybersan heavy armored mechs.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MechMaulerSyndieFilled
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+      - id: ToolboxSyndicateFilled
+      - id: PlushieNuke

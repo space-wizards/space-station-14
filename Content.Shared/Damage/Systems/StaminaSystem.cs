@@ -1,11 +1,13 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
+using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.Effects;
+using Content.Shared.Inventory;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
@@ -17,6 +19,7 @@ using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -34,11 +37,14 @@ public sealed partial class StaminaSystem : EntitySystem
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
 
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
     /// </summary>
     private static readonly TimeSpan StamCritBufferTime = TimeSpan.FromSeconds(3f);
+
+    public float UniversalStaminaDamageModifier { get; private set; } = 1f;
 
     public override void Initialize()
     {
@@ -58,6 +64,8 @@ public sealed partial class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
 
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
+
+        Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);
     }
 
     private void OnStamHandleState(EntityUid uid, StaminaComponent component, ref AfterAutoHandleStateEvent args)
@@ -238,17 +246,22 @@ public sealed partial class StaminaSystem : EntitySystem
         if (!Resolve(uid, ref component, false))
             return;
 
-        var ev = new BeforeStaminaDamageEvent(value);
-        RaiseLocalEvent(uid, ref ev);
-        if (ev.Cancelled)
+        var beforeStamina = new BeforeStaminaDamageEvent(value);
+        RaiseLocalEvent(uid, ref beforeStamina);
+        if (beforeStamina.Cancelled)
             return;
+
+        value = UniversalStaminaDamageModifier * value;
 
         // Have we already reached the point of max stamina damage?
         if (component.Critical)
             return;
+        
+        var ev = new StaminaModifyEvent(value);
+        RaiseLocalEvent(uid, ev);
 
         var oldDamage = component.StaminaDamage;
-        component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + value);
+        component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + (value * ev.Modifier));
 
         // Reset the decay cooldown upon taking damage.
         if (oldDamage < component.StaminaDamage)
@@ -364,7 +377,7 @@ public sealed partial class StaminaSystem : EntitySystem
         component.Critical = true;
         component.StaminaDamage = component.CritThreshold;
 
-        _stunSystem.TryParalyze(uid, component.StunTime, true);
+        _stunSystem.TryParalyze(uid, component.StunTime, true, force: true);
 
         // Give them buffer before being able to be re-stunned
         component.NextUpdate = _timing.CurTime + component.StunTime + StamCritBufferTime;
@@ -396,3 +409,17 @@ public sealed partial class StaminaSystem : EntitySystem
 /// </summary>
 [ByRefEvent]
 public record struct BeforeStaminaDamageEvent(float Value, bool Cancelled = false);
+
+public sealed class StaminaModifyEvent: EntityEventArgs, IInventoryRelayEvent
+{
+    public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
+    
+    public float Damage;
+    public float Modifier;
+    
+    public StaminaModifyEvent(float damage, float modifier = 1.0f)
+    {
+        Damage = damage;
+        Modifier = modifier;
+    }
+}

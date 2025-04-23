@@ -1,0 +1,409 @@
+# Base prototypes
+
+- type: latheRecipe
+  abstract: true
+  id: BaseMechPartRecipe
+  categories:
+  - Mech
+  completetime: 10
+  
+- type: latheRecipe
+  abstract: true
+  id: BaseClarkePartRecipe
+  categories:
+  - Clarke
+  completetime: 10
+  
+- type: latheRecipe
+  abstract: true
+  id: BaseDurandPartRecipe
+  categories:
+  - Durand
+  completetime: 10
+  
+- type: latheRecipe
+  abstract: true
+  id: BaseGygaxPartRecipe
+  categories:
+  - Gygax
+  completetime: 10
+  
+# Recipes
+  
+# Clarke
+- type: latheRecipe
+  parent: BaseClarkePartRecipe
+  id: ClarkeHarness
+  result: ClarkeHarness
+  materials:
+    Steel: 2000
+    Glass: 1500
+
+- type: latheRecipe
+  parent: BaseClarkePartRecipe
+  id: ClarkeHead
+  result: ClarkeHead
+  materials:
+    Steel: 1550
+    Glass: 950
+
+- type: latheRecipe
+  parent: BaseClarkePartRecipe
+  id: ClarkeLArm
+  result: ClarkeLArm
+  materials:
+    Steel: 900
+    Glass: 800
+
+- type: latheRecipe
+  parent: ClarkeLArm
+  id: ClarkeRArm
+  result: ClarkeRArm
+
+- type: latheRecipe
+  parent: BaseClarkePartRecipe
+  id: ClarkeTreads
+  result: ClarkeTreads
+  materials:
+    Steel: 950
+
+# Durand
+- type: latheRecipe
+  parent: BaseDurandPartRecipe
+  id: DurandHarness
+  result: DurandHarness
+  materials:
+    Steel: 2500
+    Glass: 2000
+    Silver: 1500
+
+- type: latheRecipe
+  parent: BaseDurandPartRecipe
+  id: DurandArmor
+  result: DurandArmorPlate
+  materials:
+    Steel: 3000
+    Silver: 900
+
+- type: latheRecipe
+  parent: BaseDurandPartRecipe
+  id: DurandHead
+  result: DurandHead
+  materials:
+    Steel: 1500
+    Glass: 800
+    Silver: 250
+    Diamond: 100
+
+- type: latheRecipe
+  parent: BaseDurandPartRecipe
+  id: DurandLArm
+  result: DurandLArm
+  materials:
+    Steel: 1100
+    Silver: 250
+
+- type: latheRecipe
+  parent: DurandLArm
+  id: DurandLLeg
+  result: DurandLLeg
+
+- type: latheRecipe
+  parent: DurandLArm
+  id: DurandRLeg
+  result: DurandRLeg
+
+- type: latheRecipe
+  parent: DurandLArm
+  id: DurandRArm
+  result: DurandRArm
+
+# Gygax
+- type: latheRecipe
+  parent: BaseGygaxPartRecipe
+  id: GygaxHarness
+  result: GygaxHarness
+  materials:
+    Steel: 2500
+    Glass: 2000
+
+- type: latheRecipe
+  parent: BaseGygaxPartRecipe
+  id: GygaxArmor
+  result: GygaxArmorPlate
+  materials:
+    Steel: 3000
+
+- type: latheRecipe
+  parent: BaseGygaxPartRecipe
+  id: GygaxHead
+  result: GygaxHead
+  materials:
+    Steel: 1500
+    Glass: 250
+    Diamond: 100
+
+- type: latheRecipe
+  parent: BaseGygaxPartRecipe
+  id: GygaxLArm
+  result: GygaxLArm
+  materials:
+    Steel: 1100
+
+- type: latheRecipe
+  parent: GygaxLArm
+  id: GygaxLLeg
+  result: GygaxLLeg
+
+- type: latheRecipe
+  parent: GygaxLArm
+  id: GygaxRLeg
+  result: GygaxRLeg
+
+- type: latheRecipe
+  parent: GygaxLArm
+  id: GygaxRArm
+  result: GygaxRArm
+
+# Ripley
+- type: latheRecipe
+  parent: BaseMechPartRecipe
+  id: RipleyHarness
+  result: RipleyHarness
+  materials:
+    Steel: 1500
+    Glass: 1200
+
+- type: latheRecipe
+  parent: BaseMechPartRecipe
+  id: RipleyLArm
+  result: RipleyLArm
+  materials:
+    Steel: 1000
+    Glass: 750
+
+- type: latheRecipe
+  parent: RipleyLArm
+  id: RipleyLLeg
+  result: RipleyLLeg
+  materials:
+    Steel: 1000
+    Glass: 750
+
+- type: latheRecipe
+  parent: RipleyLLeg
+  id: RipleyRLeg
+  result: RipleyRLeg
+  materials:
+    Steel: 1000
+    Glass: 750
+
+- type: latheRecipe
+  parent: RipleyLArm
+  id: RipleyRArm
+  result: RipleyRArm
+  materials:
+    Steel: 1000
+    Glass: 750
+
+# Ripley MK-II
+- type: latheRecipe
+  id: RipleyMKIIHarness
+  result: RipleyMKIIHarness
+  categories:
+  - RipleyMKII
+  completetime: 10
+  materials:
+    Steel: 1500
+    Glass: 1200
+
+- type: latheRecipe
+  id: RipleyUpgradeKit
+  result: RipleyUpgradeKit
+  categories:
+  - RipleyMKII
+  completetime: 10
+  materials:
+    Steel: 500
+
+# H.O.N.K.
+- type: latheRecipe
+  parent: BaseMechPartRecipe
+  id: HonkerHarness
+  result: HonkerHarness
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  parent: BaseMechPartRecipe
+  id: HonkerLArm
+  result: HonkerLArm
+  materials:
+    Steel: 2000
+    Glass: 750
+    Bananium: 250
+
+- type: latheRecipe
+  parent: HonkerLArm
+  id: HonkerLLeg
+  result: HonkerLLeg
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  parent: HonkerLLeg
+  id: HonkerRLeg
+  result: HonkerRLeg
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  parent: HonkerLArm
+  id: HonkerRArm
+  result: HonkerRArm
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+# HAMTR
+- type: latheRecipe
+  parent: BaseMechPartRecipe
+  id: HamtrHarness
+  result: HamtrHarness
+  materials:
+    Steel: 1200
+    Glass: 1000
+
+- type: latheRecipe
+  parent: BaseMechPartRecipe
+  id: HamtrLArm
+  result: HamtrLArm
+  materials:
+    Steel: 800
+    Glass: 600
+
+- type: latheRecipe
+  parent: HamtrLArm
+  id: HamtrLLeg
+  result: HamtrLLeg
+
+- type: latheRecipe
+  parent: HamtrLLeg
+  id: HamtrRLeg
+  result: HamtrRLeg
+
+- type: latheRecipe
+  parent: HamtrLArm
+  id: HamtrRArm
+  result: HamtrRArm
+
+# Vim
+- type: latheRecipe
+  id: VimHarness
+  result: VimHarness
+  categories:
+  - Vim
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 200
+
+
+# Equipment
+- type: latheRecipe
+  id: MechEquipmentDrill
+  result: WeaponMechMelleDrill
+  categories:
+  - MechEquipment
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 250
+
+- type: latheRecipe
+  id: MechEquipmentDrillDiamond
+  result: WeaponMechMelleDrillDiamond
+  categories:
+  - MechEquipment
+  completetime: 10
+  materials:
+    Steel: 1000
+    Plastic: 150
+    Silver: 350
+    Diamond: 150
+
+- type: latheRecipe
+  id: MechEquipmentGrabber
+  result: MechEquipmentGrabber
+  categories:
+  - MechEquipment
+  completetime: 10
+  materials:
+    Steel: 500
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseMechPartRecipe
+  id: MechEquipmentGrabberSmall
+  result: MechEquipmentGrabberSmall
+  materials:
+    Steel: 400
+    Plastic: 100
+
+- type: latheRecipe
+  id: MechEquipmentHorn
+  result: MechEquipmentHorn
+  categories:
+  - MechEquipment
+  completetime: 10
+  materials:
+    Steel: 500
+    Bananium: 200
+
+- type: latheRecipe
+  id: MechEquipmentHonkerBananaMortar
+  result: WeaponMechSpecialBananaMortar
+  categories:
+  - MechEquipment
+  completetime: 10
+  materials:
+    Steel: 1150
+    Bananium: 800
+
+- type: latheRecipe
+  id: MechEquipmentHonkerMousetrapMortar
+  result: WeaponMechSpecialMousetrapMortar
+  categories:
+  - MechEquipment
+  completetime: 10
+  materials:
+    Steel: 1200
+    Bananium: 300
+
+# Misc
+- type: latheRecipe
+  id: MechAirTank
+  result: MechAirTank
+  categories:
+  - MechEquipment
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 150
+
+- type: latheRecipe
+  id: MechThruster
+  result: MechThruster
+  categories:
+  - MechEquipment
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 150

@@ -23,7 +23,7 @@ namespace Content.Shared.Damage
         [JsonPropertyName("types")]
         [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
         [UsedImplicitly]
-        private Dictionary<string,FixedPoint2>? _damageTypeDictionary;
+        private Dictionary<string, FixedPoint2>? _damageTypeDictionary;
 
         [JsonPropertyName("groups")]
         [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>))]
@@ -69,6 +69,14 @@ namespace Content.Shared.Damage
             }
 
             return false;
+        }
+
+        public DamageSpecifier Invert()
+        {
+            var copy = new DamageSpecifier(this);
+            foreach (var key in copy.DamageDict.Keys)
+                copy.DamageDict[key] *= -1;
+            return copy;
         }
 
         /// <summary>
@@ -125,7 +133,7 @@ namespace Content.Shared.Damage
         ///     Only applies resistance to a damage type if it is dealing damage, not healing.
         ///     This will never convert damage into healing.
         /// </remarks>
-        public static DamageSpecifier ApplyModifierSet(DamageSpecifier damageSpec, DamageModifierSet modifierSet)
+        public static DamageSpecifier ApplyModifierSet(DamageSpecifier damageSpec, DamageModifierSet modifierSet, float armorPenetration = 0f)
         {
             // Make a copy of the given data. Don't modify the one passed to this function. I did this before, and weapons became
             // duller as you hit walls. Neat, but not FixedPoint2ended. And confusing, when you realize your fists don't work no
@@ -147,12 +155,12 @@ namespace Content.Shared.Damage
                 float newValue = value.Float();
 
                 if (modifierSet.FlatReduction.TryGetValue(key, out var reduction))
-                    newValue = Math.Max(0f, newValue - reduction); // flat reductions can't heal you
+                    newValue = Math.Max(0f, newValue - (reduction - (reduction * armorPenetration))); // flat reductions can't heal you
 
                 if (modifierSet.Coefficients.TryGetValue(key, out var coefficient))
-                    newValue *= coefficient; // coefficients can heal you, e.g. cauterizing bleeding
+                    newValue *= Math.Min(1f, coefficient + ((1f - coefficient) * armorPenetration)); // coefficients can heal you, e.g. cauterizing bleeding
 
-                if(newValue != 0)
+                if (newValue != 0)
                     newDamage.DamageDict[key] = FixedPoint2.New(newValue);
             }
 

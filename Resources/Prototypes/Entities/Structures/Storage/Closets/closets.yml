@@ -82,7 +82,7 @@
   name: janitorial bomb suit closet
   parent: ClosetSteelBase
   description: It's a storage unit for janitorial explosion-protective suits.
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: Appearance
   - type: EntityStorageVisuals

@@ -1,4 +1,5 @@
 using Content.Server.Popups;
+using Content.Shared.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mech.Components;
@@ -38,6 +39,12 @@ public sealed class MechEquipmentSystem : EntitySystem
 
         if (args.User == mechComp.PilotSlot.ContainedEntity)
             return;
+        
+        if (!mechComp.MaintenanceMode)
+        {
+            _popup.PopupEntity("You need to turn on maintenance mode first!", args.User, PopupType.MediumCaution);
+            return;
+        }
 
         if (mechComp.EquipmentContainer.ContainedEntities.Count >= mechComp.MaxEquipmentAmount)
             return;

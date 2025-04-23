@@ -1,0 +1,12 @@
+﻿<BoxContainer
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Orientation="Vertical"
+    HorizontalExpand="True">
+    <OutputPanel Name="TextOutput" VerticalExpand="true" />
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <Button Visible="False" Name="CloseTicket" Access="Public" Text="{Loc 'mentor-close-ticket'}" StyleClasses="OpenBoth" HorizontalAlignment="Left" />
+        <RichTextLabel Name="TypingIndicator" Access="Public" />
+    </BoxContainer>
+    <HistoryLineEdit Name="SenderLineEdit" />
+</BoxContainer>

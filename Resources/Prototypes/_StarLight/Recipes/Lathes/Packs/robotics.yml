@@ -1,0 +1,63 @@
+- type: latheRecipePack
+  id: StarlightMechParts
+  recipes:
+# Ripley MKII
+  
+    - RipleyMKIIHarness
+    - RipleyUpgradeKit
+
+# Clarke
+
+    - ClarkeHarness
+    - ClarkeHead
+    - ClarkeLArm
+    - ClarkeRArm
+    - ClarkeTreads
+  
+# Durand
+  
+    - DurandHarness
+    - DurandArmor
+    - DurandHead
+    - DurandLArm
+    - DurandLLeg
+    - DurandRArm
+    - DurandRLeg
+  
+# Gygax
+  
+    - GygaxHarness
+    - GygaxArmor
+    - GygaxHead
+    - GygaxLArm
+    - GygaxLLeg
+    - GygaxRArm
+    - GygaxRLeg
+  
+- type: latheRecipePack
+  id: StarlightMechBoards
+  recipes:
+    - ClarkeCentralElectronics
+    - ClarkePeripheralsElectronics
+  
+- type: latheRecipePack
+  id: StarlightMechEquipment
+  recipes:
+    - MechEquipmentDrill
+    - MechEquipmentDrillDiamond
+    - MechEquipmentKineticAccelerator
+    - MechEquipmentHonkerBananaMortar
+    - MechEquipmentHonkerMousetrapMortar
+
+- type: latheRecipePack
+  id: StarlightMechWeapon
+  recipes:
+    - WeaponMechCombatImmolationGun
+    - WeaponMechCombatSolarisLaser
+    - WeaponMechCombatFiredartLaser
+    - WeaponMechCombatUltraRifle
+    - WeaponMechCombatShotgun
+    - WeaponMechCombatShotgunIncendiary
+    - WeaponMechCombatDisabler
+    - WeaponMechCombatFlashbangLauncher
+    - WeaponMechCombatMissileRack8

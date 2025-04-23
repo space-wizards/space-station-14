@@ -35,6 +35,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/gasfilter.rsi
       layers:
@@ -72,6 +75,16 @@
         path: /Audio/Ambience/Objects/gas_hiss.ogg
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawJunction
+      degrees:
+        - 0
+        - -90
+        - 180
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
     - type: GuideHelp
       guides:
       - MixingAndFiltering
@@ -84,6 +97,9 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: SubFloorHide
+    visibleLayers:
+    - enum.SubfloorLayers.FirstLayer
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gasfilter.rsi
     layers:
@@ -119,6 +135,16 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: North
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawJunction
+    degrees:
+      - 0
+      - -90
+      - 180
+  - type: ContainerContainer
+    containers:
+      VentCrawTube: !type:Container
 
 - type: entity
   parent: GasTrinaryBase
@@ -165,6 +191,16 @@
         path: /Audio/Ambience/Objects/gas_hiss.ogg
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawJunction
+      degrees:
+        - 0
+        - -90
+        - 180
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
     - type: GuideHelp
       guides:
       - MixingAndFiltering
@@ -211,6 +247,16 @@
         pipeDirection: North
   - type: Construction
     node: mixerflipped
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawJunction
+    degrees:
+      - 0
+      - -90
+      - 180
+  - type: ContainerContainer
+    containers:
+      VentCrawTube: !type:Container
 
 - type: entity
   parent: GasPipeBase
@@ -269,6 +315,16 @@
       node: pneumaticvalve
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawJunction
+      degrees:
+        - 0
+        - -90
+        - 180
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
     - type: GuideHelp
       guides:
       - PneumaticValve

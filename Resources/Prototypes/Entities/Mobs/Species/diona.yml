@@ -5,6 +5,14 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: Absorbable
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - Diona
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger

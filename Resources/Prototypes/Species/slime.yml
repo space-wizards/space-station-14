@@ -13,8 +13,10 @@
   id: MobSlimeSprites
   sprites:
     Head: MobSlimeHead
-    Hair: MobSlimeMarkingFollowSkin
+    Hair: MobSlimeMarkingAlfa
     FacialHair: MobSlimeMarkingFollowSkin
+    UndergarmentTop: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobSlimeTorso
     Eyes: MobHumanoidEyes
     LArm: MobSlimeLArm
@@ -46,9 +48,13 @@
       required: false
 
 - type: humanoidBaseSprite
+  id: MobSlimeMarkingAlfa
+  layerAlpha: 0.5
+
+- type: humanoidBaseSprite
   id: MobSlimeMarkingFollowSkin
   markingsMatchSkin: true
-  layerAlpha: 0.5
+  layerAlpha: 0.72
 
 - type: humanoidBaseSprite
   id: MobSlimeHead

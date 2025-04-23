@@ -39,7 +39,6 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     [UISystemDependency] private readonly DebugPhysicsSystem _debugPhysics = default!;
     [UISystemDependency] private readonly MarkerSystem _marker = default!;
     [UISystemDependency] private readonly SandboxSystem _sandbox = default!;
-    [UISystemDependency] private readonly SubFloorHideSystem _subfloorHide = default!;
 
     private SandboxWindow? _window;
 
@@ -48,7 +47,7 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     private TileSpawningUIController TileSpawningController => UIManager.GetUIController<TileSpawningUIController>();
     private DecalPlacerUIController DecalPlacerController => UIManager.GetUIController<DecalPlacerUIController>();
 
-    private MenuButton? SandboxButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.SandboxButton;
+    private Controls.MenuButton? SandboxButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.SandboxButton;
 
     public void OnStateEntered(GameplayState state)
     {
@@ -117,10 +116,11 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
 
         _window.OnOpen += () => { SandboxButton!.Pressed = true; };
         _window.OnClose += () => { SandboxButton!.Pressed = false; };
+
+        // TODO: These need moving to opened so at least if they're not synced properly on open they work.
         _window.ToggleLightButton.Pressed = !_light.Enabled;
         _window.ToggleFovButton.Pressed = !_eye.CurrentEye.DrawFov;
         _window.ToggleShadowsButton.Pressed = !_light.DrawShadows;
-        _window.ToggleSubfloorButton.Pressed = _subfloorHide.ShowAll;
         _window.ShowMarkersButton.Pressed = _marker.MarkersVisible;
         _window.ShowBbButton.Pressed = (_debugPhysics.Flags & PhysicsDebugFlags.Shapes) != 0x0;
 
@@ -219,4 +219,16 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
             _window.Close();
         }
     }
+
+    #region Buttons
+
+    public void SetToggleSubfloors(bool value)
+    {
+        if (_window == null)
+            return;
+
+        _window.ToggleSubfloorButton.Pressed = value;
+    }
+
+    #endregion
 }

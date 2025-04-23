@@ -2,6 +2,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
@@ -116,7 +117,7 @@ public abstract class SharedStunSystem : EntitySystem
     private void OnStunOnContactStartup(Entity<StunOnContactComponent> ent, ref ComponentStartup args)
     {
         if (TryComp<PhysicsComponent>(ent, out var body))
-            _broadphase.RegenerateContacts(ent, body);
+            _broadphase.RegenerateContacts((ent, body));
     }
 
     private void OnStunOnContactCollide(Entity<StunOnContactComponent> ent, ref StartCollideEvent args)
@@ -173,12 +174,18 @@ public abstract class SharedStunSystem : EntitySystem
     ///     Stuns the entity, disallowing it from doing many interactions temporarily.
     /// </summary>
     public bool TryStun(EntityUid uid, TimeSpan time, bool refresh,
-        StatusEffectsComponent? status = null)
+        StatusEffectsComponent? status = null, bool force = false)
     {
         if (time <= TimeSpan.Zero)
             return false;
 
         if (!Resolve(uid, ref status, false))
+            return false;
+        
+        var beforeStun = new BeforeStunEvent();
+        RaiseLocalEvent(uid, ref beforeStun);
+        
+        if (beforeStun.Cancelled && !force)
             return false;
 
         if (!_statusEffect.TryAddStatusEffect<StunnedComponent>(uid, "Stun", time, refresh))
@@ -195,12 +202,18 @@ public abstract class SharedStunSystem : EntitySystem
     ///     Knocks down the entity, making it fall to the ground.
     /// </summary>
     public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh,
-        StatusEffectsComponent? status = null)
+        StatusEffectsComponent? status = null, bool force = false)
     {
         if (time <= TimeSpan.Zero)
             return false;
 
         if (!Resolve(uid, ref status, false))
+            return false;
+        
+        var beforeKnockdown = new BeforeKnockdownEvent();
+        RaiseLocalEvent(uid, beforeKnockdown);
+        
+        if (beforeKnockdown.Cancelled && !force)
             return false;
 
         if (!_statusEffect.TryAddStatusEffect<KnockedDownComponent>(uid, "KnockedDown", time, refresh))
@@ -216,12 +229,12 @@ public abstract class SharedStunSystem : EntitySystem
     ///     Applies knockdown and stun to the entity temporarily.
     /// </summary>
     public bool TryParalyze(EntityUid uid, TimeSpan time, bool refresh,
-        StatusEffectsComponent? status = null)
+        StatusEffectsComponent? status = null, bool force = false)
     {
         if (!Resolve(uid, ref status, false))
             return false;
 
-        return TryKnockdown(uid, time, refresh, status) && TryStun(uid, time, refresh, status);
+        return TryKnockdown(uid, time, refresh, status, force) && TryStun(uid, time, refresh, status, force);
     }
 
     /// <summary>
@@ -309,6 +322,27 @@ public abstract class SharedStunSystem : EntitySystem
     }
 
     #endregion
+}
+
+/// <summary>
+///     Raised before stun is dealt to allow other systems to cancel it.
+/// </summary>
+[ByRefEvent]
+public record struct BeforeStunEvent(bool Cancelled = false);
+
+/// <summary>
+///     Raised before knockdown is dealt to allow other systems to cancel it.
+/// </summary>
+public sealed class BeforeKnockdownEvent: EntityEventArgs, IInventoryRelayEvent
+{
+    public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
+    
+    public bool Cancelled;
+    
+    public BeforeKnockdownEvent(bool cancelled = false)
+    {
+        Cancelled = cancelled;
+    }
 }
 
 /// <summary>

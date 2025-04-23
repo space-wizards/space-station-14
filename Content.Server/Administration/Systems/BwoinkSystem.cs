@@ -11,11 +11,13 @@ using Content.Server.Database;
 using Content.Server.Discord;
 using Content.Server.GameTicking;
 using Content.Server.Players.RateLimiting;
+using Content.Shared.Starlight.MHelp;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Players.RateLimiting;
+using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared;
@@ -35,6 +37,7 @@ namespace Content.Server.Administration.Systems
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IBanManager _banManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPlayerLocator _playerLocator = default!;
@@ -75,6 +78,12 @@ namespace Content.Server.Administration.Systems
         // Maximum length a message can be before it is cut off
         // Should be shorter than DescriptionMax
         private const ushort MessageLengthCap = 3000;
+        
+        private readonly TimeSpan _messageCooldown = TimeSpan.FromSeconds(2);
+
+        private readonly Queue<(NetUserId Channel, string Text, TimeSpan Timestamp)> _recentMessages = new();
+        private const int MaxRecentMessages = 10;
+        private const int SpamCheckMessageCount = 3;
 
         // Text to be used to cut off messages that are too long. Should be shorter than MessageLengthCap
         private const string TooLongText = "... **(too long)**";
@@ -640,12 +649,22 @@ namespace Content.Server.Administration.Systems
             var personalChannel = senderSession.UserId == message.UserId;
             var senderAdmin = _adminManager.GetAdminData(senderSession);
             var senderAHelpAdmin = senderAdmin?.HasFlag(AdminFlags.Adminhelp) ?? false;
-            var authorized = personalChannel || senderAHelpAdmin;
+            var authorized = personalChannel && !message.AdminOnly || senderAHelpAdmin;
             if (!authorized)
             {
                 // Unauthorized bwoink (log?)
                 return;
             }
+            
+            var currentTime = _timing.RealTime;
+
+            if (IsOnCooldown(message.UserId, currentTime))
+                return;
+            
+            if (IsSpam(message.UserId, message.Text))
+                _banManager.CreateServerBan(senderSession.UserId, senderSession.Name, null, null, null, 0, NoteSeverity.High, "Automatic AHELP Antispam system Ban, If this ban is wrong, file an appeal.");
+
+            AddToRecentMessages(message.UserId, message.Text, currentTime);
 
             if (_rateLimit.CountAction(eventArgs.SenderSession, RateLimitKey) != RateLimitStatus.Allowed)
                 return;
@@ -676,11 +695,11 @@ namespace Content.Server.Administration.Systems
                 bwoinkText = $"{senderSession.Name}";
             }
 
-            bwoinkText = $"{(message.PlaySound ? "" : "(S) ")}{bwoinkText}: {escapedText}";
+            bwoinkText = $"{(message.AdminOnly ? Loc.GetString("bwoink-message-admin-only") : !message.PlaySound ? Loc.GetString("bwoink-message-silent") : "")} {bwoinkText}: {escapedText}";
 
-            // If it's not an admin / admin chooses to keep the sound then play it.
-            var playSound = !senderAHelpAdmin || message.PlaySound;
-            var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText, playSound: playSound);
+            // If it's not an admin / admin chooses to keep the sound and message is not an admin only message, then play it.
+            var playSound = (!senderAHelpAdmin || message.PlaySound) && !message.AdminOnly;
+            var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText, playSound: playSound, adminOnly: message.AdminOnly);
 
             LogBwoink(msg);
 
@@ -700,7 +719,7 @@ namespace Content.Server.Administration.Systems
             }
 
             // Notify player
-            if (_playerManager.TryGetSessionById(message.UserId, out var session))
+            if (_playerManager.TryGetSessionById(message.UserId, out var session) && !message.AdminOnly)
             {
                 if (!admins.Contains(session.Channel))
                 {
@@ -759,6 +778,7 @@ namespace Content.Server.Administration.Systems
                     _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"),
                     _gameTicker.RunLevel,
                     playedSound: playSound,
+                    adminOnly: message.AdminOnly,
                     noReceivers: nonAfkAdmins.Count == 0
                 );
                 _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(messageParams));
@@ -790,7 +810,7 @@ namespace Content.Server.Administration.Systems
                 .ToList();
         }
 
-        private static DiscordRelayedData GenerateAHelpMessage(AHelpMessageParams parameters)
+        private DiscordRelayedData GenerateAHelpMessage(AHelpMessageParams parameters)
         {
             var stringbuilder = new StringBuilder();
 
@@ -806,7 +826,7 @@ namespace Content.Server.Administration.Systems
             if (parameters.RoundTime != string.Empty && parameters.RoundState == GameRunLevel.InRound)
                 stringbuilder.Append($" **{parameters.RoundTime}**");
             if (!parameters.PlayedSound)
-                stringbuilder.Append(" **(S)**");
+                stringbuilder.Append($" **{(parameters.AdminOnly ? Loc.GetString("bwoink-message-admin-only") : Loc.GetString("bwoink-message-silent"))}**");
             if (parameters.Icon == null)
                 stringbuilder.Append($" **{parameters.Username}:** ");
             else
@@ -859,6 +879,41 @@ namespace Content.Server.Administration.Systems
             /// </summary>
             public bool OnCall;
         }
+        
+        private void AddToRecentMessages(NetUserId channelId, string text, TimeSpan timestamp)
+        {
+            _recentMessages.Enqueue((channelId, text, timestamp));
+
+            if (_recentMessages.Count > MaxRecentMessages)
+            {
+                _recentMessages.Dequeue();
+            }
+        }
+        
+        private bool IsOnCooldown(NetUserId channelId, TimeSpan currentTime)
+        {
+            var lastMessage = _recentMessages
+                .Where(msg => msg.Channel == channelId)
+                .OrderByDescending(msg => msg.Timestamp)
+                .FirstOrDefault();
+
+            return lastMessage != default && (currentTime - lastMessage.Timestamp) < _messageCooldown;
+        }
+        
+        private bool IsSpam(NetUserId channelId, string text)
+        {
+            var recentMessages = _recentMessages
+                .Where(msg => msg.Channel == channelId)
+                .OrderByDescending(msg => msg.Timestamp)
+                .Take(10);
+
+            return recentMessages.All(msg => msg.Text == text) && recentMessages.Count() >= 5;
+        }
+
+        public IEnumerable<(NetUserId Channel, string Text, TimeSpan Timestamp)> GetRecentMessages()
+        {
+            return _recentMessages;
+        }
     }
 
     public sealed class AHelpMessageParams
@@ -869,6 +924,7 @@ namespace Content.Server.Administration.Systems
         public string RoundTime { get; set; }
         public GameRunLevel RoundState { get; set; }
         public bool PlayedSound { get; set; }
+        public readonly bool AdminOnly;
         public bool NoReceivers { get; set; }
         public string? Icon { get; set; }
 
@@ -879,6 +935,7 @@ namespace Content.Server.Administration.Systems
             string roundTime,
             GameRunLevel roundState,
             bool playedSound,
+            bool adminOnly = false,
             bool noReceivers = false,
             string? icon = null)
         {
@@ -888,6 +945,7 @@ namespace Content.Server.Administration.Systems
             RoundTime = roundTime;
             RoundState = roundState;
             PlayedSound = playedSound;
+            AdminOnly = adminOnly;
             NoReceivers = noReceivers;
             Icon = icon;
         }

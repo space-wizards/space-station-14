@@ -1,0 +1,23 @@
+﻿<controls:ATMWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client._Starlight.Economy.Atm"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    MinSize="400 400">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 10">
+            <Button Name="WithdrawTabButton" Access="Public" Text="{Loc 'economy-atm-ui-withdraw'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
+            <Button Name="TransferTabButton" Access="Public" Text="{Loc 'economy-atm-ui-transfer'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
+        </BoxContainer>
+        <cc:HSeparator Color="#57A3F7" />
+        <ScrollContainer VScrollEnabled="True" HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Name="WithdrawTab" Access="Public" Orientation="Vertical" Visible="False">
+                <RichTextLabel Name="BalanceLabel" Access="Public"/>
+                <LineEdit Name="WithdrawInput" Access="Public" MinSize="70 0" />
+                <Button Name="WithdrawButton" Access="Public" Text="{Loc 'economy-atm-ui-withdraw'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
+                <RichTextLabel Name="DepositLabel" Text="{Loc 'economy-atm-ui-deposit'}" HorizontalExpand="false" VerticalExpand="True"/>
+            </BoxContainer>
+            <BoxContainer Name="TransferTab" Access="Public" Orientation="Vertical" Visible="False">
+            </BoxContainer>
+        </ScrollContainer>
+    </BoxContainer>
+</controls:ATMWindow>

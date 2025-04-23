@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Starlight, IAA/Magistrate Icons by Chim",
+
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "Magistrate"
+        },
+        {
+            "name": "IAA"
+        },
+        {
+            "name": "BlueShield"
+        },
+        {
+            "name": "Vampire"
+        },
+        {
+            "name": "Surgeon"
+        }
+    ]
+}

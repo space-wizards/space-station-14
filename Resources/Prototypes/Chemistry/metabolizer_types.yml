@@ -21,6 +21,10 @@
   id: Slime
   name: metabolizer-type-slime
 
+- type: metabolizerType #🌟Starlight🌟
+  id: Cyclorite
+  name: metabolizer-type-cyclorite
+
 - type: metabolizerType
   id: Vox
   name: metabolizer-type-vox
@@ -44,3 +48,7 @@
 - type: metabolizerType
   id: Arachnid
   name: metabolizer-type-arachnid
+
+- type: metabolizerType
+  id: Vampire
+  name: metabolizer-type-vampire

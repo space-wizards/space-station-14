@@ -107,6 +107,17 @@
         Base: dead
       Dead:
         Base: dead
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: GroundBee
+          Quantity: 1
+  - type: Butcherable
+    spawned:
+    - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
   - type: Item
     size: Tiny
   - type: Tag
@@ -114,6 +125,7 @@
     - Bee
     - Trash
   - type: Bloodstream
+    bloodReagent: InsectBlood
     bloodMaxVolume: 0.1
   - type: MobPrice
     price: 50
@@ -229,6 +241,7 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
+  - type: ExaminableHunger
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
@@ -444,7 +457,7 @@
     description: ghost-role-information-mothroach-description
     rules: ghost-role-information-freeagent-rules
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleGhostRoleFreeAgentHarmless
   - type: Fixtures
     fixtures:
       fix1:
@@ -663,6 +676,7 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
+  - type: ExaminableHunger
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget
@@ -769,7 +783,24 @@
         Base: dead
       Dead:
         Base: dead
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 1
+  - type: Butcherable
+    spawned:
+    - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - Trash
   - type: Bloodstream
+    bloodReagent: InsectBlood
     bloodMaxVolume: 0.1
   - type: MobPrice
     price: 50
@@ -828,6 +859,7 @@
     reagentId: Milk
     quantityPerUpdate: 25
     growthDelay: 30
+  - type: ExaminableHunger
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -864,6 +896,7 @@
   id: MobCrab
   description: A folk legend goes around that his claw snaps spacemen out of existence over distasteful remarks. Be polite and tolerant for your own safety.
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -984,6 +1017,7 @@
     reagentId: MilkGoat
     quantityPerUpdate: 25
     growthDelay: 20
+  - type: ExaminableHunger
   - type: Wooly
   - type: Food
     solution: wool
@@ -1237,6 +1271,7 @@
   description: The genetic bipedal ancestor of... Uh... Something. Yeah, there's definitely something on the station that descended from whatever this is.
   abstract: true
   components:
+  - type: VentCrawler
   - type: CombatMode
   - type: Inventory
     templateId: monkey
@@ -1272,8 +1307,8 @@
       state: body-overlay-2
       visible: false
     - map: [ "ears" ]
-    - map: [ "outerClothing" ]
     - map: [ "id" ]
+    - map: [ "outerClothing" ]
     - map: [ "mask" ]
     - map: [ "head" ]
     - map: [ "clownedon" ]
@@ -1420,6 +1455,7 @@
   suffix: syndicate agent
   components:
     # make the player a traitor once its taken
+  - type: VentCrawler
   - type: AutoTraitor
     profile: TraitorReinforcement
 
@@ -1428,6 +1464,7 @@
   parent: MobBaseSyndicateMonkey
   suffix: NukeOps
   components:
+  - type: VentCrawler
   - type: NukeOperative
 
 - type: entity
@@ -1606,6 +1643,7 @@
   id: MobMouse
   description: Squeak!
   components:
+  - type: VentCrawler
   - type: Body
     prototype: Mouse
   - type: GhostRole
@@ -1616,7 +1654,7 @@
     description: ghost-role-information-mouse-description
     rules: ghost-role-information-freeagent-rules
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleGhostRoleFreeAgentHarmless
   - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
@@ -1960,6 +1998,7 @@
   id: MobSlug
   description: And they called this a lizard?
   components:
+  - type: VentCrawler
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
@@ -2007,6 +2046,7 @@
   id: MobFrog
   description: Hop hop hop. Lookin' moist.
   components:
+  - type: VentCrawler
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 6
@@ -2255,6 +2295,7 @@
   id: MobSnake
   description: Hissss! Bites aren't poisonous.
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2303,6 +2344,7 @@
   id: MobSpiderBase
   abstract: true
   components:
+  - type: VentCrawler
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -2483,6 +2525,13 @@
         180: Dead
     - type: Spider
       webPrototype: SpiderWebClown
+    - type: Tag
+      tags:
+      - DoorBumpOpener
+      - FootstepSound
+    - type: NpcFactionMember
+      factions:
+      - HonkHostile
     - type: MeleeWeapon
       altDisarm: false
       angle: 0
@@ -2732,6 +2781,7 @@
   - type: Physics
   - type: Speech
     speechVerb: Canine
+    speechSounds: Dog
   - type: Fixtures
     fixtures:
       fix1:
@@ -2844,6 +2894,7 @@
   id: MobCorgiPuppy
   description: A little corgi! Aww...
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
@@ -3209,6 +3260,7 @@
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
+  - type: VentCrawler
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -3599,3 +3651,84 @@
         Base: reindeer_doe_dead
       Dead:
         Base: reindeer_doe_dead
+
+- type: entity
+  abstract: true
+  parent: [ SimpleMobBase, StripableInventoryBase ]
+  id: MobAdmemeCorgi
+  description: Finally, a space corgi!
+  components:
+  # Use corgi sprite
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: corgi
+  - type: Physics
+  # Apply canine dog speech
+  - type: Speech
+    speechVerb: Canine
+    speechSounds: Dog
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  # Custom inventory template
+  - type: Inventory
+    speciesId: dog
+    templateId: smartpetborgi
+  - type: Hands # HANDS!
+  - type: Puller
+  - type: Stripping
+  - type: ComplexInteraction
+  # Implement custom borgi body type
+  - type: Body
+    prototype: BodySmartCorgi
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 180
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: InteractionPopup
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene # Gender neutral
+      proper: true
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-corgi
+  - type: MobPrice
+    price: 200
+  - type: Tag
+    tags:
+    - VimPilot
+    - CanPilot
+    - AnomalyHost
+    - DoorBumpOpener
+  - type: Storage #Slime-type storage
+    clickInsert: false
+    openOnActivate: false
+    grid:
+    - 0,0,3,3
+    maxItemSize: Huge
+  - type: StatusIcon
+    bounds: -0.5,-0.5,0.5,0.5

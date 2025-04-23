@@ -35,7 +35,7 @@ chat-manager-entity-me-wrap-message = [italic]{ PROPER($entity) ->
     }
 
 chat-manager-entity-looc-wrap-message = LOOC: [bold]{$entityName}:[/bold] {$message}
-chat-manager-send-ooc-wrap-message = OOC: [bold]{$playerName}:[/bold] {$message}
+chat-manager-send-ooc-wrap-message = OOC: [bold][color={$titleColor}]{$playerTitle}[/color] [color={$nameColor}]{$playerName}:[/color] [color={$messageColor}]{$message}[/color][/bold]
 chat-manager-send-ooc-patron-wrap-message = OOC: [bold][color={$patronColor}]{$playerName}[/color]:[/bold] {$message}
 
 chat-manager-send-dead-chat-wrap-message = {$deadChannelName}: [bold][BubbleHeader]{$playerName}[/BubbleHeader]:[/bold] [BubbleContent]{$message}[/BubbleContent]
@@ -49,7 +49,7 @@ chat-manager-dead-channel-name = DEAD
 chat-manager-admin-channel-name = ADMIN
 
 chat-manager-rate-limited = You are sending messages too quickly!
-chat-manager-rate-limit-admin-announcement = Player { $player } breached chat rate limits. Watch them if this is a regular occurence.
+chat-manager-rate-limit-admin-announcement = Rate limit warning: { $player }
 
 ## Speech verbs for chat
 
@@ -112,6 +112,10 @@ chat-speech-verb-name-vox = Vox
 chat-speech-verb-vox-1 = screeches
 chat-speech-verb-vox-2 = shrieks
 chat-speech-verb-vox-3 = croaks
+
+chat-speech-verb-name-resomi = Resomi
+chat-speech-verb-resomi-1 = squawks
+chat-speech-verb-resomi-2 = chirps
 
 chat-speech-verb-name-canine = Canine
 chat-speech-verb-canine-1 = barks

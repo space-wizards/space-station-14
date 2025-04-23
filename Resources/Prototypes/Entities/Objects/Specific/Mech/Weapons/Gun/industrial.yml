@@ -1,0 +1,23 @@
+- type: entity
+  id: WeaponMechIndustrialKineticAccelerator
+  name: exosuit proto-kinetic accelerator
+  description: Fires normal-damage kinetic bolts at a short range.
+  suffix: Mech Weapon, Gun, Industrial, Kinetic Accelerator
+  parent: [ BaseMechWeaponRange, IndustrialMechEquipment ]
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha_equipment.rsi
+    state: mecha_kineticgun
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletKineticShuttle
+    fireCost: 50
+  - type: Appearance
+  - type: AmmoCounter
+# TODO: Plasma Cutter

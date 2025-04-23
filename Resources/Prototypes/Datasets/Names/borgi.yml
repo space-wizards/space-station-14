@@ -1,0 +1,23 @@
+- type: localizedDataset
+  id: NamesBorgi
+  values:
+    prefix: names-borgi-dataset-
+    count: 21
+
+- type: localizedDataset
+  id: NamesCorgi
+  values:
+    prefix: names-corgi-dataset-
+    count: 9
+
+- type: localizedDataset
+  id: NamesSyndiBorgi
+  values:
+    prefix: names-syndiborgi-dataset-
+    count: 6
+
+- type: localizedDataset
+  id: NamesShadowBorgi
+  values:
+    prefix: names-shadowborgi-dataset-
+    count: 6

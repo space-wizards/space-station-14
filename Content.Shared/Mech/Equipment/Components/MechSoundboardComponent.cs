@@ -1,4 +1,4 @@
-using Content.Shared.Mech.Equipment.Systems;
+using Content.Shared.Mech.Equipment.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 

@@ -14,6 +14,7 @@ namespace Content.Shared.Chemistry
         public const string InputSlotName = "beakerSlot";
         public const string OutputSlotName = "outputSlot";
         public const string PillSolutionName = "food";
+        public const string PatchSolutionName = "patch"; //Starlight-edit
         public const string BottleSolutionName = "drink";
         public const uint LabelMaxLength = 50;
     }
@@ -69,6 +70,23 @@ namespace Content.Shared.Chemistry
             Label = label;
         }
     }
+    
+    //Starlight-start
+    [Serializable, NetSerializable]
+    public sealed class ChemMasterCreatePatchesMessage : BoundUserInterfaceMessage
+    {
+        public readonly uint Dosage;
+        public readonly uint Number;
+        public readonly string Label;
+
+        public ChemMasterCreatePatchesMessage(uint dosage, uint number, string label)
+        {
+            Dosage = dosage;
+            Number = number;
+            Label = label;
+        }
+    }
+    //Starlight-end
 
     [Serializable, NetSerializable]
     public sealed class ChemMasterOutputToBottleMessage : BoundUserInterfaceMessage
@@ -88,6 +106,18 @@ namespace Content.Shared.Chemistry
         Transfer,
         Discard,
     }
+
+    public enum ChemMasterSortingType : byte
+    {
+        None = 0,
+        Alphabetical = 1,
+        Quantity = 2,
+        Latest = 3,
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ChemMasterSortingTypeCycleMessage : BoundUserInterfaceMessage;
+
 
     public enum ChemMasterReagentAmount
     {
@@ -160,25 +190,31 @@ namespace Content.Shared.Chemistry
 
         public readonly ChemMasterMode Mode;
 
+        public readonly ChemMasterSortingType SortingType;
+
         public readonly FixedPoint2? BufferCurrentVolume;
         public readonly uint SelectedPillType;
 
         public readonly uint PillDosageLimit;
+        
+        public readonly uint PatchDosageLimit; //Starlight-edit
 
         public readonly bool UpdateLabel;
 
         public ChemMasterBoundUserInterfaceState(
-            ChemMasterMode mode, ContainerInfo? inputContainerInfo, ContainerInfo? outputContainerInfo,
+            ChemMasterMode mode, ChemMasterSortingType sortingType, ContainerInfo? inputContainerInfo, ContainerInfo? outputContainerInfo,
             IReadOnlyList<ReagentQuantity> bufferReagents, FixedPoint2 bufferCurrentVolume,
-            uint selectedPillType, uint pillDosageLimit, bool updateLabel)
+            uint selectedPillType, uint pillDosageLimit, uint patchDosageLimit, bool updateLabel) // Starlight-edit
         {
             InputContainerInfo = inputContainerInfo;
             OutputContainerInfo = outputContainerInfo;
             BufferReagents = bufferReagents;
             Mode = mode;
+            SortingType = sortingType;
             BufferCurrentVolume = bufferCurrentVolume;
             SelectedPillType = selectedPillType;
             PillDosageLimit = pillDosageLimit;
+            PatchDosageLimit = patchDosageLimit; //Starlight-edit
             UpdateLabel = updateLabel;
         }
     }

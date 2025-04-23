@@ -63,8 +63,9 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             component.NextUpdate = _timing.CurTime + component.UpdateInterval;
 
             //Get distance between health analyzer and the scanned entity
+            //null is infinite range
             var patientCoordinates = Transform(patient).Coordinates;
-            if (!_transformSystem.InRange(patientCoordinates, transform.Coordinates, component.MaxScanRange))
+            if (component.MaxScanRange != null && !_transformSystem.InRange(patientCoordinates, transform.Coordinates, component.MaxScanRange.Value))
             {
                 //Range too far, disable updates
                 StopAnalyzingEntity((uid, component), patient);
@@ -80,7 +81,16 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     /// </summary>
     private void OnAfterInteract(Entity<HealthAnalyzerComponent> uid, ref AfterInteractEvent args)
     {
-        if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasDrawCharge(uid, user: args.User))
+        if (args.Target == null 
+            || !args.CanReach 
+            || !TryComp<DamageableComponent>(args.Target, out var damageableComponent)
+            || !HasComp<MobStateComponent>(args.Target) 
+            || !_cell.HasDrawCharge(uid, user: args.User))
+            return;
+        
+        if (uid.Comp.DamageContainers != null 
+            && damageableComponent.DamageContainerID != null 
+            && !uid.Comp.DamageContainers.Contains(damageableComponent.DamageContainerID))
             return;
 
         _audio.PlayPvs(uid.Comp.ScanningBeginSound, uid);

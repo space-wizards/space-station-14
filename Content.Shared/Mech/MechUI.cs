@@ -52,6 +52,17 @@ public abstract class MechEquipmentUiMessage : BoundUserInterfaceMessage
     public NetEntity Equipment;
 }
 
+[Serializable, NetSerializable]
+public sealed class MechMaintenanceUiMessage : BoundUserInterfaceMessage
+{
+    public bool Toggle;
+    
+    public MechMaintenanceUiMessage(bool toggle)
+    {
+        Toggle = toggle;
+    }
+}
+
 /// <summary>
 /// event raised for the grabber equipment to eject an item from it's storage
 /// </summary>

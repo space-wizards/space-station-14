@@ -6,6 +6,7 @@
     species:
     - SlimePerson
     - Vox
+    - Cyclorite #🌟Starlight🌟
 
 - type: loadoutEffectGroup
   id: OxygenBreather
@@ -18,6 +19,9 @@
     - Human
     - Moth
     - Reptilian
+    - Vulpkanin
+    - Felionoid #🌟Starlight🌟
+    - Resomi #🌟Starlight🌟
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
@@ -169,7 +173,7 @@
   - !type:GroupLoadoutEffect
     proto: EffectSpeciesVox
   equipment:
-    suitstorage: NitrogenTankFilled
+    suitstorage: DoubleEmergencyNitrogenTankFilled
 
 # Full EVA Tank, Any Species
 - type: loadout
@@ -178,7 +182,7 @@
   - !type:GroupLoadoutEffect
     proto: NitrogenBreather
   equipment:
-    suitstorage: NitrogenTankFilled
+    suitstorage: DoubleEmergencyNitrogenTankFilled
 
 - type: loadout
   id: LoadoutSpeciesEVAOxygen

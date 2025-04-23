@@ -163,6 +163,18 @@
 
 - type: entity
   parent: ClothingNeckBase
+  id: ClothingNeckCloakHonk
+  name: honk cloak
+  description: A cloak often worn by a sect of the honkmother.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/honk.rsi
+  - type: Tag
+    tags:
+    - CluwneBeastWearable
+
+- type: entity
+  parent: ClothingNeckBase
   id: ClothingNeckCloakPirateCap
   name: pirate captain cloak
   description: A rather fetching black pirate cloak, complete with skull motif.
@@ -225,6 +237,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/aro.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakAroace
+  name: aeropilot's cloak # thank you happyman442 this was the best name idea ever
+  description: Cloak awarded to Nanotrasen's finest pilots on planets with inhabitable atmospheres.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/aroace.rsi
 
 - type: entity
   parent: ClothingNeckBase

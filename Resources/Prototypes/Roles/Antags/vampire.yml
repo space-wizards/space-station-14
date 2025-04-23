@@ -1,0 +1,10 @@
+- type: antag
+  id: Vampire
+  name: roles-antag-vamire-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-vampire-description
+#  guides: [ Changelings ]
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 3600 # 1h

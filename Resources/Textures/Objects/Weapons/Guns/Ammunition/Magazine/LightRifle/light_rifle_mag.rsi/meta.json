@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/shiptest-ss13/Shiptest/pull/1602/commits/3e6cfea9d468508a7f64ad5543c3b22479cb465f , https://github.com/shiptest-ss13/Shiptest/blob/master/icons/obj/ammo.dmi",
+    "copyright": "https://github.com/shiptest-ss13/Shiptest/pull/1602/commits/3e6cfea9d468508a7f64ad5543c3b22479cb465f , https://github.com/shiptest-ss13/Shiptest/blob/master/icons/obj/ammo.dmi, redraw darkrell",
     "states": [
         {
             "name": "base"
@@ -17,7 +17,22 @@
             "name": "red"
         },
         {
+            "name": "rubber"
+        },
+        {
             "name": "uranium"
+        },
+        {
+            "name": "incendiary"
+        },
+        {
+            "name": "sp"
+        },
+        {
+            "name": "fmj"
+        },
+        {
+            "name": "ap"
         },
         {
             "name": "mag-1"

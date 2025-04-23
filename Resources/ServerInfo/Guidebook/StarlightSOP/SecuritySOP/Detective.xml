@@ -1,0 +1,38 @@
+<Document>
+    # Detective
+
+    <GuideEntityEmbed Entity="ToyFigurineDetective" Caption="Detective"/>
+
+    1 . Standard Code Green equipment is:
+
+    <Box>
+        <GuideEntityEmbed Entity="WeaponRevolverInspector"/>
+        <GuideEntityEmbed Entity="ClothingHandsGlovesForensic"/>
+        <GuideEntityEmbed Entity="ForensicScanner"/>
+        <GuideEntityEmbed Entity="ForensicPad"/>
+    </Box>
+    <Box>
+        <GuideEntityEmbed Entity="RadioHandheldSecurity"/>
+        <GuideEntityEmbed Entity="Stunbaton"/>
+        <GuideEntityEmbed Entity="HoloprojectorSecurity"/>
+        <GuideEntityEmbed Entity="FlashlightSeclite"/>
+    </Box>
+    <Box>
+        <GuideEntityEmbed Entity="CombatKnife"/>
+        in
+        <GuideEntityEmbed Entity="ClothingShoesBootsJack"/>
+    </Box>
+
+    <Box>
+    
+    </Box>
+
+    2. The Detective is permitted to patrol with a Security Officer on all alert levels, but should focus on collecting of evidence and investigations at all times.
+
+    3. When acting as a Security Officer, the Detective must follow all Security Officer guidelines listed above.
+
+    4. The Detective is permitted to wear non-security uniforms for undercover investigations, with approval from the Head of Security. The Detective's Security ID should be on their person at all times, however.
+
+    5. The Detective is permitted to interrogate detained suspects, however any detainment must be subtracted from their overall arrest time.
+
+</Document>

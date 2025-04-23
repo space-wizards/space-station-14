@@ -80,6 +80,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         if (TryComp<WieldableComponent>(uid, out var wieldable) &&
             !wieldable.Wielded)
         {
+            args.Message = Loc.GetString("wieldable-component-requires", ("item", uid));
             args.Cancel();
 
             var time = _timing.CurTime;
@@ -126,14 +127,12 @@ public abstract class SharedWieldableSystem : EntitySystem
 
     private void OnSpeedModifierWielded(EntityUid uid, SpeedModifiedOnWieldComponent component, ItemWieldedEvent args)
     {
-        if (args.User != null)
-            _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
     }
 
     private void OnSpeedModifierUnwielded(EntityUid uid, SpeedModifiedOnWieldComponent component, ItemUnwieldedEvent args)
     {
-        if (args.User != null)
-            _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
     }
 
     private void OnRefreshSpeedWielded(EntityUid uid, SpeedModifiedOnWieldComponent component, ref HeldRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
@@ -191,6 +190,9 @@ public abstract class SharedWieldableSystem : EntitySystem
             args.Handled = TryWield(uid, component, args.User);
         else if (component.UnwieldOnUse)
             args.Handled = TryUnwield(uid, component, args.User);
+
+        if (HasComp<UseDelayComponent>(uid) && !component.UseDelayOnWield)
+            args.ApplyDelay = false;
     }
 
     public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet = false)
@@ -235,9 +237,11 @@ public abstract class SharedWieldableSystem : EntitySystem
         if (!CanWield(used, component, user))
             return false;
 
-        if (TryComp(used, out UseDelayComponent? useDelay)
-            && !_delay.TryResetDelay((used, useDelay), true))
-            return false;
+        if (TryComp(used, out UseDelayComponent? useDelay) && component.UseDelayOnWield)
+        {
+            if (!_delay.TryResetDelay((used, useDelay), true))
+                return false;
+        }
 
         var attemptEv = new WieldAttemptEvent(user);
         RaiseLocalEvent(used, ref attemptEv);

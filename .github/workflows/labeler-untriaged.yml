@@ -9,6 +9,10 @@ on:
 jobs:
   add_label:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
     steps:
     - uses: actions-ecosystem/action-add-labels@v1
       if: join(github.event.issue.labels) == ''

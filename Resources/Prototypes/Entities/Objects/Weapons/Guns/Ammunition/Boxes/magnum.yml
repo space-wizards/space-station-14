@@ -8,7 +8,7 @@
     whitelist:
       tags:
         - CartridgeMagnum
-    proto: CartridgeMagnum
+    proto: CartridgeMagnumSP
     capacity: 12
   - type: Item
     size: Small
@@ -26,17 +26,47 @@
 # Boxes
 - type: entity
   parent: BaseMagazineBoxMagnum
-  id: MagazineBoxMagnum
-  name: ammunition box (.45 magnum)
+  id: MagazineBoxMagnumSP
+  name: ammunition box (.45 magnum SP)
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeMagnum
+    proto: CartridgeMagnumSP
   - type: Sprite
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+    - state: sp
+
+- type: entity
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBoxMagnumHP
+  name: ammunition box (.45 magnum HP)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumHP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBoxMagnumFMJ
+  name: ammunition box (.45 magnum FMJ)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumFMJ
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: fmj
 
 - type: entity
   parent: BaseMagazineBoxMagnum
@@ -86,7 +116,7 @@
 - type: entity
   id: MagazineBoxMagnumAP
   parent: BaseMagazineBoxMagnum
-  name: ammunition box (.45 magnum armor-piercing)
+  name: ammunition box (.45 magnum AP)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP
@@ -96,4 +126,4 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-    - state: piercing
+    - state: ap

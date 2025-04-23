@@ -9,6 +9,9 @@
       - torso
       organs:
         brain: OrganDionaBrainNymph
+        eyes: OrganHumanEyes
+        tongue: OrganHumanTongue
+        eye_implant: null
     torso:
       part: TorsoDiona
       connections:
@@ -19,6 +22,7 @@
       organs:
         stomach: OrganDionaStomachNymph
         lungs: OrganDionaLungsNymph
+        cavity: null
     right arm:
       part: RightArmDiona
       connections:

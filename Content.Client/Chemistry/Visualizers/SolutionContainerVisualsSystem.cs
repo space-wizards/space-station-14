@@ -5,6 +5,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Item;
 using Content.Shared.Rounding;
 using Robust.Client.GameObjects;
@@ -28,7 +29,6 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
     private void OnMapInit(EntityUid uid, SolutionContainerVisualsComponent component, MapInitEvent args)
     {
         var meta = MetaData(uid);
-        component.InitialName = meta.EntityName;
         component.InitialDescription = meta.EntityDescription;
     }
 
@@ -167,7 +167,15 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
             var layer = new PrototypeLayerData();
 
             var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
-            var key = heldPrefix + args.Location.ToString().ToLowerInvariant() + component.InHandsFillBaseName + closestFillSprite;
+
+            var locationString = args.Location switch
+            {
+                HandLocation.Left => "left",
+                HandLocation.Right => "right",
+                _ => "left" // bruh? Maybe add a middle hand for something, so this has some logic
+            };
+
+            var key = $"{heldPrefix}{locationString}{component.InHandsFillBaseName}{closestFillSprite}";
 
             layer.State = key;
 

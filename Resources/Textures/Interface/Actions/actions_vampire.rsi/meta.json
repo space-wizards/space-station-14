@@ -1,0 +1,65 @@
+{
+  "copyright" : "Taken from https://github.com/goonstation/goonstation at https://github.com/goonstation/goonstation/commit/4059e4be90832b02b1228b1bee3db342094e4f1e",
+  "license" : "CC-BY-SA-3.0",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "fangs_retracted"
+    },
+    {
+      "name": "fangs_extended"
+    },
+    {
+      "name": "glare"
+    },
+    {
+      "name": "screech"
+    },
+    {
+      "name": "hypnotise"
+    },
+    {
+      "name": "bloodsteal"
+    },
+    {
+      "name": "batform"
+    },
+    {
+      "name": "mouseform"
+    },
+    {
+      "name": "summonheirloom"
+    },
+    {
+      "name": "cloakofdarkness"
+    },
+    {
+      "name": "unholystrength"
+    },
+    {
+      "name": "supernaturalstrength"
+    },
+    {
+      "name": "deathsembrace"
+    },
+    {
+      "name": "mutation"
+    },
+    {
+      "name": "stellarweakness"
+    },
+    {
+      "name": "fullpotential"
+    },
+    {
+      "name": "survive_icon"
+    },
+    {
+      "name": "blood_drain_icon"
+    }
+  ]
+}

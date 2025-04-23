@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+	"copyright": "darkrell",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"load": {
+		"srgb": false
+	},
+	"states": [
+		{
+			"name": "impact",
+			"delays": [
+				[
+					0.06,
+					0.12,
+					0.18,
+					0.24
+				]
+			]
+		}
+	]
+}

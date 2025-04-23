@@ -6,7 +6,11 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
-      time: 36000 #10 hrs
+      time: 72000 # 20 hrs
+    - !type:RoleTimeRequirement
+      role: JobDetective
+      time: 3600 # 1 hr
+  weight: 5
   startingGear: WardenGear
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos
@@ -20,6 +24,7 @@
   - External
   - Detective
   - Cryogenics
+  - Brigmedic
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -27,11 +32,11 @@
 - type: startingGear
   id: WardenGear
   equipment:
-    eyes: ClothingEyesGlassesSecurity
     id: WardenPDA
     ears: ClothingHeadsetSecurity
-    pocket1: WeaponPistolMk58
+    pocket1: WeaponPistolDP
   storage:
     back:
     - Flash
-    - MagazinePistol
+    - MagazinePistol40SP
+    - MagazinePistol40SP

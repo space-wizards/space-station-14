@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from paradise station",
+  "states": [
+    {
+      "name": "alive",
+      "directions": 4
+    },
+    {
+      "name": "dead"
+    },
+    {
+      "name": "1-alive",
+      "directions": 4
+    },
+    {
+      "name": "1-dead"
+    },
+    {
+      "name": "2-alive",
+      "directions": 4
+    },
+    {
+      "name": "2-dead"
+    },
+    {
+      "name": "3-alive",
+      "directions": 4
+    },
+    {
+      "name": "3-dead"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+<ContainerButton xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:style="clr-namespace:Content.Client.Stylesheets">
+    <BoxContainer Orientation="Horizontal"
+                  HorizontalExpand="True"
+                  SeparationOverride="0"
+                  MinSize="340 64"
+                  MaxSize="340 64"
+                  Name="InternalHBox">
+        <SpriteView Scale="2 2"
+                    OverrideDirection="South"
+                    Name="View"/>
+        <Label Name="DescriptionLabel"
+               HorizontalExpand="True"/>
+        <Label Name="UnavailableLabel"
+               Text="{Loc 'ghost-new-life-unavailable'}"
+               ClipText="True"
+               MinSize="36 28"
+               MaxSize="36 28"
+               Margin="48 0 24 0"
+               HorizontalExpand="True"/>
+    </BoxContainer>
+</ContainerButton>

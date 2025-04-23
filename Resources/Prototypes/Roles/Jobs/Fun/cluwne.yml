@@ -10,7 +10,13 @@
     pocket1: CluwneHorn
 
 - type: startingGear
+  id: CluwneBeastGear
+  equipment:
+    neck: ClothingNeckCloakHonk
+    pocket1: CluwneHorn
+    id: CluwneBeastPDA
+
+- type: startingGear
   id: HoloClownGear
   equipment:
     pocket1: BikeHorn
-

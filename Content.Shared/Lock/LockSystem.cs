@@ -7,6 +7,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Mindshield.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
@@ -117,6 +118,9 @@ public sealed class LockSystem : EntitySystem
 
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
+        
+        if (lockComp.MindShieldLock && !HasMindshield(uid, user, quiet: false))
+            return false;
 
         if (!HasUserAccess(uid, user, quiet: false))
             return false;
@@ -210,6 +214,9 @@ public sealed class LockSystem : EntitySystem
 
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
+        
+        if (lockComp.MindShieldLock && !HasMindshield(uid, user, quiet: false))
+            return false;
 
         if (!HasUserAccess(uid, user, quiet: false))
             return false;
@@ -269,6 +276,16 @@ public sealed class LockSystem : EntitySystem
             return true;
 
         if (_accessReader.IsAllowed(user, uid, reader))
+            return true;
+
+        if (!quiet)
+            _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-has-user-access-fail"), uid, user);
+        return false;
+    }
+    
+    private bool HasMindshield(EntityUid uid, EntityUid user, bool quiet = true)
+    {
+        if (HasComp<MindShieldComponent>(user))
             return true;
 
         if (!quiet)

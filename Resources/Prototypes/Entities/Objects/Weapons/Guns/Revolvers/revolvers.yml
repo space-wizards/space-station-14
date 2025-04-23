@@ -39,7 +39,7 @@
       tags:
         - CartridgeMagnum
         - SpeedLoaderMagnum
-    proto: CartridgeMagnum
+    proto: CartridgeMagnumSP
     capacity: 6
     chambers: [ True, True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null, null ]
@@ -80,7 +80,7 @@
 
 - type: entity
   name: Inspector
-  parent: [BaseWeaponRevolver, BaseRestrictedContraband]
+  parent: [BaseWeaponRevolver, BaseSecurityContraband]
   id: WeaponRevolverInspector
   description: A detective's best friend. Uses .45 magnum ammo.
   components:

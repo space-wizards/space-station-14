@@ -41,6 +41,15 @@
     - id: PlushieMoth
     - id: PlushieArachind
     - id: PlushiePenguin
+#STARLIGHT-Start
+    - !type:GroupSelector
+      children:
+      - id: DeerPlushie
+        weight: 9
+      - id: OddDeerPlushie
+        weight: 1
+    - id: VikaPviPlushie
+#STARLIGHT-End
 
 - type: entity
   id: CrateFunPlushie
@@ -102,8 +111,6 @@
         amount: 2
       - id: FrenchHornInstrument
         amount: 2
-      - id: SaxophoneInstrument
-        amount: 2
       - id: EuphoniumInstrument
       - id: TubaInstrument
 
@@ -139,6 +146,8 @@
       - id: ClarinetInstrument
       - id: FluteInstrument
       - id: HarmonicaInstrument
+        amount: 2
+      - id: SaxophoneInstrument
         amount: 2
       - id: OcarinaInstrument
       - id: PanFluteInstrument
@@ -280,6 +289,21 @@
         amount: 4
 
 - type: entity
+  id: CrateFunFoamGuns
+  parent: CratePlastic
+  name: Foam Force crate
+  description: Contains four Foam Force rifles, some grenades, and extra ammo. It's [REDACTED] or nothing!
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRifleFoam
+      amount: 4
+    - id: BoxDonkSoftBox
+      amount: 2
+    - id: GrenadeFoamDart
+      amount: 4
+
+- type: entity
   id: CrateFunBoxing
   parent: CrateGenericSteel
   name: boxing crate
@@ -379,3 +403,12 @@
         amount: 1
         prob: 0.05
 
+- type: entity
+  name: moproach kit crate
+  description: A box with one moproach kit that provides you with two moproaches.
+  id: CrateFunMoproach
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+    - id: MoproachBox

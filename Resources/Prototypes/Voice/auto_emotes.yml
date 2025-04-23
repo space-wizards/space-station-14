@@ -12,3 +12,10 @@
   interval: 5.0
   chance: 0.5
   withChat: false
+# CluwneBeast
+- type: autoEmote
+  id: CluwneBeastGiggle
+  emote: Scream
+  interval: 5.0
+  chance: 0.3
+  withChat: false

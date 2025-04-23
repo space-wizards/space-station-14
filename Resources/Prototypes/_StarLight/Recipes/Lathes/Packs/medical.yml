@@ -1,0 +1,54 @@
+## Dynamic recipes
+
+- type: latheRecipePack
+  id: StarlightSurgeryDynamic
+  recipes:
+  - BoneSetter
+  - BoneGel
+  - Scalpel
+  - Retractor
+  - Cautery
+  - Saw
+  - Hemostat
+  - Drill
+  - SawAdvanced
+  - ScalpelAdvanced
+  - BoneSetterAdvanced
+  - RetractorAdvanced
+  - HemostatAdvanced
+
+#
+
+- type: latheRecipePack
+  id: StarlightCyberlimbDynamic
+  recipes:
+  - LeftArmCyber
+  - RightArmCyber
+  - LeftHandCyber
+  - RightHandCyber
+  - LeftLegCyber
+  - RightLegCyber
+  - LeftFootCyber
+  - RightFootCyber
+
+  - LeftArmCyberReaper
+  - RightArmCyberReaper
+  - LeftArmCyberMechwright
+  - RightArmCyberMechwright
+
+#
+
+- type: latheRecipePack
+  id: StarlightCyberOrgansDynamic
+  recipes:
+  - CyberEyeNightVision
+  - CyberEyeThermal
+
+#
+
+- type: latheRecipePack
+  id: StarlightImplantDynamic
+  recipes:
+  - EyeImplantWelding
+  - EyeImplantMedical
+  - EyeImplantSecurity

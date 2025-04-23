@@ -1,0 +1,29 @@
+uniform sampler2D SCREEN_TEXTURE;
+
+uniform highp float ShiftIntensity;
+
+const highp mat3 CycloriteShiftMatrix = mat3(
+    0.30, 0.20, 0.00,
+    0.10, 0.70, 0.10,
+    0.00, 0.10, 0.90
+);
+
+const highp vec3 AlienPink = vec3(1.0, 0.3, 0.7);
+
+void fragment()
+{
+    COLOR = zTextureSpec(SCREEN_TEXTURE, Pos);
+
+    highp vec3 baseColor = COLOR.rgb;
+    highp vec3 shiftedColor = CycloriteShiftMatrix * baseColor;
+    highp vec3 finalColor = mix(baseColor, shiftedColor, ShiftIntensity);
+
+    highp vec3 aboveOne = max(finalColor - 1.0, vec3(0.0));
+    highp float intensity = max(aboveOne.r, max(aboveOne.g, aboveOne.b));
+
+    finalColor = clamp(finalColor, 0.0, 1.0);
+
+    finalColor = mix(finalColor, AlienPink, intensity);
+
+    COLOR.rgb = finalColor;
+}

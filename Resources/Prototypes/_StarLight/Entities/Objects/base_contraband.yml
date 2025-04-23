@@ -1,0 +1,14 @@
+﻿- type: entity
+  id: BaseSovietContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Soviet
+
+#Advanced Cyberlimbs
+- type: entity
+  id: BaseAdvancedCyberlimbContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: AdvancedCyberlimbs

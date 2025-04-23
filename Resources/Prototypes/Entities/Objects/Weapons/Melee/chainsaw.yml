@@ -47,3 +47,10 @@
         maxVol: 300
   - type: UseDelay
     delay: 1
+  - type: Scalpel
+  - type: SurgeryTool
+    successRate: 0.01
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg

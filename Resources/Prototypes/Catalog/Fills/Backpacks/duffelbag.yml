@@ -12,7 +12,9 @@
       - id: Cautery
       - id: Retractor
       - id: Scalpel
-
+      - id: BoneGel
+      - id: BoneSetter
+      
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
   id: ClothingBackpackDuffelSyndicateFilledMedical
@@ -21,27 +23,29 @@
   components:
   - type: StorageFill
     contents:
-      - id: Hemostat
+      - id: HemostatAdvanced
       - id: SawAdvanced
       - id: Drill
       - id: Cautery
-      - id: Retractor
+      - id: RetractorAdvanced
       - id: ScalpelAdvanced
       - id: ClothingHandsGlovesNitrile
       - id: EmergencyRollerBedSpawnFolded
+      - id: BoneGel
+      - id: BoneSetterAdvanced
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledShotgun
   name: Bulldog bundle
-  description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 3 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
+  description: "Lean and mean: Contains the popular Bulldog Shotgun and four 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
   components:
   - type: StorageFill
     contents:
       - id: WeaponShotgunBulldog
       - id: MagazineShotgun
       - id: MagazineShotgun
-      - id: MagazineShotgunBeanbag
+      - id: MagazineShotgun
 #     - id: ThermalImagingGoggles
 
 - type: entity
@@ -53,7 +57,7 @@
   - type: StorageFill
     contents:
       - id: WeaponSubMachineGunC20r
-      - id: MagazinePistolSubMachineGun
+      - id: MagazinePistolSubMachineGunSP
         amount: 2
 #     - id: SMGSuppressor
 
@@ -73,12 +77,13 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledLMG
   name: L6 Saw bundle
-  description: "More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines."
+  description: "More dakka: The iconic L6 lightmachinegun, bundled with a box magazine."
   components:
   - type: StorageFill
     contents:
       - id: WeaponLightMachineGunL6
-      - id: MagazineLightRifleBox
+      - id: MagazineBoxLightRifleSP
+      - id: MagazineLightRifleBoxSP
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -103,7 +108,7 @@
   - type: StorageFill
     contents:
       - id: WeaponRifleM90GrenadeLauncher
-      - id: MagazineRifle
+      - id: MagazineRifleFMJ
         amount: 2
       - id: GrenadeBlast
         amount: 2
@@ -116,16 +121,22 @@
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateAmmoFilled
   name: ammo bundle
-  description: "Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW."
+  description: "Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 3 ammo boxes for the L6 SAW."
   components:
   - type: StorageFill
     contents:
-      - id: MagazinePistolSubMachineGun
+      - id: MagazinePistolSubMachineGunSP
         amount: 4
       - id: MagazineShotgun
         amount: 4
-      - id: MagazineLightRifleBox
-        amount: 2
+      - id: MagazineLightRifleBoxSP
+        amount: 3
+      - id: MagazineBoxLightRifleSP
+        amount: 1
+      - id: MagazineBoxLightRifleHP
+        amount: 1
+      - id: MagazineBoxLightRifleFMJ
+        amount: 1
 
 - type: entity
   parent: ClothingBackpackDuffelClown

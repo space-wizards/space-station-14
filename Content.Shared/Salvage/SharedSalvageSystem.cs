@@ -42,13 +42,15 @@ public abstract partial class SharedSalvageSystem : EntitySystem
         // - Biome
         // - Lighting
         // - Atmos
-        var biome = GetMod<SalvageBiomeModPrototype>(rand, ref modifierBudget);
-        var light = GetBiomeMod<SalvageLightMod>(biome.ID, rand, ref modifierBudget);
-        var temp = GetBiomeMod<SalvageTemperatureMod>(biome.ID, rand, ref modifierBudget);
-        var air = GetBiomeMod<SalvageAirMod>(biome.ID, rand, ref modifierBudget);
-        var dungeon = GetBiomeMod<SalvageDungeonModPrototype>(biome.ID, rand, ref modifierBudget);
-        var factionProtos = _proto.EnumeratePrototypes<SalvageFactionPrototype>().ToList();
-        factionProtos.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
+        var biome = GetMod<SalvageBiomeModPrototype>(rand, ref modifierBudget, difficulty.ID);
+        var light = GetBiomeMod<SalvageLightMod>(biome.ID, rand, ref modifierBudget, difficulty.ID);
+        var temp = GetBiomeMod<SalvageTemperatureMod>(biome.ID, rand, ref modifierBudget, difficulty.ID);
+        var air = GetBiomeMod<SalvageAirMod>(biome.ID, rand, ref modifierBudget, difficulty.ID);
+        var dungeon = GetBiomeMod<SalvageDungeonModPrototype>(biome.ID, rand, ref modifierBudget, difficulty.ID);
+        var factionProtos = _proto.EnumeratePrototypes<SalvageFactionPrototype>()
+            .Where(x => x.Difficulties.Contains(difficulty.ID) && (x.Biomes == null || x.Biomes.Contains(biome.ID)))  // 🌟Starlight🌟
+            .ToList();
+        factionProtos.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal)); //bullshit
         var faction = factionProtos[rand.Next(factionProtos.Count)];
 
         var mods = new List<string>();
@@ -74,9 +76,9 @@ public abstract partial class SharedSalvageSystem : EntitySystem
         return new SalvageMission(seed, dungeon.ID, faction.ID, biome.ID, air.ID, temp.Temperature, light.Color, duration, mods);
     }
 
-    public T GetBiomeMod<T>(string biome, System.Random rand, ref float rating) where T : class, IPrototype, IBiomeSpecificMod
+    public T GetBiomeMod<T>(string biome, System.Random rand, ref float rating, string difficultyId) where T : class, IPrototype, IBiomeSpecificMod
     {
-        var mods = _proto.EnumeratePrototypes<T>().ToList();
+        var mods = _proto.EnumeratePrototypes<T>().Where(x => x.Difficulties == null || x.Difficulties.Contains(difficultyId)).ToList();
         mods.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         rand.Shuffle(mods);
 
@@ -89,13 +91,12 @@ public abstract partial class SharedSalvageSystem : EntitySystem
 
             return mod;
         }
-
         throw new InvalidOperationException();
     }
 
-    public T GetMod<T>(System.Random rand, ref float rating) where T : class, IPrototype, ISalvageMod
+    public T GetMod<T>(System.Random rand, ref float rating, string difficultyId) where T : class, IPrototype, ISalvageMod
     {
-        var mods = _proto.EnumeratePrototypes<T>().ToList();
+        var mods = _proto.EnumeratePrototypes<T>().Where(x => x.Difficulties == null || x.Difficulties.Contains(difficultyId)).ToList();
         mods.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         rand.Shuffle(mods);
 

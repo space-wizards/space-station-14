@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
-using Content.Shared.Mobs;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -24,12 +24,13 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     /// </summary>
     private static readonly TimeSpan ExcessTime = TimeSpan.FromSeconds(0.5f);
 
+    private static readonly ProtoId<TagPrototype> InstantDoAftersTag = "InstantDoAfters";
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<DoAfterComponent, DamageChangedEvent>(OnDamage);
         SubscribeLocalEvent<DoAfterComponent, EntityUnpausedEvent>(OnUnpaused);
-        SubscribeLocalEvent<DoAfterComponent, MobStateChangedEvent>(OnStateChanged);
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
         SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
     }
@@ -43,18 +44,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                 doAfter.CancelledTime = doAfter.CancelledTime.Value + args.PausedTime;
         }
 
-        Dirty(uid, component);
-    }
-
-    private void OnStateChanged(EntityUid uid, DoAfterComponent component, MobStateChangedEvent args)
-    {
-        if (args.NewMobState != MobState.Dead || args.NewMobState != MobState.Critical)
-            return;
-
-        foreach (var doAfter in component.DoAfters.Values)
-        {
-            InternalCancel(doAfter, component);
-        }
         Dirty(uid, component);
     }
 
@@ -188,7 +177,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     {
         DebugTools.Assert(args.Broadcast || Exists(args.EventTarget) || args.Event.GetType() == typeof(AwaitedDoAfterEvent));
         DebugTools.Assert(args.Event.GetType().HasCustomAttribute<NetSerializableAttribute>()
-            || args.Event.GetType().Namespace is {} ns && ns.StartsWith("Content.IntegrationTests"), // classes defined in tests cannot be marked as serializable.
+            || args.Event.GetType().Namespace is { } ns && ns.StartsWith("Content.IntegrationTests"), // classes defined in tests cannot be marked as serializable.
             $"Do after event is not serializable. Event: {args.Event.GetType()}");
 
         if (!Resolve(args.User, ref comp))
@@ -247,11 +236,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         // TODO DO AFTER
         // Why does this tag exist? Just make this a bool on the component?
-        if (args.Delay <= TimeSpan.Zero || _tag.HasTag(args.User, "InstantDoAfters"))
+        if (args.Delay <= TimeSpan.Zero || _tag.HasTag(args.User, InstantDoAftersTag))
         {
             RaiseDoAfterEvents(doAfter, comp);
             // We don't store instant do-afters. This is just a lazy way of hiding them from client-side visuals.
-            return true;
+            if (!args.ForceNet)
+                return true;
+            else
+                args.Delay = TimeSpan.FromMilliseconds(100);
         }
 
         comp.DoAfters.Add(doAfter.Index, doAfter);
@@ -295,7 +287,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         return IsDuplicate(args, otherArgs, otherArgs.DuplicateCondition);
     }
 
-    private bool IsDuplicate(DoAfterArgs args, DoAfterArgs otherArgs, DuplicateConditions conditions )
+    private bool IsDuplicate(DoAfterArgs args, DoAfterArgs otherArgs, DuplicateConditions conditions)
     {
         if ((conditions & DuplicateConditions.SameTarget) != 0
             && args.Target != otherArgs.Target)

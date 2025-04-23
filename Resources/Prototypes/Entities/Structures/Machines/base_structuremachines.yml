@@ -3,6 +3,8 @@
   parent: BaseStructure
   id: BaseMachine
   components:
+  - type: Ricochetable
+    chance: 0.5
   - type: Animateable
   - type: InteractionOutline
   - type: Anchorable

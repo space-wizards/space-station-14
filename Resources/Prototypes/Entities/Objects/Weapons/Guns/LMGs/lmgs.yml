@@ -5,6 +5,16 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
+  - type: RestrictByUserTag
+    doestContain:
+    - Abductor
+    messages:
+    - abductor-gun-restricted-1
+  - type: KnockbackByUserTag
+    doestContain:
+      Resomi:
+        knockback: 0.02
+        staminaMultiplier: 100
   - type: Sprite
   - type: Item
     size: Huge
@@ -42,7 +52,7 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineLightRifleBox
+        startingItem: MagazineLightRifleBoxSP
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         priority: 2
@@ -51,7 +61,7 @@
             - MagazineLightRifleBox
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeLightRifle
+        startingItem: CartridgeLightRifleSP
         priority: 1
         whitelist:
           tags:
@@ -116,7 +126,7 @@
       containers:
         ballistic-ammo: !type:Container
     - type: ProjectileBatteryAmmoProvider
-      proto: CartridgeLightRifle
+      proto: CartridgeLightRifleSP
       fireCost: 100
     - type: Battery
       maxCharge: 10000

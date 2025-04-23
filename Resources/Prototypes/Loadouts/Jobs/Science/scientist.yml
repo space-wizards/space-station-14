@@ -21,15 +21,15 @@
   - !type:GroupLoadoutEffect
     proto: SeniorResearcher
 
-- type: loadout
-  id: RoboticistCap
-  equipment:
-    head: ClothingHeadHatCorpsoft
+#- type: loadout Only for roboticist
+#  id: RoboticistCap
+#  equipment:
+#    head: ClothingHeadHatCorpsoft
 
-- type: loadout
-  id: SkullBandana
-  equipment:
-    head: ClothingHeadBandSkull
+#- type: loadout
+#  id: SkullBandana
+#  equipment:
+#    head: ClothingHeadBandSkull
 
 # Neck
 
@@ -131,10 +131,10 @@
   equipment:
     gloves: ClothingHandsGlovesLatex
 
-- type: loadout
-  id: RobohandsGloves
-  equipment:
-    gloves: ClothingHandsGlovesRobohands
+#- type: loadout Only for roboticist
+#  id: RobohandsGloves
+#  equipment:
+#    gloves: ClothingHandsGlovesRobohands
 
 # Shoes
 - type: loadout

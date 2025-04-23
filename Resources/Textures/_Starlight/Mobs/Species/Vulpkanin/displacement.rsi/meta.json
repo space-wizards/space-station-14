@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "by Litogin",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "load": {
+      "srgb": false
+  },
+  "states": [
+    {
+      "name": "jumpsuit",
+      "directions": 4
+    },
+    {
+      "name": "shoes",
+      "directions" : 4
+    }
+  ]
+}

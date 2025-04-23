@@ -4,6 +4,7 @@
   id: FlyingMobBase
   abstract: true
   components:
+  - type: NightVision
   - type: Physics
     bodyStatus: InAir
   - type: NoSlip

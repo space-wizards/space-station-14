@@ -11,6 +11,10 @@ on:
 jobs:
   Label:
     if: ( github.event.pull_request.draft == false ) && ( github.actor != 'PJBot' )
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
     runs-on: ubuntu-latest
     steps:
       - name: Check for Merge Conflicts

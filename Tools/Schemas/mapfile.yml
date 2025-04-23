@@ -1,0 +1,27 @@
+# schema file for Yamale
+meta:
+  format: int()
+  postmapinit: bool(required=False)
+  time: str(required=False) # timestamp() expects yyyy-mm-dd
+  category: enum("Unknown", "Entity", "Grid", "Map", "Save", required=False) # FileCategory enum
+  engineVersion: str(required=False)
+  entityCount: int(required=False)
+  forkId: any(int(), str(), required=False)
+  forkVersion: any(int(), str(), required=False)
+tilemap: map(str(), key=int())
+orphans: list(int(), required=False)
+nullspace: list(int(), required=False)
+maps: list(int(), required=False)
+grids: list(int(), required=False)
+entities: list(include('proto'), min=1)
+---
+proto:
+  proto: str(required=True)
+  entities: list(include('entity'), min=1)
+---
+entity:
+  uid: int()
+  mapInit: bool(required=False)
+  paused: bool(required=False)
+  components: list(comp())
+  missingComponents: list(str(), required=False)

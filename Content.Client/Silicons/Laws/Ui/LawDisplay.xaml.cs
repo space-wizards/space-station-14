@@ -41,7 +41,7 @@ public sealed partial class LawDisplay : Control
         LawLabel.SetMessage(lawDescription);
 
         // If you can't talk, you can't state your laws...
-        if (!_entityManager.TryGetComponent<SpeechComponent>(uid, out var speech) || speech.SpeechSounds is null)
+        if (!_entityManager.TryGetComponent<SpeechComponent>(uid, out var speech) || speech.SpeechSounds is null || !law.Sayable)
             return;
 
         var localButton = new Button

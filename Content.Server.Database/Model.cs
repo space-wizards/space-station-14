@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
@@ -24,6 +24,7 @@ namespace Content.Server.Database
         public DbSet<AssignedUserId> AssignedUserId { get; set; } = null!;
         public DbSet<Player> Player { get; set; } = default!;
         public DbSet<Admin> Admin { get; set; } = null!;
+        public DbSet<PlayerDataDTO> PlayerData { get; set; } = null!; // 🌟Starlight🌟
         public DbSet<AdminRank> AdminRank { get; set; } = null!;
         public DbSet<Round> Round { get; set; } = null!;
         public DbSet<Server> Server { get; set; } = null!;
@@ -401,6 +402,7 @@ namespace Content.Server.Database
         public int Slot { get; set; }
         [Column("char_name")] public string CharacterName { get; set; } = null!;
         public string FlavorText { get; set; } = null!;
+        public string Voice { get; set; } = null!;
         public int Age { get; set; }
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
@@ -629,6 +631,16 @@ namespace Content.Server.Database
         public int? AdminRankId { get; set; }
         public AdminRank? AdminRank { get; set; }
         public List<AdminFlag> Flags { get; set; } = default!;
+    }
+    [Index(nameof(DiscordId))]
+    public class PlayerDataDTO // 🌟Starlight🌟
+    {
+        [Key] public Guid UserId { get; set; }
+        public string? Title { get; set; }
+        public string? GhostTheme { get; set; }
+        public string? DiscordId { get; set; } = default!;
+        public int Balance { get; set; }
+        public int Flags { get; set; }
     }
 
     public class AdminFlag
@@ -987,6 +999,8 @@ namespace Content.Server.Database
         BabyJail = 4,
         /// Results from rejected connections with external API checking tools
         IPChecks = 5,
+        /// Results from rejected connections who are authenticated but have no modern hwid associated with them.
+        NoHwid = 6
     }
 
     public class ServerBanHit

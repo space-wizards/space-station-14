@@ -8,11 +8,11 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
-using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Screen.Components;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.GameTicking;
@@ -188,7 +188,7 @@ namespace Content.Server.RoundEnd
                 null,
                 Color.Gold);
 
-            _audio.PlayGlobal("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast(), true);
+            _audio.PlayGlobal("/Audio/_Starlight/Announcements/callEvac.ogg", Filter.Broadcast(), true);  //🌟Starlight🌟
 
             LastCountdownStart = _gameTiming.CurTime;
             ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;
@@ -236,7 +236,7 @@ namespace Content.Server.RoundEnd
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
                 Loc.GetString("Station"), false, colorOverride: Color.Gold);
 
-            _audio.PlayGlobal("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast(), true);
+            _audio.PlayGlobal("/Audio/_Starlight/Announcements/recallEvac.ogg", Filter.Broadcast(), true); //🌟Starlight🌟
 
             LastCountdownStart = null;
             ExpectedCountdownEnd = null;
@@ -365,6 +365,14 @@ namespace Content.Server.RoundEnd
                 // Always reset auto-call in case of a recall.
                 SetAutoCallTime();
             }
+        }
+        
+        public TimeSpan TimeToCallShuttle()
+        {
+            var autoCalledBefore = _autoCalledBefore
+                ? _cfg.GetCVar(CCVars.EmergencyShuttleAutoCallExtensionTime)
+                : _cfg.GetCVar(CCVars.EmergencyShuttleAutoCallTime);
+            return AutoCallStartTime + TimeSpan.FromMinutes(autoCalledBefore);
         }
     }
 

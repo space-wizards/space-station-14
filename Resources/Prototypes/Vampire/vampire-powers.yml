@@ -1,0 +1,91 @@
+- type: vampirePower
+  id: SummonHeirloom
+  usableWhileCuffed: false
+  usableWhileStunned: false
+
+- type: vampirePower
+  id: ToggleFangs
+  
+- type: vampirePower
+  id: MutationsMenu
+
+- type: vampirePower
+  id: DrinkBlood
+  doAfterDelay: 1
+
+- type: vampirePower
+  id: Glare
+  duration: 10
+
+- type: vampirePower
+  id: Hypnotise
+  duration: 60
+  doAfterDelay: 5
+
+- type: vampirePower
+  id: Screech
+  duration: 3
+  damage:
+    types:
+      Blunt: 10
+      Structural: 40
+  usableWhileMuffled: false
+  activationCost: 10
+
+- type: vampirePower
+  id: BloodSteal
+  usableWhileStunned: false
+  usableWhileCuffed: false
+  activationCost: 20
+
+- type: vampirePower
+  id: PolymorphBat
+  usableWhileStunned: false
+  usableWhileCuffed: false
+  polymorphTarget: mobBatVampire
+  activationCost: 20
+
+- type: vampirePower
+  id: PolymorphMouse
+  usableWhileStunned: false
+  usableWhileCuffed: false
+  polymorphTarget: MobMouse
+  activationCost: 20
+
+- type: vampirePower
+  id: CloakOfDarkness
+  usableWhileStunned: false
+  activationCost: 30
+  upkeep: 1
+
+- type: vampirePower
+  id: UnholyStrength 
+  usableWhileStunned: false
+  usableWhileCuffed: false
+  activationCost: 30
+  upkeep: 1
+
+- type: vampirePower
+  id: SupernaturalStrength 
+  usableWhileStunned: false
+  usableWhileCuffed: false
+  activationCost: 30
+  upkeep: 1
+
+- type: vampirePassive
+  id: DeathsEmbrace 
+  catalogEntry: VampireDeathsEmbrace # Must match the catalog id
+  compsToAdd:
+  - type: VampireDeathsEmbrace
+    cost: 100
+    coffinHealing:
+      groups:
+        Toxin: 2
+        Genetic: 2
+        Airloss: 2
+        Brute: 2
+      types:
+        Burn: 1
+        Cold: 2
+        Shock: 2
+        Caustic: 2

@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://tgstation13.org/wiki/images/a/a4/Supermatter-bg.gif",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cascade_1"
+    },
+    {
+      "name": "cascade_2"
+    },
+    {
+      "name": "cascade_3"
+    },
+    {
+      "name": "cascade_4"
+    },
+    {
+      "name": "cascade_5"
+    },
+    {
+      "name": "cascade_6"
+    }
+  ]
+}

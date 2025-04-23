@@ -142,6 +142,8 @@
     sprite: Clothing/Head/Hardhats/armored.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardhats/armored.rsi
+  - type: Pierceable
+    level: HardenedMetal
   - type: Armor #Copied from the sec helmet, as it's hard to give these sane values without locational damage existing.
     modifiers:
       coefficients:

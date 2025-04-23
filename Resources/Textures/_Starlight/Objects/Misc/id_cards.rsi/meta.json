@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "taken from the game",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "default"
+    },
+    {
+      "name": "gold"
+    },
+	{
+	  "name": "silver"
+	},
+	{
+	  "name": "idmagistrate"
+	},
+	{
+	  "name": "idiaa"
+	},
+	{
+	  "name": "idblueshield"
+	},
+    {
+      "name": "idstationminer"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By Pofitlo",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "load": {
+        "srgb": false
+    },
+    "states": [
+        {
+            "name": "jumpsuit",
+            "directions": 4
+        },
+        {
+            "name": "ears",
+            "directions": 4
+        },
+        {
+            "name": "back",
+            "directions": 4
+        },
+        {
+            "name": "eyes",
+            "directions": 4
+        },
+        {
+            "name": "head",
+            "directions": 4
+        },
+        {
+            "name": "belt",
+            "directions": 4
+        },
+        {
+            "name": "hands",
+            "directions": 4
+        },
+        {
+            "name": "feet",
+            "directions": 4
+        },
+        {
+            "name": "neck",
+            "directions": 4
+        },
+        {
+            "name": "mask",
+            "directions": 4
+        },
+        {
+            "name": "inHand",
+            "directions": 4
+        },
+        {
+            "name": "suitStorage",
+            "directions": 4
+        }
+    ]
+}

@@ -11,6 +11,15 @@
       "name": "icon"
     },
     {
+      "name": "abductor",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },
@@ -20,6 +29,18 @@
     },
     {
       "name": "equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "abductor-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "abductor-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "abductor-equipped-BELT",
       "directions": 4
     },
     {

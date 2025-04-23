@@ -10,19 +10,22 @@
       organs:
         brain: OrganHumanBrain
         eyes: OrganHumanEyes
+        tongue: OrganHumanTongue
+        eye_implant: null
     torso:
       part: TorsoMoth
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
       organs:
         heart: OrganAnimalHeart
         lungs: OrganHumanLungs
         stomach: OrganMothStomach
         liver: OrganAnimalLiver
         kidneys: OrganHumanKidneys
-      connections:
-      - right arm
-      - left arm
-      - right leg
-      - left leg
+        cavity: null
     right arm:
       part: RightArmMoth
       connections:
