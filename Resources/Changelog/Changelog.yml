@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: GansuLalan
-  changes:
-  - message: Pianos will no longer push players off when climbing them
-    type: Fix
-  id: 7820
-  time: '2025-01-16T12:25:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33690
 - author: Southbridge
   changes:
   - message: More Ionstorm law elements have been added
@@ -3923,3 +3916,11 @@
   id: 8321
   time: '2025-04-23T05:37:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33286
+- author: SaphireLattice
+  changes:
+  - message: Steel sheets no longer have unintuitively wasteful plating placement
+      that can be done with steel tiles instead
+    type: Remove
+  id: 8322
+  time: '2025-04-23T11:08:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33443
