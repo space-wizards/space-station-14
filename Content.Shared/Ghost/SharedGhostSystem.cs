@@ -37,12 +37,22 @@ namespace Content.Shared.Ghost
                 args.Cancel();
         }
 
-        public void SetTimeOfDeath(EntityUid uid, TimeSpan value, GhostComponent? component)
+        public void SetTimeOfDeath(Entity<GhostComponent?> entity, TimeSpan value)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(entity, ref entity.Comp))
                 return;
 
-            component.TimeOfDeath = value;
+            if (entity.Comp.TimeOfDeath == value)
+                return;
+
+            entity.Comp.TimeOfDeath = value;
+            Dirty(entity);
+        }
+
+        [Obsolete("Use the Entity<GhostComponent?> overload")]
+        public void SetTimeOfDeath(EntityUid uid, TimeSpan value, GhostComponent? component)
+        {
+            SetTimeOfDeath((uid, component), value);
         }
 
         public void SetCanReturnToBody(Entity<GhostComponent?> entity, bool value)
