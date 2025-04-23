@@ -10,7 +10,7 @@
     nameSegments:
     - NamesXenoborg
   - type: Sprite
-    sprite: sprite: Mobs/Silicon/chassis.rsi
+    sprite: Mobs/Silicon/chassis.rsi
   - type: Reactive
     groups:
       Acidic: [Touch]
