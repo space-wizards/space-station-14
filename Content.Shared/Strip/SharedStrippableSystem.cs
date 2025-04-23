@@ -19,6 +19,7 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 using Content.Shared.Movement.Pulling.Systems;
+using Content.Shared.Damage.Components;
 
 namespace Content.Shared.Strip;
 
@@ -835,6 +836,14 @@ public abstract class SharedStrippableSystem : EntitySystem
             var reducedTime = TimeSpan.FromSeconds(targetEv.Time.TotalSeconds * 0.5);
             return (reducedTime, targetEv.Stealth);
         }
+
+        // Starlight: Check if target is in stamina crit to reduce strip time
+        if (TryComp<StaminaComponent>(targetPlayer, out var stamina) && stamina.Critical)
+        {
+            var reducedTime = TimeSpan.FromSeconds(targetEv.Time.TotalSeconds * 0.25);
+            return (reducedTime, targetEv.Stealth);
+        }
+        // Starlight End
 
         return (targetEv.Time, targetEv.Stealth);
     }
