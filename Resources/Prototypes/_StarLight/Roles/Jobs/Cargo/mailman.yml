@@ -13,8 +13,6 @@
   access:
   - Cargo
   - Maintenance
-  extendedAccess:
-  - Salvage
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: BoxingDay
