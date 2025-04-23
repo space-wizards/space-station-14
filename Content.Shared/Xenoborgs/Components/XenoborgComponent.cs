@@ -4,4 +4,4 @@ namespace Content.Shared.Xenoborgs.Components;
 /// This component for now is being used for the pinpointer, but it will recieve more stuff in the future.
 /// </summary>
 [RegisterComponent]
-public sealed partial class Mothership : Component;
+public sealed partial class XenoborgMothership : Component;
