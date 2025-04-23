@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Client.Replay.UI;
 using Content.Shared.Verbs;
+using Robust.Client.Replays;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -39,20 +40,19 @@ public sealed partial class ReplaySpectatorSystem
             return;
         }
 
+        var isActor = TryComp(target, out ActorComponent? actor);
+
         EnsureComp<ReplaySpectatorComponent>(target);
-        if (TryComp(target, out ActorComponent? actor))
-            _player.SetLocalSession(actor.PlayerSession);
+        EnsureComp<ReplayCameraComponent>(target).IsActorInReplay = isActor;
+
+        if (isActor)
+            _player.SetLocalSession(actor!.PlayerSession);
         else
             _player.SetAttachedEntity(_player.LocalSession, target);
 
         _stateMan.RequestStateChange<ReplaySpectateEntityState>();
-        if (old == null)
-            return;
 
-        if (IsClientSide(old.Value))
-            Del(old.Value);
-        else
-            RemComp<ReplaySpectatorComponent>(old.Value);
+        StopSpectatingOld(old);
     }
 
     public TransformComponent SpawnSpectatorGhost(EntityCoordinates coords, bool gridAttach)
@@ -64,6 +64,7 @@ public sealed partial class ReplaySpectatorSystem
         var ent = Spawn("ReplayObserver", coords);
         _eye.SetMaxZoom(ent, Vector2.One * 5);
         EnsureComp<ReplaySpectatorComponent>(ent);
+        EnsureComp<ReplayCameraComponent>(ent);
 
         var xform = Transform(ent);
 
@@ -72,13 +73,7 @@ public sealed partial class ReplaySpectatorSystem
 
         _player.SetAttachedEntity(session, ent);
 
-        if (old != null)
-        {
-            if (IsClientSide(old.Value))
-                QueueDel(old.Value);
-            else
-                RemComp<ReplaySpectatorComponent>(old.Value);
-        }
+        StopSpectatingOld(old);
 
         _stateMan.RequestStateChange<ReplayGhostState>();
 
@@ -112,6 +107,22 @@ public sealed partial class ReplaySpectatorSystem
         }
 
         SpectateEntity(uid);
+    }
+
+    private void StopSpectatingOld(EntityUid? old)
+    {
+        if (old == null)
+            return;
+
+        if (IsClientSide(old.Value))
+        {
+            QueueDel(old.Value);
+        }
+        else
+        {
+            RemComp<ReplaySpectatorComponent>(old.Value);
+            RemComp<ReplayCameraComponent>(old.Value);
+        }
     }
 
     private CompletionResult SpectateCompletions(IConsoleShell shell, string[] args)
