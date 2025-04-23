@@ -120,6 +120,9 @@
   id: SprayPainter
 
 - type: Tag
+  id: Suppy
+
+- type: Tag
   id: VapeCart
 
 - type: Tag
