@@ -70,3 +70,14 @@ book-text-combat-bakery-kit = Thank you for choosing our combat bakery kit!
       Butter Slice x 1
       Glass Shard x 1
       Cook Time: 5 seconds
+
+book-text-moproach = Congratulations on receiving your personal moproach kit! Perfect solution in case of a blood bath at your station.
+    Contents:
+    - two moproach cubes
+    - two purple caps
+    - this manual
+    Instructions:
+    - take a cube
+    - pour water on it
+    - put the cap on the moth
+    Done! You got your own personal moth, just don't forget to feed it!

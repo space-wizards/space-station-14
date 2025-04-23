@@ -22,6 +22,7 @@ using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Physics;
+using Content.Shared.Stunnable;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Turrets;
 using Content.Shared.Weapons.Melee;
@@ -365,6 +366,10 @@ public sealed class NPCUtilitySystem : EntitySystem
                     if (TryComp(targetUid, out FlammableComponent? fire) && fire.OnFire)
                         return 1f;
                     return 0f;
+                }
+            case TargetIsStunnedCon:
+                {
+                    return HasComp<StunnedComponent>(targetUid) ? 1f : 0f;
                 }
             case TurretTargetingCon:
                 {

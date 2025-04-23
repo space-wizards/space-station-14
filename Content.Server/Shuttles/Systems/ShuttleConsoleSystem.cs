@@ -24,6 +24,7 @@ using Content.Shared.UserInterface;
 using Serilog;
 using Robust.Shared.Localization;
 using Content.Server.Botany.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -47,6 +48,9 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
     private readonly HashSet<Entity<ShuttleConsoleComponent>> _consoles = new();
     private ISawmill _sawmill = default!;
+
+    private static readonly ProtoId<TagPrototype> CanPilotTag = "CanPilot";
+
     public override void Initialize()
     {
         _sawmill = _log.GetSawmill("ftl");
@@ -173,7 +177,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
     private bool TryPilot(EntityUid user, EntityUid uid)
     {
-        if (!_tags.HasTag(user, "CanPilot") ||
+        if (!_tags.HasTag(user, CanPilotTag) ||
             !TryComp<ShuttleConsoleComponent>(uid, out var component) ||
             !this.IsPowered(uid, EntityManager) ||
             !Transform(uid).Anchored ||

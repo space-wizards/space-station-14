@@ -10,6 +10,12 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 62000 # 20 hrs
+    - !type:AnyFlagsRequirement
+      flags:
+      - Staff
+      - Mentor
+      - ExtRoles
+      - Retiree
   startingGear: BlueShieldGear
   icon: JobIconBlueShield
   supervisors: job-supervisors-centcom

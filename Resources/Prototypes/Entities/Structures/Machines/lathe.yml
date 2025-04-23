@@ -427,6 +427,8 @@
     - StarlightSecurityAmmoStatic
     - SecurityWeaponsStatic
     dynamicPacks:
+    - SalvageSecurityBoards
+    - SalvageSecurityWeapons
     - StarlightDefenseStatic
     - StarlightSecurityEquipment
     - StarlightSecurityBoards
