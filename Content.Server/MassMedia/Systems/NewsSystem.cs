@@ -380,6 +380,7 @@ public sealed class NewsSystem : SharedNewsSystem
             var embed = new WebhookEmbed
             {
                 Title = article.Title,
+                // There is no need to cut article content. It's MaxContentLength smaller then discord's limit (4096):
                 Description = FormattedMessage.RemoveMarkupPermissive(article.Content),
                 Color = _webhookEmbedColor.ToArgb() & 0xFFFFFF, // HACK: way to get hex without A (transparency)
                 Footer = new WebhookEmbedFooter
