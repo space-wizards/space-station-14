@@ -100,7 +100,11 @@ public abstract partial class SharedPuddleSystem : EntitySystem
                 _solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName,
                     ref entity.Comp.Solution, out var solution))
             {
-                if (!isEvaporationBlocked)
+                if (isEvaporationBlocked)
+                {
+                    args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
+                }
+                else
                 {
                     if (CanFullyEvaporate(solution))
                         args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating"));
@@ -109,8 +113,6 @@ public abstract partial class SharedPuddleSystem : EntitySystem
                     else
                         args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
                 }
-                else
-                    args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
             }
             else
                 args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
