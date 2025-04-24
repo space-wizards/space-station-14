@@ -8,13 +8,25 @@
   },
     "states": [
         {
-            "name": "icon"
+            "name": "water-balloon-1"
         },
         {
-            "name": "icon_inflated"
+            "name": "water-balloon-2"
         },
         {
-            "name": "water_balloon_box"
+            "name": "water-balloon-3"
+        },
+        {
+            "name": "water-balloon-4"
+        },
+        {
+            "name": "water-balloon-5"
+        },
+        {
+            "name": "water-balloon-6"
+        },
+        {
+            "name": "water-balloon-box"
         },
         {
             "name": "water-balloon-box-inhand-left",

@@ -4,16 +4,22 @@
   name: empty water balloon
   description: Fill it up to reveal it's true color!
   components:
+  - type: Appearance
   - type: Sprite
     sprite: Objects/Fun/water_balloons.rsi
     layers:
-    - state: icon
+    - state: water-balloon-1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
   - type: Item
     size: Tiny
   - type: SolutionContainerManager
     solutions:
       balloon:
-        maxVol: 10
+        maxVol: 50
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: water-balloon-
+    emptySpriteName: water-balloon-1
   - type: DrawableSolution
     solution: balloon
   - type: RefillableSolution
@@ -24,5 +30,22 @@
     solution: balloon
   - type: Spillable
     solution: balloon
-
-
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/Fluids/splash.ogg
+      - !type:SpillBehavior { }
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: DamageOnLand
+    ignoreResistances: true
+    damage:
+      types:
+        Blunt: 5
