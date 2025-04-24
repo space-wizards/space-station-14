@@ -84,7 +84,7 @@
   suffix: Genpop Enter
   components:
   - type: AccessReader
-    access: [["GenpopEnter"]]
+    access: [["GenpopEnter"], ["Security"]]
 
 - type: entity
   id: TurnstileGenpopLeave
@@ -92,4 +92,4 @@
   suffix: Genpop Leave
   components:
   - type: AccessReader
-    access: [["GenpopLeave"]]
+    access: [["GenpopLeave"], ["Security"]]
