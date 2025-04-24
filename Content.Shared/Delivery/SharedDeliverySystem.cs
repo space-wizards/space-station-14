@@ -210,7 +210,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
     protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }
 
-    protected virtual void HandlePenalty(Entity<DeliveryComponent> ent, string? reasonLoc = null) { }
+    protected virtual void HandlePenalty(Entity<DeliveryComponent> ent, string? reason = null) { }
 
     protected virtual void SpawnDeliveries(Entity<DeliverySpawnerComponent?> ent) { }
 }

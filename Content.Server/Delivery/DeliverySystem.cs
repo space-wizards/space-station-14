@@ -32,11 +32,6 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
     /// <summary>
-    /// Name to use if the <see cref="DeliveryComponent.PenaltyBankAccount"/> is not set
-    /// </summary>
-    private static readonly LocId UnknownAccount = "delivery-penalty-default-account-name";
-
-    /// <summary>
     /// Default reason to use if the penalization is triggered
     /// </summary>
     private static readonly LocId DefaultMessage = "delivery-penalty-default-reason";
@@ -99,7 +94,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     /// </summary>
     /// <param name="ent">The delivery for which to run the penalty.</param>
     /// <param name="reasonLoc">The penalty reason, displayed in front of the message.</param>
-    protected override void HandlePenalty(Entity<DeliveryComponent> ent, string? reasonLoc = null)
+    protected override void HandlePenalty(Entity<DeliveryComponent> ent, string? reason = null)
     {
         if (!TryComp<StationBankAccountComponent>(ent.Comp.RecipientStation, out var stationAccount))
             return;
@@ -107,15 +102,14 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (ent.Comp.WasPenalized)
             return;
 
+        if (!_protoMan.TryIndex(ent.Comp.PenaltyBankAccount, out var accountInfo))
+            return;
+
         var multiplier = GetDeliveryMultiplier(ent);
 
-        var accountName = _protoMan.TryIndex(ent.Comp.PenaltyBankAccount, out var accountInfo) &&
-                   Loc.TryGetString(accountInfo.Name, out var localizedAccountName)
-                  ? localizedAccountName
-                  : Loc.GetString(UnknownAccount);
+        var localizedAccountName = Loc.GetString(accountInfo.Name);
 
-        if (reasonLoc == null || !Loc.TryGetString(reasonLoc, out var reason))
-            reason = Loc.GetString(DefaultMessage);
+        reason ??= Loc.GetString(DefaultMessage);
 
         var dist = new Dictionary<ProtoId<CargoAccountPrototype>, double>()
         {
@@ -134,10 +128,11 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
             -calculatedPenalty,
             dist);
 
-        var message = Loc.GetString("delivery-penalty-message", ("reason", reason), ("spesos", calculatedPenalty), ("account", accountName.ToUpper()));
+        var message = Loc.GetString("delivery-penalty-message", ("reason", reason), ("spesos", calculatedPenalty), ("account", localizedAccountName.ToUpper()));
         _chat.TrySendInGameICMessage(ent, message, InGameICChatType.Speak, hideChat: true);
 
         ent.Comp.WasPenalized = true;
+        DirtyField(ent.Owner, ent.Comp, nameof(DeliveryComponent.WasPenalized));
     }
 
     private float GetDeliveryMultiplier(Entity<DeliveryComponent> ent)
