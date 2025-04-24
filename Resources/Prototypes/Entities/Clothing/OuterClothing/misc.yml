@@ -13,8 +13,9 @@
     - Apron
 
 - type: entity
-  parent: ClothingOuterApron
+  parent: ClothingOuterStorageBase
   id: ClothingOuterApronBar
+  name: apron
   suffix: Bartender
   description: A darker apron designed for bartenders.
   components:
@@ -22,10 +23,14 @@
     sprite: Clothing/OuterClothing/Misc/apronbar.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apronbar.rsi
+  - type: Tag
+    tags:
+    - Apron
 
 - type: entity
-  parent: ClothingOuterApron
+  parent: ClothingOuterStorageBase
   id: ClothingOuterApronBotanist
+  name: apron
   suffix: Botanical
   description: A thick blue-apron, perfect for insulating your soft flesh from spills, soil and thorns.
   components:
@@ -33,10 +38,14 @@
     sprite: Clothing/OuterClothing/Misc/apronbotanist.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apronbotanist.rsi
+  - type: Tag
+    tags:
+    - Apron
 
 - type: entity
-  parent: ClothingOuterApron
+  parent: ClothingOuterStorageBase
   id: ClothingOuterApronChef
+  name: apron
   suffix: Chef
   description: An apron-jacket used by a high class chef.
   components:
@@ -44,6 +53,9 @@
     sprite: Clothing/OuterClothing/Misc/apronchef.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apronchef.rsi
+  - type: Tag
+    tags:
+    - Apron
 
 - type: entity
   parent: ClothingOuterStorageBase

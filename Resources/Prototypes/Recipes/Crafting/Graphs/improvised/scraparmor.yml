@@ -8,7 +8,7 @@
         steps:
         - tag: Apron
           icon:
-            sprite: Clothing/OuterClothing/Misc/apron.rsi
+            sprite: Clothing/OuterClothing/Misc/apronbotanist.rsi
             state: icon
           name: an apron
         - material: Cable
