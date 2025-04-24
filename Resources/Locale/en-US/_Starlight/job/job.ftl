@@ -4,3 +4,4 @@ job-name-iaa = Internal Affairs Agent
 job-name-blueshield = Officer “Blue Shield”
 job-name-miningspec = Mining Specialist
 job-name-surgeon = Surgeon
+job-name-centcomm = CentComm Official
