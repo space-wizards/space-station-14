@@ -1115,7 +1115,7 @@
     - HandHeldMassScannerBorg
     - HandheldStationMapUnpowered
     - WeaponGrapplingGun
-    - InfiniteJetpack
+    - JetpackXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-space-movement-module }
 
@@ -1132,7 +1132,7 @@
   - type: ItemBorgModule
     items:
     - EnergyDaggerLoudBlue
-    - InfiniteJetpack
+    - JetpackXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-sword-module }
 
@@ -1149,7 +1149,7 @@
   - type: ItemBorgModule
     items:
     - WeaponCrusherDagger
-    - InfiniteJetpack
+    - JetpackXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-sword2-module }
 
