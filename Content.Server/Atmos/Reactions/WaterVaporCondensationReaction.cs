@@ -18,8 +18,8 @@ namespace Content.Server.Atmos.Reactions
         private const float MaxCondensationPressure = 200f;
         private const float MolesToUnitsMultiplier = 2f;
         
-        private static readonly HashSet<TileAtmosphere> _eligibleTiles = new();
-        private static readonly Random _random = new();
+        private static readonly HashSet<TileAtmosphere> EligibleTiles = new();
+        private static readonly Random Random = new();
 
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
         {
@@ -31,42 +31,42 @@ namespace Content.Server.Atmos.Reactions
             if (mixture.Pressure > MaxCondensationPressure)
                 return ReactionResult.NoReaction;
 
-            _eligibleTiles.Add(tile);
+            EligibleTiles.Add(tile);
             return ReactionResult.Reacting;
         }
 
         public static void ProcessEligibleTiles(AtmosphereSystem system)
         {
             // Early exit if no tiles to process
-            if (_eligibleTiles.Count == 0)
+            if (EligibleTiles.Count == 0)
                 return;
 
             // Dynamic processing limit (10% of eligible tiles, capped at MaxTilesCap)
-            int dynamicLimit = (int)Math.Ceiling(_eligibleTiles.Count * 0.1);
-            int maxTilesThisTick = Math.Min(dynamicLimit, MaxTilesCap);
+            var dynamicLimit = Math.Min((int)Math.Ceiling(EligibleTiles.Count * 0.1), MaxTilesCap);
+            var processedAmount = 0;
 
             // Shuffle all the tiles so that the system does not select the same tiles every tick
-            var tilesList = _eligibleTiles.ToList();
-            for (int i = tilesList.Count - 1; i > 0; i--)
+            var tilesList = EligibleTiles.ToList();
+            for (var i = tilesList.Count - 1; i > 0; i--)
             {
-                int j = _random.Next(i + 1);
-                var temp = tilesList[i];
-                tilesList[i] = tilesList[j];
-                tilesList[j] = temp;
+                var j = Random.Next(i + 1);
+                (tilesList[i], tilesList[j]) = (tilesList[j], tilesList[i]);
             }
-            _eligibleTiles.Clear();
+            EligibleTiles.Clear();
 
             // Process each tile
             foreach (var tile in tilesList)
             {
+                // Limit
+                if (processedAmount >= dynamicLimit)
+                    break;
+
                 // Protection against NullReferenceException
                 if (tile.Air?.GetMoles(GasId) is not > 0)
                     continue;
 
                 // Get tile reference
                 var tileRef = system.GetTileRef(tile);
-                if (tileRef == null)
-                    continue;
 
                 // Calculate
                 float currentMoles = tile.Air.GetMoles(GasId);
@@ -78,6 +78,8 @@ namespace Content.Server.Atmos.Reactions
 
                 // Adjust gas mixture
                 tile.Air.AdjustMoles(GasId, -amountToCondense);
+
+                processedAmount++;
             }
         }
     }
