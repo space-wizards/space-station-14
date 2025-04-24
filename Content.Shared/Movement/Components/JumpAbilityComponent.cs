@@ -6,10 +6,11 @@ namespace Content.Shared.Movement.Components;
 
 /// <summary>
 /// A component for configuring the settings for the jump action.
-/// To give the jump action to an entity use <see cref="ActionGrantComponent"/> and <see cref="ItemActionGrantComponent"/>.
+/// To give the jump action to an entity use <see cref="ActionGrantComponent"/>.
 /// The basic action prototype is "ActionGravityJump".
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedJumpAbilitySystem))]
 public sealed partial class JumpAbilityComponent : Component
 {
     /// <summary>
