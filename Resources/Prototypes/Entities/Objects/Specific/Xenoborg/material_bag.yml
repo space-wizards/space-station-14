@@ -23,7 +23,7 @@
     areaInsert: true
     whitelist:
       tags:
-        - Sheet
-        - RawMaterial
-        - Ingot
+      - Sheet
+      - RawMaterial
+      - Ingot
   - type: Dumpable
