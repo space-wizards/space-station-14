@@ -19,4 +19,11 @@ public sealed partial class SSDIndicatorComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public ProtoId<SsdIconPrototype> Icon = "SSDIcon";
+
+    /// <summary>
+    /// imp. used to keep track of whether or not a body has *ever* had a player attached to it, after the player has left. 
+    /// used in GhostSystem.GetPlayerWarps
+    /// </summary>
+    [AutoNetworkedField]
+    public bool HasHadPlayer;
 }

@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Server.Access.Systems; //imp
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
@@ -9,7 +10,6 @@ using Content.Server.Roles.Jobs;
 using Content.Server.Warps;
 using Content.Shared._Impstation.Ghost;
 using Content.Shared.Actions;
-using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -19,7 +19,6 @@ using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
-using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
@@ -29,6 +28,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
+using Content.Shared.SSDIndicator; //imp
 using Content.Shared.Storage.Components;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
@@ -71,6 +71,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly NameModifierSystem _nameMod = default!;
+        [Dependency] private readonly IdCardSystem _id = default!; // imp. used for identifying dead players' jobs
 
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -383,20 +384,24 @@ namespace Content.Server.Ghost
                 TryComp<MindContainerComponent>(attached, out var mind);
 
                 var jobName = _jobs.MindTryGetJobName(mind?.Mind);
-                var isGhost = TryComp<GhostComponent>(attached, out var ghost) && ghost.CanGhostInteract == false; // imp. used in modification to line below. second check is to exclude aghosts
-                var playerInfo = isGhost ? $"{Comp<MetaDataComponent>(attached).EntityName} (Ghost of {jobName})" : $"{Comp<MetaDataComponent>(attached).EntityName} ({jobName})";
+                var isGhostBarPatron = TryComp<GhostBarPatronComponent>(player.AttachedEntity, out _);
+                var playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName} ({(isGhostBarPatron ? "At Ghost Bar" : jobName)})";
 
-                // imp. removed check for alive or crit - so ghosts can warp to other ghosts.
-                yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
+                if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
+                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
             }
 
-            // imp - added this so people can warp to dead crewmates
-            var bodyEnumerator = EntityQueryEnumerator<BodyComponent, MindContainerComponent, HumanoidAppearanceComponent>();
-            while (bodyEnumerator.MoveNext(out var uid, out _, out _, out _))
+            // imp - added this so people can warp to dead players
+            var bodyEnumerator = EntityQueryEnumerator<SSDIndicatorComponent>();
+            while (bodyEnumerator.MoveNext(out var uid, out var ssdIndicator))
             {
-                if (_mobState.IsDead(uid))
+                if (ssdIndicator.HasHadPlayer && ssdIndicator.IsSSD)
                 {
-                    var info = $"{Comp<MetaDataComponent>(uid).EntityName} (Dead)";
+                    var status = _mobState.IsDead(uid) ? "Dead" : "SSD";
+
+                    var info = _id.TryFindIdCard(uid, out var idCard) && idCard.Comp.LocalizedJobTitle != null ?
+                    $"{Comp<MetaDataComponent>(uid).EntityName} ({idCard.Comp.LocalizedJobTitle}, {status})" : $"{Comp<MetaDataComponent>(uid).EntityName} ({status})";
+
                     yield return new GhostWarp(GetNetEntity(uid), info, false);
                 }
             }

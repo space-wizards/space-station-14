@@ -16,6 +16,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
     private void OnPlayerAttached(EntityUid uid, SSDIndicatorComponent component, PlayerAttachedEvent args)
     {
         component.IsSSD = false;
+        component.HasHadPlayer = true; // imp
         Dirty(uid, component);
     }
 
