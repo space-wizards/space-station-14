@@ -5119,4 +5119,11 @@ Entries:
   id: 709
   time: '2025-04-24T04:33:09.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/526
+- author: Happyrobot33
+  changes:
+  - message: CC Faxes go directly to aghosts aswell instead of just CC.
+    type: Add
+  id: 710
+  time: '2025-04-24T05:03:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/530
 
