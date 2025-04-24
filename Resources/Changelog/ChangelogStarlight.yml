@@ -5084,4 +5084,18 @@ Entries:
   id: 704
   time: '2025-04-24T04:25:28.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/521
+- author: Happyrobot33
+  changes:
+  - message: Added Centcomm Hud and Glasses.
+    type: Add
+  id: 705
+  time: '2025-04-24T04:28:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/485
+- author: Happyrobot33
+  changes:
+  - message: Added Centcomm job icon.
+    type: Add
+  id: 706
+  time: '2025-04-24T04:28:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/485
 
