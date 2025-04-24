@@ -11,6 +11,11 @@
     sprite: Clothing/Neck/Misc/pins.rsi
   - type: Clothing
     sprite: Clothing/Neck/Misc/pins.rsi
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingGenderPinBase
+  abstract: true
   - type: ChameleonClothing
     slot: Neck
 #    default: ClothingNeckLGBTPin
@@ -26,7 +31,7 @@
     - Gender
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckLGBTPin
   name: LGBT pin
   description: Be gay do crime.
@@ -37,7 +42,7 @@
     equippedPrefix: lgbt
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckAllyPin
   name: straight ally pin
   description: Be ally do crime.
@@ -48,7 +53,7 @@
     equippedPrefix: ally
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckAromanticPin
   name: aromantic pin
   description: Be aro do crime.
@@ -59,7 +64,7 @@
     equippedPrefix: aro
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckAroacePin
   name: aroace pin
   description: Be aroace do crime.
@@ -70,7 +75,7 @@
     equippedPrefix: aroace
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckAsexualPin
   name: asexual pin
   description: Be ace do crime.
@@ -81,7 +86,7 @@
     equippedPrefix: asex
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckBisexualPin
   name: bisexual pin
   description: Be bi do crime.
@@ -92,7 +97,7 @@
     equippedPrefix: bi
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckGayPin
   name: gay pin
   description: Be gay~ do crime.
@@ -103,7 +108,7 @@
     equippedPrefix: gay
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckIntersexPin
   name: intersex pin
   description: Be intersex do crime.
@@ -114,7 +119,7 @@
     equippedPrefix: inter
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckLesbianPin
   name: lesbian pin
   description: Be lesbian do crime.
@@ -125,7 +130,7 @@
     equippedPrefix: les
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckNonBinaryPin
   name: non-binary pin
   description: "01100010 01100101 00100000 01100101 01101110 01100010 01111001 00100000 01100100 01101111 00100000 01100011 01110010 01101001 01101101 01100101"
@@ -136,7 +141,7 @@
     equippedPrefix: non
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckPansexualPin
   name: pansexual pin
   description: Be pan do crime.
@@ -147,7 +152,7 @@
     equippedPrefix: pan
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckPluralPin
   name: plural pin
   description: Be plural, do crimes.
@@ -158,7 +163,7 @@
     equippedPrefix: plural
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckOmnisexualPin
   name: omnisexual pin
   description: Be omni do crime.
@@ -169,7 +174,7 @@
     equippedPrefix: omni
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckGenderqueerPin
   name: genderqueer pin
   description: be crime, do gender
@@ -180,7 +185,7 @@
     equippedPrefix: gender
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckGenderfluidPin
   name: genderfluid pin
   description: be gender, be fluid
@@ -191,7 +196,7 @@
     equippedPrefix: fluid
 
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingGenderPinBase
   id: ClothingNeckTransPin
   name: transgender pin
   description: Be trans do crime.
