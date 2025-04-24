@@ -93,10 +93,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.80
-        Slash: 0.75
-        Piercing: 0.75
-        Heat: 0.90
+        Blunt: 0.95
+        Slash: 0.85
+        Piercing: 1
+        Heat: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.90
   - type: Clothing
@@ -125,12 +125,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.80
-        Slash: 0.75
-        Piercing: 0.75
-        Heat: 0.90
+        Blunt: 0.70
+        Slash: 0.60
+        Piercing: 0.80
+        Heat: 0.45
   - type: ExplosionResistance
-    damageCoefficient: 0.90
+    damageCoefficient: 0.80
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
     clothingVisuals:
@@ -717,12 +717,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.80
+        Blunt: 0.85
         Slash: 0.75
-        Piercing: 0.75
-        Heat: 0.90
+        Piercing: 0.95
+        Heat: 0.65
   - type: ExplosionResistance
-    damageCoefficient: 0.90
+    damageCoefficient: 0.85
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
     clothingVisuals:
