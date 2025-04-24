@@ -1,3 +1,42 @@
+- type: entityTable
+  id: FilingCabinetFillTable
+  table: !type:AllSelector
+    children:
+    - !type:GroupSelector
+      rolls: !type:RangeNumberSelector
+        range: 2, 4
+      children:
+      - id: BoxFolderBlue
+      - id: BoxFolderRed
+      - id: BoxFolderYellow
+      - id: BoxFolderWhite
+      - id: BoxFolderGrey
+      - id: BoxFolderBlack
+    - !type:GroupSelector
+      rolls: !type:RangeNumberSelector
+        range: 0, 3
+      children:
+      - id: Paper
+      - id: PaperOffice
+    - !type:GroupSelector
+      prob: .3
+      rolls: !type:ConstantNumberSelector
+        value: 2
+      children:
+      - id: Pen
+    - !type:GroupSelector
+      prob: 0.15
+      children:
+      - !type:AllSelector
+        weight: 0.2
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+      - id: RubberStampGreytide
+        weight: 0.1
+      - id: LuxuryPen
+      - id: NanoTaskCartridge
+
 - type: entity
   parent: [ BaseStructureDynamic, BaseBagOpenClose ]
   id: BaseFilingCabinet
@@ -9,11 +48,6 @@
     grid:
     - 0,0,9,3
     maxItemSize: Normal
-    whitelist:
-      tags:
-        - Document
-        - Folder
-        - Write
   - type: Sprite
     sprite: Structures/Storage/cabinets.rsi
     noRot: true
@@ -97,9 +131,6 @@
   id: filingCabinetDrawer
   description: A small drawer for all your filing needs, Now with wheels!
   components:
-  - type: Storage
-    grid:
-    - 0,0,7,2
   - type: Sprite
     state: chestdrawer
     layers:
@@ -126,25 +157,10 @@
   id: BaseBureaucraticStorageFill
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: Pen
-        prob: 0.5
-      - id: PaperOffice
-        amount: 1
-        maxAmount: 3
-      - id: BoxFolderBlue
-        orGroup: Folder
-      - id: BoxFolderRed
-        orGroup: Folder
-      - id: BoxFolderYellow
-        orGroup: Folder
-      - id: BoxFolderWhite
-        orGroup: Folder
-      - id: BoxFolderGrey
-        orGroup: Folder
-      - id: BoxFolderBlack
-        orGroup: Folder
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: FilingCabinetFillTable
 
 - type: entity
   parent: [BaseBureaucraticStorageFill, filingCabinet]

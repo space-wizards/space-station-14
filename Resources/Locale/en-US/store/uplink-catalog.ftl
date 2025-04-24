@@ -311,6 +311,9 @@ uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed.
 uplink-cluwne-bombs-name = Cluwne Bombs
 uplink-cluwne-bombs-desc = A set of 1 real and 5 decoy laughing explosives. They come in that order, so don't mix them up!
 
+uplink-saw-advanced-name = Advanced Circular Saw
+uplink-saw-advanced-desc = A bleeding-edge surgical implement designed to cut through flesh and bone alike.
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!

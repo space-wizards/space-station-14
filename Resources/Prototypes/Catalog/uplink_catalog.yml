@@ -980,18 +980,19 @@
   categories:
   - UplinkDisruption
 
-- type: listing
-  id: UplinkDuffelSurgery
-  name: uplink-duffel-surgery-name
-  description: uplink-duffel-surgery-desc
-  productEntity: ClothingBackpackDuffelSyndicateFilledMedical
-  discountCategory: usualDiscounts
-  discountDownTo:
-    Telecrystal: 2
-  cost:
-    Telecrystal: 4
-  categories:
-  - UplinkDisruption
+# Note: Removed for the time being until surgery/newmed is added. Considered bloat until then.
+# - type: listing
+#   id: UplinkDuffelSurgery
+#   name: uplink-duffel-surgery-name
+#   description: uplink-duffel-surgery-desc
+#   productEntity: ClothingBackpackDuffelSyndicateFilledMedical
+#   discountCategory: usualDiscounts
+#   discountDownTo:
+#     Telecrystal: 2
+#   cost:
+#     Telecrystal: 4
+#   categories:
+#   - UplinkDisruption
 
 - type: listing
   id: UplinkPowerSink
@@ -2185,6 +2186,9 @@
   description: uplink-cluwne-bombs-desc
   icon: { sprite: Objects/Weapons/Bombs/cluwne_bomb.rsi, state: icon}
   productEntity: BriefcaseSyndieCluwneBombBundleFilled
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 4
   cost:
     Telecrystal: 6
   categories:
@@ -2195,3 +2199,21 @@
     - Clown
     - Mime
     - Passenger
+    
+- type: listing
+  id: UplinkSawAdvanced
+  name: uplink-saw-advanced-name
+  description: uplink-saw-advanced-desc
+  icon: { sprite:  Objects/Specific/Medical/Surgery/saw.rsi, state: advanced}
+  productEntity: SawAdvanced
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 1
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - MedicalDoctor
