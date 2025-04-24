@@ -96,7 +96,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
             var isEvaporationBlocked = TryComp<PreventEvaporationComponent>(entity, out var prevent) && prevent.Active;
 
-            if (TryComp<EvaporationComponent>(entity, out var evaporation) &&
+            if (HasComp<EvaporationComponent>(entity) &&
                 _solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName,
                     ref entity.Comp.Solution, out var solution))
             {
