@@ -6,6 +6,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tools.Components;
 
+/// <summary>
+/// Component responsible for simple tool interactions.
+/// Using a tool with the correct quality on an entity with this component will start a doAfter and raise events.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SimpleToolUsageSystem))]
 public sealed partial class SimpleToolUsageComponent : Component
@@ -17,7 +21,7 @@ public sealed partial class SimpleToolUsageComponent : Component
     public ProtoId<ToolQualityPrototype> Quality = "Slicing";
 
     /// <summary>
-    /// The duration using a tool on this entity will take.
+    /// The duration using a tool on this entity will take in seconds.
     /// </summary>
     [DataField]
     public float DoAfter = 5;

@@ -11,9 +11,10 @@ public sealed partial class SimpleToolUsageSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedToolSystem _tools = default!;
 
-
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<SimpleToolUsageComponent, AfterInteractUsingEvent>(OnAfterInteract);
         SubscribeLocalEvent<SimpleToolUsageComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
     }
@@ -26,21 +27,7 @@ public sealed partial class SimpleToolUsageSystem : EntitySystem
         if (!_tools.HasQuality(args.Used, ent.Comp.Quality))
             return;
 
-        var evattempt = new AttemptSimpleToolUseEvent(args.User);
-        RaiseLocalEvent(ent, ref evattempt);
-
-        if (evattempt.Cancelled)
-            return;
-
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.DoAfter, new SimpleToolDoAfterEvent(), ent, args.Used)
-        {
-            BreakOnDamage = true,
-            BreakOnDropItem = true,
-            BreakOnMove = true,
-            BreakOnHandChange = true,
-        };
-
-        _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        AttemptToolUsage(ent, args.User, args.Used);
     }
 
     public void OnGetInteractionVerbs(Entity<SimpleToolUsageComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
@@ -60,21 +47,8 @@ public sealed partial class SimpleToolUsageSystem : EntitySystem
         {
             Act = () =>
             {
-                var ev = new AttemptSimpleToolUseEvent(user);
-                RaiseLocalEvent(ent, ref ev);
-
-                if (ev.Cancelled)
-                    return;
-
-                var doAfterArgs = new DoAfterArgs(EntityManager, user, ent.Comp.DoAfter, new SimpleToolDoAfterEvent(), ent, used)
-                {
-                    BreakOnDamage = true,
-                    BreakOnDropItem = true,
-                    BreakOnMove = true,
-                    BreakOnHandChange = true,
-                };
-
-                _doAfterSystem.TryStartDoAfter(doAfterArgs);
+                if (used != null)
+                    AttemptToolUsage(ent, user, used.Value);
             },
             Disabled = disabled,
             Message = disabled ? Loc.GetString(ent.Comp.BlockedMessage, ("quality", ent.Comp.Quality)) : null,
@@ -82,5 +56,24 @@ public sealed partial class SimpleToolUsageSystem : EntitySystem
         };
 
         args.Verbs.Add(verb);
+    }
+
+    private void AttemptToolUsage(Entity<SimpleToolUsageComponent> ent, EntityUid user, EntityUid tool)
+    {
+        var attemptEv = new AttemptSimpleToolUseEvent(user);
+        RaiseLocalEvent(ent, ref attemptEv);
+
+        if (attemptEv.Cancelled)
+            return;
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, ent.Comp.DoAfter, new SimpleToolDoAfterEvent(), ent, tool)
+        {
+            BreakOnDamage = true,
+            BreakOnDropItem = true,
+            BreakOnMove = true,
+            BreakOnHandChange = true,
+        };
+
+        _doAfterSystem.TryStartDoAfter(doAfterArgs);
     }
 }
