@@ -219,7 +219,12 @@ public abstract class SharedDeliverySystem : EntitySystem
 /// Used to gather the multiplier from all different delivery components.
 /// </summary>
 [ByRefEvent]
-public record struct GetDeliveryMultiplierEvent(float Multiplier = 1.0f);
+public record struct GetDeliveryMultiplierEvent(float Multiplier)
+{
+    // we can't use an optional parameter because the default parameterless constructor defaults everything
+
+    public GetDeliveryMultiplierEvent() : this(1.0f) { }
+}
 
 /// <summary>
 /// Event raised on the delivery when it is unlocked.
