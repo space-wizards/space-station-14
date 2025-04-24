@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Voxes can now honk, weh, and hew if forced to by a reagent.
-    type: Fix
-  - message: Arachnids and Moths can now honk if forced to by a reagent.
-    type: Fix
-  id: 7832
-  time: '2025-01-20T00:21:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33777
 - author: K-Dynamic
   changes:
   - message: Welding gas masks are now toggleable like other breathing masks.
@@ -3930,3 +3921,11 @@
   id: 8333
   time: '2025-04-24T17:41:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36750
+- author: ScarKy0, Jbsundown
+  changes:
+  - message: Letters and Packages can now be cut open with sharp objects. Be wary,
+      this makes cargo lose money!
+    type: Add
+  id: 8334
+  time: '2025-04-24T19:47:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36815
