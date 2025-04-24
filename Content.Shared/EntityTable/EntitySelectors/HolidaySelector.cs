@@ -8,7 +8,7 @@ namespace Content.Shared.EntityTable.EntitySelectors;
 /// </summary>
 public sealed partial class HolidaySelector : EntityTableSelector
 {
-    [Dependency] private readonly HolidaySystem _holiday = default!;
+    [Dependency] private readonly SharedHolidaySystem _holiday = default!;
 
     /// <summary>
     /// Holiday prototype ID

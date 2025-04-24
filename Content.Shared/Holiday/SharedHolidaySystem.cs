@@ -1,43 +1,54 @@
 using System.Linq;
-using Content.Shared.CCVar;
-using Robust.Shared.Configuration;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Holiday
 {
-    public sealed class HolidaySystem : EntitySystem
+    public abstract partial class SharedHolidaySystem : EntitySystem
     {
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly INetManager _net = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
+        [ViewVariables]
+        public bool Enabled = true;
 
         [ViewVariables]
         private readonly List<HolidayPrototype> _currentHolidays = new();
         public List<HolidayPrototype> CurrentHolidays => _currentHolidays;
 
-        [ViewVariables]
-        private bool _enabled = true;
-        public bool Enabled => _enabled;
+        private DateTime _currentDate;
 
         public override void Initialize()
         {
-            Subs.CVar(_configManager, CCVars.HolidaysEnabled, OnHolidaysEnableChange);
+            SubscribeNetworkEvent<HolidayEnablingEvent>(OnHolidayCCvarChange);
+            SubscribeNetworkEvent<ProvideWhatDateItIsEvent>(OnDateReceived);
             SubscribeLocalEvent<HolidayVisualsComponent, ComponentInit>(OnVisualsInit);
+
+            RaiseNetworkEvent(new RequestHolidayEnabledEvent()); // for new clients
+            RaiseNetworkEvent(new RequestWhatDateItIsEvent());
+        }
+
+        public void OnHolidayCCvarChange(HolidayEnablingEvent ev)
+        {
+            Enabled = ev.Enabled;
+        }
+
+        public void OnDateReceived(ProvideWhatDateItIsEvent ev)
+        {
+            _currentDate = ev.Date;
         }
 
         public void RefreshCurrentHolidays()
         {
             _currentHolidays.Clear();
 
-            if (!_enabled)
+            if (Enabled)
             {
                 RaiseLocalEvent(new HolidaysRefreshedEvent(Enumerable.Empty<HolidayPrototype>()));
                 return;
             }
 
-            var now = DateTime.Now;
+            RaiseNetworkEvent(new RequestWhatDateItIsEvent());
+            var now = _currentDate;
 
             foreach (var holiday in _prototypeManager.EnumeratePrototypes<HolidayPrototype>())
             {
@@ -50,15 +61,8 @@ namespace Content.Shared.Holiday
             RaiseLocalEvent(new HolidaysRefreshedEvent(_currentHolidays));
         }
 
-        public void DoCelebrate()
+        public virtual void DoCelebrate()
         {
-            foreach (var holiday in _currentHolidays)
-            {
-                if (_net.IsServer)
-                {
-                    holiday.Celebrate();
-                }
-            }
         }
 
         public IEnumerable<HolidayPrototype> GetCurrentHolidays()
@@ -72,13 +76,6 @@ namespace Content.Shared.Holiday
                 return false;
 
             return _currentHolidays.Contains(prototype);
-        }
-
-        private void OnHolidaysEnableChange(bool enabled)
-        {
-            _enabled = enabled;
-
-            RefreshCurrentHolidays();
         }
 
         private void OnVisualsInit(Entity<HolidayVisualsComponent> ent, ref ComponentInit args)

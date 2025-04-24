@@ -10,7 +10,7 @@ public sealed partial class HolidayMapCondition : GameMapCondition
 
     public override bool Check(GameMapPrototype map)
     {
-        var holidaySystem = IoCManager.Resolve<IEntityManager>().System<HolidaySystem>();
+        var holidaySystem = IoCManager.Resolve<IEntityManager>().System<SharedHolidaySystem>();
 
         return Holidays.Any(holiday => holidaySystem.IsCurrentlyHoliday(holiday)) ^ Inverted;
     }

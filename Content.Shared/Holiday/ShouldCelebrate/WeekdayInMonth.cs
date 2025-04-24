@@ -16,7 +16,7 @@ namespace Content.Shared.Holiday.ShouldCelebrate
         public override bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
         {
             // Not the needed month.
-            if (date.Month != (int) holiday.BeginMonth)
+            if (date.Month != (int)holiday.BeginMonth)
                 return false;
 
             // Occurrence NEEDS to be between 1 and 4.
@@ -33,7 +33,7 @@ namespace Content.Shared.Holiday.ShouldCelebrate
                     continue;
                 }
 
-                d = d.AddDays(7 * (_occurrence-1));
+                d = d.AddDays(7 * (_occurrence - 1));
 
                 return date.Day == d.Day;
             }

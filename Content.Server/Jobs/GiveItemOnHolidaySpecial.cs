@@ -24,7 +24,7 @@ namespace Content.Server.Jobs
 
             var sysMan = IoCManager.Resolve<IEntitySystemManager>();
 
-            if (!sysMan.GetEntitySystem<HolidaySystem>().IsCurrentlyHoliday(Holiday))
+            if (!sysMan.GetEntitySystem<SharedHolidaySystem>().IsCurrentlyHoliday(Holiday))
                 return;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
