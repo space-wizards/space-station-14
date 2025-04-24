@@ -262,18 +262,16 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
 
         _config.OnValueChanged(CCVars.ChatWindowOpacity, OnChatWindowOpacityChanged);
 
-        _config.OnValueChanged(CCVars.ChatAutoFillHighlights, (value) => { _autoFillHighlightsEnabled = value; });
-        _autoFillHighlightsEnabled = _config.GetCVar(CCVars.ChatAutoFillHighlights);
+        _config.OnValueChanged(CCVars.ChatAutoFillHighlights, (value) => { _autoFillHighlightsEnabled = value; }, true);
 
-        _config.OnValueChanged(CCVars.ChatHighlightsColor, (value) => { _highlightsColor = value; });
-        _highlightsColor = _config.GetCVar(CCVars.ChatHighlightsColor);
+        _config.OnValueChanged(CCVars.ChatHighlightsColor, (value) => { _highlightsColor = value; }, true);
 
         // Load highlights if any were saved.
         string highlights = _config.GetCVar(CCVars.ChatHighlights);
 
         if (!string.IsNullOrEmpty(highlights))
         {
-            UpdateHighlights(highlights);
+            UpdateHighlights(highlights, true);
         }
     }
 
@@ -309,19 +307,24 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
 
     private void OnCharacterUpdated(CharacterData data)
     {
-        // If the _charInfoIsAttach is false then the character panel was the one
+        // If _charInfoIsAttach is false then the opening of the character panel was the one
         // to generate the event, dismiss it.
         if (!_charInfoIsAttach)
             return;
 
         var (_, job, _, _, entityName) = data;
-        
-        // If the character has a normal name (eg. "Name Surname" and not "Name Initial Surname" or a particular species name) 
-        // subdivide it so that the name and surname individually get highlighted.
-        if (entityName.Count(c => c == ' ') == 1)
-            entityName = entityName.Replace(' ', '\n');
 
-        string newHighlights = entityName;
+        // Mark this entity's name as our character name for the "UpdateHighlights" function.
+        string newHighlights = "@" + entityName;
+        
+        // Subdivide the character's name based on spaces or hyphens so that every word gets highlighted.
+        if (newHighlights.Count(c => (c == ' ' || c == '-')) == 1)
+            newHighlights = newHighlights.Replace("-", "\n@").Replace(" ", "\n@");
+
+        // If the character has a name with more than one hyphen assume it is a lizard name and extract the first and
+        // last name eg. "Eats-The-Food" -> "@Eats" "@Food"
+        if (newHighlights.Count(c => c == '-') > 1)
+            newHighlights = newHighlights.Split('-')[0] + "\n@" + newHighlights.Split('-')[^1];
 
         // Convert the job title to kebab-case and use it as a key for the loc file.
         string jobKey = job.Replace(' ', '-').ToLower();
@@ -665,14 +668,17 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
         }
     }
 
-    public void UpdateHighlights(string highlights)
+    public void UpdateHighlights(string highlights, bool firstload = false)
     {
-        // Do nothing if the provided highlighs are the same as the old ones.
-        if (_config.GetCVar(CCVars.ChatHighlights).Equals(highlights, StringComparison.CurrentCultureIgnoreCase))
+        // Do nothing if the provided highlighs are the same as the old ones and it is not the first time.
+        if (!firstload && _config.GetCVar(CCVars.ChatHighlights).Equals(highlights, StringComparison.CurrentCultureIgnoreCase))
             return;
 
         _config.SetCVar(CCVars.ChatHighlights, highlights);
         _config.SaveToFile();
+
+        // Make sure any name tagged as ours gets highlighted only when others say it.
+        highlights = highlights.Replace("@", "(?<=(?<=/name.*)|(?<=,.*\"\".*))");
 
         // Replace any " character with a whole-word regex tag,
         // this tag will make the words to match are separated by spaces or punctuation.
