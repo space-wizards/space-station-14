@@ -83,6 +83,24 @@ public sealed partial class GeigerComponent : Component
     ///     Played only for current user.
     /// </summary>
     public EntityUid? Stream;
+
+    /// <summary>
+    ///     Mark true if the audio should be heard by everyone around the device
+    /// </summary>
+    [DataField]
+    public bool BroadcastAudio = false;
+
+    /// <summary>
+    ///     The distance within which the broadcast tone can be heard.
+    /// </summary>
+    [DataField]
+    public float BroadcastRange = 4f;
+
+    /// <summary>
+    ///     The volume of the warning tone.
+    /// </summary>
+    [DataField]
+    public float Volume = -4f;
 }
 
 [Serializable, NetSerializable]
