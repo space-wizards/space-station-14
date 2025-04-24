@@ -28,6 +28,12 @@ public sealed partial class SimpleToolUsageComponent : Component
     /// </summary>
     [DataField]
     public LocId? UsageVerb;
+
+    /// <summary>
+    /// The message to show when the verb is disabled.
+    /// </summary>
+    [DataField]
+    public LocId BlockedMessage = "simple-tool-usage-blocked-message";
 }
 
 [ByRefEvent]

@@ -77,6 +77,7 @@ public sealed partial class SimpleToolUsageSystem : EntitySystem
                 _doAfterSystem.TryStartDoAfter(doAfterArgs);
             },
             Disabled = disabled,
+            Message = disabled ? Loc.GetString(ent.Comp.BlockedMessage, ("quality", ent.Comp.Quality)) : null,
             Text = Loc.GetString(ent.Comp.UsageVerb),
         };
 
