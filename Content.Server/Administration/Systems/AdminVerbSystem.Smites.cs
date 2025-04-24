@@ -139,7 +139,7 @@ public sealed partial class AdminVerbSystem
                 _transformSystem.SetMapCoordinates(args.Target, session.Position);
                 _transformSystem.SetWorldRotationNoLerp((args.Target, xform), Angle.Zero);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", chessName, Loc.GetString("admin-smite-chess-dimension-description"))
         };
         args.Verbs.Add(chess);
@@ -163,7 +163,7 @@ public sealed partial class AdminVerbSystem
                     _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-set-alight-others", ("name", args.Target)), xform.Coordinates,
                         Filter.PvsExcept(args.Target), true, PopupType.MediumCaution);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", flamesName, Loc.GetString("admin-smite-set-alight-description"))
             };
             args.Verbs.Add(flames);
@@ -179,7 +179,7 @@ public sealed partial class AdminVerbSystem
             {
                 _polymorphSystem.PolymorphEntity(args.Target, "AdminMonkeySmite");
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", monkeyName, Loc.GetString("admin-smite-monkeyify-description"))
         };
         args.Verbs.Add(monkey);
@@ -194,7 +194,7 @@ public sealed partial class AdminVerbSystem
             {
                 _polymorphSystem.PolymorphEntity(args.Target, "AdminDisposalsSmite");
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", disposalBinName, Loc.GetString("admin-smite-garbage-can-description"))
         };
         args.Verbs.Add(disposalBin);
@@ -240,7 +240,7 @@ public sealed partial class AdminVerbSystem
                     _electrocutionSystem.TryDoElectrocution(args.Target, null, damageToDeal,
                         TimeSpan.FromSeconds(30), refresh: true, ignoreInsulation: true);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", hardElectrocuteName, Loc.GetString("admin-smite-electrocute-description"))
             };
             args.Verbs.Add(hardElectrocute);
@@ -258,7 +258,7 @@ public sealed partial class AdminVerbSystem
                 {
                     _creamPieSystem.SetCreamPied(args.Target, creamPied, true);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", creamPieName, Loc.GetString("admin-smite-creampie-description"))
             };
             args.Verbs.Add(creamPie);
@@ -281,7 +281,7 @@ public sealed partial class AdminVerbSystem
                     _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-blood-others", ("name", args.Target)), xform.Coordinates,
                         Filter.PvsExcept(args.Target), true, PopupType.MediumCaution);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", bloodRemovalName, Loc.GetString("admin-smite-remove-blood-description"))
             };
             args.Verbs.Add(bloodRemoval);
@@ -314,7 +314,7 @@ public sealed partial class AdminVerbSystem
                     _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-vomit-organs-others", ("name", args.Target)), baseXform.Coordinates,
                         Filter.PvsExcept(args.Target), true, PopupType.MediumCaution);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", vomitOrgansName, Loc.GetString("admin-smite-vomit-organs-description"))
             };
             args.Verbs.Add(vomitOrgans);
@@ -337,7 +337,7 @@ public sealed partial class AdminVerbSystem
                     _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-hands-other", ("name", args.Target)), baseXform.Coordinates,
                         Filter.PvsExcept(args.Target), true, PopupType.Medium);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", handsRemovalName, Loc.GetString("admin-smite-remove-hands-description"))
             };
             args.Verbs.Add(handsRemoval);
@@ -361,7 +361,7 @@ public sealed partial class AdminVerbSystem
                     _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-hands-other", ("name", args.Target)), baseXform.Coordinates,
                         Filter.PvsExcept(args.Target), true, PopupType.Medium);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", handRemovalName, Loc.GetString("admin-smite-remove-hand-description"))
             };
             args.Verbs.Add(handRemoval);
@@ -382,7 +382,7 @@ public sealed partial class AdminVerbSystem
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-stomach-removal-self"), args.Target,
                         args.Target, PopupType.LargeCaution);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", stomachRemovalName, Loc.GetString("admin-smite-stomach-removal-description"))
             };
             args.Verbs.Add(stomachRemoval);
@@ -403,7 +403,7 @@ public sealed partial class AdminVerbSystem
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-lung-removal-self"), args.Target,
                         args.Target, PopupType.LargeCaution);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", lungRemovalName, Loc.GetString("admin-smite-lung-removal-description"))
             };
             args.Verbs.Add(lungRemoval);
@@ -441,7 +441,7 @@ public sealed partial class AdminVerbSystem
                     _physics.SetLinearDamping(args.Target, physics, 0f);
                     _physics.SetAngularDamping(args.Target, physics, 0f);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", pinballName, Loc.GetString("admin-smite-pinball-description"))
             };
             args.Verbs.Add(pinball);
@@ -472,7 +472,7 @@ public sealed partial class AdminVerbSystem
                     _physics.SetLinearDamping(args.Target, physics, 0f);
                     _physics.SetAngularDamping(args.Target, physics, 0f);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", yeetName, Loc.GetString("admin-smite-yeet-description"))
             };
             args.Verbs.Add(yeet);
@@ -488,7 +488,7 @@ public sealed partial class AdminVerbSystem
             {
                 _polymorphSystem.PolymorphEntity(args.Target, "AdminBreadSmite");
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", breadName, Loc.GetString("admin-smite-become-bread-description"))
         };
         args.Verbs.Add(bread);
@@ -503,7 +503,7 @@ public sealed partial class AdminVerbSystem
             {
                 _polymorphSystem.PolymorphEntity(args.Target, "AdminMouseSmite");
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", mouseName, Loc.GetString("admin-smite-become-mouse-description"))
         };
         args.Verbs.Add(mouse);
@@ -520,7 +520,7 @@ public sealed partial class AdminVerbSystem
                 {
                     _ghostKickManager.DoDisconnect(actorComponent.PlayerSession.Channel, "Smitten.");
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", ghostKickName, Loc.GetString("admin-smite-ghostkick-description"))
 
             };
@@ -542,7 +542,7 @@ public sealed partial class AdminVerbSystem
                     _inventorySystem.TryUnequip(args.Target, "head", true, true, false, inventory);
                     _inventorySystem.TryEquip(args.Target, ears, "head", true, true, false, inventory);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", nyanifyName, Loc.GetString("admin-smite-nyanify-description"))
             };
             args.Verbs.Add(nyanify);
@@ -557,7 +557,7 @@ public sealed partial class AdminVerbSystem
                 {
                     EnsureComp<KillSignComponent>(args.Target);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", killSignName, Loc.GetString("admin-smite-kill-sign-description"))
             };
             args.Verbs.Add(killSign);
@@ -574,7 +574,7 @@ public sealed partial class AdminVerbSystem
                 {
                     EnsureComp<CluwneComponent>(args.Target);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", cluwneName, Loc.GetString("admin-smite-cluwne-description"))
             };
             args.Verbs.Add(cluwne);
@@ -594,7 +594,7 @@ public sealed partial class AdminVerbSystem
                         EnsureComp<ClumsyComponent>(args.Target);
                     });
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Admin,
                 Message = string.Join(": ", maidenName, Loc.GetString("admin-smite-maid-description"))
             };
             args.Verbs.Add(maiden);
@@ -610,7 +610,7 @@ public sealed partial class AdminVerbSystem
             {
                 EnsureComp<PointingArrowAngeringComponent>(args.Target);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", angerPointingArrowsName, Loc.GetString("admin-smite-anger-pointing-arrows-description"))
         };
         args.Verbs.Add(angerPointingArrows);
@@ -627,7 +627,7 @@ public sealed partial class AdminVerbSystem
                 Spawn("Ash", Transform(args.Target).Coordinates);
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-turned-ash-other", ("name", args.Target)), args.Target, PopupType.LargeCaution);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", dustName, Loc.GetString("admin-smite-dust-description"))
         };
         args.Verbs.Add(dust);
@@ -642,7 +642,7 @@ public sealed partial class AdminVerbSystem
             {
                 EnsureComp<BufferingComponent>(args.Target);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", youtubeVideoSimulationName, Loc.GetString("admin-smite-buffering-description"))
         };
         args.Verbs.Add(youtubeVideoSimulation);
@@ -657,7 +657,7 @@ public sealed partial class AdminVerbSystem
             {
                 _polymorphSystem.PolymorphEntity(args.Target, "AdminInstrumentSmite");
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", instrumentationName, Loc.GetString("admin-smite-become-instrument-description"))
         };
         args.Verbs.Add(instrumentation);
@@ -675,7 +675,7 @@ public sealed partial class AdminVerbSystem
 
                 Dirty(args.Target, grav);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", noGravityName, Loc.GetString("admin-smite-remove-gravity-description"))
         };
         args.Verbs.Add(noGravity);
@@ -690,7 +690,7 @@ public sealed partial class AdminVerbSystem
             {
                 _polymorphSystem.PolymorphEntity(args.Target, "AdminLizardSmite");
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", reptilianName, Loc.GetString("admin-smite-reptilian-species-swap-description"))
         };
         args.Verbs.Add(reptilian);
@@ -713,7 +713,7 @@ public sealed partial class AdminVerbSystem
                 }
                 _weldableSystem.SetWeldedState(locker, true);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", lockerName, Loc.GetString("admin-smite-locker-stuff-description"))
         };
         args.Verbs.Add(locker);
@@ -728,7 +728,7 @@ public sealed partial class AdminVerbSystem
             {
                 EnsureComp<HeadstandComponent>(args.Target);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", headstandName, Loc.GetString("admin-smite-headstand-description"))
         };
         args.Verbs.Add(headstand);
@@ -744,7 +744,7 @@ public sealed partial class AdminVerbSystem
                 var eye = EnsureComp<ContentEyeComponent>(args.Target);
                 _eyeSystem.SetZoom(args.Target, eye.TargetZoom * 0.2f, ignoreLimits: true);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", zoomInName, Loc.GetString("admin-smite-zoom-in-description"))
         };
         args.Verbs.Add(zoomIn);
@@ -760,7 +760,7 @@ public sealed partial class AdminVerbSystem
                 var eye = EnsureComp<ContentEyeComponent>(args.Target);
                 _eyeSystem.SetZoom(args.Target, eye.TargetZoom * -1, ignoreLimits: true);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", flipEyeName, Loc.GetString("admin-smite-flip-eye-description"))
         };
         args.Verbs.Add(flipEye);
@@ -781,7 +781,7 @@ public sealed partial class AdminVerbSystem
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-run-walk-swap-prompt"), args.Target,
                     args.Target, PopupType.LargeCaution);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", runWalkSwapName, Loc.GetString("admin-smite-run-walk-swap-description"))
         };
         args.Verbs.Add(runWalkSwap);
@@ -796,7 +796,7 @@ public sealed partial class AdminVerbSystem
             {
                 EnsureComp<BackwardsAccentComponent>(args.Target);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", backwardsAccentName, Loc.GetString("admin-smite-speak-backwards-description"))
         };
         args.Verbs.Add(backwardsAccent);
@@ -811,7 +811,7 @@ public sealed partial class AdminVerbSystem
             {
                 EnsureComp<DisarmProneComponent>(args.Target);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", disarmProneName, Loc.GetString("admin-smite-disarm-prone-description"))
         };
         args.Verbs.Add(disarmProne);
@@ -830,7 +830,7 @@ public sealed partial class AdminVerbSystem
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-super-speed-prompt"), args.Target,
                     args.Target, PopupType.LargeCaution);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", superSpeedName, Loc.GetString("admin-smite-super-speed-description"))
         };
         args.Verbs.Add(superSpeed);
@@ -846,7 +846,7 @@ public sealed partial class AdminVerbSystem
             {
                 _superBonkSystem.StartSuperBonk(args.Target, stopWhenDead: true);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", superBonkLiteName, Loc.GetString("admin-smite-super-bonk-lite-description"))
         };
         args.Verbs.Add(superBonkLite);
@@ -861,7 +861,7 @@ public sealed partial class AdminVerbSystem
             {
                 _superBonkSystem.StartSuperBonk(args.Target);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", superBonkName, Loc.GetString("admin-smite-super-bonk-description"))
         };
         args.Verbs.Add(superBonk);
@@ -888,7 +888,7 @@ public sealed partial class AdminVerbSystem
                     RemComp(args.Target, slipComponent);
                 }
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", superslipName, Loc.GetString("admin-smite-super-slip-description"))
         };
         args.Verbs.Add(superslip);
@@ -919,7 +919,7 @@ public sealed partial class AdminVerbSystem
                     EnsureComp<BackwardsAccentComponent>(args.Target); // was asked to make this at a low chance idk
                 }
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", omniaccentName, Loc.GetString("admin-smite-omni-accent-description"))
         };
         args.Verbs.Add(omniaccent);

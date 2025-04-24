@@ -99,7 +99,7 @@ namespace Content.Server.Administration.Systems
                 mark.Message = Loc.GetString("toolshed-verb-mark-description");
                 mark.Category = VerbCategory.Admin;
                 mark.Act = () => _toolshed.InvokeCommand(player, "=> $marked", new List<EntityUid> {args.Target}, out _);
-                mark.Impact = LogImpact.Low;
+                mark.Impact = LogImpact.Admin;
                 args.Verbs.Add(mark);
 
                 if (TryComp(args.Target, out ActorComponent? targetActor))
@@ -111,7 +111,7 @@ namespace Content.Server.Administration.Systems
                     verb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/gavel.svg.192dpi.png"));
                     verb.Act = () =>
                         _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");
-                    verb.Impact = LogImpact.Low;
+                    verb.Impact = LogImpact.Admin;
                     args.Verbs.Add(verb);
 
                     // Subtle Messages
@@ -126,7 +126,7 @@ namespace Content.Server.Administration.Systems
                             _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, player, message, popupMessage == "" ? Loc.GetString("prayer-popup-subtle-default") : popupMessage);
                         });
                     };
-                    prayerVerb.Impact = LogImpact.Low;
+                    prayerVerb.Impact = LogImpact.Admin;
                     args.Verbs.Add(prayerVerb);
 
                     // Spawn - Like respawn but on the spot.
@@ -152,7 +152,7 @@ namespace Content.Server.Administration.Systems
 
                         },
                         ConfirmationPopup = true,
-                        Impact = LogImpact.High,
+                        Impact = LogImpact.Admin,
                     });
 
                     // Clone - Spawn but without the mind transfer, also spawns at the user's coordinates not the target's
@@ -174,7 +174,7 @@ namespace Content.Server.Administration.Systems
                             _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
                         },
                         ConfirmationPopup = true,
-                        Impact = LogImpact.High,
+                        Impact = LogImpact.Admin,
                     });
 
                     // PlayerPanel
@@ -183,7 +183,7 @@ namespace Content.Server.Administration.Systems
                         Text = Loc.GetString("admin-player-actions-player-panel"),
                         Category = VerbCategory.Admin,
                         Act = () => _console.ExecuteCommand(player, $"playerpanel \"{targetActor.PlayerSession.UserId}\""),
-                        Impact = LogImpact.Low
+                        Impact = LogImpact.Admin
                     });
                 }
 
@@ -201,7 +201,7 @@ namespace Content.Server.Administration.Systems
                         {
                             _adminSystem.Erase(mindComp.UserId.Value);
                         },
-                        Impact = LogImpact.Extreme,
+                        Impact = LogImpact.Admin,
                         ConfirmationPopup = true
                     });
 
@@ -244,7 +244,7 @@ namespace Content.Server.Administration.Systems
                         {
                             EnsureComp<AdminFrozenComponent>(args.Target);
                         },
-                        Impact = LogImpact.Medium,
+                        Impact = LogImpact.Admin,
                     });
                 }
 
@@ -261,7 +261,7 @@ namespace Content.Server.Administration.Systems
                         {
                             _freeze.FreezeAndMute(args.Target);
                         },
-                        Impact = LogImpact.Medium,
+                        Impact = LogImpact.Admin,
                     });
                 }
 
@@ -277,7 +277,7 @@ namespace Content.Server.Administration.Systems
                         {
                             RemComp<AdminFrozenComponent>(args.Target);
                         },
-                        Impact = LogImpact.Medium,
+                        Impact = LogImpact.Admin,
                     });
                 }
 
@@ -296,7 +296,7 @@ namespace Content.Server.Administration.Systems
                             _euiManager.OpenEui(ui, player);
                             ui.SetLogFilter(search:args.Target.Id.ToString());
                         },
-                        Impact = LogImpact.Low
+                        Impact = LogImpact.Admin
                     };
                     args.Verbs.Add(logsVerbEntity);
                 }
@@ -311,7 +311,7 @@ namespace Content.Server.Administration.Systems
                     {
                         _console.ExecuteCommand(player, $"tpto {GetNetEntity(args.Target)}");
                     },
-                    Impact = LogImpact.Low
+                    Impact = LogImpact.Admin
                 });
 
                 // TeleportHere
@@ -344,7 +344,7 @@ namespace Content.Server.Administration.Systems
                             _console.ExecuteCommand(player, $"tpto {args.User} {args.Target}");
                         }
                     },
-                    Impact = LogImpact.Low
+                    Impact = LogImpact.Admin
                 });
 
                 // This logic is needed to be able to modify the AI's laws through its core and eye.
@@ -408,7 +408,7 @@ namespace Content.Server.Administration.Systems
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
                     Act = () => EntityManager.DeleteEntity(args.Target),
-                    Impact = LogImpact.Medium,
+                    Impact = LogImpact.Admin,
                     ConfirmationPopup = true
                 };
                 args.Verbs.Add(verb);
@@ -423,7 +423,7 @@ namespace Content.Server.Administration.Systems
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png")),
                     Act = () => _rejuvenate.PerformRejuvenate(args.Target),
-                    Impact = LogImpact.Medium
+                    Impact = LogImpact.Admin
                 };
                 args.Verbs.Add(verb);
             }
@@ -441,7 +441,7 @@ namespace Content.Server.Administration.Systems
                     {
                         _mindSystem.ControlMob(args.User, args.Target);
                     },
-                    Impact = LogImpact.High,
+                    Impact = LogImpact.Admin,
                     ConfirmationPopup = true
                 };
                 args.Verbs.Add(verb);
@@ -458,7 +458,7 @@ namespace Content.Server.Administration.Systems
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/sentient.svg.192dpi.png")),
                     Act = () => MakeSentientCommand.MakeSentient(args.Target, EntityManager),
-                    Impact = LogImpact.Medium
+                    Impact = LogImpact.Admin
                 };
                 args.Verbs.Add(verb);
             }
@@ -473,7 +473,7 @@ namespace Content.Server.Administration.Systems
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                     Act = () => _euiManager.OpenEui(new SetOutfitEui(GetNetEntity(args.Target)), player),
-                    Impact = LogImpact.Medium
+                    Impact = LogImpact.Admin
                 };
                 args.Verbs.Add(verb);
             }
@@ -523,7 +523,7 @@ namespace Content.Server.Administration.Systems
                 // TODO VERB ICON add ghost icon
                 // Where is the national park service icon for haunted forests?
                 verb.Act = () => _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target);
-                verb.Impact = LogImpact.Medium;
+                verb.Impact = LogImpact.Admin;
                 args.Verbs.Add(verb);
             }
 
@@ -550,7 +550,7 @@ namespace Content.Server.Administration.Systems
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/spill.svg.192dpi.png")),
                     Act = () => OpenEditSolutionsEui(player, args.Target),
-                    Impact = LogImpact.Medium // maybe high depending on WHAT reagents they add...
+                    Impact = LogImpact.Admin // maybe high depending on WHAT reagents they add...
                 };
                 args.Verbs.Add(verb);
             }

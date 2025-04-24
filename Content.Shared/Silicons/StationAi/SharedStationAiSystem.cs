@@ -124,7 +124,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
                 var brain = SpawnInContainerOrDrop(DefaultAi, ent.Owner, StationAiCoreComponent.Container);
                 _mind.ControlMob(user, brain);
             },
-            Impact = LogImpact.High,
+            Impact = LogImpact.Admin,
         });
     }
 
