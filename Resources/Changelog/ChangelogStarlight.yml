@@ -5070,4 +5070,18 @@ Entries:
   id: 702
   time: '2025-04-22T04:46:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/514
+- author: Happyrobot33
+  changes:
+  - message: Removed ability to mail resomi and felionoids.
+    type: Remove
+  id: 703
+  time: '2025-04-24T04:25:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/521
+- author: Happyrobot33
+  changes:
+  - message: Fixed ability to pickup resomi and felionoids while dragging them.
+    type: Fix
+  id: 704
+  time: '2025-04-24T04:25:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/521
 
