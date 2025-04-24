@@ -46,18 +46,18 @@
   components:
   - type: StorageFill
     contents:
-      - id: LightBulbCrystalCyan
-        amount: 2
-      - id: LightBulbCrystalBlue
-        amount: 2
-      - id: LightBulbCrystalGreen
-        amount: 2
-      - id: LightBulbCrystalPink
-        amount: 2
-      - id: LightBulbCrystalRed
-        amount: 2
-      - id: LightBulbCrystalOrange
-        amount: 2
+    - id: LightBulbCrystalCyan
+      amount: 2
+    - id: LightBulbCrystalBlue
+      amount: 2
+    - id: LightBulbCrystalGreen
+      amount: 2
+    - id: LightBulbCrystalPink
+      amount: 2
+    - id: LightBulbCrystalRed
+      amount: 2
+    - id: LightBulbCrystalOrange
+      amount: 2
 
 - type: entity
   parent: BoxLighttube
@@ -66,15 +66,15 @@
   components:
   - type: StorageFill
     contents:
-      - id: LightTubeCrystalCyan
-        amount: 2
-      - id: LightTubeCrystalBlue
-        amount: 2
-      - id: LightTubeCrystalGreen
-        amount: 2
-      - id: LightTubeCrystalPink
-        amount: 2
-      - id: LightTubeCrystalRed
-        amount: 2
-      - id: LightTubeCrystalOrange
-        amount: 2
+    - id: LightTubeCrystalCyan
+      amount: 2
+    - id: LightTubeCrystalBlue
+      amount: 2
+    - id: LightTubeCrystalGreen
+      amount: 2
+    - id: LightTubeCrystalPink
+      amount: 2
+    - id: LightTubeCrystalRed
+      amount: 2
+    - id: LightTubeCrystalOrange
+      amount: 2
