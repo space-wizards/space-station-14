@@ -210,7 +210,19 @@ public abstract class SharedDeliverySystem : EntitySystem
 
     protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }
 
+    protected virtual void HandlePenalty(Entity<DeliveryComponent> ent, string? reason = null) { }
+
     protected virtual void SpawnDeliveries(Entity<DeliverySpawnerComponent?> ent) { }
+}
+
+/// <summary>
+/// Used to gather the multiplier from all different delivery components.
+/// </summary>
+[ByRefEvent]
+public record struct GetDeliveryMultiplierEvent(float Multiplier)
+{
+    // we can't use an optional parameter because the default parameterless constructor defaults everything
+    public GetDeliveryMultiplierEvent() : this(1.0f) { }
 }
 
 /// <summary>
