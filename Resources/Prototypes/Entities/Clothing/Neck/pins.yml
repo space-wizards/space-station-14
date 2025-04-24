@@ -16,6 +16,7 @@
   parent: ClothingNeckPinBase
   id: ClothingGenderPinBase
   abstract: true
+  components:
   - type: ChameleonClothing
     slot: Neck
 #    default: ClothingNeckLGBTPin
