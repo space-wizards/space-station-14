@@ -67,7 +67,7 @@
   name: chat-radio-syndicate
   keycode: 't'
   frequency: 1213
-  color: "#9d2f2f"
+  color: "#802424"
   longRange: true
 
 - type: radioChannel
