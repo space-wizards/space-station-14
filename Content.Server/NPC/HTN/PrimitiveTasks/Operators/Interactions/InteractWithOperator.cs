@@ -56,7 +56,7 @@ public sealed partial class InteractWithOperator : HTNOperator
             // if CurrentDoAfter contains something, we have an active doAfter
             if (blackboard.TryGetValue<ushort>(CurrentDoAfter, out var doAfterId, _entManager))
             {
-                var status = _doAfterSystem.GetStatus(owner, doAfterId, null);
+                var status = _doAfterSystem.GetStatus(owner, doAfterId,  null);
                 return status switch
                 {
                     DoAfterStatus.Running => HTNOperatorStatus.Continuing,

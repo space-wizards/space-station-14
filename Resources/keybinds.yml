@@ -521,6 +521,9 @@ binds:
 - function: Arcade3
   type: State
   key: Z
+- function: ToggleKnockdown
+  type: State
+  key: R
 - function: OpenAbilitiesMenu
   type: State
   key: K
