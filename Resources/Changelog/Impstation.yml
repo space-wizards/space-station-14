@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Randomized characters, including some ghostroles, will now have random
-      markings. Play around with it in the character creator!
-    type: Add
-  id: 1069
-  time: '2025-02-07T14:08:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1600
-- author: widgetbeck
-  changes:
-  - message: Sir Gollylad now has a consistent appearance. He's still genderfluid,
-      but now it's on purpose.
-    type: Tweak
-  id: 1070
-  time: '2025-02-07T14:41:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1592
 - author: formlessnameless
   changes:
   - message: No more Santa.
@@ -4119,3 +4103,30 @@
   id: 1568
   time: '2025-04-24T10:11:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2337
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: Both the P-2 and the Blaster Pistol received buffs. Specifics are detailed
+      in the PR.
+    type: Tweak
+  - message: The Blaster Pistol Power Cells can now be recharged at Power Cell Charging
+      Stations.
+    type: Tweak
+  - message: P-2 Extended Magazines can be unlocked in "Advanced Sidearms" and printed
+      at the Security Techfab.
+    type: Add
+  - message: The P-2 Uranium Magazine now prints the proper magazine.
+    type: Fix
+  id: 1569
+  time: '2025-04-24T22:01:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2342
+- author: widgetbeck
+  changes:
+  - message: Ghosts can now warp to SSD players.
+    type: Tweak
+  - message: Ghosts can no longer warp to other ghosts, or non-player corpses.
+    type: Fix
+  - message: Ghost warps for dead bodies will now display the job of the deceased.
+    type: Add
+  id: 1570
+  time: '2025-04-24T22:00:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2327
