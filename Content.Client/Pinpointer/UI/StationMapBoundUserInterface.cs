@@ -24,9 +24,16 @@ public sealed class StationMapBoundUserInterface : BoundUserInterface
 
         _window = this.CreateWindow<StationMapWindow>();
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+
+        string stationName = string.Empty;
+        if(EntMan.TryGetComponent<MetaDataComponent>(gridUid, out var gridMetaData))
+        {
+            stationName = gridMetaData.EntityName;
+        }
+        
         if (EntMan.TryGetComponent<StationMapComponent>(Owner, out var comp) && comp.ShowLocation)
-            _window.Set(gridUid, Owner);
+            _window.Set(stationName, gridUid, Owner);
         else
-            _window.Set(gridUid, null);
+            _window.Set(stationName, gridUid, null);
     }
 }

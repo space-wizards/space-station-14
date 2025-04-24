@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by brainfood1183 (github)",
+  "copyright": "Made by brainfood1183 (github), modified by ps3moira (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -9,9 +9,6 @@
   "states": [
     {
       "name": "box"
-    },
-    {
-      "name": "box-open"
     },
     {
       "name": "box-inhand-left",

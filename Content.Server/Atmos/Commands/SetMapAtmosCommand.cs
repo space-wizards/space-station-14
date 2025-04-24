@@ -54,7 +54,7 @@ public sealed class AddMapAtmosCommand : LocalizedCommands
             return;
         }
 
-        var mix = new GasMixture(Atmospherics.CellVolume) {Temperature = Math.Min(temp, Atmospherics.TCMB)};
+        var mix = new GasMixture(Atmospherics.CellVolume) {Temperature = Math.Max(temp, Atmospherics.TCMB)};
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
             if (args.Length == 3 + i)
