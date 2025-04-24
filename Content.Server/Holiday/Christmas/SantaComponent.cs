@@ -1,4 +1,4 @@
-namespace Content.Shared.Holiday.Christmas;
+namespace Content.Server.Holiday.Christmas;
 
 /// <summary>
 /// This is used as a marker component, allows them to see gift contents.
