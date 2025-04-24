@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Empty guns have a louder dry fire sound (i.e. when the chamber or power
-      cell is empty).
-    type: Tweak
-  id: 7829
-  time: '2025-01-19T01:46:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34447
 - author: WarPigeon
   changes:
   - message: The debriefing room in CentComm is now open to heads of staff for end
@@ -3930,3 +3922,11 @@
   id: 8330
   time: '2025-04-24T03:45:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34896
+- author: DrMelon, EmoGarbage404
+  changes:
+  - message: Added turnstiles, gates able to limit the flow of foot traffic. The station's
+      flow is at your fingertips.
+    type: Add
+  id: 8331
+  time: '2025-04-24T11:39:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36313
