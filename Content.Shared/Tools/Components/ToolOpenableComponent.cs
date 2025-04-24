@@ -50,7 +50,7 @@ namespace Content.Shared.Tools.Components
         public bool HasVerbs = true;
 
         /// <summary>
-        ///     If true, the only way to interact is with verbs. Clicking on the entity will not do anything.
+        /// If true, the only way to interact is with verbs. Clicking on the entity will not do anything.
         /// </summary>
         [DataField, AutoNetworkedField]
         public bool VerbOnly;
