@@ -31,6 +31,17 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         SubscribeLocalEvent<ChameleonClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ChameleonClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
         SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
+        SubscribeLocalEvent<ChameleonClothingComponent, ComponentInit>(OnInit);
+    }
+
+    private void OnInit(Entity<ChameleonClothingComponent> uid, ref ComponentInit ev)
+    {
+        if (string.IsNullOrEmpty(uid.Comp.Default) || !_proto.TryIndex(uid.Comp.Default, out _))
+        {
+            if (!TryComp(uid, out MetaDataComponent? metaData) || metaData.EntityPrototype == null)
+                return;
+            uid.Comp.Default = metaData.EntityPrototype; // Yes this is a sin, but it solves a defaulting issue.
+        }
     }
 
     private void OnGotEquipped(EntityUid uid, ChameleonClothingComponent component, GotEquippedEvent args)

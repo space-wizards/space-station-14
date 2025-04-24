@@ -11,6 +11,19 @@
     sprite: Clothing/Neck/Misc/pins.rsi
   - type: Clothing
     sprite: Clothing/Neck/Misc/pins.rsi
+  - type: ChameleonClothing
+    slot: Neck
+#    default: ClothingNeckLGBTPin
+    requireTag: Gender
+  - type: UserInterface
+    interfaces:
+      enum.ChameleonUiKey.Key:
+        type: ChameleonBoundUserInterface
+  - type: Tag
+    tags:
+    - ClothMade #idk man its on the parent
+    - WhitelistChameleon
+    - Gender
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -22,6 +35,12 @@
     state: lgbt
   - type: Clothing
     equippedPrefix: lgbt
+  - type: Tag
+    tags:
+    - ClothMade #idk man its on the parent
+    - WhitelistChameleon
+    - Gender
+    
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -33,6 +52,11 @@
     state: ally
   - type: Clothing
     equippedPrefix: ally
+  - type: Tag
+    tags:
+    - ClothMade #idk man its on the parent
+    - WhitelistChameleon
+    - Gender
 
 - type: entity
   parent: ClothingNeckPinBase
