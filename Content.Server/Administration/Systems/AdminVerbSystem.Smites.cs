@@ -112,7 +112,7 @@ public sealed partial class AdminVerbSystem
 
                 _bodySystem.GibBody(args.Target);
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Admin,
             Message = string.Join(": ", explodeName, Loc.GetString("admin-smite-explode-description")) // we do this so the description tells admins the Text to run it via console.
         };
         args.Verbs.Add(explode);
