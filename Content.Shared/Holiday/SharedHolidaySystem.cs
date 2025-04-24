@@ -8,10 +8,8 @@ namespace Content.Shared.Holiday
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
-        [ViewVariables]
         public bool Enabled = true;
 
-        [ViewVariables]
         private readonly List<HolidayPrototype> _currentHolidays = new();
         public List<HolidayPrototype> CurrentHolidays => _currentHolidays;
 
