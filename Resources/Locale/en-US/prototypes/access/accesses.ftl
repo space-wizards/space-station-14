@@ -49,3 +49,5 @@ id-card-access-level-wizard = Wizard
 id-card-access-level-station-ai = Artifical Intelligence
 id-card-access-level-borg = Cyborg
 id-card-access-level-basic-silicon = Robot
+
+id-card-access-level-basic-xenoborg = Xenoborg
