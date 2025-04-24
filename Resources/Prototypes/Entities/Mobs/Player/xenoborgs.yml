@@ -314,6 +314,7 @@
     canCreateVacuum: false # its for killing the borg not the station
 
 
+# the xenoborg types
 - type: entity
   parent: [ XenoborgBaseChassi, XenoborgTransponder ]
   id: XenoborgEngi
@@ -553,3 +554,69 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
+
+
+# xenoborgs empty
+- type: entity
+  parent: XenoborgEngi
+  id: XenoborgEngiPrinted
+  suffix: no brain
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMI
+      borg_module:
+      - XenoborgModuleBasic
+      - BorgModuleAdvancedTool
+      - BorgModuleConstruction
+      - BorgModuleRCD
+      - BorgModuleCable
+      - XenoborgModuleAccessBreaker
+      - XenoborgModuleFireExtinguisher
+
+- type: entity
+  parent: XenoborgHeavy
+  id: XenoborgHeavyPrinted
+  suffix: no brain
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMI
+      borg_module:
+      - XenoborgModuleBasic
+      - XenoborgModuleTool
+      - XenoborgModuleLaser
+      - XenoborgModuleJammer
+
+- type: entity
+  parent: XenoborgScout
+  id: XenoborgScoutPrinted
+  suffix: no brain
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMI
+      borg_module:
+      - XenoborgModuleBasic
+      - XenoborgModuleTool
+      - XenoborgModuleSword
+      - XenoborgModuleSpaceMovement
+
+- type: entity
+  parent: XenoborgStealth
+  id: XenoborgStealthPrinted
+  suffix: no brain
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMI
+      borg_module:
+      - XenoborgModuleBasic
+      - XenoborgModuleTool
+      - XenoborgModuleHypo
+      - XenoborgModuleChameleonProjector
+      - XenoborgModuleCloakDevice
