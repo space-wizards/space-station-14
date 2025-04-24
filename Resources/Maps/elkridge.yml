@@ -4,8 +4,13 @@ meta:
   engineVersion: 254.1.0
   forkId: ""
   forkVersion: ""
+<<<<<<< HEAD
   time: 04/21/2025 05:59:30
   entityCount: 17213
+=======
+  time: 04/19/2025 08:48:01
+  entityCount: 17540
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
 maps:
 - 1
 grids:
@@ -8793,7 +8798,7 @@ entities:
             0: 65520
           10,-9:
             0: 17984
-            4: 1
+            6: 1
             3: 2444
           11,-7:
             0: 65518
@@ -9161,7 +9166,11 @@ entities:
             0: 4881
             3: 8226
             2: 8
+<<<<<<< HEAD
             7: 2048
+=======
+            4: 2048
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
           4,-13:
             0: 4369
             3: 17508
@@ -9170,7 +9179,11 @@ entities:
             0: 36096
           5,-10:
             2: 3
+<<<<<<< HEAD
             7: 768
+=======
+            4: 768
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
             3: 32904
             0: 2048
           5,-9:
@@ -9405,17 +9418,25 @@ entities:
             3: 4113
             0: 256
             2: 12
+<<<<<<< HEAD
             8: 3072
+=======
+            5: 3072
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
           9,-9:
             3: 1025
             0: 2832
-            4: 12
+            6: 12
           10,-11:
             3: 295
             0: 17920
           10,-10:
             2: 1
+<<<<<<< HEAD
             8: 256
+=======
+            5: 256
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
             3: 18508
             0: 1024
           10,-12:
@@ -10070,6 +10091,7 @@ entities:
           temperature: 293.15
           moles:
           - 0
+<<<<<<< HEAD
           - 6666.982
           - 0
           - 0
@@ -10115,6 +10137,8 @@ entities:
           temperature: 293.15
           moles:
           - 0
+=======
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
           - 0
           - 0
           - 6666.982
@@ -10131,6 +10155,21 @@ entities:
           moles:
           - 6666.982
           - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -12592,7 +12631,11 @@ entities:
         1363:
         - - DoorStatus
           - DoorBolt
+<<<<<<< HEAD
   - uid: 2025
+=======
+  - uid: 2749
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
     components:
     - type: Transform
       pos: 12.5,-35.5
@@ -12602,6 +12645,16 @@ entities:
     - type: Transform
       pos: 12.5,-38.5
       parent: 2
+<<<<<<< HEAD
+=======
+    - type: DeviceLinkSink
+      invokeCounter: 3
+    - type: DeviceLinkSource
+      linkedPorts:
+        8435:
+        - - DoorStatus
+          - DoorBolt
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
   - uid: 5592
     components:
     - type: Transform
@@ -12641,6 +12694,22 @@ entities:
         7698:
         - - DoorStatus
           - DoorBolt
+<<<<<<< HEAD
+=======
+  - uid: 8435
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 12.5,-34.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2749:
+        - - DoorStatus
+          - DoorBolt
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
   - uid: 9751
     components:
     - type: Transform
@@ -13563,7 +13632,11 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
+<<<<<<< HEAD
       secondsUntilStateChange: -441696
+=======
+      secondsUntilStateChange: -418632.5
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -17873,6 +17946,41 @@ entities:
     - type: Transform
       pos: 41.530895,26.826118
       parent: 2
+<<<<<<< HEAD
+=======
+- proto: BrigTimer
+  entities:
+  - uid: 1958
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -9.5,-23.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        1652:
+        - - Start
+          - Close
+        - - Timer
+          - AutoClose
+        - - Timer
+          - Open
+  - uid: 1959
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -9.5,-27.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        1929:
+        - - Start
+          - Close
+        - - Timer
+          - AutoClose
+        - - Timer
+          - Open
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
 - proto: Brutepack1
   entities:
   - uid: 17029
@@ -81658,6 +81766,24 @@ entities:
         15279:
         - - Pressed
           - Toggle
+<<<<<<< HEAD
+=======
+- proto: LockableButtonDetective
+  entities:
+  - uid: 13949
+    components:
+    - type: MetaData
+      name: lockable button (Shutters)
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -12.5,-23.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        14003:
+        - - Pressed
+          - Toggle
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
 - proto: LockableButtonEngineering
   entities:
   - uid: 2911
@@ -81741,6 +81867,27 @@ entities:
         3989:
         - - Pressed
           - Toggle
+<<<<<<< HEAD
+=======
+- proto: LockableButtonHeadOfSecurity
+  entities:
+  - uid: 16185
+    components:
+    - type: MetaData
+      name: lockable button (Shutters)
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -9.5,-32.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        16186:
+        - - Pressed
+          - Toggle
+        16187:
+        - - Pressed
+          - Toggle
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
 - proto: LockableButtonKitchen
   entities:
   - uid: 4481
@@ -81875,6 +82022,33 @@ entities:
         11182:
         - - Pressed
           - Toggle
+<<<<<<< HEAD
+=======
+- proto: LockableButtonSecurity
+  entities:
+  - uid: 16002
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -13.5,-24.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        15998:
+        - - Pressed
+          - Toggle
+  - uid: 16003
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -13.5,-28.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        15999:
+        - - Pressed
+          - Toggle
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
 - proto: LockerAtmosphericsFilled
   entities:
   - uid: 2107
@@ -82716,6 +82890,16 @@ entities:
       pos: -31.5,34.5
       parent: 2
 - proto: MachineMaterialSilo
+<<<<<<< HEAD
+=======
+  entities:
+  - uid: 3541
+    components:
+    - type: Transform
+      pos: -18.5,15.5
+      parent: 2
+- proto: MagazinePistolSubMachineGunTopMounted
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
   entities:
   - uid: 3541
     components:
@@ -91111,6 +91295,41 @@ entities:
         2588:
         - - Pressed
           - Toggle
+<<<<<<< HEAD
+=======
+  - uid: 14446
+    components:
+    - type: MetaData
+      name: signal button (Door A)
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -5.7451677,-16.472116
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        15298:
+        - - Pressed
+          - Toggle
+        15299:
+        - - Pressed
+          - Toggle
+  - uid: 14447
+    components:
+    - type: MetaData
+      name: signal button (Door B)
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -5.7451677,-16.784616
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        1940:
+        - - Pressed
+          - Toggle
+        1939:
+        - - Pressed
+          - Toggle
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
   - uid: 14511
     components:
     - type: MetaData
@@ -91143,6 +91362,22 @@ entities:
         4531:
         - - Pressed
           - Toggle
+<<<<<<< HEAD
+=======
+  - uid: 15855
+    components:
+    - type: MetaData
+      name: signal button (Janitor)
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -9.5,-22.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        15902:
+        - - Pressed
+          - Toggle
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
   - uid: 15860
     components:
     - type: MetaData
@@ -91372,6 +91607,45 @@ entities:
           - Forward
         - - Off
           - Off
+<<<<<<< HEAD
+=======
+  - uid: 13472
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -9.5,-25.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        14970:
+        - - Off
+          - Open
+        - - On
+          - Close
+        1927:
+        - - On
+          - Open
+        - - Off
+          - Close
+  - uid: 13480
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -9.5,-29.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        13703:
+        - - Off
+          - Open
+        - - On
+          - Close
+        1928:
+        - - On
+          - Open
+        - - Off
+          - Close
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
 - proto: SignAnomaly
   entities:
   - uid: 16169
@@ -99442,6 +99716,14 @@ entities:
       parent: 2
 - proto: VendingMachineCigs
   entities:
+<<<<<<< HEAD
+=======
+  - uid: 2141
+    components:
+    - type: Transform
+      pos: -0.5,-32.5
+      parent: 2
+>>>>>>> 5371dbe9a7c726674c1f0273e1de3d36a47d5627
   - uid: 13500
     components:
     - type: Transform

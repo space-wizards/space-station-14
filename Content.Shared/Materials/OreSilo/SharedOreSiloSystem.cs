@@ -149,9 +149,9 @@ public abstract class SharedOreSiloSystem : EntitySystem
     /// Checks if a given client fulfills the criteria to link/receive materials from an ore silo.
     /// </summary>
     [PublicAPI]
-    public bool CanTransmitMaterials(Entity<OreSiloComponent?> silo, EntityUid client)
+    public bool CanTransmitMaterials(Entity<OreSiloComponent?, TransformComponent?> silo, EntityUid client)
     {
-        if (!Resolve(silo, ref silo.Comp))
+        if (!Resolve(silo, ref silo.Comp1, ref silo.Comp2))
             return false;
 
         if (!_powerReceiver.IsPowered(silo.Owner))
@@ -160,7 +160,7 @@ public abstract class SharedOreSiloSystem : EntitySystem
         if (_transform.GetGrid(client) != _transform.GetGrid(silo.Owner))
             return false;
 
-        if (!_transform.InRange(silo.Owner, client, silo.Comp.Range))
+        if (!_transform.InRange((silo.Owner, silo.Comp2), client, silo.Comp1.Range))
             return false;
 
         return true;

@@ -38,12 +38,15 @@ public abstract class SharedDeliverySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DeliveryComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<DeliveryComponent, ExaminedEvent>(OnDeliveryExamine);
         SubscribeLocalEvent<DeliveryComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<DeliveryComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<DeliveryComponent, GetVerbsEvent<AlternativeVerb>>(OnGetDeliveryVerbs);
+
+        SubscribeLocalEvent<DeliverySpawnerComponent, ExaminedEvent>(OnSpawnerExamine);
+        SubscribeLocalEvent<DeliverySpawnerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetSpawnerVerbs);
     }
 
-    private void OnExamine(Entity<DeliveryComponent> ent, ref ExaminedEvent args)
+    private void OnDeliveryExamine(Entity<DeliveryComponent> ent, ref ExaminedEvent args)
     {
         var jobTitle = ent.Comp.RecipientJobTitle ?? Loc.GetString("delivery-recipient-no-job");
         var recipientName = ent.Comp.RecipientName ?? Loc.GetString("delivery-recipient-no-name");
@@ -54,6 +57,11 @@ public abstract class SharedDeliverySystem : EntitySystem
         }
 
         args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", recipientName), ("job", jobTitle)));
+    }
+
+    private void OnSpawnerExamine(Entity<DeliverySpawnerComponent> ent, ref ExaminedEvent args)
+    {
+        args.PushMarkup(Loc.GetString("delivery-teleporter-amount-examine", ("amount", ent.Comp.ContainedDeliveryAmount)), 50);
     }
 
     private void OnUseInHand(Entity<DeliveryComponent> ent, ref UseInHandEvent args)
@@ -69,7 +77,7 @@ public abstract class SharedDeliverySystem : EntitySystem
             OpenDelivery(ent, args.User);
     }
 
-    private void OnGetVerbs(Entity<DeliveryComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetDeliveryVerbs(Entity<DeliveryComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null || ent.Comp.IsOpened)
             return;
@@ -89,6 +97,33 @@ public abstract class SharedDeliverySystem : EntitySystem
                     OpenDelivery(ent, user, false);
             },
             Text = ent.Comp.IsLocked ? Loc.GetString("delivery-unlock-verb") : Loc.GetString("delivery-open-verb"),
+        });
+    }
+
+    private void OnGetSpawnerVerbs(Entity<DeliverySpawnerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            return;
+
+        var user = args.User;
+
+        args.Verbs.Add(new AlternativeVerb()
+        {
+            Act = () =>
+            {
+                _audio.PlayPredicted(ent.Comp.OpenSound, ent.Owner, user);
+
+                if(ent.Comp.ContainedDeliveryAmount == 0)
+                {
+                    _popup.PopupPredicted(Loc.GetString("delivery-teleporter-empty", ("entity", ent)), null, ent, user);
+                    return;
+                }
+
+                SpawnDeliveries(ent.Owner);
+
+                UpdateDeliverySpawnerVisuals(ent, ent.Comp.ContainedDeliveryAmount);
+            },
+            Text = Loc.GetString("delivery-teleporter-empty-verb"),
         });
     }
 
@@ -168,7 +203,14 @@ public abstract class SharedDeliverySystem : EntitySystem
             _appearance.SetData(uid, DeliveryVisuals.IsPriority, false);
     }
 
+    protected void UpdateDeliverySpawnerVisuals(EntityUid uid, int contents)
+    {
+        _appearance.SetData(uid, DeliverySpawnerVisuals.Contents, contents > 0);
+    }
+
     protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }
+
+    protected virtual void SpawnDeliveries(Entity<DeliverySpawnerComponent?> ent) { }
 }
 
 /// <summary>
