@@ -386,6 +386,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (!TryComp<StepTriggerComponent>(entity, out var comp))
             return;
 
+        // Ensure we actually have the component
+        EnsureComp<TileFrictionModifierComponent>(entity);
+
         // This is the base amount of reagent needed before a puddle can be considered slippery. Is defined based on
         // the sprite threshold for a puddle larger than 5 pixels.
         var smallPuddleThreshold = FixedPoint2.New(entity.Comp.OverflowVolume.Float() * LowThreshold);
@@ -409,7 +412,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (solution.Volume <= smallPuddleThreshold)
         {
             _stepTrigger.SetActive(entity, false, comp);
-            _tile.SetModifier(entity, TileFrictionController.DefaultFriction);
+            _tile.SetModifier(entity, 1f);
             return;
         }
 

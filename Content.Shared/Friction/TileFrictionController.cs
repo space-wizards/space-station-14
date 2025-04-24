@@ -36,8 +36,6 @@ namespace Content.Shared.Friction
         private float _airDamping;
         private float _offGridDamping;
 
-        public const float DefaultFriction = 0.3f;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -131,12 +129,13 @@ namespace Content.Shared.Friction
             PhysicsComponent body,
             TransformComponent xform)
         {
+            var tileModifier = 1f;
             // If not on a grid and not in the air then return the map's friction.
             if (!_gridQuery.TryGetComponent(xform.GridUid, out var grid))
             {
                 return _frictionQuery.TryGetComponent(xform.MapUid, out var friction)
                     ? friction.Modifier
-                    : DefaultFriction;
+                    : tileModifier;
             }
 
             var tile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
@@ -145,13 +144,10 @@ namespace Content.Shared.Friction
             if (tile.Tile.IsEmpty &&
                 HasComp<MapComponent>(xform.GridUid) &&
                 (!TryComp<GravityComponent>(xform.GridUid, out var gravity) || gravity.Enabled))
-            {
-                return DefaultFriction;
-            }
+                return tileModifier;
 
             // Check for anchored ents that modify friction
             var anc = _map.GetAnchoredEntitiesEnumerator(xform.GridUid.Value, grid, tile.GridIndices);
-            var tileModifier = 1f;
             while (anc.MoveNext(out var tileEnt))
             {
                 if (_frictionQuery.TryGetComponent(tileEnt, out var friction))

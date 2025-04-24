@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization.Metadata;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
@@ -14,15 +15,16 @@ namespace Content.Shared.Movement.Systems
 
         private float _frictionModifier;
         private float _airDamping;
+        private float _offGridDamping;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<MovementSpeedModifierComponent, MapInitEvent>(OnModMapInit);
-            SubscribeLocalEvent<MovementSpeedModifierComponent, TileFrictionEvent>(OnTileFriction);
 
             Subs.CVar(_configManager, CCVars.TileFrictionModifier, value => _frictionModifier = value, true);
             Subs.CVar(_configManager, CCVars.AirFriction, value => _airDamping = value, true);
+            Subs.CVar(_configManager, CCVars.OffgridFriction, value => _offGridDamping = value, true);
         }
 
         private void OnModMapInit(Entity<MovementSpeedModifierComponent> ent, ref MapInitEvent args)
@@ -30,9 +32,12 @@ namespace Content.Shared.Movement.Systems
             // TODO: Dirty these smarter.
             ent.Comp.WeightlessAcceleration = ent.Comp.BaseWeightlessAcceleration;
             ent.Comp.WeightlessModifier = ent.Comp.BaseWeightlessModifier;
+            ent.Comp.WeightlessFriction = _airDamping * ent.Comp.BaseWeightlessFriction;
+            ent.Comp.WeightlessFrictionNoInput = _airDamping * ent.Comp.BaseWeightlessFriction;
+            ent.Comp.OffGridFriction = _offGridDamping * ent.Comp.BaseWeightlessFriction;
+            ent.Comp.Acceleration = ent.Comp.BaseAcceleration;
             ent.Comp.Friction = _frictionModifier * ent.Comp.BaseFriction;
             ent.Comp.FrictionNoInput = _frictionModifier * ent.Comp.BaseFriction;
-            ent.Comp.Acceleration = ent.Comp.BaseAcceleration;
             Dirty(ent);
         }
 
@@ -49,9 +54,9 @@ namespace Content.Shared.Movement.Systems
                 WeightlessAcceleration = move.BaseWeightlessAcceleration,
                 WeightlessAccelerationMod = 1.0f,
                 WeightlessModifier = move.BaseWeightlessModifier,
-                WeightlessFriction = move.BaseWeightlessFriction ?? _airDamping,
+                WeightlessFriction = move.BaseWeightlessFriction,
                 WeightlessFrictionMod = 1.0f,
-                WeightlessFrictionNoInput = move.BaseWeightlessFrictionNoInput ?? _airDamping,
+                WeightlessFrictionNoInput = move.BaseWeightlessFriction,
                 WeightlessFrictionNoInputMod = 1.0f,
             };
 
@@ -67,8 +72,8 @@ namespace Content.Shared.Movement.Systems
 
             move.WeightlessAcceleration = ev.WeightlessAcceleration * ev.WeightlessAccelerationMod;
             move.WeightlessModifier = ev.WeightlessModifier;
-            move.WeightlessFriction = ev.WeightlessFriction * ev.WeightlessFrictionMod;
-            move.WeightlessFrictionNoInput = ev.WeightlessFrictionNoInput * ev.WeightlessFrictionNoInputMod;
+            move.WeightlessFriction = _airDamping * ev.WeightlessFriction * ev.WeightlessFrictionMod;
+            move.WeightlessFrictionNoInput = _airDamping * ev.WeightlessFrictionNoInput * ev.WeightlessFrictionNoInputMod;
             Dirty(uid, move);
         }
 
@@ -140,11 +145,6 @@ namespace Content.Shared.Movement.Systems
             move.FrictionNoInput = frictionNoInput;
             move.BaseAcceleration = acceleration;
             Dirty(uid, move);
-        }
-
-        private void OnTileFriction(Entity<MovementSpeedModifierComponent> ent, ref TileFrictionEvent args)
-        {
-            args.Modifier *= ent.Comp.BaseFriction;
         }
     }
 

@@ -14,7 +14,7 @@ namespace Content.Shared.Movement.Components
         #region defaults
 
         // weightless
-        public const float DefaultMinimumFrictionSpeed = 0.005f;
+        public const float DefaultWeightlessFriction = 1f;
         public const float DefaultWeightlessModifier = 0.7f;
         public const float DefaultWeightlessAcceleration = 1f;
 
@@ -22,6 +22,7 @@ namespace Content.Shared.Movement.Components
         public const float DefaultAcceleration = 20f;
         public const float DefaultFriction = 2.5f;
         public const float DefaultFrictionNoInput = 2.5f;
+        public const float DefaultMinimumFrictionSpeed = 0.005f;
 
         // movement
         public const float DefaultBaseWalkSpeed = 2.5f;
@@ -31,6 +32,9 @@ namespace Content.Shared.Movement.Components
 
         #region base values
 
+        /// <summary>
+        /// These base values should be defined in yaml and rarely if ever modified directly.
+        /// </summary>
         [DataField, AutoNetworkedField]
         public float BaseWalkSpeed = DefaultBaseWalkSpeed;
 
@@ -44,7 +48,7 @@ namespace Content.Shared.Movement.Components
         public float BaseAcceleration = DefaultAcceleration;
 
         /// <summary>
-        /// The negative velocity applied for friction.
+        /// The body's base friction modifier that is applied in *all* circumstances.
         /// </summary>
         [AutoNetworkedField, DataField]
         public float BaseFriction = DefaultFriction;
@@ -97,33 +101,14 @@ namespace Content.Shared.Movement.Components
         #region Weightless
 
         /// <summary>
-        /// The negative velocity applied for friction when weightless and providing inputs.
+        /// These base values should be defined in yaml and rarely if ever modified directly.
         /// </summary>
         [AutoNetworkedField, DataField]
-        public float? BaseWeightlessFriction;
+        public float BaseWeightlessFriction = DefaultWeightlessFriction;
 
-        /// <summary>
-        /// The negative velocity applied for friction when weightless and not providing inputs.
-        /// This is essentially how much their speed decreases per second.
-        /// </summary>
-        [AutoNetworkedField, DataField]
-        public float? BaseWeightlessFrictionNoInput;
-
-        /// <summary>
-        /// The negative velocity applied for friction when weightless and not standing on a grid or mapgrid
-        /// </summary>
-        [AutoNetworkedField, DataField]
-        public float? OffGridFriction;
-
-        /// <summary>
-        /// The movement speed modifier applied to a mob's total input velocity when weightless.
-        /// </summary>
         [AutoNetworkedField, DataField]
         public float BaseWeightlessModifier = DefaultWeightlessModifier;
 
-        /// <summary>
-        /// The acceleration applied to mobs when moving and weightless.
-        /// </summary>
         [AutoNetworkedField, DataField]
         public float BaseWeightlessAcceleration = DefaultWeightlessAcceleration;
 
@@ -136,17 +121,35 @@ namespace Content.Shared.Movement.Components
         [ViewVariables]
         public float WeightlessSprintSpeed => WeightlessModifier * BaseSprintSpeed;
 
+        /// <summary>
+        /// The acceleration applied to mobs when moving and weightless.
+        /// </summary>
         [AutoNetworkedField, DataField]
         public float WeightlessAcceleration;
 
+        /// <summary>
+        /// The movement speed modifier applied to a mob's total input velocity when weightless.
+        /// </summary>
         [AutoNetworkedField, DataField]
         public float WeightlessModifier;
 
+        /// <summary>
+        /// The negative velocity applied for friction when weightless and providing inputs.
+        /// </summary>
         [AutoNetworkedField, DataField]
         public float WeightlessFriction;
 
+        /// <summary>
+        /// The negative velocity applied for friction when weightless and not providing inputs.
+        /// </summary>
         [AutoNetworkedField, DataField]
         public float WeightlessFrictionNoInput;
+
+        /// <summary>
+        /// The negative velocity applied for friction when weightless and not standing on a grid or mapgrid
+        /// </summary>
+        [AutoNetworkedField, DataField]
+        public float? OffGridFriction;
 
         #endregion
     }
