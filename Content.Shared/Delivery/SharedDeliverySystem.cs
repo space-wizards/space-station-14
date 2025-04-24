@@ -164,7 +164,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         DirtyField(ent, ent.Comp, nameof(DeliveryComponent.IsLocked));
 
-        RemComp<SimpleToolUsageComponent>(ent); // we don't want unlocked mail to still be cuttable
+        RemCompDeferred<SimpleToolUsageComponent>(ent); // we don't want unlocked mail to still be cuttable
 
         var ev = new DeliveryUnlockedEvent(user);
         RaiseLocalEvent(ent, ref ev);
@@ -196,7 +196,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         _tag.AddTags(ent, TrashTag, RecyclableTag);
         EnsureComp<SpaceGarbageComponent>(ent);
-        RemComp<StealTargetComponent>(ent); // opened mail should not count for the objective
+        RemCompDeferred<StealTargetComponent>(ent); // opened mail should not count for the objective
 
         DirtyField(ent.Owner, ent.Comp, nameof(DeliveryComponent.IsOpened));
 
