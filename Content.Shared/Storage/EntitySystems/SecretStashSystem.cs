@@ -1,21 +1,22 @@
-using Content.Shared.Popups;
-using Content.Shared.Storage.Components;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Item;
-using Robust.Shared.Containers;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.Tools.Systems;
-using Content.Shared.Examine;
+using Content.Shared.Item;
+using Content.Shared.Materials;
+using Content.Shared.Popups;
+using Content.Shared.Storage.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Nutrition;
 using Content.Shared.Damage;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Tools.EntitySystems;
 using Content.Shared.Whitelist;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -38,6 +39,8 @@ public sealed class SecretStashSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<SecretStashComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SecretStashComponent, DestructionEventArgs>(OnDestroyed);
+        SubscribeLocalEvent<SecretStashComponent, GotReclaimedEvent>(OnReclaimed);
+        SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem), typeof(AnchorableSystem) });
         SubscribeLocalEvent<SecretStashComponent, AfterFullyEatenEvent>(OnEaten);
         SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem) });
         SubscribeLocalEvent<SecretStashComponent, InteractHandEvent>(OnInteractHand);
@@ -51,12 +54,12 @@ public sealed class SecretStashSystem : EntitySystem
 
     private void OnDestroyed(Entity<SecretStashComponent> entity, ref DestructionEventArgs args)
     {
-        var storedInside = _containerSystem.EmptyContainer(entity.Comp.ItemContainer);
-        if (storedInside != null && storedInside.Count == 1)
-        {
-            var popup = Loc.GetString("comp-secret-stash-on-destroyed-popup", ("stashname", GetStashName(entity)));
-            _popupSystem.PopupEntity(popup, storedInside[0], PopupType.MediumCaution);
-        }
+        DropContentsAndAlert(entity);
+    }
+
+    private void OnReclaimed(Entity<SecretStashComponent> entity, ref GotReclaimedEvent args)
+    {
+        DropContentsAndAlert(entity, args.ReclaimerCoordinates);
     }
 
     private void OnEaten(Entity<SecretStashComponent> entity, ref AfterFullyEatenEvent args)
@@ -221,6 +224,19 @@ public sealed class SecretStashSystem : EntitySystem
     private bool HasItemInside(Entity<SecretStashComponent> entity)
     {
         return entity.Comp.ItemContainer.ContainedEntity != null;
+    }
+
+    /// <summary>
+    ///     Drop the item stored in the stash and alert all nearby players with a popup.
+    /// </summary>
+    private void DropContentsAndAlert(Entity<SecretStashComponent> entity, EntityCoordinates? cords = null)
+    {
+        var storedInside = _containerSystem.EmptyContainer(entity.Comp.ItemContainer, true, cords);
+        if (storedInside != null && storedInside.Count >= 1)
+        {
+            var popup = Loc.GetString("comp-secret-stash-on-destroyed-popup", ("stashname", GetStashName(entity)));
+            _popupSystem.PopupPredicted(popup, storedInside[0], null, PopupType.MediumCaution);
+        }
     }
 
     #endregion

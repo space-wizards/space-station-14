@@ -106,7 +106,7 @@
     sprite: Clothing/Back/Satchels/science.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseRestrictedContraband]
+  parent: [ClothingBackpackSatchel, BaseSecurityContraband]
   id: ClothingBackpackSatchelSecurity
   name: security satchel
   description: A robust satchel for security related needs.
@@ -115,7 +115,7 @@
     sprite: Clothing/Back/Satchels/security.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseRestrictedContraband]
+  parent: [ClothingBackpackSatchel, BaseSecurityContraband]
   id: ClothingBackpackSatchelBrigmedic
   name: brigmedic satchel
   description: A sterile satchel for medical related needs.

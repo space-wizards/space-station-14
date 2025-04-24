@@ -171,6 +171,8 @@
       reagents:
       - ReagentId: WeldingFuel
         Quantity: 1
+  - type: RequiresEyeProtection
+    statusEffectTime: 5 # less harmful; sunglasses can block it
 
 - type: entity
   name: emergency welding tool

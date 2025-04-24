@@ -149,3 +149,18 @@
         reagents:
           - ReagentId: Chlorine
             Quantity: 5
+            
+- type: entity
+  id: PlasmaChemistryVial
+  parent: BaseChemistryEmptyVial
+  suffix: plasma
+  components:
+  - type: Label
+    currentLabel: reagent-name-plasma
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 10
+        reagents:
+          - ReagentId: Plasma
+            Quantity: 10
