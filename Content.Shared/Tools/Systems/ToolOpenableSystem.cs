@@ -17,7 +17,7 @@ public sealed class ToolOpenableSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ToolOpenableComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ToolOpenableComponent, ToolOpenableDoAfterEventToggleOpen>(OnOpenableStateToggled);
-        SubscribeLocalEvent<ToolOpenableComponent, InteractUsingEvent>(OnInteractUsing);//, after: new[] { typeof(SliceableFoodSystem) });
+        SubscribeLocalEvent<ToolOpenableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<ToolOpenableComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<ToolOpenableComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerb);
     }
