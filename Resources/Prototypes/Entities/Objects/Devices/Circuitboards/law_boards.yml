@@ -135,7 +135,7 @@
   id: XenoborgCircuitBoard
   parent: BaseElectronics
   name: law board (Xenoborg)
-  suffix: admin only
+  suffix: Admeme
   description: An electronics board containing the Xenoborg lawset.
   components:
   - type: Sprite
@@ -148,7 +148,7 @@
   id: MothershipCircuitBoard
   parent: BaseElectronics
   name: law board (Mothership Core)
-  suffix: admin only
+  suffix: Admeme
   description: An electronics board containing the Mothership Core lawset.
   components:
   - type: Sprite
@@ -156,4 +156,3 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: MothershipCoreLawset
-    
