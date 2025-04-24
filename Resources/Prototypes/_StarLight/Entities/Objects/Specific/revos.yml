@@ -6,10 +6,10 @@
   description: It seems to be pulsing with suspiciously enticing energies. Modified for a dubious or righteous cause, depending on where you stand. Which side are you on?
   components:
   - type: Sprite
-    sprite: _StarLight/Objects/Specific/USSP/revecrystal.rsi
+    sprite: _Starlight/Objects/Specific/USSP/revecrystal.rsi
     state: revecrystal
   - type: Item
-    sprite: _StarLight/Objects/Specific/USSP/revecrystal.rsi
+    sprite: _Starlight/Objects/Specific/USSP/revecrystal.rsi
     size: Tiny
   - type: Stack
     count: 20
@@ -55,12 +55,12 @@
   suffix: Empty
   components:
   - type: Sprite
-    sprite: _Starlight/Objects/Devices/communication.rsi
+    sprite: _Starlight/Objects/Devices/communications.rsi
     layers:
     - state: rev-radio
   - type: Item
-    sprite: _Starlight/Objects/Devices/communication.rsi
-    heldPrefix: rev-radio
+    sprite: _Starlight/Objects/Devices/communications.rsi
+    heldPrefix: rev-radio-inhand-left
   - type: UserInterface
     interfaces:
       enum.StoreUiKey.Key:
