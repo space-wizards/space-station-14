@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Nox38
-  changes:
-  - message: Seclites now start with a medium-capacity power cell.
-    type: Tweak
-  - message: Seclite power draw (wattage) has been reduced to 0.5.
-    type: Tweak
-  id: 7828
-  time: '2025-01-18T22:56:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34469
 - author: K-Dynamic
   changes:
   - message: Empty guns have a louder dry fire sound (i.e. when the chamber or power
@@ -3932,3 +3923,10 @@
   id: 8329
   time: '2025-04-24T03:24:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36135
+- author: SG6732
+  changes:
+  - message: Added meat patties. Get the charcoal and let's start grillin.
+    type: Add
+  id: 8330
+  time: '2025-04-24T03:45:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34896
