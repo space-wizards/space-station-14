@@ -1,8 +1,11 @@
+using Robust.Shared.Serialization;
+
 namespace Content.Shared.Holiday;
 
 /// <summary>
 /// Used to inquire the server if holidays are enabled.
 /// </summary>
+[NetSerializable, Serializable]
 public sealed class RequestHolidayEnabledEvent : EntityEventArgs
 {
 }
@@ -10,6 +13,7 @@ public sealed class RequestHolidayEnabledEvent : EntityEventArgs
 /// <summary>
 /// Network event used to push Holiday Enabled ccvar updates from server
 /// </summary>
+[NetSerializable, Serializable]
 public sealed class HolidayEnablingEvent : EntityEventArgs
 {
     public bool Enabled;
