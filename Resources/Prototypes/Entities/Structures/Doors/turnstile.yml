@@ -75,3 +75,21 @@
   - type: Tag
     tags:
     - HideContextMenu
+
+# Genpop
+
+- type: entity
+  id: TurnstileGenpopEnter
+  parent: Turnstile
+  suffix: Genpop Enter
+  components:
+  - type: AccessReader
+    access: [["GenpopEnter"]]
+
+- type: entity
+  id: TurnstileGenpopLeave
+  parent: Turnstile
+  suffix: Genpop Leave
+  components:
+  - type: AccessReader
+    access: [["GenpopLeave"]]
