@@ -31,10 +31,7 @@ public sealed partial class SimpleToolUsageComponent : Component
 }
 
 [ByRefEvent]
-public sealed partial class AttemptSimpleToolUseEvent(EntityUid user) : CancellableEntityEventArgs
-{
-    public EntityUid User = user;
-};
+public record struct AttemptSimpleToolUseEvent(EntityUid User, bool Cancelled = false);
 
 [Serializable, NetSerializable]
 public sealed partial class SimpleToolDoAfterEvent : SimpleDoAfterEvent;

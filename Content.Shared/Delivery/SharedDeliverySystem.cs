@@ -106,16 +106,13 @@ public abstract class SharedDeliverySystem : EntitySystem
 
     private void OnAttemptSimpleToolUse(Entity<DeliveryComponent> ent, ref AttemptSimpleToolUseEvent args)
     {
-        if (ent.Comp.IsOpened || !ent.Comp.IsLocked || _hands.IsHolding(args.User, ent))
-            args.Cancel();
+        if (ent.Comp.IsOpened || !ent.Comp.IsLocked)
+            args.Cancelled = true;
     }
 
     private void OnSimpleToolUse(Entity<DeliveryComponent> ent, ref SimpleToolDoAfterEvent args)
     {
         if (ent.Comp.IsOpened || args.Cancelled)
-            return;
-
-        if (_hands.IsHolding(args.User, ent))
             return;
 
         HandlePenalty(ent);
@@ -216,7 +213,7 @@ public abstract class SharedDeliverySystem : EntitySystem
         }
         else
         {
-            _container.EmptyContainer(container, true, Transform(ent.Owner).Coordinates);
+            _container.EmptyContainer(container, true);
         }
     }
 
