@@ -63,6 +63,9 @@ public sealed class PrototypeSaveTest
             if (prototype.Components.ContainsKey("MapGrid"))
                 continue;
 
+            // Look, it just makes sense, the thing changes it appearance all the time, lets just set its default at init.
+            if (prototype.Components.ContainsKey("ChameleonClothing"))
+
             // Currently mobs and such can't be serialized, but they aren't flagged as serializable anyways.
             if (!prototype.MapSavable)
                 continue;
