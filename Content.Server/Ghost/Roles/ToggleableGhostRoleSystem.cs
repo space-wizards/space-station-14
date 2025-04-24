@@ -14,6 +14,7 @@ namespace Content.Server.Ghost.Roles;
 /// </summary>
 public sealed class ToggleableGhostRoleSystem : EntitySystem
 {
+    [Dependency] private readonly ISharedPlayerManager _sharedPlayerManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
@@ -92,7 +93,7 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         // Mind is present, but ghosted out of the container
         else if (
             HasComp<MindContainerComponent>(uid) &&
-            CompOrNull<MindComponent>(uid)?.Session == null &&
+            _sharedPlayerManager.TryGetSessionByEntity(uid, out _) &&
             HasComp<ToggleableGhostRoleComponent>(uid)
             )
             args.PushMarkup(Loc.GetString(component.ExamineTextMindGhosted));
