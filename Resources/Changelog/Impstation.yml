@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: 'New depth 10 station wide destruction: Supermatter!'
-    type: Add
-  id: 1073
-  time: '2025-02-08T01:50:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1595
 - author: honeyed-lemons
   changes:
   - message: Priority Mail takes 5 minutes to expire again
@@ -4131,3 +4124,10 @@
   id: 1572
   time: '2025-04-24T22:03:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2346
+- author: HARPY, Sha-Seng
+  changes:
+  - message: new lamedh lobby art by harpy!
+    type: Add
+  id: 1573
+  time: '2025-04-24T22:07:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2334
