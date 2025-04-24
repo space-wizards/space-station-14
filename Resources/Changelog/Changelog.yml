@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Now items from the storage implant drop on the floor upon gibbing of
-      the owner.
-    type: Tweak
-  id: 7831
-  time: '2025-01-19T19:48:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33493
 - author: ArtisticRoomba
   changes:
   - message: Voxes can now honk, weh, and hew if forced to by a reagent.
@@ -3931,3 +3923,10 @@
   id: 8332
   time: '2025-04-24T14:32:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36392
+- author: Southbridge
+  changes:
+  - message: Colorful Light Crates have been added and can be ordered.
+    type: Add
+  id: 8333
+  time: '2025-04-24T17:41:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36750
