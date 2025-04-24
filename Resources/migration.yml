@@ -536,19 +536,22 @@ LightTree04: LightTree
 LightTree05: LightTree
 LightTree06: LightTree
 
-#2024-12-28
+# 2024-12-28
 DrinkIrishCarBomb: DrinkIrishSlammer
 
-#2025-01-06
+# 2025-01-06
 ClothingMaskSexyClown: ClothingMaskBlushingClown
 ClothingMaskSexyMime: ClothingMaskBlushingMime
 
 # 2025-01-27
 FoodCondimentPacketFrostoil: FoodCondimentPacketColdsauce
 
-#2025-02-05
+# 2025-02-05
 WeaponSubMachineGunVector: null
 WeaponSubMachineGunVectorRubber: null
+
+# 2025-02-11
+WallShuttleInterior: WallShuttle
 
 # 2025-02-20
 MagazineBoxAntiMaterielBig: null
@@ -575,3 +578,27 @@ PaxChemistryBottle: ChemistryBottlePax
 MuteToxinChemistryBottle: ChemistryBottleMuteToxin
 LeadChemistryBottle: ChemistryBottleLead
 ToxinChemistryBottle: ChemistryBottleToxin
+
+# 2025-03-29
+ClothingBackpackDuffelSyndicateRaidBundle: ClothingBackpackSyndicateRaidBundle
+
+# 2025-04-14
+MailRobustToolsSpam: MailSpamLetter
+MailNanotrasenSpam: MailSpamLetter
+MailSyndicateSpam: MailSpamLetter
+MailAlternativeDimensionSpam: MailSpamLetter
+MailNarsieCultSpam: MailSpamLetter
+MailRageCageSpam: MailSpamLetter
+MailVoyageAdvertisementSpam: MailSpamLetter
+MailScienceSpiderClanSpam: MailSpamLetter
+MailAllAccessSpam: MailSpamLetter
+MailCentcommRetributionSpam: MailSpamLetter
+MailEvilLizardSpam: MailSpamLetter
+MailParentsNeedMoneySpam: MailSpamLetter
+
+# 2025-04-15
+SimpleXenoArtifact: ComplexXenoArtifact
+MediumXenoArtifact: ComplexXenoArtifact
+SimpleXenoArtifactItem: ComplexXenoArtifactItem
+MediumXenoArtifactItem: ComplexXenoArtifactItem
+VariedXenoArtifactItem: ComplexXenoArtifactItem
