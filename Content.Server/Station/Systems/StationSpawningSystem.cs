@@ -187,7 +187,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         var gearEquippedEv = new StartingGearEquippedEvent(entity.Value);
         RaiseLocalEvent(entity.Value, ref gearEquippedEv);
 
-        if (prototype != null && TryComp<MetaDataComponent>(entity.Value, out var metaData))
+        if (prototype != null && TryComp(entity.Value, out MetaDataComponent? metaData))
         {
             SetPdaAndIdCardData(entity.Value, metaData.EntityName, prototype, station);
         }

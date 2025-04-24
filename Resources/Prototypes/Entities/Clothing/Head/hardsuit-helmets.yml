@@ -580,7 +580,7 @@
 
 #Pirate Captain Hardsuit
 - type: entity
-  parent: ClothingHeadHardsuitBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitPirateCap
   name: pirate captain's hardsuit helmet
   suffix: Pirate
@@ -590,9 +590,20 @@
     sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
+  - type: PointLight # Color matches visor colors, radius/energy same as mining hardsuit for the big captain.
+    color: "#f3ea9c"
+    radius: 7
+    energy: 3
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
 
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
@@ -643,6 +654,8 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
   - type: PointLight
     color: "#f4ffad"
+  - type: FireProtection
+    reduction: 0.2
   - type: Armor
     modifiers:
       coefficients:
