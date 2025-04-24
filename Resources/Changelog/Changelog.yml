@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Spacemann
-  changes:
-  - message: Station cameras can now be destroyed by bullets.
-    type: Add
-  id: 7825
-  time: '2025-01-18T13:41:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34500
-- author: Winkarst-cpu
-  changes:
-  - message: Some masks can now be seen when pulled down.
-    type: Add
-  id: 7826
-  time: '2025-01-18T16:58:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33451
 - author: Minemoder
   changes:
   - message: The chemical locker now has a 10u vial of plasma.
@@ -3929,3 +3915,20 @@
   id: 8326
   time: '2025-04-24T02:57:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35102
+- author: Beck Thompson
+  changes:
+  - message: You can how hide items inside cake by using a knife! Eating a cake with
+      an item inside will do minor damage.
+    type: Add
+  id: 8327
+  time: '2025-04-24T03:00:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31015
+- author: RedBookcase
+  changes:
+  - message: Added Advanced Circular Saw as a Medical Doctor specific uplink item.
+    type: Add
+  - message: Removed Syndicate Surgery Duffel Bag from uplink.
+    type: Remove
+  id: 8328
+  time: '2025-04-24T03:01:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35915
