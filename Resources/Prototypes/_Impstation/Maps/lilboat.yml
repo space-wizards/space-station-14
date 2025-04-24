@@ -2,8 +2,8 @@
   id: Lilboat
   mapName: 'NTAS Dolphin'
   mapPath: /Maps/_Impstation/lilboat.yml
-  minPlayers: 10
-  maxPlayers: 45
+  minPlayers: 5
+  maxPlayers: 35
   randomRotation: true
   stations:
     Lilboat:
@@ -19,8 +19,8 @@
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargo_fland.yml
         - type: StationJobs
-          availableJobs: # Total of 38 jobs roundstart, max of 42 inc. latejoins and trainees.
-            # command - 7
+          availableJobs: # Total of 40 jobs roundstart, max of 44 inc. latejoins and trainees.
+            # command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             ChiefEngineer: [ 1, 1 ]
@@ -28,6 +28,8 @@
             ResearchDirector: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
+            AdministrativeAssistant: [ 1, 1 ]
+            HospitalityDirector: [ 1, 1 ]
             # service - 11
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 1 ]
