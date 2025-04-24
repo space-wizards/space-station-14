@@ -7,7 +7,7 @@
   components:
   - type: Sprite
     sprite: _StarLight/Objects/Specific/USSP/revecrystal.rsi
-    state: Revecrystal
+    state: revecrystal
   - type: Item
     sprite: _StarLight/Objects/Specific/USSP/revecrystal.rsi
     size: Tiny
