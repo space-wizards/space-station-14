@@ -973,9 +973,6 @@
   id: Pipe
 
 - type: Tag
-  id: Pistachios
-
-- type: Tag
   id: Pizza
 
 - type: Tag

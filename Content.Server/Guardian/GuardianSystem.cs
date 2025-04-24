@@ -1,6 +1,7 @@
 using Content.Server.Body.Systems;
 using Content.Server.Popups;
 using Content.Shared.Actions;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -12,6 +13,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -221,7 +224,7 @@ namespace Content.Server.Guardian
             if (TryComp<GuardianComponent>(guardian, out var guardianComp))
             {
                 guardianComp.Host = args.Args.Target.Value;
-                _audio.PlayPvs(guardianComp.InjectSound, args.Args.Target.Value);
+                _audio.PlayPvs("/Audio/Effects/guardian_inject.ogg", args.Args.Target.Value);
                 _popupSystem.PopupEntity(Loc.GetString("guardian-created"), args.Args.Target.Value, args.Args.Target.Value);
                 // Exhaust the activator
                 component.Used = true;
@@ -243,18 +246,15 @@ namespace Content.Server.Guardian
             if (component.HostedGuardian == null)
                 return;
 
-            TryComp<GuardianComponent>(component.HostedGuardian, out var guardianComp);
-
             if (args.NewMobState == MobState.Critical)
             {
                 _popupSystem.PopupEntity(Loc.GetString("guardian-host-critical-warn"), component.HostedGuardian.Value, component.HostedGuardian.Value);
-                if (guardianComp != null)
-                    _audio.PlayPvs(guardianComp.CriticalSound, component.HostedGuardian.Value);
+                _audio.PlayPvs("/Audio/Effects/guardian_warn.ogg", component.HostedGuardian.Value);
             }
             else if (args.NewMobState == MobState.Dead)
             {
-                if (guardianComp != null)
-                    _audio.PlayPvs(guardianComp.DeathSound, uid);
+                //TODO: Replace WithVariation with datafield
+                _audio.PlayPvs("/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioParams.Default.WithVariation(0.20f));
                 RemComp<GuardianHostComponent>(uid);
             }
         }

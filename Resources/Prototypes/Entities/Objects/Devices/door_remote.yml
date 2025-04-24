@@ -162,7 +162,6 @@
     - CentralCommand
     - NuclearOperative
     - SyndicateAgent
-    - Wizard
 
 - type: entity
   parent: [ DoorRemoteDefault, BaseXenoborgContraband ]

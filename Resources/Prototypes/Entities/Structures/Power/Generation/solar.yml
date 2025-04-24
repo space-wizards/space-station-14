@@ -151,7 +151,6 @@
   - type: Construction
     graph: SolarPanel
     node: solarpanel
-  - type: SolarPanelReplacementMarker
 
 - type: entity
   id: SolarPanelBroken

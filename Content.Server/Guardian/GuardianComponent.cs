@@ -1,5 +1,3 @@
-using Robust.Shared.Audio;
-
 namespace Content.Server.Guardian
 {
     /// <summary>
@@ -31,24 +29,6 @@ namespace Content.Server.Guardian
         /// </summary>
         [DataField]
         public bool GuardianLoose;
-
-        /// <summary>
-        /// Sound played when a mob starts hosting the guardian.
-        /// </summary>
-        [DataField]
-        public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Effects/guardian_inject.ogg");
-
-        /// <summary>
-        /// Sound played when the guardian enters critical state.
-        /// </summary>
-        [DataField]
-        public SoundSpecifier CriticalSound = new SoundPathSpecifier("/Audio/Effects/guardian_warn.ogg");
-
-        /// <summary>
-        /// Sound played when the guardian dies.
-        /// </summary>
-        [DataField]
-        public SoundSpecifier DeathSound = new SoundPathSpecifier("/Audio/Voice/Human/malescream_guardian.ogg", AudioParams.Default.WithVariation(0.2f));
 
     }
 }

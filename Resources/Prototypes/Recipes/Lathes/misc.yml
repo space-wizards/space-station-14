@@ -245,10 +245,3 @@
   materials:
     Cloth: 100
     Steel: 50
-
-- type: latheRecipe
-  id: Ashtray
-  result: Ashtray
-  completetime: 1
-  materials:
-    Steel: 30

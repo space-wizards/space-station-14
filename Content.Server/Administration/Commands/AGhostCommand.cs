@@ -117,6 +117,6 @@ public sealed class AGhostCommand : LocalizedCommands
         }
 
         var comp = _entities.GetComponent<GhostComponent>(ghost);
-        ghostSystem.SetCanReturnToBody((ghost, comp), canReturn);
+        ghostSystem.SetCanReturnToBody(comp, canReturn);
     }
 }

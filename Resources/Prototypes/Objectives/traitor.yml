@@ -16,7 +16,7 @@
   components:
   - type: Objective
     icon:
-      sprite: Objects/Misc/folders.rsi
+      sprite: Objects/Misc/bureaucracy.rsi
       state: folder-white
   - type: MultipleTraitorsRequirement
 

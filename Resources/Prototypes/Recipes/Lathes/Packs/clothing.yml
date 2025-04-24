@@ -35,11 +35,6 @@
   - ClothingHeadHatHopcap
   - ClothingUniformJumpsuitHoP
   - ClothingUniformJumpskirtHoP
-  # Generic
-  - ClothingHeadHatBeretCommand
-  - ClothingHeadHatCommandSoft
-  - ClothingUniformJumpskirtCommandGeneric
-  - ClothingUniformJumpsuitCommandGeneric
 
 - type: latheRecipePack
   id: ClothingEngineering

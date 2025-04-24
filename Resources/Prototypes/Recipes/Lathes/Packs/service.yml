@@ -4,7 +4,6 @@
   id: ServiceStatic
   recipes:
   - Bucket
-  - Ashtray
   - DrinkMug
   - DrinkMugMetal
   - DrinkGlass

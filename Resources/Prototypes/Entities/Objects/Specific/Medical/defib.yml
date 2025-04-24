@@ -97,7 +97,7 @@
 
 - type: entity
   id: DefibrillatorSyndicate
-  parent: [ DefibrillatorCompact, BaseSyndicateContraband ]
+  parent: DefibrillatorCompact
   name: interdyne defibrillator
   description: Doubles as a self-defense weapon against war-crime inclined tiders.
   components:
