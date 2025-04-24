@@ -10,6 +10,13 @@
   components:
     - type: StationBankAccount
     - type: StationCargoOrderDatabase
+      orders:
+        Cargo: [ ]
+        Engineering: [ ]
+        Medical: [ ]
+        Science: [ ]
+        Security: [ ]
+        Service: [ ]
     - type: StationCargoBountyDatabase
 
 - type: entity
@@ -66,6 +73,7 @@
           - /Maps/Ruins/derelict.yml
           - /Maps/Ruins/djstation.yml
           - /Maps/Ruins/empty_flagship.yml
+          - /Maps/Ruins/hydro_outpost.yml
           - /Maps/Ruins/old_ai_sat.yml
           - /Maps/Ruins/ruined_prison_ship.yml
           - /Maps/Ruins/syndicate_dropship.yml
