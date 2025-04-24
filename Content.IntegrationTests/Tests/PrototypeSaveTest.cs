@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using Content.Shared.Coordinates;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -65,6 +66,7 @@ public sealed class PrototypeSaveTest
 
             // Look, it just makes sense, the thing changes it appearance all the time, lets just set its default at init.
             if (prototype.Components.ContainsKey("ChameleonClothing"))
+                continue;
 
             // Currently mobs and such can't be serialized, but they aren't flagged as serializable anyways.
             if (!prototype.MapSavable)
