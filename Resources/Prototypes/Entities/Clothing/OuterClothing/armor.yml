@@ -297,6 +297,32 @@
   - type: GroupExamine
 
 - type: entity
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSecurityCommandContraband]
+  id: ClothingOuterArmorCarapaceHoS
+  name: head of security's carapace
+  description: An armored chestpiece that offers less protection than the captain's carapace. The Head of Security thought it clever to replace protective padding with extra regalia.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/hos_carapace.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/hos_carapace.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.7
+        Caustic: 0.75
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: HeldSpeedModifier
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: GroupExamine
+
+- type: entity
   parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
   id: ClothingOuterArmorChangeling
   name: chitinous armor
