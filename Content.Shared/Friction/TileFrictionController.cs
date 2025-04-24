@@ -35,7 +35,6 @@ namespace Content.Shared.Friction
         private float _airDamping;
         private float _minDamping;
         private float _frictionModifier;
-        //TODO: KILL EVIL HARDCODED DEFAULTFRICTION
         public const float DefaultFriction = 0.3f;
 
         public override void Initialize()
@@ -77,6 +76,7 @@ namespace Content.Shared.Friction
 
                 float friction;
 
+                // If we're not touching the ground, don't use tileFriction.
                 // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
                 if (body.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(uid, body, xform) || !xform.Coordinates.IsValid(EntityManager))
                     friction = _airDamping;

@@ -13,6 +13,7 @@ namespace Content.Shared.Movement.Systems
         [Dependency] private   readonly IConfigurationManager _configManager = default!;
 
         private float _frictionModifier;
+        private float _airDamping;
 
         public override void Initialize()
         {
@@ -21,6 +22,7 @@ namespace Content.Shared.Movement.Systems
             SubscribeLocalEvent<MovementSpeedModifierComponent, TileFrictionEvent>(OnTileFriction);
 
             Subs.CVar(_configManager, CCVars.TileFrictionModifier, value => _frictionModifier = value, true);
+            Subs.CVar(_configManager, CCVars.AirFriction, value => _airDamping = value, true);
         }
 
         private void OnModMapInit(Entity<MovementSpeedModifierComponent> ent, ref MapInitEvent args)
@@ -28,8 +30,6 @@ namespace Content.Shared.Movement.Systems
             // TODO: Dirty these smarter.
             ent.Comp.WeightlessAcceleration = ent.Comp.BaseWeightlessAcceleration;
             ent.Comp.WeightlessModifier = ent.Comp.BaseWeightlessModifier;
-            ent.Comp.WeightlessFriction = ent.Comp.BaseWeightlessFriction;
-            ent.Comp.WeightlessFrictionNoInput = ent.Comp.BaseWeightlessFrictionNoInput;
             ent.Comp.Friction = _frictionModifier * ent.Comp.BaseFriction;
             ent.Comp.FrictionNoInput = _frictionModifier * ent.Comp.BaseFriction;
             ent.Comp.Acceleration = ent.Comp.BaseAcceleration;
@@ -47,9 +47,12 @@ namespace Content.Shared.Movement.Systems
             var ev = new RefreshWeightlessModifiersEvent()
             {
                 WeightlessAcceleration = move.BaseWeightlessAcceleration,
+                WeightlessAccelerationMod = 1.0f,
                 WeightlessModifier = move.BaseWeightlessModifier,
-                WeightlessFriction = move.BaseWeightlessFriction,
-                WeightlessFrictionNoInput = move.BaseWeightlessFrictionNoInput,
+                WeightlessFriction = move.BaseWeightlessFriction ?? _airDamping,
+                WeightlessFrictionMod = 1.0f,
+                WeightlessFrictionNoInput = move.BaseWeightlessFrictionNoInput ?? _airDamping,
+                WeightlessFrictionNoInputMod = 1.0f,
             };
 
             RaiseLocalEvent(uid, ref ev);
@@ -62,10 +65,10 @@ namespace Content.Shared.Movement.Systems
                 return;
             }
 
-            move.WeightlessAcceleration = ev.WeightlessAcceleration;
+            move.WeightlessAcceleration = ev.WeightlessAcceleration * ev.WeightlessAccelerationMod;
             move.WeightlessModifier = ev.WeightlessModifier;
-            move.WeightlessFriction = ev.WeightlessFriction;
-            move.WeightlessFrictionNoInput = ev.WeightlessFrictionNoInput;
+            move.WeightlessFriction = ev.WeightlessFriction * ev.WeightlessFrictionMod;
+            move.WeightlessFrictionNoInput = ev.WeightlessFrictionNoInput * ev.WeightlessFrictionNoInputMod;
             Dirty(uid, move);
         }
 
@@ -112,7 +115,7 @@ namespace Content.Shared.Movement.Systems
             {
                 Friction = move.BaseFriction,
                 FrictionNoInput = move.BaseFriction,
-                Acceleration = move.BaseAcceleration
+                Acceleration = move.BaseAcceleration,
             };
             RaiseLocalEvent(uid, ref ev);
 
@@ -173,12 +176,37 @@ namespace Content.Shared.Movement.Systems
     public record struct RefreshWeightlessModifiersEvent
     {
         public float WeightlessAcceleration;
-
-        public float WeightlessFriction;
+        public float WeightlessAccelerationMod;
 
         public float WeightlessModifier;
 
+        public float WeightlessFriction;
+        public float WeightlessFrictionMod;
+
         public float WeightlessFrictionNoInput;
+        public float WeightlessFrictionNoInputMod;
+
+        public void ModifyFriction(float friction, float noInput)
+        {
+            WeightlessFrictionMod *= friction;
+            WeightlessFrictionNoInput *= noInput;
+        }
+
+        public void ModifyFriction(float friction)
+        {
+            ModifyFriction(friction, friction);
+        }
+
+        public void ModifyAcceleration(float acceleration, float modifier)
+        {
+            WeightlessAcceleration *= acceleration;
+            WeightlessModifier *= modifier;
+        }
+
+        public void ModifyAcceleration(float modifier)
+        {
+            ModifyAcceleration(modifier, modifier);
+        }
     }
     [ByRefEvent]
     public record struct RefreshFrictionModifiersEvent : IInventoryRelayEvent

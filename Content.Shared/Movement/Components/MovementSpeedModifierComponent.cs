@@ -15,14 +15,12 @@ namespace Content.Shared.Movement.Components
 
         // weightless
         public const float DefaultMinimumFrictionSpeed = 0.005f;
-        public const float DefaultWeightlessFriction = 0.2f;
-        public const float DefaultWeightlessFrictionNoInput = 0.2f;
         public const float DefaultOffGridFriction = 0.05f;
         public const float DefaultWeightlessModifier = 0.7f;
         public const float DefaultWeightlessAcceleration = 1f;
 
         // friction
-        public const float DefaultAcceleration = 30f;
+        public const float DefaultAcceleration = 20f;
         public const float DefaultFriction = 2.5f;
         public const float DefaultFrictionNoInput = 2.5f;
 
@@ -103,14 +101,14 @@ namespace Content.Shared.Movement.Components
         /// The negative velocity applied for friction when weightless and providing inputs.
         /// </summary>
         [AutoNetworkedField, DataField]
-        public float BaseWeightlessFriction = DefaultWeightlessFriction;
+        public float? BaseWeightlessFriction;
 
         /// <summary>
         /// The negative velocity applied for friction when weightless and not providing inputs.
         /// This is essentially how much their speed decreases per second.
         /// </summary>
         [AutoNetworkedField, DataField]
-        public float BaseWeightlessFrictionNoInput = DefaultWeightlessFrictionNoInput;
+        public float? BaseWeightlessFrictionNoInput;
 
         /// <summary>
         /// The negative velocity applied for friction when weightless and not standing on a grid or mapgrid

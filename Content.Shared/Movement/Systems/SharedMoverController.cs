@@ -62,6 +62,7 @@ public abstract partial class SharedMoverController : VirtualController
     private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 
     private bool _relativeMovement;
+    private float _airDamping;
 
     /// <summary>
     /// Cache the mob movement calculation to re-use elsewhere.
@@ -88,6 +89,7 @@ public abstract partial class SharedMoverController : VirtualController
         InitializeInput();
         InitializeRelay();
         Subs.CVar(_configManager, CCVars.RelativeMovement, value => _relativeMovement = value, true);
+        Subs.CVar(_configManager, CCVars.AirFriction, value => _airDamping = value, true);
         UpdatesBefore.Add(typeof(TileFrictionController));
     }
 
@@ -233,9 +235,9 @@ public abstract partial class SharedMoverController : VirtualController
             {
                 touching = true;
                 if (wishDir != Vector2.Zero)
-                    friction = moveSpeedComponent?.WeightlessFriction ?? MovementSpeedModifierComponent.DefaultWeightlessFriction;
+                    friction = moveSpeedComponent?.WeightlessFriction ?? _airDamping;
                 else
-                    friction = moveSpeedComponent?.WeightlessFrictionNoInput ?? MovementSpeedModifierComponent.DefaultWeightlessFrictionNoInput;
+                    friction = moveSpeedComponent?.WeightlessFrictionNoInput ?? _airDamping;
             }
             // Otherwise use the off-grid values.
             else

@@ -13,7 +13,6 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
-using Content.Shared.Slippery;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
@@ -387,7 +386,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (userImpulse && TryComp<PhysicsComponent>(user, out var userPhysics))
         {
-            if (_gravity.IsWeightless(user, userPhysics) || TryComp<SlidingComponent>(user, out var sliding))
+            if (_gravity.IsWeightless(user, userPhysics))
                 CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
         }
     }
