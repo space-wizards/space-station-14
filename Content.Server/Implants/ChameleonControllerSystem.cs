@@ -32,11 +32,10 @@ public sealed class ChameleonControllerSystem : EntitySystem
 
     private void OnSelected(Entity<SubdermalImplantComponent> ent, ref ChameleonControllerSelectedJobMessage args)
     {
-        if (_delay.IsDelayed(ent.Owner) || ent.Comp.ImplantedEntity == null || !HasComp<ChameleonControllerImplantComponent>(ent))
+        if (!_delay.TryResetDelay(ent.Owner, true) || ent.Comp.ImplantedEntity == null || !HasComp<ChameleonControllerImplantComponent>(ent))
             return;
 
         ChangeChameleonClothingToJob(ent.Comp.ImplantedEntity.Value, args.SelectedJob);
-        _delay.TryResetDelay(ent.Owner);
     }
 
     /// <summary>

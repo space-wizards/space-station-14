@@ -2,6 +2,7 @@
 using Content.Shared.Implants;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
+using Content.Shared.Timing;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
@@ -13,12 +14,14 @@ public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+    private readonly UseDelaySystem _delay;
 
     [ViewVariables]
     private ChameleonControllerMenu? _menu;
 
     public ChameleonControllerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
+        _delay =  EntMan.System<UseDelaySystem>();
     }
 
     protected override void Open()
@@ -53,6 +56,18 @@ public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
 
     private void OnJobSelected(ProtoId<JobPrototype> selectedJob)
     {
+        if (!EntMan.TryGetComponent<UseDelayComponent>(Owner, out var useDelayComp))
+            return;
+
+        if (!_delay.TryResetDelay((Owner, useDelayComp), true))
+            return;
+
         SendMessage(new ChameleonControllerSelectedJobMessage(selectedJob));
+
+        if (!_delay.TryGetDelayInfo((Owner, useDelayComp), out var delay) || _menu == null)
+            return;
+
+        _menu._lockedUntil = DateTime.Now.Add(delay.Length);
+        _menu.UpdateGrid(true);
     }
 }

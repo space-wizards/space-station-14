@@ -7,6 +7,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Implants.UI;
 
@@ -19,6 +20,9 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
 
     // List of all the job protos that you can select!
     private IEnumerable<JobPrototype> _jobPrototypes = [];
+
+    // Lock the UI until this time
+    public DateTime? _lockedUntil;
 
     public event Action<ProtoId<JobPrototype>>? OnJobSelected;
 
@@ -35,7 +39,11 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
         UpdateGrid();
     }
 
-    private void UpdateGrid()
+    /// <summary>
+    ///     Fill the grid with the correct job icons and buttons.
+    /// </summary>
+    /// <param name="disabled">Set to true to disable all the buttons.</param>
+    public void UpdateGrid(bool disabled = false)
     {
         Grid.RemoveAllChildren();
 
@@ -53,6 +61,7 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
                 ToolTip = Loc.GetString(job.Name),
                 Text = Loc.GetString(job.Name),
                 Margin = new Thickness(0, 0, 15, 0),
+                Disabled = disabled,
             };
 
             var jobIconTexture = new TextureRect
@@ -75,5 +84,16 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
     private void JobButtonPressed(ProtoId<JobPrototype> job)
     {
         OnJobSelected?.Invoke(job);
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        if (_lockedUntil == null || DateTime.Now < _lockedUntil)
+            return;
+
+        _lockedUntil = null;
+        UpdateGrid();
     }
 }
