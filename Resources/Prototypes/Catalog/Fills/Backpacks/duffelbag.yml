@@ -228,19 +228,6 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
-  id: ClothingBackpackDuffelSyndicateRaidBundle
-  name: syndicate raid suit bundle
-  description: "Contains the Syndicate's durable raid armor suit."
-  components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterArmorRaid
-      - id: ClothingHeadHelmetRaid
-      - id: ClothingMaskGasSyndicate
-      - id: ClothingHandsGlovesCombat
-
-- type: entity
-  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateHardsuitBundle
   name: syndicate hardsuit bundle
   description: "Contains the Syndicate's signature blood red hardsuit."

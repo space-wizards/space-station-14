@@ -20,7 +20,7 @@
     definitions:
     - prefRoles: [ Thief ]
       max: 3
-      playerRatio: 15
+      playerRatio: 20
       lateJoinAdditional: true
       allowNonHumans: true
       multiAntagSetting: NotExclusive
@@ -62,5 +62,6 @@
         nameSegments:
         - NamesWizardFirst
         - NamesWizardLast
+        nameFormat: name-format-wizard
       mindRoles:
       - MindRoleWizard
