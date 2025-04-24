@@ -93,7 +93,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     /// Runs the penalty logic: Announcing the penalty and calculating how much to charge the designated account
     /// </summary>
     /// <param name="ent">The delivery for which to run the penalty.</param>
-    /// <param name="reasonLoc">The penalty reason, displayed in front of the message.</param>
+    /// <param name="reason">The penalty reason, displayed in front of the message.</param>
     protected override void HandlePenalty(Entity<DeliveryComponent> ent, string? reason = null)
     {
         if (!TryComp<StationBankAccountComponent>(ent.Comp.RecipientStation, out var stationAccount))
