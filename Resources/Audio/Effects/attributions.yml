@@ -246,11 +246,6 @@
   license: "CC-BY-SA-3.0"
   copyright: "Created by mattroks101 for Bee Station. cig_snuff converted to mono"
   source: "https://github.com/BeeStation/BeeStation-Hornet/pull/29"
-
-- files: [gravity_jump.ogg]
-  copyright: '"Arrows Fly By.mp3" by DigPro120. Edited pitch'
-  license: "CC0-1.0"
-  source: https://freesound.org/people/DigPro120/sounds/394004/
   
 - files: [stealthoff.ogg]
   copyright: 'TGStation at d4f678a1772007ff8d7eddd21cf7218c8e07bfc0'
