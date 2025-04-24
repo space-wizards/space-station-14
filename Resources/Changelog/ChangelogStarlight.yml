@@ -5112,4 +5112,11 @@ Entries:
   id: 708
   time: '2025-04-24T04:30:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/529
+- author: Happyrobot33
+  changes:
+  - message: Reverted upstream storage implanter change.
+    type: Tweak
+  id: 709
+  time: '2025-04-24T04:33:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/526
 
