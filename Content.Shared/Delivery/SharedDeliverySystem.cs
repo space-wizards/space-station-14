@@ -164,6 +164,8 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         DirtyField(ent, ent.Comp, nameof(DeliveryComponent.IsLocked));
 
+        RemComp<SimpleToolUsageComponent>(ent); // we don't want unlocked mail to still be cuttable
+
         var ev = new DeliveryUnlockedEvent(user);
         RaiseLocalEvent(ent, ref ev);
 
@@ -173,6 +175,7 @@ public abstract class SharedDeliverySystem : EntitySystem
         if (!force)
             _popup.PopupPredicted(Loc.GetString("delivery-unlocked-self", ("delivery", deliveryName)),
                 Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
+
         return true;
     }
 
