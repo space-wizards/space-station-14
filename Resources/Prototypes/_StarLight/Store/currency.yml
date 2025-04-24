@@ -4,3 +4,10 @@
   cash:
     1: BuildToken
   canWithdraw: true
+
+- type: currency
+  id: Revecrystal
+  displayName: "revecrystal"
+  cash:
+    1: Revecrystal1
+  canWithdraw: true

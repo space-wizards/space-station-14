@@ -1,0 +1,7 @@
+- type: listing
+  id: AKMSweapon
+  productEntity: WeaponRifleAk
+  cost:
+    Revecrystal: 4
+  categories:
+  - RevUplinkWeaponry

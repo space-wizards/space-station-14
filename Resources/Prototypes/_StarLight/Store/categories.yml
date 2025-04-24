@@ -106,3 +106,9 @@
 - type: storeCategory
   id: SalvageConsumeables
   name: Consumeables
+
+# USSP
+
+- type: storeCategory
+  id: RevUplinkWeaponry
+  name: Weaponry

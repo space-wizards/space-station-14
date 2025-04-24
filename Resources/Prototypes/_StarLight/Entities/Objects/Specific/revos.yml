@@ -1,0 +1,76 @@
+- type: entity
+  name: revecrystal
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: Relecrystal
+  suffix: 20 RC
+  description: It seems to be pulsing with suspiciously enticing energies. Modified for a dubious or righteous cause, depending on where you stand. Which side are you on?
+  components:
+  - type: Sprite
+    sprite: _StarLight/Objects/Specific/USSP/revecrystal.rsi
+    state: Revecrystal
+  - type: Item
+    sprite: _StarLight/Objects/Specific/USSP/revecrystal.rsi
+    size: Tiny
+  - type: Stack
+    count: 20
+    stackType: Revecrystal
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      Revecrystal: 1
+
+- type: entity
+  parent: Revecrystal
+  id: Revecrystal1
+  suffix: 1 RC
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: Revecrystal
+  id: Revecrystal5
+  suffix: 5 RC
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent: Revecrystal
+  id: Revecrystal10
+  suffix: 10 RC
+  components:
+  - type: Stack
+    count: 10
+
+# Uplinks
+- type: entity
+  parent: [BaseItem, BaseSovietContraband]
+  id: BaseRevUplinkRadio
+  name: USSP uplink
+  description: Suspiciously looking old radio... a hammer and sickle is ingrained in it.
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Devices/communication.rsi
+    layers:
+    - state: rev-radio
+  - type: Item
+    sprite: _Starlight/Objects/Devices/communication.rsi
+    heldPrefix: rev-radio
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      Revecrystal: 0
+
+- type: entity
+  parent: [BaseRevUplinkRadio, StorePresetUSSP]
+  id: USSPUplinkRadioPreset
