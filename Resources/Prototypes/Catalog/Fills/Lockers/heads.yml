@@ -127,7 +127,6 @@
       prob: 0.5
     - id: ClothingHeadsetCommand
     - id: ClothingNeckGoldmedal
-    - id: ClothingHandsGlovesHop
     - id: DoorRemoteService
     - id: HoPIDCard
     - id: IDComputerCircuitboard

@@ -62,6 +62,7 @@
   id: HoPGear
   equipment:
     id: HoPPDA
+    gloves: ClothingHandsGlovesHop
     belt: BoxFolderClipboard
   storage:
     back:
