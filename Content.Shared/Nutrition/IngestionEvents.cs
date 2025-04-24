@@ -25,15 +25,15 @@ public sealed class BeforeFullyEatenEvent : CancellableEntityEventArgs
 
 
 /// <summary>
-/// Raised directed at the food after finishing eating a food before it's deleted.
-/// Cancel this if you want to do something special before a food is deleted.
+///     Raised directed at the food after finishing eating it and before it's deleted.
 /// </summary>
-public sealed class AfterFullyEatenEvent : EntityEventArgs
+[ByRefEvent]
+public readonly struct AfterFullyEatenEvent(EntityUid user)
 {
     /// <summary>
-    /// The person that ate the food.
+    ///     The entity that ate the food.
     /// </summary>
-    public EntityUid User;
+    public readonly EntityUid User = user;
 }
 
 /// <summary>
