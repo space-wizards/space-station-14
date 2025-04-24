@@ -5098,4 +5098,11 @@ Entries:
   id: 706
   time: '2025-04-24T04:28:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/485
+- author: CringeCursed
+  changes:
+  - message: New trinket Rosary Beeds
+    type: Add
+  id: 707
+  time: '2025-04-24T04:29:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/523
 
