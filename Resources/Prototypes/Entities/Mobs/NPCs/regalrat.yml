@@ -107,8 +107,8 @@
   - type: MobsterAccent
   - type: Speech
     speechVerb: SmallMob
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: ClothingHeadHatFancyCrown #how did that get there?
       amount: 1
   - type: MobPrice
@@ -269,8 +269,8 @@
         Base: dead
       Dead:
         Base: splat
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatRat
       amount: 1
   - type: Vocal

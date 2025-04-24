@@ -27,7 +27,7 @@ public abstract class SharedSliceableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SliceableComponent, TrySliceEvent>(AfterSlicing);
-        SubscribeLocalEvent<SliceableComponent, GetVerbsEvent<UtilityVerb>>(AddSliceVerb);
+        SubscribeLocalEvent<ToolComponent, GetVerbsEvent<InteractionVerb>>(AddSliceVerb);
     }
 
     private void AfterSlicing(EntityUid uid, SliceableComponent comp, TrySliceEvent args)
@@ -44,20 +44,27 @@ public abstract class SharedSliceableSystem : EntitySystem
 
         if (hasBody)
             _bodySystem.GibBody(uid, body: body);
+        else
+            QueueDel(uid);
 
         var ev = new SliceEvent();
         RaiseLocalEvent(uid, ref ev);
     }
 
-    private void AddSliceVerb(EntityUid uid, SliceableComponent comp, GetVerbsEvent<UtilityVerb> args)
+    private void AddSliceVerb(EntityUid uid, ToolComponent toolComp, GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        var target = args.Target;
+
+        if (!TryComp<SliceableComponent>(target, out var sliceComp))
             return;
 
         var verbDisabled = false;
         var verbMessage = string.Empty;
 
-        if (!TryComp<ToolComponent>(uid, out var toolComp) || !_tools.HasQuality(uid, comp.ToolQuality))
+        if (!_tools.HasQuality(uid, sliceComp.ToolQuality))
         {
             verbDisabled = true;
             verbMessage = Loc.GetString("slice-verb-message-tool");
@@ -69,7 +76,7 @@ public abstract class SharedSliceableSystem : EntitySystem
             verbMessage = Loc.GetString("slice-verb-message-alive");
         }
 
-        UtilityVerb verb = new()
+        InteractionVerb verb = new()
         {
             Text = Loc.GetString("slice-verb-name"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
@@ -77,17 +84,14 @@ public abstract class SharedSliceableSystem : EntitySystem
             Message = verbMessage,
             Act = () =>
             {
-                OnVerbUsing(args.Target, args.User, uid, comp.SliceTime, toolComp);
+                OnVerbUsing(args.Target, args.User, uid, sliceComp.SliceTime, toolComp);
             },
         };
         args.Verbs.Add(verb);
     }
 
-    private void OnVerbUsing(EntityUid target, EntityUid user, EntityUid used, float time, ToolComponent? toolComp)
+    private void OnVerbUsing(EntityUid target, EntityUid user, EntityUid used, float time, ToolComponent toolComp)
     {
-        if (toolComp == null)
-            return;
-
         _tools.UseTool(
             used,
             user,

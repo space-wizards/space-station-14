@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sliceable;
+using Content.Shared.Storage;
 
 using Robust.Server.GameObjects;
 
@@ -42,11 +43,12 @@ public sealed class SliceableSystem : SharedSliceableSystem
         FoodComponent? food = null,
         TransformComponent? transform = null)
     {
-        if (!Resolve(uid, ref comp, ref food, ref transform))
+        if (!Resolve(uid, ref comp, ref transform))
             return false;
 
+        var slices = EntitySpawnCollection.GetSpawns(comp.Slices);
 
-        foreach (var sliceProto in comp.Slice)
+        foreach (var sliceProto in slices)
         {
             var sliceUid = Spawn(sliceProto);
 
@@ -60,19 +62,16 @@ public sealed class SliceableSystem : SharedSliceableSystem
                     _physics.SetLinearVelocity(sliceUid, randVect, body: physics);
             }
 
-            if (Resolve(uid, ref food))
+            // Fills new slice if comp allows.
+            if (Resolve(uid, ref food) && comp.TransferSolution)
             {
                 if (!_solutionContainer.TryGetSolution(uid, food.Solution, out var soln, out var solution))
                     return false;
 
-                var sliceVolume = solution.Volume / FixedPoint2.New(comp.Slice.Count);
+                var sliceVolume = solution.Volume / FixedPoint2.New(slices.Count);
 
-                // Fills new slice if comp allows.
-                if (comp.TransferSolution)
-                {
-                    var lostSolution = _solutionContainer.SplitSolution(soln.Value, sliceVolume);
-                    FillSlice(sliceUid, lostSolution);
-                }
+                var lostSolution = _solutionContainer.SplitSolution(soln.Value, sliceVolume);
+                FillSlice(sliceUid, lostSolution);
             }
         }
 

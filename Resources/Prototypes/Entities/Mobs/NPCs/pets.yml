@@ -25,8 +25,8 @@
     attributes:
       proper: true
       gender: male
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatCorgi
       amount: 2
     - id: MaterialHideCorgi
@@ -55,8 +55,8 @@
         Base: old_ian_dead
       Dead:
         Base: old_ian_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatCorgi
       amount: 2
     - id: SheetSteel1
@@ -118,8 +118,8 @@
     attributes:
       proper: true
       gender: male
-  - type: Butcherable # A puppy? You monster...
-    spawned:
+  - type: Sliceable # A puppy? You monster...
+    slices:
     - id: FoodMeatCorgi
       amount: 2
     - id: MaterialHideCorgi
@@ -246,8 +246,8 @@
         Base: bingus_dead
       Dead:
         Base: bingus_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 2
   - type: InteractionPopup
@@ -303,8 +303,8 @@
         Base: mcgriff_dead
       Dead:
         Base: mcgriff_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 2
   - type: ReplacementAccent
@@ -350,8 +350,8 @@
         Base: paperwork_dead
       Dead:
         Base: paperwork_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 3
   - type: InteractionPopup
@@ -399,8 +399,8 @@
         Base: walter_dead
       Dead:
         Base: walter_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 3
   - type: ReplacementAccent
@@ -549,8 +549,8 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       collection: Fox
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 3
     - id: Telecrystal5
@@ -600,8 +600,8 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/fox_squeak.ogg
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 1
   - type: Grammar
@@ -760,8 +760,8 @@
         BaseUnshaded: aslime-_3
       Dead:
         Base: rainbow_baby_slime_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatSlime
       amount: 1
     - id: MaterialSmileExtract
@@ -814,9 +814,9 @@
     description: ghost-role-information-punpun-description
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
-  - type: Butcherable
+  - type: Sliceable
     butcheringType: Spike
-    spawned:
+    slices:
     - id: FoodMeat
       amount: 3
     - id: DrinkTequilaBottleFull

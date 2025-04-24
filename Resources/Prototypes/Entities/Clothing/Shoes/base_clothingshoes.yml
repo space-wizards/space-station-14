@@ -30,11 +30,9 @@
   parent: ClothingShoesBase
   id: ClothingShoesBaseButcherable
   components:
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: Sliceable
+    slices:
     - id: MaterialCloth1
-      amount: 1
 
 # stuff common to all military boots
 - type: entity

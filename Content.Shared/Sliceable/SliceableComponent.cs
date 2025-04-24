@@ -16,7 +16,7 @@ public sealed partial class SliceableComponent : Component
     ///     Prototype ID of the entity that will be spawned after slicing.
     /// </summary>
     [DataField]
-    public List<EntitySpawnEntry> Slice = [];
+    public List<EntitySpawnEntry> Slices = [];
 
     /// <summary>
     ///     If true, entity will transfer splitted solution into <see cref"SpawnedPrototype"/>. Works only with food.

@@ -86,8 +86,8 @@
     - Goliath
     - FootstepSound
   - type: NoSlip
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatGoliath
       amount: 3
     - id: MaterialGoliathHide1
@@ -238,8 +238,8 @@
         4
       AggroVisionRadius: !type:Single
         9
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodHivelordRemains
 
 - type: entity

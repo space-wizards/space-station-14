@@ -36,8 +36,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 1
   - type: InteractionPopup
@@ -225,8 +225,8 @@
         Base: dead-0
       Dead:
         Base: dead-0
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatChicken
       amount: 1
   - type: InteractionPopup
@@ -312,8 +312,8 @@
     - MobChicken1
     - MobChicken2
     intervalSeconds: 20
-    minimumEntitiesSpawned: 1
-    maximumEntitiesSpawned: 1
+    minimumEntitiesslices: 1
+    maximumEntitiesslices: 1
   - type: TimedDespawn #delete the egg after the chicken spawns
     lifetime: 21
 
@@ -382,8 +382,8 @@
         reagents:
         - ReagentId: Slime
           Quantity: 5
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatSlime
   - type: Damageable
     damageContainer: Biological
@@ -440,8 +440,8 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatSlime
 
 - type: entity
@@ -531,8 +531,8 @@
       types:
         Asphyxiation: -0.5
   - type: CombatMode
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatSlime
       amount: 2
   - type: Extractable
@@ -661,8 +661,8 @@
         Base: dead-0
       Dead:
         Base: dead-0
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatDuck
       amount: 1
   - type: InteractionPopup
@@ -736,8 +736,8 @@
       - MobDuckWhite
       - MobDuckBrown
       intervalSeconds: 20
-      minimumEntitiesSpawned: 1
-      maximumEntitiesSpawned: 1
+      minimumEntitiesslices: 1
+      maximumEntitiesslices: 1
     - type: TimedDespawn #delete the egg after the chicken spawns
       lifetime: 21
 
@@ -861,8 +861,8 @@
     quantityPerUpdate: 25
     growthDelay: 30
   - type: ExaminableHunger
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 5
   - type: Grammar
@@ -934,8 +934,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatCrab
       amount: 2
   - type: InteractionPopup
@@ -1027,8 +1027,8 @@
   - type: FlavorProfile
     flavors:
     - fiber
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 4
   - type: Grammar
@@ -1094,8 +1094,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatChicken
       amount: 2
   - type: InteractionPopup # TODO: Make it so there's a separate chance to make certain animals outright hostile towards you.
@@ -1143,8 +1143,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 4
   - type: Bloodstream
@@ -1201,8 +1201,8 @@
     templateId: kangaroo
   - type: ReplacementAccent
     accent: kangaroo
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
   - type: DamageStateVisuals
     states:
@@ -1347,9 +1347,9 @@
       types:
         Blunt: 3
         Piercing: 3
-  - type: Butcherable
+  - type: Sliceable
     butcheringType: Spike
-    spawned:
+    slices:
     - id: FoodMeat
       amount: 3
   - type: Puller
@@ -1561,9 +1561,9 @@
           horns_floppy_kobold_ears: Inherit
           horns_double: Inherit
           horns_kobold_ears: Inherit
-  - type: Butcherable
+  - type: Sliceable
     butcheringType: Spike
-    spawned:
+    slices:
     - id: FoodMeat
       amount: 2
   - type: AlwaysRevolutionaryConvertible
@@ -1752,8 +1752,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatRat
       amount: 1
   - type: ReplacementAccent
@@ -1923,8 +1923,8 @@
           Quantity: 3
         - ReagentId: Uranium
           Quantity: 10
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatRat
       amount: 1
     - id: SheetUranium1
@@ -1968,8 +1968,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatLizard
       amount: 1
   - type: InteractionPopup
@@ -2024,8 +2024,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 1
   - type: InteractionPopup
@@ -2078,8 +2078,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 1
   - type: InteractionPopup
@@ -2130,8 +2130,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 1
   - type: Speech
@@ -2183,8 +2183,8 @@
         Base: penguin_dead
       Dead:
         Base: penguin_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatPenguin
       amount: 3
   - type: InteractionPopup
@@ -2316,8 +2316,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatSnake
       amount: 1
   - type: InteractionPopup
@@ -2350,8 +2350,16 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Butcherable
-    spawned:
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: tarantula
+      Critical:
+        Base: tarantula_dead
+      Dead:
+        Base: tarantula_dead
+  - type: Sliceable
+    slices:
     - id: FoodMeatSpider
       amount: 2
   - type: CombatMode
@@ -2500,8 +2508,8 @@
       - map: ["enum.DamageStateVisualLayers.Base"]
         state: clown
         sprite: Mobs/Animals/clownspider.rsi
-    - type: Butcherable
-      spawned:
+    - type: Sliceable
+      slices:
         - id: MaterialBananium1
           amount: 1
     - type: DamageStateVisuals
@@ -2583,8 +2591,8 @@
         Base: possum_dead
       Dead:
         Base: possum_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 3
   - type: InteractionPopup
@@ -2656,8 +2664,8 @@
         Base: raccoon_dead
       Dead:
         Base: raccoon_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 3
   - type: InteractionPopup
@@ -2716,8 +2724,8 @@
         Base: fox_dead
       Dead:
         Base: fox_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 3
   - type: InteractionPopup
@@ -2790,8 +2798,8 @@
         Base: corgi_dead
       Dead:
         Base: corgi_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 2
   - type: ReplacementAccent
@@ -2939,8 +2947,8 @@
   - type: Speech
     speechSounds: Cat
     speechVerb: SmallMob
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 3
   - type: ReplacementAccent
@@ -3117,8 +3125,8 @@
         Base: kitten_dead
       Dead:
         Base: kitten_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 1
   - type: MobPrice
@@ -3170,8 +3178,8 @@
         Base: sloth_dead
       Dead:
         Base: sloth_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 3
   - type: InteractionPopup
@@ -3223,8 +3231,8 @@
         Base: ferret_dead
       Dead:
         Base: ferret_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 3
   - type: InteractionPopup
@@ -3334,8 +3342,8 @@
           Quantity: 55
         - ReagentId: Fat
           Quantity: 5
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeat
       amount: 1
   - type: ReplacementAccent
@@ -3431,8 +3439,8 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatBacon
       amount: 6
   - type: Grammar
@@ -3494,8 +3502,8 @@
         Base: nymph_sleep
       Dead:
         Base: nymph_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: MaterialWoodPlank1
       amount: 2
   - type: InteractionPopup

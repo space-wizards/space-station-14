@@ -14,6 +14,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Content.Shared.Sliceable;
 using Content.Server.Sliceable;
+using Content.Shared.Storage;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -191,7 +192,9 @@ public sealed class CargoTest
 
                         // Spawn a slice
 
-                        foreach (var sliceProto in sliceable.Slice)
+                        var slices = EntitySpawnCollection.GetSpawns(sliceable.Slices);
+
+                        foreach (var sliceProto in slices)
                         {
                             var slice = entManager.SpawnEntity(sliceProto, coord);
 
@@ -205,7 +208,7 @@ public sealed class CargoTest
                             entManager.DeleteEntity(slice);
 
                             // If for some reason it can only make one slice, that's okay, I guess
-                            Assert.That(sliceable.Slice.Count, Is.EqualTo(1), $"{proto} counts as part of cargo bounty {bounty.ID} and slices into {sliceable.Slice.Count} slices which count for the same bounty!");
+                            Assert.That(slices.Count, Is.EqualTo(1), $"{proto} counts as part of cargo bounty {bounty.ID} and slices into {slices.Count} slices which count for the same bounty!");
                         }
                     }
                 }

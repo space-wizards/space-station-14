@@ -34,11 +34,9 @@
   parent: ClothingMaskBase
   abstract: true
   components:
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: Sliceable
+    slices:
     - id: MaterialCloth1
-      amount: 1
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
