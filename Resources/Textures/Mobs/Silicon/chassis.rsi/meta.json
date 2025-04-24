@@ -344,6 +344,10 @@
       "directions": 4
     },
     {
+      "name": "xenoborg_heavy_e_r",
+      "directions": 4
+    },
+    {
       "name": "xenoborg_heavy_l",
       "directions": 4
     },
@@ -404,11 +408,19 @@
       ]
     },
     {
+      "name": "xenoborg_scout_e_r",
+      "directions": 4
+    },
+    {
       "name": "xenoborg_engi",
       "directions": 4
     },
 	  {
       "name": "xenoborg_engi_e",
+      "directions": 4
+    },
+    {
+      "name": "xenoborg_engi_e_r",
       "directions": 4
     },
     {
@@ -444,6 +456,10 @@
           0.1
         ]
       ]
+    },
+    {
+      "name": "xenoborg_stealth_e_r",
+      "directions": 4
     },
     {
       "name": "xenoborg_stealth_l",

@@ -340,7 +340,7 @@
       visible: false
   - type: BorgChassis
     hasMindState: xenoborg_engi_e
-    noMindState: xenoborg_engi
+    noMindState: xenoborg_engi_e_r
     moduleWhitelist:
       tags:
       - XenoborgModuleGeneric
@@ -393,7 +393,7 @@
       visible: false
   - type: BorgChassis
     hasMindState: xenoborg_heavy_e
-    noMindState: xenoborg_heavy
+    noMindState: xenoborg_heavy_e_r
     moduleWhitelist:
       tags:
       - XenoborgModuleGeneric
@@ -479,7 +479,7 @@
       collection: FootstepHoverBorg
   - type: BorgChassis
     hasMindState: xenoborg_scout_e
-    noMindState: xenoborg_scout
+    noMindState: xenoborg_scout_e_r
     moduleWhitelist:
       tags:
       - XenoborgModuleGeneric
@@ -530,7 +530,7 @@
       collection: FootstepHoverBorg
   - type: BorgChassis
     hasMindState: xenoborg_stealth_e
-    noMindState: xenoborg_stealth
+    noMindState: xenoborg_stealth_e_r
     moduleWhitelist:
       tags:
       - XenoborgModuleGeneric
