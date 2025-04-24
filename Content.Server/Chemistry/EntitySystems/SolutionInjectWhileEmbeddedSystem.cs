@@ -1,14 +1,6 @@
-using Content.Server.Body.Components;
-using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Events;
-using Content.Shared.Inventory;
-using Content.Shared.Popups;
 using Content.Shared.Projectiles;
-using Content.Shared.Tag;
-using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.Collections;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -19,16 +11,11 @@ namespace Content.Server.Chemistry.EntitySystems;
 public sealed class SolutionInjectWhileEmbeddedSystem : EntitySystem
 {
 	[Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        
+
         SubscribeLocalEvent<SolutionInjectWhileEmbeddedComponent, MapInitEvent>(OnMapInit);
     }
 

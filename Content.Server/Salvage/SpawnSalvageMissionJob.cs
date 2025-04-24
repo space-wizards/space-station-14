@@ -193,7 +193,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         List<Vector2i> reservedTiles = new();
 
-        foreach (var tile in grid.GetTilesIntersecting(new Circle(Vector2.Zero, landingPadRadius), false))
+        foreach (var tile in _map.GetTilesIntersecting(mapUid, grid, new Circle(Vector2.Zero, landingPadRadius), false))
         {
             if (!_biome.TryGetBiomeTile(mapUid, grid, tile.GridIndices, out _))
                 continue;
@@ -214,7 +214,14 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             if (!lootProto.Guaranteed)
                 continue;
 
-            await SpawnDungeonLoot(lootProto, mapUid);
+            try
+            {
+                await SpawnDungeonLoot(lootProto, mapUid);
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Failed to spawn guaranteed loot {lootProto.ID}: {e}");
+            }
         }
 
         // Handle boss loot (when relevant).
@@ -244,7 +251,14 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             if (entry == null)
                 break;
 
-            await SpawnRandomEntry(grid, entry, dungeon, random);
+            try
+            {
+                await SpawnRandomEntry(grid, entry, dungeon, random);
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Failed to spawn mobs for {entry.Proto}: {e}");
+            }
         }
 
         var allLoot = _prototypeManager.Index<SalvageLootPrototype>(SharedSalvageSystem.ExpeditionsLootProto);

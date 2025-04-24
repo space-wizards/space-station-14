@@ -31,7 +31,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
     private void OnMicrowaved(EntityUid uid, IdCardComponent component, BeingMicrowavedEvent args)
     {
         if (!component.CanMicrowave || !TryComp<MicrowaveComponent>(args.Microwave, out var micro) || micro.Broken)
-            return;   
+            return;
 
         if (TryComp<AccessComponent>(uid, out var access))
         {
@@ -78,12 +78,17 @@ public sealed class IdCardSystem : SharedIdCardSystem
             }
 
             // Give them a wonderful new access to compensate for everything
-            var random = _random.Pick(_prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().ToArray());
+            var ids = _prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().Where(x => x.CanAddToIdCard).ToArray();
+
+            if (ids.Length == 0)
+                return;
+
+            var random = _random.Pick(ids);
 
             access.Tags.Add(random.ID);
             Dirty(uid, access);
 
-            _adminLogger.Add(LogType.Action, LogImpact.Medium,
+            _adminLogger.Add(LogType.Action, LogImpact.High,
                     $"{ToPrettyString(args.Microwave)} added {random.ID} access to {ToPrettyString(uid):entity}");
 
         }
