@@ -7,3 +7,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Created by Darkrell in Udio v1.5"
   source: "https://github.com/ss14Starlight/space-station-14"
+
+- files: ["breacher.ogg"]
+  license: "CC-BY-ND-4.0"
+  copyright: "Breacher by Artifyber, for InanimateIJK & their associated projects."
+  source: "https://soundcloud.com/r3dz3r/breacher"
