@@ -20,14 +20,13 @@ public abstract class SharedSliceableSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _tools = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedDestructibleSystem _destructibleSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<SliceableComponent, TrySliceEvent>(AfterSlicing);
-        SubscribeLocalEvent<ToolComponent, GetVerbsEvent<InteractionVerb>>(AddSliceVerb);
+        SubscribeLocalEvent<SliceableComponent, GetVerbsEvent<InteractionVerb>>(AddSliceVerb);
     }
 
     private void AfterSlicing(EntityUid uid, SliceableComponent comp, TrySliceEvent args)
@@ -51,26 +50,26 @@ public abstract class SharedSliceableSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
     }
 
-    private void AddSliceVerb(EntityUid uid, ToolComponent toolComp, GetVerbsEvent<InteractionVerb> args)
+    private void AddSliceVerb(EntityUid target, SliceableComponent sliceComp, GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        var target = args.Target;
+        var used = args.Using;
 
-        if (!TryComp<SliceableComponent>(target, out var sliceComp))
+        if (!TryComp<ToolComponent>(used, out var toolComp))
             return;
 
         var verbDisabled = false;
         var verbMessage = string.Empty;
 
-        if (!_tools.HasQuality(uid, sliceComp.ToolQuality))
+        if (!_tools.HasQuality(used.Value, sliceComp.ToolQuality))
         {
             verbDisabled = true;
             verbMessage = Loc.GetString("slice-verb-message-tool");
         }
 
-        if (TryComp<MobStateComponent>(args.Target, out var mobState) && !_mobStateSystem.IsDead(args.Target, mobState))
+        if (TryComp<MobStateComponent>(target, out var mobState) && !_mobStateSystem.IsDead(target, mobState))
         {
             verbDisabled = true;
             verbMessage = Loc.GetString("slice-verb-message-alive");
@@ -84,7 +83,7 @@ public abstract class SharedSliceableSystem : EntitySystem
             Message = verbMessage,
             Act = () =>
             {
-                OnVerbUsing(args.Target, args.User, uid, sliceComp.SliceTime, toolComp);
+                OnVerbUsing(target, args.User, used.Value, sliceComp.SliceTime, toolComp);
             },
         };
         args.Verbs.Add(verb);
