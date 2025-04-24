@@ -175,8 +175,8 @@
     requirements:
     - !type:OverallPlaytimeRequirement
       time: 18000 # 5h
-    - !type:DepartmentTimeRequirement
-      department: Chemistry
+    - !type:RoleTimeRequirement
+      role: JobChemist
       time: 18000 # 5h
 
 - type: entity
