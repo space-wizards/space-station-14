@@ -76,7 +76,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterEngineer
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, AllowSuitStorageClothing]
   id: ClothingOuterWinterBar
   name: bartender winter coat
   components:
@@ -108,7 +108,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterBartender
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
+  parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband, AllowSuitStorageClothing]
   id: ClothingOuterWinterCap
   name: captain's winter coat
   components:
@@ -700,7 +700,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
+  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityContraband, AllowSuitStorageClothing]
   id: ClothingOuterWinterSec
   name: security winter coat
   components:
