@@ -1,16 +1,5 @@
 - type: entity
   parent: ClothingOuterStorageBase
-  id: ClothingOuterApron
-  name: apron
-  description: A fancy apron for a stylish person.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/apron.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/apron.rsi
-
-- type: entity
-  parent: ClothingOuterStorageBase
   id: ClothingOuterApronBar
   suffix: Bartender
   name: apron
