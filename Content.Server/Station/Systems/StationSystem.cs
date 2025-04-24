@@ -124,6 +124,9 @@ public sealed class StationSystem : SharedStationSystem
         foreach (var grid in component.Grids)
         {
             RemComp<StationMemberComponent>(grid);
+
+            // If the station gets deleted, we raise the event for every grid that was a part of it
+            RaiseLocalEvent(new StationGridRemovedEvent(grid));
         }
 
         RaiseNetworkEvent(new StationsUpdatedEvent(GetStationNames()), Filter.Broadcast());

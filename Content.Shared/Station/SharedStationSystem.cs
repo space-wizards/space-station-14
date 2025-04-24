@@ -16,16 +16,16 @@ public abstract class SharedStationSystem : EntitySystem
         _xformQuery = GetEntityQuery<TransformComponent>();
         _stationMemberQuery = GetEntityQuery<StationMemberComponent>();
 
-        SubscribeLocalEvent<StationTrackerComponent, ComponentStartup>(OnStationTrackerStartup);
-        SubscribeLocalEvent<StationTrackerComponent, MoveEvent>(OnStationTrackerMoved);
+        SubscribeLocalEvent<StationTrackerComponent, MapInitEvent>(OnStationTrackerMapInit);
+        SubscribeLocalEvent<StationTrackerComponent, EntParentChangedMessage>(OnEntParentChanged);
     }
 
-    private void OnStationTrackerStartup(Entity<StationTrackerComponent> ent, ref ComponentStartup args)
+    private void OnStationTrackerMapInit(Entity<StationTrackerComponent> ent, ref MapInitEvent args)
     {
         UpdateStationTracker(ent.AsNullable());
     }
 
-    private void OnStationTrackerMoved(Entity<StationTrackerComponent> ent, ref MoveEvent args)
+    private void OnEntParentChanged(Entity<StationTrackerComponent> ent, ref EntParentChangedMessage args)
     {
         UpdateStationTracker(ent.AsNullable());
     }
