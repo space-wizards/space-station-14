@@ -26,7 +26,7 @@ public sealed partial class SpeedModifierContactsComponent : Component
     /// Indicates whether this component affects the movement speed of airborne entities that come into contact with the entity this component is added to.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool AffectAirborne = false;
+    public bool AffectAirborne;
 
     /// <summary>
     /// A whitelist of entities that should be ignored by this component's speed modifiers.
