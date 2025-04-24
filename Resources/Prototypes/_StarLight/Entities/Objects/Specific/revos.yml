@@ -1,7 +1,7 @@
 - type: entity
   name: revecrystal
   parent: [BaseItem, BaseSyndicateContraband]
-  id: Relecrystal
+  id: Revecrystal
   suffix: 20 RC
   description: It seems to be pulsing with suspiciously enticing energies. Modified for a dubious or righteous cause, depending on where you stand. Which side are you on?
   components:
