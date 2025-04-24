@@ -52,7 +52,8 @@
       Dead:
         Base: dead
   - type: Sliceable
-    slice: [ FoodMeatXeno ]
+    slice:
+    - id: FoodMeatXeno
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: CombatMode

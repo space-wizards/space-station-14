@@ -34,7 +34,8 @@
   id: ClothingHandsButcherable
   components:
   - type: Sliceable
-    slice: MaterialCloth1
+    slices:
+    - id: MaterialCloth1
 
 # gloves that cover the fingertips and have synthetic fibers
 - type: entity

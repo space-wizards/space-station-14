@@ -61,7 +61,9 @@
     - state: alpha-filling
       color: "#FF613F"
   - type: Sliceable
-    slice: FoodBreadVolcanicSlice
+    slices:
+    - id: FoodBreadVolcanicSlice
+      amount: 3
 
 - type: entity
   name: volcanic slice
@@ -94,7 +96,9 @@
     layers:
     - state: banana
   - type: Sliceable
-    slice: FoodBreadBananaSlice
+    slices:
+    - id: FoodCakePlainSlice
+      amount: 3
   - type: Tag
     tags:
     - Fruit
@@ -137,7 +141,9 @@
     layers:
     - state: cotton
   - type: Sliceable
-    slice: FoodBreadCottonSlice
+    slices:
+    - id: FoodBreadCottonSlice
+      amount: 3
   - type: Tag
     tags:
     - ClothMade
@@ -197,7 +203,9 @@
     layers:
     - state: cornbread
   - type: Sliceable
-    slice: FoodBreadCornSlice
+    slices:
+    - id: FoodBreadCornSlice
+      amount: 3
   - type: SolutionContainerManager
     solutions:
       food:
@@ -245,7 +253,9 @@
     layers:
     - state: creamcheese
   - type: Sliceable
-    slice: FoodBreadCreamcheeseSlice
+    slices:
+    - id: FoodBreadCreamcheeseSlice
+      amount: 3
   - type: SolutionContainerManager
     solutions:
       food:
@@ -297,7 +307,9 @@
     layers:
     - state: meat
   - type: Sliceable
-    slice: FoodBreadMeatSlice
+    slices:
+    - id: FoodBreadMeatSlice
+      amount: 3
   - type: SolutionContainerManager
     solutions:
       food:
@@ -357,7 +369,9 @@
     layers:
     - state: mimana
   - type: Sliceable
-    slice: FoodBreadMimanaSlice
+    slices:
+    - id: FoodBreadMimanaSlice
+      amount: 3
   - type: SolutionContainerManager
     solutions:
       food:
@@ -412,7 +426,9 @@
     layers:
     - state: plain
   - type: Sliceable
-    slice: FoodBreadPlainSlice
+    slices:
+    - id: FoodBreadPlainSlice
+      amount: 3
 
 - type: entity
   name: bread slice
@@ -440,7 +456,9 @@
     layers:
     - state: sausage
   - type: Sliceable
-    slice: FoodBreadSausageSlice
+    slices:
+    - id: FoodBreadSausageSlice
+      amount: 3
   - type: SolutionContainerManager
     solutions:
       food:
@@ -503,7 +521,9 @@
     layers:
     - state: spidermeat
   - type: Sliceable
-    slice: FoodBreadMeatSpiderSlice
+    slices:
+    - id: FoodBreadMeatSpiderSlice
+      amount: 3
   - type: SolutionContainerManager
     solutions:
       food:
@@ -563,7 +583,9 @@
     layers:
     - state: tofu
   - type: Sliceable
-    slice: FoodBreadTofuSlice
+    slices:
+    - id: FoodBreadTofuSlice
+      amount: 3
   - type: SolutionContainerManager
     solutions:
       food:
@@ -614,7 +636,9 @@
     layers:
     - state: xenomeat
   - type: Sliceable
-    slice: FoodBreadMeatXenoSlice
+    slices:
+    - id: FoodBreadMeatXenoSlice
+      amount: 3
   - type: SolutionContainerManager
     solutions:
       food:
@@ -670,8 +694,9 @@
   - type: Sprite
     state: baguette
   - type: Sliceable
-    count: 12
-    slice: FoodBreadBaguetteSlice
+    slices:
+    - id: FoodBreadBaguetteSlice
+      amount: 12
   - type: SolutionContainerManager
     solutions:
       food:

@@ -34,7 +34,8 @@
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
   - type: Sliceable
-    slice: MaterialCloth1
+    slices:
+    - id: MaterialCloth1
 
 - type: entity
   id: Carpet

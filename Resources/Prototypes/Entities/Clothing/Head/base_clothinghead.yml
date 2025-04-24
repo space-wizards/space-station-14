@@ -31,7 +31,8 @@
   id: ClothingHeadBaseButcherable
   components:
   - type: Sliceable
-    slice: MaterialCloth1
+    slices:
+    - id: MaterialCloth1
   - type: Tag
     tags:
       - ClothMade

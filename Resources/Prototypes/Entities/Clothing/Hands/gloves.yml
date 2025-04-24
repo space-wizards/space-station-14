@@ -300,7 +300,8 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/mercbattle.rsi
   - type: Sliceable
-    slice: ClothingHandsGlovesMercFingerless
+    slices:
+    - id: ClothingHandsGlovesMercFingerless
   - type: Fiber
     fiberMaterial: fibers-insulative
     fiberColor: fibers-olive

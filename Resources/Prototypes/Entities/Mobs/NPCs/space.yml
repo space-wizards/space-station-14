@@ -471,7 +471,8 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
   - type: Sliceable
-    slice: [ FoodMeatSnail ]
+    slices:
+    - id: FoodMeatSnail
   - type: Tag
     tags:
     - Trash

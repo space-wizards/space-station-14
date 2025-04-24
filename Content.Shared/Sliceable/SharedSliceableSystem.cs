@@ -1,3 +1,6 @@
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
+using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -5,10 +8,8 @@ using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
+
 using Robust.Shared.Utility;
-using Content.Shared.Destructible;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems;
 
 using Robust.Shared.Serialization;
 
@@ -16,10 +17,10 @@ namespace Content.Shared.Sliceable;
 
 public abstract class SharedSliceableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
-    [Dependency] private readonly SharedToolSystem _tools = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedToolSystem _tools = default!;
 
     public override void Initialize()
     {
@@ -31,6 +32,10 @@ public abstract class SharedSliceableSystem : EntitySystem
 
     private void AfterSlicing(EntityUid uid, SliceableComponent comp, TrySliceEvent args)
     {
+        if (args.Used == null)
+            return;
+
+        var used = args.Used.Value;
         var hasBody = TryComp<BodyComponent>(uid, out var body);
 
         // only show a big popup when butchering living things.
@@ -38,7 +43,7 @@ public abstract class SharedSliceableSystem : EntitySystem
         if (hasBody)
             popupType = PopupType.LargeCaution;
 
-        _popupSystem.PopupEntity(Loc.GetString("slice-butchered-success", ("target", uid), ("knife", uid)),
+        _popupSystem.PopupEntity(Loc.GetString("slice-butchered-success", ("target", uid), ("knife", used)),
             args.User, popupType);
 
         if (hasBody)

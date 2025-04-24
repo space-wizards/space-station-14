@@ -45,7 +45,6 @@
   - type: Sliceable
     slices:
     - id: FoodMeat
-      amount: 1
   - type: Bloodstream
     bloodMaxVolume: 100
   - type: CombatMode
@@ -243,7 +242,6 @@
   - type: Sliceable
     slices:
     - id: FoodMeat
-      amount: 1
   - type: Bloodstream
     bloodMaxVolume: 100
   - type: CombatMode

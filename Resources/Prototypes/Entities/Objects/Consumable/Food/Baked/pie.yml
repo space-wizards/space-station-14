@@ -25,8 +25,6 @@
   - type: Food #All pies here made with a pie tin; unless you're some kind of savage, you're probably not destroying this when you eat or slice the pie!
     trash:
     - FoodPlateTin
-  - type: Sliceable
-    count: 4
   - type: Tag
     tags:
     - Pie
@@ -75,7 +73,9 @@
     - state: tin
     - state: apple
   - type: Sliceable
-    slice: FoodPieAppleSlice
+    slices:
+    - id: FoodPieAppleSlice
+      amount: 4
   - type: Tag
     tags:
     - Fruit
@@ -117,7 +117,9 @@
     - state: tin
     - state: baklava
   - type: Sliceable
-    slice: FoodPieBaklavaSlice
+    slices:
+    - id: FoodPieBaklavaSlice
+      amount: 4
 
 - type: entity
   name: slice of baklava
@@ -172,7 +174,9 @@
     - Fruit
     - Pie
   - type: Sliceable
-    slice: FoodPieBananaCreamSlice
+    slices:
+    - id: FoodPieBananaCreamSlice
+      amount: 4
 
 - type: entity
   name: slice of banana cream pie
@@ -210,7 +214,9 @@
       color: pink
     - state: berryclafoutis
   - type: Sliceable
-    slice: FoodPieClafoutisSlice
+    slices:
+    - id: FoodPieClafoutisSlice
+      amount: 4
   - type: Tag
     tags:
     - Fruit
@@ -251,7 +257,9 @@
     - state: tin
     - state: cherry
   - type: Sliceable
-    slice: FoodPieCherrySlice
+    slices:
+    - id: FoodPieCherrySlice
+      amount: 4
   - type: Tag
     tags:
     - Fruit
@@ -291,7 +299,9 @@
     - state: tin
     - state: meat
   - type: Sliceable
-    slice: FoodPieMeatSlice
+    slices:
+    - id: FoodPieMeatSlice
+      amount: 4
   - type: Tag
     tags:
     - Meat
@@ -368,7 +378,9 @@
     - state: tin
     - state: xeno
   - type: Sliceable
-    slice: FoodPieXenoSlice
+    slices:
+    - id: FoodPieXenoSlice
+      amount: 4
   - type: Tag
     tags:
     - Meat
@@ -409,7 +421,9 @@
     - state: tin
     - state: frosty
   - type: Sliceable
-    slice: FoodPieFrostySlice
+    slices:
+    - id: FoodPieFrostySlice
+      amount: 4
 
 - type: entity
   name: slice of frosty pie
@@ -440,7 +454,9 @@
   - type: Item
     heldPrefix: mime
   - type: Sliceable
-    slice: FoodTartMimeSlice
+    slices:
+    - id: FoodTartMimeSlice
+      amount: 4
 
 - type: entity
   name: slice of mime tart

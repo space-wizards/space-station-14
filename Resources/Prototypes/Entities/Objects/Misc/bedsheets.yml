@@ -331,7 +331,8 @@
   name: white bedsheet
   components:
   - type: Sliceable
-    slice: MaterialCloth1 #ghostly! 👻👻👻
+    slices:
+    - id: ClothingOuterGhostSheet #ghostly! 👻👻👻
   - type: Sprite
     state: sheetwhite
   - type: Clothing

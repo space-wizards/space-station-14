@@ -67,7 +67,9 @@
     - state: alpha-filling
       color: blue
   - type: Sliceable
-    slice: FoodCakeBlueberrySlice
+    slices:
+    - id: FoodCakeBlueberrySlice
+      amount: 6
   - type: Tag
     tags:
     - Cake
@@ -101,7 +103,9 @@
   - type: Sprite
     state: plain
   - type: Sliceable
-    slice: FoodCakePlainSlice
+    slices:
+    - id: FoodCakePlainSlice
+      amount: 6
 
 # Added in type lines above
 
@@ -123,7 +127,9 @@
   - type: Sprite
     state: carrot
   - type: Sliceable
-    slice: FoodCakeCarrotSlice
+    slices:
+    - id: FoodCakeCarrotSlice
+      amount: 6
   - type: SolutionContainerManager
     solutions:
       food:
@@ -176,7 +182,9 @@
   - type: Sprite
     state: brain
   - type: Sliceable
-    slice: FoodCakeBrainSlice
+    slices:
+    - id: FoodCakeBrainSlice
+      amount: 6
   - type: Tag
     tags:
     - Cake
@@ -206,7 +214,9 @@
   - type: Sprite
     state: cheese
   - type: Sliceable
-    slice: FoodCakeCheeseSlice
+    slices:
+    - id: FoodCakeCheeseSlice
+      amount: 6
 
 - type: entity
   name: slice of cheese cake
@@ -227,7 +237,9 @@
   - type: Sprite
     state: orange
   - type: Sliceable
-    slice: FoodCakeOrangeSlice
+    slices:
+    - id: FoodCakeOrangeSlice
+      amount: 6
   - type: Tag
     tags:
     - Cake
@@ -256,7 +268,9 @@
   - type: Sprite
     state: lime
   - type: Sliceable
-    slice: FoodCakeLimeSlice
+    slices:
+    - id: FoodCakeLimeSlice
+      amount: 6
   - type: Tag
     tags:
     - Cake
@@ -285,7 +299,9 @@
   - type: Sprite
     state: lemon
   - type: Sliceable
-    slice: FoodCakeLemonSlice
+    slices:
+    - id: FoodCakeLemonSlice
+      amount: 6
   - type: Tag
     tags:
     - Cake
@@ -318,7 +334,9 @@
       - lemoon
       - berry
   - type: Sliceable
-    slice: FoodCakeLemoonSlice
+    slices:
+    - id: FoodCakeLemoonSlice
+      amount: 6
   - type: SolutionContainerManager
     solutions:
       food:
@@ -373,7 +391,9 @@
   - type: Sprite
     state: chocolate
   - type: Sliceable
-    slice: FoodCakeChocolateSlice
+    slices:
+    - id: FoodCakeChocolateSlice
+      amount: 6
   - type: SolutionContainerManager
     solutions:
       food:
@@ -415,7 +435,9 @@
   - type: Sprite
     state: apple
   - type: Sliceable
-    slice: FoodCakeAppleSlice
+    slices:
+    - id: FoodCakeAppleSlice
+      amount: 6
   - type: Tag
     tags:
     - Cake
@@ -445,7 +467,9 @@
   - type: Sprite
     state: slime
   - type: Sliceable
-    slice: FoodCakeSlimeSlice
+    slices:
+    - id: FoodCakeSlimeSlice
+      amount: 6
   - type: Tag
     tags:
     - Cake
@@ -475,7 +499,9 @@
   - type: Sprite
     state: pumpkinspice
   - type: Sliceable
-    slice: FoodCakePumpkinSlice
+    slices:
+    - id: FoodCakePumpkinSlice
+      amount: 6
   - type: SolutionContainerManager
     solutions:
       food:
@@ -523,7 +549,9 @@
   - type: Sprite
     state: christmas
   - type: Sliceable
-    slice: FoodCakeChristmasSlice
+    slices:
+    - id: FoodCakeChristmasSlice
+      amount: 6
   - type: Tag
     tags:
     - Cake
@@ -552,7 +580,9 @@
   - type: Sprite
     state: birthday
   - type: Sliceable
-    slice: FoodCakeBirthdaySlice
+    slices:
+    - id: FoodCakeBirthdaySlice
+      amount: 6
 
 - type: entity
   name: slice of birthday cake
@@ -573,7 +603,9 @@
   - type: Sprite
     state: vanilla
   - type: Sliceable
-    slice: FoodCakeVanillaSlice
+    slices:
+    - id: FoodCakeVanillaSlice
+      amount: 6
   - type: SolutionContainerManager #TODO Sprinkles
     solutions:
       food:
@@ -616,7 +648,9 @@
   - type: Sprite
     state: clown
   - type: Sliceable
-    slice: FoodCakeClownSlice
+    slices:
+    - id: FoodCakeClownSlice
+      amount: 6
   - type: SolutionContainerManager #TODO Sprinkles
     solutions:
       food:
@@ -659,7 +693,9 @@
   - type: Sprite
     state: trumpet
   - type: Sliceable
-    slice: FoodCakeSpacemanSlice
+    slices:
+    - id: FoodCakeSpacemanSlice
+      amount: 6
   - type: SolutionContainerManager
     solutions:
       food:
@@ -793,8 +829,9 @@
   - type: Sprite
     state: suppermatter
   - type: Sliceable
-    slice: FoodCakeSuppermatterSlice
-    count: 8
+    slices:
+    - id: FoodCakeSuppermatterSlice
+      amount: 8
   - type: SolutionContainerManager
     solutions:
       food:

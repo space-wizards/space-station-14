@@ -377,7 +377,8 @@
       Dead:
         Base: dead_purple_snake
   - type: Sliceable
-    slice: [ FoodMeatSnake ]
+    slice:
+    - id: FoodMeatSnake
   - type: Grammar
     attributes:
       proper: true
@@ -445,6 +446,7 @@
       Dead:
         Base: dead_small_purple_snake
   - type: Sliceable
-    slice: [ FoodMeatSnake ]
+    slice:
+    - id: FoodMeatSnake
   - type: SolutionTransfer
     maxTransferAmount: 1

@@ -292,8 +292,9 @@
   - type: Sprite
     state: dough
   - type: Sliceable
-    count: 3
-    slice: FoodDoughSlice
+    slices:
+    - id: FoodDoughSlice
+      amount: 3
   - type: Construction
     graph: Pizza
     node: start
@@ -358,8 +359,9 @@
   - type: Sprite
     state: cornmealdough
   - type: Sliceable
-    count: 3
-    slice: FoodDoughCornmealSlice
+    slices:
+    - id: FoodDoughCornmealSlice
+      amount: 3
 
 - type: entity
   name: cornmeal dough slice
@@ -390,8 +392,9 @@
   - type: Sprite
     state: tortilladough
   - type: Sliceable
-    count: 3
-    slice: FoodDoughTortillaSlice
+    slices:
+    - id: FoodDoughTortillaSlice
+      amount: 3
 
 - type: entity
   name: tortilla dough slice
@@ -552,8 +555,9 @@
     graph: Pizza
     node: flat
   - type: Sliceable
-    count: 3
-    slice: FoodCroissantRaw
+    slices:
+    - id: FoodCroissantRaw
+      amount: 3
 
 - type: entity
   name: flat cotton dough
@@ -630,8 +634,9 @@
         - ReagentId: Butter
           Quantity: 15
   - type: Sliceable
-    count: 3
-    slice: FoodButterSlice
+    slices:
+    - id: FoodButterSlice
+      amount: 3
 
 - type: entity
   name: butter slice
@@ -687,8 +692,9 @@
   - type: Sprite
     state: cheesewheel
   - type: Sliceable
-    count: 4
-    slice: FoodCheeseSlice
+    slices:
+    - id: FoodCheeseSlice
+      amount: 4
 
 - type: entity
   name: cheese wedge
@@ -729,8 +735,9 @@
   - type: Sprite
     state: chevrelog
   - type: Sliceable
-    count: 3
-    slice: FoodChevreSlice
+    slices:
+    - id: FoodChevreSlice
+      amount: 3
   - type: SolutionContainerManager
     solutions:
       food:
@@ -787,8 +794,9 @@
         - ReagentId: Nutriment
           Quantity: 6
   - type: Sliceable
-    count: 3
-    slice: FoodTofuSlice
+    slices:
+    - id: FoodTofuSlice
+      amount: 3
 
 - type: entity
   name: tofu slice

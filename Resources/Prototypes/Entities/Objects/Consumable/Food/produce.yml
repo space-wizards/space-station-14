@@ -137,8 +137,9 @@
   - type: Produce
     seedId: papercane
   - type: Sliceable
-    slice: SheetPaper1
-    count: 2
+    slices:
+    - id: SheetPaper1
+      amount: 2
 
 - type: entity
   parent: FoodProduceBase
@@ -193,8 +194,9 @@
   - type: Produce
     seedId: towercap
   - type: Sliceable
-    slice: MaterialWoodPlank1
-    count: 2
+    slices:
+    - id: MaterialWoodPlank1
+      amount: 2
 
 - type: entity
   name: steel-cap log
@@ -214,8 +216,8 @@
   - type: Produce
     seedId: steelcap
   - type: Sliceable
-    slice: SheetSteel1
-    count: 1
+    slices:
+    - id: SheetSteel1
 
 - type: entity
   name: nettle
@@ -813,8 +815,9 @@
       - ReagentId: JuicePineapple
         Quantity: 10
   - type: Sliceable
-    count: 5
-    slice: FoodPineappleSlice
+    slices:
+    - id: FoodPineappleSlice
+      amount: 5
   - type: Tag
     tags:
     - Fruit
@@ -1252,8 +1255,9 @@
   - type: Produce
     seedId: onion
   - type: Sliceable
-    count: 5
-    slice: FoodOnionSlice
+    slices:
+    - id: FoodOnionSlice
+      amount: 5
   - type: Tag
     tags:
     - Vegetable
@@ -1285,8 +1289,9 @@
   - type: Produce
     seedId: onionred
   - type: Sliceable
-    count: 5
-    slice: FoodOnionRedSlice
+    slices:
+    - id: FoodOnionRedSlice
+      amount: 5
   - type: Tag
     tags:
     - Vegetable
@@ -2093,8 +2098,9 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Sliceable
-    count: 5
-    slice: FoodWatermelonSlice
+    slices:
+    - id: FoodWatermelonSlice
+      amount: 5
   - type: Tag
     tags:
     - Fruit
@@ -2192,8 +2198,9 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Sliceable
-    count: 5
-    slice: FoodHolymelonSlice
+    slices:
+    - id: FoodHolymelonSlice
+      amount: 5
   - type: Tag
     tags:
     - Fruit
@@ -2481,7 +2488,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Sliceable
-    slice: CarvedPumpkin
+    slices:
+    - id: CarvedPumpkin
   - type: Tag
     tags:
     - Fruit
@@ -2558,8 +2566,9 @@
         - ReagentId: Fiber
           Quantity: 10
   - type: Sliceable
-    slice: MaterialCotton1
-    count: 2
+    slices:
+    - id: MaterialCotton1
+      amount: 2
   - type: Produce
     seedId: cotton
   - type: Tag
@@ -2589,8 +2598,9 @@
         - ReagentId: Phlogiston
           Quantity: 5
   - type: Sliceable
-    slice: MaterialPyrotton1
-    count: 2
+    slices:
+    - id: MaterialPyrotton1
+      amount: 2
   - type: Produce
     seedId: pyrotton
   - type: Tag

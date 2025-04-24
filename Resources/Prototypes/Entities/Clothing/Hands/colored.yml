@@ -313,7 +313,8 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/black.rsi
   - type: Sliceable
-    slice: ClothingHandsGlovesFingerless
+    slices:
+    - id: ClothingHandsGlovesFingerless
   - type: Fiber
     fiberColor: fibers-black
 
@@ -331,7 +332,8 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
   - type: Sliceable
-    slice: ClothingHandsGlovesFingerlessInsulated
+    slices:
+    - id: ClothingHandsGlovesFingerlessInsulated
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative

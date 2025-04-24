@@ -1,8 +1,8 @@
+using Content.Shared.Storage;
 using Content.Shared.Tools;
 
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Content.Shared.Storage;
 
 namespace Content.Shared.Sliceable;
 
