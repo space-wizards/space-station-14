@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: southbridge-fur
-  changes:
-  - message: Pride-O-Mats now have scarves instead of cloaks
-    type: Tweak
-  id: 7822
-  time: '2025-01-17T11:35:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34448
 - author: Toby222
   changes:
   - message: Update nix flake to use current nixpkgs release
@@ -3928,3 +3921,11 @@
   id: 8323
   time: '2025-04-23T23:55:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36857
+- author: NoElkaTheGod
+  changes:
+  - message: Toysword now actually looks almost like the real thing, as advertised
+      in the description
+    type: Tweak
+  id: 8324
+  time: '2025-04-24T01:21:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34199
