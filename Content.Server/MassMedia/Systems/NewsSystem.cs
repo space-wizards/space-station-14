@@ -27,6 +27,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -211,7 +212,7 @@ public sealed class NewsSystem : SharedNewsSystem
         }
 
         if (_webhookSendDuringRound)
-            SendDiscordWebhook(article);
+            SendArticleToDiscordWebhook(article);
 
         UpdateWriterDevices();
     }
@@ -372,14 +373,20 @@ public sealed class NewsSystem : SharedNewsSystem
 
         while (query.MoveNext(out _, out var comp))
         {
-            foreach (var article in comp.Articles.OrderBy(article => article.ShareTime))
-            {
-                SendDiscordWebhook(article);
-            }
+            SendArticlesListToDiscordWebhook(comp.Articles.OrderBy(article => article.ShareTime));
         }
     }
 
-    private async void SendDiscordWebhook(NewsArticle article)
+    private async void SendArticlesListToDiscordWebhook(IOrderedEnumerable<NewsArticle> articles)
+    {
+        foreach (var article in articles)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(1)); // TODO: proper discord rate limit handling
+            SendArticleToDiscordWebhook(article);
+        }
+    }
+
+    private async void SendArticleToDiscordWebhook(NewsArticle article)
     {
         if (_webhookId is null)
             return;
