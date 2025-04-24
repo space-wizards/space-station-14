@@ -61,7 +61,13 @@ public sealed partial class TurnstileComponent : Component
     /// Sound to play when the turnstile denies entry
     /// </summary>
     [DataField]
-    public SoundSpecifier? DenySound = new SoundPathSpecifier("/Audio/Machines/airlock_deny.ogg");
+    public SoundSpecifier? DenySound = new SoundPathSpecifier("/Audio/Machines/airlock_deny.ogg")
+    {
+        Params = new()
+        {
+            Volume = -7,
+        },
+    };
 }
 
 [Serializable, NetSerializable]
