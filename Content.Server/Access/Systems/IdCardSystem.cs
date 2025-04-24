@@ -1,11 +1,12 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Shared.Kitchen.Components;
+using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -19,6 +20,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly MicrowaveSystem _microwave = default!;
 
     public override void Initialize()
@@ -91,6 +93,24 @@ public sealed class IdCardSystem : SharedIdCardSystem
             _adminLogger.Add(LogType.Action, LogImpact.High,
                     $"{ToPrettyString(args.Microwave)} added {random.ID} access to {ToPrettyString(uid):entity}");
 
+        }
+    }
+
+    public override void ExpireId(Entity<ExpireIdCardComponent> ent)
+    {
+        if (ent.Comp.Expired)
+            return;
+
+        base.ExpireId(ent);
+
+        if (ent.Comp.ExpireMessage != null)
+        {
+            _chat.TrySendInGameICMessage(
+                ent,
+                Loc.GetString(ent.Comp.ExpireMessage),
+                InGameICChatType.Speak,
+                ChatTransmitRange.Normal,
+                true);
         }
     }
 }
