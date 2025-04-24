@@ -1,4 +1,4 @@
-﻿# non-projectile / "gun" staves
+# non-projectile / "gun" staves
 
 # wand that gives lights an RGB effect.
 - type: entity
@@ -33,11 +33,36 @@
     radius: 2
 
 - type: entity
+  id: AnimationStaff
+  parent: [ BaseItem, BaseMagicalContraband ]
+  name: staff of animation
+  description: Brings inanimate objects to life!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/staves.rsi
+    layers:
+    - state: animation
+  - type: ActionOnInteract
+    actions:
+    - ActionAnimateSpell
+  - type: Item
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: animation-inhand-left
+      right:
+      - state: animation-inhand-right
+  - type: Tag
+    tags:
+    - WizardWand
+
+- type: entity
   id: ActionRgbLight
   components:
+  - type: LimitedCharges
+    maxCharges: 25
   - type: EntityTargetAction
     whitelist: { components: [ PointLight ] }
-    charges: 25
     sound: /Audio/Magic/blink.ogg
     event: !type:ChangeComponentsSpellEvent
       toAdd:

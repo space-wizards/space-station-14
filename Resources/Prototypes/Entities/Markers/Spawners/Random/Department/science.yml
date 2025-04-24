@@ -1,0 +1,125 @@
+# Minor science loot spawner
+# Use case: Common areas that aren't science
+- type: entity
+  name: science supplies spawner
+  id: LootSpawnerScienceMinor
+  parent: MarkerBase
+  suffix: Minor, 80%
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Specific/Research/anomalyscanner.rsi
+        state: icon
+  - type: RandomSpawner
+    rarePrototypes:
+    - AnomalyScanner
+    - NodeScanner
+    - Multitool
+    - Igniter
+    rareChance: 0.1
+    prototypes:
+    - ClothingHandsGlovesLatex
+    - ClothingMaskSterile
+    - ClothingOuterCoatRnd
+    - NetworkConfigurator
+    - PowerCellSmall
+    - PowerCellMedium
+    - FlashlightLantern
+    - MatterBinStockPart
+    - CapacitorStockPart
+    - MicroManipulatorStockPart
+    - Beaker
+    chance: 0.8
+    offset: 0.2
+
+- type: entityTable
+  id: ScienceMajorTable
+  table: !type:GroupSelector
+    children:
+    # Common Group
+    - !type:GroupSelector
+      weight: 90
+      children:
+      - id: AnomalyScanner
+      - id: NodeScanner
+      - id: NetworkConfigurator
+      - id: Wirecutter
+      - id: Screwdriver
+      - id: Wrench
+      - id: Crowbar
+      - id: Multitool
+      - id: RemoteSignaller
+      - id: Welder
+      - id: GasAnalyzer
+      - id: GeigerCounter
+      - id: Beaker
+      - id: Igniter
+      - id: ClothingBeltUtility
+      - id: PowerCellMedium
+      - id: CableApcStack10
+      - id: SheetSteel10
+      - id: SheetPlastic10
+      - id: SheetGlass10
+      - id: ToolboxElectricalFilled
+      - id: ToolboxMechanicalFilled
+      - id: MatterBinStockPart
+      - id: CapacitorStockPart
+      - id: MicroManipulatorStockPart
+    # Rare Group
+    - !type:GroupSelector
+      weight: 10
+      children:
+      - id: ClothingBeltUtilityFilled
+      - id: ResearchDisk
+      - id: ResearchDisk5000
+      - id: RandomInstruments
+
+# Major science loot spawner
+# Use case: Loot in science areas only
+- type: entity
+  name: science supplies spawner
+  id: LootSpawnerScienceMajor
+  parent: MarkerBase
+  suffix: Major
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Specific/Research/researchdisk.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: ScienceMajorTable
+      offset: 0.2
+
+# Borg Module Spawner
+# Use case: One or two in robotics or as valuable loot
+- type: entity
+  name: robotics board spawner
+  id: LootSpawnerRoboticsBorgModule
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Specific/Robotics/borgmodule.rsi
+      state: generic
+  - type: RandomSpawner
+    rarePrototypes:
+    - BorgModuleDefibrillator
+    - BorgModuleAdvancedCleaning
+    - BorgModuleClowning
+    - BorgModuleGardening
+    - BorgModuleHarvesting
+    rareChance: 0.1
+    prototypes:
+    - BorgModuleCable
+    - BorgModuleFireExtinguisher
+    - BorgModuleGPS
+    - BorgModuleRadiationDetection
+    - BorgModuleTool
+    - BorgModuleArtifact
+    - BorgModuleAnomaly
+    chance: 0.9
+    offset: 0.2
