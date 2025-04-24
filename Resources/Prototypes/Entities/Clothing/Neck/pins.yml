@@ -35,12 +35,6 @@
     state: lgbt
   - type: Clothing
     equippedPrefix: lgbt
-  - type: Tag
-    tags:
-    - ClothMade #idk man its on the parent
-    - WhitelistChameleon
-    - Gender
-    
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -52,11 +46,6 @@
     state: ally
   - type: Clothing
     equippedPrefix: ally
-  - type: Tag
-    tags:
-    - ClothMade #idk man its on the parent
-    - WhitelistChameleon
-    - Gender
 
 - type: entity
   parent: ClothingNeckPinBase
