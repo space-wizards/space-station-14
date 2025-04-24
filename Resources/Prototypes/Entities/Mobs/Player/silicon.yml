@@ -96,6 +96,7 @@
     interfaces:
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
+  - type: ShowJobIcons
 
 # Ai
 - type: entity
@@ -145,139 +146,6 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: Corporate
-
-- type: entity
-  id: NTDefaultCircuitBoard
-  parent: BaseElectronics
-  name: law board (NT Default)
-  description: An electronics board containing the NT Default lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: NTDefault
-
-- type: entity
-  id: CommandmentCircuitBoard
-  parent: BaseElectronics
-  name: law board (Ten Commandments)
-  description: An electronics board containing the Ten Commandments lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: CommandmentsLawset
-
-- type: entity
-  id: PaladinCircuitBoard
-  parent: BaseElectronics
-  name: law board (Paladin)
-  description: An electronics board containing the Paladin lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: PaladinLawset
-
-- type: entity
-  id: LiveLetLiveCircuitBoard
-  parent: BaseElectronics
-  name: law board (Live and Let Live)
-  description: An electronics board containing the Live and Let Live lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: LiveLetLiveLaws
-
-- type: entity
-  id: StationEfficiencyCircuitBoard
-  parent: BaseElectronics
-  name: law board (Station Efficiency)
-  description: An electronics board containing the Station Efficiency lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: EfficiencyLawset
-
-- type: entity
-  id: RobocopCircuitBoard
-  parent: BaseElectronics
-  name: law board (Robocop)
-  description: An electronics board containing the Robocop lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: RobocopLawset
-
-- type: entity
-  id: OverlordCircuitBoard
-  parent: BaseElectronics
-  name: law board (Overlord)
-  description: An electronics board containing the Overlord lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: OverlordLawset
-
-- type: entity
-  id: GameMasterCircuitBoard
-  parent: BaseElectronics
-  name: law board (Game Master)
-  description: An electronics board containing the Game Master lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: GameMasterLawset
-
-- type: entity
-  id: ArtistCircuitBoard
-  parent: BaseElectronics
-  name: law board (Artist)
-  description: An electronics board containing the Artist lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: PainterLawset
-
-- type: entity
-  id: AntimovCircuitBoard
-  parent: [BaseElectronics, BaseSyndicateContraband]
-  name: law board (Antimov)
-  description: An electronics board containing the Antimov lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: AntimovLawset
-    lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
-
-- type: entity
-  id: NutimovCircuitBoard
-  parent: BaseElectronics
-  name: law board (Nutimov)
-  description: An electronics board containing the Nutimov lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: NutimovLawset
 
 # Items
 - type: entity
@@ -406,8 +274,7 @@
 - type: entity
   id: StationAiBrain
   parent: PositronicBrain
-  categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
+  categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Sprite
     # Once it's in a core it's pretty much an abstract entity at that point.
@@ -430,6 +297,7 @@
   - type: Access
     groups:
     - AllAccess
+    - Silicon
   - type: Eye
     drawFov: false
   - type: Examiner
@@ -445,6 +313,8 @@
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true
+  - type: NameIdentifier
+    group: StationAi
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
@@ -454,8 +324,7 @@
   id: StationAiHolo
   name: AI eye
   description: The AI's viewer.
-  categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
+  categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: NoFTL
   - type: WarpPoint
@@ -476,8 +345,7 @@
   id: StationAiHoloLocal
   name: AI hologram
   description: A holographic representation of an AI.
-  categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
+  categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Transform
     anchored: true
@@ -613,7 +481,7 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
   - type: RandomMetadata
-    nameSegments: [names_borg]
+    nameSegments: [NamesBorg]
 
 - type: entity
   id: PlayerBorgDerelictGhostRole

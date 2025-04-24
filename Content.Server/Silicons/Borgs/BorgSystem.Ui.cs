@@ -62,8 +62,6 @@ public sealed partial class BorgSystem
         }
 
         var name = args.Name.Trim();
-        if (TryComp<NameIdentifierComponent>(uid, out var identifier))
-            name = $"{name} {identifier.FullIdentifier}";
 
         var metaData = MetaData(uid);
 
