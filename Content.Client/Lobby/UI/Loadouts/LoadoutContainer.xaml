@@ -18,7 +18,7 @@
                           VerticalExpand="True">
 
                 <SpriteView Name="Sprite"
-                            Scale="5 5"
+                            Scale="4 4"
                             MouseFilter="Ignore"
                             HorizontalAlignment="Center"/>
             </BoxContainer>
