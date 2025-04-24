@@ -5105,4 +5105,11 @@ Entries:
   id: 707
   time: '2025-04-24T04:29:36.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/523
+- author: Happyrobot33
+  changes:
+  - message: Raise emote cooldown to 1.5s
+    type: Tweak
+  id: 708
+  time: '2025-04-24T04:30:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/529
 
