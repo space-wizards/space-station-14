@@ -16,6 +16,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Mind;
@@ -33,6 +34,8 @@ public abstract partial class SharedMindSystem : EntitySystem
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
+
+    private static readonly ProtoId<TagPrototype> AITag = "AI";
 
     public override void Initialize()
     {
@@ -164,28 +167,55 @@ public abstract partial class SharedMindSystem : EntitySystem
         var hasSession = CompOrNull<MindComponent>(mindContainer.Mind)?.Session;
 
         // Different inspect texts for AI, there's probably a more elegant way to handle this
-        if(_tag.HasTag(uid, "AI")) {
-            if (dead && hasUserId == null)
-                args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-ai-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
-            else if (dead && hasSession == null)
-                args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-ai-examined-dead-and-ssd", ("ent", uid))}[/color]");
-            else if (dead)
-                args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-ai-examined-dead", ("ent", uid))}[/color]");
-            else if (hasUserId == null)
-                args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-ai-examined-catatonic", ("ent", uid))}[/color]");
-            else if (hasSession == null)
-                args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-ai-examined-ssd", ("ent", uid))}[/color]");
+        if (_tag.HasTag(uid, AITag))
+        {
+            switch (dead)
+            {
+                case true when hasUserId == null:
+                    args.PushMarkup(
+                        $"[color=mediumpurple]{Loc.GetString("comp-mind-ai-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
+                    break;
+                case true when hasSession == null:
+                    args.PushMarkup(
+                        $"[color=yellow]{Loc.GetString("comp-mind-ai-examined-dead-and-ssd", ("ent", uid))}[/color]");
+                    break;
+                case true:
+                    args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-ai-examined-dead", ("ent", uid))}[/color]");
+                    break;
+                default:
+                {
+                    if (hasUserId == null)
+                        args.PushMarkup(
+                            $"[color=mediumpurple]{Loc.GetString("comp-mind-ai-examined-catatonic", ("ent", uid))}[/color]");
+
+                    else if (hasSession == null)
+                        args.PushMarkup(
+                            $"[color=yellow]{Loc.GetString("comp-mind-ai-examined-ssd", ("ent", uid))}[/color]");
+                    break;
+                }
+            }
         } else {
-            if (dead && hasUserId == null)
-                args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
-            else if (dead && hasSession == null)
-                args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
-            else if (dead)
-                args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
-            else if (hasUserId == null)
-                args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
-            else if (hasSession == null)
-                args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
+            switch (dead)
+            {
+                case true when hasUserId == null:
+                    args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
+                    break;
+                case true when hasSession == null:
+                    args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
+                    break;
+                case true:
+                    args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
+                    break;
+                default:
+                {
+                    if (hasUserId == null)
+                        args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
+
+                    else if (hasSession == null)
+                        args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
+                    break;
+                }
+            }
         }
     }
 
