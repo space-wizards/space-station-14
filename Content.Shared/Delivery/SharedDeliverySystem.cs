@@ -222,7 +222,6 @@ public abstract class SharedDeliverySystem : EntitySystem
 public record struct GetDeliveryMultiplierEvent(float Multiplier)
 {
     // we can't use an optional parameter because the default parameterless constructor defaults everything
-
     public GetDeliveryMultiplierEvent() : this(1.0f) { }
 }
 
