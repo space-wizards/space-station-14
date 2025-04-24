@@ -90,6 +90,9 @@
   - type: Food
     trash: 
     - FoodFrozenPopsicleTrash
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: berry creamsicle
