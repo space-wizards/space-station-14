@@ -1,8 +1,10 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Antag;
+using Content.Server.Containers;
 using Content.Server.EUI;
 using Content.Server.Flash;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Inventory; // Added this line for InventorySystem
 using Content.Server.Mind;
 using Content.Server.Popups;
 using Content.Server.Revolutionary;
@@ -28,6 +30,12 @@ using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Cuffs.Components;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Content.Shared.Popups;
+using Content.Server.GameTicking.Rules;
+using Robust.Shared.Containers;
+using Content.Server.Revolutionary;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -49,6 +57,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ShuttleBuildingUplinkSystem _shuttleUplink = default!;
 
     //Used in OnPostFlash, no reference to the rule component is available
     public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";
@@ -64,6 +73,32 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
 
+        SubscribeLocalEvent<RevolutionaryRoleComponent, ComponentStartup>(OnRevolutionaryStartup);
+    }
+
+    private void OnRevolutionaryStartup(EntityUid uid, RevolutionaryRoleComponent component, ComponentStartup args)
+    {
+        // Assign an uplink to the head revolutionary at startup
+        if (TryComp<HeadRevolutionaryComponent>(uid, out var headRev))
+        {
+            AssignUplink(uid);
+        }
+    }
+
+    private void AssignUplink(EntityUid uid)
+    {
+        var uplinkSystem = EntityManager.System<ShuttleBuildingUplinkSystem>();
+
+        // Check if the entity already has an uplink
+        if (uplinkSystem.TryGetUplinkEntity(uid, out _))
+            return;
+
+        // Spawn the uplink entity and attach it to the player
+        var uplinkEntity = EntityManager.SpawnEntity("MenacingShuttleBuilderUplink0", Transform(uid).Coordinates);
+
+        // Since the uplink entity does not have a container component, attach it as a child entity
+        var transform = EntityManager.GetComponent<TransformComponent>(uplinkEntity);
+        transform.AttachParent(uid);
     }
 
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -131,6 +166,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         var alwaysConvertible = HasComp<AlwaysRevolutionaryConvertibleComponent>(ev.Target);
 
+        Logger.Info($"OnPostFlash called: User={ev.User}, Target={ev.Target}, AlwaysConvertible={alwaysConvertible}");
+
         if (!_mind.TryGetMind(ev.Target, out var mindId, out var mind) && !alwaysConvertible)
             return;
 
@@ -141,6 +178,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             !_mobState.IsAlive(ev.Target) ||
             HasComp<ZombieComponent>(ev.Target))
         {
+            Logger.Info("OnPostFlash: Target failed conversion checks");
             return;
         }
 
@@ -153,10 +191,20 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 LogImpact.Medium,
                 $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
 
+            Logger.Info($"OnPostFlash: Granting currency to user {ev.User.Value}");
+
+            _popup.PopupEntity(Loc.GetString("rev-flash-used"), ev.User.Value, PopupType.Large);
+
+            _shuttleUplink.IncrementCurrency(ev.User.Value);
+
             if (_mind.TryGetMind(ev.User.Value, out var revMindId, out _))
             {
                 if (_role.MindHasRole<RevolutionaryRoleComponent>(revMindId, out var role))
                     role.Value.Comp2.ConvertedCount++;
+
+                // Instead of granting currency to uplink, spawn BuildToken entity at user's coordinates
+                var playerCoordinates = Transform(ev.User.Value).Coordinates;
+                EntityManager.SpawnEntity("BuildToken", playerCoordinates);
             }
         }
 
@@ -166,7 +214,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         if (mind?.Session != null)
-            _antag.SendBriefing(mind.Session, Loc.GetString("rev-role-greeting"), Color.Red, revComp.RevStartSound);
+            _antag.SendBriefing(mind.Session, Loc.GetString("rev-role-greeting"), Color.LightYellow, revComp.RevStartSound);
     }
 
     //TODO: Enemies of the revolution
