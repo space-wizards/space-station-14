@@ -50,6 +50,17 @@
     - CandleBlue
     - CandleGreenSmall
 
+- type: loadout
+  id: RosaryBeads
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 36000 #10h
+  storage:
+    back:
+    - RosaryBeads
+
 # Smokeables
 - type: loadout
   id: Lighter
