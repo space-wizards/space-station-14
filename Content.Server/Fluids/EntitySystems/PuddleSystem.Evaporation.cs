@@ -46,33 +46,33 @@ public sealed partial class PuddleSystem
             var hasEnoughVapor = tileMix?.GetMoles(Gas.WaterVapor) >= 1.0f;
 
             if (hasEnoughVapor)
+            {
                 EnsureComp<PreventEvaporationComponent>(uid).Active = true;
-            else
-                RemComp<PreventEvaporationComponent>(uid);
+                continue;
+            }
+
+            RemComp<PreventEvaporationComponent>(uid);
 
             if (!_solutionContainerSystem.ResolveSolution(uid, puddle.SolutionName, ref puddle.Solution, out var puddleSolution))
                 continue;
 
-            if (!hasEnoughVapor)
+            foreach ((string evaporatingReagent, FixedPoint2 evaporatingSpeed) in GetEvaporationSpeeds(puddleSolution))
             {
-                foreach ((string evaporatingReagent, FixedPoint2 evaporatingSpeed) in GetEvaporationSpeeds(puddleSolution))
-                {
-                    var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds * evaporatingSpeed;
-                    puddleSolution.SplitSolutionWithOnly(reagentTick, evaporatingReagent);
-                }
-
-                evaporation.NextTick = _timing.CurTime + EvaporationCooldown;
-                Dirty(uid, evaporation);
-
-                if (puddleSolution.Volume == FixedPoint2.Zero)
-                {
-                    // Spawn a *sparkle*
-                    Spawn("PuddleSparkle", xformQuery.GetComponent(uid).Coordinates);
-                    QueueDel(uid);
-                }
-
-                _solutionContainerSystem.UpdateChemicals(puddle.Solution.Value);
+                var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds * evaporatingSpeed;
+                puddleSolution.SplitSolutionWithOnly(reagentTick, evaporatingReagent);
             }
+
+            evaporation.NextTick = _timing.CurTime + EvaporationCooldown;
+            Dirty(uid, evaporation);
+
+            if (puddleSolution.Volume == FixedPoint2.Zero)
+            {
+                // Spawn a *sparkle*
+                Spawn("PuddleSparkle", xformQuery.GetComponent(uid).Coordinates);
+                QueueDel(uid);
+            }
+
+            _solutionContainerSystem.UpdateChemicals(puddle.Solution.Value);
         }
     }
 }
