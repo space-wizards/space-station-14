@@ -976,6 +976,7 @@
   id: HeadofSecurityOuterClothing
   name: loadout-group-head-of-security-outerclothing
   loadouts:
+  - HeadofSecurityCarapace
   - HeadofSecurityCoat
   - HeadofSecurityWinterCoat
 
