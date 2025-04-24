@@ -82,7 +82,7 @@ public sealed class MindlessCloneSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var mindlessCloneComp))
         {
-            if (mindlessCloneComp.NextDelayTime != null && _gameTiming.CurTime > mindlessCloneComp.NextDelayTime) // the null check is faster than the comparison, so it saves us some perf when we don't need the comparison anymore.
+            if (mindlessCloneComp.NextDelayTime != null && mindlessCloneComp.SpeakOnSpawn && _gameTiming.CurTime > mindlessCloneComp.NextDelayTime) // the null check is faster than the comparison, so it saves us some perf when we don't need the comparison anymore.
             {
                 DelayBehavior(uid, mindlessCloneComp);
                 var sayTime = TimeSpan.FromSeconds(0.1 * mindlessCloneComp.NextPhrase.Length);

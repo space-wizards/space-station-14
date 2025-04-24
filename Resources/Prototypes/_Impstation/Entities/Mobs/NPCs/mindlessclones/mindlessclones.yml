@@ -128,3 +128,4 @@
   - Speech
   - TypingIndicator # not sure why this doesn't work. Think it has something to do with BeforeShowTypingIndicatorEvent
   - Bloodstream
+  - InjectableSolution

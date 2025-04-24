@@ -9,6 +9,8 @@ namespace Content.Server._Impstation.MindlessClone;
 [RegisterComponent]
 public sealed partial class MindlessCloneComponent : Component
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     /// <summary>
     /// whether or not the entity will pick a randomized phrase to say after spawning. default false
     /// </summary>
@@ -63,5 +65,5 @@ public sealed partial class MindlessCloneComponent : Component
 
     public TimeSpan? NextSayTime = null;
 
-    public string NextPhrase;
+    public string NextPhrase = "Error! Couldn't find phrase! Something is wrong!";
 }
