@@ -62,7 +62,9 @@ public abstract partial class SharedMoverController : VirtualController
     private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 
     private bool _relativeMovement;
+    private float _minDamping;
     private float _airDamping;
+    private float _offGridDamping;
 
     /// <summary>
     /// Cache the mob movement calculation to re-use elsewhere.
@@ -89,7 +91,9 @@ public abstract partial class SharedMoverController : VirtualController
         InitializeInput();
         InitializeRelay();
         Subs.CVar(_configManager, CCVars.RelativeMovement, value => _relativeMovement = value, true);
+        Subs.CVar(_configManager, CCVars.MinFriction, value => _minDamping = value, true);
         Subs.CVar(_configManager, CCVars.AirFriction, value => _airDamping = value, true);
+        Subs.CVar(_configManager, CCVars.OffgridFriction, value => _offGridDamping = value, true);
         UpdatesBefore.Add(typeof(TileFrictionController));
     }
 
@@ -249,7 +253,7 @@ public abstract partial class SharedMoverController : VirtualController
 
                 if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
                     touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, uid, physicsComponent);
-                friction = moveSpeedComponent?.OffGridFriction ?? MovementSpeedModifierComponent.DefaultOffGridFriction;
+                friction = moveSpeedComponent?.OffGridFriction ?? _offGridDamping;
             }
 
             wishDir *= moveSpeedComponent?.WeightlessModifier ?? MovementSpeedModifierComponent.DefaultWeightlessModifier;
@@ -281,7 +285,7 @@ public abstract partial class SharedMoverController : VirtualController
         }
 
         // This way friction never exceeds acceleration. If you want to slow down an entity with "friction" you shouldn't be using this system.
-        friction = Math.Min(friction, accel);
+        friction = Math.Clamp(friction, _minDamping, accel);
         var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
         Friction(minimumFrictionSpeed, frameTime, friction, ref velocity);
 
