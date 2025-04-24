@@ -55,13 +55,7 @@ public sealed partial class TurnstileComponent : Component
     /// Sound to play when the turnstile admits a mob through.
     /// </summary>
     [DataField]
-    public SoundSpecifier? TurnSound = new SoundPathSpecifier("/Audio/Items/ratchet.ogg")
-    {
-        Params = new AudioParams
-        {
-            Variation = 0.0125f,
-        }
-    };
+    public SoundSpecifier? TurnSound = new SoundPathSpecifier("/Audio/Items/ratchet.ogg");
 
     /// <summary>
     /// Sound to play when the turnstile denies entry

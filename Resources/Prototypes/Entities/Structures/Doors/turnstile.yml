@@ -58,3 +58,20 @@
   - type: Construction
     graph: Turnstile
     node: turnstile
+
+- # Spawned by the client-side turnstile examine code to indicate the direction to pass through.
+  type: entity
+  id: TurnstileArrow
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/turnstile.rsi
+    color: "#FFFFFFBB"
+    layers:
+    - state: arrow
+      offset: 0, 0.78125
+  - type: TimedDespawn
+    lifetime: 2
+  - type: Tag
+    tags:
+    - HideContextMenu
