@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: widgetbeck
   changes:
-  - message: Revolutionaries now see messages from the HeadRev who converted them
-      highlighted in red.
-    type: Add
-  id: 1068
-  time: '2025-02-07T11:20:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1599
-- author: widgetbeck
-  changes:
   - message: Randomized characters, including some ghostroles, will now have random
       markings. Play around with it in the character creator!
     type: Add
@@ -4118,3 +4110,12 @@
   id: 1567
   time: '2025-04-24T06:49:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2333
+- author: widgetbeck
+  changes:
+  - message: Anomalites no longer pulse randomly, and can only pulse manually.
+    type: Tweak
+  - message: Fixed Anomalites not displaying their floating animation.
+    type: Fix
+  id: 1568
+  time: '2025-04-24T10:11:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2337
