@@ -93,7 +93,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     /// Runs the penalty logic: Announcing the penalty and calculating how much to charge the designated account
     /// </summary>
     /// <param name="ent">The delivery for which to run the penalty.</param>
-    /// <param name="reasonLoc">The penalty reason, displayed in front of the message.</param>
+    /// <param name="reason">The penalty reason, displayed in front of the message.</param>
     protected override void HandlePenalty(Entity<DeliveryComponent> ent, string? reason = null)
     {
         if (!TryComp<StationBankAccountComponent>(ent.Comp.RecipientStation, out var stationAccount))
@@ -135,6 +135,12 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         DirtyField(ent.Owner, ent.Comp, nameof(DeliveryComponent.WasPenalized));
     }
 
+    /// <summary>
+    /// Gathers the total multiplier for a delivery.
+    /// This is done by components having subscribed to GetDeliveryMultiplierEvent and having added onto it.
+    /// </summary>
+    /// <param name="ent">The delivery for which to get the multiplier.</param>
+    /// <returns>Total multiplier.</returns>
     private float GetDeliveryMultiplier(Entity<DeliveryComponent> ent)
     {
         var ev = new GetDeliveryMultiplierEvent();
