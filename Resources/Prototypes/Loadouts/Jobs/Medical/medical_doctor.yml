@@ -176,13 +176,13 @@
   equipment:
     mask: ClothingMaskSterile
 
-# Eyes
+#Eyewear
 - type: loadout
-  id: MedHud
+  id: MedicalHud
   equipment:
     eyes: ClothingEyesHudMedical
 
 - type: loadout
-  id: MedHudEyepatch
+  id: MedicalEyePatchHud
   equipment:
     eyes: ClothingEyesEyepatchHudMedical
