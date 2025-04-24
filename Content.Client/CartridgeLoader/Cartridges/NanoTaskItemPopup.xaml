@@ -53,10 +53,6 @@
                         Text="{Loc nano-task-ui-delete}"
                         StyleClasses="ButtonSquare"
                         MinSize="60 0" />
-                <Button Name="PrintButton"
-                        Text="{Loc nano-task-ui-print}"
-                        StyleClasses="ButtonSquare"
-                        MinSize="60 0" />
                 <Button Name="SaveButton"
                         Text="{Loc nano-task-ui-save}"
                         StyleClasses="OpenLeft"

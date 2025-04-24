@@ -1,5 +1,3 @@
-using Content.Shared.CartridgeLoader.Cartridges;
-
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 /// <summary>
@@ -12,25 +10,9 @@ public sealed partial class NanoTaskCartridgeComponent : Component
     /// The list of tasks
     /// </summary>
     [DataField]
-    public List<NanoTaskItemAndId> Tasks = new();
+    public List<NanoTaskItemAndDepartment> Tasks = [];
 
-    /// <summary>
-    /// counter for generating task IDs
-    /// </summary>
-    [DataField]
-    public int Counter = 1;
-
-    /// <summary>
-    /// When the user can print again
-    /// </summary>
-    [DataField, AutoPausedField]
-    public TimeSpan NextPrintAllowedAfter = TimeSpan.Zero;
-
-    /// <summary>
-    /// How long in between each time the user can print out a task
-    /// </summary>
-    [DataField]
-    public TimeSpan PrintDelay = TimeSpan.FromSeconds(5);
+    public EntityUid? ActorUid = null;
 }
 
 /// <summary>

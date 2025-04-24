@@ -1,3 +1,5 @@
+using Content.Shared.NanoTask.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
@@ -12,6 +14,13 @@ public enum NanoTaskPriority : byte
     Medium,
     Low,
 };
+
+[Serializable, NetSerializable]
+public enum NanoTaskItemStatus : byte
+{
+    InProgress,
+    Completed
+}
 
 /// <summary>
 ///     The data relating to a single NanoTask item, but not its identifier
@@ -37,20 +46,21 @@ public sealed class NanoTaskItem
     /// <summary>
     ///     If the task is marked as done or not
     /// </summary>
-    public readonly bool IsTaskDone;
+    public readonly NanoTaskItemStatus Status;
 
     /// <summary>
     ///     The task's marked priority
     /// </summary>
     public readonly NanoTaskPriority Priority;
 
-    public NanoTaskItem(string description, string taskIsFor, bool isTaskDone, NanoTaskPriority priority)
+    public NanoTaskItem(string description, string taskIsFor, NanoTaskItemStatus status, NanoTaskPriority priority)
     {
         Description = description;
         TaskIsFor = taskIsFor;
-        IsTaskDone = isTaskDone;
+        Status = status;
         Priority = priority;
     }
+
     public bool Validate()
     {
         return Description.Length <= MaximumStringLength && TaskIsFor.Length <= MaximumStringLength;
@@ -61,28 +71,24 @@ public sealed class NanoTaskItem
 ///     Pairs a NanoTask item and its identifier
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public sealed class NanoTaskItemAndId
+public sealed class NanoTaskItemAndId(uint id, NanoTaskItem data)
 {
-    public readonly int Id;
-    public readonly NanoTaskItem Data;
-
-    public NanoTaskItemAndId(int id, NanoTaskItem data)
-    {
-        Id = id;
-        Data = data;
-    }
+    public readonly uint Id = id;
+    public readonly NanoTaskItem Data = data;
 };
+
+[Serializable, NetSerializable, DataRecord]
+public sealed record NanoTaskItemAndDepartment(NanoTaskItemAndId Item, NanoTaskCategoryAndDepartment Category);
 
 /// <summary>
 ///     The UI state of the NanoTask
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class NanoTaskUiState : BoundUserInterfaceState
+public sealed class NanoTaskUiState(List<NanoTaskItemAndDepartment> tasks, List<ProtoId<NanoTaskDepartmentPrototype>> departments) : BoundUserInterfaceState
 {
-    public List<NanoTaskItemAndId> Tasks;
-
-    public NanoTaskUiState(List<NanoTaskItemAndId> tasks)
-    {
-        Tasks = tasks;
-    }
+    public readonly List<NanoTaskItemAndDepartment> Tasks = tasks;
+    public readonly List<ProtoId<NanoTaskDepartmentPrototype>> Departments = departments;
 }
+
+[Serializable, NetSerializable]
+public sealed class NanoTaskServerOfflineUiState : BoundUserInterfaceState;
