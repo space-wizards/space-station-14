@@ -93,6 +93,22 @@ public sealed class MailingUnitSystem : EntitySystem
             return;
         }
 
+        //starlight
+        //check if args have been cancelled
+        if (args.Cancelled)
+            return;
+        
+        //raise a event that the items inside are being mailed
+        //get all the items inside
+        var ev = new BeforeMailFlushEvent();
+        RaiseLocalEvent(uid, ev);
+        if (ev.Cancelled)
+        {
+            args.Cancel();
+            return;
+        }
+        //starlight end
+
         args.Tags.Add(MailTag);
         args.Tags.Add(component.Target);
 
@@ -202,3 +218,9 @@ public sealed class MailingUnitSystem : EntitySystem
         return true;
     }
 }
+
+//starlight
+public sealed class BeforeMailFlushEvent : CancellableEntityEventArgs
+{
+}
+//starlight end
