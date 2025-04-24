@@ -37,12 +37,6 @@ public sealed partial class DeliveryComponent : Component
     public int BaseSpesoPenalty = 250;
 
     /// <summary>
-    /// The base multiplier to add onto the reward or penalty upon delivery.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float BaseSpesoMultiplier = 1.0f;
-
-    /// <summary>
     /// The name of the recipient of this delivery.
     /// Used for the examine text.
     /// </summary>
