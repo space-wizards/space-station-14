@@ -29,7 +29,7 @@
     steps: 5
     zeroVisible: true
   - type: Gun
-    fireRate: 1.5
+    fireRate: 2.5
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto

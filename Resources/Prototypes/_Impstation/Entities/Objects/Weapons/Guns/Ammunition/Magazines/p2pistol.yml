@@ -42,6 +42,40 @@
     proto: null
 
 - type: entity
+  id: MagazinePistolP2ExtendedEmpty
+  name: P-2 extended pistol magazine (.22 auto any)
+  description: A 24-round .22 auto pistol magazine with no apparent markings.
+  parent: BaseMagazinePistolP2
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/p2_extended.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: BallisticAmmoProvider
+    proto: null
+    capacity: 24
+
+- type: entity
+  id: MagazinePistolP2Extended
+  name: P-2 extended pistol magazine (.22 auto)
+  description: A 24-round .22 auto pistol magazine, marked as live-fire ammo.
+  parent: BaseMagazinePistolP2
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/p2_extended.rsi
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistol
+    capacity: 24
+
+- type: entity
   id: MagazinePistolP2
   name: P-2 pistol magazine (.22 auto)
   description: A 12-round .22 auto pistol magazine, marked as live-fire ammo.
@@ -84,7 +118,7 @@
   id: MagazinePistolP2Uranium
   name: P-2 pistol magazine (.22 auto uranium)
   description: A 12-round .22 auto pistol magazine, marked as uranium ammo.
-  parent: BaseMagazineLPistol
+  parent: BaseMagazinePistolP2
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLPistolUranium

@@ -42,7 +42,7 @@
     maxCharge: 600
     startingCharge: 600
   - type: ProjectileBatteryAmmoProvider
-    proto: BulletLaser
+    proto: BulletBlasterPistol
     fireCost: 75
   - type: Tag
     tags:

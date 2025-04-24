@@ -1,7 +1,7 @@
 - type: entity
   id: MagazineBoxPistolStun
   parent: BaseMagazineBoxPistol
-  name: ammunition box (.35 auto stun)
+  name: ammunition box (Freelancer .35 auto stun)
   description: A box made for 60 rounds of .35 auto ammunition, labeled as stun bullets specially tooled for antiquated weapons.
   components:
   - type: BallisticAmmoProvider

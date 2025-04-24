@@ -105,6 +105,7 @@
           tags:
           - PowerCell
           - PowerCellSmall
+          - BlasterCell #imp
 
 - type: entity
   parent: [ BaseItemRecharger, ConstructibleMachine ]

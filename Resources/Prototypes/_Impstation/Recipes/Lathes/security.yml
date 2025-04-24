@@ -150,6 +150,20 @@
     Steel: 25
 
 - type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazinePistolP2ExtendedEmpty
+  result: MagazinePistolP2ExtendedEmpty
+  materials:
+    Steel: 30
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazinePistolP2Extended
+  result: MagazinePistolP2Extended
+  materials:
+    Steel: 234
+
+- type: latheRecipe
   parent: BaseAmmoRecipe
   id: MagazinePistolP2
   result: MagazinePistolP2

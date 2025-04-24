@@ -12,6 +12,8 @@
   recipeUnlocks:
   - FullAutoConversionKit
   - HyperBurstConversionKit
+  - MagazinePistolP2Extended
+  - MagazinePistolP2ExtendedEmpty
 
 - type: technology
   id: AdvancedMunitions

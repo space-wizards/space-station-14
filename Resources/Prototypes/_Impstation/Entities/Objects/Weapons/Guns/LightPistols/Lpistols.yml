@@ -266,7 +266,7 @@
   - type: Clothing
     sprite: _Impstation/Objects/Weapons/Guns/Pistols/p2diver.rsi
   - type: Gun
-    fireRate: 5.5
+    fireRate: 5.7
     availableModes:
     - SemiAuto
     soundGunshot:
