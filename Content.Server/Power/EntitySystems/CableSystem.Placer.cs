@@ -28,17 +28,18 @@ public sealed partial class CableSystem
         if (component.CablePrototypeId == null)
             return;
 
-        if(!TryComp<MapGridComponent>(_transform.GetGrid(args.ClickLocation), out var grid))
+        if (!TryComp<MapGridComponent>(_transform.GetGrid(args.ClickLocation), out var grid))
             return;
 
         var gridUid = _transform.GetGrid(args.ClickLocation)!.Value;
-        var snapPos = _map.TileIndicesFor(gridUid, grid, args.ClickLocation);
-        var tileDef = (ContentTileDefinition) _tileManager[_map.GetTileRef(gridUid, grid,snapPos).Tile.TypeId];
+        var snapPos = _map.TileIndicesFor((gridUid, grid), args.ClickLocation);
+        var tileDef = (ContentTileDefinition)_tileManager[_map.GetTileRef(gridUid, grid, snapPos).Tile.TypeId];
 
         if (!tileDef.IsSubFloor || !tileDef.Sturdy)
             return;
 
-        foreach (var anchored in _map.GetAnchoredEntities(gridUid, grid, snapPos))
+
+        foreach (var anchored in _map.GetAnchoredEntities((gridUid, grid), snapPos))
         {
             if (TryComp<CableComponent>(anchored, out var wire) && wire.CableType == component.BlockingCableType)
                 return;
