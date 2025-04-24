@@ -65,7 +65,7 @@ public sealed partial class TurnstileComponent : Component
     {
         Params = new()
         {
-            Volume = -5,
+            Volume = -7,
         },
     };
 }
