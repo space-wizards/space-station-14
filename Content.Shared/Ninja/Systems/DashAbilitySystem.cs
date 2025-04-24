@@ -22,7 +22,7 @@ public sealed class DashAbilitySystem : EntitySystem
 {
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedChargesSystem _charges = default!;
+    [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -79,7 +79,7 @@ public sealed class DashAbilitySystem : EntitySystem
             return;
         }
 
-        if (!_charges.TryUseCharge(uid))
+        if (!_sharedCharges.TryUseCharge(uid))
         {
             _popup.PopupClient(Loc.GetString("dash-ability-no-charges", ("item", uid)), user, user);
             return;

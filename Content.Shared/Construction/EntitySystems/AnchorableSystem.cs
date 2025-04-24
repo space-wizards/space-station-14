@@ -277,7 +277,10 @@ public sealed partial class AnchorableSystem : EntitySystem
         return !attempt.Cancelled;
     }
 
-    private bool TileFree(EntityCoordinates coordinates, PhysicsComponent anchorBody)
+    /// <summary>
+    /// Returns true if no hard anchored entities exist on the coordinate tile that would collide with the provided physics body.
+    /// </summary>
+    public bool TileFree(EntityCoordinates coordinates, PhysicsComponent anchorBody)
     {
         // Probably ignore CanCollide on the anchoring body?
         var gridUid = _transformSystem.GetGrid(coordinates);
