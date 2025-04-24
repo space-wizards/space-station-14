@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: WarPigeon
-  changes:
-  - message: The debriefing room in CentComm is now open to heads of staff for end
-      of round roleplay.
-    type: Tweak
-  id: 7830
-  time: '2025-01-19T05:32:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34475
 - author: Winkarst-cpu
   changes:
   - message: Now items from the storage implant drop on the floor upon gibbing of
@@ -3930,3 +3922,12 @@
   id: 8331
   time: '2025-04-24T11:39:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36313
+- author: EmoGarbage404
+  changes:
+  - message: Added prisoner closets. These create automatic ID's which allow you to
+      quickly handle the transfer of prisoners in and out of genpop cells while keeping
+      their belongings secure. Imprison people today!
+    type: Add
+  id: 8332
+  time: '2025-04-24T14:32:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36392
