@@ -5,6 +5,7 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Robust.Shared.Player;
 
 namespace Content.Server.Ghost.Roles;
 
@@ -24,6 +25,8 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         SubscribeLocalEvent<ToggleableGhostRoleComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<ToggleableGhostRoleComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<ToggleableGhostRoleComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, GetVerbsEvent<ActivationVerb>>(AddWipeVerb);
     }
 
@@ -65,18 +68,33 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
-        {
+        // Mind is present, has a connected session
+        if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind && HasComp<ActorComponent>(uid))
             args.PushMarkup(Loc.GetString(component.ExamineTextMindPresent));
-        }
+
+        // No mind present, actively waiting for Ghost Role Takeover
         else if (HasComp<GhostTakeoverAvailableComponent>(uid))
-        {
             args.PushMarkup(Loc.GetString(component.ExamineTextMindSearching));
-        }
+
+        // Mind is present, but no active session
+        else if (
+            HasComp<MindContainerComponent>(uid) &&
+            CompOrNull<MindComponent>(uid)?.Session == null &&
+            HasComp<GhostRoleComponent>(uid)
+            )
+            args.PushMarkup(Loc.GetString(component.ExamineTextMindSsd));
+
+        // Mind is present, but ghosted out of the container
+        else if (
+            HasComp<MindContainerComponent>(uid) &&
+            CompOrNull<MindComponent>(uid)?.Session == null &&
+            HasComp<ToggleableGhostRoleComponent>(uid)
+            )
+            args.PushMarkup(Loc.GetString(component.ExamineTextMindGhosted));
+
+        // No mind present, not waiting for Ghost Role Takeover
         else
-        {
             args.PushMarkup(Loc.GetString(component.ExamineTextNoMind));
-        }
     }
 
     private void OnMindAdded(EntityUid uid, ToggleableGhostRoleComponent pai, MindAddedMessage args)
@@ -91,6 +109,18 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         // Mind was removed, prepare for re-toggle of the role
         RemCompDeferred<GhostRoleComponent>(uid);
         UpdateAppearance(uid, ToggleableGhostRoleStatus.Off);
+    }
+
+    private void OnPlayerAttached(Entity<ToggleableGhostRoleComponent> entity, ref PlayerAttachedEvent args)
+    {
+        // Player was attached, change the appearance
+        UpdateAppearance(entity, ToggleableGhostRoleStatus.On);
+    }
+
+    private void OnPlayerDetached(Entity<ToggleableGhostRoleComponent> entity, ref PlayerDetachedEvent args)
+    {
+        // Player was detached, change the appearance
+        UpdateAppearance(entity, ToggleableGhostRoleStatus.Ssd);
     }
 
     private void UpdateAppearance(EntityUid uid, ToggleableGhostRoleStatus status)

@@ -88,6 +88,8 @@
       examineTextMindPresent: positronic-brain-installed
       examineTextMindSearching: positronic-brain-still-searching
       examineTextNoMind: positronic-brain-off
+      examineTextMindSsd: positronic-brain-ssd
+      examineTextMindGhosted: positronic-brain-ghosted
       beginSearchingText: positronic-brain-searching
       roleName: positronic-brain-role-name
       roleDescription: positronic-brain-role-description
@@ -133,6 +135,7 @@
             Off: { state: posibrain }
             Searching: { state: posibrain-searching }
             On: { state: posibrain-occupied }
+            Ssd: { state: posibrain-ssd }
     - type: GuideHelp
       guides:
       - Cyborgs
