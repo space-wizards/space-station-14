@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: honeyed-lemons
   changes:
-  - message: Priority Mail takes 5 minutes to expire again
-    type: Tweak
-  - message: Fixed some mail examine text
-    type: Fix
-  id: 1074
-  time: '2025-02-08T01:58:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1601
-- author: honeyed-lemons
-  changes:
   - message: Massive Gate Overhaul
     type: Tweak
   id: 1075
@@ -4131,3 +4122,11 @@
   id: 1573
   time: '2025-04-24T22:07:02.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2334
+- author: crekulon
+  changes:
+  - message: Declaring war as nukies now only gives an additional 20 TC, down from
+      the previous 40.
+    type: Tweak
+  id: 1574
+  time: '2025-04-24T23:52:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2331
