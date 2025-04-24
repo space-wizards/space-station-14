@@ -73,7 +73,7 @@
         Slash: 0.5
         Piercing: 0.5 #Some nukie tier physical protection...
         Heat: 0.8
-        Radiation: .8 #Hey, it's a bunch of solid steel.
+        Radiation: 0.8 #Hey, it's a bunch of solid steel.
   - type: ExplosionResistance
     damageCoefficient: 0.80
   - type: ClothingSpeedModifier #But that protection comes at a price.
