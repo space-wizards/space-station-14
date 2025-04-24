@@ -747,6 +747,12 @@
     - GenpopLeave
   - type: Speech
     speechVerb: Robotic
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - WhitelistChameleon
+    - WhitelistChameleonIdCard
+    - Recyclable
   - type: StaticPrice # these are infinitely producible.
     price: 0
 
