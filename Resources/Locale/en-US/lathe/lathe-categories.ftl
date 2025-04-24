@@ -5,6 +5,7 @@ lathe-category-lights = Lights
 lathe-category-machines = Machines
 lathe-category-parts = Parts
 lathe-category-robotics = Robotics
+lathe-category-modules = Modules
 lathe-category-tools = Tools
 lathe-category-weapons = Weapons
 
