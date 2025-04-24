@@ -53,7 +53,7 @@ namespace Content.Shared.Tools.Components
         ///     If true, the only way to interact is with verbs. Clicking on the entity will not do anything.
         /// </summary>
         [DataField, AutoNetworkedField]
-        public bool VerbOnly = false;
+        public bool VerbOnly;
 
         /// <summary>
         ///     The name of what is being open and closed.
