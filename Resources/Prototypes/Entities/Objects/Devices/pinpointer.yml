@@ -46,7 +46,7 @@
   components:
   - type: Pinpointer
     component: NukeDisk
-    targetName: nuclear authentication disk
+    targetName: pinpointer-nuke-disk-target
 
 - type: entity
   name: syndicate pinpointer
@@ -66,7 +66,7 @@
     state: pinpointer-syndicate
   - type: Pinpointer
     component: NukeDisk
-    targetName: nuclear authentication disk
+    targetName: pinpointer-nuke-disk-target
 
 - type: entity
   name: universal pinpointer
@@ -107,7 +107,7 @@
     state: pinpointer-station
   - type: Pinpointer
     component: ResearchServer
-    targetName: the station
+    targetName: pinpointer-station-target
 
 - type: entity
   parent: [ PinpointerBase, BaseXenoborgContraband ]
@@ -128,4 +128,4 @@
     state: pinpointer-station
   - type: Pinpointer
     component: XenoborgMothership
-    targetName: the mothership
+    targetName: pinpointer-mothership-target
