@@ -36,6 +36,7 @@ public sealed partial class PuddleSystem
     private void TickEvaporation()
     {
         var query = EntityQueryEnumerator<EvaporationComponent, PuddleComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
         var curTime = _timing.CurTime;
         while (query.MoveNext(out var uid, out var evaporation, out var puddle))
         {
@@ -50,31 +51,28 @@ public sealed partial class PuddleSystem
             else
                 RemComp<PreventEvaporationComponent>(uid);
 
+            if (!_solutionContainerSystem.ResolveSolution(uid, puddle.SolutionName, ref puddle.Solution, out var puddleSolution))
+                continue;
+
             if (!hasEnoughVapor)
             {
+                foreach ((string evaporatingReagent, FixedPoint2 evaporatingSpeed) in GetEvaporationSpeeds(puddleSolution))
+                {
+                    var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds * evaporatingSpeed;
+                    puddleSolution.SplitSolutionWithOnly(reagentTick, evaporatingReagent);
+                }
+
                 evaporation.NextTick = _timing.CurTime + EvaporationCooldown;
                 Dirty(uid, evaporation);
 
-                if (_solutionContainerSystem.ResolveSolution(uid, puddle.SolutionName, ref puddle.Solution, out var puddleSolution))
+                if (puddleSolution.Volume == FixedPoint2.Zero)
                 {
-                    var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds;
-                    puddleSolution.SplitSolutionWithOnly(reagentTick, EvaporationReagents);
-
-                    foreach ((string evaporatingReagent, FixedPoint2 evaporatingSpeed) in GetEvaporationSpeeds(puddleSolution))
-                    {
-                        var reagentTickOld = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds * evaporatingSpeed;
-                        puddleSolution.SplitSolutionWithOnly(reagentTickOld, evaporatingReagent);
-                    }
-
-                    if (puddleSolution.Volume == FixedPoint2.Zero)
-                    {
-                        // Spawn a *sparkle*
-                        Spawn("PuddleSparkle", Transform(uid).Coordinates);
-                        QueueDel(uid);
-                    }
-
-                    _solutionContainerSystem.UpdateChemicals(puddle.Solution.Value);
+                    // Spawn a *sparkle*
+                    Spawn("PuddleSparkle", xformQuery.GetComponent(uid).Coordinates);
+                    QueueDel(uid);
                 }
+
+                _solutionContainerSystem.UpdateChemicals(puddle.Solution.Value);
             }
         }
     }
