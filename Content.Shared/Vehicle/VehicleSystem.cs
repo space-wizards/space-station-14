@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
@@ -16,11 +15,12 @@ namespace Content.Shared.Vehicle;
 /// <summary>
 /// Handles logic relating to vehicles.
 /// </summary>
-public sealed class VehicleSystem : EntitySystem
+public sealed partial class VehicleSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
@@ -28,17 +28,14 @@ public sealed class VehicleSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+        InitializeOperator();
+        InitializeKey();
+
         SubscribeLocalEvent<VehicleComponent, BeforeDamageChangedEvent>(OnBeforeDamageChanged);
         SubscribeLocalEvent<VehicleComponent, UpdateCanMoveEvent>(OnVehicleUpdateCanMove);
         SubscribeLocalEvent<VehicleComponent, ComponentShutdown>(OnVehicleShutdown);
 
         SubscribeLocalEvent<VehicleOperatorComponent, ComponentShutdown>(OnOperatorShutdown);
-
-        SubscribeLocalEvent<StrapVehicleComponent, StrappedEvent>(OnVehicleStrapped);
-        SubscribeLocalEvent<StrapVehicleComponent, UnstrappedEvent>(OnVehicleUnstrapped);
-
-        SubscribeLocalEvent<ContainerVehicleComponent, EntInsertedIntoContainerMessage>(OnContainerEntInserted);
-        SubscribeLocalEvent<ContainerVehicleComponent, EntRemovedFromContainerMessage>(OnContainerEntRemoved);
     }
 
     /// <remarks>
@@ -52,6 +49,7 @@ public sealed class VehicleSystem : EntitySystem
         var damage = args.Damage;
         if (_prototype.TryIndex(ent.Comp.TransferDamageModifier, out var modifierSet))
         {
+            // Reduce damage to via the specified modifier, if provided.
             damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
         }
 
@@ -60,7 +58,16 @@ public sealed class VehicleSystem : EntitySystem
 
     private void OnVehicleUpdateCanMove(Entity<VehicleComponent> ent, ref UpdateCanMoveEvent args)
     {
-        if (ent.Comp.Operator is null)
+        // TODO: determine if this check is necessary
+        // if (ent.Comp.Operator is null)
+        // {
+        //     args.Cancel();
+        //     return;
+        // }
+
+        var ev = new VehicleCanRunEvent(ent);
+        RaiseLocalEvent(ent, ref ev);
+        if (!ev.CanRun)
             args.Cancel();
     }
 
@@ -71,46 +78,16 @@ public sealed class VehicleSystem : EntitySystem
 
     private void OnOperatorShutdown(Entity<VehicleOperatorComponent> ent, ref ComponentShutdown args)
     {
-        TryRemoveOperator(ent);
+        TryRemoveOperator((ent, ent));
     }
 
-    private void OnVehicleStrapped(Entity<StrapVehicleComponent> ent, ref StrappedEvent args)
-    {
-        if (!TryComp<VehicleComponent>(ent, out var vehicle))
-            return;
-        TrySetOperator((ent, vehicle), args.Buckle);
-    }
-
-    private void OnVehicleUnstrapped(Entity<StrapVehicleComponent> ent, ref UnstrappedEvent args)
-    {
-        if (!TryComp<VehicleComponent>(ent, out var vehicle))
-            return;
-        TrySetOperator((ent, vehicle), null);
-    }
-
-    private void OnContainerEntInserted(Entity<ContainerVehicleComponent> ent, ref EntInsertedIntoContainerMessage args)
-    {
-        if (args.Container.ID != ent.Comp.ContainerId)
-            return;
-
-        if (!TryComp<VehicleComponent>(ent, out var vehicle))
-            return;
-
-        TrySetOperator((ent, vehicle), args.Entity, removeExisting: false);
-    }
-
-    private void OnContainerEntRemoved(Entity<ContainerVehicleComponent> ent, ref EntRemovedFromContainerMessage args)
-    {
-        if (args.Container.ID != ent.Comp.ContainerId)
-            return;
-        if (!TryComp<VehicleComponent>(ent, out var vehicle))
-            return;
-        if (vehicle.Operator != args.Entity)
-            return;
-
-        TryRemoveOperator((ent, vehicle));
-    }
-
+    /// <summary>
+    /// Set the operator for a given vehicle
+    /// </summary>
+    /// <param name="entity">The vehicle</param>
+    /// <param name="uid">The new operator. If null, will only remove the operator.</param>
+    /// <param name="removeExisting">If true, will remove the current operator when setting the new one.</param>
+    /// <returns>If the new operator was successfully able to be set</returns>
     public bool TrySetOperator(Entity<VehicleComponent> entity, EntityUid? uid, bool removeExisting = true)
     {
         if (entity.Comp.Operator == null && uid is null)
@@ -141,6 +118,7 @@ public sealed class VehicleSystem : EntitySystem
 
         if (uid != null)
         {
+            // AddComp used for noisy fail. This should never be an issue.
             var vehicleOperator = AddComp<VehicleOperatorComponent>(uid.Value);
             vehicleOperator.Vehicle = entity.Owner;
             Dirty(uid.Value, vehicleOperator);
@@ -155,8 +133,7 @@ public sealed class VehicleSystem : EntitySystem
             RemCompDeferred<MovementRelayTargetComponent>(entity);
         }
 
-        _actionBlocker.UpdateCanMove(entity);
-        UpdateAppearance(entity);
+        RefreshCanRun((entity, entity.Comp));
 
         var setEvent = new VehicleOperatorSetEvent(uid);
         RaiseLocalEvent(entity, ref setEvent);
@@ -165,26 +142,44 @@ public sealed class VehicleSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Attempts to remove the current operator from a vehicle
+    /// </summary>
+    /// <param name="entity">The vehicle whose operator is being removed.</param>
+    /// <returns>If the operator was removed successfully</returns>
     [PublicAPI]
     public bool TryRemoveOperator(Entity<VehicleComponent> entity)
     {
-        return TrySetOperator(entity, null);
+        return TrySetOperator(entity, null, removeExisting: true);
     }
 
+    /// <summary>
+    /// From an operator, removes it from the vehicle
+    /// </summary>
+    /// <param name="operatorEntity">The operator who is riding a vehicle</param>
+    /// <returns>If the operator was removed successfully or if the entity was not operating a vehicle.</returns>
     [PublicAPI]
-    public bool TryRemoveOperator(Entity<VehicleOperatorComponent> operatorEntity)
+    public bool TryRemoveOperator(Entity<VehicleOperatorComponent?> operatorEntity)
     {
-        if (!TryComp<VehicleComponent>(operatorEntity.Comp.Vehicle, out var vehicle))
-            return false;
+        if (!Resolve(operatorEntity, ref operatorEntity.Comp, false))
+            return true;
 
-        return TrySetOperator((operatorEntity.Comp.Vehicle.Value, vehicle), null);
+        if (!TryComp<VehicleComponent>(operatorEntity.Comp.Vehicle, out var vehicle))
+            return true;
+
+        return TrySetOperator((operatorEntity.Comp.Vehicle.Value, vehicle), null, removeExisting: true);
     }
 
+    /// <summary>
+    /// Attempts to get the current operator of a vehicle
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="operatorEnt"></param>
     [PublicAPI]
     public bool TryGetOperator(Entity<VehicleComponent?> entity, [NotNullWhen(true)] out Entity<VehicleOperatorComponent>? operatorEnt)
     {
         operatorEnt = null;
-        if (!Resolve(entity, ref entity.Comp, false))
+        if (!Resolve(entity, ref entity.Comp))
             return false;
 
         if (entity.Comp.Operator is not { } operatorUid)
@@ -197,17 +192,39 @@ public sealed class VehicleSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Checks if a given entity is capable of operating a vehicle.
+    /// Note that the general ability for a vehicle to run (keys, fuel, etc.) is not checked here.
+    /// This is *only* for checks on the user.
+    /// </summary>
     public bool CanOperate(Entity<VehicleComponent> entity, EntityUid uid)
     {
         if (_entityWhitelist.IsWhitelistFail(entity.Comp.OperatorWhitelist, uid))
             return false;
 
-        return true;
+        return _actionBlocker.CanConsciouslyPerformAction(uid);
+    }
+
+    /// <summary>
+    /// Checks if the vehicle is capable of running (has keys, fuel, etc.) and caches the value.
+    /// Updates the appearance data.
+    /// </summary>
+    public void RefreshCanRun(Entity<VehicleComponent?> entity)
+    {
+        if (TerminatingOrDeleted(entity))
+            return;
+
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+
+        _actionBlocker.UpdateCanMove(entity);
+        UpdateAppearance((entity, entity.Comp));
     }
 
     private void UpdateAppearance(Entity<VehicleComponent> entity)
     {
-        var appearance = CompOrNull<AppearanceComponent>(entity);
+        if (!TryComp<AppearanceComponent>(entity, out var appearance))
+            return;
 
         if (TryComp<InputMoverComponent>(entity, out var inputMover))
         {

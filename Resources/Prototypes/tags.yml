@@ -744,6 +744,9 @@
   id: InvalidForSurvivorAntag
 
 - type: Tag
+  id: JanicartKeys
+
+- type: Tag
   id: JawsOfLife
 
 - type: Tag

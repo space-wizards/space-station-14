@@ -45,8 +45,8 @@ public sealed partial class VehicleComponent : Component
 [Serializable, NetSerializable]
 public enum VehicleVisuals : byte
 {
-    HasOperator,
-    CanRun,
+    HasOperator,    // The vehicle has a valid operator
+    CanRun,         // The vehicle can be moved by the operator (turned on :flushed:)
 }
 
 /// <summary>
@@ -69,3 +69,9 @@ public readonly record struct OnVehicleExitedEvent(Entity<VehicleComponent> Vehi
 /// </summary>
 [ByRefEvent, UsedImplicitly]
 public readonly record struct VehicleOperatorSetEvent(EntityUid? NewOperator);
+
+/// <summary>
+/// Event raised on a vehicle to check if it can run/move around.
+/// </summary>
+[ByRefEvent, UsedImplicitly]
+public record struct VehicleCanRunEvent(Entity<VehicleComponent> Vehicle, bool CanRun = true);
