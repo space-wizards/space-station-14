@@ -1,19 +1,19 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Botany.Components;
-using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Botany;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Random;
+using Content.Shared.Tools.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 
@@ -30,6 +30,7 @@ public sealed partial class BotanySystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedToolSystem _tools = default!;
 
     public override void Initialize()
     {
@@ -193,7 +194,7 @@ public sealed partial class BotanySystem : EntitySystem
 
     public bool CanHarvest(SeedData proto, EntityUid? held = null)
     {
-        return !proto.Ligneous || proto.Ligneous && held != null && HasComp<SharpComponent>(held);
+        return !proto.Ligneous || proto.Ligneous && held != null && _tools.HasQuality(held.Value, "Slicing");
     }
 
     #endregion

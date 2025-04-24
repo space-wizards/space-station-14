@@ -30,11 +30,8 @@
   parent: ClothingHeadBase
   id: ClothingHeadBaseButcherable
   components:
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
-    - id: MaterialCloth1
-      amount: 1
+  - type: Sliceable
+    slice: MaterialCloth1
   - type: Tag
     tags:
       - ClothMade

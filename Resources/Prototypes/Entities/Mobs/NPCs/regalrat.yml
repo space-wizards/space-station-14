@@ -124,7 +124,8 @@
   - type: Grammar
     attributes:
       gender: male
-  - type: Sharp
+  - type: Tool
+    qualities: Slicing # Should work 🙏🙏🙏🙏
 
 - type: entity
   id: MobRatKingBuff

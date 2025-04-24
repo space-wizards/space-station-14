@@ -5,7 +5,6 @@
   name: crystal shard
   description:  A small piece of crystal.
   components:
-  - type: Sharp
   - type: Execution
     doAfterDuration: 4.0
   - type: Sprite

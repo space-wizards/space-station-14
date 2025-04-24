@@ -93,7 +93,6 @@
   name: crusher
   description: An early design of the proto-kinetic accelerator.
   components:
-  - type: Sharp
   - type: UnpoweredFlashlight
   - type: PointLight
     color: "#ffeead"

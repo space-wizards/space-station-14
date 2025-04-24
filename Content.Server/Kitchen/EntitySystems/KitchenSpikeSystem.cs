@@ -21,6 +21,8 @@ using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
+using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Robust.Shared.Random;
 using static Content.Shared.Kitchen.Components.KitchenSpikeComponent;
 
@@ -39,6 +41,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly SharedSuicideSystem _suicide = default!;
+        [Dependency] private readonly SharedToolSystem _tools = default!;
 
         public override void Initialize()
         {
@@ -59,7 +62,6 @@ namespace Content.Server.Kitchen.EntitySystems
         private void OnButcherableCanDrop(Entity<ButcherableComponent> entity, ref CanDropDraggedEvent args)
         {
             args.Handled = true;
-            args.CanDrop |= entity.Comp.Type != ButcheringType.Knife;
         }
 
         /// <summary>
@@ -166,24 +168,21 @@ namespace Content.Server.Kitchen.EntitySystems
             // THE WHAT?
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             var gibs = _bodySystem.GibBody(victimUid);
-            foreach (var gib in gibs) {
+            foreach (var gib in gibs)
                 QueueDel(gib);
-            }
 
             _audio.PlayPvs(component.SpikeSound, uid);
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,
-            KitchenSpikeComponent? component = null, SharpComponent? sharp = null)
+            KitchenSpikeComponent? component = null)
         {
             if (!Resolve(uid, ref component) || component.PrototypesToSpawn == null || component.PrototypesToSpawn.Count == 0)
                 return false;
 
             // Is using knife
-            if (!Resolve(used, ref sharp, false) )
-            {
+            if (!_tools.HasQuality(used, "Slicing"))
                 return false;
-            }
 
             var item = _random.PickAndTake(component.PrototypesToSpawn);
 
@@ -228,17 +227,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return false;
             }
 
-            switch (butcherable.Type)
-            {
-                case ButcheringType.Spike:
-                    return true;
-                case ButcheringType.Knife:
-                    _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher-knife", ("victim", Identity.Entity(victimUid, EntityManager)), ("this", uid)), victimUid, userUid);
-                    return false;
-                default:
-                    _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", Identity.Entity(victimUid, EntityManager)), ("this", uid)), victimUid, userUid);
-                    return false;
-            }
+            return true;
         }
 
         public bool TrySpike(EntityUid uid, EntityUid userUid, EntityUid victimUid, KitchenSpikeComponent? component = null,

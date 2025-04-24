@@ -29,10 +29,10 @@ public sealed class SliceableSystem : SharedSliceableSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SliceableComponent, SliceFoodEvent>(OnSliceEvent);
+        SubscribeLocalEvent<SliceableComponent, SliceEvent>(OnSliceEvent);
     }
 
-    private void OnSliceEvent(EntityUid uid, SliceableComponent comp, ref SliceFoodEvent args)
+    private void OnSliceEvent(EntityUid uid, SliceableComponent comp, ref SliceEvent args)
     {
         TrySlice(uid);
     }
@@ -42,23 +42,37 @@ public sealed class SliceableSystem : SharedSliceableSystem
         FoodComponent? food = null,
         TransformComponent? transform = null)
     {
-        if (!Resolve(uid, ref comp, ref food, ref transform) ||
-            string.IsNullOrEmpty(comp.Slice))
+        if (!Resolve(uid, ref comp, ref food, ref transform))
             return false;
 
-        if (!_solutionContainer.TryGetSolution(uid, food.Solution, out var soln, out var solution))
-            return false;
 
-        var sliceVolume = solution.Volume / FixedPoint2.New(comp.Count);
-        for (var i = 0; i < comp.Count; i++)
+        foreach (var sliceProto in comp.Slice)
         {
-            var sliceUid = Slice(uid, comp, transform);
+            var sliceUid = Spawn(sliceProto);
 
-            // Fills new slice if comp allows
-            if (comp.TransferSolution)
+            _transform.DropNextTo(sliceUid, (uid, transform));
+            _transform.SetLocalRotation(sliceUid, 0);
+
+            if (!_container.IsEntityOrParentInContainer(sliceUid))
             {
-                var lostSolution = _solutionContainer.SplitSolution(soln.Value, sliceVolume);
-                FillSlice(sliceUid, lostSolution);
+                var randVect = _random.NextVector2(2.0f, 2.5f);
+                if (TryComp<PhysicsComponent>(sliceUid, out var physics))
+                    _physics.SetLinearVelocity(sliceUid, randVect, body: physics);
+            }
+
+            if (Resolve(uid, ref food))
+            {
+                if (!_solutionContainer.TryGetSolution(uid, food.Solution, out var soln, out var solution))
+                    return false;
+
+                var sliceVolume = solution.Volume / FixedPoint2.New(comp.Slice.Count);
+
+                // Fills new slice if comp allows.
+                if (comp.TransferSolution)
+                {
+                    var lostSolution = _solutionContainer.SplitSolution(soln.Value, sliceVolume);
+                    FillSlice(sliceUid, lostSolution);
+                }
             }
         }
 
@@ -78,29 +92,5 @@ public sealed class SliceableSystem : SharedSliceableSystem
             var lostSolutionPart = solution.SplitSolution(itsSolution.AvailableVolume);
             _solutionContainer.TryAddSolution(itsSoln.Value, lostSolutionPart);
         }
-    }
-
-    public EntityUid Slice(EntityUid uid,
-        SliceableComponent? comp = null,
-        TransformComponent? transform = null)
-    {
-        if (!Resolve(uid, ref comp, ref transform))
-            return EntityUid.Invalid;
-
-        var sliceUid = Spawn(comp.Slice, _transform.GetMapCoordinates(uid));
-
-        // try putting the slice into the container if the food being sliced is in a container!
-        // this lets you do things like slice a pizza up inside of a hot food cart without making a food-everywhere mess
-        _transform.DropNextTo(sliceUid, (uid, transform));
-        _transform.SetLocalRotation(sliceUid, 0);
-
-        if (!_container.IsEntityOrParentInContainer(sliceUid))
-        {
-            var randVect = _random.NextVector2(2.0f, 2.5f);
-            if (TryComp<PhysicsComponent>(sliceUid, out var physics))
-                _physics.SetLinearVelocity(sliceUid, randVect, body: physics);
-        }
-
-        return sliceUid;
     }
 }

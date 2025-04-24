@@ -2095,10 +2095,6 @@
   - type: Sliceable
     count: 5
     slice: FoodWatermelonSlice
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
-    - id: ClothingHeadHatWatermelon
   - type: Tag
     tags:
     - Fruit
@@ -2198,10 +2194,6 @@
   - type: Sliceable
     count: 5
     slice: FoodHolymelonSlice
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
-    - id: ClothingHeadHatHolyWatermelon
   - type: Tag
     tags:
     - Fruit
@@ -2488,11 +2480,8 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
-    - id: CarvedPumpkin
-    - id: PumpkinSeeds
+  - type: Sliceable
+    slice: CarvedPumpkin
   - type: Tag
     tags:
     - Fruit

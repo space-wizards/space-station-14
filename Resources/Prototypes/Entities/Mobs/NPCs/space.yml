@@ -470,10 +470,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatSnail
-      amount: 1
+  - type: Sliceable
+    slice: [ FoodMeatSnail ]
   - type: Tag
     tags:
     - Trash

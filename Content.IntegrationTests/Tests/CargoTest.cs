@@ -190,19 +190,23 @@ public sealed class CargoTest
                             continue;
 
                         // Spawn a slice
-                        var slice = entManager.SpawnEntity(sliceable.Slice, coord);
 
-                        // See if the slice also counts for this bounty entry
-                        if (!cargo.IsValidBountyEntry(slice, entry))
+                        foreach (var sliceProto in sliceable.Slice)
                         {
+                            var slice = entManager.SpawnEntity(sliceProto, coord);
+
+                            // See if the slice also counts for this bounty entry
+                            if (!cargo.IsValidBountyEntry(slice, entry))
+                            {
+                                entManager.DeleteEntity(slice);
+                                continue;
+                            }
+
                             entManager.DeleteEntity(slice);
-                            continue;
+
+                            // If for some reason it can only make one slice, that's okay, I guess
+                            Assert.That(sliceable.Slice.Count, Is.EqualTo(1), $"{proto} counts as part of cargo bounty {bounty.ID} and slices into {sliceable.Slice.Count} slices which count for the same bounty!");
                         }
-
-                        entManager.DeleteEntity(slice);
-
-                        // If for some reason it can only make one slice, that's okay, I guess
-                        Assert.That(sliceable.Count, Is.EqualTo(1), $"{proto} counts as part of cargo bounty {bounty.ID} and slices into {sliceable.Count} slices which count for the same bounty!");
                     }
                 }
 

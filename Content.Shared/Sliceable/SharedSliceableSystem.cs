@@ -1,7 +1,14 @@
 using Content.Shared.DoAfter;
-using Content.Shared.Interaction;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
+using Content.Shared.Verbs;
+using Robust.Shared.Utility;
+using Content.Shared.Destructible;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 
 using Robust.Shared.Serialization;
 
@@ -9,35 +16,83 @@ namespace Content.Shared.Sliceable;
 
 public abstract class SharedSliceableSystem : EntitySystem
 {
+    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly SharedToolSystem _tools = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedDestructibleSystem _destructibleSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SliceableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<SliceableComponent, TrySliceEvent>(AfterSlicing);
+        SubscribeLocalEvent<SliceableComponent, GetVerbsEvent<UtilityVerb>>(AddSliceVerb);
     }
 
     private void AfterSlicing(EntityUid uid, SliceableComponent comp, TrySliceEvent args)
     {
-        var ev = new SliceFoodEvent();
+        var hasBody = TryComp<BodyComponent>(uid, out var body);
+
+        // only show a big popup when butchering living things.
+        var popupType = PopupType.Small;
+        if (hasBody)
+            popupType = PopupType.LargeCaution;
+
+        _popupSystem.PopupEntity(Loc.GetString("slice-butchered-success", ("target", uid), ("knife", uid)),
+            args.User, popupType);
+
+        if (hasBody)
+            _bodySystem.GibBody(uid, body: body);
+
+        var ev = new SliceEvent();
         RaiseLocalEvent(uid, ref ev);
     }
 
-    private void OnInteractUsing(EntityUid uid, SliceableComponent comp, InteractUsingEvent args)
+    private void AddSliceVerb(EntityUid uid, SliceableComponent comp, GetVerbsEvent<UtilityVerb> args)
     {
-        if (args.Handled)
+        if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (!TryComp<ToolComponent>(args.Used, out var toolComp))
+        var verbDisabled = false;
+        var verbMessage = string.Empty;
+
+        if (!TryComp<ToolComponent>(uid, out var toolComp) || !_tools.HasQuality(uid, comp.ToolQuality))
+        {
+            verbDisabled = true;
+            verbMessage = Loc.GetString("slice-verb-message-tool");
+        }
+
+        if (TryComp<MobStateComponent>(args.Target, out var mobState) && !_mobStateSystem.IsDead(args.Target, mobState))
+        {
+            verbDisabled = true;
+            verbMessage = Loc.GetString("slice-verb-message-alive");
+        }
+
+        UtilityVerb verb = new()
+        {
+            Text = Loc.GetString("slice-verb-name"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
+            Disabled = verbDisabled,
+            Message = verbMessage,
+            Act = () =>
+            {
+                OnVerbUsing(args.Target, args.User, uid, comp.SliceTime, toolComp);
+            },
+        };
+        args.Verbs.Add(verb);
+    }
+
+    private void OnVerbUsing(EntityUid target, EntityUid user, EntityUid used, float time, ToolComponent? toolComp)
+    {
+        if (toolComp == null)
             return;
 
         _tools.UseTool(
-            args.Used,
-            args.User,
-            uid,
-            comp.SliceTime,
+            used,
+            user,
+            target,
+            time,
             toolComp.Qualities,
             new TrySliceEvent());
     }
@@ -46,11 +101,11 @@ public abstract class SharedSliceableSystem : EntitySystem
     ///     Called after doafter.
     /// </summary>
     [ByRefEvent]
-    public record struct SliceFoodEvent();
+    public record struct SliceEvent();
 }
 
 /// <summary>
-///     Called during doafter.
+///     Called for doafter.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class TrySliceEvent : SimpleDoAfterEvent;

@@ -9,7 +9,6 @@
       path: /Audio/Weapons/chainsawwield.ogg
       params:
         volume: -3
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/chainsaw.rsi
     state: icon

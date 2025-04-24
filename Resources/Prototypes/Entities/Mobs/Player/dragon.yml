@@ -118,10 +118,8 @@
     groups:
     - id: Medicine
     - id: Poison
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatDragon
-      amount: 2
+  - type: Sliceable
+    slice: [ FoodMeatDragon, FoodMeatDragon ]
   - type: InteractionPopup
     successChance: 0.25 # It's no goose, but you better smell like carp.
     interactSuccessString: petting-success-dragon
@@ -214,10 +212,8 @@
       0: Alive
       200: Dead
   # less meat spawned since it's a lot easier to kill
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatDragon
-      amount: 1
+  - type: Sliceable
+    slice: [ FoodMeatDragon]
   - type: MeleeWeapon
     damage:
       groups:

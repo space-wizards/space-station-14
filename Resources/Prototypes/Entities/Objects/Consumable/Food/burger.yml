@@ -19,22 +19,17 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 6.66 # 1/3 of a loaf of bread, technically losing 0.01 nutriment per batch of three buns over making bread loaves/slices
-  - type: Butcherable
-    butcherDelay: 1
-    spawned:
-      - id: FoodBreadBunTop
-        amount: 1
-      - id: FoodBreadBunBottom
-        amount: 1
+  - type: Slicing
+    slice: [ FoodBreadBunTop, FoodBreadBunBottom]
 
 - type: entity
   id: FoodBreadBunBottom
   parent: FoodBreadSliceBase
   name: bottom bun
-  description: It's time to start building the burger tower. 
+  description: It's time to start building the burger tower.
   components:
   - type: Item
-    size: Normal #patch until there is an adequate resizing system in place 
+    size: Normal #patch until there is an adequate resizing system in place
   - type: Food
   - type: Sprite
     drawdepth: Mobs
@@ -83,7 +78,7 @@
   - type: FoodSequenceElement
     entries:
       Burger: BunTopBurger
-  
+
 # Base
 
 - type: entity
@@ -687,7 +682,7 @@
   description: An elusive rib shaped burger with limited availability across the galaxy. Not as good as you remember it.
   components:
   - type: Food
-    trash: 
+    trash:
     - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
@@ -987,4 +982,4 @@
   - type: Tag
     tags:
     - Meat
-    
+

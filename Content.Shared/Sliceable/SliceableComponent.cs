@@ -2,6 +2,7 @@ using Content.Shared.Tools;
 
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Content.Shared.Storage;
 
 namespace Content.Shared.Sliceable;
 
@@ -15,16 +16,10 @@ public sealed partial class SliceableComponent : Component
     ///     Prototype ID of the entity that will be spawned after slicing.
     /// </summary>
     [DataField]
-    public EntProtoId Slice = default!;
+    public List<EntitySpawnEntry> Slice = [];
 
     /// <summary>
-    ///     Amount of <see cref"SpawnedPrototype"/> that will be spawned after slicing.
-    /// </summary>
-    [DataField]
-    public byte Count = 5;
-
-    /// <summary>
-    ///     If true, entity will transfer splitted solution into <see cref"SpawnedPrototype"/>.
+    ///     If true, entity will transfer splitted solution into <see cref"SpawnedPrototype"/>. Works only with food.
     /// </summary>
     [DataField]
     public bool TransferSolution = true;

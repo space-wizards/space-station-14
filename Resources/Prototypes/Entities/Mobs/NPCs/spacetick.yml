@@ -51,10 +51,8 @@
         Base: alive
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatXeno
-      amount: 1
+  - type: Sliceable
+    slice: [ FoodMeatXeno ]
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: CombatMode
