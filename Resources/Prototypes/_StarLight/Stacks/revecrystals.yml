@@ -1,0 +1,5 @@
+- type: stack
+  id: Revecrystal
+  name: revecrystal
+  icon: _StarLight/Objects/Specific/USSP/revecrystal.rsi
+  spawn: Revecrystal1
