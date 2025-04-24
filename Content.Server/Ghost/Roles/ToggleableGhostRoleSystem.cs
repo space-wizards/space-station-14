@@ -68,6 +68,8 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
+        // --- Commented out for now pending code review for inspect message unification ---
+
         // Mind is present, has a connected session
         if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind && HasComp<ActorComponent>(uid))
             args.PushMarkup(Loc.GetString(component.ExamineTextMindPresent));
@@ -77,12 +79,15 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
             args.PushMarkup(Loc.GetString(component.ExamineTextMindSearching));
 
         // Mind is present, but no active session
+        // -- Commented out for now to make space for the new AI SSD Indicator
+        /*
         else if (
             HasComp<MindContainerComponent>(uid) &&
             CompOrNull<MindComponent>(uid)?.Session == null &&
             HasComp<GhostRoleComponent>(uid)
             )
             args.PushMarkup(Loc.GetString(component.ExamineTextMindSsd));
+        */
 
         // Mind is present, but ghosted out of the container
         else if (
@@ -95,6 +100,7 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         // No mind present, not waiting for Ghost Role Takeover
         else
             args.PushMarkup(Loc.GetString(component.ExamineTextNoMind));
+
     }
 
     private void OnMindAdded(EntityUid uid, ToggleableGhostRoleComponent pai, MindAddedMessage args)
