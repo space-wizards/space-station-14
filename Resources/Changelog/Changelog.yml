@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Minemoder
-  changes:
-  - message: The chemical locker now has a 10u vial of plasma.
-    type: Add
-  id: 7827
-  time: '2025-01-18T18:27:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33871
 - author: Nox38
   changes:
   - message: Seclites now start with a medium-capacity power cell.
@@ -3932,3 +3925,10 @@
   id: 8328
   time: '2025-04-24T03:01:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35915
+- author: AgentSmithRadio, MadeOfHeartAndStone
+  changes:
+  - message: Added cotton grilled cheese sandwich entity and recipe.
+    type: Add
+  id: 8329
+  time: '2025-04-24T03:24:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36135
