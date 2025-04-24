@@ -50,6 +50,9 @@ public sealed class ElectricityAnomalySystem : EntitySystem
         var query = EntityQueryEnumerator<ElectricityAnomalyComponent, AnomalyComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var elec, out var anom, out var xform))
         {
+            if (anom.CannotRandomPulse) // imp. added CannotRandomPulse
+                continue;
+
             if (_timing.CurTime < elec.NextSecond)
                 continue;
             elec.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);

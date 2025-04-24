@@ -26,6 +26,12 @@ public sealed partial class AnomalyComponent : Component
     public bool CannotSupercrit;
 
     /// <summary>
+    /// imp. if true, skips random pulsing and health change over time.
+    /// </summary>
+    [DataField]
+    public bool CannotRandomPulse;
+
+    /// <summary>
     /// How likely an anomaly is to grow more dangerous. Moves both up and down.
     /// Ranges from 0 to 1.
     /// Values less than 0.5 indicate stability, whereas values greater

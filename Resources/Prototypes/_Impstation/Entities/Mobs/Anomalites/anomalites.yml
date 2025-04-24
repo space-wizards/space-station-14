@@ -121,6 +121,7 @@
   # Anomaly component. Some settings changed to make them not be fucked-up powerful. now they're only a little bit fucked-up powerful. 
   - type: Anomaly
     cannotSupercrit: true
+    cannotRandomPulse: true
     deleteEntity: false
     maxPointsPerSecond: 10
     corePrototype: AnomaliteCore
@@ -137,6 +138,7 @@
     bodyStatus: InAir
   - type: CanMoveInAir
   - type: FloatingVisuals # still not sure why this isn't working. please help
+    animationKey: anomalyfloat
   - type: AnimationPlayer
   - type: MovementSpeedModifier
     weightlessFriction: 1
