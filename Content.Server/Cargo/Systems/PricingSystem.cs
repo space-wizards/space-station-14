@@ -424,7 +424,7 @@ public record struct PriceCalculationEvent()
 [ByRefEvent]
 public record struct EstimatedPriceCalculationEvent()
 {
-    public EntityPrototype Prototype;
+    public required EntityPrototype Prototype;
 
     /// <summary>
     /// The total price of the entity.

@@ -23,6 +23,7 @@
       appliesToProduce: false
       persists: false
       effect: !type:PlantSpeciesChange
+      persists: false
     - name: Unviable
       baseOdds: 0.109
       persists: false
