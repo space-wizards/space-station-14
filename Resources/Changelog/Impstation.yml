@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: No more Santa.
-    type: Remove
-  id: 1071
-  time: '2025-02-07T19:00:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1602
-- author: wafehling
-  changes:
-  - message: Blink emote, with sound, in the General emote category.
-    type: Add
-  id: 1072
-  time: '2025-02-08T01:25:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1583
 - author: TheGrimbeeper
   changes:
   - message: 'New depth 10 station wide destruction: Supermatter!'
@@ -4130,3 +4116,18 @@
   id: 1570
   time: '2025-04-24T22:00:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2327
+- author: meridiadottxt
+  changes:
+  - message: gate station now has many more holopads, station maps, and evac timer
+      screens
+    type: Add
+  id: 1571
+  time: '2025-04-24T22:03:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2345
+- author: HAPPYNEWYEAR1999
+  changes:
+  - message: Added new lobby art by Happy99 (virus not included)
+    type: Add
+  id: 1572
+  time: '2025-04-24T22:03:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2346
