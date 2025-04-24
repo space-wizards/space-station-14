@@ -63,7 +63,6 @@
   equipment:
     id: HoPPDA
     belt: BoxFolderClipboard
-    eyes: ClothingEyesHudCommand
   storage:
     back:
     - Flash

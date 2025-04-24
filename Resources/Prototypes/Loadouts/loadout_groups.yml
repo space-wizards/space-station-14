@@ -1254,13 +1254,6 @@
   - NurseHat
 
 - type: loadoutGroup
-  id: MedicalDoctorEyes
-  name: loadout-group-medical-doctor-eyes
-  loadouts:
-  - MedHud
-  - MedHudEyepatch
-
-- type: loadoutGroup
   id: MedicalDoctorJumpsuit
   name: loadout-group-medical-doctor-jumpsuit
   loadouts:
