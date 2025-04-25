@@ -119,4 +119,4 @@
 - type: loadout
   id: CommandWinterBoots
   equipment:
-    shoes: ClothingShoesBootsWinter
+    shoes: ClothingShoesBootsWinterCommand
