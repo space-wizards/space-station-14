@@ -1054,9 +1054,6 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
-  - type: FoodSequenceElement
-    entries:
-      CottonBurger: XenoPlushie
 
 - type: entity
   parent: BasePlushie
@@ -1968,6 +1965,3 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
-  - type: FoodSequenceElement
-    entries:
-      CottonBurger: RubberChicken
