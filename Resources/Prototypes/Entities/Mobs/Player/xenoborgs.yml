@@ -776,7 +776,7 @@
 
 ## sentient core body
 - type: body
-  id: SamukaXenoborgCoreBody
+  id: MothershipCoreBody
   name: "core"
   root: torso
   slots:
