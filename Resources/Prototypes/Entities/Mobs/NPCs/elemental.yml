@@ -106,6 +106,7 @@
   parent: MobOreCrab
   id: MobQuartzCrab
   description: An ore crab made from Quartz.
+  suffix: Quartz
   components:
   - type: Sprite
     state: quartz_crab
@@ -130,6 +131,7 @@
   parent: MobOreCrab
   id: MobIronCrab
   description: An ore crab made from iron.
+  suffix: Iron
   components:
   - type: Sprite
     state: iron_crab
@@ -161,6 +163,7 @@
   parent: MobOreCrab
   id: MobCoalCrab
   description: An ore crab made from coal.
+  suffix: Coal
   components:
   - type: Sprite
     state: coal_crab
@@ -192,6 +195,7 @@
   parent: MobOreCrab
   id: MobUraniumCrab
   description: An ore crab made from uranium.
+  suffix: Uranium
   components:
   - type: FactionException
   - type: NPCRetaliation
@@ -226,8 +230,8 @@
 - type: entity
   parent: MobOreCrab
   id: MobSilverCrab
-  name: ore crab
   description: An ore crab made from silver.
+  suffix: Silver
   components:
   - type: Sprite
     state: silver_crab
@@ -255,8 +259,8 @@
 - type: entity
   parent: MobOreCrab
   id: MobGoldCrab
-  name: ore crab
   description: An ore crab made from gold.
+  suffix: Gold
   components:
   - type: Sprite
     state: gold_crab
