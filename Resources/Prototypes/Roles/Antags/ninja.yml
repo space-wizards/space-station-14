@@ -5,6 +5,7 @@
   setPreference: true
   objective: roles-antag-space-ninja-objective
   guides: [ SpaceNinja ]
+  previewStartingGear: SpaceNinjaGear
 
 #Ninja Gear
 - type: startingGear

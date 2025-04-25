@@ -53,4 +53,7 @@ public sealed partial class AntagPrototype : IPrototype
     /// </summary>
     [DataField]
     public List<ProtoId<GuideEntryPrototype>>? Guides;
+
+    [DataField(readOnly: true)]
+    public ProtoId<StartingGearPrototype>? PreviewStartingGear;
 }

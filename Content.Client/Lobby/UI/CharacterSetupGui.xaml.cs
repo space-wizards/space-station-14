@@ -10,6 +10,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Configuration;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Lobby.UI
@@ -22,9 +23,10 @@ namespace Content.Client.Lobby.UI
     {
         [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IPrototypeManager _protomanager = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
         private readonly Button _createNewCharacterButton;
         private readonly HumanoidProfileEditor _humanoidProfileEditor;
@@ -75,13 +77,14 @@ namespace Content.Client.Lobby.UI
                 jobPriorityEditor.LoadJobPriorities();
                 CharEditor.Visible = false;
                 JobPriorityEditor.Visible = true;
+                ReloadCharacterPickers(selectJobPriorities: true);
             };
         }
 
         /// <summary>
         /// Disposes and reloads all character picker buttons from the preferences data.
         /// </summary>
-        public void ReloadCharacterPickers()
+        public void ReloadCharacterPickers(bool selectJobPriorities = false)
         {
             _createNewCharacterButton.Orphan();
             Characters.DisposeAllChildren();
@@ -97,8 +100,8 @@ namespace Content.Client.Lobby.UI
                 return;
             }
 
-            CharEditor.Visible = true;
-            JobPriorityEditor.Visible = false;
+            CharEditor.Visible = !selectJobPriorities;
+            JobPriorityEditor.Visible = selectJobPriorities;
 
             _createNewCharacterButton.ToolTip =
                 Loc.GetString("character-setup-gui-create-new-character-button-tooltip",
@@ -108,12 +111,17 @@ namespace Content.Client.Lobby.UI
             var first = !SelectedCharacterSlot.HasValue;
             foreach (var (slot, character) in _preferencesManager.Preferences!.Characters)
             {
-                var isSelected = SelectedCharacterSlot.HasValue ? slot == SelectedCharacterSlot : first;
+                if (character is not HumanoidCharacterProfile humanoid)
+                    continue;
+                var isSelected = !selectJobPriorities &&  (SelectedCharacterSlot.HasValue ? slot == SelectedCharacterSlot : first);
                 numberOfFullSlots++;
-                var characterPickerButton = new CharacterPickerButton(_entManager,
-                    _protomanager,
+                var characterPickerButton = new CharacterPickerButton(
+                    _preferencesManager,
+                    _protoManager,
+                    _entManager,
+                    _playerManager,
                     characterButtonsGroup,
-                    character,
+                    humanoid,
                     isSelected);
 
                 // If this button is selected we need to initialize the editor with this profile
