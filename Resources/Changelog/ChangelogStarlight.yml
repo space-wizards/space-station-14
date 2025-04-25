@@ -5155,4 +5155,11 @@ Entries:
   id: 714
   time: '2025-04-25T04:34:27.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/532
+- author: Mephisto72
+  changes:
+  - message: The AI can now access Law Communications
+    type: Tweak
+  id: 715
+  time: '2025-04-25T04:35:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/519
 
