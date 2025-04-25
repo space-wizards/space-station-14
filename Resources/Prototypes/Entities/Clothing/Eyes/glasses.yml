@@ -265,3 +265,24 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesNoir
+  name: noir-tech glasses
+  description: A pair of glasses that simulate what the world looked like before the invention of color.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/noir.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+  - type: BlackAndWhiteOverlay
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
