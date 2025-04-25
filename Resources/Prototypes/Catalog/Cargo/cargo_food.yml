@@ -94,7 +94,7 @@
     sprite: Objects/Consumable/Food/burger.rsi
     state: bigbite
   product: CrateFoodHappyHonkBigBite
-  cost: 1000
+  cost: 1400
   category: cargoproduct-category-name-food
   group: market
 
