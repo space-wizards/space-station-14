@@ -1,11 +1,7 @@
--	Make flare spent
---			Give: Passenger PDA/ID (name?), Ancient jumpsuit, gas mask, budget insuls,
-				shoes, bling, ID computer board in pocket
+-Make flare spent
+--	Give: Passenger PDA/ID (name?), Ancient jumpsuit, gas mask, budget insuls,
+		shoes, bling, ID computer board in pocket
 - Stuff that gets flushed down toilets, aside from the mime and clowns', goes to the QM's shower for some reason.
-	Figure out mail chutes first, though.
-Evac:
--	Rename + fill ore crates
--	Decals, of course
 - Make the station move forward!
 - Job numbers in the prototype file
 Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
@@ -13,6 +9,7 @@ Command Meeting: Needs access to execution cameras
 Execution telescreens: Need access to execution cameras
 I'd really like the sec camera monitors to only see General if possible...
 	And I think I already have it on this list, but the Admin camera still no worky.
+	One missing Amogus camera: Admin (probably because of fix wiring)
 Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there...
 Among Us "clues" on detective notice boards
 Would it be too radical to totally left/right swap the Atmos
@@ -32,7 +29,6 @@ Swap nuke/PA? Move nuke to vault?
 Move oxy miner to where the other gasses are?
 Set ejection chamber button access (cap and HoS)
 Nudge wall sign transform variables to make them line up better
-One missing Amogus camera: Admin (probably because of fix wiring)
 Salvage space arm is getting sensed as part of the room by air sensors?
 Weapons north maints door stuck open
 Somewhere, there is a holopad with no label.
@@ -293,3 +289,7 @@ DONE:
 /* Shrink or move HoP tunnel to expand Atmos a bit more? */ Nah
 /* Check various shuttle designs to make sure docking arms line up with at least some */
 /* Fill CMO's special syringe */
+/* Evac: */
+/* -	Rename + fill ore crates */
+/* -	Decals, of course */
+	/* Figure out mail chutes first, though. */
