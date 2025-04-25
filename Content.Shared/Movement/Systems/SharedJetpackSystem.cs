@@ -30,6 +30,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         SubscribeLocalEvent<JetpackUserComponent, RefreshWeightlessModifiersEvent>(OnJetpackUserWeightlessMovement);
         SubscribeLocalEvent<JetpackUserComponent, CanWeightlessMoveEvent>(OnJetpackUserCanWeightless);
         SubscribeLocalEvent<JetpackUserComponent, EntParentChangedMessage>(OnJetpackUserEntParentChanged);
+        SubscribeLocalEvent<JetpackComponent, EntGotInsertedIntoContainerMessage>(OnJetpackMoved);
 
         SubscribeLocalEvent<GravityChangedEvent>(OnJetpackUserGravityChanged);
         SubscribeLocalEvent<JetpackComponent, MapInitEvent>(OnMapInit);
@@ -73,6 +74,12 @@ public abstract class SharedJetpackSystem : EntitySystem
         SetEnabled(uid, component, false, args.User);
     }
 
+    private void OnJetpackMoved(Entity<JetpackComponent> ent, ref EntGotInsertedIntoContainerMessage args)
+    {
+        if (args.Container.Owner != ent.Comp.JetpackUser)
+            SetEnabled(ent, ent.Comp, false, ent.Comp.JetpackUser);
+    }
+
     private void OnJetpackUserCanWeightless(EntityUid uid, JetpackUserComponent component, ref CanWeightlessMoveEvent args)
     {
         args.CanMove = true;
@@ -92,6 +99,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     private void SetupUser(EntityUid user, EntityUid jetpackUid, JetpackComponent component)
     {
         EnsureComp<JetpackUserComponent>(user, out var userComp);
+        component.JetpackUser = user;
 
         if (TryComp<PhysicsComponent>(user, out var physics))
             _physics.SetBodyStatus(user, physics, BodyStatus.InAir);
@@ -104,10 +112,12 @@ public abstract class SharedJetpackSystem : EntitySystem
         _movementSpeedModifier.RefreshWeightlessModifiers(user);
     }
 
-    private void RemoveUser(EntityUid uid)
+    private void RemoveUser(EntityUid uid, JetpackComponent component)
     {
         if (!RemComp<JetpackUserComponent>(uid))
             return;
+
+        component.JetpackUser = null;
 
         if (TryComp<PhysicsComponent>(uid, out var physics))
             _physics.SetBodyStatus(uid, physics, BodyStatus.OnGround);
@@ -152,40 +162,26 @@ public abstract class SharedJetpackSystem : EntitySystem
     {
         if (IsEnabled(uid) == enabled ||
             enabled && !CanEnable(uid, component))
-        {
             return;
+
+        if (user == null)
+        {
+            if (!Container.TryGetContainingContainer((uid, null, null), out var container))
+                return;
+            user = container.Owner;
         }
 
         if (enabled)
         {
+            SetupUser(user.Value, uid, component);
             EnsureComp<ActiveJetpackComponent>(uid);
         }
         else
         {
+            RemoveUser(user.Value, component);
             RemComp<ActiveJetpackComponent>(uid);
         }
 
-        if (user == null)
-        {
-            Container.TryGetContainingContainer((uid, null, null), out var container);
-            user = container?.Owner;
-        }
-
-        // Can't activate if no one's using.
-        if (user == null && enabled)
-            return;
-
-        if (user != null)
-        {
-            if (enabled)
-            {
-                SetupUser(user.Value, uid, component);
-            }
-            else
-            {
-                RemoveUser(user.Value);
-            }
-        }
 
         Appearance.SetData(uid, JetpackVisuals.Enabled, enabled);
         Dirty(uid, component);
