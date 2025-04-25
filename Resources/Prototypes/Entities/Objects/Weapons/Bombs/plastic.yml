@@ -142,9 +142,9 @@
       - Timer
   - type: Explosive
     explosionType: Radioactive
-    totalIntensity: 150
+    totalIntensity: 100
     intensitySlope: 4
-    maxIntensity: 90
+    maxIntensity: 40
     canCreateVacuum: false
   - type: ExplodeOnTrigger
 
