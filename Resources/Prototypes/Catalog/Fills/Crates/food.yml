@@ -84,6 +84,8 @@
       amount: 1
     - id: DrinkGlass
       amount: 4
+    - id: FoodPlateMuffinTin
+      amount: 4
     - id: FoodPlateTin
       amount: 4
     - id: Fork
