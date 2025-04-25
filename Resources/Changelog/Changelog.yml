@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Fildrance, SaphireLattice, eoineoineoin
-  changes:
-  - message: Radial menu UIs have been updated for readability.
-    type: Tweak
-  id: 7842
-  time: '2025-01-23T12:16:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32653
 - author: K-Dynamic
   changes:
   - message: The Drozd SMG can now fire in full-auto, burst or semi-auto
@@ -3922,3 +3915,10 @@
   id: 8343
   time: '2025-04-25T04:52:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36841
+- author: lzk228
+  changes:
+  - message: Seashell is small size. Kalimba is percussion instrument.
+    type: Tweak
+  id: 8344
+  time: '2025-04-25T05:54:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32262
