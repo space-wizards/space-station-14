@@ -4,8 +4,8 @@ meta:
   engineVersion: 254.1.0
   forkId: ""
   forkVersion: ""
-  time: 04/25/2025 05:26:13
-  entityCount: 17818
+  time: 04/25/2025 06:26:44
+  entityCount: 17819
 maps:
 - 1
 grids:
@@ -7285,7 +7285,7 @@ entities:
       pos: -30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -56273.78
+      secondsUntilStateChange: -56299.75
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -44025,7 +44025,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -304029.34
+      secondsUntilStateChange: -304055.3
       state: Opening
   - uid: 6747
     components:
@@ -44033,7 +44033,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -304030.06
+      secondsUntilStateChange: -304056.03
       state: Opening
   - uid: 6749
     components:
@@ -44041,7 +44041,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -304028.62
+      secondsUntilStateChange: -304054.6
       state: Opening
   - uid: 6750
     components:
@@ -44049,7 +44049,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -304028
+      secondsUntilStateChange: -304053.97
       state: Opening
   - uid: 9721
     components:
@@ -52314,6 +52314,8 @@ entities:
       pos: -5.5,45.5
       parent: 2
     - type: DeviceNetwork
+      configurators:
+      - invalid
       deviceLists:
       - 4405
       - 11474
@@ -90006,6 +90008,11 @@ entities:
     components:
     - type: Transform
       pos: -0.5,45.5
+      parent: 2
+  - uid: 17819
+    components:
+    - type: Transform
+      pos: -14.5,45.5
       parent: 2
 - proto: SignGravity
   entities:
