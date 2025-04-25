@@ -285,7 +285,7 @@ public sealed class GithubApiManager
     /// <param name="response">The response from the request</param>
     /// <param name="expectedStatusCodes"></param>
     /// <returns>True if the request properly went through, false otherwise.</returns>
-    private bool IsValidResponse(HttpResponseMessage response, List<HttpStatusCode> expectedStatusCodes)
+    private bool IsValidResponse(HttpResponseMessage response, IEnumerable<HttpStatusCode> expectedStatusCodes)
     {
         foreach (var code in expectedStatusCodes)
         {
