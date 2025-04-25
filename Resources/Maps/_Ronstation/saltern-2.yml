@@ -4,8 +4,8 @@ meta:
   engineVersion: 254.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/25/2025 18:20:35
-  entityCount: 14928
+  time: 04/25/2025 19:16:06
+  entityCount: 14936
 maps:
 - 12082
 grids:
@@ -889,10 +889,10 @@ entities:
           8,6:
             0: 257
             2: 14
-            4: 17408
+            3: 17408
           8,7:
             2: 65297
-            4: 4
+            3: 4
           7,8:
             2: 136
           1,9:
@@ -952,10 +952,10 @@ entities:
             0: 53759
           11,2:
             0: 4319
-            3: 49152
+            4: 49152
           11,3:
             0: 61457
-            3: 204
+            4: 204
           11,-1:
             0: 30583
           11,4:
@@ -966,9 +966,9 @@ entities:
             0: 61559
           12,2:
             0: 255
-            3: 28672
+            4: 28672
           12,3:
-            3: 119
+            4: 119
             0: 61440
           12,-1:
             0: 29311
@@ -999,7 +999,7 @@ entities:
             2: 65528
           14,4:
             2: 15
-            3: 60928
+            4: 60928
           15,0:
             0: 5393
             2: 34952
@@ -1458,28 +1458,28 @@ entities:
           9,6:
             2: 15
             5: 4352
-            3: 17408
+            4: 17408
           9,7:
             5: 1
             2: 65280
-            3: 4
+            4: 4
           10,5:
             0: 4095
           10,6:
             2: 15
-            3: 4352
+            4: 4352
             6: 17408
           10,7:
-            3: 1
+            4: 1
             2: 65280
             6: 4
           11,5:
             0: 4095
           11,6:
             2: 15
-            3: 21760
+            4: 21760
           11,7:
-            3: 5
+            4: 5
             2: 65280
           12,5:
             0: 4095
@@ -1503,7 +1503,7 @@ entities:
           14,6:
             2: 119
           14,5:
-            3: 14
+            4: 14
             2: 50176
           15,5:
             2: 61672
@@ -1746,7 +1746,7 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -1761,7 +1761,7 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -4766,15 +4766,6 @@ entities:
             color: '#8080807F'
             id: WarnFullGreyscale
           decals:
-            4556: -19,26
-            4557: 10,-40
-            4558: 10,-44
-            4559: 12,-42
-            4574: 17,-42
-        - node:
-            color: '#8080807F'
-            id: WarnFullGreyscale
-          decals:
             3328: -35,-7
             3329: -40,-5
             3333: -45,-13
@@ -4819,6 +4810,11 @@ entities:
             3962: -29,-26
             3998: -20,-29
             4474: -28,16
+            4556: -19,26
+            4557: 10,-40
+            4558: 10,-44
+            4559: 12,-42
+            4574: 17,-42
         - node:
             color: '#8C347F96'
             id: WarnFullGreyscale
@@ -4834,14 +4830,10 @@ entities:
             color: '#9999997F'
             id: WarnFullGreyscale
           decals:
-            4561: 13,-38
-        - node:
-            color: '#9999997F'
-            id: WarnFullGreyscale
-          decals:
             4287: -24,-41
             4288: -20,-41
             4289: -20,-38
+            4561: 13,-38
         - node:
             color: '#9FED5896'
             id: WarnFullGreyscale
@@ -8186,7 +8178,7 @@ entities:
       pos: 26.5,-19.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -193030.83
+      secondsUntilStateChange: -193813.27
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9487,6 +9479,13 @@ entities:
     - type: Transform
       pos: 27.439587,21.646126
       parent: 31
+- proto: ArtistCircuitBoard
+  entities:
+  - uid: 12716
+    components:
+    - type: Transform
+      pos: 4.452328,41.295456
+      parent: 31
 - proto: Ashtray
   entities:
   - uid: 10197
@@ -9497,10 +9496,10 @@ entities:
       parent: 31
 - proto: AsimovCircuitBoard
   entities:
-  - uid: 12716
+  - uid: 14930
     components:
     - type: Transform
-      pos: 4.4549932,41.300697
+      pos: 10.5,41.5
       parent: 31
 - proto: AtmosDeviceFanDirectional
   entities:
@@ -10636,6 +10635,18 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -22.5,-1.5
+      parent: 31
+  - uid: 11945
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -19.5,29.5
+      parent: 31
+  - uid: 11946
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -19.5,28.5
       parent: 31
   - uid: 12428
     components:
@@ -36212,6 +36223,13 @@ entities:
     - type: Transform
       pos: 0.5,-4.5
       parent: 31
+- proto: CommandmentCircuitBoard
+  entities:
+  - uid: 14815
+    components:
+    - type: Transform
+      pos: 4.545013,41.11027
+      parent: 31
 - proto: ComputerAlert
   entities:
   - uid: 8296
@@ -36912,10 +36930,10 @@ entities:
       parent: 31
 - proto: CorporateCircuitBoard
   entities:
-  - uid: 12715
+  - uid: 11942
     components:
     - type: Transform
-      pos: 4.4549932,41.708103
+      pos: 4.452328,41.702866
       parent: 31
 - proto: CrateArtifactContainer
   entities:
@@ -66137,6 +66155,13 @@ entities:
     - type: Transform
       pos: -16.29771,-39.00967
       parent: 31
+- proto: LiveLetLiveCircuitBoard
+  entities:
+  - uid: 11191
+    components:
+    - type: Transform
+      pos: 4.359644,41.11027
+      parent: 31
 - proto: LockableButtonAtmospherics
   entities:
   - uid: 1409
@@ -67460,6 +67485,13 @@ entities:
     - type: Transform
       pos: -1.5,18.5
       parent: 31
+- proto: NutimovCircuitBoard
+  entities:
+  - uid: 14931
+    components:
+    - type: Transform
+      pos: 4.364412,40.672
+      parent: 31
 - proto: Ointment
   entities:
   - uid: 2199
@@ -67619,6 +67651,13 @@ entities:
     components:
     - type: Transform
       pos: -3.5,-18.5
+      parent: 31
+- proto: PaladinCircuitBoard
+  entities:
+  - uid: 14814
+    components:
+    - type: Transform
+      pos: 4.359644,41.54237
       parent: 31
 - proto: Paper
   entities:
@@ -71130,6 +71169,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 18.5,-40.5
       parent: 31
+  - uid: 14929
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -18.5,28.5
+      parent: 31
 - proto: PoweredSmallLightEmpty
   entities:
   - uid: 8209
@@ -73491,24 +73536,6 @@ entities:
     components:
     - type: Transform
       pos: -18.5,-29.5
-      parent: 31
-  - uid: 14813
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -19.5,27.5
-      parent: 31
-  - uid: 14814
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -19.5,28.5
-      parent: 31
-  - uid: 14815
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -19.5,29.5
       parent: 31
 - proto: RandomArtifactSpawner
   entities:
@@ -76000,6 +76027,13 @@ entities:
     components:
     - type: Transform
       pos: -19.317593,37.763016
+      parent: 31
+- proto: RobocopCircuitBoard
+  entities:
+  - uid: 14813
+    components:
+    - type: Transform
+      pos: 4.5388336,41.54237
       parent: 31
 - proto: RollerBed
   entities:
@@ -79099,6 +79133,14 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -22.5,-0.5
       parent: 31
+- proto: SpaceVillainArcadeFilled
+  entities:
+  - uid: 12715
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -19.5,27.5
+      parent: 31
 - proto: SpawnMobAdultSlimesYellow
   entities:
   - uid: 13209
@@ -81379,6 +81421,11 @@ entities:
     components:
     - type: Transform
       pos: -19.5,30.5
+      parent: 31
+  - uid: 14932
+    components:
+    - type: Transform
+      pos: 10.5,41.5
       parent: 31
 - proto: TableCarpet
   entities:
@@ -92966,28 +93013,6 @@ entities:
     - type: Transform
       pos: -14.5,13.5
       parent: 31
-- proto: WeaponEnergyTurretAI
-  entities:
-  - uid: 11191
-    components:
-    - type: Transform
-      pos: 4.5,39.5
-      parent: 31
-  - uid: 11942
-    components:
-    - type: Transform
-      pos: 10.5,39.5
-      parent: 31
-  - uid: 11945
-    components:
-    - type: Transform
-      pos: 10.5,43.5
-      parent: 31
-  - uid: 11946
-    components:
-    - type: Transform
-      pos: 4.5,43.5
-      parent: 31
 - proto: WeaponPistolMk58
   entities:
   - uid: 4096
@@ -93018,6 +93043,28 @@ entities:
     components:
     - type: Transform
       pos: -8.457573,20.768534
+      parent: 31
+- proto: WeaponTurretSyndicateBroken
+  entities:
+  - uid: 14933
+    components:
+    - type: Transform
+      pos: 10.5,43.5
+      parent: 31
+  - uid: 14934
+    components:
+    - type: Transform
+      pos: 10.5,39.5
+      parent: 31
+  - uid: 14935
+    components:
+    - type: Transform
+      pos: 4.5,39.5
+      parent: 31
+  - uid: 14936
+    components:
+    - type: Transform
+      pos: 4.5,43.5
       parent: 31
 - proto: WeaponWaterBlaster
   entities:

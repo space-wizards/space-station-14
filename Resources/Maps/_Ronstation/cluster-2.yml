@@ -4,8 +4,8 @@ meta:
   engineVersion: 254.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/19/2025 16:48:42
-  entityCount: 13827
+  time: 04/25/2025 19:14:38
+  entityCount: 13833
 maps:
 - 12281
 grids:
@@ -9341,10 +9341,10 @@ entities:
       parent: 1
 - proto: AsimovCircuitBoard
   entities:
-  - uid: 2086
+  - uid: 13000
     components:
     - type: Transform
-      pos: -10.407803,52.46982
+      pos: -10.645758,52.577076
       parent: 1
 - proto: AtmosDeviceFanDirectional
   entities:
@@ -31399,6 +31399,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.5,5.5
       parent: 1
+- proto: CommandmentCircuitBoard
+  entities:
+  - uid: 2719
+    components:
+    - type: Transform
+      pos: -10.614863,52.694363
+      parent: 1
 - proto: ComputerAlert
   entities:
   - uid: 2685
@@ -40134,6 +40141,13 @@ entities:
     components:
     - type: Transform
       pos: 1.2974858,10.5533285
+      parent: 1
+- proto: GameMasterCircuitBoard
+  entities:
+  - uid: 2086
+    components:
+    - type: Transform
+      pos: -10.670474,52.793125
       parent: 1
 - proto: GasAnalyzer
   entities:
@@ -62267,6 +62281,13 @@ entities:
     - type: Transform
       pos: 12.627049,-0.27726722
       parent: 1
+- proto: LiveLetLiveCircuitBoard
+  entities:
+  - uid: 12998
+    components:
+    - type: Transform
+      pos: -10.491283,52.317818
+      parent: 1
 - proto: LockableButtonCaptain
   entities:
   - uid: 9792
@@ -63898,6 +63919,13 @@ entities:
     - type: Transform
       pos: -4.5,25.5
       parent: 1
+- proto: NutimovCircuitBoard
+  entities:
+  - uid: 13833
+    components:
+    - type: Transform
+      pos: -10.689071,52.435482
+      parent: 1
 - proto: Ointment
   entities:
   - uid: 9630
@@ -64063,6 +64091,13 @@ entities:
     components:
     - type: Transform
       pos: 3.5,13.5
+      parent: 1
+- proto: PaladinCircuitBoard
+  entities:
+  - uid: 13001
+    components:
+    - type: Transform
+      pos: -10.590147,52.490658
       parent: 1
 - proto: Paper
   entities:
@@ -72206,6 +72241,13 @@ entities:
     components:
     - type: Transform
       pos: -5.1487813,-15.441898
+      parent: 1
+- proto: RobocopCircuitBoard
+  entities:
+  - uid: 13828
+    components:
+    - type: Transform
+      pos: -10.503642,52.367203
       parent: 1
 - proto: RubberStampApproved
   entities:
@@ -83748,12 +83790,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,57.5
       parent: 1
-  - uid: 2719
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -2.5,56.5
-      parent: 1
   - uid: 2720
     components:
     - type: Transform
@@ -84867,6 +84903,11 @@ entities:
     components:
     - type: Transform
       pos: 36.5,-27.5
+      parent: 1
+  - uid: 12999
+    components:
+    - type: Transform
+      pos: -2.5,56.5
       parent: 1
   - uid: 13002
     components:
@@ -88334,28 +88375,6 @@ entities:
     - type: Transform
       pos: 16.47756,15.577075
       parent: 1
-- proto: WeaponEnergyTurretAI
-  entities:
-  - uid: 12998
-    components:
-    - type: Transform
-      pos: -2.5,55.5
-      parent: 1
-  - uid: 12999
-    components:
-    - type: Transform
-      pos: -2.5,49.5
-      parent: 1
-  - uid: 13000
-    components:
-    - type: Transform
-      pos: -10.5,49.5
-      parent: 1
-  - uid: 13001
-    components:
-    - type: Transform
-      pos: -10.5,55.5
-      parent: 1
 - proto: WeaponLaserCarbine
   entities:
   - uid: 5425
@@ -88395,6 +88414,28 @@ entities:
     components:
     - type: Transform
       pos: 27.516527,12.712759
+      parent: 1
+- proto: WeaponTurretSyndicateBroken
+  entities:
+  - uid: 13829
+    components:
+    - type: Transform
+      pos: -2.5,55.5
+      parent: 1
+  - uid: 13830
+    components:
+    - type: Transform
+      pos: -10.5,55.5
+      parent: 1
+  - uid: 13831
+    components:
+    - type: Transform
+      pos: -10.5,49.5
+      parent: 1
+  - uid: 13832
+    components:
+    - type: Transform
+      pos: -2.5,49.5
       parent: 1
 - proto: WelderIndustrialAdvanced
   entities:
