@@ -82,7 +82,6 @@
     baseWeightlessAcceleration: 5
     baseWeightlessModifier: 2
     baseWeightlessFriction: 0
-    baseWeightlessFrictionNoInput: 0
     baseFriction: 0
     offGridFriction: 0
   - type: CanMoveInAir
