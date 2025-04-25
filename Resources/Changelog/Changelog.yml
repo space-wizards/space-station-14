@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nimfar11
-  changes:
-  - message: Adds Blueprint double emergency tank.
-    type: Add
-  id: 7838
-  time: '2025-01-21T16:08:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34232
 - author: sowelipililimute
   changes:
   - message: Chefs now have access to cloth boxes in their locker, kitchen supplies
@@ -3922,3 +3915,10 @@
   id: 8339
   time: '2025-04-25T03:53:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36890
+- author: Vexerot
+  changes:
+  - message: Goliaths now have a bloodstream and can bleed.
+    type: Tweak
+  id: 8340
+  time: '2025-04-25T04:02:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33305
