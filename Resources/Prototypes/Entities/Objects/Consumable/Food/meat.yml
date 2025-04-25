@@ -623,6 +623,7 @@
     price: 100
   - type: Tag
     tags:
+    - Fruit
     - Vegetable
 
 - type: entity
