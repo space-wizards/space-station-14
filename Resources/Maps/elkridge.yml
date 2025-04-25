@@ -4,8 +4,8 @@ meta:
   engineVersion: 254.1.0
   forkId: ""
   forkVersion: ""
-  time: 04/25/2025 07:32:16
-  entityCount: 17583
+  time: 04/25/2025 14:04:06
+  entityCount: 17584
 maps:
 - 1
 grids:
@@ -14395,7 +14395,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -454574.28
+      secondsUntilStateChange: -454590.38
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -97329,6 +97329,13 @@ entities:
     components:
     - type: Transform
       pos: 0.5,9.5
+      parent: 2
+- proto: SpawnPointDetective
+  entities:
+  - uid: 17584
+    components:
+    - type: Transform
+      pos: 4.5,-26.5
       parent: 2
 - proto: SpawnPointHeadOfPersonnel
   entities:
