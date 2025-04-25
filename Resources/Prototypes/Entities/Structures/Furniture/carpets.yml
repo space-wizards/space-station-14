@@ -31,8 +31,6 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
   - type: TrayScanReveal
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
   - type: Sliceable
     slices:
     - id: MaterialCloth1
