@@ -1,6 +1,5 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
-using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -8,6 +7,7 @@ using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
+using Content.Shared.Interaction;
 
 using Robust.Shared.Utility;
 
@@ -28,31 +28,32 @@ public abstract class SharedSliceableSystem : EntitySystem
 
         SubscribeLocalEvent<SliceableComponent, TrySliceEvent>(AfterSlicing);
         SubscribeLocalEvent<SliceableComponent, GetVerbsEvent<InteractionVerb>>(AddSliceVerb);
+        SubscribeLocalEvent<SliceableComponent, InteractUsingEvent>(OnInteraction);
     }
 
-    private void AfterSlicing(EntityUid uid, SliceableComponent comp, TrySliceEvent args)
+    private void OnInteraction(EntityUid target, SliceableComponent sliceComp, InteractUsingEvent args)
     {
-        if (args.Used == null)
+        if (args.Handled)
             return;
 
-        var used = args.Used.Value;
-        var hasBody = TryComp<BodyComponent>(uid, out var body);
+        ToolComponent? toolComp = null;
+        EntityUid? tool = null;
 
-        // only show a big popup when butchering living things.
-        var popupType = PopupType.Small;
-        if (hasBody)
-            popupType = PopupType.LargeCaution;
+        // Tryes to get tool component in held entity, after it on entity itself.
+        if (Resolve(args.Used, ref toolComp))
+            tool = args.Used;
 
-        _popupSystem.PopupEntity(Loc.GetString("slice-butchered-success", ("target", uid), ("knife", used)),
-            args.User, popupType);
+        else if (Resolve(args.User, ref toolComp))
+            tool = args.User;
 
-        if (hasBody)
-            _bodySystem.GibBody(uid, body: body);
         else
-            QueueDel(uid);
+            return;
 
-        var ev = new SliceEvent();
-        RaiseLocalEvent(uid, ref ev);
+        if (_tools.HasQuality(tool.Value, sliceComp.ToolQuality))
+        {
+            args.Handled = true;
+            OnVerbUsing(target, args.User, tool.Value, sliceComp.SliceTime, toolComp);
+        }
     }
 
     private void AddSliceVerb(EntityUid target, SliceableComponent sliceComp, GetVerbsEvent<InteractionVerb> args)
@@ -71,7 +72,7 @@ public abstract class SharedSliceableSystem : EntitySystem
         if (!_tools.HasQuality(used.Value, sliceComp.ToolQuality))
         {
             verbDisabled = true;
-            verbMessage = Loc.GetString("slice-verb-message-tool");
+            verbMessage = Loc.GetString("slice-verb-message-tool", ("target", target));
         }
 
         if (TryComp<MobStateComponent>(target, out var mobState) && !_mobStateSystem.IsDead(target, mobState))
@@ -103,6 +104,31 @@ public abstract class SharedSliceableSystem : EntitySystem
             time,
             toolComp.Qualities,
             new TrySliceEvent());
+    }
+
+    private void AfterSlicing(EntityUid uid, SliceableComponent comp, TrySliceEvent args)
+    {
+        if (args.Used == null)
+            return;
+
+        var used = args.Used.Value;
+        var hasBody = TryComp<BodyComponent>(uid, out var body);
+
+        // only show a big popup when butchering living things.
+        var popupType = PopupType.Small;
+        if (hasBody)
+            popupType = PopupType.LargeCaution;
+
+        _popupSystem.PopupEntity(Loc.GetString("slice-butchered-success", ("target", uid), ("knife", used)),
+            args.User, popupType);
+
+        if (hasBody)
+            _bodySystem.GibBody(uid, body: body);
+        else
+            QueueDel(uid);
+
+        var ev = new SliceEvent();
+        RaiseLocalEvent(uid, ref ev);
     }
 
     /// <summary>

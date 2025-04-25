@@ -5,6 +5,9 @@
   name: crystal shard
   description:  A small piece of crystal.
   components:
+  - type: Tool
+    qualities:
+      - Slicing
   - type: Execution
     doAfterDuration: 4.0
   - type: Sprite

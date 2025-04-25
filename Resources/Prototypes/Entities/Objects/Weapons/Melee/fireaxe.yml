@@ -39,7 +39,8 @@
     - back
   - type: Tool
     qualities:
-      - Prying
+    - Prying
+    - Slicing
   - type: ToolTileCompatible
   - type: Prying
   - type: UseDelay
