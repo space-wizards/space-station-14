@@ -369,6 +369,7 @@
   - type: Tag
     tags:
     - Dropper
+  - type: PhysicalComposition
 
 - type: entity
   parent: Dropper

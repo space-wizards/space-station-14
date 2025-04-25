@@ -11,18 +11,9 @@ public sealed class SlidingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SlidingComponent, TileFrictionEvent>(OnSlideAttempt);
         SubscribeLocalEvent<SlidingComponent, StoodEvent>(OnStand);
         SubscribeLocalEvent<SlidingComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<SlidingComponent, EndCollideEvent>(OnEndCollide);
-    }
-
-    /// <summary>
-    ///     Modify the friction by the frictionModifier stored on the component.
-    /// </summary>
-    private void OnSlideAttempt(EntityUid uid, SlidingComponent component, ref TileFrictionEvent args)
-    {
-        args.Modifier = component.FrictionModifier;
     }
 
     /// <summary>
@@ -38,11 +29,10 @@ public sealed class SlidingSystem : EntitySystem
     /// </summary>
     private void OnStartCollide(EntityUid uid, SlidingComponent component, ref StartCollideEvent args)
     {
-        if (!TryComp<SlipperyComponent>(args.OtherEntity, out var slippery) || !slippery.SuperSlippery)
+        if (!TryComp<SlipperyComponent>(args.OtherEntity, out var slippery) || !slippery.SlipData.SuperSlippery)
             return;
 
         component.CollidingEntities.Add(args.OtherEntity);
-        component.FrictionModifier = 0;
         Dirty(uid, component);
     }
 
@@ -55,7 +45,7 @@ public sealed class SlidingSystem : EntitySystem
             return;
 
         if (component.CollidingEntities.Count == 0)
-            component.FrictionModifier = SharedStunSystem.KnockDownModifier;
+            RemComp<SlidingComponent>(uid);
 
         Dirty(uid, component);
     }

@@ -5,6 +5,7 @@ using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -18,6 +19,7 @@ public sealed partial class CargoSystem
      */
 
     private static readonly SoundPathSpecifier ApproveSound = new("/Audio/Effects/Cargo/ping.ogg");
+    private bool _lockboxCutEnabled;
 
     private void InitializeShuttle()
     {
@@ -28,6 +30,8 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletSellMessage>(OnPalletSale);
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletAppraiseMessage>(OnPalletAppraise);
         SubscribeLocalEvent<CargoPalletConsoleComponent, BoundUIOpenedEvent>(OnPalletUIOpen);
+
+        _cfg.OnValueChanged(CCVars.LockboxCutEnabled, (enabled) => { _lockboxCutEnabled = enabled; }, true);
     }
 
     #region Console
@@ -340,10 +344,11 @@ public sealed partial class CargoSystem
             Dictionary<ProtoId<CargoAccountPrototype>, double> distribution;
             if (sellComponent != null)
             {
+                var cut = _lockboxCutEnabled ? bankAccount.LockboxCut : bankAccount.PrimaryCut;
                 distribution = new Dictionary<ProtoId<CargoAccountPrototype>, double>
                 {
-                    { sellComponent.OverrideAccount, bankAccount.PrimaryCut },
-                    { bankAccount.PrimaryAccount, 1.0 - bankAccount.PrimaryCut },
+                    { sellComponent.OverrideAccount, cut },
+                    { bankAccount.PrimaryAccount, 1.0 - cut },
                 };
             }
             else
