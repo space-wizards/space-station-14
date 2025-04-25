@@ -641,33 +641,8 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHighPrinted
 
-- type: body
-  id: MothershipCoreBody
-  name: "core"
-  root: torso
-  slots:
-    torso:
-      part: TorsoBorg
-      connections:
-      - right2hand
-      - right1hand
-      - left1hand
-      - left2hand
-    left1hand:
-      part: LeftArmBorg
-    left2hand:
-      part: LeftArmBorg
-    right1hand:
-      part: RightArmBorg
-    right2hand:
-      part: RightArmBorg
 
-- type: startingGear
-  id: MothershipCoreGear
-  inhand:
-  - DoorRemoteXenoborg
-  - Omnitool
-
+## mothership core
 - type: entity
   abstract: true
   parent: BaseMachinePowered
@@ -764,12 +739,6 @@
   - type: Pullable
   - type: StaticPrice
     price: 800
-
-- type: entity
-  abstract: true
-  parent: [ BaseMob, StripableInventoryBase ]
-  id: MothershipCoreSentientBase
-  components:
   - type: WarpPoint
     location: mothership core
     follow: true
@@ -798,19 +767,63 @@
     - Xenoborg
     - Binary
   - type: XenoborgMothership
+
+## just a fabcritor Core (for testing)
+- type: entity
+  parent: MothershipCoreFabricatorBase
+  id: MothershipCoreFabricator
+  suffix: not sentient
+
+## sentient core body
+- type: body
+  id: SamukaXenoborgCoreBody
+  name: "core"
+  root: torso
+  slots:
+    torso:
+      part: TorsoBorg
+      connections:
+      - right2hand
+      - right1hand
+      - left1hand
+      - left2hand
+    left1hand:
+      part: LeftArmBorg
+    left2hand:
+      part: LeftArmBorg
+    right1hand:
+      part: RightArmBorg
+    right2hand:
+      part: RightArmBorg
+
+## xenoborg starting gear
+- type: startingGear
+  id: MothershipCoreGear
+  inhand:
+  - DoorRemoteXenoborg
+  - Omnitool
+
+## sentient core base
+- type: entity
+  abstract: true
+  parent:
+  - BaseMob
+  - StripableInventoryBase
+  id: MothershipCoreSentienceBase
+  components:
   - type: Tag
     tags:
     - CanPilot
   - type: Inventory
     templateId: borg
   - type: Loadout
-    prototypes: [ MothershipCoreGear ]
+    prototypes: [MothershipCoreGear]
   - type: NpcFactionMember
     factions:
     - Xenoborg
   - type: Body
     prototype: MothershipCoreBody
-  - type: Hands 
+  - type: Hands # HANDS!
   - type: Puller
   - type: Eye
     drawFov: false
@@ -831,11 +844,11 @@
     actions:
     - ActionViewLaws
   - type: SiliconLawProvider
-    laws: MothershipCoreLawset 
+    laws: MothershipCoreLawset # custom laws here
     subverted: true
   - type: Stripping
   - type: Access
-    enabled: false
+    enabled: true
     tags:
     - Xenoborg
   - type: LockingWhitelist
@@ -846,14 +859,11 @@
       components:
       - BorgChassis
 
+## Sentient core
 - type: entity
-  parent: MothershipCoreFabricatorBase
-  id: MothershipCoreFrabricator
-  suffix: not sentient
-
-- type: entity
-  parent: [ MothershipCoreFabricatorBase, MothershipCoreSentientBase ]
-  id: MothershipCore
+  parent: [ MothershipCoreFabricatorBase, MothershipCoreSentienceBase ]
+  id: SamukaXenoborgFabricatorSentient
+  suffix: Sentient
   components:
   - type: UserInterface
     interfaces:
