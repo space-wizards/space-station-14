@@ -20,6 +20,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Damage.Components;
+using Content.Server.RoundEnd;
 
 namespace Content.Shared.Strip;
 
@@ -43,7 +44,36 @@ public abstract class SharedStrippableSystem : EntitySystem
 
     private readonly Dictionary<EntityUid, Queue<DoAfterId>> _activeStripDoAfters = new();
 
-    // Starlight Start
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnRoundEndSystemChanged);
+
+        // Existing subscriptions...
+        SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<Verb>>(AddStripVerb);
+        SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<ExamineVerb>>(AddStripExamineVerb);
+
+        // BUI
+        SubscribeLocalEvent<StrippableComponent, StrippingSlotButtonPressed>(OnStripButtonPressed);
+
+        // the DoAfters
+        SubscribeLocalEvent<HandsComponent, DoAfterAttemptEvent<StrippableDoAfterEvent>>(OnStrippableDoAfterRunning);
+        SubscribeLocalEvent<HandsComponent, StrippableDoAfterEvent>(OnStrippableDoAfterFinished);
+
+        SubscribeLocalEvent<StrippingComponent, CanDropTargetEvent>(OnCanDropOn);
+        SubscribeLocalEvent<StrippableComponent, CanDropDraggedEvent>(OnCanDrop);
+        SubscribeLocalEvent<StrippableComponent, DragDropDraggedEvent>(OnDragDrop);
+        SubscribeLocalEvent<StrippableComponent, ActivateInWorldEvent>(OnActivateInWorld);
+
+        SubscribeLocalEvent<StrippableComponent, BeforeGettingStrippedEvent>(OnBeforeGettingStripped);
+    }
+
+    private void OnRoundEndSystemChanged(RoundEndSystemChangedEvent ev)
+    {
+        _activeStripDoAfters.Clear();
+    }
+
     private void LimitSimultaneousStripDoAfters(Entity<HandsComponent?> user, DoAfterArgs doAfterArgs)
     {
         var userId = user.Owner;
