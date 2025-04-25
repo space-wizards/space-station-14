@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: ImprovisedMagazinePistolSubMachineGunGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shell
+          steps:
+            - material: Steel
+              amount: 8
+              doAfter: 6
+    - node: shell
+      entity: MagazinePistolSubMachineGunImprovised

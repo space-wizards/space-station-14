@@ -305,7 +305,7 @@
         Blunt: 6
         Heat: 6
     items:
-      - id: GasPipeStraight
+      - id: ModularBarrel
         launchAngle: 0
         prob: 1
       - id: ModularReceiver
@@ -359,7 +359,7 @@
         Blunt: 6
         Heat: 6
     items:
-      - id: GasPipeStraight
+      - id: ModularBarrel
         launchAngle: 0
         prob: 1
       - id: ModularReceiver

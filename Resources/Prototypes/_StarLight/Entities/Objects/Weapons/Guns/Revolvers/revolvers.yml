@@ -1,6 +1,6 @@
 - type: entity
   name: Makeshift Revolver
-  parent: [BaseWeaponRevolver, BaseSecurityContraband]
+  parent: [BaseWeaponRevolver, BaseMinorContraband]
   id: WeaponRevolverMakeshift
   description: Little more than a hand-cannon with a high chance of blowing up in your face.
   components:
@@ -29,7 +29,7 @@
         Blunt: 8
         Heat: 8
     items:
-      - id: GasPipeStraight
+      - id: ModularBarrel
         launchAngle: 0
         prob: 1
       - id: ModularReceiver
@@ -41,7 +41,7 @@
 
 - type: entity
   name: Improvised Revolver
-  parent: [BaseWeaponRevolver, BaseSecurityContraband]
+  parent: WeaponRevolverMakeshift
   id: WeaponRevolverImprovised
   description: A revolver that has two barrels and no cylinder. Can you really call this a revolver?
   components:
@@ -50,13 +50,6 @@
   - type: Clothing
     sprite: _Starlight/Objects/Weapons/Guns/Revolvers/improvised_revolver.rsi
   - type: RevolverAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeMagnum
-        - CartridgeMagnumImprovised
-        - SpeedLoaderMagnum
-        - SpeedLoaderMagnumImprovised
-    proto: null
     capacity: 2
     chambers: [ true, true]
     ammoSlots: [ null, null]
@@ -65,12 +58,8 @@
     node: shotgun
   - type: WeaponDismantleOnShoot
     dismantleChance: 0.10
-    selfDamage:
-      types:
-        Blunt: 8
-        Heat: 8
     items:
-      - id: GasPipeStraight
+      - id: ModularBarrel
         launchAngle: 0
         prob: 1
       - id: ModularReceiver
@@ -85,7 +74,7 @@
 
 - type: entity
   name: Forged Revolver
-  parent: [BaseWeaponRevolver, BaseSecurityContraband]
+  parent: WeaponRevolverImprovised
   id: WeaponRevolverForged
   description: The best Tider engineering can offer, a revolver with the ability to hold 4 bullets! 
   components:
@@ -94,13 +83,8 @@
   - type: Clothing
     sprite: _Starlight/Objects/Weapons/Guns/Revolvers/forged_revolver.rsi
   - type: RevolverAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeMagnum
-        - CartridgeMagnumImprovised
-        - SpeedLoaderMagnum
-        - SpeedLoaderMagnumImprovised
-    proto: null
     capacity: 4
     chambers: [ null, null, null, null]
     ammoSlots: [ null, null, null, null]
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0

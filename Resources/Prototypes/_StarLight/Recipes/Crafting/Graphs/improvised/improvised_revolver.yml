@@ -6,16 +6,16 @@
     edges:
     - to: shotgun
       steps:
-      - tag: Pipe
+      - tag: ModularBarrel
         icon:
-          sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeStraight
-        name: pipe
-      - tag: Pipe
+          sprite: _Starlight/Objects/Misc/modular_barrel
+          state: icon
+        name: modular barrel
+      - tag: ModularBarrel
         icon:
-          sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeStraight
-        name: pipe
+          sprite: _Starlight/Objects/Misc/modular_barrel
+          state: icon
+        name: modular barrel
       - tag: ModularReceiver
         icon:
           sprite: Objects/Misc/modular_receiver.rsi

@@ -62,3 +62,45 @@
   - type: Construction
     graph: ForgedRevolverGraph
     node: shotgun
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedSubMachineGunForged
+  name: forged SMG parts
+  description: Some assembly may be reqiured. Needs welding.
+  components:
+  - type: Item
+    size: Large
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/SMGs/forged_smg.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: WeaponSubMachineGunForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedSMGGraph
+    node: shotgun
+
+- type: entity
+  parent: BaseItem
+  id: ModularBarrel
+  name: modular barrel
+  description: A vital component in guncrafting.
+  components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/modular_barrel
+    state: icon
+  - type: Tag
+    tags:
+    - Metal
+    - ModularBarrel
+  - type: Construction
+    graph: ModularBarrelGraph
+    node: shotgun

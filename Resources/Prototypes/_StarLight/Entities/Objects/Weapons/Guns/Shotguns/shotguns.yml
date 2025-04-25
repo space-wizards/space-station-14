@@ -218,3 +218,37 @@
   - type: BallisticAmmoProvider
     capacity: 2
     proto: null
+
+- type: entity
+  name: makeshift shotgun
+  parent: [WeaponFlareGunSecurity, BaseMinorContraband]
+  id: WeaponShotgunMakeshift
+  description: A small hand-cannon that fires .50 shotgun shells. Has no cloth to hold it together, so it has a high chance of falling apart with every shot.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/makeshift_shotgun.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/makeshift_shotgun.rsi
+  - type: Construction
+    graph: MakeshiftShotgunGraph
+    node: shotgun
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0.50
+    selfDamage:
+      types:
+        Blunt: 5
+        Heat: 5
+    items:
+      - id: ModularBarrel
+        launchAngle: 0
+        prob: 1
+      - id: ModularReceiver
+        launchAngle: 90
+        prob: 0.10
+      - id: RifleStock
+        launchAngle: 180
+        prob: 0.80

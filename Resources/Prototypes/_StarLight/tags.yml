@@ -17,6 +17,9 @@
 
 - type: Tag
   id: CartridgeMagnumImprovised
+
+- type: Tag
+  id: ModularBarrel
   
 - type: Tag
   id: Diona
@@ -44,7 +47,10 @@
   
 - type: Tag
   id: MagazineSMGUzi
-  
+
+- type: Tag
+  id: MagazineSMGImprovised
+
 - type: Tag
   id: MedCyberEyes
   

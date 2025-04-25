@@ -140,3 +140,81 @@
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/improvised_magnum_speed_loader.rsi
     state: base
+
+- type: construction
+  name: modular barrel
+  id: ModularBarrel
+  graph: ModularBarrelGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-misc
+  objectType: Item
+  description: For all your guncrafting needs!
+  icon:
+    sprite: _Starlight/Objects/Misc/modular_barrel
+    state: icon
+
+- type: construction
+  name: makeshift shotgun
+  id: WeaponShotgunMakeshift
+  graph: MakeshiftShotgunGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: A robust hand-cannon that'll snap your wrist right off if you're not careful
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/makeshift_shotgun.rsi
+    state: base
+
+- type: construction
+  name: makeshift smg
+  id: WeaponSMGMakeshift
+  graph: MakeshiftSMGGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: It can't hit the broad side of a barn.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/SMGs/makeshift_smg.rsi
+    state: base
+
+- type: construction
+  name: improvised smg
+  id: WeaponSubMachineGunImprovised
+  graph: ImprovisedSMGGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: It CAN hit the broad side of a barn, but not a person.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/SMGs/improvised_smg.rsi
+    state: base
+
+- type: construction
+  name: forged smg
+  id: WeaponSubMachineGunForged
+  graph: ForgedSMGGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: Finally, an SMG that can hit a person! Needs to be welded together, so make sure you have welding supplies!
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/SMGs/forged_smg.rsi
+    state: base
+
+- type: construction
+  name: improvised smg magazine
+  id: MagazinePistolSubMachineGunImprovised
+  graph: ImprovisedMagazinePistolSubMachineGunGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: The fact this thing works at all is nothing short of a miracle
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/SMGs/improvised_smg_magazine.rsi
+    state: base
