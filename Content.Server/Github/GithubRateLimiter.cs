@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 namespace Content.Server.Github;
 
 /// <summary>
-/// Basic rate limiter for the GitHub api! Will ensure there is only ever one outgoing request at a time and all requests respect the rate limit the best they can.
+/// Basic rate limiter for the GitHub api! Will ensure there is only ever one outgoing request at a time and all
+/// requests respect the rate limit the best they can.
 /// <br/>
 /// <br/> Links to the api for more information:
 /// <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28">Best practices</see>

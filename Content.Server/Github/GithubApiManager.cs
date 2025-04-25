@@ -16,8 +16,9 @@ using Robust.Shared.Network;
 namespace Content.Server.Github;
 
 /// <summary>
-/// Basic implementation of the GitHub api. This was mainly created for making issues from users bug reports - it is not a full implementation!
-/// I tried to follow the spec very closely and the docs are really well done. I highly recommend taking a look at them!
+/// Basic implementation of the GitHub api. This was mainly created for making issues from users bug reports - it is not
+/// a full implementation! I tried to follow the spec very closely and the docs are really well done. I highly recommend
+/// taking a look at them!
 /// <br/>
 /// <br/> Some useful information about the api:
 /// <br/> <see href="https://docs.github.com/en/rest?apiVersion=2022-11-28">Api home page</see>
