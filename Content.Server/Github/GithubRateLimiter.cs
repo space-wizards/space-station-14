@@ -105,14 +105,12 @@ public sealed class GithubRateLimiter
         if (_remainingRequests <= _requestBuffer || statusCode == HttpStatusCode.Forbidden || statusCode == HttpStatusCode.TooManyRequests)
         {
             // Retry after header
-            if (GithubApiManager.TryGetLongHeader(headers, "retry-after", out var retryAfterSeconds))
-            {
+            if (GithubApiManager.TryGetLongHeader(headers, "retry-after") is { } retryAfterSeconds)
                 return DateTime.UtcNow.AddSeconds(retryAfterSeconds + ExtraBufferTime);
-            }
 
             // Reset header (Tells us when we get more api credits)
-            if (GithubApiManager.TryGetLongHeader(headers, "x-ratelimit-remaining", out var remainingRequests) &&
-                GithubApiManager.TryGetLongHeader(headers, "x-ratelimit-reset", out var resetTime))
+            if (GithubApiManager.TryGetLongHeader(headers, "x-ratelimit-remaining") is { } remainingRequests &&
+                GithubApiManager.TryGetLongHeader(headers, "x-ratelimit-reset") is { } resetTime)
             {
                 // If it's not zero, something is wrong so just do an exponential backoff.
                 if (remainingRequests == 0)

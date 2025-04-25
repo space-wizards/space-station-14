@@ -131,8 +131,9 @@ public sealed class GithubApiManager
         var response = await _http.Client.SendAsync(httpRequest);
 
         // Update rate limit
-        if (TryGetLongHeader(response.Headers, RemainingHeader, out var remainingRequests))
-            _rateLimiter.UpdateRequests(remainingRequests);
+        var remainingRequests = TryGetLongHeader(response.Headers, RemainingHeader);
+        if (remainingRequests != null)
+            _rateLimiter.UpdateRequests(remainingRequests.Value);
 
         _sawmill.Info($"Made a github api request to: {BaseUri+request.GetLocation(_owner, _repository)}");
 
@@ -147,17 +148,18 @@ public sealed class GithubApiManager
     /// <param name="header">The header you want to get the long value for.</param>
     /// <param name="value">The output from the header, if unsuccessfully found or didn't parse correctly will be 0.</param>
     /// <returns>True if the header was found and was parsed correctly, false if not.</returns>
-    public static bool TryGetLongHeader(HttpResponseHeaders? headers, string header, out long value)
+    public static long? TryGetLongHeader(HttpResponseHeaders? headers, string header)
     {
-        value = 0;
-
         if (headers == null)
-            return false;
+            return null;
 
         if (!headers.TryGetValues(header, out var headerValues))
-            return false;
+            return null;
 
-        return long.TryParse(headerValues.First(), out value);
+        if (!long.TryParse(headerValues.First(), out var result))
+            return null;
+
+        return result;
     }
 
     # endregion
