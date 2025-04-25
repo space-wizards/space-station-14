@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Lecter sprites have been updated.
-    type: Tweak
-  id: 7840
-  time: '2025-01-23T06:02:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34589
 - author: Ian321
   changes:
   - message: Job specific contraband descriptions are now grammatically sound.
@@ -3922,3 +3915,10 @@
   id: 8341
   time: '2025-04-25T04:05:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31450
+- author: Krzeszny
+  changes:
+  - message: Rewrote the controls guide.
+    type: Tweak
+  id: 8342
+  time: '2025-04-25T04:49:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36363
