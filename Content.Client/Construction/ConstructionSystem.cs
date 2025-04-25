@@ -25,26 +25,23 @@ namespace Content.Client.Construction
     public sealed class ConstructionSystem : SharedConstructionSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         private readonly Dictionary<int, EntityUid> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
-        private Dictionary<string, string>? _recipeMetadataCache;
+
+        private Dictionary<string, string> _recipesMetadataCache = [];
 
         public bool CraftingEnabled { get; private set; }
-
-        public bool IsRecipesCacheWarmed { get; private set; }
 
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeNetworkEvent<ResponseConstructionRecipes>(OnResponseConstructionRecipes);
-            RaiseNetworkEvent(new RequestConstructionRecipes());
+            WarmupRecipesCache();
 
             UpdatesOutsidePrediction = true;
             SubscribeLocalEvent<LocalPlayerAttachedEvent>(HandlePlayerAttached);
@@ -69,43 +66,70 @@ namespace Content.Client.Construction
             ClearGhost(component.GhostId);
         }
 
-        public event EventHandler? OnConstructionRecipesUpdated;
-        private void OnResponseConstructionRecipes(ResponseConstructionRecipes ev)
-        {
-            if (_recipeMetadataCache is null)
-            {
-                _recipeMetadataCache = new();
-
-                foreach (var (constructionProtoId, targetProtoId) in ev.Metadata)
-                {
-                    if (!_prototypeManager.TryIndex(constructionProtoId, out ConstructionPrototype? recipe))
-                        continue;
-
-                    if (!_prototypeManager.TryIndex(targetProtoId, out var proto))
-                        continue;
-
-                    var name = recipe.NameLocId.HasValue ? Loc.GetString(recipe.NameLocId) : proto.Name;
-                    var desc = recipe.DescLocId.HasValue ? Loc.GetString(recipe.DescLocId) : proto.Description;
-
-                    recipe.Name = name;
-                    recipe.Description = desc;
-
-                    _recipeMetadataCache.Add(constructionProtoId, targetProtoId);
-                }
-
-                IsRecipesCacheWarmed = true;
-            }
-
-            OnConstructionRecipesUpdated?.Invoke(this, EventArgs.Empty);
-        }
-
         public bool TryGetRecipePrototype(string constructionProtoId, [NotNullWhen(true)] out string? targetProtoId)
         {
-            if (_recipeMetadataCache is not null && _recipeMetadataCache.TryGetValue(constructionProtoId, out targetProtoId))
+            if (_recipesMetadataCache.TryGetValue(constructionProtoId, out targetProtoId))
                 return true;
 
             targetProtoId = null;
             return false;
+        }
+
+        private void WarmupRecipesCache()
+        {
+            foreach (var constructionProto in PrototypeManager.EnumeratePrototypes<ConstructionPrototype>())
+            {
+                if (!PrototypeManager.TryIndex(constructionProto.Graph, out var graphProto))
+                    continue;
+
+                if (constructionProto.TargetNode is not { } targetNodeId)
+                    continue;
+
+                if (!graphProto.Nodes.TryGetValue(targetNodeId, out var targetNode))
+                    continue;
+
+                // Recursion is for wimps.
+                var stack = new Stack<ConstructionGraphNode>();
+                stack.Push(targetNode);
+
+                do
+                {
+                    var node = stack.Pop();
+
+                    // I never realized if this uid affects anything...
+                    // EntityUid? userUid = args.SenderSession.State.ControlledEntity.HasValue
+                    //     ? GetEntity(args.SenderSession.State.ControlledEntity.Value)
+                    //     : null;
+
+                    // We try to get the id of the target prototype, if it fails, we try going through the edges.
+                    if (node.Entity.GetId(null, null, new(EntityManager)) is not { } entityId)
+                    {
+                        // If the stack is not empty, there is a high probability that the loop will go to infinity.
+                        if (stack.Count == 0)
+                            foreach (var edge in node.Edges)
+                                if (graphProto.Nodes.TryGetValue(edge.Target, out var graphNode))
+                                    stack.Push(graphNode);
+                        continue;
+                    }
+
+                    // If we got the id of the prototype, we exit the “recursion” by clearing the stack.
+                    stack.Clear();
+
+                    if (!PrototypeManager.TryIndex(constructionProto.ID, out ConstructionPrototype? recipe))
+                        continue;
+
+                    if (!PrototypeManager.TryIndex(entityId, out var proto))
+                        continue;
+
+                    var name = recipe.SetName.HasValue ? Loc.GetString(recipe.SetName) : proto.Name;
+                    var desc = recipe.SetDescription.HasValue ? Loc.GetString(recipe.SetDescription) : proto.Description;
+
+                    recipe.Name = name;
+                    recipe.Description = desc;
+
+                    _recipesMetadataCache.Add(constructionProto.ID, entityId);
+                } while (stack.Count > 0);
+            }
         }
 
         private void OnConstructionGuideReceived(ResponseConstructionGuide ev)
@@ -142,7 +166,7 @@ namespace Content.Client.Construction
                     "construction-ghost-examine-message",
                     ("name", component.Prototype.Name)));
 
-                if (!_prototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
+                if (!PrototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
                     return;
 
                 var startNode = graph.Nodes[component.Prototype.StartNode];
@@ -243,7 +267,7 @@ namespace Content.Client.Construction
                 return false;
             }
 
-            if (!TryGetRecipePrototype(prototype.ID, out var targetProtoId) || !_prototypeManager.TryIndex(targetProtoId, out EntityPrototype? targetProto))
+            if (!TryGetRecipePrototype(prototype.ID, out var targetProtoId) || !PrototypeManager.TryIndex(targetProtoId, out EntityPrototype? targetProto))
                 return false;
 
             if (GhostPresent(loc))

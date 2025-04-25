@@ -178,7 +178,7 @@ namespace Content.Client.Construction.UI
 
         private void OnViewPopulateRecipes(object? sender, (string search, string catagory) args)
         {
-            if (_constructionSystem is null || !_constructionSystem.IsRecipesCacheWarmed)
+            if (_constructionSystem is null)
                 return;
 
             var actualRecipes = GetAndSortRecipes(args);
@@ -285,11 +285,11 @@ namespace Content.Client.Construction.UI
                     Logger.Error("Cannot find the target prototype in the recipe cache with the id \"{0}\" of {1}.",
                         recipe.ID,
                         nameof(ConstructionPrototype));
-                    return [];
+                    continue;
                 }
 
                 if (!_prototypeManager.TryIndex(targetProtoId, out EntityPrototype? proto))
-                    return [];
+                    continue;
 
                 recipes.Add(new(recipe, proto));
             }
@@ -357,7 +357,7 @@ namespace Content.Client.Construction.UI
 
         private void PopulateInfo(ConstructionPrototype? prototype)
         {
-            if (_constructionSystem is null || !_constructionSystem.IsRecipesCacheWarmed)
+            if (_constructionSystem is null)
                 return;
 
             _constructionView.ClearRecipeInfo();
@@ -519,16 +519,12 @@ namespace Content.Client.Construction.UI
             }
         }
 
-        // We will update the UI as soon as the client system receives the response.
-        private void OnConstructionRecipesUpdated(object? sender, EventArgs e)
-        {
-            OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
-        }
-
         private void BindToSystem(ConstructionSystem system)
         {
             _constructionSystem = system;
-            system.OnConstructionRecipesUpdated += OnConstructionRecipesUpdated;
+
+            OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
+
             system.ToggleCraftingWindow += SystemOnToggleMenu;
             system.FlipConstructionPrototype += SystemFlipConstructionPrototype;
             system.CraftingAvailabilityChanged += SystemCraftingAvailabilityChanged;
@@ -546,7 +542,6 @@ namespace Content.Client.Construction.UI
             if (system is null)
                 throw new InvalidOperationException();
 
-            system.OnConstructionRecipesUpdated -= OnConstructionRecipesUpdated;
             system.ToggleCraftingWindow -= SystemOnToggleMenu;
             system.FlipConstructionPrototype -= SystemFlipConstructionPrototype;
             system.CraftingAvailabilityChanged -= SystemCraftingAvailabilityChanged;

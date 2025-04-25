@@ -19,7 +19,7 @@ public sealed partial class ConstructionPrototype : IPrototype
     ///     Friendly name displayed in the construction GUI.
     /// </summary>
     [DataField("name")]
-    public LocId? NameLocId;
+    public LocId? SetName;
 
     public string? Name;
 
@@ -27,7 +27,7 @@ public sealed partial class ConstructionPrototype : IPrototype
     ///     "Useful" description displayed in the construction GUI.
     /// </summary>
     [DataField("description")]
-    public LocId? DescLocId;
+    public LocId? SetDescription;
 
     public string? Description;
 
