@@ -4,9 +4,9 @@
   id: HandheldBSOCrewMonitor
   description: Does not monitor the competence levels of command members.
   components:
-  - type: Tag
-    tags:
-      - BSOBeltEquip
+#  - type: Tag
+#    tags:
+#      - BSOBeltEquip
   - type: Sprite
     sprite: _Starlight/Objects/Specific/Medical/handheld_bso_crewmonitor.rsi
     state: scanner
@@ -28,9 +28,9 @@
   parent: HandheldBSOCrewMonitor
   suffix: Empty
   components:
-  - type: Tag
-    tags:
-      - BSOBeltEquip
+#  - type: Tag
+#    tags:
+#      - BSOBeltEquip
   - type: ItemSlots
     slots:
       cell_slot:
