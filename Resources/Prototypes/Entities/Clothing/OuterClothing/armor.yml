@@ -143,8 +143,8 @@
   - type: ExplosionResistance
     damageCoefficient: 0.35
   - type: ClothingSpeedModifier
-    walkModifier: 1.2
-    sprintModifier: 1.2
+    walkModifier: 1
+    sprintModifier: 1.1
   #Shoulder mounted flashlight
   - type: ToggleableLightVisuals
     spriteLayer: light
