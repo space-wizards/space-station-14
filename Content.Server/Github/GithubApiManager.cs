@@ -308,14 +308,15 @@ public sealed class GithubApiManager
     }
 
     #endregion
-}
 
-/// <summary>
-/// Entry for the queue. Keeps track of the amount of times this specific request has given an error.
-/// </summary>
-/// <param name="request">The request for this queue value.</param>
-public struct GithubQueueEntry(IGithubRequest request)
-{
-    public IGithubRequest Request = request;
-    public int Failures = 0;
+    /// <summary>
+    /// Entry for the queue. Keeps track of the amount of times this specific request has given an error.
+    /// </summary>
+    /// <param name="request">The request for this queue value.</param>
+    private struct GithubQueueEntry(IGithubRequest request)
+    {
+        public IGithubRequest Request = request;
+        public int Failures = 0;
+    }
+
 }
