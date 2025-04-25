@@ -264,7 +264,7 @@
   parent: [ ClothingHandsGlovesColorBlack, BaseSecurityEngineeringContraband ]
   id: ClothingHandsGlovesCombat
   name: combat gloves
-  description: These tactical gloves are fireproof and shock resistant.
+  description: These tactical gloves are shock resistant and make processing restrained targets easier.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/combat.rsi
@@ -273,6 +273,9 @@
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative
+  - type: Thieving
+    stripTimeReduction: 1.5
+    stealthy: false
 
 # can't parent combat gloves since they are butcherable
 - type: entity
