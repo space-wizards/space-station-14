@@ -127,21 +127,6 @@
     stateDoorOpen: bio_viro_open
     stateDoorClosed: bio_viro_door
 
-# CMO Variant
-- type: entity
-  id: ClosetL3CMO
-  parent: LockerBaseSecure
-  name: level 3 biohazard gear closet
-  description: It's a storage unit for level 3 biohazard gear.
-  components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: bio_cmo
-    stateDoorOpen: bio_cmo_open
-    stateDoorClosed: bio_cmo_door
-  - type: AccessReader
-
-
 # Security variant
 - type: entity
   id: ClosetL3Security
