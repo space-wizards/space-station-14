@@ -170,7 +170,6 @@ public sealed partial class SalvageSystem
             _biome,
             _dungeon,
             _metaData,
-            _transform,
             _mapSystem,
             station,
             coordinatesDisk,

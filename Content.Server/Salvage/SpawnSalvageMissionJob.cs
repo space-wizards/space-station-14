@@ -27,7 +27,6 @@ using Content.Shared.Salvage.Expeditions.Modifiers;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Collections;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -46,7 +45,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     private readonly BiomeSystem _biome;
     private readonly DungeonSystem _dungeon;
     private readonly MetaDataSystem _metaData;
-    private readonly SharedTransformSystem _xforms;
     private readonly SharedMapSystem _map;
 
     public readonly EntityUid Station;
@@ -65,7 +63,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         BiomeSystem biome,
         DungeonSystem dungeon,
         MetaDataSystem metaData,
-        SharedTransformSystem xform,
         SharedMapSystem map,
         EntityUid station,
         EntityUid? coordinatesDisk,
@@ -79,7 +76,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         _biome = biome;
         _dungeon = dungeon;
         _metaData = metaData;
-        _xforms = xform;
         _map = map;
         Station = station;
         CoordinatesDisk = coordinatesDisk;
@@ -155,7 +151,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         }
 
         _map.InitializeMap(mapId);
-        _map.SetPaused(mapId, true);
+        _map.SetPaused(mapUid, true);
 
         // Setup expedition
         var expedition = _entManager.AddComponent<SalvageExpeditionComponent>(mapUid);

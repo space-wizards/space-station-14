@@ -69,7 +69,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Unanchored, state == DisposalUnitComponent.VisualState.UnAnchored);
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Base, state == DisposalUnitComponent.VisualState.Anchored);
-        sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayFlush, state is DisposalUnitComponent.VisualState.OverlayFlushing or DisposalUnitComponent.VisualState.OverlayCharging);
+        sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayFlush, state == DisposalUnitComponent.VisualState.OverlayFlushing);
+        sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseCharging, state == DisposalUnitComponent.VisualState.OverlayCharging);
 
         var chargingState = sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseCharging, out var chargingLayer)
             ? sprite.LayerGetState(chargingLayer)
@@ -97,10 +98,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                             {
                                 // Play the flush animation
                                 new AnimationTrackSpriteFlick.KeyFrame(flushState, 0),
-                                // Return to base state (though, depending on how the unit is
-                                // configured we might get an appearance change event telling
-                                // us to go to charging state)
-                                new AnimationTrackSpriteFlick.KeyFrame(chargingState, (float) ent.Comp.FlushDelay.TotalSeconds)
                             }
                         },
                     }
@@ -121,8 +118,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                 _animationSystem.Play(ent, anim, AnimationKey);
             }
         }
-        else if (state == DisposalUnitComponent.VisualState.OverlayCharging)
-            sprite.LayerSetState(DisposalUnitVisualLayers.OverlayFlush, chargingState);
         else
             _animationSystem.Stop(ent.Owner, AnimationKey);
 

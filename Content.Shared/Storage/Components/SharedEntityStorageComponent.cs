@@ -159,7 +159,7 @@ public readonly record struct StorageBeforeOpenEvent;
 public readonly record struct StorageAfterOpenEvent;
 
 [ByRefEvent]
-public record struct StorageCloseAttemptEvent(bool Cancelled = false);
+public record struct StorageCloseAttemptEvent(EntityUid? User, bool Cancelled = false);
 
 [ByRefEvent]
 public readonly record struct StorageBeforeCloseEvent(HashSet<EntityUid> Contents, HashSet<EntityUid> BypassChecks);
