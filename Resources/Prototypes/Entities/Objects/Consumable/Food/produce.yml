@@ -250,7 +250,7 @@
   name: death nettle
   description: This nettle's out for blood.
   id: DeathNettle
-  parent: ProduceBase
+  parent: [ProduceBase, BaseMajorContraband]
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/death_nettle.rsi
@@ -261,24 +261,56 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 8.5
-        Caustic: 8.5
+        Heat: 8
+        Caustic: 8
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: SulfuricAcid
-          Quantity: 3
+          Quantity: 15
         - ReagentId: FluorosulfuricAcid
-          Quantity: 3
+          Quantity: 15
   - type: Produce
     seedId: deathNettle
   - type: MeleeChemicalInjector
-    transferAmount: 2
+    transferAmount: 5
     solution: food
-    pierceArmor: false
+    pierceArmor: true
   - type: Extractable
     grindableSolutionName: food
+  - type: DamageOnInteract
+    damage: 
+      types:
+        Heat: 4
+        Caustic: 4
+    throw: true
+    throwSpeed: 3
+    interactTimer: 2 # Stop the player from spam clicking the entity
+    ignoreResistances: false
+    popupText: powered-light-component-burn-hand
+    interactSound: /Audio/Effects/lightburn.ogg
+    stunChance: 0.10
+    stunSeconds: 1.5
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Voice/Diona/diona_salute.ogg
+          params:
+            volume: -5
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnHit 
+    damage:
+      types:
+        Blunt: 5 # The nettle will "wilt" after 5 hits.
 
 - type: entity
   name: banana
@@ -1791,10 +1823,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 15
         reagents:
         - ReagentId: Amatoxin
-          Quantity: 25
+          Quantity: 10
         - ReagentId: Nutriment
           Quantity: 5
   - type: Sprite

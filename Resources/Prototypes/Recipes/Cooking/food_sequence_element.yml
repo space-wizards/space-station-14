@@ -67,6 +67,18 @@
   - Cooked
   - Meat
 
+# Dragon Steak
+
+- type: foodSequenceElement
+  id: DragonSteak
+  name: food-sequence-content-dragon
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: dragon-cooked
+  tags:
+  - Cooked
+  - Meat
+
 # Bacon
 
 - type: foodSequenceElement
@@ -432,6 +444,19 @@
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: xenocutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+# Dragon cutlet
+
+- type: foodSequenceElement
+  id: DragonCutlet
+  name: food-sequence-content-dragon
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: dragoncutlet-cooked
   tags:
   - Cooked
   - Cutlet
