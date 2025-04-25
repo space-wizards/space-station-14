@@ -671,7 +671,7 @@
 - type: entity
   abstract: true
   parent: BaseMachinePowered
-  id: MothershipCoreFrabricatorBase
+  id: MothershipCoreFabricatorBase
   name: mothership core
   description: A sentient machine that can produce xenoborgs. Without this the xenoborgs are doomed.
   components:
