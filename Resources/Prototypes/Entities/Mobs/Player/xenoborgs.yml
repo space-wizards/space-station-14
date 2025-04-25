@@ -669,8 +669,9 @@
   - Omnitool
 
 - type: entity
-  parent: [ BaseMachinePowered, BaseMob, StripableInventoryBase ]
-  id: MothershipCore
+  abstract: true
+  parent: BaseMachinePowered
+  id: MothershipCoreFrabricatorBase
   name: mothership core
   description: A sentient machine that can produce xenoborgs. Without this the xenoborgs are doomed.
   components:
@@ -756,16 +757,19 @@
     interfaces:
       enum.LatheUiKey.Key:
         type: LatheBoundUserInterface
-      enum.SiliconLawsUiKey.Key:
-        type: SiliconLawBoundUserInterface
-        requireInputValidation: false
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
   - type: Transform
     anchored: true
   - type: Pullable
   - type: StaticPrice
     price: 800
+
+- type: entity
+  abstract: true
+  parent: [ BaseMob, StripableInventoryBase ]
+  id: MothershipCoreSentientBase
+  components:
   - type: WarpPoint
     location: mothership core
     follow: true
@@ -794,12 +798,9 @@
     - Xenoborg
     - Binary
   - type: XenoborgMothership
-  - type: Body
-    prototype: MothershipCoreBody
   - type: Tag
     tags:
     - CanPilot
-    - Structure
   - type: Inventory
     templateId: borg
   - type: Loadout
@@ -807,7 +808,9 @@
   - type: NpcFactionMember
     factions:
     - Xenoborg
-  - type: Hands
+  - type: Body
+    prototype: MothershipCoreBody
+  - type: Hands 
   - type: Puller
   - type: Eye
     drawFov: false
@@ -815,6 +818,13 @@
   - type: IgnoreUIRange
   - type: ComplexInteraction
   - type: MindContainer
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: SiliconLawBound
   - type: Actions
   - type: ActionGrant
@@ -835,3 +845,30 @@
     whitelist:
       components:
       - BorgChassis
+
+- type: entity
+  parent: MothershipCoreFrabricatorBase
+  id: MothershipCoreFrabricator
+  suffix: not sentient
+
+- type: entity
+  parent: [ MothershipCoreFabricatorBase, MothershipCoreSentientBase ]
+  id: MothershipCore
+  components:
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.LatheUiKey.Key:
+        type: LatheBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
+  - type: Access
+    enabled: true
+  - type: Tag
+    tags:
+    - CanPilot
+    - Structure
