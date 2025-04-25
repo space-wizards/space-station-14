@@ -7,6 +7,9 @@ namespace Content.Shared.Movement.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class JetpackComponent : Component
 {
+    [DataField, AutoNetworkedField]
+    public EntityUid? JetpackUser;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("moleUsage")]
     public float MoleUsage = 0.012f;
 
