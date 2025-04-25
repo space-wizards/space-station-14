@@ -20,7 +20,6 @@ using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Damage.Components;
-using Content.Server.RoundEnd;
 
 namespace Content.Shared.Strip;
 
