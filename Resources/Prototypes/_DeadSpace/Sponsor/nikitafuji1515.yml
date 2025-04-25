@@ -38,6 +38,7 @@
       - id: ClothingEyesHudnikitafuji1515
       - id: ClothingOuterHardsuitnikitafuji1515
       - id: PaperLawnikitafuji1515
+      - id: ClothingShoesBootsMagnikitafuji1515
 
 # PaperLaw
 
@@ -222,6 +223,7 @@
     sprite: _DeadSpace/Sponsor/nikitafuji1515/instr/welder.rsi
 
 # Jetpack
+
 - type: entity
   parent: JetpackVoidFilled
   id: JetpackVoidFilleddnikitafuji1515
@@ -281,6 +283,7 @@
       sprite: _DeadSpace/Sponsor/nikitafuji1515/scirt.rsi
 
 # HardSuit
+
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseEngineeringContraband]
   id: ClothingOuterHardsuitnikitafuji1515
@@ -360,6 +363,25 @@
       coolingCoefficient: 0.005
     - type: FireProtection
       reduction: 0.2
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagnikitafuji1515
+  name: зелёные украшенные магнитные ботинки
+  description: Магнитные ботинки в зелёном цвете. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/vjlados/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/vjlados/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
 
 # Очки-визор
 

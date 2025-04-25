@@ -1,0 +1,29 @@
+- type: entity
+  name: KangTao G58
+  parent: BaseWeaponSubMachineGun
+  id: WeaponSubMachineGunKangTao
+  description: G-58 оснащен выдвижным прикладом, длину которого можно регулировать, а многие другие части оружия можно сложить в основной корпус, чтобы сделать его более компактным и удобным для скрытого ношения.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/Wisdom/TraumaTeam/weapon.rsi
+      layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/Wisdom/TraumaTeam/weapon.rsi
+    - type: Gun
+      fireRate: 9
+      selectedMode: FullAuto
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
+      availableModes:
+      - FullAuto
+    - type: MagazineVisuals
+      magState: mag
+      steps: 1
+      zeroVisible: true
+    - type: Appearance
+    - type: ChamberMagazineAmmoProvider
+      autoEject: true

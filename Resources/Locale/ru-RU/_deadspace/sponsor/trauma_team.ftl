@@ -1,0 +1,1 @@
+chat-radio-traumateam = Мед-Тех

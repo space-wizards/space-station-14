@@ -1,0 +1,23 @@
+- type: entity
+  parent: ClothingOuterHardsuitRd
+  id: ClothingOuterHardsuitRdWoman
+  name: экспериментальный скафандр научного руководителя
+  description: Специальный костюм, защищающий от опасной среды с низким давлением. Имеет дополнительный слой брони и значительную защиту от взрыва.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Wisdom/rd/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Wisdom/rd/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitRdWoman
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitRd
+  id: ClothingHeadHelmetHardsuitRdWoman
+  name: шлем экспериментального скафандра научного руководителя
+  description: Лёгкий шлем скафандра, не стесняющий движений головы.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Wisdom/rd/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Wisdom/rd/helmet.rsi

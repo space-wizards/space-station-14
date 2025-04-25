@@ -1,0 +1,63 @@
+# EncryptionKey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyTraumaTeam
+  name: ключ шифрования Мед-Теха
+  description: Ключ шифрования Мед-Теха.
+  components:
+  - type: EncryptionKey
+    channels:
+    - TraumaTeam
+    defaultChannel: TraumaTeam
+  - type: Sprite
+    layers:
+    - state: crypt_blue
+    - state: nano_label
+
+- type: radioChannel
+  id: TraumaTeam
+  name: chat-radio-traumateam
+  keycode: 'з'
+  frequency: 2707
+  color: "#00d0ff"
+  longRange: true
+
+# Implant
+
+- type: entity
+  id: DeathRattleImplanterTraumaTeam
+  name: имплантер трекер Мед-Теха
+  suffix: Трекер Мед-Тех
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: TrackingImplantTraumaTeam
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: TrackingImplantTraumaTeam
+  name: трекер имплант Мед-Теха
+  description: Имплант, который следит за состоянием здоровья носителя и в случае падения в критическое состояние, сообщает об этом в радио-канал Мед-Теха
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      whitelist:
+        components:
+        - MobState
+    - type: SuitSensor
+      randomMode: false
+      controlsLocked: true
+      mode: SensorCords
+      activationContainer: "implant"
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      transmitFrequencyId: SuitSensor
+    - type: StationLimitedNetwork
+    - type: WirelessNetworkConnection
+      range: 3000
+    - type: TriggerOnMobstateChange
+      mobState:
+      - Critical
+    - type: Rattle
+      radioChannel: "TraumaTeam"

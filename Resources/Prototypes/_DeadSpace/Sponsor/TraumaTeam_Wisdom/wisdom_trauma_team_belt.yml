@@ -1,0 +1,38 @@
+- type: entity
+  parent: ClothingBeltMilitaryWebbing
+  id: ClothingBeltWisdomTraumaTeamSec
+  name: РПС Мед-Техника безопасника
+  description: Разгрузочный жилет, необходимый для спасения жизней в экстремальных условиях.
+  components:
+  - type: Storage
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Wisdom/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Wisdom/belt.rsi
+  - type: Item
+    size: Huge
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltWisdomTraumaTeamHolster
+  name: набедренная кобура Мед-Теха
+  description: Глубокая наплечная кобура, способная вместить множество видов баллистики.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Wisdom/TraumaTeam/holster.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Wisdom/TraumaTeam/holster.rsi
+    slots:
+    - neck
+    - belt
+  - type: Item
+    size: Ginormous
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,3,3
+    whitelist:
+      components:
+        - Gun
+        - BallisticAmmoProvider
+        - CartridgeAmmo
