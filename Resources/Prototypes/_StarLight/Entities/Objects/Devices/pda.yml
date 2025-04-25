@@ -141,3 +141,32 @@
     - NotekeeperCartridge
     - NewsReaderCartridge
     - AstroNavCartridge
+
+- type: entity
+  parent: BasePDA
+  id: MailPDA
+  name: mail PDA
+  description: watch out for papercuts.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Devices/pda.rsi
+  - type: Pda
+    id: MailTechIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-mailtech
+  - type: PdaBorderColor
+    borderColor: "#af9366"
+    accentVColor: "#3e3ac3"
+  - type: Icon
+    sprite: _Starlight/Objects/Devices/pda.rsi
+    state: pda-mailtech
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - AstroNavCartridge

@@ -5007,4 +5007,187 @@ Entries:
   id: 693
   time: '2025-04-21T07:33:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/506
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added mining specialist to every single map
+    type: Add
+  id: 694
+  time: '2025-04-22T02:52:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/509
+- author: PubliclyExecutedPig
+  changes:
+  - message: Removed unfun <3
+    type: Remove
+  id: 695
+  time: '2025-04-22T02:52:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/509
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed Orwell Station
+    type: Tweak
+  id: 696
+  time: '2025-04-22T02:52:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/509
+- author: PubliclyExecutedPig
+  changes:
+  - message: Fixed every single map in rotation to fit our and wizden's mapping standards
+    type: Fix
+  id: 697
+  time: '2025-04-22T02:52:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/509
+- author: choccy
+  changes:
+  - message: various small features sighted in the CL description
+    type: Fix
+  id: 698
+  time: '2025-04-22T02:54:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/511
+- author: Happyrobot33
+  changes:
+  - message: Allowed Resomi to roundstart as nukies.
+    type: Tweak
+  id: 699
+  time: '2025-04-22T02:57:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/510
+- author: RetSamphis
+  changes:
+  - message: Added damage examine to ammo cartridges
+    type: Add
+  id: 700
+  time: '2025-04-22T03:37:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/512
+- author: RetSamphis
+  changes:
+  - message: Added armor penetration values to ammo tooltip
+    type: Add
+  id: 701
+  time: '2025-04-22T03:37:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/512
+- author: Killer Tamashi
+  changes:
+  - message: Admeme synth now uses [suffix] instead of (name)
+    type: Fix
+  id: 702
+  time: '2025-04-22T04:46:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/514
+- author: Happyrobot33
+  changes:
+  - message: Removed ability to mail resomi and felionoids.
+    type: Remove
+  id: 703
+  time: '2025-04-24T04:25:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/521
+- author: Happyrobot33
+  changes:
+  - message: Fixed ability to pickup resomi and felionoids while dragging them.
+    type: Fix
+  id: 704
+  time: '2025-04-24T04:25:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/521
+- author: Happyrobot33
+  changes:
+  - message: Added Centcomm Hud and Glasses.
+    type: Add
+  id: 705
+  time: '2025-04-24T04:28:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/485
+- author: Happyrobot33
+  changes:
+  - message: Added Centcomm job icon.
+    type: Add
+  id: 706
+  time: '2025-04-24T04:28:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/485
+- author: CringeCursed
+  changes:
+  - message: New trinket Rosary Beeds
+    type: Add
+  id: 707
+  time: '2025-04-24T04:29:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/523
+- author: Happyrobot33
+  changes:
+  - message: Raise emote cooldown to 1.5s
+    type: Tweak
+  id: 708
+  time: '2025-04-24T04:30:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/529
+- author: Happyrobot33
+  changes:
+  - message: Reverted upstream storage implanter change.
+    type: Tweak
+  id: 709
+  time: '2025-04-24T04:33:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/526
+- author: Happyrobot33
+  changes:
+  - message: CC Faxes go directly to aghosts aswell instead of just CC.
+    type: Add
+  id: 710
+  time: '2025-04-24T05:03:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/530
+- author: PubliclyExecutedPig
+  changes:
+  - message: Buffed Barotrauma Damage
+    type: Tweak
+  id: 711
+  time: '2025-04-25T04:29:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/535
+- author: CringeCursed
+  changes:
+  - message: added resistance to winter coats
+    type: Tweak
+  id: 712
+  time: '2025-04-25T04:32:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/524
+- author: CringeCursed
+  changes:
+  - message: make some of collective minds and syndicate radio channel more readable
+    type: Tweak
+  id: 713
+  time: '2025-04-25T04:32:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/534
+- author: InanimateIJK
+  changes:
+  - message: As originally intended... "breacher.ogg" by Artifyber to the lobby music
+      roll from the misc path basement.
+    type: Add
+  id: 714
+  time: '2025-04-25T04:34:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/532
+- author: Mephisto72
+  changes:
+  - message: The AI can now access Law Communications
+    type: Tweak
+  id: 715
+  time: '2025-04-25T04:35:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/519
+- author: Happyrobot33
+  changes:
+  - message: Added Mailman job.
+    type: Add
+  id: 716
+  time: '2025-04-25T04:52:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/496
+- author: Happyrobot33
+  changes:
+  - message: Added Mail Trolley
+    type: Add
+  id: 717
+  time: '2025-04-25T04:52:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/496
+- author: Happyrobot33
+  changes:
+  - message: Increased capacity of mail bag.
+    type: Tweak
+  id: 718
+  time: '2025-04-25T04:52:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/496
+- author: Happyrobot33
+  changes:
+  - message: Fixed ling biomass not decreasing.
+    type: Fix
+  id: 719
+  time: '2025-04-25T04:53:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/528
 
