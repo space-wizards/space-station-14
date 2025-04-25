@@ -289,8 +289,11 @@ public abstract partial class SharedMoverController : VirtualController
             accel *= tileDef?.MobAcceleration ?? 1f;
         }
 
-        // This way friction never exceeds acceleration. If you want to slow down an entity with "friction" you shouldn't be using this system.
-        friction = Math.Clamp(friction, _minDamping, accel);
+        // This way friction never exceeds acceleration when you're trying to move.
+        // If you want to slow down an entity with "friction" you shouldn't be using this system.
+        if (wishDir != Vector2.Zero)
+            friction = Math.Min(friction, accel);
+        friction = Math.Max(friction, _minDamping);
         var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
         Friction(minimumFrictionSpeed, frameTime, friction, ref velocity);
 
