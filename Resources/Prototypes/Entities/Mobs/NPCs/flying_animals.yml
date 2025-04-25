@@ -9,3 +9,5 @@
   - type: NoSlip
   - type: MovementAlwaysTouching
   - type: CanMoveInAir
+  - type: MovementSpeedModifier
+    baseWeightlessFriction: 5

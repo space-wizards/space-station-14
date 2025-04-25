@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Numerics;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.CCVar;
@@ -21,6 +22,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Exceptions;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
@@ -62,6 +64,9 @@ public abstract partial class SharedMoverController : VirtualController
     private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 
     private bool _relativeMovement;
+    private float _minDamping;
+    private float _airDamping;
+    private float _offGridDamping;
 
     /// <summary>
     /// Cache the mob movement calculation to re-use elsewhere.
@@ -85,9 +90,14 @@ public abstract partial class SharedMoverController : VirtualController
         FootstepModifierQuery = GetEntityQuery<FootstepModifierComponent>();
         MapGridQuery = GetEntityQuery<MapGridComponent>();
 
+        SubscribeLocalEvent<MovementSpeedModifierComponent, TileFrictionEvent>(OnTileFriction);
+
         InitializeInput();
         InitializeRelay();
         Subs.CVar(_configManager, CCVars.RelativeMovement, value => _relativeMovement = value, true);
+        Subs.CVar(_configManager, CCVars.MinFriction, value => _minDamping = value, true);
+        Subs.CVar(_configManager, CCVars.AirFriction, value => _airDamping = value, true);
+        Subs.CVar(_configManager, CCVars.OffgridFriction, value => _offGridDamping = value, true);
         UpdatesBefore.Add(typeof(TileFrictionController));
     }
 
@@ -190,7 +200,7 @@ public abstract partial class SharedMoverController : VirtualController
             return;
         }
 
-        // If the body is in air but isn't weightless then can't move
+        // If the body is in air but isn't weightless then it can't move
         // TODO: MAKE ISWEIGHTLESS EVENT BASED
         var weightless = _gravity.IsWeightless(uid, physicsComponent, xform);
         var inAirHelpless = false;
@@ -227,30 +237,30 @@ public abstract partial class SharedMoverController : VirtualController
 
             wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
 
+            var ev = new CanWeightlessMoveEvent(uid);
+            RaiseLocalEvent(uid, ref ev, true);
+
+            touching = ev.CanMove || xform.GridUid != null || MapGridQuery.HasComp(xform.GridUid);
+
+            // If we're not on a grid, and not able to move in space check if we're close enough to a grid to touch.
+            if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
+                touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, uid, physicsComponent);
+
             // If we're touching then use the weightless values
-            // Some stuff like jetpacks for example might flag it as touching even if it isn't.
-            if (xform.GridUid != null || MapGridQuery.HasComp(xform.GridUid))
+            if (touching)
             {
                 touching = true;
                 if (wishDir != Vector2.Zero)
-                    friction = moveSpeedComponent?.WeightlessFriction ?? MovementSpeedModifierComponent.DefaultWeightlessFriction;
+                    friction = moveSpeedComponent?.WeightlessFriction ?? _airDamping;
                 else
-                    friction = moveSpeedComponent?.WeightlessFrictionNoInput ?? MovementSpeedModifierComponent.DefaultWeightlessFrictionNoInput;
+                    friction = moveSpeedComponent?.WeightlessFrictionNoInput ?? _airDamping;
             }
             // Otherwise use the off-grid values.
             else
             {
-                var ev = new CanWeightlessMoveEvent(uid);
-                RaiseLocalEvent(uid, ref ev, true);
-                // No gravity: is our entity touching anything?
-                touching = ev.CanMove;
-
-                if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
-                    touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, uid, physicsComponent);
-                friction = moveSpeedComponent?.OffGridFriction ?? MovementSpeedModifierComponent.DefaultOffGridFriction;
+                friction = moveSpeedComponent?.OffGridFriction ?? _offGridDamping;
             }
 
-            wishDir *= moveSpeedComponent?.WeightlessModifier ?? MovementSpeedModifierComponent.DefaultWeightlessModifier;
             accel = moveSpeedComponent?.WeightlessAcceleration ?? MovementSpeedModifierComponent.DefaultWeightlessAcceleration;
         }
         else
@@ -264,22 +274,26 @@ public abstract partial class SharedMoverController : VirtualController
 
             wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
 
-            friction = tileDef?.Friction ?? 0.3f;
-
             if (wishDir != Vector2.Zero)
             {
-                friction *= tileDef?.MobFriction ?? moveSpeedComponent?.Friction ?? MovementSpeedModifierComponent.DefaultFriction;
+                friction = moveSpeedComponent?.Friction ?? MovementSpeedModifierComponent.DefaultFriction;
+                friction *= tileDef?.MobFriction ?? tileDef?.Friction ?? 1f;
             }
             else
             {
-                friction *= tileDef?.MobFrictionNoInput ?? moveSpeedComponent?.FrictionNoInput ?? MovementSpeedModifierComponent.DefaultFrictionNoInput;
+                friction = moveSpeedComponent?.FrictionNoInput ?? MovementSpeedModifierComponent.DefaultFrictionNoInput;
+                friction *= tileDef?.Friction ?? 1f;
             }
 
-            accel = tileDef?.MobAcceleration ?? moveSpeedComponent?.Acceleration ?? MovementSpeedModifierComponent.DefaultAcceleration;
+            accel = moveSpeedComponent?.Acceleration ?? MovementSpeedModifierComponent.DefaultAcceleration;
+            accel *= tileDef?.MobAcceleration ?? 1f;
         }
 
-        // This way friction never exceeds acceleration. If you want to slow down an entity with "friction" you shouldn't be using this system.
-        friction = Math.Min(friction, accel);
+        // This way friction never exceeds acceleration when you're trying to move.
+        // If you want to slow down an entity with "friction" you shouldn't be using this system.
+        if (wishDir != Vector2.Zero)
+            friction = Math.Min(friction, accel);
+        friction = Math.Max(friction, _minDamping);
         var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
         Friction(minimumFrictionSpeed, frameTime, friction, ref velocity);
 
@@ -289,10 +303,19 @@ public abstract partial class SharedMoverController : VirtualController
         SetWishDir((uid, mover), wishDir);
 
         /*
-         * TODO: Put info about snaking here so someone doesn't think it's a bug
-         * Snaking is when you strafe side to side to get a bit more velocity. It's a feature but for it to be a feature
-         * you need to be very careful with the friction values you pass to a mover. Snaking should only be useful in
-         * certain cases and friction should never be so low compared to acceleration that your movement feels jumpy.
+         * SNAKING!!! >-( 0 ================>
+         * Snaking is a feature where you can move faster by strafing in a direction perpendicular to the
+         * direction you intend to move while still holding the movement key for the direction you're trying to move.
+         * Snaking only works if acceleration exceeds friction, and it's effectiveness scales as acceleration continues
+         * to exceed friction.
+         * Snaking works because friction is applied first in the direction of our current velocity, while acceleration
+         * is applied after in our "Wish Direction" and is capped by the dot of our wish direction and current direction.
+         * This means when you change direction, you're technically able to accelerate more than what the velocity cap
+         * allows, but friction normally eats up the extra movement you gain.
+         * By strafing as stated above you can increase your speed by about 1.4 (square root of 2).
+         * This only works if friction is low enough so be sure that anytime you are letting a mob move in a low friction
+         * environment you take into account the fact they can snake! Also be sure to lower acceleration as well to
+         * prevent jerky movement!
          */
         PhysicsSystem.SetLinearVelocity(uid, velocity, body: physicsComponent);
 
@@ -582,5 +605,17 @@ public abstract partial class SharedMoverController : VirtualController
         DebugTools.Assert(MathHelper.CloseToPercent(total.Length(), wishDir.Length()));
 
         return wishDir;
+    }
+
+    private void OnTileFriction(Entity<MovementSpeedModifierComponent> ent, ref TileFrictionEvent args)
+    {
+        if (!TryComp<PhysicsComponent>(ent, out var physicsComponent) || !XformQuery.TryComp(ent, out var xform))
+            return;
+
+        // TODO: Make IsWeightless event based!!!
+        if (physicsComponent.BodyStatus != BodyStatus.OnGround || _gravity.IsWeightless(ent, physicsComponent, xform))
+            args.Modifier *= ent.Comp.BaseWeightlessFriction;
+        else
+            args.Modifier *= ent.Comp.BaseFriction;
     }
 }
