@@ -43,6 +43,11 @@ public abstract class SharedStrippableSystem : EntitySystem
 
     private readonly Dictionary<EntityUid, Queue<DoAfterId>> _activeStripDoAfters = new();
 
+    public void ClearActiveStripDoAfters()
+    {
+        _activeStripDoAfters.Clear();
+    }
+
     // Starlight Start
     private void LimitSimultaneousStripDoAfters(Entity<HandsComponent?> user, DoAfterArgs doAfterArgs)
     {
