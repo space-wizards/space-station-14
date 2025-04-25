@@ -1,4 +1,6 @@
 using System.Linq;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -16,6 +18,7 @@ namespace Content.Shared.Weapons.Ranged.Upgrades;
 
 public sealed class GunUpgradeSystem : EntitySystem
 {
+    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
@@ -85,6 +88,8 @@ public sealed class GunUpgradeSystem : EntitySystem
         _popup.PopupClient(Loc.GetString("gun-upgrade-popup-insert", ("upgrade", args.Used),("gun", ent.Owner)), args.User);
         _gun.RefreshModifiers(ent.Owner);
         args.Handled = _container.Insert(args.Used, _container.GetContainer(ent, ent.Comp.UpgradesContainerId));
+
+        _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Used):player} inserted gun upgrade {ToPrettyString(args.Used)} into {ToPrettyString(ent.Owner)}.");
     }
 
     private void OnFireRateRefresh(Entity<GunUpgradeFireRateComponent> ent, ref GunRefreshModifiersEvent args)
