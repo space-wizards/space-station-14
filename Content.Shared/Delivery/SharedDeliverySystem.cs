@@ -56,10 +56,21 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         if (ent.Comp.IsOpened)
         {
-            args.PushText(Loc.GetString("delivery-already-opened-examine"));
+            // Should always show at the top
+            args.PushText(Loc.GetString("delivery-already-opened-examine"), 99);
         }
 
-        args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", recipientName), ("job", jobTitle)));
+        // Should always show second.
+        args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", recipientName), ("job", jobTitle)), 98);
+
+        if (ent.Comp.IsLocked)
+        {
+            var multiplier = GetDeliveryMultiplier(ent);
+            var totalSpesos = Math.Round(ent.Comp.BaseSpesoReward * multiplier);
+
+            // Should always show at the bottom. (Excluding things like item size examine)
+            args.PushMarkup(Loc.GetString("delivery-earnings-examine", ("spesos", totalSpesos)));
+        }
     }
 
     private void OnSpawnerExamine(Entity<DeliverySpawnerComponent> ent, ref ExaminedEvent args)
@@ -233,6 +244,20 @@ public abstract class SharedDeliverySystem : EntitySystem
     protected void UpdateDeliverySpawnerVisuals(EntityUid uid, int contents)
     {
         _appearance.SetData(uid, DeliverySpawnerVisuals.Contents, contents > 0);
+    }
+
+    /// <summary>
+    /// Gathers the total multiplier for a delivery.
+    /// This is done by components having subscribed to GetDeliveryMultiplierEvent and having added onto it.
+    /// </summary>
+    /// <param name="ent">The delivery for which to get the multiplier.</param>
+    /// <returns>Total multiplier.</returns>
+    protected float GetDeliveryMultiplier(Entity<DeliveryComponent> ent)
+    {
+        var ev = new GetDeliveryMultiplierEvent();
+        RaiseLocalEvent(ent, ref ev);
+
+        return ev.Multiplier;
     }
 
     protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }

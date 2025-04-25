@@ -36,6 +36,7 @@
     failPopup: fingerprint-reader-fail
     failGlovesPopup: fingerprint-reader-fail-gloves
   - type: Delivery
+  - type: DeliveryRandomMultiplier
   - type: ContainerContainer
     containers:
       delivery: !type:Container
