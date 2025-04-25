@@ -25,7 +25,7 @@ namespace Content.Server.Github;
 /// <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28">Rate limit information</see>
 /// <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/troubleshooting-the-rest-api?apiVersion=2022-11-28">Troubleshooting</see>
 /// </summary>
-public sealed class GithubApiManager : IPostInjectInit
+public sealed class GithubApiManager
 {
     [Dependency] private readonly ILogManager _log = default!;
     [Dependency] private readonly IHttpClientHolder _http = default!;
@@ -44,9 +44,11 @@ public sealed class GithubApiManager : IPostInjectInit
     private const string VersionHeader = "X-GitHub-Api-Version";
     private const string VersionNumber = "2022-11-28";
 
+    private const string RemainingHeader = "x-ratelimit-remaining";
+
     #endregion
 
-    private const string BaseUri = "https://api.github.com/";
+    private readonly Uri BaseUri = new("https://api.github.com/");
 
     #region CCvar values
 
@@ -74,7 +76,7 @@ public sealed class GithubApiManager : IPostInjectInit
         _cfg.OnValueChanged(CCVars.GithubMaxRetries, val => _maxRetries = val, true);
         _cfg.OnValueChanged(CCVars.GithubRequestBuffer, _rateLimiter.UpdateRequestBuffer, true);
 
-        // _nextApiCall = DateTime.UtcNow.AddSeconds(DefaultDelayTime);
+        _sawmill = _log.GetSawmill("github");
     }
 
     #region Public functions
@@ -89,7 +91,7 @@ public sealed class GithubApiManager : IPostInjectInit
     /// </summary>
     /// <remarks>This does not necessarily respect order.</remarks>>
     /// <param name="request">The request to enqueue.</param>
-    public async void QueueRequest(IGithubRequest request)
+    public void QueueRequest(IGithubRequest request)
     {
         _queue.Enqueue(new GithubQueueEntry(request));
         _sawmill.Info("Queued github request.");
@@ -129,7 +131,7 @@ public sealed class GithubApiManager : IPostInjectInit
         var response = await _http.Client.SendAsync(httpRequest);
 
         // Update rate limit
-        if (TryGetLongHeader(response.Headers, "x-ratelimit-remaining", out var remainingRequests))
+        if (TryGetLongHeader(response.Headers, RemainingHeader, out var remainingRequests))
             _rateLimiter.UpdateRequests(remainingRequests);
 
         _sawmill.Info($"Made a github api request to: {BaseUri+request.GetLocation(_owner, _repository)}");
@@ -306,11 +308,6 @@ public sealed class GithubApiManager : IPostInjectInit
     }
 
     #endregion
-
-    public void PostInject()
-    {
-        _sawmill = _log.GetSawmill("GITHUB");
-    }
 }
 
 /// <summary>
