@@ -115,6 +115,9 @@ public sealed class GithubApiManager
         var json = JsonSerializer.Serialize(request);
         var payload = new StringContent(json, Encoding.UTF8, "application/json");
 
+        var builder = new UriBuilder(BaseUri);
+        builder.Fragment = request.GetLocation(_owner, _repository);
+
         var httpRequest = new HttpRequestMessage
         {
             Method = request.RequestMethod,
@@ -124,7 +127,7 @@ public sealed class GithubApiManager
                 { AuthHeader, AuthHeaderBearer+_authToken },
                 { VersionHeader, VersionNumber },
             },
-            RequestUri = new Uri(BaseUri+request.GetLocation(_owner, _repository)),
+            RequestUri = builder.Uri,
             Content = payload,
         };
 
