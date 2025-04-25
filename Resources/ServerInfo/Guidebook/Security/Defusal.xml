@@ -26,7 +26,7 @@
   </Box>
 
   ## Arming
-  To arm a bomb, you can either [color=yellow]right click[/color] and click [color=yellow]Begin countdown[/click], or [color=yellow]alt-click[/color] the bomb. It will begin beeping.
+  To arm a bomb, you can either [color=yellow]right click[/color] and click [color=yellow]Begin countdown[/color], or [color=yellow]alt-click[/color] the bomb. It will begin beeping.
 
   ## Time
   A bomb has a limited time, at a minimum of [protodata="SyndicateBomb" comp="OnUseTimerTrigger" member="ShortestDelayOption"/] seconds and a maximum of [protodata="SyndicateBomb" comp="OnUseTimerTrigger" member="LongestDelayOption"/] seconds. You can view the timer by examining it, unless the Proceed wire is cut. Once the timer hits zero, the bomb will detonate.

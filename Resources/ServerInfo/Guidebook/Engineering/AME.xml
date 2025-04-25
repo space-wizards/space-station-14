@@ -2,7 +2,7 @@
   # Antimatter Engine (AME)
   The Antimatter Engine is a short-term support generator for the station, providing a sizable chunk of power for a limited time.
 
-  It's mainly used to assist engineers in starting up bigger engines like the [textlink="Singularity Engine" link="SingularityEngine"] or [textlink="Tesla Engine" link="TeslaEngine"], by supplementing the station's [textlink="batteries" link="PowerStorage"] with partial power to extend their runtime.
+  It's mainly used to assist engineers in starting up bigger engines like the [textlink="Singularity Engine" link="SingularityEngine"/] or [textlink="Tesla Engine" link="TeslaEngine"/], by supplementing the station's [textlink="batteries" link="PowerStorage"/] with partial power to extend their runtime.
 
   ## Construction
   <Box>Required parts:</Box>
@@ -12,7 +12,7 @@
   <GuideEntityEmbed Entity="AmeJar"/>
   </Box>
 
-  The AME Controller is the part of the AME that outputs power to the station's grid through an [textlink="HV connection" link="VoltageNetworks"].
+  The AME Controller is the part of the AME that outputs power to the station's grid through an [textlink="HV connection" link="VoltageNetworks"/].
   Because of this, you'll want to start your AME construction with the controller on top of an [color=orange]HV wire[/color].
 
   Most stations have exposed [color=orange]HV wiring[/color] or designated spots to wrench an AME controller, so that it connects to the grid.
@@ -57,7 +57,7 @@
     <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
   </Box>
   <Box>
-    [color=#999999][italic]An example of a one core setup[italic][/color]
+    [color=#999999][italic]An example of a one core setup[/italic][/color]
   </Box>
 
   ## Operation
@@ -71,6 +71,6 @@
 
   Any more than this ratio will eventually result in the engine [color=#ff0000]overheating[/color] and, shortly afterwards, [color=#ff0000]exploding[/color].
 
-  The AME controller will [textlink="report" link="InspectingPower"] on both the amount of power it is providing to the grid, and the theoretical maximum power it could provide if demanded.
+  The AME controller will [textlink="report" link="InspectingPower"/] on both the amount of power it is providing to the grid, and the theoretical maximum power it could provide if demanded.
 
 </Document>

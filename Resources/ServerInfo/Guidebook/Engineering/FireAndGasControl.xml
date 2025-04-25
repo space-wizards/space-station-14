@@ -1,6 +1,6 @@
 ﻿<Document>
   # Fire and Gas Control
-  Unfortunately, [textlink="fires" link="Fires"], [textlink="spacing" link="Spacing"], and other [textlink="atmospheric upsets" link="AtmosphericUpsets"] are a common occurrence on the station.
+  Unfortunately, [textlink="fires" link="Fires"/], [textlink="spacing" link="Spacing"/], and other [textlink="atmospheric upsets" link="AtmosphericUpsets"/] are a common occurrence on the station.
   These upsets can quickly spread throughout the station and make the atmosphere uninhabitable for the crew.
 
   <Box>
@@ -15,13 +15,13 @@
   ## Firelocks
   Firelocks are a simple and effective way to prevent fires from spreading throughout the station.
 
-  Based on conditions sensed by the firelock, or through instruction from a connected [textlink="air" link="AirAlarms"] or fire alarm, they can close off sections of the station to prevent the spread of dangerous conditions.
+  Based on conditions sensed by the firelock, or through instruction from a connected [textlink="air" link="AirAlarms"/] or fire alarm, they can close off sections of the station to prevent the spread of dangerous conditions.
 
   ## Station Sectioning
   Firelocks are intentionally placed in key areas to divide the station into sections. Open spaces like hallways or promenades are divided into smaller sections. This prevents the spread of dangerous conditions to the entire station through connected rooms, hallways, and other open spaces.
 
   ## Basic Operation
-  When not connected to an [textlink="air alarm" link="AirAlarms"] or fire alarm, firelocks will function based on the conditions they sense. Firelocks will drop (close) if:
+  When not connected to an [textlink="air alarm" link="AirAlarms"/] or fire alarm, firelocks will function based on the conditions they sense. Firelocks will drop (close) if:
   - The temperature between the two sides of the firelock is different by [color=orange][protodata="Firelock" comp="Firelock" member="TemperatureThreshold"/] K[/color] or more.
   - The pressure between the two sides of the firelock is different by [color=orange][protodata="Firelock" comp="Firelock" member="PressureThreshold"/] kPa[/color] or more.
 
@@ -35,8 +35,8 @@
   A common example of this is a firelock that has released due to both sides being exposed to space.
 
   ## Connecting to Air and Fire Alarms
-  Firelocks can be connected to [textlink="air alarms" link="AirAlarms"] and fire alarms to receive instructions on when to drop.
-  Firelocks use the [textlink="List system" link="Networking"], and you can connect these devices using a multitool or network configurator.
+  Firelocks can be connected to [textlink="air alarms" link="AirAlarms"/] and fire alarms to receive instructions on when to drop.
+  Firelocks use the [textlink="List system" link="Networking"/], and you can connect these devices using a multitool or network configurator.
 
   <Box>
     <GuideEntityEmbed Entity="Firelock" Caption=""/>
@@ -49,7 +49,7 @@
   Each firelock has its own unique address. The process for connecting air vents, scrubbers, and sensors to air alarms is very similar.
 
   ## Operation Under Air Alarms
-  When connected to an air alarm, firelocks will also drop under the command of the connected [textlink="air alarm" link="AirAlarms"].
+  When connected to an air alarm, firelocks will also drop under the command of the connected [textlink="air alarm" link="AirAlarms"/].
 
   Firelocks will drop if the air alarm reaches a [color=red]Danger[/color] alert state. Firelocks will remain dropped until the air alarm returns to a [color=green]Green[/color] alert state.
 
@@ -65,7 +65,7 @@
     <GuideEntityEmbed Entity="FireAlarm"/>
   </Box>
 
-  Devices with sensors can be [textlink="linked" link="Networking"] to fire alarms, which will trigger the fire alarm if the sensor enters the [color=red]Danger[/color] temperature threshold as defined by its sensors.
+  Devices with sensors can be [textlink="linked" link="Networking"/] to fire alarms, which will trigger the fire alarm if the sensor enters the [color=red]Danger[/color] temperature threshold as defined by its sensors.
 
   When the fire alarm is triggered, all connected firelocks will be overridden with a [color=red]Danger[/color] alert state and will drop.
 

@@ -8,26 +8,26 @@ You and your fellow crewmates are tasked with working together, surviving, and h
 
 More detailed guides about [italic]specific jobs[/italic] and [italic]mechanics[/italic] can be found [textlink="here." link="SS14"/]
 
-This guide can be reopened at any time using [color=yellow][bold][keybind="OpenGuidebook"][/bold][/color].
+This guide can be reopened at any time using [color=yellow][bold][keybind="OpenGuidebook"/][/bold][/color].
 
 ## Basic Controls
 The following are the controls you'll need for regular gameplay:
 
-- Run using [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color]. Hold down [color=yellow][bold][keybind="Walk"][/bold][/color] to walk
+- Run using [color=yellow][bold][keybind="MoveUp"/][keybind="MoveLeft"/][keybind="MoveDown"/][keybind="MoveRight"/][/bold][/color]. Hold down [color=yellow][bold][keybind="Walk"/][/bold][/color] to walk
 
-- Examine the world around you with [color=yellow][bold][keybind="ExamineEntity"][/bold][/color]
+- Examine the world around you with [color=yellow][bold][keybind="ExamineEntity"/][/bold][/color]
 
-- Interact with the world using [color=yellow][bold][keybind="Use"][/bold][/color]
+- Interact with the world using [color=yellow][bold][keybind="Use"/][/bold][/color]
 
-- Hovering over an entity and pressing [color=yellow][bold][keybind="UseSecondary"][/bold][/color] shows the [italic]context menu[/italic], which contains additional interactions
+- Hovering over an entity and pressing [color=yellow][bold][keybind="UseSecondary"/][/bold][/color] shows the [italic]context menu[/italic], which contains additional interactions
 
-- Swap hands using [color=yellow][bold][keybind="SwapHands"][/bold][/color] and activate the currently held item with [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color]
+- Swap hands using [color=yellow][bold][keybind="SwapHands"/][/bold][/color] and activate the currently held item with [color=yellow][bold][keybind="ActivateItemInHand"/][/bold][/color]
 
-- Drop held items with [color=yellow][bold][keybind="Drop"][/bold][/color] or throw them using [color=yellow][bold][keybind="ThrowItemInHand"][/bold][/color]
+- Drop held items with [color=yellow][bold][keybind="Drop"/][/bold][/color] or throw them using [color=yellow][bold][keybind="ThrowItemInHand"/][/bold][/color]
 
-- Pull and release things with [color=yellow][bold][keybind="TryPullObject"][/bold][/color] and [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color]
+- Pull and release things with [color=yellow][bold][keybind="TryPullObject"/][/bold][/color] and [color=yellow][bold][keybind="ReleasePulledObject"/][/bold][/color]
 
-A more comprehensive list can be found on the [textlink="controls" link="Controls"] page.
+A more comprehensive list can be found on the [textlink="controls" link="Controls"/] page.
 
 ## What is SS14?
 Space Station 14 is a multiplayer game about paranoia and chaos on a space station and a remake of the cult-classic Space Station 13.

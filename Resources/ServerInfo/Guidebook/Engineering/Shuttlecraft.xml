@@ -83,9 +83,9 @@
   It's a good idea to install four thrusters, one on each side of the platform, to ensure you can move in any direction.
 
   They must be pointing outward into space to function and will not fire if there's a tile in the way of the nozzle.
-  You can rotate thrusters—even anchored ones—using either [color=yellow][bold][keybind="RotateObjectClockwise"][/bold][/color] or [color=yellow][bold][keybind="RotateObjectCounterclockwise"][/bold][/color] to rotate clockwise or counterclockwise.
+  You can rotate thrusters—even anchored ones—using either [color=yellow][bold][keybind="RotateObjectClockwise"/][/bold][/color] or [color=yellow][bold][keybind="RotateObjectCounterclockwise"/][/bold][/color] to rotate clockwise or counterclockwise.
 
-  Thrusters can be disabled or enabled using [color=yellow][bold][keybind="Use"][/bold][/color] with an empty hand or [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
+  Thrusters can be disabled or enabled using [color=yellow][bold][keybind="Use"/][/bold][/color] with an empty hand or [color=yellow][bold][keybind="ActivateItemInWorld"/][/bold][/color].
 
   ## Rotational Control
   Now that you have directional control, you'll need to install a gyroscope to control your rotation.
