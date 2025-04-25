@@ -137,6 +137,7 @@ food-sequence-cotton-burger-content-plushie-rouny = rouny
 food-sequence-cotton-burger-content-plushie-lamp = lamp
 food-sequence-cotton-burger-content-plushie-arachnid = spider
 food-sequence-cotton-burger-content-plushie-lizard = weh
+food-sequence-cotton-burger-content-plushie-experiment = experimental
 food-sequence-cotton-burger-content-plushie-spacelizard = space
 food-sequence-cotton-burger-content-plushie-lizard-inversed = hew
 food-sequence-cotton-burger-content-plushie-diona = dion
@@ -157,7 +158,6 @@ food-sequence-cotton-burger-content-plushie-human = uristmc
 food-sequence-cotton-burger-content-plushie-moth = fluff
 food-sequence-cotton-burger-content-plushie-ian = corgi
 food-sequence-cotton-burger-content-among-pequeno = sus
-food-sequence-cotton-burger-content-rubber-chicken = chicken
 
 # TACO
 

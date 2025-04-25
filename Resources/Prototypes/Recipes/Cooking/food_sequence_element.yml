@@ -1361,6 +1361,16 @@
   - sprite: Objects/Fun/toys.rsi
     state: plushie_lizard_inversed
 
+# Experiment Plushie
+
+- type: foodSequenceElement
+  id: ExperimentPlushie
+  scale: 0.8, 0.8
+  name: food-sequence-cotton-burger-content-plushie-experiment
+  sprites:
+  - sprite: Objects/Fun/expiplush.rsi
+    state: expi
+
 #Diona Plushie
 
 - type: foodSequenceElement
@@ -1542,12 +1552,3 @@
 #  name: food-sequence-cotton-burger-content-among-pequeno
 #  sprites:
 #  - sprite: Objects/Fun/pequeno.rsi
-
-#Rubber Chicken, which for some reason can be eaten by moths
-
-- type: foodSequenceElement
-  id: RubberChicken
-  name: food-sequence-cotton-burger-content-rubber-chicken
-  sprites:
-  - sprite: Objects/Fun/toys.rsi
-    state: rubber_chicken

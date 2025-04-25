@@ -456,6 +456,9 @@
     equippedPrefix: expi
     slots:
     - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: ExperimentPlushie
 
 - type: entity
   parent: PlushieLizard
@@ -1079,6 +1082,9 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: XenoPlushie
 
 - type: entity
   parent: BasePlushie
