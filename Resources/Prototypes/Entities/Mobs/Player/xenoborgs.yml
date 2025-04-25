@@ -574,6 +574,11 @@
       - BorgModuleCable
       - XenoborgModuleAccessBreaker
       - XenoborgModuleFireExtinguisher
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHighPrinted
 
 - type: entity
   parent: XenoborgHeavy
@@ -589,6 +594,11 @@
       - XenoborgModuleTool
       - XenoborgModuleLaser
       - XenoborgModuleJammer
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHighPrinted
 
 - type: entity
   parent: XenoborgScout
@@ -604,6 +614,11 @@
       - XenoborgModuleTool
       - XenoborgModuleSword
       - XenoborgModuleSpaceMovement
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHighPrinted
 
 - type: entity
   parent: XenoborgStealth
@@ -620,3 +635,8 @@
       - XenoborgModuleHypo
       - XenoborgModuleChameleonProjector
       - XenoborgModuleCloakDevice
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHighPrinted
