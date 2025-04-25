@@ -12,6 +12,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Numerics;
+using static Robust.Client.Placement.PlacementManager;
 
 namespace Content.Client.Atmos;
 
@@ -74,6 +75,10 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
         _unalignedMouseCoords = ScreenToCursorGrid(mouseScreen);
         base.AlignPlacementMode(mouseScreen);
 
+        // Exit early if we are in line/grid placing mode
+        if (pManager.PlacementType != PlacementTypes.None)
+            return;
+
         MouseCoords = _unalignedMouseCoords.AlignWithClosestGridTile(SearchBoxSize, _entityManager, _mapManager);
 
         var gridId = _transformSystem.GetGrid(MouseCoords);
@@ -101,11 +106,11 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
             layer = (direction == Direction.North || direction == Direction.East) ? 1 : 2;
         }
 
-        // Update construction menu placer
+        // Update the construction menu placer
         if (pManager.Hijack != null)
             UpdateHijackedPlacer(layer, mouseScreen);
 
-        // Update debug placer
+        // Otherwise update the debug placer
         else
             UpdatePlacer(layer);
     }
