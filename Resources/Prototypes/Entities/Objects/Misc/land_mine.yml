@@ -5,7 +5,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: ItemToggle
-  - type: Anchorable
+    soundActivate:
+      path: /Audio/Weapons/click.ogg
+      params:
+        maxDistance: 1
   - type: Pullable
   - type: MovedByPressure
   - type: Physics

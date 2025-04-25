@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Examine;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.Toggleable;
-
 
 namespace Content.Shared.Armable;
 
@@ -12,7 +11,7 @@ namespace Content.Shared.Armable;
 /// </summary>
 public sealed class ArmableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
 
     public override void Initialize()
     {
@@ -48,12 +47,8 @@ public sealed class ArmableSystem : EntitySystem
     /// </summary>
     private void ArmingDone(Entity<ArmableComponent> entity, ref ItemToggledEvent args)
     {
-        if (!TryComp<ItemToggleComponent>(entity, out var comp))
+        if (!args.Activated)
             return;
-
-        comp.Activated = true;
-        comp.OnActivate = false;
-
-        _appearance.SetData(entity, ToggleVisuals.Toggled, comp.Activated);
+        _itemToggle.SetOnActivate(entity.Owner, false);
     }
 }

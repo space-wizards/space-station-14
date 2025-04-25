@@ -6,6 +6,7 @@ namespace Content.Shared.Armable;
 /// Makes an item armable, needs ItemToggleComponent to work.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(ArmableSystem))]
 public sealed partial class ArmableComponent : Component
 {
     /// <summary>
