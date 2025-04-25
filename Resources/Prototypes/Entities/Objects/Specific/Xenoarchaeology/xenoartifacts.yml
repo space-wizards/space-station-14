@@ -45,6 +45,10 @@
   # These components are needed for certain triggers to work.
   - type: RadiationReceiver
   - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+      Acidic: [Touch]
 
 - type: entity
   id: ActionArtifactActivate
