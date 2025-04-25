@@ -29,20 +29,6 @@ public sealed partial class ProfilePreviewSpriteView
     {
         JobName = null;
 
-        if (job == null && humanoid.JobPreferences.Count == 0)
-        {
-            foreach(var antag in humanoid.AntagPreferences)
-            {
-                if (!_prototypeManager.TryIndex(antag, out var antagProto))
-                    continue;
-                if (!antagProto.PreviewStartingGear.HasValue)
-                    continue;
-
-                GiveDummyAntagLoadout(antagProto);
-                JobName = Loc.GetString(antagProto.Name);
-                return;
-            }
-        }
         job ??= GetPreferredJob(humanoid);
 
         EntProtoId? previewEntity = null;
@@ -64,6 +50,21 @@ public sealed partial class ProfilePreviewSpriteView
 
         if (!showClothes)
             return;
+
+        if (job == null && humanoid.JobPreferences.Count == 0)
+        {
+            foreach(var antag in humanoid.AntagPreferences)
+            {
+                if (!_prototypeManager.TryIndex(antag, out var antagProto))
+                    continue;
+                if (!antagProto.PreviewStartingGear.HasValue)
+                    continue;
+
+                GiveDummyAntagLoadout(antagProto);
+                JobName = Loc.GetString(antagProto.Name);
+                return;
+            }
+        }
 
         if (job == null)
         {
