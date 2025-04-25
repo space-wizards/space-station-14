@@ -235,3 +235,27 @@
   - type: Residue
     residueAdjective: residue-slippery
     residueColor: residue-blue
+
+- type: entity
+  name: cyber soap
+  id: BorgSoap
+  parent: SoapNT
+  description: A bar of soap artificially created by the inner workings of a cyborg.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      soap:
+        maxVol: 1000 # Basically never runs out
+        reagents:
+        - ReagentId: SoapReagent
+          Quantity: 1000
+  - type: SolutionTransfer
+    canReceive: false
+    canSend: false
+    canChangeTransferAmount: false
+  - type: SolutionRegeneration
+    solution: soap
+    generated:
+      reagents:
+      - ReagentId: SoapReagent # Just so it definitely never runs out
+        Quantity: 10
