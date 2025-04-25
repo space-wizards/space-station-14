@@ -22,7 +22,7 @@ public sealed partial class ItemToggleComponent : Component
     /// <summary>
     /// Can the entity be activated in the world.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool OnActivate = true;
 
     /// <summary>
