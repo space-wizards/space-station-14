@@ -504,6 +504,10 @@
           Quantity: 10
         - ReagentId: Fat
           Quantity: 3
+  - type: Tag
+    tags:
+    - Raw
+    - Meat
 
 - type: entity
   name: meatwheat clump
@@ -522,6 +526,10 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 1
+  - type: Tag
+    tags:
+    - Raw
+    - Meat
 
 - type: entity
   name: raw snake meat
@@ -613,6 +621,9 @@
     slice: FoodMeatTomatoCutlet
   - type: StaticPrice
     price: 100
+  - type: Tag
+    tags:
+    - Vegetable
 
 - type: entity
   name: salami
