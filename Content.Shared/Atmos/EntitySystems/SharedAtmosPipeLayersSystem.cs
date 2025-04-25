@@ -5,6 +5,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Content.Shared.SubFloor;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
@@ -55,9 +56,37 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             return;
 
         var user = args.User;
+        var isCovered = TryComp<SubFloorHideComponent>(ent, out var subFloorHide) && subFloorHide.IsUnderCover;
+        var isMissingTool = !TryGetHeldTool(user, ent.Comp.Tool, out var tool);
 
-        // Player either require a tool to adjust the pipe layer or the instant do afters tag
-        if (TryGetHeldTool(user, ent.Comp.Tool, out var tool))
+        if (isCovered || isMissingTool)
+        {
+            var label = "???";
+
+            if (isCovered)
+            {
+                label = Loc.GetString("atmos-pipe-layers-component-pipes-are-covered");
+            }
+
+            else if (isMissingTool)
+            {
+                var toolName = Loc.GetString(toolProto.ToolName).ToLower();
+                label = Loc.GetString("atmos-pipe-layers-component-tool-missing", ("toolName", toolName));
+            }
+
+            var v = new Verb
+            {
+                Priority = 1,
+                Category = VerbCategory.Adjust,
+                Text = label,
+                Disabled = true,
+                Impact = LogImpact.Low,
+            };
+
+            args.Verbs.Add(v);
+        }
+
+        else if (tool != null)
         {
             for (var i = 0; i < ent.Comp.NumberOfPipeLayers; i++)
             {
@@ -82,29 +111,18 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
                 args.Verbs.Add(v);
             }
         }
-
-        else
-        {
-            var toolName = Loc.GetString(toolProto.ToolName).ToLower();
-            var label = Loc.GetString("atmos-pipe-layers-component-tool-missing", ("toolName", toolName));
-
-            var v = new Verb
-            {
-                Priority = 1,
-                Category = VerbCategory.Adjust,
-                Text = label,
-                Disabled = true,
-                Impact = LogImpact.Low,
-            };
-
-            args.Verbs.Add(v);
-        }
     }
 
     private void OnInteractUsing(Entity<AtmosPipeLayersComponent> ent, ref InteractUsingEvent args)
     {
         if (ent.Comp.NumberOfPipeLayers <= 1 || ent.Comp.PipeLayersLocked)
             return;
+
+        if (TryComp<SubFloorHideComponent>(ent, out var subFloorHide) && subFloorHide.IsUnderCover)
+        {
+            _popup.PopupPredicted(Loc.GetString("atmos-pipe-layers-component-cannot-adjust-pipes"), ent, args.User);
+            return;
+        }
 
         if (TryComp<ToolComponent>(args.Used, out var tool) && _tool.HasQuality(args.Used, ent.Comp.Tool, tool))
             _tool.UseTool(args.Used, args.User, ent, ent.Comp.Delay, tool.Qualities, new TryCyclingPipeLayerCompletedEvent());
