@@ -5126,4 +5126,11 @@ Entries:
   id: 710
   time: '2025-04-24T05:03:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/530
+- author: PubliclyExecutedPig
+  changes:
+  - message: Buffed Barotrauma Damage
+    type: Tweak
+  id: 711
+  time: '2025-04-25T04:29:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/535
 
