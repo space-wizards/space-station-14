@@ -62,19 +62,6 @@
 
 - type: entity
   parent: BasePercussionInstrument
-  id: KalimbaInstrument
-  name: kalimba
-  description: The power of a piano right at your thumbs.
-  components:
-  - type: Instrument
-    program: 108
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/kalimba.rsi
-  - type: Item
-    size: Small
-
-- type: entity
-  parent: BasePercussionInstrument
   id: WoodblockInstrument
   name: woodblock
   description: If you listen to this enough it'll start driving itself into your mind.

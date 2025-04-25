@@ -53,3 +53,15 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/accordion.rsi
 
+- type: entity
+  parent: BaseKeyedInstrument
+  id: KalimbaInstrument
+  name: kalimba
+  description: The power of a piano right at your thumbs.
+  components:
+  - type: Instrument
+    program: 108
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/kalimba.rsi
+  - type: Item
+    size: Small
