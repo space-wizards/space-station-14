@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Ian321
-  changes:
-  - message: Restricted contraband now gets displayed correctly.
-    type: Fix
-  id: 7844
-  time: '2025-01-23T14:01:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34558
-- author: TheShuEd, LeveFUN
-  changes:
-  - message: You can now put c4 on your head
-    type: Add
-  id: 7845
-  time: '2025-01-23T21:11:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34076
 - author: WarPigeon
   changes:
   - message: Uranium is now slightly radioactive.
@@ -3924,3 +3910,18 @@
   id: 8345
   time: '2025-04-25T06:03:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32293
+- author: kosticia
+  changes:
+  - message: Moths can no longer eat rubber toys.
+    type: Fix
+  id: 8346
+  time: '2025-04-25T07:20:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34543
+- author: chromiumboy
+  changes:
+  - message: Gas vent under-pressure lockout releases are now performed using the
+      right-click menu - a screwdriver is no longer required
+    type: Tweak
+  id: 8347
+  time: '2025-04-25T07:21:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36910
