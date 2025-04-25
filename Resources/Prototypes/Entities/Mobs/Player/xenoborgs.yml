@@ -847,7 +847,7 @@
       - BorgChassis
 
 - type: entity
-  parent: MothershipCoreFrabricatorBase
+  parent: MothershipCoreFabricatorBase
   id: MothershipCoreFrabricator
   suffix: not sentient
 
