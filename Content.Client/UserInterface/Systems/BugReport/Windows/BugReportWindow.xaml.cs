@@ -21,12 +21,17 @@ public sealed partial class BugReportWindow : DefaultWindow
     // This action gets invoked when the user submits a bug report.
     public event Action<PlayerBugReportInformation>? OnBugReportSubmitted;
 
+    // These are NOT always up to date. If someone disconnects and reconnects, the values will be reset.
+    // The only other way of getting updated values would be a message from client -> server then from server -> client.
+    // I don't think that is worth the added complexity.
     private DateTime lastBugReportSubmittedTime = DateTime.MinValue;
+    private int amountOfBugReportsSubmitted;
 
     // CCvar cached values.
     private bool EnablePlayerBugReports;
     private int MinimumPlaytimeBugReports;
     private int MinimumTimeBetweenBugReports;
+    private int MaximumBugReportsPerRound;
 
     private int MaximumBugReportTitleLength;
     private int MinimumBugReportTitleLength;
@@ -41,6 +46,7 @@ public sealed partial class BugReportWindow : DefaultWindow
         _cfg.OnValueChanged(CCVars.EnablePlayerBugReports, v => { EnablePlayerBugReports = v;}, true);
         _cfg.OnValueChanged(CCVars.MinimumPlaytimeBugReports, v => { MinimumPlaytimeBugReports = v;}, true);
         _cfg.OnValueChanged(CCVars.MinimumTimeBetweenBugReports, v => { MinimumTimeBetweenBugReports = v;}, true);
+        _cfg.OnValueChanged(CCVars.MaximumBugReportsPerRound, v => { MaximumBugReportsPerRound = v;}, true);
 
         _cfg.OnValueChanged(CCVars.MaximumBugReportTitleLength, v => { MaximumBugReportTitleLength = v;}, true);
         _cfg.OnValueChanged(CCVars.MinimumBugReportTitleLength, v => { MinimumBugReportTitleLength = v;}, true);
@@ -67,6 +73,7 @@ public sealed partial class BugReportWindow : DefaultWindow
 
         OnBugReportSubmitted?.Invoke(report);
         lastBugReportSubmittedTime = DateTime.UtcNow;
+        amountOfBugReportsSubmitted++;
 
         BugReportTitle.Text = string.Empty;
         BugReportDescription.TextRope = Rope.Leaf.Empty;
@@ -120,6 +127,12 @@ public sealed partial class BugReportWindow : DefaultWindow
         {
             var time = timeBetweenBugReports - timeSinceLastReport;
             errorMessage = Loc.GetString("bug-report-window-disabled-cooldown", ("time", $"{new TimeSpan(time.Days, time.Hours, time.Minutes, time.Seconds)}"));
+            return false;
+        }
+
+        if (amountOfBugReportsSubmitted >= MaximumBugReportsPerRound)
+        {
+            errorMessage = Loc.GetString("bug-report-window-disabled-submissions", ("num", MaximumBugReportsPerRound));
             return false;
         }
 

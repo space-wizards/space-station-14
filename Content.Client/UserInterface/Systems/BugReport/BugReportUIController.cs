@@ -41,8 +41,6 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
         CommandBinds.Unregister<BugReportUIController>();
     }
 
-    public override void Initialize(){}
-
     private void SetupWindow()
     {
         _bugReportWindow = UIManager.CreateWindow<BugReportWindow>();
