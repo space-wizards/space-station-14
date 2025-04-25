@@ -620,3 +620,198 @@
       - XenoborgModuleHypo
       - XenoborgModuleChameleonProjector
       - XenoborgModuleCloakDevice
+
+- type: body
+  id: MothershipCoreBody
+  name: "core"
+  root: torso
+  slots:
+    torso:
+      part: TorsoBorg
+      connections:
+      - right2hand
+      - right1hand
+      - left1hand
+      - left2hand
+    left1hand:
+      part: LeftArmBorg
+    left2hand:
+      part: LeftArmBorg
+    right1hand:
+      part: RightArmBorg
+    right2hand:
+      part: RightArmBorg
+
+- type: startingGear
+  id: MothershipCoreGear
+  inhand:
+  - DoorRemoteXenoborg
+  - Omnitool
+
+- type: entity
+  parent: [ BaseMachinePowered, BaseMob, StripableInventoryBase ]
+  id: MothershipCore
+  name: mothership core
+  description: A sentient machine that can produce xenoborgs. Without this the xenoborgs are doomed.
+  components:
+  - type: Appearance
+  - type: WiresVisuals
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+          - MachineLayer
+  - type: Sprite
+    sprite: Mobs/Silicon/mothership_core.rsi
+    layers:
+    - state: core-idle
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: core-load
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: core-o
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: null
+  - type: Lathe
+    idleState: core-idle
+    runningState: core-active
+    staticPacks:
+    - EmptyXenoborgs
+    - XenoborgUpgradeModules
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: PointLight
+    color: "#0033ff"
+    enabled: true
+    radius: 4
+    netsync: false
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:ExplodeBehavior
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
+      - !type:SpawnGasBehavior
+        gasMixture:
+          volume: 1000
+          moles:
+            - 0 # oxygen
+            - 0 # nitrogen
+            - 340.5701689 # carbon dioxide
+          temperature: 373.15
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 100
+    intensitySlope: 2
+    totalIntensity: 200
+  - type: WiresPanel
+  - type: ActivatableUI
+    key: enum.LatheUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.LatheUiKey.Key:
+        type: LatheBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: Transform
+    anchored: true
+  - type: Pullable
+  - type: StaticPrice
+    price: 800
+  - type: WarpPoint
+    location: mothership core
+    follow: true
+  - type: VoiceOverride
+    nameOverride: MOTHERSHIP CORE
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: SyndieBorg
+    allowedEmotes:
+    - Laugh
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSiliconSyndicate
+    screamAction: null
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Mothership
+    - Xenoborg
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Mothership
+    - Xenoborg
+    - Binary
+  - type: XenoborgMothership
+  - type: Body
+    prototype: MothershipCoreBody
+  - type: Tag
+    tags:
+    - CanPilot
+    - Structure
+  - type: Inventory
+    templateId: borg
+  - type: Loadout
+    prototypes: [ MothershipCoreGear ]
+  - type: NpcFactionMember
+    factions:
+    - Xenoborg
+  - type: Hands
+  - type: Puller
+  - type: Eye
+    drawFov: false
+  - type: StationAiOverlay
+  - type: IgnoreUIRange
+  - type: ComplexInteraction
+  - type: MindContainer
+  - type: SiliconLawBound
+  - type: Actions
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: SiliconLawProvider
+    laws: MothershipCoreLawset 
+    subverted: true
+  - type: Stripping
+  - type: Access
+    enabled: false
+    tags:
+    - Xenoborg
+  - type: LockingWhitelist
+    blacklist:
+      components:
+      - RoboticsConsole 
+    whitelist:
+      components:
+      - BorgChassis
