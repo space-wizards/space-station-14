@@ -245,6 +245,7 @@
       - state: base-stripes-inhand-right
         color: "#7B0F12"
       
+
 - type: entity
   id: BaseBorgModuleSyndicateAssault
   parent: BaseBorgModule
