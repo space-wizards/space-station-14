@@ -767,10 +767,11 @@
           Quantity: 90
         - ReagentId: Fat
           Quantity: 90
-  - type: SliceableFood
-    count: 10
+  - type: Sliceable
+    slices:
+    - id: FoodMeat #That's... So much meat
+      amount: 10
     sliceTime: 5
-    slice: FoodMeat #That's... So much meat
   - type: InternalTemperature
     conductivity: 0.43
   - type: Construction
@@ -1312,10 +1313,11 @@
           Quantity: 100
         - ReagentId: Protein
           Quantity: 50
-  - type: SliceableFood
-    count: 10
+  - type: Sliceable
+    slices:
+    - id: FoodMeatCooked
+      amount: 10
     sliceTime: 5
-    slice: FoodMeatCooked
   - type: Construction
     graph: AnomalyMeatSteak
     node: anomaly steak
@@ -1344,9 +1346,10 @@
           Quantity: 6
         - ReagentId: Protein
           Quantity: 6
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatDragonCutletCooked
+  - type: Sliceable
+    slices:
+    - id: FoodMeatDragonCutletCooked
+      amount: 3
   - type: Construction
     graph: DragonSteak
     node: dragon steak

@@ -970,8 +970,9 @@
     flavors:
     - meaty
     - bread
-  - type: SliceableFood
-    slice: FoodBreadSausageSlice
+  - type: Sliceable
+    slices:
+    - id: FoodBreadSausageSlice
   - type: SolutionContainerManager
     solutions:
       food:

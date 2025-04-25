@@ -571,9 +571,10 @@
   - type: Construction
     graph: CottonPizza
     node: flat
-  - type: SliceableFood
-    count: 3
-    slice: FoodCroissantRawCotton
+  - type: Sliceable
+    slices:
+    - id: FoodCroissantRawCotton
+      amount: 3
 
 - type: entity
   name: pizza bread
