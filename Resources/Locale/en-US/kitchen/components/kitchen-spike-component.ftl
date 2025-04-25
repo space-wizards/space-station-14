@@ -6,10 +6,10 @@ comp-kitchen-spike-deny-not-dead = { CAPITALIZE(THE($victim)) } can't be butcher
 comp-kitchen-spike-begin-hook-victim = { CAPITALIZE(THE($user)) } begins dragging you onto { THE($this) }!
 comp-kitchen-spike-begin-hook-self = You begin dragging yourself onto { THE($this) }!
 
-comp-kitchen-spike-kill = { CAPITALIZE(THE($user)) } has forced { THE($victim) } onto the spike, killing them instantly!
+comp-kitchen-spike-kill = { CAPITALIZE(THE($user)) } has forced { THE($victim) } onto { THE($this) }, killing { OBJECT($victim) } instantly!
 
-comp-kitchen-spike-suicide-other = { CAPITALIZE(THE($victim)) } has thrown themselves on a meat spike!
-comp-kitchen-spike-suicide-self = You throw yourself on a meat spike!
+comp-kitchen-spike-suicide-other = { CAPITALIZE(THE($victim)) } threw { REFLEXIVE($victim) } on { THE($this) }!
+comp-kitchen-spike-suicide-self = You throw yourself on { THE($this) }!
 
 comp-kitchen-spike-knife-needed = You need a knife to do this.
 comp-kitchen-spike-remove-meat = You remove some meat from { THE($victim) }.

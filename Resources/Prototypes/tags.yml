@@ -387,6 +387,9 @@
   id: CrayonYellow
 
 - type: Tag
+  id: Creamsicle
+
+- type: Tag
   id: Crowbar
 
 - type: Tag
@@ -640,6 +643,9 @@
 
 - type: Tag
   id: Handcuffs
+
+- type: Tag
+  id: HandGrenade
 
 - type: Tag
   id: HappyHonk
@@ -970,6 +976,9 @@
   id: Pipe
 
 - type: Tag
+  id: Pistachios
+
+- type: Tag
   id: Pizza
 
 - type: Tag
@@ -1140,6 +1149,9 @@
 
 - type: Tag
   id: SilentStorageUser # used in SharedStorageSystem, so the entity will do all silently
+
+- type: Tag
+  id: SiliconEmotes
 
 - type: Tag
   id: SkeletonMotorcycleKeys

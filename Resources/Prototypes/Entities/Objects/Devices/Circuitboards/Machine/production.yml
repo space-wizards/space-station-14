@@ -1006,6 +1006,19 @@
       Steel: 1
 
 - type: entity
+  id: MaterialSiloMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: material silo machine board
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: MachineMaterialSilo
+    stackRequirements:
+      MatterBin: 4
+      Cable: 1
+
+- type: entity
   id: OreProcessorMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: ore processor machine board
