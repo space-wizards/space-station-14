@@ -88,7 +88,7 @@ public sealed partial class CCVars
         CVarDef.Create("discord.news_webhook_embed_color", Color.LawnGreen.ToHex(), CVar.SERVERONLY);
 
     /// <summary>
-    ///     HEX color of station news discord webhook's embed.
+    ///     Whether or not articles should be sent mid-round instead of all at once at the round's end
     /// </summary>
     public static readonly CVarDef<bool> DiscordNewsWebhookSendDuringRound =
         CVarDef.Create("discord.news_webhook_send_during_round", false, CVar.SERVERONLY);
