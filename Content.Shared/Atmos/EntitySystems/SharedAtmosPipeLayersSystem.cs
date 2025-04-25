@@ -5,7 +5,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
-using Content.Shared.Tag;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
@@ -25,8 +24,6 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-
-    private readonly DrawDepth.DrawDepth[] _pipeLayerDrawDepths = { DrawDepth.DrawDepth.ThinPipe, DrawDepth.DrawDepth.ThinPipeAlt1, DrawDepth.DrawDepth.ThinPipeAlt2 };
 
     public override void Initialize()
     {
@@ -177,11 +174,6 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
         if (TryComp<AppearanceComponent>(ent, out var appearance))
         {
-            if (ent.Comp.CurrentPipeLayer < _pipeLayerDrawDepths.Length)
-            {
-                _appearance.SetData(ent, AtmosPipeLayerVisuals.DrawDepth, (int)_pipeLayerDrawDepths[ent.Comp.CurrentPipeLayer], appearance);
-            }
-
             if (ent.Comp.CurrentPipeLayer < ent.Comp.SpriteRsiPaths.Length)
                 _appearance.SetData(ent, AtmosPipeLayerVisuals.Sprite, ent.Comp.SpriteRsiPaths[ent.Comp.CurrentPipeLayer], appearance);
 
