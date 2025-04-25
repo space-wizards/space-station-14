@@ -82,6 +82,7 @@ public sealed class GunUpgradeSystem : EntitySystem
         }
 
         _audio.PlayPredicted(ent.Comp.InsertSound, ent, args.User);
+        _popup.PopupClient(Loc.GetString("gun-upgrade-popup-insert", ("upgrade", args.Used),("gun", ent.Owner)), args.User);
         _gun.RefreshModifiers(ent.Owner);
         args.Handled = _container.Insert(args.Used, _container.GetContainer(ent, ent.Comp.UpgradesContainerId));
     }
