@@ -1,5 +1,7 @@
 using System.Net;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Content.Server.Github;
 
@@ -11,11 +13,16 @@ namespace Content.Server.Github;
 /// <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28">Rate limit information</see>
 /// </summary>
 /// <remarks> This was designed for the 2022-11-28 version of the API. </remarks>
-public sealed class GithubRateLimiter
+public sealed class GithubRateLimiter : IPostInjectInit
 {
+    [Dependency] private readonly ILogManager _log = default!;
+
+    private ISawmill _sawmill = default!;
+
     // This assumes all requests use the same "Core" resource. If more methods are added, this will need to be updated to be more robust.
     private long _remainingRequests;
 
+    // See the ccvar for more information!
     private long _requestBuffer;
 
     /// If true, there is currently an outgoing requests.
@@ -35,18 +42,19 @@ public sealed class GithubRateLimiter
     /// <inheritdoc cref="ExponentialBackoff"/>
     private long _exponentialBackoffC;
 
+    private static readonly SemaphoreSlim _lock = new(1);
+
     /// <summary>
     /// Try to acquire the API lock.
     /// </summary>
     /// <remarks>This doesn't have any locking or anything so it shouldn't ever be called in async functions.</remarks>>
     /// <returns>True if the API lock was acquired, false if not.</returns>
-    public bool TryAcquire()
+    public async Task TryAcquire()
     {
-        if (_ongoingRequest || DateTime.UtcNow <= _nextValidRequestTime)
-            return false;
+        await _lock.WaitAsync();
 
-        _ongoingRequest = true;
-        return true;
+        if (DateTime.UtcNow <= _nextValidRequestTime)
+            await Task.Delay(_nextValidRequestTime - DateTime.UtcNow);
     }
 
     /// <summary>
@@ -54,7 +62,7 @@ public sealed class GithubRateLimiter
     /// </summary>
     public void Release()
     {
-        _ongoingRequest = false;
+        _lock.Release();
     }
 
     /// <summary>
@@ -63,8 +71,8 @@ public sealed class GithubRateLimiter
     /// </summary>
     public void ReleaseNoResponse()
     {
-        _ongoingRequest = false;
         _nextValidRequestTime = ExponentialBackoff();
+        _lock.Release();
     }
 
     /// <summary>
@@ -74,8 +82,8 @@ public sealed class GithubRateLimiter
     /// <param name="expectedStatusCodes">Expected status codes from the request.</param>
     public void ReleaseWithResponse(HttpResponseMessage response, List<HttpStatusCode> expectedStatusCodes)
     {
-        _ongoingRequest = false;
         _nextValidRequestTime = CalculateNextRequestTime(response, expectedStatusCodes);
+        _lock.Release();
     }
 
     /// <summary>
@@ -101,6 +109,8 @@ public sealed class GithubRateLimiter
             }
         }
 
+        _sawmill.Warning("Github api is potentially being rate limited.");
+
         // Specific checks for rate limits.
         if (_remainingRequests <= _requestBuffer || statusCode == HttpStatusCode.Forbidden || statusCode == HttpStatusCode.TooManyRequests)
         {
@@ -110,17 +120,12 @@ public sealed class GithubRateLimiter
 
             // Reset header (Tells us when we get more api credits)
             if (GithubApiManager.TryGetLongHeader(headers, "x-ratelimit-remaining") is { } remainingRequests &&
-                GithubApiManager.TryGetLongHeader(headers, "x-ratelimit-reset") is { } resetTime)
+                GithubApiManager.TryGetLongHeader(headers, "x-ratelimit-reset") is { } resetTime &&
+                remainingRequests <= _remainingRequests)
             {
-                // If it's not zero, something is wrong so just do an exponential backoff.
-                if (remainingRequests == 0)
-                {
-                    var delayTime = resetTime - DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-                    return DateTime.UtcNow.AddSeconds(delayTime + ExtraBufferTime);
-                }
+                var delayTime = resetTime - DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                return DateTime.UtcNow.AddSeconds(delayTime + ExtraBufferTime);
             }
-
-            // _sawmill.Warning("Github api is potentially being rate limited.");
         }
 
         // If the status code is not the expected one or the rate limit checks are failing, just do an exponential backoff.
@@ -150,5 +155,10 @@ public sealed class GithubRateLimiter
     public void UpdateRequestBuffer(long buffer)
     {
         _requestBuffer = buffer;
+    }
+
+    public void PostInject()
+    {
+        _sawmill = _log.GetSawmill("github-ratelimit");
     }
 }

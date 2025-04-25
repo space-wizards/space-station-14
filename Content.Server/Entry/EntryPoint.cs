@@ -171,7 +171,6 @@ namespace Content.Server.Entry
                 {
                     _euiManager.SendUpdates();
                     _voteManager.Update();
-                    _gitManager.Update();
                     break;
                 }
 

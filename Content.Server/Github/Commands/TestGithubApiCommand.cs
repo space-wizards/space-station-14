@@ -11,7 +11,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Github.Commands;
 
 /// <summary>
-/// Simple command for testing if the github api is set up correctly!
+/// Simple command for testing if the GitHub api is set up correctly!
 /// </summary>
 [AdminCommand(AdminFlags.Server)]
 public sealed class TestGithubApiCommand : LocalizedEntityCommands
@@ -53,13 +53,20 @@ public sealed class TestGithubApiCommand : LocalizedEntityCommands
         }
 
         // Rate limit request
-        var rateLimitResult = await _git.TryMakeRequest(new GetRateLimit());
+        var rateLimitRequest = new GetRateLimit();
+        var rateLimitResponse = await _git.TryMakeRequest(rateLimitRequest);
 
-        var rateLimitRespJson = await rateLimitResult.Item2.Content.ReadFromJsonAsync<RateLimitResponse>();
-
-        if (rateLimitRespJson == null || rateLimitResult.Item2.StatusCode != HttpStatusCode.OK)
+        if (rateLimitResponse == null)
         {
-            shell.WriteError(Loc.GetString("github-command-rate-limit-resp-fail",  ("error", rateLimitResult.Item2.StatusCode)));
+            shell.WriteError(Loc.GetString("github-command-could-not-request"));
+            return;
+        }
+
+        var rateLimitRespJson = await rateLimitResponse.Content.ReadFromJsonAsync<RateLimitResponse>();
+
+        if (rateLimitRespJson == null || !rateLimitRequest.GetExpectedResponseCodes().Contains(rateLimitResponse.StatusCode))
+        {
+            shell.WriteError(Loc.GetString("github-command-rate-limit-resp-fail", ("error", rateLimitResponse.StatusCode)));
             return;
         }
 
@@ -74,18 +81,25 @@ public sealed class TestGithubApiCommand : LocalizedEntityCommands
         shell.WriteLine(Loc.GetString("github-command-rate-limit-success", ("rateLimit", remainingRequests.ToString())));
 
         // Make zen request
-        var zenResult = await _git.TryMakeRequest(new GetZen());
+        var zenRequest = new GetZen();
+        var zenResponse = await _git.TryMakeRequest(zenRequest);
 
-        if (zenResult.Item2.StatusCode != HttpStatusCode.OK)
+        if (zenResponse == null)
         {
-            shell.WriteError(Loc.GetString("github-command-zen-failure",  ("error", zenResult.Item2.StatusCode)));
+            shell.WriteError(Loc.GetString("github-command-could-not-request"));
             return;
         }
 
-        var zenText = await zenResult.Item2.Content.ReadAsStringAsync();
+        if (!rateLimitRequest.GetExpectedResponseCodes().Contains(zenResponse.StatusCode))
+        {
+            shell.WriteError(Loc.GetString("github-command-zen-failure", ("error", zenResponse.StatusCode)));
+            return;
+        }
+
+        var zenText = await zenResponse.Content.ReadAsStringAsync();
         shell.WriteLine(Loc.GetString("github-command-zen-success", ("zen", zenText)));
 
-        // Add two things to the queue
+        // Create two issues and send them to the api.
         var request1 = new CreateIssue
         {
             Title = Loc.GetString("github-command-issue-title-one"),
@@ -98,8 +112,28 @@ public sealed class TestGithubApiCommand : LocalizedEntityCommands
             Body = Loc.GetString("github-command-issue-description-two"),
         };
 
-        _git.QueueRequest(request1);
-        _git.QueueRequest(request2);
+        var task1 = _git.TryMakeRequestSafe(request1);
+        var task2 = _git.TryMakeRequestSafe(request2);
+
+        var response1 = await task1;
+        var response2 = await task2;
+
+        if (response1 == null || response2 == null)
+        {
+            shell.WriteError(Loc.GetString("github-command-could-not-request"));
+            return;
+        }
+
+        if (!request1.GetExpectedResponseCodes().Contains(response1.StatusCode))
+            shell.WriteError(Loc.GetString("github-command-issue-failure", ("error", response1.StatusCode)));
+        else
+            shell.WriteLine(Loc.GetString("github-command-issue-success"));
+
+        if (!request2.GetExpectedResponseCodes().Contains(response2.StatusCode))
+            shell.WriteError(Loc.GetString("github-command-issue-failure", ("error", response2.StatusCode)));
+        else
+            shell.WriteLine(Loc.GetString("github-command-issue-success"));
+
 
         shell.WriteLine(Loc.GetString("github-command-finish"));
     }

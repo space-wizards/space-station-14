@@ -60,63 +60,47 @@ public sealed class GithubApiManager
 
     #endregion
 
-    private int _initializationAttempts;
     private bool _apiInitialized;
-
-    private readonly ConcurrentQueue<GithubQueueEntry> _queue = new();
 
     private readonly GithubRateLimiter _rateLimiter = new();
 
     public void Initialize()
     {
-        _cfg.OnValueChanged(CCVars.GithubEnabled, val => _enabled = val, true);
-        _cfg.OnValueChanged(CCVars.GithubAuthToken, val => _authToken = val, true);
-        _cfg.OnValueChanged(CCVars.GithubRepositoryName, val => _repository = val, true);
-        _cfg.OnValueChanged(CCVars.GithubRepositoryOwner, val => _owner = val, true);
+        _cfg.OnValueChanged(CCVars.GithubEnabled, val => UpdateAndTryInitialize(ref _enabled, val), true);
+        _cfg.OnValueChanged(CCVars.GithubAuthToken, val => UpdateAndTryInitialize(ref _authToken, val), true);
+        _cfg.OnValueChanged(CCVars.GithubRepositoryName, val => UpdateAndTryInitialize(ref _repository, val), true);
+        _cfg.OnValueChanged(CCVars.GithubRepositoryOwner, val => UpdateAndTryInitialize(ref _owner, val), true);
         _cfg.OnValueChanged(CCVars.GithubMaxRetries, val => _maxRetries = val, true);
         _cfg.OnValueChanged(CCVars.GithubRequestBuffer, _rateLimiter.UpdateRequestBuffer, true);
 
         _sawmill = _log.GetSawmill("github");
+
+        TryInitializeApi();
     }
 
     #region Public functions
 
     /// <summary>
-    /// Queue a request for the api! This will try its hardest to ensure the request gets through to the API. However,
-    /// there is no way to review the response from the request or determine if it succeeded. You can also still add
-    /// items to the queue even if the api is disabled, they just won't get set until its reactivated.
-    /// <br/>
-    /// This will fully respect the API rate limits to the best of its ability. Most requests will actually be sent
-    /// ~1 second after you enqueue them.
-    /// </summary>
-    /// <remarks>This does not necessarily respect order.</remarks>>
-    /// <param name="request">The request to enqueue.</param>
-    public void QueueRequest(IGithubRequest request)
-    {
-        _queue.Enqueue(new GithubQueueEntry(request));
-        _sawmill.Info("Queued github request.");
-    }
-
-    /// <summary>
     /// Directly send a request to the API. This does not have any rate limits checks so be careful!
+    /// <b>Only use this if you have a very good reason to!</b>
     /// </summary>
-    /// <remarks>If you want a safer way to send requests, look at <see cref="QueueRequest"/>></remarks>
+    /// <remarks>If you want the safe way to send requests, look at <see cref="TryMakeRequestSafe"/>></remarks>
     /// <param name="request">The request to make.</param>
-    /// <returns>The direct HTTP response from the API with a boolean that indicates of the request was attempted at all.</returns>
-    /// <exception cref="InvalidOperationException"></exception>
-    public async Task<(bool, HttpResponseMessage)> TryMakeRequest(IGithubRequest request)
+    /// <returns>The direct HTTP response from the API. If null the request could not be made.</returns>
+    public async Task<HttpResponseMessage?> TryMakeRequest(IGithubRequest request)
     {
         if (!ApiEnabled())
         {
             _sawmill.Info("Tried to make a github api request but the api was not enabled.");
-            return (false, new HttpResponseMessage());
+            return null;
         }
 
         var json = JsonSerializer.Serialize(request);
         var payload = new StringContent(json, Encoding.UTF8, "application/json");
 
         var builder = new UriBuilder(BaseUri);
-        builder.Fragment = request.GetLocation(_owner, _repository);
+        builder.Port = -1;
+        builder.Path = request.GetLocation(_owner, _repository);
 
         var httpRequest = new HttpRequestMessage
         {
@@ -140,7 +124,58 @@ public sealed class GithubApiManager
 
         _sawmill.Info($"Made a github api request to: {BaseUri+request.GetLocation(_owner, _repository)}");
 
-        return (true, response);
+        return response;
+    }
+
+    /// <summary>
+    /// The standard way to make requests to the GitHub api. This will ensure that the request respects the rate limit
+    /// and will also retry the request if it fails. Awaiting this to finish could take a very long time depending
+    /// on what exactly is going on! Only await for it if you're willing to wait a long time.
+    /// </summary>
+    /// <param name="request">The request you want to make.</param>
+    /// <param name="attempts">The number of attempts so far. Probably don't set this yourself!</param>
+    /// <returns>The direct HTTP response from the API. If null the request could not be made.</returns>
+    public async Task<HttpResponseMessage?> TryMakeRequestSafe(IGithubRequest request, uint attempts = 0)
+    {
+        try
+        {
+            if (attempts > _maxRetries)
+                return null;
+
+            await _rateLimiter.TryAcquire();
+
+            if (_apiInitialized == false)
+            {
+                _sawmill.Info("Tried to make a github api request but the api was not initialized.");
+                return null;
+            }
+
+            var response = await TryMakeRequest(request);
+
+            // No response
+            if (response == null)
+            {
+                _rateLimiter.ReleaseNoResponse();
+                return await TryMakeRequestSafe(request, attempts+1);
+            }
+
+            // Invalid response
+            if (!IsValidResponse(response, request.GetExpectedResponseCodes()))
+            {
+                _rateLimiter.ReleaseWithResponse(response, request.GetExpectedResponseCodes());
+                return await TryMakeRequestSafe(request, attempts+1);
+            }
+
+            // Successful response
+            _rateLimiter.ReleaseWithResponse(response, request.GetExpectedResponseCodes());
+            return response;
+        }
+        catch (Exception e)
+        {
+            _sawmill.Error($"Github API exception: {e.Message}");
+            _rateLimiter.ReleaseNoResponse();
+            return null;
+        }
     }
 
     /// <summary>
@@ -149,8 +184,7 @@ public sealed class GithubApiManager
     /// </summary>
     /// <param name="headers">The headers that you want to search.</param>
     /// <param name="header">The header you want to get the long value for.</param>
-    /// <param name="value">The output from the header, if unsuccessfully found or didn't parse correctly will be 0.</param>
-    /// <returns>True if the header was found and was parsed correctly, false if not.</returns>
+    /// <returns>The headers value if it exists, null otherwise.</returns>
     public static long? TryGetLongHeader(HttpResponseHeaders? headers, string header)
     {
         if (headers == null)
@@ -168,75 +202,29 @@ public sealed class GithubApiManager
     # endregion
 
     /// <summary>
-    /// This will try to acquire the api lock every update tick. Having to get the lock ensures that we
-    /// only ever have one outgoing request at a time and that no requests violates the rate limits!
-    /// </summary>
-    public void Update()
-    {
-        if (!ApiEnabled() || _initializationAttempts >= _maxRetries)
-            return;
-
-        var apiAcquired = _rateLimiter.TryAcquire();
-
-        if (!apiAcquired)
-            return;
-
-        if (!_apiInitialized)
-        {
-            TryInitializeApi();
-            return;
-        }
-
-        HandleQueue();
-    }
-
-    /// <summary>
-    /// This deals with handling the queue of requests!
-    /// </summary>
-    private async void HandleQueue()
-    {
-        try
-        {
-            if (!_queue.TryDequeue(out var entry))
-            {
-                _rateLimiter.Release();
-                return;
-            }
-
-            var request = await TryMakeRequest(entry.Request);
-
-            if (!IsValidResponse(request.Item2, entry.Request.GetExpectedResponseCodes()))
-            {
-                entry.Failures++;
-
-                // Don't bother putting it back if you failed too many times.
-                if (entry.Failures < _maxRetries)
-                    _queue.Enqueue(entry);
-            }
-
-            _rateLimiter.ReleaseWithResponse(request.Item2, entry.Request.GetExpectedResponseCodes());
-        }
-        catch (Exception e)
-        {
-            _sawmill.Error($"Github API exception: {e.Message}");
-            _rateLimiter.ReleaseNoResponse();
-        }
-    }
-
-    /// <summary>
     /// This will try to initialize the api! This really just means ensuring you aren't currently rate limited.
     /// Will instantly return and do nothing if the api is already initialized.
     /// </summary>
-    private async void TryInitializeApi()
+    private async Task TryInitializeApi(uint attempts = 0)
     {
         try
         {
-            var rateLimitRequest = new GetRateLimit();
-            var request = await TryMakeRequest(rateLimitRequest);
-            var response = request.Item2;
+            if (!ApiEnabled() || _apiInitialized)
+                return;
 
-            // This should never happen but if it somehow does we would want to return.
-            if (!request.Item1)
+            if (attempts > _maxRetries)
+            {
+                _sawmill.Error($"Could not initialize Github API after {attempts} attempts.");
+                return;
+            }
+
+            await _rateLimiter.TryAcquire();
+
+            var rateLimitRequest = new GetRateLimit();
+            var response = await TryMakeRequest(rateLimitRequest);
+
+            // This should never happen but if it somehow does, we would want to return.
+            if (response == null)
             {
                 _rateLimiter.Release();
                 return;
@@ -244,10 +232,11 @@ public sealed class GithubApiManager
 
             var rateLimitRespJson = await response.Content.ReadFromJsonAsync<RateLimitResponse>();
 
-            if (!IsValidResponse(response, rateLimitRequest.GetExpectedResponseCodes()) || rateLimitRespJson == null)
+            if (rateLimitRespJson == null || !IsValidResponse(response, rateLimitRequest.GetExpectedResponseCodes()))
             {
-                _initializationAttempts++;
+                _sawmill.Error($"Could not initialize Github API {attempts}/{_maxRetries} attempts.");
                 _rateLimiter.ReleaseWithResponse(response, rateLimitRequest.GetExpectedResponseCodes());
+                await TryInitializeApi(attempts+1);
                 return;
             }
 
@@ -281,9 +270,9 @@ public sealed class GithubApiManager
     }
 
     /// <summary>
-    ///     Check if response is valid. Mainly used for printing out useful error messages!
-    ///     <br/>
-    ///     <see href="https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28"/>
+    /// Check if response is valid. Mainly used for printing out useful error messages!
+    /// <br/>
+    /// <see href="https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28"/>
     /// </summary>
     /// <param name="response">The response from the request</param>
     /// <param name="expectedStatusCodes"></param>
@@ -312,16 +301,19 @@ public sealed class GithubApiManager
         return false;
     }
 
-    #endregion
-
     /// <summary>
-    /// Entry for the queue. Keeps track of the amount of times this specific request has given an error.
+    /// Updates the passed in ccvar and also will try to initialize the api if it wasn't initialized yet.
     /// </summary>
-    /// <param name="request">The request for this queue value.</param>
-    private struct GithubQueueEntry(IGithubRequest request)
+    /// <param name="field">The ccvar field that we have cached in this class.</param>
+    /// <param name="newValue">The new value to update the field with.</param>
+    /// <typeparam name="T">Type of the ccvar.</typeparam>
+    private void UpdateAndTryInitialize<T>(ref T field, T newValue)
     {
-        public IGithubRequest Request = request;
-        public int Failures = 0;
+        var enabledBefore = ApiEnabled();
+        field = newValue;
+        if (!enabledBefore && ApiEnabled() && !_apiInitialized)
+            TryInitializeApi();
     }
 
+    #endregion
 }
