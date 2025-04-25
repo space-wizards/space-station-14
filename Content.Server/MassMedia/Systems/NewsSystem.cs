@@ -212,7 +212,7 @@ public sealed class NewsSystem : SharedNewsSystem
         }
 
         if (_webhookSendDuringRound)
-            SendArticleToDiscordWebhook(article);
+            Task.Run(async () => await SendArticleToDiscordWebhook(article));
 
         UpdateWriterDevices();
     }
@@ -382,11 +382,11 @@ public sealed class NewsSystem : SharedNewsSystem
         foreach (var article in articles)
         {
             await Task.Delay(TimeSpan.FromSeconds(1)); // TODO: proper discord rate limit handling
-            SendArticleToDiscordWebhook(article);
+            await SendArticleToDiscordWebhook(article);
         }
     }
 
-    private async void SendArticleToDiscordWebhook(NewsArticle article)
+    private async Task SendArticleToDiscordWebhook(NewsArticle article)
     {
         if (_webhookId is null)
             return;
