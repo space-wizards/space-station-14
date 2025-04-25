@@ -5133,4 +5133,11 @@ Entries:
   id: 711
   time: '2025-04-25T04:29:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/535
+- author: CringeCursed
+  changes:
+  - message: added resistance to winter coats
+    type: Tweak
+  id: 712
+  time: '2025-04-25T04:32:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/524
 
