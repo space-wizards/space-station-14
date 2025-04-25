@@ -57,8 +57,9 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltBlueShieldWebbingFilled
     gloves: ClothingHandsGlovesCombat
+    pocket1: WeaponMultiphaseGun
+    pocket2: HandheldBSOCrewMonitor
   storage:
     back:
-    - WeaponMultiphaseGun
     - Flash
     - ClothingMaskGasBSO

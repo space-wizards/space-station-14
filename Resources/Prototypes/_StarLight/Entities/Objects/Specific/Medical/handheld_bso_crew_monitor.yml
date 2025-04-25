@@ -2,7 +2,7 @@
   name: CommandFriend™ X-02
   parent: [ BaseHandheldComputer, BaseRestrictedContraband ]
   id: HandheldBSOCrewMonitor
-  description: So advanced it only tracks security personnel! Does not monitor emotional stability or competence levels of security members. Use at your own risk!
+  description: Does not monitor the competence levels of command members.
   components:
   - type: Tag
     tags:
