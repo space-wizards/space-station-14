@@ -5126,4 +5126,68 @@ Entries:
   id: 710
   time: '2025-04-24T05:03:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/530
+- author: PubliclyExecutedPig
+  changes:
+  - message: Buffed Barotrauma Damage
+    type: Tweak
+  id: 711
+  time: '2025-04-25T04:29:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/535
+- author: CringeCursed
+  changes:
+  - message: added resistance to winter coats
+    type: Tweak
+  id: 712
+  time: '2025-04-25T04:32:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/524
+- author: CringeCursed
+  changes:
+  - message: make some of collective minds and syndicate radio channel more readable
+    type: Tweak
+  id: 713
+  time: '2025-04-25T04:32:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/534
+- author: InanimateIJK
+  changes:
+  - message: As originally intended... "breacher.ogg" by Artifyber to the lobby music
+      roll from the misc path basement.
+    type: Add
+  id: 714
+  time: '2025-04-25T04:34:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/532
+- author: Mephisto72
+  changes:
+  - message: The AI can now access Law Communications
+    type: Tweak
+  id: 715
+  time: '2025-04-25T04:35:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/519
+- author: Happyrobot33
+  changes:
+  - message: Added Mailman job.
+    type: Add
+  id: 716
+  time: '2025-04-25T04:52:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/496
+- author: Happyrobot33
+  changes:
+  - message: Added Mail Trolley
+    type: Add
+  id: 717
+  time: '2025-04-25T04:52:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/496
+- author: Happyrobot33
+  changes:
+  - message: Increased capacity of mail bag.
+    type: Tweak
+  id: 718
+  time: '2025-04-25T04:52:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/496
+- author: Happyrobot33
+  changes:
+  - message: Fixed ling biomass not decreasing.
+    type: Fix
+  id: 719
+  time: '2025-04-25T04:53:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/528
 
