@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: sporkyz
-  changes:
-  - message: Galoshes are now restricted to janitor.
-    type: Tweak
-  - message: Double barrel shotguns, basic armor vests, beanbag/flare shotgun shells,
-      and bandoliers are now allowed for Bartenders, not just Security.
-    type: Tweak
-  - message: Lawyers now have access to the Security headset they spawn with, as well
-      as the encryption key inside.
-    type: Fix
-  - message: Sawn-off shotguns are now properly considered contraband instead of being
-      unrestricted.
-    type: Fix
-  id: 7836
-  time: '2025-01-21T09:51:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33385
 - author: K-Dynamic
   changes:
   - message: Electrified doors and windoors now visibly spark when touched.
@@ -3930,3 +3914,12 @@
   id: 8337
   time: '2025-04-24T23:44:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32734
+- author: Nox38
+  changes:
+  - message: Rebalanced cyborg modules and made more of them starting equipment.
+    type: Tweak
+  - message: Added new advanced mining and advanced chemical modules.
+    type: Add
+  id: 8338
+  time: '2025-04-25T02:29:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34186
