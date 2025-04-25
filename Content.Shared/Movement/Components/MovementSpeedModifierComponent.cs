@@ -32,28 +32,6 @@ namespace Content.Shared.Movement.Components
 
         #endregion
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _baseWalkSpeedVV
-        {
-            get => BaseWalkSpeed;
-            set
-            {
-                BaseWalkSpeed = value;
-                Dirty();
-            }
-        }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _baseSprintSpeedVV
-        {
-            get => BaseSprintSpeed;
-            set
-            {
-                BaseSprintSpeed = value;
-                Dirty();
-            }
-        }
-
         #region base values
 
         [DataField, AutoNetworkedField]
