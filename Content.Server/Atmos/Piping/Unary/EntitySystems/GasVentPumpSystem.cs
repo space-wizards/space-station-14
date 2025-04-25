@@ -390,7 +390,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var v = new Verb
             {
                 Priority = 1,
-                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")),
                 Text = Loc.GetString("gas-vent-pump-release-lockout"),
                 Impact = LogImpact.Low,
                 DoContactInteraction = true,
@@ -405,7 +405,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     };
 
                     _doAfterSystem.TryStartDoAfter(doAfter);
-                }
+                },
             };
 
             args.Verbs.Add(v);
