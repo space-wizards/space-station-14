@@ -105,12 +105,29 @@ namespace Content.Shared.Preferences
         /// </summary>
         /// <param name="job"></param>
         /// <returns></returns>
+        public Dictionary<int, HumanoidCharacterProfile> GetAllEnabledProfilesForJob(ProtoId<JobPrototype> job)
+        {
+            return GetAllProfilesForJobInternal(job, onlyEnabled: true);
+        }
+
+        /// <summary>
+        /// Get all profiles asking for a job
+        /// </summary>
+        /// <param name="job"></param>
+        /// <returns></returns>
         public Dictionary<int, HumanoidCharacterProfile> GetAllProfilesForJob(ProtoId<JobPrototype> job)
+        {
+            return GetAllProfilesForJobInternal(job, onlyEnabled: false);
+        }
+
+        private Dictionary<int, HumanoidCharacterProfile> GetAllProfilesForJobInternal(ProtoId<JobPrototype> job, bool onlyEnabled)
         {
             var result = new Dictionary<int, HumanoidCharacterProfile>();
             foreach (var (slot, profile) in Characters)
             {
-                if (profile is not HumanoidCharacterProfile { Enabled: true } humanoid)
+                if (profile is not HumanoidCharacterProfile humanoid)
+                    continue;
+                if (onlyEnabled && !humanoid.Enabled)
                     continue;
                 if (humanoid.JobPreferences.Contains(job))
                     result.Add(slot, humanoid);
@@ -118,6 +135,7 @@ namespace Content.Shared.Preferences
 
             return result;
         }
+
 
         /// <summary>
         /// Get any random enabled profile

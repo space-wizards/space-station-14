@@ -13,7 +13,6 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
-using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -199,7 +198,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             playTimes = new Dictionary<string, TimeSpan>();
         }
 
-        var allProfilesForJob = _preferencesManager.GetPreferences(player.UserId).GetAllProfilesForJob(job);
+        var allProfilesForJob = _preferencesManager.GetPreferences(player.UserId).GetAllEnabledProfilesForJob(job);
         return allProfilesForJob.Values.Any(profile => JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, profile));
     }
 
@@ -217,7 +216,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
         foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
         {
-            var allProfilesForJob = _preferencesManager.GetPreferences(player.UserId).GetAllProfilesForJob(job);
+            var allProfilesForJob = _preferencesManager.GetPreferences(player.UserId).GetAllEnabledProfilesForJob(job);
             if (allProfilesForJob.Values.All(profile => !JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, profile)))
                 roles.Add(job.ID);
         }
@@ -242,7 +241,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         {
             if(!_prototypes.TryIndex(job, out var jobToRemove))
                 continue;
-            var allProfilesForJob = _preferencesManager.GetPreferences(player.UserId).GetAllProfilesForJob(job);
+            var allProfilesForJob = _preferencesManager.GetPreferences(player.UserId).GetAllEnabledProfilesForJob(job);
             if (allProfilesForJob.Values.All(profile =>
                     !JobRequirements.TryRequirementsMet(jobToRemove, playTimes, out _, EntityManager, _prototypes, profile)))
                 jobs.Remove(job);

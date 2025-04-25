@@ -28,12 +28,6 @@ public sealed partial class ProfilePreviewSpriteView
     private void LoadHumanoidEntity(HumanoidCharacterProfile humanoid, JobPrototype? job, bool showClothes)
     {
         JobName = null;
-        PreviewDummy = _entManager.SpawnEntity(
-            _prototypeManager.Index(humanoid.Species).DollPrototype,
-            MapCoordinates.Nullspace);
-
-        if (!showClothes)
-            return;
 
         if (job == null && humanoid.JobPreferences.Count == 0)
         {
@@ -50,6 +44,27 @@ public sealed partial class ProfilePreviewSpriteView
             }
         }
         job ??= GetPreferredJob(humanoid);
+
+        EntProtoId? previewEntity = null;
+        if(job != null)
+        {
+            previewEntity = job.JobPreviewEntity ?? (EntProtoId?)job.JobEntity;
+
+            if (previewEntity != null)
+            {
+                PreviewDummy = _entManager.SpawnEntity(previewEntity, MapCoordinates.Nullspace);
+                JobName = job.LocalizedName;
+                return;
+            }
+        }
+
+        PreviewDummy = _entManager.SpawnEntity(
+            _prototypeManager.Index(humanoid.Species).DollPrototype,
+            MapCoordinates.Nullspace);
+
+        if (!showClothes)
+            return;
+
         if (job == null)
         {
             job = _prototypeManager.Index<JobPrototype>(SharedGameTicker.FallbackOverflowJob);
