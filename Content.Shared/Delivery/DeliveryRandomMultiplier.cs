@@ -5,6 +5,7 @@ namespace Content.Shared.Delivery;
 /// <summary>
 /// Component given to deliveries.
 /// Applies a random multiplier to the delivery on init.
+/// Added additively to the total multiplier.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DeliveryRandomMultiplierComponent : Component
@@ -13,18 +14,18 @@ public sealed partial class DeliveryRandomMultiplierComponent : Component
     /// The highest the random multiplier can go.
     /// </summary>
     [DataField]
-    public float MaxMultiplier = 0.2f;
+    public float MaxMultiplierOffset = 0.2f;
 
     /// <summary>
     /// The lowest the random multiplier can go.
     /// </summary>
     [DataField]
-    public float MinMultiplier = -0.2f;
+    public float MinMultiplierOffset = -0.2f;
 
     /// <summary>
     /// The current multiplier this component provides.
-    /// Gets randomized between MinMultiplier and MaxMultiplier on MapInit.
+    /// Gets randomized between MaxMultiplierOffset and MinMultiplierOffset on MapInit.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float CurrentMultiplier;
+    public float CurrentMultiplierOffset;
 }

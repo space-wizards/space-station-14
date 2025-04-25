@@ -54,21 +54,21 @@ public abstract class SharedDeliverySystem : EntitySystem
         var jobTitle = ent.Comp.RecipientJobTitle ?? Loc.GetString("delivery-recipient-no-job");
         var recipientName = ent.Comp.RecipientName ?? Loc.GetString("delivery-recipient-no-name");
 
-        if (ent.Comp.IsOpened)
+        using (args.PushGroup(nameof(DeliveryComponent), 1))
         {
-            // Should always show at the top
-            args.PushText(Loc.GetString("delivery-already-opened-examine"), 99);
-        }
+            if (ent.Comp.IsOpened)
+            {
+                args.PushText(Loc.GetString("delivery-already-opened-examine"));
+            }
 
-        // Should always show second.
-        args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", recipientName), ("job", jobTitle)), 98);
+            args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", recipientName), ("job", jobTitle)));
+        }
 
         if (ent.Comp.IsLocked)
         {
             var multiplier = GetDeliveryMultiplier(ent);
             var totalSpesos = Math.Round(ent.Comp.BaseSpesoReward * multiplier);
 
-            // Should always show at the bottom. (Excluding things like item size examine)
             args.PushMarkup(Loc.GetString("delivery-earnings-examine", ("spesos", totalSpesos)));
         }
     }

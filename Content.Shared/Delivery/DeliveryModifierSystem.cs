@@ -19,12 +19,12 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
 
     private void OnRandomMultiplierMapInit(Entity<DeliveryRandomMultiplierComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.CurrentMultiplier = _random.NextFloat(ent.Comp.MinMultiplier, ent.Comp.MaxMultiplier);
+        ent.Comp.CurrentMultiplierOffset = _random.NextFloat(ent.Comp.MinMultiplierOffset, ent.Comp.MaxMultiplierOffset);
         Dirty(ent);
     }
 
     private void OnGetRandomMultiplier(Entity<DeliveryRandomMultiplierComponent> ent, ref GetDeliveryMultiplierEvent args)
     {
-        args.Multiplier += ent.Comp.CurrentMultiplier;
+        args.Multiplier += ent.Comp.CurrentMultiplierOffset;
     }
 }
