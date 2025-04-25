@@ -2,7 +2,7 @@
   parent: [ BorgHypo, BaseXenoborgContraband ]
   id: NocturineHypo
   name: nocturine hypo
-  description: A sterile injector for rapid administration of nocturine to victms. A specialised version for xenoborgs.
+  description: A self-refilling injector for rapid administration of nocturine to victms.
   components:
   - type: SolutionContainerManager
     solutions:
