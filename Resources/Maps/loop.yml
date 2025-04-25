@@ -52314,8 +52314,6 @@ entities:
       pos: -5.5,45.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 4405
       - 11474
