@@ -107,7 +107,8 @@ def reset_solution():
 
 def check_for_zip_download():
     # Check if .git exists,
-    if not os.path.isdir(".git"):
+    cur_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+    if not os.path.isdir(os.path.join(cur_dir, ".git")):
         print("It appears that you downloaded this repository directly from GitHub. (Using the .zip download option) \n"
               "When downloading straight from GitHub, it leaves out important information that git needs to function. "
               "Such as being able to download the engine or even being able to create contributions. \n"
