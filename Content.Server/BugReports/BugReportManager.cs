@@ -79,7 +79,7 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
         var playtime = _playTime.GetOverallPlaytime(session);
         var playerInfo = _bugReportsPerPlayerThisRound.GetValueOrDefault(netId);
         var timeSinceLastReport = DateTime.UtcNow - playerInfo.Item2;
-        var timeBetweenBugReports = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MinimumTimeBetweenBugReports));
+        var timeBetweenBugReports = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.MinimumTimeBetweenBugReports));
 
         if (!_cfg.GetCVar(CCVars.EnablePlayerBugReports))
             return false;

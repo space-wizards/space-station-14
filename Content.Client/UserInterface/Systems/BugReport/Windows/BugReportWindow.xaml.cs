@@ -114,14 +114,14 @@ public sealed partial class BugReportWindow : DefaultWindow
             return false;
         }
 
-        if (TimeSpan.FromMinutes(MinimumPlaytimeBugReports) > _job.FetchOverallPlaytime())
+        if (TimeSpan.FromSeconds(MinimumPlaytimeBugReports) > _job.FetchOverallPlaytime())
         {
             errorMessage = Loc.GetString("bug-report-window-disabled-playtime");
             return false;
         }
 
         var timeSinceLastReport = DateTime.UtcNow - lastBugReportSubmittedTime;
-        var timeBetweenBugReports = TimeSpan.FromMinutes(MinimumTimeBetweenBugReports);
+        var timeBetweenBugReports = TimeSpan.FromSeconds(MinimumTimeBetweenBugReports);
 
         if (timeSinceLastReport <= timeBetweenBugReports)
         {

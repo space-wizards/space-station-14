@@ -26,9 +26,9 @@ public sealed partial class CCVars
     /// <summary>
     ///     Minimum time between bug reports.
     /// </summary>
-    /// <remarks>In minutes!</remarks>
+    /// <remarks>In seconds!</remarks>
     public static readonly CVarDef<int> MinimumTimeBetweenBugReports =
-        CVarDef.Create("bug_reports.minimum_time_between_bug_reports", 2, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("bug_reports.minimum_time_between_bug_reports", 120, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Maximum length of a bug report title.
