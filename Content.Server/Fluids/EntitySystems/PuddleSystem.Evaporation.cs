@@ -48,10 +48,13 @@ public sealed partial class PuddleSystem
             if (hasEnoughVapor)
             {
                 EnsureComp<PreventEvaporationComponent>(uid).Active = true;
+                evaporation.NextTick += EvaporationCooldown;
                 continue;
             }
 
             RemComp<PreventEvaporationComponent>(uid);
+
+            evaporation.NextTick += EvaporationCooldown;
 
             if (!_solutionContainerSystem.ResolveSolution(uid, puddle.SolutionName, ref puddle.Solution, out var puddleSolution))
                 continue;
@@ -61,9 +64,6 @@ public sealed partial class PuddleSystem
                 var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds * evaporatingSpeed;
                 puddleSolution.SplitSolutionWithOnly(reagentTick, evaporatingReagent);
             }
-
-            evaporation.NextTick = _timing.CurTime + EvaporationCooldown;
-            Dirty(uid, evaporation);
 
             if (puddleSolution.Volume == FixedPoint2.Zero)
             {
