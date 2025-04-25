@@ -577,7 +577,6 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: turnstile
   id: Turnstile
   graph: Turnstile
   startNode: start
