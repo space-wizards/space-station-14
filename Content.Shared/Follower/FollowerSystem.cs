@@ -171,6 +171,8 @@ public sealed class FollowerSystem : EntitySystem
         }
     }
 
+    // TODO: Slartibarfast mentioned that ideally this should be generalized and made part of SetRelay in SharedMoverController.Relay.cs.
+    // This would apply to polymorphed entities as well
     private void OnFollowedStationAiRemoteEntityReplaced(Entity<FollowedComponent> entity, ref StationAiRemoteEntityReplacementEvent args)
     {
         if (args.NewRemoteEntity == null)
