@@ -41,6 +41,9 @@
       delivery: !type:Container
   - type: StealTarget
     stealGroup: Mail
+  - type: SimpleToolUsage
+    doAfter: 4
+    usageVerb: delivery-slice-verb
 
 - type: entity
   parent: BaseDelivery
@@ -75,9 +78,11 @@
     size: Huge
   - type: Delivery
     baseSpesoReward: 1000
-    baseSpesoPenalty: 500
+    baseSpesoPenalty: 250 # So low due to dept economy splitting all the earnings, but not splitting the penalty.
   - type: Speech
     speechVerb: Robotic
+  - type: SimpleToolUsage
+    doAfter: 6
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
@@ -115,7 +120,7 @@
     storedRotation: 90
   - type: Delivery
     baseSpesoReward: 500
-    baseSpesoPenalty: 250
+    baseSpesoPenalty: 125 # So low due to dept economy splitting all the earnings, but not splitting the penalty.
   - type: Speech
     speechVerb: Robotic
   - type: EntityTableContainerFill
