@@ -446,7 +446,7 @@
       Dead:
         Base: dead_small_purple_snake
   - type: Sliceable
-    slice:
+    slices:
     - id: FoodMeatSnake
   - type: SolutionTransfer
     maxTransferAmount: 1

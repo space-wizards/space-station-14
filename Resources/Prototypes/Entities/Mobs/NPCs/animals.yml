@@ -734,8 +734,6 @@
       - MobDuckWhite
       - MobDuckBrown
       intervalSeconds: 20
-      minimumEntitiesslices: 1
-      maximumEntitiesslices: 1
     - type: TimedDespawn #delete the egg after the chicken spawns
       lifetime: 21
 
