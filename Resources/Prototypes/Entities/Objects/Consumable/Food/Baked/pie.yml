@@ -341,8 +341,9 @@
     layers:
     - state: tin
     - state: pumpkin
-  - type: SliceableFood
-    slice: FoodPiePumpkinSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPiePumpkinSlice
   - type: Tag
     tags:
     - Pie

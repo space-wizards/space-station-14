@@ -388,9 +388,10 @@
       reagents:
       - ReagentId: Ichor
         Quantity: 10
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatDragonCutlet
+  - type: Sliceable
+    slices:
+    - id: FoodMeatDragonCutlet
+      amount: 3
   - type: Construction
     graph: DragonSteak
     node: start

@@ -715,8 +715,9 @@
   - type: Sprite
     layers:
     - state: worldpeas
-  - type: SliceableFood
-    slice: FoodPizzaWorldpeasSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPizzaWorldpeasSlice
   - type: SolutionContainerManager
     solutions:
       food:

@@ -735,8 +735,9 @@
   components:
   - type: Sprite
     state: baguette-cotton
-  - type: SliceableFood
-    slice: FoodBreadBaguetteCottonSlice
+  - type: Sliceable
+    slices:
+    - id: FoodBreadBaguetteCottonSlice
   - type: Food
     requiresSpecialDigestion: true
   - type: Tag

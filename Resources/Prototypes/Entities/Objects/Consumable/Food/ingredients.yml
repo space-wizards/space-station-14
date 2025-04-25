@@ -443,9 +443,10 @@
     - cotton
   - type: Sprite
     state: cotton-dough
-  - type: SliceableFood
-    count: 3
-    slice: FoodDoughCottonSlice
+  - type: Sliceable
+    slices:
+    - id: FoodDoughCottonSlice
+      amount: 3
   - type: Construction
     graph: CottonPizza
     node: start
