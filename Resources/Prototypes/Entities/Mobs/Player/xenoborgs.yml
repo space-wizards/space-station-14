@@ -401,6 +401,7 @@
   - type: MovementSpeedModifier # slower
     baseWalkSpeed : 1.2
     baseSprintSpeed : 2.2
+  - type: FlashImmunity
   - type: MobThresholds # tankier
     thresholds:
       0: Alive
@@ -477,6 +478,7 @@
   - type: FootstepModifier # it flies instead of walking
     footstepSoundCollection:
       collection: FootstepHoverBorg
+  - type: FlashImmunity
   - type: BorgChassis
     hasMindState: xenoborg_scout_e
     noMindState: xenoborg_scout_e_r
