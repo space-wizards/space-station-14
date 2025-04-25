@@ -543,6 +543,7 @@ DrinkIrishCarBomb: DrinkIrishSlammer
 BorgModuleRadiationDetection: null
 BorgModuleGPS: null
 BorgModuleLightReplacer: BorgModuleCustodial
+BorgModuleAdvancedTreatment: null
 ClothingMaskSexyClown: ClothingMaskBlushingClown
 ClothingMaskSexyMime: ClothingMaskBlushingMime
 
