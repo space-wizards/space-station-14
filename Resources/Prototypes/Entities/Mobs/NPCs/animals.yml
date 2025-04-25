@@ -312,8 +312,6 @@
     - MobChicken1
     - MobChicken2
     intervalSeconds: 20
-    minimumEntitiesslices: 1
-    maximumEntitiesslices: 1
   - type: TimedDespawn #delete the egg after the chicken spawns
     lifetime: 21
 
@@ -1348,7 +1346,6 @@
         Blunt: 3
         Piercing: 3
   - type: Sliceable
-    butcheringType: Spike
     slices:
     - id: FoodMeat
       amount: 3
@@ -1562,7 +1559,6 @@
           horns_double: Inherit
           horns_kobold_ears: Inherit
   - type: Sliceable
-    butcheringType: Spike
     slices:
     - id: FoodMeat
       amount: 2

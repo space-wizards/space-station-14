@@ -815,7 +815,6 @@
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
   - type: Sliceable
-    butcheringType: Spike
     slices:
     - id: FoodMeat
       amount: 3

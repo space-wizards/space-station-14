@@ -377,7 +377,7 @@
       Dead:
         Base: dead_purple_snake
   - type: Sliceable
-    slice:
+    slices:
     - id: FoodMeatSnake
   - type: Grammar
     attributes:
