@@ -50,9 +50,9 @@
           High: {state: jammer_high_charge}
 
 - type: entity
-  name: xenoborg radio jammer
   parent: [RadioJammer, BaseXenoborgContraband]
   id: XenoborgRadioJammer
+  name: xenoborg radio jammer
   components:
   - type: ItemSlots
     slots:
