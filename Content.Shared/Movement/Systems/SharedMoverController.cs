@@ -237,9 +237,17 @@ public abstract partial class SharedMoverController : VirtualController
 
             wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
 
+            var ev = new CanWeightlessMoveEvent(uid);
+            RaiseLocalEvent(uid, ref ev, true);
+
+            touching = ev.CanMove || xform.GridUid != null || MapGridQuery.HasComp(xform.GridUid);
+
+            // If we're not on a grid, and not able to move in space check if we're close enough to a grid to touch.
+            if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
+                touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, uid, physicsComponent);
+
             // If we're touching then use the weightless values
-            // Some stuff like jetpacks for example might flag it as touching even if it isn't.
-            if (xform.GridUid != null || MapGridQuery.HasComp(xform.GridUid))
+            if (touching)
             {
                 touching = true;
                 if (wishDir != Vector2.Zero)
@@ -250,17 +258,9 @@ public abstract partial class SharedMoverController : VirtualController
             // Otherwise use the off-grid values.
             else
             {
-                var ev = new CanWeightlessMoveEvent(uid);
-                RaiseLocalEvent(uid, ref ev, true);
-                // No gravity: is our entity touching anything?
-                touching = ev.CanMove;
-
-                if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
-                    touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, uid, physicsComponent);
                 friction = moveSpeedComponent?.OffGridFriction ?? _offGridDamping;
             }
 
-            wishDir *= moveSpeedComponent?.WeightlessModifier ?? MovementSpeedModifierComponent.DefaultWeightlessModifier;
             accel = moveSpeedComponent?.WeightlessAcceleration ?? MovementSpeedModifierComponent.DefaultWeightlessAcceleration;
         }
         else
@@ -300,10 +300,19 @@ public abstract partial class SharedMoverController : VirtualController
         SetWishDir((uid, mover), wishDir);
 
         /*
-         * TODO: Put info about snaking here so someone doesn't think it's a bug
-         * Snaking is when you strafe side to side to get a bit more velocity. It's a feature but for it to be a feature
-         * you need to be very careful with the friction values you pass to a mover. Snaking should only be useful in
-         * certain cases and friction should never be so low compared to acceleration that your movement feels jumpy.
+         * SNAKING!!! >-( 0 ================>
+         * Snaking is a feature where you can move faster by strafing in a direction perpendicular to the
+         * direction you intend to move while still holding the movement key for the direction you're trying to move.
+         * Snaking only works if acceleration exceeds friction, and it's effectiveness scales as acceleration continues
+         * to exceed friction.
+         * Snaking works because friction is applied first in the direction of our current velocity, while acceleration
+         * is applied after in our "Wish Direction" and is capped by the dot of our wish direction and current direction.
+         * This means when you change direction, you're technically able to accelerate more than what the velocity cap
+         * allows, but friction normally eats up the extra movement you gain.
+         * By strafing as stated above you can increase your speed by about 1.4 (square root of 2).
+         * This only works if friction is low enough so be sure that anytime you are letting a mob move in a low friction
+         * environment you take into account the fact they can snake! Also be sure to lower acceleration as well to
+         * prevent jerky movement!
          */
         PhysicsSystem.SetLinearVelocity(uid, velocity, body: physicsComponent);
 

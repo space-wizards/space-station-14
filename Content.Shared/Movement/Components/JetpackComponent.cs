@@ -18,8 +18,8 @@ public sealed partial class JetpackComponent : Component
     public float Acceleration = 1f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("friction")]
-    public float Friction = 0.3f;
+    public float Friction = 0.25f; // same as off-grid friction
 
     [ViewVariables(VVAccess.ReadWrite), DataField("weightlessModifier")]
-    public float WeightlessModifier = 1.2f;
+    public float WeightlessModifier = 1.5f;
 }

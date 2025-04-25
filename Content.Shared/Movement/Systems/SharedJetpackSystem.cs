@@ -91,7 +91,7 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void SetupUser(EntityUid user, EntityUid jetpackUid, JetpackComponent component)
     {
-        var userComp = EnsureComp<JetpackUserComponent>(user);
+        EnsureComp<JetpackUserComponent>(user, out var userComp);
 
         if (TryComp<PhysicsComponent>(user, out var physics))
             _physics.SetBodyStatus(user, physics, BodyStatus.InAir);
