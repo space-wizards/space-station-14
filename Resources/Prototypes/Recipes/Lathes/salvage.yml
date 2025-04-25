@@ -76,9 +76,9 @@
   - Weapons
   completetime: 5
   materials:
-    Steel: 1500
-    Gold: 500
-    Silver: 500
+    Steel: 500
+    Gold: 100
+    Silver: 100
 
 - type: latheRecipe
   id: PKAUpgradeRange
@@ -87,9 +87,9 @@
   - Weapons
   completetime: 5
   materials:
-    Steel: 1500
-    Gold: 500
-    Silver: 500
+    Steel: 500
+    Gold: 100
+    Silver: 100
 
 - type: latheRecipe
   id: PKAUpgradeFireRate
@@ -98,7 +98,7 @@
   - Weapons
   completetime: 5
   materials:
-    Steel: 1500
-    Gold: 500
-    Silver: 500
+    Steel: 500
+    Gold: 100
+    Silver: 100
 
