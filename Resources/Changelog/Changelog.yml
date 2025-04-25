@@ -3896,7 +3896,7 @@
   url: https://github.com/space-wizards/space-station-14/pull/36841
 - author: lzk228
   changes:
-  - message: Seashell is small size. Kalimba is percussion instrument.
+  - message: Seashell is small size.
     type: Tweak
   id: 8344
   time: '2025-04-25T05:54:49.0000000+00:00'
