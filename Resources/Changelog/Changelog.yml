@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Chefs now have access to cloth boxes in their locker, kitchen supplies
-      crate, etc. for moths
-    type: Add
-  id: 7839
-  time: '2025-01-22T23:54:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34403
 - author: Emisse
   changes:
   - message: Lecter sprites have been updated.
@@ -3922,3 +3914,11 @@
   id: 8340
   time: '2025-04-25T04:02:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33305
+- author: Blackern5000
+  changes:
+  - message: The mining hardsuit has had it's armor tweaked to be more effective against
+      fish and less effective against bullets and/or bombs
+    type: Tweak
+  id: 8341
+  time: '2025-04-25T04:05:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31450
