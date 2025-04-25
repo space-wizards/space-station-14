@@ -25,6 +25,6 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
 
     private void OnGetRandomMultiplier(Entity<DeliveryRandomMultiplierComponent> ent, ref GetDeliveryMultiplierEvent args)
     {
-        args.Multiplier += ent.Comp.CurrentMultiplierOffset;
+        args.AdditiveMultiplier += ent.Comp.CurrentMultiplierOffset;
     }
 }

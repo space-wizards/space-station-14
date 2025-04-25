@@ -257,7 +257,7 @@ public abstract class SharedDeliverySystem : EntitySystem
         var ev = new GetDeliveryMultiplierEvent();
         RaiseLocalEvent(ent, ref ev);
 
-        return ev.Multiplier;
+        return ev.AdditiveMultiplier * ev.MultiplicativeMultiplier;
     }
 
     protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }
@@ -268,13 +268,16 @@ public abstract class SharedDeliverySystem : EntitySystem
 }
 
 /// <summary>
-/// Used to gather the multiplier from all different delivery components.
+/// Used to gather the total multiplier for deliveries.
+/// This is done by various modifier components subscribing to this and adding accordingly.
 /// </summary>
+/// <param name="AdditiveMultiplier">The additive multiplier.</param>
+/// <param name="MultiplicativeMultiplier">The multiplicative multiplier.</param>
 [ByRefEvent]
-public record struct GetDeliveryMultiplierEvent(float Multiplier)
+public record struct GetDeliveryMultiplierEvent(float AdditiveMultiplier, float MultiplicativeMultiplier)
 {
     // we can't use an optional parameter because the default parameterless constructor defaults everything
-    public GetDeliveryMultiplierEvent() : this(1.0f) { }
+    public GetDeliveryMultiplierEvent() : this(1.0f, 1.0f) { }
 }
 
 /// <summary>
