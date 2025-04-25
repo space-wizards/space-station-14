@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Electrified doors and windoors now visibly spark when touched.
-    type: Tweak
-  - message: New tips have been added about opening electrified doors by throwing
-      your PDA or ID, and resetting doors that are electrified by AI.
-    type: Add
-  id: 7837
-  time: '2025-01-21T10:39:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34502
 - author: Nimfar11
   changes:
   - message: Adds Blueprint double emergency tank.
@@ -3923,3 +3913,12 @@
   id: 8338
   time: '2025-04-25T02:29:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34186
+- author: AgentSmithRadio
+  changes:
+  - message: Reptilians can now eat orange creamsicles.
+    type: Tweak
+  - message: Berry creamsicles can no longer be used in cargo's generic fruit bounty.
+    type: Fix
+  id: 8339
+  time: '2025-04-25T03:53:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36890
