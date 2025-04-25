@@ -387,6 +387,9 @@
   id: CrayonYellow
 
 - type: Tag
+  id: Creamsicle
+
+- type: Tag
   id: Crowbar
 
 - type: Tag
@@ -971,6 +974,9 @@
 
 - type: Tag
   id: Pipe
+
+- type: Tag
+  id: Pistachios
 
 - type: Tag
   id: Pizza
