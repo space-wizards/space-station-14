@@ -15,3 +15,12 @@
   components:
   - type: Flatpack
     entity: KitchenOven
+
+- type: entity
+  parent: BaseFlatpack
+  id: MailTrolleyFlatpack
+  name: mail trolley flatpack
+  description: A flatpack used for constructing an mail trolley.
+  components:
+  - type: Flatpack
+    entity: MailTrolley
