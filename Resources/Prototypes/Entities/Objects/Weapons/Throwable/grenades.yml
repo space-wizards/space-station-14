@@ -15,7 +15,7 @@
     slots:
     - Belt
   - type: OnUseTimerTrigger
-    delay: 3.5
+    delay: 3
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -448,13 +448,15 @@
   parent: [ BaseEngineeringContraband, SmokeGrenade ]
   id: MetalFoamGrenade
   name: metal foam grenade
-  description: An emergency tool used for patching up holes. Almost as good as real walls.
+  description: An emergency tool used for patching breaches with special quick-set metal foam. Almost as good as real walls.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/metalfoam.rsi
+  - type: OnUseTimerTrigger
+    delay: 1.5
   - type: SmokeOnTrigger
-    duration: 10
-    spreadAmount: 13
+    duration: 2
+    spreadAmount: 5
     smokePrototype: AluminiumMetalFoam
   - type: StaticPrice
     price: 350
@@ -488,6 +490,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+  - type: OnUseTimerTrigger
+    delay: 5
   - type: SoundOnTrigger
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
