@@ -16,14 +16,14 @@ using Robust.Shared.Network;
 namespace Content.Server.Github;
 
 /// <summary>
-///     Basic implementation of the GitHub api. This was mainly created for making issues from users bug reports - it is not a full implementation!
-///     I tried to follow the spec very closely and the docs are really well done. I highly recommend taking a look at them!
-///     <br/>
-///     <br/> Some useful information about the api:
-///     <br/> <see href="https://docs.github.com/en/rest?apiVersion=2022-11-28">Api home page</see>
-///     <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28">Best practices</see>
-///     <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28">Rate limit information</see>
-///     <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/troubleshooting-the-rest-api?apiVersion=2022-11-28">Troubleshooting</see>
+/// Basic implementation of the GitHub api. This was mainly created for making issues from users bug reports - it is not a full implementation!
+/// I tried to follow the spec very closely and the docs are really well done. I highly recommend taking a look at them!
+/// <br/>
+/// <br/> Some useful information about the api:
+/// <br/> <see href="https://docs.github.com/en/rest?apiVersion=2022-11-28">Api home page</see>
+/// <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28">Best practices</see>
+/// <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28">Rate limit information</see>
+/// <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/troubleshooting-the-rest-api?apiVersion=2022-11-28">Troubleshooting</see>
 /// </summary>
 public sealed class GithubApiManager : IPostInjectInit
 {
@@ -80,12 +80,12 @@ public sealed class GithubApiManager : IPostInjectInit
     #region Public functions
 
     /// <summary>
-    ///     Queue a request for the api! This will try its hardest to ensure the request gets through to the API. However,
-    ///     there is no way to review the response from the request or determine if it succeeded. You can also still add
-    ///     items to the queue even if the api is disabled, they just won't get set until its reactivated.
-    ///     <br/>
-    ///     This will fully respect the API rate limits to the best of its ability. Most requests will actually be sent
-    ///     ~1 second after you enqueue them.
+    /// Queue a request for the api! This will try its hardest to ensure the request gets through to the API. However,
+    /// there is no way to review the response from the request or determine if it succeeded. You can also still add
+    /// items to the queue even if the api is disabled, they just won't get set until its reactivated.
+    /// <br/>
+    /// This will fully respect the API rate limits to the best of its ability. Most requests will actually be sent
+    /// ~1 second after you enqueue them.
     /// </summary>
     /// <remarks>This does not necessarily respect order.</remarks>>
     /// <param name="request">The request to enqueue.</param>
@@ -96,7 +96,7 @@ public sealed class GithubApiManager : IPostInjectInit
     }
 
     /// <summary>
-    ///     Directly send a request to the API. This does not have any rate limits checks so be careful!
+    /// Directly send a request to the API. This does not have any rate limits checks so be careful!
     /// </summary>
     /// <remarks>If you want a safer way to send requests, look at <see cref="QueueRequest"/>></remarks>
     /// <param name="request">The request to make.</param>
@@ -138,8 +138,8 @@ public sealed class GithubApiManager : IPostInjectInit
     }
 
     /// <summary>
-    ///     A simple helper function that just tries to a header value that is a long.
-    ///     In general, there are just a lot of single value headers that are longs so this removes a lot of duplicate code.
+    /// A simple helper function that just tries to a header value that is a long.
+    /// In general, there are just a lot of single value headers that are longs so this removes a lot of duplicate code.
     /// </summary>
     /// <param name="headers">The headers that you want to search.</param>
     /// <param name="header">The header you want to get the long value for.</param>
@@ -161,8 +161,8 @@ public sealed class GithubApiManager : IPostInjectInit
     # endregion
 
     /// <summary>
-    ///     This will try to acquire the api lock every update tick. Having to get the lock ensures that we
-    ///     only ever have one outgoing request at a time and that no requests violates the rate limits!
+    /// This will try to acquire the api lock every update tick. Having to get the lock ensures that we
+    /// only ever have one outgoing request at a time and that no requests violates the rate limits!
     /// </summary>
     public void Update()
     {
@@ -184,7 +184,7 @@ public sealed class GithubApiManager : IPostInjectInit
     }
 
     /// <summary>
-    ///     This deals with handling the queue of requests!
+    /// This deals with handling the queue of requests!
     /// </summary>
     private async void HandleQueue()
     {
@@ -217,8 +217,8 @@ public sealed class GithubApiManager : IPostInjectInit
     }
 
     /// <summary>
-    ///     This will try to initialize the api! This really just means ensuring you aren't currently rate limited.
-    ///     Will instantly return and do nothing if the api is already initialized.
+    /// This will try to initialize the api! This really just means ensuring you aren't currently rate limited.
+    /// Will instantly return and do nothing if the api is already initialized.
     /// </summary>
     private async void TryInitializeApi()
     {
@@ -314,7 +314,7 @@ public sealed class GithubApiManager : IPostInjectInit
 }
 
 /// <summary>
-///     Entry for the queue. Keeps track of the amount of times this specific request has given an error.
+/// Entry for the queue. Keeps track of the amount of times this specific request has given an error.
 /// </summary>
 /// <param name="request">The request for this queue value.</param>
 public struct GithubQueueEntry(IGithubRequest request)

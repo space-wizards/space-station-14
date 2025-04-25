@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 namespace Content.Server.Github.Responses;
 
 /// <summary>
-///     <see href="https://docs.github.com/en/rest/rate-limit/rate-limit?apiVersion=2022-11-28"/>>
+/// <see href="https://docs.github.com/en/rest/rate-limit/rate-limit?apiVersion=2022-11-28"/>>
 /// </summary>
 public sealed class RateLimitResponse
 {

@@ -11,7 +11,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Github.Commands;
 
 /// <summary>
-///     Simple command for testing if the github api is set up correctly!
+/// Simple command for testing if the github api is set up correctly!
 /// </summary>
 [AdminCommand(AdminFlags.Server)]
 public sealed class TestGithubApiCommand : LocalizedEntityCommands
