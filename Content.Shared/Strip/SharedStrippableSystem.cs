@@ -23,6 +23,8 @@ namespace Content.Shared.Strip;
 
 public abstract class SharedStrippableSystem : EntitySystem
 {
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -244,7 +246,7 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (!_handsSystem.TryDrop(user, handsComp: user.Comp))
             return;
 
-        _inventorySystem.TryEquip(user, target, held, slot);
+        _inventorySystem.TryEquip(user, target, held, slot, triggerHandContact: true);
         _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):actor} has placed the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s {slot} slot");
     }
 
@@ -306,6 +308,8 @@ public abstract class SharedStrippableSystem : EntitySystem
         var prefix = stealth ? "stealthily " : "";
         _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
 
+        _interactionSystem.DoContactInteraction(user, item);
+
         var doAfterArgs = new DoAfterArgs(EntityManager, user, time, new StrippableDoAfterEvent(false, true, slot), user, target, item)
         {
             Hidden = stealth,
@@ -333,13 +337,13 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (!CanStripRemoveInventory(user, target, item, slot))
             return;
 
-        if (!_inventorySystem.TryUnequip(user, target, slot))
+        if (!_inventorySystem.TryUnequip(user, target, slot, triggerHandContact: true))
             return;
 
         RaiseLocalEvent(item, new DroppedEvent(user), true); // Gas tank internals etc.
 
         _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth);
-        _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
+        _adminLogger.Add(LogType.Stripping, LogImpact.High, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
     }
 
     /// <summary>
@@ -511,6 +515,8 @@ public abstract class SharedStrippableSystem : EntitySystem
         var prefix = stealth ? "stealthily " : "";
         _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
 
+        _interactionSystem.DoContactInteraction(user, item);
+
         var doAfterArgs = new DoAfterArgs(EntityManager, user, time, new StrippableDoAfterEvent(false, false, handName), user, target, item)
         {
             Hidden = stealth,
@@ -544,7 +550,7 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         _handsSystem.TryDrop(target, item, checkActionBlocker: false, handsComp: target.Comp);
         _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth, handsComp: user.Comp);
-        _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
+        _adminLogger.Add(LogType.Stripping, LogImpact.High, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
 
         // Hand update will trigger strippable update.
     }

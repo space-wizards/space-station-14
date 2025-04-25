@@ -17,92 +17,65 @@
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetBlack
+            - material: FloorCarpetBlack
+              amount: 1
               doAfter: 1
-              name: construction-graph-tag-black-carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-black
         - to: CurtainsBlue
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetBlue
+            - material: FloorCarpetBlue
+              amount: 1
               doAfter: 1
-              name: construction-graph-tag-blue-carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-blue
         - to: CurtainsCyan
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetCyan
+            - material: FloorCarpetCyan
+              amount: 1
               doAfter: 1
-              name: construction-graph-tag-cyan-carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-cyan
         - to: CurtainsGreen
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetGreen
+            - material: FloorCarpetGreen
+              amount: 1
               doAfter: 1
-              name: construction-graph-tag-green-carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-green
         - to: CurtainsOrange
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetOrange
+            - material: FloorCarpetOrange
+              amount: 1
               doAfter: 1
-              name: construction-graph-tag-orange-carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-orange
         - to: CurtainsPink
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetPink
+            - material: FloorCarpetPink
+              amount: 1
               doAfter: 1
-              name: construction-graph-tag-pink-carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-pink
         - to: CurtainsPurple
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetPurple
+            - material: FloorCarpetPurple
+              amount: 1
               doAfter: 1
-              name: construction-graph-tag-purple-carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-purple
         - to: CurtainsRed
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetRed
+            - material: FloorCarpetRed
+              amount: 1
               doAfter: 1
-              name: construction-graph-tag-red-carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-red
         - to: CurtainsWhite
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetWhite
+            - material: FloorCarpetWhite
+              amount: 1
               doAfter: 1
-              name: construction-graph-tag-white-carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-white
 
     - node: Curtains
       entity: HospitalCurtains
