@@ -5140,4 +5140,11 @@ Entries:
   id: 712
   time: '2025-04-25T04:32:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/524
+- author: CringeCursed
+  changes:
+  - message: make some of collective minds and syndicate radio channel more readable
+    type: Tweak
+  id: 713
+  time: '2025-04-25T04:32:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/534
 
