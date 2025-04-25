@@ -970,6 +970,13 @@
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
 - type: entity
+  parent: AirlockServiceTheatreLocked
+  id: AirlockMaintServiceTheatreLocked
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+- type: entity
   parent: AirlockKitchenLocked
   id: AirlockMaintKitchenLocked
   components:
