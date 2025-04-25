@@ -45,6 +45,15 @@ public sealed class GithubRateLimiter : IPostInjectInit
 
     private static readonly SemaphoreSlim _lock = new(1);
 
+    #region Headers
+
+    private const string RetryAfterHeader = "retry-after";
+
+    private const string RemainingHeader = "x-ratelimit-remaining";
+    private const string RateLimitResetHeader = "x-ratelimit-reset";
+
+    #endregion
+
     /// <summary>
     /// Try to acquire the API lock.
     /// </summary>
@@ -116,12 +125,12 @@ public sealed class GithubRateLimiter : IPostInjectInit
         if (_remainingRequests <= _requestBuffer || statusCode == HttpStatusCode.Forbidden || statusCode == HttpStatusCode.TooManyRequests)
         {
             // Retry after header
-            if (GithubApiManager.TryGetLongHeader(headers, "retry-after") is { } retryAfterSeconds)
+            if (GithubApiManager.TryGetLongHeader(headers, RetryAfterHeader) is { } retryAfterSeconds)
                 return DateTime.UtcNow.AddSeconds(retryAfterSeconds + ExtraBufferTime);
 
             // Reset header (Tells us when we get more api credits)
-            if (GithubApiManager.TryGetLongHeader(headers, "x-ratelimit-remaining") is { } remainingRequests &&
-                GithubApiManager.TryGetLongHeader(headers, "x-ratelimit-reset") is { } resetTime &&
+            if (GithubApiManager.TryGetLongHeader(headers, RemainingHeader) is { } remainingRequests &&
+                GithubApiManager.TryGetLongHeader(headers, RateLimitResetHeader) is { } resetTime &&
                 remainingRequests <= _remainingRequests)
             {
                 var delayTime = resetTime - DateTimeOffset.UtcNow.ToUnixTimeSeconds();
