@@ -237,9 +237,9 @@
     residueColor: residue-blue
 
 - type: entity
-  name: cyber soap
-  id: BorgSoap
   parent: SoapNT
+  id: BorgSoap
+  name: cyber soap
   description: A bar of soap artificially created by the inner workings of a cyborg.
   components:
   - type: SolutionContainerManager
