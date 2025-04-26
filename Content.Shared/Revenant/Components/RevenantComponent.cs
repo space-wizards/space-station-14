@@ -216,9 +216,4 @@ public sealed partial class RevenantComponent : Component
     #endregion
 
     [DataField] public EntityUid? Action;
-
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public bool Visible;
-
-    [DataField] public bool VisibleOverride;
 }

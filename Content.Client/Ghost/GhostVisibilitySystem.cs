@@ -43,9 +43,9 @@ public sealed class GhostVisibilitySystem: SharedGhostVisibilitySystem
         UpdateSpriteVisibility((uid, component));
     }
 
-    public void ToggleGhostVisibility(bool? visibility = null)
+    public void ToggleGhostVisibility()
     {
-        GhostVisibility = visibility ?? !GhostVisibility;
+        GhostVisibility = !GhostVisibility;
     }
 
     public override void UpdateVisibility(Entity<GhostVisibilityComponent?, VisibilityComponent?> ent)

@@ -4,7 +4,7 @@ namespace Content.Shared.Ghost;
 
 /// <summary>
 /// This component modifies visibility masks & sprite visibility for entities.
-/// This exists to avoid code duplication between revenants & observer ghosts.
+/// This exists to avoid code duplication between ghosts, and ghost-like entities (e.g., revenants).
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedGhostVisibilitySystem))]
 [AutoGenerateComponentState(true)]
@@ -25,12 +25,20 @@ public sealed partial class GhostVisibilityComponent : Component
     /// <summary>
     /// Whether the ghost can be revealed by global visibility settings (e.g., wizard shenanigans).
     /// </summary>
+    /// <remarks>
+    /// Admin ghosts should not be getting revealed by the wizard.
+    /// </remarks>
     [DataField]
     public bool IgnoreGlobalVisibility = true;
+    // This defaults to true / is opt-in because that's how it was before I refactored it. IMO it should be opt-out.
 
     /// <summary>
     /// Whether the ghost will be revealed after the round ends.
     /// </summary>
+    /// <remarks>
+    /// Admin ghosts should not be getting revealed at the end of the round.
+    /// </remarks>
     [DataField]
     public bool VisibleOnRoundEnd;
+    // This defaults to false / is opt-in because that's how it was before I refactored it. IMO it should be opt-out.
 }

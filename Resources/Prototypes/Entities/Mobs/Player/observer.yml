@@ -75,7 +75,7 @@
   components:
   - type: Spectral
   - type: GhostVisibility
-    allowSetVisibleEvent: true
+    ignoreGlobalVisibility: false # affected by wizard show-ghosts action
     visibleOnRoundEnd: true
 
 - type: entity
