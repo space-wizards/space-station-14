@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Massive Gate Overhaul
-    type: Tweak
-  id: 1075
-  time: '2025-02-08T02:14:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1603
 - author: ultramario1998
   changes:
   - message: A few more packages can now be sent your way!
@@ -4130,3 +4123,10 @@
   id: 1574
   time: '2025-04-24T23:52:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2331
+- author: jtfg-dev
+  changes:
+  - message: Life is finally Beautiful.
+    type: Fix
+  id: 1575
+  time: '2025-04-26T02:48:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2350
