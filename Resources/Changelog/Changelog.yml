@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Kickguy223
-  changes:
-  - message: A new Syndicate and Thief togglable implant is available capable of Impersonating
-      a Mindshield
-    type: Add
-  - message: All implants will now inform you if an implant is already present after
-      the attempt instead of before
-    type: Tweak
-  id: 7861
-  time: '2025-01-28T02:37:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34079
 - author: ArtisticRoomba
   changes:
   - message: Frezon prices have been tweaked to be much more worth it for new players
@@ -3934,3 +3923,10 @@
   id: 8362
   time: '2025-04-26T23:24:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34471
+- author: TiniestShark
+  changes:
+  - message: Inhand sprites for (most) ammo mags and speedloaders.
+    type: Add
+  id: 8363
+  time: '2025-04-26T23:36:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34235
