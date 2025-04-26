@@ -484,6 +484,4 @@ public record struct AnomalySpawnSettings()
     public bool SpawnOnSeverityChanged { get; set; } = false;
 }
 
-public sealed partial class ActionAnomalyPulseEvent : InstantActionEvent
-{
-}
+public sealed partial class ActionAnomalyPulseEvent : InstantActionEvent;
