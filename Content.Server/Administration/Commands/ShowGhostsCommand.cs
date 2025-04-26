@@ -1,6 +1,4 @@
-﻿using Content.Server.Ghost;
-using Content.Server.Revenant.EntitySystems;
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 using Content.Shared.Ghost;
 using Robust.Shared.Console;
 
