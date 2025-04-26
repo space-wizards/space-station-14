@@ -186,7 +186,7 @@ namespace Content.Server.Preferences.Managers
             }
         }
 
-        private void HandleUpdateConstructionFavoritesMessage(MsgUpdateConstructionFavorites message)
+        private async void HandleUpdateConstructionFavoritesMessage(MsgUpdateConstructionFavorites message)
         {
             var userId = message.MsgChannel.UserId;
             if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
@@ -216,7 +216,7 @@ namespace Content.Server.Preferences.Managers
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
-                _db.SaveConstructionFavoritesAsync(userId, validatedList);
+                await _db.SaveConstructionFavoritesAsync(userId, validatedList);
             }
         }
 
