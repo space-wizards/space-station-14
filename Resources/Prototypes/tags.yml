@@ -582,7 +582,7 @@
   id: GeigerCounter
 
 - type: Tag
-  id: Gender
+  id: GenderPin
 
 - type: Tag
   id: GlassAirlock

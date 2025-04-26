@@ -24,7 +24,7 @@ public sealed partial class ChameleonClothingComponent : Component
     ///     EntityPrototype id that chameleon item is trying to mimic.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField, AutoNetworkedField]
+    [DataField(required: true), AutoNetworkedField]
     public EntProtoId? Default;
 
     /// <summary>
