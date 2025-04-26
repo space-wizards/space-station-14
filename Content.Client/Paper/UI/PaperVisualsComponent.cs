@@ -56,6 +56,24 @@ public sealed partial class PaperVisualsComponent : Component
     public Box2 HeaderMargin = default;
 
     /// <summary>
+    ///     A path to an image which will be used as a header on the paper
+    /// </summary>
+    [DataField]
+    public string? FooterImagePath;
+
+    /// <summary>
+    ///     Modulate the header image by this color
+    /// </summary>
+    [DataField]
+    public Color FooterImageModulate = Color.White;
+
+    /// <summary>
+    ///     Any additional margin to add around the header
+    /// </summary>
+    [DataField]
+    public Box2 FooterMargin = default;
+
+    /// <summary>
     ///     Path to an image to use as the background to the "content" of the paper
     ///     The header and actual written text will use this as a background. The
     ///     image will be tiled vertically with the property that the bottom of the
