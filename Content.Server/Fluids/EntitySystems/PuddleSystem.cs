@@ -424,8 +424,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return;
         }
 
-        if (!TryComp<SlipperyComponent>(entity, out var slipComp))
-            return;
+        EnsureComp<SlipperyComponent>(entity, out var slipComp);
+        slipComp.AffectsSliding = true;
 
         foreach (var (reagent, quantity) in solution.Contents)
         {

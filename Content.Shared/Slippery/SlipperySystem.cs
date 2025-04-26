@@ -113,26 +113,19 @@ public sealed class SlipperySystem : EntitySystem
 
         if (TryComp(other, out PhysicsComponent? physics) && !HasComp<SlidingComponent>(other))
         {
-            _physics.SetLinearVelocity(other, physics.LinearVelocity * component.SlipData.LaunchForwardsMultiplier, body: physics);
+            _physics.SetLinearVelocity(other, physics.LinearVelocity * component.SlipData.LaunchForwardsMultiplier);
 
-            if (component.SlipData.SuperSlippery && requiresContact)
-            {
-                var sliding = EnsureComp<SlidingComponent>(other);
-                sliding.CollidingEntities.Add(uid);
-                // Why the fuck does this assertion stack overflow every once in a while
-                DebugTools.Assert(_physics.GetContactingEntities(other, physics).Contains(uid));
-            }
+            if (component.AffectsSliding && requiresContact)
+                EnsureComp<SlidingComponent>(other);
         }
 
-        var playSound = !_statusEffects.HasStatusEffect(other, "KnockedDown");
-
-        _stun.TryParalyze(other, component.SlipData.ParalyzeTime, true);
-
-        // Preventing from playing the slip sound when you are already knocked down.
-        if (playSound)
+        // Preventing from playing the slip sound and stunning when you are already knocked down.
+        if (!HasComp<KnockedDownComponent>(other))
         {
+            _stun.TryStun(other, component.SlipData.StunTime, true);
             _audio.PlayPredicted(component.SlipSound, other, other);
         }
+        _stun.TryKnockdown(other, component.SlipData.KnockdownTime, true, true);
 
         _adminLogger.Add(LogType.Slip, LogImpact.Low,
             $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");

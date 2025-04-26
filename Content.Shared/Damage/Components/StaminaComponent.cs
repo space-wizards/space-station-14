@@ -37,10 +37,22 @@ public sealed partial class StaminaComponent : Component
     public float StaminaDamage;
 
     /// <summary>
-    /// How much stamina damage is required to entire stam crit.
+    /// How much stamina damage is required to enterstam crit.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public float CritThreshold = 100f;
+
+    /// <summary>
+    /// How much stamina damage is required to enter big stam crit.
+    /// </summary>
+    //[ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    //public float HardCritThreshold = 200f;
+
+    /// <summary>
+    /// How long will this mob be knocked down for?
+    /// </summary>
+    //[ViewVariables(VVAccess.ReadWrite), DataField]
+    //public TimeSpan KnockdownTime = TimeSpan.FromSeconds(3);
 
     /// <summary>
     /// How long will this mob be stunned for?

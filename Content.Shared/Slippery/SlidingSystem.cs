@@ -1,19 +1,46 @@
+using System.Diagnostics;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Slippery;
 
 public sealed class SlidingSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<SlidingComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SlidingComponent, StoodEvent>(OnStand);
         SubscribeLocalEvent<SlidingComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<SlidingComponent, EndCollideEvent>(OnEndCollide);
+        SubscribeLocalEvent<SlidingComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionModifiers);
+    }
+
+    /// <summary>
+    ///     When the component is first added, calculate the friction modifier we need.
+    ///     Don't do this more than once to avoid mispredicts.
+    /// </summary>
+    private void OnComponentInit(Entity<SlidingComponent> entity, ref ComponentInit args)
+    {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
+        if (!CalculateSlidingModifier(entity))
+            throw new Exception($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
+
+        _speedModifierSystem.RefreshFrictionModifiers(entity);
     }
 
     /// <summary>
@@ -25,28 +52,64 @@ public sealed class SlidingSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Sets friction to 0 if colliding with a SuperSlippery Entity.
+    ///     Updates friction when we collide with a slippery entity
     /// </summary>
-    private void OnStartCollide(EntityUid uid, SlidingComponent component, ref StartCollideEvent args)
+    private void OnStartCollide(Entity<SlidingComponent> entity, ref StartCollideEvent args)
     {
-        if (!TryComp<SlipperyComponent>(args.OtherEntity, out var slippery) || !slippery.SlipData.SuperSlippery)
+        if (!TryComp<SlipperyComponent>(args.OtherEntity, out var slippery) || !slippery.AffectsSliding)
             return;
 
-        component.CollidingEntities.Add(args.OtherEntity);
-        Dirty(uid, component);
+        if (!CalculateSlidingModifier(entity))
+            throw new Exception($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
+
+        _speedModifierSystem.RefreshFrictionModifiers(entity);
     }
 
     /// <summary>
-    ///     Set friction to normal when ending collision with a SuperSlippery entity.
+    ///     Update friction when we stop colliding with a slippery entity
     /// </summary>
-    private void OnEndCollide(EntityUid uid, SlidingComponent component, ref EndCollideEvent args)
+    private void OnEndCollide(Entity<SlidingComponent> entity, ref EndCollideEvent args)
     {
-        if (!component.CollidingEntities.Remove(args.OtherEntity))
+        if (!TryComp<SlipperyComponent>(args.OtherEntity, out var slippery) || !slippery.AffectsSliding)
             return;
 
-        if (component.CollidingEntities.Count == 0)
-            RemComp<SlidingComponent>(uid);
+        if (!CalculateSlidingModifier(entity, args.OtherEntity))
+        {
+            entity.Comp.FrictionModifier = 1;
+            RemComp<SlidingComponent>(entity);
+        }
 
-        Dirty(uid, component);
+        _speedModifierSystem.RefreshFrictionModifiers(entity);
+    }
+
+    /// <summary>
+    ///     Gets contacting slippery entities and averages their friction modifiers.
+    /// </summary>
+    private bool CalculateSlidingModifier(Entity<SlidingComponent> entity, EntityUid? ignore = null)
+    {
+        var friction = 0.0f;
+        var count = 0;
+
+        foreach (var ent in _physics.GetContactingEntities(entity))
+        {
+            if (ent == ignore || !TryComp<SlipperyComponent>(ent, out var slippery) || !slippery.AffectsSliding)
+                continue;
+
+            friction += slippery.SlipData.SlipFriction;
+
+            count++;
+        }
+
+        if (count == 0)
+            return false;
+
+        entity.Comp.FrictionModifier = friction / count;
+        return true;
+    }
+
+    private void OnRefreshFrictionModifiers(Entity<SlidingComponent> entity, ref RefreshFrictionModifiersEvent args)
+    {
+        args.ModifyFriction(entity.Comp.FrictionModifier);
+        args.ModifyAcceleration(entity.Comp.FrictionModifier);
     }
 }
