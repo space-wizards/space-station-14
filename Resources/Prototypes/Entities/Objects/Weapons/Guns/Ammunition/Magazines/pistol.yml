@@ -412,4 +412,10 @@
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      right:
+      - state: inhand-right-mag
 
