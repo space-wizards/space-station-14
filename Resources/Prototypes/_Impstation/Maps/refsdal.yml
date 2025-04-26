@@ -12,7 +12,7 @@
           mapNameTemplate: '{0} Refsdal {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: '-DF-'
+            prefixCreator: '-DF'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/_Impstation/Shuttles/emergency_refsdal.yml
         - type: StationCargoShuttle

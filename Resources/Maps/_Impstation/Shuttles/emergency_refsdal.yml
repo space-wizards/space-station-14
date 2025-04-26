@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 248.0.2
+  engineVersion: 250.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/19/2025 22:15:28
-  entityCount: 311
+  time: 04/24/2025 23:21:48
+  entityCount: 314
 maps: []
 grids:
 - 1
@@ -876,6 +876,18 @@ entities:
       rot: 3.141592653589793 rad
       pos: -4.8841286,0.49346948
       parent: 1
+  - uid: 313
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -6.6673546,-3.3960788
+      parent: 1
+  - uid: 314
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -6.707203,-2.5989132
+      parent: 1
 - proto: ChairFoldingSpawnFolded
   entities:
   - uid: 256
@@ -1498,6 +1510,13 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,-5.5
+      parent: 1
+- proto: Screen
+  entities:
+  - uid: 312
+    components:
+    - type: Transform
+      pos: -2.5,0.5
       parent: 1
 - proto: ShuttleWindow
   entities:
