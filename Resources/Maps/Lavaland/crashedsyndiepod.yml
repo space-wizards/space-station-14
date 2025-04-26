@@ -1,16 +1,16 @@
 meta:
   format: 7
-  category: Grid
+  category: Map
   engineVersion: 254.1.0
   forkId: ""
   forkVersion: ""
-  time: 04/25/2025 05:05:48
+  time: 04/26/2025 05:56:17
   entityCount: 202
-maps: []
+maps:
+- 94
 grids:
 - 1
-orphans:
-- 1
+orphans: []
 nullspace: []
 tilemap:
   0: Space
@@ -31,7 +31,7 @@ entities:
       desc: Evacuation pod
       name: Evacuation pod
     - type: Transform
-      parent: invalid
+      parent: 94
     - type: MapGrid
       chunks:
         -1,-1:
@@ -238,6 +238,18 @@ entities:
     - type: GasTileOverlay
     - type: NavMap
     - type: RadiationGridResistance
+  - uid: 94
+    components:
+    - type: MetaData
+      name: Map Entity
+    - type: Transform
+    - type: Map
+      mapPaused: True
+    - type: PhysicsMap
+    - type: GridTree
+    - type: MovedGrids
+    - type: Broadphase
+    - type: OccluderTree
 - proto: AirCanister
   entities:
   - uid: 193
@@ -1255,13 +1267,6 @@ entities:
     components:
     - type: Transform
       pos: 2.5,2.5
-      parent: 1
-- proto: RubberStampSyndicate
-  entities:
-  - uid: 94
-    components:
-    - type: Transform
-      pos: 0.65062594,-0.68369055
       parent: 1
 - proto: SalvageHumanCorpseSpawner
   entities:
