@@ -53,6 +53,7 @@
   - type: Clothing
     sprite: Clothing/Mask/gassyndicate.rsi
   - type: FlashImmunity
+    blocksSpecialVision: false
   - type: EyeProtection
   - type: Pierceable
     level: Metal
