@@ -21,6 +21,7 @@
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 10
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Heat: 15
