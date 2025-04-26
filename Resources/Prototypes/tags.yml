@@ -354,6 +354,9 @@
   id: CottonBoll
 
 - type: Tag
+  id: CottonBurger
+
+- type: Tag
   id: Cow
 
 - type: Tag
