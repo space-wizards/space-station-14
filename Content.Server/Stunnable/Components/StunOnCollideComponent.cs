@@ -9,20 +9,23 @@ namespace Content.Server.Stunnable.Components
         // TODO: Can probably predict this.
 
         // See stunsystem for what these do
-        [DataField("stunAmount")]
-        public int StunAmount;
+        [DataField]
+        public TimeSpan StunAmount;
 
-        [DataField("knockdownAmount")]
-        public int KnockdownAmount;
+        [DataField]
+        public TimeSpan KnockdownAmount;
 
-        [DataField("slowdownAmount")]
-        public int SlowdownAmount;
+        [DataField]
+        public TimeSpan SlowdownAmount;
 
-        [DataField("walkSpeedMultiplier")]
+        [DataField]
         public float WalkSpeedMultiplier = 1f;
 
-        [DataField("runSpeedMultiplier")]
+        [DataField]
         public float RunSpeedMultiplier = 1f;
+
+        [DataField]
+        public bool Refresh = true;
 
         /// <summary>
         /// Fixture we track for the collision.

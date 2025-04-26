@@ -384,6 +384,7 @@ public abstract class SharedStunSystem : EntitySystem
     private void OnRefreshFriction(Entity<KnockedDownComponent> entity, ref RefreshFrictionModifiersEvent args)
     {
         args.ModifyFriction(entity.Comp.FrictionModifier);
+        args.ModifyAcceleration(entity.Comp.FrictionModifier);
     }
 
     #region Attempt Event Handling

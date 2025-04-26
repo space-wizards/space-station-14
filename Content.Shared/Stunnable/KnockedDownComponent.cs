@@ -27,11 +27,11 @@ public sealed partial class KnockedDownComponent : Component
     /// Makes them accelerate and deccelerate slower.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float FrictionModifier = 0.2f;
+    public float FrictionModifier = 0.4f; // Should add a friction modifier to slipping to compensate for this
 
     /// <summary>
     /// Modifier to the maximum movement speed of a knocked down mover.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float SpeedModifier = 0.5f;
+    public float SpeedModifier = 0.3f;
 }
