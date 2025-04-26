@@ -13,7 +13,6 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Examine;
-using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
@@ -27,9 +26,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
-using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -55,7 +52,6 @@ namespace Content.Server.Ghost
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly ISharedPlayerManager _player = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
-        [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -66,12 +62,10 @@ namespace Content.Server.Ghost
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
-        public bool AllObserversVisible { get; private set; }
 
         public override void Initialize()
         {
@@ -100,20 +94,6 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
-
-            SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
-            SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
-
-            SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
-        }
-
-        private void OnGhostVis(Entity<GhostComponent> ent, ref GetVisMaskEvent args)
-        {
-            // If component not deleting they can see ghosts.
-            if (ent.Comp.LifeStage <= ComponentLifeStage.Running)
-            {
-                args.VisibilityMask |= (int)VisibilityFlags.Ghost;
-            }
         }
 
         private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
@@ -137,33 +117,6 @@ namespace Content.Server.Ghost
 
             Popup.PopupEntity(str, uid, uid);
             Dirty(uid, component);
-        }
-
-        public override void SetVisible(Entity<GhostComponent?> ghost, bool visible)
-        {
-            if (!Resolve(ghost.Owner, ref ghost.Comp))
-                return;
-
-            if (ghost.Comp.Visible == visible)
-                return;
-
-            base.SetVisible(ghost, visible);
-
-            if (!TryComp(ghost.Owner, out VisibilityComponent? visibility))
-                return;
-
-            if (visible)
-            {
-                _visibilitySystem.RemoveLayer((ghost.Owner, visibility), (int)VisibilityFlags.Ghost, false);
-                _visibilitySystem.AddLayer((ghost.Owner, visibility), (int)VisibilityFlags.Normal, false);
-            }
-            else
-            {
-                _visibilitySystem.AddLayer((ghost.Owner, visibility), (int)VisibilityFlags.Ghost, false);
-                _visibilitySystem.RemoveLayer((ghost.Owner, visibility), (int)VisibilityFlags.Normal, false);
-            }
-
-            _visibilitySystem.RefreshVisibility(ghost.Owner, visibility);
         }
 
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
@@ -217,31 +170,13 @@ namespace Content.Server.Ghost
 
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
-            var vis = ShouldBeVisible(component);
-            component.Visible = !vis; // bypass the SetVisible() early exit (force a layer update).
-            SetVisible((uid, component), vis);
-
-            _eye.RefreshVisibilityMask(uid);
+            EnsureComp<GhostVisibilityComponent>(uid);
             var time = _gameTiming.CurTime;
             component.TimeOfDeath = time;
         }
 
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
         {
-            // Perf: If the entity is deleting itself, no reason to change these back.
-            if (Terminating(uid))
-                return;
-
-            // Entity can't be seen by ghosts anymore.
-            if (TryComp(uid, out VisibilityComponent? visibility)  && !component.Visible)
-            {
-                _visibilitySystem.RemoveLayer((uid, visibility), (int) VisibilityFlags.Ghost, false);
-                _visibilitySystem.AddLayer((uid, visibility), (int) VisibilityFlags.Normal, false);
-                _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
-            }
-
-            // Entity can't see ghosts anymore.
-            _eye.RefreshVisibilityMask(uid);
             _actions.RemoveAction(uid, component.BooActionEntity);
         }
 
@@ -398,58 +333,6 @@ namespace Content.Server.Ghost
         private void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
         {
             args.Cancelled = true;
-        }
-
-        private void OnToggleGhostVisibilityToAll(ToggleGhostVisibilityToAllEvent ev)
-        {
-            if (ev.Handled)
-                return;
-
-            ev.Handled = true;
-            SetAllObserversVisible(true);
-        }
-
-        private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
-        {
-            // Reset global visibility.
-            if (ev.New is GameRunLevel.PreRoundLobby or GameRunLevel.InRound)
-                AllObserversVisible = false;
-
-            var entityQuery = EntityQueryEnumerator<GhostComponent>();
-            while (entityQuery.MoveNext(out var uid, out var ghost))
-            {
-                SetVisible((uid, ghost), ShouldBeVisible(ghost));
-            }
-        }
-
-        /// <summary>
-        /// Make all whitelisted ghosts visible. This usually just includes all observer ghosts.
-        /// </summary>
-        /// <remarks>
-        /// Used to make ghosts visible when the round ends, and for wizard shenanigans.
-        /// </remarks>
-        public void SetAllObserversVisible(bool visible)
-        {
-            if (AllObserversVisible == visible)
-                return;
-
-            AllObserversVisible = visible;
-            var entityQuery = EntityQueryEnumerator<GhostComponent>();
-            while (entityQuery.MoveNext(out var uid, out var ghost))
-            {
-                if (!ghost.AllowSetVisibleEvent)
-                    continue;
-
-                SetVisible((uid, ghost), ShouldBeVisible(ghost));
-            }
-        }
-
-        private bool ShouldBeVisible(GhostComponent ghost)
-        {
-            if (ghost.VisibleOnRoundEnd && _gameTicker.RunLevel == GameRunLevel.PostRound)
-                return true;
-
-            return ghost.AllowSetVisibleEvent && AllObserversVisible;
         }
 
         public bool DoGhostBooEvent(EntityUid target)

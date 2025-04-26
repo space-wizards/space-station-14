@@ -1,13 +1,12 @@
 using System.Numerics;
 using Content.Server.Actions;
-using Content.Server.GameTicking;
 using Content.Server.Store.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
-using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
+using Content.Shared.Ghost;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Mobs.Systems;
@@ -32,11 +31,9 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedInteractionSystem _interact = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -62,23 +59,13 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RevenantComponent, StatusEffectAddedEvent>(OnStatusAdded);
         SubscribeLocalEvent<RevenantComponent, StatusEffectEndedEvent>(OnStatusEnded);
-        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
-
-        SubscribeLocalEvent<RevenantComponent, GetVisMaskEvent>(OnRevenantGetVis);
 
         InitializeAbilities();
     }
 
-    private void OnRevenantGetVis(Entity<RevenantComponent> ent, ref GetVisMaskEvent args)
-    {
-        args.VisibilityMask |= (int)VisibilityFlags.Ghost;
-    }
-
     private void OnStartup(EntityUid uid, RevenantComponent component, ComponentStartup args)
     {
-        var vis = ShouldBeVisible();
-        component.Visible = !vis; // bypass the SetVisible() early exit (force a layer update).
-        SetVisible((uid, component), vis);
+        EnsureComp<GhostVisibilityComponent>(uid);
 
         //update the icon
         ChangeEssenceAmount(uid, 0, component);
@@ -87,9 +74,6 @@ public sealed partial class RevenantSystem : EntitySystem
         _appearance.SetData(uid, RevenantVisuals.Corporeal, false);
         _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
         _appearance.SetData(uid, RevenantVisuals.Stunned, false);
-
-        //ghost vision
-        _eye.RefreshVisibilityMask(uid);
     }
 
     private void OnMapInit(EntityUid uid, RevenantComponent component, MapInitEvent args)
@@ -186,63 +170,6 @@ public sealed partial class RevenantSystem : EntitySystem
             return;
         _store.ToggleUi(uid, uid, store);
     }
-
-
-    # region GhostSystem code duplication yipeeee
-    public void MakeVisible(bool visible)
-    {
-        if (_allVisible == visible)
-            return;
-
-        _allVisible = visible;
-        var query = EntityQueryEnumerator<RevenantComponent, VisibilityComponent>();
-        while (query.MoveNext(out var uid, out var rev, out var vis))
-        {
-            SetVisible((uid, rev, vis), visible);
-        }
-    }
-
-    private void SetVisible(Entity<RevenantComponent?, VisibilityComponent?> ent, bool visible)
-    {
-        if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2))
-            return;
-
-        if (ent.Comp1.Visible == visible)
-            return;
-
-        ent.Comp1.Visible = visible;
-        if (visible)
-        {
-            _visibility.AddLayer((ent, ent.Comp2), (int)VisibilityFlags.Normal, false);
-            _visibility.RemoveLayer((ent, ent.Comp2), (int)VisibilityFlags.Ghost, false);
-        }
-        else
-        {
-            _visibility.AddLayer((ent, ent.Comp2), (int)VisibilityFlags.Ghost, false);
-            _visibility.RemoveLayer((ent, ent.Comp2), (int)VisibilityFlags.Normal, false);
-        }
-
-        _visibility.RefreshVisibility(ent, ent.Comp2);
-    }
-
-    private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
-    {
-        // Reset global visibility.
-        if (ev.New is GameRunLevel.PreRoundLobby or GameRunLevel.InRound)
-            _allVisible = false;
-
-        var entityQuery = EntityQueryEnumerator<RevenantComponent, VisibilityComponent>();
-        while (entityQuery.MoveNext(out var uid, out var rev, out var vis))
-        {
-            SetVisible((uid, rev, vis), ShouldBeVisible());
-        }
-    }
-
-    private bool ShouldBeVisible()
-    {
-        return _allVisible || _ticker.RunLevel == GameRunLevel.PostRound;
-    }
-    #endregion
 
     public override void Update(float frameTime)
     {

@@ -12,7 +12,7 @@ public sealed class ToggleGhostVisibilityCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var ghostSystem = _entSysMan.GetEntitySystem<GhostSystem>();
+        var ghostSystem = _entSysMan.GetEntitySystem<GhostVisibilitySystem>();
 
         if (args.Length != 0 && bool.TryParse(args[0], out var visibility))
         {

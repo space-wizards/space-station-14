@@ -88,11 +88,16 @@ public sealed partial class GhostComponent : Component
     public bool CanReturnToBody;
 
     /// <summary>
-    /// Whether or not the ghost should be visible by default.
-    /// The ghost will still always be visible if global ghost visibility is enabled in the ghost system.
+    /// Whether the ghost is currently visible.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Visible;
+
+    /// <summary>
+    /// Optional override for normal ghost visibility rules. Can be used to make a ghost always visible.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public bool VisibleOverride;
 
     /// <summary>
     /// Ghost color

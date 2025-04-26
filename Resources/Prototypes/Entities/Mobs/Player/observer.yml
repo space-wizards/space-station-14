@@ -74,7 +74,7 @@
   id: MobObserver
   components:
   - type: Spectral
-  - type: Ghost
+  - type: GhostVisibility
     allowSetVisibleEvent: true
     visibleOnRoundEnd: true
 
