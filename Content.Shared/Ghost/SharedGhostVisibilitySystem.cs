@@ -18,7 +18,7 @@ public abstract class SharedGhostVisibilitySystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<GhostVisibilityComponent, ComponentStartup>(OnGhostVisStartup);
         SubscribeLocalEvent<GhostVisibilityComponent, ComponentShutdown>(OnGhostVisShutdown);
-        SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
+        SubscribeLocalEvent<GhostVisibilityComponent, GetVisMaskEvent>(OnGhostVis);
         SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
     }
 
@@ -35,11 +35,11 @@ public abstract class SharedGhostVisibilitySystem : EntitySystem
         _eye.RefreshVisibilityMask(uid);
     }
 
-    private void OnGhostVis(Entity<GhostComponent> ent, ref GetVisMaskEvent args)
+    private void OnGhostVis(Entity<GhostVisibilityComponent> ent, ref GetVisMaskEvent args)
     {
         // If component not deleting they can see ghosts.
         if (ent.Comp.LifeStage <= ComponentLifeStage.Running)
-            args.VisibilityMask |= (int)VisibilityFlags.Ghost;
+            args.VisibilityMask |= (int)ent.Comp.Mask;
     }
 
     protected virtual void UpdateVisibility(Entity<GhostVisibilityComponent?, VisibilityComponent?> ent)
@@ -66,13 +66,13 @@ public abstract class SharedGhostVisibilitySystem : EntitySystem
 
         if (visible)
         {
-            _visibility.RemoveLayer((ghost.Owner, ghost.Comp2), (int)VisibilityFlags.Ghost, false);
-            _visibility.AddLayer((ghost.Owner, ghost.Comp2), (int)VisibilityFlags.Normal, false);
+            _visibility.RemoveLayer((ghost.Owner, ghost.Comp2), (ushort)ghost.Comp1.Layer, false);
+            _visibility.AddLayer((ghost.Owner, ghost.Comp2), (ushort)VisibilityFlags.Normal, false);
         }
         else
         {
-            _visibility.AddLayer((ghost.Owner, ghost.Comp2), (int)VisibilityFlags.Ghost, false);
-            _visibility.RemoveLayer((ghost.Owner, ghost.Comp2), (int)VisibilityFlags.Normal, false);
+            _visibility.AddLayer((ghost.Owner, ghost.Comp2), (ushort)ghost.Comp1.Layer, false);
+            _visibility.RemoveLayer((ghost.Owner, ghost.Comp2), (ushort)VisibilityFlags.Normal, false);
         }
 
         _visibility.RefreshVisibility(ghost.Owner, ghost.Comp2);

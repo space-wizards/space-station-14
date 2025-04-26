@@ -8,22 +8,26 @@ public sealed class GhostVisibilitySystem: SharedGhostVisibilitySystem
 {
     [Dependency] private readonly ISharedPlayerManager _player = default!;
 
-    private bool _drawGhosts;
+    private bool _showGhosts;
 
     /// <summary>
-    /// Whether ghost sprites should be visible or not.
+    /// Whether hidden/invisible ghost sprites should be drawn.
     /// </summary>
-    public bool DrawGhosts
+    /// <remarks>
+    /// This can be used to toggle drawing other spectator ghosts. However, if the ghost is actually visible for
+    /// everyone they will still get drawn regardless.
+    /// </remarks>
+    public bool ShowGhosts
     {
-        get => _drawGhosts;
+        get => _showGhosts;
         set
         {
-            if (_drawGhosts == value)
+            if (_showGhosts == value)
             {
                 return;
             }
 
-            _drawGhosts = value;
+            _showGhosts = value;
             var query = AllEntityQuery<GhostVisibilityComponent, SpriteComponent>();
             while (query.MoveNext(out var uid, out var ghost, out var sprite))
             {
@@ -36,6 +40,18 @@ public sealed class GhostVisibilitySystem: SharedGhostVisibilitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<GhostVisibilityComponent, AfterAutoHandleStateEvent>(OnGhostVisState);
+        SubscribeLocalEvent<GhostVisibilityComponent, PlayerAttachedEvent>(OnAttached);
+        SubscribeLocalEvent<GhostVisibilityComponent, PlayerDetachedEvent>(OnDetached);
+    }
+
+    private void OnDetached(Entity<GhostVisibilityComponent> ent, ref PlayerDetachedEvent args)
+    {
+        UpdateVisibility(ent!);
+    }
+
+    private void OnAttached(Entity<GhostVisibilityComponent> ent, ref PlayerAttachedEvent args)
+    {
+        UpdateVisibility(ent!);
     }
 
     private void OnGhostVisState(EntityUid uid, GhostVisibilityComponent component, ref AfterAutoHandleStateEvent args)
@@ -48,7 +64,10 @@ public sealed class GhostVisibilitySystem: SharedGhostVisibilitySystem
         if (!Resolve(ent.Owner, ref ent.Comp1))
             return;
 
-        base.UpdateVisibility(ent);
+        // Intentionally not calling the base event / modifying component data.
+        // Client cannot predict ghost visibility due to lack of round-end information, and because the global
+        // visibility is not networked.
+
         UpdateSpriteVisibility((ent.Owner, ent.Comp1));
     }
 
@@ -57,6 +76,6 @@ public sealed class GhostVisibilitySystem: SharedGhostVisibilitySystem
         if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2))
             return;
 
-        ent.Comp2.Visible = DrawGhosts || ent.Comp1.Visible || ent.Owner == _player.LocalEntity;
+        ent.Comp2.Visible = ShowGhosts || ent.Comp1.Visible || ent.Owner == _player.LocalEntity;
     }
 }

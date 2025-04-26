@@ -1,3 +1,4 @@
+using Content.Shared.Eye;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Ghost;
@@ -42,4 +43,16 @@ public sealed partial class GhostVisibilityComponent : Component
     [DataField]
     public bool VisibleOnRoundEnd;
     // This defaults to false / is opt-in because that's how it was before I refactored it. IMO it should be opt-out.
+
+    /// <summary>
+    /// Visibility layers to add or remove from this entity when ghost-visibility is toggled.
+    /// </summary>
+    [DataField]
+    public VisibilityFlags Layer = VisibilityFlags.Ghost;
+
+    /// <summary>
+    /// Eye visibility mask to add to this entity..
+    /// </summary>
+    [DataField]
+    public VisibilityFlags Mask = VisibilityFlags.Ghost;
 }
