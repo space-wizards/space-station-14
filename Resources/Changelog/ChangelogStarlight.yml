@@ -5283,4 +5283,12 @@ Entries:
   id: 732
   time: '2025-04-26T10:01:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/517
+- author: Happyrobot33
+  changes:
+  - message: Fixed TTS Announce/Radio volume slider logic. Both should work properly
+      now.
+    type: Fix
+  id: 733
+  time: '2025-04-26T15:23:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/549
 
