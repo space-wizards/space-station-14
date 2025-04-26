@@ -4,6 +4,7 @@ using Content.Shared.Research.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Lathe
 {
@@ -57,6 +58,8 @@ namespace Content.Shared.Lathe
         /// </summary>
         [DataField]
         public float? MinTemp;
+
+        public LatheTemperatureStatus TempStatus = LatheTemperatureStatus.Normal;
 
         #region Visualizer info
         [DataField]
@@ -114,4 +117,12 @@ namespace Content.Shared.Lathe
     /// </summary>
     [ByRefEvent]
     public readonly record struct LatheStartPrintingEvent(LatheRecipePrototype Recipe);
+
+    [Serializable, NetSerializable]
+    public enum LatheTemperatureStatus
+    {
+        Low,
+        High,
+        Normal
+    }
 }

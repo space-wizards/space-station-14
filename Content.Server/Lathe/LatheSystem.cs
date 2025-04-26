@@ -195,18 +195,27 @@ namespace Content.Server.Lathe
             if (component.CurrentRecipe != null || component.Queue.Count <= 0 || !this.IsPowered(uid, EntityManager))
                 return false;
 
-            if ((component.MaxTemp != null || component.MinTemp != null) && Resolve(uid, ref xform) && xform.GridUid != null)
+            if ((component.MaxTemp != null || component.MinTemp != null) && Resolve(uid, ref xform) && xform.GridUid != null && xform.MapUid != null)
             {
                 var position = _transform.GetGridTilePositionOrDefault((uid, xform));
-                var enumerator = _atmosphere.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true);
-                while (enumerator.MoveNext(out var mix))
-                    _environments.Add(mix);
+                var temperature = _atmosphere.GetTileHeatCapacity(xform.GridUid, xform.MapUid.Value, position);
 
-                foreach (var env in _environments)
+                if (temperature <= component.MinTemp)
                 {
-                    if (env.Temperature > component.MaxTemp || env.Temperature < component.MinTemp)
-                        return false;
+                    component.TempStatus = LatheTemperatureStatus.Low;
+                    UpdateTemperatureAppearance(uid, component.TempStatus);
+                    return false;
                 }
+
+                else if (temperature >= component.MaxTemp)
+                {
+                    component.TempStatus = LatheTemperatureStatus.High;
+                    UpdateTemperatureAppearance(uid, component.TempStatus);
+                    return false;
+                }
+
+                component.TempStatus = LatheTemperatureStatus.Normal;
+                UpdateTemperatureAppearance(uid, component.TempStatus);
             }
 
             var recipe = component.Queue.First();
@@ -354,6 +363,25 @@ namespace Content.Server.Lathe
         private void UpdateRunningAppearance(EntityUid uid, bool isRunning)
         {
             _appearance.SetData(uid, LatheVisuals.IsRunning, isRunning);
+        }
+
+        private void UpdateTemperatureAppearance(EntityUid uid, LatheTemperatureStatus status, AppearanceComponent? appearance = null)
+        {
+            if (!Resolve(uid, ref appearance))
+                return;
+
+            switch (status)
+            {
+                case LatheTemperatureStatus.Normal:
+                    _appearance.RemoveData(uid, LatheVisuals.Temperature);
+                    break;
+                case LatheTemperatureStatus.Low:
+                    _appearance.SetData(uid, LatheVisuals.Temperature, status);
+                    break;
+                case LatheTemperatureStatus.High:
+                    _appearance.SetData(uid, LatheVisuals.Temperature, status);
+                    break;
+            }
         }
 
         private void OnPowerChanged(EntityUid uid, LatheComponent component, ref PowerChangedEvent args)

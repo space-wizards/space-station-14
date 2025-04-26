@@ -17,6 +17,12 @@
       "name": "unlit"
     },
     {
+        "name": "overheated"
+    },
+    {
+        "name": "overcooled"
+    },
+    {
       "name": "building",
       "delays": [
         [
