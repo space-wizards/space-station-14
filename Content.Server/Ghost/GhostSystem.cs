@@ -411,6 +411,10 @@ namespace Content.Server.Ghost
 
         private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
         {
+            // Reset global visibility.
+            if (ev.New is GameRunLevel.PreRoundLobby or GameRunLevel.InRound)
+                AllObserversVisible = false;
+
             var entityQuery = EntityQueryEnumerator<GhostComponent>();
             while (entityQuery.MoveNext(out var uid, out var ghost))
             {

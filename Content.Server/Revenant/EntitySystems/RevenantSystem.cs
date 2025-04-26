@@ -45,7 +45,7 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly VisibilitySystem _visibility = default!;
 
-    private bool _visible;
+    private bool _allVisible;
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string RevenantShopId = "ActionRevenantShop";
@@ -191,10 +191,10 @@ public sealed partial class RevenantSystem : EntitySystem
     # region GhostSystem code duplication yipeeee
     public void MakeVisible(bool visible)
     {
-        if (_visible == visible)
+        if (_allVisible == visible)
             return;
 
-        _visible = visible;
+        _allVisible = visible;
         var query = EntityQueryEnumerator<RevenantComponent, VisibilityComponent>();
         while (query.MoveNext(out var uid, out var rev, out var vis))
         {
@@ -227,6 +227,10 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
     {
+        // Reset global visibility.
+        if (ev.New is GameRunLevel.PreRoundLobby or GameRunLevel.InRound)
+            _allVisible = false;
+
         var entityQuery = EntityQueryEnumerator<RevenantComponent, VisibilityComponent>();
         while (entityQuery.MoveNext(out var uid, out var rev, out var vis))
         {
@@ -236,7 +240,7 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private bool ShouldBeVisible()
     {
-        return _visible || _ticker.RunLevel == GameRunLevel.PostRound;
+        return _allVisible || _ticker.RunLevel == GameRunLevel.PostRound;
     }
     #endregion
 
