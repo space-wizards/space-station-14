@@ -27,8 +27,7 @@
   recipeUnlocks:
   - RadarConsoleCircuitboard
   - HandHeldMassScanner
-  - BorgModuleGPS
-
+  
 - type: technology
   id: AdvancedPowercells
   name: research-technology-advanced-powercells
@@ -166,6 +165,8 @@
     - PowerDrill
     - JawsOfLife
     - BorgModuleAdvancedTool
+    - Fulton
+    - FultonBeacon
 
 - type: technology
   id: MassExcavation
@@ -180,6 +181,7 @@
     - OreBagOfHolding
     - MiningDrillDiamond
     - AdvancedMineralScannerEmpty
+    - BorgModuleAdvancedMining
 
 # Tier 3
 
