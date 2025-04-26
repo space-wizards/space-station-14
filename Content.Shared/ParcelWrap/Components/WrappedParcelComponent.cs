@@ -1,6 +1,7 @@
 using Content.Shared.ParcelWrap.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.ParcelWrap.Components;
@@ -10,7 +11,7 @@ namespace Content.Shared.ParcelWrap.Components;
 /// destroying this entity and releasing <see cref="Contents"/>.
 /// </summary>
 /// <seealso cref="ParcelWrapComponent"/>
-[RegisterComponent, Access(typeof(SharedParcelWrappingSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(ParcelWrappingSystem))]
 public sealed partial class WrappedParcelComponent : Component
 {
     /// <summary>

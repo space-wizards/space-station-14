@@ -10,7 +10,7 @@ using Robust.Shared.Containers;
 namespace Content.Shared.ParcelWrap.Systems;
 
 // This part handles Wrapped Parcels
-public sealed partial class SharedParcelWrappingSystem
+public sealed partial class ParcelWrappingSystem
 {
     private void InitializeWrappedParcel()
     {
@@ -32,8 +32,7 @@ public sealed partial class SharedParcelWrappingSystem
         if (args.Handled)
             return;
 
-        TryStartUnwrapDoAfter(args.User, entity);
-        args.Handled = true;
+        args.Handled = TryStartUnwrapDoAfter(args.User, entity);
     }
 
     private void OnGetVerbsForWrappedParcel(Entity<WrappedParcelComponent> entity,

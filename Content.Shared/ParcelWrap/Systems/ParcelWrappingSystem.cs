@@ -16,7 +16,7 @@ namespace Content.Shared.ParcelWrap.Systems;
 /// </summary>
 /// <seealso cref="ParcelWrapComponent"/>
 /// <seealso cref="WrappedParcelComponent"/>
-public sealed partial class SharedParcelWrappingSystem : EntitySystem
+public sealed partial class ParcelWrappingSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;

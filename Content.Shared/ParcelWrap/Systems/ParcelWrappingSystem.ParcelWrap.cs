@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.ParcelWrap.Systems;
 
 // This part handles Parcel Wrap.
-public sealed partial class SharedParcelWrappingSystem
+public sealed partial class ParcelWrappingSystem
 {
     private void InitializeParcelWrap()
     {

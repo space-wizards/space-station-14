@@ -10,7 +10,11 @@
   - type: ParcelWrap
     parcelPrototype: WrappedParcel
     wrapDelay: 1.0
-    wrapSound: /Audio/Items/Handcuffs/rope_start.ogg
+    wrapSound:
+      path: /Audio/Items/Handcuffs/rope_start.ogg
+      params:
+        volume: -5
+        variation: 0.05
     whitelist:
       components:
       - Item
@@ -53,8 +57,27 @@
       map: [ "enum.WrappedParcelVisuals.Layer" ]
   - type: WrappedParcel
     unwrapDelay: 0.5
-    unwrapSound: /Audio/Effects/poster_broken.ogg
+    unwrapSound:
+      path: /Audio/Effects/poster_broken.ogg
+      params:
+        volume: -4
     unwrapTrash: ParcelWrapTrash
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Slash
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+          params:
+            volume: -4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Tag
     tags:
     - Recyclable # Parcel entity is recyclable, and when it's destroyed, it'll drop its contents.

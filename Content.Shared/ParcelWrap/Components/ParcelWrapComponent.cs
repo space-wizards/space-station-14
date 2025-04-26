@@ -1,5 +1,4 @@
 using Content.Shared.Item;
-using Content.Shared.ParcelWrap.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -57,12 +56,12 @@ public sealed partial class ParcelWrapComponent : Component
     /// <summary>
     /// Defines the set of things which can be wrapped (unless it fails the <see cref="Blacklist"/>).
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// Defines the set of things which cannot be wrapped (even if it passes the <see cref="Whitelist"/>).
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public EntityWhitelist? Blacklist;
 }
