@@ -4,8 +4,8 @@ meta:
   engineVersion: 254.1.0
   forkId: ""
   forkVersion: ""
-  time: 04/22/2025 02:10:38
-  entityCount: 273
+  time: 04/26/2025 06:31:33
+  entityCount: 272
 maps: []
 grids:
 - 1
@@ -39,7 +39,7 @@ entities:
       name: GX-13 Infiltrator
     - type: Transform
       pos: 0.64252126,4.1776605
-      parent: invalid
+      parent: 1
     - type: Tag
       tags:
       - Syndicate
@@ -951,13 +951,6 @@ entities:
     components:
     - type: Transform
       pos: 1.5,-6.5
-      parent: 1
-- proto: FireAxeFlaming
-  entities:
-  - uid: 23
-    components:
-    - type: Transform
-      pos: -1.5018963,-3.4569345
       parent: 1
 - proto: GasPipeBend
   entities:
