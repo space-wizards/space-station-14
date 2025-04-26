@@ -5205,4 +5205,18 @@ Entries:
   id: 721
   time: '2025-04-26T07:29:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/543
+- author: Happyrobot33
+  changes:
+  - message: Fixed Mail Tech PDA UI Color.
+    type: Fix
+  id: 722
+  time: '2025-04-26T07:35:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/545
+- author: Happyrobot33
+  changes:
+  - message: Fixed Mail Tech NanoTask missing.
+    type: Fix
+  id: 723
+  time: '2025-04-26T07:35:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/545
 
