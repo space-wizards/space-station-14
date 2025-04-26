@@ -13,7 +13,7 @@ namespace Content.Shared.Holiday
         private readonly List<HolidayPrototype> _currentHolidays = new();
         public List<HolidayPrototype> CurrentHolidays => _currentHolidays;
 
-        private DateTime _currentDate;
+        private DateTime _currentDate = DateTime.Today;
 
         public override void Initialize()
         {
@@ -39,7 +39,7 @@ namespace Content.Shared.Holiday
         {
             _currentHolidays.Clear();
 
-            if (Enabled)
+            if (!Enabled)
             {
                 RaiseLocalEvent(new HolidaysRefreshedEvent(Enumerable.Empty<HolidayPrototype>()));
                 return;
