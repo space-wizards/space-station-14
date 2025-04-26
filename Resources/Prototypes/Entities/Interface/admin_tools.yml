@@ -8,7 +8,7 @@
   description: We are watching you.
   components:
   - type: Visibility
-    layer: 0 # Don't network this to anyone so cheat clients can't see it. We are adding a PVS override to the user.
+    layer: 8 # Don't network this to anyone so cheat clients can't see it. We are adding a PVS override to the user.
   - type: Eye # for the camera itself
     drawFov: false
     drawLight: false
