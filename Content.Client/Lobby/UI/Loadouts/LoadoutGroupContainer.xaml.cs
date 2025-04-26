@@ -88,6 +88,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
         .ToDictionary(g => g.Key, g => g.ToList());
 
         GridContainer? contentContainer = null;
+        int countRows = 0;
 
         foreach (var kvp in groups)
         {
@@ -101,6 +102,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                 };
                 LoadoutsContainer.AddChild(contentContainer);
                 _openSubLists.Add(contentContainer, null);
+                countRows++;
             }
 
             var protos = kvp.Value;
@@ -151,7 +153,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                 );
             }
         }
-        if (LoadoutsContainer.ChildCount > 1 && contentContainer != null && contentContainer.ChildCount > 0 && contentContainer.ChildCount < Columns)
+        if (countRows > 1 && contentContainer != null && contentContainer.ChildCount > 0 && contentContainer.ChildCount < Columns)
         {
             for (int i = contentContainer.ChildCount; i < Columns; i++)
             {
