@@ -88,6 +88,8 @@
       amount: 4
     - id: FoodPlateTin
       amount: 4
+    - id: BoxUtensil
+      amount: 1
 
 - type: entity
   id: CrateFoodBarSupply
