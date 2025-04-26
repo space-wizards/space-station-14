@@ -31,10 +31,10 @@ public sealed partial class AtmosPipeLayersComponent : Component
 
     /// <summary>
     /// The RSI path that the entity sprite will use for each pipe layer.
-    /// If null, the RSI path does not differ between pipe layers.
+    /// If empty the RSI path does not differ between pipe layers.
     /// </summary>
     /// <remarks>
-    /// If not null, it is assumed that there will be an array entry for each pipe layer
+    /// If the array is not empty there should be an entry for each pipe layer
     /// (from 0 to <see cref="NumberOfPipeLayers"/> - 1).
     /// </remarks>
     [DataField]
@@ -45,7 +45,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// RSI paths updated when the pipe layer changes.
     /// </summary>
     /// <remarks>
-    /// It is assumed that there will be an array entry for each pipe layer
+    /// If an array is not empty there should be an entry for each pipe layer
     /// (from 0 to <see cref="NumberOfPipeLayers"/> - 1).
     /// </remarks>
     [DataField]
@@ -56,7 +56,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// one when using position dependent entity placement via AlignAtmosPipeLayers. 
     /// </summary>
     /// <remarks>
-    /// It is assumed that there will be an array entry for each pipe layer
+    /// If an array is not empty there should be an entry for each pipe layer
     /// (from 0 to <see cref="MaxPipeLayer"/>).
     /// </remarks>
     [DataField]
