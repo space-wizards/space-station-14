@@ -464,6 +464,6 @@
   result: HolopadMachineCircuitboard
 
 - type: latheRecipe
-  parent: BaseGoldCircuitboardRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
   id: SalvageExpeditionsComputerCircuitboard
   result: SalvageExpeditionsComputerCircuitboard
