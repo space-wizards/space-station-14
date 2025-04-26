@@ -56,15 +56,18 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
         if (gridUid == null || Grid == null)
             return;
 
-        // Draw guide circles for each pipe layer 
-        var gridRotation = _transformSystem.GetWorldRotation(gridUid.Value);
-        var worldPosition = _mapSystem.LocalToWorld(gridUid.Value, Grid, MouseCoords.Position);
-        var direction = (_eyeManager.CurrentEye.Rotation + gridRotation + Math.PI / 2).GetCardinalDir();
-        var multi = (direction == Direction.North || direction == Direction.South) ? -1f : 1f;
+        // Draw guide circles for each pipe layer if we are not in line/grid placing mode
+        if (pManager.PlacementType == PlacementTypes.None)
+        {
+            var gridRotation = _transformSystem.GetWorldRotation(gridUid.Value);
+            var worldPosition = _mapSystem.LocalToWorld(gridUid.Value, Grid, MouseCoords.Position);
+            var direction = (_eyeManager.CurrentEye.Rotation + gridRotation + Math.PI / 2).GetCardinalDir();
+            var multi = (direction == Direction.North || direction == Direction.South) ? -1f : 1f;
 
-        args.WorldHandle.DrawCircle(worldPosition, GuideRadius, _guideColor);
-        args.WorldHandle.DrawCircle(worldPosition + gridRotation.RotateVec(new Vector2(multi * GuideOffset, GuideOffset)), GuideRadius, _guideColor);
-        args.WorldHandle.DrawCircle(worldPosition - gridRotation.RotateVec(new Vector2(multi * GuideOffset, GuideOffset)), GuideRadius, _guideColor);
+            args.WorldHandle.DrawCircle(worldPosition, GuideRadius, _guideColor);
+            args.WorldHandle.DrawCircle(worldPosition + gridRotation.RotateVec(new Vector2(multi * GuideOffset, GuideOffset)), GuideRadius, _guideColor);
+            args.WorldHandle.DrawCircle(worldPosition - gridRotation.RotateVec(new Vector2(multi * GuideOffset, GuideOffset)), GuideRadius, _guideColor);
+        }
 
         base.Render(args);
     }
