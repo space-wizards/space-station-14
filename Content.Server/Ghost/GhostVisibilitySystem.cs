@@ -3,7 +3,7 @@ using Content.Shared.Ghost;
 
 namespace Content.Server.Ghost;
 
-public sealed class GhostVisibilitySystem: SharedGhostVisibilitySystem
+public sealed class GhostVisibilitySystem : SharedGhostVisibilitySystem
 {
     [Dependency] private readonly GameTicker _ticker = default!;
 

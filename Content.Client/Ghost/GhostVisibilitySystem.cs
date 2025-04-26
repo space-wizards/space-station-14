@@ -43,7 +43,7 @@ public sealed class GhostVisibilitySystem: SharedGhostVisibilitySystem
         UpdateSpriteVisibility((uid, component));
     }
 
-    public override void UpdateVisibility(Entity<GhostVisibilityComponent?, VisibilityComponent?> ent)
+    protected override void UpdateVisibility(Entity<GhostVisibilityComponent?, VisibilityComponent?> ent)
     {
         if (!Resolve(ent.Owner, ref ent.Comp1))
             return;

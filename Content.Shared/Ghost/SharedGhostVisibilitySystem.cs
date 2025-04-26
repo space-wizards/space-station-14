@@ -24,6 +24,7 @@ public abstract class SharedGhostVisibilitySystem : EntitySystem
 
     private void OnGhostVisStartup(EntityUid uid, GhostVisibilityComponent component, ComponentStartup args)
     {
+        EnsureComp<VisibilityComponent>(uid);
         UpdateVisibility((uid, component));
         _eye.RefreshVisibilityMask(uid);
     }
@@ -41,7 +42,7 @@ public abstract class SharedGhostVisibilitySystem : EntitySystem
             args.VisibilityMask |= (int)VisibilityFlags.Ghost;
     }
 
-    public virtual void UpdateVisibility(Entity<GhostVisibilityComponent?, VisibilityComponent?> ent)
+    protected virtual void UpdateVisibility(Entity<GhostVisibilityComponent?, VisibilityComponent?> ent)
     {
         if (Terminating(ent.Owner))
             return;
@@ -54,10 +55,10 @@ public abstract class SharedGhostVisibilitySystem : EntitySystem
 
     protected virtual void SetVisible(Entity<GhostVisibilityComponent?, VisibilityComponent?> ghost, bool visible)
     {
-        if (!Resolve(ghost.Owner, ref ghost.Comp1))
+        if (!Resolve(ghost.Owner, ref ghost.Comp1, ref ghost.Comp2))
             return;
 
-        if (ghost.Comp1.Visible == visible && ghost.Comp1.LifeStage < ComponentLifeStage.Running)
+        if (ghost.Comp1.Visible == visible && ghost.Comp1.LifeStage >= ComponentLifeStage.Running)
             return;
 
         // VisibilityComponent might not exist yet, and will not get added on client
