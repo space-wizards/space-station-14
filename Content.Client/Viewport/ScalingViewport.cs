@@ -5,13 +5,16 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Configuration;
 using Robust.Shared.Graphics;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using Content.Shared.CCVar;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Viewport
@@ -24,6 +27,8 @@ namespace Content.Client.Viewport
         [Dependency] private readonly IClyde _clyde = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
         // Internal viewport creation is deferred.
         private IClydeViewport? _viewport;
@@ -38,6 +43,14 @@ namespace Content.Client.Viewport
         private readonly List<CopyPixelsDelegate<Rgba32>> _queuedScreenshots = new();
 
         public int CurrentRenderScale => _curRenderScale;
+
+        private ShaderInstance? _sharpeningShader;
+        private float _sharpeningValue;
+
+        private void SharpeningChanged(int value)
+        {
+            _sharpeningValue = value / 10f;
+        }
 
         /// <summary>
         ///     The eye to render.
@@ -122,6 +135,10 @@ namespace Content.Client.Viewport
         {
             IoCManager.InjectDependencies(this);
             RectClipContent = true;
+
+            _sharpeningShader = _protoManager.Index<ShaderPrototype>("Sharpening").InstanceUnique();
+            _sharpeningValue = _cfg.GetCVar(CCVars.DisplaySharpening) / 10f;
+            _cfg.OnValueChanged(CCVars.DisplaySharpening, SharpeningChanged, true);
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -170,7 +187,17 @@ namespace Content.Client.Viewport
             var drawBox = GetDrawBox();
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
             _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
-            handle.DrawingHandleScreen.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
+
+            if (_sharpeningValue > 0 && _sharpeningShader != null)
+            {
+                var texture = _viewport.RenderTarget.Texture;
+                ApplySharpening(handle, texture, drawBox);
+            }
+            else
+            {
+                handle.DrawingHandleScreen.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
+            }
+
             _viewport.RenderScreenOverlaysAbove(handle, this, drawBoxGlobal);
         }
 
@@ -342,6 +369,17 @@ namespace Content.Client.Viewport
             }
 
             DebugTools.AssertNotNull(_viewport);
+        }
+
+        private void ApplySharpening(IRenderHandle handle, Texture texture, UIBox2i drawBox)
+        {
+            _sharpeningShader!.SetParameter("SCREEN_TEXTURE", texture);
+            _sharpeningShader.SetParameter("Sharpness", _sharpeningValue);
+            _sharpeningShader.SetParameter("viewportSize", texture.Size);
+
+            handle.DrawingHandleScreen.UseShader(_sharpeningShader);
+            handle.DrawingHandleScreen.DrawTextureRect(texture, drawBox);
+            handle.DrawingHandleScreen.UseShader(null);
         }
     }
 
