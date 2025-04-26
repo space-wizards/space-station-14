@@ -20,6 +20,6 @@ public sealed partial class FlashImmunityComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     [DataField]
-    public bool AffectsVision { get; set; } = true;
+    public bool BlocksSpecialVision { get; set; } = true;
     //starlight end
 }

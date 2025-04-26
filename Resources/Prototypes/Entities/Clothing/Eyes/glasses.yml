@@ -265,4 +265,4 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
-    affectsVision: false
+    blocksSpecialVision: false
