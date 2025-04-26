@@ -88,18 +88,6 @@ public sealed partial class GhostComponent : Component
     public bool CanReturnToBody;
 
     /// <summary>
-    /// Whether the ghost is currently visible.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Visible;
-
-    /// <summary>
-    /// Optional override for normal ghost visibility rules. Can be used to make a ghost always visible.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public bool VisibleOverride;
-
-    /// <summary>
     /// Ghost color
     /// </summary>
     /// <remarks>Used to allow admins to change ghost colors. Should be removed if the capability to edit existing sprite colors is ever added back.</remarks>

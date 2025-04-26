@@ -85,7 +85,6 @@ namespace Content.Shared.Ghost
             SetCanReturnToBody((component.Owner, component), value);
         }
 
-
         /// <summary>
         /// Sets whether the ghost is allowed to interact with other entities.
         /// </summary>
@@ -99,15 +98,6 @@ namespace Content.Shared.Ghost
 
             entity.Comp.CanGhostInteract = value;
             Dirty(entity);
-        }
-
-        public virtual void SetVisible(Entity<GhostComponent?> ghost, bool visible)
-        {
-            if (!Resolve(ghost.Owner, ref ghost.Comp))
-                return;
-
-            ghost.Comp.Visible = visible;
-            Dirty(ghost);
         }
     }
 

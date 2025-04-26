@@ -27,6 +27,7 @@ public sealed partial class GhostVisibilityComponent : Component
     /// </summary>
     /// <remarks>
     /// Admin ghosts should not be getting revealed by the wizard.
+    /// Similarly, revenants should be able to continue functioning.
     /// </remarks>
     [DataField]
     public bool IgnoreGlobalVisibility = true;

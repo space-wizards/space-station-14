@@ -92,10 +92,10 @@ namespace Content.Client.Ghost
             if (args.Handled)
                 return;
 
-            var locId = _ghostVis.GhostVisibility ? "ghost-gui-toggle-ghost-visibility-popup-off" : "ghost-gui-toggle-ghost-visibility-popup-on";
+            var locId = _ghostVis.DrawGhosts ? "ghost-gui-toggle-ghost-visibility-popup-off" : "ghost-gui-toggle-ghost-visibility-popup-on";
             Popup.PopupEntity(Loc.GetString(locId), args.Performer);
             if (uid == _playerManager.LocalEntity)
-                _ghostVis.ToggleGhostVisibility();
+                _ghostVis.DrawGhosts = !_ghostVis.DrawGhosts;
 
             args.Handled = true;
         }
@@ -110,13 +110,13 @@ namespace Content.Client.Ghost
             if (uid != _playerManager.LocalEntity)
                 return;
 
-            _ghostVis.GhostVisibility = false;
+            _ghostVis.DrawGhosts = false;
             PlayerRemoved?.Invoke(component);
         }
 
         private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, LocalPlayerAttachedEvent localPlayerAttachedEvent)
         {
-            _ghostVis.GhostVisibility = true;
+            _ghostVis.DrawGhosts = true;
             PlayerAttached?.Invoke(component);
         }
 
@@ -133,7 +133,7 @@ namespace Content.Client.Ghost
 
         private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, LocalPlayerDetachedEvent args)
         {
-            _ghostVis.GhostVisibility = false;
+            _ghostVis.DrawGhosts = false;
             PlayerDetached?.Invoke();
         }
 

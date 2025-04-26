@@ -8,22 +8,22 @@ public sealed class GhostVisibilitySystem: SharedGhostVisibilitySystem
 {
     [Dependency] private readonly ISharedPlayerManager _player = default!;
 
-    private bool _ghostVisibility;
+    private bool _drawGhosts;
 
     /// <summary>
     /// Whether ghost sprites should be visible or not.
     /// </summary>
-    public bool GhostVisibility
+    public bool DrawGhosts
     {
-        get => _ghostVisibility;
+        get => _drawGhosts;
         set
         {
-            if (_ghostVisibility == value)
+            if (_drawGhosts == value)
             {
                 return;
             }
 
-            _ghostVisibility = value;
+            _drawGhosts = value;
             var query = AllEntityQuery<GhostVisibilityComponent, SpriteComponent>();
             while (query.MoveNext(out var uid, out var ghost, out var sprite))
             {
@@ -43,11 +43,6 @@ public sealed class GhostVisibilitySystem: SharedGhostVisibilitySystem
         UpdateSpriteVisibility((uid, component));
     }
 
-    public void ToggleGhostVisibility()
-    {
-        GhostVisibility = !GhostVisibility;
-    }
-
     public override void UpdateVisibility(Entity<GhostVisibilityComponent?, VisibilityComponent?> ent)
     {
         if (!Resolve(ent.Owner, ref ent.Comp1))
@@ -62,6 +57,6 @@ public sealed class GhostVisibilitySystem: SharedGhostVisibilitySystem
         if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2))
             return;
 
-        ent.Comp2.Visible = GhostVisibility || ent.Comp1.Visible || ent.Owner == _player.LocalEntity;
+        ent.Comp2.Visible = DrawGhosts || ent.Comp1.Visible || ent.Owner == _player.LocalEntity;
     }
 }

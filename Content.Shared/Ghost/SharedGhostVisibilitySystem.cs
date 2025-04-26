@@ -46,7 +46,7 @@ public abstract class SharedGhostVisibilitySystem : EntitySystem
         if (Terminating(ent.Owner))
             return;
 
-        if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2))
+        if (!Resolve(ent.Owner, ref ent.Comp1))
             return;
 
         SetVisible(ent, ShouldBeVisible(ent.Comp1));
@@ -59,6 +59,9 @@ public abstract class SharedGhostVisibilitySystem : EntitySystem
 
         if (ghost.Comp1.Visible == visible && ghost.Comp1.LifeStage < ComponentLifeStage.Running)
             return;
+
+        // VisibilityComponent might not exist yet, and will not get added on client
+        Resolve(ghost.Owner, ref ghost.Comp2, false);
 
         if (visible)
         {

@@ -40,9 +40,6 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly VisibilitySystem _visibility = default!;
-
-    private bool _allVisible;
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string RevenantShopId = "ActionRevenantShop";

@@ -16,11 +16,11 @@ public sealed class ToggleGhostVisibilityCommand : IConsoleCommand
 
         if (args.Length != 0 && bool.TryParse(args[0], out var visibility))
         {
-            ghostSystem.GhostVisibility = visibility;
+            ghostSystem.DrawGhosts = visibility;
         }
         else
         {
-            ghostSystem.ToggleGhostVisibility();
+            ghostSystem.DrawGhosts = !ghostSystem.DrawGhosts;
         }
     }
 }
