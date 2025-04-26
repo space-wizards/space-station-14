@@ -188,12 +188,26 @@ namespace Content.Server.Lathe
             return true;
         }
 
-        public bool TryStartProducing(EntityUid uid, LatheComponent? component = null)
+        public bool TryStartProducing(EntityUid uid, LatheComponent? component = null, TransformComponent? xform = null)
         {
             if (!Resolve(uid, ref component))
                 return false;
             if (component.CurrentRecipe != null || component.Queue.Count <= 0 || !this.IsPowered(uid, EntityManager))
                 return false;
+
+            if ((component.MaxTemp != null || component.MinTemp != null) && Resolve(uid, ref xform) && xform.GridUid != null)
+            {
+                var position = _transform.GetGridTilePositionOrDefault((uid, xform));
+                var enumerator = _atmosphere.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true);
+                while (enumerator.MoveNext(out var mix))
+                    _environments.Add(mix);
+
+                foreach (var env in _environments)
+                {
+                    if (env.Temperature > component.MaxTemp || env.Temperature < component.MinTemp)
+                        return false;
+                }
+            }
 
             var recipe = component.Queue.First();
             component.Queue.RemoveAt(0);

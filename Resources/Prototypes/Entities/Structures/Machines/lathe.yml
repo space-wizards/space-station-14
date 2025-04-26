@@ -79,6 +79,8 @@
   - type: Lathe
     materialUseMultiplier: 0.5
     timeMultiplier: 1.5
+    maxTemp: 400
+    minTemp: 30
   - type: LatheHeatProducing
   - type: ReagentSpeed
     modifiers:

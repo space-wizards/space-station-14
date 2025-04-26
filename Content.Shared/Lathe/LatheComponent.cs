@@ -46,6 +46,18 @@ namespace Content.Shared.Lathe
         [DataField, AutoNetworkedField]
         public int DefaultProductionAmount = 1;
 
+        /// <summary>
+        ///     If air reaches this temperature, lathe stops work. Prevents abusing via flaps.
+        /// </summary>
+        [DataField]
+        public float? MaxTemp = 400;
+
+        /// <summary>
+        ///     If air reaches this temperature, lathe stops work. Prevents abusing via flaps and space.
+        /// </summary>
+        [DataField]
+        public float? MinTemp = 20;
+
         #region Visualizer info
         [DataField]
         public string? IdleState;
