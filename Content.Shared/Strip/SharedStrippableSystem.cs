@@ -146,7 +146,7 @@ public abstract class SharedStrippableSystem : EntitySystem
         SubscribeLocalEvent<StrippableComponent, DragDropDraggedEvent>(OnDragDrop);
         SubscribeLocalEvent<StrippableComponent, ActivateInWorldEvent>(OnActivateInWorld);
 
-        SubscribeLocalEvent<StrippableComponent, BeforeGettingStrippedEvent>(OnBeforeGettingStripped);
+        SubscribeLocalEvent<StrippableComponent, BeforeGettingStrippedEvent>(OnBeforeGettingStripped); //🌟Starlight🌟
     }
 
     private void AddStripVerb(EntityUid uid, StrippableComponent component, GetVerbsEvent<Verb> args)
@@ -435,7 +435,7 @@ public abstract class SharedStrippableSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.SameTool
         };
 
-        LimitSimultaneousStripDoAfters((user, null), doAfterArgs);
+        LimitSimultaneousStripDoAfters((user, null), doAfterArgs); //🌟Starlight🌟
     }
 
     /// <summary>
@@ -548,7 +548,7 @@ public abstract class SharedStrippableSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.SameTool
         };
 
-        LimitSimultaneousStripDoAfters(user, doAfterArgs);
+        LimitSimultaneousStripDoAfters(user, doAfterArgs); //🌟Starlight🌟
     }
 
     /// <summary>
@@ -661,7 +661,7 @@ public abstract class SharedStrippableSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.SameTool
         };
 
-        LimitSimultaneousStripDoAfters(user, doAfterArgs);
+        LimitSimultaneousStripDoAfters(user, doAfterArgs); //🌟Starlight🌟
     }
 
     /// <summary>
@@ -753,7 +753,7 @@ public abstract class SharedStrippableSystem : EntitySystem
                 ev.Cancel();
         }
 
-        // Remove DoAfterId from tracking if cancelled
+        // Starlight: Remove DoAfterId from tracking if cancelled
         if (ev.Cancelled)
         {
             if (_activeStripDoAfters.TryGetValue(entity.Owner, out var queue))
@@ -770,6 +770,7 @@ public abstract class SharedStrippableSystem : EntitySystem
                 _activeStripDoAfters[entity.Owner] = newQueue;
             }
         }
+        // Starlight End
     }
 
     private void OnStrippableDoAfterFinished(Entity<HandsComponent> entity, ref StrippableDoAfterEvent ev)
@@ -782,7 +783,7 @@ public abstract class SharedStrippableSystem : EntitySystem
         DebugTools.Assert(ev.Used != null);
         DebugTools.Assert(ev.SlotOrHandName != null);
 
-        // Remove DoAfterId from tracking
+        // Starlight: Remove DoAfterId from tracking
         if (_activeStripDoAfters.TryGetValue(entity.Owner, out var queue))
         {
             var toRemove = ev.DoAfter.Id;
@@ -795,6 +796,7 @@ public abstract class SharedStrippableSystem : EntitySystem
             }
             _activeStripDoAfters[entity.Owner] = newQueue;
         }
+        // Starlight End
 
         if (ev.InventoryOrHand)
         {
@@ -834,14 +836,14 @@ public abstract class SharedStrippableSystem : EntitySystem
         var targetEv = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
         RaiseLocalEvent(targetPlayer, ref targetEv);
 
-        // Check if target is cuffed to reduce strip time
+        // Starlight: Check if target is cuffed to reduce strip time
         if (TryComp<CuffableComponent>(targetPlayer, out var cuffable) && _cuffableSystem.IsCuffed(new Entity<CuffableComponent>(targetPlayer, cuffable), true))
         {
             var reducedTime = TimeSpan.FromSeconds(targetEv.Time.TotalSeconds * 0.5);
             return (reducedTime, targetEv.Stealth);
         }
 
-        // Starlight: Check if target is in stamina crit to reduce strip time
+        // Check if target is in stamina crit to reduce strip time
         if (TryComp<StaminaComponent>(targetPlayer, out var stamina) && stamina.Critical)
         {
             var reducedTime = TimeSpan.FromSeconds(targetEv.Time.TotalSeconds * 0.25);
