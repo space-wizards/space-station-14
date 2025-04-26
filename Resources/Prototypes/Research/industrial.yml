@@ -135,6 +135,7 @@
   - ThrusterMachineCircuitboard
   - GyroscopeMachineCircuitboard
   - MiniGravityGeneratorCircuitboard
+  - SalvageExpeditionsComputerCircuitboard
 
 - type: technology
   id: AdvancedAtmospherics
