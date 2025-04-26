@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Helm
-  changes:
-  - message: Fixed an overly roomy matchbox!
-    type: Fix
-  id: 7854
-  time: '2025-01-27T08:30:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34632
 - author: metalgearsloth
   changes:
   - message: Fix hovering storage containers flickering sometimes.
@@ -3933,3 +3926,11 @@
   id: 8355
   time: '2025-04-26T13:36:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36952
+- author: RedBookcase
+  changes:
+  - message: Various changes to edged weapons, including new storage sprites and new
+      storage options.
+    type: Add
+  id: 8356
+  time: '2025-04-26T20:45:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36564
