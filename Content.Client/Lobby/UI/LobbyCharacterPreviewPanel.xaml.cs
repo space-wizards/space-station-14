@@ -93,7 +93,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
                 MouseFilter = MouseFilterMode.Pass,
             };
             if(!atLeastOneEnabled)
-                icon.Modulate = Color.LightSalmon;
+                icon.Modulate = Color.Salmon;
 
             var jobIcon = _prototypeManager.Index(job.Icon);
             icon.Texture = _sprite.Frame0(jobIcon.Icon);
@@ -143,7 +143,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
                 HorizontalAlignment = HAlignment.Right,
             };
             if(!profile.Enabled)
-                profilePreview.Modulate = Color.Red;
+                profilePreview.Modulate = Color.Salmon;
             profilePreview.Initialize(_preferences, _prototypeManager, _entManager, _playerManager);
             profilePreview.LoadPreview(profile, job);
 
