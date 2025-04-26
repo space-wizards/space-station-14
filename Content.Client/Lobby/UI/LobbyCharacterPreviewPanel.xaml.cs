@@ -114,7 +114,8 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
 
         var grid = new GridContainer()
         {
-            MaxGridHeight = _uiManager.PopupRoot.Height,
+            MaxGridHeight = _uiManager.PopupRoot.Height * 0.99f,
+            Margin = new Thickness(6),
         };
 
         content.AddChild(grid);
@@ -158,6 +159,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
                 Align = Label.AlignMode.Right,
                 HorizontalAlignment = HAlignment.Right,
                 HorizontalExpand = true,
+                Margin = new Thickness(0, 0, 10, 0),
             };
 
             var profileContainer = new BoxContainer
