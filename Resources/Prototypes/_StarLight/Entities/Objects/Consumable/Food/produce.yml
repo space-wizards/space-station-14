@@ -8,7 +8,7 @@
       flavors:
         - strange
     - type: Sprite
-      sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
+      sprite: _Starlight/Objects/Specific/Hydroponics/organtree.rsi
       state: produce
     - type: Produce
       seedId: organTree

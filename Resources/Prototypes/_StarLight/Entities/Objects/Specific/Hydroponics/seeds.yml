@@ -6,4 +6,4 @@
   - type: Seed
     seedId: organTree
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
+    sprite: _Starlight/Objects/Specific/Hydroponics/organtree.rsi
