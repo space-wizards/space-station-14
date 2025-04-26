@@ -36,11 +36,15 @@
     failPopup: fingerprint-reader-fail
     failGlovesPopup: fingerprint-reader-fail-gloves
   - type: Delivery
+  - type: DeliveryRandomMultiplier
   - type: ContainerContainer
     containers:
       delivery: !type:Container
   - type: StealTarget
     stealGroup: Mail
+  - type: SimpleToolUsage
+    doAfter: 4
+    usageVerb: delivery-slice-verb
 
 - type: entity
   parent: BaseDelivery
@@ -74,7 +78,12 @@
   - type: Item
     size: Huge
   - type: Delivery
-    spesoReward: 800
+    baseSpesoReward: 1000
+    baseSpesoPenalty: 250 # So low due to dept economy splitting all the earnings, but not splitting the penalty.
+  - type: Speech
+    speechVerb: Robotic
+  - type: SimpleToolUsage
+    doAfter: 6
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
@@ -111,7 +120,10 @@
   - type: Item
     storedRotation: 90
   - type: Delivery
-    spesoReward: 400
+    baseSpesoReward: 500
+    baseSpesoPenalty: 125 # So low due to dept economy splitting all the earnings, but not splitting the penalty.
+  - type: Speech
+    speechVerb: Robotic
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector

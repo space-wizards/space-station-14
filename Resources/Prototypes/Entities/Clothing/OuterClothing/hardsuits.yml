@@ -145,13 +145,14 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.3
+    damageCoefficient: 0.7
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.7
-        Slash: 0.7
-        Piercing: 0.5
+        Slash: 0.6
+        Piercing: 0.7
+        Heat: 0.7
         Radiation: 0.3
         Caustic: 0.7
   - type: ClothingSpeedModifier
@@ -251,6 +252,7 @@
         Blunt: 0.6
         Slash: 0.6
         Piercing: 0.6
+        Heat: 0.8
         Caustic: 0.7
   - type: ClothingSpeedModifier
     walkModifier: 0.75
@@ -305,9 +307,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.5
-        Slash: 0.6
+        Blunt: 0.4
+        Slash: 0.5
         Piercing: 0.6
+        Heat: 0.8
         Caustic: 0.7
   - type: ClothingSpeedModifier
     walkModifier: 0.7
@@ -400,6 +403,8 @@
     modifiers:
       coefficients:
         Caustic: 0.1
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.4
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.95
@@ -466,13 +471,14 @@
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.6
+    damageCoefficient: 0.5
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.6
         Slash: 0.5
         Piercing: 0.5
+        Heat: 0.8
         Radiation: 0.5
         Caustic: 0.6
   - type: ClothingSpeedModifier
@@ -498,13 +504,14 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.5
+    damageCoefficient: 0.9
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Heat: 0.9
         Radiation: 0.5
         Caustic: 0.8
   - type: ClothingSpeedModifier
@@ -751,7 +758,7 @@
 #Pirate EVA Suit (Deep Space EVA Suit)
 #Despite visually appearing like a softsuit, it functions exactly like a hardsuit would (parents off of base hardsuit, has resistances and toggleable clothing, etc.) so it goes here.
 - type: entity
-  parent:  ClothingOuterHardsuitBase
+  parent: [ ClothingOuterHardsuitBase, BaseMajorContraband ]
   id:  ClothingOuterHardsuitPirateEVA
   name: deep space EVA suit
   suffix: Pirate
@@ -759,6 +766,8 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
+  - type: Item
+    size: Huge
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
   - type: ExplosionResistance
@@ -782,13 +791,15 @@
 
 #Pirate Captain Hardsuit
 - type: entity
-  parent: ClothingOuterHardsuitBase
+  parent: [ ClothingOuterHardsuitBase, BaseMajorContraband ]
   id: ClothingOuterHardsuitPirateCap
   name: pirate captain's hardsuit
   description: An ancient armored hardsuit, perfect for defending against space scurvy and toolbox-wielding scallywags.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
+  - type: Item
+    size: Huge
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
   - type: PressureProtection
@@ -855,6 +866,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
+  - type: FireProtection
+    reduction: 0.8
 
 #ERT Medic Hardsuit
 - type: entity
