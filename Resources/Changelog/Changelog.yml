@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Coolsurf6
-  changes:
-  - message: Added the ability for a creature to be unable to feel pain
-    type: Add
-  - message: Added a Pain Numbness Trait to character creation.
-    type: Add
-  id: 7856
-  time: '2025-01-27T10:34:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34538
 - author: metalgearsloth
   changes:
   - message: Puddles will now draw below floor objects like vents.
@@ -3934,3 +3925,13 @@
   id: 8357
   time: '2025-04-26T20:56:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36937
+- author: ScarKy0
+  changes:
+  - message: Deliveries now have a random multiplier added to them, slightly modifying
+      their earnings.
+    type: Add
+  - message: Deliveries now show how many spesos they grant on examine.
+    type: Tweak
+  id: 8358
+  time: '2025-04-26T21:42:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36918
