@@ -1,5 +1,5 @@
 - type: entity
-  name: organ tree
+  name: organ pod
   description: Strangest salad you've ever seen.
   parent: FoodProduceBase
   id: FoodOrganTree
