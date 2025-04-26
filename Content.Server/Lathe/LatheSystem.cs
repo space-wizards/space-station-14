@@ -195,10 +195,9 @@ namespace Content.Server.Lathe
             if (component.CurrentRecipe != null || component.Queue.Count <= 0 || !this.IsPowered(uid, EntityManager))
                 return false;
 
-            if ((component.MaxTemp != null || component.MinTemp != null) && Resolve(uid, ref xform) && xform.GridUid != null && xform.MapUid != null)
+            if ((component.MaxTemp != null || component.MinTemp != null) && Resolve(uid, ref xform))
             {
-                var position = _transform.GetGridTilePositionOrDefault((uid, xform));
-                var mix = _atmosphere.GetTileMixture(xform.GridUid, xform.MapUid.Value, position);
+                var mix = _atmosphere.GetTileMixture(uid);
 
                 if (mix.Temperature <= component.MinTemp)
                 {
