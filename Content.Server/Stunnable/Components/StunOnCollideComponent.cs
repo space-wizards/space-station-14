@@ -27,6 +27,9 @@ namespace Content.Server.Stunnable.Components
         [DataField]
         public bool Refresh = true;
 
+        [DataField]
+        public bool AutoStand = true;
+
         /// <summary>
         /// Fixture we track for the collision.
         /// </summary>

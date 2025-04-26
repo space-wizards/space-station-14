@@ -7,20 +7,17 @@ namespace Content.Shared.Stunnable;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStunSystem))]
 public sealed partial class KnockedDownComponent : Component
 {
+    /// <summary>
+    /// Game time that we can stand up.
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan NextUpdate = TimeSpan.FromSeconds(1.5);
+    public TimeSpan NextUpdate;
 
+    /// <summary>
+    /// Should we try to stand up?
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool AutoStand = true;
-
-    [DataField("helpInterval"), AutoNetworkedField]
-    public float HelpInterval = 1f;
-
-    [DataField("helpAttemptSound")]
-    public SoundSpecifier StunAttemptSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
-
-    [ViewVariables, AutoNetworkedField]
-    public float HelpTimer = 0f;
 
     /// <summary>
     /// Friction modifier for knocked down players.
@@ -34,4 +31,19 @@ public sealed partial class KnockedDownComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float SpeedModifier = 0.3f;
+
+    /// <summary>
+    /// How long does it take us to get up?
+    /// </summary>
+    public TimeSpan GetUpDoAfter = TimeSpan.FromSeconds(1);
+
+    // TODO: This isn't my code reuse if able, prune if necessary
+    [DataField("helpAttemptSound")]
+    public SoundSpecifier StunAttemptSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
+
+    [DataField("helpInterval"), AutoNetworkedField]
+    public float HelpInterval = 1f;
+
+    [ViewVariables, AutoNetworkedField]
+    public float HelpTimer = 0f;
 }

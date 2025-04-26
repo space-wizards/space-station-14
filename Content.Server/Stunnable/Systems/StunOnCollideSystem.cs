@@ -28,7 +28,7 @@ namespace Content.Server.Stunnable
 
             _stunSystem.TryStun(target, component.StunAmount, component.Refresh, status);
 
-            _stunSystem.TryKnockdown(target, component.KnockdownAmount, component.Refresh, status);
+            _stunSystem.TryKnockdown(target, component.KnockdownAmount, component.Refresh, component.AutoStand, status);
 
             _stunSystem.TrySlowdown(target, component.SlowdownAmount, component.Refresh, component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status);
         }

@@ -22,6 +22,12 @@ namespace Content.Shared.Slippery
         public SoundSpecifier SlipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");
 
         /// <summary>
+        /// Should this component's friction factor into sliding friction?
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool AffectsSliding;
+
+        /// <summary>
         /// Loads the data needed to determine how slippery something is.
         /// </summary>
         [DataField, AutoNetworkedField]
@@ -41,6 +47,12 @@ namespace Content.Shared.Slippery
 
         [DataField]
         public TimeSpan KnockdownTime = TimeSpan.FromSeconds(1.5);
+
+        /// <summary>
+        /// Should the slipped entity try to stand up when Knockdown ends?
+        /// </summary>
+        [DataField]
+        public bool AutoStand = true;
 
         /// <summary>
         /// The entity's speed will be multiplied by this to slip it forwards.
