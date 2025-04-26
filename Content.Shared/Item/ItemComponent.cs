@@ -62,7 +62,7 @@ public sealed partial class ItemComponent : Component
     public Vector2i StoredOffset;
 
     /// <summary>
-    /// Modifies the speed at which the object is thrown by hand, default speed is 11. It will return to that value if it goes below 0
+    /// Modifies the speed at which the entity is thrown by hand by adding its value to it, default speed is 11.
     /// </summary>
     [DataField]
     public float ThrowingSpeedModifier = 0;
