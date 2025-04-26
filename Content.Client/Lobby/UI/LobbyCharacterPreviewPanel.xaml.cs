@@ -22,6 +22,8 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly JobRequirementsManager _requirements = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+
     private SpriteSystem _sprite = default!;
 
     public Button CharacterSetupButton => CharacterSetup;
@@ -110,6 +112,13 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         var content = tooltip.GetChild(0);
         content.RemoveAllChildren();
 
+        var grid = new GridContainer()
+        {
+            MaxGridHeight = _uiManager.PopupRoot.Height,
+        };
+
+        content.AddChild(grid);
+
         var profiles = prefs.GetAllProfilesForJob(job);
 
         if (profiles.Count == 0)
@@ -120,7 +129,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
                     ("job", job.LocalizedName)),
                 Align = Label.AlignMode.Center,
             };
-            content.AddChild(label);
+            grid.AddChild(label);
             return tooltip;
         }
 
@@ -158,7 +167,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
             profileContainer.AddChild(label);
             profileContainer.AddChild(profilePreview);
 
-            content.AddChild(profileContainer);
+            grid.AddChild(profileContainer);
         }
 
         return tooltip;
