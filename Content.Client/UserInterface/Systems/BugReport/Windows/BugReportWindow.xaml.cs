@@ -81,7 +81,6 @@ public sealed partial class BugReportWindow : DefaultWindow
         HandleInputChange();
     }
 
-
     // Deals with the user changing their input. Ensures that things that depend on what the user has inputted get updated
     // (E.g. the amount of characters they have typed)
     private void HandleInputChange()
@@ -120,6 +119,12 @@ public sealed partial class BugReportWindow : DefaultWindow
             return false;
         }
 
+        if (amountOfBugReportsSubmitted >= MaximumBugReportsPerRound)
+        {
+            errorMessage = Loc.GetString("bug-report-window-disabled-submissions", ("num", MaximumBugReportsPerRound));
+            return false;
+        }
+
         var timeSinceLastReport = DateTime.UtcNow - lastBugReportSubmittedTime;
         var timeBetweenBugReports = TimeSpan.FromSeconds(MinimumTimeBetweenBugReports);
 
@@ -127,12 +132,6 @@ public sealed partial class BugReportWindow : DefaultWindow
         {
             var time = timeBetweenBugReports - timeSinceLastReport;
             errorMessage = Loc.GetString("bug-report-window-disabled-cooldown", ("time", $"{new TimeSpan(time.Days, time.Hours, time.Minutes, time.Seconds)}"));
-            return false;
-        }
-
-        if (amountOfBugReportsSubmitted >= MaximumBugReportsPerRound)
-        {
-            errorMessage = Loc.GetString("bug-report-window-disabled-submissions", ("num", MaximumBugReportsPerRound));
             return false;
         }
 
