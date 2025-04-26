@@ -55,6 +55,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: AccessReader
   - type: Construction
     graph: Turnstile
     node: turnstile
