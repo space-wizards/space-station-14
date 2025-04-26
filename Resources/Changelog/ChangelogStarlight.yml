@@ -5219,4 +5219,18 @@ Entries:
   id: 723
   time: '2025-04-26T07:35:24.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/545
+- author: PubliclyExecutedPig
+  changes:
+  - message: Badassified Warden's Hardsuit
+    type: Tweak
+  id: 724
+  time: '2025-04-26T07:39:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/541
+- author: PubliclyExecutedPig
+  changes:
+  - message: Mirrored Warden's Hardsuit's stats to Wizden's stat update
+    type: Tweak
+  id: 725
+  time: '2025-04-26T07:39:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/541
 
