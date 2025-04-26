@@ -11,8 +11,8 @@
     size: Ginormous
   - type: AmmoCounter
   - type: Gun
+    showingInabilityToShoot: false
     soundGunshot: /Audio/Magic/fireball.ogg
-    soundEmpty: /Audio/Magic/rumble.ogg
     useKey: false
   - type: BasicEntityAmmoProvider
     proto: ProjectileSpellblade

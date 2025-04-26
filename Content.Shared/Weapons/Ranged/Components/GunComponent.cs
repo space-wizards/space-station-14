@@ -176,6 +176,12 @@ public sealed partial class GunComponent : Component
     public bool BurstActivated = false;
 
     /// <summary>
+    /// If it is turned off, there will be no sound of an empty magazine and the inscription "No ammo left".
+    /// </summary>
+    [DataField]
+    public bool ShowingInabilityToShoot = true;
+
+    /// <summary>
     /// The burst fire bullet count.
     /// </summary>
     [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]

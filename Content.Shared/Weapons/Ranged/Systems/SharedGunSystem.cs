@@ -349,7 +349,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
-            if (shots > 0)
+            if (shots > 0 && ShowingInabilityToShoot)
             {
                 PopupSystem.PopupCursor(ev.Reason ?? Loc.GetString("gun-magazine-fired-empty"));
 
