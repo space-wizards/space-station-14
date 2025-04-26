@@ -59,6 +59,10 @@ namespace Content.Shared.Lathe
         [DataField]
         public float? MinTemp;
 
+        /// <summary>
+        ///     Current temperature status of the lathe. Changed only if <see cref="MaxTemp"/> or <see cref="MinTemp"/> not null.
+        /// </summary>
+        [ViewVariables]
         public LatheTemperatureStatus TempStatus = LatheTemperatureStatus.Normal;
 
         #region Visualizer info

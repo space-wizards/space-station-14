@@ -163,8 +163,9 @@
     visuals:
       enum.LatheVisuals.Temperature:
         tempLayer:
-          Low: { state: overcooled, shader: unshaded }
-          High: { state: overheated, shader: unshaded }
+          Normal: { visible: False }
+          Low: { state: overcooled, visible: True, shader: unshaded }
+          High: { state: overheated, visible: True, shader: unshaded }
 
 - type: entity
   id: Protolathe

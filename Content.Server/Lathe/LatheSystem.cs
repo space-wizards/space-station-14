@@ -195,18 +195,18 @@ namespace Content.Server.Lathe
             if (component.CurrentRecipe != null || component.Queue.Count <= 0 || !this.IsPowered(uid, EntityManager))
                 return false;
 
-            if ((component.MaxTemp != null || component.MinTemp != null) && Resolve(uid, ref xform))
+            if (component.MaxTemp != null || component.MinTemp != null)
             {
                 var mix = _atmosphere.GetTileMixture(uid);
 
-                if (mix.Temperature <= component.MinTemp)
+                if (mix == null || mix.TotalMoles <= 0 || mix.Temperature <= component.MinTemp)
                 {
                     component.TempStatus = LatheTemperatureStatus.Low;
                     UpdateTemperatureAppearance(uid, component.TempStatus);
                     return false;
                 }
 
-                else if (mix.Temperature >= component.MaxTemp)
+                if (mix.Temperature >= component.MaxTemp)
                 {
                     component.TempStatus = LatheTemperatureStatus.High;
                     UpdateTemperatureAppearance(uid, component.TempStatus);
@@ -369,18 +369,7 @@ namespace Content.Server.Lathe
             if (!Resolve(uid, ref appearance))
                 return;
 
-            switch (status)
-            {
-                case LatheTemperatureStatus.Normal:
-                    _appearance.RemoveData(uid, LatheVisuals.Temperature);
-                    break;
-                case LatheTemperatureStatus.Low:
-                    _appearance.SetData(uid, LatheVisuals.Temperature, status);
-                    break;
-                case LatheTemperatureStatus.High:
-                    _appearance.SetData(uid, LatheVisuals.Temperature, status);
-                    break;
-            }
+            _appearance.SetData(uid, LatheVisuals.Temperature, status);
         }
 
         private void OnPowerChanged(EntityUid uid, LatheComponent component, ref PowerChangedEvent args)
