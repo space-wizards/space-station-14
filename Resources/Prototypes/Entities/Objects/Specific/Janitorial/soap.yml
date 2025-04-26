@@ -233,6 +233,8 @@
         - ReagentId: SoapReagent
           Quantity: 240
   - type: Residue
+    residueAdjective: residue-slippery
+    residueColor: residue-blue
 
 - type: entity
   name: soap
@@ -240,9 +242,6 @@
   parent: BaseItem
   description: A Nanotrasen brand bar of soap. Smells of plasma and machines.
   components:
-  - type: Tag
-    tags:
-    - Soap
   - type: Sprite
     sprite: Objects/Specific/Janitorial/soap.rsi
     layers:
@@ -257,3 +256,6 @@
     residueColor: residue-grey
     residueAdjective: residue-slippery
     residueColor: residue-blue
+  - type: Tag
+    tags:
+    - Soap
