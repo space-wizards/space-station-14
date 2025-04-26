@@ -98,28 +98,6 @@
 
 - type: entity
   name: soap
-  id: SoapBorg # Intended for borg internals, not slippery or food, not a container for soap reagent
-  parent: BaseItem
-  description: A Nanotrasen brand bar of soap. Smells of plasma and machines.
-  components:
-  - type: Tag
-    tags:
-    - Soap
-  - type: Sprite
-    sprite: Objects/Specific/Janitorial/soap.rsi
-    layers:
-    - state: nt-4
-  - type: Appearance
-  - type: Item
-    sprite: Objects/Specific/Janitorial/soap.rsi
-    storedRotation: -90
-  - type: CleansForensics
-  - type: Residue
-    residueAdjective: residue-slippery
-    residueColor: residue-grey
-
-- type: entity
-  name: soap
   id: SoapDeluxe
   parent: Soap
   description: A deluxe Waffle Co. brand bar of soap. Smells of strawberries.
@@ -255,5 +233,27 @@
         - ReagentId: SoapReagent
           Quantity: 240
   - type: Residue
+
+- type: entity
+  name: soap
+  id: SoapBorg # Intended for borg internals, not slippery or food, not a container for soap reagent
+  parent: BaseItem
+  description: A Nanotrasen brand bar of soap. Smells of plasma and machines.
+  components:
+  - type: Tag
+    tags:
+    - Soap
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    layers:
+    - state: nt-4
+  - type: Appearance
+  - type: Item
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    storedRotation: -90
+  - type: CleansForensics
+  - type: Residue
+    residueAdjective: residue-slippery
+    residueColor: residue-grey
     residueAdjective: residue-slippery
     residueColor: residue-blue
