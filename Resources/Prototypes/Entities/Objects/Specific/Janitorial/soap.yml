@@ -254,8 +254,6 @@
   - type: Residue
     residueAdjective: residue-slippery
     residueColor: residue-grey
-    residueAdjective: residue-slippery
-    residueColor: residue-blue
   - type: Tag
     tags:
     - Soap
