@@ -216,4 +216,6 @@ public sealed partial class RevenantComponent : Component
     #endregion
 
     [DataField] public EntityUid? Action;
+
+    [DataField] public bool Visible;
 }

@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Server.Actions;
+using Content.Server.GameTicking;
 using Content.Server.Store.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
@@ -31,6 +32,7 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -41,6 +43,9 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly VisibilitySystem _visibility = default!;
+
+    private bool _visible;
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string RevenantShopId = "ActionRevenantShop";
@@ -57,6 +62,7 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RevenantComponent, StatusEffectAddedEvent>(OnStatusAdded);
         SubscribeLocalEvent<RevenantComponent, StatusEffectEndedEvent>(OnStatusEnded);
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
 
         SubscribeLocalEvent<RevenantComponent, GetVisMaskEvent>(OnRevenantGetVis);
 
@@ -70,6 +76,10 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, RevenantComponent component, ComponentStartup args)
     {
+        var vis = ShouldBeVisible();
+        component.Visible = !vis; // bypass the SetVisible() early exit (force a layer update).
+        SetVisible((uid, component), vis);
+
         //update the icon
         ChangeEssenceAmount(uid, 0, component);
 
@@ -176,6 +186,59 @@ public sealed partial class RevenantSystem : EntitySystem
             return;
         _store.ToggleUi(uid, uid, store);
     }
+
+
+    # region GhostSystem code duplication yipeeee
+    public void MakeVisible(bool visible)
+    {
+        if (_visible == visible)
+            return;
+
+        _visible = visible;
+        var query = EntityQueryEnumerator<RevenantComponent, VisibilityComponent>();
+        while (query.MoveNext(out var uid, out var rev, out var vis))
+        {
+            SetVisible((uid, rev, vis), visible);
+        }
+    }
+
+    private void SetVisible(Entity<RevenantComponent?, VisibilityComponent?> ent, bool visible)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2))
+            return;
+
+        if (ent.Comp1.Visible == visible)
+            return;
+
+        ent.Comp1.Visible = visible;
+        if (visible)
+        {
+            _visibility.AddLayer((ent, ent.Comp2), (int)VisibilityFlags.Normal, false);
+            _visibility.RemoveLayer((ent, ent.Comp2), (int)VisibilityFlags.Ghost, false);
+        }
+        else
+        {
+            _visibility.AddLayer((ent, ent.Comp2), (int)VisibilityFlags.Ghost, false);
+            _visibility.RemoveLayer((ent, ent.Comp2), (int)VisibilityFlags.Normal, false);
+        }
+
+        _visibility.RefreshVisibility(ent, ent.Comp2);
+    }
+
+    private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
+    {
+        var entityQuery = EntityQueryEnumerator<RevenantComponent, VisibilityComponent>();
+        while (entityQuery.MoveNext(out var uid, out var rev, out var vis))
+        {
+            SetVisible((uid, rev, vis), ShouldBeVisible());
+        }
+    }
+
+    private bool ShouldBeVisible()
+    {
+        return _visible || _ticker.RunLevel == GameRunLevel.PostRound;
+    }
+    #endregion
 
     public override void Update(float frameTime)
     {

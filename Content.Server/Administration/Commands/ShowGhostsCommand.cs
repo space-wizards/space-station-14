@@ -11,7 +11,7 @@ namespace Content.Server.Administration.Commands
         [Dependency] private readonly IEntityManager _entities = default!;
 
         public string Command => "showghosts";
-        public string Description => "makes all of the currently present ghosts visible. Cannot be reversed.";
+        public string Description => "set visibility of all normal observer ghosts.";
         public string Help => "showghosts <visible>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -29,6 +29,7 @@ namespace Content.Server.Administration.Commands
             }
 
             _entities.System<GhostSystem>().SetAllObserversVisible(visible);
+            _entities.System<RevenantSystem>().MakeVisible(visible);
         }
     }
 }
