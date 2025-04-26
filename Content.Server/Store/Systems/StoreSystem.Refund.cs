@@ -38,7 +38,6 @@ public sealed partial class StoreSystem
 
     private void OnUseInHand(Entity<StoreRefundComponent> ent, ref UseInHandEvent args)
     {
-        args.Handled = true;
         CheckDisableRefund(ent);
     }
 

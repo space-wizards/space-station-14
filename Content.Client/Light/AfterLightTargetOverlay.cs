@@ -33,7 +33,8 @@ public sealed class AfterLightTargetOverlay : Overlay
         var bounds = args.WorldBounds;
 
         // at 1-1 render scale it's mostly fine but at 4x4 it's way too fkn big
-        var newScale = viewport.RenderScale / 2f;
+        var lightScale = viewport.LightRenderTarget.Size / (Vector2) viewport.Size;
+        var newScale = viewport.RenderScale / (Vector2.One / lightScale);
 
         var localMatrix =
             viewport.LightRenderTarget.GetWorldToLocalMatrix(viewport.Eye, newScale);
@@ -53,6 +54,6 @@ public sealed class AfterLightTargetOverlay : Overlay
 
                 worldHandle.SetTransform(localMatrix);
                 worldHandle.DrawTextureRectRegion(lightOverlay.EnlargedLightTarget.Texture, bounds, subRegion: subRegion);
-            }, null);
+            }, Color.Transparent);
     }
 }

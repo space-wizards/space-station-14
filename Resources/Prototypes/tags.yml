@@ -16,6 +16,12 @@
   id: AirSensor
 
 - type: Tag
+  id: AllowBiomeLoading # Entities with this tag will load terrain, even if a ghost.
+
+- type: Tag
+  id: AllowGhostShownByEvent
+
+- type: Tag
   id: Ambrosia
 
 - type: Tag
@@ -73,6 +79,9 @@
   id: BodyBag
 
 - type: Tag
+  id: Boll
+
+- type: Tag
   id: Book
 
 - type: Tag
@@ -113,6 +122,9 @@
 
 - type: Tag
   id: BorgModuleMedical
+
+- type: Tag
+  id: BorgModuleScience
 
 - type: Tag
   id: BorgModuleService
@@ -215,36 +227,6 @@
 
 - type: Tag
   id: Carpet
-
-- type: Tag
-  id: CarpetBlack
-
-- type: Tag
-  id: CarpetBlue
-
-- type: Tag
-  id: CarpetCyan
-
-- type: Tag
-  id: CarpetGreen
-
-- type: Tag
-  id: CarpetOrange
-
-- type: Tag
-  id: CarpetPink
-
-- type: Tag
-  id: CarpetPurple
-
-- type: Tag
-  id: CarpetRed
-
-- type: Tag
-  id: CarpetSBlue
-
-- type: Tag
-  id: CarpetWhite
 
 - type: Tag
   id: Carrot
@@ -375,6 +357,9 @@
   id: CottonBoll
 
 - type: Tag
+  id: CottonBurger
+
+- type: Tag
   id: Cow
 
 - type: Tag
@@ -408,6 +393,9 @@
   id: CrayonYellow
 
 - type: Tag
+  id: Creamsicle
+
+- type: Tag
   id: Crowbar
 
 - type: Tag
@@ -415,6 +403,9 @@
 
 - type: Tag
   id: Cryobeaker
+
+- type: Tag
+  id: CrystalBlack
 
 - type: Tag
   id: CrystalBlue
@@ -433,6 +424,9 @@
 
 - type: Tag
   id: CrystalRed
+
+- type: Tag
+  id: CrystalYellow
 
 - type: Tag
   id: CubanCarp
@@ -630,6 +624,15 @@
   id: GuideEmbeded
 
 - type: Tag
+  id: GunUpgradeDamage
+
+- type: Tag
+  id: GunUpgradeRange
+
+- type: Tag
+  id: GunUpgradeReloadSpeed
+
+- type: Tag
   id: Hamster
 
 - type: Tag
@@ -655,6 +658,9 @@
 
 - type: Tag
   id: Handcuffs
+
+- type: Tag
+  id: HandGrenade
 
 - type: Tag
   id: HappyHonk
@@ -748,6 +754,12 @@
 
 - type: Tag
   id: IntercomElectronics
+
+- type: Tag
+  id: InvalidForGlobalSpawnSpell
+
+- type: Tag
+  id: InvalidForSurvivorAntag
 
 - type: Tag
   id: JawsOfLife
@@ -880,9 +892,6 @@
   id: MimeHappyHonk
 
 - type: Tag
-  id: MindShield
-
-- type: Tag
   id: MindTransferTarget
 
 - type: Tag
@@ -940,6 +949,9 @@
   id: Packet
 
 - type: Tag
+  id: ParadoxCloneObjectiveBlacklist # objective entities with this tag don't get copied to paradox clones
+
+- type: Tag
   id: Paper
 
 - type: Tag
@@ -979,7 +991,13 @@
   id: Pipe
 
 - type: Tag
+  id: Pistachios
+
+- type: Tag
   id: Pizza
+
+- type: Tag
+  id: PKAUpgrade
 
 - type: Tag
   id: PlantAnalyzer
@@ -1004,6 +1022,9 @@
 
 - type: Tag
   id: PlushieGhost
+
+- type: Tag
+  id: PlushieLizard
 
 - type: Tag
   id: PlushieSharkBlue
@@ -1031,6 +1052,9 @@
 
 - type: Tag
   id: Powerdrill
+
+- type: Tag
+  id: PreventAccessLogging
 
 - type: Tag
   id: PrisonUniform
@@ -1140,6 +1164,12 @@
 
 - type: Tag
   id: SignalTrigger
+
+- type: Tag
+  id: SilentStorageUser # used in SharedStorageSystem, so the entity will do all silently
+
+- type: Tag
+  id: SiliconEmotes
 
 - type: Tag
   id: SkeletonMotorcycleKeys
@@ -1290,6 +1320,12 @@
 
 - type: Tag
   id: Truncheon
+
+- type: Tag
+  id: TurretCompatibleWeapon # Used in the construction of sentry turrets
+
+- type: Tag
+  id: TurretControlElectronics # Used in the construction of sentry turret control panels
 
 - type: Tag
   id: Unimplantable
