@@ -16,8 +16,7 @@ namespace Content.Client.Lobby.UI.Loadouts;
 public sealed partial class LoadoutGroupContainer : BoxContainer
 {
     const int Columns = 4;
-    private Dictionary<BoxContainer, GridContainer?> _openSubLists
-    = new Dictionary<BoxContainer, GridContainer?>();
+    private Dictionary<GridContainer, PanelContainer?> _openSubLists = new();
 
     private readonly LoadoutGroupPrototype _groupProto;
 
@@ -88,15 +87,15 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                          : p.GroupByTag)
         .ToDictionary(g => g.Key, g => g.ToList());
 
-        BoxContainer? contentContainer = null;
+        GridContainer? contentContainer = null;
 
         foreach (var kvp in groups)
         {
             if (contentContainer == null || contentContainer.ChildCount >= Columns)
             {
-                contentContainer = new BoxContainer
+                contentContainer = new GridContainer
                 {
-                    Orientation = LayoutOrientation.Horizontal,
+                    Columns = Columns,
                     HorizontalExpand = true,
                     VerticalExpand = true
                 };
@@ -112,30 +111,34 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 
                 var first = CreateLoadoutUI(protos[0], profile, loadout, session, collection);
                 first.HorizontalExpand = true;
+                var toggle = new Button { Text = "▶",
+                    VerticalExpand = false,
+                    HorizontalExpand = false,
+                    HorizontalAlignment = HAlignment.Right,
+                    VerticalAlignment = VAlignment.Bottom,
 
-                var subList = new GridContainer
-                {
-                    Columns = Columns,
-                    Visible = false,
-                    HorizontalExpand = true
+
                 };
-                LoadoutsContainer.AddChild(subList);
+                var subContainer = new SubLoadoutContainer(toggle)
+                {
+                    Visible = false
+                };
+                var subList = subContainer.Grid;
+                LoadoutsContainer.AddChild(subContainer);
 
-                var toggle = new Button { Text = "▶" };
                 toggle.OnPressed += _ =>
                 {
                     var prev = _openSubLists[row];
-                    if (prev != null && prev != subList)
+                    if (prev != null && prev != subContainer)
                         prev.Visible = false;
 
-                    bool willOpen = !subList.Visible;
-                    subList.Visible = willOpen;
+                    bool willOpen = !subContainer.Visible;
+                    subContainer.Visible = willOpen;
                     toggle.Text = willOpen ? "▼" : "▶";
-
-                    _openSubLists[row] = willOpen ? subList : null;
+                    _openSubLists[row] = willOpen ? subContainer : null;
                 };
 
-                first.AddChild(toggle);
+                first.Select.AddChild(toggle);
                 contentContainer.AddChild(first);
                 foreach (var proto in protos.Skip(1))
                     subList.AddChild(CreateLoadoutUI(proto, profile, loadout, session, collection));

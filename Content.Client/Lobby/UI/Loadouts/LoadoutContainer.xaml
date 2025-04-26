@@ -5,7 +5,7 @@
               Margin="2.2"
               HorizontalExpand="True"
               VerticalExpand="True"
-              SizeFlagsStretchRatio ="1"
+              SizeFlagsStretchRatio ="5"
               MinHeight="100">
 
         <Button Name="SelectButton"
