@@ -624,6 +624,12 @@
   maxCount: 30
 
 - type: stack
+  id: FloorTileAstroAsteroidSand
+  name: asteroid astro-sand floor
+  spawn: FloorTileItemAstroAsteroidSand
+  maxCount: 30
+
+- type: stack
   id: FloorTileWoodLarge
   name: large wood floor
   spawn: FloorTileItemWoodLarge

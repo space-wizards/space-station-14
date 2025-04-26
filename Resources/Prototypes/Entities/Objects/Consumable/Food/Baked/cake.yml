@@ -26,6 +26,19 @@
   - type: Tag
     tags:
     - Cake
+  - type: SecretStash
+    maxItemSize: "Normal"
+    secretStashName: secret-stash-cake
+    damageEatenItemInside:
+      types:
+        Slash: 7.5
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: Slicing
+    verbOnly: true
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
 
 - type: entity
   parent: FoodCakeBase
@@ -135,6 +148,10 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 5
+  - type: Tag
+    tags:
+    - Cake
+    - Vegetable
 
 - type: entity
   name: slice of carrot cake
@@ -155,6 +172,11 @@
           Quantity: 1
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Cake
+    - Vegetable
+    - Slice
 
 # Tastes like sweetness, cake, carrot.
 
@@ -168,7 +190,10 @@
     state: brain
   - type: SliceableFood
     slice: FoodCakeBrainSlice
-
+  - type: Tag
+    tags:
+    - Cake
+    - Meat
 
 - type: entity
   name: slice of brain cake
@@ -178,6 +203,11 @@
   components:
   - type: Sprite
     state: brain-slice
+  - type: Tag
+    tags:
+    - Cake
+    - Meat
+    - Slice
 # Tastes like sweetness, cake, brains.
 
 - type: entity
@@ -429,6 +459,10 @@
     state: slime
   - type: SliceableFood
     slice: FoodCakeSlimeSlice
+  - type: Tag
+    tags:
+    - Cake
+    - Meat
 
 - type: entity
   name: slice of slime cake
@@ -438,6 +472,11 @@
   components:
   - type: Sprite
     state: slime-slice
+  - type: Tag
+    tags:
+    - Cake
+    - Meat
+    - Slice
 # Tastes like sweetness, cake, slime.
 
 - type: entity
@@ -498,6 +537,10 @@
     state: christmas
   - type: SliceableFood
     slice: FoodCakeChristmasSlice
+  - type: Tag
+    tags:
+    - Cake
+    - Fruit
 
 - type: entity
   name: slice of christmas cake
@@ -506,6 +549,11 @@
   components:
   - type: Sprite
     state: christmas-slice
+  - type: Tag
+    tags:
+    - Cake
+    - Fruit
+    - Slice
 # Tastes like sweetness, cake, christmas.
 
 - type: entity
@@ -634,7 +682,7 @@
           Quantity: 20
         - ReagentId: Vitamin
           Quantity: 5
-        - ReagentId: Omnizine #This is a really rare cake with healing stuff and we don't have any of its chems yet
+        - ReagentId: PolypyryliumOligomers
           Quantity: 15
 
 - type: entity
@@ -654,16 +702,32 @@
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 1
-        - ReagentId: Omnizine
+        - ReagentId: PolypyryliumOligomers
           Quantity: 3
 # Tastes like sweetness, cake, jam.
 
 - type: entity
   name: cak
   id: MobCatCake
-  parent: FoodCakeBase
+  parent: EdibleBase
   description: It's a cake. It's a cat. It's a cak.
   components:
+  - type: FlavorProfile
+    flavors:
+    - sweet
+  - type: InjectableSolution
+    solution: food
+  - type: RefillableSolution
+    solution: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Vitamin
+          Quantity: 5
   - type: Sprite
     noRot: true
     drawdepth: Mobs
@@ -708,8 +772,8 @@
     speechSounds: Cat
     speechVerb: SmallMob
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5
-    baseSprintSpeed : 3
+    baseWalkSpeed : 3
+    baseSprintSpeed : 5
   - type: Tag
     tags:
     - VimPilot

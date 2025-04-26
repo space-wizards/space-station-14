@@ -47,8 +47,8 @@
       params:
         variation: 0.125
         volume: -4
-  - type: ToggleVerb
-    text: fire-extinguisher-component-verb-text
+    verbToggleOn: fire-extinguisher-component-verb-remove
+    verbToggleOff: fire-extinguisher-component-verb-engage
   - type: SpraySafety
   - type: MeleeWeapon
     wideAnimationRotation: 180
@@ -76,6 +76,20 @@
       Steel: 100
 
 - type: entity
+  parent: FireExtinguisher
+  id: BorgFireExtinguisher
+  name: maneuvering jet
+  description: Based on fire extinguisher technology, the maneuvering jet is... well yes, its just a bigger fire extinguisher.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 200
+        reagents:
+        - ReagentId: Water
+          Quantity: 200
+
+- type: entity
   name: extinguisher spray
   id: ExtinguisherSpray
   parent: Vapor
@@ -97,7 +111,7 @@
   name: pocket fire extinguisher
   parent: FireExtinguisher
   id: FireExtinguisherMini
-  description: A light and compact fibreglass-framed model fire extinguisher. It holds less water then its bigger brother.
+  description: A light and compact fibreglass-framed model fire extinguisher. It holds less water than its bigger brother.
   components:
   - type: Sprite
     sprite: Objects/Misc/fire_extinguisher_mini.rsi

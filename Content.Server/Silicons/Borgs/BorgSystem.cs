@@ -5,7 +5,6 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
-using Content.Shared.Access.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
@@ -55,7 +54,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
 
     [ValidatePrototypeId<JobPrototype>]
     public const string BorgJobId = "Borg";
@@ -111,9 +110,10 @@ public sealed partial class BorgSystem : SharedBorgSystem
         if (component.BrainEntity == null && brain != null &&
             _whitelistSystem.IsWhitelistPassOrNull(component.BrainWhitelist, used))
         {
-            if (_mind.TryGetMind(used, out _, out var mind) && mind.Session != null)
+            if (_mind.TryGetMind(used, out _, out var mind) &&
+                _player.TryGetSessionById(mind.UserId, out var session))
             {
-                if (!CanPlayerBeBorged(mind.Session))
+                if (!CanPlayerBeBorged(session))
                 {
                     Popup.PopupEntity(Loc.GetString("borg-player-not-allowed"), used, args.User);
                     return;
@@ -129,7 +129,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         if (module != null && CanInsertModule(uid, used, component, module, args.User))
         {
-            _container.Insert(used, component.ModuleContainer);
+            InsertModule((uid, component), used);
             _adminLog.Add(LogType.Action, LogImpact.Low,
                 $"{ToPrettyString(args.User):player} installed module {ToPrettyString(used)} into borg {ToPrettyString(uid)}");
             args.Handled = true;
@@ -137,12 +137,25 @@ public sealed partial class BorgSystem : SharedBorgSystem
         }
     }
 
+    /// <summary>
+    /// Inserts a new module into a borg, the same as if a player inserted it manually.
+    /// </summary>
+    /// <para>
+    /// This does not run checks to see if the borg is actually allowed to be inserted, such as whitelists.
+    /// </para>
+    /// <param name="ent">The borg to insert into.</param>
+    /// <param name="module">The module to insert.</param>
+    public void InsertModule(Entity<BorgChassisComponent> ent, EntityUid module)
+    {
+        _container.Insert(module, ent.Comp.ModuleContainer);
+    }
+
     // todo: consider transferring over the ghost role? managing that might suck.
     protected override void OnInserted(EntityUid uid, BorgChassisComponent component, EntInsertedIntoContainerMessage args)
     {
         base.OnInserted(uid, component, args);
 
-        if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mindId, out var mind))
+        if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mindId, out var mind) && args.Container == component.BrainContainer)
         {
             _mind.TransferTo(mindId, uid, mind: mind);
         }
@@ -152,8 +165,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
     {
         base.OnRemoved(uid, component, args);
 
-        if (HasComp<BorgBrainComponent>(args.Entity) &
-            _mind.TryGetMind(uid, out var mindId, out var mind))
+        if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(uid, out var mindId, out var mind) && args.Container == component.BrainContainer)
         {
             _mind.TransferTo(mindId, args.Entity, mind: mind);
         }
@@ -234,10 +246,11 @@ public sealed partial class BorgSystem : SharedBorgSystem
             container.ID != chassisComponent.BrainContainerId)
             return;
 
-        if (!_mind.TryGetMind(uid, out var mindId, out var mind) || mind.Session == null)
+        if (!_mind.TryGetMind(uid, out var mindId, out var mind) ||
+            !_player.TryGetSessionById(mind.UserId, out var session))
             return;
 
-        if (!CanPlayerBeBorged(mind.Session))
+        if (!CanPlayerBeBorged(session))
         {
             Popup.PopupEntity(Loc.GetString("borg-player-not-allowed-eject"), uid);
             Container.RemoveEntity(containerEnt, uid);
@@ -281,8 +294,11 @@ public sealed partial class BorgSystem : SharedBorgSystem
     public void BorgActivate(EntityUid uid, BorgChassisComponent component)
     {
         Popup.PopupEntity(Loc.GetString("borg-mind-added", ("name", Identity.Name(uid, EntityManager))), uid);
-        Toggle.TryActivate(uid);
-        _powerCell.SetDrawEnabled(uid, _mobState.IsAlive(uid));
+        if (_powerCell.HasDrawCharge(uid))
+        {
+            Toggle.TryActivate(uid);
+            _powerCell.SetDrawEnabled(uid, _mobState.IsAlive(uid));
+        }
         _appearance.SetData(uid, BorgVisuals.HasPlayer, true);
     }
 

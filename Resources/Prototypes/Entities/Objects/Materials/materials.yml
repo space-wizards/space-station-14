@@ -54,6 +54,8 @@
         reagents:
         - ReagentId: Cellulose
           Quantity: 6
+  - type: Item
+    heldPrefix: cardboard
 
 - type: entity
   parent: MaterialCardboard
@@ -91,8 +93,14 @@
     bloodlossModifier: -4
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
   - type: Stack
     stackType: Cloth
     baseLayer: base
@@ -135,6 +143,8 @@
   - type: Construction
     graph: WebObjects # not sure if I should either keep this here or just make another prototype. Will keep it here just in case.
     node: cloth
+  - type: Item
+    heldPrefix: cloth
 
 - type: entity
   parent: MaterialCloth
@@ -195,6 +205,8 @@
     tags:
       - ClothMade
       - RawMaterial
+  - type: Item
+    heldPrefix: durathread
 
 - type: entity
   parent: MaterialDurathread
@@ -334,8 +346,7 @@
     sprite: Objects/Materials/materials.rsi
     state: corgihide
   - type: Item
-    sprite: Clothing/Head/Misc/hides.rsi
-    heldPrefix: corgi
+    heldPrefix: corgihide
   - type: Clothing
     sprite: Clothing/Head/Misc/hides.rsi
     equippedPrefix: corgi2
@@ -432,6 +443,9 @@
   - type: PhysicalComposition
     materialComposition:
       Cotton: 100
+  - type: Item
+    heldPrefix: cotton
+
 
 - type: entity
   parent: MaterialCotton
@@ -484,6 +498,8 @@
     tags:
       - ClothMade
       - RawMaterial
+  - type: Item
+    heldPrefix: pyrotton
 
 - type: entity
   parent: MaterialPyrotton
@@ -543,6 +559,8 @@
       - ReagentId: Honk
         Quantity: 5
   - type: Appearance
+  - type: Item
+    heldPrefix: bananium
 
 - type: entity
   parent: MaterialBananium
@@ -593,6 +611,9 @@
     tags:
       - ClothMade
       - RawMaterial
+  - type: Item
+    sprite: Objects/Materials/silk.rsi
+    heldPrefix: silk
 
 - type: entity
   parent: MaterialWebSilk
@@ -715,6 +736,8 @@
         reagents:
         - ReagentId: Vitamin
           Quantity: 3
+  - type: Item
+    heldPrefix: bones
 
 - type: entity
   parent: MaterialBones
@@ -769,6 +792,8 @@
     - goliath_hide_3
   - type: Item
     size: Large
+    heldPrefix: goliathhide
+    sprite: Objects/Materials/hide.rsi
     shape:
     - 0,0,2,2
 

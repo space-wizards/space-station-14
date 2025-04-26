@@ -12,8 +12,6 @@
   recipeUnlocks:
   - MiningDrill
   - MineralScannerEmpty
-  - BorgModuleMining
-  - BorgModuleGrapplingGun
   - OreProcessorIndustrialMachineCircuitboard
   - ClothingMaskWeldingGas
 
@@ -29,8 +27,7 @@
   recipeUnlocks:
   - RadarConsoleCircuitboard
   - HandHeldMassScanner
-  - BorgModuleGPS
-
+  
 - type: technology
   id: AdvancedPowercells
   name: research-technology-advanced-powercells
@@ -43,6 +40,7 @@
   recipeUnlocks:
   - PowerCellHigh
   - TurboItemRechargerCircuitboard
+  - SMESAdvancedMachineCircuitboard
 
 - type: technology
   id: MechanicalCompression
@@ -84,7 +82,6 @@
   - PortableGeneratorPacmanMachineCircuitboard
   - PortableGeneratorSuperPacmanMachineCircuitboard
   - PortableGeneratorJrPacmanMachineCircuitboard
-  - PowerComputerCircuitboard #the actual solar panel itself should be in here
   - SolarControlComputerCircuitboard
   - SolarTrackerElectronics
   - EmitterCircuitboard
@@ -168,7 +165,8 @@
     - PowerDrill
     - JawsOfLife
     - BorgModuleAdvancedTool
-    - BorgModuleRCD
+    - Fulton
+    - FultonBeacon
 
 - type: technology
   id: MassExcavation
@@ -183,6 +181,7 @@
     - OreBagOfHolding
     - MiningDrillDiamond
     - AdvancedMineralScannerEmpty
+    - BorgModuleAdvancedMining
 
 # Tier 3
 

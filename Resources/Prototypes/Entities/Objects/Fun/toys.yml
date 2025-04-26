@@ -1,7 +1,32 @@
+## Base stash
+
+- type: entity
+  id: BaseStash
+  abstract: true
+  components:
+  - type: Speech
+    speechVerb: Default # for pais (In the secret stash)
+  - type: SecretStash
+    secretStashName: secret-stash-plushie
+    blacklist:
+      components:
+      - SecretStash # Prevents being able to insert plushies inside each other (infinite plush)!
+      - NukeDisk # Could confuse the nukies if they don't know that plushies have a stash.
+      tags:
+      - QuantumSpinInverter # It will cause issues with the grinder...
+      - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be inserted or not.
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
+    name: secret-stash-plushie
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
+
 ## Plushies
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseStash]
   id: BasePlushie
   abstract: true
   components:
@@ -35,6 +60,7 @@
     damage:
       types:
         Blunt: 0
+    hidden: true
   - type: PhysicalComposition
     materialComposition:
       Cloth: 100
@@ -53,6 +79,7 @@
         - ReagentId: Fiber
           Quantity: 10
 
+
 - type: entity
   parent: BasePlushie
   id: PlushieThrongler
@@ -68,6 +95,10 @@
     - type: Item
       size: Ginormous
       sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
+    - type: FoodSequenceElement
+      entries:
+        CottonBurger: ThronglerPlushie
+
 
 - type: entity
   parent: BasePlushie
@@ -107,12 +138,15 @@
       accumulatorRatio: 0.5
       maxSpeed: 1
       minSpeed: 0.25
+    - type: FoodSequenceElement
+      entries:
+        CottonBurger: GhostPlushie
 
 - type: entity
   parent: PlushieGhost
   id: PlushieGhostRevenant
   name: revenant soft toy
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   description: So soft it almost makes you want to take a nap...
   components:
     - type: Item
@@ -124,6 +158,9 @@
     - type: Construction
       graph: PlushieGhostRevenant
       node: plushie
+    - type: FoodSequenceElement
+      entries:
+        CottonBurger: RevenantPlushie
 
 - type: entity
   parent: BasePlushie
@@ -159,6 +196,9 @@
     equippedPrefix: bee
     slots:
     - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: BeePlushie
 
 - type: entity
   parent: BasePlushie
@@ -180,6 +220,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -188,6 +231,9 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: HamptrPlushie
 
 - type: entity
   parent: PlushieBee
@@ -222,6 +268,9 @@
   components:
   - type: Sprite
     state: plushie_nuke
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: NukiePlushie
 
 - type: entity
   parent: BasePlushie
@@ -232,6 +281,9 @@
   - type: Sprite
     state: plushie_rouny
   - type: Rotatable
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: RounyPlushie
 
 - type: entity
   parent: BasePlushie
@@ -245,6 +297,9 @@
     radius: 1.5
     energy: 2
     netsync: false
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: LampPlushie
 
 - type: entity
   parent: BasePlushie
@@ -266,6 +321,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -274,6 +332,9 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: ArachnidPlushie
 
 - type: entity
   parent: BasePlushie
@@ -282,7 +343,10 @@
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentComm as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
   components:
   - type: Sprite
+    sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
+  - type: Item
+    heldPrefix: plushielizard
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/weh.ogg
@@ -293,6 +357,9 @@
     sound:
       path: /Audio/Items/Toys/weh.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/weh.ogg
   - type: Food
@@ -323,6 +390,102 @@
     equippedPrefix: lizard
     slots:
     - HEAD
+  - type: Speech
+    speechVerb: Reptilian # for pais (In the secret stash)
+  - type: Tag
+    tags:
+    - ClothMade
+    - Payload
+    - PlushieLizard
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: LizardPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieExperiment #Arf!
+  name: experiment plushie
+  description: A plushie of a canid of sorts, it yearns to be detonated on a landmine.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/expiplush.rsi
+    state: expi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: expi-inhand-left
+        shader: shaded
+      right:
+      - state: expi-inhand-right
+        shader: shaded
+    heldPrefix: plushielizard
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: Tag
+    tags:
+    - ClothMade
+    - Payload
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: expi-equipped-HELMET
+        shader: shaded
+    quickEquip: false
+    sprite: Objects/Fun/toys.rsi
+    equippedPrefix: expi
+    slots:
+    - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: ExperimentPlushie
+
+- type: entity
+  parent: PlushieLizard
+  id: PlushieRainbowLizard #Weh but gay
+  description: An adorable stuffed toy that resembles a lizardperson of every color. You just might trip while staring at it...
+  name: rainbow lizard plushie
+  components:
+  - type: Sprite
+    state: rainbowlizardplush
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+    layers: [ 0 ]
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: lizard-equipped-HELMET
+        shader: unshaded
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: rainbowlizardplush-inhand-left
+        shader: unshaded
+      right:
+      - state: rainbowlizardplush-inhand-right
+        shader: unshaded
 
 - type: entity
   parent: PlushieLizard
@@ -331,7 +494,8 @@
   - type: Item
     size: Small
   - type: Sprite
-    state: plushie_lizard_mirrored
+    state: plushie_lizard
+    scale: -1, 1
 
 - type: entity
   parent: BasePlushie
@@ -339,6 +503,8 @@
   name: space lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson in an EVA suit. Made by CentComm as a token initiative to combat speciesism in space environments. "Welcome your new colleges as you do this plush, with open arms!"
   components:
+  - type: Item
+    heldPrefix: spacelizard
   - type: Sprite
     state: plushie_spacelizard
   - type: EmitSoundOnUse
@@ -351,6 +517,9 @@
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/muffled_weh.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
   - type: Food
@@ -375,6 +544,72 @@
           Quantity: 10
         - ReagentId: JuiceThatMakesYouWeh
           Quantity: 10
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+    clothingVisuals:
+      head:
+      - state: spacelizard-equipped-HELMET
+        offset: "0, 0.03"
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: SpaceLizardPlushie
+
+- type: entity
+  parent: PlushieLizard
+  id: PlushieLizardInversed #Hew!
+  name: drazil plushie
+  description: An adorable stuffed toy that resembles a lizardperson from an inversed dimension. Hew!
+  components:
+  - type: Sprite
+    state: plushie_lizard_inversed
+  - type: Item
+    heldPrefix: plushielizardinversed
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouHew
+        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: JuiceThatMakesYouHew
+          Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toys.rsi
+    equippedPrefix: lizard-inversed
+    slots:
+    - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: InversedLizardPlushie
+
 
 - type: entity
   parent: BasePlushie
@@ -400,6 +635,9 @@
     - type: EmitSoundOnTrigger
       sound:
         path: /Audio/Items/Toys/toy_rustle.ogg
+    - type: EmitSoundOnCollide
+      sound:
+        path: /Audio/Items/Toys/toy_rustle.ogg
     - type: MeleeWeapon
       wideAnimationRotation: 180
       soundHit:
@@ -421,6 +659,7 @@
     - type: RefillableSolution
       solution: plushie
     - type: SolutionContainerVisuals
+      solutionName: plushie
       maxFillLevels: 1
       fillBaseName: plushie_diona
       changeColor: false
@@ -450,6 +689,9 @@
             - LowImpassable
     - type: CollisionWake
       enabled: false
+    - type: FoodSequenceElement
+      entries:
+        CottonBurger: DionaPlushie
 
 - type: entity
   parent: BasePlushie
@@ -460,11 +702,24 @@
   - type: Sprite
     sprite: Objects/Fun/sharkplush.rsi
     state: blue
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/rawr.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/rawr.ogg
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/rawr.ogg
   - type: EmitSoundOnActivate
     sound:
+      path: /Audio/Items/Toys/rawr.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/rawr.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
       path: /Audio/Items/Toys/rawr.ogg
   - type: Item
     heldPrefix: blue
@@ -473,6 +728,9 @@
     tags:
       - PlushieSharkBlue
       - Payload
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: BlueSharkPlushie
 
 - type: entity
   parent: PlushieSharkBlue
@@ -489,6 +747,9 @@
     tags:
       - PlushieSharkPink
       - Payload
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: PinkSharkPlushie
 
 - type: entity
   parent: PlushieSharkBlue
@@ -505,6 +766,9 @@
     tags:
       - PlushieSharkGrey
       - Payload
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: GreySharkPlushie
 
 - type: entity
   parent: BasePlushie
@@ -516,6 +780,9 @@
     size: Normal
   - type: Sprite
     state: plushie_ratvar
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: RatvarPlushie
 
 - type: entity
   parent: BasePlushie
@@ -527,6 +794,9 @@
     size: Normal
   - type: Sprite
     state: narplush
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: NarPlushie
 
 - type: entity
   parent: BasePlushie
@@ -551,6 +821,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Effects/bite.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/bite.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -561,6 +834,14 @@
       path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite # Rrrr!
+  - type: Tag
+    tags:
+      - Payload
+      - ClothMade
+      - PlushieCarp
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: CarpPlushie
 
 - type: entity
   parent: PlushieCarp
@@ -570,6 +851,9 @@
   components:
   - type: Sprite
     state: magicplush
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: MagicarpPlushie
 
 - type: entity
   parent: PlushieCarp
@@ -585,7 +869,6 @@
   - type: RgbLightController
     layers: [ 0 ]
   - type: Item
-    heldPrefix: rainbowcarpplush
     inhandVisuals:
       left:
       - state: rainbowcarpplush-inhand-left
@@ -602,6 +885,9 @@
   components:
   - type: Sprite
     state: holoplush
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: HolocarpPlushie
 
 - type: entity
   parent: BasePlushie
@@ -611,6 +897,25 @@
   components:
   - type: Sprite
     state: plushie_slime
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: SlimePlushie
 
 - type: entity
   parent: BasePlushie
@@ -620,10 +925,21 @@
   components:
   - type: Sprite
     state: plushie_snake
+  - type: Item
+    heldPrefix: plushiesnake
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/rattle.ogg
   - type: Food
@@ -634,6 +950,16 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/rattle.ogg
+  - type: Clothing
+    quickEquip: false
+    equippedPrefix: plushiesnake
+    slots:
+    - NECK
+  - type: Speech
+    speechVerb: Reptilian # for pais (In the secret stash)
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: SnakePlushie
 
 - type: entity
   parent: BasePlushie
@@ -646,7 +972,16 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: Food
@@ -663,36 +998,9 @@
     equippedPrefix: mouse
     slots:
     - HEAD
-
-- type: entity
-  parent: BasePlushie
-  id: ToyRubberDuck
-  name: rubber ducky
-  description: Not carried here by ocean currents.
-  components:
-  - type: Item
-    size: Tiny
-  - type: Sprite
-    sprite: Objects/Fun/ducky.rsi
-    state: icon
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/ducky.rsi
-    slots:
-    - HEAD
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Items/Toys/quack.ogg
-  - type: EmitSoundOnTrigger
-    sound:
-      path: /Audio/Items/Toys/quack.ogg
-  - type: Food
-    requiresSpecialDigestion: true
-    useSound:
-      path: /Audio/Items/Toys/mousesqueek.ogg
-  - type: Tag
-    tags:
-    - ToyRubberDuck
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: MousePlushie
 
 - type: entity
   parent: BasePlushie
@@ -708,7 +1016,13 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: Food
@@ -719,6 +1033,9 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Voice/Vox/shriek1.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: VoxPlushie
 
 - type: entity
   parent: BasePlushie
@@ -728,6 +1045,9 @@
   components:
   - type: Sprite
     state: plushie_atmosian
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: AtmosianPlushie
 
 - type: entity
   parent: BasePlushie
@@ -751,6 +1071,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -759,6 +1082,10 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: XenoPlushie
+
 - type: entity
   parent: BasePlushie
   id: PlushiePenguin
@@ -767,6 +1094,9 @@
   components:
   - type: Sprite
     state: plushie_penguin
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: PenguinPlushie
 
 - type: entity
   parent: BasePlushie
@@ -785,6 +1115,9 @@
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Voice/Human/malescream_3.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Human/malescream_4.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -795,6 +1128,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Human/malescream_5.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: HumanPlushie
 
 - type: entity
   parent: BasePlushie
@@ -816,6 +1152,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Moth/moth_chitter.ogg
@@ -823,6 +1162,115 @@
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: MothPlushie
+
+## Rubber
+
+- type: entity
+  parent: [BaseItem, BaseStash]
+  id: BaseRubberToy
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+  - type: Tag
+    tags:
+      - Payload
+  - type: UseDelay
+    delay: 1.0
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+  - type: StaticPrice
+    price: 5
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
+
+- type: entity
+  parent: BaseRubberToy
+  id: ToyRubberDuck
+  name: rubber ducky
+  description: Not carried here by ocean currents.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Fun/ducky.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/ducky.rsi
+    slots:
+    - HEAD
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: Tag
+    tags:
+    - ToyRubberDuck
+
+- type: entity
+  parent: BaseRubberToy
+  id: RubberChicken
+  name: rubber chicken
+  description: A stress inducing parody of nature's most delectable avian.
+  components:
+  - type: Sprite
+    state: rubber_chicken
+  - type: EmitSoundOnUse
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnLand
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnActivate
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnCollide
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: MeleeWeapon
+    wideAnimationRotation: 110
+    soundHit:
+      collection: RubberChicken
+      params:
+        variation: 0.125
 
 ## Cheapo Figurines
 
@@ -898,7 +1346,16 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/ian.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
   - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
+  - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/ian.ogg
   - type: MeleeWeapon
@@ -908,6 +1365,9 @@
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Items/Toys/ian.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: IanPlushie
 
 ## Toyweapons
 
@@ -1202,7 +1662,7 @@
         volume: -10
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseMagicalContraband ]
   id: PonderingOrb
   name: pondering orb
   description: Ponderous, man... Really ponderous.
@@ -1222,14 +1682,34 @@
     modifier: 0.001
 
 - type: entity
+  parent: PonderingOrb
+  id: PonderingOrbWizard
+  name: pondering orb
+  description: Ponderous, man... Really ponderous. Magically shows the station's camera network.
+  suffix: Wizard
+  components:
+  - type: ActivatableUI
+    requireActiveHand: false
+    inHandsOnly: true
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: WiredNetworkConnection
+  - type: SurveillanceCameraMonitor
+
+- type: entity
   parent: BaseItem
   id: ToySword
   name: toy sword
   description: New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!
   components:
     - type: EnergySword
-      colorOptions:
-        - DodgerBlue
     - type: ItemToggle
       soundActivate:
         path: /Audio/Weapons/ebladeon.ogg
@@ -1239,7 +1719,7 @@
       activeSound:
         path: /Audio/Weapons/ebladehum.ogg
     - type: Sprite
-      sprite: Objects/Fun/toy_sword.rsi
+      sprite: Objects/Weapons/Melee/e_sword.rsi
       layers:
         - state: e_sword
         - state: e_sword_blade
@@ -1249,7 +1729,7 @@
           map: [ "blade" ]
     - type: Item
       size: Small
-      sprite: Objects/Fun/toy_sword.rsi
+      sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
     - type: UseDelay
       delay: 1.0
     - type: PointLight
@@ -1308,6 +1788,10 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           base: Sixteen
+#  - type: FoodSequenceElement - does not work with randomized sprites
+#    entries:
+#      CottonBurger: AmongPequeno
+
 
 - type: entity
   parent: BaseItem
@@ -1341,10 +1825,16 @@
   - type: EmitSoundOnUse
     sound:
       collection: ClownRecorder
+  - type: EmitSoundOnLand
+    sound:
+      collection: ClownRecorder
   - type: EmitSoundOnActivate
     sound:
       collection: ClownRecorder
   - type: EmitSoundOnTrigger
+    sound:
+      collection: ClownRecorder
+  - type: EmitSoundOnCollide
     sound:
       collection: ClownRecorder
   - type: UseDelay
@@ -1376,6 +1866,7 @@
     - type: DisarmMalus
       malus: 0
     - type: MeleeWeapon
+      wideAnimationRotation: -135
       soundHit:
         collection: RubberHammer
         params:
@@ -1408,10 +1899,26 @@
       collection: Parp
       params:
         variation: 0.125
+  - type: EmitSoundOnLand
+    sound:
+      collection: Parp
+      params:
+        variation: 0.125
+  - type: EmitSoundOnActivate
+    sound:
+      collection: Parp
+      params:
+        variation: 0.125
+  - type: EmitSoundOnCollide
+    sound:
+      collection: Parp
+      params:
+        variation: 0.125
   - type: UseDelay
     delay: 0.8
   - type: Slippery
-    paralyzeTime: 0
+    slipData:
+      paralyzeTime: 0
     slipSound:
       collection: Parp
       params:
@@ -1545,52 +2052,3 @@
       params:
         volume: -9
         maxDistance: 3
-
-- type: entity
-  parent: BasePlushie
-  id: RubberChicken
-  name: rubber chicken
-  description: A stress inducing parody of nature's most delectable avian.
-  components:
-  - type: Sprite
-    state: rubber_chicken
-  - type: EmitSoundOnUse
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: EmitSoundOnLand
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: EmitSoundOnActivate
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: EmitSoundOnCollide
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: EmitSoundOnTrigger
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: Food
-    requiresSpecialDigestion: true
-    useSound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: MeleeWeapon
-    wideAnimationRotation: 110
-    soundHit:
-      collection: RubberChicken
-      params:
-        variation: 0.125
-  - type: PhysicalComposition
-    materialComposition:
-      Plastic: 25

@@ -62,6 +62,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [ValidatePrototypeId<DamageTypePrototype>]
     private const string DamageType = "Shock";
 
+    private static readonly ProtoId<TagPrototype> WindowTag = "Window";
+
     // Multiply and shift the log scale for shock damage.
     private const float RecursiveDamageMultiplier = 0.75f;
     private const float RecursiveTimeMultiplier = 0.8f;
@@ -121,7 +123,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             activated.TimeLeft -= frameTime;
             if (activated.TimeLeft <= 0 || !IsPowered(uid, electrified, transform))
             {
-                _appearance.SetData(uid, ElectrifiedVisuals.IsPowered, false);
+                _appearance.SetData(uid, ElectrifiedVisuals.ShowSparks, false);
                 RemComp<ActivatedElectrifiedComponent>(uid);
             }
         }
@@ -139,7 +141,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             {
                 foreach (var entity in _entityLookup.GetLocalEntitiesIntersecting(tileRef.Value, flags: LookupFlags.StaticSundries))
                 {
-                    if (_tag.HasTag(entity, "Window"))
+                    if (_tag.HasTag(entity, WindowTag))
                         return false;
                 }
             }
@@ -186,7 +188,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (_meleeWeapon.GetDamage(args.Used, args.User).Empty)
             return;
 
-        DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false);
+        TryDoElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false);
     }
 
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
@@ -217,7 +219,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
 
         EnsureComp<ActivatedElectrifiedComponent>(uid);
-        _appearance.SetData(uid, ElectrifiedVisuals.IsPowered, true);
+        _appearance.SetData(uid, ElectrifiedVisuals.ShowSparks, true);
 
         siemens *= electrified.SiemensCoefficient;
         if (!DoCommonElectrocutionAttempt(targetUid, uid, ref siemens) || siemens <= 0)
@@ -487,16 +489,5 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return;
         }
         _audio.PlayPvs(electrified.ShockNoises, targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
-    }
-
-    public void SetElectrifiedWireCut(Entity<ElectrifiedComponent> ent, bool value)
-    {
-        if (ent.Comp.IsWireCut == value)
-        {
-            return;
-        }
-
-        ent.Comp.IsWireCut = value;
-        Dirty(ent);
     }
 }
