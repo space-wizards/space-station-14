@@ -92,4 +92,91 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
             comp.Fibers = forensicsComponent.Fibers;
         }
     }
+
+    [Serializable]
+    [DataDefinition]
+    public sealed partial class BinomialSpawnEntitiesBehavior : IThresholdBehavior
+    {
+        /// <summary>
+        ///     Entities spawned on reaching this threshold, count chosen using a binomial distribution.
+        /// </summary>
+        [DataField]
+        public Dictionary<EntProtoId, Binomial> Spawn = new();
+
+        [DataField("offset")]
+        public float Offset { get; set; } = 0.5f;
+
+        [DataField("transferForensics")]
+        public bool DoTransferForensics;
+
+        [DataField]
+        public bool SpawnInContainer;
+
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        {
+            var tSys = system.EntityManager.System<TransformSystem>();
+            var position = tSys.GetMapCoordinates(owner);
+
+            var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
+
+            var executions = 1;
+            if (system.EntityManager.TryGetComponent<StackComponent>(owner, out var stack))
+            {
+                executions = stack.Count;
+            }
+
+            foreach (var (entityId, binomial) in Spawn)
+            {
+                for (var execution = 0; execution < executions; execution++)
+                {
+                    var count = 0;
+
+                    for (int i = 0; i < binomial.Trials; i++)
+                    {
+                        if (system.Random.Prob(binomial.Chance))
+                            count++;
+                    }
+
+                    if (count == 0)
+                        continue;
+
+                    if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
+                    {
+                        var spawned = SpawnInContainer
+                            ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
+                            : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                        system.StackSystem.SetCount(spawned, count);
+
+                        TransferForensics(spawned, system, owner);
+                    }
+                    else
+                    {
+                        for (var i = 0; i < count; i++)
+                        {
+                            var spawned = SpawnInContainer
+                                ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
+                                : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+
+                            TransferForensics(spawned, system, owner);
+                        }
+                    }
+                }
+            }
+        }
+
+        public void TransferForensics(EntityUid spawned, DestructibleSystem system, EntityUid owner)
+        {
+            if (!DoTransferForensics ||
+                !system.EntityManager.TryGetComponent<ForensicsComponent>(owner, out var forensicsComponent))
+                return;
+
+            var comp = system.EntityManager.EnsureComponent<ForensicsComponent>(spawned);
+            comp.DNAs = forensicsComponent.DNAs;
+
+            if (!system.Random.Prob(0.4f))
+                return;
+            comp.Fingerprints = forensicsComponent.Fingerprints;
+            comp.Fibers = forensicsComponent.Fibers;
+        }
+    }
 }
