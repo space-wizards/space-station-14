@@ -98,18 +98,25 @@
 
 - type: entity
   name: soap
-  id: SoapBorg # Intended for borg internals
-  parent: SoapNT
+  id: SoapBorg # Intended for borg internals, not slippery or food, not a container for soap reagent
+  parent: BaseItem
   description: A Nanotrasen brand bar of soap. Smells of plasma and machines.
   components:
-  - type: DeleteOnSolutionEmpty #This overrides the DeleteOnSolutionEmpty component from the parent of the parent, Soap, which prevents this item from being consumed
-    solution: none
-  - type: SolutionRegeneration #Slowly regenerates so a borg isn't stuck with a sad crust of soap if they use it up, the rate may be lowered.
-    solution: soap
-    generated:
-      reagents:
-      - ReagentId: SoapReagent
-        Quantity: 1
+  - type: Tag
+    tags:
+    - Soap
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    layers:
+    - state: nt-4
+  - type: Appearance
+  - type: Item
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    storedRotation: -90
+  - type: CleansForensics
+  - type: Residue
+    residueAdjective: residue-slippery
+    residueColor: residue-grey
 
 - type: entity
   name: soap
