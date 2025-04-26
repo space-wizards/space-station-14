@@ -21,7 +21,7 @@
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 10
   - type: MeleeWeapon
-    Animation: WeaponArcSlash
+    animation: WeaponArcSlash
     wideAnimationRotation: -135
     damage:
       types:
