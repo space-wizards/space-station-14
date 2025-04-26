@@ -11,5 +11,4 @@
     layer: 8 # Don't network this to anyone so cheat clients can't see it. We are adding a PVS override to the user.
   - type: Eye # for the camera itself
     drawFov: false
-    drawLight: false
     pvsScale: 0.8 # we don't need the full range
