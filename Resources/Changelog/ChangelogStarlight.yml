@@ -5240,4 +5240,11 @@ Entries:
   id: 726
   time: '2025-04-26T07:39:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/540
+- author: Happyrobot33
+  changes:
+  - message: Fixed Boxcutter being dropped on toggle.
+    type: Fix
+  id: 727
+  time: '2025-04-26T07:55:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/538
 
