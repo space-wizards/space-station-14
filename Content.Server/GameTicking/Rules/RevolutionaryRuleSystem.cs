@@ -5,6 +5,9 @@ using Content.Server.EUI;
 using Content.Server.Flash;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Inventory; // Added this line for InventorySystem
+using Content.Shared.Inventory;
+using Content.Shared.Store.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Server.Mind;
 using Content.Server.Popups;
 using Content.Server.Revolutionary;
@@ -36,6 +39,9 @@ using Content.Shared.Popups;
 using Content.Server.GameTicking.Rules;
 using Robust.Shared.Containers;
 using Content.Server.Revolutionary;
+using Content.Server.Traitor.Uplink;
+using Content.Server.Store.Systems;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -73,32 +79,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
 
-        SubscribeLocalEvent<RevolutionaryRoleComponent, ComponentStartup>(OnRevolutionaryStartup);
-    }
-
-    private void OnRevolutionaryStartup(EntityUid uid, RevolutionaryRoleComponent component, ComponentStartup args)
-    {
-        // Assign an uplink to the head revolutionary at startup
-        if (TryComp<HeadRevolutionaryComponent>(uid, out var headRev))
-        {
-            AssignUplink(uid);
-        }
-    }
-
-    private void AssignUplink(EntityUid uid)
-    {
-        var uplinkSystem = EntityManager.System<ShuttleBuildingUplinkSystem>();
-
-        // Check if the entity already has an uplink
-        if (uplinkSystem.TryGetUplinkEntity(uid, out _))
-            return;
-
-        // Spawn the uplink entity and attach it to the player
-        var uplinkEntity = EntityManager.SpawnEntity("MenacingShuttleBuilderUplink0", Transform(uid).Coordinates);
-
-        // Since the uplink entity does not have a container component, attach it as a child entity
-        var transform = EntityManager.GetComponent<TransformComponent>(uplinkEntity);
-        transform.AttachParent(uid);
     }
 
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -162,6 +142,42 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Called when a Head Rev uses a flash in melee to convert somebody else.
     /// </summary>
+    private EntityUid? FindUSSPUplink(EntityUid user)
+    {
+        var uplinkSystem = EntityManager.System<UplinkSystem>();
+        var inventorySystem = EntityManager.System<InventorySystem>();
+
+        // Search container slots
+        if (inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
+        {
+            while (containerSlotEnumerator.MoveNext(out var slotEntity))
+            {
+                if (!slotEntity.ContainedEntity.HasValue)
+                    continue;
+
+                var contained = slotEntity.ContainedEntity.Value;
+                if (EntityManager.HasComponent<StoreComponent>(contained) &&
+                    EntityManager.GetComponent<MetaDataComponent>(contained).EntityPrototype?.ID == "USSPUplinkRadioPreset")
+                {
+                    return contained;
+                }
+            }
+        }
+
+        // Search held items
+        var handsSystem = EntityManager.System<SharedHandsSystem>();
+        foreach (var held in handsSystem.EnumerateHeld(user))
+        {
+            if (EntityManager.HasComponent<StoreComponent>(held) &&
+                EntityManager.GetComponent<MetaDataComponent>(held).EntityPrototype?.ID == "USSPUplinkRadioPreset")
+            {
+                return held;
+            }
+        }
+
+        return null;
+    }
+
     private void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, ref AfterFlashedEvent ev)
     {
         var alwaysConvertible = HasComp<AlwaysRevolutionaryConvertibleComponent>(ev.Target);
@@ -193,18 +209,21 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
             Logger.Info($"OnPostFlash: Granting currency to user {ev.User.Value}");
 
-            _popup.PopupEntity(Loc.GetString("rev-flash-used"), ev.User.Value, PopupType.Large);
+            var storeSystem = EntityManager.System<StoreSystem>();
 
-            _shuttleUplink.IncrementCurrency(ev.User.Value);
+            var uplinkEntity = FindUSSPUplink(ev.User.Value);
+            if (uplinkEntity != null)
+            {
+                Logger.Info($"OnPostFlash: Found USSP uplink entity {uplinkEntity.Value}");
+                var currencyToAdd = new Dictionary<string, FixedPoint2> { { "Revecrystal", FixedPoint2.New(1) } };
+                var success = storeSystem.TryAddCurrency(currencyToAdd, uplinkEntity.Value);
+                Logger.Info($"OnPostFlash: TryAddCurrency success: {success}");
+            }
 
             if (_mind.TryGetMind(ev.User.Value, out var revMindId, out _))
             {
                 if (_role.MindHasRole<RevolutionaryRoleComponent>(revMindId, out var role))
                     role.Value.Comp2.ConvertedCount++;
-
-                // Instead of granting currency to uplink, spawn BuildToken entity at user's coordinates
-                var playerCoordinates = Transform(ev.User.Value).Coordinates;
-                EntityManager.SpawnEntity("BuildToken", playerCoordinates);
             }
         }
 
