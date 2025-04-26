@@ -390,12 +390,12 @@ namespace Content.Server.Administration.Systems
                     });
                 }
 
-                // observe entity
+                // open camera
                 args.Verbs.Add(new Verb()
                 {
                     Priority = 10,
-                    Text = Loc.GetString("admin-verbs-observe"),
-                    Message = Loc.GetString("admin-verbs-observe-description"),
+                    Text = Loc.GetString("admin-verbs-camera"),
+                    Message = Loc.GetString("admin-verbs-camera-description"),
                     Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/vv.svg.192dpi.png")),
                     Category = VerbCategory.Admin,
                     Act = () =>
