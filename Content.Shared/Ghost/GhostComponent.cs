@@ -102,10 +102,16 @@ public sealed partial class GhostComponent : Component
     public Color Color = Color.White;
 
     /// <summary>
-    /// Whether the ghost will be revealed after the round ends, or when certain events happen (e.g., wizard shenanigans)
+    /// Whether the ghost can be revealed by events (e.g., wizard shenanigans).
     /// </summary>
     [DataField]
-    public bool AllowGhostShownByEvent;
+    public bool AllowSetVisibleEvent;
+
+    /// <summary>
+    /// Whether the ghost will be revealed after the round ends.
+    /// </summary>
+    [DataField]
+    public bool VisibleOnRoundEnd;
 }
 
 public sealed partial class ToggleFoVActionEvent : InstantActionEvent { }

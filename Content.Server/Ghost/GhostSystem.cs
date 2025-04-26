@@ -217,7 +217,8 @@ namespace Content.Server.Ghost
 
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
-            var vis = AllObserversVisible && component.AllowGhostShownByEvent;
+            var vis = ShouldBeVisible(component);
+            component.Visible = !vis; // bypass the SetVisible() early exit (force a layer update).
             SetVisible((uid, component), vis);
 
             _eye.RefreshVisibilityMask(uid);
@@ -410,7 +411,11 @@ namespace Content.Server.Ghost
 
         private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
         {
-            SetAllObserversVisible(ev.New == GameRunLevel.PostRound);
+            var entityQuery = EntityQueryEnumerator<GhostComponent>();
+            while (entityQuery.MoveNext(out var uid, out var ghost))
+            {
+                SetVisible((uid, ghost), ShouldBeVisible(ghost));
+            }
         }
 
         /// <summary>
@@ -428,9 +433,19 @@ namespace Content.Server.Ghost
             var entityQuery = EntityQueryEnumerator<GhostComponent>();
             while (entityQuery.MoveNext(out var uid, out var ghost))
             {
-                if (ghost.AllowGhostShownByEvent)
-                    SetVisible((uid, ghost), visible);
+                if (!ghost.AllowSetVisibleEvent)
+                    continue;
+
+                SetVisible((uid, ghost), ShouldBeVisible(ghost));
             }
+        }
+
+        private bool ShouldBeVisible(GhostComponent ghost)
+        {
+            if (ghost.VisibleOnRoundEnd && _gameTicker.RunLevel == GameRunLevel.PostRound)
+                return true;
+
+            return ghost.AllowSetVisibleEvent && AllObserversVisible;
         }
 
         public bool DoGhostBooEvent(EntityUid target)

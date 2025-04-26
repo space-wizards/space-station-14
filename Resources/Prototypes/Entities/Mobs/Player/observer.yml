@@ -75,7 +75,8 @@
   components:
   - type: Spectral
   - type: Ghost
-    allowGhostShownByEvent: true
+    allowSetVisibleEvent: true
+    visibleOnRoundEnd: true
 
 - type: entity
   id: ActionGhostBoo
