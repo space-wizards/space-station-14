@@ -189,7 +189,7 @@ public sealed class FollowerSystem : EntitySystem
     /// <param name="entity">The entity to be followed</param>
     public void StartFollowingEntity(EntityUid follower, EntityUid entity)
     {
-        if (TerminatingOrDeleted(entity))
+        if (follower == entity || TerminatingOrDeleted(entity))
             return;
 
         // No recursion for you
