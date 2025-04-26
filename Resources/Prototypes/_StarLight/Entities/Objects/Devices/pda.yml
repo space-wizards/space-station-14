@@ -158,15 +158,8 @@
         !type:String
         pda-mailtech
   - type: PdaBorderColor
-    borderColor: "#af9366"
-    accentVColor: "#3e3ac3"
+    borderColor: "#e39751"
+    accentVColor: "#6ec8fa"
   - type: Icon
     sprite: _Starlight/Objects/Devices/pda.rsi
     state: pda-mailtech
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - AstroNavCartridge
