@@ -101,8 +101,8 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
-            SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => SetAllObserversVisible(true));
             SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
+            SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
 
             SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
         }
@@ -406,6 +406,11 @@ namespace Content.Server.Ghost
 
             ev.Handled = true;
             SetAllObserversVisible(true);
+        }
+
+        private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
+        {
+            SetAllObserversVisible(ev.New == GameRunLevel.PostRound);
         }
 
         /// <summary>
