@@ -54,12 +54,23 @@ public abstract class SharedDeliverySystem : EntitySystem
         var jobTitle = ent.Comp.RecipientJobTitle ?? Loc.GetString("delivery-recipient-no-job");
         var recipientName = ent.Comp.RecipientName ?? Loc.GetString("delivery-recipient-no-name");
 
-        if (ent.Comp.IsOpened)
+        using (args.PushGroup(nameof(DeliveryComponent), 1))
         {
-            args.PushText(Loc.GetString("delivery-already-opened-examine"));
+            if (ent.Comp.IsOpened)
+            {
+                args.PushText(Loc.GetString("delivery-already-opened-examine"));
+            }
+
+            args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", recipientName), ("job", jobTitle)));
         }
 
-        args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", recipientName), ("job", jobTitle)));
+        if (ent.Comp.IsLocked)
+        {
+            var multiplier = GetDeliveryMultiplier(ent);
+            var totalSpesos = Math.Round(ent.Comp.BaseSpesoReward * multiplier);
+
+            args.PushMarkup(Loc.GetString("delivery-earnings-examine", ("spesos", totalSpesos)));
+        }
     }
 
     private void OnSpawnerExamine(Entity<DeliverySpawnerComponent> ent, ref ExaminedEvent args)
@@ -235,6 +246,20 @@ public abstract class SharedDeliverySystem : EntitySystem
         _appearance.SetData(uid, DeliverySpawnerVisuals.Contents, contents > 0);
     }
 
+    /// <summary>
+    /// Gathers the total multiplier for a delivery.
+    /// This is done by components having subscribed to GetDeliveryMultiplierEvent and having added onto it.
+    /// </summary>
+    /// <param name="ent">The delivery for which to get the multiplier.</param>
+    /// <returns>Total multiplier.</returns>
+    protected float GetDeliveryMultiplier(Entity<DeliveryComponent> ent)
+    {
+        var ev = new GetDeliveryMultiplierEvent();
+        RaiseLocalEvent(ent, ref ev);
+
+        return ev.AdditiveMultiplier * ev.MultiplicativeMultiplier;
+    }
+
     protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }
 
     protected virtual void HandlePenalty(Entity<DeliveryComponent> ent, string? reason = null) { }
@@ -243,13 +268,16 @@ public abstract class SharedDeliverySystem : EntitySystem
 }
 
 /// <summary>
-/// Used to gather the multiplier from all different delivery components.
+/// Used to gather the total multiplier for deliveries.
+/// This is done by various modifier components subscribing to this and adding accordingly.
 /// </summary>
+/// <param name="AdditiveMultiplier">The additive multiplier.</param>
+/// <param name="MultiplicativeMultiplier">The multiplicative multiplier.</param>
 [ByRefEvent]
-public record struct GetDeliveryMultiplierEvent(float Multiplier)
+public record struct GetDeliveryMultiplierEvent(float AdditiveMultiplier, float MultiplicativeMultiplier)
 {
     // we can't use an optional parameter because the default parameterless constructor defaults everything
-    public GetDeliveryMultiplierEvent() : this(1.0f) { }
+    public GetDeliveryMultiplierEvent() : this(1.0f, 1.0f) { }
 }
 
 /// <summary>
