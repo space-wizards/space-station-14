@@ -5,178 +5,176 @@ using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Destructible.Thresholds.Behaviors
+namespace Content.Server.Destructible.Thresholds.Behaviors;
+
+/// <summary>
+///     Destructible system behavior to spawn entites.
+/// </summary>
+public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
 {
-    [Serializable]
-    [DataDefinition]
-    public sealed partial class SpawnEntitiesBehavior : IThresholdBehavior
+    /// <summary>
+    ///     Spawn items in parent container, if one exists.
+    /// </summary>
+    /// <remarks>
+    ///     If true spawns will not be offset, even if they weren't in a container.
+    /// </remarks>
+    [DataField]
+    public bool SpawnInContainer;
+
+    /// <summary>
+    ///     How far from the destroyed entity to spawn.
+    ///     Creates a random <see cref="Vector2"/> of ((-Offset, Offset), (-Offset, Offset)).
+    /// </summary>
+    [DataField]
+    public float Offset { get; set; } = 0.5f;
+
+    /// <summary>
+    ///     Spawned items will try to copy the forensics of the destroyed entity.
+    /// </summary>
+    [DataField]
+    public bool TransferForensics;
+
+    /// <summary>
+    ///     Chance for forensics to be transfered if <see cref="TransferForensics"/> is true.
+    /// </summary>
+    [DataField]
+    public float ForensicsChance = .6f;
+
+    /// <summary>
+    ///     How many times to spawn items, i.e. a stack got destroyed.
+    ///     Set by <see cref="Execute"/>.
+    /// </summary>
+    protected int Executions = 1;
+
+    /// <summary>
+    ///     Spawn position. Set by <see cref="Execute"/>.
+    /// </summary>
+    private MapCoordinates Position;
+
+    public virtual void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
     {
-        /// <summary>
-        ///     Entities spawned on reaching this threshold, from a min to a max.
-        /// </summary>
-        [DataField]
-        public Dictionary<EntProtoId, MinMax> Spawn = new();
+        Position = system.EntityManager.System<TransformSystem>().GetMapCoordinates(owner);
 
-        [DataField("offset")]
-        public float Offset { get; set; } = 0.5f;
-
-        [DataField("transferForensics")]
-        public bool DoTransferForensics;
-
-        [DataField]
-        public bool SpawnInContainer;
-
-        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        if (system.EntityManager.TryGetComponent<StackComponent>(owner, out var stack))
         {
-            var tSys = system.EntityManager.System<TransformSystem>();
-            var position = tSys.GetMapCoordinates(owner);
-
-            var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
-
-            var executions = 1;
-            if (system.EntityManager.TryGetComponent<StackComponent>(owner, out var stack))
-            {
-                executions = stack.Count;
-            }
-
-            foreach (var (entityId, minMax) in Spawn)
-            {
-                for (var execution = 0; execution < executions; execution++)
-                {
-                    var count = minMax.Min >= minMax.Max
-                        ? minMax.Min
-                        : system.Random.Next(minMax.Min, minMax.Max + 1);
-
-                    if (count == 0)
-                        continue;
-
-                    if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
-                    {
-                        var spawned = SpawnInContainer
-                            ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                            : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
-                        system.StackSystem.SetCount(spawned, count);
-
-                        TransferForensics(spawned, system, owner);
-                    }
-                    else
-                    {
-                        for (var i = 0; i < count; i++)
-                        {
-                            var spawned = SpawnInContainer
-                                ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                                : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
-
-                            TransferForensics(spawned, system, owner);
-                        }
-                    }
-                }
-            }
+            Executions = stack.Count;
         }
 
-        public void TransferForensics(EntityUid spawned, DestructibleSystem system, EntityUid owner)
+        /// Children will get a count and run <see cref="SpawnEntities"/> here.
+    }
+
+    protected void SpawnEntities(EntProtoId toSpawn, int count, DestructibleSystem system, EntityUid owner)
+    {
+        // Spawn offset function
+        var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
+
+        // Spawn as a stack
+        if (EntityPrototypeHelpers.HasComponent<StackComponent>(toSpawn, system.PrototypeManager, system.ComponentFactory))
         {
-            if (!DoTransferForensics ||
-                !system.EntityManager.TryGetComponent<ForensicsComponent>(owner, out var forensicsComponent))
-                return;
+            var spawned = SpawnInContainer
+                ? system.EntityManager.SpawnNextToOrDrop(toSpawn, owner)
+                : system.EntityManager.SpawnEntity(toSpawn, Position.Offset(getRandomVector()));
+            system.StackSystem.SetCount(spawned, count);
 
-            var comp = system.EntityManager.EnsureComponent<ForensicsComponent>(spawned);
-            comp.DNAs = forensicsComponent.DNAs;
+            CopyForensics(spawned, system, owner);
+        }
+        // Spawn as individual items
+        else
+        {
+            for (var i = 0; i < count; i++)
+            {
+                var spawned = SpawnInContainer
+                    ? system.EntityManager.SpawnNextToOrDrop(toSpawn, owner)
+                    : system.EntityManager.SpawnEntity(toSpawn, Position.Offset(getRandomVector()));
 
-            if (!system.Random.Prob(0.4f))
-                return;
-            comp.Fingerprints = forensicsComponent.Fingerprints;
-            comp.Fibers = forensicsComponent.Fibers;
+                CopyForensics(spawned, system, owner);
+            }
         }
     }
 
-    [Serializable]
-    [DataDefinition]
-    public sealed partial class BinomialSpawnEntitiesBehavior : IThresholdBehavior
+    private void CopyForensics(EntityUid spawned, DestructibleSystem system, EntityUid owner)
     {
-        /// <summary>
-        ///     Entities spawned on reaching this threshold, count chosen using a binomial distribution.
-        /// </summary>
-        [DataField]
-        public Dictionary<EntProtoId, Binomial> Spawn = new();
+        if (!TransferForensics ||
+            !system.Random.Prob(ForensicsChance) ||
+            !system.EntityManager.TryGetComponent<ForensicsComponent>(owner, out var forensicsComponent))
+            return;
 
-        [DataField("offset")]
-        public float Offset { get; set; } = 0.5f;
+        system.EntityManager.System<ForensicsSystem>().CopyForensicsFrom(forensicsComponent, spawned);
+    }
+}
 
-        [DataField("transferForensics")]
-        public bool DoTransferForensics;
+/// <summary>
+///     Spawns items with an even distrbution between min and max.
+/// </summary>
+[Serializable]
+[DataDefinition]
+public sealed partial class SpawnEntitiesBehavior : BaseSpawnEntitiesBehavior
+{
+    /// <summary>
+    ///     Entities spawned on reaching this threshold, from a min to a max.
+    /// </summary>
+    [DataField]
+    public Dictionary<EntProtoId, MinMax> Spawn = new();
 
-        [DataField]
-        public bool SpawnInContainer;
+    public override void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+    {
+        base.Execute(owner, system, cause);
 
-        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        foreach (var (entityId, minMax) in Spawn)
         {
-            var tSys = system.EntityManager.System<TransformSystem>();
-            var position = tSys.GetMapCoordinates(owner);
-
-            var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
-
-            var executions = 1;
-            if (system.EntityManager.TryGetComponent<StackComponent>(owner, out var stack))
+            for (var execution = 0; execution < Executions; execution++)
             {
-                executions = stack.Count;
-            }
+                var count = minMax.Min >= minMax.Max
+                    ? minMax.Min
+                    : system.Random.Next(minMax.Min, minMax.Max + 1);
 
-            foreach (var (entityId, binomial) in Spawn)
-            {
-                for (var execution = 0; execution < executions; execution++)
-                {
-                    var count = 0;
+                if (count == 0)
+                    continue;
 
-                    for (int i = 0; i < binomial.Trials; i++)
-                    {
-                        if (system.Random.Prob(binomial.Chance))
-                            count++;
-                    }
-
-                    if (count == 0)
-                        continue;
-
-                    if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
-                    {
-                        var spawned = SpawnInContainer
-                            ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                            : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
-                        system.StackSystem.SetCount(spawned, count);
-
-                        TransferForensics(spawned, system, owner);
-                    }
-                    else
-                    {
-                        for (var i = 0; i < count; i++)
-                        {
-                            var spawned = SpawnInContainer
-                                ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                                : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
-
-                            TransferForensics(spawned, system, owner);
-                        }
-                    }
-                }
+                SpawnEntities(entityId, count, system, owner);
             }
         }
+    }
+}
 
-        public void TransferForensics(EntityUid spawned, DestructibleSystem system, EntityUid owner)
+/// <summary>
+///     Spawns items with a binomial distribution.
+/// </summary>
+[Serializable]
+[DataDefinition]
+public sealed partial class BinomialSpawnEntitiesBehavior : BaseSpawnEntitiesBehavior
+{
+    /// <summary>
+    ///     Entities spawned on reaching this threshold, using a binomial distribution.
+    /// </summary>
+    [DataField]
+    public Dictionary<EntProtoId, Binomial> Spawn = new();
+
+    public override void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+    {
+        base.Execute(owner, system, cause);
+
+        foreach (var (entityId, binomial) in Spawn)
         {
-            if (!DoTransferForensics ||
-                !system.EntityManager.TryGetComponent<ForensicsComponent>(owner, out var forensicsComponent))
-                return;
+            for (var execution = 0; execution < Executions; execution++)
+            {
+                var count = 0;
 
-            var comp = system.EntityManager.EnsureComponent<ForensicsComponent>(spawned);
-            comp.DNAs = forensicsComponent.DNAs;
+                for (int i = 0; i < binomial.Trials; i++)
+                {
+                    if (system.Random.Prob(binomial.Chance))
+                        count++;
+                }
 
-            if (!system.Random.Prob(0.4f))
-                return;
-            comp.Fingerprints = forensicsComponent.Fingerprints;
-            comp.Fibers = forensicsComponent.Fibers;
+                if (count == 0)
+                    continue;
+
+                SpawnEntities(entityId, count, system, owner);
+            }
         }
     }
 }
