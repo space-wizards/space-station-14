@@ -198,16 +198,16 @@ namespace Content.Server.Lathe
             if ((component.MaxTemp != null || component.MinTemp != null) && Resolve(uid, ref xform) && xform.GridUid != null && xform.MapUid != null)
             {
                 var position = _transform.GetGridTilePositionOrDefault((uid, xform));
-                var temperature = _atmosphere.GetTileHeatCapacity(xform.GridUid, xform.MapUid.Value, position);
+                var mix = _atmosphere.GetTileMixture(xform.GridUid, xform.MapUid.Value, position);
 
-                if (temperature <= component.MinTemp)
+                if (mix.Temperature <= component.MinTemp)
                 {
                     component.TempStatus = LatheTemperatureStatus.Low;
                     UpdateTemperatureAppearance(uid, component.TempStatus);
                     return false;
                 }
 
-                else if (temperature >= component.MaxTemp)
+                else if (mix.Temperature >= component.MaxTemp)
                 {
                     component.TempStatus = LatheTemperatureStatus.High;
                     UpdateTemperatureAppearance(uid, component.TempStatus);
