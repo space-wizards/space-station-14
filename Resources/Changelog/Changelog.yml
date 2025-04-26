@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: august-sun
-  changes:
-  - message: Utility and CE belts can now hold the pAI and the handheld station map.
-    type: Tweak
-  id: 7858
-  time: '2025-01-27T18:48:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33048
-- author: ArtisticRoomba
-  changes:
-  - message: The Engineering Guidebook has been significantly revamped and is now
-      mostly up to date.
-    type: Add
-  - message: Most Atmospherics and Engineering-related devices and equipment now have
-      a link to their relevant guidebook entry upon examine.
-    type: Add
-  id: 7859
-  time: '2025-01-27T19:42:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33062
 - author: SlamBamActionman
   changes:
   - message: Hristov now provides an increased view range of 3 tiles when wielded.
@@ -3936,3 +3918,18 @@
   id: 8359
   time: '2025-04-26T21:45:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36945
+- author: Nox38
+  changes:
+  - message: Added descriptions for the .30 caliber and weapons.
+    type: Add
+  id: 8360
+  time: '2025-04-26T21:48:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36958
+- author: UpAndLeaves
+  changes:
+  - message: The CMO's hardsuit has been redesigned with extra durathread to withstand
+      zombie bites more effectively.
+    type: Tweak
+  id: 8361
+  time: '2025-04-26T21:49:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36957
