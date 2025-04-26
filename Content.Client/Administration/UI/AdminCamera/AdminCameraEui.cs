@@ -1,7 +1,10 @@
+using System.Linq;
 using Content.Client.Eui;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
+using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Administration.UI.AdminCamera;
 
@@ -12,6 +15,9 @@ namespace Content.Client.Administration.UI.AdminCamera;
 [UsedImplicitly]
 public sealed partial class AdminCameraEui : BaseEui
 {
+    [Dependency] private readonly IClyde _clyde = default!;
+    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+
     private readonly AdminCameraWindow _window;
 
     public AdminCameraEui()
@@ -19,6 +25,32 @@ public sealed partial class AdminCameraEui : BaseEui
         _window = new AdminCameraWindow();
         _window.OnFollow += () => SendMessage(new AdminCameraFollowMessage());
         _window.OnClose += () => SendMessage(new CloseEuiMessage());
+        _window.OnPopout += Popout;
+    }
+
+    private void Popout()
+    {
+        var monitor = _clyde.EnumerateMonitors().First();
+
+        _window.Orphan();
+
+        var clydeWindow = _clyde.CreateWindow(new WindowCreateParameters
+        {
+            Maximized = false,
+            Title = _window.Title ?? Loc.GetString("admin-camera-window-title-placeholder"),
+            Monitor = monitor,
+            Width = 500,
+            Height = 500,
+        });
+
+        var clydeRoot = _uiManager.CreateWindowRoot(clydeWindow);
+        clydeRoot.AddChild(_window);
+
+        clydeWindow.RequestClosed += _ => _window.Close();
+        clydeWindow.DisposeOnClose = true;
+
+        _window.PopoutButton.Disabled = true;
+        _window.PopoutButton.Text = Loc.GetString("admin-camera-window-popped-out");
     }
 
     public override void Opened()

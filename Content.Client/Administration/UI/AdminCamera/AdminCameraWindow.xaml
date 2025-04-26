@@ -3,7 +3,6 @@
     Title="{Loc admin-camera-window-title-placeholder}"
     MinSize="400 400">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
-        <Button Name="FollowButton" Access="Public" Text="{Loc 'admin-camera-window-teleport'}" />
         <Control VerticalExpand="True" HorizontalExpand="True" Margin="5 5 5 5" Name="CameraViewBox">
             <viewport:ScalingViewport Name="CameraView"
                                       VerticalExpand="True"
@@ -11,5 +10,9 @@
                                       MinSize="400 400"
                                       MouseFilter="Ignore" />
         </Control>
+        <BoxContainer Orientation="Horizontal">
+            <Button StyleClasses="OpenRight" Name="FollowButton" HorizontalExpand="True" Access="Public" Text="{Loc 'admin-camera-window-follow'}" />
+            <Button StyleClasses="OpenLeft" Name="PopoutButton" HorizontalExpand="True" Access="Public" Text="{Loc 'admin-camera-window-pop-out'}" />
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

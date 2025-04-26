@@ -15,6 +15,8 @@ public sealed partial class AdminCameraWindow : DefaultWindow
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IClientGameTiming _timing = default!;
     public event Action? OnFollow;
+    public event Action? OnPopout;
+
     private readonly EyeLerpingSystem _eyeLerpingSystem;
     private readonly FixedEye _defaultEye = new();
     private AdminCameraEuiState? _nextState;
@@ -32,6 +34,11 @@ public sealed partial class AdminCameraWindow : DefaultWindow
         CameraView.Eye = _defaultEye;
 
         FollowButton.OnPressed += _ => OnFollow?.Invoke();
+        PopoutButton.OnPressed += _ =>
+        {
+            OnPopout?.Invoke();
+            WindowHeader.Visible = false;
+        };
     }
 
     public void SetState(AdminCameraEuiState state)
