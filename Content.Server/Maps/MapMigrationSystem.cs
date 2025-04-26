@@ -17,7 +17,9 @@ namespace Content.Server.Maps;
 /// </summary>
 public sealed class MapMigrationSystem : EntitySystem
 {
+#if DEBUG
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
+#endif
     [Dependency] private readonly IResourceManager _resMan = default!;
 
     private const string MigrationFile = "/migration.yml";
