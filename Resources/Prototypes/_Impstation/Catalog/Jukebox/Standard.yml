@@ -159,7 +159,7 @@
   id: LifeIsBeautiful
   name: "[Deadly Premonition] Life is Beautiful // Riyou Kinugasa, Takuya Kobayashi & Hiromi Mizutani"
   path:
-    path: /Audio/_Impstation/Music/level_0.ogg
+    path: /Audio/_Impstation/Music/life_is_beautiful.ogg
 
 - type: jukebox
   id: LiveStudioAudience
@@ -313,7 +313,7 @@
 
 - type: jukebox
   id: ThrashardInTheCave
-  name: "[Akumajō Dracula] Thrashard In The Cave - Stage 2 // Shin-chan, Keizo Nakamura, & Hiroshi Kobayashi; arranged by Sota Fujimori (for Castlevania Chronicles)"
+  name: "[Akumajō Dracula] Thrashard In The Cave - Stage 2 // Konami Kukeiha Club; arranged by Sota Fujimori (for Castlevania Chronicles)"
   path:
     path: /Audio/_Impstation/Music/thrashard_in_the_cave.ogg
 
