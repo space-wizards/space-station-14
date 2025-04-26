@@ -7,6 +7,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
@@ -29,6 +30,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -157,7 +159,12 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             return;
         TryComp<PhysicsComponent>(uid, out var physics);
         _physics.SetBodyType(uid, BodyType.Dynamic, body: physics, xform: xform);
-        _transform.AttachToGridOrMap(uid, xform);
+        //starlight, check if its in a inventory
+        if (!_containerSystem.TryGetContainingContainer((uid, null, null), out var container))
+        {
+            _transform.AttachToGridOrMap(uid, xform);
+        }
+        //starlight end
         component.EmbeddedIntoUid = null;
         Dirty(uid, component);
 
