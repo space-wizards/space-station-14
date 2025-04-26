@@ -216,13 +216,64 @@
   - type: Projectile
     damage:
       types:
+        Shock: 1
+    soundHit:
+      path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+    forceSound: true
+  - type: TimedDespawn
+    lifetime: 0.170 # Same as PKA
+  - type: StunOnCollide
+    stunAmount: 0
+    knockdownAmount: 3 # Enough to subdue and follow up with a stun batong
+    slowdownAmount: 3
+    walkSpeedMultiplier: 0.5
+    sprintSpeedMultiplier: 0.5
+
+- type: entity
+  name: taser bolt
+  id: BulletTaserSuper
+  description: If you can see this, you've probably been stun-meta'd
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    noRot: true
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    color: "#ffff33"
+    layers:
+    - state: spark
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.45,0.15,0.15"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
+  - type: Ammo
+  - type: Projectile
+    damage:
+      types:
         Heat: 5
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     forceSound: true
   - type: StunOnCollide
     stunAmount: 5
-    knockdownAmount: 5
+    knockdownAmount: 10
+    slowdownAmount: 10
+    walkSpeedMultiplier: 0.5
+    sprintSpeedMultiplier: 0.5
 
 - type: entity
   name : disabler bolt
