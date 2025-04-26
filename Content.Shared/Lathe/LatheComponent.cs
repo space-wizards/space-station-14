@@ -50,13 +50,13 @@ namespace Content.Shared.Lathe
         ///     If air reaches this temperature, lathe stops work. Prevents abusing via flaps.
         /// </summary>
         [DataField]
-        public float? MaxTemp = 400;
+        public float? MaxTemp;
 
         /// <summary>
         ///     If air reaches this temperature, lathe stops work. Prevents abusing via flaps and space.
         /// </summary>
         [DataField]
-        public float? MinTemp = 20;
+        public float? MinTemp;
 
         #region Visualizer info
         [DataField]
