@@ -282,7 +282,7 @@
     outerClothing: ClothingOuterArmorBasicSlim
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
-  inhand: 
+  inhand:
   - FlashlightSeclite
 
 - type: startingGear
@@ -859,7 +859,7 @@
     eyes: ClothingEyesHudMedical
     pocket1: RegenerativeMesh
     pocket2: PillCanisterBicaridine
-  inhand: 
+  inhand:
   - ScalpelAdvanced
   - MedicatedSuture
 
@@ -1574,7 +1574,16 @@
     pocket2: PillCanisterDylovene
 
 # Misc
-
+- type: startingGear
+  id: KnightErrantLoadout
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHelmetKnight
+    back: ClothingBackpackSatchelLeather
+    pocket1: DoubleEmergencyOxygenTankFilled
+    suitstorage: Claymore
+    outerClothing: ClothingOuterSuitKnight
 ### Challenge Visitors
 
 # Command
