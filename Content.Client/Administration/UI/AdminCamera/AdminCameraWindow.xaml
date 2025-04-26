@@ -1,0 +1,14 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+    xmlns:viewport="clr-namespace:Content.Client.Viewport"
+    MinSize="400 400">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <Button Name="FollowButton" Access="Public" Text="{Loc 'admin-camera-window-teleport'}" />
+        <Control VerticalExpand="True" HorizontalExpand="True" Margin="5 5 5 5" Name="CameraViewBox">
+            <viewport:ScalingViewport Name="CameraView"
+                                      VerticalExpand="True"
+                                      HorizontalExpand="True"
+                                      MinSize="400 400"
+                                      MouseFilter="Ignore" />
+        </Control>
+    </BoxContainer>
+</DefaultWindow>
