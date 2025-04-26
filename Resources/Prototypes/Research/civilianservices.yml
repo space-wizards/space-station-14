@@ -10,6 +10,8 @@
   tier: 1
   cost: 5000
   recipeUnlocks:
+  - BorgModuleGardening
+  - BorgModuleHarvesting
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
   - ReagentGrinderIndustrialMachineCircuitboard
@@ -117,7 +119,7 @@
   - CryostasisBeaker
   - SyringeCryostasis
 
-- type: technology # Merge with other T2 medical research if possible!
+- type: technology
   id: MechanizedTreatment
   name: research-technology-mechanized-treatment
   icon:
@@ -127,7 +129,8 @@
   tier: 2
   cost: 5000
   recipeUnlocks:
-  - BorgModuleAdvancedChemical
+  - BorgModuleAdvancedTreatment
+  - BorgModuleDefibrillator
 
 - type: technology
   id: AdvancedCleaning
@@ -141,7 +144,6 @@
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
-  - BorgModuleAdvancedCleaning
 
 - type: technology
   id: HONKMech
