@@ -121,6 +121,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("alertLevels");
             _prototypeManager.RegisterIgnore("nukeopsRole");
             _prototypeManager.RegisterIgnore("ghostRoleRaffleDecider");
+            _prototypeManager.RegisterIgnore("mapModification"); // Harmony
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();
