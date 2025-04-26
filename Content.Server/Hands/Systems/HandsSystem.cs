@@ -11,6 +11,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Item;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
@@ -225,6 +226,11 @@ namespace Content.Server.Hands.Systems
             direction *= distance / length;
 
             var throwSpeed = hands.BaseThrowspeed;
+            // Checks for and applies the throwing speed modifier
+            if (EntityManager.TryGetComponent<ItemComponent>(throwEnt, out var itemComponent))
+            {
+                throwSpeed += itemComponent.ThrowingSpeedModifier;
+            }
 
             // Let other systems change the thrown entity (useful for virtual items)
             // or the throw strength.
