@@ -8,6 +8,7 @@ namespace Content.Shared.Delivery;
 /// Added additively to the total multiplier.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(DeliveryModifierSystem))]
 public sealed partial class DeliveryRandomMultiplierComponent : Component
 {
     /// <summary>
