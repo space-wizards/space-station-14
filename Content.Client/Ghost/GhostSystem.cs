@@ -35,7 +35,7 @@ namespace Content.Client.Ghost
                 var query = AllEntityQuery<GhostComponent, SpriteComponent>();
                 while (query.MoveNext(out var uid, out var ghost, out var sprite))
                 {
-                    UpdateVisibility((uid, ghost, sprite));
+                    UpdateSpriteVisibility((uid, ghost, sprite));
                 }
             }
         }
@@ -71,10 +71,18 @@ namespace Content.Client.Ghost
 
         private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
-            UpdateVisibility((uid, component));
+            UpdateSpriteVisibility((uid, component));
         }
 
-        private void UpdateVisibility(Entity<GhostComponent?, SpriteComponent?> ghost)
+        public override void SetVisible(Entity<GhostComponent?> ghost, bool visible)
+        {
+            if (!Resolve(ghost.Owner, ref ghost.Comp))
+                return;
+            base.SetVisible(ghost, visible);
+            UpdateSpriteVisibility(ghost);
+        }
+
+        private void UpdateSpriteVisibility(Entity<GhostComponent?, SpriteComponent?> ghost)
         {
             if (!Resolve(ghost.Owner, ref ghost.Comp1, ref ghost.Comp2))
                 return;
@@ -159,7 +167,7 @@ namespace Content.Client.Ghost
             if (TryComp<SpriteComponent>(uid, out var sprite))
                 sprite.LayerSetColor(0, component.Color);
 
-            UpdateVisibility((uid, component, null));
+            UpdateSpriteVisibility((uid, component, null));
 
             if (uid != _playerManager.LocalEntity)
                 return;

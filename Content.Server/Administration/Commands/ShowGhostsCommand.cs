@@ -28,7 +28,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            _entities.System<GhostSystem>().MakeVisible(visible);
+            _entities.System<GhostSystem>().SetAllObserversVisible(visible);
         }
     }
 }

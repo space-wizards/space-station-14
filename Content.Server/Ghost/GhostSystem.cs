@@ -71,8 +71,7 @@ namespace Content.Server.Ghost
 
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
-
-        private static readonly ProtoId<TagPrototype> AllowGhostShownByEventTag = "AllowGhostShownByEvent";
+        public bool AllObserversVisible { get; private set; }
 
         public override void Initialize()
         {
@@ -102,7 +101,7 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
-            SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
+            SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => SetAllObserversVisible(true));
             SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
 
             SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
@@ -157,14 +156,14 @@ namespace Content.Server.Ghost
             {
                 _visibilitySystem.RemoveLayer((ghost.Owner, visibility), (int)VisibilityFlags.Ghost, false);
                 _visibilitySystem.AddLayer((ghost.Owner, visibility), (int)VisibilityFlags.Normal, false);
-                _visibilitySystem.RefreshVisibility(ghost.Owner, visibility);
             }
             else
             {
                 _visibilitySystem.AddLayer((ghost.Owner, visibility), (int)VisibilityFlags.Ghost, false);
                 _visibilitySystem.RemoveLayer((ghost.Owner, visibility), (int)VisibilityFlags.Normal, false);
-                _visibilitySystem.RefreshVisibility(ghost.Owner, visibility);
             }
+
+            _visibilitySystem.RefreshVisibility(ghost.Owner, visibility);
         }
 
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
@@ -218,15 +217,8 @@ namespace Content.Server.Ghost
 
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
-            // Allow this entity to be seen by other ghosts.
-            var visibility = EnsureComp<VisibilityComponent>(uid);
-
-            if (_gameTicker.RunLevel != GameRunLevel.PostRound && !component.Visible)
-            {
-                _visibilitySystem.AddLayer((uid, visibility), (int) VisibilityFlags.Ghost, false);
-                _visibilitySystem.RemoveLayer((uid, visibility), (int) VisibilityFlags.Normal, false);
-                _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
-            }
+            var vis = AllObserversVisible && component.AllowGhostShownByEvent;
+            SetVisible((uid, component), vis);
 
             _eye.RefreshVisibilityMask(uid);
             var time = _gameTiming.CurTime;
@@ -413,21 +405,26 @@ namespace Content.Server.Ghost
                 return;
 
             ev.Handled = true;
-            MakeVisible(true);
+            SetAllObserversVisible(true);
         }
 
         /// <summary>
-        /// When the round ends, make all players able to see ghosts.
+        /// Make all whitelisted ghosts visible. This usually just includes all observer ghosts.
         /// </summary>
-        public void MakeVisible(bool visible)
+        /// <remarks>
+        /// Used to make ghosts visible when the round ends, and for wizard shenanigans.
+        /// </remarks>
+        public void SetAllObserversVisible(bool visible)
         {
+            if (AllObserversVisible == visible)
+                return;
+
+            AllObserversVisible = visible;
             var entityQuery = EntityQueryEnumerator<GhostComponent>();
             while (entityQuery.MoveNext(out var uid, out var ghost))
             {
-                if (!_tag.HasTag(uid, AllowGhostShownByEventTag))
-                    continue;
-
-                SetVisible((uid, ghost), visible);
+                if (ghost.AllowGhostShownByEvent)
+                    SetVisible((uid, ghost), visible);
             }
         }
 

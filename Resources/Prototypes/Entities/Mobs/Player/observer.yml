@@ -74,9 +74,8 @@
   id: MobObserver
   components:
   - type: Spectral
-  - type: Tag
-    tags:
-    - AllowGhostShownByEvent
+  - type: Ghost
+    allowGhostShownByEvent: true
 
 - type: entity
   id: ActionGhostBoo
