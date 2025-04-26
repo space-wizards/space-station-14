@@ -179,6 +179,7 @@ public sealed partial class GunComponent : Component
     /// If it is turned off, there will be no sound of an empty magazine and the inscription "No ammo left".
     /// </summary>
     [DataField]
+    [AutoNetworkedField]
     public bool ShowingInabilityToShoot = true;
 
     /// <summary>
