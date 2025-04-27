@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Touched up highlights on Gathered Low hairstyle
-    type: Tweak
-  id: 1077
-  time: '2025-02-08T02:20:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1605
 - author: mqole
   changes:
   - message: Bottles and vials are a bit bigger. They might not fit as easily into
@@ -4131,3 +4124,15 @@
   id: 1576
   time: '2025-04-27T08:35:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2357
+- author: DinnerCalzone
+  changes:
+  - message: Nukeops Commander now requires 4 hours of playtime of any team nukeops
+      role in place of its previous requirements.
+    type: Tweak
+  - message: Lone Operative playtime will now be tracked separately from the regular
+      Nuclear Operative role and will not count towards Nukeops Commander playtime
+      requirements.
+    type: Tweak
+  id: 1577
+  time: '2025-04-27T17:47:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2272
