@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: jamessimo
-  changes:
-  - message: Criminal Records computer got enhanced UX & UI.
-    type: Tweak
-  - message: Criminal Records computer can now filter its list against crew criminal
-      status.
-    type: Tweak
-  - message: Criminal Records computer will now announce the suspects Job next to
-      their name.
-    type: Tweak
-  id: 7868
-  time: '2025-01-29T10:34:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32352
 - author: Starbuckss14
   changes:
   - message: New borg names
@@ -3931,3 +3918,11 @@
   id: 8369
   time: '2025-04-27T20:15:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34848
+- author: ScarKy0
+  changes:
+  - message: Deliveries can now spawn as fragile-type! Deliver them intact to earn
+      a minor speso bonus.
+    type: Add
+  id: 8370
+  time: '2025-04-27T23:04:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36980
