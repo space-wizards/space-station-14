@@ -15,6 +15,12 @@ namespace Content.Shared.Standing
         public bool Standing { get; set; } = true;
 
         /// <summary>
+        /// Time it takes us to stand up
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public TimeSpan StandTime = TimeSpan.FromSeconds(1);
+        
+        /// <summary>
         /// Default Friction modifier for knocked down players.
         /// Makes them accelerate and deccelerate slower.
         /// </summary>
