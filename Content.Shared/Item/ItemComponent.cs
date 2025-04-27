@@ -63,6 +63,7 @@ public sealed partial class ItemComponent : Component
 
     /// <summary>
     /// Modifies the speed at which the entity is thrown by hand by adding its value to it, default speed is 11.
+    /// It will not take effect if the result would be or go below 0.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float ThrowingSpeedModifier;
