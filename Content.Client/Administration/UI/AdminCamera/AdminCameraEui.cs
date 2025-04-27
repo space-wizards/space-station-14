@@ -41,7 +41,7 @@ public sealed partial class AdminCameraEui : BaseEui
             Title = _window.Title ?? Loc.GetString("admin-camera-window-title-placeholder"),
             Monitor = monitor,
             Width = 400,
-            Height = 400,
+            Height = 500,
         });
 
         var clydeRoot = _uiManager.CreateWindowRoot(clydeWindow);
