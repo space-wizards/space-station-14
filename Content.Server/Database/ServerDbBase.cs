@@ -21,6 +21,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.DeadSpace.Interfaces.Server;
 
 namespace Content.Server.Database
 {
@@ -28,12 +29,19 @@ namespace Content.Server.Database
     {
         private readonly ISawmill _opsLog;
 
+        private IServerPlayTimeManager? _playTimeServer; // DS14-play-time-server-support
+
         public event Action<DatabaseNotification>? OnNotificationReceived;
 
         /// <param name="opsLog">Sawmill to trace log database operations to.</param>
         public ServerDbBase(ISawmill opsLog)
         {
             _opsLog = opsLog;
+
+            // DS14-play-time-server-support-start
+            if (IoCManager.Instance != null)
+                IoCManager.Instance.TryResolveType(out _playTimeServer);
+            // DS14-play-time-server-support-end
         }
 
         #region Preferences
@@ -551,6 +559,11 @@ namespace Content.Server.Database
         #region Playtime
         public async Task<List<PlayTime>> GetPlayTimes(Guid player, CancellationToken cancel)
         {
+            // DS14-play-time-server-support-start
+            if (_playTimeServer != null && _playTimeServer.UsePlayTimeServer())
+                return await _playTimeServer.GetPlayTimesAsync(player, cancel);
+            // DS14-play-time-server-support-end
+
             await using var db = await GetDb(cancel);
 
             return await db.DbContext.PlayTime
@@ -560,6 +573,25 @@ namespace Content.Server.Database
 
         public async Task UpdatePlayTimes(IReadOnlyCollection<PlayTimeUpdate> updates)
         {
+            // DS14-play-time-server-support-start
+            if (_playTimeServer != null && _playTimeServer.UsePlayTimeServer())
+            {
+                var data = updates.Select(x => new PlayTime()
+                {
+                    PlayerId = x.User.UserId,
+                    Tracker = x.Tracker,
+                    TimeSpent = x.Time
+                });
+
+                await _playTimeServer.UpdatePlayTimes(data);
+
+                if (!_playTimeServer.SaveLocaly())
+                {
+                    return;
+                }
+            }
+            // DS14-play-time-server-support-end
+
             await using var db = await GetDb();
 
             // Ideally I would just be able to send a bunch of UPSERT commands, but EFCore is a pile of garbage.

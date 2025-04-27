@@ -1,22 +1,21 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
 
 namespace Content.DeadSpace.Interfaces.Shared;
 
 public interface ISharedSponsorsManager
 {
-    public void Initialize();
+    void Initialize();
 }
 
 public interface ISponsorInfo
 {
-    public string CharacterName { get; set; }
-    public int? Tier { get; set; }
-    public string? OOCColor { get; set; }
-    public bool HavePriorityJoin { get; set; }
-    public int ExtraSlots { get; set; }
-    public string[] AllowedMarkings { get; set; }
-    public DateTime ExpireDate { get; set; }
-    public bool AllowJob { get; set; }
-    public bool HavePriorityAntag { get; set; }
+    string CharacterName { get; set; }
+    int? Tier { get; set; }
+    string? OOCColor { get; set; }
+    bool HavePriorityJoin { get; set; }
+    int ExtraSlots { get; set; }
+    string[] AllowedMarkings { get; set; }
+    DateTime ExpireDate { get; set; }
+    bool AllowJob { get; set; }
+    bool HavePriorityAntag { get; set; }
 }
