@@ -1037,9 +1037,10 @@
   parent: PosterBase
   id: PosterLegitPeriodicTable
   name: "Periodic Table of the Elements"
-  description: "A periodic table of the elements, from Hydrogen to Oganesson, and everything inbetween."
+  description: "A periodic table of the elements, from Hydrogen to Unhexennium, and everything inbetween." #Imp
   components:
     - type: Sprite
+      sprite: _Impstation/Structures/Wallmounts/posters.rsi #Imp
       state: poster49_legit
 
 - type: entity
