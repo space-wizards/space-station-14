@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed precision attack animation for thrust weapons
-    type: Fix
-  id: 7866
-  time: '2025-01-29T10:11:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34713
 - author: yuitop
   changes:
   - message: Sentient medibots can now properly inject.
@@ -3929,3 +3922,11 @@
   id: 8367
   time: '2025-04-27T14:47:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36851
+- author: Fildrance
+  changes:
+  - message: node scanner now dislplays live artifact info (while in range) after
+      linking to artifact
+    type: Tweak
+  id: 8368
+  time: '2025-04-27T15:11:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36635
