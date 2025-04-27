@@ -115,10 +115,12 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
-      - !type:WeightedSpawnEntityBehavior
-        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
-        minSpawn: 2
-        maxSpawn: 4
+      - !type:EntityTableSpawnEntitiesBehavior
+        spawn: !type:NestedSelector
+          tableId: MeteorSpawnAsteroidWallTable
+          rolls: !type:RangeNumberSelector
+            range: 2, 4
+        offset: 1
         spawnAfter: 0.5
 
 - type: entity
@@ -155,11 +157,12 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
-      - !type:WeightedSpawnEntityBehavior
-        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
-        spawnOffset: 2
-        minSpawn: 3
-        maxSpawn: 6
+      - !type:EntityTableSpawnEntitiesBehavior
+        spawn: !type:NestedSelector
+          tableId: MeteorSpawnAsteroidWallTable
+          rolls: !type:RangeNumberSelector
+            range: 3, 6
+        offset: 2
         spawnAfter: 0.5
 
 - type: entity
@@ -183,11 +186,12 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
-      - !type:WeightedSpawnEntityBehavior
-        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
-        spawnOffset: 3
-        minSpawn: 5
-        maxSpawn: 8
+      - !type:EntityTableSpawnEntitiesBehavior
+        spawn: !type:NestedSelector
+          tableId: MeteorSpawnAsteroidWallTable
+          rolls: !type:RangeNumberSelector
+            range: 5, 8
+        offset: 3
         spawnAfter: 0.5
 
 - type: entity
