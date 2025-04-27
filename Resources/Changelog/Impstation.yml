@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Using a mop as a melee weapon now splashes some of its contents when
-      it hits a mob.
-    type: Add
-  id: 1080
-  time: '2025-02-08T12:40:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1589
 - author: hivehum
   changes:
   - message: You have no longer heard of Hatsune Miku.
@@ -4137,3 +4129,11 @@
   id: 1579
   time: '2025-04-27T18:02:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2269
+- author: AvianMaiden
+  changes:
+  - message: Nanotrasen revisions to security's management of storing restricted items,
+      evidence, and prisoners' items, bring a new appearance and goodies!
+    type: Add
+  id: 1580
+  time: '2025-04-27T18:03:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2286
