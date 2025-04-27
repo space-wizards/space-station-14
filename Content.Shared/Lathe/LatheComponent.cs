@@ -47,6 +47,7 @@ namespace Content.Shared.Lathe
         [DataField, AutoNetworkedField]
         public int DefaultProductionAmount = 1;
 
+        #region Temperature
         /// <summary>
         ///     If air reaches this temperature, lathe stops work. Prevents abusing via flaps.
         /// </summary>
@@ -64,6 +65,7 @@ namespace Content.Shared.Lathe
         /// </summary>
         [ViewVariables]
         public LatheTemperatureStatus TempStatus = LatheTemperatureStatus.Normal;
+        #endregion
 
         #region Visualizer info
         [DataField]

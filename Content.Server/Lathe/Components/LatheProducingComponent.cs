@@ -17,5 +17,11 @@ public sealed partial class LatheProducingComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan ProductionLength;
+
+    /// <summary>
+    ///     For the current status of producing.
+    /// </summary>
+    [ViewVariables]
+    public bool Stoped;
 }
 

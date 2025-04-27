@@ -67,7 +67,7 @@ namespace Content.Server.Lathe
             base.Initialize();
             SubscribeLocalEvent<LatheComponent, GetMaterialWhitelistEvent>(OnGetWhitelist);
             SubscribeLocalEvent<LatheComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<LatheComponent, PowerChangedEvent>(OnPowerChanged);
+            SubscribeLocalEvent<LatheProducingComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<LatheComponent, TechnologyDatabaseModifiedEvent>(OnDatabaseModified);
             SubscribeLocalEvent<LatheAnnouncingComponent, TechnologyDatabaseModifiedEvent>(OnTechnologyDatabaseModified);
             SubscribeLocalEvent<LatheComponent, ResearchRegistrationChangedEvent>(OnResearchRegistrationChanged);
@@ -89,13 +89,21 @@ namespace Content.Server.Lathe
                 if (lathe.CurrentRecipe == null)
                     continue;
 
+                if (GetLatheTemperatureStatus(uid, lathe) != LatheTemperatureStatus.Normal || comp.Stoped)
+                {
+                    UpdateRunningAppearance(uid, false);
+                    continue;
+                }
+
                 if (_timing.CurTime - comp.StartTime >= comp.ProductionLength)
                     FinishProducing(uid, lathe);
             }
 
             var heatQuery = EntityQueryEnumerator<LatheHeatProducingComponent, LatheProducingComponent, TransformComponent>();
-            while (heatQuery.MoveNext(out var uid, out var heatComp, out _, out var xform))
+            while (heatQuery.MoveNext(out var uid, out var heatComp, out var producing, out var xform))
             {
+                if (producing.Stoped)
+                    continue;
                 if (_timing.CurTime < heatComp.NextSecond)
                     continue;
                 heatComp.NextSecond += TimeSpan.FromSeconds(1);
@@ -178,7 +186,7 @@ namespace Content.Server.Lathe
             foreach (var (mat, amount) in recipe.Materials)
             {
                 var adjustedAmount = recipe.ApplyMaterialDiscount
-                    ? (int) (-amount * component.MaterialUseMultiplier)
+                    ? (int)(-amount * component.MaterialUseMultiplier)
                     : -amount;
 
                 _materialStorage.TryChangeMaterialAmount(uid, mat, adjustedAmount);
@@ -188,34 +196,12 @@ namespace Content.Server.Lathe
             return true;
         }
 
-        public bool TryStartProducing(EntityUid uid, LatheComponent? component = null, TransformComponent? xform = null)
+        public bool TryStartProducing(EntityUid uid, LatheComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return false;
             if (component.CurrentRecipe != null || component.Queue.Count <= 0 || !this.IsPowered(uid, EntityManager))
                 return false;
-
-            if (component.MaxTemp != null || component.MinTemp != null)
-            {
-                var mix = _atmosphere.GetTileMixture(uid);
-
-                if (mix == null || mix.TotalMoles <= 0 || mix.Temperature <= component.MinTemp)
-                {
-                    component.TempStatus = LatheTemperatureStatus.Low;
-                    UpdateTemperatureAppearance(uid, component.TempStatus);
-                    return false;
-                }
-
-                if (mix.Temperature >= component.MaxTemp)
-                {
-                    component.TempStatus = LatheTemperatureStatus.High;
-                    UpdateTemperatureAppearance(uid, component.TempStatus);
-                    return false;
-                }
-
-                component.TempStatus = LatheTemperatureStatus.Normal;
-                UpdateTemperatureAppearance(uid, component.TempStatus);
-            }
 
             var recipe = component.Queue.First();
             component.Queue.RemoveAt(0);
@@ -364,25 +350,17 @@ namespace Content.Server.Lathe
             _appearance.SetData(uid, LatheVisuals.IsRunning, isRunning);
         }
 
-        private void UpdateTemperatureAppearance(EntityUid uid, LatheTemperatureStatus status, AppearanceComponent? appearance = null)
-        {
-            if (!Resolve(uid, ref appearance))
-                return;
-
-            _appearance.SetData(uid, LatheVisuals.Temperature, status);
-        }
-
-        private void OnPowerChanged(EntityUid uid, LatheComponent component, ref PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, LatheProducingComponent component, ref PowerChangedEvent args)
         {
             if (!args.Powered)
             {
-                RemComp<LatheProducingComponent>(uid);
+                component.Stoped = true;
                 UpdateRunningAppearance(uid, false);
             }
-            else if (component.CurrentRecipe != null)
+            else if (TryComp<LatheComponent>(uid, out var lathe) && lathe.CurrentRecipe != null)
             {
-                EnsureComp<LatheProducingComponent>(uid);
-                TryStartProducing(uid, component);
+                component.Stoped = false;
+                TryStartProducing(uid, lathe);
             }
         }
 
@@ -435,6 +413,39 @@ namespace Content.Server.Lathe
         {
             return GetAvailableRecipes(uid, component).Contains(recipe.ID);
         }
+
+        #region Temperature
+        public LatheTemperatureStatus GetLatheTemperatureStatus(EntityUid uid, LatheComponent component)
+        {
+            component.TempStatus = LatheTemperatureStatus.Normal;
+
+            if (component.MinTemp != null || component.MaxTemp != null)
+            {
+                var mix = _atmosphere.GetTileMixture(uid);
+
+                if (mix == null || mix.TotalMoles <= 0 || mix.Temperature <= component.MinTemp)
+                {
+                    component.TempStatus = LatheTemperatureStatus.Low;
+                }
+
+                else if (mix.Temperature >= component.MaxTemp)
+                {
+                    component.TempStatus = LatheTemperatureStatus.High;
+                }
+            }
+
+            UpdateTemperatureAppearance(uid, component.TempStatus);
+            return component.TempStatus;
+        }
+
+        private void UpdateTemperatureAppearance(EntityUid uid, LatheTemperatureStatus status, AppearanceComponent? appearance = null)
+        {
+            if (!Resolve(uid, ref appearance))
+                return;
+
+            _appearance.SetData(uid, LatheVisuals.Temperature, status);
+        }
+        #endregion
 
         #region UI Messages
 
