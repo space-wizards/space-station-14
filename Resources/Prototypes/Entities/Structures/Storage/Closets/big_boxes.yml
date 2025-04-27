@@ -23,7 +23,7 @@
           hard: true
     - type: Pullable
     - type: CardboardBox
-      effectSound: /Audio/Effects/chime.ogg
+      quiet: true # Imp change, removes the chime sound
     - type: InputMover
     - type: EntityStorage
       isCollidableWhenOpen: false
