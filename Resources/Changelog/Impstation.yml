@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: A few more packages can now be sent your way!
-    type: Add
-  id: 1076
-  time: '2025-02-08T02:18:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1604
 - author: Sha-Seng
   changes:
   - message: Touched up highlights on Gathered Low hairstyle
@@ -4130,3 +4123,11 @@
   id: 1575
   time: '2025-04-26T02:48:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2350
+- author: Ecramox
+  changes:
+  - message: Removed the metal gear chime from the cardboard box. Your exclamation
+      mark and general Metal Gear reference is still preserved, but so are your ears.
+    type: Remove
+  id: 1576
+  time: '2025-04-27T08:35:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2357
