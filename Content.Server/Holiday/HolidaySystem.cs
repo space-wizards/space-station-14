@@ -53,7 +53,7 @@ namespace Content.Server.Holiday
 
         private void OnRunLevelChanged(GameRunLevelChangedEvent eventArgs)
         {
-            if (Enabled) return;
+            if (!Enabled) return;
 
             switch (eventArgs.New)
             {

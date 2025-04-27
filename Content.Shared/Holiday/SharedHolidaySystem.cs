@@ -1,4 +1,5 @@
 using System.Linq;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Holiday
@@ -7,6 +8,7 @@ namespace Content.Shared.Holiday
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly INetManager _net = default!;
 
         public bool Enabled = true;
 
@@ -46,7 +48,22 @@ namespace Content.Shared.Holiday
             }
 
             RaiseNetworkEvent(new RequestWhatDateItIsEvent());
+
+            // I think I have to break the method here to let the network event resolve.
             var now = _currentDate;
+            RefreshCurrentHolidaysPart2(now);
+        }
+
+        public void RefreshCurrentHolidaysPart2(DateTime then)
+        {
+            var now = _currentDate;
+
+            // The following is intended to interrogate race conditions since the first part of this method needs to let the server get the date and set it for shared.
+            if (_net.IsServer)
+                Log.Warning($"the value for now on Server is {now} and was {then}");
+            else
+                Log.Warning($"the value for now on Client is {now} and was {then}; if they're the same I don't understand network events.");
+
 
             foreach (var holiday in _prototypeManager.EnumeratePrototypes<HolidayPrototype>())
             {
