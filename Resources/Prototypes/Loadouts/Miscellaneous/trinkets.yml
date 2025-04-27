@@ -137,16 +137,16 @@
 
 # Beverage containers
 - type: loadout
-  id: DrinkVacuumFlask
-  storage:
-    back:
-    - DrinkVacuumFlask
-
-- type: loadout
   id: DrinkFlaskBar
   storage:
     back:
     - DrinkFlaskBar
+
+- type: loadout
+  id: DrinkVacuumFlask
+  storage:
+    back:
+    - DrinkVacuumFlask
 
 - type: loadout
   id: DrinkMug
