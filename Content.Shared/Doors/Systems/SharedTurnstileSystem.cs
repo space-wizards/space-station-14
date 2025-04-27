@@ -120,8 +120,12 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         var approachAngle = (pos - otherPos).ToAngle();
         var rotateAngle = rot.ToWorldVec().ToAngle();
 
-        var dif = Math.Min(Math.Abs(approachAngle.Theta - rotateAngle.Theta), Math.Abs(rotateAngle.Theta - approachAngle.Theta));
-        return dif < Math.PI / 4;
+        var diff = Math.Abs(approachAngle - rotateAngle);
+        diff %= MathHelper.TwoPi;
+        if (diff > Math.PI)
+            diff = MathHelper.TwoPi - diff;
+
+        return diff < Math.PI / 4;
     }
 
     protected virtual void PlayAnimation(EntityUid uid, string stateId)

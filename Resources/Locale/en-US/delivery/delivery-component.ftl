@@ -1,5 +1,6 @@
 delivery-recipient-examine = This one is meant for {$recipient}, {$job}.
 delivery-already-opened-examine = It was already opened.
+delivery-earnings-examine = Delivering this will earn the station [color=yellow]{$spesos}[/color] spesos.
 delivery-recipient-no-name = Unnamed
 delivery-recipient-no-job = Unknown
 
@@ -10,6 +11,7 @@ delivery-opened-others = {CAPITALIZE($recipient)} opened the {$delivery}.
 
 delivery-unlock-verb = Unlock
 delivery-open-verb = Open
+delivery-slice-verb = Slice open
 
 delivery-teleporter-amount-examine =
     { $amount ->
