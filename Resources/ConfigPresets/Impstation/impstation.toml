@@ -13,7 +13,7 @@ uptime_restart_minutes = 240
 
 [chat]
 # Message Of The Day
-motd = "Server whitelist will be enabled at the end of the week! Check the announcement on discord for more information!"
+# motd = ""
 
 [ic]
 flavor_text = true
@@ -29,7 +29,7 @@ restricted_names = false
 rate_limit_count = 20
 
 [infolinks]
-discord = "https://discord.gg/pisk"
+# discord = ""
 github = "https://github.com/impstation/imp-station-14"
 website = "https://impstation.gay"
 # wiki = ""
@@ -53,6 +53,6 @@ role_time = 10
 login_dataset = "LoginTips"
 
 [whitelist]
-enabled = false
+enabled = true
 # pretty much only worries about users who've been manually whitelisted
-# all players who have joined once before ~4am UTC 19th Apr 2025 should be whitelisted at time of edit
+# whitelist cutoff date: ~0:00CT 28 april 2025
