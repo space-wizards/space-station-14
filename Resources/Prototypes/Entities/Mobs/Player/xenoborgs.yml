@@ -174,7 +174,7 @@
     minInterval: 30
     maxInterval: 45
     sound:
-      path: /Audio/Machines/genetics.ogg
+      path: /Audio/Voice/Talk/Silicon/syndieborg_spam.ogg
       params:
         volume: -8
         maxDistance: 5
@@ -256,6 +256,7 @@
   - type: StandingState
   - type: Tag
     tags:
+    - SiliconEmotes
     - DoorBumpOpener
     - FootstepSound
     - CanPilot
