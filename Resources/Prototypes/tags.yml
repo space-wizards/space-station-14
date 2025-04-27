@@ -387,6 +387,9 @@
   id: CrayonYellow
 
 - type: Tag
+  id: Creamsicle
+
+- type: Tag
   id: Crowbar
 
 - type: Tag
@@ -613,6 +616,15 @@
 
 - type: Tag
   id: GuideEmbeded
+
+- type: Tag
+  id: GunUpgradeDamage
+
+- type: Tag
+  id: GunUpgradeRange
+
+- type: Tag
+  id: GunUpgradeReloadSpeed
 
 - type: Tag
   id: Hamster
@@ -977,6 +989,9 @@
 
 - type: Tag
   id: Pizza
+
+- type: Tag
+  id: PKAUpgrade
 
 - type: Tag
   id: PlantAnalyzer

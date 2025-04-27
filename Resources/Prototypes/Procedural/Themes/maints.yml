@@ -159,11 +159,22 @@
   - Maints
 
 - type: entity
-  id: MaintsRoomMarker
   parent: BaseRoomMarker
+  id: MaintsRoomMarker
   name: Maints interior marker
   components:
   - type: RoomFill
+    clearExisting: false
     roomWhitelist:
       tags:
       - Maints
+
+- type: entity
+  parent: MaintsRoomMarker
+  id: MaintsRoomMarkerClearing
+  suffix: Clearing
+  components:
+  - type: RoomFill
+    clearExisting: true
+
+
