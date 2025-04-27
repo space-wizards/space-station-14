@@ -1,3 +1,5 @@
+# Base prototypes
+
 - type: latheRecipe
   abstract: true
   id: BaseXenoborgRecipe
@@ -19,7 +21,7 @@
 - type: latheRecipe
   parent: BaseXenoborgRecipe
   id: XenoborgEngiRecipe
-  result: XenoborgSEngiPrinted
+  result: XenoborgEngiPrinted
   materials:
     Steel: 3000
 

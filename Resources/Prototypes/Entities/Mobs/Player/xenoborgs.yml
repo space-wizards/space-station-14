@@ -643,10 +643,39 @@
 
 
 ## mothership core
+- type: body
+  id: MothershipCoreBody
+  name: "core"
+  root: torso
+  slots:
+    torso:
+      part: TorsoBorg
+      connections:
+      - right2hand
+      - right1hand
+      - left1hand
+      - left2hand
+    left1hand:
+      part: LeftArmBorg
+    left2hand:
+      part: LeftArmBorg
+    right1hand:
+      part: RightArmBorg
+    right2hand:
+      part: RightArmBorg
+
+- type: startingGear
+  id: MothershipCoreGear
+  inhand:
+  - DoorRemoteXenoborg
+  - Omnitool
+
 - type: entity
-  abstract: true
-  parent: BaseMachinePowered
-  id: MothershipCoreFabricatorBase
+  parent: 
+  - BaseMachinePowered
+  - BaseMob
+  - StripableInventoryBase
+  id: MothershipCore
   name: mothership core
   description: A sentient machine that can produce xenoborgs. Without this the xenoborgs are doomed.
   components:
@@ -730,6 +759,11 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
       enum.LatheUiKey.Key:
         type: LatheBoundUserInterface
       enum.ResearchClientUiKey.Key:
@@ -767,64 +801,10 @@
     - Xenoborg
     - Binary
   - type: XenoborgMothership
-
-## just a fabcritor Core (for testing)
-- type: entity
-  parent: MothershipCoreFabricatorBase
-  id: MothershipCoreFabricator
-  suffix: not sentient
-
-## recipies test
-- type: entity
-  parent: ExosuitFabricator
-  id: ExosuitFabricatorXenoborgTest
-  suffix: makes xenoborg stuff
-  components:
-  - type: Lathe
-    staticPacks:
-    - EmptyXenoborgs
-    - XenoborgUpgradeModules
-
-## sentient core body
-- type: body
-  id: MothershipCoreBody
-  name: "core"
-  root: torso
-  slots:
-    torso:
-      part: TorsoBorg
-      connections:
-      - right2hand
-      - right1hand
-      - left1hand
-      - left2hand
-    left1hand:
-      part: LeftArmBorg
-    left2hand:
-      part: LeftArmBorg
-    right1hand:
-      part: RightArmBorg
-    right2hand:
-      part: RightArmBorg
-
-## xenoborg starting gear
-- type: startingGear
-  id: MothershipCoreGear
-  inhand:
-  - DoorRemoteXenoborg
-  - Omnitool
-
-## sentient core base
-- type: entity
-  abstract: true
-  parent:
-  - BaseMob
-  - StripableInventoryBase
-  id: MothershipCoreSentienceBase
-  components:
   - type: Tag
     tags:
     - CanPilot
+    - Structure
   - type: Inventory
     templateId: borg
   - type: Loadout
@@ -834,7 +814,7 @@
     - Xenoborg
   - type: Body
     prototype: MothershipCoreBody
-  - type: Hands # HANDS!
+  - type: Hands
   - type: Puller
   - type: Eye
     drawFov: false
@@ -842,13 +822,6 @@
   - type: IgnoreUIRange
   - type: ComplexInteraction
   - type: MindContainer
-  - type: UserInterface
-    interfaces:
-      enum.SiliconLawsUiKey.Key:
-        type: SiliconLawBoundUserInterface
-        requireInputValidation: false
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: SiliconLawBound
   - type: Actions
   - type: ActionGrant
@@ -869,27 +842,3 @@
     whitelist:
       components:
       - BorgChassis
-
-## Sentient core
-- type: entity
-  parent: [ MothershipCoreFabricatorBase, MothershipCoreSentienceBase ]
-  id: SamukaXenoborgFabricatorSentient
-  suffix: Sentient
-  components:
-  - type: UserInterface
-    interfaces:
-      enum.SiliconLawsUiKey.Key:
-        type: SiliconLawBoundUserInterface
-        requireInputValidation: false
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
-      enum.LatheUiKey.Key:
-        type: LatheBoundUserInterface
-      enum.ResearchClientUiKey.Key:
-        type: ResearchClientBoundUserInterface
-  - type: Access
-    enabled: true
-  - type: Tag
-    tags:
-    - CanPilot
-    - Structure
