@@ -14,7 +14,7 @@ namespace Content.Server.Administration.UI;
 
 /// <summary>
 /// Admin Eui for opening a viewport window to observe entities.
-/// Use the "Observe" admin verb to open.
+/// Use the "Open Camera" admin verb or the "camera" command to open.
 /// </summary>
 [UsedImplicitly]
 public sealed partial class AdminCameraEui : BaseEui

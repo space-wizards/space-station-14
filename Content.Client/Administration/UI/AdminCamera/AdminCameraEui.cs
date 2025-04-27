@@ -10,7 +10,7 @@ namespace Content.Client.Administration.UI.AdminCamera;
 
 /// <summary>
 /// Admin Eui for opening a viewport window to observe entities.
-/// Use the "Observe" admin verb to open.
+/// Use the "Open Camera" admin verb or the "camera" command to open.
 /// </summary>
 [UsedImplicitly]
 public sealed partial class AdminCameraEui : BaseEui
@@ -23,6 +23,7 @@ public sealed partial class AdminCameraEui : BaseEui
     public AdminCameraEui()
     {
         _window = new AdminCameraWindow();
+
         _window.OnFollow += () => SendMessage(new AdminCameraFollowMessage());
         _window.OnClose += () => SendMessage(new CloseEuiMessage());
         _window.OnPopout += Popout;
@@ -39,8 +40,8 @@ public sealed partial class AdminCameraEui : BaseEui
             Maximized = false,
             Title = _window.Title ?? Loc.GetString("admin-camera-window-title-placeholder"),
             Monitor = monitor,
-            Width = 500,
-            Height = 500,
+            Width = 400,
+            Height = 400,
         });
 
         var clydeRoot = _uiManager.CreateWindowRoot(clydeWindow);
