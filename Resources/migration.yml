@@ -605,3 +605,7 @@ VariedXenoArtifactItem: ComplexXenoArtifactItem
 
 # 2025-04-19
 ClothingOuterHardsuitSyndicate: ClothingOuterEVASuitSyndicate
+
+# 2025-04-26
+ComputerCargoShuttle: ComputerShuttleCargo
+CargoShuttleComputerCircuitboard: CargoShuttleConsoleCircuitboard
