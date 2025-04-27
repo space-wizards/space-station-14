@@ -105,15 +105,9 @@
   background: /Textures/_Impstation/LobbyScreens/tidy.webp
   name: it's not that messy in here
   artist: argentsunshine
-  
+
 - type: lobbyBackground
   id: teabar
   background: /Textures/_Impstation/LobbyScreens/teabar.webp
   name: Hey Whats In This Ice Cream Anyway
   artist: Happy99
-
-- type: lobbyBackground
-  id: YourWorldIsOurs
-  background: /Textures/_Impstation/LobbyScreens/yourworldisours.webp
-  name: your world is ours!
-  artist: harpy

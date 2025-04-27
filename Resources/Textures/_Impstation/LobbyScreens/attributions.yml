@@ -87,13 +87,8 @@
   license: "CC-BY-SA-4.0"
   copyright: "argentsunshine"
   source: "https://github.com/impstation/imp-station-14/"
-  
+
 - files: ["teabar.webp"]
   license: "CC-BY-SA-4.0"
   copyright: "Happy99"
-  source: "https://github.com/impstation/imp-station-14/"
-
-- files: ["yourworldisours.webp"]
-  license: "CC-BY-SA-4.0"
-  copyright: "harpy"
   source: "https://github.com/impstation/imp-station-14/"
