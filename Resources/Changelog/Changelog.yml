@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Drozd sprites have been updated.
-    type: Tweak
-  id: 7864
-  time: '2025-01-29T08:41:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34574
 - author: Southbridge
   changes:
   - message: The Nuke will now reset to a minimum countdown value when disarmed if
@@ -3929,3 +3922,11 @@
   id: 8365
   time: '2025-04-27T09:13:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36968
+- author: PJB3005
+  changes:
+  - message: SMES and substations now have an (extremely fancy) interface to control
+      them with.
+    type: Add
+  id: 8366
+  time: '2025-04-27T11:08:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36386
