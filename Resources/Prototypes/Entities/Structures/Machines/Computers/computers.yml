@@ -210,38 +210,6 @@
     board: SyndicateShuttleConsoleCircuitboard
 
 - type: entity
-  parent: BaseComputerShuttle
-  id: ComputerShuttleCargo
-  name: cargo shuttle console
-  description: Used to pilot the cargo shuttle.
-  components:
-  - type: Sprite
-    layers:
-    - map: ["computerLayerBody"]
-      state: computer
-    - map: ["computerLayerKeyboard"]
-      state: generic_keyboard
-    - map: ["computerLayerScreen"]
-      state: shuttle
-    - map: ["computerLayerKeys"]
-      state: generic_keys
-    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      state: generic_panel_open
-  - type: DroneConsole
-    components:
-      - type: CargoShuttle
-  - type: RadarConsole
-    maxRange: 256
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#43ccb5"
-  - type: Computer
-    board: CargoShuttleConsoleCircuitboard
-  - type: StealTarget
-    stealGroup: CargoShuttleConsoleCircuitboard
-
-- type: entity
   parent: BaseComputerAiAccess
   id: ComputerIFF
   name: IFF computer
@@ -893,6 +861,8 @@
   - type: GuideHelp
     guides:
     - Cargo
+  - type: StealTarget
+    stealGroup: CargoShuttleComputerCircuitboard
 
 - type: entity
   id: ComputerCargoOrders

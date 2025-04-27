@@ -250,7 +250,7 @@
     state: cpu_supply
 
 - type: stealTargetGroup
-  id: CargoShuttleConsoleCircuitboard
+  id: CargoShuttleComputerCircuitboard
   name: steal-target-groups-cargo-shuttle-console-circuitboard
   sprite:
     sprite: Objects/Misc/module.rsi

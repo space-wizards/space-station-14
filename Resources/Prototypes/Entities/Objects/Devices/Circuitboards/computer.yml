@@ -199,17 +199,6 @@
   - type: StaticPrice
 
 - type: entity
-  parent: BaseComputerCircuitboard
-  id: CargoShuttleComputerCircuitboard
-  name: cargo shuttle computer board
-  description: A computer printed circuit board for a cargo shuttle computer.
-  components:
-    - type: Sprite
-      state: cpu_supply
-    - type: ComputerBoard
-      prototype: ComputerCargoShuttle
-
-- type: entity
   parent: [BaseComputerCircuitboard, BaseCargoContraband]
   id: SalvageExpeditionsComputerCircuitboard
   name: salvage expeditions computer board
@@ -224,16 +213,16 @@
 
 - type: entity
   parent: [BaseComputerCircuitboard, BaseCargoContraband]
-  id: CargoShuttleConsoleCircuitboard
-  name: cargo shuttle console board
-  description: A computer printed circuit board for a cargo shuttle console.
+  id: CargoShuttleComputerCircuitboard
+  name: cargo shuttle computer board
+  description: A computer printed circuit board for a cargo shuttle computer.
   components:
   - type: Sprite
     state: cpu_supply
   - type: ComputerBoard
-    prototype: ComputerShuttleCargo
+    prototype: ComputerCargoShuttle
   - type: StealTarget
-    stealGroup: CargoShuttleConsoleCircuitboard
+    stealGroup: CargoShuttleComputerCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
