@@ -199,7 +199,7 @@
   - type: StaticPrice
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseCargoContraband]
   id: SalvageExpeditionsComputerCircuitboard
   name: salvage expeditions computer board
   description: A computer printed circuit board for a salvage expeditions computer.
@@ -210,6 +210,19 @@
       prototype: ComputerSalvageExpedition
     - type: StealTarget
       stealGroup: SalvageExpeditionsComputerCircuitboard
+
+- type: entity
+  parent: [BaseComputerCircuitboard, BaseCargoContraband]
+  id: CargoShuttleComputerCircuitboard
+  name: cargo shuttle console board
+  description: A computer printed circuit board for a cargo shuttle console.
+  components:
+  - type: Sprite
+    state: cpu_supply
+  - type: ComputerBoard
+    prototype: ComputerShuttleCargo
+  - type: StealTarget
+    stealGroup: CargoShuttleComputerCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
