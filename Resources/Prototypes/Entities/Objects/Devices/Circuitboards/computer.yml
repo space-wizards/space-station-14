@@ -199,7 +199,7 @@
   - type: StaticPrice
 
 - type: entity
-  parent: [BaseComputerCircuitboard, BaseCargoContraband]
+  parent: BaseComputerCircuitboard
   id: SalvageExpeditionsComputerCircuitboard
   name: salvage expeditions computer board
   description: A computer printed circuit board for a salvage expeditions computer.
