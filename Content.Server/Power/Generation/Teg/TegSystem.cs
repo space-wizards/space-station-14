@@ -9,11 +9,14 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
 using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Power.Generation.Teg;
 using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Power.Generation.Teg;
 
@@ -66,11 +69,12 @@ public sealed class TegSystem : EntitySystem
     /// </summary>
     public const string DeviceNetworkCommandSyncData = "teg_sync_data";
 
+    [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly PointLightSystem _pointLight = default!;
-    [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
 
     private EntityQuery<NodeContainerComponent> _nodeContainerQuery;
 
@@ -241,8 +245,7 @@ public sealed class TegSystem : EntitySystem
 
         var powerReceiver = Comp<ApcPowerReceiverComponent>(uid);
 
-        powerReceiver.PowerDisabled = !group.IsFullyBuilt;
-
+        _receiver.SetPowerDisabled(uid, !group.IsFullyBuilt, powerReceiver);
         UpdateAppearance(uid, component, powerReceiver, group);
     }
 
@@ -259,13 +262,16 @@ public sealed class TegSystem : EntitySystem
         // Otherwise, make sure circulator is set to nothing.
         if (!group.IsFullyBuilt)
         {
-            UpdateCirculatorAppearance(uid, false);
+            UpdateCirculatorAppearance((uid, component), false);
         }
     }
 
-    private void UpdateCirculatorAppearance(EntityUid uid, bool powered)
+    private void UpdateCirculatorAppearance(Entity<TegCirculatorComponent?> ent, bool powered)
     {
-        var circ = Comp<TegCirculatorComponent>(uid);
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        var circ = ent.Comp;
 
         TegCirculatorSpeed speed;
         if (powered && circ.LastPressureDelta > 0 && circ.LastMolesTransferred > 0)
@@ -280,13 +286,13 @@ public sealed class TegSystem : EntitySystem
             speed = TegCirculatorSpeed.SpeedStill;
         }
 
-        _appearance.SetData(uid, TegVisuals.CirculatorSpeed, speed);
-        _appearance.SetData(uid, TegVisuals.CirculatorPower, powered);
+        _appearance.SetData(ent, TegVisuals.CirculatorSpeed, speed);
+        _appearance.SetData(ent, TegVisuals.CirculatorPower, powered);
 
-        if (_pointLight.TryGetLight(uid, out var pointLight))
+        if (_pointLight.TryGetLight(ent, out var pointLight))
         {
-            _pointLight.SetEnabled(uid, powered, pointLight);
-            _pointLight.SetColor(uid, speed == TegCirculatorSpeed.SpeedFast ? circ.LightColorFast : circ.LightColorSlow, pointLight);
+            _pointLight.SetEnabled(ent, powered, pointLight);
+            _pointLight.SetColor(ent, speed == TegCirculatorSpeed.SpeedFast ? circ.LightColorFast : circ.LightColorSlow, pointLight);
         }
     }
 

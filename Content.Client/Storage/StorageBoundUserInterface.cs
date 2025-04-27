@@ -93,4 +93,3 @@ public sealed class StorageBoundUserInterface : BoundUserInterface
         LayoutContainer.SetPosition(_window, position);
     }
 }
-
