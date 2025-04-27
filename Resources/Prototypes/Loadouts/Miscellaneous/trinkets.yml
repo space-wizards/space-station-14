@@ -28,7 +28,92 @@
     back:
     - ClothingNeckHeadphones
 
+# Paperwork
+- type: loadout
+  id: BoxFolderClipboard
+  storage:
+    back:
+    - DrinkMug
+
+- type: loadout
+  id: BoxFolderYellow
+  storage:
+    back:
+    - BoxFolderYellow
+
 # Toys
+- type: loadout
+  id: DiceBag
+  storage:
+    back:
+    - DiceBag
+
+- type: loadout
+  id: PlushieBee
+  storage:
+    back:
+    - PlushieBee
+
+- type: loadout
+  id: PlushiePenguin
+  storage:
+    back:
+    - PlushiePenguin
+
+- type: loadout
+  id: PlushieSharkBlue
+  storage:
+    back:
+    - PlushieSharkBlue
+
+- type: loadout
+  id: PlushieSharkGrey
+  storage:
+    back:
+    - PlushieSharkGrey
+
+- type: loadout
+  id: PlushieSharkPink
+  storage:
+    back:
+    - PlushieSharkPink
+
+- type: loadout
+  id: PlushieSnake
+  storage:
+    back:
+    - PlushieSnake
+
+- type: loadout
+  id: PlushieArachind
+  storage:
+    back:
+    - PlushieArachind
+
+- type: loadout
+  id: PlushieDiona
+  storage:
+    back:
+    - PlushieDiona
+
+- type: loadout
+  id: PlushieMoth
+  storage:
+    back:
+    - PlushieMoth
+
+- type: loadout
+  id: PlushieSlime
+  storage:
+    back:
+    - PlushieSlime
+
+- type: loadout
+  id: PlushieVox
+  storage:
+    back:
+    - PlushieVox
+
 - type: loadout
   id: PlushieLizard
   storage:
@@ -50,12 +135,43 @@
     - CandleBlue
     - CandleGreenSmall
 
+# Beverage containers
+- type: loadout
+  id: DrinkVacuumFlask
+  storage:
+    back:
+    - DrinkVacuumFlask
+
+- type: loadout
+  id: DrinkFlaskBar
+  storage:
+    back:
+    - DrinkFlaskBar
+
+- type: loadout
+  id: DrinkMug
+  storage:
+    back:
+    - DrinkMug
+
+- type: loadout
+  id: DrinkMugMetal
+  storage:
+    back:
+    - DrinkMugMetal
+
 # Smokeables
 - type: loadout
   id: Lighter
   storage:
     back:
     - Lighter
+
+- type: loadout
+  id: Matchbox
+  storage:
+    back:
+    - Matchbox
 
 - type: loadout
   id: CigPackGreen
@@ -82,6 +198,12 @@
     - CigPackBlack
 
 - type: loadout
+  id: SmokingPipe
+  storage:
+    back:
+    - SmokingPipe
+
+- type: loadout
   id: CigarCase
   effects:
   - !type:GroupLoadoutEffect
@@ -98,6 +220,13 @@
   storage:
     back:
     - CigarGold
+
+# Assistive items
+- type: loadout
+  id: Cane
+  storage:
+    back:
+    - Cane
 
 # Pins
 - type: loadout
