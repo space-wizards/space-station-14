@@ -33,7 +33,7 @@
   id: BoxFolderClipboard
   storage:
     back:
-    - DrinkMug
+    - Clipboard
 
 - type: loadout
   id: BoxFolderYellow
