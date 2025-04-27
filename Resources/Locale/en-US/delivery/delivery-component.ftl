@@ -20,3 +20,8 @@ delivery-teleporter-amount-examine =
     }
 delivery-teleporter-empty = The {$entity} is empty.
 delivery-teleporter-empty-verb = Take mail
+
+
+# modifiers
+delivery-priority-examine = This is a [color=orange]priority {$type}[/color]. You have [color=orange]{$time}[/color] left to deliver it to get a bonus.
+delivery-priority-expired-examine = This is a [color=orange]priority {$type}[/color]. It seems you ran out of time.
