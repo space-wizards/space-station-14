@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Stun batons play thrusting instead of wide swing animation on precise
-      attacks (LMB).
-    type: Tweak
-  id: 7863
-  time: '2025-01-28T18:55:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34693
 - author: Emisse
   changes:
   - message: Drozd sprites have been updated.
@@ -3929,3 +3921,11 @@
   id: 8364
   time: '2025-04-26T23:45:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36929
+- author: ScarKy0
+  changes:
+  - message: Deliveries can now spawn as priority-type! Deliver them within their
+      time limit to earn a nice speso bonus.
+    type: Add
+  id: 8365
+  time: '2025-04-27T09:13:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36968
