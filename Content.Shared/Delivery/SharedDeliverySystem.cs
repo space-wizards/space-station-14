@@ -268,7 +268,10 @@ public abstract class SharedDeliverySystem : EntitySystem
         var ev = new GetDeliveryMultiplierEvent();
         RaiseLocalEvent(ent, ref ev);
 
-        return ev.AdditiveMultiplier * ev.MultiplicativeMultiplier;
+        // Ensure the multiplier can never go below 0.
+        var totalMultiplier = Math.Max(ev.AdditiveMultiplier * ev.MultiplicativeMultiplier, 0);
+
+        return totalMultiplier;
     }
 
     protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }
