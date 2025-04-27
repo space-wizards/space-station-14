@@ -774,6 +774,17 @@
   id: MothershipCoreFabricator
   suffix: not sentient
 
+## recipies test
+- type: entity
+  parent: ExosuitFabricator
+  id: ExosuitFabricatorXenoborgTest
+  suffix: makes xenoborg stuff
+  components:
+  - type: Lathe
+    staticPacks:
+    - EmptyXenoborgs
+    - XenoborgUpgradeModules
+
 ## sentient core body
 - type: body
   id: MothershipCoreBody
