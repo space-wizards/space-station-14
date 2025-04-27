@@ -97,6 +97,18 @@
     - PlushieDiona
 
 - type: loadout
+  id: PlushieLizard
+  storage:
+    back:
+    - PlushieLizard
+
+- type: loadout
+  id: PlushieSpaceLizard
+  storage:
+    back:
+    - PlushieSpaceLizard
+
+- type: loadout
   id: PlushieMoth
   storage:
     back:
@@ -113,18 +125,6 @@
   storage:
     back:
     - PlushieVox
-
-- type: loadout
-  id: PlushieLizard
-  storage:
-    back:
-    - PlushieLizard
-
-- type: loadout
-  id: PlushieSpaceLizard
-  storage:
-    back:
-    - PlushieSpaceLizard
 
 - type: loadout
   id: ThreeCandles

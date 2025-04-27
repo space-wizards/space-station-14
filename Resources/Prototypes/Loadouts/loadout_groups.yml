@@ -8,16 +8,37 @@
   - FlowerWreath
   - Hairflower
   - Headphones
+  - BoxFolderClipboard
+  - BoxFolderYellow
+  - DiceBag
+  - PlushieBee
+  - PlushiePenguin
+  - PlushieSharkBlue
+  - PlushieSharkGrey
+  - PlushieSharkPink
+  - PlushieSnake
+  - PlushieArachind
+  - PlushieDiona
   - PlushieLizard
   - PlushieSpaceLizard
+  - PlushieMoth
+  - PlushieSlime
+  - PlushieVox
   - ThreeCandles
+  - DrinkVacuumFlask
+  - DrinkFlaskBar
+  - DrinkMug
+  - DrinkMugMetal
   - Lighter
+  - Matchbox
   - CigPackGreen
   - CigPackRed
   - CigPackBlue
   - CigPackBlack
+  - SmokingPipe
   - CigarCase
   - CigarGold
+  - Cane
   - ClothingNeckLGBTPin
   - ClothingNeckAllyPin
   - ClothingNeckAromanticPin
@@ -59,6 +80,7 @@
   minLimit: 0
   loadouts:
   - Glasses
+  - GlassesCheapSunglasses
   - GlassesJamjar
   - GlassesJensen
 
