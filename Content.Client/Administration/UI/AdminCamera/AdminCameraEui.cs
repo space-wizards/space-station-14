@@ -1,10 +1,12 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Eui;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Administration.UI.AdminCamera;
 
@@ -19,21 +21,35 @@ public sealed partial class AdminCameraEui : BaseEui
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
 
     private readonly AdminCameraWindow _window;
+    private readonly AdminCameraControl _control;
+
+    private WindowRoot? _windowRoot;
+
+    private Vector2? _lastLocation;
 
     public AdminCameraEui()
     {
         _window = new AdminCameraWindow();
+        _control = new AdminCameraControl();
 
-        _window.OnFollow += () => SendMessage(new AdminCameraFollowMessage());
+        _control.OnFollow += () => SendMessage(new AdminCameraFollowMessage());
         _window.OnClose += () => SendMessage(new CloseEuiMessage());
-        _window.OnPopout += Popout;
+
+        _window.Contents.AddChild(_control);
+        _control.OnPopoutControl += () =>
+        {
+            if (_control.IsPoppedOut)
+                PopIn();
+            else
+                PopOut();
+        };
     }
 
-    private void Popout()
+    private void PopOut()
     {
-        var monitor = _clyde.EnumerateMonitors().First();
+        _lastLocation = _window.Position;
 
-        _window.Orphan();
+        var monitor = _clyde.EnumerateMonitors().First();
 
         var clydeWindow = _clyde.CreateWindow(new WindowCreateParameters
         {
@@ -44,14 +60,43 @@ public sealed partial class AdminCameraEui : BaseEui
             Height = 500,
         });
 
-        var clydeRoot = _uiManager.CreateWindowRoot(clydeWindow);
-        clydeRoot.AddChild(_window);
+        _control.Orphan();
 
-        clydeWindow.RequestClosed += _ => _window.Close();
+        // TODO: When there is a way to have a minimum window size, enforce something!
+        _windowRoot = _uiManager.CreateWindowRoot(clydeWindow);
+        _windowRoot.AddChild(_control);
+
+        clydeWindow.RequestClosed += _ =>
+        {
+            _window.Close();
+            // _window.AdminCameraWindowRoot.Orphan();
+            // _window.AddChild(_window.AdminCameraWindowRoot);
+        };
         clydeWindow.DisposeOnClose = true;
 
-        _window.PopoutButton.Disabled = true;
-        _window.PopoutButton.Text = Loc.GetString("admin-camera-window-popped-out");
+        // You can't close the window, otherwise the EUI will complain that your sending requests without it open.
+        _window.Visible = false;
+
+        // _window.PopoutButton.Disabled = true;
+        _control.IsPoppedOut = true;
+        _control.PopControl.Text = Loc.GetString("admin-camera-window-pop-in");
+    }
+
+    private void PopIn()
+    {
+        _control.Orphan();
+
+        _window.Contents.AddChild(_control);
+        if (_lastLocation != null)
+            _window.Open(_lastLocation.Value);
+        else
+            _window.OpenCentered();
+
+        _windowRoot?.Window.Dispose();
+        _windowRoot = null;
+
+        _control.IsPoppedOut = false;
+        _control.PopControl.Text = Loc.GetString("admin-camera-window-pop-out");
     }
 
     public override void Opened()
@@ -72,5 +117,6 @@ public sealed partial class AdminCameraEui : BaseEui
             return;
 
         _window.SetState(state);
+        _control.SetState(state);
     }
 }
