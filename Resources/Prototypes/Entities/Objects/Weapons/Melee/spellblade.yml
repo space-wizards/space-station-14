@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseMagicalContraband ]
   id: WeaponSpellblade
   name: SpellBlade
   description: A formidable weapon that shoots magical lava.
