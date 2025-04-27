@@ -18,7 +18,7 @@ public abstract partial class SharedStationAiSystem
         if (!_protoManager.TryIndex(args.GroupProtoId, out var groupPrototype) || !_protoManager.TryIndex(args.CustomizationProtoId, out var customizationProto))
             return;
 
-        if (!TryGetInsertedAI(entity, out var held))
+        if (!TryGetHeld((entity, entity.Comp), out var held))
             return;
 
         if (!TryComp<StationAiCustomizationComponent>(held, out var stationAiCustomization))
@@ -29,11 +29,11 @@ public abstract partial class SharedStationAiSystem
 
         stationAiCustomization.ProtoIds[args.GroupProtoId] = args.CustomizationProtoId;
 
-        Dirty(held.Value, stationAiCustomization);
+        Dirty(held, stationAiCustomization);
 
         // Update hologram
         if (groupPrototype.Category == StationAiCustomizationType.Hologram)
-            UpdateHolographicAvatar((held.Value, stationAiCustomization));
+            UpdateHolographicAvatar((held, stationAiCustomization));
 
         // Update core iconography
         if (groupPrototype.Category == StationAiCustomizationType.CoreIconography && TryComp<StationAiHolderComponent>(entity, out var stationAiHolder))

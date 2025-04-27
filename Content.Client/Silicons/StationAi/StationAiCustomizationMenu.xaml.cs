@@ -54,7 +54,7 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
         if (_owner == null || !_entManager.TryGetComponent<StationAiCoreComponent>(_owner, out var stationAiCore))
             return;
 
-        if (!_stationAiSystem.TryGetInsertedAI((_owner.Value, stationAiCore), out var insertedAi))
+        if (!_stationAiSystem.TryGetHeld((_owner.Value, stationAiCore), out var insertedAi))
             return;
 
         if (!_entManager.TryGetComponent<StationAiCustomizationComponent>(insertedAi, out var stationAiCustomization))

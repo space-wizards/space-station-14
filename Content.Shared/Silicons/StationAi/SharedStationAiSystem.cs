@@ -130,12 +130,12 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         }
 
         // Option to open the station AI customization menu
-        if (TryGetInsertedAI(ent, out var insertedAi) && insertedAi.Value.Owner == user)
+        if (TryGetHeld((ent, ent.Comp), out var insertedAi) && insertedAi == user)
         {
             args.Verbs.Add(new Verb()
             {
                 Text = Loc.GetString("station-ai-customization-menu"),
-                Act = () => _uiSystem.TryOpenUi(ent.Owner, StationAiCustomizationUiKey.Key, insertedAi.Value.Owner),
+                Act = () => _uiSystem.TryOpenUi(ent.Owner, StationAiCustomizationUiKey.Key, insertedAi),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/emotes.svg.192dpi.png")),
             });
         }
