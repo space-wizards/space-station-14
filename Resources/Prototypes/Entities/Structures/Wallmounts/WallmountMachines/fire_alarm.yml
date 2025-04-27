@@ -1,10 +1,11 @@
 - type: entity
+  parent: BaseWallmountMachine
   id: FireAlarm
   name: fire alarm
   description: A fire alarm. Spicy!
   components:
-  - type: WallMount
-  - type: ApcPowerReceiver
+  - type: LightningTarget
+    priority: 0
   - type: Electrified
     enabled: false
     usesApcPower: true
@@ -39,8 +40,6 @@
   - type: Tag
     tags:
       - FireAlarm
-  - type: Clickable
-  - type: InteractionOutline
   - type: FireAlarm
   - type: AtmosAlertsDevice
     group: FireAlarm
@@ -108,19 +107,13 @@
               params:
                 volume: -4
   - type: StationAiWhitelist
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
 
 - type: entity
+  parent: BaseWallmountMetallic
   id: FireAlarmAssembly
   name: fire alarm assembly
   description: A fire alarm assembly. Very mild.
   components:
-  - type: WallMount
-  - type: Clickable
-  - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
     layers:
@@ -136,9 +129,22 @@
   - type: Construction
     graph: FireAlarm
     node: assembly
-  - type: Transform
-    anchored: true
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 20
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 15
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalGlassBreak
+              params:
+                volume: -4
