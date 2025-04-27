@@ -33,7 +33,7 @@
   id: BoxFolderClipboard
   storage:
     back:
-    - Clipboard
+    - BoxFolderClipboard
 
 - type: loadout
   id: BoxFolderYellow
