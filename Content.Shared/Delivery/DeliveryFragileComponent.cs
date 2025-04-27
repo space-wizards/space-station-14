@@ -15,13 +15,13 @@ public sealed partial class DeliveryFragileComponent : Component
     /// Multiplier to use when the delivery is intact.
     /// </summary>
     [DataField]
-    public float IntactMultiplierOffset = 0.1f;
+    public float IntactMultiplierOffset = 0.15f;
 
     /// <summary>
     /// Multiplier to use when the delivery is broken.
     /// </summary>
     [DataField]
-    public float BrokenMultiplierOffset = -0.1f;
+    public float BrokenMultiplierOffset = -0.33f;
 
     /// <summary>
     /// Whether this priority has already been broken or not.
