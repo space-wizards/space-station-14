@@ -231,6 +231,7 @@ public abstract class SharedDeliverySystem : EntitySystem
         }
     }
 
+    #region Visual Updates
     // TODO: generic updateVisuals from component data
     private void UpdateAntiTamperVisuals(EntityUid uid, bool isLocked)
     {
@@ -252,10 +253,17 @@ public abstract class SharedDeliverySystem : EntitySystem
         }
     }
 
+    public void UpdateBrokenVisuals(Entity<DeliveryFragileComponent> ent, bool isFragile)
+    {
+        _appearance.SetData(ent, DeliveryVisuals.IsBroken, ent.Comp.Broken);
+        _appearance.SetData(ent, DeliveryVisuals.IsFragile, isFragile);
+    }
+
     protected void UpdateDeliverySpawnerVisuals(EntityUid uid, int contents)
     {
         _appearance.SetData(uid, DeliverySpawnerVisuals.Contents, contents > 0);
     }
+    #endregion
 
     /// <summary>
     /// Gathers the total multiplier for a delivery.
