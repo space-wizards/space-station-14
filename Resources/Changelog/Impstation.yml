@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Goblins can once more open doors, pilot shuttles, and host anomalies.
-    type: Fix
-  id: 1079
-  time: '2025-02-08T12:23:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1611
 - author: DinnerCalzone
   changes:
   - message: Using a mop as a melee weapon now splashes some of its contents when
@@ -4136,3 +4129,11 @@
   id: 1578
   time: '2025-04-27T17:49:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2233
+- author: Mousetrinity
+  changes:
+  - message: Learner PAIs are here for every department! Heads of staff, check your
+      lockers and turn these puppies on!
+    type: Add
+  id: 1579
+  time: '2025-04-27T18:02:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2269
