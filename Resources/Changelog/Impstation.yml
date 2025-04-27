@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Courier and Brigmedic now have appropriate text highlighting auto-fills.
-    type: Add
-  id: 1082
-  time: '2025-02-09T04:39:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1615
 - author: crocodilecarousel, RosySaturniidae
   changes:
   - message: Added some more figurines for our metallic friends!
@@ -4135,3 +4128,10 @@
   id: 1581
   time: '2025-04-27T18:12:02.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2348
+- author: kipdotnet
+  changes:
+  - message: Decapoids can now wear a vaporizer with no clothing requirements.
+    type: Tweak
+  id: 1582
+  time: '2025-04-27T18:18:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2353
