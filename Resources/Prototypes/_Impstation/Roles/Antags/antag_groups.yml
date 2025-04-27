@@ -1,0 +1,8 @@
+- type: antagGroup
+  id: Nukies
+  name: antag-group-Nukies
+  color: "#ff0000"
+  roles:
+  - Nukeops
+  - NukeopsMedic
+  - NukeopsCommander

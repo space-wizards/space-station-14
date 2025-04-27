@@ -37,6 +37,9 @@
   id: AntagNuclearCommander
 
 - type: playTimeTracker
+  id: AntagLoneOperative
+
+- type: playTimeTracker
   id: AntagHeadRevolutionary
 
 - type: playTimeTracker

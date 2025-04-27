@@ -484,7 +484,7 @@
         factions:
         - Syndicate
       mindRoles:
-      - MindRoleNukeops
+      - MindRoleNukeopsLone #imp edit to separate playtime tracking from regular nukies
 
 - type: entity
   parent: BaseTraitorRule
