@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: yuitop
-  changes:
-  - message: Sentient medibots can now properly inject.
-    type: Tweak
-  id: 7867
-  time: '2025-01-29T10:34:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32110
 - author: jamessimo
   changes:
   - message: Criminal Records computer got enhanced UX & UI.
@@ -3930,3 +3923,11 @@
   id: 8368
   time: '2025-04-27T15:11:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36635
+- author: ArtisticRoomba
+  changes:
+  - message: A new Mapping changelog has been added. You can find it in a different
+      "Mapping" tab under the changelog menu.
+    type: Add
+  id: 8369
+  time: '2025-04-27T20:15:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34848
