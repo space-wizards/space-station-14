@@ -4,9 +4,6 @@
   id: AccessBreakerImmune
 
 - type: Tag
-  id: AI
-
-- type: Tag
   id: AirAlarm
 
 - type: Tag
@@ -995,6 +992,9 @@
 
 - type: Tag
   id: Plastic
+
+- type: Tag
+  id: PlayableSilicon
 
 - type: Tag
   id: Plunger

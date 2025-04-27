@@ -239,7 +239,7 @@
     - DoorBumpOpener
     - FootstepSound
     - CanPilot
-    - AI
+    - PlayableSilicon
     - SiliconEmotes
     - Unimplantable
   - type: Emoting

@@ -6,7 +6,7 @@
   components:
   - type: Tag
     tags:
-      - AI
+      - PlayableSilicon
   - type: Sprite
     sprite: Objects/Specific/Robotics/mmi.rsi
     layers:
@@ -127,7 +127,7 @@
     - type: Tag
       tags:
       - CannotSuicide
-      - AI
+      - PlayableSilicon
     - type: GenericVisualizer
       visuals:
         enum.ToggleableGhostRoleVisuals.Status:

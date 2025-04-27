@@ -36,8 +36,6 @@ public abstract partial class SharedMindSystem : EntitySystem
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
 
-    private static readonly ProtoId<TagPrototype> AITag = "AI";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -175,7 +173,7 @@ public abstract partial class SharedMindSystem : EntitySystem
         // 4. Alive + No User ID: Entity was never controlled by a player
         // 5. Alive + No Session: Player disconnected while alive (SSD)
 
-        if (_tag.HasTag(uid, AITag))
+        if (_tag.HasTag(uid, new ProtoId<TagPrototype>("PlayableSilicon")))
         {
             switch (dead)
             {

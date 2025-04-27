@@ -8,7 +8,7 @@
   components:
   - type: Tag
     tags:
-    - AI
+    - PlayableSilicon
   - type: Instrument
     allowPercussion: false
     handheld: false
