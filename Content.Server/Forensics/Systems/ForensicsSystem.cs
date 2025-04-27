@@ -117,34 +117,6 @@ namespace Content.Server.Forensics
             CopyForensicsFrom(ent.Comp, args.Target);
         }
 
-        /// <summary>
-        /// Copy forensic information from a source entity to a destination.
-        /// Existing forensic information on the target is still kept.
-        /// </summary>
-        public void CopyForensicsFrom(ForensicsComponent src, EntityUid target)
-        {
-            var dest = EnsureComp<ForensicsComponent>(target);
-            foreach (var dna in src.DNAs)
-            {
-                dest.DNAs.Add(dna);
-            }
-
-            foreach (var fiber in src.Fibers)
-            {
-                dest.Fibers.Add(fiber);
-            }
-
-            foreach (var print in src.Fingerprints)
-            {
-                dest.Fingerprints.Add(print);
-            }
-
-            foreach (var residue in src.Residues)
-            {
-                dest.Residues.Add(residue);
-            }
-        }
-
         public List<string> GetSolutionsDNA(EntityUid uid)
         {
             List<string> list = new();
@@ -316,6 +288,34 @@ namespace Content.Server.Forensics
         }
 
         #region Public API
+
+        /// <summary>
+        /// Copy forensic information from a source entity to a destination.
+        /// Existing forensic information on the target is still kept.
+        /// </summary>
+        public void CopyForensicsFrom(ForensicsComponent src, EntityUid target)
+        {
+            var dest = EnsureComp<ForensicsComponent>(target);
+            foreach (var dna in src.DNAs)
+            {
+                dest.DNAs.Add(dna);
+            }
+
+            foreach (var fiber in src.Fibers)
+            {
+                dest.Fibers.Add(fiber);
+            }
+
+            foreach (var print in src.Fingerprints)
+            {
+                dest.Fingerprints.Add(print);
+            }
+
+            foreach (var residue in src.Residues)
+            {
+                dest.Residues.Add(residue);
+            }
+        }
 
         /// <summary>
         /// Give the entity a new, random DNA string and call an event to notify other systems like the bloodstream that it has been changed.

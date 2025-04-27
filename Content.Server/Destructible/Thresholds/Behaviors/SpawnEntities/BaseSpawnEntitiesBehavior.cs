@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Server.Forensics;
 using Content.Server.Stack;
-using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
@@ -104,77 +103,5 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
             return;
 
         system.EntityManager.System<ForensicsSystem>().CopyForensicsFrom(forensicsComponent, spawned);
-    }
-}
-
-/// <summary>
-///     Spawns items with an even distrbution between min and max.
-/// </summary>
-[Serializable]
-[DataDefinition]
-public sealed partial class SpawnEntitiesBehavior : BaseSpawnEntitiesBehavior
-{
-    /// <summary>
-    ///     Entities spawned on reaching this threshold, from a min to a max.
-    /// </summary>
-    [DataField]
-    public Dictionary<EntProtoId, MinMax> Spawn = new();
-
-    public override void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
-    {
-        base.Execute(owner, system, cause);
-
-        foreach (var (entityId, minMax) in Spawn)
-        {
-            for (var execution = 0; execution < Executions; execution++)
-            {
-                var count = minMax.Min >= minMax.Max
-                    ? minMax.Min
-                    : system.Random.Next(minMax.Min, minMax.Max + 1);
-
-                if (count == 0)
-                    continue;
-
-                SpawnEntities(entityId, count, system, owner);
-            }
-        }
-    }
-}
-
-/// <summary>
-///     Spawns items with a binomial distribution.
-/// </summary>
-[Serializable]
-[DataDefinition]
-public sealed partial class BinomialSpawnEntitiesBehavior : BaseSpawnEntitiesBehavior
-{
-    /// <summary>
-    ///     Entities spawned on reaching this threshold, using a binomial distribution.
-    /// </summary>
-    [DataField]
-    public Dictionary<EntProtoId, Binomial> Spawn = new();
-
-    public override void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
-    {
-        base.Execute(owner, system, cause);
-
-        foreach (var (entityId, binomial) in Spawn)
-        {
-            for (var execution = 0; execution < Executions; execution++)
-            {
-                var count = 0;
-
-                for (int i = 0; i < binomial.Trials; i++)
-                {
-                    if (system.Random.Prob(binomial.Chance))
-                        count++;
-                }
-
-                if (count == 0)
-                    continue;
-
-                SpawnEntities(entityId, count, system, owner);
-            }
-        }
     }
 }
