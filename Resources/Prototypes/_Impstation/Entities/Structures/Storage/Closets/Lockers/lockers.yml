@@ -96,6 +96,20 @@
   - type: AccessReader
     access: [["Musician"]]
 
+# Belongings
+- type: entity
+  id: LockerBelongings
+  parent: LockerSecurity
+  name: belongings locker
+  description: To safely store detainee and prisoner belongings during their stay. #imp
+  components:
+  - type: EntityStorageVisuals #imp
+    stateBaseClosed: belongings
+    stateDoorOpen: sec_open
+    stateDoorClosed: belongings_door
+  - type: AccessReader
+    access: [["Security"]]
+
 # Griffy
 - type: entity
   id: LockerGriffy

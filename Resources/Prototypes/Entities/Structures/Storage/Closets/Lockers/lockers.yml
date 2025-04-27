@@ -400,8 +400,12 @@
   id: LockerEvidence
   parent: LockerSecurity
   name: evidence locker
-  description: To store bags of bullet casings and detainee belongings.
+  description: To store bags of bullet casings and other crime clues. #imp
   components:
+  - type: EntityStorageVisuals #imp
+    stateBaseClosed: evidence
+    stateDoorOpen: sec_open
+    stateDoorClosed: evidence_door
   - type: AccessReader
     access: [["Security"]]
 

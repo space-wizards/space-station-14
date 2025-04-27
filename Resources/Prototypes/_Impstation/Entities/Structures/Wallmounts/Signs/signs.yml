@@ -15,6 +15,7 @@
   description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
   components:
   - type: Sprite
+    sprite: _Impstation/Structures/Wallmounts/signs.rsi
     state: mats_command
 
 - type: entity
@@ -25,6 +26,7 @@
   description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
   components:
   - type: Sprite
+    sprite: _Impstation/Structures/Wallmounts/signs.rsi
     state: mats_medical
 
 - type: entity
@@ -35,6 +37,7 @@
   description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
   components:
   - type: Sprite
+    sprite: _Impstation/Structures/Wallmounts/signs.rsi
     state: mats_sci
 
 - type: entity
@@ -45,6 +48,7 @@
   description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
   components:
   - type: Sprite
+    sprite: _Impstation/Structures/Wallmounts/signs.rsi
     state: mats_sec
 
 - type: entity
@@ -55,6 +59,7 @@
   description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
   components:
   - type: Sprite
+    sprite: _Impstation/Structures/Wallmounts/signs.rsi
     state: mats_service
 
 - type: entity
@@ -65,6 +70,7 @@
   description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
   components:
   - type: Sprite
+    sprite: _Impstation/Structures/Wallmounts/signs.rsi
     state: mats_supply
 
 - type: entity
@@ -74,8 +80,19 @@
   description: A sign indicating nearby drones, and their home.
   components:
   - type: Sprite
+    sprite: _Impstation/Structures/Wallmounts/signs.rsi
     state: drones
 
+- type: entity
+  parent: BaseSign
+  id: SignContraband
+  name: evidence sign
+  description: A sign indicating the security department's evidence and contraband lockup.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Wallmounts/signs.rsi
+    state: contraband
+    
 - type: entity
   parent: BaseSign
   id: SignApid
