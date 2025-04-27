@@ -37,6 +37,7 @@
       - StorageImplant
       - FreedomImplant
       - UplinkImplant
+      - USSPUplinkImplanter
       - EmpImplant
       - ScramImplant
       - DnaScramblerImplant
@@ -222,6 +223,14 @@
   components:
   - type: Implanter
     implant: UplinkImplant
+
+- type: entity
+  id: USSPUplinkImplanter
+  suffix: uplink
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: USSPUplinkImplantItem
 
 - type: entity
   id: EmpImplanter
