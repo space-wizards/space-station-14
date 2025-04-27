@@ -236,26 +236,52 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
   - type: StorageFill
     contents:
-    - id: CigaretteBbqSauce
-      prob: 0.70
-    - id: CigaretteBlackPepper
-      prob: 0.70
+    - id: CigaretteLicoxide
+      prob: 0.05
+    - id: CigaretteFrezon
+      prob: 0.05
+    - id: CigarettePhlogiston
+      prob: 0.05
+    - id: CigaretteWeldingFuel
+      prob: 0.10
+    - id: CigaretteMold
+      prob: 0.10
+    - id: CigaretteRadium
+      prob: 0.10
+    - id: CigaretteOmnizine
+      prob: 0.10
+    - id: CigaretteTricordrazine
+      prob: 0.15
+    - id: CigaretteIron
+      prob: 0.15
+    - id: CigaretteDylovene
+      prob: 0.15
+    - id: CigaretteDermaline
+      prob: 0.15
+    - id: CigaretteArithrazine
+      prob: 0.15
+    - id: CigaretteBicaridine
+      prob: 0.15
+    - id: CigaretteDexalin
+      prob: 0.15
+    - id: CigaretteHaloperidol
+      prob: 0.40
+    - id: CigaretteLaughter
+      prob: 0.40
+    - id: CigaretteLipolicide
+      prob: 0.40
+    - id: CigaretteSodiumPolyacrylate
+      prob: 0.40
+    - id: CigaretteRobustHarvest
+      prob: 0.40
     - id: CigaretteCapsaicinOil
       prob: 0.70
-    - id: CigaretteBread
+    - id: CigaretteBbqSauce
       prob: 0.70
-    - id: CigaretteMilk
+    - id: CigaretteNutriment
       prob: 0.70
-    - id: CigaretteBanana
-      prob: 0.10
-    - id: CigaretteTHC
+    - id: CigaretteSaline
       prob: 0.70
-    - id: CigaretteTricordrazine
-      prob: 0.25
-    - id: CigaretteSpaceDrugs
-      prob: 0.50
-    - id: CigaretteLicoxide
-      prob: 0.10
 
 - type: entity
   id: CigPackMixedNasty
