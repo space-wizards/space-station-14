@@ -1,0 +1,182 @@
+- type: entity
+  parent: [BaseWeaponEnergyTurret, ConstructibleMachine]
+  id: WeaponEnergyTurretStation
+  name: sentry turret
+  description: A high-tech autonomous weapons system designed to keep unauthorized personnel out of sensitive areas.
+  components:
+  
+  # Physics
+  - type: Fixtures
+    fixtures:
+      body:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 60
+        mask:
+          - Impassable
+      turret:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 60
+        mask:
+          - MachineMask
+        layer:
+          - MachineLayer
+        hard: false
+        
+  # Sprites and appearance
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Turrets/sentry_turret.rsi
+    drawdepth: HighFloorObjects
+    granularLayersRendering: true
+    layers:
+    - state: support
+      renderingStrategy: NoRotation
+    - state: base_shadow
+      map: [ "shadow" ]
+    - state: base
+      map: [ "base" ]
+    - state: stun
+      map: [ "enum.DeployableTurretVisuals.Weapon" ]
+      shader: "unshaded"
+      visible: false
+    - state: cover_closed
+      map: [ "enum.DeployableTurretVisuals.Turret" ]
+      renderingStrategy: NoRotation
+    - state: cover_light_on
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      shader: "unshaded"
+      renderingStrategy: NoRotation
+      visible: false
+    - state: panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      renderingStrategy: NoRotation
+      visible: false
+  - type: AnimationPlayer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryWeaponFireModeVisuals.State:
+        enum.DeployableTurretVisuals.Weapon:
+          BulletEnergyTurretDisabler: { state: stun }
+          BulletEnergyTurretLaser: { state: lethal }
+      enum.DeployableTurretVisuals.Broken:
+        base:
+          True: { state: destroyed }
+          False: { state: base }
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: false }
+          False: { visible: true }
+  
+  # HTN
+  - type: HTN
+    enabled: false
+  
+  # Faction / control
+  - type: StationAiWhitelist
+  - type: NpcFactionMember
+    factions:
+    - AllHostile
+  - type: AccessReader
+    access: [["Security"]]
+    
+  # Weapon systems
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletEnergyTurretDisabler
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletEnergyTurretDisabler
+      fireCost: 100
+    - proto: BulletEnergyTurretLaser
+      fireCost: 100
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - Security
+    - Borg
+    - BasicSilicon
+    
+  # Defenses / destruction
+  - type: DeployableTurret
+    retractedDamageModifierSetId: Metallic
+    deployedDamageModifierSetId: FlimsyMetallic
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Repairable
+    doAfterDelay: 10
+    allowSelfRepair: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      
+  # Device network
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: TurretControl
+    transmitFrequencyId: Turret
+    sendBroadcastAttemptEvent: true
+    prefix: device-address-prefix-turret
+    examinableAddress: true
+  - type: DeviceNetworkRequiresPower
+  - type: WiredNetworkConnection
+  
+  # Wires
+  - type: UserInterface
+    interfaces:
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: Wires
+    boardName: wires-board-name-weapon-energy-turret
+    layoutId: WeaponEnergyTurret
+  - type: Lock
+    locked: true
+    unlockOnClick: false
+  - type: LockedWiresPanel
+  
+  # General properties  
+  - type: Machine
+    board: WeaponEnergyTurretStationMachineCircuitboard
+  - type: UseDelay
+    delay: 1.2
+
+- type: entity
+  parent: WeaponEnergyTurretStation
+  id: WeaponEnergyTurretAI
+  name: AI sentry turret
+  description: A high-tech autonomous weapons system under the direct control of a local artifical intelligence.
+  components:
+  - type: AccessReader
+    access: [["StationAi"]]
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - Borg
+    - BasicSilicon
+  - type: Machine
+    board: WeaponEnergyTurretAIMachineCircuitboard
+  - type: DeviceNetwork
+    receiveFrequencyId: TurretControlAI
+    transmitFrequencyId: TurretAI

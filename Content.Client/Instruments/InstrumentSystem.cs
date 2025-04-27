@@ -167,11 +167,14 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
     private void UpdateRendererMaster(InstrumentComponent instrument)
     {
-        if (instrument.Renderer == null || instrument.Master == null)
+        if (instrument.Renderer == null)
             return;
 
-        if (!TryComp(instrument.Master, out InstrumentComponent? masterInstrument) || masterInstrument.Renderer == null)
+        if (instrument.Master == null || !TryComp(instrument.Master, out InstrumentComponent? masterInstrument) || masterInstrument.Renderer == null)
+        {
+            instrument.Renderer.Master = null;
             return;
+        }
 
         instrument.Renderer.Master = masterInstrument.Renderer;
     }
@@ -196,15 +199,16 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             return;
         }
 
-        instrument.Renderer?.SystemReset();
-        instrument.Renderer?.ClearAllEvents();
+        if (instrument.Renderer is { } renderer)
+        {
+            renderer.Master = null;
+            renderer.SystemReset();
+            renderer.ClearAllEvents();
 
-        var renderer = instrument.Renderer;
-
-        // We dispose of the synth two seconds from now to allow the last notes to stop from playing.
-        // Don't use timers bound to the entity in case it is getting deleted.
-        if (renderer != null)
+            // We dispose of the synth two seconds from now to allow the last notes to stop from playing.
+            // Don't use timers bound to the entity in case it is getting deleted.
             Timer.Spawn(2000, () => { renderer.Dispose(); });
+        }
 
         instrument.Renderer = null;
         instrument.MidiEventBuffer.Clear();

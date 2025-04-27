@@ -13,18 +13,11 @@
           map: [ "enum.ToggleVisuals.Layer" ]
           visible: false
           shader: unshaded
-        - state: ready
-          map: ["enum.PowerDeviceVisualLayers.Powered"]
-          shader: unshaded
     - type: Appearance
     - type: GenericVisualizer
       visuals:
         enum.ToggleVisuals.Toggled:
           enum.ToggleVisuals.Layer:
-            True: { visible: true }
-            False: { visible: false }
-        enum.DefibrillatorVisuals.Ready:
-          enum.PowerDeviceVisualLayers.Powered:
             True: { visible: true }
             False: { visible: false }
     - type: Item
@@ -104,7 +97,7 @@
 
 - type: entity
   id: DefibrillatorSyndicate
-  parent: DefibrillatorCompact
+  parent: [ DefibrillatorCompact, BaseSyndicateContraband ]
   name: interdyne defibrillator
   description: Doubles as a self-defense weapon against war-crime inclined tiders.
   components:
