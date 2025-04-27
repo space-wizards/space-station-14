@@ -22,8 +22,6 @@ tilemap:
   120: Lattice
   121: Plating
 entities:
-- proto: ""
-  entities:
   - uid: 2
     components:
     - type: MetaData
@@ -4249,11 +4247,6 @@ entities:
       parent: 2
 - proto: RandomVendingSnacks
   entities:
-  - uid: 503
-    components:
-    - type: Transform
-      pos: 6.5,11.5
-      parent: 2
   - uid: 504
     components:
     - type: Transform
