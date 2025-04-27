@@ -4,8 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.ComponentTable;
 
 /// <summary>
-/// Shared side of the DeliverySystem.
-/// This covers for letters/packages, as well as spawning a reward for the player upon opening.
+/// Applies an entity prototype to an entity on map init. Taken from entities inside an EntityTableSelector.
 /// </summary>
 public sealed class SharedComponentTableSystem : EntitySystem
 {
