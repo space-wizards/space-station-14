@@ -1,4 +1,4 @@
-using Content.Server.Explosion.Components.OnTrigger;
+using Content.Shared.Explosion.Components.OnTrigger;
 using Content.Shared.RepulseAttract;
 using Content.Shared.Timing;
 
@@ -12,10 +12,10 @@ public sealed class RepulseAttractOnTriggerSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<RepulseAttractOnTriggerComponent, TriggerEvent>(OnTrigger);
+        SubscribeLocalEvent<SharedRepulseAttractOnTriggerComponent, TriggerEvent>(OnTrigger);
     }
 
-    private void OnTrigger(Entity<RepulseAttractOnTriggerComponent> ent, ref TriggerEvent args)
+    private void OnTrigger(Entity<SharedRepulseAttractOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (_delay.IsDelayed(ent.Owner))
             return;
