@@ -434,14 +434,8 @@
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true
-  - type: StationAiCustomization
-    protoIds:
-      StationAiCoreIconography: StationAiIconAi
-      StationAiHolograms: StationAiHologramFemale
-  - type: HolographicAvatar
-    layerData:
-    - sprite: Mobs/Silicon/holograms.rsi
-      state: ai_female
+  - type: NameIdentifier
+    group: StationAi
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
