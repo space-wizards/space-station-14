@@ -283,16 +283,16 @@
           renderingStrategy: Default
     - type: GenericVisualizer
       visuals:
-        enum.ThermomachineVisuals.State:
+        enum.ThermomachineVisuals.Enabled:
           enabled:
-            On: { state: freezerOn }
-            Off: { state: freezerOff }
+            True: { state: freezerOn }
+            False: { state: freezerOff }
     - type: Toggleable
       altVerbAvailable: true
+      enabled: false #starts off
     - type: GasThermoMachine
       coefficientOfPerformance: -3.9
       altVerbAvailable: true
-      enabled: false #starts off
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
     - type: DeviceNetwork
@@ -331,10 +331,10 @@
           renderingStrategy: Default
     - type: GenericVisualizer
       visuals:
-        enum.ThermomachineVisuals.State:
+        enum.ThermomachineVisuals.Enabled:
           enabled:
-            On: { state: heaterOn }
-            Off: { state: heaterOff }
+            True: { state: heaterOn }
+            False: { state: heaterOff }
     - type: Toggleable
       altVerbAvailable: true
       enabled: false #starts off

@@ -8,15 +8,6 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
     [Access(typeof(GasMixerSystem))]
     public sealed partial class GasMixerComponent : Component
     {
-        [Access(typeof(GasMixerSystem))]
-        public ToggleableComponent ToggleableComponent;
-
-        /// <summary>
-        ///     The default Enabled value for this comp's ToggleableComponent. Only used on init.
-        /// </summary>
-        [DataField("enabled")]
-        public bool DefaultEnabled = false;
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inletOne")]
         public string InletOneName = "inletOne";

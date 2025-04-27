@@ -22,7 +22,7 @@ public sealed partial class ToggleableComponent : Component
 
     /// <summary>
     ///     If true, this device is toggled on and should be enabled whenever possible (e.g., whenever it has power and is anchored.)
-    ///     This is usually set by init of another component of this component's object to match DefaultEnabled var.
+    ///     This is usually set by init of another component of this component's object to match the InitialEnabled var.
     /// </summary>
     /// <remarks>
     ///     Should never be directly set outside of initialisation (Using YAML is fine too, but not always a good idea!) and when .

@@ -58,12 +58,11 @@
       interfaces:
         enum.GasFilterUiKey.Key:
           type: GasFilterBoundUserInterface
-    - type: GasFilter
-      enabled: false
-      transferRate: 1000
-      maxTransferRate: 1000
     - type: Toggleable
       altVerbAvailable: true
+    - type: GasFilter
+      transferRate: 1000
+      maxTransferRate: 1000
     - type: Flippable
       mirrorEntity: GasFilterFlipped
     - type: Construction
@@ -159,12 +158,11 @@
       interfaces:
         enum.GasMixerUiKey.Key:
           type: GasMixerBoundUserInterface
-    - type: GasMixer
-      enabled: false
-      inletOne: inlet
-      inletTwo: filter
     - type: Toggleable
       altVerbAvailable: true
+    - type: GasMixer
+      inletOne: inlet
+      inletTwo: filter
     - type: Flippable
       mirrorEntity: GasMixerFlipped
     - type: Construction

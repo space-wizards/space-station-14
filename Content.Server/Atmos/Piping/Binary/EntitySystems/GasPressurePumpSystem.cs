@@ -7,6 +7,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Audio;
+using Content.Shared.Toggleable;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
@@ -18,6 +19,7 @@ public sealed class GasPressurePumpSystem : SharedGasPressurePumpSystem
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly PowerReceiverSystem _power = default!;
+    [Dependency] private readonly ToggleableSystem _toggleableSystem = default!;
 
     public override void Initialize()
     {
@@ -28,7 +30,7 @@ public sealed class GasPressurePumpSystem : SharedGasPressurePumpSystem
 
     private void OnPumpUpdated(Entity<GasPressurePumpComponent> ent, ref AtmosDeviceUpdateEvent args)
     {
-        if (!ent.Comp.ToggleableComponent.Enabled
+        if (!_toggleableSystem.IsEnabled(ent.Owner)
             || !_power.IsPowered(ent)
             || !_nodeContainer.TryGetNodes(ent.Owner, ent.Comp.InletName, ent.Comp.OutletName, out PipeNode? inlet, out PipeNode? outlet))
         {

@@ -1,5 +1,6 @@
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Binary.Systems;
+using Content.Shared.Toggleable;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Atmos.Piping.Binary.Systems;

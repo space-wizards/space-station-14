@@ -67,6 +67,8 @@
     interfaces:
       enum.GasPressurePumpUiKey.Key:
         type: GasPressurePumpBoundUserInterface
+  - type: Toggleable
+    altVerbAvailable: true
   - type: Construction
     graph: GasBinary
     node: pressurepump
@@ -127,6 +129,8 @@
       interfaces:
         enum.GasVolumePumpUiKey.Key:
           type: GasVolumePumpBoundUserInterface
+    - type: Toggleable
+      altVerbAvailable: true
     - type: Construction
       graph: GasBinary
       node: volumepump

@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Shared.Utility;
 
 
 namespace Content.Shared.Toggleable;
@@ -11,6 +10,7 @@ namespace Content.Shared.Toggleable;
 public sealed class ToggleableSystem : EntitySystem
 {
     [Dependency] private readonly EntityManager _entityManager = default!;
+
     private static ToggleableEnabledEvent _enabledEv = new();
     private static ToggleableDisabledEvent _disabledEv = new();
 
@@ -19,61 +19,96 @@ public sealed class ToggleableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ToggleableComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleVerb);
+
+        // This exists if someone wants to use it
         SubscribeLocalEvent<ToggleableComponent, ToggleActionEvent>(OnToggleAction);
     }
 
     /// <summary>
     ///     Checks an entity for <see cref="ToggleableComponent"/>, and sets it's <see cref="ToggleableComponent.Enabled"/> value accordingly, if the component is present.
-    ///     Does not raise any events.
     /// </summary>
-    /// <returns><c>true</c> if <see cref="ToggleableComponent.Enabled"/> status was set, regardless of whether the new value is different or not.</returns>
-    public bool SetEnabled(EntityUid uid, bool newToggle)
+    /// <returns>Whether the component was present.</returns>
+    public bool SetEnabled(EntityUid uid, bool newToggle, [NotNullWhen(true)] out ToggleableComponent? toggleableComponent)
     {
-        if (!_entityManager.TryGetComponent<ToggleableComponent>(uid, out var toggleableComponent))
+        if (!_entityManager.TryGetComponent<ToggleableComponent>(uid, out toggleableComponent))
             return false;
 
-        toggleableComponent.Enabled = newToggle;
+        SetEnabled(uid, newToggle, toggleableComponent);
         return true;
     }
 
-    /// <summary>
-    ///     Checks an entity for <see cref="ToggleableComponent"/>, and returns it's <see cref="ToggleableComponent.Enabled"/> value, or <c>true</c> if the component isn't present.
-    /// </summary>
-    public bool IsEnabled(EntityUid uid)
+    /// <inheritdoc cref="IsEnabled"/>
+    public bool SetEnabled(EntityUid uid, bool newToggle)
     {
-        if (!_entityManager.TryGetComponent<ToggleableComponent>(uid, out var toggleableComponent))
-            return true;
+        return SetEnabled(uid, newToggle, out _);
+    }
+
+    /// <summary>
+    ///     Sets an entity's toggle to specified value, and raises the corresponding event for it.
+    /// </summary>
+    public void SetEnabled(EntityUid uid, bool newToggle, ToggleableComponent toggleableComponent)
+    {
+        toggleableComponent.Enabled = newToggle;
+        if (newToggle)
+            RaiseLocalEvent(uid, ref _enabledEv);
+        else
+            RaiseLocalEvent(uid, ref _disabledEv);
+    }
+
+    /// <summary>
+    ///     Checks an entity for <see cref="ToggleableComponent"/>, and returns it's <see cref="ToggleableComponent.Enabled"/> value,
+    ///     or <paramref name="defaultValue"/> if the component isn't present.
+    /// </summary>
+    public bool IsEnabled(EntityUid uid, [NotNullWhen(true)] out ToggleableComponent? toggleableComponent, bool defaultValue = true)
+    {
+        if (!_entityManager.TryGetComponent<ToggleableComponent>(uid, out toggleableComponent))
+            return defaultValue;
 
         return toggleableComponent.Enabled;
     }
 
-    /// <summary>
-    ///     Raises either <see cref="ToggleableComponent"/> or <see cref="ToggleableComponent"/>
-    ///     to invert an entity's <see cref="ToggleableComponent.Enabled"/> value, if the component was present.
-    /// </summary>
-    /// <returns><c>true</c> if an event was raised.</returns>
-    public bool Toggle(EntityUid uid, [NotNullWhen(false)] ref ToggleableComponent? toggleableComponent)
+    /// <inheritdoc cref="IsEnabled"/>
+    public bool IsEnabled(EntityUid uid, bool defaultValue = true)
     {
-        if (!Resolve(uid, ref toggleableComponent))
-            return true;
+        return IsEnabled(uid, out _, defaultValue);
+    }
+
+    /// <summary>
+    ///     Toggles the entity and raises the corresponding event, if a <see cref="ToggleableComponent"/> is present.
+    ///     Returns <paramref name="defaultValue"/> if the component isn't present.
+    /// </summary>
+    /// <returns><paramref name="defaultValue"/> if the <see cref="ToggleableComponent"/> was missing, true otherwise.</returns>
+    public bool Toggle(EntityUid uid, [NotNullWhen(true)] out ToggleableComponent? toggleableComponent, bool defaultValue = true)
+    {
+        if (!_entityManager.TryGetComponent<ToggleableComponent>(uid, out toggleableComponent))
+            return defaultValue;
 
         Toggle(uid, toggleableComponent);
-        return false;
+        return true;
     }
 
+    /// <inheritdoc cref="Toggle"/>
+    public bool Toggle(EntityUid uid, bool defaultValue = true)
+    {
+        return Toggle(uid, out _, defaultValue);
+    }
+
+    /// <summary>
+    ///     Toggles the entity and raises the corresponding event.
+    /// </summary>
     /// <returns>New value of the specified <see cref="ToggleableComponent.Enabled"/>.</returns>
-    public bool Toggle(EntityUid uid, ToggleableComponent component)
+    public bool Toggle(EntityUid uid, ToggleableComponent toggleableComponent)
     {
-        if (!component.Enabled)
-            RaiseLocalEvent(uid, ref _enabledEv);
-        else
-            RaiseLocalEvent(uid, ref _disabledEv);
+        var inverseEnabled = !toggleableComponent.Enabled;
+        SetEnabled(uid, inverseEnabled, toggleableComponent);
 
-        return !component.Enabled;
+        return inverseEnabled;
     }
-    private void AddToggleVerb(EntityUid uid, ToggleableComponent component, GetVerbsEvent<AlternativeVerb> args)
+
+
+    private void AddToggleVerb(EntityUid uid, ToggleableComponent toggleableComponent, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!component.AltVerbAvailable)
+        if (!toggleableComponent.AltVerbAvailable)
             return;
 
         if (!args.CanInteract || !args.CanAccess)
@@ -82,14 +117,13 @@ public sealed class ToggleableSystem : EntitySystem
         if (!HasComp<HandsComponent>(args.User))
             return;
 
-        AlternativeVerb verb = new()
+        args.Verbs.Add(new AlternativeVerb()
         {
-            Act = () => { Toggle(uid, component); },
+            Act = () => SetEnabled(uid, !toggleableComponent.Enabled),
             Priority = 1,
-            Icon = component.Icon,
-            Text = Loc.GetString(component.Text),
-        };
-        args.Verbs.Add(verb);
+            Icon = toggleableComponent.Icon,
+            Text = Loc.GetString(toggleableComponent.Text),
+        });
     }
 
     private void OnToggleAction(EntityUid uid, ToggleableComponent component, ToggleActionEvent args)

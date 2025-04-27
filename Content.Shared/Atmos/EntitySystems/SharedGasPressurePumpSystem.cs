@@ -17,6 +17,7 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private readonly ToggleableSystem _toggleableSystem = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UserInterfaceSystem = default!;
 
     private static ToggleableEnabledEvent _enabledEvent = new();
@@ -37,8 +38,8 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
         SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceDisabledEvent>(OnPumpLeaveAtmosphere);
         SubscribeLocalEvent<GasPressurePumpComponent, ExaminedEvent>(OnExamined);
 
-        SubscribeLocalEvent<GasPressurePumpComponent, ToggleableEnabledEvent>(OnPumpToggledEnabled);
-        SubscribeLocalEvent<GasPressurePumpComponent, ToggleableDisabledEvent>(OnPumpToggledDisabled);
+        SubscribeLocalEvent<GasPressurePumpComponent, ToggleableEnabledEvent>(OnPumpToggledOn);
+        SubscribeLocalEvent<GasPressurePumpComponent, ToggleableDisabledEvent>(OnPumpToggledOff);
     }
 
     private void OnExamined(Entity<GasPressurePumpComponent> ent, ref ExaminedEvent args)
@@ -58,9 +59,7 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
 
     private void OnInit(Entity<GasPressurePumpComponent> ent, ref ComponentInit args)
     {
-        ent.Comp.ToggleableComponent = Comp<ToggleableComponent>(ent);
-        ent.Comp.ToggleableComponent.Enabled = ent.Comp.DefaultEnabled;
-        UpdateAppearance(ent);
+        _toggleableSystem.SetEnabled(ent.Owner, ent.Comp.InitialEnabled, out _);
     }
 
     private void OnPowerChanged(Entity<GasPressurePumpComponent> ent, ref PowerChangedEvent args)
@@ -73,19 +72,19 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp2, false))
             return;
 
-        var pumpOn = ent.Comp1.ToggleableComponent.Enabled && _receiver.IsPowered(ent.Owner);
+        var pumpOn = _toggleableSystem.IsEnabled(ent.Owner) && _receiver.IsPowered(ent.Owner);
         _appearance.SetData(ent, PumpVisuals.Enabled, pumpOn, ent.Comp2);
     }
 
     private void OnToggleStatusMessage(Entity<GasPressurePumpComponent> ent, ref GasPressurePumpToggleStatusMessage args)
     {
-        if (args.Enabled)
-            RaiseLocalEvent(ent, ref _enabledEvent);
-        else
-            RaiseLocalEvent(ent, ref _disabledEvent);
-
+        _toggleableSystem.SetEnabled(ent.Owner, args.Enabled);
         _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
             $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(ent):device} to {args.Enabled}");
+
+        Dirty(ent);
+        UpdateUi(ent);
+        UpdateAppearance(ent);
     }
 
     private void OnOutputPressureChangeMessage(Entity<GasPressurePumpComponent> ent, ref GasPressurePumpChangeOutputPressureMessage args)
@@ -100,7 +99,7 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
 
     private void OnPumpLeaveAtmosphere(Entity<GasPressurePumpComponent> ent, ref AtmosDeviceDisabledEvent args)
     {
-        RaiseLocalEvent(ent, ref _disabledEvent);
+        _toggleableSystem.SetEnabled(ent.Owner, false);
         UserInterfaceSystem.CloseUi(ent.Owner, GasPressurePumpUiKey.Key);
     }
 
@@ -108,17 +107,15 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
     {
     }
 
-    private void OnPumpToggledEnabled(Entity<GasPressurePumpComponent> ent, ref ToggleableEnabledEvent args)
+    private void OnPumpToggledOn(Entity<GasPressurePumpComponent> ent, ref ToggleableEnabledEvent args)
     {
-        ent.Comp.ToggleableComponent.Enabled = true;
         Dirty(ent);
         UpdateAppearance(ent);
         UpdateUi(ent);
     }
 
-    private void OnPumpToggledDisabled(Entity<GasPressurePumpComponent> ent, ref ToggleableDisabledEvent args)
+    private void OnPumpToggledOff(Entity<GasPressurePumpComponent> ent, ref ToggleableDisabledEvent args)
     {
-        ent.Comp.ToggleableComponent.Enabled = false;
         Dirty(ent);
         UpdateAppearance(ent);
         UpdateUi(ent);

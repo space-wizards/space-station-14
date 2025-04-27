@@ -41,7 +41,9 @@ public sealed class GasPressurePumpBoundUserInterface(EntityUid owner, Enum uiKe
         if (!EntMan.TryGetComponent(Owner, out GasPressurePumpComponent? pump))
             return;
 
-        _window.SetPumpStatus(pump.ToggleableComponent.Enabled);
+        EntMan.TryGetComponent(Owner, out ToggleableComponent? toggleableComponent);
+
+        _window.SetPumpStatus(toggleableComponent != null ? toggleableComponent.Enabled : true);
         _window.MaxPressure = pump.MaxTargetPressure;
         _window.SetOutputPressure(pump.TargetPressure);
     }

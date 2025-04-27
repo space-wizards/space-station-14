@@ -9,14 +9,11 @@ namespace Content.Shared.Atmos.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class GasPressurePumpComponent : Component
 {
-    [Access(typeof(SharedGasPressurePumpSystem))]
-    public ToggleableComponent ToggleableComponent;
-
     /// <summary>
     ///     The default Enabled value for this comp's ToggleableComponent. Only used on init.
     /// </summary>
     [DataField("enabled"), AutoNetworkedField]
-    public bool DefaultEnabled = false;
+    public bool InitialEnabled = false;
 
     [DataField("inlet")]
     public string InletName = "inlet";
