@@ -27,19 +27,30 @@ public sealed partial class ProfilePreviewSpriteView
 
     private void LoadHumanoidEntity(HumanoidCharacterProfile humanoid, JobPrototype? job, bool showClothes)
     {
+        ProfileName = humanoid.Name;
         JobName = null;
+        LoadoutName = null;
 
         job ??= GetPreferredJob(humanoid);
 
-        EntProtoId? previewEntity = null;
+        RoleLoadout? loadout;
+
         if(job != null)
         {
-            previewEntity = job.JobPreviewEntity ?? (EntProtoId?)job.JobEntity;
+            loadout = humanoid.GetLoadoutOrDefault(
+                LoadoutSystem.GetJobPrototype(job.ID),
+                _playerManager.LocalSession,
+                humanoid.Species,
+                _entManager,
+                _prototypeManager);
+
+            var previewEntity = job.JobPreviewEntity ?? (EntProtoId?)job.JobEntity;
 
             if (previewEntity != null)
             {
                 PreviewDummy = _entManager.SpawnEntity(previewEntity, MapCoordinates.Nullspace);
                 JobName = job.LocalizedName;
+                LoadoutName = GetLoadoutName(loadout);
                 return;
             }
         }
@@ -79,12 +90,14 @@ public sealed partial class ProfilePreviewSpriteView
         if (!_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
             return;
 
-        var loadout = humanoid.GetLoadoutOrDefault(
+        loadout = humanoid.GetLoadoutOrDefault(
             LoadoutSystem.GetJobPrototype(job.ID),
             _playerManager.LocalSession,
             humanoid.Species,
             _entManager,
             _prototypeManager);
+
+        LoadoutName = GetLoadoutName(loadout);
 
         GiveDummyLoadout(PreviewDummy, loadout);
 
@@ -113,6 +126,14 @@ public sealed partial class ProfilePreviewSpriteView
         }
         // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract (what is resharper smoking?)
         return highPriorityJob.Id == null ? null : _prototypeManager.Index(highPriorityJob);
+    }
+
+    private string? GetLoadoutName(RoleLoadout loadout)
+    {
+        if (_prototypeManager.TryIndex(loadout.Role, out var roleLoadoutPrototype) &&
+            roleLoadoutPrototype.CanCustomizeName)
+            return loadout.EntityName;
+        return null;
     }
 
     private void GiveDummyAntagLoadout(AntagPrototype antag)

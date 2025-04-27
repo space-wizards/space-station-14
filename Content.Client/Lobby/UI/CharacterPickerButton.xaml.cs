@@ -51,19 +51,15 @@ public sealed partial class CharacterPickerButton : ContainerButton
         AddStyleClass(StyleClassButton);
         ToggleMode = true;
         Group = group;
-        var description = profile.Name;
 
         View.Initialize(prefMan, protoMan, entMan, playerMan);
         View.LoadPreview(profile);
-
-        if(View.JobName != null)
-            description = $"{description}\n{View.JobName}";
 
         EnabledCheck.Pressed = profile.Enabled;
 
         Pressed = isSelected;
 
-        DescriptionLabel.Text = description;
+        DescriptionLabel.Text = View.FullDescription;
 
         // Set up the StyleBoxTextures for the outlines...
         foreach (var panel in new List<PanelContainer>
