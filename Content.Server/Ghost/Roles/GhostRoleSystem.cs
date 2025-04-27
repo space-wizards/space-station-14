@@ -514,7 +514,7 @@ public sealed class GhostRoleSystem : EntitySystem
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
 
         _mindSystem.SetUserId(newMind, player.UserId);
-        _mindSystem.TransferTo(newMind, mob, setShowExamineInfo: true);
+        _mindSystem.TransferTo(newMind, mob);
 
         _roleSystem.MindAddRoles(newMind.Owner, role.MindRoles, newMind.Comp);
 

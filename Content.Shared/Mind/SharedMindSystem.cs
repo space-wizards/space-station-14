@@ -380,8 +380,7 @@ public abstract partial class SharedMindSystem : EntitySystem
         EntityUid? entity,
         bool ghostCheckOverride = false,
         bool createGhost = true,
-        MindComponent? mind = null,
-        bool setShowExamineInfo = false)
+        MindComponent? mind = null)
     {
     }
 

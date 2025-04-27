@@ -92,10 +92,11 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
 
         // Mind is present, but ghosted out of the container
         else if (
-            HasComp<MindContainerComponent>(uid) &&
+            // HasComp<MindContainerComponent>(uid) && [TODO: REDUNDANT CHECK, TEST FIRST]
             _sharedPlayerManager.TryGetSessionByEntity(uid, out _) &&
             HasComp<ToggleableGhostRoleComponent>(uid)
             )
+
             args.PushMarkup(Loc.GetString(component.ExamineTextMindGhosted));
 
         // No mind present, not waiting for Ghost Role Takeover
