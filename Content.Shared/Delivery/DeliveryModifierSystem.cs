@@ -16,7 +16,6 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly NameModifierSystem _nameModifier = default!;
     [Dependency] private readonly SharedDeliverySystem _delivery = default!;
-    [Dependency] private readonly SharedGameTicker _gameTicker = default!;
 
     public override void Initialize()
     {
