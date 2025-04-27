@@ -174,7 +174,7 @@
     minInterval: 30
     maxInterval: 45
     sound:
-      path: /Audio/Voice/Xenoborg/xenoborg_spam.ogg
+      path: /Audio/Machines/genetics.ogg
       params:
         volume: -8
         maxDistance: 5
