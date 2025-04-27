@@ -1,0 +1,109 @@
+- type: entity
+  name: sledgehammer
+  parent: BaseItem
+  id: Sledgehammer
+  description: The perfect tool for wanton carnage.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/sledgehammer.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 10
+        Structural: 10
+    soundHit:
+      collection: MetalThud
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 10
+        Structural: 10
+  - type: Item
+    size: Large
+
+- type: entity
+  id: Mjollnir
+  parent: [ BaseItem, BaseMagicalContraband ]
+  name: Mjollnir
+  description: A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy.
+  components:
+  - type: Wieldable
+    useDelayOnWield: false
+  - type: MeleeRequiresWield
+  - type: LandAtCursor
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/mjollnir.rsi
+    layers:
+    - state: icon
+  - type: UseDelay
+    delay: 10
+  - type: UseDelayOnMeleeHit
+  - type: MeleeThrowOnHit
+    stunTime: 3
+    activateOnThrown: true
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 5
+        Structural: 5
+    soundHit:
+      path: /Audio/Effects/tesla_consume.ogg
+      params:
+        variation: 0.10
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 20
+        Structural: 25
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 15
+        Structural: 15
+  - type: Item
+    size: Ginormous
+
+- type: entity
+  id: SingularityHammer
+  parent: [ BaseItem, BaseMagicalContraband ]
+  name: Singularity Hammer
+  description: The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows.
+  components:
+  - type: Wieldable
+    useDelayOnWield: false
+  - type: MeleeRequiresWield
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/singularityhammer.rsi
+    layers:
+    - state: icon
+  - type: RepulseAttract
+    speed: -15 #Anything above this pushes things too far away from the Wizard
+    range: 5
+    whitelist:
+      components:
+      - MobMover
+      - Item
+  - type: UseDelay
+    delay: 10
+  - type: UseDelayOnMeleeHit
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 5
+        Structural: 5
+    soundHit:
+      path: /Audio/Effects/radpulse5.ogg
+      params:
+        variation: 0.10
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 15
+        Structural: 15
+  - type: Item
+    size: Ginormous
