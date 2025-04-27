@@ -41,7 +41,7 @@ public sealed partial class StationAiCustomizationPrototype : IPrototype, IInher
     /// The prototype we inherit from.
     /// </summary>
     [ViewVariables]
-    [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<EntityPrototype>))]
+    [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<StationAiCustomizationPrototype>))]
     public string[]? Parents { get; }
 
     /// <summary>
