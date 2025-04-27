@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: crocodilecarousel, RosySaturniidae
-  changes:
-  - message: Added some more figurines for our metallic friends!
-    type: Add
-  id: 1083
-  time: '2025-02-09T09:21:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1619
 - author: TheGrimbeeper
   changes:
   - message: Heretics can no longer have changelings appear on the sacrifice heartbeat,
@@ -4135,3 +4128,10 @@
   id: 1582
   time: '2025-04-27T18:18:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2353
+- author: argentsunshine
+  changes:
+  - message: Changed the periodic table sprite and description.
+    type: Tweak
+  id: 1583
+  time: '2025-04-27T18:21:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2358
