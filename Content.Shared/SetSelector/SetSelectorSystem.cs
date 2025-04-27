@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -15,6 +16,7 @@ public sealed class SetSelectorSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedEntityStorageSystem _entityStorage = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
@@ -37,9 +39,9 @@ public sealed class SetSelectorSystem : EntitySystem
         }
 
         // Randomize sets available for selection
-        selector.Comp.AvailableSets = new List<ProtoId<SelectableSetPrototype>>(selector.Comp.PossibleSets
-            .OrderBy(_ => new System.Random().Next())
-            .Take(selector.Comp.SetsToSelect));
+        var sets = selector.Comp.PossibleSets.ToArray();
+        new System.Random().Shuffle(sets);
+        selector.Comp.AvailableSets = sets.Take(selector.Comp.SetsToSelect).ToList();
     }
 
     private void OnUIOpened(Entity<SetSelectorComponent> selector, ref BoundUIOpenedEvent args)
@@ -58,8 +60,7 @@ public sealed class SetSelectorSystem : EntitySystem
         var openSpawnedStorage = selector.Comp.OpenSpawnedStorage;
         var coordinates = _transform.GetMapCoordinates(selector.Owner);
         _container.TryGetContainingContainer(selector, out var target);
-        List<string> ignoredContainers = [];
-        ignoredContainers.AddRange(["implant", "pocket1", "pocket2", "pocket3", "pocket4"]);
+        List<string> ignoredContainers = new() { "implant", "pocket1", "pocket2", "pocket3", "pocket4" } ;
 
         // Spawn the contents of the chosen sets and add them to spawnedEntities
         List<EntityUid> spawnedEntities = [];
@@ -79,7 +80,7 @@ public sealed class SetSelectorSystem : EntitySystem
             _container.TryGetContainer(spawnedStorage, spawnedStorageContainer, out target);
         }
 
-        ignoredContainers.AddRange(["body_part_slot_right hand", "body_part_slot_left hand"]);
+        ignoredContainers.AddRange(_hands.EnumerateHands(args.Actor).Select(hand => hand.Name));
         spawnedEntities.ForEach(ent => RecursiveInsert(ent, target, ignoredContainers));
 
         if (openSpawnedStorage)
