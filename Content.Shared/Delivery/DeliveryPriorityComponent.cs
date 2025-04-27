@@ -5,7 +5,7 @@ namespace Content.Shared.Delivery;
 /// <summary>
 /// Component given to deliveries.
 /// Applies a duration before which the delivery must be delivered.
-/// If successful, adds a small modifier, otherwise removes a small modifier.
+/// If successful, adds a small multiplier, otherwise removes a small multiplier.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(DeliveryModifierSystem))]
