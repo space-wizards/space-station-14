@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: Bottles and vials are a bit bigger. They might not fit as easily into
-      small containers.
-    type: Tweak
-  id: 1078
-  time: '2025-02-08T02:24:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1606
 - author: widgetbeck
   changes:
   - message: Goblins can once more open doors, pilot shuttles, and host anomalies.
@@ -4136,3 +4128,11 @@
   id: 1577
   time: '2025-04-27T17:47:40.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2272
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: +20/25% heat resist on Security/HoS hardsuits. HoS hardsuit explosion
+      protection upped to 60% from 40% (on-par with standard security hardsuit)
+    type: Tweak
+  id: 1578
+  time: '2025-04-27T17:49:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2233
