@@ -7,7 +7,7 @@ namespace Content.Shared.Roles.RoleCodeword;
 /// <summary>
 /// Used to display and highlight codewords in chat messages on the client.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedRoleCodewordSystem), Other = AccessPermissions.Read)]
+[RegisterComponent, NetworkedComponent(StateRestriction.SessionSpecific), AutoGenerateComponentState, Access(typeof(SharedRoleCodewordSystem), Other = AccessPermissions.Read)]
 public sealed partial class RoleCodewordComponent : Component
 {
     /// <summary>
@@ -16,8 +16,6 @@ public sealed partial class RoleCodewordComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<string, CodewordsData> RoleCodewords = new();
-
-    public override bool SessionSpecific => true;
 }
 
 [DataDefinition, Serializable, NetSerializable]

@@ -9,13 +9,11 @@ namespace Content.Shared.Alert;
 /// </summary>
 // Component is not AutoNetworked due to supporting clientside-only alerts.
 // Component state is handled manually to avoid the server overwriting the client list.
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent(StateRestriction.OwnerOnly)]
 public sealed partial class AlertsComponent : Component
 {
     [ViewVariables]
     public Dictionary<AlertKey, AlertState> Alerts = new();
-
-    public override bool SendOnlyToOwner => true;
 }
 
 [Serializable, NetSerializable]
