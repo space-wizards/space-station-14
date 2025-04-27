@@ -14,4 +14,10 @@ public sealed partial class LatheAnnouncingComponent : Component
     /// </summary>
     [DataField(required: true)]
     public List<ProtoId<RadioChannelPrototype>> Channels = new();
+
+    /// <summary>
+    /// How many items should be announced in a message before it truncates
+    /// </summary>
+    [DataField]
+    public int MaximumItems = 5;
 }
