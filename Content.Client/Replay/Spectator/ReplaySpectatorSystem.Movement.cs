@@ -89,10 +89,10 @@ public sealed partial class ReplaySpectatorSystem
         // This is very hacky and has already caused bugs.
         // This is done the way it is because grid traversal gets processed in physics' SimulateWorld() update.
         // TODO do this properly somehow.
-        _transform.SetGridId(player, xform, null);
+        _transform.SetGridId(player, xform, MetaData(player), null);
         _transform.AttachToGridOrMap(player);
         if (xform.ParentUid.IsValid())
-            _transform.SetGridId(player, xform, Transform(xform.ParentUid).GridUid);
+            _transform.SetGridId(player, xform, MetaData(player), Transform(xform.ParentUid).GridUid);
 
         var parentRotation = _mover.GetParentGridAngle(mover);
         var localVec = effectiveDir.AsDir().ToAngle().ToWorldVec();
