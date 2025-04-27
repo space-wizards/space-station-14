@@ -12,18 +12,18 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 public sealed partial class BinomialSpawnEntitiesBehavior : BaseSpawnEntitiesBehavior
 {
     /// <summary>
-    ///     Entities spawned on reaching this threshold, using binomial distribution.
+    ///     Entities spawned on reaching this threshold, paired to a binomial distribution.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public Dictionary<EntProtoId, Binomial> Spawn = new();
 
     public override void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
     {
         base.Execute(owner, system, cause);
 
-        foreach (var (entityId, binomial) in Spawn)
+        for (var execution = 0; execution < Executions; execution++)
         {
-            for (var execution = 0; execution < Executions; execution++)
+            foreach (var (entityId, binomial) in Spawn)
             {
                 var count = 0;
 

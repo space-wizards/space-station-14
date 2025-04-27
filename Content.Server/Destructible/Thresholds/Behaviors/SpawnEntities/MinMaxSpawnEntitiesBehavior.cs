@@ -14,16 +14,16 @@ public sealed partial class SpawnEntitiesBehavior : BaseSpawnEntitiesBehavior
     /// <summary>
     ///     Entities spawned on reaching this threshold, from a min to a max.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public Dictionary<EntProtoId, MinMax> Spawn = new();
 
     public override void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
     {
         base.Execute(owner, system, cause);
 
-        foreach (var (entityId, minMax) in Spawn)
+        for (var execution = 0; execution < Executions; execution++)
         {
-            for (var execution = 0; execution < Executions; execution++)
+            foreach (var (entityId, minMax) in Spawn)
             {
                 var count = minMax.Min >= minMax.Max
                     ? minMax.Min
