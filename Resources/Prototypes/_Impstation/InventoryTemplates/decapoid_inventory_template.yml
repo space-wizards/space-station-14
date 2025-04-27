@@ -82,10 +82,7 @@
       slotGroup: MainHotbar
       stripTime: 3
       uiWindowPos: 2,0
-      strippingWindowPos: 2,5
-      dependsOn: outerClothing
-      dependsOnComponents:
-      - type: AllowSuitStorage
+      strippingWindowPos: 2,5 #they dont need suit storage clothing to use this slot
       displayName: Suit Storage
     - name: id
       slotTexture: id
