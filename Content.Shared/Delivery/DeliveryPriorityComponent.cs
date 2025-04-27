@@ -4,7 +4,7 @@ namespace Content.Shared.Delivery;
 
 /// <summary>
 /// Component given to deliveries.
-/// Applies a random duration before which the delivery must be delivered.
+/// Applies a duration before which the delivery must be delivered.
 /// If successful, adds a small modifier, otherwise removes a small modifier.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
