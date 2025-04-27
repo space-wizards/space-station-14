@@ -1,4 +1,6 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -6,7 +8,7 @@ namespace Content.Shared.Silicons.StationAi;
 /// Holds data for customizing the appearance of station AIs.
 /// </summary>
 [Prototype]
-public sealed partial class StationAiCustomizationPrototype : IPrototype
+public sealed partial class StationAiCustomizationPrototype : IPrototype, IInheritingPrototype
 {
     [IdDataField]
     public string ID { get; } = string.Empty;
@@ -22,4 +24,31 @@ public sealed partial class StationAiCustomizationPrototype : IPrototype
     /// </summary>
     [DataField(required: true)]
     public Dictionary<string, PrototypeLayerData> LayerData = new();
+
+    /// <summary>
+    /// Key used to index the prototype layer data and extract a preview of the customization (for menus, etc)
+    /// </summary>
+    [DataField]
+    public string PreviewKey = string.Empty;
+
+    /// <summary>
+    /// Specifies a background to use for previewing the customization (for menus, etc)
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? PreviewBackground;
+
+    /// <summary>
+    /// The prototype we inherit from.
+    /// </summary>
+    [ViewVariables]
+    [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<EntityPrototype>))]
+    public string[]? Parents { get; }
+
+    /// <summary>
+    /// Specifies whether the prototype is abstract.
+    /// </summary>
+    [ViewVariables]
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; }
 }

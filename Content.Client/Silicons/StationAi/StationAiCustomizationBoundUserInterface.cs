@@ -1,5 +1,4 @@
 using Content.Shared.Silicons.StationAi;
-using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Silicons.StationAi;
@@ -17,8 +16,9 @@ public sealed class StationAiCustomizationBoundUserInterface : BoundUserInterfac
     {
         base.Open();
 
-        _menu = this.CreateWindow<StationAiCustomizationMenu>();
-        _menu.SetOwner(Owner);
+        _menu = new StationAiCustomizationMenu(Owner);
+        _menu.OpenCentered();
+        _menu.OnClose += Close;
 
         _menu.SendStationAiCustomizationMessageAction += SendStationAiCustomizationMessage;
     }
@@ -26,5 +26,15 @@ public sealed class StationAiCustomizationBoundUserInterface : BoundUserInterfac
     public void SendStationAiCustomizationMessage(ProtoId<StationAiCustomizationGroupPrototype> groupProtoId, ProtoId<StationAiCustomizationPrototype> customizationProtoId)
     {
         SendPredictedMessage(new StationAiCustomizationMessage(groupProtoId, customizationProtoId));
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        if (!disposing)
+            return;
+
+        _menu?.Dispose();
     }
 }
