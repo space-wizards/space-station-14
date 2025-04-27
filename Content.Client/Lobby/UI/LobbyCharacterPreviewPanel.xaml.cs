@@ -147,9 +147,15 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
             profilePreview.Initialize(_preferences, _prototypeManager, _entManager, _playerManager);
             profilePreview.LoadPreview(profile, job);
 
+            var description = profilePreview.ProfileName;
+            if (profilePreview.LoadoutName != null)
+                description = $"{description}\n\"{profilePreview.LoadoutName}\"";
+            if (!profile.Enabled)
+                description += $"\n{Loc.GetString("character-setup-gui-character-picker-button-disabled-button")}";
+
             var label = new Label
             {
-                Text = profilePreview.FullDescription,
+                Text = description,
                 Align = Label.AlignMode.Right,
                 HorizontalAlignment = HAlignment.Right,
                 HorizontalExpand = true,
