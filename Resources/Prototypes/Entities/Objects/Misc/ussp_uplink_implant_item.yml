@@ -1,0 +1,28 @@
+- type: entity
+  id: USSPUplinkImplantItem
+  name: USSP uplink implant
+  description: A subdermal implant containing the USSP uplink radio.
+  parent: BaseSubdermalImplant
+  components:
+    - type: SubdermalImplant
+      implantAction: USSPUplinkRadioPreset
+      whitelist:
+        components:
+          - Hands
+    - type: Store
+      balance:
+        Revecrystal: 0
+    - type: UserInterface
+      interfaces:
+        enum.StoreUiKey.Key:
+          type: StoreBoundUserInterface
+    - type: Item
+      sprite: Objects/Specific/Medical/implant.rsi
+      size: Small
+    - type: Sprite
+      sprite: Objects/Specific/Medical/implant.rsi
+      state: implant
+    - type: Appearance
+  tags:
+    - SubdermalImplant
+    - ImplantItem

@@ -9,6 +9,16 @@
   - !type:OverallPlaytimeRequirement
     time: 3600 # 1h
 
+- type: startingGear
+  id: HeadRevGear
+  storage:
+    back:
+    - Flash
+    - ClothingEyesGlassesSunglasses
+    - USSPUplinkImplantItem
+  implants:
+    # Removed USSPUplinkRadioPreset to prevent starting implanted
+
 - type: antag
   id: Rev
   name: roles-antag-rev-name
@@ -16,11 +26,3 @@
   setPreference: false
   objective: roles-antag-rev-objective
   guides: [ Revolutionaries ]
-
-- type: startingGear
-  id: HeadRevGear
-  storage:
-    back:
-    - Flash
-    - ClothingEyesGlassesSunglasses
-    - USSPUplinkRadioPreset

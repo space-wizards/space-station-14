@@ -1,0 +1,23 @@
+- type: entity
+  id: USSPUplinkRadioPreset
+  parent: [BaseRevUplinkRadio, StorePresetUSSP, BaseSovietContraband]
+  name: USSP uplink radio
+  description: A suspiciously looking old radio with a hammer and sickle ingrained in it.
+  tags:
+  - SubdermalImplant
+  components:
+  - type: Store
+    balance:
+      Revecrystal: 0
+
+- type: entity
+  id: USSPUplinkRadioPresetDebug
+  parent: [BaseRevUplinkRadio, StorePresetUSSP, BaseSovietContraband]
+  name: USSP uplink radio (Debug)
+  description: A debug version of the USSP uplink radio with extra Revecrystals.
+  tags:
+  - SubdermalImplant
+  components:
+  - type: Store
+    balance:
+      Revecrystal: 1000
