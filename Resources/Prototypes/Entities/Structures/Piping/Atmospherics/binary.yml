@@ -177,8 +177,8 @@
     visuals:
       enum.PressureReliefValveVisuals.State:
         enabled:
-          On: { state: pumpPressureValveOn }
-          Off: { state: pumpPressureValve }
+          True: { state: pumpPressureValveOn }
+          False: { state: pumpPressureValve }
   - type: PipeColorVisuals
   - type: GasPressureReliefValve
     enabled: false
