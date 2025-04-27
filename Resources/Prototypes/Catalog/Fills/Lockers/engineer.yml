@@ -65,61 +65,41 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillWelderSupplies
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillWelderSupplies
+          rolls: !type:ConstantNumberSelector
+            value: 3
+        - !type:NestedSelector
+          tableId: FillWelderSuppliesMask
+          rolls: !type:ConstantNumberSelector
+            value: 3
 
 - type: entityTable
   id: FillWelderSupplies
-  table: !type:AllSelector
+  table: !type:GroupSelector
     children:
-    - !type:GroupSelector
-      children:
-      - id: ClothingHeadHatWelding
-      - id: ClothingHeadHatWeldingMaskFlame
-        weight: 0.25
-      - id: ClothingHeadHatWeldingMaskFlameBlue
-        weight: 0.25
-      - id: ClothingHeadHatWeldingMaskPainted
-        weight: 0.25
-    - !type:GroupSelector
-      children:
-      - id: ClothingHeadHatWelding
-      - id: ClothingHeadHatWeldingMaskFlame
-        weight: 0.25
-      - id: ClothingHeadHatWeldingMaskFlameBlue
-        weight: 0.25
-      - id: ClothingHeadHatWeldingMaskPainted
-        weight: 0.25
-    - !type:GroupSelector
-      children:
-      - id: ClothingHeadHatWelding
-      - id: ClothingHeadHatWeldingMaskFlame
-        weight: 0.25
-      - id: ClothingHeadHatWeldingMaskFlameBlue
-        weight: 0.25
-      - id: ClothingHeadHatWeldingMaskPainted
-        weight: 0.25
-    - !type:GroupSelector
-      children:
-      - id: Welder
-      - id: WelderIndustrial
-        weight: 0.25
-      - id: WelderIndustrialAdvanced
-        weight: 0.10
-    - !type:GroupSelector
-      children:
-      - id: Welder
-      - id: WelderIndustrial
-        weight: 0.25
-      - id: WelderIndustrialAdvanced
-        weight: 0.10
-    - !type:GroupSelector
-      children:
-      - id: Welder
-      - id: WelderIndustrial
-        weight: 0.25
-      - id: WelderIndustrialAdvanced
-        weight: 0.10
+    - id: ClothingHeadHatWelding
+    - id: ClothingHeadHatWeldingMaskFlame
+      weight: 0.25
+    - id: ClothingHeadHatWeldingMaskFlameBlue
+      weight: 0.25
+    - id: ClothingHeadHatWeldingMaskPainted
+      weight: 0.25
+    - id: ClothingMaskWeldingGas
+      weight: 0.05
+
+- type: entityTable
+  id: FillWelderSuppliesMask
+  table: !type:GroupSelector
+    children:
+    - id: WelderMini
+    - id: Welder
+    - id: WelderIndustrial
+      weight: 0.25
+    - id: WelderIndustrialAdvanced
+      weight: 0.05
 
 - type: entity
   id: LockerAtmosphericsFilledHardsuit
