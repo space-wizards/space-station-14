@@ -1,11 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 using Content.Server.AbstractAnalyzer;
 using Content.Server.Botany.Components;
 using Content.Server.Popups;
 using Content.Shared.Botany.PlantAnalyzer;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Labels.EntitySystems;
@@ -28,8 +26,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly PaperSystem _paperSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedLabelSystem _labelSystem = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly LabelSystem _labelSystem = default!;
 
     public override void Initialize()
     {
