@@ -1,0 +1,253 @@
+# leaner PAIs! imp original
+
+- type: entity
+  parent: PersonalAI
+  id: PersonalAILearnerScience
+  name: research director's personal learner device
+  description: Your electronic pal, who is itching to learn!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/pai.rsi
+    layers:
+    - state: science-pai-base
+    - state: science-pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 54000 #15 hrs
+      inverted: true
+    roleName: pai-system-role-name-learner-science
+    roleDescription: pai-system-role-description-learner-science
+    roleRules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+  - type: ActiveRadio
+    channels:
+    - Science
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: science-pai-off-overlay }
+          Searching: { state: science-pai-searching-overlay }
+          On: { state: science-pai-on-overlay }
+
+- type: entity
+  parent: PersonalAI
+  id: PersonalAILearnerEngineering
+  name: chief engineer's personal learner device
+  description: Your electronic pal, who is itching to learn!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/pai.rsi
+    layers:
+    - state: engineering-pai-base
+    - state: engineering-pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 54000 #15 hrs
+      inverted: true
+    roleName: pai-system-role-name-learner-engineering
+    roleDescription: pai-system-role-description-learner-engineering
+    roleRules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+  - type: ActiveRadio
+    channels:
+    - Engineering
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: engineering-pai-off-overlay }
+          Searching: { state: engineering-pai-searching-overlay }
+          On: { state: engineering-pai-on-overlay }
+
+- type: entity
+  parent: PersonalAI
+  id: PersonalAILearnerSecurity
+  name: head of security's personal learner device
+  description: Your electronic pal, who is itching to learn!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/pai.rsi
+    layers:
+    - state: security-pai-base
+    - state: security-pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 54000 #15 hrs
+      inverted: true
+    roleName: pai-system-role-name-learner-security
+    roleDescription: pai-system-role-description-learner-security
+    roleRules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+  - type: ActiveRadio
+    channels:
+    - Security
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: security-pai-off-overlay }
+          Searching: { state: security-pai-searching-overlay }
+          On: { state: security-pai-on-overlay }
+
+- type: entity
+  parent: PersonalAI
+  id: PersonalAILearnerMedical
+  name: chief medical officer's personal learner device
+  description: Your electronic pal, who is itching to learn!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/pai.rsi
+    layers:
+    - state: medical-pai-base
+    - state: medical-pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 54000 #15 hrs
+      inverted: true
+    roleName: pai-system-role-name-learner-medical
+    roleDescription: pai-system-role-description-learner-medical
+    roleRules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+  - type: ActiveRadio
+    channels:
+    - Medical
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: medical-pai-off-overlay }
+          Searching: { state: medical-pai-searching-overlay }
+          On: { state: medical-pai-on-overlay }
+
+- type: entity
+  parent: PersonalAI
+  id: PersonalAILearnerCargo
+  name: quartermaster's personal learner device
+  description: Your electronic pal, who is itching to learn!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/pai.rsi
+    layers:
+    - state: cargo-pai-base
+    - state: cargo-pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 18000 #5 hrs
+      inverted: true
+    roleName: pai-system-role-name-learner-cargo
+    roleDescription: pai-system-role-description-learner-cargo
+    roleRules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+  - type: ActiveRadio
+    channels:
+    - Supply
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: cargo-pai-off-overlay }
+          Searching: { state: cargo-pai-searching-overlay }
+          On: { state: cargo-pai-on-overlay }
+
+- type: entity
+  parent: PersonalAI
+  id: PersonalAILearnerService
+  name: hospitality director's personal learner device
+  description: Your electronic pal, who is itching to learn!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/pai.rsi
+    layers:
+    - state: service-pai-base
+    - state: service-pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Service
+      time: 54000 #15 hrs
+      inverted: true
+    roleName: pai-system-role-name-learner-service
+    roleDescription: pai-system-role-description-learner-service
+    roleRules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+  - type: ActiveRadio
+    channels:
+    - Service
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: service-pai-off-overlay }
+          Searching: { state: service-pai-searching-overlay }
+          On: { state: service-pai-on-overlay }
+      
+- type: entity
+  parent: PersonalAI
+  id: PersonalAILearnerCommand
+  name: captain's personal learner device
+  description: Your electronic pal, who is itching to learn!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/pai.rsi
+    layers:
+    - state: command-pai-base
+    - state: command-pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 54000 #15 hrs
+      inverted: true
+    roleName: pai-system-role-name-learner-command
+    roleDescription: pai-system-role-description-learner-command
+    roleRules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+  - type: ActiveRadio
+    channels:
+    - Command
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: command-pai-off-overlay }
+          Searching: { state: command-pai-searching-overlay }
+          On: { state: command-pai-on-overlay }

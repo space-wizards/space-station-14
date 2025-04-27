@@ -19,6 +19,7 @@ public sealed partial class GhostRoleComponent : Component
     // Why is this even here.
     // Move to ghost role prototype & respect CCvars.GameRoleTimerOverride
     [DataField("requirements")]
+    [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] //imp
     public HashSet<JobRequirement>? Requirements;
 
     /// <summary>

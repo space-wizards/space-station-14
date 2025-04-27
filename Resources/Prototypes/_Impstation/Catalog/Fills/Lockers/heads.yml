@@ -12,7 +12,8 @@
     - id: RubberStampHD
     - id: ServiceTechFabCircuitboard
     - id: WeaponLauncherCleanerLake
-
+    - id: PersonalAILearnerService
+    
 - type: entity
   id: LockerHospitalityDirectorFilled
   suffix: Filled
