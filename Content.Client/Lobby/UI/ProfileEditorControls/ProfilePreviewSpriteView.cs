@@ -14,7 +14,10 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
     private IEntityManager _entManager = default!;
     private ISharedPlayerManager _playerManager = default!;
 
+    public string? ProfileName { get; private set; }
     public string? JobName { get; private set; }
+    public string? LoadoutName { get; private set; }
+    public string? FullDescription { get; private set; }
 
     public EntityUid PreviewDummy { get; private set; } = EntityUid.Invalid;
 
@@ -43,6 +46,8 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
                 return;
         }
 
+        FullDescription = ConstructFullDescription();
+
         SetEntity(PreviewDummy);
         InvalidateMeasure();
         _entManager.System<MetaDataSystem>().SetEntityName(PreviewDummy, profile.Name);
@@ -56,6 +61,16 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
                 ReloadHumanoidEntity(humanoid);
                 break;
         }
+    }
+
+    private string? ConstructFullDescription()
+    {
+        var description = ProfileName;
+        if (LoadoutName != null)
+            description = $"{description}\n\"{LoadoutName}\"";
+        if (JobName != null)
+            description = $"{description}\n{JobName}";
+        return description;
     }
 
     protected override void Dispose(bool disposing)
