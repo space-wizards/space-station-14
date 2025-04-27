@@ -220,7 +220,8 @@
 - type: latheRecipe
   id: CableDetStack1
   result: CableDetStack1
-  category: Weapons
+  categories: 
+  - Weapons
   completetime: 2
   materials:
     Plastic: 50
@@ -230,7 +231,8 @@
 - type: latheRecipe
   id: EmptyDetonator
   result: EmptyDetonator
-  category: Weapons
+  categories: 
+  - Weapons
   completetime: 3
   materials:
     Steel: 100
