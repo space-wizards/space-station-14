@@ -212,19 +212,6 @@
       stealGroup: SalvageExpeditionsComputerCircuitboard
 
 - type: entity
-  parent: [BaseComputerCircuitboard, BaseCargoContraband]
-  id: CargoShuttleComputerCircuitboard
-  name: cargo shuttle computer board
-  description: A computer printed circuit board for a cargo shuttle computer.
-  components:
-  - type: Sprite
-    state: cpu_supply
-  - type: ComputerBoard
-    prototype: ComputerCargoShuttle
-  - type: StealTarget
-    stealGroup: CargoShuttleComputerCircuitboard
-
-- type: entity
   parent: BaseComputerCircuitboard
   id: SurveillanceCameraMonitorCircuitboard
   name: surveillance camera monitor board
