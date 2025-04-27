@@ -69,15 +69,12 @@ public sealed partial class AdminCameraEui : BaseEui
         clydeWindow.RequestClosed += _ =>
         {
             _window.Close();
-            // _window.AdminCameraWindowRoot.Orphan();
-            // _window.AddChild(_window.AdminCameraWindowRoot);
         };
         clydeWindow.DisposeOnClose = true;
 
         // You can't close the window, otherwise the EUI will complain that your sending requests without it open.
         _window.Visible = false;
 
-        // _window.PopoutButton.Disabled = true;
         _control.IsPoppedOut = true;
         _control.PopControl.Text = Loc.GetString("admin-camera-window-pop-in");
     }
