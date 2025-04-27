@@ -63,22 +63,63 @@
   suffix: Filled
   parent: LockerWeldingSupplies
   components:
-  - type: StorageFill
-    contents:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWelderSupplies
+
+- type: entityTable
+  id: FillWelderSupplies
+  table: !type:AllSelector
+    children:
+    - !type:GroupSelector
+      children:
       - id: ClothingHeadHatWelding
+      - id: ClothingHeadHatWeldingMaskFlame
+        weight: 0.25
+      - id: ClothingHeadHatWeldingMaskFlameBlue
+        weight: 0.25
+      - id: ClothingHeadHatWeldingMaskPainted
+        weight: 0.25
+    - !type:GroupSelector
+      children:
       - id: ClothingHeadHatWelding
+      - id: ClothingHeadHatWeldingMaskFlame
+        weight: 0.25
+      - id: ClothingHeadHatWeldingMaskFlameBlue
+        weight: 0.25
+      - id: ClothingHeadHatWeldingMaskPainted
+        weight: 0.25
+    - !type:GroupSelector
+      children:
       - id: ClothingHeadHatWelding
-        prob: 0.5
+      - id: ClothingHeadHatWeldingMaskFlame
+        weight: 0.25
+      - id: ClothingHeadHatWeldingMaskFlameBlue
+        weight: 0.25
+      - id: ClothingHeadHatWeldingMaskPainted
+        weight: 0.25
+    - !type:GroupSelector
+      children:
       - id: Welder
-      - id: Welder
-      - id: WelderMini
-        orGroup: thirdWelder
-      - id: Welder
-        prob: 0.33
-        orGroup: thirdWelder
       - id: WelderIndustrial
-        prob: 0.33
-        orGroup: thirdWelder
+        weight: 0.25
+      - id: WelderIndustrialAdvanced
+        weight: 0.10
+    - !type:GroupSelector
+      children:
+      - id: Welder
+      - id: WelderIndustrial
+        weight: 0.25
+      - id: WelderIndustrialAdvanced
+        weight: 0.10
+    - !type:GroupSelector
+      children:
+      - id: Welder
+      - id: WelderIndustrial
+        weight: 0.25
+      - id: WelderIndustrialAdvanced
+        weight: 0.10
 
 - type: entity
   id: LockerAtmosphericsFilledHardsuit
