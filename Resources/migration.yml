@@ -613,3 +613,7 @@ VariedXenoArtifactItem: ComplexXenoArtifactItem
 
 # 2025-04-19
 AirlockMaintCommonLocked: AirlockMaintLocked
+
+# 2025-04-26
+ComputerCargoShuttle: ComputerShuttleCargo
+CargoShuttleComputerCircuitboard: CargoShuttleConsoleCircuitboard
