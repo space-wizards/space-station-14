@@ -244,7 +244,7 @@
   - type: Sprite
     noRot: true
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    color: "#ffff33"
+    color: "#ffabdb"
     layers:
     - state: spark
       shader: unshaded
@@ -268,6 +268,11 @@
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     forceSound: true
+  - type: PointLight
+    enabled: true
+    color: "#ffabdb"
+    radius: 2.0
+    energy: 7.0
   - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 10

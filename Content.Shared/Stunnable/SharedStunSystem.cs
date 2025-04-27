@@ -15,6 +15,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Slippery;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using Content.Shared.Storage.EntitySystems;
@@ -94,13 +95,15 @@ public abstract class SharedStunSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var curTime = _gameTiming.CurTime;
+
+        if (!_gameTiming.IsFirstTimePredicted)
+            return;
 
         foreach (var uid in _toUpdate)
         {
             if (HasComp<StunnedComponent>(uid)
                 || !TryComp<KnockedDownComponent>(uid, out var knockedDown)
-                || knockedDown.NextUpdate >= curTime)
+                || knockedDown.NextUpdate >= _gameTiming.CurTime)
                 continue;
 
             // Try to stand, if we can stand, don't try to do it again
@@ -177,7 +180,7 @@ public abstract class SharedStunSystem : EntitySystem
     private void OnKnockShutdown(EntityUid uid, KnockedDownComponent component, ComponentShutdown args)
     {
         _toUpdate.Remove(uid);
-        // This is jank but if we don't do this it'll still use the knockeddowncomponent modifiers for friction because it hasn't been deleted quite yet.
+        // This is jank but if we don't do this it'll still use the knockedDownComponent modifiers for friction because it hasn't been deleted quite yet.
         component.FrictionModifier = 1f;
         component.SpeedModifier = 1f;
         _standingState.Stand(uid);
@@ -240,9 +243,15 @@ public abstract class SharedStunSystem : EntitySystem
         if (!_statusEffect.CanApplyEffect(uid, "KnockedDown", status))
             return false;
 
-        // Don't override our auto-stand preference if we're already knocked down
+        // Don't override our auto-stand preference if we're already knocked down, if we're trying to stand, stop that
         if (!EnsureComp<KnockedDownComponent>(uid, out var component))
             component.AutoStand = autostand;
+        else if (component.DoAfter != null)
+        {
+            // This shit mispredicts like a motherfucker
+            _doAfter.Cancel(component.DoAfter.Value);
+            component.DoAfter = null;
+        }
 
         var ev = new KnockedDownEvent()
         {
@@ -306,14 +315,18 @@ public abstract class SharedStunSystem : EntitySystem
 
     public bool TryStanding(EntityUid uid, KnockedDownComponent? comp)
     {
-        if (!Resolve(uid, ref comp, false))
+        // If we aren't knocked down or can't be knocked down, then we did technically succeed in standing up
+        if (!Resolve(uid, ref comp, false) || !TryComp<StandingStateComponent>(uid, out var state))
             return true;
+
+        if (comp.NextUpdate >= _gameTiming.CurTime)
+            return false;
 
         // TODO: Check if we even have space to stand
 
         var ev = new StandupAttemptEvent()
         {
-            DoAfterTime = comp.GetUpDoAfter,
+            DoAfterTime = state.StandTime,
             AutoStand = comp.AutoStand,
         };
         RaiseLocalEvent(uid, ref ev);
@@ -321,24 +334,32 @@ public abstract class SharedStunSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, uid, TimeSpan.FromSeconds(1f), new TryStandDoAfterEvent(), uid, uid)
+        var doAfterArgs = new DoAfterArgs(EntityManager, uid, ev.DoAfterTime, new TryStandDoAfterEvent(), uid, uid)
         {
             BreakOnDamage = true,
+            DamageThreshold = 5,
             CancelDuplicate = true,
             RequireCanInteract = false
         };
 
         // If we try standing don't try standing again
         _toUpdate.Remove(uid);
-        return _doAfter.TryStartDoAfter(doAfterArgs);
+        if (!_doAfter.TryStartDoAfter(doAfterArgs, out var id))
+            return false;
+
+        // Store the DoAfter id so we can cancel it if needed
+        comp.DoAfter = id;
+        return true;
     }
 
-    public void OnStandDoAfter(EntityUid uid, KnockedDownComponent comp, TryStandDoAfterEvent args)
+    private void OnStandDoAfter(Entity<KnockedDownComponent> entity, ref TryStandDoAfterEvent args)
     {
+        entity.Comp.DoAfter = null;
+
         if (args.Cancelled)
             return;
 
-        RemComp<KnockedDownComponent>(uid);
+        RemComp<KnockedDownComponent>(entity);
     }
 
     private void HandleToggleKnockdown(ICommonSession? session)

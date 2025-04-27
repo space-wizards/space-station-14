@@ -1,3 +1,4 @@
+using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -18,6 +19,12 @@ public sealed partial class KnockedDownComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool AutoStand = true;
+
+    /// <summary>
+    /// The Standing Up DoAfter.
+    /// </summary>
+    [DataField]
+    public DoAfterId? DoAfter;
 
     /// <summary>
     /// Friction modifier for knocked down players.

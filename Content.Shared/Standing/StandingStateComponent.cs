@@ -15,6 +15,12 @@ namespace Content.Shared.Standing
         public bool Standing { get; set; } = true;
 
         /// <summary>
+        /// Time it takes us to stand up
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public TimeSpan StandTime = TimeSpan.FromSeconds(1);
+
+        /// <summary>
         ///     List of fixtures that had their collision mask changed when the entity was downed.
         ///     Required for re-adding the collision mask.
         /// </summary>
