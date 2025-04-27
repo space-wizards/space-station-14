@@ -27,7 +27,7 @@ namespace Content.Server.Station.Systems;
 /// For jobs, look at StationJobSystem. For spawning, look at StationSpawningSystem.
 /// </summary>
 [PublicAPI]
-public sealed class StationSystem : SharedStationSystem
+public sealed partial class StationSystem : SharedStationSystem
 {
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
@@ -126,7 +126,7 @@ public sealed class StationSystem : SharedStationSystem
             RemComp<StationMemberComponent>(grid);
 
             // If the station gets deleted, we raise the event for every grid that was a part of it
-            RaiseLocalEvent(new StationGridRemovedEvent(grid));
+            RaiseLocalEvent(new StationGridRemovedEvent(grid, uid));
         }
 
         RaiseNetworkEvent(new StationsUpdatedEvent(GetStationNames()), Filter.Broadcast());
@@ -408,7 +408,7 @@ public sealed class StationSystem : SharedStationSystem
         RemComp<StationMemberComponent>(mapGrid);
         stationData.Grids.Remove(mapGrid);
 
-        RaiseLocalEvent(station, new StationGridRemovedEvent(mapGrid), true);
+        RaiseLocalEvent(station, new StationGridRemovedEvent(mapGrid, station), true);
         _sawmill.Info($"Removing grid {mapGrid} from station {Name(station)} ({station})");
     }
 
@@ -615,9 +615,15 @@ public sealed class StationGridRemovedEvent : EntityEventArgs
     /// </summary>
     public EntityUid GridId;
 
-    public StationGridRemovedEvent(EntityUid gridId)
+    /// <summary>
+    /// EntityUid of the station this grid was added to.
+    /// </summary>
+    public EntityUid Station;
+
+    public StationGridRemovedEvent(EntityUid gridId, EntityUid station)
     {
         GridId = gridId;
+        Station = station;
     }
 }
 

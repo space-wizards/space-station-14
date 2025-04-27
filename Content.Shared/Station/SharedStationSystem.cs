@@ -1,10 +1,13 @@
 using Content.Shared.Station.Components;
+using JetBrains.Annotations;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Station;
 
-public abstract class SharedStationSystem : EntitySystem
+public abstract partial class SharedStationSystem : EntitySystem
 {
+    [Dependency] private readonly MetaDataSystem _meta = default!;
+
     private EntityQuery<TransformComponent> _xformQuery;
     private EntityQuery<StationMemberComponent> _stationMemberQuery;
 
@@ -16,29 +19,48 @@ public abstract class SharedStationSystem : EntitySystem
         _xformQuery = GetEntityQuery<TransformComponent>();
         _stationMemberQuery = GetEntityQuery<StationMemberComponent>();
 
-        SubscribeLocalEvent<StationTrackerComponent, MapInitEvent>(OnStationTrackerMapInit);
-        SubscribeLocalEvent<StationTrackerComponent, EntParentChangedMessage>(OnEntParentChanged);
+        SubscribeLocalEvent<StationTrackerComponent, MapInitEvent>(OnTrackerMapInit);
+        SubscribeLocalEvent<StationTrackerComponent, ComponentRemove>(OnTrackerRemove);
+        SubscribeLocalEvent<StationTrackerComponent, EntGridChangedEvent>(OnTrackerGridChanged);
+        SubscribeLocalEvent<StationTrackerComponent, MetaFlagRemoveAttemptEvent>(OnMetaFlagRemoveAttempt);
     }
 
-    private void OnStationTrackerMapInit(Entity<StationTrackerComponent> ent, ref MapInitEvent args)
+    private void OnTrackerMapInit(Entity<StationTrackerComponent> ent, ref MapInitEvent args)
     {
+        _meta.AddFlag(ent, MetaDataFlags.GridTracking);
         UpdateStationTracker(ent.AsNullable());
     }
 
-    private void OnEntParentChanged(Entity<StationTrackerComponent> ent, ref EntParentChangedMessage args)
+    private void OnTrackerRemove(Entity<StationTrackerComponent> ent, ref ComponentRemove args)
     {
-        UpdateStationTracker(ent.AsNullable());
+        _meta.RemoveFlag(ent, MetaDataFlags.GridTracking);
+    }
+
+    private void OnTrackerGridChanged(Entity<StationTrackerComponent> ent, ref EntGridChangedEvent args)
+    {
+        UpdateStationTracker((ent, ent.Comp, args.Transform));
+    }
+
+    private void OnMetaFlagRemoveAttempt(Entity<StationTrackerComponent> ent, ref MetaFlagRemoveAttemptEvent args)
+    {
+        if ((args.ToRemove & MetaDataFlags.GridTracking) != 0)
+        {
+            args.ToRemove &= ~MetaDataFlags.GridTracking;
+        }
     }
 
     /// <summary>
     /// Updates the station tracker component based on entity's current location.
     /// </summary>
-    public void UpdateStationTracker(Entity<StationTrackerComponent?> ent)
+    [PublicAPI]
+    public void UpdateStationTracker(Entity<StationTrackerComponent?, TransformComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp1))
             return;
 
-        if (!_xformQuery.TryGetComponent(ent, out var xform))
+        var xform = ent.Comp2;
+
+        if (!_xformQuery.Resolve(ent, ref xform))
             return;
 
         // Entity is in nullspace or not on a grid
@@ -61,6 +83,7 @@ public abstract class SharedStationSystem : EntitySystem
     /// <summary>
     /// Sets the station for a StationTrackerComponent.
     /// </summary>
+    [PublicAPI]
     public void SetStation(Entity<StationTrackerComponent?> ent, EntityUid? station)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -76,6 +99,7 @@ public abstract class SharedStationSystem : EntitySystem
     /// <summary>
     /// Gets the station an entity is currently on, if any.
     /// </summary>
+    [PublicAPI]
     public EntityUid? GetCurrentStation(Entity<StationTrackerComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false))
