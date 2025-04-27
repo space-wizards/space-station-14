@@ -60,8 +60,6 @@
   - type: PipeColorVisuals
   - type: GasPressurePump
     enabled: false
-  - type: Toggleable
-    altVerbAvailable: true
   - type: ActivatableUI
     key: enum.GasPressurePumpUiKey.Key
   - type: ActivatableUIRequiresAnchor
@@ -122,8 +120,9 @@
     - type: PipeColorVisuals
     - type: GasVolumePump
       enabled: false
-    - type: Toggleable
-      altVerbAvailable: true
+    - type: ActivatableUI
+      key: enum.GasVolumePumpUiKey.Key
+    - type: ActivatableUIRequiresAnchor
     - type: UserInterface
       interfaces:
         enum.GasVolumePumpUiKey.Key:
