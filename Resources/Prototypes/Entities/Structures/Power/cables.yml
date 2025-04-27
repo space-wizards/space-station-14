@@ -236,7 +236,7 @@
     cableDroppedOnCutPrototype: CableDetStack1
     cableType: ExCable
   - type: Sprite
-    color: null # maybe change this later and move the stripes to the CableVisualizerComp layer instead
+#    color: white # maybe change this later and move the stripes to the CableVisualizerComp layer instead
     sprite: Structures/Power/Cables/ex_cable.rsi
     state: excable_0
   - type: Icon
