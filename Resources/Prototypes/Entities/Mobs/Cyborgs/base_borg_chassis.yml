@@ -6,8 +6,8 @@
   save: false
   abstract: true
   components:
-  - MindContainer:
-      showExamineInfo: true
+  - type: MindContainer
+    showExamineInfo: true
   - type: Reactive
     groups:
       Acidic: [Touch]

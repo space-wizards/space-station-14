@@ -373,6 +373,9 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// <param name="ghostCheckOverride">
     ///     If true, skips ghost check for Visiting Entity
     /// </param>
+    /// <param name="createGhost">
+    ///     If true, creates a ghost if the entity is null.
+    /// </param>
     /// <exception cref="ArgumentException">
     ///     Thrown if <paramref name="entity"/> is already controlled by another player.
     /// </exception>

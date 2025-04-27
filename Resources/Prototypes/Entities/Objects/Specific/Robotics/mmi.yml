@@ -77,6 +77,8 @@
   name: positronic brain
   description: An artificial brain capable of spontaneous neural activity.
   components:
+    - type: MindContainer
+      showExamineInfo: true
     - type: Sprite
       sprite: Objects/Specific/Robotics/mmi.rsi
       layers:
@@ -88,8 +90,6 @@
       examineTextMindPresent: positronic-brain-installed
       examineTextMindSearching: positronic-brain-still-searching
       examineTextNoMind: positronic-brain-off
-      examineTextMindSsd: positronic-brain-ssd
-      examineTextMindGhosted: positronic-brain-ghosted
       beginSearchingText: positronic-brain-searching
       roleName: positronic-brain-role-name
       roleDescription: positronic-brain-role-description

@@ -23,7 +23,6 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<ToggleableGhostRoleComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<ToggleableGhostRoleComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, PlayerDetachedEvent>(OnPlayerDetached);
@@ -62,47 +61,6 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         ghostRole.RoleRules = Loc.GetString(component.RoleRules);
         ghostRole.JobProto = component.JobProto;
         ghostRole.MindRoles = component.MindRoles;
-    }
-
-    private void OnExamined(EntityUid uid, ToggleableGhostRoleComponent component, ExaminedEvent args)
-    {
-        if (!args.IsInDetailsRange)
-            return;
-
-        // --- Commented out for now pending code review for inspect message unification ---
-
-        // Mind is present, has a connected session
-        if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind && HasComp<ActorComponent>(uid))
-            args.PushMarkup(Loc.GetString(component.ExamineTextMindPresent));
-
-        // No mind present, actively waiting for Ghost Role Takeover
-        else if (HasComp<GhostTakeoverAvailableComponent>(uid))
-            args.PushMarkup(Loc.GetString(component.ExamineTextMindSearching));
-
-        // Mind is present, but no active session
-        // -- Commented out for now to make space for the new AI SSD Indicator
-        /*
-        else if (
-            HasComp<MindContainerComponent>(uid) &&
-            CompOrNull<MindComponent>(uid)?.Session == null &&
-            HasComp<GhostRoleComponent>(uid)
-            )
-            args.PushMarkup(Loc.GetString(component.ExamineTextMindSsd));
-        */
-
-        // Mind is present, but ghosted out of the container
-        else if (
-            // HasComp<MindContainerComponent>(uid) && [TODO: REDUNDANT CHECK, TEST FIRST]
-            _sharedPlayerManager.TryGetSessionByEntity(uid, out _) &&
-            HasComp<ToggleableGhostRoleComponent>(uid)
-            )
-
-            args.PushMarkup(Loc.GetString(component.ExamineTextMindGhosted));
-
-        // No mind present, not waiting for Ghost Role Takeover
-        else
-            args.PushMarkup(Loc.GetString(component.ExamineTextNoMind));
-
     }
 
     private void OnMindAdded(EntityUid uid, ToggleableGhostRoleComponent pai, MindAddedMessage args)

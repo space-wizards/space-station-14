@@ -11,7 +11,7 @@ comp-mind-examined-dead-and-ssd = { CAPITALIZE(POSS-ADJ($ent)) } soul lies dorma
 comp-mind-examined-dead-and-irrecoverable = { CAPITALIZE(POSS-ADJ($ent)) } soul has departed and moved on. Any recovery is impossible.
 
 ## AI
-comp-mind-ai-examined-catatonic = { CAPITALIZE(SUBJECT($ent)) } { CONJUGATE-BE($ent) } experiencing a critical system failure. Internal processes have ceased and recovery is unlikely without significant intervention.
+comp-mind-ai-examined-catatonic = { CAPITALIZE(SUBJECT($ent)) } { CONJUGATE-BE($ent) } experiencing a critical system failure. Internal processes have ceased and recovery is impossible without a system reset.
 comp-mind-ai-examined-dead = { CAPITALIZE(SUBJECT($ent)) } { CONJUGATE-BE($ent) } completely offline. Power levels are critically low or non-existent.
 comp-mind-ai-examined-ssd = { CAPITALIZE(SUBJECT($ent)) } { CONJUGATE-HAVE($ent) } entered a low-power state. { CAPITALIZE(SUBJECT($ent)) } is unresponsive but may reactivate if given sufficient input or if internal processes resume.
 comp-mind-ai-examined-dead-and-ssd = { CAPITALIZE(SUBJECT($ent)) }'s core systems are inactive, but some residual power or memory might remain. Reactivation may be possible with significant effort.
