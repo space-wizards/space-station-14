@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 250.0.0
+  engineVersion: 251.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/16/2025 07:53:49
+  time: 04/25/2025 02:24:23
   entityCount: 23445
 maps:
 - 1
@@ -9914,11 +9914,6 @@ entities:
     - type: Transform
       pos: -36.5,38.5
       parent: 2
-  - uid: 196
-    components:
-    - type: Transform
-      pos: -49.5,34.5
-      parent: 2
   - uid: 197
     components:
     - type: Transform
@@ -9943,13 +9938,6 @@ entities:
     components:
     - type: Transform
       pos: 44.5,38.5
-      parent: 2
-- proto: AirlockBrigLocked
-  entities:
-  - uid: 202
-    components:
-    - type: Transform
-      pos: -54.5,32.5
       parent: 2
 - proto: AirlockCaptainGlassLocked
   entities:
@@ -11395,6 +11383,13 @@ entities:
     - type: Transform
       pos: -11.5,12.5
       parent: 2
+- proto: AirlockLawyerGlassLocked
+  entities:
+  - uid: 196
+    components:
+    - type: Transform
+      pos: -49.5,34.5
+      parent: 2
 - proto: AirlockLibrarianLocked
   entities:
   - uid: 571
@@ -11434,6 +11429,13 @@ entities:
     components:
     - type: Transform
       pos: -5.5,16.5
+      parent: 2
+- proto: AirlockMaintBrigLocked
+  entities:
+  - uid: 501
+    components:
+    - type: Transform
+      pos: -49.5,43.5
       parent: 2
 - proto: AirlockMaintCargoLocked
   entities:
@@ -11574,6 +11576,13 @@ entities:
     components:
     - type: Transform
       pos: -30.5,14.5
+      parent: 2
+- proto: AirlockMaintLawyerLocked
+  entities:
+  - uid: 202
+    components:
+    - type: Transform
+      pos: -54.5,32.5
       parent: 2
 - proto: AirlockMaintLocked
   entities:
@@ -11804,11 +11813,6 @@ entities:
       parent: 2
 - proto: AirlockMaintSecLocked
   entities:
-  - uid: 501
-    components:
-    - type: Transform
-      pos: -49.5,43.5
-      parent: 2
   - uid: 502
     components:
     - type: Transform
@@ -15284,6 +15288,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: -4.5,-12.5
       parent: 2
+  - uid: 8374
+    components:
+    - type: Transform
+      pos: 15.5,-21.5
+      parent: 2
 - proto: Beaker
   entities:
   - uid: 978
@@ -16215,6 +16224,13 @@ entities:
     components:
     - type: Transform
       pos: -10.5,-38.5
+      parent: 2
+- proto: BorgChargerDroneSpawner
+  entities:
+  - uid: 16918
+    components:
+    - type: Transform
+      pos: -38.5,24.5
       parent: 2
 - proto: BoxBeaker
   entities:
@@ -53004,29 +53020,6 @@ entities:
         - 0
 - proto: ClosetMaintenanceFilledRandom
   entities:
-  - uid: 8272
-    components:
-    - type: Transform
-      pos: -25.5,19.5
-      parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
   - uid: 8273
     components:
     - type: Transform
@@ -53147,6 +53140,11 @@ entities:
         - 0
         - 0
         - 0
+  - uid: 23330
+    components:
+    - type: Transform
+      pos: -25.5,20.5
+      parent: 2
 - proto: ClosetRadiationSuitFilled
   entities:
   - uid: 8279
@@ -53781,13 +53779,6 @@ entities:
     - type: Transform
       pos: -28.699547,16.50104
       parent: 2
-- proto: ClothingHeadHatRedwizard
-  entities:
-  - uid: 8363
-    components:
-    - type: Transform
-      pos: 39.5393,43.86121
-      parent: 2
 - proto: ClothingHeadHatRichard
   entities:
   - uid: 8364
@@ -53827,19 +53818,12 @@ entities:
     - type: Transform
       pos: -25.477394,-32.340332
       parent: 2
-- proto: ClothingHeadHatVioletwizard
-  entities:
-  - uid: 8374
-    components:
-    - type: Transform
-      pos: -21.586058,-27.491894
-      parent: 2
 - proto: ClothingHeadHatWarden
   entities:
   - uid: 8375
     components:
     - type: Transform
-      pos: -44.478676,46.781105
+      pos: -42.492004,46.42145
       parent: 2
 - proto: ClothingHeadHatWelding
   entities:
@@ -53883,13 +53867,6 @@ entities:
     components:
     - type: Transform
       pos: -52.689133,41.472305
-      parent: 2
-- proto: ClothingHeadHatWizard
-  entities:
-  - uid: 8383
-    components:
-    - type: Transform
-      pos: 35.44555,43.82996
       parent: 2
 - proto: ClothingHeadHelmetBasic
   entities:
@@ -54195,6 +54172,13 @@ entities:
     - type: Transform
       pos: 19.488726,8.340895
       parent: 2
+- proto: ClothingOuterCoatSpaceAsshole
+  entities:
+  - uid: 8448
+    components:
+    - type: Transform
+      pos: -21.476774,-28.063505
+      parent: 2
 - proto: ClothingOuterCoatTrench
   entities:
   - uid: 8432
@@ -54283,27 +54267,6 @@ entities:
     - type: Transform
       pos: -1.5342877,-32.48201
       parent: 2
-- proto: ClothingOuterWizard
-  entities:
-  - uid: 8447
-    components:
-    - type: Transform
-      pos: 35.461174,43.595585
-      parent: 2
-- proto: ClothingOuterWizardRed
-  entities:
-  - uid: 8448
-    components:
-    - type: Transform
-      pos: 39.523674,43.658085
-      parent: 2
-- proto: ClothingOuterWizardViolet
-  entities:
-  - uid: 8449
-    components:
-    - type: Transform
-      pos: -21.523558,-28.023144
-      parent: 2
 - proto: ClothingShoesBootsJack
   entities:
   - uid: 8450
@@ -54378,11 +54341,6 @@ entities:
     components:
     - type: Transform
       pos: 39.523674,43.39246
-      parent: 2
-  - uid: 8461
-    components:
-    - type: Transform
-      pos: -21.507933,-28.679394
       parent: 2
   - uid: 8462
     components:
@@ -56308,6 +56266,11 @@ entities:
     components:
     - type: Transform
       pos: -58.516808,51.429756
+      parent: 2
+  - uid: 19438
+    components:
+    - type: Transform
+      pos: 21.497667,44.818108
       parent: 2
 - proto: Crematorium
   entities:
@@ -90765,6 +90728,12 @@ entities:
       parent: 2
 - proto: GasPort
   entities:
+  - uid: 8383
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 15.5,-22.5
+      parent: 2
   - uid: 13379
     components:
     - type: Transform
@@ -90981,7 +90950,7 @@ entities:
   - uid: 13410
     components:
     - type: MetaData
-      name: mix to supermatter loop
+      name: mix to teg
     - type: Transform
       pos: 6.5,-36.5
       parent: 2
@@ -90989,10 +90958,14 @@ entities:
       color: '#EB9834FF'
   - uid: 13411
     components:
+    - type: MetaData
+      name: input from atmos
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-48.5
       parent: 2
+    - type: AtmosPipeColor
+      color: '#EB9834FF'
   - uid: 13412
     components:
     - type: Transform
@@ -97103,11 +97076,6 @@ entities:
     components:
     - type: Transform
       pos: 21.5,-0.5
-      parent: 2
-  - uid: 14264
-    components:
-    - type: Transform
-      pos: 18.5,-5.5
       parent: 2
   - uid: 14265
     components:
@@ -106027,6 +105995,13 @@ entities:
     - type: Transform
       pos: 3.5,41.5
       parent: 2
+- proto: LockerGriffyFilled
+  entities:
+  - uid: 18643
+    components:
+    - type: Transform
+      pos: -44.5,46.5
+      parent: 2
 - proto: LockerHeadOfPersonnelFilled
   entities:
   - uid: 15838
@@ -113899,11 +113874,6 @@ entities:
     - type: Transform
       pos: -42.5,-19.5
       parent: 2
-  - uid: 16918
-    components:
-    - type: Transform
-      pos: -38.5,24.5
-      parent: 2
   - uid: 16919
     components:
     - type: Transform
@@ -117018,11 +116988,6 @@ entities:
     components:
     - type: Transform
       pos: 18.5,-7.5
-      parent: 2
-  - uid: 17512
-    components:
-    - type: Transform
-      pos: 18.5,-5.5
       parent: 2
   - uid: 17513
     components:
@@ -123550,13 +123515,11 @@ entities:
       parent: 2
 - proto: SpaceVillainArcadeFilled
   entities:
-  - uid: 18643
+  - uid: 8461
     components:
     - type: Transform
-      pos: 18.5,44.5
+      pos: 22.5,40.5
       parent: 2
-    - type: SpamEmitSound
-      enabled: False
   - uid: 18644
     components:
     - type: Transform
@@ -123620,13 +123583,6 @@ entities:
     components:
     - type: Transform
       pos: 10.5,-25.5
-      parent: 2
-- proto: SpawnMobDrone
-  entities:
-  - uid: 23330
-    components:
-    - type: Transform
-      pos: -40.5,26.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
@@ -128045,11 +128001,6 @@ entities:
     - type: Transform
       pos: 19.5,2.5
       parent: 2
-  - uid: 19262
-    components:
-    - type: Transform
-      pos: 25.5,29.5
-      parent: 2
   - uid: 19263
     components:
     - type: Transform
@@ -128970,11 +128921,6 @@ entities:
     components:
     - type: Transform
       pos: -39.5,56.5
-      parent: 2
-  - uid: 19438
-    components:
-    - type: Transform
-      pos: -44.5,46.5
       parent: 2
   - uid: 19439
     components:
@@ -130031,6 +129977,14 @@ entities:
     - type: Transform
       pos: -14.5,14.5
       parent: 2
+- proto: TailorsKnife
+  entities:
+  - uid: 19262
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 21.347797,44.494587
+      parent: 2
 - proto: TargetClown
   entities:
   - uid: 19645
@@ -130343,7 +130297,7 @@ entities:
   - uid: 19693
     components:
     - type: Transform
-      pos: -21.467775,23.567343
+      pos: -21.515497,22.965252
       parent: 2
 - proto: ToolboxElectricalFilled
   entities:
@@ -131560,6 +131514,11 @@ entities:
     components:
     - type: Transform
       pos: -25.5,-57.5
+      parent: 2
+  - uid: 8449
+    components:
+    - type: Transform
+      pos: 18.5,-5.5
       parent: 2
   - uid: 10281
     components:
@@ -146641,6 +146600,33 @@ entities:
       parent: 2
     - type: BombingTarget
       location: HD's Office
+- proto: WashingMachine
+  entities:
+  - uid: 8272
+    components:
+    - type: Transform
+      pos: 38.5,45.5
+      parent: 2
+  - uid: 8363
+    components:
+    - type: Transform
+      pos: -21.5,23.5
+      parent: 2
+  - uid: 8447
+    components:
+    - type: Transform
+      pos: -12.5,-24.5
+      parent: 2
+  - uid: 14264
+    components:
+    - type: Transform
+      pos: 18.5,44.5
+      parent: 2
+  - uid: 17512
+    components:
+    - type: Transform
+      pos: 25.5,29.5
+      parent: 2
 - proto: WaterCooler
   entities:
   - uid: 22762
