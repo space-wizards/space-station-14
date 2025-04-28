@@ -785,12 +785,12 @@
     proto: robot
   - type: Speech
     speechVerb: Robotic
-    speechSounds: SyndieBorg
+    speechSounds: Xenoborg
     allowedEmotes:
     - Laugh
   - type: Vocal
     sounds:
-      Unsexed: UnisexSiliconSyndicate
+      Unsexed: UnisexSiliconXenoborg
     screamAction: null
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
