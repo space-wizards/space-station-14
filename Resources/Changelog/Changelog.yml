@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Southbridge
-  changes:
-  - message: Astro Asteroid Sand has been added as another type of faux tile.
-    type: Add
-  - message: Asteroid Astro Sand has also been added to the T2 civilian tech for the
-      faux astro tiles.
-    type: Add
-  id: 7873
-  time: '2025-01-30T04:41:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34463
 - author: august-sun
   changes:
   - message: Added the goliath hardsuit to the game and crafting menu. Adjusted goliath
@@ -3922,3 +3912,10 @@
   id: 8374
   time: '2025-04-28T06:56:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36997
+- author: lzk228
+  changes:
+  - message: Scrubber now will turn on widenet in panic mode.
+    type: Tweak
+  id: 8375
+  time: '2025-04-28T19:22:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37013
