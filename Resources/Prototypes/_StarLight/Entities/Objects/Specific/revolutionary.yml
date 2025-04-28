@@ -8,16 +8,16 @@
   components:
   - type: Store
     balance:
-      Revecrystal: 0
+      Telebond: 0
 
 - type: entity
   id: USSPUplinkRadioPresetDebug
   parent: [BaseRevUplinkRadio, StorePresetUSSP, BaseSovietContraband]
   name: USSP uplink radio (Debug)
-  description: A debug version of the USSP uplink radio with extra Revecrystals.
+  description: A debug version of the USSP uplink radio with extra telebonds.
   tags:
   - SubdermalImplant
   components:
   - type: Store
     balance:
-      Revecrystal: 1000
+      Telebond: 1000

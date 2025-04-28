@@ -11,17 +11,16 @@
           - Hands
     - type: Store
       balance:
-        Revecrystal: 0
+        Telebond: 0
     - type: UserInterface
       interfaces:
         enum.StoreUiKey.Key:
           type: StoreBoundUserInterface
     - type: Item
-      sprite: Objects/Specific/Medical/implant.rsi
+      sprite: Objects/Specific/Medical/implanter.rsi
       size: Small
     - type: Sprite
-      sprite: Objects/Specific/Medical/implant.rsi
-      state: implant
+      sprite: Objects/Specific/Medical/implanter.rsi
     - type: Appearance
   tags:
     - SubdermalImplant

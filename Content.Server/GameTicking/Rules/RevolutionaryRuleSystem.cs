@@ -215,7 +215,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             if (uplinkEntity != null)
             {
                 Logger.Info($"OnPostFlash: Found USSP uplink entity {uplinkEntity.Value}");
-                var currencyToAdd = new Dictionary<string, FixedPoint2> { { "Revecrystal", FixedPoint2.New(1) } };
+                var currencyToAdd = new Dictionary<string, FixedPoint2> { { "Telebond", FixedPoint2.New(1) } };
                 var success = storeSystem.TryAddCurrency(currencyToAdd, uplinkEntity.Value);
                 Logger.Info($"OnPostFlash: TryAddCurrency success: {success}");
             }
