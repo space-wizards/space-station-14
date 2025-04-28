@@ -257,7 +257,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     private void OnFTLStarted(ref FTLStartedEvent ev)
     {
         var targetMap = _transform.ToMapCoordinates(ev.TargetCoordinates);
-        var targetMapUid = _mapSystem.GetMap(targetMap.MapId);
+        var targetMapUid = _mapSystem.GetMapOrInvalid(targetMap.MapId);
 
         if (!TryComp<BiomeComponent>(targetMapUid, out var biome))
             return;
