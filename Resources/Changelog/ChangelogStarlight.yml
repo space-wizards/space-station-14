@@ -5306,4 +5306,11 @@ Entries:
   id: 735
   time: '2025-04-26T15:25:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/508
+- author: Happyrobot33
+  changes:
+  - message: Lowered mail tech count.
+    type: Tweak
+  id: 736
+  time: '2025-04-28T21:33:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/554
 
