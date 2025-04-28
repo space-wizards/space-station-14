@@ -36,7 +36,7 @@ public sealed class DestructionEventArgs : CancellableEntityEventArgs
 /// <summary>
 ///     Raised when entity was heavy damage and about to break.
 /// </summary>
-public sealed class BreakageEventArgs : CancellableEntityEventArgs
+public sealed class BreakageEventArgs : EntityEventArgs
 {
 
 }

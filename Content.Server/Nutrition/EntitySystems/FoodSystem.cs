@@ -338,6 +338,8 @@ public sealed class FoodSystem : EntitySystem
 
         var dev = new DestructionEventArgs();
         RaiseLocalEvent(food, dev);
+        if (dev.Cancelled)
+            return;
 
         if (component.Trash.Count == 0)
         {
