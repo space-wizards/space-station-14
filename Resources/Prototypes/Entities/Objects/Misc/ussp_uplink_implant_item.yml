@@ -21,6 +21,7 @@
       size: Small
     - type: Sprite
       sprite: Objects/Specific/Medical/implanter.rsi
+      state: implant
     - type: Appearance
   tags:
     - SubdermalImplant
