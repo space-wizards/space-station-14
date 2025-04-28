@@ -83,7 +83,9 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
     private void OnUseInHandEvent(EntityUid uid, BatteryWeaponFireModesComponent component, UseInHandEvent args)
     {
-        TryCycleFireMode(uid, component, args.User);
+        if (TryComp<WieldableComponent>(uid, out var wieldable) &&
+            wieldable.Wielded)
+            TryCycleFireMode(uid, component, args.User);
     }
 
     public void TryCycleFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, EntityUid? user = null)
@@ -99,11 +101,7 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
     {
         if (index < 0 || index >= component.FireModes.Count)
             return false;
-
         if (user != null && !_accessReaderSystem.IsAllowed(user.Value, uid))
-            return false;
-        if (TryComp<WieldableComponent>(uid, out var wieldable) &&
-            !wieldable.Wielded)
             return false;
         SetFireMode(uid, component, index, user);
 
