@@ -287,8 +287,8 @@
 
 # Infinite jetpack
 - type: entity
-  id: InfiniteJetpack
   parent: [ JetpackBlack, BaseXenoborgContraband ]
+  id: JetpackXenoborg
   name: xenoborg jetpack
   suffix: Infinite
   components:
