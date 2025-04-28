@@ -192,6 +192,57 @@
       amount: 10
 
 - type: entity
+  id: CigPackMixedMedical
+  parent: CigPackMixedBase
+  name: Dan's soaked smokes
+  suffix: Medical
+  description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: StorageFill
+    contents:
+    - id: CigaretteIron
+    - id: CigaretteTricordrazine
+    - id: CigaretteDylovene
+    - id: CigaretteDermaline
+    - id: CigaretteArithrazine
+    - id: CigaretteBicaridine
+    - id: CigaretteIpecac
+    - id: CigaretteOmnizine
+      prob: 0.25
+    - id: CigaretteDexalin
+      prob: 0.25
+
+- type: entity
+  id: CigPackMixedNasty
+  parent: CigPackMixedBase
+  name: Dan's soaked smokes
+  suffix: Nasty
+  description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: StorageFill
+    contents:
+    - id: CigaretteWeldingFuel
+      amount: 2
+    - id: CigaretteMold
+      amount: 2
+    - id: CigaretteRadium
+      amount: 2
+    - id: CigaretteLicoxide
+      prob: 0.50
+    - id: CigarettePhlogiston
+      prob: 0.10
+    - id: CigaretteFrezon
+      prob: 0.05
+
+- type: entity
   id: CigPackMixed
   parent: CigPackMixedBase
   name: Dan's soaked smokes
