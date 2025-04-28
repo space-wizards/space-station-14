@@ -9,19 +9,18 @@ using Robust.Shared.Utility;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Server)]
-public sealed class PersistenceSave : IConsoleCommand
+public sealed class PersistenceSave : LocalizedEntityCommands
 {
     [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly IEntitySystemManager _system = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
 
-    public string Command => "persistencesave";
-    public string Description => "Saves server data to a persistence file to be loaded later.";
-    public string Help => "persistencesave [mapId] [filePath - default: game.map (CCVar) ]";
+    public override string Command => "persistencesave";
+    public override string Description => "Saves server data to a persistence file to be loaded later.";
+    public override string Help => "persistencesave [mapId] [filePath - default: game.map (CCVar) ]";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var mapSystem = _system.GetEntitySystem<SharedMapSystem>();
-
         if (args.Length < 1 || args.Length > 2)
         {
             shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
@@ -35,7 +34,7 @@ public sealed class PersistenceSave : IConsoleCommand
         }
 
         var mapId = new MapId(intMapId);
-        if (!mapSystem.MapExists(mapId))
+        if (!_mapSystem.MapExists(mapId))
         {
             shell.WriteError(Loc.GetString("cmd-savemap-not-exist"));
             return;
@@ -48,8 +47,7 @@ public sealed class PersistenceSave : IConsoleCommand
             return;
         }
 
-        var mapLoader = _system.GetEntitySystem<MapLoaderSystem>();
-        mapLoader.TrySaveMap(mapId, new ResPath(saveFilePath));
+        _mapLoader.TrySaveMap(mapId, new ResPath(saveFilePath));
         shell.WriteLine(Loc.GetString("cmd-savemap-success"));
     }
 }
