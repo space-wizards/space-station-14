@@ -406,27 +406,27 @@ public sealed partial class StaminaSystem : EntitySystem
     /// The method determines the closest applicable damage threshold below the crit limit and applies the corresponding
     /// speed modifier using the stun system. If no threshold is met then the entity's speed is restored to normal.
     /// </summary>
-    /// <param name="uid">Entity to update</param>
+    /// <param name="ent">Entity to update</param>
     /// <param name="comp">
     /// Stamina component of the entity. Can be null, in this case the method attempts to resolve it automatically.
     /// </param>
-    private void AdjustSlowdown(Entity<StaminaComponent?> uid)
+    private void AdjustSlowdown(Entity<StaminaComponent?> ent)
     {
-        if (!Resolve(uid, ref uid.Comp))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
         var closest = FixedPoint2.Zero;
 
         // Iterate through the dictionary in the similar way as in Damage.SlowOnDamageSystem.OnRefreshMovespeed
-        foreach (var thres in uid.Comp.StunModifierThresholds)
+        foreach (var thres in ent.Comp.StunModifierThresholds)
         {
             var key = thres.Key.Float();
 
-            if (uid.Comp.StaminaDamage >= key && key > closest && closest < uid.Comp.CritThreshold)
+            if (ent.Comp.StaminaDamage >= key && key > closest && closest < ent.Comp.CritThreshold)
                 closest = thres.Key;
         }
 
-        _stunSystem.UpdateStunModifiers(uid, uid.Comp.StunModifierThresholds[closest]);
+        _stunSystem.UpdateStunModifiers(ent, ent.Comp.StunModifierThresholds[closest]);
     }
 }
 
