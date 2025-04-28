@@ -447,3 +447,5 @@
       orGroup: puddleMess
     - id: SmugglerStashVariationPass
       prob: 0.90
+    - id: SolarPanelDamageVariationPass
+    - id: SolarPanelEmptyVariationPass

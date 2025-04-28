@@ -22,6 +22,12 @@ public sealed partial class XenoArtifactUnlockingComponent : Component
     public TimeSpan EndTime;
 
     /// <summary>
+    /// Tracks if artifexium has been applied, which changes the unlock behavior slightly.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ArtifexiumApplied;
+
+    /// <summary>
     /// The sound that plays when an artifact finishes unlocking successfully (with node unlocked).
     /// </summary>
     [DataField]

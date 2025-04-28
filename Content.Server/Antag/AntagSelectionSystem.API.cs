@@ -264,10 +264,10 @@ public sealed partial class AntagSelectionSystem
         if (!_mind.TryGetMind(entity, out _, out var mindComponent))
             return;
 
-        if (mindComponent.Session == null)
+        if (!_playerManager.TryGetSessionById(mindComponent.UserId, out var session))
             return;
 
-        SendBriefing(mindComponent.Session, briefing, briefingColor, briefingSound);
+        SendBriefing(session, briefing, briefingColor, briefingSound);
     }
 
     /// <summary>

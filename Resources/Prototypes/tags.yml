@@ -79,6 +79,9 @@
   id: BodyBag
 
 - type: Tag
+  id: Boll
+
+- type: Tag
   id: Book
 
 - type: Tag
@@ -354,6 +357,9 @@
   id: CottonBoll
 
 - type: Tag
+  id: CottonBurger
+
+- type: Tag
   id: Cow
 
 - type: Tag
@@ -385,6 +391,9 @@
 
 - type: Tag
   id: CrayonYellow
+
+- type: Tag
+  id: Creamsicle
 
 - type: Tag
   id: Crowbar
@@ -642,6 +651,15 @@
   id: GuideEmbeded
 
 - type: Tag
+  id: GunUpgradeDamage
+
+- type: Tag
+  id: GunUpgradeRange
+
+- type: Tag
+  id: GunUpgradeReloadSpeed
+
+- type: Tag
   id: Hamster
 
 - type: Tag
@@ -667,6 +685,9 @@
 
 - type: Tag
   id: Handcuffs
+
+- type: Tag
+  id: HandGrenade
 
 - type: Tag
   id: HappyHonk
@@ -898,9 +919,6 @@
   id: MimeHappyHonk
 
 - type: Tag
-  id: MindShield
-
-- type: Tag
   id: MindTransferTarget
 
 - type: Tag
@@ -967,6 +985,9 @@
   id: Pancake
 
 - type: Tag
+  id: ParcelWrapBlacklist
+
+- type: Tag
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
@@ -1000,7 +1021,13 @@
   id: Pipe
 
 - type: Tag
+  id: Pistachios
+
+- type: Tag
   id: Pizza
+
+- type: Tag
+  id: PKAUpgrade
 
 - type: Tag
   id: PlantAnalyzer
@@ -1170,6 +1197,9 @@
 
 - type: Tag
   id: SilentStorageUser # used in SharedStorageSystem, so the entity will do all silently
+
+- type: Tag
+  id: SiliconEmotes
 
 - type: Tag
   id: SkeletonMotorcycleKeys
