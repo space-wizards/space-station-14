@@ -176,6 +176,8 @@ namespace Content.Shared.Chemistry
 
         public readonly FixedPoint2? BufferCurrentVolume;
         public readonly uint SelectedPillType;
+        public readonly uint SelectedPillNumber;
+        public readonly uint SelectedPillDosage;
 
         public readonly uint PillDosageLimit;
 
@@ -184,7 +186,7 @@ namespace Content.Shared.Chemistry
         public ChemMasterBoundUserInterfaceState(
             ChemMasterMode mode, ChemMasterSortingType sortingType, ContainerInfo? inputContainerInfo, ContainerInfo? outputContainerInfo,
             IReadOnlyList<ReagentQuantity> bufferReagents, FixedPoint2 bufferCurrentVolume,
-            uint selectedPillType, uint pillDosageLimit, bool updateLabel)
+            uint selectedPillType, uint selectedPillNumber, uint selectedPillDosage, uint pillDosageLimit, bool updateLabel)
         {
             InputContainerInfo = inputContainerInfo;
             OutputContainerInfo = outputContainerInfo;
@@ -193,6 +195,8 @@ namespace Content.Shared.Chemistry
             SortingType = sortingType;
             BufferCurrentVolume = bufferCurrentVolume;
             SelectedPillType = selectedPillType;
+            SelectedPillNumber = selectedPillNumber;
+            SelectedPillDosage = selectedPillDosage;
             PillDosageLimit = pillDosageLimit;
             UpdateLabel = updateLabel;
         }

@@ -171,6 +171,8 @@ namespace Content.Client.Chemistry.UI
 
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
 
+            PillNumber.Value = (int)castState.SelectedPillNumber;
+            PillDosage.Value = (int)castState.SelectedPillDosage;
             PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
             PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
             BottleDosage.IsValid = x => x >= 0 && x <= bottleAmountMax;
@@ -181,13 +183,9 @@ namespace Content.Client.Chemistry.UI
                 BottleDosage.Value = bottleAmountMax;
 
             // Avoid division by zero
-            if (PillDosage.Value > 0)
+            if (PillDosage.Value > 0 && PillNumber.Value == 0)
             {
                 PillNumber.Value = Math.Min(bufferVolume / PillDosage.Value, pillNumberMax);
-            }
-            else
-            {
-                PillNumber.Value = 0;
             }
 
             BottleDosage.Value = Math.Min(bottleAmountMax, bufferVolume);
@@ -263,7 +261,7 @@ namespace Content.Client.Chemistry.UI
                 _prototypeManager.TryIndex(reagentId.Prototype, out ReagentPrototype? proto);
                 var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
                 var reagentColor = proto?.SubstanceColor ?? default(Color);
-                reagentList.Add(new (reagentId, name, reagentColor, quantity));
+                reagentList.Add(new(reagentId, name, reagentColor, quantity));
             }
 
             // We sort here since we need sorted list to be filled first.
@@ -356,7 +354,7 @@ namespace Content.Client.Chemistry.UI
             var rowColor1 = Color.FromHex("#1B1B1E");
             var rowColor2 = Color.FromHex("#202025");
             var currentRowColor = (rowCount % 2 == 1) ? rowColor1 : rowColor2;
-            if ((reagentColor == default(Color))|(!addReagentButtons))
+            if ((reagentColor == default(Color)) | (!addReagentButtons))
             {
                 reagentColor = currentRowColor;
             }
