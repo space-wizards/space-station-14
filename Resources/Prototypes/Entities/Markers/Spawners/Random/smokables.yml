@@ -32,7 +32,7 @@
         state: unlit-icon
   - type: EntityTableSpawner
     table: !type:NestedSelector
-      tableId: SoakedSmokesTable
+      tableId: RandomSoakedSmokeTable
 
 #Tables
 - type: entityTable
@@ -80,29 +80,3 @@
         - id: CigPackMixedNasty
       - id: CigarGold
         weight: 0.10
-
-- type: entityTable
-  id: SoakedSmokesTable
-  table: !type:GroupSelector
-    children:
-      - id: CigaretteOmnizine
-      - id: CigaretteIron
-      - id: CigaretteDylovene
-      - id: CigaretteDermaline
-      - id: CigaretteIpecac
-      - id: CigaretteBicaridine
-      - id: CigaretteDexalin
-      - id: CigarettePax
-      - id: CigaretteBbqSauce
-      - id: CigaretteBlackPepper
-      - id: CigaretteOmnizine
-      - id: CigaretteCapsaicinOil
-      - id: CigaretteBread
-      - id: CigaretteMilk
-      - id: CigaretteBanana
-      - id: CigaretteSpaceDrugs
-      - id: CigaretteMuteToxin
-      - id: CigaretteMold
-      - id: CigaretteLicoxide
-      - id: CigaretteWeldingFuel
-      - id: CigaretteTHC
