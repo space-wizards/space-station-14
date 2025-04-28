@@ -83,10 +83,10 @@ namespace Content.Server.Database
                 .HasForeignKey(e => e.ProfileLoadoutGroupId)
                 .IsRequired();
 
-            modelBuilder.Entity<JobPreference>()
+            modelBuilder.Entity<JobPriorityEntry>()
                 .HasIndex(j => j.PreferenceId);
 
-            modelBuilder.Entity<JobPreference>()
+            modelBuilder.Entity<JobPriorityEntry>()
                 .HasIndex(j => j.PreferenceId, "IX_job_one_high_priority")
                 .IsUnique()
                 .HasFilter("priority = 3");
@@ -395,7 +395,7 @@ namespace Content.Server.Database
         public Guid UserId { get; set; }
         public string AdminOOCColor { get; set; } = null!;
         public List<Profile> Profiles { get; } = new();
-        public List<JobPreference> JobPreferences { get; set; } = new();
+        public List<JobPriorityEntry> JobPriorities { get; set; } = new();
     }
 
     public class Profile
@@ -437,7 +437,7 @@ namespace Content.Server.Database
         public string JobName { get; set; } = null!;
     }
 
-    public class JobPreference
+    public class JobPriorityEntry
     {
         public int Id { get; set; }
         public Preference Preference { get; set; } = null!;

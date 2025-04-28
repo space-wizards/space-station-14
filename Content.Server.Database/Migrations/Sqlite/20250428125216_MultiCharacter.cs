@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Content.Server.Database.Migrations.Postgres
+namespace Content.Server.Database.Migrations.Sqlite
 {
     /// <inheritdoc />
     public partial class MultiCharacter : Migration
@@ -16,10 +15,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 table: "job");
 
             migrationBuilder.DropColumn(
-                name: "pref_unavailable",
-                table: "profile");
-
-            migrationBuilder.DropColumn(
                 name: "selected_character_slot",
                 table: "preference");
 
@@ -27,28 +22,26 @@ namespace Content.Server.Database.Migrations.Postgres
                 name: "priority",
                 table: "job");
 
-            migrationBuilder.AddColumn<bool>(
-                name: "enabled",
+            migrationBuilder.RenameColumn(
+                name: "pref_unavailable",
                 table: "profile",
-                type: "boolean",
-                nullable: false,
-                defaultValue: false);
+                newName: "enabled");
 
             migrationBuilder.CreateTable(
-                name: "job_preference",
+                name: "job_priority_entry",
                 columns: table => new
                 {
-                    job_preference_id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    preference_id = table.Column<int>(type: "integer", nullable: false),
-                    job_name = table.Column<string>(type: "text", nullable: false),
-                    priority = table.Column<int>(type: "integer", nullable: false)
+                    job_priority_entry_id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    preference_id = table.Column<int>(type: "INTEGER", nullable: false),
+                    job_name = table.Column<string>(type: "TEXT", nullable: false),
+                    priority = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_job_preference", x => x.job_preference_id);
+                    table.PrimaryKey("PK_job_priority_entry", x => x.job_priority_entry_id);
                     table.ForeignKey(
-                        name: "FK_job_preference_preference_preference_id",
+                        name: "FK_job_priority_entry_preference_preference_id",
                         column: x => x.preference_id,
                         principalTable: "preference",
                         principalColumn: "preference_id",
@@ -57,14 +50,14 @@ namespace Content.Server.Database.Migrations.Postgres
 
             migrationBuilder.CreateIndex(
                 name: "IX_job_one_high_priority",
-                table: "job_preference",
+                table: "job_priority_entry",
                 column: "preference_id",
                 unique: true,
                 filter: "priority = 3");
 
             migrationBuilder.CreateIndex(
-                name: "IX_job_preference_preference_id",
-                table: "job_preference",
+                name: "IX_job_priority_entry_preference_id",
+                table: "job_priority_entry",
                 column: "preference_id");
         }
 
@@ -72,30 +65,24 @@ namespace Content.Server.Database.Migrations.Postgres
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "job_preference");
+                name: "job_priority_entry");
 
-            migrationBuilder.DropColumn(
+            migrationBuilder.RenameColumn(
                 name: "enabled",
-                table: "profile");
-
-            migrationBuilder.AddColumn<int>(
-                name: "pref_unavailable",
                 table: "profile",
-                type: "integer",
-                nullable: false,
-                defaultValue: 0);
+                newName: "pref_unavailable");
 
             migrationBuilder.AddColumn<int>(
                 name: "selected_character_slot",
                 table: "preference",
-                type: "integer",
+                type: "INTEGER",
                 nullable: false,
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<int>(
                 name: "priority",
                 table: "job",
-                type: "integer",
+                type: "INTEGER",
                 nullable: false,
                 defaultValue: 0);
 

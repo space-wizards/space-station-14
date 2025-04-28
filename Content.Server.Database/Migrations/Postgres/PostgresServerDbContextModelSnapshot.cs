@@ -690,12 +690,12 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("job", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.JobPreference", b =>
+            modelBuilder.Entity("Content.Server.Database.JobPriorityEntry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("job_preference_id");
+                        .HasColumnName("job_priority_entry_id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -713,7 +713,7 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnName("priority");
 
                     b.HasKey("Id")
-                        .HasName("PK_job_preference");
+                        .HasName("PK_job_priority_entry");
 
                     b.HasIndex("PreferenceId");
 
@@ -721,7 +721,7 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsUnique()
                         .HasFilter("priority = 3");
 
-                    b.ToTable("job_preference", (string)null);
+                    b.ToTable("job_priority_entry", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
@@ -1728,14 +1728,14 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Profile");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.JobPreference", b =>
+            modelBuilder.Entity("Content.Server.Database.JobPriorityEntry", b =>
                 {
                     b.HasOne("Content.Server.Database.Preference", "Preference")
-                        .WithMany("JobPreferences")
+                        .WithMany("JobPriorities")
                         .HasForeignKey("PreferenceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_job_preference_preference_preference_id");
+                        .HasConstraintName("FK_job_priority_entry_preference_preference_id");
 
                     b.Navigation("Preference");
                 });
@@ -2093,7 +2093,7 @@ namespace Content.Server.Database.Migrations.Postgres
 
             modelBuilder.Entity("Content.Server.Database.Preference", b =>
                 {
-                    b.Navigation("JobPreferences");
+                    b.Navigation("JobPriorities");
 
                     b.Navigation("Profiles");
                 });

@@ -53,7 +53,7 @@ namespace Content.Server.Database
                     .ThenInclude(h => h.Loadouts)
                     .ThenInclude(l => l.Groups)
                     .ThenInclude(group => group.Loadouts)
-                .Include(p => p.JobPreferences)
+                .Include(p => p.JobPriorities)
                 .AsSplitQuery()
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
 
@@ -67,9 +67,9 @@ namespace Content.Server.Database
                 profiles[profile.Slot] = ConvertProfiles(profile);
             }
 
-            var jobPreferences = prefs.JobPreferences.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
+            var jobPriorities = prefs.JobPriorities.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
 
-            return new PlayerPreferences(profiles, Color.FromHex(prefs.AdminOOCColor), jobPreferences);
+            return new PlayerPreferences(profiles, Color.FromHex(prefs.AdminOOCColor), jobPriorities);
         }
 
         public async Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot)
@@ -120,20 +120,20 @@ namespace Content.Server.Database
             await using var db = await GetDb();
 
             var oldPref = db.DbContext.Preference
-                .Include(p => p.JobPreferences)
+                .Include(p => p.JobPriorities)
                 .Single(p => p.UserId == userId.UserId);
 
-            var newPrefs = new List<JobPreference>();
+            var newPrefs = new List<JobPriorityEntry>();
             foreach (var (job, priority) in newJobPriorities)
             {
-                var newPref = new JobPreference
+                var newPref = new JobPriorityEntry
                 {
                     JobName = job,
                     Priority = (DbJobPriority)priority,
                 };
                 newPrefs.Add(newPref);
             }
-            oldPref.JobPreferences = newPrefs;
+            oldPref.JobPriorities = newPrefs;
 
             await db.DbContext.SaveChangesAsync();
         }
@@ -161,7 +161,7 @@ namespace Content.Server.Database
 
             var dbPriorities = priorities
                 .Where(j => j.Value != JobPriority.Never)
-                .Select(j => new JobPreference { JobName = j.Key, Priority = (DbJobPriority)j.Value })
+                .Select(j => new JobPriorityEntry { JobName = j.Key, Priority = (DbJobPriority)j.Value })
                 .ToList();
 
             var profile = ConvertProfiles((HumanoidCharacterProfile) defaultProfile, 0);
@@ -169,7 +169,7 @@ namespace Content.Server.Database
             {
                 UserId = userId.UserId,
                 AdminOOCColor = Color.Red.ToHex(),
-                JobPreferences = dbPriorities,
+                JobPriorities = dbPriorities,
             };
 
             prefs.Profiles.Add(profile);
