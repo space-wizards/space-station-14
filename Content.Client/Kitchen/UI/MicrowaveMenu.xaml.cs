@@ -16,19 +16,29 @@ namespace Content.Client.Kitchen.UI
         public ButtonGroup CookTimeButtonGroup { get; }
 
         public bool IsBusy;
+        public bool IsSafe;
         public TimeSpan CurrentCooktimeEnd;
+        public TimeSpan StartedCooktime = TimeSpan.Zero;
 
         public MicrowaveMenu()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
             CookTimeButtonGroup = new ButtonGroup();
+            
+            CurrentCookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-current-cook-time-label", ("time", StartedCooktime.ToString(@"mm\:ss")));
+        }
+        
+        public void AddCookingButtons()
+        {
+            CookTimeButtonVbox.RemoveAllChildren();
+            
             InstantCookButton.Group = CookTimeButtonGroup;
             InstantCookButton.OnPressed += args =>
             {
                 OnCookTimeSelected?.Invoke(args, 0);
             };
-
+            
             for (var i = 1; i <= 6; i++)
             {
                 var newButton = new MicrowaveCookTimeButton
@@ -55,6 +65,11 @@ namespace Content.Client.Kitchen.UI
                 };
             }
         }
+        
+        public void ClearCookingButtons()
+        {
+            CookTimeButtonVbox.RemoveAllChildren();
+        }
 
         public void ToggleBusyDisableOverlayPanel(bool shouldDisable)
         {
@@ -67,8 +82,10 @@ namespace Content.Client.Kitchen.UI
 
             if (!IsBusy)
                 return;
+            
+            CurrentCookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-current-cook-time-label", ("time", (_timing.CurTime - StartedCooktime).ToString(@"mm\:ss")));
 
-            if (CurrentCooktimeEnd > _timing.CurTime)
+            if (CurrentCooktimeEnd > _timing.CurTime && IsSafe)
             {
                 CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
                 ("time", CurrentCooktimeEnd.Subtract(_timing.CurTime).Seconds));

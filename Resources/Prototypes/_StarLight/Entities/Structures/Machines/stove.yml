@@ -1,12 +1,13 @@
 - type: entity
-  id: KitchenOven
+  id: KitchenStove
   parent: [ BaseMachinePowered, SmallConstructibleMachine ]
-  name: oven
-  description: It's a huge magic.
+  name: stove
+  description: It's a small magic.
   components:
   - type: CookingDevice
     capacity: 10
-    deviceType: Oven
+    deviceType: Stove
+    safe: false
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -19,9 +20,6 @@
           Idle: { state: "on" }
           Broken: { state: "on" }
           Cooking: { state: "enabled" }
-        enum.MicrowaveVisualizerLayers.Opened:
-          Opened: { visible: true }
-          Closed: { visible: false }
       enum.PowerDeviceVisuals.Powered:
         enum.MicrowaveVisualizerLayers.BaseUnlit:
           True: { visible: true }
@@ -46,14 +44,14 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.3,-0.16,0.3,0.40"
+          bounds: "-0.3,-0.16,0.3,0.16"
         density: 190
         mask:
-        - MachineMask
+        - TabletopMachineMask
         layer:
-        - MachineLayer
+        - TabletopMachineLayer
   - type: Sprite
-    sprite: _Starlight/Structures/Machines/oven.rsi
+    sprite: _Starlight/Structures/Machines/stove.rsi
     drawdepth: SmallObjects
     snapCardinals: true
     layers:
@@ -62,9 +60,6 @@
     - state: on
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
-    - state: opened
-      visible: false
-      map: ["enum.MicrowaveVisualizerLayers.Opened"]
   - type: Destructible
     thresholds:
     - trigger:
@@ -83,7 +78,7 @@
   - type: ApcPowerReceiver
     powerLoad: 400
   - type: Machine
-    board: OvenMachineCircuitboard
+    board: StoveMachineCircuitboard
   - type: ContainerContainer
     containers:
       microwave_entity_container: !type:Container

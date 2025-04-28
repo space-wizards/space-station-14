@@ -4,7 +4,7 @@ namespace Content.Server.Kitchen.Components;
 /// Attached to an object that's actively being microwaved
 /// </summary>
 [RegisterComponent]
-public sealed partial class ActivelyMicrowavedComponent : Component
+public sealed partial class ActivelyCookedComponent : Component
 {
     /// <summary>
     /// The microwave this entity is actively being microwaved by.

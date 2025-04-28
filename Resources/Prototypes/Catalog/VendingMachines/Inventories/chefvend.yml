@@ -21,6 +21,7 @@
     FoodCheese: 1
     FoodMeat: 6
     KitchenOvenFlatpack: 1
+    KitchenStoveFlatpack: 1
   contrabandInventory:
     EggBoxBroken: 1
     FoodBoxDonkpocket: 1

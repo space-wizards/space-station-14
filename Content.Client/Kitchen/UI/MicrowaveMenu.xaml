@@ -30,6 +30,11 @@
                     <!-- Ingredients are added here by code -->
                 </ItemList>
             </PanelContainer>
+            <PanelContainer Name="DisableCookingPanelOverlay" MouseFilter="Stop">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E66" />
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
             <BoxContainer
                 Orientation="Vertical"
                 MinWidth="170"
@@ -44,6 +49,12 @@
                         ModulateSelfOverride="#FF0000"
                         MinSize="100 128">
                         <BoxContainer Orientation="Vertical">
+                            <Label
+                                Name="CurrentCookTimeInfoLabel"
+                                Access="Public"
+                                Align="Center"
+                                Modulate="#FFFFFF"
+                                VAlign="Center" />
                             <Label
                                 Name="CookTimeInfoLabel"
                                 Access="Public"
@@ -74,19 +85,32 @@
                                     Align="Center"
                                     SizeFlagsStretchRatio="3">
                                     <Control MinSize="0 15" />
-                                    <Button
-                                        Name="StartButton"
-                                        Access="Public"
-                                        Text="{Loc 'microwave-menu-start-button'}"
-                                        StyleClasses="ButtonColorGreen"
-                                        TextAlign="Center" />
-                                    <Button
-                                        Name="EjectButton"
-                                        Access="Public"
-                                        Text="{Loc 'microwave-menu-eject-all-text'}"
-                                        ToolTip="{Loc 'microwave-menu-eject-all-tooltip'}"
-                                        StyleClasses="ButtonColorRed"
-                                        TextAlign="Center" />
+                                    <BoxContainer Orientation="Horizontal" Align="Center" SeparationOverride="4">
+                                        <PanelContainer SizeFlagsStretchRatio="1">
+                                            <BoxContainer SeparationOverride="0">
+                                                <Button
+                                                    Name="StartButton"
+                                                    Access="Public"
+                                                    Text="{Loc 'microwave-menu-start-button'}"
+                                                    StyleClasses="ButtonColorGreen"
+                                                    TextAlign="Center" />
+                                                <Button
+                                                    Name="StopButton"
+                                                    Access="Public"
+                                                    Text="{Loc 'microwave-menu-stop-button'}"
+                                                    StyleClasses="ButtonColorRed"
+                                                    TextAlign="Center" />
+                                            </BoxContainer>
+                                        </PanelContainer>
+                                        <Button
+                                            Name="EjectButton"
+                                            Access="Public"
+                                            Text="{Loc 'microwave-menu-eject-all-text'}"
+                                            ToolTip="{Loc 'microwave-menu-eject-all-tooltip'}"
+                                            StyleClasses="ButtonColorRed"
+                                            TextAlign="Center" 
+                                            SizeFlagsStretchRatio="1" />
+                                    </BoxContainer>
                                 </BoxContainer>
                             </BoxContainer>
                         </BoxContainer>
@@ -95,7 +119,7 @@
             </BoxContainer>
         </BoxContainer>
          <!-- Footer -->
-        <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical" MinSize="0 10" MaxSize="9999 10">
             <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'microwave-menu-footer-flavor-left'}" StyleClasses="WindowFooterText" />
@@ -105,9 +129,4 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-    <PanelContainer Name="DisableCookingPanelOverlay" MouseFilter="Stop">
-        <PanelContainer.PanelOverride>
-            <gfx:StyleBoxFlat BackgroundColor="#1B1B1E66" />
-        </PanelContainer.PanelOverride>
-    </PanelContainer>
 </controls:FancyWindow>

@@ -30,7 +30,8 @@
   - BiogeneratorMachineCircuitboard
   - UniformPrinterMachineCircuitboard
   - MicrowaveMachineCircuitboard
-  - OvenMachineCircuitboard
+  - OvenMachineCircuitboard # Starlight-edit
+  - StoveMachineCircuitboard # Starlight-edit
   - ReagentGrinderMachineCircuitboard
   - ElectricGrillMachineCircuitboard
   - BoozeDispenserMachineCircuitboard

@@ -12,8 +12,16 @@ namespace Content.Client.Kitchen.UI
     [UsedImplicitly]
     public sealed class MicrowaveBoundUserInterface : BoundUserInterface
     {
+        private IEntityManager _entManager;
+        
+        private IGameTiming _timing = default!;
+        
+        [ViewVariables]
+        private EntityUid? _owner;
+        
         [ViewVariables]
         private MicrowaveMenu? _menu;
+        
 
         [ViewVariables]
         private readonly Dictionary<int, EntityUid> _solids = new();
@@ -23,13 +31,29 @@ namespace Content.Client.Kitchen.UI
 
         public MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
+            _owner = owner;
+            _entManager = IoCManager.Resolve<IEntityManager>();
+            _timing = IoCManager.Resolve<IGameTiming>();
         }
 
         protected override void Open()
         {
             base.Open();
             _menu = this.CreateWindow<MicrowaveMenu>();
+            
+            if (!_entManager.TryGetComponent<CookingDeviceComponent>(_owner, out var cookingDevice))
+                return;
+            
+            if (_owner != null && cookingDevice.Safe)
+                _menu.AddCookingButtons();
+            else
+            {
+                _menu.CookTimeInfoLabel.Text = "";
+                _menu.InstantCookButton.Visible = false;
+            }
             _menu.StartButton.OnPressed += _ => SendPredictedMessage(new MicrowaveStartCookMessage());
+            _menu.StopButton.OnPressed += _ => SendPredictedMessage(new MicrowaveStopCookMessage());
+            _menu.StopButton.Visible = false;
             _menu.EjectButton.OnPressed += _ => SendPredictedMessage(new MicrowaveEjectMessage());
             _menu.IngredientsList.OnItemSelected += args =>
             {
@@ -48,16 +72,16 @@ namespace Content.Client.Kitchen.UI
                     // SendMessage(new MicrowaveSelectCookTimeMessage((int) selectedCookTime / 5, actualButton.CookTime));
                     SendPredictedMessage(new MicrowaveSelectCookTimeMessage((int) selectedCookTime / 5, actualButton.CookTime));
 
-                    _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                                                                    ("time", selectedCookTime));
+                    if (cookingDevice.Safe)
+                        _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label", ("time", selectedCookTime));
                 }
                 else
                 {
                     // args.Button is a normal button aka instant cook button
                     SendPredictedMessage(new MicrowaveSelectCookTimeMessage((int) selectedCookTime, 0));
-
-                    _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                                                         ("time", Loc.GetString("microwave-menu-instant-button")));
+                    
+                    if (cookingDevice.Safe)
+                        _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label", ("time", Loc.GetString("microwave-menu-instant-button")));
                 }
             };
         }
@@ -71,6 +95,7 @@ namespace Content.Client.Kitchen.UI
             }
 
             _menu.IsBusy = cState.IsMicrowaveBusy;
+            _menu.IsSafe = cState.IsMicrowaveSafe;
             _menu.CurrentCooktimeEnd = cState.CurrentCookTimeEnd;
 
             _menu.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0);
@@ -82,11 +107,30 @@ namespace Content.Client.Kitchen.UI
                 ? Loc.GetString("microwave-menu-instant-button")
                 : cState.CurrentCookTime.ToString();
 
-
-            _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                                                         ("time", cookTime));
+            if (cState.IsMicrowaveSafe)
+                _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label", ("time", cookTime));
+            else
+            {
+                _menu.CookTimeInfoLabel.Text = "";
+                _menu.InstantCookButton.Visible = false;
+            }
             _menu.StartButton.Disabled = cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0;
+            _menu.StartButton.Visible = !cState.IsMicrowaveBusy;
+            _menu.StopButton.Visible = cState.IsMicrowaveBusy;
+            _menu.StopButton.Disabled = !cState.IsMicrowaveBusy;
             _menu.EjectButton.Disabled = cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0;
+            
+            if (cState.IsMicrowaveSafe)
+                _menu.AddCookingButtons();
+            else
+                _menu.ClearCookingButtons();
+            
+            _menu.StartedCooktime = cState.StartedCookTime;
+            
+            if (cState.StartedCookTime != TimeSpan.Zero)
+                _menu.CurrentCookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-current-cook-time-label", ("time", (_timing.CurTime - cState.StartedCookTime).ToString(@"mm\:ss")));
+            else
+                _menu.CurrentCookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-current-cook-time-label", ("time", cState.StartedCookTime.ToString(@"mm\:ss")));
 
 
             //Set the correct button active button
@@ -99,6 +143,13 @@ namespace Content.Client.Kitchen.UI
                 var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex - 1);
                 currentlySelectedTimeButton.Pressed = true;
             }
+            
+            foreach (Button children in _menu.CookTimeButtonVbox.Children)
+            {
+                children.Disabled = cState.IsMicrowaveBusy;
+            }
+            
+            _menu.InstantCookButton.Disabled = cState.IsMicrowaveBusy;
 
             //Set the "micowave light" ui color to indicate if the microwave is busy or not
             if (cState.IsMicrowaveBusy && cState.ContainedSolids.Length > 0)

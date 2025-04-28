@@ -15,12 +15,14 @@ microwave-component-interact-item-too-big = { CAPITALIZE(THE($item)) } is too bi
 ## Bound UI
 
 microwave-bound-user-interface-instant-button = INSTANT
-microwave-bound-user-interface-cook-time-label = COOK TIME: {$time}
+microwave-bound-user-interface-current-cook-time-label = CURRENT COOK TIME: {$time}
+microwave-bound-user-interface-cook-time-label = SELECTED COOK TIME: {$time}
 
 ## UI
 
 microwave-menu-title = Cooking
 microwave-menu-start-button = Start
+microwave-menu-stop-button = Stop
 microwave-menu-eject-all-text = Eject All Contents
 microwave-menu-eject-all-tooltip = This vaporizes all reagents, but ejects any solids.
 microwave-menu-instant-button = INSTANT
