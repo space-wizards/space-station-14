@@ -1,47 +1,47 @@
 - type: entity
-  name: revecrystal
+  name: telebond
   parent: [BaseItem, BaseSovietContraband]
-  id: Revecrystal
-  suffix: 20 RC
-  description: It seems to be pulsing with suspiciously enticing energies. Modified for a dubious or righteous cause, depending on where you stand. Which side are you on?
+  id: Telebond
+  suffix: 20 TB
+  description: Outdated tickets printed with a microcrystalline pattern, used to summon supplies via an old radio uplink, the old way. "DO NOT EAT!" — Boris
   components:
   - type: Sprite
-    sprite: _Starlight/Objects/Specific/USSP/revecrystal.rsi
-    state: revecrystal
+    sprite: _Starlight/Objects/Specific/USSP/telebond.rsi
+    state: telebond
   - type: Item
-    sprite: _Starlight/Objects/Specific/USSP/revecrystal.rsi
+    sprite: _Starlight/Objects/Specific/USSP/telebond.rsi
     size: Tiny
   - type: Stack
     count: 20
-    stackType: Revecrystal
+    stackType: Telebond
   - type: StaticPrice
     price: 0
   - type: StackPrice
     price: 200
   - type: Currency
     price:
-      Revecrystal: 1
+      Telebond: 1
 
 - type: entity
-  parent: Revecrystal
-  id: Revecrystal1
-  suffix: 1 RC
+  parent: Telebond
+  id: Telebond1
+  suffix: 1 TB
   components:
   - type: Stack
     count: 1
 
 - type: entity
-  parent: Revecrystal
-  id: Revecrystal5
-  suffix: 5 RC
+  parent: Telebond
+  id: Telebond5
+  suffix: 5 TB
   components:
   - type: Stack
     count: 5
 
 - type: entity
-  parent: Revecrystal
-  id: Revecrystal10
-  suffix: 10 RC
+  parent: Telebond
+  id: Telebond10
+  suffix: 10 TB
   components:
   - type: Stack
     count: 10
@@ -69,7 +69,7 @@
     key: enum.StoreUiKey.Key
   - type: Store
     balance:
-      Revecrystal: 0
+      Telebond: 0
 
 - type: entity
   parent: [BaseRevUplinkRadio, StorePresetUSSP]

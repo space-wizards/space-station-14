@@ -45,6 +45,6 @@
     categories:
     - RevUplinkWeaponry
     currencyWhitelist:
-    - Revecrystal
+    - Telebond
     balance:
-      Revecrystal: 0
+      Telebond: 0

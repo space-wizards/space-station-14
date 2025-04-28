@@ -30,7 +30,7 @@ namespace Content.Server.Implants
                 return;
 
             // Check if the user has the USSP uplink implant store
-            if (!store.Balance.ContainsKey("Revecrystal"))
+            if (!store.Balance.ContainsKey("Telebond"))
                 return;
 
             // Open the USSP uplink UI (StoreBoundUserInterface)

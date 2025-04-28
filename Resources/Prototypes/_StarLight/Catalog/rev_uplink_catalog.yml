@@ -2,6 +2,6 @@
   id: AKMSweapon
   productEntity: WeaponRifleAk
   cost:
-    Revecrystal: 4
+    Telebond: 4
   categories:
   - RevUplinkWeaponry

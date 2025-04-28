@@ -6,8 +6,8 @@
   canWithdraw: true
 
 - type: currency
-  id: Revecrystal
-  displayName: "revecrystal"
+  id: Telebond
+  displayName: "telebond"
   cash:
-    1: Revecrystal1
+    1: Telebond1
   canWithdraw: true
