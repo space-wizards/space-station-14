@@ -15,30 +15,9 @@ namespace Content.Client.Ghost
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly PointLightSystem _pointLightSystem = default!;
         [Dependency] private readonly ContentEyeSystem _contentEye = default!;
+        [Dependency] private readonly GhostVisibilitySystem _ghostVis = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
-
-        private bool _ghostVisibility = true;
-
-        private bool GhostVisibility
-        {
-            get => _ghostVisibility;
-            set
-            {
-                if (_ghostVisibility == value)
-                {
-                    return;
-                }
-
-                _ghostVisibility = value;
-
-                var query = AllEntityQuery<GhostComponent, SpriteComponent>();
-                while (query.MoveNext(out var uid, out _, out var sprite))
-                {
-                    sprite.Visible = value || uid == _playerManager.LocalEntity;
-                }
-            }
-        }
 
         public GhostComponent? Player => CompOrNull<GhostComponent>(_playerManager.LocalEntity);
         public bool IsGhost => Player != null;
@@ -54,7 +33,6 @@ namespace Content.Client.Ghost
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GhostComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<GhostComponent, ComponentRemove>(OnGhostRemove);
             SubscribeLocalEvent<GhostComponent, AfterAutoHandleStateEvent>(OnGhostState);
 
@@ -69,11 +47,6 @@ namespace Content.Client.Ghost
             SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
         }
 
-        private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
-        {
-            if (TryComp(uid, out SpriteComponent? sprite))
-                sprite.Visible = GhostVisibility || uid == _playerManager.LocalEntity;
-        }
 
         private void OnToggleLighting(EntityUid uid, EyeComponent component, ToggleLightingActionEvent args)
         {
@@ -119,10 +92,10 @@ namespace Content.Client.Ghost
             if (args.Handled)
                 return;
 
-            var locId = GhostVisibility ? "ghost-gui-toggle-ghost-visibility-popup-off" : "ghost-gui-toggle-ghost-visibility-popup-on";
+            var locId = _ghostVis.ShowGhosts ? "ghost-gui-toggle-ghost-visibility-popup-off" : "ghost-gui-toggle-ghost-visibility-popup-on";
             Popup.PopupEntity(Loc.GetString(locId), args.Performer);
             if (uid == _playerManager.LocalEntity)
-                ToggleGhostVisibility();
+                _ghostVis.ShowGhosts = !_ghostVis.ShowGhosts;
 
             args.Handled = true;
         }
@@ -137,13 +110,13 @@ namespace Content.Client.Ghost
             if (uid != _playerManager.LocalEntity)
                 return;
 
-            GhostVisibility = false;
+            _ghostVis.ShowGhosts = false;
             PlayerRemoved?.Invoke(component);
         }
 
         private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, LocalPlayerAttachedEvent localPlayerAttachedEvent)
         {
-            GhostVisibility = true;
+            _ghostVis.ShowGhosts = true;
             PlayerAttached?.Invoke(component);
         }
 
@@ -160,7 +133,7 @@ namespace Content.Client.Ghost
 
         private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, LocalPlayerDetachedEvent args)
         {
-            GhostVisibility = false;
+            _ghostVis.ShowGhosts = false;
             PlayerDetached?.Invoke();
         }
 
@@ -194,11 +167,6 @@ namespace Content.Client.Ghost
         public void OpenGhostRoles()
         {
             _console.RemoteExecuteCommand(null, "ghostroles");
-        }
-
-        public void ToggleGhostVisibility(bool? visibility = null)
-        {
-            GhostVisibility = visibility ?? !GhostVisibility;
         }
     }
 }

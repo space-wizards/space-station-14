@@ -19,9 +19,6 @@
   id: AllowBiomeLoading # Entities with this tag will load terrain, even if a ghost.
 
 - type: Tag
-  id: AllowGhostShownByEvent
-
-- type: Tag
   id: Ambrosia
 
 - type: Tag

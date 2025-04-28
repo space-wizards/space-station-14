@@ -6,6 +6,8 @@
   name: revenant
   description: A spooky ghostie.
   components:
+  - type: GhostVisibility
+    visibleOnRoundEnd: true
   - type: Input
     context: "ghost"
   - type: Spectral
