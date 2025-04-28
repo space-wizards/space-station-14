@@ -61,18 +61,18 @@ public sealed partial class StaminaComponent : Component
     /// <summary>
     /// This flag indicates whether the value of <see cref="StaminaDamage"/> decreases after the entity exits stamina crit.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField, DataField]
+    [DataField, AutoNetworkedField]
     public bool AfterCritical;
 
     /// <summary>
     /// This float determines how fast stamina will regenerate after exiting the stamina crit.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField, AutoNetworkedField]
     public float AfterCritDecayMultiplier = 5f;
 
     /// <summary>
     /// Thresholds that determine an entity's slowdown as a function of stamina damage.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), DataField("stunModifierThresholds")]
+    [ViewVariables(VVAccess.ReadOnly), DataField]
     public Dictionary<FixedPoint2, float> StunModifierThresholds = new() { {0, 1f }, { 60, 0.7f }, { 80, 0.5f } };
 }
