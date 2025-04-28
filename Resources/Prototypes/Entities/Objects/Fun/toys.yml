@@ -1922,8 +1922,8 @@
     delay: 0.8
   - type: Slippery
     slipData:
-        paralyzeTime: 0
-        launchForwardsMultiplier: 0
+      paralyzeTime: 0
+      launchForwardsMultiplier: 0
     slipSound:
       collection: Parp
       params:
