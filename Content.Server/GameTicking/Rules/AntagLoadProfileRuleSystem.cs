@@ -27,6 +27,7 @@ public sealed class AntagLoadProfileRuleSystem : GameRuleSystem<AntagLoadProfile
         if (args.Handled)
             return;
 
+        // Try to find a profile with this antagonist enabled on the player preferences
         HumanoidCharacterProfile? profile = null;
         if (args.Session != null)
         {
@@ -35,6 +36,7 @@ public sealed class AntagLoadProfileRuleSystem : GameRuleSystem<AntagLoadProfile
             profile = prefs.SelectProfileForAntag(roles);
         }
 
+        // If we can't find one, give them a random humanoid
         profile ??= HumanoidCharacterProfile.RandomWithSpecies();
         if (profile?.Species is not { } speciesId || !_proto.TryIndex(speciesId, out var species))
         {

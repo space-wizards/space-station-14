@@ -63,6 +63,8 @@ namespace Content.Client.Lobby.UI
             SelectedId += x =>
             {
                 var (station, slot, jobId) = x;
+                if (slot < 0)
+                    return;
                 Logger.InfoS("latejoin", $"Late joining as ID: {jobId}");
                 _consoleHost.ExecuteCommand($"joingame {slot} {CommandParsing.Escape(jobId)} {station}");
                 Close();
@@ -290,6 +292,7 @@ namespace Content.Client.Lobby.UI
                         jobButton.AddChild(jobSelector);
                         category.AddChild(jobButton);
 
+                        // just send a -1 if there is no selected slot... catch it later
                         jobButton.OnPressed += _ => SelectedId.Invoke((id, _selectedSlot ?? -1, jobButton.JobId));
 
                         if (!_jobRequirements.IsAllowed(prototype, humanoid, out var reason))

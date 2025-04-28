@@ -79,7 +79,7 @@ namespace Content.Client.Lobby.UI
         public HumanoidCharacterProfile? Profile;
 
         /// <summary>
-        /// The last saved profile, should match the server's copy, used for dirty state and "reset"
+        /// The last saved profile, should match the server's copy, used for dirty state check and "reset to default"
         /// </summary>
         private HumanoidCharacterProfile? _savedProfile;
 

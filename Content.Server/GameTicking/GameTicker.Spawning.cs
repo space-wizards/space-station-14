@@ -118,6 +118,7 @@ namespace Content.Server.GameTicking
                 if (job == null)
                     continue;
 
+                // Select a profile for the player
                 var playerPrefs = _preferencesManager.GetPreferences(player);
                 var profile = playerPrefs.SelectProfileForJob(job.Value);
                 if (profile == null)
@@ -407,6 +408,7 @@ namespace Content.Server.GameTicking
             Entity<MindComponent?>? mind = player.GetMind();
             if (mind == null)
             {
+                // There is no selected character anymore, just use the player's name directly
                 var name = player.Name;
                 var (mindId, mindComp) = _mind.CreateMind(player.UserId, name);
                 mind = (mindId, mindComp);

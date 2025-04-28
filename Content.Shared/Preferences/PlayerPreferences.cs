@@ -141,7 +141,7 @@ namespace Content.Shared.Preferences
         /// Get any random enabled profile
         /// </summary>
         /// <returns></returns>
-        public HumanoidCharacterProfile? GetRandomProfile()
+        public HumanoidCharacterProfile? GetRandomEnabledProfile()
         {
             var random = IoCManager.Resolve<IRobustRandom>();
             var pool = Characters.Values.Where(p => p is HumanoidCharacterProfile { Enabled: true }).ToList();

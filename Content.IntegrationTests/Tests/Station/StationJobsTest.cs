@@ -94,8 +94,6 @@ public sealed class StationJobsTest
         var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
         var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
         var logmill = server.ResolveDependency<ILogManager>().RootSawmill;
-        var prefMan = server.ResolveDependency<IServerPreferencesManager>();
-        var dbMan = server.ResolveDependency<UserDbDataManager>();
 
         List<EntityUid> stations = new();
         await server.WaitPost(() =>

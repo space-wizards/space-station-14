@@ -301,6 +301,9 @@ public sealed partial class StationJobsSystem
         {
             var roleBans = _banManager.GetJobBans(player);
             var antagBlocked = _antag.GetPreSelectedAntagSessions();
+
+            // Get all the jobs that a player has selected with a priority greater than Never and also that they
+            // have an enabled character with that job preference selected
             var playerPrefs = _serverPreferences.GetPreferences(player);
             var playerJobs = playerPrefs.JobPriorities;
             var allCharacterJobs = new HashSet<ProtoId<JobPrototype>>();
@@ -320,6 +323,7 @@ public sealed partial class StationJobsSystem
                 filteredPlayerJobs.Add(job);
             }
 
+            // Remove jobs that the player in ineligible for
             var profileJobs = filteredPlayerJobs.ToList();
             var ev = new StationJobsGetCandidatesEvent(player, profileJobs);
             RaiseLocalEvent(ref ev);
