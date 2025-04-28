@@ -263,6 +263,21 @@ public sealed class ItemToggleSystem : EntitySystem
         RaiseLocalEvent(uid, ref toggleUsed);
     }
 
+    /// <summary>
+    /// Sets if this toggleable item can be activated in world by pressing "e"
+    /// </summary>
+    public void SetOnActivate(Entity<ItemToggleComponent?> ent, bool val)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (ent.Comp.OnActivate == val)
+            return;
+
+        ent.Comp.OnActivate = val;
+        Dirty(ent);
+    }
+
     private void UpdateVisuals(Entity<ItemToggleComponent> ent)
     {
         if (TryComp(ent, out AppearanceComponent? appearance))

@@ -1,0 +1,6 @@
+﻿<Control xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Horizontal">
+        <Button Name="OffButton" StyleClasses="OpenRight" Text="{Loc 'ui-button-off'}" />
+        <Button Name="OnButton" StyleClasses="OpenLeft" Text="{Loc 'ui-button-on'}" />
+    </BoxContainer>
+</Control>
