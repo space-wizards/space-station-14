@@ -8,6 +8,7 @@
     nameSegments:
     - ApidWorker
     - ApidNames
+    nameFormat: name-format-standard
   - type: RandomHumanoidAppearance
     randomizeName: false
 
@@ -24,6 +25,7 @@
     nameSegments:
     - ApidBotanist
     - ApidNames
+    nameFormat: name-format-standard
 
 - type: entity
   name: apid doctor
@@ -38,6 +40,7 @@
     nameSegments:
     - ApidDoctor
     - ApidNames
+    nameFormat: name-format-standard
 
 - type: entity
   name: apid engineer
@@ -52,6 +55,7 @@
     nameSegments:
     - ApidEngineer
     - ApidNames
+    nameFormat: name-format-standard
 
 - type: entity
   name: apid emergency responder
@@ -66,6 +70,7 @@
     nameSegments:
     - ApidEmergency
     - ApidNames
+    nameFormat: name-format-standard
 
 - type: entity
   name: apid chef
@@ -80,6 +85,7 @@
     nameSegments:
     - ApidChef
     - ApidNames
+    nameFormat: name-format-standard
 
 - type: entity
   name: apid courier
@@ -94,6 +100,7 @@
     nameSegments:
     - ApidCourier
     - ApidNames
+    nameFormat: name-format-standard
 
 - type: entity
   name: apid scientist
@@ -108,6 +115,7 @@
     nameSegments:
     - ApidScientist
     - ApidNames
+    nameFormat: name-format-standard
 
 - type: entity
   name: apid janitor
@@ -122,6 +130,7 @@
     nameSegments:
     - ApidJanitor
     - ApidNames
+    nameFormat: name-format-standard
 
 - type: entity
   name: apid administrative assistant
@@ -136,6 +145,7 @@
     nameSegments:
     - ApidAdminAssistant
     - ApidNames
+    nameFormat: name-format-standard
 
 - type: entity
   name: apid chaplain
@@ -150,6 +160,7 @@
     nameSegments:
     - ApidChaplain
     - ApidNames
+    nameFormat: name-format-standard
   - type: BibleUser #thusd beeble
 
 - type: entity
@@ -165,3 +176,4 @@
     nameSegments:
     - ApidSalvager
     - ApidNames
+    nameFormat: name-format-standard
