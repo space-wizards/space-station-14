@@ -113,13 +113,13 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         {
             string messageDenied = Loc.GetString("delivery-insert-denied", ("mail", args.Used));
             _chat.TrySendInGameICMessage(args.Target.Value, messageDenied, InGameICChatType.Speak, hideChat: true);
-            _audio.PlayPvs(deliverySpawner.InsertAppoveSound, args.Target.Value);
+            _audio.PlayPvs(deliverySpawner.InsertDenySound, args.Target.Value);
             return;
         }
 
         string messageApproved = Loc.GetString("delivery-insert-approved", ("mail", args.Used));
         _chat.TrySendInGameICMessage(args.Target.Value, messageApproved, InGameICChatType.Speak, hideChat: true);
-        _audio.PlayPvs(deliverySpawner.InsertDenySound, args.Target.Value);
+        _audio.PlayPvs(deliverySpawner.InsertAppoveSound, args.Target.Value);
         QueueDel(args.Used);
     }
 
