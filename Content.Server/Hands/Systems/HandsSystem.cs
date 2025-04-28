@@ -11,7 +11,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Inventory.VirtualItem;
-using Content.Shared.Item;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
@@ -227,7 +226,7 @@ namespace Content.Server.Hands.Systems
 
             var throwSpeed = hands.BaseThrowspeed;
             // Checks for and applies the throwing speed modifier
-            if (EntityManager.TryGetComponent<ThrowSpeedModifierComponent>(throwEnt, out var speedComp)
+            if (TryComp<ThrowSpeedModifierComponent>(throwEnt, out var speedComp)
                 && throwSpeed + speedComp.Modifier > 0)
             {
                 throwSpeed += speedComp.Modifier;
