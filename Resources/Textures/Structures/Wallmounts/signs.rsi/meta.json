@@ -509,6 +509,9 @@
         },
         {
             "name": "ntmining"
-        }
+        },
+        {
+            "name": "brief"
+        },
     ]
 }

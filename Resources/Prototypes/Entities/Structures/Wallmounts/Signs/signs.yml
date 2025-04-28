@@ -1420,3 +1420,13 @@
   components:
   - type: Sprite
     state: ntmining
+
+#shmeegstation changes
+- type: entity
+  parent: BaseSign
+  id: SignBrief
+  name: briefing room sign
+  description: A sign indicating the briefing room.
+  components:
+  - type: Sprite
+    state: Brief
