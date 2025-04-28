@@ -1,10 +1,11 @@
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.FixedPoint;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Chemistry.UI;

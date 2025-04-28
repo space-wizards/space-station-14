@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using Content.Shared.FixedPoint;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Server.Administration.Logs.Converters;
 

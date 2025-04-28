@@ -1,10 +1,10 @@
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Shared.FixedPoint;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Client.Tools.UI;
 

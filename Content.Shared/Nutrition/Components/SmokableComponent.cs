@@ -1,6 +1,6 @@
-using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
 using Robust.Shared.Audio;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Nutrition.Components

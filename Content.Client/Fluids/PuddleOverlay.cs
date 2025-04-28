@@ -1,8 +1,8 @@
 using System.Numerics;
-using Content.Shared.FixedPoint;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 

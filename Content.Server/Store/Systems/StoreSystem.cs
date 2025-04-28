@@ -1,6 +1,5 @@
 using Content.Server.Store.Components;
 using Content.Shared.UserInterface;
-using Content.Shared.FixedPoint;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -12,6 +11,7 @@ using Robust.Shared.Utility;
 using System.Linq;
 using Robust.Shared.Timing;
 using Content.Shared.Mind;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Server.Store.Systems;
 

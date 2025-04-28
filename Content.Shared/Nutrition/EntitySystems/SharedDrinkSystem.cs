@@ -1,8 +1,8 @@
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition.Components;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 

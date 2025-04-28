@@ -1,10 +1,10 @@
 ﻿using Content.Shared.Beeper.Systems;
-using Content.Shared.FixedPoint;
 using Content.Shared.ProximityDetection.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Beeper.Components;
+ using Robust.Shared.FixedPoint;
+ namespace Content.Shared.Beeper.Components;
 
 /// <summary>
 /// This is used for an item that beeps based on

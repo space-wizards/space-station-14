@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Store.Systems;
 using Content.Server.StoreDiscount.Systems;
-using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants;
 using Content.Shared.Inventory;
@@ -9,6 +8,7 @@ using Content.Shared.Mind;
 using Content.Shared.PDA;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traitor.Uplink;

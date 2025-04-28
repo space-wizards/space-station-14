@@ -1,7 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
-using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Medical.Stethoscope.Components;
 using Content.Shared.Mobs.Components;
@@ -9,6 +8,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Shared.Medical.Stethoscope;
 

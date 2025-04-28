@@ -1,5 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.FixedPoint;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Server.Power.Components;
 

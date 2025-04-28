@@ -2,12 +2,12 @@ using Content.Server.Destructible;
 using Content.Shared.Construction;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Server.Construction.Conditions;
 

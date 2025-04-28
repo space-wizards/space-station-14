@@ -3,6 +3,7 @@ using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
+using Serilog;
 
 namespace Content.Server.Store.Systems;
 

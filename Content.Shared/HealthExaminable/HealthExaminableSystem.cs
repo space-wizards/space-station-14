@@ -1,8 +1,8 @@
 using Content.Shared.Damage;
 using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Verbs;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.HealthExaminable;

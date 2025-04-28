@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Damage.Prototypes;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
+using Robust.Shared.FixedPoint;
 namespace Content.Shared.HealthExaminable;
 
 [RegisterComponent, Access(typeof(HealthExaminableSystem))]

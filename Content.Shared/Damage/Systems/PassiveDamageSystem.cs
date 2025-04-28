@@ -1,7 +1,6 @@
 using Content.Shared.Damage.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Components;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage;

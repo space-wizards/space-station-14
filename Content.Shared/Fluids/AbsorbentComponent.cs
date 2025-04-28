@@ -1,9 +1,9 @@
 using Content.Shared.Audio;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Fluids;
+ using Robust.Shared.FixedPoint;
+ namespace Content.Shared.Fluids;
 
 /// <summary>
 /// For entities that can clean up puddles

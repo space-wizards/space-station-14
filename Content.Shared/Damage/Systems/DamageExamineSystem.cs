@@ -2,8 +2,8 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
 using Content.Shared.Verbs;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 

@@ -4,7 +4,6 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Hypospray.Events;
 using Content.Shared.Chemistry;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
 using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -15,6 +14,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Content.Server.Body.Components;
 using System.Linq;
 using Robust.Server.Audio;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Server.Chemistry.EntitySystems;
 

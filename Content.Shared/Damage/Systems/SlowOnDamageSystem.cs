@@ -1,9 +1,9 @@
 using Content.Shared.Clothing;
 using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Systems;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Shared.Damage
 {

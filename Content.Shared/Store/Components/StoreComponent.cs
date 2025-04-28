@@ -1,6 +1,6 @@
-using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Store.Components;
@@ -87,11 +87,13 @@ public sealed partial class StoreComponent : Component
     public EntityUid? StartingMap;
 
     #region audio
+
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.
     /// </summary>
     [DataField]
     public SoundSpecifier BuySuccessSound = new SoundPathSpecifier("/Audio/Effects/kaching.ogg");
+
     #endregion
 }
 
@@ -100,6 +102,7 @@ public sealed partial class StoreComponent : Component
 /// </summary>
 [ByRefEvent]
 public readonly record struct StoreAddedEvent;
+
 /// <summary>
 /// Event that is broadcast when a store is removed from an entity
 /// </summary>

@@ -1,7 +1,7 @@
 using Content.Shared.Dataset;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Bed.Sleep;

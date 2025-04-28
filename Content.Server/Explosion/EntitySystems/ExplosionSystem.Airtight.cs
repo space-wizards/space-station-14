@@ -4,7 +4,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.EntitySystems;
-using Content.Shared.FixedPoint;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -40,7 +40,7 @@ public sealed partial class ExplosionSystem
     //
     // We then need this data for every tile on a grid. So this mess of a variable maps the Grid ID and Vector2i grid
     // indices to this tile-data struct.
-    private Dictionary<EntityUid, Dictionary<Vector2i, TileData>> _airtightMap = new();
+    private Dictionary<EntityUid, Dictionary<Vector2i, ExplosionSystem.TileData>> _airtightMap = new();
 
     public void UpdateAirtightMap(EntityUid gridId, Vector2i tile, MapGridComponent? grid = null, EntityQuery<AirtightComponent>? query = null)
     {

@@ -1,10 +1,10 @@
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Silicons.Bots;
+ using Robust.Shared.FixedPoint;
+ namespace Content.Shared.Silicons.Bots;
 
 /// <summary>
 /// Used by the server for NPC medibot injection.

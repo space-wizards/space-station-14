@@ -1,12 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
-using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Events;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.CombatMode.Pacification;

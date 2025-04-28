@@ -1,5 +1,5 @@
-using Content.Shared.FixedPoint;
 using Content.Shared.Store;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

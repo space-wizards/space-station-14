@@ -1,6 +1,5 @@
 using System.Collections.Frozen;
 using System.Linq;
-using Content.Shared.FixedPoint;
 using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
@@ -12,6 +11,7 @@ using Content.Shared.Nutrition;
 using Content.Shared.Prototypes;
 using Content.Shared.Slippery;
 using Robust.Shared.Audio;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;

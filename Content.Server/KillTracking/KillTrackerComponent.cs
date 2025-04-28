@@ -1,6 +1,6 @@
-﻿using Content.Shared.FixedPoint;
-using Content.Shared.Mobs;
+﻿using Content.Shared.Mobs;
 using Robust.Shared.Network;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Server.KillTracking;
 

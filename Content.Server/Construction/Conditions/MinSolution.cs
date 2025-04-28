@@ -2,7 +2,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction.Conditions;

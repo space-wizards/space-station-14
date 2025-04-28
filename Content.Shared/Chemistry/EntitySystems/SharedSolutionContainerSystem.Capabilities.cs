@@ -2,10 +2,10 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 

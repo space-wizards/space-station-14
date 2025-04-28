@@ -1,8 +1,9 @@
+using System.Text.RegularExpressions;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
-using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -12,7 +13,7 @@ namespace Content.Server.EntityEffects.Effects
     public sealed partial class AdjustReagent : EntityEffect
     {
         /// <summary>
-        ///     The reagent ID to remove. Only one of this and <see cref="Group"/> should be active.
+        ///     The reagent ID to remove. Only one of this and <see cref="System.Text.RegularExpressions.Group"/> should be active.
         /// </summary>
         [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
         public string? Reagent = null;

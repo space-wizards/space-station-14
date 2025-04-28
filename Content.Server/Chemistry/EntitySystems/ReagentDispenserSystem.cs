@@ -4,7 +4,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.Audio;
@@ -13,6 +12,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Content.Shared.Labels.Components;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Server.Chemistry.EntitySystems
 {

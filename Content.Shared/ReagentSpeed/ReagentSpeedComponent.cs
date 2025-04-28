@@ -1,7 +1,7 @@
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
+using Robust.Shared.FixedPoint;
 namespace Content.Shared.ReagentSpeed;
 
 /// <summary>

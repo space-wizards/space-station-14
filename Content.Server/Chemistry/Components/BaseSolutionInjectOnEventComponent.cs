@@ -1,5 +1,5 @@
-﻿using Content.Shared.FixedPoint;
-using Content.Shared.Inventory;
+﻿using Content.Shared.Inventory;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Server.Chemistry.Components;
 

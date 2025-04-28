@@ -2,7 +2,7 @@
 using Content.Server.PowerCell;
 using Content.Shared.Speech.Components;
 using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;

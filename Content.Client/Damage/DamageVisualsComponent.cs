@@ -1,4 +1,5 @@
-using Content.Shared.FixedPoint;
+
+using Robust.Shared.FixedPoint;
 
 namespace Content.Client.Damage;
 

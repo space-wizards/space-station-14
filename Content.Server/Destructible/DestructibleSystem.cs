@@ -13,7 +13,6 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
-using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
@@ -22,6 +21,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 using Content.Shared.Humanoid;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Player;
 
 namespace Content.Server.Destructible

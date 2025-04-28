@@ -1,9 +1,9 @@
 using Content.Server.Fluids.EntitySystems;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Fluids.Components;
+ using Robust.Shared.FixedPoint;
+ namespace Content.Server.Fluids.Components;
 
 [RegisterComponent]
 [Access(typeof(SpraySystem))]

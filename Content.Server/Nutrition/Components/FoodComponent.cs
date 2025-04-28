@@ -1,11 +1,11 @@
 using Content.Server.Body.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Nutrition.Components;
+ using Robust.Shared.FixedPoint;
+ namespace Content.Server.Nutrition.Components;
 
 [RegisterComponent, Access(typeof(FoodSystem), typeof(FoodSequenceSystem))]
 public sealed partial class FoodComponent : Component

@@ -8,8 +8,8 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
+using Robust.Shared.FixedPoint;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 

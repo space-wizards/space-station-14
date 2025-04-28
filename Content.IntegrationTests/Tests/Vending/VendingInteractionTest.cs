@@ -3,8 +3,8 @@ using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.VendingMachines;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.FixedPoint;
 using Content.Shared.VendingMachines;
+using Robust.Shared.FixedPoint;
 
 namespace Content.IntegrationTests.Tests.Vending;
 

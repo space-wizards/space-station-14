@@ -1,8 +1,8 @@
 ﻿using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameStates;
 
+using Robust.Shared.FixedPoint;
 namespace Content.Shared.Weapons.Melee.Components;
 
 /// <summary>

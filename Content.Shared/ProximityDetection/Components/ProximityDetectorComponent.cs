@@ -1,8 +1,8 @@
-﻿using Content.Shared.FixedPoint;
-using Content.Shared.ProximityDetection.Systems;
+﻿using Content.Shared.ProximityDetection.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
+using Robust.Shared.FixedPoint;
 namespace Content.Shared.ProximityDetection.Components;
 /// <summary>
 /// This is used to search for the closest entity with a range that matches specified requirements (tags and/or components)

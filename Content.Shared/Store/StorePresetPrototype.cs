@@ -1,7 +1,7 @@
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Store;
 

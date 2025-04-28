@@ -1,9 +1,9 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Fluids.Components
+ using Robust.Shared.FixedPoint;
+ namespace Content.Shared.Fluids.Components
 {
     /// <summary>
     /// Puddle on a floor

@@ -1,9 +1,9 @@
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Nutrition.Components;
+ using Robust.Shared.FixedPoint;
+ namespace Content.Shared.Nutrition.Components;
 
 [NetworkedComponent, AutoGenerateComponentState]
 [RegisterComponent, Access(typeof(SharedDrinkSystem))]

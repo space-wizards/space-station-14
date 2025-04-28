@@ -1,6 +1,6 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.FixedPoint;
 using NUnit.Framework;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 

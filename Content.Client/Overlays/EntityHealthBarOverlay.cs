@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Client.StatusIcon;
 using Content.Client.UserInterface.Systems;
 using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -11,6 +10,7 @@ using Content.Shared.StatusIcon.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Robust.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using static Robust.Shared.Maths.Color;
 

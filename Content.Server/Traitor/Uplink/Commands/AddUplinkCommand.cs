@@ -1,7 +1,6 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
-using Content.Shared.FixedPoint;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
