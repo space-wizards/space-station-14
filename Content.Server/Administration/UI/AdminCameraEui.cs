@@ -83,14 +83,13 @@ public sealed partial class AdminCameraEui : BaseEui
 
     private EntityUid CreateCamera(EntityUid target, ICommonSession observer)
     {
-        // spawn a camera entity attached to the target
+        // Spawn a camera entity attached to the target.
         var coords = target.ToCoordinates();
         var camera = _entityManager.SpawnAttachedTo(CameraProtoId, coords);
 
-        // The camera entity has its visibility flags set to 0 so that cheat clients can't see it.
-        // We add an override so that only the user can.
-        _pvs.AddForceSend(camera, observer);
         // Allow the user to see the entities near the camera.
+        // This also force sends the camera entity to the user, overriding the visibility flags.
+        // (The camera entity has its visibility flags set to 0 so that cheat clients can't see it)
         _viewSubscriber.AddViewSubscriber(camera, observer);
 
         return camera;
