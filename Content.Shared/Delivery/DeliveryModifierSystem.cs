@@ -1,5 +1,5 @@
+using Content.Shared.Destructible;
 using Content.Shared.Examine;
-using Content.Shared.GameTicking;
 using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -27,6 +27,11 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
         SubscribeLocalEvent<DeliveryPriorityComponent, MapInitEvent>(OnPriorityMapInit);
         SubscribeLocalEvent<DeliveryPriorityComponent, ExaminedEvent>(OnPriorityExamine);
         SubscribeLocalEvent<DeliveryPriorityComponent, GetDeliveryMultiplierEvent>(OnGetPriorityMultiplier);
+
+        SubscribeLocalEvent<DeliveryFragileComponent, MapInitEvent>(OnFragileMapInit);
+        SubscribeLocalEvent<DeliveryFragileComponent, BreakageEventArgs>(OnFragileBreakage);
+        SubscribeLocalEvent<DeliveryFragileComponent, ExaminedEvent>(OnFragileExamine);
+        SubscribeLocalEvent<DeliveryFragileComponent, GetDeliveryMultiplierEvent>(OnGetFragileMultiplier);
     }
 
     #region Random
@@ -67,6 +72,38 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
             args.AdditiveMultiplier += ent.Comp.InTimeMultiplierOffset;
         else
             args.AdditiveMultiplier += ent.Comp.ExpiredMultiplierOffset;
+    }
+    #endregion
+
+    #region Fragile
+    private void OnFragileMapInit(Entity<DeliveryFragileComponent> ent, ref MapInitEvent args)
+    {
+        _delivery.UpdateBrokenVisuals(ent, true);
+    }
+
+    private void OnFragileBreakage(Entity<DeliveryFragileComponent> ent, ref BreakageEventArgs args)
+    {
+        ent.Comp.Broken = true;
+        _delivery.UpdateBrokenVisuals(ent, true);
+        Dirty(ent);
+    }
+
+    private void OnFragileExamine(Entity<DeliveryFragileComponent> ent, ref ExaminedEvent args)
+    {
+        var trueName = _nameModifier.GetBaseName(ent.Owner);
+
+        if (ent.Comp.Broken)
+            args.PushMarkup(Loc.GetString("delivery-fragile-broken-examine", ("type", trueName)));
+        else
+            args.PushMarkup(Loc.GetString("delivery-fragile-examine", ("type", trueName)));
+    }
+
+    private void OnGetFragileMultiplier(Entity<DeliveryFragileComponent> ent, ref GetDeliveryMultiplierEvent args)
+    {
+        if (ent.Comp.Broken)
+            args.AdditiveMultiplier += ent.Comp.BrokenMultiplierOffset;
+        else
+            args.AdditiveMultiplier += ent.Comp.IntactMultiplierOffset;
     }
     #endregion
 
