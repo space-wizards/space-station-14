@@ -7,6 +7,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Wieldable.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
@@ -101,7 +102,9 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
         if (user != null && !_accessReaderSystem.IsAllowed(user.Value, uid))
             return false;
-
+        if (TryComp<WieldableComponent>(uid, out var wieldable) &&
+            !wieldable.Wielded)
+            return false;
         SetFireMode(uid, component, index, user);
 
         return true;
