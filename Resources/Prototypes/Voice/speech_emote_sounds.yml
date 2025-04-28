@@ -432,6 +432,26 @@
     Ping:
       path: /Audio/Effects/Cargo/ping.ogg
 
+- type: emoteSounds
+  id: UnisexSiliconXenoborg
+  params:
+    variation: 0.05
+  sounds:
+    Laugh:
+      path: /Audio/Voice/Xenoborg/xenoborg_laugh.ogg
+    Beep:
+      path: /Audio/Voice/Xenoborg/xenoborg_twobeep.ogg
+    Chime:
+      path: /Audio/Voice/Xenoborg/xenoborg_chime.ogg
+    Buzz:
+      path: /Audio/Voice/Xenoborg/xenoborg_buzz-sigh.ogg
+    Buzz-Two:
+      path: /Audio/Voice/Xenoborg/xenoborg_buzz-two.ogg
+    Honk:
+      path: /Audio/Voice/Xenoborg/xenoborg_bikehorn.ogg
+    Ping:
+      path: /Audio/Voice/Xenoborg/xenoborg_ping.ogg
+
 # body emotes
 - type: emoteSounds
   id: GeneralBodyEmotes

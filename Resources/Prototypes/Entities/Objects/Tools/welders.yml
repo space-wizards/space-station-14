@@ -205,7 +205,7 @@
   name: refuling welding tool
   parent: [ Welder, BaseXenoborgContraband ]
   id: RefuelingWelder
-  description: "An slowe welder that can refuel itself overtime"
+  description: "An slow welder that can refuel itself over time."
   components:
   - type: Tool
     speedModifier: 0.5

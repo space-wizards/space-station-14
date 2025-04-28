@@ -158,12 +158,12 @@
     proto: robot
   - type: Speech
     speechVerb: Robotic
-    speechSounds: SyndieBorg
+    speechSounds: Xenoborg
     allowedEmotes:
     - Laugh
   - type: Vocal
     sounds:
-      Unsexed: UnisexSiliconSyndicate
+      Unsexed: UnisexSiliconXenoborg
     screamAction: null
   - type: DamagedSiliconAccent 
   - type: UnblockableSpeech
@@ -256,6 +256,7 @@
   - type: StandingState
   - type: Tag
     tags:
+    - SiliconEmotes
     - DoorBumpOpener
     - FootstepSound
     - CanPilot
@@ -401,6 +402,7 @@
   - type: MovementSpeedModifier # slower
     baseWalkSpeed : 1.2
     baseSprintSpeed : 2.2
+  - type: FlashImmunity
   - type: MobThresholds # tankier
     thresholds:
       0: Alive
@@ -477,6 +479,7 @@
   - type: FootstepModifier # it flies instead of walking
     footstepSoundCollection:
       collection: FootstepHoverBorg
+  - type: FlashImmunity
   - type: BorgChassis
     hasMindState: xenoborg_scout_e
     noMindState: xenoborg_scout_e_r
