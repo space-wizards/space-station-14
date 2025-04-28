@@ -10,6 +10,8 @@ public abstract class SharedDestructibleSystem : EntitySystem
         var eventArgs = new DestructionEventArgs();
 
         RaiseLocalEvent(owner, eventArgs);
+        if (eventArgs.Cancelled)
+            return;
         QueueDel(owner);
     }
 
@@ -26,7 +28,7 @@ public abstract class SharedDestructibleSystem : EntitySystem
 /// <summary>
 ///     Raised when entity is destroyed and about to be deleted.
 /// </summary>
-public sealed class DestructionEventArgs : EntityEventArgs
+public sealed class DestructionEventArgs : CancellableEntityEventArgs
 {
 
 }
@@ -34,7 +36,7 @@ public sealed class DestructionEventArgs : EntityEventArgs
 /// <summary>
 ///     Raised when entity was heavy damage and about to break.
 /// </summary>
-public sealed class BreakageEventArgs : EntityEventArgs
+public sealed class BreakageEventArgs : CancellableEntityEventArgs
 {
 
 }

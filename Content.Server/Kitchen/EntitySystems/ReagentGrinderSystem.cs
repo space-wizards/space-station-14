@@ -125,6 +125,8 @@ namespace Content.Server.Kitchen.EntitySystems
 
                         var dev = new DestructionEventArgs();
                         RaiseLocalEvent(item, dev);
+                        if (dev.Cancelled)
+                            continue;
 
                         QueueDel(item);
                     }
