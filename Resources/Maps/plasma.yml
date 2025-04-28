@@ -148892,13 +148892,13 @@ entities:
       parent: 2
     - type: ApcPowerReceiver
       powerLoad: 500
-    - ContainerContainer
     missingComponents:
     - Destructible
     - Machine
     - WiresPanel
     - EncryptionKeyHolder
     - TelecomServer
+    - ContainerContainer
     - Construction
 - proto: TelecomServerCircuitboard
   entities:
