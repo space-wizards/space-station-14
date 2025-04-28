@@ -111,7 +111,7 @@ public sealed partial class StaminaSystem : EntitySystem
         }
 
         component.StaminaDamage = 0;
-        AdjustSlowdown(uid, component);
+        AdjustSlowdown(uid);
         RemComp<ActiveStaminaComponent>(uid);
         SetStaminaAlert(uid, component);
         Dirty(uid, component);
@@ -267,7 +267,7 @@ public sealed partial class StaminaSystem : EntitySystem
                 component.NextUpdate = nextUpdate;
         }
 
-        AdjustSlowdown(uid, component);
+        AdjustSlowdown(uid);
 
         SetStaminaAlert(uid, component);
 
@@ -410,23 +410,23 @@ public sealed partial class StaminaSystem : EntitySystem
     /// <param name="comp">
     /// Stamina component of the entity. Can be null, in this case the method attempts to resolve it automatically.
     /// </param>
-    private void AdjustSlowdown(EntityUid uid, StaminaComponent? comp = null)
+    private void AdjustSlowdown(Entity<StaminaComponent?> uid)
     {
-        if (!Resolve(uid, ref comp))
+        if (!Resolve(uid, ref uid.Comp))
             return;
 
         var closest = FixedPoint2.Zero;
 
         // Iterate through the dictionary in the similar way as in Damage.SlowOnDamageSystem.OnRefreshMovespeed
-        foreach (var thres in comp.StunModifierThresholds)
+        foreach (var thres in uid.Comp.StunModifierThresholds)
         {
             var key = thres.Key.Float();
 
-            if (comp.StaminaDamage >= key && key > closest && closest < comp.CritThreshold)
+            if (uid.Comp.StaminaDamage >= key && key > closest && closest < uid.Comp.CritThreshold)
                 closest = thres.Key;
         }
 
-        _stunSystem.UpdateStunModifiers(uid, comp.StunModifierThresholds[closest], comp);
+        _stunSystem.UpdateStunModifiers(uid, uid.Comp.StunModifierThresholds[closest]);
     }
 }
 

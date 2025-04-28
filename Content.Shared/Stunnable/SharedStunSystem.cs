@@ -269,15 +269,15 @@ public abstract class SharedStunSystem : EntitySystem
     /// Optional <see cref="StaminaComponent"/> of the entity.
     /// </param>
 
-    public void UpdateStunModifiers(EntityUid uid,
+    public void UpdateStunModifiers(Entity<StaminaComponent?> uid,
         float walkSpeedModifier = 1f,
-        float runSpeedModifier = 1f, StaminaComponent? component = null)
+        float runSpeedModifier = 1f)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref uid.Comp))
             return;
 
         if (
-            (MathHelper.CloseTo(walkSpeedModifier, 1f) && MathHelper.CloseTo(runSpeedModifier, 1f) && component.StaminaDamage == 0f) ||
+            (MathHelper.CloseTo(walkSpeedModifier, 1f) && MathHelper.CloseTo(runSpeedModifier, 1f) && uid.Comp.StaminaDamage == 0f) ||
             (walkSpeedModifier == 0f && runSpeedModifier == 0f)
         )
         {
@@ -303,9 +303,9 @@ public abstract class SharedStunSystem : EntitySystem
     /// <param name="component">
     /// Optional <see cref="StaminaComponent"/> of the entity.
     /// </param>
-    public void UpdateStunModifiers(EntityUid uid, float speedModifier = 1f, StaminaComponent? component = null)
+    public void UpdateStunModifiers(Entity<StaminaComponent?> uid, float speedModifier = 1f)
     {
-        UpdateStunModifiers(uid, speedModifier, speedModifier, component);
+        UpdateStunModifiers(uid, speedModifier, speedModifier);
     }
 
     private void OnInteractHand(EntityUid uid, KnockedDownComponent knocked, InteractHandEvent args)
