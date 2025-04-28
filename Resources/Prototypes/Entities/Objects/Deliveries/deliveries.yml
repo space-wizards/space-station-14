@@ -137,6 +137,8 @@
     children:
     - id: DeliveryModifierPriority
       prob: 0.25
+    - id: DeliveryModifierFragile
+      prob: 0.25
 
 - type: entity
   id: DeliveryModifierPriority
@@ -144,3 +146,34 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: DeliveryPriority
+
+- type: entity
+  id: DeliveryModifierFragile
+  description: Components to add when a delivery is rolled as fragile.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: DeliveryFragile
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
+    soundHit:
+      collection: WeakHit
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: DeliveryOpenSounds
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
