@@ -1,0 +1,9 @@
+- type: npcFaction
+  id: Changeling
+  hostile:
+  - NanoTrasen
+  - Syndicate
+  - Zombie
+  - Revolutionary
+  - Heretic
+  - Blob # Goobstation - Blob

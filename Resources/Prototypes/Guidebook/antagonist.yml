@@ -4,6 +4,7 @@
   text: "/ServerInfo/Guidebook/Antagonist/Antagonists.xml"
   children:
   - Traitors
+  - Changelings # Harmony - Changeling port
   - Thieves
   - Revolutionaries
   - NuclearOperatives

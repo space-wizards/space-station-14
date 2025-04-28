@@ -185,6 +185,9 @@
   - type: Stripping
   - type: UserInterface
     interfaces:
+      # Harmony - Changeling port
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
       enum.HumanoidMarkingModifierKey.Key:
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
@@ -225,6 +228,7 @@
   id: BaseMobSpeciesOrganic
   abstract: true
   components:
+  - type: Absorbable  # Harmony - Changeling port
   - type: Barotrauma
     damage:
       types:
@@ -288,6 +292,7 @@
   parent: InventoryBase
   abstract: true
   components:
+  - type: Absorbable  # Harmony - Changeling port
   - type: Hands
   - type: ComplexInteraction
   - type: ContainerContainer
@@ -346,4 +351,4 @@
   - type: UserInterface
     interfaces:
       enum.HumanoidMarkingModifierKey.Key: # sure, this can go here too
-        type: HumanoidMarkingModifierBoundUserInterface
+        type: HumanoidMarkingModifierBoundUserInterface      

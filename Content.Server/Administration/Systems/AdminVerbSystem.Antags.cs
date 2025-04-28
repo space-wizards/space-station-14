@@ -12,6 +12,8 @@ using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+// Harmony - We don't have IPCs or the silicon component so I'm just replacing any instances with the borg chassis component
+using Content.Shared.Silicons.Borgs.Components;
 
 namespace Content.Server.Administration.Systems;
 
@@ -186,5 +188,23 @@ public sealed partial class AdminVerbSystem
 
         if (HasComp<HumanoidAppearanceComponent>(args.Target)) // only humanoids can be cloned
             args.Verbs.Add(paradox);
+
+        //  Harmony change begins - Changeling port
+        Verb ling = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-changeling"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/_Goobstation/Changeling/changeling_abilities.rsi"), "transform"),
+            Act = () =>
+            {
+                if (!HasComp<BorgChassisComponent>(args.Target))
+                    _antag.ForceMakeAntag<ChangelingRuleComponent>(targetPlayer, "Changeling");
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-changeling"),
+        };
+        if (!HasComp<BorgChassisComponent>(args.Target))
+            args.Verbs.Add(ling);
+        // Harmony change ends
     }
 }

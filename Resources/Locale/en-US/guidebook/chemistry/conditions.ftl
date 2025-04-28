@@ -62,3 +62,6 @@ reagent-effect-condition-guidebook-has-tag =
                 } the tag {$tag}
 
 reagent-effect-condition-guidebook-this-reagent = this reagent
+
+# Harmony - Changeling port
+reagent-effect-condition-guidebook-ling = the target is a changeling

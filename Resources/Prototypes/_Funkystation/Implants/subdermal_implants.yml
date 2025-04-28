@@ -1,0 +1,17 @@
+- type: entity
+  parent: BaseSubdermalImplant
+  id: ChangelingInfectionImplant
+  name: changeling infection implant
+  description: This implant injects a changeling egg into the user's arm, eventually giving them the Changeling infection as a result.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      permanent: true
+      whitelist:
+        components:
+        - Absorbable
+    - type: ChangelingInfectionImplant
+    - type: Tag
+      tags:
+      - ChangelingInfectionImplant
+      - HideContextMenu

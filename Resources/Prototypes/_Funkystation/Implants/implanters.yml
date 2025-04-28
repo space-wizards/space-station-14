@@ -1,0 +1,7 @@
+- type: entity
+  id: ChangelingInfectionImplanter
+  suffix: changeling infection implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: ChangelingInfectionImplant

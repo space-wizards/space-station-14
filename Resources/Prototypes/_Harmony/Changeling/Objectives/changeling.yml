@@ -1,0 +1,13 @@
+- type: entity
+  parent: BaseChangelingObjective
+  id: AbsorbTargetObjective
+  description: I must absorb this being's biomass. They cannot be left alive.
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Devices/health_analyzer.rsi
+      state: genetic
+  - type: AbsorbTargetCondition
+  - type: TargetObjective
+    title: objective-condition-absorb-target-title
+  - type: PickRandomPerson

@@ -1,0 +1,27 @@
+- type: reagent
+  id: Deunomia
+  name: reagent-name-deunomia
+  group: Medicine
+  desc:  reagent-desc-deunomia
+  physicalDesc: reagent-physical-desc-acidic
+  flavor: medicine
+  color: "#7851A9"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 0.5
+      - !type:Emote
+        emote: Scream
+        probability: 0.3
+      - !type:CureChangelingInfection
+        conditions:
+        - !type:ReagentThreshold
+          min: 1

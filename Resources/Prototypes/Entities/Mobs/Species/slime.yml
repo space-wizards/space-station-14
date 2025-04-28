@@ -27,6 +27,9 @@
         ents: []
   - type: UserInterface
     interfaces:
+      # Harmony - Changeling port
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
       enum.HumanoidMarkingModifierKey.Key:

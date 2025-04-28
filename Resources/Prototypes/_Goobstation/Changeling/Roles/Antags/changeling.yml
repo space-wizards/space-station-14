@@ -1,0 +1,16 @@
+- type: antag
+  id: Changeling
+  name: roles-antag-changeling-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-changeling-description
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 10800 #3 hrs
+    # Harmony - IPCs don't exist
+#  - !type:SpeciesRequirement
+#    inverted: true
+#    species:
+#    - IPC
+  guides: [ Changelings ]

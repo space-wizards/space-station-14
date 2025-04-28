@@ -1,0 +1,97 @@
+<Document>
+  # Changelings
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookChangelingFluff" Caption=""/>
+  </Box>
+  A Changeling is an alien creature that is intelligent and able to morph into humans.
+  Changelings are aliens in a form of a headslug, but before a shift starts, they either transform as someone while they're off-station or rather they somehow killed someone and made into a Changeling through unknown ways.
+  The main weapons of the Changeling are its ability to internally synthesize dangerous chemicals, morph into other creatures that it has absorbed, and blend in with humans.
+
+  Changelings are reported to be extinct. Once the apex predator of the universe reduced to being a myth.
+
+  The Changeling can be anyone it's absorbed, it can switch identities instantaneously, only absorbing takes time and peace.
+  Unlike the Traitor, the Changeling's only objective is to survive until the shuttle arrives and escape on it while transformed into somebody else.
+
+  Remember that Changelings are not obliged to work each other as a team, and some may go solo/rogue depending on the situation.
+  Changelings are generally expected to keep a low profile.
+
+  ## Chemicals
+  Chemicals are your source of abilities. Without them you won't be able to use your powers.
+  They regenerate slowly over time, and absorption will increase their max capacity.
+
+  ## Biomass
+  Your biomass is your health. In the beginning you have 30 biomass to begin. Biomass does not drain over time, as it's used by some of your abilities.
+
+  Once your biomass levels get low enough, the effects of your decay will be seen by crew, such as:
+  - Vomiting blood
+  - Violently shaking
+  - Death.
+
+  You cannot die normally, as in being gibbed by blunt trauma. As you are a natural organism, being tossed in the incinerator is your biggest worry. Or tossed into the super-matter.
+
+  ## DNA Extraction
+  If your main weapon is deception, then DNA Extraction is your main tool. This sting allows you to copy the genetic information of anyone you come into contact with.
+
+  The person you extract from will have no indication that they were just harvested, and can be used secretly. This ability is powerful, as you can turn into someone just from stinging them.
+
+  You can only have a maximum of 5 DNA strands at a time, and must transform to obtain more.
+
+  <Box>
+    <GuideEntityEmbed Entity="ActionStingExtractDNA" Caption="Changeling Extraction Ability"/>
+  </Box>
+
+  Remember, your objective is to collect DNA, absorb and then eventually become your target, so keep a low-profile.
+
+  ## DNA Absorption
+  Absorbing your victim is a lot different from extraction. You will need to absorb your target and effectively [bold]become[/bold] them.
+
+  Acquiring DNA via absorption requires the victim's incapacitation, critical condition or death.
+  You can absorb a target that is handcuffed, critical, or dead.
+
+  - Absorbing someone takes a lot of time, so prepare a safe spot or do it somewhere with the least amount of ears possible.
+  - [color=red]Absorbed victims cannot be cloned.[/color] Although, medicine exists that can undo genetic damage on corpses.
+
+  [color=red]Absorbing another changeling[/color] will give you even more chemicals and evolution points, including the points they collected.
+
+  ## You exclaim, "I am the only one here!"
+  Changelings are limited, however, to how much DNA they can absorb at once! If a changeling has 5 DNAs stored and attempts to gain another, they must purge the older DNA by transforming.
+  Eventually, any changeling will have to be a twin of someone else on the station, living or dead.
+
+  The changeling can shift its appearance, making them look and sound exactly like a victim of which they have absorbed. This can be massive compromise in security, especially if command staff are absorbed and the changeling is able to imitate them.
+  Changelings can also, via their lesser form ability, transform into monkeys and do monkey things.
+
+  ## Regeneration
+  Also known as Regenerative Stasis, changelings have the ability to 'kill' themselves, and appear dead. After an uncertain amount of time, the changeling can revive at will, fully healed of all injuries and illness.
+  Entering stasis drains all the changeling's chemicals, and leaving costs 60. Chemicals will still regenerate while a changeling is dead, meaning it can always enter stasis unless it's biomass levels are critical.
+
+  Changelings can also choose to revive by defibrillator, making it even harder to tell if they are one or not.
+
+  This makes them nigh-unkillable, as they can fully regenerate themselves even from death if they have enough chemicals.
+  Spaced changelings may also be able to make it back on station given enough time.
+  The best way to permanently deal with a changeling is to starve it to death, putting them on mining colonies or solitary confinement.
+
+  ## Going Solo or Teaming Up
+  Like traitors, changelings operate individually and are in no way obligated to assist each other.
+  It is not required for changelings to even reveal their identity to each other, as it's not uncommon for changelings to backstab each other to remove competition.
+  Even so, [color=red]a coordinated group of changelings is truly a terror to behold[/color].
+
+  ## Medical
+  As a changeling, your worst enemy will be a competent medical team.
+  A good medical team will be able to completely revive all of your victims, and once they learn of your presence, the Chemist and Chief Medical Officer have full reign to begin blood tests.
+
+  <Box>
+    <GuideEntityEmbed Entity="MachineCentrifuge"/>
+  </Box>
+  Changelings have a different blood type. Even if a changeling is pretending to be a diona, vox or a moth person, they have one blood type.
+  When put in a centrifuge, the changeling's blood reacts in a violent explosion. A good chemist will be constantly performing blood checks on the realization of a changeling, so be careful.
+
+  <Box>
+    <GuideEntityEmbed Entity="CryoPod"/>
+  </Box>
+  Along with this, hollowing someone does not mean they are round removed.
+
+  Hollowing someone gives them 200 genetic damage; in most cases this does mean they are dead forever. Genetic damage causes cloning to fail, and there's no conventional mean to heal genetic damage on corpses.
+  By setting up pyrogenics and making Natusixadone, medical is able to completely revive any hollowed corpses.
+
+  <GuideReagentEmbed Reagent="Natusixadone"/>
+</Document>

@@ -1,0 +1,49 @@
+- type: entity
+  parent: ArmBlade
+  id: ArmBladeChangeling
+  suffix: Unremoveable
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: _Goobstation/Changeling/arm_blade.rsi
+    state: icon
+  - type: MeleeWeapon
+    angle: 0
+    wideAnimationRotation: 90
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 2.5
+        Slash: 5
+        Piercing: 7.5
+        Structural: 20
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Ginormous
+    sprite: _Goobstation/Changeling/arm_blade.rsi
+  - type: Prying
+    pryPowered: true
+  - type: Unremoveable
+  - type: Tool
+    qualities:
+    - Slicing
+    - Prying
+  - type: DisarmMalus
+    malus: 0
+
+- type: entity
+  parent: ArmBladeChangeling
+  id: FakeArmBladeChangeling
+  components:
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    attackRate: 0.75
+    damage:
+      types:
+        Blunt: 1
+        Slash: 1
+        Piercing: 1
+        Structural: 1
+  - type: TimedDespawn
+    lifetime: 60

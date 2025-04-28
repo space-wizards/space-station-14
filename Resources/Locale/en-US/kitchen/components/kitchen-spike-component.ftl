@@ -16,3 +16,7 @@ comp-kitchen-spike-remove-meat = You remove some meat from { THE($victim) }.
 comp-kitchen-spike-remove-meat-last = You remove the last piece of meat from { THE($victim) }!
 
 comp-kitchen-spike-meat-name = { $name } ({ $victim })
+
+# Harmony - Changeling port
+comp-kitchen-spike-deny-changeling = { CAPITALIZE(THE($victim)) } resists being put on { THE($this) }.
+comp-kitchen-spike-deny-absorbed = { CAPITALIZE(THE($victim)) } has nothing left to butcher.

@@ -21,6 +21,7 @@
   - Dragon
   - AllHostile
   - Wizard
+  - Changeling  # Harmony - Changeling port
 
 - type: npcFaction
   id: Mouse
@@ -70,6 +71,7 @@
   - Dragon
   - AllHostile
   - Wizard
+  - Changeling  # Harmony - Changeling port
 
 - type: npcFaction
   id: Xeno
@@ -97,6 +99,7 @@
   - AllHostile
   - Wizard
   - Dragon
+  - Changeling  # Harmony - Changeling port
 
 - type: npcFaction
   id: Revolutionary
@@ -123,6 +126,7 @@
   - Zombie
   - Revolutionary
   - Wizard
+  - Changeling  # Harmony - Changeling port
 
 - type: npcFaction
   id: Wizard

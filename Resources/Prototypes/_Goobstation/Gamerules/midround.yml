@@ -1,0 +1,37 @@
+# Midround Changelings
+- type: entity
+  parent: BaseGameRule # Funky: Changed parent because it no longer directly makes changelings at all
+  id: ChangelingMidround
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    weight: 3
+    minimumPlayers: 15
+    startAnnouncement: station-event-communication-interception
+    startAudio:
+      path: /Audio/Announcements/intercept.ogg
+    duration: null
+    occursDuringRoundEnd: false
+#   Harmony - Don't know what this is. Something to do with their dynamic gamemode, I think?
+#   chaos:
+#     Hostile: 100
+#     Medical: 100
+#     Death: 100
+  - type: AlertLevelInterceptionRule
+  - type: AntagSelection
+    selectionTime: PostPlayerSpawn
+    agentName: changeling-roundend-name
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 1
+      playerRatio: 1 # 10 normally, 1 for testing   ...Harmony - Then why is it set to 1? This makes it sound like it's meant to be 10, but I'll leave it as-is.
+      blacklist:
+        components:
+          - AntagImmune
+      lateJoinAdditional: true
+      components:
+      - type: ChangelingInfection # Funky: Made midround lings infections instead of instant.
+        needsInitialization: true
+  - type: Tag
+    tags:
+      - MidroundAntag

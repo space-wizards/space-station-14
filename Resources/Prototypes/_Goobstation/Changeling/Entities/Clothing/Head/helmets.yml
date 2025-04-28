@@ -1,0 +1,19 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ChangelingClothingHeadHelmet
+  name: chitinous helmet
+  description: An all-consuming chitinous mass of armor.
+  suffix: Unremoveable
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Changeling/ling_armor_helmet.rsi
+  - type: Clothing
+    sprite: _Goobstation/Changeling/ling_armor_helmet.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: Unremoveable

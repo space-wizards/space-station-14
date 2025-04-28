@@ -47,6 +47,7 @@
             "name": "Server/Client",
             "configurations": [
                 "Server",
+                "Client",
                 "Client"
             ],
             "preLaunchTask": "build"

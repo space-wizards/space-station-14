@@ -1,0 +1,31 @@
+- type: gamePreset
+  id: Changeling
+  alias:
+    - ling
+    - lings
+    - changeling
+  name: changeling-gamemode-title
+  description: changeling-gamemode-description
+  showInVote: false
+  rules:
+    - Changeling
+    - SubGamemodesRule
+    - BasicStationEventScheduler
+    - MeteorSwarmScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: Traitorling
+  alias:
+    - lingtraitor
+    - traitorling
+  name: traitorling-title
+  description: traitorling-description
+  showInVote: false
+  rules:
+    - CalmLing
+    - CalmTraitor
+    - SubGamemodesRule
+    - BasicStationEventScheduler
+    - MeteorSwarmScheduler
+    - BasicRoundstartVariation

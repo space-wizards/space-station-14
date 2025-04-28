@@ -1,0 +1,78 @@
+- type: entity
+  parent: BaseGameRule
+  id: Changeling
+  components:
+  - type: ChangelingRule
+  - type: GameRule
+    minPlayers: 8
+    delay:
+      min: 30
+      max: 60
+  - type: AntagObjectives
+    objectives:
+    - ChangelingStealDNAObjective
+    - EscapeIdentityObjective
+    - AbsorbTargetObjective 
+    - ChangelingSurviveObjective
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    agentName: changeling-roundend-name
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 5
+      playerRatio: 12
+      lateJoinAdditional: true
+      mindRoles:
+      - MindRoleChangeling
+  - type: Tag
+    tags:
+      - RoundstartAntag
+
+- type: entity
+  parent: BaseTraitorRule
+  id: CalmTraitor # For Dual Antag Gamemodes / Funky: For gamemodes that need nerfed antags
+  components:
+  - type: GameRule
+    minPlayers: 15
+    delay:
+      min: 240
+      max: 420
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    definitions:
+    - prefRoles: [ Traitor ]
+      max: 4
+      playerRatio: 15
+      blacklist:
+        components:
+        - AntagImmune
+        - Changeling
+      lateJoinAdditional: true
+      mindRoles:
+      - MindRoleTraitor
+  - type: Tag
+    tags:
+      - CalmAntag
+
+- type: entity
+  parent: Changeling
+  id: CalmLing # For Dual Antag Gamemodes / Funky: For gamemodes that need nerfed antags
+  components:
+  - type: GameRule
+    minPlayers: 15
+    delay:
+      min: 30
+      max: 60
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    agentName: changeling-roundend-name
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 4
+      playerRatio: 18
+      lateJoinAdditional: true
+      mindRoles:
+      - MindRoleTraitor
+  - type: Tag
+    tags:
+      - CalmAntag

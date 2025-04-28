@@ -207,6 +207,7 @@
       blacklist:
         components:
         - AntagImmune
+        - Changeling  # Harmony - Changeling port
       lateJoinAdditional: true
       mindRoles:
       - MindRoleTraitor
