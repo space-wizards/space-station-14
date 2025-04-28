@@ -46,8 +46,8 @@
       offset: "0.0,0.5"
 
 - type: entity
-  id: Monolith
   parent: Memorial
+  id: Monolith
   name: monolith
   description: |
     Holy shit modern art.
@@ -63,7 +63,7 @@
           bounds: "-0.45,-0.45,0.45,0.20"
         density: 1500 # good luck.
         mask:
-        - MachineMask # had to change em because youre intended to drap this back for mulah.
+        - MachineMask # had to change em because youre intended to drag this back for mulah.
         layer:
         - MachineLayer
   - type: Anchorable
