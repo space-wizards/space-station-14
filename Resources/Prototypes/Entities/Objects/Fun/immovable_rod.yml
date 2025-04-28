@@ -11,6 +11,12 @@
     state: icon
     noRot: false
   - type: ImmovableRod
+    deletionBlacklist:
+      components:
+        - Organ # Rods are appropriately splatter-y
+        - Nuke # Prevents rarely halting round progression
+        - StationAnchor # Prevents "fun"
+        - StationAiCore # Prevents an unlucky rod RDMing the AI
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
@@ -65,15 +71,16 @@
   id: ImmovableRodWizard
   suffix: Wizard
   components:
-  - type: ImmovableRod
-    maxSpeed: 25
+  - type: ImmovableRod # Deliberately significantly weaker than the non-spell counterpart.
+    maxSpeed: 20 # Because the Wizard's camera follows the rod, it needs slowing down a lot.
     destroyTiles: false
     randomizeVelocity: false
     shouldGib: false
+    shouldDelete: false
     damage:
       types:
         Piercing: 50 # OH GOD, MY INSIDES
-        Structural: 100 # OH FUCK, MY CAR
+        Structural: 200 # OH FUCK, MY CAR
   - type: MovementIgnoreGravity
     gravityState: true
   - type: InputMover
