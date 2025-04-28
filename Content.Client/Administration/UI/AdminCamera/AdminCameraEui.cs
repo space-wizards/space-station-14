@@ -1,11 +1,8 @@
-using System.Linq;
 using System.Numerics;
 using Content.Client.Eui;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
-using Robust.Client.Graphics;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Administration.UI.AdminCamera;
@@ -17,14 +14,14 @@ namespace Content.Client.Administration.UI.AdminCamera;
 [UsedImplicitly]
 public sealed partial class AdminCameraEui : BaseEui
 {
-    [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-
     private readonly AdminCameraWindow _window;
     private readonly AdminCameraControl _control;
 
-    private WindowRoot? _windowRoot;
+    // If not null the camera is in "popped out" mode and is in an external window.
+    private OSWindow? _OSWindow;
 
+    // The last location the window was located at in game.
+    // Is used for getting knowing where to "pop in" external windows.
     private Vector2? _lastLocation;
 
     public AdminCameraEui()
@@ -36,6 +33,7 @@ public sealed partial class AdminCameraEui : BaseEui
         _window.OnClose += () => SendMessage(new CloseEuiMessage());
 
         _window.Contents.AddChild(_control);
+
         _control.OnPopoutControl += () =>
         {
             if (_control.IsPoppedOut)
@@ -45,32 +43,29 @@ public sealed partial class AdminCameraEui : BaseEui
         };
     }
 
+    // Pop the window out into an external OS window
     private void PopOut()
     {
         _lastLocation = _window.Position;
 
-        var monitor = _clyde.EnumerateMonitors().First();
-
-        var clydeWindow = _clyde.CreateWindow(new WindowCreateParameters
+        // TODO: When there is a way to have a minimum window size, enforce something!
+        _OSWindow = new OSWindow
         {
-            Maximized = false,
+            SetSize = _window.Size,
             Title = _window.Title ?? Loc.GetString("admin-camera-window-title-placeholder"),
-            Monitor = monitor,
-            Width = 400,
-            Height = 500,
-        });
+        };
+
+        _OSWindow.Show();
+
+        if (_OSWindow.ClydeWindow == null || _OSWindow.Root == null)
+            return;
 
         _control.Orphan();
 
-        // TODO: When there is a way to have a minimum window size, enforce something!
-        _windowRoot = _uiManager.CreateWindowRoot(clydeWindow);
-        _windowRoot.AddChild(_control);
+        _OSWindow.Root.AddChild(_control);
 
-        clydeWindow.RequestClosed += _ =>
-        {
-            _window.Close();
-        };
-        clydeWindow.DisposeOnClose = true;
+        _OSWindow.ClydeWindow.RequestClosed += _ => _window.Close();
+        _OSWindow.ClydeWindow.DisposeOnClose = true;
 
         // You can't close the window, otherwise the EUI will complain that your sending requests without it open.
         _window.Visible = false;
@@ -79,21 +74,23 @@ public sealed partial class AdminCameraEui : BaseEui
         _control.PopControl.Text = Loc.GetString("admin-camera-window-pop-in");
     }
 
+    // Pop the window back into the in game window.
     private void PopIn()
     {
         _control.Orphan();
 
         _window.Contents.AddChild(_control);
+
         if (_lastLocation != null)
             _window.Open(_lastLocation.Value);
         else
             _window.OpenCentered();
 
-        _windowRoot?.Window.Dispose();
-        _windowRoot = null;
-
         _control.IsPoppedOut = false;
         _control.PopControl.Text = Loc.GetString("admin-camera-window-pop-out");
+
+        _OSWindow?.Close();
+        _OSWindow = null;
     }
 
     public override void Opened()
