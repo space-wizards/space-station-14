@@ -1,11 +1,13 @@
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
+using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
+using Content.Shared.Interaction;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.StationRecords;
 using Robust.Shared.Audio.Systems;
@@ -41,6 +43,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         base.Initialize();
 
         SubscribeLocalEvent<DeliveryComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<DeliveryComponent, AfterInteractEvent>(OnAfterInteract);
 
         InitializeSpawning();
     }
@@ -69,6 +72,55 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         }
 
         Dirty(ent);
+    }
+
+    private void OnAfterInteract(Entity<DeliveryComponent> ent, ref AfterInteractEvent args)
+    {
+        if (!args.CanReach || args.Handled || args.Target == null)
+            return;
+
+        if (!TryComp<DeliverySpawnerComponent>(args.Target, out var deliverySpawner) || !TryComp<FingerprintReaderComponent>(args.Used, out var fingerprintReaderComp))
+            return;
+
+        var station = _station.GetOwningStation(args.Target);
+        if (!TryComp<StationRecordsComponent>(station, out var stationRecords))
+        {
+            string messageNoStation = Loc.GetString("delivery-insert-no-station");
+            _chat.TrySendInGameICMessage(args.Target.Value, messageNoStation, InGameICChatType.Speak, hideChat: true);
+            _audio.PlayPvs(deliverySpawner.InsertDenySound, args.Target.Value);
+            return;
+        }
+
+        bool isReceivable = false;
+
+        // checks if anyone on the station is capable of opening ts
+        foreach (var fingerprint in fingerprintReaderComp.AllowedFingerprints)
+        {
+            var recordId = _records.GetRecordByFingerprint(station.Value, fingerprint);
+            if (recordId != null)
+            {
+                var key = new StationRecordKey(recordId.Value, station.Value);
+                if (_records.TryGetRecord<GeneralStationRecord>(key, out var entry, stationRecords)
+                    && entry.Fingerprint == fingerprint)
+                {
+                    isReceivable = true;
+                    break;
+                }
+            }
+        }
+
+        if (isReceivable)
+        {
+            string messageDenied = Loc.GetString("delivery-insert-denied", ("mail", args.Used));
+            _chat.TrySendInGameICMessage(args.Target.Value, messageDenied, InGameICChatType.Speak, hideChat: true);
+            _audio.PlayPvs(deliverySpawner.InsertAppoveSound, args.Target.Value);
+            return;
+        }
+
+        string messageApproved = Loc.GetString("delivery-insert-approved", ("mail", args.Used));
+        _chat.TrySendInGameICMessage(args.Target.Value, messageApproved, InGameICChatType.Speak, hideChat: true);
+        _audio.PlayPvs(deliverySpawner.InsertDenySound, args.Target.Value);
+        QueueDel(args.Used);
     }
 
     protected override void GrantSpesoReward(Entity<DeliveryComponent?> ent)
