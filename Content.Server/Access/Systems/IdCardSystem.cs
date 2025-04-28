@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Shared.Kitchen.Components;
+using Content.Shared.Kitchen.Components; // Starlight-edit
 using Content.Server.Popups;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
@@ -19,7 +19,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly CookingDeviceSystem _microwave = default!;
+    [Dependency] private readonly CookingDeviceSystem _microwave = default!; // Starlight-edit
 
     public override void Initialize()
     {
@@ -30,7 +30,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
 
     private void OnMicrowaved(EntityUid uid, IdCardComponent component, BeingMicrowavedEvent args)
     {
-        if (!component.CanMicrowave || !TryComp<CookingDeviceComponent>(args.Microwave, out var micro) || micro.Broken)
+        if (!component.CanMicrowave || !TryComp<CookingDeviceComponent>(args.Microwave, out var micro) || micro.Broken) // Starlight-edit
             return;
 
         if (TryComp<AccessComponent>(uid, out var access))

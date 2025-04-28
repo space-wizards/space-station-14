@@ -1,4 +1,4 @@
-﻿using Content.Shared.Kitchen.Components;
+﻿using Content.Shared.Kitchen.Components; // Starlight-edit
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;

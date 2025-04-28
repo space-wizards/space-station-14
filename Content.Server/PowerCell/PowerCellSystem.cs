@@ -4,7 +4,7 @@ using Content.Shared.Examine;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rounding;
-using Content.Shared.Kitchen.Components;
+using Content.Shared.Kitchen.Components; // Starlight-edit
 using Robust.Shared.Containers;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Power.EntitySystems;

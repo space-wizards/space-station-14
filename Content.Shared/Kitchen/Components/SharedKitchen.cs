@@ -3,6 +3,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.Components;
 
+// Starlight-start
+
 [Serializable, NetSerializable]
 public sealed class MicrowaveStartCookMessage : BoundUserInterfaceMessage
 {
@@ -105,3 +107,5 @@ public enum CookingDeviceType
     Oven,
     Stove
 }
+
+// Starlight-end: Moved from SharedMicrowave

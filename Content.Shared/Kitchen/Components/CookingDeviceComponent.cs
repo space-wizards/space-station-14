@@ -7,16 +7,16 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Kitchen.Components
+namespace Content.Shared.Kitchen.Components // Starlight-edit: moved from server
 {
     [RegisterComponent]
-    public sealed partial class CookingDeviceComponent : Component
+    public sealed partial class CookingDeviceComponent : Component // Starlight-edit: Renamed from MicrowaveComponent to CookingDeviceComponent
     {
         [DataField("cookTimeMultiplier"), ViewVariables(VVAccess.ReadWrite)]
         public float CookTimeMultiplier = 1;
         
         [DataField("safe"), ViewVariables(VVAccess.ReadWrite)]
-        public bool Safe = true;
+        public bool Safe = true; // Starlight-edit
 
         [DataField("deviceType")]
         public CookingDeviceType DeviceType = CookingDeviceType.Microwave;
@@ -70,7 +70,7 @@ namespace Content.Shared.Kitchen.Components
         public TimeSpan CurrentCookTimeEnd = TimeSpan.Zero;
         
         [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public TimeSpan StartedCookTime = TimeSpan.Zero;
+        public TimeSpan StartedCookTime = TimeSpan.Zero; // Starlight-edit
 
         /// <summary>
         /// The maximum number of seconds a microwave can be set to.
@@ -122,7 +122,7 @@ namespace Content.Shared.Kitchen.Components
         public bool CanMicrowaveIdsSafely = true;
         
         [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public string SpoiledItemId = "Ash";
+        public string SpoiledItemId = "Ash"; // Starlight-edit
     }
 
     public sealed class BeingMicrowavedEvent : HandledEntityEventArgs

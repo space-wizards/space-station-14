@@ -20,8 +20,10 @@
     FoodButter: 3
     FoodCheese: 1
     FoodMeat: 6
+    # Starlight-start
     KitchenOvenFlatpack: 1
     KitchenStoveFlatpack: 1
+    # Starlight-end
   contrabandInventory:
     EggBoxBroken: 1
     FoodBoxDonkpocket: 1
