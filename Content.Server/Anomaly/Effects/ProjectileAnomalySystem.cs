@@ -83,12 +83,7 @@ public sealed class ProjectileAnomalySystem : EntitySystem
         float severity)
     {
         var mapPos = _xform.ToMapCoordinates(coords);
-
-        var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var gridUid, out _)
-                ? _xform.WithEntityId(coords, gridUid)
-                : new(_mapSystem.GetMap(mapPos.MapId), mapPos.Position);
-
-        var ent = Spawn(component.ProjectilePrototype, spawnCoords);
+        var ent = Spawn(component.ProjectilePrototype, mapPos);
         var direction = _xform.ToMapCoordinates(targetCoords).Position - mapPos.Position;
 
         if (!TryComp<ProjectileComponent>(ent, out var comp))
