@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Starbuckss14
-  changes:
-  - message: New borg names
-    type: Add
-  id: 7869
-  time: '2025-01-29T10:35:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32502
-- author: thetolbean
-  changes:
-  - message: Traitors now have access to a Syndicate Radio Implanter, allowing covert
-      communications on the Syndicate channel without a headset.
-    type: Add
-  id: 7870
-  time: '2025-01-30T00:14:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33533
 - author: Spessmann
   changes:
   - message: Added Convex recreational complex, a large service-oriented highpop map.
@@ -3926,3 +3911,20 @@
   id: 8370
   time: '2025-04-27T23:04:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36980
+- author: Bokser815
+  changes:
+  - message: Cargo buy and sell pallets aboard the ATS can no longer be destroyed,
+      so cargo workers will no longer be unable to perform their job entirely for
+      the rest of the round.
+    type: Tweak
+  id: 8371
+  time: '2025-04-28T00:59:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34195
+- author: lzk228
+  changes:
+  - message: Shelves don't have whitelists. But still max item size you can fit is
+      Normal.
+    type: Tweak
+  id: 8372
+  time: '2025-04-28T01:00:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36986
