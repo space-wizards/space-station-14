@@ -18,3 +18,9 @@ reagent-desc-welding-fuel = Used by welders to weld.
 
 reagent-name-fluorosurfactant = fluorosurfactant
 reagent-desc-fluorosurfactant = A perfluoronated sulfonic acid that forms a foam when mixed with water.
+
+reagent-name-steelslag = steel slag
+reagent-desc-steelslag = Unpurified version of steel, only good for spilling on tiders when they broke into YOUR lab! Can be purified in a centrifuge.
+
+reagent-name-steel = steel
+reagent-desc-steel = Blazing hot carbonated iron - The culprit of industrial era. It is an alloy of great strength - if made right way. Average space station is made up of THOUSANDS of cubic meters of this compound.

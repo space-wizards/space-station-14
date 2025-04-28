@@ -73,3 +73,21 @@
     Ethanol: 5
     Hydrogen: 3
     Sulfur: 2
+
+- type: reaction
+  id: MeltSteelSlag
+  impact: Low # Yeah, it makes CO2, but not good enough for Medium impact.
+  minTemp: 1610
+  reactants:
+    Iron:
+      amount: 9
+    Carbon:
+      amount: 1
+    Sulfur:
+      amount: 5
+  products:
+    SteelSlag:
+      amount: 15
+  effects:
+    - !type:CreateGas
+      gas: CarbonDioxide

@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: BasePyrotechnic
   group: Pyrotechnic
   abstract: true
@@ -180,3 +180,111 @@
   color: "#9e6b38"
   boilingPoint: 190.0 # Perfluorooctanoic Acid.
   meltingPoint: 45.0
+
+- type: reagent
+  id: SteelSlag
+  name: reagent-name-steelslag
+  parent: BasePyrotechnic
+  physicalDesc: reagent-physical-desc-blazing
+  desc: reagent-desc-steelslag
+  flavor: spicy # Get it? Spicy. Wonder if chefs will ask for Steel Slag when hot sauce got all used up...
+  color: "#e09c09"
+  boilingPoint: 3400
+  meltingPoint: 1600
+  reactiveEffects:
+    Flameable:
+      methods: [ Touch ]
+      effects:
+      - !type:AdjustTemperature
+        amount: 1000
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Heat: 0.8
+      - !type:Emote
+        emote: Scream
+        probability: 0.7
+      - !type:FlameableReaction
+        multiplier: 0.1
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        messages: [ "steelslag-effect-sears-skin" ]
+        probability: 0.8
+      - !type:Ignite
+  metabolisms:
+    Poison:
+      metabolismRate : 0.4
+      effects:
+      - !type:AdjustTemperature 
+        amount: 8000
+      - !type:HealthChange
+        damage:
+          types:
+             Heat: 1.8
+             Bloodloss: 0.3 # Because it solidifies in your veins and such...
+             Slash: 0.1 # Same reason!
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        messages: [ "steelslag-effect-burns-insides" ]
+        probability: 0.33
+      - !type:Emote
+        emote: Scream
+        probability: 0.9 
+
+- type: reagent # I was really lazy so... this is just copy of steelslag with few changes.
+  id: Steel
+  name: reagent-name-steel
+  parent: BasePyrotechnic
+  physicalDesc: reagent-physical-desc-blazing
+  desc: reagent-desc-steel
+  flavor: carbonated
+  color: "#f5bf69"
+  boilingPoint: 3000 # Just plain Steel in real life.
+  meltingPoint: 1500
+  reactiveEffects:
+    Flameable:
+      methods: [ Touch ]
+      effects:
+      - !type:AdjustTemperature
+        amount: 800 # Less than slag because slag is really viscous and stays on your skin for longer time.
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Heat: 0.5
+      - !type:Emote
+        emote: Scream
+        probability: 0.6
+      - !type:FlameableReaction
+        multiplier: 0.1
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        messages: [ "steel-effect-sizzles-skin","steel-effect-burns-skin" ]
+        probability: 0.7
+      - !type:Ignite
+  metabolisms:
+    Poison:
+      metabolismRate : 0.7 # Steel is much more fluid than slag.
+      effects:
+      - !type:AdjustTemperature 
+        amount: 8000
+      - !type:HealthChange
+        damage:
+          types:
+             Heat: 2.1
+             Bloodloss: 0.3 # Because it solidifies in your veins and such...
+             Slash: 0.1 # Same reason!
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        messages: [ "steel-effect-burns-insides" ]
+        probability: 0.6
+      - !type:Emote
+        emote: Scream
+        probability: 0.9

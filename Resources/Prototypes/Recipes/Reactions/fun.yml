@@ -201,14 +201,6 @@
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
 
-#- type: reaction
-#  id: MeltSteelSlag
-#  impact: Medium
-#  quantized: true
-#  reactants:
-#    Phlogiston:
-#      amount:
-
 - type: reaction
   id: SolidifyGoldFrost
   impact: Low
