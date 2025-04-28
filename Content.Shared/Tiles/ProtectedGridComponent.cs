@@ -10,8 +10,8 @@ namespace Content.Shared.Tiles;
 public sealed partial class ProtectedGridComponent : Component
 {
     /// <summary>
-    /// A hashset of all the initial tiles of this grid.
+    /// A bitmask of all the initial tiles on this grid.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<Vector2i> BaseIndices = new();
+    public Dictionary<Vector2i, ulong> BaseIndices = new();
 }
