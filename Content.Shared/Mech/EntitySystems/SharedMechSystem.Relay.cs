@@ -11,9 +11,9 @@ public abstract partial class SharedMechSystem
         SubscribeLocalEvent<MechComponent, GettingAttackedAttemptEvent>(RelayRefToPilot);
     }
 
-    public void RelayToPilot<T>(EntityUid uid, MechComponent component, T args)
+    public void RelayToPilot<T>(Entity<MechComponent> uid, T args)
     {
-        if (component.PilotSlot.ContainedEntity is not { } pilot)
+        if (uid.Comp.PilotSlot.ContainedEntity is not { } pilot)
             return;
 
         var ev = new MechPilotRelayedEvent<T>(args);
@@ -21,9 +21,9 @@ public abstract partial class SharedMechSystem
         RaiseLocalEvent(pilot, ref ev);
     }
 
-    public void RelayRefToPilot<T>(EntityUid uid, MechComponent component, ref T args)
+    public void RelayRefToPilot<T>(Entity<MechComponent> uid, ref T args)
     {
-        if(component.PilotSlot.ContainedEntity is not { } pilot)
+        if(uid.Comp.PilotSlot.ContainedEntity is not { } pilot)
             return;
 
         var ev = new MechPilotRelayedEvent<T>(args);

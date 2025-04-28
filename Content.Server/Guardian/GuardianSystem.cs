@@ -150,7 +150,7 @@ namespace Content.Server.Guardian
             args.Cancel();
         }
 
-        private void OnPilotAttackAttempt(EntityUid uid, GuardianHostComponent component, ref MechPilotRelayedEvent<GettingAttackedAttemptEvent> args)
+        private void OnPilotAttackAttempt(Entity<GuardianHostComponent> uid, ref MechPilotRelayedEvent<GettingAttackedAttemptEvent> args)
         {
             if (args.Args.Cancelled)
                 return;
