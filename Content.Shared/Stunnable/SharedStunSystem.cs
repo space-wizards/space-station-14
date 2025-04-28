@@ -292,6 +292,8 @@ public abstract class SharedStunSystem : EntitySystem
         comp.SprintSpeedModifier = runSpeedModifier;
 
         _movementSpeedModifier.RefreshMovementSpeedModifiers(ent);
+
+        Dirty(ent);
     }
 
     /// <summary>
