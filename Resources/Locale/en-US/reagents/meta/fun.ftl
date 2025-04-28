@@ -19,6 +19,9 @@ reagent-desc-licoxide = A synthetic battery acid. It looks... electrifying.
 reagent-name-razorium = razorium
 reagent-desc-razorium = A strange, non-newtonian chemical. It is produced when two conflicting brute medications are combined. When force is applied to it, it temporarily hardens creating millions of tiny, sharp edges. Very painful.
 
+reagent-name-steelslag = Steel Slag
+reagent-desc-steelslag = Blazing hot carbonated iron - The culprit of industrial era. It is an alloy of great strength - if made right way. Average space station is made up of THOUSANDS of cubic meters of this compound.
+
 reagent-name-fresium = Fresium
 reagent-desc-fresium = A mysterious compound that slows the vibration of atoms and molecules... somehow. In layman's terms, it makes things cold... REALLY cold. Can cause long-lasting movement issues if ingested.
 

@@ -124,6 +124,7 @@
 
 - type: reaction
   id: Fresium
+  impact: Medium
   priority: 20
   maxTemp: 300
   reactants:
@@ -134,6 +135,8 @@
       catalyst: true
     Nitrogen:
       amount: 3
+    TableSalt:
+      amount: 1.5
     Water:
       amount: 1.5
   effects:
@@ -197,6 +200,14 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
+
+#- type: reaction
+#  id: MeltSteelSlag
+#  impact: Medium
+#  quantized: true
+#  reactants:
+#    Phlogiston:
+#      amount:
 
 - type: reaction
   id: SolidifyGoldFrost
