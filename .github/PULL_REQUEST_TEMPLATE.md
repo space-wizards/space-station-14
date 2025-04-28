@@ -1,27 +1,10 @@
-<!-- Guidelines: https://docs.spacestation14.io/en/getting-started/pr-guideline -->
+## Hey nerd, why did you do this PR stinky?
 
-## About the PR
-<!-- What did you change? -->
+## OK but how did you do it?
 
-## Why / Balance
-<!-- Discuss how this would affect game balance or explain why it was changed. Link any relevant discussions or issues. -->
+## PUT IMAGES BELOW IF YA WANT TO
 
-## Technical details
-<!-- Summary of code changes for easier review. -->
-
-## Media
-<!-- Attach media if the PR makes ingame changes (clothing, items, features, etc). 
-Small fixes/refactors are exempt. Media may be used in SS14 progress reports with credit. -->
-
-## Requirements
-<!-- Confirm the following by placing an X in the brackets [X]: -->
-- [ ] I have read and am following the [Pull Request and Changelog Guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
-- [ ] I have added media to this PR or it does not require an ingame showcase.
-<!-- You should understand that not following the above may get your PR closed at maintainer’s discretion -->
-
-## Breaking changes
-<!-- List any breaking changes, including namespaces, public class/method/field changes, prototype renames; and provide instructions for fixing them.
-This will be posted in #codebase-changes. -->
+## THANK
 
 **Changelog**
 <!-- Add a Changelog entry to make players aware of new features or changes that could affect gameplay.
