@@ -103,8 +103,7 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
             return false;
 
         if (user != null && !_accessReaderSystem.IsAllowed(user.Value, uid))
-            return false;
-                  
+            return false;                  
         SetFireMode(uid, component, index, user);
 
         return true;
