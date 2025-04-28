@@ -72,7 +72,8 @@
     shouldGib: false
     damage:
       types:
-        Blunt: 190
+        Piercing: 50 # OH GOD, MY INSIDES
+        Structural: 100 # OH FUCK, MY CAR
   - type: MovementIgnoreGravity
     gravityState: true
   - type: InputMover
