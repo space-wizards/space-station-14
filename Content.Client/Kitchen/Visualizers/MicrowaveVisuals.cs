@@ -4,6 +4,6 @@ public enum MicrowaveVisualizerLayers : byte
 {
     Base,
     BaseUnlit,
-    Opened
+    Opened // Starlight-edit
 }
 

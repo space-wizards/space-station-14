@@ -16,9 +16,9 @@ namespace Content.Client.Kitchen.UI
         public ButtonGroup CookTimeButtonGroup { get; }
 
         public bool IsBusy;
-        public bool IsSafe;
+        public bool IsSafe; // Starlight-edit
         public TimeSpan CurrentCooktimeEnd;
-        public TimeSpan StartedCooktime = TimeSpan.Zero;
+        public TimeSpan StartedCooktime = TimeSpan.Zero; // Starlight-edit
 
         public MicrowaveMenu()
         {
@@ -26,9 +26,10 @@ namespace Content.Client.Kitchen.UI
             IoCManager.InjectDependencies(this);
             CookTimeButtonGroup = new ButtonGroup();
             
-            CurrentCookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-current-cook-time-label", ("time", StartedCooktime.ToString(@"mm\:ss")));
+            CurrentCookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-current-cook-time-label", ("time", StartedCooktime.ToString(@"mm\:ss"))); // Starlight-edit
         }
         
+        // Starlight-start: adds cooking button as method for Unsafe cooking devices
         public void AddCookingButtons()
         {
             CookTimeButtonVbox.RemoveAllChildren();
@@ -65,11 +66,14 @@ namespace Content.Client.Kitchen.UI
                 };
             }
         }
+        // Starlight-end
         
+        // Starlight-start
         public void ClearCookingButtons()
         {
             CookTimeButtonVbox.RemoveAllChildren();
         }
+        // Starlight-end
 
         public void ToggleBusyDisableOverlayPanel(bool shouldDisable)
         {
@@ -83,9 +87,9 @@ namespace Content.Client.Kitchen.UI
             if (!IsBusy)
                 return;
             
-            CurrentCookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-current-cook-time-label", ("time", (_timing.CurTime - StartedCooktime).ToString(@"mm\:ss")));
+            CurrentCookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-current-cook-time-label", ("time", (_timing.CurTime - StartedCooktime).ToString(@"mm\:ss"))); // Starlight-edit
 
-            if (CurrentCooktimeEnd > _timing.CurTime && IsSafe)
+            if (CurrentCooktimeEnd > _timing.CurTime && IsSafe) // Starlight-edit
             {
                 CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
                 ("time", CurrentCooktimeEnd.Subtract(_timing.CurTime).Seconds));
