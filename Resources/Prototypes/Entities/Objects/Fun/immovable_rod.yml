@@ -68,13 +68,13 @@
   suffix: Wizard
   components:
   - type: ImmovableRod
-    maxSpeed: 25
+    maxSpeed: 15
     destroyTiles: false
     randomizeVelocity: false
     shouldGib: false
     damage:
       types:
-        Piercing: 50
+        Piercing: 40 # applies damage twice so it's actually half what it should be
   - type: MovementIgnoreGravity
     gravityState: true
   - type: InputMover
@@ -84,20 +84,12 @@
     weightlessFriction: 0
     friction: 0
     frictionNoInput: 0
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.5
-        density: 1
-        hard: false
-        layer:
-        - Impassable
-        - Opaque
   - type: CanMoveInAir
   - type: MovementAlwaysTouching
   - type: NoSlip
+  - type: StunOnCollide
+    stunAmount: 1
+    knockdownAmount: 1
 
 - type: entity
   parent: ImmovableRodKeepTiles

@@ -4,6 +4,7 @@ using Content.Server.Popups;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -100,6 +101,9 @@ public sealed class ImmovableRodSystem : EntitySystem
 
             return;
         }
+
+        if (!HasComp<DamageableComponent>(ent) && !component.ShouldGib)
+            return;
 
         // dont delete/hurt self if polymoprhed into a rod
         if (TryComp<PolymorphedEntityComponent>(uid, out var polymorphed))
