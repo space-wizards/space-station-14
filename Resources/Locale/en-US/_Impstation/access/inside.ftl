@@ -1,0 +1,1 @@
+inside-lock-toggle-attempt = You fumble with the locking mechanism!
