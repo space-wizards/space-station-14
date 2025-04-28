@@ -1,5 +1,6 @@
 using Content.Shared.Destructible;
 using Content.Shared.Examine;
+using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -16,6 +17,7 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly NameModifierSystem _nameModifier = default!;
     [Dependency] private readonly SharedDeliverySystem _delivery = default!;
+    [Dependency] private readonly SharedExplosionSystem _explosion = default!;
 
     public override void Initialize()
     {
@@ -32,6 +34,11 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
         SubscribeLocalEvent<DeliveryFragileComponent, BreakageEventArgs>(OnFragileBreakage);
         SubscribeLocalEvent<DeliveryFragileComponent, ExaminedEvent>(OnFragileExamine);
         SubscribeLocalEvent<DeliveryFragileComponent, GetDeliveryMultiplierEvent>(OnGetFragileMultiplier);
+
+        SubscribeLocalEvent<DeliveryBombComponent, MapInitEvent>(OnExplosiveMapInit);
+        SubscribeLocalEvent<DeliveryBombComponent, ExaminedEvent>(OnExplosiveExamine);
+        SubscribeLocalEvent<DeliveryBombComponent, GetDeliveryMultiplierEvent>(OnGetExplosiveMultiplier);
+        SubscribeLocalEvent<DeliveryBombComponent, DeliveryUnlockedEvent>(OnExplosiveUnlock);
     }
 
     #region Random
@@ -104,6 +111,31 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
             args.AdditiveMultiplier += ent.Comp.BrokenMultiplierOffset;
         else
             args.AdditiveMultiplier += ent.Comp.IntactMultiplierOffset;
+    }
+    #endregion
+
+    #region Explosive
+    private void OnExplosiveMapInit(Entity<DeliveryBombComponent> ent, ref MapInitEvent args)
+    {
+        //_delivery.UpdateBrokenVisuals(ent, true);
+    }
+
+    private void OnExplosiveExamine(Entity<DeliveryBombComponent> ent, ref ExaminedEvent args)
+    {
+        var trueName = _nameModifier.GetBaseName(ent.Owner);
+
+        args.PushMarkup(Loc.GetString("delivery-bomb-examine", ("type", trueName)));
+    }
+
+    private void OnGetExplosiveMultiplier(Entity<DeliveryBombComponent> ent, ref GetDeliveryMultiplierEvent args)
+    {
+        // Big danger for big rewards
+        args.MultiplicativeMultiplier += ent.Comp.SpesoMultiplier;
+    }
+
+    private void OnExplosiveUnlock(Entity<DeliveryBombComponent> ent, ref DeliveryUnlockedEvent args)
+    {
+        _explosion.TriggerExplosive(ent, delete: false);
     }
     #endregion
 

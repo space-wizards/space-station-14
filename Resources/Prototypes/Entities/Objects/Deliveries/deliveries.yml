@@ -139,6 +139,8 @@
       prob: 0.25
     - id: DeliveryModifierFragile
       prob: 0.25
+    - id: DeliveryModifierBomb
+      prob: 0.25
 
 - type: entity
   id: DeliveryModifierPriority
@@ -177,3 +179,17 @@
           collection: DeliveryOpenSounds
       - !type:DoActsBehavior
         acts: [ "Breakage" ]
+
+- type: entity
+  id: DeliveryModifierBomb
+  description: Components to add when a delivery is rolled as a bomb.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: DeliveryBomb
+  - type: Explosive
+    explosionType: MicroBomb
+    totalIntensity: 90
+    intensitySlope: 4
+    maxIntensity: 30
+    canCreateVacuum: false
+    deleteAfterExplosion: false

@@ -28,3 +28,5 @@ delivery-priority-expired-examine = This is a [color=orange]priority {$type}[/co
 
 delivery-fragile-examine = This is a [color=red]fragile {$type}[/color]. Deliver it intact for a bonus.
 delivery-fragile-broken-examine = This is a [color=red]fragile {$type}[/color]. It looks badly damaged.
+
+delivery-bomb-examine = This is a [color=purple]bomb {$type}[/color]. Oh no.
