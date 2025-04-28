@@ -111,6 +111,7 @@
       - DrinkAppleMartiniCrystalLiteGlass
       - DrinkBloodierMaryGlass
       - DrinkBumWineGlass
+      - DrinkBurnchamberGlass
       - DrinkCalimotxoGlass
       - DrinkCleverGirlGlass
       - DrinkCottonBoolGlass
@@ -119,10 +120,13 @@
       - DrinkGenderfluidGlass
       - DrinkHummingBirdGlass
       - DrinkLoveTapGlass
+      - DrinkLungCloggerGlass
+      - DrinkMinotaursLamentGlass
       - DrinkOrangeCoffeeGlass
       - DrinkRaktaccinoGlass
       - DrinkStarryNightGlass
       - DrinkSojuGlass
+      - DrinkSupermixerGlass
       - DrinkTheGreaseGlass
       - DrinkVoxRocksGlass
     chance: 0.8
@@ -144,12 +148,15 @@
       - DrinkBeepskySmashGlass
       - DrinkBacchusBlessing
       # imp drinks, skipped horsepussy but im looking skeptically at bacchusblessing one line above this
+      - DrinkBreathofFreshAirGlass
       - DrinkFeverDreamGlass
       - DrinkLovePotionGlass
       - DrinkReaganomicsGlass
       - DrinkRotgutGlass
       - DrinkSalvagersSootheGlass
+      - DrinkSupermixerpsychGlass
       - DrinkThavenBadGlass
       - DrinkUAPGlass
+      - DrinkWeldingCoilsGlass
       - DrinkZombieSlushieGlass
     rareChance: 0.05

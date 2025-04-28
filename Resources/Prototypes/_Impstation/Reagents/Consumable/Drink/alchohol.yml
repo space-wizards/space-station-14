@@ -611,3 +611,195 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.2
+
+- type: reagent
+  id: LungClogger
+  name: reagent-name-lungclogger
+  parent: BaseAlcohol
+  desc: reagent-desc-lungclogger
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: lungclogger
+  color: "#1F9275"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/lungclogger.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+      - !type:Emote
+        emote: Cough
+        showInChat: true
+        force: true
+        probability: 0.15
+  fizziness: .4
+
+- type: reagent
+  id: SleepytimeJunction
+  name: reagent-name-sleepytimejunction
+  parent: BaseAlcohol
+  desc: reagent-desc-sleepytimejunction
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: sleepytimejunction
+  color: "#941FDB"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/sleepytimejunction.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:Emote
+        emote: Yawn
+        showInChat: true
+        force: true
+        probability: 0.05
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.85
+        sprintSpeedModifier: 0.85
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        component: Drowsiness
+        time: 2
+        type: Add
+  fizziness: .1
+
+- type: reagent
+  id: BreathofFreshAir
+  name: reagent-name-breathoffreshair
+  parent: BaseAlcohol
+  desc: reagent-desc-breathoffreshair
+  physicalDesc: reagent-physical-desc-refreshing
+  flavor: breathoffreshair
+  color: "#538FBC"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/breathoffreshair.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Medicine:
+      effects:
+      - !type:HealthChange
+        probability: 0.75
+        damage:
+          types:
+            Asphyxiation: -1
+  fizziness: .9
+
+- type: reagent
+  id: MinotaursLament
+  name: reagent-name-minotaurslament
+  parent: BaseAlcohol
+  desc: reagent-desc-minotaurslament
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: minotaurslament
+  color: "#D7F407"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/minotaurslament.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        probability: 0.75
+        damage:
+          types:
+            Poison: .3
+  fizziness: .2
+
+- type: reagent 
+  id: Burnchamber
+  name: reagent-name-burnchamber
+  parent: BaseAlcohol
+  desc: reagent-desc-burnchamber
+  physicalDesc: reagent-physical-desc-burning
+  flavor: burnchamber
+  color: "#FFC503"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/burnchamber.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+    Poison:
+      effects:
+        - !type:AdjustTemperature
+          amount: 250 # thermal energy, not temp
+        - !type:HealthChange
+          conditions:
+            - !type:ReagentThreshold
+              min: 10
+          damage:
+            types:
+              Heat: .5
+        - !type:PopupMessage
+          type: Local
+          messages: [ "capsaicin-effect-light-burn" ]
+          probability: 0.2
+  fizziness: .5
+
+- type: reagent 
+  id: WeldingCoils
+  name: reagent-name-weldingcoils
+  parent: BaseAlcohol
+  desc: reagent-desc-weldingcoils
+  physicalDesc: reagent-physical-desc-electric
+  flavor: weldingcoils
+  color: "#7030e6"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/weldingcoils.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.25
+    Poison:
+      effects:
+      - !type:Electrocute
+        probability: 0.05
+  fizziness: .5

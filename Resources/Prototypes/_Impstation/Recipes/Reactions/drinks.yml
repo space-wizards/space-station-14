@@ -429,3 +429,108 @@
       amount: 1
   products:
     Soju: 2
+
+- type: reaction
+  id: LungClogger
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    SpaceUp:
+      amount: 1
+    Gin:
+      amount: 1
+    JuiceLime:
+      amount: 1
+    Nothing:
+      amount: 1
+  products:
+    LungClogger: 4
+
+- type: reaction
+  id: SleepytimeJunction
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    Wine:
+      amount: 1
+    Cream:
+      amount: 1
+    JuiceBluePumpkin:
+      amount: 1
+  products:
+    SleepytimeJunction: 3
+
+- type: reaction
+  id: BreathofFreshAir
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Dexalin:
+      amount: 1
+    SpaceMountainWind:
+      amount: 1
+    Vermouth:
+      amount: 1
+  products:
+    BreathofFreshAir: 3
+
+- type: reaction
+  id: MinotaursLament
+  reactants:
+    XenoBasher:
+      amount: 1
+    Absinthe:
+      amount: 1
+  products:
+    MinotaursLament: 2
+
+- type: reaction
+  id: Burnchamber
+  minTemp: 370
+  reactants:
+    CapsaicinOil:
+      amount: 2
+    Plasma:
+      amount: 1
+    Whiskey:
+      amount: 3
+  products:
+    Burnchamber: 6
+
+- type: reaction
+  id: WeldingCoils
+  reactants:
+    WeldingFuel:
+      amount: 1
+    Vodka:
+      amount: 2
+    LemonAsterade:
+      amount: 3
+  products:
+    WeldingCoils: 6
+
+- type: reaction
+  id: Supermixer
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    Sugar:
+      amount: 1
+    SodaWater:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+  products:
+    Supermixer: 3
+
+- type: reaction
+  id: Supermixerpsych
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Supermixer:
+      amount: 2
+    Psicodine:
+      amount: 1
+  products:
+    Supermixerpsych: 3

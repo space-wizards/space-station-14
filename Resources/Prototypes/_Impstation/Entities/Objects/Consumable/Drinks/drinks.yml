@@ -479,3 +479,131 @@
   - type: Icon
     sprite: _Impstation/Objects/Consumable/Drinks/feverdream.rsi
     state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkLungCloggerGlass
+  suffix: lung clogger
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: LungClogger
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/lungclogger.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkBreathofFreshAirGlass
+  suffix: a breath of fresh air
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: BreathofFreshAir
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/breathoffreshair.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkSleepytimeJunctionGlass
+  suffix: sleepytime junction
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: SleepytimeJunction
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/sleepytimejunction.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkMinotaursLamentGlass
+  suffix: minotaur's lament
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: MinotaursLament
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/minotaurslament.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkBurnchamberGlass
+  suffix: the burnchamber
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Burnchamber
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/burnchamber.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkWeldingCoilsGlass
+  suffix: weldin' coils
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: WeldingCoils
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/weldingcoils.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkSupermixerGlass
+  suffix: the supermixer
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Supermixer
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/supermixer.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkSupermixerpsychGlass
+  suffix: the supermixer
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Supermixerpsych
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/supermixerpsych.rsi
+    state: icon

@@ -63,3 +63,48 @@
           type: Moth
           shouldHave: false
   fizziness: 0.2
+
+- type: reagent
+  id: Supermixer
+  name: reagent-name-supermixer
+  parent: BaseSoda
+  desc: reagent-desc-supermixer
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: supermixer
+  color: "#FDD54E"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/supermixer.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+  fizziness: 0.8
+
+- type: reagent
+  id: Supermixerpsych
+  name: reagent-name-supermixerpsych
+  parent: BaseSoda
+  desc: reagent-desc-supermixerpsych
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: supermixerpsych
+  color: "#5471A8"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/supermixerpsych.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Psicodine
+        amount: 0.10
+  fizziness: 0.8

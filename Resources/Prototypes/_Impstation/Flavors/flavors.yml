@@ -157,3 +157,43 @@
   id: soju
   flavorType: Complex
   description: flavor-complex-soju
+
+- type: flavor
+  id: lungclogger
+  flavorType: Complex
+  description: flavor-complex-lungclogger
+
+- type: flavor
+  id: breathoffreshair
+  flavorType: Complex
+  description: flavor-complex-breathoffreshair
+
+- type: flavor
+  id: minotaurslament
+  flavorType: Complex
+  description: flavor-complex-minotaurslament
+
+- type: flavor
+  id: sleepytimejunction
+  flavorType: Complex
+  description: flavor-complex-sleepytimejunction
+
+- type: flavor
+  id: burnchamber
+  flavorType: Complex
+  description: flavor-complex-burnchamber
+
+- type: flavor
+  id: weldingcoils
+  flavorType: Complex
+  description: flavor-complex-weldingcoils
+
+- type: flavor
+  id: supermixer
+  flavorType: Complex
+  description: flavor-complex-supermixer
+
+- type: flavor
+  id: supermixerpsych
+  flavorType: Complex
+  description: flavor-complex-supermixerpsych
