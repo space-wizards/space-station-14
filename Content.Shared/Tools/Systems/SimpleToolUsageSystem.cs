@@ -72,6 +72,7 @@ public sealed partial class SimpleToolUsageSystem : EntitySystem
             BreakOnDropItem = true,
             BreakOnMove = true,
             BreakOnHandChange = true,
+            NeedHand = true,
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
