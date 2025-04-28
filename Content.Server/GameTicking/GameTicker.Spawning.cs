@@ -442,7 +442,7 @@ namespace Content.Server.GameTicking
 
             if (_map.MapExists(DefaultMap))
             {
-                var mapUid = _map.GetMap(DefaultMap);
+                var mapUid = _map.GetMapOrInvalid(DefaultMap);
                 if (!TerminatingOrDeleted(mapUid))
                     return new EntityCoordinates(mapUid, Vector2.Zero);
             }
