@@ -428,3 +428,33 @@
           Quantity: 10
         - ReagentId: Phlogiston
           Quantity: 10
+
+- type: entity
+  id: CigaretteBanana
+  parent: SoakedCigarette
+  name: Pun Pun's Tropical Getaway
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nicotine
+          Quantity: 10
+        - ReagentId: Potassium
+          Quantity: 10
+
+- type: entity
+  id: CigaretteBlackPepper
+  parent: SoakedCigarette
+  name: English Spice
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nicotine
+          Quantity: 10
+        - ReagentId: Blackpepper
+          Quantity: 10

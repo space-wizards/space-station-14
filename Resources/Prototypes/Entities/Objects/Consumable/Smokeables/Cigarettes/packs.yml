@@ -210,7 +210,6 @@
     - id: CigaretteDermaline
     - id: CigaretteArithrazine
     - id: CigaretteBicaridine
-    - id: CigaretteIpecac
     - id: CigaretteOmnizine
       prob: 0.25
     - id: CigaretteDexalin
@@ -304,6 +303,10 @@
       weight: 6
     - id: CigaretteRobustHarvest
       weight: 6
+    - id: CigaretteBanana
+      weight: 7
+    - id: CigaretteBlackPepper
+      weight: 7
     - id: CigaretteCapsaicinOil
       weight: 7
     - id: CigaretteBbqSauce
