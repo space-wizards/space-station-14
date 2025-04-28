@@ -89,7 +89,7 @@ public sealed partial class AdminCameraEui : BaseEui
 
         // Allow the user to see the entities near the camera.
         // This also force sends the camera entity to the user, overriding the visibility flags.
-        // (The camera entity has its visibility flags set to 0 so that cheat clients can't see it)
+        // (The camera entity has its visibility flags set to VisibilityFlags.Admin so that cheat clients can't see it)
         _viewSubscriber.AddViewSubscriber(camera, observer);
 
         return camera;
