@@ -1429,4 +1429,4 @@
   description: A sign indicating the briefing room.
   components:
   - type: Sprite
-    state: Brief
+    state: brief
