@@ -14,6 +14,8 @@
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
+  - type: TileFrictionModifier
+    modifier: 0
   - type: PointLight
     radius: 3
     color: red
@@ -72,7 +74,7 @@
     shouldGib: false
     damage:
       types:
-        Blunt: 190
+        Piercing: 50
   - type: MovementIgnoreGravity
     gravityState: true
   - type: InputMover
@@ -82,6 +84,17 @@
     weightlessFriction: 0
     friction: 0
     frictionNoInput: 0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.5
+        density: 1
+        hard: false
+        layer:
+        - Impassable
+        - Opaque
   - type: CanMoveInAir
   - type: MovementAlwaysTouching
   - type: NoSlip
