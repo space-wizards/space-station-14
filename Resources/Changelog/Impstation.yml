@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Flipped version of the twisted scar marking.
-    type: Add
-  - message: '[Changeling Blind Sting] No longer damages eyes, instead inflicting
-      the blindness debuff for a significantly longer time. Ability''s Chemical Cost
-      increased to align with this buff.'
-    type: Tweak
-  id: 1087
-  time: '2025-02-10T03:17:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1622
 - author: nowaitstop
   changes:
   - message: New playing card colors! Good luck finding them lol
@@ -4138,3 +4127,10 @@
   id: 1586
   time: '2025-04-28T08:45:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2347
+- author: kipdotnet
+  changes:
+  - message: Apids have first (last?) names again.
+    type: Fix
+  id: 1587
+  time: '2025-04-28T10:40:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2363
