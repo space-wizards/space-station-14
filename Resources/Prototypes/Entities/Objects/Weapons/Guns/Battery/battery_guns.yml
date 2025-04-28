@@ -846,12 +846,12 @@
 
 - type: entity
   name: xenoborg laser gun
-  parent: [ WeaponAdvancedLaser, BaseXenoborgContraband]
+  parent: [ WeaponAdvancedLaser, BaseXenoborgContraband ]
   id: XenoborgLaserGun
 
 - type: entity
   name: xenoborg heavy laser gun
-  parent: [ WeaponAdvancedLaser, BaseXenoborgContraband]
+  parent: [ WeaponAdvancedLaser, BaseXenoborgContraband ]
   id: XenoborgHeavyLaserGun
   components:
   - type: HitscanBatteryAmmoProvider
