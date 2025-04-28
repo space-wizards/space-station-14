@@ -207,6 +207,43 @@
         probability: 0.3
 
 - type: reagent
+  id: SteelSlag
+  name: reagent-name-steelslag
+  physicalDesc: reagent-physical-desc-hot
+  desc: reagent-desc-steelslag
+  flavor: carbonated
+  color: "#ffb720"
+  reactiveEffects:
+    Flameable:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Heat: 0.8
+      - !type:Emote
+        emote: Scream
+        probability: 0.7
+  metabolisms:
+    Poison:
+      metabolismRate : 0.5
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+             Heat : 2
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        # messages: [ "generic-reagent-effect-slicing-insides"] EDIT THIS SHIT BEFORE MERGING
+        probability: 0.33
+      - !type:Emote
+        emote: Scream
+        probability: 0.3
+
+- type: reagent
   id: Fresium
   name: reagent-name-fresium
   group: Toxins

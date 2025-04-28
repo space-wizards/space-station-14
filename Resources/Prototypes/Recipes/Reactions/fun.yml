@@ -133,16 +133,12 @@
       amount: 1
       catalyst: true
     Nitrogen:
-      amount: 2
-    Cryoxadone:
-      amount: 0.22
-    TableSalt:
-      amount: 0.08
+      amount: 3
     Water:
       amount: 1.5
   effects:
   - !type:CreateGas
-    gas: Nitrogen
+    gas: NitrousOxide
   products:
     Fresium: 5
 
@@ -203,7 +199,7 @@
       entity: MaterialGunpowder
 
 - type: reaction
-  id: SolidifyGold
+  id: SolidifyGoldFrost
   impact: Low
   quantized: true
   reactants:
@@ -216,7 +212,23 @@
     entity: IngotGold1
 
 - type: reaction
-  id: SolidifySilver
+  id: SolidifyGoldFresium # Just puts good old Fresium to use...
+  impact: Low
+  quantized: true
+  reactants:
+    Gold:
+      amount: 10
+    Fresium:
+      amount: 1
+      catalyst: true
+    Nitrogen:
+      amount: 10 # I dunno why I set this to 10, but it seems fair.
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: IngotGold1
+
+- type: reaction
+  id: SolidifySilverFrost
   impact: Low
   quantized: true
   reactants:
@@ -227,6 +239,51 @@
   effects:
   - !type:CreateEntityReactionEffect
     entity: IngotSilver1
+
+- type: reaction
+  id: SolidifySilverFresium # Just puts good old Fresium to use...
+  impact: Low
+  quantized: true
+  reactants:
+    Silver:
+      amount: 10
+    Fresium:
+      amount: 1
+      catalyst: true
+    Nitrogen:
+      amount: 10
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: IngotSilver1
+
+- type: reaction
+  id: SolidifyPlasmaFrost
+  impact: Low
+  quantized: true
+  reactants:
+    Plasma:
+      amount: 10
+    FrostOil:
+      amount: 20 # Because Plasma is really flameable and I think it should require more cooling.
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: SheetPlasma1
+
+- type: reaction
+  id: SolidifyPlasmaFresium
+  impact: Low
+  quantized: true
+  reactants:
+    Plasma:
+      amount: 10
+    Fresium:
+      amount: 1
+      catalyst: true
+    Nitrogen:
+      amount: 40 # Because Plasma is really flameable and I think it should require more cooling.
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: SheetPlasma1
 
 - type: reaction
   id: WehHewExplosion
