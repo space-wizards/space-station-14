@@ -4,16 +4,17 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Access.Commands;
 
-public sealed class ShowAccessReadersCommand : IConsoleCommand
+public sealed class ShowAccessReadersCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IResourceCache _cahce = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
 
-    public string Command => "showaccessreaders";
+    public override string Command => "showaccessreaders";
 
-    public string Description => "Toggles showing access reader permissions on the map";
-    public string Help => """
+    public override string Description => "Toggles showing access reader permissions on the map";
+    public override string Help => """
         Overlay Info:
         -Disabled | The access reader is disabled
         +Unrestricted | The access reader has no restrictions
@@ -21,17 +22,16 @@ public sealed class ShowAccessReadersCommand : IConsoleCommand
         +Key [StationUid]: [StationRecordKeyId] | A StationRecordKey that is allowed
         -Tag [Tag Name] | A tag that is not allowed (takes priority over other allows)
         """;
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (_overlay.RemoveOverlay<AccessOverlay>())
         {
-            shell.WriteLine($"Set access reader debug overlay to false");
+            shell.WriteLine(Loc.GetString($"cmd-show-access-readers-disabled"));
             return;
         }
 
-        var xform = _ent.System<SharedTransformSystem>();
+        _overlay.AddOverlay(new AccessOverlay(_ent, _cahce, _xform));
+        shell.WriteLine(Loc.GetString($"cmd-show-access-readers-enabled"));
 
-        _overlay.AddOverlay(new AccessOverlay(_ent, _cahce, xform));
-        shell.WriteLine($"Set access reader debug overlay to true");
     }
 }
