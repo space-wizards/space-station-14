@@ -4,8 +4,8 @@ meta:
   engineVersion: 254.1.0
   forkId: ""
   forkVersion: ""
-  time: 04/21/2025 21:36:21
-  entityCount: 275
+  time: 04/27/2025 23:18:21
+  entityCount: 289
 maps: []
 grids:
 - 1
@@ -856,13 +856,8 @@ entities:
   - uid: 211
     components:
     - type: Transform
-      pos: -1.7836423,6.7995443
-      parent: 1
-  - uid: 212
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -5.3733253,-6.0754557
+      rot: 1.5707963267948966 rad
+      pos: 7.881867,-2.6772983
       parent: 1
   - uid: 213
     components:
@@ -951,7 +946,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.1699274,-11.661009
       parent: 1
-- proto: Memorial
+- proto: Monolith
   entities:
   - uid: 228
     components:
@@ -1055,6 +1050,78 @@ entities:
     - type: Transform
       pos: -8.5,-3.5
       parent: 1
+- proto: ScrapSteel
+  entities:
+  - uid: 276
+    components:
+    - type: Transform
+      pos: 7.5261097,3.5501933
+      parent: 1
+  - uid: 277
+    components:
+    - type: Transform
+      pos: -4.5676403,8.448631
+      parent: 1
+  - uid: 278
+    components:
+    - type: Transform
+      pos: -10.450453,1.6986309
+      parent: 1
+  - uid: 279
+    components:
+    - type: Transform
+      pos: 3.4245472,-9.387306
+      parent: 1
+  - uid: 280
+    components:
+    - type: Transform
+      pos: -1.5442028,-6.410744
+      parent: 1
+  - uid: 281
+    components:
+    - type: Transform
+      pos: -8.458265,4.370506
+      parent: 1
+  - uid: 282
+    components:
+    - type: Transform
+      pos: 7.3854847,-7.5357437
+      parent: 1
+  - uid: 283
+    components:
+    - type: Transform
+      pos: 8.46361,-1.6294942
+      parent: 1
+  - uid: 284
+    components:
+    - type: Transform
+      pos: -8.083265,-1.9107442
+      parent: 1
+  - uid: 285
+    components:
+    - type: Transform
+      pos: -6.466078,8.214256
+      parent: 1
+  - uid: 286
+    components:
+    - type: Transform
+      pos: -2.4817028,6.479881
+      parent: 1
+  - uid: 287
+    components:
+    - type: Transform
+      pos: 4.2917347,8.495506
+      parent: 1
+  - uid: 288
+    components:
+    - type: Transform
+      pos: 4.455797,-6.6685567
+      parent: 1
+  - uid: 289
+    components:
+    - type: Transform
+      pos: -7.356703,-7.699806
+      parent: 1
 - proto: SpawnMobGorilla
   entities:
   - uid: 181
@@ -1144,6 +1211,11 @@ entities:
     components:
     - type: Transform
       pos: -4.8318434,1.1291535
+      parent: 1
+  - uid: 212
+    components:
+    - type: Transform
+      pos: 5.458567,3.3996565
       parent: 1
 - proto: WallRockBasalt
   entities:

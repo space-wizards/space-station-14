@@ -4,8 +4,8 @@ meta:
   engineVersion: 254.1.0
   forkId: ""
   forkVersion: ""
-  time: 04/21/2025 20:42:34
-  entityCount: 373
+  time: 04/28/2025 04:51:53
+  entityCount: 411
 maps: []
 grids:
 - 1
@@ -771,6 +771,90 @@ entities:
     - type: Transform
       pos: -3.5,-0.5
       parent: 1
+- proto: GoldRing
+  entities:
+  - uid: 374
+    components:
+    - type: Transform
+      pos: 1.5221288,-0.57420516
+      parent: 1
+- proto: IngotGold1
+  entities:
+  - uid: 399
+    components:
+    - type: Transform
+      pos: -0.101760924,1.4815335
+      parent: 1
+    - type: Stack
+      count: 10
+  - uid: 400
+    components:
+    - type: Transform
+      pos: -6.3048863,-2.2997165
+      parent: 1
+  - uid: 401
+    components:
+    - type: Transform
+      pos: 7.759688,-2.434428
+      parent: 1
+  - uid: 402
+    components:
+    - type: Transform
+      pos: 1.6346881,8.674947
+      parent: 1
+  - uid: 403
+    components:
+    - type: Transform
+      pos: -7.0507083,3.362447
+      parent: 1
+  - uid: 404
+    components:
+    - type: Transform
+      pos: 0.5899171,-0.528178
+      parent: 1
+    - type: Stack
+      count: 10
+- proto: IngotSilver1
+  entities:
+  - uid: 405
+    components:
+    - type: Transform
+      pos: 6.049924,6.37298
+      parent: 1
+  - uid: 406
+    components:
+    - type: Transform
+      pos: 9.846799,2.7951682
+      parent: 1
+  - uid: 407
+    components:
+    - type: Transform
+      pos: 3.883467,-6.2521105
+      parent: 1
+  - uid: 408
+    components:
+    - type: Transform
+      pos: -0.38527852,0.03516984
+      parent: 1
+    - type: Stack
+      count: 10
+  - uid: 409
+    components:
+    - type: Transform
+      pos: 1.4336672,0.518697
+      parent: 1
+    - type: Stack
+      count: 10
+  - uid: 410
+    components:
+    - type: Transform
+      pos: -2.7694578,-6.715678
+      parent: 1
+  - uid: 411
+    components:
+    - type: Transform
+      pos: -4.6649365,6.857355
+      parent: 1
 - proto: MaterialBones1
   entities:
   - uid: 2
@@ -834,6 +918,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.9204736,4.442614
+      parent: 1
+  - uid: 375
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -0.8647148,2.725618
       parent: 1
 - proto: MetalDoor
   entities:
@@ -1094,6 +1184,20 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,-9.5
       parent: 1
+- proto: SilverRing
+  entities:
+  - uid: 390
+    components:
+    - type: Transform
+      pos: -7.571117,-2.2148302
+      parent: 1
+- proto: SilverRingDiamond
+  entities:
+  - uid: 389
+    components:
+    - type: Transform
+      pos: -0.13412124,-0.48045516
+      parent: 1
 - proto: SpearBone
   entities:
   - uid: 84
@@ -1154,6 +1258,117 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -10.5,0.5
+      parent: 1
+- proto: TreasureCoinGold
+  entities:
+  - uid: 376
+    components:
+    - type: Transform
+      pos: -3.33866,-5.4637747
+      parent: 1
+  - uid: 377
+    components:
+    - type: Transform
+      pos: -5.5417852,4.1456003
+      parent: 1
+  - uid: 379
+    components:
+    - type: Transform
+      pos: 1.395715,1.2393506
+      parent: 1
+  - uid: 384
+    components:
+    - type: Transform
+      pos: 5.8755803,1.5518506
+      parent: 1
+  - uid: 386
+    components:
+    - type: Transform
+      pos: 1.010158,0.036225557
+      parent: 1
+- proto: TreasureCoinIron
+  entities:
+  - uid: 378
+    components:
+    - type: Transform
+      pos: -5.847972,-0.17922056
+      parent: 1
+  - uid: 391
+    components:
+    - type: Transform
+      pos: -7.055638,5.707677
+      parent: 1
+  - uid: 392
+    components:
+    - type: Transform
+      pos: -6.010097,-5.559984
+      parent: 1
+  - uid: 393
+    components:
+    - type: Transform
+      pos: 1.224278,-9.184984
+      parent: 1
+  - uid: 394
+    components:
+    - type: Transform
+      pos: 6.9676065,5.377516
+      parent: 1
+  - uid: 395
+    components:
+    - type: Transform
+      pos: 1.1394815,5.658766
+      parent: 1
+  - uid: 396
+    components:
+    - type: Transform
+      pos: 1.7019815,-5.841234
+      parent: 1
+  - uid: 397
+    components:
+    - type: Transform
+      pos: -0.988509,9.670308
+      parent: 1
+  - uid: 398
+    components:
+    - type: Transform
+      pos: 9.948616,-0.85712314
+      parent: 1
+- proto: TreasureCoinSilver
+  entities:
+  - uid: 380
+    components:
+    - type: Transform
+      pos: 4.7193303,5.9581003
+      parent: 1
+  - uid: 381
+    components:
+    - type: Transform
+      pos: 4.8287053,-6.2293997
+      parent: 1
+  - uid: 382
+    components:
+    - type: Transform
+      pos: -0.59033686,0.54183877
+      parent: 1
+  - uid: 383
+    components:
+    - type: Transform
+      pos: 6.9849553,-1.0106494
+      parent: 1
+  - uid: 385
+    components:
+    - type: Transform
+      pos: -3.8804672,7.4424753
+      parent: 1
+  - uid: 387
+    components:
+    - type: Transform
+      pos: 0.8832292,1.714114
+      parent: 1
+  - uid: 388
+    components:
+    - type: Transform
+      pos: -0.2886458,0.9172389
       parent: 1
 - proto: WallBasaltCobblebrick
   entities:

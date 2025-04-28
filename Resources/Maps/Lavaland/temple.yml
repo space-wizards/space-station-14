@@ -4,8 +4,8 @@ meta:
   engineVersion: 254.1.0
   forkId: ""
   forkVersion: ""
-  time: 04/21/2025 19:53:54
-  entityCount: 429
+  time: 04/28/2025 04:45:54
+  entityCount: 453
 maps: []
 grids:
 - 1
@@ -1354,6 +1354,52 @@ entities:
     - type: Transform
       pos: -1.4316361,3.6125546
       parent: 1
+- proto: GoldRing
+  entities:
+  - uid: 447
+    components:
+    - type: Transform
+      pos: -1.1354166,10.444935
+      parent: 1
+- proto: GoldRingDiamond
+  entities:
+  - uid: 446
+    components:
+    - type: Transform
+      pos: 2.3958333,10.444935
+      parent: 1
+- proto: IngotGold1
+  entities:
+  - uid: 449
+    components:
+    - type: Transform
+      pos: 2.3020833,10.663685
+      parent: 1
+    - type: Stack
+      count: 5
+  - uid: 450
+    components:
+    - type: Transform
+      pos: -1.5416666,10.642852
+      parent: 1
+    - type: Stack
+      count: 5
+- proto: IngotSilver1
+  entities:
+  - uid: 441
+    components:
+    - type: Transform
+      pos: -1.28125,10.517852
+      parent: 1
+    - type: Stack
+      count: 5
+  - uid: 448
+    components:
+    - type: Transform
+      pos: 2.625,10.569935
+      parent: 1
+    - type: Stack
+      count: 5
 - proto: KitchenKnife
   entities:
   - uid: 407
@@ -1368,6 +1414,18 @@ entities:
     components:
     - type: Transform
       pos: 0.5,5.5
+      parent: 1
+- proto: LootSpawnerMaterialsSurplus
+  entities:
+  - uid: 451
+    components:
+    - type: Transform
+      pos: -2.5,-6.5
+      parent: 1
+  - uid: 453
+    components:
+    - type: Transform
+      pos: 3.5,-5.5
       parent: 1
 - proto: Machete
   entities:
@@ -1537,6 +1595,20 @@ entities:
     - type: Transform
       pos: 1.5,-12.5
       parent: 1
+- proto: SilverRing
+  entities:
+  - uid: 445
+    components:
+    - type: Transform
+      pos: 2.0833333,10.736602
+      parent: 1
+- proto: SilverRingDiamond
+  entities:
+  - uid: 444
+    components:
+    - type: Transform
+      pos: -1.4791666,10.559518
+      parent: 1
 - proto: StairStageDark
   entities:
   - uid: 175
@@ -1685,6 +1757,16 @@ entities:
     - type: Transform
       pos: 2.5,-10.5
       parent: 1
+  - uid: 442
+    components:
+    - type: Transform
+      pos: -1.5,10.5
+      parent: 1
+  - uid: 443
+    components:
+    - type: Transform
+      pos: 2.5,10.5
+      parent: 1
 - proto: ThrowingKnife
   entities:
   - uid: 405
@@ -1697,6 +1779,80 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -2.2542107,-7.5088096
+      parent: 1
+- proto: TreasureCoinDiamond
+  entities:
+  - uid: 452
+    components:
+    - type: Transform
+      pos: 0.40063152,10.722128
+      parent: 1
+- proto: TreasureCoinGold
+  entities:
+  - uid: 430
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.3541666,-1.5263778
+      parent: 1
+  - uid: 431
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -2.7604167,-1.6201278
+      parent: 1
+  - uid: 432
+    components:
+    - type: Transform
+      pos: -2.5208335,-1.297211
+      parent: 1
+  - uid: 433
+    components:
+    - type: Transform
+      pos: 2.4583333,-1.2867944
+      parent: 1
+  - uid: 434
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 3.4270833,-1.2242944
+      parent: 1
+  - uid: 435
+    components:
+    - type: Transform
+      pos: 3.7291667,-1.4117944
+      parent: 1
+- proto: TreasureCoinSilver
+  entities:
+  - uid: 436
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.4895834,-1.2763778
+      parent: 1
+  - uid: 437
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.2604167,-1.484711
+      parent: 1
+  - uid: 438
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 3.75,-1.203461
+      parent: 1
+  - uid: 439
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.6666667,3.6904576
+      parent: 1
+  - uid: 440
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.28125,3.7008743
       parent: 1
 - proto: WallBasaltCobblebrick
   entities:
@@ -2292,8 +2448,13 @@ entities:
     - type: SolutionContainerManager
       solutions:
         tank:
+          temperature: 293.15
+          canReact: True
+          maxVol: 500
+          name: null
           reagents:
-          - ReagentId: Blood
+          - data: []
+            ReagentId: Blood
             Quantity: 500
 - proto: WoodenBench
   entities:
