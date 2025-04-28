@@ -98,7 +98,7 @@
     - Belt
   - type: Reflect
     slotFlags:
-      - NONE
+    - NONE
 
 - type: entity
   name: machete
