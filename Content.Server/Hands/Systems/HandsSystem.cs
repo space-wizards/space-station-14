@@ -227,11 +227,10 @@ namespace Content.Server.Hands.Systems
 
             var throwSpeed = hands.BaseThrowspeed;
             // Checks for and applies the throwing speed modifier
-            if (EntityManager.TryGetComponent<ItemComponent>(throwEnt, out var itemComponent)
-                && throwSpeed + itemComponent.ThrowingSpeedModifier > 0)
+            if (EntityManager.TryGetComponent<ThrowSpeedModifierComponent>(throwEnt, out var speedComp)
+                && throwSpeed + speedComp.Modifier > 0)
             {
-                throwSpeed += itemComponent.ThrowingSpeedModifier;
-                Log.Debug($"{throwSpeed}");
+                throwSpeed += speedComp.Modifier;
             }
 
             // Let other systems change the thrown entity (useful for virtual items)
