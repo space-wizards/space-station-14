@@ -22,6 +22,8 @@ tilemap:
   120: Lattice
   121: Plating
 entities:
+- proto: ""
+  entities:
   - uid: 2
     components:
     - type: MetaData
