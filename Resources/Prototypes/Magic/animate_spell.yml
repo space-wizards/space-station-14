@@ -17,7 +17,7 @@
       - AnomalyGenerator
       - TegGenerator
       - TegCirculator
-      - Artifact
+      - XenoArtifact
     canTargetSelf: false
     interactOnMiss: false
     sound: !type:SoundPathSpecifier
