@@ -9,19 +9,19 @@ using Robust.Shared.Map;
 namespace Content.Server.Atmos.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class AddMapAtmosCommand : LocalizedCommands
+public sealed class AddMapAtmosCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
-    private const string _cmd = "cmd-set-map-atmos";
+    private const string Cmd = "cmd-set-map-atmos";
     public override string Command => "setmapatmos";
-    public override string Description => Loc.GetString($"{_cmd}-desc");
-    public override string Help => Loc.GetString($"{_cmd}-help");
+    public override string Description => Loc.GetString($"{Cmd}-desc");
+    public override string Help => Loc.GetString($"{Cmd}-help");
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var mapSystem = _entities.System<SharedMapSystem>();
-
         if (args.Length < 2)
         {
             shell.WriteLine(Help);
@@ -29,7 +29,7 @@ public sealed class AddMapAtmosCommand : LocalizedCommands
         }
 
         int.TryParse(args[0], out var id);
-        var map = mapSystem.GetMap(new MapId(id));
+        var map = _mapSystem.GetMap(new MapId(id));
         if (!map.IsValid())
         {
             shell.WriteError(Loc.GetString("cmd-parse-failure-mapid",  ("arg", args[0])));
@@ -45,7 +45,7 @@ public sealed class AddMapAtmosCommand : LocalizedCommands
         if (space || args.Length < 4)
         {
             _entities.RemoveComponent<MapAtmosphereComponent>(map);
-            shell.WriteLine(Loc.GetString($"{_cmd}-removed", ("map", id)));
+            shell.WriteLine(Loc.GetString($"{Cmd}-removed", ("map", id)));
             return;
         }
 
@@ -70,26 +70,25 @@ public sealed class AddMapAtmosCommand : LocalizedCommands
             mix.AdjustMoles(i, moles);
         }
 
-        var atmos = _entities.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
-        atmos.SetMapAtmosphere(map, space, mix);
-        shell.WriteLine(Loc.GetString($"{_cmd}-updated", ("map", id)));
+        _atmos.SetMapAtmosphere(map, space, mix);
+        shell.WriteLine(Loc.GetString($"{Cmd}-updated", ("map", id)));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entities), Loc.GetString($"{_cmd}-hint-map"));
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entities), Loc.GetString($"{Cmd}-hint-map"));
 
         if (args.Length == 2)
-            return CompletionResult.FromHintOptions(new[]{ "false", "true"}, Loc.GetString($"{_cmd}-hint-space"));
+            return CompletionResult.FromHintOptions(new[]{ "false", "true"}, Loc.GetString($"{Cmd}-hint-space"));
 
         if (!bool.TryParse(args[1], out var space) || space)
             return CompletionResult.Empty;
 
         if (args.Length == 3)
-            return CompletionResult.FromHint(Loc.GetString($"{_cmd}-hint-temp"));
+            return CompletionResult.FromHint(Loc.GetString($"{Cmd}-hint-temp"));
 
         var gas = (Gas) args.Length - 4;
-        return CompletionResult.FromHint(Loc.GetString($"{_cmd}-hint-gas" , ("gas", gas.ToString())));
+        return CompletionResult.FromHint(Loc.GetString($"{Cmd}-hint-gas" , ("gas", gas.ToString())));
     }
 }
