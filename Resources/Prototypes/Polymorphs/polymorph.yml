@@ -195,17 +195,17 @@
     revertOnDeath: true
     revertOnCrit: true
 
-- type: polymorph
-  id: WizardRod
-  configuration:
-    entity: ImmovableRodWizard #CLANG
-    transferName: true
-    transferDamage: false
-    inventory: None
-    duration: 1
-    forced: true
-    revertOnCrit: false
-    revertOnDeath: false
+# - type: polymorph
+#   id: WizardRod
+#   configuration:
+#     entity: ImmovableRodWizard #CLANG
+#     transferName: true
+#     transferDamage: false
+#     inventory: None
+#     duration: 1
+#     forced: true
+#     revertOnCrit: false
+#     revertOnDeath: false
 
 # Temporary Jaunt
 # Don't make permanent jaunts until action system can be reworked to allow do afters and cooldown pausing
