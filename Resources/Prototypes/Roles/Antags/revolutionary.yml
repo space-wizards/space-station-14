@@ -15,7 +15,7 @@
     back:
     - Flash
     - ClothingEyesGlassesSunglasses
-    - USSPUplinkImplantItem
+    - USSPUplinkImplanter
   implants:
     # Removed USSPUplinkRadioPreset to prevent starting implanted
 
