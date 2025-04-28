@@ -49,7 +49,8 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
             if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
 
-            var profile = ev.Profile ?? _preferences.GetPreferences(ev.Player.UserId).GetRandomProfile();
+            // If no profile is provided here, try to get any enabled profile for the player...
+            var profile = ev.Profile ?? _preferences.GetPreferences(ev.Player.UserId).GetRandomEnabledProfile();
             if (profile == null)
                 return;
 

@@ -30,12 +30,29 @@ namespace Content.Client.Lobby.UI
 
         private readonly Button _createNewCharacterButton;
         private readonly HumanoidProfileEditor _humanoidProfileEditor;
+
         public int? SelectedCharacterSlot;
 
+        /// <summary>
+        /// Action invoked when a character is selected (update the profile editor)
+        /// </summary>
         public event Action<int>? SelectCharacter;
+
+        /// <summary>
+        /// Action invoked when we should delete a character in a slot
+        /// </summary>
         public event Action<int>? DeleteCharacter;
+
+        /// <summary>
+        /// Action invoked when we should enable or disable a character in a slot
+        /// </summary>
         public event Action<(int, bool)>? SetCharacterEnable;
 
+        /// <summary>
+        /// UI Class for the character customization window that pops up when you click "Customize" on the lobby screen
+        /// </summary>
+        /// <param name="profileEditor"></param>
+        /// <param name="jobPriorityEditor"></param>
         public CharacterSetupGui(HumanoidProfileEditor profileEditor, JobPriorityEditor jobPriorityEditor)
         {
             _humanoidProfileEditor = profileEditor;
@@ -72,6 +89,7 @@ namespace Content.Client.Lobby.UI
 
             _cfg.OnValueChanged(CCVars.SeeOwnNotes, p => AdminRemarksButton.Visible = p, true);
 
+            // This is in the same button group as the character picker buttons
             JobPrioritiesButton.OnPressed += args =>
             {
                 jobPriorityEditor.LoadJobPriorities();
@@ -84,6 +102,8 @@ namespace Content.Client.Lobby.UI
         /// <summary>
         /// Disposes and reloads all character picker buttons from the preferences data.
         /// </summary>
+        /// <param name="selectJobPriorities">If true, then reload with the job priorities button selected instead of
+        /// one of the character picker buttons</param>
         public void ReloadCharacterPickers(bool selectJobPriorities = false)
         {
             _createNewCharacterButton.Orphan();

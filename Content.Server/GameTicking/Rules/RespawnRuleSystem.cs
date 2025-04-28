@@ -110,6 +110,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         {
             if (_station.GetStations().FirstOrNull() is not { } station)
                 return false;
+            // Respawn the player using the profile that the original character was created with
             var profile = _appearance.GetBaseProfile((player, player.Comp2));
             if (profile is null)
                 return false;

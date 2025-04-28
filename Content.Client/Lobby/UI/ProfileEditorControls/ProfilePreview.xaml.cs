@@ -26,6 +26,14 @@ public sealed partial class ProfilePreview : BoxContainer
         SpriteRotateRight.OnPressed += OnRotateRight;
     }
 
+/// <summary>
+/// This should be called before loading a profile to initialize the managers
+/// </summary>
+/// <param name="profileEditor"></param>
+/// <param name="entMan"></param>
+/// <param name="prefMan"></param>
+/// <param name="protoMan"></param>
+/// <param name="playerMan"></param>
     public void Initialize(HumanoidProfileEditor profileEditor, IEntityManager entMan, IClientPreferencesManager prefMan, IPrototypeManager protoMan, ISharedPlayerManager playerMan)
     {
         _editor = profileEditor;
@@ -50,6 +58,12 @@ public sealed partial class ProfilePreview : BoxContainer
         SpriteView.OverrideDirection = (Direction) ((int) direction % 4 * 2);
     }
 
+    /// <summary>
+    /// Reloads the entire dummy entity for preview.
+    /// </summary>
+    /// <remarks>
+    /// This is expensive so not recommended to run if you have a slider.
+    /// </remarks>
     public void ReloadPreview()
     {
         if (_editor?.Profile == null)
@@ -58,6 +72,9 @@ public sealed partial class ProfilePreview : BoxContainer
         SpriteView.LoadPreview(_editor.Profile, _editor?.JobOverride, _editor?.ShouldShowClothes ?? true);
     }
 
+    /// <summary>
+    /// A slim reload that only updates the entity itself and not any of the job entities, etc.
+    /// </summary>
     public void ReloadProfilePreview()
     {
         if (_editor?.Profile == null)

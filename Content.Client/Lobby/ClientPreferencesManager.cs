@@ -44,6 +44,11 @@ namespace Content.Client.Lobby
             }
         }
 
+        /// <summary>
+        /// Send message to server to enable or disable a character in a slot
+        /// </summary>
+        /// <param name="slot">slot number to modify</param>
+        /// <param name="enable">whether to enable or disable the character</param>
         public void SetCharacterEnable(int slot, bool enable = true)
         {
             if (!Preferences.Characters.TryGetValue(slot, out var characterProfile))
@@ -114,6 +119,10 @@ namespace Content.Client.Lobby
             _netManager.ClientSendMessage(msg);
         }
 
+        /// <summary>
+        /// Send a message to the server to update the list of your job priorities
+        /// </summary>
+        /// <param name="jobPriorities">Dictionary of job priorities to save to the server</param>
         public void UpdateJobPriorities(Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
         {
             Preferences = new PlayerPreferences(Preferences.Characters,
