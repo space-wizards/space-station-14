@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SpaceRox1244
-  changes:
-  - message: Massive scrap can now fit in bags of holding.
-    type: Tweak
-  id: 7876
-  time: '2025-01-30T12:06:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33454
 - author: sleepyyapril
   changes:
   - message: Fixed double muzzle flash for the user.
@@ -3918,3 +3911,10 @@
   id: 8377
   time: '2025-04-28T21:16:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37019
+- author: themias
+  changes:
+  - message: cable terminals are now visually layered below floors, like other cables
+    type: Fix
+  id: 8378
+  time: '2025-04-28T23:43:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37018
