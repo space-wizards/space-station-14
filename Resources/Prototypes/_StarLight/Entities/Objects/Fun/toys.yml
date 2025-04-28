@@ -866,39 +866,6 @@
 
 - type: entity
   parent: BasePlushie
-  id: TamashiPlush
-  name: Brigmedic Plushie
-  description: The original Brigmedic. LMG attachment sold seperately.
-  components:
-  - type: Item
-    size: Small
-    sprite: _Starlight/Objects/Fun/toys.rsi
-  - type: Sprite
-    sprite: _Starlight/Objects/Fun/toys.rsi
-    state: tamashi_plush
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Animals/dog_bark1.ogg
-  - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Animals/dog_bark2.ogg
-  - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Animals/dog_bark1.ogg
-  - type: EmitSoundOnTrigger
-    sound:
-      path: /Audio/Animals/dog_bark3.ogg
-  - type: Food
-    requiresSpecialDigestion: true
-    useSound:
-      path: /Audio/Items/Toys/toysqueak3.ogg
-  - type: MeleeWeapon
-    wideAnimationRotation: 180
-    soundHit:
-      path: /Audio/Animals/dog_bark2.ogg
-
-- type: entity
-  parent: BasePlushie
   id: MinaPlush
   name: Minttongue Plushie
   description: A member of CentComm's Administration Division, all dressed up in her old HoP uniform.
