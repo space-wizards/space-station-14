@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20250419190319_MultiCharacter")]
+    [Migration("20250428125216_MultiCharacter")]
     partial class MultiCharacter
     {
         /// <inheritdoc />
@@ -656,12 +656,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("job", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.JobPreference", b =>
+            modelBuilder.Entity("Content.Server.Database.JobPriorityEntry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
-                        .HasColumnName("job_preference_id");
+                        .HasColumnName("job_priority_entry_id");
 
                     b.Property<string>("JobName")
                         .IsRequired()
@@ -677,7 +677,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnName("priority");
 
                     b.HasKey("Id")
-                        .HasName("PK_job_preference");
+                        .HasName("PK_job_priority_entry");
 
                     b.HasIndex("PreferenceId");
 
@@ -685,7 +685,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsUnique()
                         .HasFilter("priority = 3");
 
-                    b.ToTable("job_preference", (string)null);
+                    b.ToTable("job_priority_entry", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
@@ -1653,14 +1653,14 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Profile");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.JobPreference", b =>
+            modelBuilder.Entity("Content.Server.Database.JobPriorityEntry", b =>
                 {
                     b.HasOne("Content.Server.Database.Preference", "Preference")
-                        .WithMany("JobPreferences")
+                        .WithMany("JobPriorities")
                         .HasForeignKey("PreferenceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_job_preference_preference_preference_id");
+                        .HasConstraintName("FK_job_priority_entry_preference_preference_id");
 
                     b.Navigation("Preference");
                 });
@@ -2018,7 +2018,7 @@ namespace Content.Server.Database.Migrations.Sqlite
 
             modelBuilder.Entity("Content.Server.Database.Preference", b =>
                 {
-                    b.Navigation("JobPreferences");
+                    b.Navigation("JobPriorities");
 
                     b.Navigation("Profiles");
                 });
