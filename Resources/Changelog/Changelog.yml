@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Added the Authentication Disruptor to the syndicate uplink for 5TC. It
-      removes access requirements from devices and forcefully opens airlocks and digital
-      locks.
-    type: Add
-  - message: The EMAG can no longer open airlocks or break locks.
-    type: Tweak
-  - message: Price of the EMAG lowered to 4TC.
-    type: Tweak
-  - message: '"Emagged" airlocks can now be fixed by unbolting and using the access
-      configurator. Locks and similiar can now be fixed by just using the access configurator.'
-    type: Tweak
-  id: 7872
-  time: '2025-01-30T04:05:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34337
 - author: Southbridge
   changes:
   - message: Astro Asteroid Sand has been added as another type of faux tile.
@@ -3928,3 +3912,13 @@
   id: 8373
   time: '2025-04-28T02:40:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36702
+- author: Southbridge
+  changes:
+  - message: Amber Station - Added Genpop
+    type: Add
+  - message: Amber Station - Ensured a lot of doorways had tiles and decals under
+      them.
+    type: Tweak
+  id: 8374
+  time: '2025-04-28T06:56:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36997
