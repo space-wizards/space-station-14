@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Heretics can no longer have changelings appear on the sacrifice heartbeat,
-      because changelings cannot be sacrificed.
-    type: Fix
-  id: 1084
-  time: '2025-02-09T09:24:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1620
 - author: irismessage
   changes:
   - message: 'Round dividers for #postround chat'
@@ -4135,3 +4127,13 @@
   id: 1583
   time: '2025-04-27T18:21:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2358
+- author: meridiadottxt
+  changes:
+  - message: gate station now has expanded zookeeper area, atmos canister storage,
+      various other small fixes and additions
+    type: Add
+  - message: gumbo. he was never here.
+    type: Remove
+  id: 1584
+  time: '2025-04-28T00:55:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2361
