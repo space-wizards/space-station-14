@@ -14,7 +14,7 @@ public sealed partial class RingerUplinkComponent : Component
     /// Set via GenerateUplinkCodeEvent.
     /// </summary>
     [DataField]
-    public Note[] Code = new Note[SharedRingerSystem.RingtoneLength];
+    public Note[]? Code;
 
     /// <summary>
     /// Whether to show the toggle uplink button in PDA settings.
