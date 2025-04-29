@@ -12,7 +12,7 @@ jobs:
     steps:    
     - uses: superbrothers/close-pull-request@v3
       with:
-        comment: "Thank you for your contribution! It appears you created a PR from your master branch, this is [something you should avoid doing](https://jmeridth.com/posts/do-not-issue-pull-requests-from-your-master-branch/), and thus this PR has been automatically closed. \n \n We suggest you follow [our git usage documentation](https://docs.spacestation14.com/en/general-development/setup/git-for-the-ss14-developer.html). \n \n You can move your current work from the master branch to another branch by following [these commands](https://ohshitgit.com/#accidental-commit-master). And then you may recreate your PR using the new branch."
+        comment: "Благодарим вас за вклад в репозиторий Space Station 14! Похоже, вы создали pull request из вашей `master` ветки, а [этого следует избегать](https://jmeridth.com/posts/do-not-issue-pull-requests-from-your-master-branch/), поэтому данный PR был автоматически закрыт. Мы рекомендуем следовать [официальной документации по использованию git](https://docs.spacestation14.com/en/general-development/setup/git-for-the-ss14-developer.html). \n \n Вы можете перенести текущую работу из `master` ветки в новую ветку, выполнив команды, приведённые [здесь](https://ohshitgit.com/#accidental-commit-master). После этого вы сможете повторно открыть PR, используя уже новую ветку."
 
     # If you prefer to just comment on the pr and not close it, uncomment the bellow and comment the above
       
