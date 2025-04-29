@@ -59,12 +59,6 @@ public class RaiseEventBenchmark
         return _sys.CSharpEvent();
     }
 
-    [Benchmark]
-    public int DirectInvoke()
-    {
-        return _sys.Direct();
-    }
-
     public sealed class BenchSystem : EntitySystem
     {
         public Entity<TransformComponent> Ent;
@@ -98,13 +92,6 @@ public class RaiseEventBenchmark
         {
             var ev = new BenchEv();
             OnCSharpEvent?.Invoke(Ent.Owner, Ent.Comp, ref ev);
-            return ev.N;
-        }
-
-        public int Direct()
-        {
-            var ev = new BenchEv();
-            OnEvent(Ent.Owner, Ent.Comp, ref ev);
             return ev.N;
         }
 
