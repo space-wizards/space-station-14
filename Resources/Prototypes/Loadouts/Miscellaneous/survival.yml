@@ -26,13 +26,6 @@
     species:
     - Vox
 
-- type: loadoutEffectGroup
-  id: EffectSpeciesMoth
-  effects:
-  - !type:SpeciesLoadoutEffect
-    species:
-    - Moth
-
 # Basic
 - type: loadout
   id: EmergencyOxygen
