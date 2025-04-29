@@ -228,7 +228,7 @@
   name: advanced circular saw
   id: SawAdvanced
   parent: [ SawElectric, BaseSyndicateContraband ]
-  description: You think you can cut anything with it.
+  description: Interdyne's state-of-the-art surgical saw. Guaranteed to stay spotless and sterile, no matter how messy the job.
   components:
   - type: Sprite
     state: advanced
