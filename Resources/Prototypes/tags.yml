@@ -511,28 +511,28 @@
 
 - type: Tag
   id: EncryptionCargo
-  
+
 - type: Tag
   id: EncryptionCommand
-  
+
 - type: Tag
   id: EncryptionCommon
-  
+
 - type: Tag
   id: EncryptionElse
-  
+
 - type: Tag
   id: EncryptionEngineering
- 
+
 - type: Tag
   id: EncryptionMedical
-  
+
 - type: Tag
   id: EncryptionScience
-  
+
 - type: Tag
   id: EncryptionSecurity
-  
+
 - type: Tag
   id: EncryptionService
 
@@ -616,6 +616,10 @@
 
 - type: Tag
   id: GeigerCounter
+
+# Used for warps
+- type: Tag
+  id: GhostOnlyWarp
 
 - type: Tag
   id: GlassAirlock
@@ -1449,5 +1453,20 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+- type: Tag
+  id: XenoborgModuleEngi
+
+- type: Tag
+  id: XenoborgModuleGeneric
+
+- type: Tag
+  id: XenoborgModuleHeavy
+
+- type: Tag
+  id: XenoborgModuleScout
+
+- type: Tag
+  id: XenoborgModuleStealth
 
 # ALPHABETICAL

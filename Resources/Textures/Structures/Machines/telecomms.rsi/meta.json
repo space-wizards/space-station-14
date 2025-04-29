@@ -8,7 +8,7 @@
     },
     "states": [
         {
-            "name": "tele-server-on",
+            "name": "telecom-on",
             "delays": [
                 [
                     0.35,
@@ -18,59 +18,46 @@
             ]
         },
         {
-            "name": "tele-server-nopower"
+            "name": "telecom-nopower"
         },
         {
-            "name": "tele-stripe"
+            "name": "telecom-stripe"
         },
         {
-            "name": "cams-stripe"
+            "name": "variant-cargo"
         },
         {
-            "name": "cams-server-on",
-            "delays": [
-                [
-                    0.35,
-                    0.35,
-                    0.35
-                ]
-            ]
+            "name": "variant-common"
         },
         {
-            "name": "tele-server-on-cargo"
+            "name": "variant-engineering"
         },
         {
-            "name": "tele-server-on-common"
+            "name": "variant-service"
         },
         {
-            "name": "tele-server-on-engineering"
+            "name": "variant-medical"
         },
         {
-            "name": "tele-server-on-service"
+            "name": "variant-science"
         },
         {
-            "name": "tele-server-on-medical"
+            "name": "variant-sec"
         },
         {
-            "name": "tele-server-on-science"
+            "name": "variant-command"
         },
         {
-            "name": "tele-server-on-sec"
+            "name": "variant-default"
         },
         {
-            "name": "tele-server-on-command"
+            "name": "variant-multiple"
         },
         {
-            "name": "tele-server-on-default"
+            "name": "variant-nokey"
         },
         {
-            "name": "tele-server-on-multiple"
-        },
-        {
-            "name": "tele-server-no-key"
-        },
-        {
-            "name": "tele_o"
+            "name": "telecom-open"
         }
     ]
 }

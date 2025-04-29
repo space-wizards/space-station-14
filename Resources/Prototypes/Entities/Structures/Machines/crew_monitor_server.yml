@@ -1,6 +1,8 @@
 - type: entity
   id: CrewMonitoringServer
-  parent: [ BaseMachinePowered, ConstructibleMachine ] 
+
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+
   name: crew monitoring server
   description: Receives and relays the status of all active suit sensors on the station.
   components:
@@ -8,21 +10,26 @@
       sprite: Structures/Machines/server.rsi
       snapCardinals: true
       layers:
-        - state: server
-        - state: server-nopower-crew
-        - state: server-on-crew
-          shader: unshaded
+
+        - state: server-off
+        - state: server-on
           visible: false
           map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        - state: variant-crew
         - state: server_o
-          map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - type: PointLight
-      enabled: false
-      castShadows: false
-      radius: 1.5
-      energy: 1.6
-      color: "#22b14c"
-    - type: LitOnPowered
+          map: ["enum.WiresVisualLayers.MaintenancePanel"] 
+    - type: Construction
+      graph: Machine
+      node: machine
+      containers:
+        - machine_board
+        - machine_parts
+    - type: Machine
+      board: CrewMonitoringServerMachineCircuitboard
+    - type: ContainerContainer
+      containers:
+        machine_board: !type:Container
+        machine_parts: !type:Container
     - type: CrewMonitoringServer
     - type: SingletonDeviceNetServer
     - type: DeviceNetwork
@@ -38,8 +45,6 @@
     - type: ExtensionCableReceiver
     - type: WiresPanel
     - type: WiresVisuals
-    - type: Machine
-      board: CrewMonitoringServerMachineCircuitboard
     - type: Destructible
       thresholds:
         - trigger:

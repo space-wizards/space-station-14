@@ -8,12 +8,11 @@
     sprite: Structures/Machines/server.rsi
     snapCardinals: true
     layers:
-      - state: server
-      - state: server-nopower-research
-      - state: server-on-research
-        shader: unshaded
+      - state: server-off
+      - state: server-on
         visible: false
-        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+      - state: variant-research
       - state: server_o
         map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
