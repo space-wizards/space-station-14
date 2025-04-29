@@ -77,12 +77,13 @@
 - type: reaction
   id: MeltSteelSlag
   impact: Medium
-  minTemp: 1610
+  priority: 10 # This can conflict with gunpowder recipe. Sometimes.
+  minTemp: 1610 # Maybe needs quantized: true, not sure.
   reactants:
     Iron:
       amount: 9
     Carbon:
-      amount: 1
+      amount: 11
     Sulfur:
       amount: 5
   effects:

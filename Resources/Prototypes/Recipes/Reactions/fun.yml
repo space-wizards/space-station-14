@@ -146,6 +146,25 @@
     Fresium: 5
 
 - type: reaction
+  id: EndothermicFreeze # This is for EXPERIENCED chemists. This CAN be jugmixed, yet not to full volume of the jug.
+  impact: Medium
+  priority: 5 # Flash freeze ice conflict. Add water or fresium last or get iced.
+  conserveEnergy: false # For reaction to actually work.
+  reactants:
+    Ammonia:
+      amount: 2
+    Fresium:
+      amount: 4
+    Chlorine:
+      amount: 1
+    Water:
+      amount: 3
+  effects:
+  - !type:AdjustSolutionTemperatureEffect
+      delta: -25 # 100 units of this reaction makes 250 Kelvin temperature drop.
+      scaled: true
+
+- type: reaction
   id: FiberBreakdown
   source: true
   requiredMixerCategories:
@@ -215,17 +234,16 @@
     entity: IngotGold1
 
 - type: reaction
-  id: SolidifyGoldFresium # Just puts good old Fresium to use...
+  id: SolidifyGoldFresium
   impact: Low
   quantized: true
   reactants:
     Gold:
       amount: 10
     Fresium:
-      amount: 1
-      catalyst: true
+      amount: 10
     Nitrogen:
-      amount: 10 # I dunno why I set this to 10, but it seems fair.
+      amount: 10
   effects:
   - !type:CreateEntityReactionEffect
     entity: IngotGold1
@@ -244,15 +262,14 @@
     entity: IngotSilver1
 
 - type: reaction
-  id: SolidifySilverFresium # Just puts good old Fresium to use...
+  id: SolidifySilverFresium
   impact: Low
   quantized: true
   reactants:
     Silver:
       amount: 10
     Fresium:
-      amount: 1
-      catalyst: true
+      amount: 10
     Nitrogen:
       amount: 10
   effects:
@@ -265,9 +282,9 @@
   quantized: true
   reactants:
     Plasma:
-      amount: 10
+      amount: 10 # Because Plasma is really flameable and I think it should require more cooling.
     FrostOil:
-      amount: 20 # Because Plasma is really flameable and I think it should require more cooling.
+      amount: 20
   effects:
   - !type:CreateEntityReactionEffect
     entity: SheetPlasma1
@@ -280,10 +297,9 @@
     Plasma:
       amount: 10
     Fresium:
-      amount: 1
-      catalyst: true
+      amount: 20 # Because Plasma is really flameable and I think it should require more cooling.
     Nitrogen:
-      amount: 40 # Because Plasma is really flameable and I think it should require more cooling.
+      amount: 20
   effects:
   - !type:CreateEntityReactionEffect
     entity: SheetPlasma1
