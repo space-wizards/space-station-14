@@ -237,9 +237,9 @@ public abstract class SharedDeliverySystem : EntitySystem
     {
         _appearance.SetData(uid, DeliveryVisuals.IsLocked, isLocked);
 
-        // If we're trying to unlock, always remove the priority tape
-        if (!isLocked)
-            _appearance.SetData(uid, DeliveryVisuals.PriorityState, DeliveryPriorityState.Off);
+        // If we're trying to unlock, mark priority as inactive
+        if (HasComp<DeliveryPriorityComponent>(uid))
+            _appearance.SetData(uid, DeliveryVisuals.PriorityState, DeliveryPriorityState.Inactive);
     }
 
     public void UpdatePriorityVisuals(Entity<DeliveryPriorityComponent> ent)
