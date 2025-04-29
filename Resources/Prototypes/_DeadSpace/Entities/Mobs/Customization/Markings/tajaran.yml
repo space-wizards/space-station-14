@@ -36,7 +36,7 @@
 
 - type: marking
   id: BodyStripes
-  bodyPart: [ Chest, RArm, LArm, RLeg, LLeg ]
+  bodyPart: Chest
   markingCategory: Overlay
   speciesRestriction: [Tajaran]
   sprites:
@@ -45,7 +45,7 @@
 
 - type: marking
   id: BodyBlots
-  bodyPart: [ Chest, RArm, LArm, RLeg, LLeg ]
+  bodyPart: Chest
   markingCategory: Overlay
   speciesRestriction: [Tajaran]
   sprites:
@@ -63,7 +63,7 @@
 
 - type: marking
   id: BodySkeleton
-  bodyPart: [ Chest, RArm, LArm, RLeg, LLeg ]
+  bodyPart: Chest
   markingCategory: Overlay
   speciesRestriction: [Tajaran]
   sprites:
