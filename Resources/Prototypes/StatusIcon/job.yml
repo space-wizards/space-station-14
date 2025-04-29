@@ -28,6 +28,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Borg
   jobName: job-name-borg
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -36,6 +37,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: StationAi
   jobName: job-name-station-ai
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -76,6 +78,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Prisoner
   jobName: job-name-prisoner
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -116,6 +119,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: NoId
   jobName: job-name-no-id
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -156,6 +160,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Unknown
   jobName: job-name-unknown
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -388,6 +393,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Zombie
   jobName: job-name-zombie
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -396,6 +402,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Syndicate
   jobName: job-name-syndicate
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon

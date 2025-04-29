@@ -75,6 +75,7 @@
     - sprite: Mobs/Silicon/station_ai.rsi
       state: default
   - type: ShowJobIcons
+    includeCrewBorder: true
 
 - type: entity
   id: AiHeldIntellicard
@@ -97,6 +98,7 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
   - type: ShowJobIcons
+    includeCrewBorder: true
 
 # Ai
 - type: entity
