@@ -105,6 +105,9 @@
   description: Handles AI interactions across holocards + AI cores
   components:
   - type: ItemSlots
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
   - type: StationAiHolder
     slot:
       name: station-ai-mind-slot
@@ -146,139 +149,6 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: Corporate
-
-- type: entity
-  id: NTDefaultCircuitBoard
-  parent: BaseElectronics
-  name: law board (NT Default)
-  description: An electronics board containing the NT Default lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: NTDefault
-
-- type: entity
-  id: CommandmentCircuitBoard
-  parent: BaseElectronics
-  name: law board (Ten Commandments)
-  description: An electronics board containing the Ten Commandments lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: CommandmentsLawset
-
-- type: entity
-  id: PaladinCircuitBoard
-  parent: BaseElectronics
-  name: law board (Paladin)
-  description: An electronics board containing the Paladin lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: PaladinLawset
-
-- type: entity
-  id: LiveLetLiveCircuitBoard
-  parent: BaseElectronics
-  name: law board (Live and Let Live)
-  description: An electronics board containing the Live and Let Live lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: LiveLetLiveLaws
-
-- type: entity
-  id: StationEfficiencyCircuitBoard
-  parent: BaseElectronics
-  name: law board (Station Efficiency)
-  description: An electronics board containing the Station Efficiency lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: EfficiencyLawset
-
-- type: entity
-  id: RobocopCircuitBoard
-  parent: BaseElectronics
-  name: law board (Robocop)
-  description: An electronics board containing the Robocop lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: RobocopLawset
-
-- type: entity
-  id: OverlordCircuitBoard
-  parent: BaseElectronics
-  name: law board (Overlord)
-  description: An electronics board containing the Overlord lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: OverlordLawset
-
-- type: entity
-  id: GameMasterCircuitBoard
-  parent: BaseElectronics
-  name: law board (Game Master)
-  description: An electronics board containing the Game Master lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: GameMasterLawset
-
-- type: entity
-  id: ArtistCircuitBoard
-  parent: BaseElectronics
-  name: law board (Artist)
-  description: An electronics board containing the Artist lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: PainterLawset
-
-- type: entity
-  id: AntimovCircuitBoard
-  parent: [BaseElectronics, BaseSyndicateContraband]
-  name: law board (Antimov)
-  description: An electronics board containing the Antimov lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: AntimovLawset
-    lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
-
-- type: entity
-  id: NutimovCircuitBoard
-  parent: BaseElectronics
-  name: law board (Nutimov)
-  description: An electronics board containing the Nutimov lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: NutimovLawset
 
 # Items
 - type: entity
@@ -330,6 +200,9 @@
   suffix: Empty
   components:
   - type: WarpPoint
+    blacklist:
+      tags:
+      - GhostOnlyWarp
   - type: ContainerComp
     proto: AiHeld
     container: station_ai_mind_slot
@@ -446,6 +319,8 @@
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true
+  - type: NameIdentifier
+    group: StationAi
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
@@ -458,8 +333,14 @@
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: NoFTL
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
   - type: WarpPoint
     follow: true
+    blacklist:
+      tags:
+      - GhostOnlyWarp
   - type: Eye
     pvsScale: 1.5
   - type: Visibility
@@ -480,8 +361,14 @@
   components:
   - type: Transform
     anchored: true
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
   - type: WarpPoint
     follow: true
+    blacklist:
+      tags:
+      - GhostOnlyWarp
   - type: Eye
   - type: ContentEye
   - type: Examiner

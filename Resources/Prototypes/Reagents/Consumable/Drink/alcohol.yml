@@ -969,6 +969,21 @@
         amount: 0.15
 
 - type: reagent
+  id: Eggnog
+  name: reagent-name-eggnog
+  parent: BaseAlcohol
+  desc: reagent-desc-eggnog
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: eggnog
+  color: "#e6d6bc"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/eggnogglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
   id: ElectricShark
   name: reagent-name-electric-shark
   parent: BaseAlcohol

@@ -19,7 +19,6 @@
     amount: 1
   tileReactions:
   - !type:ExtinguishTileReaction { }
-  - !type:SpillIfPuddlePresentTileReaction { }
 
 - type: reagent
   id: BaseSoda
