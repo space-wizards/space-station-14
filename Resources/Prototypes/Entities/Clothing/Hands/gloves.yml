@@ -555,11 +555,7 @@
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Hands/Gloves/KnuckleDusters/electricknuckleduster.rsi
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
-          True: {state: on-equipped-HAND}
-          False: {state: off-equipped-HAND}
+    equippedPrefix: on
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -569,10 +565,26 @@
           False: {state: knuckleduster_off}
   - type: ToggleClothing
     action: ActionToggleKnuckleDustersStun
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      collection: sparks
+      params:
+        variation: 0.250
+        volume: 5
+    soundDeactivate:
+      collection: sparks
+      params:
+        variation: 0.250
+        volume: 5
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.250
+        volume: 5
   - type: Stunbaton
     energyPerUse: 50
   - type: ItemToggleMeleeWeapon
-    attackRate: 1.5
     activatedDamage:
       types:
         Blunt: 0
@@ -598,8 +610,6 @@
     - Security
     - Antagonists
 
-
-
 - type: entity #Admeme
   parent: ClothingHandsKnuckleDusters
   id: ClothingHandsKnuckleBoneCrushers
@@ -617,7 +627,7 @@
     attackRate: 2
     damage:
       types:
-        Blunt: 35 
+        Blunt: 35
     soundHit:
       collection: Punch
     animation: WeaponArcFist
