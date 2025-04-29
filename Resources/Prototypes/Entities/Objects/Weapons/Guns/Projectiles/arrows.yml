@@ -128,7 +128,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 35
+        Piercing: 30
   - type: Construction
     graph: ImprovisedArrowCarp
     node: ImprovisedArrowCarp
