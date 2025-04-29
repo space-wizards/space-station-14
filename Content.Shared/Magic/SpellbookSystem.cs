@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Actions;
+using Content.Shared.Charges.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Magic.Components;
@@ -9,6 +10,7 @@ namespace Content.Shared.Magic;
 
 public sealed class SpellbookSystem : EntitySystem
 {
+    [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
@@ -30,11 +32,7 @@ public sealed class SpellbookSystem : EntitySystem
             if (spell == null)
                 continue;
 
-            int? charge = charges;
-            if (_actions.GetCharges(spell) != null)
-                charge = _actions.GetCharges(spell);
-
-            _actions.SetCharges(spell, charge < 0 ? null : charge);
+            _sharedCharges.SetCharges(spell.Value, charges);
             ent.Comp.Spells.Add(spell.Value);
         }
     }
@@ -75,7 +73,7 @@ public sealed class SpellbookSystem : EntitySystem
             {
                 EntityUid? actionId = null;
                 if (_actions.AddAction(args.Args.User, ref actionId, id))
-                    _actions.SetCharges(actionId, charges < 0 ? null : charges);
+                    _sharedCharges.SetCharges(actionId.Value, charges);
             }
         }
 

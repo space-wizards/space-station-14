@@ -32,6 +32,8 @@
     tags:
     - FitInTeleporterConsole
   - type: HandTeleporter
+    allowPortalsOnDifferentGrids: true
+    allowPortalsOnDifferentMaps: true
     firstPortalPrototype: PortalGatewayBlue
     secondPortalPrototype: PortalGatewayOrange
     allowPortalsOnDifferentGrids: true
