@@ -15,6 +15,13 @@
       - state: variant-research
       - state: server_o
         map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    enabled: false
+    castShadows: false
+    radius: 1.5
+    energy: 1.6
+    color: "#b211b2"
+  - type: LitOnPowered
   - type: ResearchServer
   - type: TechnologyDatabase
     supportedDisciplines:

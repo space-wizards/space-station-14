@@ -1,6 +1,8 @@
 - type: entity
   id: CrewMonitoringServer
+
   parent: [ BaseMachinePowered, ConstructibleMachine ]
+
   name: crew monitoring server
   description: Receives and relays the status of all active suit sensors on the station.
   components:
@@ -8,6 +10,7 @@
       sprite: Structures/Machines/server.rsi
       snapCardinals: true
       layers:
+
         - state: server-off
         - state: server-on
           visible: false

@@ -18,7 +18,7 @@
     - type: Machine
       board: SurveillanceCameraRouterCircuitboard
     - type: Sprite
-      sprite: Structures/Machines/server.rsi
+      sprite: Structures/Machines/telecomms.rsi
       snapCardinals: true
       layers:
         - state: server-off
@@ -41,6 +41,8 @@
       enabled: false
       sound:
         path: /Audio/Ambience/Objects/server_fans.ogg
+    - type: WiresVisuals
+    - type: WiresPanel
 
 - type: entity
   parent: SurveillanceCameraRouterBase
@@ -151,7 +153,7 @@
     - type: Machine
       board: SurveillanceCameraWirelessRouterCircuitboard
     - type: Sprite
-      sprite: Structures/Machines/server.rsi
+      sprite: Structures/Machines/telecomms.rsi
       layers:
         - state: server-off
         - state: server-on
@@ -173,6 +175,8 @@
       enabled: false
       sound:
         path: /Audio/Ambience/Objects/server_fans.ogg
+    - type: WiresVisuals
+    - type: WiresPanel
 
 - type: entity
   parent: SurveillanceCameraWirelessRouterBase
