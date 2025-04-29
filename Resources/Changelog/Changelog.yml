@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: keronshb
-  changes:
-  - message: Added Void's Applause! A Wizard Spell that switches your location with
-      the target.
-    type: Add
-  id: 7881
-  time: '2025-01-31T00:10:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34591
 - author: Nox38
   changes:
   - message: Rebalanced Box's armory and increased its max security officers to 7.
@@ -3925,3 +3917,10 @@
   id: 8382
   time: '2025-04-29T03:37:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37025
+- author: drakewill-CRL
+  changes:
+  - message: You can now see mutations on plants and produce.
+    type: Tweak
+  id: 8383
+  time: '2025-04-29T04:45:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32650
