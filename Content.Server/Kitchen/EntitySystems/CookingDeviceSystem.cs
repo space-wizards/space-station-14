@@ -290,7 +290,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnInit(Entity<CookingDeviceComponent> ent, ref ComponentInit args) => ent.Comp.Storage = _container.EnsureContainer<Container>(ent, ent.Comp.ContainerId); // Starlight-edit: this really does have to be in ComponentInit
 
-        private void OnMapInit(Entity<CookingDeviceComponent> ent, ref MapInitEvent args) => _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort) // Starlight-edit
+        private void OnMapInit(Entity<CookingDeviceComponent> ent, ref MapInitEvent args) => _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort); // Starlight-edit
 
         /// <summary>
         /// Kills the user by microwaving their head
@@ -345,7 +345,7 @@ namespace Content.Server.Kitchen.EntitySystems
         private void OnContentUpdate(EntityUid uid, CookingDeviceComponent component, ContainerModifiedMessage args) // Starlight-edit: ContainerModifiedMessage just can't be used at all with Entity<T>, because it's abstract.
         {
             if (component.Storage == args.Container) 
-                UpdateUserInterfaceState(uid, component)
+                UpdateUserInterfaceState(uid, component);
         }
 
         private void OnInsertAttempt(Entity<CookingDeviceComponent> ent, ref ContainerIsInsertingAttemptEvent args) // Starlight-edit
