@@ -107,7 +107,7 @@
   description: A crude uranium spear for when you need to put holes in somebody.
   icon: { sprite: Objects/Weapons/Melee/uranium_spear.rsi, state: spear }
   objectType: Item
-  
+
 - type: construction
   name: sharkminnow tooth spear
   id: SpearSharkMinnow
@@ -171,6 +171,28 @@
   targetNode: ImprovisedArrowCarp
   category: construction-category-weapons
   description: An arrow tipped with a carp tooth, for use with a bow.
+  icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: wielded-arrow }
+  objectType: Item
+
+- type: construction
+  name: plasma glass shard arrow
+  id: ImprovisedArrowPlasma
+  graph: ImprovisedArrowPlasma
+  startNode: start
+  targetNode: ImprovisedArrowPlasma
+  category: construction-category-weapons
+  description: An arrow tipped with pieces of a plasma glass shard, for use with a bow.
+  icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: wielded-arrow }
+  objectType: Item
+
+- type: construction
+  name: uranium glass shard arrow
+  id: ImprovisedArrowUranium
+  graph: ImprovisedArrowUranium
+  startNode: start
+  targetNode: ImprovisedArrowUranium
+  category: construction-category-weapons
+  description: An arrow tipped with pieces of a uranium glass shard, for use with a bow.
   icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: wielded-arrow }
   objectType: Item
 

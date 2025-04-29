@@ -139,6 +139,9 @@
       - id: FoodCocoaBeans
         amount: !type:RangeNumberSelector
           range: 1, 5
+      - id: FoodCherry
+        amount: !type:RangeNumberSelector
+          range: 1, 5
     #rare
     - !type:GroupSelector
       children:

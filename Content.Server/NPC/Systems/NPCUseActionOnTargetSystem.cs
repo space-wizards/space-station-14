@@ -36,8 +36,6 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
 
         if (action.Event != null)
         {
-            action.Event.Performer = user;
-            action.Event.Action = user.Comp.ActionEnt.Value;
             action.Event.Coords = Transform(target).Coordinates;
         }
 

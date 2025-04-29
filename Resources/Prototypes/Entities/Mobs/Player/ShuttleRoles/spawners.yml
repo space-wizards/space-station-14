@@ -1,0 +1,1045 @@
+## See also ../settings.yml and ../roles.yml
+
+### Visitors with Visitor ID
+
+# Command
+
+- type: entity
+  name: command visitor spawner
+  id: CommandVisitorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCaptain
+    - RandomHumanoidVisitorCE
+    - RandomHumanoidVisitorCMO
+    - RandomHumanoidVisitorHOP
+    - RandomHumanoidVisitorHOS
+    - RandomHumanoidVisitorQM
+    - RandomHumanoidVisitorRD
+
+- type: entity
+  name: visiting captain spawner
+  id: VisitorCaptainSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCaptain
+
+- type: entity
+  name: visiting chief engineer spawner
+  id: VisitorCESpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_engineering
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCE
+
+- type: entity
+  name: visiting chief medical officer spawner
+  id: VisitorCMOSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCMO
+
+- type: entity
+  name: visiting head of personnel spawner
+  id: VisitorHOPSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorHOP
+
+- type: entity
+  name: visiting head of security spawner
+  id: VisitorHOSSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorHOS
+
+- type: entity
+  name: visiting research director spawner
+  id: VisitorRDSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_science
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorRD
+
+- type: entity
+  name: visiting quartermaster spawner
+  id: VisitorQMSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_cargo
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorQM
+
+# Security
+
+- type: entity
+  name: security visitor spawner
+  id: SecurityVisitorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorSecurityOfficer
+    - RandomHumanoidVisitorSecurityCadet
+    - RandomHumanoidVisitorDetective
+    rarePrototypes:
+    - RandomHumanoidVisitorWarden
+    - RandomHumanoidVisitorHOS
+    rareChance: 0.05
+
+- type: entity
+  name: visiting security cadet spawner
+  id: VisitorSecurityCadetSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorSecurityCadet
+
+- type: entity
+  name: visiting security officer spawner
+  id: VisitorSecurityOfficerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorSecurityOfficer
+
+- type: entity
+  name: visiting detective spawner
+  id: VisitorDetective
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorDetective
+
+- type: entity
+  name: visiting warden spawner
+  id: VisitorWarden
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_security
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorWarden
+
+# Cargo
+
+- type: entity
+  name: cargonian visitor spawner
+  id: VisitingCargonianSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_cargo
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCargoTechnician
+    - RandomHumanoidVisitorSalvageSpecialist
+    rarePrototypes:
+    - RandomHumanoidVisitorQM
+    rareChance: 0.05
+
+- type: entity
+  name: visiting cargo technician spawner
+  id: VisitorCargoTechnicianSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_cargo
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCargoTechnician
+
+- type: entity
+  name: visiting salvage specialist spawner
+  id: VisitorSalvageSpecialistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_cargo
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorSalvageSpecialist
+
+# Engineering
+
+- type: entity
+  name: engineering visitor spawner
+  id: EngineeringVisitorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_engineering
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorAtmosTech
+    - RandomHumanoidVisitorTechnicalAssistant
+    - RandomHumanoidVisitorEngineer
+    rarePrototypes:
+    - RandomHumanoidVisitorCE
+    rareChance: 0.05
+
+- type: entity
+  name: visiting atmospheric technician spawner
+  id: VisitorAtmosTechSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_engineering
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorAtmosTech
+
+- type: entity
+  name: visiting technical assistant spawner
+  id: VisitorTechnicalAssistantSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_engineering
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorTechnicalAssistant
+
+- type: entity
+  name: visiting engineer spawner
+  id: VisitorEngineerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_engineering
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorEngineer
+
+# Medical
+
+- type: entity
+  name: medical visitor spawner
+  id: VisitingMedicalSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorChemist
+    - RandomHumanoidVisitorMedicalIntern
+    - RandomHumanoidVisitorMedicalDoctor
+    - RandomHumanoidVisitorParamedic
+    - RandomHumanoidVisitorVirologist
+    - RandomHumanoidVisitorGeneticist
+    - RandomHumanoidVisitorPsychologist
+    rarePrototypes:
+    - RandomHumanoidVisitorCMO
+    - RandomHumanoidVisitorDentist
+    rareChance: 0.05
+
+- type: entity
+  name: visiting chemist spawner
+  id: VisitorChemistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorChemist
+
+- type: entity
+  name: visiting medical intern spawner
+  id: VisitorMedicalInternSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorMedicalIntern
+
+- type: entity
+  name: visiting medical doctor spawner
+  id: VisitorMedicalDoctorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorMedicalDoctor
+
+- type: entity
+  name: visiting paramedic spawner
+  id: VisitorParamedicSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorParamedic
+
+- type: entity
+  name: visiting virologist spawner
+  id: VisitorVirologistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorVirologist
+
+- type: entity
+  name: visiting geneticist spawner
+  id: VisitorGeneticistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorGeneticist
+
+- type: entity
+  name: visiting psychologist spawner
+  id: VisitorPsychologistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorPsychologist
+
+- type: entity
+  name: visiting dentist spawner
+  id: VisitorDentistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_medical
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorDentist
+
+# Science
+
+- type: entity
+  name: scientific visitor spawner
+  id: VisitingScientistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_science
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorResearchAssistant
+    - RandomHumanoidVisitorScientist
+    rarePrototypes:
+    - RandomHumanoidVisitorRD
+    rareChance: 0.05
+
+- type: entity
+  name: visiting scientist spawner
+  id: VisitorScientistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_science
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorScientist
+
+- type: entity
+  name: visiting research assistant spawner
+  id: VisitorResearchAssistantSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_science
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorResearchAssistant
+
+# Civilian
+
+- type: entity
+  name: civilian visitor spawner
+  id: VisitingCivilianSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorBartender
+    - RandomHumanoidVisitorBotanist
+    - RandomHumanoidVisitorBoxer
+    - RandomHumanoidVisitorChaplain
+    - RandomHumanoidVisitorChef
+    - RandomHumanoidVisitorClown
+    - RandomHumanoidVisitorJanitor
+    - RandomHumanoidVisitorLawyer
+    - RandomHumanoidVisitorLibrarian
+    - RandomHumanoidVisitorMusician
+    - RandomHumanoidVisitorMime
+    - RandomHumanoidVisitorReporter
+    - RandomHumanoidVisitorServiceWorker
+    - RandomHumanoidVisitorZookeeper
+    rarePrototypes:
+    - RandomHumanoidVisitorHOP
+    rareChance: 0.03
+
+- type: entity
+  name: visiting bartender spawner
+  id: VisitorBartenderSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorBartender
+
+- type: entity
+  name: visiting botanist spawner
+  id: VisitorBotanistSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorBotanist
+
+- type: entity
+  name: visiting boxer spawner
+  id: VisitorBoxerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorBoxer
+
+- type: entity
+  name: visiting chaplain spawner
+  id: VisitorChaplainSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorChaplain
+
+- type: entity
+  name: visiting chef spawner
+  id: VisitorChefSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorChef
+
+- type: entity
+  name: visiting clown spawner
+  id: VisitorClownSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorClown
+
+- type: entity
+  name: visiting janitor spawner
+  id: VisitorJanitorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorJanitor
+
+- type: entity
+  name: visiting lawyer spawner
+  id: VisitorLawyerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorLawyer
+
+- type: entity
+  name: visiting centcom lawyer spawner
+  id: VisitorLawyerCentcomSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorLawyerCentcom
+
+- type: entity
+  name: visiting librarian spawner
+  id: VisitorLibrarianSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorLibrarian
+
+- type: entity
+  name: visiting musician spawner
+  id: VisitorMusicianSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorMusician
+
+- type: entity
+  name: visiting fancy musician spawner
+  id: VisitorMusicianFancySpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorMusicianFancy
+
+- type: entity
+  name: visiting relaxed musician spawner
+  id: VisitorMusicianRelaxedSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorMusicianRelaxed
+
+- type: entity
+  name: visiting mime spawner
+  id: VisitorMimeSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorMime
+
+- type: entity
+  name: visiting reporter spawner
+  id: VisitorReporterSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorReporter
+
+- type: entity
+  name: visiting service worker spawner
+  id: VisitorServiceWorkerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorServiceWorker
+
+- type: entity
+  name: visiting zookeeper spawner
+  id: VisitorZookeeperSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorZookeeper
+
+### Visitors missing equipment for challenges
+
+# Command
+
+- type: entity
+  name: disaster victim spawner
+  id: ChallengeVictimSpawner
+  parent: MarkerBase
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidChallengeVictimCaptain
+    - RandomHumanoidChallengeVictimCE
+    - RandomHumanoidChallengeVictimCMO
+    - RandomHumanoidChallengeVictimHOP
+    - RandomHumanoidChallengeVictimHOS
+    - RandomHumanoidChallengeVictimRD
+    - RandomHumanoidChallengeVictimQM
+
+# Security
+
+# Misc
+
+# Cargo
+
+- type: entity
+  name: challenge cargo technician spawner
+  id: ChallengeCargoTechnicianSpawner
+  parent: MarkerBase
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_cargo
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidChallengeCargoTechnician
+    chance: 1
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+### Misc
+
+- type: entity
+  name: NanoTrasen visitor spawner
+  id: NTVisitorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorCaptain
+    - RandomHumanoidVisitorCE
+    - RandomHumanoidVisitorCMO
+    - RandomHumanoidVisitorHOP
+    - RandomHumanoidVisitorHOS
+    - RandomHumanoidVisitorQM
+    - RandomHumanoidVisitorRD
+    - RandomHumanoidVisitorSecurityCadet
+    - RandomHumanoidVisitorSecurityOfficer
+    - RandomHumanoidVisitorDetective
+    - RandomHumanoidVisitorWarden
+    - RandomHumanoidVisitorCargoTechnician
+    - RandomHumanoidVisitorSalvageSpecialist
+    - RandomHumanoidVisitorAtmosTech
+    - RandomHumanoidVisitorTechnicalAssistant
+    - RandomHumanoidVisitorEngineer
+    - RandomHumanoidVisitorMedicalIntern
+    - RandomHumanoidVisitorMedicalDoctor
+    - RandomHumanoidVisitorParamedic
+    - RandomHumanoidVisitorPsychologist
+    - RandomHumanoidVisitorChemist
+    - RandomHumanoidVisitorVirologist
+    - RandomHumanoidVisitorGeneticist
+    - RandomHumanoidVisitorDentist
+    - RandomHumanoidVisitorResearchAssistant
+    - RandomHumanoidVisitorScientist
+    - RandomHumanoidVisitorBartender
+    - RandomHumanoidVisitorBotanist
+    - RandomHumanoidVisitorBoxer
+    - RandomHumanoidVisitorChaplain
+    - RandomHumanoidVisitorChef
+    - RandomHumanoidVisitorClown
+    - RandomHumanoidVisitorJanitor
+    - RandomHumanoidVisitorLawyer
+    - RandomHumanoidVisitorLibrarian
+    - RandomHumanoidVisitorMusician
+    - RandomHumanoidVisitorMime
+    - RandomHumanoidVisitorReporter
+    - RandomHumanoidVisitorServiceWorker
+    - RandomHumanoidVisitorZookeeper
+    - MobSkeletonCloset
+
+- type: entity
+  name: NanoTrasen visitor spawner
+  suffix: 50
+  id: NTVisitorSpawner50
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: ConditionalSpawner
+    prototypes:
+    - NTVisitorSpawner
+    chance: 0.5
+
+- type: entity
+  name: NanoTrasen visitor spawner
+  suffix: 33
+  id: NTVisitorSpawner33
+  parent: NTVisitorSpawner50
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - NTVisitorSpawner
+    chance: 0.33
+
+- type: entity
+  name: NanoTrasen visitor spawner
+  suffix: 25
+  id: NTVisitorSpawner25
+  parent: NTVisitorSpawner50
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - NTVisitorSpawner
+    chance: 0.25
+
+- type: entity
+  name: NanoTrasen visitor spawner
+  suffix: 20
+  id: NTVisitorSpawner20
+  parent: NTVisitorSpawner50
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - NTVisitorSpawner
+    chance: 0.20
+
+- type: entity
+  name: NanoTrasen visitor spawner
+  suffix: 10
+  id: NTVisitorSpawner10
+  parent: NTVisitorSpawner50
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - NTVisitorSpawner
+    chance: 0.10
+
+### Syndicate & Hostiles
+
+- type: entity
+  name: syndicate team leader spawner
+  id: SyndieSoldierTeamLeaderSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_syndicate
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidSyndieSoldierTeamLeader
+
+- type: entity
+  name: syndicate soldier spawner
+  id: SyndieSoldierSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_syndicate
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidSyndieSoldier
+
+- type: entity
+  name: syndie disaster victim spawner
+  id: SyndieVisitorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_syndicate
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidSyndieVisitor
+
+- type: entity
+  name: pirate crewman spawner
+  suffix: scooner
+  id: PirateScoonerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner-red
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidPirateScooner
+
+- type: entity
+  name: pirate captain spawner
+  suffix: scooner
+  id: PirateCaptainScoonerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner-red
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidPirateCaptainScooner
+
+### Other
+
+- type: entity
+  name: Blackmarketeer spawner
+  id: VisitorBlackmarketeerSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner-yellow
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorBlackmarketeer
+
+- type: entity
+  name: cossack spawner
+  id: CossackSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner-yellow
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidCossack

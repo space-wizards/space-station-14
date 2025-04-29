@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Originally created by EmoGarbage404 (github) for Space Station 14, modified by Ilya246 (github) for Space Station 14.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "screen",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    }
+  ]
+}

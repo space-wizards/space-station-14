@@ -884,23 +884,6 @@
   itemDrop: FloorTileItemSteel #This should probably be made null when it becomes possible to make it such, in SS13 prying destroyed tiles wouldn't give you anything.
   heatCapacity: 10000
 
-- type: tile
-  id: FloorSteelBurnt
-  name: tiles-steel-floor
-  sprite: /Textures/Tiles/steel_burnt.png
-  variants: 2
-  placementVariants:
-  - 1.0
-  - 1.0
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
-  footstepSounds:
-    collection: FootstepFloor
-  itemDrop: FloorTileItemSteel #Same case as FloorSteelDamaged, make it null when possible
-  heatCapacity: 10000
-
-
 # Concrete
 - type: tile
   id: FloorConcrete
@@ -1422,6 +1405,18 @@
   itemDrop: FloorTileItemBCircuit
   heatCapacity: 10000
 
+- type: tile
+  id: FloorRedCircuit
+  name: tiles-red-circuit-floor
+  sprite: /Textures/Tiles/red_circuit.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemRCircuit
+  heatCapacity: 10000
+
 # Terrain
 - type: tile
   id: FloorAsphalt
@@ -1524,8 +1519,8 @@
 # Asteroid
 
 - type: tile
-  id: FloorAsteroidSand
-  name: tiles-asteroid-sand
+  id: FloorAsteroidSandBorderless
+  name: tiles-asteroid-sand-borderless
   sprite: /Textures/Tiles/Asteroid/asteroid.png
   variants: 13
   placementVariants:
@@ -1550,8 +1545,22 @@
   weather: true
 
 - type: tile
-  id: FloorAsteroidSandDug
+  id: FloorAsteroidSand
+  parent: FloorAsteroidSandBorderless
   name: tiles-asteroid-sand
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    NorthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    NorthWest: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    SouthWest: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    South: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+    East: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+    North: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+    West: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+
+- type: tile
+  id: FloorAsteroidSandDugBorderless
+  name: tiles-asteroid-sand-borderless
   sprite: /Textures/Tiles/Asteroid/asteroid_dug.png
   baseTurf: Space
   isSubfloor: true
@@ -1561,8 +1570,22 @@
   weather: true
 
 - type: tile
-  id: FloorAsteroidSandRed
+  id: FloorAsteroidSandDug
+  parent: FloorAsteroidSandDugBorderless
   name: tiles-asteroid-sand
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    NorthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    NorthWest: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    SouthWest: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    South: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+    East: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+    North: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+    West: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+
+- type: tile
+  id: FloorAsteroidSandRedBorderless
+  name: tiles-asteroid-sand-borderless
   sprite: /Textures/Tiles/Asteroid/asteroid_red.png
   variants: 13
   placementVariants:
@@ -1587,6 +1610,20 @@
   weather: true
 
 - type: tile
+  id: FloorAsteroidSandRed
+  parent: FloorAsteroidSandRedBorderless
+  name: tiles-asteroid-sand
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    NorthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    NorthWest: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    SouthWest: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    South: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+    East: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+    North: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+    West: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+
+- type: tile
   id: FloorAsteroidTile
   name: tiles-asteroid-tile
   sprite: /Textures/Tiles/Asteroid/asteroid_tile.png
@@ -1599,8 +1636,8 @@
   weather: true
 
 - type: tile
-  id: FloorAsteroidIronsand
-  name: tiles-asteroid-ironsand
+  id: FloorAsteroidIronsandBorderless
+  name: tiles-asteroid-ironsand-borderless
   sprite: /Textures/Tiles/Asteroid/ironsand.png
   variants: 15
   placementVariants:
@@ -1627,8 +1664,22 @@
   weather: true
 
 - type: tile
-  id: FloorAsteroidSandUnvariantized
-  name: tiles-asteroid-sand
+  id: FloorAsteroidIronsand
+  parent: FloorAsteroidIronsandBorderless
+  name: tiles-asteroid-ironsand
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Asteroid/iron_single_edge.png
+    NorthEast: /Textures/Tiles/Asteroid/iron_single_edge.png
+    NorthWest: /Textures/Tiles/Asteroid/iron_single_edge.png
+    SouthWest: /Textures/Tiles/Asteroid/iron_single_edge.png
+    South: /Textures/Tiles/Asteroid/iron_double_edge.png
+    East: /Textures/Tiles/Asteroid/iron_double_edge.png
+    North: /Textures/Tiles/Asteroid/iron_double_edge.png
+    West: /Textures/Tiles/Asteroid/iron_double_edge.png
+
+- type: tile
+  id: FloorAsteroidSandUnvariantizedBorderless
+  name: tiles-asteroid-sand-borderless
   sprite: /Textures/Tiles/Asteroid/asteroid0.png
   baseTurf: Space
   isSubfloor: true
@@ -1638,8 +1689,22 @@
   weather: true
 
 - type: tile
-  id: FloorAsteroidIronsandUnvariantized
-  name: tiles-asteroid-ironsand
+  id: FloorAsteroidSandUnvariantized
+  parent: FloorAsteroidSandUnvariantizedBorderless
+  name: tiles-asteroid-sand
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    NorthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    NorthWest: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    SouthWest: /Textures/Tiles/Asteroid/asteroid_single_edge.png
+    South: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+    East: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+    North: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+    West: /Textures/Tiles/Asteroid/asteroid_double_edge.png
+
+- type: tile
+  id: FloorAsteroidIronsandUnvariantizedBorderless
+  name: tiles-asteroid-ironsand-borderless
   sprite: /Textures/Tiles/Asteroid/ironsand0.png
   baseTurf: Space
   isSubfloor: true
@@ -1647,6 +1712,20 @@
     collection: FootstepAsteroid
   heatCapacity: 10000
   weather: true
+
+- type: tile
+  id: FloorAsteroidIronsandUnvariantized
+  parent: FloorAsteroidIronsandUnvariantizedBorderless
+  name: tiles-asteroid-ironsand
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Asteroid/iron_single_edge.png
+    NorthEast: /Textures/Tiles/Asteroid/iron_single_edge.png
+    NorthWest: /Textures/Tiles/Asteroid/iron_single_edge.png
+    SouthWest: /Textures/Tiles/Asteroid/iron_single_edge.png
+    South: /Textures/Tiles/Asteroid/iron_double_edge.png
+    East: /Textures/Tiles/Asteroid/iron_double_edge.png
+    North: /Textures/Tiles/Asteroid/iron_double_edge.png
+    West: /Textures/Tiles/Asteroid/iron_double_edge.png
 
 # Caves
 - type: tile
@@ -1919,6 +1998,27 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemAstroSnow
+
+# Asteroid Sand
+- type: tile
+  id: FloorAstroAsteroidSand
+  name: tiles-astro-asteroid-sand
+  parent: FloorAsteroidSand
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroAsteroidSand
+  weather: false
+
+- type: tile
+  id: FloorAstroAsteroidSandBorderless
+  name: tiles-astro-asteroid-sand-borderless
+  parent: FloorAsteroidSandBorderless
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroAsteroidSand
+  weather: false
 
 - type: tile
   id: FloorWoodLarge

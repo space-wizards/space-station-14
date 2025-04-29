@@ -4,18 +4,20 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.PDA;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using Robust.Shared.Configuration;
 
 namespace Content.Client.PDA
 {
     [UsedImplicitly]
     public sealed class PdaBoundUserInterface : CartridgeLoaderBoundUserInterface
     {
+        private readonly PdaSystem _pdaSystem;
+
         [ViewVariables]
         private PdaMenu? _menu;
 
         public PdaBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
+            _pdaSystem = EntMan.System<PdaSystem>();
         }
 
         protected override void Open()
@@ -28,8 +30,7 @@ namespace Content.Client.PDA
 
         private void CreateMenu()
         {
-            _menu = this.CreateWindow<PdaMenu>();
-            _menu.OpenCenteredLeft();
+            _menu = this.CreateWindowCenteredLeft<PdaMenu>();
 
             _menu.FlashLightToggleButton.OnToggled += _ =>
             {
@@ -92,7 +93,13 @@ namespace Content.Client.PDA
             if (state is not PdaUpdateState updateState)
                 return;
 
-            _menu?.UpdateState(updateState);
+            if (_menu == null)
+            {
+                _pdaSystem.Log.Error("PDA state received before menu was created.");
+                return;
+            }
+
+            _menu.UpdateState(updateState);
         }
 
         protected override void AttachCartridgeUI(Control cartridgeUIFragment, string? title)

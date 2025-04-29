@@ -539,6 +539,12 @@
   maxCount: 30
 
 - type: stack
+  id: FloorTileRCircuit
+  name: red-circuit floor
+  spawn: FloorTileItemRCircuit
+  maxCount: 30
+
+- type: stack
   id: FloorTileGrass
   name: grass floor tile
   spawn: FloorTileItemGrass
@@ -615,6 +621,12 @@
   id: FloorTileAstroSnow
   name: astro-snow floor
   spawn: FloorTileItemAstroSnow
+  maxCount: 30
+
+- type: stack
+  id: FloorTileAstroAsteroidSand
+  name: asteroid astro-sand floor
+  spawn: FloorTileItemAstroAsteroidSand
   maxCount: 30
 
 - type: stack

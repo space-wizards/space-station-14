@@ -31,11 +31,14 @@ namespace Content.Shared.Localizations
             _loc.AddFunction(culture, "PRESSURE", FormatPressure);
             _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
             _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
+            // NOTE: ENERGYWATTHOURS() still takes a value in joules, but formats as watt-hours.
+            _loc.AddFunction(culture, "ENERGYWATTHOURS", FormatEnergyWattHours);
             _loc.AddFunction(culture, "UNITS", FormatUnits);
             _loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
             _loc.AddFunction(culture, "LOC", FormatLoc);
             _loc.AddFunction(culture, "NATURALFIXED", FormatNaturalFixed);
             _loc.AddFunction(culture, "NATURALPERCENT", FormatNaturalPercent);
+            _loc.AddFunction(culture, "PLAYTIME", FormatPlaytime);
 
 
             /*
@@ -141,6 +144,17 @@ namespace Content.Shared.Localizations
             return Loc.GetString($"zzzz-fmt-direction-{dir.ToString()}");
         }
 
+        /// <summary>
+        /// Formats playtime as hours and minutes.
+        /// </summary>
+        public static string FormatPlaytime(TimeSpan time)
+        {
+            time = TimeSpan.FromMinutes(Math.Ceiling(time.TotalMinutes));
+            var hours = (int)time.TotalHours;
+            var minutes = time.Minutes;
+            return Loc.GetString($"zzzz-fmt-playtime", ("hours", hours), ("minutes", minutes));
+        }
+
         private static ILocValue FormatLoc(LocArgs args)
         {
             var id = ((LocValueString) args.Args[0]).Value;
@@ -160,10 +174,16 @@ namespace Content.Shared.Localizations
             return new LocValueString(obj?.ToString() ?? "");
         }
 
-        private static ILocValue FormatUnitsGeneric(LocArgs args, string mode)
+        private static ILocValue FormatUnitsGeneric(
+            LocArgs args,
+            string mode,
+            Func<double, double>? transformValue = null)
         {
             const int maxPlaces = 5; // Matches amount in _lib.ftl
             var pressure = ((LocValueNumber) args.Args[0]).Value;
+
+            if (transformValue != null)
+                pressure = transformValue(pressure);
 
             var places = 0;
             while (pressure > 1000 && places < maxPlaces)
@@ -188,6 +208,13 @@ namespace Content.Shared.Localizations
         private static ILocValue FormatPowerJoules(LocArgs args)
         {
             return FormatUnitsGeneric(args, "zzzz-fmt-power-joules");
+        }
+
+        private static ILocValue FormatEnergyWattHours(LocArgs args)
+        {
+            const double joulesToWattHours = 1.0 / 3600;
+
+            return FormatUnitsGeneric(args, "zzzz-fmt-energy-watt-hours", joules => joules * joulesToWattHours);
         }
 
         private static ILocValue FormatUnits(LocArgs args)
@@ -228,6 +255,16 @@ namespace Content.Shared.Localizations
             );
 
             return new LocValueString(res);
+        }
+
+        private static ILocValue FormatPlaytime(LocArgs args)
+        {
+            var time = TimeSpan.Zero;
+            if (args.Args is { Count: > 0 } && args.Args[0].Value is TimeSpan timeArg)
+            {
+                time = timeArg;
+            }
+            return new LocValueString(FormatPlaytime(time));
         }
     }
 }

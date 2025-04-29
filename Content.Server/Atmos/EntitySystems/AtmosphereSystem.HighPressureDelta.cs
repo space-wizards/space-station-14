@@ -56,11 +56,15 @@ namespace Content.Server.Atmos.EntitySystems
                     _physics.SetBodyStatus(uid, body, BodyStatus.OnGround);
                 }
 
-                if (TryComp<FixturesComponent>(uid, out var fixtures))
+                if (TryComp<FixturesComponent>(uid, out var fixtures)
+                    && TryComp<MovedByPressureComponent>(uid, out var component))
                 {
                     foreach (var (id, fixture) in fixtures.Fixtures)
                     {
-                        _physics.AddCollisionMask(uid, id, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
+                        if (component.TableLayerRemoved.Contains(id))
+                        {
+                            _physics.AddCollisionMask(uid, id, fixture, (int)CollisionGroup.TableLayer, manager: fixtures);
+                        }
                     }
                 }
             }
@@ -80,9 +84,13 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var (id, fixture) in fixtures.Fixtures)
             {
-                _physics.RemoveCollisionMask(uid, id, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
+                // Mark fixtures that have TableLayer removed
+                if ((fixture.CollisionMask & (int)CollisionGroup.TableLayer) != 0)
+                {
+                    component.TableLayerRemoved.Add(id);
+                    _physics.RemoveCollisionMask(uid, id, fixture, (int)CollisionGroup.TableLayer, manager: fixtures);
+                }
             }
-
             // TODO: Make them dynamic type? Ehh but they still want movement so uhh make it non-predicted like weightless?
             // idk it's hard.
 
@@ -118,7 +126,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             // Used by ExperiencePressureDifference to correct push/throw directions from tile-relative to physics world.
-            var gridWorldRotation = xforms.GetComponent(gridAtmosphere).WorldRotation;
+            var gridWorldRotation = _transformSystem.GetWorldRotation(gridAtmosphere);
 
             // If we're using monstermos, smooth out the yeet direction to follow the flow
             if (MonstermosEqualization)
@@ -210,7 +218,7 @@ namespace Content.Server.Atmos.EntitySystems
                                      MovedByPressureComponent.ProbabilityOffset);
 
             // Can we yeet the thing (due to probability, strength, etc.)
-            if (moveProb > MovedByPressureComponent.ProbabilityOffset && _robustRandom.Prob(MathF.Min(moveProb / 100f, 1f))
+            if (moveProb > MovedByPressureComponent.ProbabilityOffset && _random.Prob(MathF.Min(moveProb / 100f, 1f))
                                                                       && !float.IsPositiveInfinity(component.MoveResist)
                                                                       && (physics.BodyType != BodyType.Static
                                                                           && (maxForce >= (component.MoveResist * MovedByPressureComponent.MoveForcePushRatio)))

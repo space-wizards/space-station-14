@@ -31,7 +31,10 @@
     - id: Flare
     - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
-  # Intentionally wrong picture on the box. NT did not care enough to change it.
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
 
@@ -68,7 +71,10 @@
     - id: Flare
     - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
-  # Intentionally wrong picture on the box. NT did not care enough to change it.
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
 
@@ -106,7 +112,10 @@
     - id: Flare
     - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
-  # Intentionally wrong picture on the box. NT did not care enough to change it.
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
 
@@ -144,7 +153,10 @@
     - id: Flare
     - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
-  # Intentionally wrong picture on the box. NT did not care enough to change it.
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
 
@@ -192,9 +204,7 @@
 - type: entity
   parent: BoxSurvival
   id: BoxMime
-  name: survival box
-  description: It's a box with basic internals inside.
-  suffix: Emergency
+  suffix: Mime, Emergency
   components:
   - type: StorageFill
     contents:
@@ -208,7 +218,7 @@
 - type: entity
   parent: BoxSurvivalNitrogen
   id: BoxMimeNitrogen
-  suffix: Emergency N2
+  suffix: Mime, Emergency N2
   components:
   - type: StorageFill
     contents:
@@ -218,6 +228,10 @@
     - id: Flare
     - id: FoodBreadBaguette
     - id: DrinkWaterBottleFull
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
 
@@ -252,6 +266,9 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    # Intentionally wrong picture on the box to mimic the NT one
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen

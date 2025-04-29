@@ -18,26 +18,13 @@ tilemap:
 entities:
 - proto: ""
   entities:
-  - uid: 1
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
-    - type: LoadedMap
   - uid: 2
     components:
     - type: MetaData
       name: NT Evac Wode
     - type: Transform
       pos: -0.70836353,-1.958334
-      parent: 1
+      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -84,6 +71,7 @@ entities:
       configurators: []
       deviceLists: []
       transmitFrequencyId: ShuttleTimer
+      deviceNetId: Wireless
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -669,55 +657,55 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,17.5
       parent: 2
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
-  - uid: 215
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -7.5,19.5
-      parent: 2
-  - uid: 216
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 5.5,17.5
-      parent: 2
-  - uid: 295
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -7.5,9.5
-      parent: 2
-  - uid: 296
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 5.5,9.5
-      parent: 2
-  - uid: 342
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 5.5,19.5
-      parent: 2
-  - uid: 374
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -7.5,17.5
-      parent: 2
-  - uid: 385
+  - uid: 1
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,11.5
       parent: 2
-  - uid: 386
+  - uid: 215
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
+      pos: -7.5,9.5
+      parent: 2
+  - uid: 216
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -7.5,17.5
+      parent: 2
+  - uid: 295
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -7.5,19.5
+      parent: 2
+  - uid: 296
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 5.5,19.5
+      parent: 2
+  - uid: 342
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 5.5,17.5
+      parent: 2
+  - uid: 374
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
       pos: 5.5,11.5
+      parent: 2
+  - uid: 385
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 5.5,9.5
       parent: 2
 - proto: BedsheetMedical
   entities:
@@ -2271,7 +2259,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,18.5
       parent: 2
-    - type: DeviceNetwork
   - uid: 175
     components:
     - type: Transform

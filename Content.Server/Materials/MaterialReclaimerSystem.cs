@@ -1,30 +1,30 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Administration.Logs;
 using Content.Server.Fluids.EntitySystems;
-using Content.Server.GameTicking;
+using Content.Server.Ghost;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
+using Content.Server.Repairable;
 using Content.Server.Stack;
 using Content.Server.Wires;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Database;
+using Content.Shared.Destructible;
+using Content.Shared.Emag.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Materials;
 using Content.Shared.Mind;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Server.Administration.Logs;
-using Content.Server.Repairable;
-using Content.Shared.Database;
-using Content.Shared.Destructible;
-using Content.Shared.Emag.Components;
-using Robust.Shared.Prototypes;
+using Content.Shared.Humanoid;
 
 namespace Content.Server.Materials;
 
@@ -33,7 +33,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -98,7 +98,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (TryComp(victim, out ActorComponent? actor) &&
             _mind.TryGetMind(actor.PlayerSession, out var mindId, out var mind))
         {
-            _ticker.OnGhostAttempt(mindId, false, mind: mind);
+            _ghostSystem.OnGhostAttempt(mindId, false, mind: mind);
             if (mind.OwnedEntity is { Valid: true } suicider)
             {
                 _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message"), suicider);
@@ -187,7 +187,8 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         if (CanGib(uid, item, component))
         {
-            _adminLogger.Add(LogType.Gib, LogImpact.Extreme, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
+            var logImpact = HasComp<HumanoidAppearanceComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
+            _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
             SpawnChemicalsFromComposition(uid, item, completion, false, component, xform);
             _body.GibBody(item, true);
             _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
@@ -259,9 +260,22 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         }
 
         // if the item we inserted has reagents, add it in.
-        if (_solutionContainer.TryGetDrainableSolution(item, out _, out var drainableSolution))
+
+        if (reclaimerComponent.OnlyReclaimDrainable)
         {
-            totalChemicals.AddSolution(drainableSolution, _prototype);
+            // Are we a recycler? Only use drainable solution.
+            if (_solutionContainer.TryGetDrainableSolution(item, out _, out var drainableSolution))
+            {
+                totalChemicals.AddSolution(drainableSolution, _prototype);
+            }
+        }
+        else
+        {
+            // Are we an industrial reagent grinder? Use extractable solution.
+            if (_solutionContainer.TryGetExtractableSolution(item, out _, out var extractableSolution))
+            {
+                totalChemicals.AddSolution(extractableSolution, _prototype);
+            }
         }
 
         if (!_solutionContainer.TryGetSolution(reclaimer, reclaimerComponent.SolutionContainerId, out var outputSolution) ||

@@ -7,8 +7,8 @@
     - id: CargoBountyComputerCircuitboard
     - id: CargoRequestComputerCircuitboard
     - id: CargoSaleComputerCircuitboard
-    - id: CargoShuttleComputerCircuitboard
     - id: CargoShuttleConsoleCircuitboard
+    - id: SalvageMagnetMachineCircuitboard
     - id: CigPackGreen
       prob: 0.50
     - id: ClothingHeadsetAltCargo
@@ -16,7 +16,8 @@
     - id: RubberStampApproved
     - id: RubberStampDenied
     - id: RubberStampQm
-    - id: SalvageShuttleConsoleCircuitboard
+    - id: AstroNavCartridge
+    - id: MailTeleporterMachineCircuitboard
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -49,6 +50,7 @@
     - id: RubberStampCaptain
     - id: SpaceCash1000
     - id: WeaponDisabler
+    - id: ClothingEyesGlassesCommand
 
 # No laser table + Laser table
 - type: entityTable
@@ -127,10 +129,13 @@
     - id: DoorRemoteService
     - id: HoPIDCard
     - id: IDComputerCircuitboard
+    - id: FundingAllocationComputerCircuitboard
+    - id: CargoRequestServiceComputerCircuitboard
     - id: RubberStampApproved
     - id: RubberStampDenied
     - id: RubberStampHop
     - id: WeaponDisabler
+    - id: ClothingEyesHudCommand
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -156,6 +161,7 @@
     - id: ClothingHandsGlovesColorYellow
     - id: ClothingHeadsetAltEngineering
     - id: DoorRemoteEngineering
+    - id: CargoRequestEngineeringComputerCircuitboard
     - id: RCD
     - id: RCDAmmo
     - id: RubberStampCE
@@ -165,7 +171,7 @@
   id: FillChiefEngineerHardsuit
   table: !type:AllSelector
     children:
-    - id: ClothingMaskBreath
+    - id: ClothingMaskGasAtmos
     - id: ClothingOuterHardsuitEngineeringWhite
     - id: ClothingShoesBootsMagAdv
     - id: JetpackVoidFilled
@@ -214,8 +220,10 @@
     - id: HandheldCrewMonitor
     - id: Hypospray
     - id: MedicalTechFabCircuitboard
+    - id: CargoRequestMedicalComputerCircuitboard
     - id: MedkitFilled
     - id: RubberStampCMO
+    - id: MedTekCartridge
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -257,15 +265,16 @@
   id: LockerFillResearchDirectorNoHardsuit
   table: !type:AllSelector
     children:
+    - id: Intellicard
     - id: BoxEncryptionKeyScience
     - id: CircuitImprinterMachineCircuitboard
     - id: ClothingBeltUtilityFilled
     - id: ClothingHeadsetAltScience
     - id: DoorRemoteResearch
-    - id: EncryptionKeyBinary
     - id: HandTeleporter
     - id: ProtolatheMachineCircuitboard
     - id: ResearchComputerCircuitboard
+    - id: CargoRequestScienceComputerCircuitboard
     - id: RubberStampRd
 
 # Hardsuit table, used for suit storage as well
@@ -323,7 +332,10 @@
     - id: HoloprojectorSecurity
     - id: RubberStampHos
     - id: SecurityTechFabCircuitboard
+    - id: CargoRequestSecurityComputerCircuitboard
     - id: WeaponDisabler
+    - id: WantedListCartridge
+    - id: DrinkHosFlask
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
