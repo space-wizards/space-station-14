@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC0-1.0",
-    "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). layered inhands by mubururu_ (github).",
+    "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). layered inhands by mubururu_ (github), icon-chem.png & icon-mining-adv.png created by mubururu_ (github), Xenoborg modules sprites by Samuka-C (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -30,6 +30,9 @@
         },
         {
             "name": "icon-chemist"
+        },
+        {
+            "name": "icon-chem"
         },
         {
             "name": "icon-clown"
@@ -68,6 +71,9 @@
             "name": "icon-mining"
         },
         {
+            "name": "icon-mining-adv"
+        },
+        {
             "name": "icon-mop"
         },
         {
@@ -101,6 +107,45 @@
             "name": "icon-treatment"
         },
         {
+            "name": "icon-xenoborg-access-breaker"
+        },
+        {
+            "name": "icon-xenoborg-basic"
+        },
+        {
+            "name": "icon-xenoborg-cloak"
+        },
+        {
+            "name": "icon-xenoborg-fire-extinguisher"
+        },
+        {
+            "name": "icon-xenoborg-hypo"
+        },
+        {
+            "name": "icon-xenoborg-jammer"
+        },
+        {
+            "name": "icon-xenoborg-laser"
+        },
+        {
+            "name": "icon-xenoborg-laser2"
+        },
+        {
+            "name": "icon-xenoborg-projector"
+        },
+        {
+            "name": "icon-xenoborg-space-movement"
+        },
+        {
+            "name": "icon-xenoborg-sword"
+        },
+        {
+            "name": "icon-xenoborg-sword2"
+        },
+        {
+            "name": "icon-xenoborg-tools"
+        },
+        {
             "name": "icon-syndicate"
         },
         {
@@ -126,6 +171,21 @@
         },
         {
             "name": "syndicate"
+        },
+        {
+            "name": "xenoborg_engi"
+        }, 
+        {
+            "name": "xenoborg_generic"
+        }, 
+        {
+            "name": "xenoborg_heavy"
+        },
+        {
+            "name": "xenoborg_scout"
+        },
+        {
+            "name": "xenoborg_stealth"
         },
         {
             "name": "base-icon-inhand-left",

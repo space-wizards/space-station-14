@@ -9,6 +9,8 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.EntityEffects;
 using Content.Shared.Database;
 using Content.Shared.Nutrition;
+using Content.Shared.Prototypes;
+using Content.Shared.Slippery;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -98,11 +100,12 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public bool MetamorphicChangeColor { get; private set; } = true;
 
+
         /// <summary>
-        /// If this reagent is part of a puddle is it slippery.
+        /// If not null, makes something slippery. Also defines slippery interactions like stun time and launch mult.
         /// </summary>
         [DataField]
-        public bool Slippery;
+        public SlipperyEffectEntry? SlipData;
 
         /// <summary>
         /// The speed at which the reagent evaporates over time.
@@ -129,6 +132,13 @@ namespace Content.Shared.Chemistry.Reagent
         /// </summary>
         [DataField]
         public float Viscosity;
+
+        /// <summary>
+        /// Linear Friction Multiplier for a reagent
+        /// 0 - frictionless, 1 - no effect on friction
+        /// </summary>
+        [DataField]
+        public float Friction = 1.0f;
 
         /// <summary>
         /// Should this reagent work on the dead?

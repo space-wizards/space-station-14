@@ -1085,5 +1085,35 @@ Entries:
   id: 131
   time: '2025-04-18T12:24:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30812
+- author: Tayrtahn
+  changes:
+  - message: Added MarkerOne, MarkerTwo, and MarkerThree components for testing and
+      tracking purposes.
+    type: Add
+  id: 132
+  time: '2025-04-20T19:08:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36776
+- author: sowelipililimute
+  changes:
+  - message: The Funding Allocation Computer now has a CVar to enable configuring
+      the primary cut (off by default)
+    type: Add
+  - message: The Funding Allocation Computer now has a CVar to enable configuring
+      the lockbox cut (on by default)
+    type: Add
+  - message: The Funding Allocation Computer now has a CVar to enable hiding the primary
+      account from the funding splits (on by default)
+    type: Add
+  id: 133
+  time: '2025-04-22T12:34:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36790
+- author: qrwas
+  changes:
+  - message: 'Added new Cvar: game.contraband_examine_only_in_hud to display contraband
+      only in security glasses **disabled by default**'
+    type: Add
+  id: 134
+  time: '2025-04-26T21:06:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36412
 Name: Admin
-Order: 1
+Order: 2

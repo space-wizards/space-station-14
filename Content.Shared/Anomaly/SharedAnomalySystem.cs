@@ -187,7 +187,8 @@ public abstract class SharedAnomalySystem : EntitySystem
             // Logging before resolve, in case the anomaly has deleted itself.
             if (_net.IsServer)
                 Log.Info($"Ending anomaly. Entity: {ToPrettyString(uid)}");
-            AdminLog.Add(LogType.Anomaly, supercritical ? LogImpact.High : LogImpact.Low,
+            AdminLog.Add(LogType.Anomaly,
+                supercritical ? LogImpact.High : LogImpact.Low,
                 $"Anomaly {ToPrettyString(uid)} {(supercritical ? "went supercritical" : "decayed")}.");
         }
 
@@ -402,7 +403,7 @@ public abstract class SharedAnomalySystem : EntitySystem
             if (!settings.CanSpawnOnEntities)
             {
                 var valid = true;
-                foreach (var ent in grid.GetAnchoredEntities(tileref.GridIndices))
+                foreach (var ent in _map.GetAnchoredEntities(xform.GridUid.Value, grid, tileref.GridIndices))
                 {
                     if (!physQuery.TryGetComponent(ent, out var body))
                         continue;
@@ -429,7 +430,7 @@ public abstract class SharedAnomalySystem : EntitySystem
 }
 
 [DataRecord]
-public partial record struct AnomalySpawnSettings()
+public record struct AnomalySpawnSettings()
 {
     /// <summary>
     /// should entities block spawning?
@@ -483,4 +484,4 @@ public partial record struct AnomalySpawnSettings()
     public bool SpawnOnSeverityChanged { get; set; } = false;
 }
 
-public sealed partial class ActionAnomalyPulseEvent : InstantActionEvent { }
+public sealed partial class ActionAnomalyPulseEvent : InstantActionEvent;
