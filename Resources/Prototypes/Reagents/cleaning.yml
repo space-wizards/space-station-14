@@ -76,7 +76,9 @@
   color: "#77b58e"
   recognizable: true
   boilingPoint: 290.0 # Glycerin
-  meltingPoint: 18.2
+  meltingPoint: 18.
+  tileReactions:
+  - !type:SpillTileReaction
   friction: 0.0
 
 - type: reagent
@@ -88,6 +90,8 @@
   color: "#ffffff"
   boilingPoint: 250.0
   meltingPoint: 380.0
+  tileReactions:
+  - !type:SpillTileReaction
   viscosity: 0.5
   reactiveEffects:
     Acidic:
