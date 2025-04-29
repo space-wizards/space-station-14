@@ -87,9 +87,6 @@
           minCount: 12
           maxCount: 16
           addComponents:
-          - type: Gravity
-            enabled: true
-            inherent: true
           - type: IFF
             flags: HideLabel
             color: "#88b0d1"
