@@ -1,0 +1,46 @@
+- type: entity
+  parent: MarkerBase
+  id: SpawnDirtWide
+  name: Dirt Spawner
+  suffix: Wide
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: decal
+  - type: RandomDecalSpawner
+    decals:
+    - Dirt
+    - DirtLight
+    - DirtyMedium
+    - DirtHeavy
+    - DirtHeavyMonotile
+    range: 10
+    falloff: 5
+    snapPosition: true
+    maxDecalsPerTile: 3
+    zIndex: 5
+    color: '#FFFFFF7F'
+    cleanable: true
+    tileBlacklist:
+    - FloorSteelDiagonal
+    - FloorSteelOffset
+    - FloorSteelDiagonalMini
+    - FloorWood
+    - FloorWoodLarge
+    - FloorWhiteDiagonal
+    - FloorWhiteOffset
+    - FloorWhiteDiagonalMini
+    - FloorDarkDiagonal
+    - FloorDarkOffset
+    - FloorDarkDiagonalMini
+    - FloorArcadeBlue
+    - FloorArcadeBlue2
+    - FloorArcadeRed
+    - FloorEighties
+    - FloorCarpetClown
+    - FloorCarpetOffice
+    - FloorBoxing
+    - FloorGym
+    - FloorGlass
+    - FloorRGlass
