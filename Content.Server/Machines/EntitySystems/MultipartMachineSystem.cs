@@ -310,7 +310,7 @@ public sealed class MultipartMachineSystem : EntitySystem
                         break;
                     }
 
-                    curAngle += Math.PI / 2;
+                    curAngle += Math.PI * 0.5;
                 }
             }
 
