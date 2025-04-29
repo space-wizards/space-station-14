@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: Nox38
   changes:
-  - message: Renamed riot bullet shield to ballistic shield
-    type: Tweak
-  - message: Renamed riot laser shield to ablative shield
-    type: Tweak
-  id: 7885
-  time: '2025-01-31T23:39:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34794
-- author: Nox38
-  changes:
   - message: Set Marathon's max secoffs to 8.
     type: Tweak
   - message: Restocked Marathon's armory.
@@ -3924,3 +3915,11 @@
   id: 8386
   time: '2025-04-29T10:24:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36995
+- author: Thinbug0
+  changes:
+  - message: Science developed the Push-Horn, capable of pushing people away with
+      each honk!
+    type: Add
+  id: 8387
+  time: '2025-04-29T13:07:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36009
