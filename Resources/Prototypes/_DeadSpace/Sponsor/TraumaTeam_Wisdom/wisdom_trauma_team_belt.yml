@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingBeltMilitaryWebbing
   id: ClothingBeltWisdomTraumaTeamSec
-  name: РПС Мед-Техника безопасника
+  name: РПС TTI безопасника
   description: Разгрузочный жилет, необходимый для спасения жизней в экстремальных условиях.
   components:
   - type: Storage
@@ -15,7 +15,7 @@
 - type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltWisdomTraumaTeamHolster
-  name: набедренная кобура Мед-Теха
+  name: набедренная кобура TTI
   description: Глубокая наплечная кобура, способная вместить множество видов баллистики.
   components:
   - type: Sprite

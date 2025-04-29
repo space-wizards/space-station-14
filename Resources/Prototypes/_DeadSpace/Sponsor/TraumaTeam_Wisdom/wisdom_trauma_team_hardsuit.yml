@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingOuterHardsuitAtmos
   id: ClothingOuterHardsuitWisdomPilot
-  name: скафандр Мед-Техника пилота
+  name: скафандр TTI пилота
   description: Скафандр с биокодированием, обеспечивающий защиту в критических ситуациях.
   components:
   - type: Sprite
@@ -32,7 +32,7 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase, ShowMedicalIcons ]
   id: ClothingHeadHelmetHardsuitWisdomPilot
   categories: [ HideSpawnMenu ]
-  name: шлем скафандра Мед-Техника пилота
+  name: шлем скафандра TTI пилота
   description: Шлем с встроенным медицинским визором, который обеспечивает защиту и освещение для работы в темных условиях.
   components:
   - type: Sprite
@@ -56,7 +56,7 @@
 - type: entity
   parent: ClothingOuterHardsuitAtmos
   id: ClothingOuterHardsuitWisdomSec
-  name: скафандр Мед-Техника безопасника
+  name: скафандр TTI безопасника
   description: Скафандр с биокодированием, обеспечивающий защиту в критических ситуациях.
   components:
   - type: Sprite
@@ -90,7 +90,7 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase, ShowMedicalIcons ]
   id: ClothingHeadHelmetHardsuitWisdomSec
   categories: [ HideSpawnMenu ]
-  name: шлем скафандра Мед-Техника безопасника
+  name: шлем скафандра TTI безопасника
   description: Шлем с встроенным медицинским визором, который обеспечивает защиту и освещение для работы в темных условиях.
   components:
   - type: Sprite

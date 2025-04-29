@@ -1,1 +1,1 @@
-chat-radio-traumateam = Мед-Тех
+chat-radio-traumateam = TTI
