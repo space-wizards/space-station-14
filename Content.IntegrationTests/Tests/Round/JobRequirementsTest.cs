@@ -102,12 +102,8 @@ public sealed class JobRequirementsTest
         });
         pair.Server.CfgMan.SetCVar(CCVars.GameMap, _map);
 
-        // TODO: This is a work around for https://github.com/space-wizards/space-station-14/issues/37042
-        pair.Server.CfgMan.SetCVar(CCVars.GameRoleTimers, true);
-
         var ticker = pair.Server.System<GameTicker>();
 
-        var sPref = pair.Server.ResolveDependency<IServerPreferencesManager>();
         var cPref = pair.Client.ResolveDependency<IClientPreferencesManager>();
 
         await pair.ReallyBeIdle();
@@ -157,12 +153,8 @@ public sealed class JobRequirementsTest
         });
         pair.Server.CfgMan.SetCVar(CCVars.GameMap, _map);
 
-        // TODO: This is a work around for https://github.com/space-wizards/space-station-14/issues/37042
-        pair.Server.CfgMan.SetCVar(CCVars.GameRoleTimers, true);
-
         var ticker = pair.Server.System<GameTicker>();
 
-        var sPref = pair.Server.ResolveDependency<IServerPreferencesManager>();
         var cPref = pair.Client.ResolveDependency<IClientPreferencesManager>();
 
         await pair.ReallyBeIdle();
@@ -220,7 +212,6 @@ public sealed class JobRequirementsTest
         });
         pair.Server.CfgMan.SetCVar(CCVars.GameMap, _map);
         var ticker = pair.Server.System<GameTicker>();
-        var sPref = pair.Server.ResolveDependency<IServerPreferencesManager>();
         var cPref = pair.Client.ResolveDependency<IClientPreferencesManager>();
 
         await pair.ReallyBeIdle();
