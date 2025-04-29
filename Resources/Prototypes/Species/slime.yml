@@ -15,8 +15,8 @@
     Head: MobSlimeHead
     Hair: MobSlimeMarkingFollowSkin
     FacialHair: MobSlimeMarkingFollowSkin
-    UndergarmentTop: MobHumanoidAnyMarking
-    UndergarmentBottom: MobHumanoidAnyMarking
+    # UndergarmentTop: MobHumanoidAnyMarking # DS14
+    # UndergarmentBottom: MobHumanoidAnyMarking # DS14
     Chest: MobSlimeTorso
     HeadTop: MobHumanoidAnyMarking # Corvax Sponsors
     Tail: MobHumanoidAnyMarking # Corvax Sponsors

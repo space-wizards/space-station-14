@@ -454,6 +454,12 @@
         whitelist:
           tags:
           - PepperShaker
+      # DS14-start
+      goldenkitchenknife:
+        whitelist:
+          tags:
+          - ChefGoldenKnife
+      # DS14-end
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
 

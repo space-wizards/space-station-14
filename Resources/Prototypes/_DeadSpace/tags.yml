@@ -23,6 +23,9 @@
   id: BorgModuleSecurity
 
 - type: Tag
+  id: ChefGoldenKnife
+
+- type: Tag
   id: DockCentcommERT
 
 - type: Tag
