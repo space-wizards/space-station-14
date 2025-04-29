@@ -1,3 +1,4 @@
+using Content.Shared.Access.Components;
 using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -32,6 +33,12 @@ public sealed partial class LockComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool UnlockOnClick = true;
+
+    /// <summary>
+    /// Whether the lock requires access validation through <see cref="AccessReaderComponent"/>
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool UseAccess = true;
 
     /// <summary>
     /// The sound played when unlocked.

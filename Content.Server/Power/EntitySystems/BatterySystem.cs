@@ -13,7 +13,7 @@ namespace Content.Server.Power.EntitySystems
     [UsedImplicitly]
     public sealed class BatterySystem : EntitySystem
     {
-        [Dependency] protected readonly IGameTiming Timing = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
         {
@@ -94,7 +94,7 @@ namespace Content.Server.Power.EntitySystems
 
                 if (comp.AutoRechargePause)
                 {
-                    if (comp.NextAutoRecharge > Timing.CurTime)
+                    if (comp.NextAutoRecharge > _timing.CurTime)
                         continue;
                 }
 
@@ -206,7 +206,7 @@ namespace Content.Server.Power.EntitySystems
             if (value < 0)
                 value = batteryself.AutoRechargePauseTime;
 
-            if (Timing.CurTime + TimeSpan.FromSeconds(value) <= batteryself.NextAutoRecharge)
+            if (_timing.CurTime + TimeSpan.FromSeconds(value) <= batteryself.NextAutoRecharge)
                 return;
 
             SetChargeCooldown(uid, batteryself.AutoRechargePauseTime, batteryself);
@@ -221,9 +221,9 @@ namespace Content.Server.Power.EntitySystems
                 return;
 
             if (value >= 0)
-                batteryself.NextAutoRecharge = Timing.CurTime + TimeSpan.FromSeconds(value);
+                batteryself.NextAutoRecharge = _timing.CurTime + TimeSpan.FromSeconds(value);
             else
-                batteryself.NextAutoRecharge = Timing.CurTime;
+                batteryself.NextAutoRecharge = _timing.CurTime;
         }
 
         /// <summary>
