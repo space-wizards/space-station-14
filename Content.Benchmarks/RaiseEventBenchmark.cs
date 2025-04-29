@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
@@ -52,14 +53,31 @@ public class RaiseEventBenchmark
         return _sys.RaiseCompEvent();
     }
 
+    [Benchmark]
+    public int RaiseCSharpEvent()
+    {
+        return _sys.CSharpEvent();
+    }
+
+    [Benchmark]
+    public int DirectInvoke()
+    {
+        return _sys.Direct();
+    }
+
     public sealed class BenchSystem : EntitySystem
     {
         public Entity<TransformComponent> Ent;
+
+        public delegate void EntityEventHandler(EntityUid uid, TransformComponent comp, ref BenchEv ev);
+
+        public event EntityEventHandler? OnCSharpEvent;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<TransformComponent, BenchEv>(OnEvent);
+            OnCSharpEvent += OnEvent;
         }
 
         public int RaiseEvent()
@@ -73,6 +91,20 @@ public class RaiseEventBenchmark
         {
             var ev = new BenchEv();
             EntityManager.EventBus.RaiseComponentEvent(Ent.Owner, Ent.Comp, ref ev);
+            return ev.N;
+        }
+
+        public int CSharpEvent()
+        {
+            var ev = new BenchEv();
+            OnCSharpEvent?.Invoke(Ent.Owner, Ent.Comp, ref ev);
+            return ev.N;
+        }
+
+        public int Direct()
+        {
+            var ev = new BenchEv();
+            OnEvent(Ent.Owner, Ent.Comp, ref ev);
             return ev.N;
         }
 
