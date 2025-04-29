@@ -1558,13 +1558,30 @@
   description: Fake sand. Luckily, it's not as coarse as the real thing.
   components:
   - type: Sprite
-    state: asteroid
+    state: astro-asteroid
   - type: Item
     heldPrefix: asteroid
   - type: FloorTile
     outputs:
     - Plating
     - FloorAstroAsteroidSand
+  - type: Stack
+    stackType: FloorTileAstroAsteroidSand
+
+- type: entity
+  id: FloorTileItemAstroAsteroidSandBorderless
+  parent: FloorTileItemBase
+  name: borderless asteroid astro-sand
+  description: Fake sand. Luckily, it's not as coarse as the real thing.
+  components:
+  - type: Sprite
+    state: asteroid
+  - type: Item
+    heldPrefix: asteroid
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroAsteroidSandBorderless
   - type: Stack
     stackType: FloorTileAstroAsteroidSand
 

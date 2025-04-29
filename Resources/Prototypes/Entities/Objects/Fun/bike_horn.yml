@@ -196,3 +196,37 @@
   - type: Construction
     graph: BananiumHorn
     node: bananiumHorn
+
+- type: entity
+  parent: BaseItem
+  id: PushHorn
+  name: push horn
+  description: This powerful bikehorn is sure to blast frowns away.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/push_horn.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/push_horn.rsi
+    size: Tiny
+  - type: Clothing
+    sprite: Objects/Fun/push_horn.rsi
+    slots: [Belt]
+    quickEquip: false
+  - type: EmitSoundOnUse
+    handle: false
+    sound: "/Audio/Items/Toys/pushHornHonk.ogg"
+  - type: EmitSoundOnLand
+    sound: "/Audio/Items/Toys/pushHornFloor.ogg"
+  - type: UseDelay
+    delay: 6
+  - type: TriggerOnUse
+  - type: RepulseAttractOnTrigger
+    speed: 50
+    range: 2
+    whitelist:
+      components:
+      - MobMover
+      - Item
+  - type: SpawnOnTrigger
+    proto: EffectGravityPulse
