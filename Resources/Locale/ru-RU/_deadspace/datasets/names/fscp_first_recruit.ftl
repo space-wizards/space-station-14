@@ -1,1 +1,1 @@
-names-first-fscp-recruit-dataset = Рядовой
+names-first-fscp-recruit-dataset-1 = Рядовой
