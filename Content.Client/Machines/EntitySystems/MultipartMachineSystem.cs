@@ -14,7 +14,7 @@ namespace Content.Client.Machines.EntitySystems;
 /// </summary>
 public sealed class MultipartMachineSystem : EntitySystem
 {
-    private EntProtoId _ghostPrototype = "MultipartMachineGhost";
+    private readonly EntProtoId _ghostPrototype = "MultipartMachineGhost";
 
     public override void Initialize()
     {
