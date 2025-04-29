@@ -75,13 +75,10 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// <returns>May contain the resolved EntityUid for the specified part, null otherwise.</returns>
     public EntityUid? GetPartEntity(Entity<MultipartMachineComponent?> ent, Enum part)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!TryGetPartEntity(ent, part, out var entity))
             return null;
 
-        if (ent.Comp.Parts.TryGetValue(part, out var value))
-            return GetEntity(value.Entity);
-
-        return null;
+        return entity;
     }
 
     /// <summary>
