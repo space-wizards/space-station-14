@@ -120,9 +120,21 @@ namespace Content.Server.GameTicking
 
                 // Select a profile for the player
                 var playerPrefs = _preferencesManager.GetPreferences(player);
-                var profile = playerPrefs.SelectProfileForJob(job.Value);
-                if (profile == null)
+                var playerProfiles = playerPrefs.GetAllEnabledProfilesForJob(job.Value);
+                var filteredPlayerProfiles = playerProfiles.Values.Where(profile =>
+                    JobRequirements.TryRequirementsMet(job.Value,
+                        null,
+                        out _,
+                        EntityManager,
+                        _prototypeManager,
+                        profile)
+                    );
+
+                var finalPlayerProfiles = filteredPlayerProfiles.ToList();
+                if (finalPlayerProfiles.Count == 0)
                     continue;
+
+                var profile = _robustRandom.Pick(finalPlayerProfiles.ToList());
 
                 SpawnPlayer(_playerManager.GetSessionById(player), profile, station, job, false);
             }
