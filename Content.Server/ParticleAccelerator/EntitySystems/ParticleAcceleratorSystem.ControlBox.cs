@@ -360,7 +360,7 @@ public sealed partial class ParticleAcceleratorSystem
     /// <param name="args">Args for this event</param>
     private void OnMachineAssembledChanged(Entity<ParticleAcceleratorControlBoxComponent> ent, ref MultipartMachineAssemblyStateChanged args)
     {
-        if (args.Assembled)
+        if (args.IsAssembled)
         {
             UpdatePowerDraw(ent, ent.Comp);
             UpdateUI(ent, ent.Comp);

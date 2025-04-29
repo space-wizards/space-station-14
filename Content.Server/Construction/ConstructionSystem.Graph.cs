@@ -412,7 +412,7 @@ namespace Content.Server.Construction
             // If ChangeEntity has ran, then the entity uid has changed and the
             // new entity should be initialized by this point.
             var afterChangeEv = new AfterConstructionChangeEntityEvent(construction.Graph, construction.Node, previousNode);
-            RaiseLocalEvent(newUid, afterChangeEv);
+            RaiseLocalEvent(newUid, ref afterChangeEv);
 
             return newUid;
         }
@@ -465,14 +465,11 @@ namespace Content.Server.Construction
     /// This event is raised after an entity changes prototype/uid during construction.
     /// This is only raised at the new entity, after it has been initialized.
     /// </summary>
-    /// <param name="graph">Construction graph for this entity</param>
-    /// <param name="previousNode">Previous node that was active on the graph</param>
-    /// <param name="currentNode">New node that has become active</param>
-    public sealed class AfterConstructionChangeEntityEvent(string graph, string currentNode, string? previousNode)
-        : EntityEventArgs
+    /// <param name="Graph">Construction graph for this entity</param>
+    /// <param name="CurrentNode">New node that has become active</param>
+    /// <param name="PreviousNode">Previous node that was active on the graph</param>
+    [ByRefEvent]
+    public record struct AfterConstructionChangeEntityEvent(string Graph, string CurrentNode, string? PreviousNode)
     {
-        public readonly string Graph = graph;
-        public readonly string CurrentNode = currentNode;
-        public readonly string? PreviousNode = previousNode;
     }
 }

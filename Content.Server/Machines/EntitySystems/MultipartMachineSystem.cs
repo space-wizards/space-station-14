@@ -341,7 +341,7 @@ public sealed class MultipartMachineSystem : EntitySystem
         if (stateHasChanged)
         {
             var ev = new MultipartMachineAssemblyStateChanged(ent, ent.Comp.IsAssembled, user);
-            RaiseLocalEvent(ent, ev);
+            RaiseLocalEvent(ent, ref ev);
         }
 
         Dirty(ent);
