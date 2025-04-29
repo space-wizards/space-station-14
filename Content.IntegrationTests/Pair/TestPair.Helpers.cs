@@ -9,7 +9,6 @@ using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
@@ -200,67 +199,5 @@ public sealed partial class TestPair
         await RunTicksSync(5);
 
         return sessions;
-    }
-
-    /// <summary>
-    /// Set the job priorities for a session
-    /// </summary>
-    /// <param name="player">session to modify</param>
-    /// <param name="jobPriorities">job priorities to set</param>
-    public async Task SetJobPriorities(ICommonSession player,
-        Dictionary<ProtoId<JobPrototype>,JobPriority> jobPriorities)
-    {
-        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
-        await Server.WaitPost(() =>
-        {
-            prefMan.SetJobPriorities(player.UserId, jobPriorities).Wait();
-        });
-    }
-
-    /// <summary>
-    /// Set the job priorities for the TestPair.Player session
-    /// </summary>
-    /// <param name="jobPriorities">job priorities to set</param>
-    public Task SetJobPriorities(Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
-    {
-        return SetJobPriorities(Player!, jobPriorities);
-    }
-
-    /// <summary>
-    /// Set the job preferences for the TestPair.Player session, specifically the character in slot 0
-    /// </summary>
-    /// <param name="jobPreferences">job preferences to set</param>
-    public async Task SetJobPreferences(HashSet<ProtoId<JobPrototype>> jobPreferences)
-    {
-        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
-        await Server.WaitPost(() =>
-        {
-            var profile = prefMan.GetPreferences(Player!.UserId).Characters[0] as HumanoidCharacterProfile;
-            prefMan.SetProfile(Player!.UserId, 0, profile!.WithJobPreferences(jobPreferences)).Wait();
-        });
-    }
-
-    /// <summary>
-    /// Set the antag preferences for a session, specifically the character in slot 0
-    /// </summary>
-    /// <param name="player">session to modify</param>
-    /// <param name="antagPreferences">antag preferences to set</param>
-    public async Task SetAntagPreferences(ICommonSession player, HashSet<ProtoId<AntagPrototype>> antagPreferences)
-    {
-        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
-        await Server.WaitPost(() =>
-        {
-            var profile = prefMan.GetPreferences(player.UserId).Characters[0] as HumanoidCharacterProfile;
-            prefMan.SetProfile(player.UserId, 0, profile!.WithAntagPreferences(antagPreferences)).Wait();
-        });
-    }
-
-    /// <summary>
-    /// Set the antag preferences for the TestPair.Player session, specifically the character in slot 0
-    /// </summary>
-    /// <param name="antagPreferences">antag preferences to set</param>
-    public Task SetAntagPreferences(HashSet<ProtoId<AntagPrototype>> antagPreferences)
-    {
-        return SetAntagPreferences(Player!, antagPreferences);
     }
 }

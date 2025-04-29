@@ -119,7 +119,15 @@ public sealed partial class TestPair : IAsyncDisposable
 
         await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: Return of pair {Id} started");
         State = PairState.CleanDisposed;
-        await OnCleanDispose();
+        try
+        {
+            await OnCleanDispose();
+        }
+        catch (Exception e)
+        {
+            await _testOut.WriteLineAsync($"Exception raised in OnCleanDispose\n{e}");
+            throw;
+        }
         State = PairState.Ready;
         PoolManager.NoCheckReturn(this);
         ClearContext();
