@@ -368,7 +368,7 @@ namespace Content.Server.Kitchen.EntitySystems
             UpdateUserInterfaceState(ent, ent.Comp);
         }
 
-        private void OnContentUpdate(EntityUid uid, CookingDeviceComponent component, ContainerModifiedMessage args) // Starlight-edit: For some reason ContainerModifiedMessage just can't be used at all with Entity<T>. TODO: replace with Entity<T> syntax once that's possible
+        private void OnContentUpdate(EntityUid uid, CookingDeviceComponent component, ContainerModifiedMessage args) // Starlight-edit: ContainerModifiedMessage just can't be used at all with Entity<T>, because it's abstract.
         {
             if (component.Storage != args.Container)
                 return;
