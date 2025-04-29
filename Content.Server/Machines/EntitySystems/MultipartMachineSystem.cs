@@ -277,9 +277,8 @@ public sealed class MultipartMachineSystem : EntitySystem
         var stateHasChanged = false;
 
         var missingParts = false;
-        for (var i = 0; i < ent.Comp.Parts.Count; ++i)
+        foreach (var (_, part) in ent.Comp.Parts)
         {
-            var part = ent.Comp.Parts.Values.ElementAt(i);
             var originalPart = part.Entity;
             part.Entity = null;
 
