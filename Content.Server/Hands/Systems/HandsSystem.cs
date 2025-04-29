@@ -98,7 +98,7 @@ namespace Content.Server.Hands.Systems
             }
         }
 
-        private void OnDisarmed(EntityUid uid, HandsComponent component, DisarmedEvent args)
+        private void OnDisarmed(EntityUid uid, HandsComponent component, ref DisarmedEvent args)
         {
             if (args.Handled)
                 return;

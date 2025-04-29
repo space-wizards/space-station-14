@@ -163,7 +163,7 @@ public abstract partial class SharedXenoArtifactSystem
         if (ent.Comp.Locked)
             return 0;
 
-        return ent.Comp.ResearchValue - ent.Comp.ConsumedResearchValue;
+        return Math.Max(0, ent.Comp.ResearchValue - ent.Comp.ConsumedResearchValue);
     }
 
     /// <summary>
