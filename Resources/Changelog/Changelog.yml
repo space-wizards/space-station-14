@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: NazrinNya
-  changes:
-  - message: Flesh Kudzu now contains razorium, making it unsafe to eat.
-    type: Tweak
-  id: 7888
-  time: '2025-02-01T12:10:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32821
 - author: Boaz1111
   changes:
   - message: 'New Reagent: Coldsauce! It can be made using the Frost Oil from Chilly
@@ -3923,3 +3916,10 @@
   id: 8389
   time: '2025-04-29T16:36:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31257
+- author: whatston3
+  changes:
+  - message: Speso stacks now show different denominations depending on their size.
+    type: Add
+  id: 8390
+  time: '2025-04-29T21:44:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37030
