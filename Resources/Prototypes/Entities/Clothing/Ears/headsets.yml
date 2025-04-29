@@ -240,6 +240,10 @@
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/security.rsi
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/secoff.ogg
+
 
 - type: entity
   parent: [ClothingHeadset, BaseSecurityContraband]

@@ -2,11 +2,12 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
-using Content.Server.Radio.Components;
+using Content.Shared.Radio.Components;
 using Content.Server.Starlight.TTS;
 using Content.Server.VoiceMask;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Inventory;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.PDA;
@@ -17,6 +18,8 @@ using Content.Shared.Speech;
 using Content.Shared.StatusIcon;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.StationAi;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -24,6 +27,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using Content.Shared.Clothing.EntitySystems;
+using Content.Shared; // Added for RadioChimeComponent
+using Content.Server.Radio.Components; // Added for ActiveRadioComponent
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -39,6 +45,10 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly ClothingSystem _clothingSystem = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -88,10 +98,16 @@ public sealed class RadioSystem : EntitySystem
         if (!_messages.Add(message))
             return;
 
-        var evt = new TransformSpeakerNameEvent(messageSource, MetaData(messageSource).EntityName);
+        var meta = MetaData(messageSource);
+        var entityName = meta?.EntityName ?? string.Empty;
+        var evt = new TransformSpeakerNameEvent(messageSource, entityName);
         RaiseLocalEvent(messageSource, evt);
 
         var name = evt.VoiceName;
+        if (string.IsNullOrEmpty(name))
+            name = entityName;
+        if (name == null)
+            name = string.Empty;
         name = FormattedMessage.EscapeText(name);
 
         SpeechVerbPrototype speech;
@@ -108,6 +124,7 @@ public sealed class RadioSystem : EntitySystem
 
         var iconId = "JobIconNoId";
         var jobName = "";
+        SoundSpecifier? soundPath = null;
 
         if (_accessReader.FindAccessItemsInventory(messageSource, out var items))
         {
@@ -144,7 +161,60 @@ public sealed class RadioSystem : EntitySystem
             iconId = "JobIconStationAi";
             jobName = Loc.GetString("job-name-station-ai");
         }
-        // end 🌟Starlight🌟
+
+        // Play chime sound if player is wearing a headset with a RadioChimeComponent
+        Filter filter = Filter.Empty();
+
+        if (_inventorySystem.TryGetSlotEntity(messageSource, "ears", out var headsetEntity))
+        {
+            Logger.Debug($"Headset entity found in ears slot: {headsetEntity.Value}");
+
+            if (TryComp<RadioChimeComponent>(headsetEntity.Value, out var radioChime) && radioChime.ChimeSound != null)
+            {
+                Logger.Debug($"RadioChimeComponent found with sound: {radioChime.ChimeSound}");
+                soundPath = radioChime.ChimeSound;
+            }
+            else
+            {
+                Logger.Debug("RadioChimeComponent not found or ChimeSound is null on headset entity.");
+            }
+
+            if (soundPath != null)
+            {
+            var players = EntityQueryEnumerator<ActorComponent>();
+            int count = 0;
+            while (players.MoveNext(out var entity, out var actor))
+            {
+                Logger.Debug($"Checking player entity {entity} with ActorComponent");
+                if (_inventorySystem.TryGetSlotEntity(entity, "ears", out var headsetSlotEntity))
+                {
+                    Logger.Debug($"Player entity {entity} has headset entity {headsetSlotEntity.Value} in ears slot");
+                    if (TryComp<RadioChimeComponent>(headsetSlotEntity.Value, out var radioChime2) && radioChime2.ChimeSound != null)
+                    {
+                        Logger.Debug($"Headset entity {headsetSlotEntity.Value} has RadioChimeComponent with sound {radioChime2.ChimeSound}");
+                        filter = filter.AddPlayer(actor.PlayerSession);
+                        count++;
+                    }
+                    else
+                    {
+                        Logger.Debug($"Headset entity {headsetSlotEntity.Value} does not have RadioChimeComponent or ChimeSound is null");
+                    }
+                }
+                else
+                {
+                    Logger.Debug($"Player entity {entity} does not have headset entity in ears slot");
+                }
+            }
+            Logger.Debug($"Number of players with headset and RadioChimeComponent added to filter: {count}");
+
+                _audio.PlayGlobal(soundPath, filter, true, AudioParams.Default.WithVolume(-7f));
+                Logger.Debug("Played global chime sound.");
+            }
+        }
+        else
+        {
+            Logger.Debug("No headset entity found in ears slot.");
+        }
 
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
             ("color", channel.Color),
@@ -208,6 +278,11 @@ public sealed class RadioSystem : EntitySystem
             Message = message,
             Receivers = [.. ev.Receivers]
         });
+
+        if (soundPath != null && canSend)
+        {
+            _audio.PlayGlobal(soundPath, filter, true, AudioParams.Default.WithVolume(-7f));
+        }
 
         if (name != Name(messageSource))
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");
