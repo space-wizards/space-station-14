@@ -76,7 +76,7 @@
 
 - type: reaction
   id: MeltSteelSlag
-  impact: Low # Yeah, it makes CO2, but not good enough for Medium impact.
+  impact: Medium
   minTemp: 1610
   reactants:
     Iron:

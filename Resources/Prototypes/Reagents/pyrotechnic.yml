@@ -187,7 +187,7 @@
   parent: BasePyrotechnic
   physicalDesc: reagent-physical-desc-blazing
   desc: reagent-desc-steelslag
-  flavor: spicy # Get it? Spicy. Wonder if chefs will ask for Steel Slag when hot sauce got all used up...
+  flavor: spicy # Wonder if chefs will ask for Steel Slag when hot sauce got all used up...
   color: "#e09c09"
   boilingPoint: 3400
   meltingPoint: 1600
@@ -222,6 +222,8 @@
         amount: 8000
       - !type:HealthChange
         damage:
+          scaleByQuantity: true
+          ignoreResistances: false
           types:
              Heat: 1.8
              Bloodloss: 0.3 # Because it solidifies in your veins and such...
@@ -275,6 +277,8 @@
       - !type:AdjustTemperature 
         amount: 8000
       - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
         damage:
           types:
              Heat: 2.1
