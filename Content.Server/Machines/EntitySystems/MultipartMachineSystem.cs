@@ -319,6 +319,8 @@ public sealed class MultipartMachineSystem : EntitySystem
             // Even optional parts should trigger state updates
             if (part.Entity != originalPart)
             {
+                stateHasChanged = true;
+
                 if (part.Entity.HasValue)
                 {
                     // This part gained an entity, add the Part component so it can find out which machine
@@ -332,8 +334,6 @@ public sealed class MultipartMachineSystem : EntitySystem
                     // as something we care about.
                     RemComp<MultipartMachinePartComponent>(GetEntity(originalPart!.Value));
                 }
-
-                stateHasChanged = true;
             }
         }
 
