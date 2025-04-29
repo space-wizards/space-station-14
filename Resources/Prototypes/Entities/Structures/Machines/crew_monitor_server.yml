@@ -10,7 +10,6 @@
       sprite: Structures/Machines/server.rsi
       snapCardinals: true
       layers:
-
         - state: server-off
         - state: server-on
           visible: false

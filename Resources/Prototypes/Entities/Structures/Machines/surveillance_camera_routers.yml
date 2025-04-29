@@ -18,7 +18,7 @@
     - type: Machine
       board: SurveillanceCameraRouterCircuitboard
     - type: Sprite
-      sprite: Structures/Machines/telecomms.rsi
+      sprite: Structures/Machines/server.rsi
       snapCardinals: true
       layers:
         - state: server-off
@@ -153,7 +153,7 @@
     - type: Machine
       board: SurveillanceCameraWirelessRouterCircuitboard
     - type: Sprite
-      sprite: Structures/Machines/telecomms.rsi
+      sprite: Structures/Machines/server.rsi
       layers:
         - state: server-off
         - state: server-on
