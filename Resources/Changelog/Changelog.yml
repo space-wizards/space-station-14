@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nox38
-  changes:
-  - message: Rebalanced Box's armory and increased its max security officers to 7.
-    type: Tweak
-  id: 7882
-  time: '2025-01-31T07:23:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34750
 - author: SlamBamActionman
   changes:
   - message: Forcefeeding pills now takes 2 seconds (was 1 second), while eating them
@@ -3924,3 +3917,11 @@
   id: 8383
   time: '2025-04-29T04:45:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32650
+- author: lzk228
+  changes:
+  - message: When an entity becomes SSD, it will be forced to sleep after 10 minutes.
+      It can be awakened if no more SSD.
+    type: Tweak
+  id: 8384
+  time: '2025-04-29T05:24:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34039
