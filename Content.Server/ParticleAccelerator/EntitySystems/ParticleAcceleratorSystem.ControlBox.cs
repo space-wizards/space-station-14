@@ -23,8 +23,6 @@ public sealed partial class ParticleAcceleratorSystem
 
     private void InitializeControlBoxSystem()
     {
-        SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ComponentStartup>(OnComponentStartup);
-        SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, PowerChangedEvent>(OnControlBoxPowerChange);
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ParticleAcceleratorSetEnableMessage>(OnUISetEnableMessage);
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ParticleAcceleratorSetPowerStateMessage>(OnUISetPowerMessage);
@@ -331,28 +329,6 @@ public sealed partial class ParticleAcceleratorSystem
         if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.StarboardEmitter, out var starboardEmitter) && starboardEmitter.HasValue)
             _appearanceSystem.SetData(starboardEmitter.Value, ParticleAcceleratorVisuals.VisualState, state);
         //no endcap because it has no powerlevel-sprites
-    }
-
-    private void OnComponentStartup(EntityUid uid, ParticleAcceleratorControlBoxComponent comp, ComponentStartup args)
-    {
-        if (TryComp<ParticleAcceleratorPartComponent>(uid, out var part))
-            part.Master = uid;
-    }
-
-    private void OnComponentShutdown(EntityUid uid, ParticleAcceleratorControlBoxComponent comp, ComponentShutdown args)
-    {
-        if (TryComp<ParticleAcceleratorPartComponent>(uid, out var partStatus))
-            partStatus.Master = null;
-
-        if (!TryComp<MultipartMachineComponent>(uid, out var machine))
-            return;
-
-        var partQuery = GetEntityQuery<ParticleAcceleratorPartComponent>();
-        foreach (var part in machine.Parts.Values)
-        {
-            if (partQuery.TryGetComponent(GetEntity(part.Entity), out var partData))
-                partData.Master = null;
-        }
     }
 
     /// <summary>
