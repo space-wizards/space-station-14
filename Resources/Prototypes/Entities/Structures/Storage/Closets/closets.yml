@@ -105,6 +105,17 @@
     stateDoorOpen: bio_open
     stateDoorClosed: bio_door
 
+# Science Variant
+- type: entity
+  id: ClosetL3Science
+  parent: ClosetL3
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: bio_sci
+    stateDoorOpen: bio_sci_open
+    stateDoorClosed: bio_sci_door
+
 # Virology variant
 - type: entity
   id: ClosetL3Virology

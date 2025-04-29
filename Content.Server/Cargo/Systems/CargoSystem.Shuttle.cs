@@ -5,7 +5,7 @@ using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
-using JetBrains.Annotations;
+using Content.Shared.CCVar;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -18,39 +18,20 @@ public sealed partial class CargoSystem
      */
 
     private static readonly SoundPathSpecifier ApproveSound = new("/Audio/Effects/Cargo/ping.ogg");
+    private bool _lockboxCutEnabled;
 
     private void InitializeShuttle()
     {
         SubscribeLocalEvent<TradeStationComponent, GridSplitEvent>(OnTradeSplit);
 
-        SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
-
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletSellMessage>(OnPalletSale);
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletAppraiseMessage>(OnPalletAppraise);
         SubscribeLocalEvent<CargoPalletConsoleComponent, BoundUIOpenedEvent>(OnPalletUIOpen);
+
+        _cfg.OnValueChanged(CCVars.LockboxCutEnabled, (enabled) => { _lockboxCutEnabled = enabled; }, true);
     }
 
     #region Console
-
-    [PublicAPI]
-    private void UpdateCargoShuttleConsoles(EntityUid shuttleUid, CargoShuttleComponent _)
-    {
-        // Update pilot consoles that are already open.
-        _console.RefreshDroneConsoles();
-
-        // Update order consoles.
-        var shuttleConsoleQuery = AllEntityQuery<CargoShuttleConsoleComponent>();
-
-        while (shuttleConsoleQuery.MoveNext(out var uid, out var _))
-        {
-            var stationUid = _station.GetOwningStation(uid);
-            if (stationUid != shuttleUid)
-                continue;
-
-            UpdateShuttleState(uid, stationUid);
-        }
-    }
-
     private void UpdatePalletConsoleInterface(EntityUid uid)
     {
         if (Transform(uid).GridUid is not { } gridUid)
@@ -85,32 +66,6 @@ public sealed partial class CargoSystem
         UpdatePalletConsoleInterface(uid);
     }
 
-    private void OnCargoShuttleConsoleStartup(EntityUid uid, CargoShuttleConsoleComponent component, ComponentStartup args)
-    {
-        var station = _station.GetOwningStation(uid);
-        UpdateShuttleState(uid, station);
-    }
-
-    private void UpdateShuttleState(EntityUid uid, EntityUid? station = null)
-    {
-        TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase);
-        TryComp<CargoShuttleComponent>(orderDatabase?.Shuttle, out var shuttle);
-
-        var orders = GetProjectedOrders(station ?? EntityUid.Invalid, orderDatabase, shuttle);
-        var shuttleName = orderDatabase?.Shuttle != null ? MetaData(orderDatabase.Shuttle.Value).EntityName : string.Empty;
-
-        if (_uiSystem.HasUi(uid, CargoConsoleUiKey.Shuttle))
-        {
-            _uiSystem.SetUiState(uid,
-                CargoConsoleUiKey.Shuttle,
-                new CargoShuttleConsoleBoundUserInterfaceState(
-                station != null ? MetaData(station.Value).EntityName : Loc.GetString("cargo-shuttle-console-station-unknown"),
-                string.IsNullOrEmpty(shuttleName) ? Loc.GetString("cargo-shuttle-console-shuttle-not-found") : shuttleName,
-                orders
-            ));
-        }
-    }
-
     #endregion
 
     private void OnTradeSplit(EntityUid uid, TradeStationComponent component, ref GridSplitEvent args)
@@ -123,62 +78,6 @@ public sealed partial class CargoSystem
     }
 
     #region Shuttle
-
-    /// <summary>
-    /// Returns the orders that can fit on the cargo shuttle.
-    /// </summary>
-    private List<CargoOrderData> GetProjectedOrders(
-        EntityUid shuttleUid,
-        StationCargoOrderDatabaseComponent? component = null,
-        CargoShuttleComponent? shuttle = null)
-    {
-        var orders = new List<CargoOrderData>();
-
-        if (component == null || shuttle == null || component.Orders.Count == 0)
-            return orders;
-
-        var spaceRemaining = GetCargoSpace(shuttleUid);
-        var allOrders = component.AllOrders.ToList();
-        for (var i = 0; i < allOrders.Count && spaceRemaining > 0; i++)
-        {
-            var order = allOrders[i];
-            if (order.Approved)
-            {
-                var numToShip = order.OrderQuantity - order.NumDispatched;
-                if (numToShip > spaceRemaining)
-                {
-                    // We won't be able to fit the whole order on, so make one
-                    // which represents the space we do have left:
-                    var reducedOrder = new CargoOrderData(
-                        order.OrderId,
-                        order.ProductId,
-                        order.ProductName,
-                        order.Price,
-                        spaceRemaining,
-                        order.Requester,
-                        order.Reason);
-                    orders.Add(reducedOrder);
-                }
-                else
-                {
-                    orders.Add(order);
-                }
-                spaceRemaining -= numToShip;
-            }
-        }
-
-        return orders;
-    }
-
-    /// <summary>
-    /// Get the amount of space the cargo shuttle can fit for orders.
-    /// </summary>
-    private int GetCargoSpace(EntityUid gridUid)
-    {
-        var space = GetCargoPallets(gridUid, BuySellType.Buy).Count;
-        return space;
-    }
-
     /// GetCargoPallets(gridUid, BuySellType.Sell) to return only Sell pads
     /// GetCargoPallets(gridUid, BuySellType.Buy) to return only Buy pads
     private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent PalletXform)> GetCargoPallets(EntityUid gridUid, BuySellType requestType = BuySellType.All)
@@ -334,16 +233,17 @@ public sealed partial class CargoSystem
         if (!SellPallets(gridUid, out var goods))
             return;
 
-        var baseDistribution = CreateAccountDistribution(bankAccount.PrimaryAccount, bankAccount, bankAccount.PrimaryCut);
+        var baseDistribution = CreateAccountDistribution((station, bankAccount));
         foreach (var (_, sellComponent, value) in goods)
         {
             Dictionary<ProtoId<CargoAccountPrototype>, double> distribution;
             if (sellComponent != null)
             {
-                distribution = new Dictionary<ProtoId<CargoAccountPrototype>, double>()
+                var cut = _lockboxCutEnabled ? bankAccount.LockboxCut : bankAccount.PrimaryCut;
+                distribution = new Dictionary<ProtoId<CargoAccountPrototype>, double>
                 {
-                    { sellComponent.OverrideAccount, bankAccount.PrimaryCut },
-                    { bankAccount.PrimaryAccount, 1.0 - bankAccount.PrimaryCut },
+                    { sellComponent.OverrideAccount, cut },
+                    { bankAccount.PrimaryAccount, 1.0 - cut },
                 };
             }
             else

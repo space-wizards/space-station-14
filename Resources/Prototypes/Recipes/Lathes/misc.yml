@@ -106,6 +106,15 @@
     Glass: 100
 
 - type: latheRecipe
+  id: PushHorn
+  result: PushHorn
+  completetime: 5
+  materials:
+    Steel: 500
+    Plastic: 500
+    Plasma: 200
+
+- type: latheRecipe
   parent: BaseToolRecipe
   id: NodeScanner
   result: NodeScanner
@@ -197,6 +206,11 @@
   result: FloorTileItemAstroAsteroidSand
 
 - type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroAsteroidSandBorderless
+  result: FloorTileItemAstroAsteroidSandBorderless
+
+- type: latheRecipe
   id: FloorGreenCircuit
   result: FloorTileItemGCircuit4
   completetime: 2
@@ -237,3 +251,18 @@
   completetime: 3
   materials:
     Plastic: 200
+
+- type: latheRecipe
+  id: ClothingOuterVestTank
+  result: ClothingOuterVestTank
+  completetime: 2
+  materials:
+    Cloth: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: Ashtray
+  result: Ashtray
+  completetime: 1
+  materials:
+    Steel: 30
