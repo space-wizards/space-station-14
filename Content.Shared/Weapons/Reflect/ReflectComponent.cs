@@ -1,6 +1,7 @@
 using Content.Shared.Inventory;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Reflect;
 
@@ -14,7 +15,7 @@ public sealed partial class ReflectComponent : Component
     /// <summary>
     /// What we reflect.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField]
     public ReflectType Reflects = ReflectType.Energy | ReflectType.NonEnergy;
 
     /// <summary>
@@ -33,23 +34,29 @@ public sealed partial class ReflectComponent : Component
     /// <summary>
     /// Can only reflect when placed correctly.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
-    public bool InRightPlace = true;
+    [DataField, AutoNetworkedField]
+    public bool InRightPlace;
 
     /// <summary>
     /// Probability for a projectile to be reflected.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float ReflectProb = 0.25f;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    /// <summary>
+    /// Probability for a projectile to be reflected.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public Angle Spread = Angle.FromDegrees(45);
 
+    /// <summary>
+    /// The sound to play when reflecting.
+    /// </summary>
     [DataField]
     public SoundSpecifier? SoundOnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg", AudioParams.Default.WithVariation(0.05f));
 }
 
-[Flags]
+[Flags, Serializable, NetSerializable]
 public enum ReflectType : byte
 {
     None = 0,
