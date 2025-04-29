@@ -78,6 +78,13 @@ namespace Content.Shared.Stacks
         [DataField("layerStates")]
         [ViewVariables(VVAccess.ReadWrite)]
         public List<string> LayerStates = new();
+
+        /// <summary>
+        /// An optional function to convert the amounts used to adjust a stack's appearance.
+        /// Useful for different denominations of cash, for example.
+        /// </summary>
+        [DataField]
+        public StackLayerFunction LayerFunction = StackLayerFunction.None;
     }
 
     [Serializable, NetSerializable]
@@ -94,5 +101,14 @@ namespace Content.Shared.Stacks
             MaxCount = maxCount;
             Lingering = lingering;
         }
+    }
+
+    public enum StackLayerFunction
+    {
+        // No operation performed.
+        None,
+        // Arbitrarily thresholds the stack amount for each layer.
+        // Expects entity to have the StackLayerThresholdComponent.
+        Threshold
     }
 }
