@@ -272,24 +272,24 @@ public sealed partial class ParticleAcceleratorSystem
 
         var machine = (uid, machineComp);
 
-        _uiSystem.SetUiState(uid,
-            ParticleAcceleratorControlBoxUiKey.Key,
-            new ParticleAcceleratorUIState(
-                machineComp.IsAssembled,
-                comp.Enabled,
-                comp.SelectedStrength,
-                (int)draw,
-                (int)receive,
-                _multipartMachine.HasPart(machine, AcceleratorParts.StarboardEmitter),
-                _multipartMachine.HasPart(machine, AcceleratorParts.ForeEmitter),
-                _multipartMachine.HasPart(machine, AcceleratorParts.PortEmitter),
-                _multipartMachine.HasPart(machine, AcceleratorParts.PowerBox),
-                _multipartMachine.HasPart(machine, AcceleratorParts.FuelChamber),
-                _multipartMachine.HasPart(machine, AcceleratorParts.EndCap),
-                comp.InterfaceDisabled,
-                comp.MaxStrength,
-                comp.StrengthLocked
-            ));
+        var uiState = new ParticleAcceleratorUIState(
+            machineComp.IsAssembled,
+            comp.Enabled,
+            comp.SelectedStrength,
+            (int)draw,
+            (int)receive,
+            _multipartMachine.HasPart(machine, AcceleratorParts.StarboardEmitter),
+            _multipartMachine.HasPart(machine, AcceleratorParts.ForeEmitter),
+            _multipartMachine.HasPart(machine, AcceleratorParts.PortEmitter),
+            _multipartMachine.HasPart(machine, AcceleratorParts.PowerBox),
+            _multipartMachine.HasPart(machine, AcceleratorParts.FuelChamber),
+            _multipartMachine.HasPart(machine, AcceleratorParts.EndCap),
+            comp.InterfaceDisabled,
+            comp.MaxStrength,
+            comp.StrengthLocked
+        );
+
+        _uiSystem.SetUiState(uid, ParticleAcceleratorControlBoxUiKey.Key, uiState);
     }
 
     private void UpdateAppearance(EntityUid uid, ParticleAcceleratorControlBoxComponent? comp = null, AppearanceComponent? appearance = null)
