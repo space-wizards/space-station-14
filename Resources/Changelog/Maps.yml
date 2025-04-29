@@ -51,4 +51,13 @@
     type: Tweak
   id: 7
   time: '2025-01-19T12:00:00Z'
+- author: IProduceWidgets
+  changes:
+  - message: On Oasis, the genpop prison has been added.
+    type: Add
+  - message: On Oasis, Security has been given a large department rework.
+    type: Tweak
+  id: 8
+  time: '2025-04-29T09:04:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37031
 Order: 1
