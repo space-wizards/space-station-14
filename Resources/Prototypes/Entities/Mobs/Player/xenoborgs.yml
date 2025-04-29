@@ -806,6 +806,7 @@
   - type: XenoborgMothership
   - type: Tag
     tags:
+    - SiliconEmotes
     - CanPilot
     - Structure
   - type: Inventory
