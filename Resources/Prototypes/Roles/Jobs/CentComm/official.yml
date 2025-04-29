@@ -1,17 +1,20 @@
-# - type: job
-#   id: CentralCommandOfficial
-#   name: job-name-centcomoff
-#   description: job-description-centcomoff
-#   playTimeTracker: JobCentralCommandOfficial
-#   setPreference: false
-#   startingGear: CentcomGear
-#   icon: "JobIconNanotrasen"
-#   supervisors: job-supervisors-hos
-#   canBeAntag: false
-#   accessGroups:
-#   - AllAccess
-#   access:
-#   - CentralCommand
+- type: job
+  id: CentralCommandOfficial
+  name: job-name-centcomoff
+  description: job-description-centcomoff
+  playTimeTracker: JobCentralCommandOfficial
+  setPreference: false
+  startingGear: CentcomGear
+  icon: "JobIconNanotrasen"
+  supervisors: job-supervisors-hos
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 # - type: startingGear
 #   id: CentcomGear

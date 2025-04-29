@@ -135,6 +135,8 @@
     - id: DoorRemoteService
     - id: HoPIDCard
     - id: IDComputerCircuitboard
+    - id: FundingAllocationComputerCircuitboard
+    - id: CargoRequestServiceComputerCircuitboard
     - id: RubberStampApproved
     - id: RubberStampDenied
     - id: RubberStampHop
@@ -169,6 +171,7 @@
     - id: ClothingHandsGlovesColorYellow
     - id: ClothingHeadsetAltEngineering
     - id: DoorRemoteEngineering
+    - id: CargoRequestEngineeringComputerCircuitboard
     # - id: RCD # DS14
     # - id: RCDAmmo # DS14
     - id: RubberStampCE
@@ -230,6 +233,7 @@
     - id: HandheldCrewMonitor
     - id: Hypospray
     - id: MedicalTechFabCircuitboard
+    - id: CargoRequestMedicalComputerCircuitboard
     - id: MedkitFilled
     - id: RubberStampCMO
     - id: MedTekCartridge
@@ -284,6 +288,7 @@
     - id: HandTeleporter
     - id: ProtolatheMachineCircuitboard
     - id: ResearchComputerCircuitboard
+    - id: CargoRequestScienceComputerCircuitboard
     - id: RubberStampRd
     - id: ADTtelescopicBaton # ADT
     - id: ClothingHandsGlovesColorYellow # DS14
@@ -348,6 +353,7 @@
     - id: HoloprojectorSecurity
     - id: RubberStampHos
     - id: SecurityTechFabCircuitboard
+    - id: CargoRequestSecurityComputerCircuitboard
     - id: WeaponDisabler
     - id: WantedListCartridge
     - id: DrinkHosFlask
@@ -408,6 +414,6 @@
     - id: WeaponRevolverDeckard
     - id: ClothingOuterHardsuitBasic
     - id: JetpackBlue
-    - id: SpaceCash10000
+    - id: SpaceCash10000 # DS14
     - id: BeachBall
     - id: BikeHorn
