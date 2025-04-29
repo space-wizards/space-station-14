@@ -221,7 +221,7 @@ public sealed class MultipartMachineSystem : EntitySystem
         EntityQuery<IComponent> query,
         EntityUid gridUid,
         MapGridComponent grid,
-        ref MachinePart part)
+        MachinePart part)
     {
         // Safety first, nuke any existing data
         part.Entity = null;
@@ -305,7 +305,7 @@ public sealed class MultipartMachineSystem : EntitySystem
                 // use that direction for future lookups.
                 // Not using this means the orientations of the parts could be wildly different and still
                 // "Match" the expected offsets
-                ScanPart(machineOrigin, ent.Comp.Rotation.Value, query, gridUid.Value, grid, ref part);
+                ScanPart(machineOrigin, ent.Comp.Rotation.Value, query, gridUid.Value, grid, part);
             }
             else
             {
@@ -314,7 +314,7 @@ public sealed class MultipartMachineSystem : EntitySystem
                 Angle curAngle = 0;
                 for (var j = 0; j < 4; ++j)
                 {
-                    if (ScanPart(machineOrigin, curAngle, query, gridUid.Value, grid, ref part))
+                    if (ScanPart(machineOrigin, curAngle, query, gridUid.Value, grid, part))
                     {
                         // This entity succeeds, store the direction we used to get this one and expect all
                         // future machine parts to match this direction.
