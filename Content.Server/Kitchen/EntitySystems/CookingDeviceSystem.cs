@@ -120,15 +120,9 @@ namespace Content.Server.Kitchen.EntitySystems
         }
         
         // Starlight-start
-        private void OnBuiOpened(EntityUid uid, CookingDeviceComponent component, BoundUIOpenedEvent args)
-        {
-            SetAppearance(uid, null, component, Opened: true);
-        }
+        private void OnBuiOpened(EntityUid uid, CookingDeviceComponent component, BoundUIOpenedEvent args) => SetAppearance(uid, null, component, Opened: true);
         
-        private void OnBuiClosed(EntityUid uid, CookingDeviceComponent component, BoundUIClosedEvent args)
-        {
-            SetAppearance(uid, null, component, Opened: false);
-        }
+        private void OnBuiClosed(EntityUid uid, CookingDeviceComponent component, BoundUIClosedEvent args) => SetAppearance(uid, null, component, Opened: false);
         // Starlight-end
 
         private void OnCookStart(Entity<ActiveCookingDeviceComponent> ent, ref ComponentStartup args) // Starlight-edit
@@ -248,9 +242,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         totalReagentsToRemove.Remove(reagent);
                     }
                     else
-                    {
                         totalReagentsToRemove[reagent] -= quant;
-                    }
 
                     _solutionContainer.RemoveReagent(solutionEntity.Value, reagent, quant);
                 }
@@ -266,30 +258,22 @@ namespace Content.Server.Kitchen.EntitySystems
 
                         // If an entity has a stack component, use the stacktype instead of prototype id
                         if (TryComp<StackComponent>(item, out var stackComp))
-                        {
                             itemID = _prototype.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
-                        }
                         else
                         {
                             var metaData = MetaData(item);
                             if (metaData.EntityPrototype == null)
-                            {
                                 continue;
-                            }
                             itemID = metaData.EntityPrototype.ID;
                         }
 
                         if (itemID != recipeSolid.Key)
-                        {
                             continue;
-                        }
 
                         if (stackComp is not null)
                         {
                             if (stackComp.Count == 1)
-                            {
                                 _container.Remove(item, component.Storage);
-                            }
                             _stack.Use(item, 1, stackComp);
                             break;
                         }
@@ -304,16 +288,9 @@ namespace Content.Server.Kitchen.EntitySystems
             }
         }
 
-        private void OnInit(Entity<CookingDeviceComponent> ent, ref ComponentInit args) // Starlight-edit
-        {
-            // this really does have to be in ComponentInit
-            ent.Comp.Storage = _container.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
-        }
+        private void OnInit(Entity<CookingDeviceComponent> ent, ref ComponentInit args) => ent.Comp.Storage = _container.EnsureContainer<Container>(ent, ent.Comp.ContainerId); // Starlight-edit: this really does have to be in ComponentInit
 
-        private void OnMapInit(Entity<CookingDeviceComponent> ent, ref MapInitEvent args) // Starlight-edit
-        {
-            _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort);
-        }
+        private void OnMapInit(Entity<CookingDeviceComponent> ent, ref MapInitEvent args) => _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort) // Starlight-edit
 
         /// <summary>
         /// Kills the user by microwaving their head
@@ -363,17 +340,12 @@ namespace Content.Server.Kitchen.EntitySystems
             args.Handled = true;
         }
 
-        private void OnSolutionChange(Entity<CookingDeviceComponent> ent, ref SolutionContainerChangedEvent args) // Starlight-edit
-        {
-            UpdateUserInterfaceState(ent, ent.Comp);
-        }
+        private void OnSolutionChange(Entity<CookingDeviceComponent> ent, ref SolutionContainerChangedEvent args) => UpdateUserInterfaceState(ent, ent.Comp); // Starlight-edit
 
         private void OnContentUpdate(EntityUid uid, CookingDeviceComponent component, ContainerModifiedMessage args) // Starlight-edit: ContainerModifiedMessage just can't be used at all with Entity<T>, because it's abstract.
         {
-            if (component.Storage != args.Container)
-                return;
-
-            UpdateUserInterfaceState(uid, component);
+            if (component.Storage == args.Container) 
+                UpdateUserInterfaceState(uid, component)
         }
 
         private void OnInsertAttempt(Entity<CookingDeviceComponent> ent, ref ContainerIsInsertingAttemptEvent args) // Starlight-edit
@@ -595,9 +567,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 }
 
                 if (_tag.HasTag(item, MetalTag))
-                {
                     malfunctioning = true;
-                }
 
                 if (_tag.HasTag(item, PlasticTag))
                 {
@@ -638,10 +608,8 @@ namespace Content.Server.Kitchen.EntitySystems
                     continue;
 
                 foreach (var (reagent, quantity) in solution.Contents)
-                {
                     if (!reagentDict.TryAdd(reagent.Prototype, quantity))
                         reagentDict[reagent.Prototype] += quantity;
-                }
             }
 
             // Check recipes
