@@ -44,7 +44,7 @@ public sealed partial class UnitologyRuleComponent : Component
     public TimeSpan NextStageTime;
 
     [DataField("stageObeliskDuration")]
-    public TimeSpan StageObeliskDuration = TimeSpan.FromMinutes(30);
+    public TimeSpan StageObeliskDuration = TimeSpan.FromMinutes(20);
 
     [DataField("stageConvergenceDuration")]
     public TimeSpan StageConvergenceDuration = TimeSpan.FromMinutes(1);

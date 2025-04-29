@@ -186,7 +186,7 @@
     sprite: Structures/Storage/Crates/artifact.rsi
     state: artifact_container_icon
   product: CrateArtifactContainerNecroobelisk
-  cost: 500000
+  cost: 300000
   category: cargoproduct-category-name-science
   group: market
 

@@ -198,3 +198,21 @@
   - type: StorageFill
     contents:
       - id: ObeliskSplinter
+
+- type: entity
+  name: пинпоинтер
+  suffix: обелиск
+  id: PinpointerNecroobelisk
+  parent: [ PinpointerBase, BaseCommandContraband ]
+  components:
+  - type: Sprite
+    layers:
+    - state: pinpointer-way
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
+      shader: unshaded
+      visible: false
+  - type: Pinpointer
+    component: Necroobelisk
+    targetName: обелиск

@@ -790,7 +790,7 @@
 
 - type: decal
   id: rune1
-  tags: ["crayon", "crayon-5-graffiti"]
+  tags: ["crayon", "crayon-5-graffiti", "uni-penctagram"]
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
@@ -800,7 +800,7 @@
 
 - type: decal
   id: rune2
-  tags: ["crayon", "crayon-5-graffiti"]
+  tags: ["crayon", "crayon-5-graffiti", "uni-penctagram"]
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
@@ -810,7 +810,7 @@
 
 - type: decal
   id: rune3
-  tags: ["crayon", "crayon-5-graffiti"]
+  tags: ["crayon", "crayon-5-graffiti", "uni-penctagram"]
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
@@ -820,7 +820,7 @@
 
 - type: decal
   id: rune4
-  tags: ["crayon", "crayon-5-graffiti"]
+  tags: ["crayon", "crayon-5-graffiti", "uni-penctagram"]
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
@@ -830,7 +830,7 @@
 
 - type: decal
   id: rune5
-  tags: ["crayon", "crayon-5-graffiti"]
+  tags: ["crayon", "crayon-5-graffiti", "uni-penctagram"]
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false
@@ -840,7 +840,7 @@
 
 - type: decal
   id: rune6
-  tags: ["crayon", "crayon-5-graffiti"]
+  tags: ["crayon", "crayon-5-graffiti", "uni-penctagram"]
   defaultCleanable: true
   defaultCustomColor: true
   defaultSnap: false

@@ -8,7 +8,11 @@
   id: UnitologLeaderGear
   storage:
     back:
-    - UplinkRadioLeaderUnitology
+    - UplinkRadioHeadLeaderUnitology
+    - Candle
+    - Candle
+    - Candle
+    - CrayonBlack
 
 - type: antag
   id: UniHead
@@ -24,11 +28,8 @@
   id: Uni
   name: roles-antag-uni-name
   antagonist: true
-  setPreference: true
+  setPreference: false
   objective: roles-antag-uni-objective
-  requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 86400 # 24 hours
 
 - type: antag
   id: UniEnslaved
@@ -48,7 +49,8 @@
     definitions:
     - prefRoles: [ UniHead ]
       fallbackRoles: [ Uni, UniEnslaved ]
-      max: 1
+      max: 2
+      min: 2
       playerRatio: 15
       briefing:
         text: uni-head-role-greeting
@@ -64,7 +66,7 @@
         - Unitolog
       - type: IntrinsicRadioReceiver
       - type: Unitology
-      - type: UnitologyObeliskSpawnAbility
+      - type: UnitologyObeliskActivateAbility
       - type: UnitologyHead
       - type: AutoImplant
         implants:
@@ -78,13 +80,13 @@
       - MindRoleHeadUnitology
     - prefRoles: [ Uni ]
       fallbackRoles: [ UniHead, UniEnslaved ]
-      max: 4
+      max: 0
+      min: 0
       playerRatio: 15
       briefing:
         text: uni-role-greeting
         color: CornflowerBlue
         sound: "/Audio/_DeadSpace/Necromorfs/unitolog_start.ogg"
-      startingGear: UnitologGear
       components:
       - type: IntrinsicRadioTransmitter
         channels:

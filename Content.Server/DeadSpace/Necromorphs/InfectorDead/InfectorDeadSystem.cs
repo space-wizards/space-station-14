@@ -95,7 +95,7 @@ public sealed partial class InfectorDeadSystem : EntitySystem
         if (!HasComp<BodyComponent>(target))
             return;
 
-        if (HasComp<NecromorfComponent>(target) && !_mobState.IsDead(target))
+        if (HasComp<NecromorfComponent>(target))
         {
             component.Duration = component.HealDuration;
             BeginInfected(uid, target, component);

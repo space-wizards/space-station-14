@@ -1,7 +1,7 @@
 ﻿- type: listing
   id: UnitologyCrateObeliskSplinterList
   name: Осколок обелиска
-  description: Ящик с осколком обелиска. Без него обелиск не призвать.
+  description: Ящик с осколком обелиска. Без него обелиск не активировать.
   icon: { sprite: Structures/Storage/Crates/generic.rsi, state: icon }
   productEntity: CrateObeliskSplinter
   cost:
@@ -32,6 +32,17 @@
     - UplinkUnitologyInfection
 
 - type: listing
+  id: SyringeNecromorphMutagenBruteList
+  name: Шприц с мутагеном некроморфа зверя
+  description: После ввода вещества 5 ед. вещества в животное, после заражения он станет зверем.
+  icon: { sprite: Objects/Specific/Chemistry/syringe.rsi, state: syringe1 }
+  productEntity: SyringeNecromorphMutagenBrute
+  cost:
+    Telecrystal: 10
+  categories:
+    - UplinkUnitologyInfection
+
+- type: listing
   id: UnitologyPukerNecroList
   name: Некроморф выделитель газа
   description: Некроморф.
@@ -42,9 +53,64 @@
   categories:
     - UplinkUnitologyInfection
 
+- type: listing
+  id: UnitologyPinpointerNecroobeliskList
+  name: Пинпоинтер
+  description: Указывает на обелиск.
+  icon: { sprite: Objects/Devices/pinpointer.rsi, state: pinpointer-way }
+  productEntity: PinpointerNecroobelisk
+  cost:
+    Telecrystal: 5
+  categories:
+    - UplinkUnitologyInfection
+
+- type: listing
+  id: UnitologyLauncherSyringeList
+  name: Шприцемёт
+  description: Стреляет шприцами.
+  icon: { sprite: Objects/Weapons/Guns/Cannons/syringe_gun.rsi, state: syringe_gun }
+  productEntity: LauncherSyringe
+  cost:
+    Telecrystal: 5
+  categories:
+    - UplinkUnitologyInfection
+
+- type: listing
+  id: UnitologyMiniSyringeList
+  name: Мини-шприц
+  description: Патрон для шприцемёта.
+  icon: { sprite: Objects/Specific/Chemistry/syringe.rsi, state: minisyringe1 }
+  productEntity: MiniSyringe
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkUnitologyInfection
+
+- type: listing
+  id: UnitologyStorageImplanterList
+  name: Имплант хранилище
+  description: Даёт способность встроенного хранилища.
+  icon: { sprite: Objects/Specific/Medical/syndi_implanter.rsi, state: implanter1 }
+  productEntity: StorageImplanter
+  cost:
+    Telecrystal: 5
+  categories:
+    - UplinkUnitologyInfection
+
+- type: listing
+  id: UnitologyHypopenBoxList
+  name: Гипоручка
+  description: Ручка с гипоспреем.
+  icon: { sprite: Objects/Storage/penbox.rsi, state: hypopen }
+  productEntity: HypopenBox
+  cost:
+    Telecrystal: 5
+  categories:
+    - UplinkUnitologyInfection
+
 - type: storeCategory
   id: UplinkUnitologyInfection
-  name: Инфекция
+  name: Общее
   priority: 1
 
 - type: entity
@@ -105,3 +171,14 @@
   - type: Store
     balance:
       Telecrystal: 25
+
+- type: entity
+  parent: BaseUplinkRadioUnitology
+  id: UplinkRadioHeadLeaderUnitology
+  name: линия связи юнитологов
+  description: Подозрительно выглядящее старое радио...
+  suffix: 50 тк
+  components:
+  - type: Store
+    balance:
+      Telecrystal: 50

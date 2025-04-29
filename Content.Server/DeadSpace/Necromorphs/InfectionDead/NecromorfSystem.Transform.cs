@@ -47,7 +47,6 @@ using Content.Shared.Cuffs.Components;
 using Content.Shared.DeadSpace.NightVision;
 using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.DeadSpace.Necromorphs.Necroobelisk;
-using Content.Shared.DeadSpace.Necromorphs.InfectionDead;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Damage.Components;
 using Content.Shared.Rotation;
@@ -79,7 +78,7 @@ public sealed partial class NecromorfSystem
         if (!Resolve(target, ref mobState, logMissing: false))
             return;
 
-        var necromorfComp = AddComp<NecromorfComponent>(target);
+        var necromorfComp = EnsureComp<NecromorfComponent>(target);
 
         NecromorfLayerComponent necromorfLayercomp = new NecromorfLayerComponent(necromorf.Sprite, necromorf.State, necromorf.IsAnimal);
 
@@ -232,13 +231,6 @@ public sealed partial class NecromorfSystem
             };
 
             melee.Damage = necromorf?.Damage ?? dspec;
-
-            var pryComp = EnsureComp<PryingComponent>(target);
-            pryComp.SpeedModifier = 0.75f;
-            pryComp.PryPowered = true;
-            pryComp.Force = true;
-
-            Dirty(target, pryComp);
         }
 
         if (necromorf != null)
@@ -307,6 +299,15 @@ public sealed partial class NecromorfSystem
         }
 
         RemComp<PullerComponent>(target);
+        var puller = new PullerComponent(false);
+        AddComp(target, puller);
+
+        var pryComp = EnsureComp<PryingComponent>(target);
+        pryComp.SpeedModifier = 1f;
+        pryComp.PryPowered = true;
+        pryComp.Force = true;
+
+        Dirty(target, pryComp);
 
         if (necromorf != null)
         {

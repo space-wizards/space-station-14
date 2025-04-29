@@ -14,7 +14,7 @@
 - type: entity
   id: ActionInfectionNecro
   name: Заразить существо
-  description: Заражает мёртвое существо инфекцией.
+  description: Заражает мёртвое существо инфекцией, или лечит/воскрешает некроморфа.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -48,6 +48,34 @@
     event: !type:DevaEnrageActionEvent
 
 - type: entity
+  id: ActionSelectTargetRecruitment
+  name: Начать вербовку
+  description: Провести ритуал по вербовки нового члена юнитологии.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 3
+    icon:
+      sprite: /Textures/_DeadSpace/Interface/Misc/antag_icons.rsi
+      state: UnitologyHead
+    event: !type:SelectTargetRecruitmentEvent
+    checkCanAccess: false
+    range: 1
+
+- type: entity
+  id: ActionReturnToBody
+  name: Вернуться к своему телу
+  description: Телепортирует вас к привязанной сущности.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 5
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_overload_off
+    event: !type:ReturnToBodyEvent
+
+- type: entity
   id: ActionUnitologyHead
   name: Передать знания
   description: Ментально передаёт свою роль и знания другому юнитологу.
@@ -78,7 +106,7 @@
     range: 10
 
 - type: entity
-  id: ActionUnitologObeliskSpawn
+  id: ActionUnitologObeliskActivate
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction

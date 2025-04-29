@@ -32,6 +32,25 @@
               min: 3
 
 - type: reagent
+  id: NecromorphMutagenBrute
+  name: entity-name-necromorph-mutagen
+  group: Toxins
+  desc: reagent-desc-necromorph-mutagen
+  physicalDesc: reagent-physical-desc-thick
+  flavor: sharp
+  color: "#B22222"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:NecromorphMutagen
+          isAnimal: true
+          necroPrototype: NecroBrute
+          conditions:
+            - !type:ReagentThreshold
+              min: 5
+
+- type: reagent
   id: SerumEnslaved
   name: reagent-name-vent-crud
   group: Toxins
@@ -46,6 +65,19 @@
           conditions:
             - !type:ReagentThreshold
               min: 12
+
+- type: entity
+  parent: BaseSyringe
+  id: SyringeNecromorphMutagenBrute
+  categories: [ DoNotMap ]
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: NecromorphMutagenBrute
+              Quantity: 15
 
 - type: entity
   parent: BaseSyringe

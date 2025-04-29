@@ -32,7 +32,7 @@
   id: NecroSlasher
   damage:
     groups:
-      Brute: 15
+      Brute: 20
     types:
       Structural: 10
   damageModifierSet: Necromorf
@@ -44,7 +44,7 @@
   movementSpeedMultiply: 1
   damage:
     groups:
-      Brute: 5
+      Brute: 10
     types:
       Structural: 10
   damageModifierSet: Necromorf
@@ -62,7 +62,7 @@
   movementSpeedMultiply: 1
   damage:
     groups:
-      Brute: 15
+      Brute: 20
     types:
       Structural: 10
   damageModifierSet: Necromorf
@@ -104,19 +104,19 @@
   id: NecroTwitcher
   damage:
     groups:
-      Brute: 15
+      Brute: 20
     types:
       Structural: 10
   damageModifierSet: Necromorf
   claws: ClothingNecroClaws
   hardsuit: ClothingNecroRibs
-  movementSpeedMultiply: 1.5
+  movementSpeedMultiply: 1.2
 
 - type: necromorf
   id: NecroPregnant
   damage:
     groups:
-      Brute: 15
+      Brute: 20
     types:
       Structural: 10
   damageModifierSet: Necromorf
@@ -132,10 +132,10 @@
   id: NecroBrute
   isAnimal: true
   slowOnDamage: false
-  thresholdMultiply: 4
+  thresholdMultiply: 5
   damage:
     groups:
-      Brute: 35
+      Brute: 50
     types:
       Structural: 40
   damageModifierSet: Necromorf
@@ -171,7 +171,7 @@
   thresholdMultiply: 2
   damage: # Урон наносимый некроморфом
     groups:
-      Brute: 20
+      Brute: 25
     types:
       Structural: 15
   damageModifierSet: Necromorf # Модификатор получаемого урона
@@ -252,6 +252,7 @@
 
 - type: randomHumanoidSettings
   id: RandomNecromorf
+  parent: Necromorf
   components:
   - type: InitialNecrofication
   - type: GhostRole
@@ -261,6 +262,7 @@
 
 - type: randomHumanoidSettings
   id: HiveNecromorf
+  parent: Necromorf
   components:
   - type: InitialNecrofication
     necroPrototype: NecroHive
@@ -271,6 +273,7 @@
 
 - type: randomHumanoidSettings
   id: PregnantNecromorf
+  parent: Necromorf
   components:
   - type: InitialNecrofication
     necroPrototype: NecroPregnant
@@ -281,6 +284,7 @@
 
 - type: randomHumanoidSettings
   id: DevaNecromorf
+  parent: Necromorf
   components:
   - type: InitialNecrofication
     necroPrototype: NecroDeva
@@ -291,6 +295,7 @@
 
 - type: randomHumanoidSettings
   id: SlasherNecromorf
+  parent: Necromorf
   components:
   - type: InitialNecrofication
     necroPrototype: NecroSlasher
@@ -301,6 +306,7 @@
 
 - type: randomHumanoidSettings
   id: TwitcherNecromorf
+  parent: Necromorf
   components:
   - type: InitialNecrofication
     necroPrototype: NecroTwitcher
@@ -311,6 +317,7 @@
 
 - type: randomHumanoidSettings
   id: CorpseCollectorNecromorf
+  parent: Necromorf
   components:
   - type: InitialNecrofication
     necroPrototype: NecroCorpseCollector

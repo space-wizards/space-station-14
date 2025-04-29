@@ -26,8 +26,19 @@ public sealed partial class OrderToSlaveActionEvent : EntityTargetActionEvent
 
 }
 
+public sealed partial class SelectTargetRecruitmentEvent : EntityTargetActionEvent
+{
+
+}
+
 [Serializable, NetSerializable]
-public sealed partial class ObeliskSpawnDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class ObeliskActivateDoAfterEvent : SimpleDoAfterEvent
+{
+
+}
+
+[Serializable, NetSerializable]
+public sealed partial class UnitologistRecruitmentDoAfterEvent : SimpleDoAfterEvent
 {
 
 }

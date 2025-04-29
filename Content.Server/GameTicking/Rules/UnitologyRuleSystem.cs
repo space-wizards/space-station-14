@@ -51,6 +51,7 @@ public sealed class UnitologyRuleSystem : GameRuleSystem<UnitologyRuleComponent>
     protected override void Started(EntityUid uid, UnitologyRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
+        GameTicker.AddGameRule("GiftsNecroobeliskArtefact");
     }
 
     protected override void ActiveTick(EntityUid uid, UnitologyRuleComponent component, GameRuleComponent gameRule, float frameTime)
