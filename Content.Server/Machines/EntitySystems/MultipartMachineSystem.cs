@@ -45,9 +45,7 @@ public sealed class MultipartMachineSystem : EntitySystem
         foreach (var (name, part) in ent.Comp.Parts)
         {
             if (!_factory.TryGetRegistration(part.Component, out var registration))
-            {
                 throw new Exception($"Unable to resolve component type [{part.Component}] for machine part [{name}]");
-            }
         }
     }
 
@@ -121,9 +119,7 @@ public sealed class MultipartMachineSystem : EntitySystem
             return;
 
         if (ent.Comp.Parts.TryGetValue(part, out var value))
-        {
             value.Entity = null;
-        }
     }
 
     /// <summary>
@@ -157,9 +153,7 @@ public sealed class MultipartMachineSystem : EntitySystem
             return null;
 
         if (ent.Comp.Parts.TryGetValue(part, out var value))
-        {
             return GetEntity(value.Entity);
-        }
 
         return null;
     }
@@ -180,9 +174,7 @@ public sealed class MultipartMachineSystem : EntitySystem
             return false;
 
         if (ent.Comp.Parts.TryGetValue(part, out var value))
-        {
             return TryGetEntity(value.Entity, out entity);
-        }
 
         return false;
     }
@@ -270,15 +262,11 @@ public sealed class MultipartMachineSystem : EntitySystem
     {
         // Get all required transform information to start looking for the other parts based on their offset
         if (!_xformQuery.TryGetComponent(ent.Owner, out var xform) || !xform.Anchored)
-        {
             return false;
-        }
 
         var gridUid = xform.GridUid;
         if (gridUid == null || gridUid != xform.ParentUid || !TryComp<MapGridComponent>(gridUid, out var grid))
-        {
             return false;
-        }
 
         ent.Comp.Rotation = null; // Ensure we reset our expected orientation
 
@@ -327,9 +315,7 @@ public sealed class MultipartMachineSystem : EntitySystem
             }
 
             if (!part.Entity.HasValue && !part.Optional)
-            {
                 missingParts = true;
-            }
 
             // Even optional parts should trigger state updates
             if (part.Entity != originalPart)
