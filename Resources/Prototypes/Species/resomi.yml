@@ -11,6 +11,10 @@
   naming: First
   dollPrototype: MobResomiDummy
   skinColoration: Hues
+  minAge: 30
+  youngAge: 103
+  oldAge: 257
+  maxAge: 430
 
 - type: speciesBaseSprites
   id: MobResomiSprites
