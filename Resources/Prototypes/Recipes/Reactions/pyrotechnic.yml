@@ -85,9 +85,9 @@
       amount: 1
     Sulfur:
       amount: 5
+  effects:
+  - !type:CreateGas
+    gas: CarbonDioxide
   products:
     SteelSlag:
       amount: 15
-  effects:
-    - !type:CreateGas
-      gas: CarbonDioxide
