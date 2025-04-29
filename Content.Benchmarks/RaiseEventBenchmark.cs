@@ -29,6 +29,7 @@ public class RaiseEventBenchmark
         {
             var uid = _entMan.Spawn();
             _sys.Ent = new(uid, _entMan.GetComponent<TransformComponent>(uid));
+            _sys.Ent2 = new(_sys.Ent.Owner, _sys.Ent.Comp);
         })
             .GetAwaiter()
             .GetResult();
@@ -54,6 +55,12 @@ public class RaiseEventBenchmark
     }
 
     [Benchmark]
+    public int RaiseICompEvent()
+    {
+        return _sys.RaiseICompEvent();
+    }
+
+    [Benchmark]
     public int RaiseCSharpEvent()
     {
         return _sys.CSharpEvent();
@@ -62,6 +69,7 @@ public class RaiseEventBenchmark
     public sealed class BenchSystem : EntitySystem
     {
         public Entity<TransformComponent> Ent;
+        public Entity<IComponent> Ent2;
 
         public delegate void EntityEventHandler(EntityUid uid, TransformComponent comp, ref BenchEv ev);
 
@@ -85,6 +93,14 @@ public class RaiseEventBenchmark
         {
             var ev = new BenchEv();
             EntityManager.EventBus.RaiseComponentEvent(Ent.Owner, Ent.Comp, ref ev);
+            return ev.N;
+        }
+
+        public int RaiseICompEvent()
+        {
+            // Raise with an IComponent instead of concrete type
+            var ev = new BenchEv();
+            EntityManager.EventBus.RaiseComponentEvent(Ent2.Owner, Ent2.Comp, ref ev);
             return ev.N;
         }
 
