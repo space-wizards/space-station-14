@@ -270,27 +270,25 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// <param name="args">Args for this event, notably the anchor status.</param>
     private void OnConstructionAnchorChanged(Entity<ConstructionComponent> ent, ref AnchorStateChangedEvent args)
     {
+        if (!args.Anchored)
+        {
+            if (!TryComp<MultipartMachinePartComponent>(ent.Owner, out var part) || !part.Master.HasValue)
+                return; // This is not an entity we care about
+
+            // This is a machine part that is being unanchored, rescan its machine
+            if (!TryComp<MultipartMachineComponent>(part.Master, out var machine))
+                return;
+
+            Rescan((part.Master.Value, machine));
+            return;
+        }
+
+        // We're anchoring some construction, we have no idea which machine this might be for
+        // so we have to just check everyone and perform a rescan.
         var query = EntityQueryEnumerator<MultipartMachineComponent>();
         while (query.MoveNext(out var uid, out var machine))
         {
-            if (!args.Anchored)
-            {
-                // Some construction is being unanchored, check if its a known part for us
-                foreach (var part in machine.Parts.Values)
-                {
-                    if (part.Entity.HasValue && GetEntity(part.Entity) == ent.Owner)
-                    {
-                        Rescan((uid, machine));
-                        return; // Can just early out now that we have scanned the exact right machine.
-                    }
-                }
-            }
-            else
-            {
-                // We're anchoring some construction, we have no idea which machine this might be for
-                // so we have to just check everyone and perform a rescan.
-                Rescan((uid, machine));
-            }
+            Rescan((uid, machine));
         }
     }
 
