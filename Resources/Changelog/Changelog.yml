@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: BarryNorfolk
-  changes:
-  - message: Added a history tab to the bounty computer, showing all past completed
-      and skipped orders (and who skipped them).
-    type: Add
-  id: 7878
-  time: '2025-01-30T17:27:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33932
 - author: K-Dynamic
   changes:
   - message: The Kammerer now holds 7 shells but now fires slightly slower than other
@@ -3918,3 +3910,11 @@
   id: 8379
   time: '2025-04-29T00:24:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33299
+- author: themias
+  changes:
+  - message: Theatre workers (clown/mime/musician) now have access to the Service
+      Request Computer
+    type: Tweak
+  id: 8380
+  time: '2025-04-29T00:26:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37003
