@@ -615,8 +615,6 @@ public sealed partial class ChangelingSystem : EntitySystem
             _actions.AddAction(uid, actionId);
 
         // making sure things are right in this world
-        comp.Chemicals = comp.MaxChemicals;
-        comp.Biomass = comp.MaxBiomass;
         comp.ChemicalNextUpdateTime = _timing.CurTime + comp.ChemicalUpdateCooldown;
         comp.BiomassNextUpdateTime = _timing.CurTime + comp.BiomassUpdateCooldown;
 
