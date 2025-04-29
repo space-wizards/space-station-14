@@ -1,5 +1,9 @@
 namespace Content.Shared.Stacks;
 
+/// <summary>
+/// Denotes an item as having thresholded stack visuals.
+/// StackComponent.LayerFunction should be set to Threshold to use this in practice.
+/// </summary>
 [RegisterComponent]
 public sealed partial class StackLayerThresholdComponent : Component
 {

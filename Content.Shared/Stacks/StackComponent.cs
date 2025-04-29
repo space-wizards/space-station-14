@@ -104,7 +104,7 @@ namespace Content.Shared.Stacks
     }
 
     [Serializable, NetSerializable]
-    public enum StackLayerFunction
+    public enum StackLayerFunction : byte
     {
         // <summary>
         // No operation performed.
