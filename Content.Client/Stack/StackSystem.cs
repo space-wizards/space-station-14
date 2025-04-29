@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Client.Items;
 using Content.Client.Storage.Systems;
 using Content.Shared.Stacks;
-using Content.Shared.Stacks.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 

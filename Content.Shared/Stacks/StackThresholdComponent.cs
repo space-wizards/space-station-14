@@ -1,4 +1,4 @@
-namespace Content.Shared.Stacks.Components;
+namespace Content.Shared.Stacks;
 
 [RegisterComponent]
 public sealed partial class StackLayerThresholdComponent : Component
