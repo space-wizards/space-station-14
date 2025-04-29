@@ -267,7 +267,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
     proto: Pulse
     fireCost: 200
@@ -303,7 +303,7 @@
       - SemiAuto
       - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
     proto: Pulse
     fireCost: 200
@@ -843,3 +843,16 @@
     startingCharge: 1000
   - type: StaticPrice
     price: 100
+
+- type: entity
+  name: xenoborg laser gun
+  parent: [ WeaponAdvancedLaser, BaseXenoborgContraband ]
+  id: XenoborgLaserGun
+
+- type: entity
+  name: xenoborg heavy laser gun
+  parent: [ WeaponAdvancedLaser, BaseXenoborgContraband ]
+  id: XenoborgHeavyLaserGun
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: RedHeavyLaser
