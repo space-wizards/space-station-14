@@ -205,6 +205,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
                 mindDescriptionMessage.AddText("\n");
                 mindDescriptionMessage.PushColor(mindPrototype.Color);
                 mindDescriptionMessage.AddText($"{mindId.Key}: +{mindPrototype.KeyCode}");
+                mindDescriptionMessage.AddText($" (Number {mindId.Value})");
                 mindDescriptionMessage.Pop();
             }
             mindsControl.Description.SetMessage(mindDescriptionMessage);
