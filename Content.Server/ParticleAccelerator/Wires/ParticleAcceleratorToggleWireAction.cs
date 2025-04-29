@@ -43,7 +43,7 @@ public sealed partial class ParticleAcceleratorPowerWireAction : ComponentWireAc
 
         if (controller.Enabled)
             paSystem.SwitchOff(wire.Owner, user, controller);
-        else if (multipartMachine.Assembled((wire.Owner, null)))
+        else if (multipartMachine.IsAssembled((wire.Owner, null)))
             paSystem.SwitchOn(wire.Owner, user, controller);
     }
 }

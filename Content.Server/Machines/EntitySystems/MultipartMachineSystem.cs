@@ -128,7 +128,7 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// </summary>
     /// <param name="ent">Entity to check the assembled state of.</param>
     /// <returns>True if all non-optional parts have a matching entity, false otherwise.</returns>
-    public bool Assembled(Entity<MultipartMachineComponent?> ent)
+    public bool IsAssembled(Entity<MultipartMachineComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
@@ -350,10 +350,10 @@ public sealed class MultipartMachineSystem : EntitySystem
             }
         }
 
-        ent.Comp.Assembled = !missingParts;
+        ent.Comp.IsAssembled = !missingParts;
         if (stateHasChanged)
         {
-            var ev = new MultipartMachineAssemblyStateChanged(ent, ent.Comp.Assembled, user);
+            var ev = new MultipartMachineAssemblyStateChanged(ent, ent.Comp.IsAssembled, user);
             RaiseLocalEvent(ent, ev);
         }
 

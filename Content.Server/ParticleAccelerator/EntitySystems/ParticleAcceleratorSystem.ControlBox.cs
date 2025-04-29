@@ -49,7 +49,7 @@ public sealed partial class ParticleAcceleratorSystem
     {
         DebugTools.Assert(controller.Powered);
         DebugTools.Assert(controller.SelectedStrength != ParticleAcceleratorPowerState.Standby);
-        DebugTools.Assert(machine.Comp.Assembled);
+        DebugTools.Assert(machine.Comp.IsAssembled);
 
         DebugTools.Assert(EntityManager.EntityExists(_multipartMachine.GetPartEntity(machine.AsNullable(), AcceleratorParts.PortEmitter)));
         DebugTools.Assert(EntityManager.EntityExists(_multipartMachine.GetPartEntity(machine.AsNullable(), AcceleratorParts.ForeEmitter)));
@@ -82,7 +82,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (!Resolve(uid, ref comp))
             return;
 
-        DebugTools.Assert(_multipartMachine.Assembled((uid, null)));
+        DebugTools.Assert(_multipartMachine.IsAssembled((uid, null)));
 
         if (comp.Enabled || !comp.CanBeEnabled)
             return;
@@ -124,7 +124,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
 
         DebugTools.Assert(comp.Enabled);
-        DebugTools.Assert(_multipartMachine.Assembled((uid, null)));
+        DebugTools.Assert(_multipartMachine.IsAssembled((uid, null)));
 
         if (comp.Powered)
             return;
@@ -273,7 +273,7 @@ public sealed partial class ParticleAcceleratorSystem
         _uiSystem.SetUiState(uid,
             ParticleAcceleratorControlBoxUiKey.Key,
             new ParticleAcceleratorUIState(
-                machineComp.Assembled,
+                machineComp.IsAssembled,
                 comp.Enabled,
                 comp.SelectedStrength,
                 (int)draw,
@@ -397,7 +397,7 @@ public sealed partial class ParticleAcceleratorSystem
 
         if (msg.Enabled)
         {
-            if (_multipartMachine.Assembled((uid, null)))
+            if (_multipartMachine.IsAssembled((uid, null)))
                 SwitchOn(uid, msg.Actor, comp);
         }
         else

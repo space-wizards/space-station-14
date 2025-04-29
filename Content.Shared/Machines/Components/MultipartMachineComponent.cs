@@ -87,7 +87,7 @@ public sealed partial class MultipartMachineComponent : Component
     /// Optional parts are not taken into account.
     /// </summary>
     [DataField]
-    public bool Assembled = false;
+    public bool IsAssembled = false;
 
     /// <summary>
     /// Flag for whether the client side system is allowed to show
