@@ -499,6 +499,10 @@ public sealed partial class ChatSystem : SharedChatSystem
             true,
             admins,
             collectiveMind.Color);
+
+        //raise event so TTS and other related things work
+        var ev = new EntitySpokeEvent(source, message, null, null);
+        RaiseLocalEvent(source, ev, true);
     }
 
     private void SendEntitySpeak(
