@@ -17,24 +17,9 @@ public sealed class PaintedSystem : EntitySystem
 
     private void OnExamined(Entity<PaintedComponent> ent, ref ExaminedEvent args)
     {
+        if (ent.Comp.RemoveTime > _timing.CurTime)
+            return;
+
         args.PushText(Loc.GetString("spray-painter-on-examined-painted-message"));
-    }
-
-    public override void Update(float frameTime)
-    {
-        var paintedQuery = EntityQueryEnumerator<PaintedComponent>();
-        while (paintedQuery.MoveNext(out var uid, out var component))
-        {
-            if (component.NextUpdate > _timing.CurTime)
-                continue;
-
-            if (component.NextUpdate >= component.RemoveTime)
-            {
-                _entityManager.RemoveComponent(uid, component);
-                Dirty(uid, component);
-            }
-
-            component.NextUpdate = _timing.CurTime + component.UpdateInterval;
-        }
     }
 }

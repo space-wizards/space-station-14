@@ -5,10 +5,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Atmos.EntitySystems;
 
+/// <summary>
+/// Used to change the appearance of canisters.
+/// </summary>
 public sealed class GasCanisterAppearanceSystem : VisualizerSystem<GasCanisterComponent>
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private IComponentFactory _componentFactory = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, GasCanisterComponent component, ref AppearanceChangeEvent args)
     {

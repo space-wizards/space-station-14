@@ -5,18 +5,21 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SprayPainter.Components;
 
+/// <summary>
+/// Responsible for storing the state of the spray painter.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SprayPainterComponent : Component
 {
+    /// <summary>
+    /// The sound to be played after painting the entities.
+    /// </summary>
     [DataField]
     public SoundSpecifier SpraySound = new SoundPathSpecifier("/Audio/Effects/spray2.ogg");
 
     [DataField]
     public TimeSpan PipeSprayTime = TimeSpan.FromSeconds(1);
 
-    /// <summary>
-    /// Pipe color chosen to spray with.
-    /// </summary>
     [DataField, AutoNetworkedField]
     public string? PickedColor;
 

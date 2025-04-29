@@ -10,11 +10,12 @@ using Content.Shared.SprayPainter.Prototypes;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.SprayPainter;
 
 /// <summary>
-/// System for painting airlocks using a spray painter.
+/// System for painting paintable objects using a spray painter.
 /// Pipes are handled serverside since AtmosPipeColorSystem is server only.
 /// </summary>
 public abstract class SharedSprayPainterSystem : EntitySystem
@@ -26,8 +27,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] protected readonly SharedChargesSystem Charges = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
-    public Dictionary<ProtoId<PaintableGroupCategoryPrototype>, PaintableTargets> Targets { get; private set; } = new();
+    public Dictionary<ProtoId<PaintableGroupCategoryPrototype>, PaintableTargets> Targets { get; } = new();
 
     public override void Initialize()
     {
@@ -81,10 +83,17 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Audio.PlayPredicted(ent.Comp.SpraySound, ent, args.Args.User);
         Charges.TryUseCharges(new Entity<LimitedChargesComponent?>(ent, EnsureComp<LimitedChargesComponent>(ent)), args.Cost);
 
-        if (HasComp<PaintedComponent>(target))
-            RemComp<PaintedComponent>(target);
-
-        Dirty(target, AddComp<PaintedComponent>(target));
+        if (TryComp<PaintedComponent>(target, out var paintedComponent))
+        {
+            paintedComponent.RemoveTime = _timing.CurTime + paintedComponent.RemovalInterval;
+            Dirty(target, paintedComponent);
+        }
+        else
+        {
+            var comp = AddComp<PaintedComponent>(target);
+            comp.RemoveTime = _timing.CurTime + comp.RemovalInterval;
+            Dirty(target, comp);
+        }
 
 
         if (args.Visuals is PaintableVisuals.Canister)
@@ -255,6 +264,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
     #endregion
 }
 
+/// <summary>
+/// Used for convenient cache storage.
+/// </summary>
 public record PaintableTargets(
     List<string> Styles,
     List<PaintableGroupPrototype> Groups,

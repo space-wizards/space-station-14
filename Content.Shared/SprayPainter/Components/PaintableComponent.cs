@@ -4,6 +4,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SprayPainter.Components;
 
+/// <summary>
+/// Marks objects that can be painted with the spray painter.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PaintableComponent : Component
 {

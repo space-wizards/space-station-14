@@ -7,6 +7,9 @@ using Content.Shared.SprayPainter.Components;
 
 namespace Content.Shared.SprayPainter;
 
+/// <summary>
+/// The system is responsible for charging the spray painter.
+/// </summary>
 public sealed class SprayPainterAmmoSystem : EntitySystem
 {
     [Dependency] private readonly SharedChargesSystem _charges = default!;

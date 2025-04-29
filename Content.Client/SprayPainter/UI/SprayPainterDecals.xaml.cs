@@ -11,6 +11,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.SprayPainter.UI;
 
+/// <summary>
+/// Used to display the decal menu in the spray painter menu.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class SprayPainterDecals : Control
 {
@@ -41,6 +44,9 @@ public sealed partial class SprayPainterDecals : Control
         UpdateColorButtons();
     }
 
+    /// <summary>
+    /// Updates the decal list.
+    /// </summary>
     public void PopulateDecals(List<SprayPainterDecalEntry> decals, SpriteSystem sprite)
     {
         Sprite ??= sprite;

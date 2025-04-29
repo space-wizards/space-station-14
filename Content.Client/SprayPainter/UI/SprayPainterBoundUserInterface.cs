@@ -7,14 +7,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.SprayPainter.UI;
 
-public sealed class SprayPainterBoundUserInterface : BoundUserInterface
+public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private SprayPainterWindow? _window;
-
-    public SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {

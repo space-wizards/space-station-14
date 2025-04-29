@@ -6,6 +6,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.SprayPainter;
 
+/// <summary>
+/// Responsible for preparing the data for presentable appearance in the spray painter menu.
+/// </summary>
 public sealed class SprayPainterSystem : SharedSprayPainterSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -49,12 +52,18 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
     }
 }
 
+/// <summary>
+/// Used for convenient data storage.
+/// </summary>
 public sealed class SprayPainterEntry(string name, EntityPrototype? proto)
 {
     public string Name = name;
     public EntityPrototype? Proto = proto;
 }
 
+/// <summary>
+/// Used for convenient data storage.
+/// </summary>
 public sealed class SprayPainterDecalEntry(string name, SpriteSpecifier spriteSpecifier)
 {
     public string Name = name;

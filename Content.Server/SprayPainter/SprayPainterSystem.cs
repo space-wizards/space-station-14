@@ -17,7 +17,7 @@ using Robust.Server.Audio;
 namespace Content.Server.SprayPainter;
 
 /// <summary>
-/// Handles spraying pipes using a spray painter.
+/// Handles spraying pipes and decals using a spray painter.
 /// Other are handled in shared.
 /// </summary>
 public sealed class SprayPainterSystem : SharedSprayPainterSystem
