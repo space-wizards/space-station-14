@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Forcefeeding pills now takes 2 seconds (was 1 second), while eating them
-      takes 0.6 seconds (was 1 second).
-    type: Tweak
-  id: 7883
-  time: '2025-01-31T11:59:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34764
 - author: themias
   changes:
   - message: Updated sound effects for shutters
@@ -3925,3 +3917,10 @@
   id: 8384
   time: '2025-04-29T05:24:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34039
+- author: TytosB
+  changes:
+  - message: adjusted pka damage and range
+    type: Tweak
+  id: 8385
+  time: '2025-04-29T10:00:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37012
