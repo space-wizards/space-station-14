@@ -6,7 +6,6 @@ using Content.IntegrationTests.Pair;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Random;
 
 namespace Content.Benchmarks;
 
@@ -25,7 +24,13 @@ public class RaiseEventBenchmark
         _pair = PoolManager.GetServerClient().GetAwaiter().GetResult();
         _entMan = _pair.Server.ResolveDependency<IEntityManager>();
         _sys = _entMan.System<BenchSystem>();
-        _pair.Server.WaitPost(() => _sys.UidA = _entMan.Spawn()).GetAwaiter().GetResult();
+        _pair.Server.WaitPost(() =>
+        {
+            var uid = _entMan.Spawn();
+            _sys.Ent = new(uid, _entMan.GetComponent<TransformComponent>(uid));
+        })
+            .GetAwaiter()
+            .GetResult();
     }
 
     [GlobalCleanup]
@@ -35,38 +40,51 @@ public class RaiseEventBenchmark
         PoolManager.Shutdown();
     }
 
-    [Benchmark]
-    public int StructEvents()
+    [Benchmark(Baseline = true)]
+    public int RaiseEvent()
     {
         return _sys.RaiseEvent();
     }
-}
 
-[ByRefEvent]
-public struct BenchEv
-{
-    public int N;
-}
-
-public sealed class BenchSystem : EntitySystem
-{
-    public override void Initialize()
+    [Benchmark]
+    public int RaiseCompEvent()
     {
-        base.Initialize();
-        SubscribeLocalEvent<TransformComponent, BenchEv>(OnEvent);
+        return _sys.RaiseCompEvent();
     }
 
-    public EntityUid UidA;
-
-    public int RaiseEvent()
+    public sealed class BenchSystem : EntitySystem
     {
-        var ev = new BenchEv();
-        RaiseLocalEvent(UidA, ref ev);
-        return ev.N;
-    }
+        public Entity<TransformComponent> Ent;
 
-    private void OnEvent(EntityUid uid, TransformComponent component, ref BenchEv args)
-    {
-        args.N += uid.Id;
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<TransformComponent, BenchEv>(OnEvent);
+        }
+
+        public int RaiseEvent()
+        {
+            var ev = new BenchEv();
+            RaiseLocalEvent(Ent.Owner, ref ev);
+            return ev.N;
+        }
+
+        public int RaiseCompEvent()
+        {
+            var ev = new BenchEv();
+            EntityManager.EventBus.RaiseComponentEvent(Ent.Owner, Ent.Comp, ref ev);
+            return ev.N;
+        }
+
+        private void OnEvent(EntityUid uid, TransformComponent component, ref BenchEv args)
+        {
+            args.N += uid.Id;
+        }
+
+        [ByRefEvent]
+        public struct BenchEv
+        {
+            public int N;
+        }
     }
 }
