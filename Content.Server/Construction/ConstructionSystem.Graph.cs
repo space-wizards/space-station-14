@@ -412,7 +412,7 @@ namespace Content.Server.Construction
             // If ChangeEntity has ran, then the entity uid has changed and the
             // new entity should be initialized by this point.
             var afterChangeEv = new AfterConstructionChangeEntityEvent(construction.Graph, construction.Node, previousNode);
-            RaiseLocalEvent(uid, afterChangeEv);
+            RaiseLocalEvent(newUid, afterChangeEv);
 
             return newUid;
         }
