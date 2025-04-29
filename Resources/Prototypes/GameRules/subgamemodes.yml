@@ -58,7 +58,7 @@
     agentName: vampire-roundend-name
     definitions:
     - prefRoles: [ Vampire ]
-      max: 4
+      max: 10
       playerRatio: 10
       lateJoinAdditional: true
       allowNonHumans: false
