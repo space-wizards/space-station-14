@@ -16,7 +16,7 @@ quick_lottery = true
 generator_enabled = false
 
 [movement]
-mob_pushing = true
+mob_pushing = false
 
 [physics]
 # Makes mapping annoying

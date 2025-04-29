@@ -1,21 +1,21 @@
 # Leader
-- type: job
-  id: ERTLeader
-  name: job-name-ertleader
-  description: job-description-ertleader
-  playTimeTracker: JobERTLeader
-  setPreference: false
-  startingGear: ERTLeaderGearEVA
-  icon: "JobIconNanotrasen"
-  supervisors: job-supervisors-centcom
-  canBeAntag: false
-  accessGroups:
-  - AllAccess
-  access:
-  - CentralCommand
-  special:
-  - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
+# - type: job
+#   id: ERTLeader
+#   name: job-name-ertleader
+#   description: job-description-ertleader
+#   playTimeTracker: JobERTLeader
+#   setPreference: false
+#   startingGear: ERTLeaderGearEVA
+#   icon: "JobIconNanotrasen"
+#   supervisors: job-supervisors-centcom
+#   canBeAntag: false
+#   accessGroups:
+#   - AllAccess
+#   access:
+#   - CentralCommand
+#   special:
+#   - !type:AddImplantSpecial
+#     implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 # - type: startingGear
 #   id: ERTLeaderGear
@@ -111,7 +111,7 @@
     components:
     - type: BibleUser #Lets them heal with bibles
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
+    implants: [ MindShieldImplant, TrackingImplant ]
 
 - type: startingGear
   id: ERTChaplainGear
@@ -176,23 +176,23 @@
 #     - Lighter
 
 # Engineer
-- type: job
-  id: ERTEngineer
-  name: job-name-ertengineer
-  description: job-description-ertengineer
-  playTimeTracker: JobERTEngineer
-  setPreference: false
-  startingGear: ERTEngineerGearEVA
-  icon: "JobIconNanotrasen"
-  supervisors: job-supervisors-centcom
-  canBeAntag: false
-  accessGroups:
-  - AllAccess
-  access:
-  - CentralCommand
-  special:
-  - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
+# - type: job
+#   id: ERTEngineer
+#   name: job-name-ertengineer
+#   description: job-description-ertengineer
+#   playTimeTracker: JobERTEngineer
+#   setPreference: false
+#   startingGear: ERTEngineerGearEVA
+#   icon: "JobIconNanotrasen"
+#   supervisors: job-supervisors-centcom
+#   canBeAntag: false
+#   accessGroups:
+#   - AllAccess
+#   access:
+#   - CentralCommand
+#   special:
+#   - !type:AddImplantSpecial
+#     implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 # - type: startingGear
 #   id: ERTEngineerGear
@@ -251,23 +251,23 @@
 #     - SheetGlass
 
 # Security
-- type: job
-  id: ERTSecurity
-  name: job-name-ertsecurity
-  description: job-description-ertsecurity
-  playTimeTracker: JobERTSecurity
-  setPreference: false
-  startingGear: ERTEngineerGearEVA
-  icon: "JobIconNanotrasen"
-  supervisors: job-supervisors-centcom
-  canBeAntag: false
-  accessGroups:
-  - AllAccess
-  access:
-  - CentralCommand
-  special:
-  - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
+# - type: job
+#   id: ERTSecurity
+#   name: job-name-ertsecurity
+#   description: job-description-ertsecurity
+#   playTimeTracker: JobERTSecurity
+#   setPreference: false
+#   startingGear: ERTEngineerGearEVA
+#   icon: "JobIconNanotrasen"
+#   supervisors: job-supervisors-centcom
+#   canBeAntag: false
+#   accessGroups:
+#   - AllAccess
+#   access:
+#   - CentralCommand
+#   special:
+#   - !type:AddImplantSpecial
+#     implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 # - type: startingGear
 #   id: ERTSecurityGear
@@ -344,23 +344,23 @@
 #     - MagazinePistol
 
 # Medical
-- type: job
-  id: ERTMedical
-  name: job-name-ertmedic
-  description: job-description-ertmedic
-  playTimeTracker: JobERTMedical
-  setPreference: false
-  startingGear: ERTMedicalGearEVA
-  icon: "JobIconNanotrasen"
-  supervisors: job-supervisors-centcom
-  canBeAntag: false
-  accessGroups:
-  - AllAccess
-  access:
-  - CentralCommand
-  special:
-  - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
+# - type: job
+#   id: ERTMedical
+#   name: job-name-ertmedic
+#   description: job-description-ertmedic
+#   playTimeTracker: JobERTMedical
+#   setPreference: false
+#   startingGear: ERTMedicalGearEVA
+#   icon: "JobIconNanotrasen"
+#   supervisors: job-supervisors-centcom
+#   canBeAntag: false
+#   accessGroups:
+#   - AllAccess
+#   access:
+#   - CentralCommand
+#   special:
+#   - !type:AddImplantSpecial
+#     implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 # - type: startingGear
 #   id: ERTMedicalGear
@@ -411,23 +411,23 @@
 #     - ChemistryBottleEpinephrine
 
 # Janitor
-- type: job
-  id: ERTJanitor
-  name: job-name-ertjanitor
-  description: job-description-ertjanitor
-  playTimeTracker: JobERTJanitor
-  setPreference: false
-  startingGear: ERTJanitorGearEVA
-  icon: "JobIconNanotrasen"
-  supervisors: job-supervisors-centcom
-  canBeAntag: false
-  accessGroups:
-  - AllAccess
-  access:
-  - CentralCommand
-  special:
-  - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
+# - type: job
+#   id: ERTJanitor
+#   name: job-name-ertjanitor
+#   description: job-description-ertjanitor
+#   playTimeTracker: JobERTJanitor
+#   setPreference: false
+#   startingGear: ERTJanitorGearEVA
+#   icon: "JobIconNanotrasen"
+#   supervisors: job-supervisors-centcom
+#   canBeAntag: false
+#   accessGroups:
+#   - AllAccess
+#   access:
+#   - CentralCommand
+#   special:
+#   - !type:AddImplantSpecial
+#     implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 # - type: startingGear
 #   id: ERTJanitorGear

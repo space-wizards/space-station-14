@@ -12,7 +12,7 @@
     xmlns:changelog="clr-namespace:Content.Client.Changelog">
     <!-- Background -->
     <TextureRect Access="Public" VerticalExpand="True" HorizontalExpand="True" Name="Background" Stretch="KeepAspectCovered" Visible="False"/>
-    <parallax:ParallaxControl ParallaxId="KettleStation" Access="Public" Name="ParallaxControl" VerticalExpand="True" HorizontalExpand="True"/>
+    <parallax:ParallaxControl ParallaxPrototype="KettleStation" Access="Public" Name="ParallaxControl" VerticalExpand="True" HorizontalExpand="True"/>
     <BoxContainer Name="MainContainer" VerticalExpand="True" HorizontalExpand="True" Orientation="Horizontal" Margin="10 10 10 10">
         <!-- Character setup state -->
         <Control  Access="Public" Visible="False" Name="CharacterSetupState" VerticalExpand="True" HorizontalExpand="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>

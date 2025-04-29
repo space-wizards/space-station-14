@@ -574,11 +574,11 @@
     - type: Loadout
       prototypes: [ ChallengeVictimCaptain, ChallengeVictimCaptainAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
       roleLoadout: [ RoleSurvivalVoxSupport ]
-    - type: RandomMetadata
-      nameSegments:
-      - NamesFirst
-      - NamesLast
-      nameFormat: name-format-standard
+    # - type: RandomMetadata
+    #   nameSegments:
+    #   - NamesFirst
+    #   - NamesLast
+    #   nameFormat: name-format-standard
 
 - type: randomHumanoidSettings
   id: ChallengeVictimChiefEngineer
@@ -594,11 +594,11 @@
     - type: Loadout
       prototypes: [ ChallengeVictimCE, ChallengeVictimCEAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
       roleLoadout: [ RoleSurvivalVoxSupport ]
-    - type: RandomMetadata
-      nameSegments:
-      - NamesFirst
-      - NamesLast
-      nameFormat: name-format-standard
+    # - type: RandomMetadata
+    #   nameSegments:
+    #   - NamesFirst
+    #   - NamesLast
+    #   nameFormat: name-format-standard
 
 - type: randomHumanoidSettings
   id: ChallengeVictimCMO
@@ -614,11 +614,11 @@
     - type: Loadout
       prototypes: [ ChallengeVictimCMO, ChallengeVictimCMOAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
       roleLoadout: [ RoleSurvivalVoxSupport ]
-    - type: RandomMetadata
-      nameSegments:
-      - NamesFirst
-      - NamesLast
-      nameFormat: name-format-standard
+    # - type: RandomMetadata
+    #   nameSegments:
+    #   - NamesFirst
+    #   - NamesLast
+    #   nameFormat: name-format-standard
 
 - type: randomHumanoidSettings
   id: ChallengeVictimHeadOfPersonnel
@@ -634,11 +634,11 @@
     - type: Loadout
       prototypes: [ ChallengeVictimHOP, ChallengeVictimHOPAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
       roleLoadout: [ RoleSurvivalVoxSupport ]
-    - type: RandomMetadata
-      nameSegments:
-      - NamesFirst
-      - NamesLast
-      nameFormat: name-format-standard
+    # - type: RandomMetadata
+    #   nameSegments:
+    #   - NamesFirst
+    #   - NamesLast
+    #   nameFormat: name-format-standard
 
 - type: randomHumanoidSettings
   id: ChallengeVictimHeadOfSecurity
@@ -654,11 +654,11 @@
     - type: Loadout
       prototypes: [ ChallengeVictimHOS, ChallengeVictimHOSAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
       roleLoadout: [ RoleSurvivalVoxSupport ]
-    - type: RandomMetadata
-      nameSegments:
-      - NamesFirst
-      - NamesLast
-      nameFormat: name-format-standard
+    # - type: RandomMetadata
+    #   nameSegments:
+    #   - NamesFirst
+    #   - NamesLast
+    #   nameFormat: name-format-standard
 
 - type: randomHumanoidSettings
   id: ChallengeVictimResearchDirector
@@ -674,11 +674,11 @@
     - type: Loadout
       prototypes: [ ChallengeVictimRD, ChallengeVictimRDAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
       roleLoadout: [ RoleSurvivalVoxSupport ]
-    - type: RandomMetadata
-      nameSegments:
-      - NamesFirst
-      - NamesLast
-      nameFormat: name-format-standard
+    # - type: RandomMetadata
+    #   nameSegments:
+    #   - NamesFirst
+    #   - NamesLast
+    #   nameFormat: name-format-standard
 
 - type: randomHumanoidSettings
   id: ChallengeVictimQuartermaster
@@ -694,11 +694,11 @@
     - type: Loadout
       prototypes: [ ChallengeVictimQM, ChallengeVictimQMAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
       roleLoadout: [ RoleSurvivalVoxSupport ]
-    - type: RandomMetadata
-      nameSegments:
-      - NamesFirst
-      - NamesLast
-      nameFormat: name-format-standard
+    # - type: RandomMetadata
+    #   nameSegments:
+    #   - NamesFirst
+    #   - NamesLast
+    #   nameFormat: name-format-standard
 
 # Security
 # Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
@@ -719,11 +719,11 @@
     - type: Loadout
       prototypes: [ ChallengeCargoTechGearSuit, ChallengeCargoTechGearCoat ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
       roleLoadout: [ RoleSurvivalVoxSupport ]
-    - type: RandomMetadata
-      nameSegments:
-      - NamesFirst
-      - NamesLast
-      nameFormat: name-format-standard
+    # - type: RandomMetadata
+    #   nameSegments:
+    #   - NamesFirst
+    #   - NamesLast
+    #   nameFormat: name-format-standard
 
 # Engineering
 

@@ -84,7 +84,6 @@
     issuer: objective-issuer-sith
   - type: RoleRequirement
     roles:
-      mindRoles:
       - SithRole
 
 - type: entity

@@ -14,14 +14,6 @@
       "name": "icon-lit"
     },
     {
-      "name": "equipped-BACKPACK",
-      "directions": 4
-     },
-     {
-      "name": "equipped-SUITSTORAGE",
-      "directions": 4
-     },
-    {
       "name": "icon-uncharged",
       "delays": [
         [
@@ -34,7 +26,7 @@
       "name": "equipped-BACKPACK",
       "directions": 4
     },
-	{
+	  {
       "name": "equipped-SUITSTORAGE",
       "directions": 4
     }

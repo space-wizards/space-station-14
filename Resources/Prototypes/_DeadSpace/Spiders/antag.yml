@@ -83,7 +83,6 @@
     issuer: objective-issuer-spider-terror
   - type: RoleRequirement
     roles:
-      mindRoles:
       - SpiderTerrorRole
 
 - type: entity

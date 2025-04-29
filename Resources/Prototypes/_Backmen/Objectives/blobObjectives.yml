@@ -12,8 +12,7 @@
         state: blob_nuke_overlay
     - type: RoleRequirement
       roles:
-        mindRoles:
-          - BlobRole
+        - BlobRole
 
 - type: entity
   categories: [ HideSpawnMenu ]
