@@ -103,12 +103,18 @@ namespace Content.Shared.Stacks
         }
     }
 
+    [Serializable, NetSerializable]
     public enum StackLayerFunction
     {
+        // <summary>
         // No operation performed.
+        // </summary>
         None,
+
+        // <summary>
         // Arbitrarily thresholds the stack amount for each layer.
-        // Expects entity to have the StackLayerThresholdComponent.
+        // Expects entity to have StackLayerThresholdComponent.
+        // </summary>
         Threshold
     }
 }

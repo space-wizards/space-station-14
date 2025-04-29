@@ -78,8 +78,7 @@ namespace Content.Client.Stack
         /// <summary>
         /// Adjusts the actual and maxCount to change how stack amounts are displayed.
         /// </summary>
-        /// <param name="uid">The entity being applied.</param>
-        /// <param name="comp">The </param>
+        /// <param name="ent">The entity considered.</param>
         /// <param name="actual">The actual number of items in the stack. Altered depending on the function to run.</param>
         /// <param name="maxCount">The maximum number of items in the stack. Altered depending on the function to run.</param>
         /// <returns>Whether or not a function was applied.</returns>
@@ -100,7 +99,8 @@ namespace Content.Client.Stack
         }
 
         /// <summary>
-        /// Selects which layer a stack applies based on a list of thresholds. Each threshold passed results in the next layer being selected.
+        /// Selects which layer a stack applies based on a list of thresholds.
+        /// Each threshold passed results in the next layer being selected.
         /// </summary>
         /// <param name="comp">The threshold parameters to apply.</param>
         /// <param name="actual">The number of items in the stack. Will be set to the index of the layer to use.</param>
@@ -109,7 +109,7 @@ namespace Content.Client.Stack
         {
             // We must stop before we run out of thresholds or layers, whichever's smaller. 
             maxCount = Math.Min(comp.Thresholds.Count + 1, maxCount);
-            int newActual = 0;
+            var newActual = 0;
             foreach (var threshold in comp.Thresholds)
             {
                 //If our value exceeds threshold, the next layer should be displayed.

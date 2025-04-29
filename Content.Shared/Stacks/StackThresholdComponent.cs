@@ -9,5 +9,5 @@ public sealed partial class StackLayerThresholdComponent : Component
     /// Should be sorted in ascending order.
     /// </summary>
     [DataField(required: true)]
-    public List<int> Thresholds = new List<int>();
+    public List<int> Thresholds = new();
 }
