@@ -64,6 +64,9 @@ public sealed partial class MachinePart
     public string ExpectedNode;
 }
 
+/// <summary>
+/// Marks an entity as being the owner of a multipart machine.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MultipartMachineComponent : Component
 {
@@ -80,7 +83,6 @@ public sealed partial class MultipartMachineComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Angle? Rotation = null;
-
 
     /// <summary>
     /// Whether this multipart machine is assembled or not.
