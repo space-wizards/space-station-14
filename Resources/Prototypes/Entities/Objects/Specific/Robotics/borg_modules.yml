@@ -274,9 +274,9 @@
         color: "#7B0F12"
 
 - type: entity
+  abstract: true
   parent: BaseBorgModule
   id: BaseXenoborgModuleGeneric
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -301,9 +301,9 @@
         color: "#337dd6"
 
 - type: entity
+  abstract: true
   parent: BaseBorgModule
   id: BaseXenoborgModuleEngi
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -380,7 +380,7 @@
       - state: base-part-inhand-right
       - state: base-stripes-inhand-right
         color: "#282828"
-      
+
 - type: entity
   parent: BaseBorgModule
   id: BaseXenoborgModuleStealth
@@ -1218,7 +1218,7 @@
   - type: Sprite
     layers:
     - state: xenoborg_stealth
-    - state: icon-xenoborg-projector 
+    - state: icon-xenoborg-projector
   - type: ItemBorgModule
     items:
     - ChameleonProjector

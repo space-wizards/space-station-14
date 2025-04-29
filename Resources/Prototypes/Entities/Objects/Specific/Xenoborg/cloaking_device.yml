@@ -2,7 +2,7 @@
   parent: [ BaseItem, BaseXenoborgContraband ]
   id: CloakingDevice
   name: cloaking device
-  description: A device that allows xenoborgs to go invisible
+  description: A device that allows xenoborgs to go invisible.
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalyscanner.rsi

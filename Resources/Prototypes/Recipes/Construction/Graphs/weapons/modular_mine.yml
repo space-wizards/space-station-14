@@ -12,7 +12,7 @@
         doAfter: 1
 
   - node: emptyCase
-    entity: LandMineModular
+    entity: LandMineModularUnarmed
     edges:
     - to: wiredCase
       steps:
@@ -34,7 +34,7 @@
         doAfter: 2
 
   - node: wiredCase
-    entity: LandMineModular
+    entity: LandMineModularUnarmed
     actions:
     - !type:PlaySound
       sound: /Audio/Machines/button.ogg
