@@ -1,11 +1,11 @@
 - type: localizedDataset
-  id: names_resomi_male
+  id: names_resomi_first
   values:
-    prefix: names-resomi-male-dataset-
-    count: 47
+    prefix: names-resomi-first-dataset-
+    count: 276
 
 - type: localizedDataset
-  id: names_resomi_female
+  id: names_resomi_packs
   values:
-    prefix: names-resomi-female-dataset-
-    count: 48
+    prefix: names-resomi-packs-dataset-
+    count: 14
