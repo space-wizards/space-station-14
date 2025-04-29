@@ -82,6 +82,8 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (!TryComp<DeliverySpawnerComponent>(args.Target, out var deliverySpawner) || !TryComp<FingerprintReaderComponent>(args.Used, out var fingerprintReaderComp))
             return;
 
+        args.Handled = true;
+
         var station = _station.GetOwningStation(args.Target);
         if (!TryComp<StationRecordsComponent>(station, out var stationRecords))
         {
@@ -120,7 +122,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         string messageApproved = Loc.GetString("delivery-insert-approved", ("mail", args.Used));
         _chat.TrySendInGameICMessage(args.Target.Value, messageApproved, InGameICChatType.Speak, hideChat: true);
         _audio.PlayPvs(deliverySpawner.InsertAppoveSound, args.Target.Value);
-        QueueDel(args.Used);
+        Del(args.Used);
     }
 
     protected override void GrantSpesoReward(Entity<DeliveryComponent?> ent)
