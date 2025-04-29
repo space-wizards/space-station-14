@@ -15,6 +15,7 @@ namespace Content.Client.Machines.EntitySystems;
 public sealed class MultipartMachineSystem : EntitySystem
 {
     private readonly EntProtoId _ghostPrototype = "MultipartMachineGhost";
+    private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
     {
@@ -22,6 +23,8 @@ public sealed class MultipartMachineSystem : EntitySystem
 
         SubscribeLocalEvent<MultipartMachineComponent, ClientExaminedEvent>(OnMachineExamined);
         SubscribeLocalEvent<MultipartMachineGhostComponent, TimedDespawnEvent>(OnGhostDespawned);
+
+        _xformQuery = GetEntityQuery<TransformComponent>();
     }
 
     /// <summary>
@@ -40,7 +43,6 @@ public sealed class MultipartMachineSystem : EntitySystem
             return;
         }
 
-        var xformQuery = GetEntityQuery<TransformComponent>();
         foreach (var part in ent.Comp.Parts.Values)
         {
             if (part.Entity.HasValue)
@@ -48,7 +50,7 @@ public sealed class MultipartMachineSystem : EntitySystem
 
             var rotation = ent.Comp.Rotation ?? Angle.Zero;
             var ghostEnt = Spawn(_ghostPrototype, new EntityCoordinates(ent.Owner, part.Offset.Rotate(rotation)));
-            if (!xformQuery.TryGetComponent(ghostEnt, out var xform))
+            if (!_xformQuery.TryGetComponent(ghostEnt, out var xform))
                 break;
 
             xform.LocalRotation = part.Rotation + rotation;

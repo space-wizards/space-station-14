@@ -20,6 +20,7 @@ public sealed class MultipartMachineSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
+    private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
     {
@@ -29,6 +30,8 @@ public sealed class MultipartMachineSystem : EntitySystem
 
         SubscribeLocalEvent<ConstructionComponent, AfterConstructionChangeEntityEvent>(OnConstructionNodeChanged);
         SubscribeLocalEvent<ConstructionComponent, AnchorStateChangedEvent>(OnConstructionAnchorChanged);
+
+        _xformQuery = GetEntityQuery<TransformComponent>();
     }
 
     /// <summary>
@@ -266,8 +269,7 @@ public sealed class MultipartMachineSystem : EntitySystem
     public bool Rescan(Entity<MultipartMachineComponent> ent, EntityUid? user = null)
     {
         // Get all required transform information to start looking for the other parts based on their offset
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        if (!xformQuery.TryGetComponent(ent.Owner, out var xform) || !xform.Anchored)
+        if (!_xformQuery.TryGetComponent(ent.Owner, out var xform) || !xform.Anchored)
         {
             return false;
         }
