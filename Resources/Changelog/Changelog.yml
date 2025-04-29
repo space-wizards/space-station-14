@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Toxic, Nox
-  changes:
-  - message: Changed Packed armory.
-    type: Tweak
-  id: 7890
-  time: '2025-02-01T21:19:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34808
 - author: Minty642
   changes:
   - message: Added Gold and Silver Solidification, just mix with frost oil.
@@ -3919,3 +3912,10 @@
   id: 8391
   time: '2025-04-29T22:17:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37048
+- author: ScarKy0
+  changes:
+  - message: Priority mail now indicates whether it was delivered on time or not.
+    type: Tweak
+  id: 8392
+  time: '2025-04-29T22:55:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37049
