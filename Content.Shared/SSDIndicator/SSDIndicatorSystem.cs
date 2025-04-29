@@ -14,11 +14,17 @@ public sealed class SSDIndicatorSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
+    private bool _icSsdSleep;
+    private float _icSsdSleepTime;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<SSDIndicatorComponent, MapInitEvent>(OnMapInit);
+
+        _cfg.OnValueChanged(CCVars.ICSSDSleep, obj => _icSsdSleep = obj, true);
+        _cfg.OnValueChanged(CCVars.ICSSDSleepTime, obj => _icSsdSleepTime = obj, true);
     }
 
     private void OnPlayerAttached(EntityUid uid, SSDIndicatorComponent component, PlayerAttachedEvent args)
@@ -26,7 +32,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
         component.IsSSD = false;
 
         // Removes force sleep and resets the time to zero
-        if (_cfg.GetCVar(CCVars.ICSSDSleep))
+        if (_icSsdSleep)
         {
             component.FallAsleepTime = TimeSpan.Zero;
             if (component.ForcedSleepAdded) // Remove component only if it has been added by this system
@@ -43,9 +49,9 @@ public sealed class SSDIndicatorSystem : EntitySystem
         component.IsSSD = true;
 
         // Sets the time when the entity should fall asleep
-        if (_cfg.GetCVar(CCVars.ICSSDSleep))
+        if (_icSsdSleep)
         {
-            component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.ICSSDSleepTime));
+            component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
         }
         Dirty(uid, component);
     }
@@ -53,11 +59,11 @@ public sealed class SSDIndicatorSystem : EntitySystem
     // Prevents mapped mobs to go to sleep immediately
     private void OnMapInit(EntityUid uid, SSDIndicatorComponent component, MapInitEvent args)
     {
-        if (_cfg.GetCVar(CCVars.ICSSDSleep) &&
+        if (_icSsdSleep &&
             component.IsSSD &&
             component.FallAsleepTime == TimeSpan.Zero)
         {
-            component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.ICSSDSleepTime));
+            component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
         }
     }
 
@@ -65,7 +71,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        if (!_cfg.GetCVar(CCVars.ICSSDSleep))
+        if (!_icSsdSleep)
             return;
 
         var query = EntityQueryEnumerator<SSDIndicatorComponent>();
