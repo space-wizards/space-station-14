@@ -54,6 +54,9 @@
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/command.rsi
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/captain.ogg
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
@@ -70,6 +73,9 @@
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/engineering.rsi
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/ce.ogg
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]

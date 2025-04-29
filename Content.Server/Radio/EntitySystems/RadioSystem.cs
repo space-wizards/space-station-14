@@ -181,33 +181,34 @@ public sealed class RadioSystem : EntitySystem
 
             if (soundPath != null)
             {
-            var players = EntityQueryEnumerator<ActorComponent>();
-            int count = 0;
-            while (players.MoveNext(out var entity, out var actor))
-            {
-                Logger.Debug($"Checking player entity {entity} with ActorComponent");
-                if (_inventorySystem.TryGetSlotEntity(entity, "ears", out var headsetSlotEntity))
-                {
-                    Logger.Debug($"Player entity {entity} has headset entity {headsetSlotEntity.Value} in ears slot");
-                    if (TryComp<RadioChimeComponent>(headsetSlotEntity.Value, out var radioChime2) && radioChime2.ChimeSound != null)
-                    {
-                        Logger.Debug($"Headset entity {headsetSlotEntity.Value} has RadioChimeComponent with sound {radioChime2.ChimeSound}");
-                        filter = filter.AddPlayer(actor.PlayerSession);
-                        count++;
-                    }
-                    else
-                    {
-                        Logger.Debug($"Headset entity {headsetSlotEntity.Value} does not have RadioChimeComponent or ChimeSound is null");
-                    }
-                }
-                else
-                {
-                    Logger.Debug($"Player entity {entity} does not have headset entity in ears slot");
-                }
-            }
-            Logger.Debug($"Number of players with headset and RadioChimeComponent added to filter: {count}");
+                // Build filter of players who are actively listening on the radio channel
+                var filterBuilder = Filter.Empty();
+                int count = 0;
+                var sourceMapIdChime = Transform(radioSource).MapID;
 
-                _audio.PlayGlobal(soundPath, filter, true, AudioParams.Default.WithVolume(-7f));
+                var radioQueryChime = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
+                while (radioQueryChime.MoveNext(out var entity, out var activeRadio, out var transform))
+                {
+                    if (!activeRadio.ReceiveAllChannels)
+                    {
+                        if (!activeRadio.Channels.Contains(channel.ID))
+                            continue;
+                    }
+
+                    if (!channel.LongRange && transform.MapID != sourceMapIdChime && !activeRadio.GlobalReceive)
+                        continue;
+
+                    var parent = transform.ParentUid;
+                    if (parent == null || !TryComp<ActorComponent>(parent, out var actor))
+                        continue;
+
+                    Logger.Debug($"Adding player entity {parent} listening on channel {channel.ID} to filter");
+                    filterBuilder = filterBuilder.AddPlayer(actor.PlayerSession);
+                    count++;
+                }
+                Logger.Debug($"Number of players listening to channel added to filter: {count}");
+
+                _audio.PlayGlobal(soundPath, filterBuilder, true, AudioParams.Default.WithVolume(-7f));
                 Logger.Debug("Played global chime sound.");
             }
         }
