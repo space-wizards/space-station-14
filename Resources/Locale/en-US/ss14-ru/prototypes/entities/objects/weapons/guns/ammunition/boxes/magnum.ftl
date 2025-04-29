@@ -1,12 +1,12 @@
 ent-BaseMagazineBoxMagnum = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
 ent-MagazineBoxMagnum = ammunition box (.45 magnum)
-    .desc = { ent-BaseMagazineBoxMagnum.desc }
+    .desc = A cardboard box of .45 magnum rounds. Intended to hold general-purpose kinetic ammunition.
 ent-MagazineBoxMagnumPractice = ammunition box (.45 magnum practice)
-    .desc = { ent-BaseMagazineBoxMagnum.desc }
+    .desc = A cardboard box of .45 magnum rounds. Intended to hold non-harmful chalk ammunition.
 ent-MagazineBoxMagnumIncendiary = ammunition box (.45 magnum incendiary)
-    .desc = { ent-BaseMagazineBoxMagnum.desc }
+    .desc = A cardboard box of .45 magnum rounds. Intended to hold self-igniting incendiary ammunition.
 ent-MagazineBoxMagnumUranium = ammunition box (.45 magnum uranium)
-    .desc = { ent-BaseMagazineBoxMagnum.desc }
+    .desc = A cardboard box of .45 magnum rounds. Intended to hold exotic uranium-core ammunition.
 ent-MagazineBoxMagnumAP = ammunition box (.45 magnum armor-piercing)
-    .desc = { ent-BaseMagazineBoxMagnum.desc }
+    .desc = A cardboard box of .45 magnum rounds. Intended to hold rare armor-piercing ammunition.

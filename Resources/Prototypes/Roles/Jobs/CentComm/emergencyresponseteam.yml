@@ -1,4 +1,4 @@
-# # Leader
+# Leader
 # - type: job
 #   id: ERTLeader
 #   name: job-name-ertleader
@@ -13,6 +13,9 @@
 #   - AllAccess
 #   access:
 #   - CentralCommand
+#   special:
+#   - !type:AddImplantSpecial
+#     implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 # - type: startingGear
 #   id: ERTLeaderGear
@@ -107,6 +110,8 @@
   - !type:AddComponentSpecial
     components:
     - type: BibleUser #Lets them heal with bibles
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant, TrackingImplant ]
 
 - type: startingGear
   id: ERTChaplainGear
@@ -170,7 +175,7 @@
 #     - FoodBakedBunHotX
 #     - Lighter
 
-# # Engineer
+# Engineer
 # - type: job
 #   id: ERTEngineer
 #   name: job-name-ertengineer
@@ -185,6 +190,9 @@
 #   - AllAccess
 #   access:
 #   - CentralCommand
+#   special:
+#   - !type:AddImplantSpecial
+#     implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 # - type: startingGear
 #   id: ERTEngineerGear
@@ -242,7 +250,7 @@
 #     - SheetSteel
 #     - SheetGlass
 
-# # Security
+# Security
 # - type: job
 #   id: ERTSecurity
 #   name: job-name-ertsecurity
@@ -257,6 +265,9 @@
 #   - AllAccess
 #   access:
 #   - CentralCommand
+#   special:
+#   - !type:AddImplantSpecial
+#     implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 # - type: startingGear
 #   id: ERTSecurityGear
@@ -332,7 +343,7 @@
 #     - CrowbarRed
 #     - MagazinePistol
 
-# # Medical
+# Medical
 # - type: job
 #   id: ERTMedical
 #   name: job-name-ertmedic
@@ -347,6 +358,9 @@
 #   - AllAccess
 #   access:
 #   - CentralCommand
+#   special:
+#   - !type:AddImplantSpecial
+#     implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 # - type: startingGear
 #   id: ERTMedicalGear
@@ -396,7 +410,7 @@
 #     - ChemistryBottleEpinephrine
 #     - ChemistryBottleEpinephrine
 
-# # Janitor
+# Janitor
 # - type: job
 #   id: ERTJanitor
 #   name: job-name-ertjanitor
@@ -411,6 +425,9 @@
 #   - AllAccess
 #   access:
 #   - CentralCommand
+#   special:
+#   - !type:AddImplantSpecial
+#     implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 # - type: startingGear
 #   id: ERTJanitorGear

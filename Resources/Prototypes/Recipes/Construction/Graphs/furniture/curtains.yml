@@ -99,7 +99,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-    
+
     - node: CurtainsBlack
       entity: CurtainsBlack
       edges:
@@ -121,8 +121,8 @@
               amount: 1
           steps:
             - tool: Cutting
-              doAfter: 1    
-              
+              doAfter: 1
+
     - node: CurtainsBlue
       entity: CurtainsBlue
       edges:
@@ -145,7 +145,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsCyan
       entity: CurtainsCyan
       edges:
@@ -168,7 +168,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsGreen
       entity: CurtainsGreen
       edges:
@@ -191,7 +191,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsOrange
       entity: CurtainsOrange
       edges:
@@ -214,7 +214,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsPink
       entity: CurtainsPink
       edges:
@@ -260,7 +260,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsRed
       entity: CurtainsRed
       edges:
@@ -283,7 +283,7 @@
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsWhite
       entity: CurtainsWhite
       edges:

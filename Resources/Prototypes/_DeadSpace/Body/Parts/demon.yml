@@ -90,9 +90,6 @@
   - type: Sprite
     sprite: _ADT/Mobs/Demon/parts.rsi
     state: "l_leg"
-  - type: MovementBodyPart
-    walkSpeed : 2.5
-    sprintSpeed : 4.5
 
 - type: entity
   id: RightLegDemon
@@ -102,9 +99,6 @@
   - type: Sprite
     sprite: _ADT/Mobs/Demon/parts.rsi
     state: "r_leg"
-  - type: MovementBodyPart
-    walkSpeed : 2.5
-    sprintSpeed : 4.5
 
 - type: entity
   id: LeftFootDemon

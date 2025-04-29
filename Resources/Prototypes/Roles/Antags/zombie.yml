@@ -5,6 +5,9 @@
   setPreference: true
   objective: roles-antag-initial-infected-objective
   # guides: [ Zombies ] # DS14: disabled due to lack of localization
+  # requirements: # DS14: disabled
+  # - !type:OverallPlaytimeRequirement
+  #   time: 3600 # 1h
 
 - type: antag
   id: Zombie

@@ -397,6 +397,8 @@
     - SecurityWeaponsStatic
     - SecurityBorgModulesStatic
     dynamicPacks:
+    - SalvageSecurityBoards
+    - SalvageSecurityWeapons
     - SecurityEquipment
     - SecurityBoards
     - SecurityExplosives

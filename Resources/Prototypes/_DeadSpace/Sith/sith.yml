@@ -69,8 +69,8 @@
     prototypes: [ SithGear ]
   - type: RandomMetadata
     nameSegments:
-    - names_sith
-    - names_sith_title
+    - NamesSithTitle
+    - NamesSith
   - type: RandomHumanoidAppearance
     randomizeName: false
 
@@ -84,7 +84,6 @@
     issuer: objective-issuer-sith
   - type: RoleRequirement
     roles:
-      mindRoles:
       - SithRole
 
 - type: entity

@@ -308,3 +308,11 @@
   components:
   - type: Implanter
     implant: RadioImplantCentcomm
+
+- type: entity
+  id: DeathRattleImplanterCentcomm
+  suffix: centcomm death rattle
+  parent: BaseImplantOnlyImplanter
+  components:
+  - type: Implanter
+    implant: DeathRattleImplantCentcomm

@@ -15,7 +15,7 @@
     - HeadSide
     - Tail
   - type: Body
-    prototype: ADTSharkBody
+    prototype: SharkBody
     requiredLegs: 2
   - type: RoarAccent
   - type: Hunger
@@ -50,7 +50,6 @@
   - type: FootPrints
     leftBarePrint: "footprint-left-bare-lizard"
     rightBarePrint: "footprint-right-bare-lizard"
-
 
 - type: entity
   parent: BaseSpeciesDummy
