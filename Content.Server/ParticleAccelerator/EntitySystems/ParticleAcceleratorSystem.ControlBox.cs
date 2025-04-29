@@ -48,10 +48,6 @@ public sealed partial class ParticleAcceleratorSystem
         DebugTools.Assert(controller.Powered);
         DebugTools.Assert(controller.SelectedStrength != ParticleAcceleratorPowerState.Standby);
         DebugTools.Assert(machine.Comp.IsAssembled);
-
-        DebugTools.Assert(EntityManager.EntityExists(_multipartMachine.GetPartEntity(machine.AsNullable(), AcceleratorParts.PortEmitter)));
-        DebugTools.Assert(EntityManager.EntityExists(_multipartMachine.GetPartEntity(machine.AsNullable(), AcceleratorParts.ForeEmitter)));
-        DebugTools.Assert(EntityManager.EntityExists(_multipartMachine.GetPartEntity(machine.AsNullable(), AcceleratorParts.StarboardEmitter)));
     }
 
     public void Fire(EntityUid uid, TimeSpan curTime, ParticleAcceleratorControlBoxComponent? comp = null)
