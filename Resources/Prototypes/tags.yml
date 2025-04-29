@@ -79,6 +79,9 @@
   id: BodyBag
 
 - type: Tag
+  id: Boll
+
+- type: Tag
   id: Book
 
 - type: Tag
@@ -354,6 +357,9 @@
   id: CottonBoll
 
 - type: Tag
+  id: CottonBurger
+
+- type: Tag
   id: Cow
 
 - type: Tag
@@ -583,6 +589,10 @@
 
 - type: Tag
   id: GeigerCounter
+
+# Used for warps
+- type: Tag
+  id: GhostOnlyWarp
 
 - type: Tag
   id: GlassAirlock
@@ -950,6 +960,9 @@
 
 - type: Tag
   id: Pancake
+
+- type: Tag
+  id: ParcelWrapBlacklist
 
 - type: Tag
   id: Payload # for grenade/bomb crafting
