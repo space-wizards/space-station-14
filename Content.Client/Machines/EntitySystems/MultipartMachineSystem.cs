@@ -49,7 +49,8 @@ public sealed class MultipartMachineSystem : EntitySystem
                 continue;
 
             var rotation = ent.Comp.Rotation ?? Angle.Zero;
-            var ghostEnt = Spawn(_ghostPrototype, new EntityCoordinates(ent.Owner, part.Offset.Rotate(rotation)));
+            var entityCoords = new EntityCoordinates(ent.Owner, part.Offset.Rotate(rotation));
+            var ghostEnt = Spawn(_ghostPrototype, entityCoords);
             if (!_xformQuery.TryGetComponent(ghostEnt, out var xform))
                 break;
 
