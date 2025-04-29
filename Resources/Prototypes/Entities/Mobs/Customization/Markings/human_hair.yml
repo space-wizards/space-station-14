@@ -55,6 +55,13 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: bedheadv3
 - type: marking
+  id: HumanHairPulato
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: pulato
+- type: marking
   id: HumanHairLongBedhead
   bodyPart: Hair
   markingCategory: Hair
@@ -1182,12 +1189,12 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: swept2
 - type: marking
-  id: HumanHairShoulderLengthOverEye
+  id: HumanHairBAlt
   bodyPart: Hair
   markingCategory: Hair
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
-      state: shoulderlengthovereye
+      state: b_alt
 - type: marking
   id: HumanHairThinning
   bodyPart: Hair

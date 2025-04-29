@@ -28,8 +28,18 @@
   materials:
     RawQuartz: 3000
 
+# This version is for the autolathe
 - type: latheRecipe
   id: SheetRGlass
+  result: SheetRGlass1
+  completetime: 0
+  materials:
+    Glass: 100
+    Steel: 50
+
+# This version is for the ore processor
+- type: latheRecipe
+  id: SheetRGlassRaw
   result: SheetRGlass1
   completetime: 0
   materials:
@@ -234,3 +244,10 @@
   completetime: 1
   materials:
     Wood: 50
+
+- type: latheRecipe
+  id: MaterialClothCotton
+  result: MaterialCloth1
+  completetime: 1
+  materials:
+    Cotton: 200 #my pyrocloth keeps catching on fire whenever I make it!

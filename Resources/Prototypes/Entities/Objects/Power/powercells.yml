@@ -95,6 +95,18 @@
     startingCharge: 0
 
 - type: entity
+  parent: PowerCellSmall
+  id: PowerCellSmallNuclear
+  name: small-capacity nuclear power cell
+  description: A self rechargeable power cell, designed for fast recharge rate at the expense of capacity.
+  components:
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 36 # 10 seconds to recharge
+    autoRechargePause: true
+    autoRechargePauseTime: 30
+
+- type: entity
   name: medium-capacity power cell
   description: A rechargeable power cell. This is the popular and reliable version.
   id: PowerCellMedium
