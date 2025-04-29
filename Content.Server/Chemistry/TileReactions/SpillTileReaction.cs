@@ -18,9 +18,6 @@ namespace Content.Server.Chemistry.TileReactions
             IEntityManager entityManager,
             List<ReagentData>? data)
         {
-            if (reactVolume < 5)
-                return FixedPoint2.Zero;
-
             var spillSystem = entityManager.System<PuddleSystem>();
 
             return spillSystem.TrySpillAt(tile, new Solution(reagent.ID, reactVolume, data), out _, sound: false, tileReact: false)
