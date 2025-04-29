@@ -588,8 +588,25 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
+  - type: ToggleableLightVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-HELMET-light-vox
+        shader: unshaded
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+      - state: equipped-HELMET-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-HELMET-vox
+      - state: equipped-HELMET-unshaded-vox
+        shader: unshaded
   - type: PointLight # Color matches visor colors, radius/energy same as mining hardsuit for the big captain.
     color: "#f3ea9c"
     radius: 7
