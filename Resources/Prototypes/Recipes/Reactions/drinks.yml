@@ -1562,8 +1562,8 @@
     ScrewdriverCocktail:
       amount: 3
     BlueCuracao:
-      amount: 1
+      amount: 2
     Ice:
       amount: 1
   products:
-    KoboldJuice: 5
+    KoboldJuice: 6
