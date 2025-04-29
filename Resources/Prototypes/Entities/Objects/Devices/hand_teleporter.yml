@@ -36,4 +36,3 @@
     allowPortalsOnDifferentMaps: true
     firstPortalPrototype: PortalGatewayBlue
     secondPortalPrototype: PortalGatewayOrange
-    allowPortalsOnDifferentGrids: true
