@@ -76,7 +76,7 @@
   color: "#77b58e"
   recognizable: true
   boilingPoint: 290.0 # Glycerin
-  meltingPoint: 18.
+  meltingPoint: 18.2
   tileReactions:
   - !type:SpillTileReaction
   friction: 0.0
