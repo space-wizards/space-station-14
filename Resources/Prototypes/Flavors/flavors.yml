@@ -1468,3 +1468,8 @@
   id: bacchusblessing
   flavorType: Complex
   description: flavor-complex-bacchus-blessing
+
+- type: flavor
+  id: koboldjuice
+  flavorType: Complex
+  description: flavor-complex-kobold-juice

@@ -1555,3 +1555,15 @@
       amount: 1
   products:
     BacchusBlessing: 4
+
+- type: reaction
+  id: KoboldJuice
+  reactants:
+    ScrewdriverCocktail:
+      amount: 3
+    BlueCuracao:
+      amount: 1
+    Ice:
+      amount: 1
+  products:
+    KoboldJuice: 5

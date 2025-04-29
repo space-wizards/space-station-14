@@ -2525,3 +2525,30 @@
         - !type:OrganType
           type: Dwarf
           shouldHave: false
+
+- type: reagent
+  id: KoboldJuice
+  name: reagent-name-kobold-juice
+  parent: BaseAlcohol
+  desc: reagent-desc-kobold-juice
+  # PhysicalDesc isn't set in stone, waiting on feedback from Flash himself.
+  physicalDesc: reagent-physical-desc-citric
+  flavor: koboldjuice
+  # Color likely needs some in-game fine-tuning, I just color-picked the IRL image.
+  color: "#6DAC75"
+  # Commenting out metamorphic glass stuff for now, since I need actual sprites first
+  # metamorphicSprite:
+  #   sprite: Objects/Consumable/Drinks/koboldjuice.rsi
+  #   state: icon_empty
+  # metamorphicMaxFillLevels: 4
+  # metamorphicFillBaseName: fill-
+  # metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      # Don't really know what to change these to yet so I'm just copying the entry for blue curacao for now.
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.1
