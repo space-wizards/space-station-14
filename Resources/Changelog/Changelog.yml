@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: beck-thompson
-  changes:
-  - message: Ore rocks now drop the correct amount of ore when mined.
-    type: Fix
-  id: 7880
-  time: '2025-01-30T17:48:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34557
 - author: keronshb
   changes:
   - message: Added Void's Applause! A Wizard Spell that switches your location with
@@ -3917,3 +3910,18 @@
   id: 8381
   time: '2025-04-29T03:13:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33517
+- author: EmoGarbage404
+  changes:
+  - message: Space debris now have a chance for landmines to spawn on them.
+    type: Add
+  - message: Adjusted the loot table on space debris to have more useful equipment
+      and items.
+    type: Tweak
+  - message: Round-start space debris now better mimics what the salvage magnet can
+      pull in.
+    type: Tweak
+  - message: Removed round-start space asteroids.
+    type: Remove
+  id: 8382
+  time: '2025-04-29T03:37:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37025
