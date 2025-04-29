@@ -25,6 +25,7 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
         SubscribeLocalEvent<DeliveryRandomMultiplierComponent, GetDeliveryMultiplierEvent>(OnGetRandomMultiplier);
 
         SubscribeLocalEvent<DeliveryPriorityComponent, MapInitEvent>(OnPriorityMapInit);
+        SubscribeLocalEvent<DeliveryPriorityComponent, DeliveryUnlockedEvent>(OnPriorityDelivered);
         SubscribeLocalEvent<DeliveryPriorityComponent, ExaminedEvent>(OnPriorityExamine);
         SubscribeLocalEvent<DeliveryPriorityComponent, GetDeliveryMultiplierEvent>(OnGetPriorityMultiplier);
 
@@ -55,12 +56,23 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
         Dirty(ent);
     }
 
+    private void OnPriorityDelivered(Entity<DeliveryPriorityComponent> ent, ref DeliveryUnlockedEvent args)
+    {
+        if (ent.Comp.Expired)
+            return;
+
+        ent.Comp.Delivered = true;
+        Dirty(ent);
+    }
+
     private void OnPriorityExamine(Entity<DeliveryPriorityComponent> ent, ref ExaminedEvent args)
     {
         var trueName = _nameModifier.GetBaseName(ent.Owner);
         var timeLeft = ent.Comp.DeliverUntilTime - _timing.CurTime;
 
-        if (_timing.CurTime < ent.Comp.DeliverUntilTime)
+        if (ent.Comp.Delivered)
+            args.PushMarkup(Loc.GetString("delivery-priority-delivered-examine", ("type", trueName)));
+        else if (_timing.CurTime < ent.Comp.DeliverUntilTime)
             args.PushMarkup(Loc.GetString("delivery-priority-examine", ("type", trueName), ("time", timeLeft.ToString("mm\\:ss"))));
         else
             args.PushMarkup(Loc.GetString("delivery-priority-expired-examine", ("type", trueName)));
@@ -122,7 +134,7 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
 
         while (priorityQuery.MoveNext(out var uid, out var priorityData))
         {
-            if (priorityData.Expired)
+            if (priorityData.Expired || priorityData.Delivered)
                 continue;
 
             if (priorityData.DeliverUntilTime < curTime)
