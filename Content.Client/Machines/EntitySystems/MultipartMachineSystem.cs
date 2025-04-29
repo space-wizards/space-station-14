@@ -30,8 +30,8 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// Can only show one set of ghost parts at a time and their location depends on the current map/grid
     /// location of the origin machine.
     /// </summary>
-    /// <param name="ent">Entity/Component that has been inspected</param
-    /// <param name="args">Args for the event</param>
+    /// <param name="ent">Entity/Component that has been inspected.</param>
+    /// <param name="args">Args for the event.</param>
     private void OnMachineExamined(Entity<MultipartMachineComponent> ent, ref ClientExaminedEvent args)
     {
         if (ent.Comp.Ghosts.Count != 0)
@@ -70,8 +70,8 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// Will attempt to remove itself from the list of known ghost entities in the main multipart
     /// machine component.
     /// </summary>
-    /// <param name="ent">Ghost entity that has been despawned</param>
-    /// <param name="args">Args for the event</param>
+    /// <param name="ent">Ghost entity that has been despawned.</param>
+    /// <param name="args">Args for the event.</param>
     private void OnGhostDespawned(Entity<MultipartMachineGhostComponent> ent, ref TimedDespawnEvent args)
     {
         if (!TryComp<MultipartMachineComponent>(ent.Comp.LinkedMachine, out var machine))

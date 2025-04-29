@@ -35,8 +35,8 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// Handles resolving the component type to a registration we can use for validating
     /// the machine parts we find.
     /// </summary>
-    /// <param name="ent">Entity/Component that just started</param
-    /// <param name="args">Args for the startup</param>
+    /// <param name="ent">Entity/Component that just started.</param>
+    /// <param name="args">Args for the startup.</param>
     private void OnComponentStartup(Entity<MultipartMachineComponent> ent, ref ComponentStartup args)
     {
         foreach (var (name, part) in ent.Comp.Parts)
@@ -53,8 +53,8 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// Scans all known multipart machines and rescans any that have a part which matches that specific graph
     /// and node IDs.
     /// </summary>
-    /// <param name="ent">Constructable entity that has moved in a graph</param>
-    /// <param name="args">Args for this event</param>
+    /// <param name="ent">Constructable entity that has moved in a graph.</param>
+    /// <param name="args">Args for this event.</param>
     private void OnConstructionNodeChanged(Entity<ConstructionComponent> ent,
         ref AfterConstructionChangeEntityEvent args)
     {
@@ -79,8 +79,8 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// entity will require a rescan of all machines as we have no idea what machine it might be a
     /// part of.
     /// </summary>
-    /// <param name="ent">Constructable entity that has been anchored or unanchored</param>
-    /// <param name="args">Args for this event, notably the anchor status</param>
+    /// <param name="ent">Constructable entity that has been anchored or unanchored.</param>
+    /// <param name="args">Args for this event, notably the anchor status.</param>
     private void OnConstructionAnchorChanged(Entity<ConstructionComponent> ent, ref AnchorStateChangedEvent args)
     {
         var query = EntityQueryEnumerator<MultipartMachineComponent>();
@@ -110,8 +110,8 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// <summary>
     /// Clears the matched entity from the specified part
     /// </summary>
-    /// <param name="ent">Entity to clear the part for</param>
-    /// <param name="part">Enum value for the part to clear</param>
+    /// <param name="ent">Entity to clear the part for.</param>
+    /// <param name="part">Enum value for the part to clear.</param>
     public void ClearPartEntity(Entity<MultipartMachineComponent?> ent, Enum part)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -126,8 +126,8 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// <summary>
     /// Returns whether each non-optional part of the machine has a matched entity
     /// </summary>
-    /// <param name="ent">Entity to check the assembled state of</param>
-    /// <returns>True if all non-optional parts have a match entity, false otherise</returns>
+    /// <param name="ent">Entity to check the assembled state of.</param>
+    /// <returns>True if all non-optional parts have a matching entity, false otherwise.</returns>
     public bool Assembled(Entity<MultipartMachineComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -143,11 +143,11 @@ public sealed class MultipartMachineSystem : EntitySystem
     }
 
     /// <summary>
-    /// Convenience method for getting a specific part of the machine.
+    /// Get the EntityUid for the entity bound to a specific part, if one exists.
     /// </summary>
-    /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query</param>
-    /// <param name="part">Enum value for the part to find, must match the value specified in YAML</param>
-    /// <returns>May contain the resoilved EntityUid for the specified part, null otherwise</returns>
+    /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query.</param>
+    /// <param name="part">Enum value for the part to find, must match the value specified in YAML.</param>
+    /// <returns>May contain the resolved EntityUid for the specified part, null otherwise.</returns>
     public EntityUid? GetPartEntity(Entity<MultipartMachineComponent?> ent, Enum part)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -162,12 +162,12 @@ public sealed class MultipartMachineSystem : EntitySystem
     }
 
     /// <summary>
-    /// Convenience method for getting a specific part of the machine.
+    /// Get the EntityUid for the entity bound to a specific part, if one exists.
     /// </summary>
-    /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query</param>
-    /// <param name="part">Enum for the part to find, must match the value specified in YAML</param>
-    /// <param name="entity">Out var which may contain the matched EntityUid for the specified part</param>
-    /// <returns>True if the part is found and has an matched entity, false otherwise</returns>
+    /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query.</param>
+    /// <param name="part">Enum for the part to find, must match the value specified in YAML.</param>
+    /// <param name="entity">Out var which may contain the matched EntityUid for the specified part.</param>
+    /// <returns>True if the part is found and has a matched entity, false otherwise.</returns>
     public bool TryGetPartEntity(Entity<MultipartMachineComponent?> ent,
         Enum part,
         [NotNullWhen(true)] out EntityUid? entity)
@@ -185,11 +185,11 @@ public sealed class MultipartMachineSystem : EntitySystem
     }
 
     /// <summary>
-    /// Convenience method for checking if a machine has an entity bound to a specific part
+    /// Check if a machine has an entity bound to a specific part
     /// </summary>
-    /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query</param>
-    /// <param name="part">Enum for the part to find</param>
-    /// <returns></returns>
+    /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query.</param>
+    /// <param name="part">Enum for the part to find.</param>
+    /// <returns>True if the specific part has a entity bound to it, false otherwise.</returns>
     public bool HasPart(Entity<MultipartMachineComponent?> ent, Enum part)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -205,13 +205,13 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// Scans the specified coordinates for any anchored entities that might match the given
     /// component and rotation requirements.
     /// </summary>
-    /// <param name="machineOrigin">Origin coordinates for the machine</param>
-    /// <param name="rotation">Rotation we're expecting to use to </param>
-    /// <param name="query">Entity query for the specific component the entity must have</param>
-    /// <param name="gridUid">EntityUID of the grid to use for the lookup</param>
-    /// <param name="grid">Grid to use for the lookup</param>
-    /// <param name="part">Part we're searching for</param>
-    /// <returns>True when part is found and matches, false otherwise</returns>
+    /// <param name="machineOrigin">Origin coordinates for the machine.</param>
+    /// <param name="rotation">Rotation we're expecting to use to.</param>
+    /// <param name="query">Entity query for the specific component the entity must have.</param>
+    /// <param name="gridUid">EntityUID of the grid to use for the lookup.</param>
+    /// <param name="grid">Grid to use for the lookup.</param>
+    /// <param name="part">Part we're searching for.</param>
+    /// <returns>True when part is found and matches requirements, false otherwise.</returns>
     private bool ScanPart(
         Vector2i machineOrigin,
         Angle rotation,
@@ -260,9 +260,9 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// Performs a rescan of all parts of the machine to confirm they exist and match
     /// the specified requirements for offset, rotation, and components.
     /// </summary>
-    /// <param name="ent">Entity to rescan for</param>
-    /// <param name="user">Optional user entity which has caused this rescan</param>
-    /// <returns>True if all non-optional parts are found and match, false otherwise</returns>
+    /// <param name="ent">Entity to rescan for.</param>
+    /// <param name="user">Optional user entity which has caused this rescan.</param>
+    /// <returns>True if all non-optional parts are found and match requirements, false otherwise.</returns>
     public bool Rescan(Entity<MultipartMachineComponent> ent, EntityUid? user = null)
     {
         // Get all required transform information to start looking for the other parts based on their offset
