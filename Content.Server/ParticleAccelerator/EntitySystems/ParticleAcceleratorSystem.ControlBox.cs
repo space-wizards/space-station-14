@@ -94,9 +94,10 @@ public sealed partial class ParticleAcceleratorSystem
         UpdatePowerDraw(uid, comp);
 
         if (!TryComp<PowerConsumerComponent>(_multipartMachine.GetPartEntity(uid, AcceleratorParts.PowerBox), out var powerConsumer)
-            || powerConsumer.ReceivedPower >=
-            powerConsumer.DrawRate * ParticleAcceleratorControlBoxComponent.RequiredPowerRatio)
+            || powerConsumer.ReceivedPower >= powerConsumer.DrawRate * ParticleAcceleratorControlBoxComponent.RequiredPowerRatio)
+        {
             PowerOn(uid, comp);
+        }
 
         UpdateUI(uid, comp);
     }
@@ -238,6 +239,7 @@ public sealed partial class ParticleAcceleratorSystem
     {
         if (!Resolve(uid, ref comp))
             return;
+
         if (!TryComp<PowerConsumerComponent>(_multipartMachine.GetPartEntity(uid, AcceleratorParts.PowerBox), out var powerConsumer))
             return;
 
