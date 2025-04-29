@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Nox38
-  changes:
-  - message: Set Marathon's max secoffs to 8.
-    type: Tweak
-  - message: Restocked Marathon's armory.
-    type: Tweak
-  id: 7886
-  time: '2025-02-01T06:32:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34798
 - author: ToxicSonicFan04
   changes:
   - message: Added Sink to Chemistry on Box Station!
@@ -3923,3 +3914,10 @@
   id: 8387
   time: '2025-04-29T13:07:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36009
+- author: SlamBamActionman
+  changes:
+  - message: The "Toggle Walk" alert no longer gets removed when it shouldn't.
+    type: Fix
+  id: 8388
+  time: '2025-04-29T13:32:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37033
