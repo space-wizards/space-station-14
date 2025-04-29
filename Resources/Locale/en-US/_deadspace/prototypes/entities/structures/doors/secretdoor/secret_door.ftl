@@ -1,0 +1,10 @@
+ent-WoodSecretDoor = wood wall
+    .desc = { ent-BaseSecretDoor.desc }
+ent-ReinforcedSecretDoor = reinforced solid wall
+    .desc = { ent-BaseSecretDoor.desc }
+ent-GoldSecretDoor = gold solid wall
+    .desc = { ent-BaseSecretDoor.desc }
+ent-SilverSecretDoor = silver solid wall
+    .desc = { ent-BaseSecretDoor.desc }
+ent-BrassSecretDoor = brass solid wall
+    .desc = { ent-BaseSecretDoor.desc }

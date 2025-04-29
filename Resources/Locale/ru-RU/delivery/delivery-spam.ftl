@@ -1,6 +1,30 @@
 # All spelling mistakes and broken english are intentional!
 # I hate saving paper contents in ftl files
 
+-delivery-header-nanotrasen = [color=blue]
+    ╔══════════════════╗
+    ║███░███░░░░██░░░░░║
+    ║░██░████░░░██░░░░░║
+    ║░░█░██░██░░██░█░░░║
+    ║░░░░██░░██░██░██░░║
+    ║░░░░██░░░████░███░║
+    ╚══════════════════╝[/color]
+-delivery-header-nanotrasen-alternate-timeline = [color=red]
+    ╔══════════════════╗
+    ║███░███░░░░██░░░░░║
+    ║░██░████░░░██░░░░░║
+    ║░░█░██░██░░██░█░░░║
+    ║░░░░██░░██░██░██░░║
+    ║░░░░██░░░████░███░║
+    ╚══════════════════╝[/color]
+-delivery-header-syndicate = [color=#ff0000]
+    ╔══════════════════╗
+    ║░░░░░████████░░░░░║
+    ║░░░░░██░░░░░░░░░░░║
+    ║░░░░░████████░░░░░║
+    ║░░░░░░░░░░░██░░░░░║
+    ║░░░░░████████░░░░░║
+    ╚══════════════════╝[/color]
 delivery-spam-robust-toolboxes = [color=blue][head=1]
     ░░▄▀░░
     ░▄█▄▄▀ [head=3]ROBUST - TOOLBOXES AND TOOLS[/head]
