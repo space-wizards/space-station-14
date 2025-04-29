@@ -1,79 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: The Kammerer now holds 7 shells but now fires slightly slower than other
-      shotguns.
-    type: Tweak
-  - message: The Double-Barreled Shotgun and its sawn-off counterpart now share the
-      same firerate.
-    type: Tweak
-  - message: Changed descriptions of the Kammerer, Enforcer and Bulldog.
-    type: Tweak
-  id: 7879
-  time: '2025-01-30T17:36:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33512
-- author: beck-thompson
-  changes:
-  - message: Ore rocks now drop the correct amount of ore when mined.
-    type: Fix
-  id: 7880
-  time: '2025-01-30T17:48:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34557
-- author: keronshb
-  changes:
-  - message: Added Void's Applause! A Wizard Spell that switches your location with
-      the target.
-    type: Add
-  id: 7881
-  time: '2025-01-31T00:10:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34591
-- author: Nox38
-  changes:
-  - message: Rebalanced Box's armory and increased its max security officers to 7.
-    type: Tweak
-  id: 7882
-  time: '2025-01-31T07:23:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34750
-- author: SlamBamActionman
-  changes:
-  - message: Forcefeeding pills now takes 2 seconds (was 1 second), while eating them
-      takes 0.6 seconds (was 1 second).
-    type: Tweak
-  id: 7883
-  time: '2025-01-31T11:59:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34764
-- author: themias
-  changes:
-  - message: Updated sound effects for shutters
-    type: Tweak
-  id: 7884
-  time: '2025-01-31T17:41:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34774
-- author: Nox38
-  changes:
-  - message: Renamed riot bullet shield to ballistic shield
-    type: Tweak
-  - message: Renamed riot laser shield to ablative shield
-    type: Tweak
-  id: 7885
-  time: '2025-01-31T23:39:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34794
-- author: Nox38
-  changes:
-  - message: Set Marathon's max secoffs to 8.
-    type: Tweak
-  - message: Restocked Marathon's armory.
-    type: Tweak
-  id: 7886
-  time: '2025-02-01T06:32:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34798
-- author: ToxicSonicFan04
-  changes:
-  - message: Added Sink to Chemistry on Box Station!
-    type: Add
-  id: 7887
-  time: '2025-02-01T06:35:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34803
 - author: NazrinNya
   changes:
   - message: Flesh Kudzu now contains razorium, making it unsafe to eat.
@@ -3918,3 +3843,83 @@
   id: 8380
   time: '2025-04-29T00:26:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37003
+- author: Thatonestomf
+  changes:
+  - message: Added slugs to both the bulldog and ammo bundle.
+    type: Add
+  - message: Slugs are alot more powerful than they were before, now dealing 40 pierce
+      and 15 structural
+    type: Tweak
+  - message: Basic shells now deal structural damage
+    type: Tweak
+  id: 8381
+  time: '2025-04-29T03:13:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33517
+- author: EmoGarbage404
+  changes:
+  - message: Space debris now have a chance for landmines to spawn on them.
+    type: Add
+  - message: Adjusted the loot table on space debris to have more useful equipment
+      and items.
+    type: Tweak
+  - message: Round-start space debris now better mimics what the salvage magnet can
+      pull in.
+    type: Tweak
+  - message: Removed round-start space asteroids.
+    type: Remove
+  id: 8382
+  time: '2025-04-29T03:37:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37025
+- author: drakewill-CRL
+  changes:
+  - message: You can now see mutations on plants and produce.
+    type: Tweak
+  id: 8383
+  time: '2025-04-29T04:45:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32650
+- author: lzk228
+  changes:
+  - message: When an entity becomes SSD, it will be forced to sleep after 10 minutes.
+      It can be awakened if no more SSD.
+    type: Tweak
+  id: 8384
+  time: '2025-04-29T05:24:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34039
+- author: TytosB
+  changes:
+  - message: adjusted pka damage and range
+    type: Tweak
+  id: 8385
+  time: '2025-04-29T10:00:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37012
+- author: abadaba695
+  changes:
+  - message: Added 15u, 20u, and 30u transfer buttons in the chem master.
+    type: Add
+  id: 8386
+  time: '2025-04-29T10:24:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36995
+- author: Thinbug0
+  changes:
+  - message: Science developed the Push-Horn, capable of pushing people away with
+      each honk!
+    type: Add
+  id: 8387
+  time: '2025-04-29T13:07:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36009
+- author: SlamBamActionman
+  changes:
+  - message: The "Toggle Walk" alert no longer gets removed when it shouldn't.
+    type: Fix
+  id: 8388
+  time: '2025-04-29T13:32:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37033
+- author: Boaz1111
+  changes:
+  - message: Added sharkminnow tooth spears and carp tooth arrows. Happy salvaging!
+    type: Add
+  - message: Sharkminnow teeth now deal 15 damage instead of 10.
+    type: Tweak
+  id: 8389
+  time: '2025-04-29T16:36:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31257
