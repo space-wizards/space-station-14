@@ -2546,9 +2546,8 @@
   metabolisms:
     Drink:
       effects:
-      # Don't really know what to change these to yet so I'm just copying the entry for blue curacao for now.
       - !type:SatiateThirst
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.1
+        amount: 0.06
