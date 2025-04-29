@@ -5,6 +5,42 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Machines.Components;
 
+/// <summary>
+/// Marks an entity as being the owner of a multipart machine.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class MultipartMachineComponent : Component
+{
+    /// <summary>
+    /// Dictionary of Enum values to specific parts of this machine.
+    /// Each key can be specified as 'enum.<EnumName>.<EnumValue>` in Yaml.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<Enum, MachinePart> Parts = [];
+
+    /// <summary>
+    /// Determined orientation of this machine, used when displaying
+    /// ghost entities to show machine part locations.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Angle? Rotation = null;
+
+    /// <summary>
+    /// Whether this multipart machine is assembled or not.
+    /// Optional parts are not taken into account.
+    /// </summary>
+    [DataField]
+    public bool IsAssembled = false;
+
+    /// <summary>
+    /// Flag for whether the client side system is allowed to show
+    /// ghosts of missing machine parts.
+    /// Controlled/Used by the client side.
+    /// </summary>
+    [DataField]
+    public List<EntityUid> Ghosts = [];
+}
+
 [DataDefinition]
 [Serializable, NetSerializable]
 public sealed partial class MachinePart
@@ -62,40 +98,4 @@ public sealed partial class MachinePart
     /// </summary>
     [DataField]
     public string ExpectedNode;
-}
-
-/// <summary>
-/// Marks an entity as being the owner of a multipart machine.
-/// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class MultipartMachineComponent : Component
-{
-    /// <summary>
-    /// Dictionary of Enum values to specific parts of this machine.
-    /// Each key can be specified as 'enum.<EnumName>.<EnumValue>` in Yaml.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public Dictionary<Enum, MachinePart> Parts = [];
-
-    /// <summary>
-    /// Determined orientation of this machine, used when displaying
-    /// ghost entities to show machine part locations.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public Angle? Rotation = null;
-
-    /// <summary>
-    /// Whether this multipart machine is assembled or not.
-    /// Optional parts are not taken into account.
-    /// </summary>
-    [DataField]
-    public bool IsAssembled = false;
-
-    /// <summary>
-    /// Flag for whether the client side system is allowed to show
-    /// ghosts of missing machine parts.
-    /// Controlled/Used by the client side.
-    /// </summary>
-    [DataField]
-    public List<EntityUid> Ghosts = [];
 }

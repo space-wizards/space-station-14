@@ -35,80 +35,6 @@ public sealed class MultipartMachineSystem : EntitySystem
     }
 
     /// <summary>
-    /// Handles resolving the component type to a registration we can use for validating
-    /// the machine parts we find.
-    /// </summary>
-    /// <param name="ent">Entity/Component that just started.</param>
-    /// <param name="args">Args for the startup.</param>
-    private void OnComponentStartup(Entity<MultipartMachineComponent> ent, ref ComponentStartup args)
-    {
-        foreach (var (name, part) in ent.Comp.Parts)
-        {
-            if (!_factory.TryGetRegistration(part.Component, out var registration))
-                throw new Exception($"Unable to resolve component type [{part.Component}] for machine part [{name}]");
-        }
-    }
-
-    /// <summary>
-    /// Handles when a constructable entity has been created due to a move in a construction graph.
-    /// Scans all known multipart machines and rescans any that have a part which matches that specific graph
-    /// and node IDs.
-    /// </summary>
-    /// <param name="ent">Constructable entity that has moved in a graph.</param>
-    /// <param name="args">Args for this event.</param>
-    private void OnConstructionNodeChanged(Entity<ConstructionComponent> ent,
-        ref AfterConstructionChangeEntityEvent args)
-    {
-        var query = EntityQueryEnumerator<MultipartMachineComponent>();
-        while (query.MoveNext(out var uid, out var machine))
-        {
-            foreach (var part in machine.Parts.Values)
-            {
-                if (args.Graph == part.Graph &&
-                    (args.PreviousNode == part.ExpectedNode || args.CurrentNode == part.ExpectedNode))
-                {
-                    Rescan((uid, machine));
-                    break; // No need to scan the same machine again
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Handles when a constructable entity has been anchored or unanchored by a user.
-    /// We might be able to link an unanchored part to a machine, but anchoring a constructable
-    /// entity will require a rescan of all machines as we have no idea what machine it might be a
-    /// part of.
-    /// </summary>
-    /// <param name="ent">Constructable entity that has been anchored or unanchored.</param>
-    /// <param name="args">Args for this event, notably the anchor status.</param>
-    private void OnConstructionAnchorChanged(Entity<ConstructionComponent> ent, ref AnchorStateChangedEvent args)
-    {
-        var query = EntityQueryEnumerator<MultipartMachineComponent>();
-        while (query.MoveNext(out var uid, out var machine))
-        {
-            if (!args.Anchored)
-            {
-                // Some construction is being unanchored, check if its a known part for us
-                foreach (var part in machine.Parts.Values)
-                {
-                    if (part.Entity.HasValue && GetEntity(part.Entity) == ent.Owner)
-                    {
-                        Rescan((uid, machine));
-                        return; // Can just early out now that we have scanned the exact right machine.
-                    }
-                }
-            }
-            else
-            {
-                // We're anchoring some construction, we have no idea which machine this might be for
-                // so we have to just check everyone and perform a rescan.
-                Rescan((uid, machine));
-            }
-        }
-    }
-
-    /// <summary>
     /// Clears the matched entity from the specified part
     /// </summary>
     /// <param name="ent">Entity to clear the part for.</param>
@@ -194,61 +120,6 @@ public sealed class MultipartMachineSystem : EntitySystem
             return false;
 
         return value.Entity != null;
-    }
-
-    /// <summary>
-    /// Scans the specified coordinates for any anchored entities that might match the given
-    /// component and rotation requirements.
-    /// </summary>
-    /// <param name="machineOrigin">Origin coordinates for the machine.</param>
-    /// <param name="rotation">Rotation we're expecting to use to.</param>
-    /// <param name="query">Entity query for the specific component the entity must have.</param>
-    /// <param name="gridUid">EntityUID of the grid to use for the lookup.</param>
-    /// <param name="grid">Grid to use for the lookup.</param>
-    /// <param name="part">Part we're searching for.</param>
-    /// <returns>True when part is found and matches requirements, false otherwise.</returns>
-    private bool ScanPart(
-        Vector2i machineOrigin,
-        Angle rotation,
-        EntityQuery<IComponent> query,
-        EntityUid gridUid,
-        MapGridComponent grid,
-        MachinePart part)
-    {
-        // Safety first, nuke any existing data
-        part.Entity = null;
-
-        var expectedLocation = machineOrigin + part.Offset.Rotate(rotation);
-        var expectedRotation = part.Rotation + rotation;
-
-        foreach (var entity in _mapSystem.GetAnchoredEntities(gridUid, grid, expectedLocation))
-        {
-            if (TerminatingOrDeleted(entity))
-            {
-                // Ignore entities which are in the process of being deleted
-                continue;
-            }
-
-            if (!query.TryGetComponent(entity, out var comp) ||
-                !Transform(entity).LocalRotation.EqualsApprox(expectedRotation.Theta))
-            {
-                // Either has no transform, or doesn't match the rotation
-                continue;
-            }
-
-            if (!TryComp<ConstructionComponent>(entity, out var construction) ||
-                construction.Graph != part.Graph ||
-                construction.Node != part.ExpectedNode)
-            {
-                // This constructable doesn't match the right graph we expect
-                continue;
-            }
-
-            part.Entity = GetNetEntity(entity);
-            return true;
-        }
-
-        return false;
     }
 
     /// <summary>
@@ -347,5 +218,134 @@ public sealed class MultipartMachineSystem : EntitySystem
         Dirty(ent);
 
         return !missingParts;
+    }
+
+    /// <summary>
+    /// Handles resolving the component type to a registration we can use for validating
+    /// the machine parts we find.
+    /// </summary>
+    /// <param name="ent">Entity/Component that just started.</param>
+    /// <param name="args">Args for the startup.</param>
+    private void OnComponentStartup(Entity<MultipartMachineComponent> ent, ref ComponentStartup args)
+    {
+        foreach (var (name, part) in ent.Comp.Parts)
+        {
+            if (!_factory.TryGetRegistration(part.Component, out var registration))
+                throw new Exception($"Unable to resolve component type [{part.Component}] for machine part [{name}]");
+        }
+    }
+
+    /// <summary>
+    /// Handles when a constructable entity has been created due to a move in a construction graph.
+    /// Scans all known multipart machines and rescans any that have a part which matches that specific graph
+    /// and node IDs.
+    /// </summary>
+    /// <param name="ent">Constructable entity that has moved in a graph.</param>
+    /// <param name="args">Args for this event.</param>
+    private void OnConstructionNodeChanged(Entity<ConstructionComponent> ent,
+        ref AfterConstructionChangeEntityEvent args)
+    {
+        var query = EntityQueryEnumerator<MultipartMachineComponent>();
+        while (query.MoveNext(out var uid, out var machine))
+        {
+            foreach (var part in machine.Parts.Values)
+            {
+                if (args.Graph == part.Graph &&
+                    (args.PreviousNode == part.ExpectedNode || args.CurrentNode == part.ExpectedNode))
+                {
+                    Rescan((uid, machine));
+                    break; // No need to scan the same machine again
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Handles when a constructable entity has been anchored or unanchored by a user.
+    /// We might be able to link an unanchored part to a machine, but anchoring a constructable
+    /// entity will require a rescan of all machines as we have no idea what machine it might be a
+    /// part of.
+    /// </summary>
+    /// <param name="ent">Constructable entity that has been anchored or unanchored.</param>
+    /// <param name="args">Args for this event, notably the anchor status.</param>
+    private void OnConstructionAnchorChanged(Entity<ConstructionComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        var query = EntityQueryEnumerator<MultipartMachineComponent>();
+        while (query.MoveNext(out var uid, out var machine))
+        {
+            if (!args.Anchored)
+            {
+                // Some construction is being unanchored, check if its a known part for us
+                foreach (var part in machine.Parts.Values)
+                {
+                    if (part.Entity.HasValue && GetEntity(part.Entity) == ent.Owner)
+                    {
+                        Rescan((uid, machine));
+                        return; // Can just early out now that we have scanned the exact right machine.
+                    }
+                }
+            }
+            else
+            {
+                // We're anchoring some construction, we have no idea which machine this might be for
+                // so we have to just check everyone and perform a rescan.
+                Rescan((uid, machine));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Scans the specified coordinates for any anchored entities that might match the given
+    /// component and rotation requirements.
+    /// </summary>
+    /// <param name="machineOrigin">Origin coordinates for the machine.</param>
+    /// <param name="rotation">Rotation we're expecting to use to.</param>
+    /// <param name="query">Entity query for the specific component the entity must have.</param>
+    /// <param name="gridUid">EntityUID of the grid to use for the lookup.</param>
+    /// <param name="grid">Grid to use for the lookup.</param>
+    /// <param name="part">Part we're searching for.</param>
+    /// <returns>True when part is found and matches requirements, false otherwise.</returns>
+    private bool ScanPart(
+        Vector2i machineOrigin,
+        Angle rotation,
+        EntityQuery<IComponent> query,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        MachinePart part)
+    {
+        // Safety first, nuke any existing data
+        part.Entity = null;
+
+        var expectedLocation = machineOrigin + part.Offset.Rotate(rotation);
+        var expectedRotation = part.Rotation + rotation;
+
+        foreach (var entity in _mapSystem.GetAnchoredEntities(gridUid, grid, expectedLocation))
+        {
+            if (TerminatingOrDeleted(entity))
+            {
+                // Ignore entities which are in the process of being deleted
+                continue;
+            }
+
+            if (!query.TryGetComponent(entity, out var comp) ||
+                !Transform(entity).LocalRotation.EqualsApprox(expectedRotation.Theta))
+            {
+                // Either has no transform, or doesn't match the rotation
+                continue;
+            }
+
+            if (!TryComp<ConstructionComponent>(entity, out var construction) ||
+                construction.Graph != part.Graph ||
+                construction.Node != part.ExpectedNode)
+            {
+                // This constructable doesn't match the right graph we expect
+                continue;
+            }
+
+            part.Entity = GetNetEntity(entity);
+            return true;
+        }
+
+        return false;
     }
 }
