@@ -28,10 +28,10 @@ public abstract partial class EntityTableSelector
     public double Prob = 1;
 
     /// <summary>
-    /// A list of conditions that must be evaluated for the selector to function.
+    /// A list of conditions that must evaluate to 'true' for the selector to apply.
     /// </summary>
     [DataField]
-    public List<TableCondition> Conditions = new();
+    public List<EntityTableCondition> Conditions = new();
 
     /// <summary>
     /// If true, all the conditions must be successful in order for the selector to process.
@@ -71,12 +71,14 @@ public abstract partial class EntityTableSelector
             var res = condition.Evaluate(entMan, proto);
 
             if (RequireAll && !res)
-                return false;
+                return false; // intentional break out of loop and function
+
             success |= res;
         }
 
         if (RequireAll)
             return true;
+
         return success;
     }
 

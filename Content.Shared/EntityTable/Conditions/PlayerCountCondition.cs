@@ -3,7 +3,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityTable.Conditions;
 
-public sealed partial class PlayerCountCondition : TableCondition
+/// <summary>
+/// Condition that passes only if the server player count is within a certain range.
+/// </summary>
+public sealed partial class PlayerCountCondition : EntityTableCondition
 {
     /// <summary>
     /// Minimum players of needed for this condition to succeed. Inclusive.

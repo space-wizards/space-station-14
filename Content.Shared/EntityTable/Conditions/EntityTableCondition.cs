@@ -5,10 +5,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityTable.Conditions;
 
 /// <summary>
-/// Used for implementing conditional logic for <see cref="EntityTableSelector"/>
+/// Used for implementing conditional logic for <see cref="EntityTableSelector"/>.
 /// </summary>
 [ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
-public abstract partial class TableCondition
+public abstract partial class EntityTableCondition
 {
     /// <summary>
     /// If true, inverts the result of the condition.
@@ -20,9 +20,8 @@ public abstract partial class TableCondition
     {
         var res = EvaluateImplementation(entMan, proto);
 
-        if (Invert)
-            return !res;
-        return res;
+        // XOR eval to invert the result.
+        return res ^ Invert;
     }
 
     public abstract bool EvaluateImplementation(IEntityManager entMan, IPrototypeManager proto);
