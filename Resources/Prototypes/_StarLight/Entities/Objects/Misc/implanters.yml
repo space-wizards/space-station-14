@@ -1,0 +1,7 @@
+- type: entity
+  id: USSPUplinkImplanter
+  suffix: USSP uplink
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: USSPUplinkImplant

@@ -1,11 +1,12 @@
 - type: entity
-  id: USSPUplinkImplantItem
+  id: USSPUplinkImplant
   name: USSP uplink implant
   description: A subdermal implant containing the USSP uplink radio.
-  parent: BaseSubdermalImplant
+  parent: [ BaseSubdermalImplant, StorePresetUSSP ]
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
-      implantAction: USSPUplinkRadioPreset
+      implantAction: ActionOpenUplinkImplant
       whitelist:
         components:
           - Hands
@@ -16,13 +17,3 @@
       interfaces:
         enum.StoreUiKey.Key:
           type: StoreBoundUserInterface
-    - type: Item
-      sprite: Objects/Specific/Medical/implanter.rsi
-      size: Small
-    - type: Sprite
-      sprite: Objects/Specific/Medical/implanter.rsi
-      state: implant
-    - type: Appearance
-  tags:
-    - SubdermalImplant
-    - ImplantItem
