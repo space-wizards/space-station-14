@@ -1,3 +1,4 @@
+using System.Diagnostics.Contracts;
 using Content.Shared.Light.Components;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
@@ -18,6 +19,7 @@ public abstract class SharedRoofSystem : EntitySystem
     /// Returns whether the specified tile is roof-occupied.
     /// </summary>
     /// <returns>Returns false if no data or not rooved.</returns>
+    [Pure]
     public bool IsRooved(Entity<MapGridComponent, RoofComponent> grid, Vector2i index)
     {
         var roof = grid.Comp2;
@@ -47,6 +49,40 @@ public abstract class SharedRoofSystem : EntitySystem
         }
 
         return false;
+    }
+
+    [Pure]
+    public Color? GetColor(Entity<MapGridComponent, RoofComponent> grid, Vector2i index)
+    {
+        var roof = grid.Comp2;
+        var chunkOrigin = SharedMapSystem.GetChunkIndices(index, RoofComponent.ChunkSize);
+
+        if (roof.Data.TryGetValue(chunkOrigin, out var bitMask))
+        {
+            var chunkRelative = SharedMapSystem.GetChunkRelative(index, RoofComponent.ChunkSize);
+            var bitFlag = (ulong) 1 << (chunkRelative.X + chunkRelative.Y * RoofComponent.ChunkSize);
+
+            var isRoof = (bitMask & bitFlag) == bitFlag;
+
+            // Early out, otherwise check for components on tile.
+            if (isRoof)
+            {
+                return roof.Color;
+            }
+        }
+
+        _roofSet.Clear();
+        _lookup.GetLocalEntitiesIntersecting(grid.Owner, index, _roofSet);
+
+        foreach (var isRoofEnt in _roofSet)
+        {
+            if (!isRoofEnt.Comp.Enabled)
+                continue;
+
+            return isRoofEnt.Comp.Color ?? roof.Color;
+        }
+
+        return null;
     }
 
     public void SetRoof(Entity<MapGridComponent?, RoofComponent?> grid, Vector2i index, bool value)

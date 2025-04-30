@@ -16,10 +16,16 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_crimson.yml
         - type: StationJobs
-          availableJobs:
-            #service
+          availableJobs: # 46 jobs total w/o latejoins & interns, 57 jobs total w/ latejoins & interns
+            #command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            ChiefEngineer: [ 1, 1 ]
+            ResearchDirector: [ 1, 1 ]
+            Quartermaster: [ 1, 1 ]
+            #service (8 - 10)
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 2 ]
             Chef: [ 1, 1 ]
@@ -27,37 +33,32 @@
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
-            #engineering
-            ChiefEngineer: [ 1, 1 ]
+            #engineering (6)
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 4, 4 ]
-            TechnicalAssistant: [ 3, 3 ]
-            #medical
-            ChiefMedicalOfficer: [ 1, 1 ]
+            TechnicalAssistant: [ 3, 3 ] #intern, not counted
+            #medical (6)
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
-            MedicalIntern: [ 2, 2 ]
+            MedicalIntern: [ 2, 2 ] #intern, not counted
             Paramedic: [ 1, 1 ]
-            #science
-            ResearchDirector: [ 1, 1 ]
+            #science (4)
             Scientist: [ 4, 4 ]
-            ResearchAssistant: [ 2, 2 ]
-            #security
-            HeadOfSecurity: [ 1, 1 ]
+            ResearchAssistant: [ 2, 2 ] #intern, not counted
+            #security (6)
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 3, 3 ]
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 2, 2 ]
+            SecurityCadet: [ 2, 2 ] #intern, not counted
             Lawyer: [ 1, 1 ]
-            #supply
-            Quartermaster: [ 1, 1 ]
+            #supply (4)
             SalvageSpecialist: [ 2, 2 ]
             CargoTechnician: [ 2, 2 ]
-            #civilian
-            Passenger: [ -1, -1 ]
+            #civilian (3+)
+            Passenger: [ -1, -1 ] #infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            #silicon
+            #silicon (2)
             StationAi: [ 1, 1 ]
             Borg: [ 1, 1 ]

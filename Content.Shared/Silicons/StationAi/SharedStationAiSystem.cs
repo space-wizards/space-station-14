@@ -360,10 +360,19 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         EntityCoordinates? coords = ent.Comp.RemoteEntity != null ? Transform(ent.Comp.RemoteEntity.Value).Coordinates : null;
 
         // Attach new eye
+        var oldEye = ent.Comp.RemoteEntity;
+
         ClearEye(ent);
 
         if (SetupEye(ent, coords))
             AttachEye(ent);
+
+        if (oldEye != null)
+        {
+            // Raise the following event on the old eye before it's deleted
+            var ev = new StationAiRemoteEntityReplacementEvent(ent.Comp.RemoteEntity);
+            RaiseLocalEvent(oldEye.Value, ref ev);
+        }
 
         // Adjust user FoV
         var user = GetInsertedAI(ent);
