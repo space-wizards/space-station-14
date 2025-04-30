@@ -121,7 +121,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 
         if (HasComp<ChangelingHuskedCorpseComponent>(target))
         {
-            _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-husk"), args.Performer, args.Performer);
+            _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-husked"), args.Performer, args.Performer);
             return;
         }
 

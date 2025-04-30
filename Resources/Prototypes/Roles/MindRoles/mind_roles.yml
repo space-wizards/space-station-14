@@ -320,4 +320,5 @@
       antagPrototype: Changeling
       exclusiveAntag: true
       roleType: SoloAntagonist
+      subtype: changeling-subtype
     - type: ChangelingRole
