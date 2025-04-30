@@ -109,6 +109,17 @@
   objectType: Item
 
 - type: construction
+  name: sharkminnow tooth spear
+  id: SpearSharkMinnow
+  graph: SpearSharkMinnow
+  startNode: start
+  targetNode: spear
+  category: construction-category-weapons
+  description: A crude spear with a sharkminnow tooth for when you need to put holes in somebody.
+  icon: { sprite: Objects/Weapons/Melee/sharkminnow_spear.rsi, state: spear }
+  objectType: Item
+
+- type: construction
   name: makeshift bola
   id: Bola
   graph: Bola
@@ -149,6 +160,17 @@
   targetNode: ImprovisedArrow
   category: construction-category-weapons
   description: An arrow tipped with pieces of a glass shard, for use with a bow.
+  icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: wielded-arrow }
+  objectType: Item
+
+- type: construction
+  name: carp tooth arrow
+  id: ImprovisedArrowCarp
+  graph: ImprovisedArrowCarp
+  startNode: start
+  targetNode: ImprovisedArrowCarp
+  category: construction-category-weapons
+  description: An arrow tipped with a carp tooth, for use with a bow.
   icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: wielded-arrow }
   objectType: Item
 
