@@ -348,6 +348,9 @@
   id: ConveyorAssembly
 
 - type: Tag
+  id: Cooked
+
+- type: Tag
   id: CoordinatesDisk
 
 - type: Tag #Ohioans die happy
@@ -430,6 +433,9 @@
 
 - type: Tag
   id: CubanCarp
+
+- type: Tag
+  id: Cutlet
 
 - type: Tag
   id: DeathAcidifier
@@ -1074,6 +1080,9 @@
 
 - type: Tag
   id: Radio
+
+- type: Tag
+  id: Raw
 
 - type: Tag
   id: RawMaterial
