@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Forensics.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -23,6 +24,9 @@ public sealed class FingerprintReaderSystem : EntitySystem
     {
         if (!Resolve(target, ref target.Comp, false))
             return true;
+
+        if (!HasComp<FingerprintReaderComponent>(target))
+            return false;
 
         if (target.Comp.AllowedFingerprints.Count == 0)
             return true;

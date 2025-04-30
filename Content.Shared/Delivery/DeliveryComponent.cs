@@ -70,6 +70,20 @@ public sealed partial class DeliveryComponent : Component
     public bool WasPenalized;
 
     /// <summary>
+    /// Whether you can force another entity to open this letter.
+    /// This is done via interaction.
+    /// </summary>
+    [DataField]
+    public bool CanForceDeliver = true;
+
+    /// <summary>
+    /// Whether this delivery has already received a penalty.
+    /// Used to avoid getting penalized several times.
+    /// </summary>
+    [DataField]
+    public TimeSpan ForceDeliverTime = TimeSpan.FromSeconds(5);
+
+    /// <summary>
     /// The sound to play when the delivery is unlocked.
     /// </summary>
     [DataField]

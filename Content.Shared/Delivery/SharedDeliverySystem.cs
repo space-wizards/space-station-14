@@ -1,9 +1,12 @@
 using System.Linq;
+using Content.Shared.DoAfter;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Examine;
 using Content.Shared.FingerprintReader;
+using Content.Shared.Forensics.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Objectives.Components;
@@ -14,6 +17,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Delivery;
 
@@ -31,6 +35,7 @@ public abstract class SharedDeliverySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly NameModifierSystem _nameModifier = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
     private static readonly ProtoId<TagPrototype> RecyclableTag = "Recyclable";
@@ -47,8 +52,62 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         SubscribeLocalEvent<DeliverySpawnerComponent, ExaminedEvent>(OnSpawnerExamine);
         SubscribeLocalEvent<DeliverySpawnerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetSpawnerVerbs);
+
+        SubscribeLocalEvent<DeliveryComponent, AfterInteractEvent>(OnDeliveryAfterInteract);
+        SubscribeLocalEvent<DeliveryComponent, DeliveryForceUnlockDoAfterEvent>(OnDeliveryForceUnlockDoAfter);
     }
 
+    #region Force Unlock
+    private void OnDeliveryAfterInteract(Entity<DeliveryComponent> ent, ref AfterInteractEvent args)
+    {
+        if (!args.CanReach || args.Target == null || args.Target == args.User || !ent.Comp.CanForceDeliver)
+            return;
+
+        if (!HasComp<FingerprintComponent>(args.Target.Value))
+            return;
+
+        if (!ent.Comp.IsLocked)
+            return;
+
+        var usedName = _nameModifier.GetBaseName(ent.Owner);
+
+        _popup.PopupPredicted(Loc.GetString("delivery-force-popup-target", ("identity", Identity.Name(args.User, EntityManager))), null, args.Target.Value, args.Target.Value, PopupType.SmallCaution);
+        _popup.PopupPredicted(Loc.GetString("delivery-force-popup-self", ("identity", Identity.Name(args.Target.Value, EntityManager)), ("type", usedName)), null, args.User, args.User);
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.ForceDeliverTime, new DeliveryForceUnlockDoAfterEvent(), args.Used, args.Target, args.Used)
+        {
+            NeedHand = true,
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            BreakOnDropItem = true,
+            BreakOnHandChange = true,
+        };
+
+        _doAfterSystem.TryStartDoAfter(doAfterArgs);
+    }
+
+    private void OnDeliveryForceUnlockDoAfter(Entity<DeliveryComponent> ent, ref DeliveryForceUnlockDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Target == null || args.Target == args.User)
+            return;
+
+        if (!_fingerprintReader.IsAllowed(ent.Owner, args.Target.Value))
+        {
+            var usedName = _nameModifier.GetBaseName(ent.Owner);
+            _popup.PopupPredicted(Loc.GetString("delivery-force-popup-self-fail", ("identity", Identity.Name(args.Target.Value, EntityManager)), ("type", usedName)), null, args.User, args.User);
+            return;
+        }
+
+        if (!ent.Comp.IsLocked)
+            return;
+
+        _hands.TryPickupAnyHand(args.Target.Value, ent);
+
+        TryUnlockDelivery(ent, args.Target.Value);
+    }
+    #endregion
+
+    #region Examines
     private void OnDeliveryExamine(Entity<DeliveryComponent> ent, ref ExaminedEvent args)
     {
         var jobTitle = ent.Comp.RecipientJobTitle ?? Loc.GetString("delivery-recipient-no-job");
@@ -77,7 +136,9 @@ public abstract class SharedDeliverySystem : EntitySystem
     {
         args.PushMarkup(Loc.GetString("delivery-teleporter-amount-examine", ("amount", ent.Comp.ContainedDeliveryAmount)), 50);
     }
+    #endregion
 
+    #region Usage Events
     private void OnUseInHand(Entity<DeliveryComponent> ent, ref UseInHandEvent args)
     {
         args.Handled = true;
@@ -158,7 +219,9 @@ public abstract class SharedDeliverySystem : EntitySystem
             Text = Loc.GetString("delivery-teleporter-empty-verb"),
         });
     }
+    #endregion
 
+    #region API
     private bool TryUnlockDelivery(Entity<DeliveryComponent> ent, EntityUid user, bool rewardMoney = true, bool force = false)
     {
         // Check fingerprint access if there is a reader on the mail
@@ -230,6 +293,7 @@ public abstract class SharedDeliverySystem : EntitySystem
             _container.EmptyContainer(container, true);
         }
     }
+    #endregion
 
     #region Visual Updates
     // TODO: generic updateVisuals from component data
@@ -288,6 +352,9 @@ public abstract class SharedDeliverySystem : EntitySystem
 
     protected virtual void SpawnDeliveries(Entity<DeliverySpawnerComponent?> ent) { }
 }
+
+[Serializable, NetSerializable]
+public sealed partial class DeliveryForceUnlockDoAfterEvent : SimpleDoAfterEvent;
 
 /// <summary>
 /// Used to gather the total multiplier for deliveries.
