@@ -80,7 +80,8 @@ public sealed partial class NodeScannerDisplay : FancyWindow
             ArtifactState.None => "\u2800", // placeholder for line to not be squeezed
             ArtifactState.Ready => Loc.GetString("node-scanner-artifact-state-ready"),
             ArtifactState.Unlocking => Loc.GetString("node-scanner-artifact-state-unlocking"),
-            ArtifactState.Cooldown => Loc.GetString("node-scanner-artifact-state-cooldown")
+            ArtifactState.Cooldown => Loc.GetString("node-scanner-artifact-state-cooldown"),
+            _ => throw new ArgumentException("Invalid state"),
         };
     }
 }

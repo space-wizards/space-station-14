@@ -1,18 +1,18 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "made by emisse for ss14",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "made by augustsun(Discord)/august-sun(GitHub) for SS14",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "equipped-NECK",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-NECK",
+            "directions": 4
+        }
+    ]
 }

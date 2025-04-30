@@ -436,12 +436,12 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
     /// to the position of <paramref name="ent"/> from the nearest beacon.
     /// </summary>
     [PublicAPI]
-    public string GetNearestBeaconString(Entity<TransformComponent?> ent)
+    public string GetNearestBeaconString(Entity<TransformComponent?> ent, bool onlyName = false)
     {
         if (!Resolve(ent, ref ent.Comp))
             return Loc.GetString("nav-beacon-pos-no-beacons");
 
-        return GetNearestBeaconString(_transformSystem.GetMapCoordinates(ent, ent.Comp));
+        return GetNearestBeaconString(_transformSystem.GetMapCoordinates(ent, ent.Comp), onlyName);
     }
 
     /// <summary>
@@ -449,10 +449,13 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
     /// to <paramref name="coordinates"/> from the nearest beacon.
     /// </summary>
 
-    public string GetNearestBeaconString(MapCoordinates coordinates)
+    public string GetNearestBeaconString(MapCoordinates coordinates, bool onlyName = false)
     {
         if (!TryGetNearestBeacon(coordinates, out var beacon, out var pos))
             return Loc.GetString("nav-beacon-pos-no-beacons");
+
+        if (onlyName)
+            return beacon.Value.Comp.Text!;
 
         var gridOffset = Angle.Zero;
         if (_mapManager.TryFindGridAt(pos.Value, out var grid, out _))
