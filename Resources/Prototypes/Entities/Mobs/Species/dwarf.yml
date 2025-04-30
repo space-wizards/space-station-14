@@ -67,6 +67,7 @@
   - type: FootPrints # Backmen-footsteps
     leftBarePrint: "footprint-left-bare-dwarf"
     rightBarePrint: "footprint-right-bare-dwarf"
+  - type: MutilatedCorpse # DS14 - MutilatedCorpse
 
 - type: entity
   parent: BaseSpeciesDummy

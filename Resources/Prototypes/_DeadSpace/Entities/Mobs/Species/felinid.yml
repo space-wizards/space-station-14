@@ -67,6 +67,7 @@
   - type: Felinid # For felinid stuff like hairballs
   - type: CatVocal # For cat emotes
   - type: FootPrints
+  - type: MutilatedCorpse # DS14 - MutilatedCorpse
 
 - type: entity
   parent: MobHumanDummy
