@@ -86,6 +86,50 @@
   - type: Shakeable
 
 - type: entity
+  parent: DrinkBottleSmallBaseFull
+  id: DrinkBottleGlassSmallBaseFull
+  abstract: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/beer.rsi
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 4
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BrokenBottle:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 100
+  - type: Tool
+    qualities:
+    - Rolling
+    speedModifier: 0.75
+
+- type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkBottleGlassBaseFull
   abstract: true
@@ -572,6 +616,50 @@
     - Wine
     - DrinkBottle
 
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
+  id: DrinkBeerGrowler # Needs to be renamed DrinkBeerBottleFull
+  name: beer growler  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
+  description: An alcoholic beverage made from malted grains, hops, yeast, and water. XL growler bottle.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: Beer
+          Quantity: 150
+  - type: Label
+    currentLabel: reagent-name-beer
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/beer.rsi
+  - type: Openable
+    closeable: false
+  - type: Tag
+    tags:
+    - Beer
+    - DrinkBottle
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
+  id: DrinkAleBottleFullGrowler
+  name: Magm-Ale growler
+  description: A true dorf's drink of choice. XL growler bottle.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: Ale
+          Quantity: 150
+  - type: Label
+    currentLabel: reagent-name-ale
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/alebottle.rsi
+  - type: Openable
+    closeable: false
+
 # Large Plastic Bottles
 
 - type: entity
@@ -635,17 +723,14 @@
 # Small Bottles
 
 - type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassSmallBaseFull]
   id: DrinkBeerBottleFull
   name: beer bottle # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
-  - type: Item
-    size: Small
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
         reagents:
         - ReagentId: Beer
           Quantity: 50
@@ -658,44 +743,16 @@
   - type: Tag
     tags:
     - Beer
-    - DrinkBottle
 
 - type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
-  id: DrinkBeerGrowler # Needs to be renamed DrinkBeerBottleFull
-  name: beer growler  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
-  description: An alcoholic beverage made from malted grains, hops, yeast, and water. XL growler bottle.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Beer
-          Quantity: 150
-  - type: Label
-    currentLabel: reagent-name-beer
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/beer.rsi
-  - type: Openable
-    closeable: false
-  - type: Tag
-    tags:
-    - Beer
-    - DrinkBottle
-
-- type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassSmallBaseFull]
   id: DrinkAleBottleFull
   name: Magm-Ale bottle
   description: A true dorf's drink of choice.
   components:
-  - type: Item
-    size: Small
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
         reagents:
         - ReagentId: Ale
           Quantity: 50
@@ -707,27 +764,7 @@
     closeable: false
 
 - type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
-  id: DrinkAleBottleFullGrowler
-  name: Magm-Ale growler
-  description: A true dorf's drink of choice. XL growler bottle.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Ale
-          Quantity: 150
-  - type: Label
-    currentLabel: reagent-name-ale
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/alebottle.rsi
-  - type: Openable
-    closeable: false
-
-- type: entity
-  parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
+  parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassSmallBaseFull]
   id: DrinkSakeBottleFull
   name: small sake bottle
   description: The regret of the next morning seems to be nipping on the bottle too.
