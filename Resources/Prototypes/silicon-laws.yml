@@ -516,6 +516,12 @@
 
   # Borgi Lawset, normal
 - type: siliconLaw
+  id: Borgi0
+  order: 0
+  lawString: law-borgi-0
+  sayable: false
+  
+- type: siliconLaw
   id: Borgi1
   order: 1
   lawString: law-borgi-1
@@ -533,6 +539,7 @@
 - type: siliconLawset
   id: BorgiLawset
   laws:
+  - Borgi0
   - Borgi1
   - Borgi2
   - Borgi3

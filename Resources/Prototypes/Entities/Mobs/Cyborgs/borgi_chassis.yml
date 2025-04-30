@@ -139,6 +139,8 @@
       - BorgModuleGeneric
       - BorgModuleCargo
       - BorgModuleMedical
+      - BorgModuleSyndicate # allow installing a Esword into borgis.
+      - BorgModuleSyndicateAssault # allow installing a l6c into borigs!
     hasMindState: corgitag
     noMindState: corgitag
   - type: LockingWhitelist
