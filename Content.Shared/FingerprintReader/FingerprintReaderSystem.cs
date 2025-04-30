@@ -25,7 +25,7 @@ public sealed class FingerprintReaderSystem : EntitySystem
         if (!Resolve(target, ref target.Comp, false))
             return true;
 
-        if (!HasComp<FingerprintReaderComponent>(target))
+        if (!HasComp<FingerprintComponent>(user))
             return false;
 
         if (target.Comp.AllowedFingerprints.Count == 0)

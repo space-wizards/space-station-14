@@ -77,11 +77,10 @@ public sealed partial class DeliveryComponent : Component
     public bool CanForceDeliver = true;
 
     /// <summary>
-    /// Whether this delivery has already received a penalty.
-    /// Used to avoid getting penalized several times.
+    /// How long the DoAfter for forcing someone to open this delivery is.
     /// </summary>
     [DataField]
-    public TimeSpan ForceDeliverTime = TimeSpan.FromSeconds(5);
+    public TimeSpan ForceDeliverDoAfterTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// The sound to play when the delivery is unlocked.

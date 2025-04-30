@@ -71,10 +71,10 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         var usedName = _nameModifier.GetBaseName(ent.Owner);
 
-        _popup.PopupPredicted(Loc.GetString("delivery-force-popup-target", ("identity", Identity.Name(args.User, EntityManager))), null, args.Target.Value, args.Target.Value, PopupType.SmallCaution);
+        _popup.PopupEntity(Loc.GetString("delivery-force-popup-target", ("identity", Identity.Name(args.User, EntityManager))), args.Target.Value, args.Target.Value, PopupType.Medium);
         _popup.PopupPredicted(Loc.GetString("delivery-force-popup-self", ("identity", Identity.Name(args.Target.Value, EntityManager)), ("type", usedName)), null, args.User, args.User);
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.ForceDeliverTime, new DeliveryForceUnlockDoAfterEvent(), args.Used, args.Target, args.Used)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.ForceDeliverDoAfterTime, new DeliveryForceUnlockDoAfterEvent(), args.Used, args.Target, args.Used)
         {
             NeedHand = true,
             BreakOnDamage = true,
@@ -88,7 +88,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
     private void OnDeliveryForceUnlockDoAfter(Entity<DeliveryComponent> ent, ref DeliveryForceUnlockDoAfterEvent args)
     {
-        if (args.Cancelled || args.Target == null || args.Target == args.User)
+        if (args.Cancelled || args.Target == null || args.Target == args.User || !ent.Comp.IsLocked)
             return;
 
         if (!_fingerprintReader.IsAllowed(ent.Owner, args.Target.Value))
@@ -97,9 +97,6 @@ public abstract class SharedDeliverySystem : EntitySystem
             _popup.PopupPredicted(Loc.GetString("delivery-force-popup-self-fail", ("identity", Identity.Name(args.Target.Value, EntityManager)), ("type", usedName)), null, args.User, args.User);
             return;
         }
-
-        if (!ent.Comp.IsLocked)
-            return;
 
         _hands.TryPickupAnyHand(args.Target.Value, ent);
 
