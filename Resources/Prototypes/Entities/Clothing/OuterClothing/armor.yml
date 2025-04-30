@@ -129,6 +129,21 @@
     sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
 
 - type: entity
+  parent: [ClothingOuterBaseLarge, ClothingOuterArmorHoS, BaseSecurityCommandContraband] # not parented from cap carapace for balance reasons
+  id: ClothingOuterArmorCarapaceHoS
+  name: head of security's carapace
+  description: An armored chestpiece that offers less protection than the captain's carapace. The Head of Security thought it clever to replace protective padding with extra regalia.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/hos_carapace.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/hos_carapace.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: GroupExamine
+
+- type: entity
   parent: [ClothingOuterArmorBaseCarapace, BaseCentcommContraband]
   id: ClothingOuterArmorCentcommCarapace
   name: centcomm carapace
@@ -397,48 +412,6 @@
     sprite: Clothing/OuterClothing/Armor/magusred.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/magusred.rsi
-
-- type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseCommandContraband]
-  id: ClothingOuterArmorCaptainCarapace
-  name: "captain's carapace"
-  description: "An armored chestpiece that provides protection whilst still offering maximum mobility and flexibility. Issued only to the station's finest."
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.5
-        Slash: 0.5
-        Piercing: 0.6
-        Heat: 0.5
-        Caustic: 0.9
-  - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
-  - type: HeldSpeedModifier
-  - type: ExplosionResistance
-    damageCoefficient: 0.65
-  - type: GroupExamine
-
-- type: entity
-  parent: [ClothingOuterBaseLarge, ClothingOuterArmorHoS, BaseSecurityCommandContraband]
-  id: ClothingOuterArmorCarapaceHoS
-  name: head of security's carapace
-  description: An armored chestpiece that offers less protection than the captain's carapace. The Head of Security thought it clever to replace protective padding with extra regalia.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Armor/hos_carapace.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Armor/hos_carapace.rsi
-  - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
-  - type: HeldSpeedModifier
-  - type: GroupExamine
 
 - type: entity
   parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
