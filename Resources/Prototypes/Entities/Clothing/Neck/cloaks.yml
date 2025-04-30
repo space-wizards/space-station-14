@@ -228,6 +228,15 @@
 
 - type: entity
   parent: ClothingNeckBase
+  id: ClothingNeckCloakAroace
+  name: aeropilot's cloak # thank you happyman442 this was the best name idea ever
+  description: Cloak awarded to Nanotrasen's finest pilots on planets with inhabitable atmospheres.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/aroace.rsi
+
+- type: entity
+  parent: ClothingNeckBase
   id: ClothingNeckCloakBi
   name: poison cloak
   description: The purple color is a clear indicator you are poisonous.

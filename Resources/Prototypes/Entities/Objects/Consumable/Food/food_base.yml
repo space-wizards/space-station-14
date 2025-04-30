@@ -1,19 +1,29 @@
 #
-# Base component for consumable food
+# Base component for edible food-like items
 #
 - type: entity
   parent: BaseItem
-  id: FoodBase
+  id: EdibleBase
   abstract: true
   components:
   - type: FlavorProfile
     flavors:
       - food
   - type: Food
-  - type: SpaceGarbage
   - type: Sprite
   - type: StaticPrice
     price: 0
+
+#
+# Base component for consumable food
+# that should be cleaned up in space
+#
+- type: entity
+  parent: EdibleBase
+  id: FoodBase
+  abstract: true
+  components:
+  - type: SpaceGarbage
 
 # This base type is used to cover all of the "obvious" things that should be doable to open-package food.
 # Practically this means injection.

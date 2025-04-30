@@ -10,6 +10,9 @@ public abstract partial class InteractionTest
     protected const string Plating = "Plating";
     protected const string Lattice = "Lattice";
 
+    // Structures
+    protected const string Airlock = "Airlock";
+
     // Tools/steps
     protected const string Wrench = "Wrench";
     protected const string Screw = "Screwdriver";

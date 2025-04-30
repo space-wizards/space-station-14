@@ -178,10 +178,10 @@
   - type: Item
 
 - type: entity
-  name: sweetie's pistachios
+  name: Sweetie's pistachios
   parent: FoodSnackBase
   id: FoodSnackPistachios
-  description: Sweeties's name-brand pistachios. probably won't give you diseases. Probably.
+  description: Sweeties's name-brand pistachios. Probably won't give you diseases. Probably.
   components:
   - type: FlavorProfile
     flavors:
@@ -196,6 +196,7 @@
   - type: Tag
     tags:
     - Fruit # Seed of a fruit, you can yell at me
+    - Pistachios # Added tag due to CrateFoodGetMore interaction with BountyFruit.
 
 - type: entity
   name: popcorn
@@ -669,7 +670,7 @@
     state: fortune
   - type: Item
   - type: RandomMetadata
-    descriptionSegments: [CookieFortuneDescriptions]
+    descriptionSegments: [DescriptionsCookieFortune]
 
 - type: entity
   categories: [ HideSpawnMenu ]
@@ -683,7 +684,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 45
         reagents:
         - ReagentId: Fiber
           Quantity: 40

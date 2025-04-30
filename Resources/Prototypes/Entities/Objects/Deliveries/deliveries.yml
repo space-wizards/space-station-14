@@ -1,0 +1,179 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseDelivery
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.DeliveryVisuals.IsFragile:
+        enum.DeliveryVisualLayers.FragileStamp:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DeliveryVisuals.IsLocked:
+        enum.DeliveryVisualLayers.Lock:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DeliveryVisuals.PriorityState:
+        enum.DeliveryVisualLayers.PriorityTape:
+          Off: { visible: false }
+          Active: { visible: true, shader: unshaded, state: priority }
+          Inactive: { visible: true, shader: shaded, state: priority_inactive }
+      enum.DeliveryVisuals.IsBroken:
+        enum.DeliveryVisualLayers.Breakage:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DeliveryVisuals.IsTrash:
+        enum.DeliveryVisualLayers.Trash:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Label
+    examinable: false
+  - type: FingerprintReader
+    failPopup: fingerprint-reader-fail
+    failGlovesPopup: fingerprint-reader-fail-gloves
+  - type: Delivery
+  - type: DeliveryRandomMultiplier
+  - type: ContainerContainer
+    containers:
+      delivery: !type:Container
+  - type: StealTarget
+    stealGroup: Mail
+  - type: SimpleToolUsage
+    doAfter: 4
+    usageVerb: delivery-slice-verb
+  - type: ComponentTable
+    table: !type:NestedSelector
+      tableId: DeliveryModifierTable
+
+- type: entity
+  parent: BaseDelivery
+  id: PackageDelivery
+  name: package
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Cargo/mail_large.rsi
+    layers:
+    - state: icon
+      map: [ "enum.DeliveryVisualLayers.Icon" ]
+    - state: trash
+      map: [ "enum.DeliveryVisualLayers.Trash" ]
+      visible: false
+    - state: priority
+      map: [ "enum.DeliveryVisualLayers.PriorityTape" ]
+      visible: false
+      shader: unshaded
+    - state: fragile
+      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
+      visible: false
+    - state: postmark
+    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
+      offset: -0.21875, -0.25
+    - state: locked
+      map: [ "enum.DeliveryVisualLayers.Lock" ]
+    - state: broken
+      map: [ "enum.DeliveryVisualLayers.Breakage" ]
+      visible: false
+  - type: MultiHandedItem
+  - type: Item
+    size: Huge
+  - type: Delivery
+    baseSpesoReward: 1000
+    baseSpesoPenalty: 250 # So low due to dept economy splitting all the earnings, but not splitting the penalty.
+  - type: Speech
+    speechVerb: Robotic
+  - type: SimpleToolUsage
+    doAfter: 6
+  - type: EntityTableContainerFill
+    containers:
+      delivery: !type:NestedSelector
+        tableId: PackageDeliveryRewards
+
+- type: entity
+  parent: BaseDelivery
+  id: LetterDelivery
+  name: letter
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Cargo/mail.rsi
+    layers:
+    - state: icon
+      map: [ "enum.DeliveryVisualLayers.Icon" ]
+    - state: trash
+      map: [ "enum.DeliveryVisualLayers.Trash" ]
+      visible: false
+    - state: priority
+      map: [ "enum.DeliveryVisualLayers.PriorityTape" ]
+      visible: false
+      shader: unshaded
+    - state: fragile
+      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
+      visible: false
+    - state: postmark
+    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
+      offset: -0.125, -0.0625
+    - state: locked
+      map: [ "enum.DeliveryVisualLayers.Lock" ]
+    - state: broken
+      map: [ "enum.DeliveryVisualLayers.Breakage" ]
+      visible: false
+  - type: Item
+    storedRotation: 90
+  - type: Delivery
+    baseSpesoReward: 500
+    baseSpesoPenalty: 125 # So low due to dept economy splitting all the earnings, but not splitting the penalty.
+  - type: Speech
+    speechVerb: Robotic
+  - type: EntityTableContainerFill
+    containers:
+      delivery: !type:NestedSelector
+        tableId: LetterDeliveryRewards
+
+
+# Modifier Tables
+- type: entityTable
+  id: DeliveryModifierTable
+  table: !type:AllSelector
+    children:
+    - id: DeliveryModifierPriority
+      prob: 0.25
+    - id: DeliveryModifierFragile
+      prob: 0.25
+
+- type: entity
+  id: DeliveryModifierPriority
+  description: Components to add when a delivery is rolled as priority.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: DeliveryPriority
+
+- type: entity
+  id: DeliveryModifierFragile
+  description: Components to add when a delivery is rolled as fragile.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: DeliveryFragile
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
+    soundHit:
+      collection: WeakHit
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: DeliveryOpenSounds
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
