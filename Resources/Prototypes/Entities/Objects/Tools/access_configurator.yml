@@ -86,6 +86,7 @@
   - type: Clothing
     sprite: Objects/Tools/universal_access_configurator.rsi
   - type: AccessOverrider
+    infiniteRange: true
     accessLevels:
     - Armory
     - Atmospherics

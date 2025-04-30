@@ -197,7 +197,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         if (!PrivilegedIdIsAuthorized(uid, component))
             return;
 
-        if (!_interactionSystem.InRangeUnobstructed(uid, component.TargetAccessReaderId))
+        if (!component.infiniteRange && !_interactionSystem.InRangeUnobstructed(uid, component.TargetAccessReaderId))
         {
             _popupSystem.PopupEntity(Loc.GetString("access-overrider-out-of-range"), player, player);
 

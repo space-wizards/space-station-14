@@ -14,6 +14,9 @@ public sealed partial class AccessOverriderComponent : Component
     public static string PrivilegedIdCardSlotId = "AccessOverrider-privilegedId";
 
     [DataField]
+    public bool infiniteRange = false;
+
+    [DataField]
     public ItemSlot PrivilegedIdSlot = new();
 
     [ViewVariables(VVAccess.ReadWrite)]
