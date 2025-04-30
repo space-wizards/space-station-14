@@ -1,5 +1,6 @@
 using Content.Client.Examine;
 using Content.Shared.Machines.Components;
+using Content.Shared.Machines.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -12,10 +13,9 @@ namespace Content.Client.Machines.EntitySystems;
 /// Handles client side examination events to show the expected layout of the machine
 /// based on the origin of the main entity.
 /// </summary>
-public sealed class MultipartMachineSystem : EntitySystem
+public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 {
     private readonly EntProtoId _ghostPrototype = "MultipartMachineGhost";
-    private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
     {
@@ -23,8 +23,6 @@ public sealed class MultipartMachineSystem : EntitySystem
 
         SubscribeLocalEvent<MultipartMachineComponent, ClientExaminedEvent>(OnMachineExamined);
         SubscribeLocalEvent<MultipartMachineGhostComponent, TimedDespawnEvent>(OnGhostDespawned);
-
-        _xformQuery = GetEntityQuery<TransformComponent>();
     }
 
     /// <summary>
@@ -51,7 +49,7 @@ public sealed class MultipartMachineSystem : EntitySystem
             var rotation = ent.Comp.Rotation ?? Angle.Zero;
             var entityCoords = new EntityCoordinates(ent.Owner, part.Offset.Rotate(rotation));
             var ghostEnt = Spawn(_ghostPrototype, entityCoords);
-            if (!_xformQuery.TryGetComponent(ghostEnt, out var xform))
+            if (!XformQuery.TryGetComponent(ghostEnt, out var xform))
                 break;
 
             xform.LocalRotation = part.Rotation + rotation;

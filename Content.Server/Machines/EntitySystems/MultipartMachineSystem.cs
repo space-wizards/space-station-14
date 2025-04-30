@@ -1,10 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Numerics;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Machines.Components;
 using Content.Shared.Machines.Components;
+using Content.Shared.Machines.EntitySystems;
 using Content.Shared.Machines.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
@@ -16,12 +16,11 @@ namespace Content.Server.Machines.EntitySystems;
 /// When requested, performs scans of the map area around the specified entity
 /// to find and match parts of the machine.
 /// </summary>
-public sealed class MultipartMachineSystem : EntitySystem
+public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 {
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
-    private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
     {
@@ -31,8 +30,6 @@ public sealed class MultipartMachineSystem : EntitySystem
 
         SubscribeLocalEvent<ConstructionComponent, AfterConstructionChangeEntityEvent>(OnConstructionNodeChanged);
         SubscribeLocalEvent<ConstructionComponent, AnchorStateChangedEvent>(OnConstructionAnchorChanged);
-
-        _xformQuery = GetEntityQuery<TransformComponent>();
     }
 
     /// <summary>
@@ -50,77 +47,6 @@ public sealed class MultipartMachineSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns whether each non-optional part of the machine has a matched entity
-    /// </summary>
-    /// <param name="ent">Entity to check the assembled state of.</param>
-    /// <returns>True if all non-optional parts have a matching entity, false otherwise.</returns>
-    public bool IsAssembled(Entity<MultipartMachineComponent?> ent)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return false;
-
-        foreach (var part in ent.Comp.Parts.Values)
-        {
-            if (!part.Entity.HasValue && !part.Optional)
-                return false;
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    /// Get the EntityUid for the entity bound to a specific part, if one exists.
-    /// </summary>
-    /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query.</param>
-    /// <param name="part">Enum value for the part to find, must match the value specified in YAML.</param>
-    /// <returns>May contain the resolved EntityUid for the specified part, null otherwise.</returns>
-    public EntityUid? GetPartEntity(Entity<MultipartMachineComponent?> ent, Enum part)
-    {
-        if (!TryGetPartEntity(ent, part, out var entity))
-            return null;
-
-        return entity;
-    }
-
-    /// <summary>
-    /// Get the EntityUid for the entity bound to a specific part, if one exists.
-    /// </summary>
-    /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query.</param>
-    /// <param name="part">Enum for the part to find, must match the value specified in YAML.</param>
-    /// <param name="entity">Out var which may contain the matched EntityUid for the specified part.</param>
-    /// <returns>True if the part is found and has a matched entity, false otherwise.</returns>
-    public bool TryGetPartEntity(Entity<MultipartMachineComponent?> ent,
-        Enum part,
-        [NotNullWhen(true)] out EntityUid? entity)
-    {
-        entity = null;
-        if (!Resolve(ent, ref ent.Comp))
-            return false;
-
-        if (ent.Comp.Parts.TryGetValue(part, out var value))
-            return TryGetEntity(value.Entity, out entity);
-
-        return false;
-    }
-
-    /// <summary>
-    /// Check if a machine has an entity bound to a specific part
-    /// </summary>
-    /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query.</param>
-    /// <param name="part">Enum for the part to find.</param>
-    /// <returns>True if the specific part has a entity bound to it, false otherwise.</returns>
-    public bool HasPart(Entity<MultipartMachineComponent?> ent, Enum part)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return false;
-
-        if (!ent.Comp.Parts.TryGetValue(part, out var value))
-            return false;
-
-        return value.Entity != null;
-    }
-
-    /// <summary>
     /// Performs a rescan of all parts of the machine to confirm they exist and match
     /// the specified requirements for offset, rotation, and components.
     /// </summary>
@@ -130,7 +56,7 @@ public sealed class MultipartMachineSystem : EntitySystem
     public bool Rescan(Entity<MultipartMachineComponent> ent, EntityUid? user = null)
     {
         // Get all required transform information to start looking for the other parts based on their offset
-        if (!_xformQuery.TryGetComponent(ent.Owner, out var xform) || !xform.Anchored)
+        if (!XformQuery.TryGetComponent(ent.Owner, out var xform) || !xform.Anchored)
             return false;
 
         var gridUid = xform.GridUid;
@@ -246,7 +172,7 @@ public sealed class MultipartMachineSystem : EntitySystem
     private void OnConstructionNodeChanged(Entity<ConstructionComponent> ent,
         ref AfterConstructionChangeEntityEvent args)
     {
-        if (!_xformQuery.TryGetComponent(ent.Owner, out var constructXform))
+        if (!XformQuery.TryGetComponent(ent.Owner, out var constructXform))
             return;
 
         var query = EntityQueryEnumerator<MultipartMachineComponent>();
@@ -293,7 +219,7 @@ public sealed class MultipartMachineSystem : EntitySystem
 
         // We're anchoring some construction, we have no idea which machine this might be for
         // so we have to just check everyone in range and perform a rescan.
-        if (!_xformQuery.TryGetComponent(ent.Owner, out var constructXform))
+        if (!XformQuery.TryGetComponent(ent.Owner, out var constructXform))
             return;
 
         var query = EntityQueryEnumerator<MultipartMachineComponent>();
@@ -315,7 +241,7 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// <returns>True if the position is within the MaxRange of the machine, false otherwise</returns>
     private bool IsMachineInRange(Entity<MultipartMachineComponent> machine, Vector2 position)
     {
-        if (!_xformQuery.TryGetComponent(machine.Owner, out var machineXform))
+        if (!XformQuery.TryGetComponent(machine.Owner, out var machineXform))
             return false;
 
         var direction = position - machineXform.LocalPosition;

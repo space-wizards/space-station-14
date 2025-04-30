@@ -1,3 +1,4 @@
+using Content.Shared.Machines.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -9,6 +10,7 @@ namespace Content.Shared.Machines.Components;
 /// Marks an entity as being the owner of a multipart machine.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedMultipartMachineSystem))]
 public sealed partial class MultipartMachineComponent : Component
 {
     /// <summary>
