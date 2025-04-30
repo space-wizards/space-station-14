@@ -45,6 +45,9 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
         if (component == null)
             return false;
 
+        if (component.Decals.Count == 0)
+            return false;
+
         var tileBlacklist = new List<ITileDefinition>();
         if (component.TileBlacklist.Count > 0)
         {
@@ -93,6 +96,9 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
             return false;
 
         if (component == null)
+            return false;
+
+        if (component.Decals.Count == 0)
             return false;
 
         var tileBlacklist = new List<ITileDefinition>();
