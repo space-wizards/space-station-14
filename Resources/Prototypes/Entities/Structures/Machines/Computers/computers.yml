@@ -1526,7 +1526,7 @@
     receiveFrequencyId: Mothership
     transmitFrequencyId: Xenoborg
   - type: Computer
-    board: SamukaXenoborgRoboticsConsoleCircuitboard
+    board: ComputerXenoborgsControlCircuitboard
   - type: AccessReader # only used for dangerous things
     access: [["Xenoborg"]]
 
