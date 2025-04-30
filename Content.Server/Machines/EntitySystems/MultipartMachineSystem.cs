@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Machines.Components;
@@ -229,12 +230,15 @@ public sealed class MultipartMachineSystem : EntitySystem
         {
             if (!_factory.TryGetRegistration(part.Component, out var registration))
                 throw new Exception($"Unable to resolve component type [{part.Component}] for machine part [{name}]");
+
+            if (part.Offset.Length > ent.Comp.MaxRange)
+                ent.Comp.MaxRange = part.Offset.Length;
         }
     }
 
     /// <summary>
     /// Handles when a constructable entity has been created due to a move in a construction graph.
-    /// Scans all known multipart machines and rescans any that have a part which matches that specific graph
+    /// Rescans all known multipart machines within range that have a part which matches that specific graph
     /// and node IDs.
     /// </summary>
     /// <param name="ent">Constructable entity that has moved in a graph.</param>
@@ -242,15 +246,22 @@ public sealed class MultipartMachineSystem : EntitySystem
     private void OnConstructionNodeChanged(Entity<ConstructionComponent> ent,
         ref AfterConstructionChangeEntityEvent args)
     {
+        if (!_xformQuery.TryGetComponent(ent.Owner, out var constructXform))
+            return;
+
         var query = EntityQueryEnumerator<MultipartMachineComponent>();
-        while (query.MoveNext(out var uid, out var machine))
+        while (query.MoveNext(out var uid, out var machineComp))
         {
-            foreach (var part in machine.Parts.Values)
+            var machine = new Entity<MultipartMachineComponent>(uid, machineComp);
+            if (!IsMachineInRange(machine, constructXform.LocalPosition))
+                continue; // This part is outside the max range of the machine, ignore
+
+            foreach (var part in machine.Comp.Parts.Values)
             {
                 if (args.Graph == part.Graph &&
                     (args.PreviousNode == part.ExpectedNode || args.CurrentNode == part.ExpectedNode))
                 {
-                    Rescan((uid, machine));
+                    Rescan(machine);
                     break; // No need to scan the same machine again
                 }
             }
@@ -260,7 +271,7 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// <summary>
     /// Handles when a constructable entity has been anchored or unanchored by a user.
     /// We might be able to link an unanchored part to a machine, but anchoring a constructable
-    /// entity will require a rescan of all machines as we have no idea what machine it might be a
+    /// entity will require a rescan of all machines within range as we have no idea what machine it might be a
     /// part of.
     /// </summary>
     /// <param name="ent">Constructable entity that has been anchored or unanchored.</param>
@@ -281,12 +292,34 @@ public sealed class MultipartMachineSystem : EntitySystem
         }
 
         // We're anchoring some construction, we have no idea which machine this might be for
-        // so we have to just check everyone and perform a rescan.
+        // so we have to just check everyone in range and perform a rescan.
+        if (!_xformQuery.TryGetComponent(ent.Owner, out var constructXform))
+            return;
+
         var query = EntityQueryEnumerator<MultipartMachineComponent>();
-        while (query.MoveNext(out var uid, out var machine))
+        while (query.MoveNext(out var uid, out var machineComp))
         {
-            Rescan((uid, machine));
+            var machine = new Entity<MultipartMachineComponent>(uid, machineComp);
+            if (!IsMachineInRange(machine, constructXform.LocalPosition))
+                continue; // This part is outside the max range of the machine, ignore
+
+            Rescan(machine);
         }
+    }
+
+    /// <summary>
+    /// Checks whether a given position is within the MaxRange of the specified machine.
+    /// </summary>
+    /// <param name="machine">Specific machine to check against.</param>
+    /// <param name="position">Position to check against.</param>
+    /// <returns>True if the position is within the MaxRange of the machine, false otherwise</returns>
+    private bool IsMachineInRange(Entity<MultipartMachineComponent> machine, Vector2 position)
+    {
+        if (!_xformQuery.TryGetComponent(machine.Owner, out var machineXform))
+            return false;
+
+        var direction = position - machineXform.LocalPosition;
+        return direction.Length() <= machine.Comp.MaxRange;
     }
 
     /// <summary>

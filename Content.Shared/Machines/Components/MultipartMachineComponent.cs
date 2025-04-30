@@ -39,6 +39,12 @@ public sealed partial class MultipartMachineComponent : Component
     /// </summary>
     [DataField]
     public List<EntityUid> Ghosts = [];
+
+    /// <summary>
+    /// Calculated maximum distance between this machine and the
+    /// furthest away part.
+    /// </summary>
+    public float MaxRange = 0;
 }
 
 [DataDefinition]
