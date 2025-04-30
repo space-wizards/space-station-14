@@ -7,6 +7,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using Robust.Server.GameObjects;
+using Robust.Shared.EntitySerialization;
 
 namespace Content.IntegrationTests.Tests.Power;
 
@@ -55,7 +56,8 @@ public sealed class StationPowerTests
         await server.WaitAssertion(() =>
         {
             Assert.That(protoMan.TryIndex<GameMapPrototype>(mapProtoId, out var mapProto));
-            ticker.LoadGameMap(mapProto, out var mapId);
+            var opts = DeserializationOptions.Default with { InitializeMaps = true };
+            ticker.LoadGameMap(mapProto, out var mapId, opts);
         });
 
         // Let powernet set up
