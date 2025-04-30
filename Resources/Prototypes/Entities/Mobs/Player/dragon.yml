@@ -159,6 +159,12 @@
     - NamesDragon
     - NamesDragonTitle
     nameFormat: name-format-dragon
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 2.5 # fast because dragon strong
+    useSound:
+      path: /Audio/Items/crowbar.ogg
 
 - type: entity
   parent: BaseMobDragon

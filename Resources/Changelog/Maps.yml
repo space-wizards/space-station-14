@@ -1,0 +1,63 @@
+﻿Entries:
+- author: ArtisticRoomba
+  changes:
+  - message: The mapping changelog has been added! This primarily serves as a way
+      to make players aware of large changes or important fixes to maps, without cluttering
+      the main changelog.
+    type: Add
+  id: 1
+  time: '2025-02-03T01:29:24.112Z'
+- author: ArtisticRoomba
+  changes:
+  - message: A chemical dispenser has been added to the nukie planet, allowing new
+      agents to work in a familiar environment.
+    type: Add
+  id: 2
+  time: '2025-01-27T07:10:24.000Z'
+- author: ArtisticRoomba
+  changes:
+  - message: On many stations, power has been rebalanced to allow more time for engineering
+      to setup power. This should allow time for activities like TA mentoring and
+      more complex power setups.
+    type: Tweak
+  id: 3
+  time: '2025-01-27T07:10:24.000Z'
+- author: Nox, ToxicSonicFan04
+  changes:
+  - message: Station armory contents have been tweaked to balance security gear to
+      the amount of security personnel.
+    type: Tweak
+  id: 4
+  time: '2025-01-27T07:10:24.000Z'
+- author: ArtisticRoomba
+  changes:
+  - message: On Meta, Engineering and Atmospherics now share a distinct HV subnet
+      seperate from the station's main power grid. Previously Engineering and Atmos
+      couldn't share power, and one side would be discharged depending on who setup
+      power first.
+    type: Fix
+  id: 5
+  time: '2025-01-26T12:00:00Z'
+- author: Southbridge
+  changes:
+  - message: On many stations, uncleanable dirt decals have been made cleanable.
+    type: Fix
+  id: 6
+  time: '2025-01-12T12:00:00Z'
+- author: Compilatron144
+  changes:
+  - message: Plasma station's population limit has been raised to make it into a high
+      population station.
+    type: Tweak
+  id: 7
+  time: '2025-01-19T12:00:00Z'
+- author: IProduceWidgets
+  changes:
+  - message: On Oasis, the genpop prison has been added.
+    type: Add
+  - message: On Oasis, Security has been given a large department rework.
+    type: Tweak
+  id: 8
+  time: '2025-04-29T09:04:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37031
+Order: 1
