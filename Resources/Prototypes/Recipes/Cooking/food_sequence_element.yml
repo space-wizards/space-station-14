@@ -79,28 +79,6 @@
   - Cooked
   - Meat
 
-# Killer Tomato meat
-
-- type: foodSequenceElement
-  id: KillerTomato
-  name: food-sequence-content-killer-tomato
-  sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: tomato
-  tags:
-  - Cooked
-  - Meat
-
-- type: foodSequenceElement
-  id: KillerTomatoBurger
-  name: food-sequence-burger-content-killer-tomato
-  sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: tomato
-  tags:
-  - Cooked
-  - Meat
-
 # Bacon
 
 - type: foodSequenceElement
@@ -479,32 +457,6 @@
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: dragoncutlet-cooked
-  tags:
-  - Cooked
-  - Cutlet
-  - Meat
-
-# Killer Tomato cutlet
-
-- type: foodSequenceElement
-  id: KillerTomatoCutlet
-  name: food-sequence-content-killer-tomato
-  sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: salami-slice
-    color: red
-  tags:
-  - Cooked
-  - Cutlet
-  - Meat
-
-- type: foodSequenceElement
-  id: KillerTomatoCutletBurger
-  name: food-sequence-burger-content-killer-tomato
-  sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: salami-slice
-    color: red
   tags:
   - Cooked
   - Cutlet

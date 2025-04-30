@@ -573,6 +573,21 @@
     defaultTarget: rouny steak
 
 - type: entity
+  name: raw killer tomato meat
+  parent: FoodMeatRawBase
+  id: FoodMeatTomato
+  description: A slice from a huge, living tomato.
+  components:
+  - type: Sprite
+    state: tomato
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatTomatoCutlet
+  - type: StaticPrice
+    price: 100
+  # TODO: Construction component for proper cooked version
+
+- type: entity
   name: salami
   parent: FoodMeatRawBase
   id: FoodMeatSalami
@@ -1272,28 +1287,6 @@
       Burger: DragonSteak
       Taco: DragonSteak
 
-- type: entity
-  name: killer tomato meat
-  parent: FoodMeatBase
-  id: FoodMeatTomato
-  description: A slice from a huge tomato.
-  components:
-  - type: Tag
-    tags:
-    - Cooked
-    - Meat
-  - type: Sprite
-    state: tomato
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatTomatoCutlet
-  - type: StaticPrice
-    price: 100
-  - type: FoodSequenceElement
-    entries:
-      Burger: KillerTomatoBurger
-      Taco: KillerTomato
-
 # Cutlets
 
 # Raw
@@ -1518,6 +1511,19 @@
     graph: XenoCutlet
     node: start
     defaultTarget: xeno cutlet
+
+- type: entity
+  name: raw killer tomato cutlet
+  parent: FoodMeatRawBase
+  id: FoodMeatTomatoCutlet
+  description: A cutlet from a slab of living tomato.
+  components:
+  - type: Sprite
+    state: salami-slice
+    color: red
+  - type: StaticPrice
+    price: 30
+  # TODO: Construction component for proper cooked version
 
 - type: entity
   name: salami slice
@@ -1841,24 +1847,3 @@
     entries:
       Burger: DragonCutlet
       Taco: DragonCutlet
-
-- type: entity
-  name: killer tomato cutlet
-  parent: FoodMeatBase
-  id: FoodMeatTomatoCutlet
-  description: A cutlet from a slab of tomato.
-  components:
-  - type: Tag
-    tags:
-    - Cooked
-    - Cutlet
-    - Meat
-  - type: Sprite
-    state: salami-slice
-    color: red
-  - type: StaticPrice
-    price: 30
-  - type: FoodSequenceElement
-    entries:
-      Burger: KillerTomatoCutletBurger
-      Taco: KillerTomatoCutlet
