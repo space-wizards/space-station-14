@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/9b0c2e771e9d2442dd7d21c019b970c1299b5cf4, inhands by mubururu_ (github)",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/9b0c2e771e9d2442dd7d21c019b970c1299b5cf4, inhands by mubururu_ (github), seed modified from https://github.com/space-wizards/space-station-14/pull/23210/files#diff-6b89a02e399bc4dd9c50c16ad274a353a92c8a0f462083fab0c1e5045d957ad2 by Chaoticaa (GitHub), slice modified from https://github.com/space-wizards/space-station-14/pull/3436/files#diff-65d1e265b787136da82b8e8b56ede11fdb879c31f9d14b4236d33a9a89d6a815 by Chaoticaa (GitHub), Growth, harvest, dead, and produce created by Chaoticaa (GitHub)",
     "size": {
         "x": 32,
         "y": 32

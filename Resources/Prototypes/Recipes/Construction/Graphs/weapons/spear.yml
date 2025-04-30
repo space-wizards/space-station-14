@@ -126,3 +126,23 @@
               doAfter: 1
     - node: spear
       entity: SpearBone
+
+- type: constructionGraph
+  id: SpearSharkMinnow
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: spear
+      steps:
+      - material: MetalRod
+        amount: 2
+        doAfter: 2
+      - material: Cable
+        amount: 3
+        doAfter: 1
+      - material: SharkMinnowTooth
+        amount: 1
+        doAfter: 1
+  - node: spear
+    entity: SpearSharkMinnow

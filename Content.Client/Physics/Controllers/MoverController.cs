@@ -62,16 +62,16 @@ public sealed class MoverController : SharedMoverController
 
     private void OnRelayPlayerAttached(Entity<RelayInputMoverComponent> entity, ref LocalPlayerAttachedEvent args)
     {
-        Physics.UpdateIsPredicted(entity.Owner);
-        Physics.UpdateIsPredicted(entity.Comp.RelayEntity);
+        PhysicsSystem.UpdateIsPredicted(entity.Owner);
+        PhysicsSystem.UpdateIsPredicted(entity.Comp.RelayEntity);
         if (MoverQuery.TryGetComponent(entity.Comp.RelayEntity, out var inputMover))
             SetMoveInput((entity.Comp.RelayEntity, inputMover), MoveButtons.None);
     }
 
     private void OnRelayPlayerDetached(Entity<RelayInputMoverComponent> entity, ref LocalPlayerDetachedEvent args)
     {
-        Physics.UpdateIsPredicted(entity.Owner);
-        Physics.UpdateIsPredicted(entity.Comp.RelayEntity);
+        PhysicsSystem.UpdateIsPredicted(entity.Owner);
+        PhysicsSystem.UpdateIsPredicted(entity.Comp.RelayEntity);
         if (MoverQuery.TryGetComponent(entity.Comp.RelayEntity, out var inputMover))
             SetMoveInput((entity.Comp.RelayEntity, inputMover), MoveButtons.None);
     }

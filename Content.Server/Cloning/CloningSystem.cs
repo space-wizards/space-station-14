@@ -9,7 +9,6 @@ using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.StatusEffect;
-using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
@@ -25,7 +24,7 @@ namespace Content.Server.Cloning;
 ///     System responsible for making a copy of a humanoid's body.
 ///     For the cloning machines themselves look at CloningPodSystem, CloningConsoleSystem and MedicalScannerSystem instead.
 /// </summary>
-public sealed class CloningSystem : EntitySystem
+public sealed partial class CloningSystem : EntitySystem
 {
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
@@ -36,7 +35,6 @@ public sealed class CloningSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
-    [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
 
     /// <summary>
@@ -157,9 +155,9 @@ public sealed class CloningSystem : EntitySystem
 
         var spawned = EntityManager.SpawnAtPosition(prototype, coords);
 
-        // if the original is a stack, adjust the count of the copy
-        if (TryComp<StackComponent>(original, out var originalStack) && TryComp<StackComponent>(spawned, out var spawnedStack))
-            _stack.SetCount(spawned, originalStack.Count, spawnedStack);
+        // copy over important component data
+        var ev = new CloningItemEvent(spawned);
+        RaiseLocalEvent(original, ref ev);
 
         // if the original has items inside its storage, copy those as well
         if (TryComp<StorageComponent>(original, out var originalStorage) && TryComp<StorageComponent>(spawned, out var spawnedStorage))
@@ -232,7 +230,14 @@ public sealed class CloningSystem : EntitySystem
 
             var targetImplant = _subdermalImplant.AddImplant(target, implantId);
 
-            if (copyStorage && targetImplant != null)
+            if (targetImplant == null)
+                continue;
+
+            // copy over important component data
+            var ev = new CloningItemEvent(targetImplant.Value);
+            RaiseLocalEvent(originalImplant, ref ev);
+
+            if (copyStorage)
                 CopyStorage(originalImplant, targetImplant.Value, whitelist, blacklist); // only needed for storage implants
         }
 
