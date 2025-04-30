@@ -6,7 +6,7 @@
   - type: RandomDecalSpawnerDistributed
     decals:
     - DirtLight
-    - DirtyMedium
+    - DirtMedium
     - DirtHeavy
     snapPosition: true
     zIndex: 1
