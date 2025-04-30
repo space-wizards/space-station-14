@@ -165,6 +165,52 @@ public sealed class RadioSystem : EntitySystem
         // Play chime sound if player is wearing a headset with a RadioChimeComponent
         Filter filter = Filter.Empty();
 
+        var aiChimeSound = new SoundPathSpecifier("/Audio/_Starlight/Effects/Radio/ai.ogg");
+
+        // Gaslight AI by playing chime sound locally to itself
+        if (HasComp<StationAiHeldComponent>(messageSource))
+        {
+            if (TryComp<ActorComponent>(messageSource, out var aiActor))
+            {
+                var aiFilter = Filter.Empty().AddPlayer(aiActor.PlayerSession);
+                _audio.PlayGlobal(aiChimeSound, aiFilter, true, AudioParams.Default.WithVolume(-7f));
+                Logger.Debug("Played AI local chime sound to AI itself.");
+            }
+        }
+
+        // Gaslight AI into hearing other chimes
+        if (!HasComp<StationAiHeldComponent>(messageSource))
+        {
+            SoundSpecifier? senderChimeSound = null;
+            if (_inventorySystem.TryGetSlotEntity(messageSource, "ears", out var senderHeadsetEntity))
+            {
+                if (TryComp<RadioChimeComponent>(senderHeadsetEntity.Value, out var senderRadioChime) && senderRadioChime.ChimeSound != null)
+                {
+                    senderChimeSound = senderRadioChime.ChimeSound;
+                }
+                else
+                {
+                    Logger.Debug("Sender's headset does not have a RadioChimeComponent or chime sound is null.");
+                }
+            }
+            else
+            {
+                Logger.Debug("Sender does not have a headset in ears slot.");
+            }
+
+            if (senderChimeSound != null)
+            {
+                var radioQueryChime = EntityQueryEnumerator<StationAiHeldComponent, ActorComponent>();
+                while (radioQueryChime.MoveNext(out var aiEntity, out var _, out var aiActorComp))
+                {
+                    var aiFilter = Filter.Empty().AddPlayer(aiActorComp.PlayerSession);
+                    _audio.PlayGlobal(senderChimeSound, aiFilter, true, AudioParams.Default.WithVolume(-7f));
+                    Logger.Debug($"Played sender's chime sound locally to AI entity {aiEntity}.");
+                }
+            }
+        }
+
+        // Play normal global chime sound for all listeners (headset conversations)
         if (_inventorySystem.TryGetSlotEntity(messageSource, "ears", out var headsetEntity))
         {
             Logger.Debug($"Headset entity found in ears slot: {headsetEntity.Value}");
@@ -248,6 +294,7 @@ public sealed class RadioSystem : EntitySystem
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
         while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
+            Logger.Debug($"RadioSystem: Processing receiver {receiver}");
             if (!radio.ReceiveAllChannels)
             {
                 if (!radio.Channels.Contains(channel.ID) || (TryComp<IntercomComponent>(receiver, out var intercom) &&
@@ -272,6 +319,36 @@ public sealed class RadioSystem : EntitySystem
 
             // send the message
             RaiseLocalEvent(receiver, ref ev);
+
+            // Special case: if sender is AI and receiver is normal player, gaslight the player
+            Logger.Debug($"RadioSystem: Evaluating AI chime sound condition for receiver {receiver}");
+            if (HasComp<StationAiHeldComponent>(messageSource) && !HasComp<StationAiHeldComponent>(receiver))
+            {
+                Logger.Debug($"RadioSystem: Condition met for receiver {receiver}");
+                ActorComponent? receiverActor = null;
+                if (!TryComp<ActorComponent>(receiver, out receiverActor))
+                {
+                    // Try to get ActorComponent from parent entity if receiver itself doesn't have it
+                    var parent = Transform(receiver).ParentUid;
+                    if (parent != null)
+                        TryComp<ActorComponent>(parent, out receiverActor);
+                }
+
+                if (receiverActor != null)
+                {
+                    Logger.Debug($"RadioSystem: Playing AI chime sound locally to normal player {receiver} because sender is AI.");
+                    var receiverFilter = Filter.Empty().AddPlayer(receiverActor.PlayerSession);
+                    _audio.PlayGlobal(aiChimeSound, receiverFilter, true, AudioParams.Default.WithVolume(-7f));
+                }
+                else
+                {
+                    Logger.Debug($"RadioSystem: Receiver {receiver} and its parent do not have ActorComponent");
+                }
+            }
+            else
+            {
+                Logger.Debug($"RadioSystem: Receiver {receiver} does not meet AI chime sound condition");
+            }
         }
         RaiseLocalEvent(new RadioSpokeEvent
         {
