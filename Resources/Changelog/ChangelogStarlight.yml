@@ -5394,4 +5394,18 @@ Entries:
   id: 747
   time: '2025-04-30T21:02:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/556
+- author: Happyrobot33
+  changes:
+  - message: Changed Resomi naming scheme to better match Avali.
+    type: Tweak
+  id: 748
+  time: '2025-04-30T21:06:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/558
+- author: Happyrobot33
+  changes:
+  - message: Changed Resomi age range to better match Avali.
+    type: Tweak
+  id: 749
+  time: '2025-04-30T21:06:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/558
 
