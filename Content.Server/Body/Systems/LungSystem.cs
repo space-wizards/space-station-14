@@ -53,6 +53,24 @@ public sealed class LungSystem : EntitySystem
         }
     }
 
+    private void OnMaskToggled(Entity<BreathToolComponent> ent, ref ItemMaskToggledEvent args)
+    {
+        if (args.Mask.Comp.IsToggled)
+        {
+            _atmos.DisconnectInternals(ent);
+        }
+        else
+        {
+            ent.Comp.IsFunctional = true;
+
+            if (TryComp(args.Wearer, out InternalsComponent? internals))
+            {
+                ent.Comp.ConnectedInternalsEntity = args.Wearer;
+                _internals.ConnectBreathTool((args.Wearer.Value, internals), ent);
+            }
+        }
+    }
+
     public void GasToReagent(EntityUid uid, LungComponent lung)
     {
         if (!_solutionContainerSystem.ResolveSolution(uid, lung.SolutionName, ref lung.Solution, out var solution))

@@ -1,6 +1,6 @@
-using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Explosion.Components;
+using Content.Shared.DeviceLinking.Events;
 
 namespace Content.Server.Explosion.EntitySystems
 {

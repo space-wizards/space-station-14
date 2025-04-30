@@ -46,6 +46,8 @@ namespace Content.Client.Chemistry.UI
             _window.CreateBottleButton.OnPressed += _ => SendMessage(
                 new ChemMasterOutputToBottleMessage(
                     (uint) _window.BottleDosage.Value, _window.LabelLine));
+            _window.BufferSortButton.OnPressed += _ => SendMessage(
+                    new ChemMasterSortingTypeCycleMessage());
 
             for (uint i = 0; i < _window.PillTypeButtons.Length; i++)
             {

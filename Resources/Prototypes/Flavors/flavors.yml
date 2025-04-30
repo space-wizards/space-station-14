@@ -600,6 +600,11 @@
   description: flavor-complex-irish-slammer
 
 - type: flavor
+  id: alienbrainhemorrhage
+  flavorType: Complex
+  description: flavor-complex-alien-brain-hemorrhage
+
+- type: flavor
   id: vodkaredbool
   flavorType: Complex
   description: flavor-complex-vodka-red-bool
@@ -623,6 +628,11 @@
   id: watermelonwakeup
   flavorType: Complex
   description: flavor-complex-watermelon-wakeup
+
+- type: flavor
+  id: electricshark
+  flavorType: Complex
+  description: flavor-complex-electric-shark
 
 - type: flavor
   id: rubberneck
@@ -750,6 +760,11 @@
   description: flavor-complex-coconut-rum
 
 - type: flavor
+  id: darkandstormy
+  flavorType: Complex
+  description: flavor-complex-dark-and-stormy
+
+- type: flavor
   id: coffeeliquor
   flavorType: Complex
   description: flavor-complex-coffee-liquor
@@ -798,6 +813,11 @@
   id: arnoldpalmer
   flavorType: Complex
   description: flavor-complex-arnold-palmer
+
+- type: flavor
+  id: tortuga
+  flavorType: Complex
+  description: flavor-complex-tortuga
 
 - type: flavor
   id: bluehawaiian
@@ -860,6 +880,11 @@
   description: flavor-complex-iced-beer
 
 - type: flavor
+  id: radler
+  flavorType: Complex
+  description: flavor-complex-radler
+
+- type: flavor
   id: gargleblaster
   flavorType: Complex
   description: flavor-complex-gargle-blaster
@@ -895,6 +920,11 @@
   description: flavor-complex-atomic-cola
 
 - type: flavor
+  id: crushdepth
+  flavorType: Complex
+  description: flavor-complex-crush-depth
+
+- type: flavor
   id: cubalibre
   flavorType: Complex
   description: flavor-complex-cuba-libre
@@ -903,6 +933,31 @@
   id: gintonic
   flavorType: Complex
   description: flavor-complex-gin-tonic
+
+- type: flavor
+  id: jackrose
+  flavorType: Complex
+  description: flavor-complex-jack-rose
+
+- type: flavor
+  id: junglebird
+  flavorType: Complex
+  description: flavor-complex-jungle-bird
+
+- type: flavor
+  id: kalimotxo
+  flavorType: Complex
+  description: flavor-complex-kalimotxo
+
+- type: flavor
+  id: vampiro
+  flavorType: Complex
+  description: flavor-complex-vampiro
+
+- type: flavor
+  id: bronx
+  flavorType: Complex
+  description: flavor-complex-bronx
 
 - type: flavor
   id: screwdriver
@@ -995,6 +1050,11 @@
   description: flavor-complex-driest-martini
 
 - type: flavor
+  id: eggnog
+  flavorType: Complex
+  description: flavor-complex-eggnog
+
+- type: flavor
   id: erikasurprise
   flavorType: Complex
   description: flavor-complex-erika-surprise
@@ -1048,6 +1108,11 @@
   id: mojito
   flavorType: Complex
   description: flavor-complex-mojito
+
+- type: flavor
+  id: monkeybusiness
+  flavorType: Complex
+  description: flavor-complex-monkey-business
 
 - type: flavor
   id: neurotoxin
@@ -1340,6 +1405,66 @@
   description: flavor-complex-compressed-meat
 
 - type: flavor
+  id: caipirinha
+  flavorType: Complex
+  description: flavor-complex-caipirinha
+
+- type: flavor
+  id: daiquiri
+  flavorType: Complex
+  description: flavor-complex-daiquiri
+
+- type: flavor
+  id: deathintheafternoon
+  flavorType: Complex
+  description: flavor-complex-deathintheafternoon
+
+- type: flavor
+  id: empress75
+  flavorType: Complex
+  description: flavor-complex-empress75
+
+- type: flavor
+  id: espressomartini
+  flavorType: Complex
+  description: flavor-complex-espressomartini
+
+- type: flavor
+  id: mayojito
+  flavorType: Complex
+  description: flavor-complex-mayojito
+
+- type: flavor
+  id: mimeosa
+  flavorType: Complex
+  description: flavor-complex-mimeosa
+
+- type: flavor
+  id: mimosa
+  flavorType: Complex
+  description: flavor-complex-mimosa
+
+- type: flavor
+  id: moscowmule
+  flavorType: Complex
+  description: flavor-complex-moscowmule
+
+- type: flavor
+  id: thesunalsorises
+  flavorType: Complex
+  description: flavor-complex-thesunalsorises
+
+- type: flavor
+  id: whiskeysour
+  flavorType: Complex
+  description: flavor-complex-whiskeysour
+
+- type: flavor
   id: zombiecocktail
   flavorType: Complex
   description: flavor-complex-zombiecocktail
+
+- type: flavor
+  id: bacchusblessing
+  flavorType: Complex
+  description: flavor-complex-bacchus-blessing
