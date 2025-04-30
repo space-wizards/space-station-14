@@ -87,7 +87,6 @@
   - type: FootPrints
     leftBarePrint: "footprint-left-bare-lizard"
     rightBarePrint: "footprint-right-bare-lizard"
-  - type: MutilatedCorpse # DS14 - MutilatedCorpse
 
 
 - type: entity

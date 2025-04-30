@@ -1,1 +1,0 @@
-copy-loc-SalvageHumanCorpse = {ent-SalvageHumanCorpse}

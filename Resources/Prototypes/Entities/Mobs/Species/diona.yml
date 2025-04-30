@@ -114,7 +114,6 @@
   - type: FootPrints # Backmen-footsteps
     leftBarePrint: "footprint-left-bare-diona"
     rightBarePrint: "footprint-right-bare-diona"
-  - type: MutilatedCorpse # DS14 - MutilatedCorpse
 
 - type: entity
   parent: BaseSpeciesDummy

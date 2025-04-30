@@ -80,7 +80,6 @@
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
   - type: Sanity # DS14
-  - type: MutilatedCorpse # DS14 - MutilatedCorpse
 
 
 - type: entity

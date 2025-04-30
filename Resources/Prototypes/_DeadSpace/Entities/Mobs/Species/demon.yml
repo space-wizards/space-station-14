@@ -51,7 +51,6 @@
   - type: Speech
     speechSounds: Lizard
   - type: FootPrints
-  - type: MutilatedCorpse # DS14 - MutilatedCorpse
 
 - type: entity
   parent: BaseSpeciesDummy
