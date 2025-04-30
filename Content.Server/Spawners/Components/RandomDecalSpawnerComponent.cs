@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Map;
 
 namespace Content.Server.Spawners.Components;
 
@@ -66,7 +67,7 @@ public abstract partial class RandomDecalSpawnerComponent : Component
     /// This is mostly so dirt decals don't go on diagonal tiles that won't work for them.
     /// </remarks>
     [DataField]
-    public List<String> TileBlacklist = new();
+    public List<ProtoId<ITileDefinition>> TileBlacklist = new();
 
     /// <summary>
     /// Sets whether to delete the entity with this component after the spawner is finished.

@@ -4,6 +4,7 @@ using Content.Server.Decals;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Spawners.EntitySystems;
 
@@ -124,12 +125,12 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
 
     // Gets a list of all the tile definitions in the current map that are also part of the blacklist
     // This is so we can minimize the list size we have to work with.
-    private List<ITileDefinition> GetTileDefs(List<String> tileNames)
+    private List<ITileDefinition> GetTileDefs(List<ProtoId<ITileDefinition>> tileProtos)
     {
         var existingTileDefs = new List<ITileDefinition>();
-        foreach (var tileName in tileNames)
+        foreach (var tileProto in tileProtos)
         {
-            if (_tileDefs.TryGetDefinition(tileName, out var tileDef))
+            if (_tileDefs.TryGetDefinition(tileProto, out var tileDef))
                 existingTileDefs.Add(tileDef);
         }
 
