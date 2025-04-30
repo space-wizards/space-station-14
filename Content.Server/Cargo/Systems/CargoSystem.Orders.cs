@@ -378,16 +378,6 @@ namespace Content.Server.Cargo.Systems
 
                 UpdateOrderState(uid, station);
             }
-
-            var consoleQuery = AllEntityQuery<CargoShuttleConsoleComponent>();
-            while (consoleQuery.MoveNext(out var uid, out var _))
-            {
-                var station = _station.GetOwningStation(uid);
-                if (station != dbUid)
-                    continue;
-
-                UpdateShuttleState(uid, station);
-            }
         }
 
         public bool AddAndApproveOrder(

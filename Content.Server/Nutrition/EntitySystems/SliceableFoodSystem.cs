@@ -14,6 +14,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Content.Shared.Destructible;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -139,6 +140,9 @@ public sealed class SliceableFoodSystem : EntitySystem
         RaiseLocalEvent(uid, ev);
         if (ev.Cancelled)
             return;
+
+        var dev = new DestructionEventArgs();
+        RaiseLocalEvent(uid, dev);
 
         // Locate the sliced food and spawn its trash
         foreach (var trash in foodComp.Trash)
