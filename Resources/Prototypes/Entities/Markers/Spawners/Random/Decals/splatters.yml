@@ -15,6 +15,7 @@
     zIndex: 5
     color: '#9900007F'
     cleanable: true
+    deleteSpawnerAfterSpawn: true
 
 - type: entity
   parent: DecalSpawnerBase
@@ -79,7 +80,7 @@
     - toilet
     - toolbox
     - uboa
-    range: 1
+    range: 0.5
     randomRotation: true
     snapRotation: false
     maxDecals: 1
@@ -100,3 +101,4 @@
     - silver
     - yellow
     cleanable: true
+    deleteSpawnerAfterSpawn: true

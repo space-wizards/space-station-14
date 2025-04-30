@@ -26,13 +26,15 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
     public void OnMapInit(EntityUid uid, RandomDecalSpawnerDistributedComponent component, MapInitEvent args)
     {
         TrySpawn(uid, component);
-        QueueDel(uid);
+        if (component.DeleteSpawnerAfterSpawn)
+            QueueDel(uid);
     }
 
     public void OnMapInit(EntityUid uid, RandomDecalSpawnerScatteredComponent component, MapInitEvent args)
     {
         TrySpawn(uid, component);
-        QueueDel(uid);
+        if (component.DeleteSpawnerAfterSpawn)
+            QueueDel(uid);
     }
 
     public bool TrySpawn(EntityUid uid, RandomDecalSpawnerDistributedComponent component)

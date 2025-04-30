@@ -48,7 +48,7 @@ public abstract partial class RandomDecalSpawnerComponent : Component
     public Color Color = Color.White;
 
     /// <summary>
-    /// A random color to select from. Overrides Color if it is set.
+    /// A random color to select from. Overrides Color if set.
     /// </summary>
     [DataField]
     public List<Color> RandomColorList = new();
@@ -69,5 +69,9 @@ public abstract partial class RandomDecalSpawnerComponent : Component
     [DataField]
     public List<String> TileBlacklist = new();
 
+    /// <summary>
+    /// Sets whether to delete the entity with this component after the spawner is finished.
+    /// </summary>
+    [DataField]
+    public bool DeleteSpawnerAfterSpawn = false;
 }
-

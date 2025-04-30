@@ -35,6 +35,7 @@
     - FloorGym
     - FloorGlass
     - FloorRGlass
+    deleteSpawnerAfterSpawn: true
 
 - type: entity
   parent: DecalSpawnerDirtBase

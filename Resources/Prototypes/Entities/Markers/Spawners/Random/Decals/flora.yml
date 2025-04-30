@@ -6,6 +6,7 @@
   - type: RandomDecalSpawnerScattered
     range: 0.3
     zIndex: 1
+    deleteSpawnerAfterSpawn: true
 
 - type: entity
   parent: DecalSpawnerFloraBase
