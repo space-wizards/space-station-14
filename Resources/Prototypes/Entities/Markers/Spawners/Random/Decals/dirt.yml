@@ -13,15 +13,19 @@
     prob: 0.8
     color: '#FFFFFF7F'
     cleanable: true
-    tileBlacklist:
+    maxDecalsPerTile: 1
+    tileBlacklist: # Everything here just looks bad if it gets regular dirt on it
+    - FloorSteelMono
     - FloorSteelDiagonal
     - FloorSteelOffset
     - FloorSteelDiagonalMini
     - FloorWood
     - FloorWoodLarge
+    - FloorWhiteMono
     - FloorWhiteDiagonal
     - FloorWhiteOffset
     - FloorWhiteDiagonalMini
+    - FloorDarkMono
     - FloorDarkDiagonal
     - FloorDarkOffset
     - FloorDarkDiagonalMini
@@ -35,6 +39,28 @@
     - FloorGym
     - FloorGlass
     - FloorRGlass
+    - FloorAstroGrass
+    - FloorMowedAstroGrass
+    - FloorJungleAstroGrass
+    - FloorAstroIce
+    - FloorAstroSnow
+    - FloorAstroAsteroidSand
+    - FloorFlesh
+    - FloorAsteroidSandUnvariantized
+    - FloorAsteroidIronsandUnvariantized
+    - FloorCave
+    - FloorAsteroidIronsand
+    - FloorAsteroidTile
+    - FloorAsteroidSandDug
+    - FloorAsteroidSand
+    - FloorDirt
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorGrass
+    - FloorAsphalt
+    - FloorReinforced
+    - FloorLino
     deleteSpawnerAfterSpawn: true
 
 - type: entity
@@ -43,7 +69,6 @@
   suffix: Dirt, 0 Radius
   components:
   - type: RandomDecalSpawnerDistributed
-    maxDecalsPerTile: 1
     range: 0
     prob: 1.0
 
@@ -53,7 +78,6 @@
   suffix: Dirt, 1 Radius
   components:
   - type: RandomDecalSpawnerDistributed
-    maxDecalsPerTile: 1
     range: 1
 
 - type: entity
@@ -71,7 +95,6 @@
   suffix: Dirt, Monospace, 1 Radius
   components:
   - type: RandomDecalSpawnerDistributed
-    maxDecalsPerTile: 2
     range: 1
     decals:
     - Dirt
@@ -94,9 +117,30 @@
     - FloorCarpetOffice
     - FloorBoxing
     - FloorGym
+    - FloorAstroGrass
+    - FloorMowedAstroGrass
+    - FloorJungleAstroGrass
+    - FloorAstroIce
+    - FloorAstroSnow
+    - FloorAstroAsteroidSand
+    - FloorFlesh
+    - FloorAsteroidSandUnvariantized
+    - FloorAsteroidIronsandUnvariantized
+    - FloorCave
+    - FloorAsteroidIronsand
+    - FloorAsteroidTile
+    - FloorAsteroidSandDug
+    - FloorAsteroidSand
+    - FloorDirt
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorGrass
+    - FloorAsphalt
+    - FloorReinforced
 
 - type: entity
-  parent: DecalSpawnerDirtBase
+  parent: DecalSpawnerDirtMonospace
   id: DecalSpawnerBurns
   suffix: Burns, 1 Radius
   components:
@@ -106,5 +150,4 @@
     - burnt2
     - burnt3
     - burnt4
-    maxDecalsPerTile: 1
     range: 1

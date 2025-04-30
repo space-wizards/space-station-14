@@ -2,7 +2,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Spawners.Components;
 
-[RegisterComponent, EntityCategory("Spawner")]
+[ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public abstract partial class RandomDecalSpawnerComponent : Component
 {
     /// <summary>
