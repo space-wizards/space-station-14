@@ -25,6 +25,9 @@
     sprite: Clothing/Ears/Headsets/cargo.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/cargo.rsi
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/qm.ogg
 
 - type: entity
   parent: ClothingHeadsetAlt
@@ -40,6 +43,9 @@
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/centcom.rsi
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/cc.ogg
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
@@ -57,6 +63,23 @@
   - type: RadioChime
     chimeSound:
       path: /Audio/_Starlight/Effects/Radio/captain.ogg
+
+- type: entity
+  parent: [ClothingHeadsetAlt, BaseCommandContraband]
+  id: ClothingHeadsetAltBSO
+  name: officer blue shield over-ear headset
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyStationMaster
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/command.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/command.rsi
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/bso.ogg
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
@@ -94,6 +117,9 @@
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: StealTarget
     stealGroup: ClothingHeadsetAltMedical
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/cmo.ogg
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
@@ -110,6 +136,9 @@
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/security.rsi
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/hos.ogg
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
@@ -126,6 +155,9 @@
     sprite: Clothing/Ears/Headsets/science.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/science.rsi
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/rd.ogg
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseSyndicateContraband]
@@ -144,6 +176,9 @@
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/syndicate.rsi
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/marauder.ogg
 
 - type: entity
   parent: ClothingHeadsetAlt

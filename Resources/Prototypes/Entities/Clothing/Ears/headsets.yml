@@ -74,6 +74,9 @@
       - EncryptionKeyCargo
       - EncryptionKeyCommand
       - EncryptionKeyCommon
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/qm.ogg
 
 - type: entity
   parent: [ ClothingHeadset, BaseCentcommContraband ]
@@ -169,6 +172,9 @@
       - EncryptionKeyMedical
       - EncryptionKeyCommand
       - EncryptionKeyCommon
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/cmo.ogg
 
 - type: entity
   parent: ClothingHeadset
@@ -230,6 +236,9 @@
       - EncryptionKeyScience
       - EncryptionKeyCommand
       - EncryptionKeyCommon
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/rd.ogg
 
 - type: entity
   parent: [ClothingHeadset, BaseSecurityLawyerContraband]
@@ -267,6 +276,9 @@
     sprite: Clothing/Ears/Headsets/brigmedic.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/brigmedic.rsi
+  - type: RadioChime
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/brigmedic.ogg
 
 - type: entity
   parent: ClothingHeadset
