@@ -48,16 +48,16 @@
 
 - type: entity
   parent: DecalSpawnerDirtBase
-  id: DecalSpawnerDirtWide
+  id: DecalSpawnerDirtNear
   suffix: Dirt, 1 Radius
   components:
   - type: RandomDecalSpawnerDistributed
-    maxDecalsPerTile: 3
+    maxDecalsPerTile: 1
     range: 1
 
 - type: entity
   parent: DecalSpawnerDirtBase
-  id: DecalSpawnerDirtThin
+  id: DecalSpawnerDirtWide
   suffix: Dirt, 3 Radius
   components:
   - type: RandomDecalSpawnerDistributed
@@ -67,11 +67,11 @@
 - type: entity
   parent: DecalSpawnerDirtBase
   id: DecalSpawnerDirtMonospace
-  suffix: Dirt, Monospace, 3 Radius
+  suffix: Dirt, Monospace, 1 Radius
   components:
   - type: RandomDecalSpawnerDistributed
     maxDecalsPerTile: 2
-    range: 3
+    range: 1
     decals:
     - Dirt
     - DirtHeavyMonotile
@@ -93,3 +93,17 @@
     - FloorCarpetOffice
     - FloorBoxing
     - FloorGym
+
+- type: entity
+  parent: DecalSpawnerDirtBase
+  id: DecalSpawnerBurns
+  suffix: Burns, 1 Radius
+  components:
+  - type: RandomDecalSpawnerDistributed
+    decals:
+    - burnt1
+    - burnt2
+    - burnt3
+    - burnt4
+    maxDecalsPerTile: 1
+    range: 1

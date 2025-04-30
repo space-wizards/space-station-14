@@ -59,14 +59,11 @@
     - face
     - fireaxe
     - firedanger
-    - food
     - ghost
     - guy
     - heart
     - like
     - matt
-    - med
-    - nay
     - peace
     - prolizard
     - radiation
@@ -76,13 +73,11 @@
     - shotgun
     - skull
     - snake
-    - space
     - star
     - stickman
     - taser
     - toilet
     - toolbox
-    - trade
     - uboa
     range: 1
     randomRotation: true
