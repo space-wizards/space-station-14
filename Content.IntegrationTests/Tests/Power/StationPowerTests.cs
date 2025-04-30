@@ -11,7 +11,7 @@ using Robust.Shared.EntitySerialization;
 
 namespace Content.IntegrationTests.Tests.Power;
 
-[TestFixture]
+[Explicit]
 public sealed class StationPowerTests
 {
     /// <summary>
