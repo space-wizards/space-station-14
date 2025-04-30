@@ -117,11 +117,10 @@
     - MobCorgiIanPup
 
 - type: entity
-  suffix: Admeme
   id: SpawnMobCorgiMouse
   name: Dev Mouse Spawner
   parent: MarkerBase
-  suffix: Dev Map Pet
+  suffix: Dev Map Pet, Admeme
   components:
   - type: Sprite
     layers:
