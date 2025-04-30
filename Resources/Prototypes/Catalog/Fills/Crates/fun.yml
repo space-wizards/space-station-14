@@ -67,6 +67,8 @@
       weight: 0.1
     - id: PlushieCaptain
       weight: 0.1
+    - id: PlushieOdds
+      weight: 0.4
     - id: PlushieGiantBear
       weight: 0.5
     - id: PlushieGriffy

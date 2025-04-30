@@ -697,3 +697,52 @@
   - type: Sprite
     sprite: _Impstation/Objects/Fun/prizeticket.rsi
     state: diamond
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieOdds
+  name: odd plushie
+  description: You have a feeling you shouldn't be mapping this.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: plushie_odds
+  - type: Item
+    inhandVisuals:
+      left:
+        - state: plushie_odds-inhand-left
+      right:
+        - state: plushie_odds-inhand-right
+  - type: MeleeWeapon
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/_Impstation/Animals/spooky_horse.ogg
+      - !type:ExplodeBehavior
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 3
+  - type: Explosive
+    explosionType: Default
+    # Cosmetic explosion :tf:
+    maxIntensity: 0.01
+    intensitySlope: 1
+    totalIntensity: 0.01
+  - type: Clothing
+    quickEquip: false
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    equippedPrefix: odd
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: odds-equipped-HELMET
+        offset: "0, 0.06"

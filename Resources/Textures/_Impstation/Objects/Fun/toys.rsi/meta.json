@@ -1,7 +1,7 @@
 ﻿{
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "minor, giant bear, plushie hop, and plushie captain by carousel. finfin, yarn noodles, fabric scrap salad by starlighthowls. gray plushie by tox. bug, dolls, and imp specific species plushies by Doop. imp plush by mqole,",
+    "copyright": "minor, giant bear, plushie hop, and plushie captain by carousel. finfin, yarn noodles, fabric scrap salad, odds by starlighthowls. gray plushie by tox. bug, dolls, and imp specific species plushies by Doop. imp plush by mqole,",
     "size": {
         "x": 32,
         "y": 32
@@ -131,6 +131,21 @@
         },
         {
             "name": "doll_hair-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "plushie_odds"
+        },
+        {
+            "name": "plushie_odds-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plushie_odds-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "odds-equipped-HELMET",
             "directions": 4
         },
         {
