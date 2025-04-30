@@ -1,0 +1,71 @@
+- type: entity
+  parent: [BaseWeaponPowerCell, BaseGunWieldable]
+  id: CartridgeLaserRifle
+  name: экспериментальная лазерная винтовка
+  description: Эксперементальная лазерная винтовка которая использует энергитические картриджи для стрельбы.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Battery/clr.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-3
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Weapons/Guns/Battery/clr.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: Gun
+    fireRate: 1.75
+    soundGunshot:
+      path: /Audio/_DeadSpace/Weapons/Guns/Gunshots/laser_rifle.ogg
+      params:
+        volume: 1
+  - type: MagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: EnergyCartridge
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+          - EnergyCartridge
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+  - type: Appearance
+
+- type: entity
+  id: EnergyCartridge
+  parent: BaseItem
+  name: энергитический картридж
+  description: Мощный хранитель энергии служащий для стрельбы с ЭЛВ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/energycartridge.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: base
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Item
+    size: Normal
+  - type: Tag
+    tags:
+    - EnergyCartridge
+  - type: Battery
+    maxCharge: 1500
+    startingCharge: 1500
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 100
+  - type: PowerCell
+  - type: Appearance
+  - type: PowerCellVisuals
+  - type: Riggable
