@@ -5380,4 +5380,18 @@ Entries:
   id: 745
   time: '2025-04-30T21:01:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/555
+- author: Salthew & Gensy
+  changes:
+  - message: Added Croft Plushie and Minttongue Plushie
+    type: Add
+  id: 746
+  time: '2025-04-30T21:02:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/556
+- author: Salthew & Gensy
+  changes:
+  - message: Updated sprites of the Jessica Plushie and Spiro Plushie
+    type: Tweak
+  id: 747
+  time: '2025-04-30T21:02:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/556
 
