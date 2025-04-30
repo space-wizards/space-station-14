@@ -879,6 +879,13 @@
   - ScarfLightBlue
 
 - type: loadoutGroup
+  id: AtmosphericTechnicianHead
+  name: loadout-group-atmospheric-technician-head
+  minLimit: 0
+  loadouts:
+  - AtmosphericTechnicianBeret
+
+- type: loadoutGroup
   id: AtmosphericTechnicianPDA
   name: loadout-group-atmospheric-technician-id
   loadouts:

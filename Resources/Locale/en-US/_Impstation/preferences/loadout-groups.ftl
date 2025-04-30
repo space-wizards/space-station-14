@@ -109,6 +109,7 @@ loadout-group-station-engineer-mask = Station Engineer mask
 loadout-group-station-engineer-neck = Station Engineer neck
 
 loadout-group-atmospheric-technician-neck = Atmospheric Technician neck
+loadout-group-atmospheric-technician-head = Atmospheric Technician head
 loadout-group-atmospheric-technician-id = Atmospheric Technician ID
 
 # science

@@ -1,0 +1,7 @@
+# Head
+- type: loadout
+  id: AtmosphericTechnicianBeret
+  startingGear: EngineeringBeret
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorEngineering #From default senior engineering playtime in Resources\Prototypes\Loadouts\Jobs\Engineering\station_engineer.yml
