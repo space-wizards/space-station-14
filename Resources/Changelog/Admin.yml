@@ -1115,5 +1115,13 @@ Entries:
   id: 134
   time: '2025-04-26T21:06:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36412
+- author: K-Dynamic
+  changes:
+  - message: CC officials now wear a centcomm carapace for body armour, which have
+      identical stats to the command carapace.
+    type: Add
+  id: 135
+  time: '2025-04-30T00:40:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35301
 Name: Admin
 Order: 2
