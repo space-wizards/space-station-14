@@ -64,3 +64,14 @@
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 5
+
+- type: entity
+  parent: TrashBag
+  id: BorgTrashBag
+  name: internal trash bag
+  description: An upgraded trash bag with a larger internal volume, installed directly into a custodial cyborg.
+  components:
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,7,6

@@ -67,3 +67,13 @@
   cost: 1000
   category: cargoproduct-category-name-security
   group: market
+
+- type: cargoProduct
+  id: SecurityNonlethalThrowables
+  icon:
+    sprite: Objects/Weapons/Grenades/stingergrenade.rsi
+    state: icon
+  product: CrateSecNonlethalThrowables
+  cost: 2500
+  category: cargoproduct-category-name-security
+  group: market
