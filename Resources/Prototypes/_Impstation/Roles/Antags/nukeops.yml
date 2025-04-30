@@ -3,7 +3,6 @@
   name: ghost-role-information-loneop-name
   antagonist: true
   playTimeTracker: AntagLoneOperative
-  setPreference: true
   objective: ghost-role-information-loneop-description
   requirements:
   - !type:OverallPlaytimeRequirement
