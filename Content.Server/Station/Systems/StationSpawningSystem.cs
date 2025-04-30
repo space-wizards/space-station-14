@@ -25,6 +25,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.GameObjects.Components.Localization; //imp
 
 namespace Content.Server.Station.Systems;
 
@@ -130,7 +131,14 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             {
                 EquipRoleName(jobEntity, loadout, roleProto!);
             }
-
+            //START IMP EDIT: let silicon have detail text and pronouns
+            if (profile != null){
+                if (string.IsNullOrEmpty(profile.FlavorText) && _configurationManager.GetCVar(CCVars.FlavorText))
+                    AddComp<DetailExaminableComponent>(jobEntity).Content = profile.FlavorText;
+                if (TryComp<GrammarComponent>(jobEntity, out var grammar))
+                    grammar.Gender = profile.Gender;
+            }
+            //END IMP EDIT
             DoJobSpecials(job, jobEntity);
             _identity.QueueIdentityUpdate(jobEntity);
             return jobEntity;
