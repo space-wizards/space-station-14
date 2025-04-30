@@ -23,18 +23,22 @@ public sealed class StationPowerTests
         "Fland",
         "Meta",
         "Packed",
-        "Cluster",
         "Omega",
         "Bagel",
-        "Origin",
         "Box",
-        "Saltern",
         "Core",
         "Marathon",
-        "Atlas",
+        "Saltern",
         "Reach",
         "Train",
-        "Oasis"
+        "Oasis",
+        "Gate",
+        "Amber",
+        "Loop",
+        "Plasma",
+        "Elkridge",
+        "Convex",
+        "Relic",
     ];
 
     [Test, TestCaseSource(nameof(GameMaps))]
