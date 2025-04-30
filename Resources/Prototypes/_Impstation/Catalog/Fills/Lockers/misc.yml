@@ -1,7 +1,7 @@
 - type: entity
   id: LockerSyndicateChemistryFilled
   suffix: Filled
-  name: interdyne chemical locker
+  name: Interdyne chemical locker # imp preference for capsing company names
   parent: LockerSyndicatePersonal
   components:
   - type: EntityTableContainerFill

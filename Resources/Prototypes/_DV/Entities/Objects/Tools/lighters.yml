@@ -1,8 +1,8 @@
 ﻿- type: entity
   parent: [ FlippoLighter, Tier2Contraband ] # imp - its not tier 1 because its also a fucking gun lol
   id: FlippoSyndicateLighter # imp - flippo appears to be the brand name
-  name: flippo blood-red lighter # imp - ditto
-  description: "A 'Valid' choice in lighters. Capable of superheating welding fuel into incendiary shots when lit. Contains no copper."
+  name: Flippo blood-red lighter # imp - ditto
+  description: "A 'valid' choice in lighters. Capable of superheating welding fuel into incendiary shots when lit. Contains no copper."
   components:
   - type: Sprite
     # imp start

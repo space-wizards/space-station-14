@@ -45,8 +45,8 @@
 - type: entity
   id: CrateMindShieldImplants
   parent: CrateMedical
-  name: MindShield implant crate
-  description: Crate filled with 3 MindShield implants.
+  name: mindshield implant crate # imp caps fix
+  description: Crate filled with 3 mindshield implants. # imp caps fix
   components:
   - type: StorageFill
     contents:

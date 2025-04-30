@@ -47,7 +47,7 @@
 - type: entity
   parent: [BaseTraitorObjective, BaseLivingObjective]
   id: EscapeShuttleObjective
-  name: Escape to centcomm alive and unrestrained.
+  name: Escape to CentComm alive and unrestrained. # imp caps fix
   description: One of our undercover agents will debrief you when you arrive. Don't show up in cuffs.
   components:
   - type: Objective
@@ -61,7 +61,7 @@
 - type: entity
   parent: BaseTraitorObjective
   id: DieObjective
-  name: Die a glorious death
+  name: Die a glorious death. # imp style fix
   description: Die.
   components:
   - type: Objective
@@ -95,7 +95,7 @@
 - type: entity
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillRandomPersonObjective
-  description: Do it however you like, just make sure they don't make it to centcomm.
+  description: Do it however you like, just make sure they don't make it to CentComm. # imp caps fix
   components:
   - type: Objective
     difficulty: 1.75

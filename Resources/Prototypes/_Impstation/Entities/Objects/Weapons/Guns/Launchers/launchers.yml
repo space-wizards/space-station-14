@@ -1,8 +1,8 @@
 - type: entity
-  name: shining spring
+  name: Shining Spring
   parent: [BaseWeaponLauncher, BaseGunWieldable, BaseJanitorContraband]
   id: WeaponLauncherCleanerLake
-  description: A de-militarised piece of military surplus equipment, repurposed for the real troops.
+  description: A de-militarised piece of military surplus equipment, repurposed for the real troops. Load it with cleannades and give 'em a show!
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Launchers/cleaner_lake.rsi
@@ -60,10 +60,10 @@
     speed: 5
 
 - type: entity
-  name: remilitarised shining spring
+  name: Shining Spring # it's a secret. until a janitor kills you
   parent: [WeaponLauncherCleanerLake, BaseGunWieldable]
   id: WeaponLauncherCleanerLakeRemilitarised
-  description: A re-militarised piece of military surplus equipment, go nuts.
+  description: I love you, Kitchen Gun!
   components:
   - type: BallisticAmmoProvider
     whitelist:

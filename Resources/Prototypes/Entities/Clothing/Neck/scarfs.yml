@@ -143,7 +143,7 @@
   parent: [ ClothingScarfBase, BaseCentcommContraband ]
   id: ClothingNeckScarfStripedCentcom
   name: striped CentComm scarf
-  description: A stylish striped centcomm colored scarf. The perfect winter accessory for those with a keen fashion sense, and those who need to do paperwork in the cold.
+  description: A stylish striped CentComm-colored scarf. The perfect winter accessory for those with a keen fashion sense, and those who need to do paperwork in the cold. # imp caps fix
   components:
     - type: Sprite
       sprite: Clothing/Neck/Scarfs/centcom.rsi

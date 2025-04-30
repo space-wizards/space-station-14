@@ -313,8 +313,8 @@
 - type: entity
   parent: [ BaseComputerCircuitboard, BaseCentcommContraband ]
   id: CentcommCommsComputerCircuitboard
-  name: central command communications computer board
-  description: A computer printed circuit board for a central command communications console.
+  name: Central Command communications computer board # imp caps fix
+  description: A core component comprising a CentComm comm computer's contents. # imp edit we have fun here
   components:
   - type: Sprite
     state: cpu_centcomm

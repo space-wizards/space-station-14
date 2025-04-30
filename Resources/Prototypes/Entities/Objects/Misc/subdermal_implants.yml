@@ -330,7 +330,7 @@
   parent: BaseSubdermalImplant
   id: FakeMindShieldImplant
   name: fake mindshield implant
-  description: This implant allows the implanter to produce a fake signal that NT security huds use to identify individuals implanted with a mindshield.
+  description: This implant produces a covert signal, causing Nanotrasen HUDs to misidentify the implanted individual as having a mindshield. # imp edit
   categories: [ HideSpawnMenu ]
   components:
       - type: SubdermalImplant
@@ -343,7 +343,7 @@
   parent: BaseSubdermalImplant
   id: MindShieldImplant
   name: mindshield implant
-  description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
+  description: This proprietary implant ensures loyalty to Nanotrasen, blocking the effects of mind control devices or mental subversion. Ostensibly required for, and injected at shift-start into, all members of Command and Security. # imp edit
   categories: [ HideSpawnMenu ]
   components:
    - type: SubdermalImplant
@@ -358,7 +358,7 @@
   parent: BaseSubdermalImplant
   id: RadioImplantCentcomm
   name: radio implant
-  description: This implant grants access to the Centcomm channel without a headset. Only authorized for Centcomm employees.
+  description: This implant grants access to the Central Command radio, without need for a headset. Only authorized for CentComm employees. # imp edit
   categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant

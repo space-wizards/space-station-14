@@ -1,8 +1,8 @@
 - type: entity
-  name: Shining spring re-militarisation kit
+  name: Shining Spring re-militarisation kit
   parent: [BaseItem, BaseSyndicateContraband]
   id: WeaponCleanerLakeUpgradeKit
-  description: A re-militarisation kit for the shining spring.
+  description: A re-militarisation kit for the janitorial Shining Spring, letting it use real grenades. For those really tough stains.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi

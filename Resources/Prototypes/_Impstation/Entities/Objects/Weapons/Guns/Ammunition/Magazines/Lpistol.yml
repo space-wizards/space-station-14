@@ -34,8 +34,8 @@
 
 - type: entity
   id: BaseMagazineZipper
-  name: zipper .22 magazine (.22 auto)
-  description: A 6-round holder-of-bullets.
+  name: Zipper .22 magazine (.22 auto)
+  description: A 6-round holder-of-bullets. Looks like half a toy. # gave this a description for roleplay when it shows up in maints loot
   parent: BaseItem
   abstract: true
   components:
@@ -92,7 +92,7 @@
 
 - type: entity
   id: MagazineZipper
-  name: zipper magazine (.22 auto)
+  name: Zipper magazine (.22 auto)
   parent: BaseMagazineZipper
   components:
   - type: BallisticAmmoProvider
@@ -106,7 +106,7 @@
 
 - type: entity
   id: MagazineZipperAP
-  name: zipper magazine (.22 auto APDSFS)
+  name: Zipper magazine (.22 auto APDSFS)
   description: A 6-round holder-of-bullets, marked as armor-piercing darts.
   parent: BaseMagazineZipper
   components:
@@ -121,7 +121,7 @@
 
 - type: entity
   id: MagazineZipperEmpty
-  name: zipper .22 magazine (.22 auto any)
+  name: Zipper .22 magazine (.22 auto any)
   description: A 6-round holder-of-bullets with no apparent markings.
   suffix: empty
   parent: BaseMagazineZipper

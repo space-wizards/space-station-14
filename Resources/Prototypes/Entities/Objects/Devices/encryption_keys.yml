@@ -44,8 +44,8 @@
 - type: entity
   parent: [ EncryptionKey, BaseCentcommContraband ]
   id: EncryptionKeyCentCom
-  name: central command encryption key
-  description: An encryption key used by captain's bosses.
+  name: Central Command encryption key # imp caps fix
+  description: An encryption key used by your boss's bosses. # imp wording
   components:
   - type: EncryptionKey
     channels:
@@ -60,7 +60,7 @@
   parent: [ EncryptionKey, BaseCommandContraband ] #imp edit, cenctomm implicitly allowed through this contraband entity. also all centcomm jobs are already part of command, so like...
   id: EncryptionKeyStationMaster
   name: station master encryption key
-  description: An encryption key used by station's bosses.
+  description: An encryption key used by the station's bossiest bosses. # imp wording
   components:
   - type: EncryptionKey
     channels:
@@ -82,7 +82,7 @@
   parent: [ EncryptionKey, BaseCommandContraband ]
   id: EncryptionKeyCommand
   name: command encryption key
-  description: An encryption key used by crew's bosses.
+  description: An encryption key used by the crew's bosses. # imp wording
   components:
   - type: EncryptionKey
     channels:

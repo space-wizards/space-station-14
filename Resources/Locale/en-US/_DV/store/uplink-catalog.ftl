@@ -24,7 +24,8 @@ uplink-dead-mans-signaller-name = Dead Man's Signaller
 uplink-dead-mans-signaller-desc = A device that if armed, will send a signal to any linked devices (such as bombs) when it is dropped or put away.
 
 uplink-chainsmoker-bundle-name = Chainsmoker Bundle
-uplink-chainsmoker-bundle-desc = A Carton of 6 Packs of Interdyne Herbals, plus a weaponized flippo that turns welding fuel into incendiary shots.
+# imp brand name fix
+uplink-chainsmoker-bundle-desc = A carton of 6 Packs of Interdyne Herbals, plus a weaponized Flippo that turns welding fuel into incendiary shots.
 
 uplink-paperwork-hater-name = "I Hate Paperwork" Stamp
 uplink-paperwork-hater-desc = For the seasoned paperwork hater. A stamp with an electric cigarette lighter embedded into it. Will Ignite any paper stamped with it.

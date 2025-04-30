@@ -301,7 +301,7 @@
 
 - type: entity
   id: RadioImplanterCentcomm
-  suffix: radio Centcomm
+  suffix: radio CentComm # imp caps fix
   parent: BaseImplantOnlyImplanter
   components:
   - type: Implanter

@@ -2,7 +2,7 @@
   id: CrateCargoLuxuryHardsuit
   parent: CratePirate
   name: luxury mining hardsuit crate
-  description: Finally, a hardsuit Quartermasters could call their own. Centcomm has heard you, now stop asking.
+  description: Finally, a hardsuit Quartermasters could call their own. CentComm has heard you, now stop asking. # imp caps fix
   components:
   - type: StorageFill
     contents:

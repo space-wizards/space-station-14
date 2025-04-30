@@ -74,7 +74,7 @@
   parent: FaxMachineBase
   id: FaxMachineCentcom
   name: CentComm long range fax machine
-  suffix: CentCom
+  suffix: CentComm # imp caps fix
   components:
   - type: Sprite
     layers:

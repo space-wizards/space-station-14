@@ -76,7 +76,7 @@
   id: DefibrillatorCompact # This should be a research item at some point
   parent: [ BaseDefibrillator, PowerCellSlotMediumItem ]
   name: compact defibrillator
-  description: A smaller one handed defibrillator initially designed by interdyne # Imp description
+  description: A smaller one handed defibrillator initially designed by Interdyne. # Imp description
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Specific/Medical/defibinterdyne.rsi # Imp

@@ -52,7 +52,8 @@ accent-goblin-words-47 = bus
 accent-goblin-words-48 = captain
 accent-goblin-words-49 = captains
 accent-goblin-words-50 = cash
-accent-goblin-words-51 = centcom
+# imp fix typo?
+accent-goblin-words-51 = centcomm
 accent-goblin-words-52 = cheap
 accent-goblin-words-53 = cheater
 accent-goblin-words-54 = close

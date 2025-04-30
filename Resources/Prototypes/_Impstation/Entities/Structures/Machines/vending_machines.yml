@@ -35,7 +35,7 @@
   parent: VendingMachineChemicals
   id: VendingMachineChemicalsInterdyne
   name: Interdyne ChemVend
-  description: A high tech ChemVend built by InterDyne. Backwards compatible with standard ChemVend restocks. # DeltaV: Add chemvend part
+  description: A high tech ChemVend built by Interdyne. Backwards compatible with standard ChemVend restocks. # DeltaV: Add chemvend part ; imp caps fix
   components:
   - type: VendingMachine
     pack: ChemVendInventoryInterdyne

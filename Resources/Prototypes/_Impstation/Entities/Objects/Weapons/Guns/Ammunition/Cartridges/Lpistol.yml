@@ -62,7 +62,7 @@
 
 - type: entity
   id: CartridgeLPistolAP
-  name: cartridge (.22 Auto APDSFS)
+  name: cartridge (.22 auto APDSFS)
   description: Gunner, sabot, infantry!
   parent: BaseCartridgeLPistol
   components:

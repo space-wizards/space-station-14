@@ -789,7 +789,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomFormal
-  name: central command formal suit
+  name: Central Command formal suit # imp caps fix
   description: A suit for special occasions.
   components:
   - type: Sprite

@@ -13,7 +13,7 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineCentCommOfficial
-  name: centcomm official figure
+  name: CentComm official figure
   description: A figurine depicting a CentComm official, who you should not be happy to see.
   components:
   - type: Sprite
@@ -49,7 +49,7 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineERTChaplain
-  name: ert chaplain figure
+  name: ERT chaplain figure
   description: A figurine depicting an Emergency Response Chaplain. For when ghosts and ghouls are afoot.
   components:
   - type: Sprite
@@ -61,7 +61,7 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineERTEngineer
-  name: ert engineer figure
+  name: ERT engineer figure
   description: A figurine depicting an Emergency Response Engineer. For when the hull just doesn't want to stay together.
   components:
   - type: Sprite
@@ -73,7 +73,7 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineERTJanitor
-  name: ert janitor figure
+  name: ERT janitor figure
   description: A figurine depicting an Emergency Response Janitor. For when the station is more trashed than a frat house.
   components:
   - type: Sprite
@@ -85,7 +85,7 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineERTLeader
-  name: ert leader figure
+  name: ERT leader figure
   description: A figurine depicting the leader of an Emergency Response Team. To take charge in the face of rampant bullshit.
   components:
   - type: Sprite
@@ -97,7 +97,7 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineERTMedic
-  name: ert medic figure
+  name: ERT medic figure
   description: A figurine depicting an Emergency Response Medic. For when the medbay has been bombed for the 8th time this shift.
   components:
   - type: Sprite
@@ -109,7 +109,7 @@
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineERTSecurity
-  name: ert security figure
+  name: ERT security figure
   description: A figurine depicting an Emergency Response Security Officer. For when things get far too hot to handle.
   components:
   - type: Sprite

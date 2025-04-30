@@ -28,7 +28,7 @@
   parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckMantleCMO
   name: chief medical officer's mantle
-  description: For a CMO that has been in enough medbays to know that more PPE means less central command dry cleaning visits when the shift is over.
+  description: For a CMO that has been in enough medbays to know that more PPE means less Central Command dry cleaning visits when the shift is over. # imp caps fix
   components:
   - type: Sprite
     sprite: Clothing/Neck/mantles/cmomantle.rsi

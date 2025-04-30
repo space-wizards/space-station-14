@@ -16,7 +16,7 @@
 - type: entity
   parent: [ClothingEyesGlassesChemical, ShowMedicalIcons, Tier1Contraband]
   id: ClothingEyesGlassesChemicalInterdyne
-  name: interdyne chemical analysis goggles
+  name: Interdyne chemical analysis goggles # imp preference for capsing company names
   description: Goggles engineered to be unable to get a stain on the lenses. It comes with a medical HUD incorporated.
   components:
   - type: Sprite

@@ -282,8 +282,9 @@ ghost-role-information-science-description = You are part of a science team, but
 
 ghost-role-information-civilian-name = Civilian
 ghost-role-information-civilian-description = You were just hanging out, but seem to have found yourself in a strange situation...
-ghost-role-information-civilian-centcom-lawyer-name = Centcom Lawyer
-ghost-role-information-civilian-centcom-lawyer-description = A lawyer direct from the Central Legal Division.
+# imp caps fix, and style on the description
+ghost-role-information-civilian-centcom-lawyer-name = CentComm Lawyer
+ghost-role-information-civilian-centcom-lawyer-description = You are a lawyer, commissioned directly from the Central Command Legal team.
 
 ghost-role-information-command-name = Commander
 ghost-role-information-command-description = You are a member of command, but seem to have found yourself in a strange situation...

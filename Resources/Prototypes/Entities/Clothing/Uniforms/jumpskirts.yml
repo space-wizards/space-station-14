@@ -485,7 +485,7 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCentcomFormalDress
-  name: central command formal dress
+  name: Central Command formal dress # imp caps fix
   description: A dress for special occasions.
   components:
   - type: Sprite
