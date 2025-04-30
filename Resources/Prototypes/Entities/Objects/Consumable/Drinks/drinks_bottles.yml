@@ -309,23 +309,6 @@
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
   - type: Sealable
 
-- type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
-  id: DrinkColaBottleFull
-  name: Space Cola bottle
-  description: Cola. In spaaace!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Cola
-          Quantity: 100
-  - type: Label
-    currentLabel: reagent-name-cola
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/colabottle.rsi
-  - type: Sealable
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -485,44 +468,6 @@
   - type: Sealable
 
 - type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
-  id: DrinkSpaceMountainWindBottleFull
-  name: Space Solar Wind bottle
-  description: Blows right through you like a solar wind.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: SpaceMountainWind
-          Quantity: 100
-  - type: Drink
-  - type: Label
-    currentLabel: reagent-name-space-mountain-wind
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
-  - type: Sealable
-
-- type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
-  id: DrinkSpaceUpBottleFull
-  name: Space-Up bottle
-  description: Tastes like a hull breach in your mouth.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: SpaceUp
-          Quantity: 100
-  - type: Drink
-  - type: Label
-    currentLabel: reagent-name-space-up
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
-  - type: Sealable
-
-- type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkTequilaBottleFull
   name: Caccavo Guaranteed Quality tequila bottle
@@ -664,6 +609,62 @@
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
+  id: DrinkColaBottleFull
+  name: Space Cola bottle
+  description: Cola. In spaaace!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Cola
+          Quantity: 100
+  - type: Label
+    currentLabel: reagent-name-cola
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/colabottle.rsi
+  - type: Sealable
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
+  id: DrinkSpaceMountainWindBottleFull
+  name: Space Solar Wind bottle
+  description: Blows right through you like a solar wind.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: SpaceMountainWind
+          Quantity: 100
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-space-mountain-wind
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
+  - type: Sealable
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
+  id: DrinkSpaceUpBottleFull
+  name: Space-Up bottle
+  description: Tastes like a hull breach in your mouth.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: SpaceUp
+          Quantity: 100
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-space-up
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
+  - type: Sealable
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkSodaWaterBottleFull
   name: soda water bottle
   description: Like water, but angry!
@@ -671,10 +672,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 150
+        maxVol: 100
         reagents:
         - ReagentId: SodaWater
-          Quantity: 150
+          Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sodawater-bottle.rsi
 
@@ -687,10 +688,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 150
+        maxVol: 100
         reagents:
         - ReagentId: TonicWater
-          Quantity: 150
+          Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tonic_bottle.rsi
 
