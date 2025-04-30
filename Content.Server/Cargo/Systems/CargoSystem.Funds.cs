@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Cargo.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.IdentityManagement;
@@ -9,12 +10,18 @@ namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {
+    private bool _allowPrimaryAccountAllocation;
+    private bool _allowPrimaryCutAdjustment;
+
     public void InitializeFunds()
     {
         SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleWithdrawFundsMessage>(OnWithdrawFunds);
         SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleToggleLimitMessage>(OnToggleLimit);
         SubscribeLocalEvent<FundingAllocationConsoleComponent, SetFundingAllocationBuiMessage>(OnSetFundingAllocation);
         SubscribeLocalEvent<FundingAllocationConsoleComponent, BeforeActivatableUIOpenEvent>(OnFundAllocationBuiOpen);
+
+        _cfg.OnValueChanged(CCVars.AllowPrimaryAccountAllocation, enabled => { _allowPrimaryAccountAllocation = enabled; }, true);
+        _cfg.OnValueChanged(CCVars.AllowPrimaryCutAdjustment, enabled => { _allowPrimaryCutAdjustment = enabled; }, true);
     }
 
     private void OnWithdrawFunds(Entity<CargoOrderConsoleComponent> ent, ref CargoConsoleWithdrawFundsMessage args)
@@ -102,7 +109,8 @@ public sealed partial class CargoSystem
             !TryComp<StationBankAccountComponent>(station, out var bank))
             return;
 
-        if (args.Percents.Count != bank.RevenueDistribution.Count)
+        var expectedCount = _allowPrimaryAccountAllocation ? bank.RevenueDistribution.Count : bank.RevenueDistribution.Count - 1;
+        if (args.Percents.Count != expectedCount)
             return;
 
         var differs = false;
@@ -114,6 +122,7 @@ public sealed partial class CargoSystem
                 break;
             }
         }
+        differs = differs || args.PrimaryCut != bank.PrimaryCut || args.LockboxCut != bank.LockboxCut;
 
         if (!differs)
             return;
@@ -121,18 +130,33 @@ public sealed partial class CargoSystem
         if (args.Percents.Values.Sum() != 100)
             return;
 
+        var primaryCut = bank.RevenueDistribution[bank.PrimaryAccount];
         bank.RevenueDistribution.Clear();
         foreach (var (account, percent )in args.Percents)
         {
             bank.RevenueDistribution.Add(account, percent / 100.0);
         }
+        if (!_allowPrimaryAccountAllocation)
+        {
+            bank.RevenueDistribution.Add(bank.PrimaryAccount, 0);
+        }
+
+        if (_allowPrimaryCutAdjustment && args.PrimaryCut is >= 0.0 and <= 1.0)
+        {
+            bank.PrimaryCut = args.PrimaryCut;
+        }
+        if (_lockboxCutEnabled && args.LockboxCut is >= 0.0 and <= 1.0)
+        {
+            bank.LockboxCut = args.LockboxCut;
+        }
+
         Dirty(station, bank);
 
         _audio.PlayPvs(ent.Comp.SetDistributionSound, ent);
         _adminLogger.Add(
             LogType.Action,
             LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set station {ToPrettyString(station)} fund distribution: {string.Join(',', bank.RevenueDistribution.Select(p => $"{p.Key}: {p.Value}").ToList())}");
+            $"{ToPrettyString(args.Actor):player} set station {ToPrettyString(station)} fund distribution: {string.Join(',', bank.RevenueDistribution.Select(p => $"{p.Key}: {p.Value}").ToList())}, primary cut: {bank.PrimaryCut}, lockbox cut: {bank.LockboxCut}");
     }
 
     private void OnFundAllocationBuiOpen(Entity<FundingAllocationConsoleComponent> ent, ref BeforeActivatableUIOpenEvent args)
