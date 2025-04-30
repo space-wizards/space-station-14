@@ -24,7 +24,7 @@
     - state: ai
   - type: ConditionalSpawner
     prototypes:
-    - MobBandit
+    - MobBandito
 
 - type: entity
   parent: MarkerBase
