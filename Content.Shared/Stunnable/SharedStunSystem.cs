@@ -10,6 +10,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -46,6 +47,7 @@ public abstract class SharedStunSystem : EntitySystem
     [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
 
+    // TODO: Move all the knockdown stuff to its own SharedStunSystem.Knockdown, it's getting quite messy
     public override void Initialize()
     {
         SubscribeLocalEvent<KnockedDownComponent, ComponentInit>(OnKnockInit);
@@ -87,6 +89,8 @@ public abstract class SharedStunSystem : EntitySystem
 
         // DoAfter event subscriptions
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
+        SubscribeLocalEvent<KnockedDownComponent, DidEquipHandEvent>(OnHandEquipped);
+        SubscribeLocalEvent<KnockedDownComponent, DidUnequipHandEvent>(OnHandUnequipped);
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.ToggleKnockdown, InputCmdHandler.FromDelegate(HandleToggleKnockdown, handle: false))
@@ -217,32 +221,37 @@ public abstract class SharedStunSystem : EntitySystem
         if (time <= TimeSpan.Zero)
             return false;
 
-        if (!Resolve(uid, ref status, false))
+        if (!Resolve(uid, ref status, false) || !TryComp<StandingStateComponent>(uid, out var standing))
             return false;
 
         if (!_statusEffect.CanApplyEffect(uid, "KnockedDown", status))
+            return false;
+
+        var evAttempt = new KnockDownAttemptEvent()
+        {
+            AutoStand = autostand,
+        };
+        RaiseLocalEvent(uid, ref evAttempt);
+
+        if (evAttempt.Cancelled)
             return false;
 
         // Initialize our component with the relevant data we need if we don't have it
         if (!TryComp<KnockedDownComponent>(uid, out var component))
         {
             var knockedDown = _component.GetComponent<KnockedDownComponent>();
-            knockedDown.AutoStand = autostand;
+            knockedDown.AutoStand = evAttempt.AutoStand;
             AddComp(uid, knockedDown);
             component = knockedDown;
         }
 
-        var ev = new KnockedDownEvent()
+        var knockedEv = new KnockedDownEvent()
         {
             KnockdownTime = time,
-            AutoStand = autostand,
         };
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(uid, ref knockedEv);
 
-        component.NextUpdate = _gameTiming.CurTime + time;
-
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
-        _movementSpeedModifier.RefreshFrictionModifiers(uid);
+        RefreshKnockedMovement(uid, component, standing);
 
         Dirty(uid, component);
 
@@ -321,13 +330,43 @@ public abstract class SharedStunSystem : EntitySystem
         {
             BreakOnDamage = true,
             DamageThreshold = 5,
-            CancelDuplicate = false,
+            CancelDuplicate = true,
             RequireCanInteract = false,
             BreakOnHandChange = true
         };
 
         // If we try standing don't try standing again
         return _doAfter.TryStartDoAfter(doAfterArgs, out id);
+    }
+
+    private void RefreshKnockedMovement(EntityUid uid, KnockedDownComponent component, StandingStateComponent? standing = null)
+    {
+        if (!Resolve(uid, ref standing, false))
+            return;
+
+        var ev = new KnockedDownRefreshEvent()
+        {
+            // TODO: the other two modifiers
+            SpeedModifier = standing.SpeedModifier,
+            FrictionModifier = standing.FrictionModifier,
+        };
+        RaiseLocalEvent(uid, ref ev);
+
+        component.SpeedModifier = ev.SpeedModifier;
+        component.FrictionModifier = ev.FrictionModifier;
+
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+        _movementSpeedModifier.RefreshFrictionModifiers(uid);
+    }
+
+    private void OnHandEquipped(Entity<KnockedDownComponent> ent, ref DidEquipHandEvent args)
+    {
+        RefreshKnockedMovement(ent, ent.Comp);
+    }
+
+    private void OnHandUnequipped(Entity<KnockedDownComponent> ent, ref DidUnequipHandEvent args)
+    {
+        RefreshKnockedMovement(ent, ent.Comp);
     }
 
     private void OnStandDoAfter(Entity<KnockedDownComponent> entity, ref TryStandDoAfterEvent args)
@@ -454,7 +493,25 @@ public record struct StunnedEvent;
 ///     Raised directed on an entity when it is knocked down.
 /// </summary>
 [ByRefEvent]
+public record struct KnockDownAttemptEvent(bool Cancelled = false)
+{
+    public bool AutoStand;
+}
+
+/// <summary>
+///     Raised directed on an entity when it is knocked down.
+/// </summary>
+[ByRefEvent]
 public record struct KnockedDownEvent
+{
+    public TimeSpan KnockdownTime;
+}
+
+/// <summary>
+///     Raised on an entity that needs to refresh its knockdown modifiers
+/// </summary>
+[ByRefEvent]
+public record struct KnockedDownRefreshEvent
 {
     public TimeSpan KnockdownTime;
     public bool AutoStand;
