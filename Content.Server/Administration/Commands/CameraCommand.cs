@@ -17,7 +17,7 @@ public sealed class CameraCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player is not { } player)
+        if (shell.Player is not { } user)
         {
             shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
             return;
@@ -31,7 +31,7 @@ public sealed class CameraCommand : LocalizedCommands
 
         if (!NetEntity.TryParse(args[0], out var targetNetId) || !_entManager.TryGetEntity(targetNetId, out var targetUid))
         {
-            if (!_playerManager.TryGetSessionByUsername(args[0], out player)
+            if (!_playerManager.TryGetSessionByUsername(args[0], out var player)
                 || player.AttachedEntity == null)
             {
                 shell.WriteError(Loc.GetString("cmd-camera-wrong-argument"));
@@ -41,7 +41,7 @@ public sealed class CameraCommand : LocalizedCommands
         }
 
         var ui = new AdminCameraEui(targetUid.Value);
-        _eui.OpenEui(ui, player);
+        _eui.OpenEui(ui, user);
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)

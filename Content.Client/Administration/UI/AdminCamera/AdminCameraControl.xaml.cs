@@ -72,12 +72,9 @@ public sealed partial class AdminCameraControl : Control
 
     // I know that this is awful, but I copied this from the solution editor anyways.
     // This is needed because EUIs update before the gamestate is applied, which means it will fail to get the uid from the net entity.
-    // The suggestion from the comment in the solution editor saying to use a BUI is even worse:
-    // - BUIs have range checks hardcoded in, which can only be bypassed by having GhostComponent or IgnoreUIRangeComponent.
-    // - Both of these would bypass *any* BUI range checks.
-    // - The UI would close if we ghost or otherwise leave the body.
-    // - If we spawn a dummy entity for the BUI and parent it to the user we have the same problem when changing bodies.
-    // I am choosing the lesser evil.
+    // The suggestion from the comment in the solution editor saying to use a BUI is not ideal either:
+    // - We would need to bind the UI to an entity, but with how BUIs currently work we cannot open it in the same tick as we spawn that entity on the server.
+    // - We want the UI opened by the user session, not by their currently attached entity. Otherwise it would close in cases where admins move from one entity to another, for example when ghosting.
     protected override void FrameUpdate(FrameEventArgs args)
     {
         if (_nextState == null || _timing.LastRealTick < _nextState.Tick) // make sure the last gamestate has been applied
