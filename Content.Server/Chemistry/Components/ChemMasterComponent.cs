@@ -15,7 +15,7 @@ namespace Content.Server.Chemistry.Components
         [DataField("pillType"), ViewVariables(VVAccess.ReadWrite)]
         public uint PillType = 0;
 
-        [DataField("pillNumber"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public uint PillNumber = 0;
 
         [DataField("pillDosage"), ViewVariables(VVAccess.ReadWrite)]
