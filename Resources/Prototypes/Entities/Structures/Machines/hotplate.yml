@@ -40,12 +40,28 @@
     - state: on
       map: ["enum.SolutionHeaterVisuals.IsOn"]
       shader: unshaded
-  - type: SolutionHeater
-    heatPerSecond: 160
-  - type: ItemPlacer
-    whitelist:
-      components:
-      - FitsInDispenser
+#  - type: SolutionHeater
+#    heatPerSecond: 160
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: ActivatableUI
+    key: enum.HotplateUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.HotplateUiKey.Key:
+        type: HotplateBoundUserInterface
+  - type: Hotplate
+#  - type: ItemPlacer
+#    whitelist:
+#      components:
+#      - FitsInDispenser
   - type: PlaceableSurface
     placeCentered: true
     positionOffset: 0, 0.25
