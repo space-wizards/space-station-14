@@ -193,6 +193,7 @@
         - SpeedLoaderMagnum
         - Shiv
         - Cartridge
+        - Pen
       components:
         - Stunbaton
         - FlashOnTrigger
