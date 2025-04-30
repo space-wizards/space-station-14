@@ -106,20 +106,26 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// <summary>
     /// The time at which the console will be able to print a slip again.
     /// </summary>
-    [DataField("nextPrintTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextPrintTime = TimeSpan.Zero;
 
     /// <summary>
     /// The time between prints.
     /// </summary>
-    [DataField("printDelay")]
+    [DataField]
     public TimeSpan PrintDelay = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// The sound made when printing occurs
     /// </summary>
-    [DataField("printSound")]
-    public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
+    [DataField]
+    public SoundSpecifier PrintSound = new SoundCollectionSpecifier("PrinterPrint");
+
+    /// <summary>
+    /// The sound made when an order slip is scanned
+    /// </summary>
+    [DataField]
+    public SoundSpecifier ScanSound = new SoundCollectionSpecifier("CargoBeep");
 }
 
 /// <summary>

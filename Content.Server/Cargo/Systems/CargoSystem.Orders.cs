@@ -25,8 +25,6 @@ namespace Content.Server.Cargo.Systems
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly EmagSystem _emag = default!;
 
-        private static readonly SoundPathSpecifier BeepSound = new("/Audio/Effects/Cargo/beep.ogg");
-
         private void InitializeConsole()
         {
             SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleAddOrderMessage>(OnAddOrderMessage);
@@ -56,12 +54,12 @@ namespace Content.Server.Cargo.Systems
             args.Handled = true;
         }
 
-        private void OnInteractUsingSlip(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args, CargoSlipComponent slip)
+        private void OnInteractUsingSlip(Entity<CargoOrderConsoleComponent> ent, ref InteractUsingEvent args, CargoSlipComponent slip)
         {
             if (slip.OrderQuantity <= 0)
                 return;
 
-            var stationUid = _station.GetOwningStation(uid);
+            var stationUid = _station.GetOwningStation(ent);
 
             if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
                 return;
@@ -72,20 +70,20 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
-            if (!component.AllowedGroups.Contains(product.Group))
+            if (!ent.Comp.AllowedGroups.Contains(product.Group))
                 return;
 
             var orderId = GenerateOrderId(orderDatabase);
             var data = new CargoOrderData(orderId, product.Product, product.Name, product.Cost, slip.OrderQuantity, slip.Requester, slip.Reason, slip.Account);
 
-            if (!TryAddOrder(stationUid.Value, component.Account, data, orderDatabase))
+            if (!TryAddOrder(stationUid.Value, ent.Comp.Account, data, orderDatabase))
             {
-                PlayDenySound(uid, component);
+                PlayDenySound(ent, ent.Comp);
                 return;
             }
 
             // Log order addition
-            _audio.PlayPvs(BeepSound, uid);
+            _audio.PlayPvs(ent.Comp.ScanSound, ent);
             _adminLogger.Add(LogType.Action,
                 LogImpact.Low,
                 $"{ToPrettyString(args.User):user} inserted order slip [orderId:{data.OrderId}, quantity:{data.OrderQuantity}, product:{data.ProductId}, requester:{data.Requester}, reason:{data.Reason}]");
@@ -101,7 +99,7 @@ namespace Content.Server.Cargo.Systems
             }
             else if (TryComp<CargoSlipComponent>(args.Used, out var slip) && !component.SlipPrinter)
             {
-                OnInteractUsingSlip(uid, component, ref args, slip);
+                OnInteractUsingSlip((uid, component), ref args, slip);
             }
         }
 
@@ -335,7 +333,7 @@ namespace Content.Server.Cargo.Systems
             var paper = EnsureComp<PaperComponent>(label);
             var msg = new FormattedMessage();
 
-            msg.AddMarkupOrThrow(Loc.GetString("cargo-acquisition-slip-body",
+            msg.AddMarkupPermissive(Loc.GetString("cargo-acquisition-slip-body",
                 ("product", product.Name),
                 ("description", product.Description),
                 ("unit", product.Cost),

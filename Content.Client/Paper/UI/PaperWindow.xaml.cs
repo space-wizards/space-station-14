@@ -152,7 +152,7 @@ namespace Content.Client.Paper.UI
             // Then the footer
             if (visuals.FooterImagePath is {} path)
             {
-                FooterImage.TexturePath = path;
+                FooterImage.TexturePath = path.ToString();
                 FooterImage.MinSize = FooterImage.TextureNormal?.Size ?? Vector2.Zero;
             }
 
