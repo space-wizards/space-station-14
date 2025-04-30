@@ -28,6 +28,19 @@ namespace Content.Shared.Standing
         public float FrictionModifier = 0.4f;
 
         /// <summary>
+        /// Default Friction modifier for knocked down players.
+        /// Makes them accelerate and deccelerate slower.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public float FrictionModifier = 0.4f;
+
+        /// <summary>
+        /// Base modifier to the maximum movement speed of a knocked down mover.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public float SpeedModifier = 0.4f;
+
+        /// <summary>
         ///     List of fixtures that had their collision mask changed when the entity was downed.
         ///     Required for re-adding the collision mask.
         /// </summary>

@@ -90,7 +90,7 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<HandcuffComponent, AddCuffDoAfterEvent>(OnAddCuffDoAfter);
             SubscribeLocalEvent<HandcuffComponent, VirtualItemDeletedEvent>(OnCuffVirtualItemDeleted);
             SubscribeLocalEvent<CuffableComponent, StandupAttemptEvent>(OnCuffableStandup);
-            SubscribeLocalEvent<CuffableComponent, RefreshMovementSpeedModifiersEvent>(OnCuffableRefreshMovement);
+            SubscribeLocalEvent<CuffableComponent, KnockedDownRefreshEvent>(OnCuffableKnockdownRefresh);
         }
 
         private void CheckInteract(Entity<CuffableComponent> ent, ref InteractionAttemptEvent args)
@@ -428,12 +428,13 @@ namespace Content.Shared.Cuffs
             args.DoAfterTime *= handcuff.StandupMod;
         }
 
-        private void OnCuffableRefreshMovement(Entity<CuffableComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
+        private void OnCuffableKnockdownRefresh(Entity<CuffableComponent> ent, ref KnockedDownRefreshEvent args)
         {
             if (!IsCuffed(ent) || !TryComp<HandcuffComponent>(ent.Comp.LastAddedCuffs, out var handcuff))
                 return;
 
-            args.ModifySpeed(HasComp<KnockedDownComponent>(ent) ? handcuff.KnockedMovementMod : handcuff.MovementMod);
+            // TODO: Iterate through equipped cuffs you have in case the entity has more than one pair of hands or something
+            args.SpeedModifier *= HasComp<KnockedDownComponent>(ent) ? handcuff.KnockedMovementMod : handcuff.MovementMod;
         }
 
         /// <summary>

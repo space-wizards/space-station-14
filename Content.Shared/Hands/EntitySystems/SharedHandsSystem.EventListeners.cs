@@ -12,8 +12,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     private void InitializeEventListeners()
     {
         SubscribeLocalEvent<HandsComponent, StandupAttemptEvent>(OnStandupAttempt);
-        // TODO: This should listen for a specific function within the knockdown system.
-        //SubscribeLocalEvent<HandsComponent, >();
+        SubscribeLocalEvent<HandsComponent, KnockedDownRefreshEvent>(OnKnockDownRefresh);
     }
 
     /// <summary>
@@ -27,14 +26,12 @@ public abstract partial class SharedHandsSystem : EntitySystem
         args.DoAfterTime *= (float)ent.Comp.Count / (hands.Value + ent.Comp.Count);
     }
 
-    // TODO: This fucking sucks
-    private void OnRefreshMovementSpeedModifiers(Entity<HandsComponent> ent,
-        ref RefreshMovementSpeedModifiersEvent args)
+    private void OnKnockDownRefresh(Entity<HandsComponent> ent,
+        ref KnockedDownRefreshEvent args)
     {
         if (!HasComp<KnockedDownComponent>(ent) || !TryCountEmptyHands(ent, out var hands) && !hands.HasValue)
             return;
 
-        // TODO: Make this not shit
-        //args.ModifySpeed((float)hands.Value/ent.Comp.Count);
+        args.SpeedModifier *= (float)(hands.Value + 1)/(ent.Comp.Count + 1); // TODO: Unhardcode this calculation a little bit
     }
 }
