@@ -76,6 +76,7 @@ namespace Content.Server.Research.Systems
             return list;
         }
 
+        // DS14-rnd-server-per-stations-start
         /// <summary>
         /// Frontier copies of the original get servers. We need our research system to be isolated on a per-grid basis.
         /// </summary>
@@ -99,6 +100,7 @@ namespace Content.Server.Research.Systems
             var serverList = list.ToArray();
             return serverList;
         }
+        // DS14-rnd-server-per-stations-end
 
         /// <summary>
         /// Gets the ids of all the servers
@@ -117,6 +119,7 @@ namespace Content.Server.Research.Systems
             return list;
         }
 
+        // DS14-rnd-server-per-stations-start
         /// <summary>
         /// Gets the ids of all the servers
         /// </summary>
@@ -139,6 +142,7 @@ namespace Content.Server.Research.Systems
             var serverList = list.ToArray();
             return serverList;
         }
+        // DS14-rnd-server-per-stations-end
 
         public override void Update(float frameTime)
         {
