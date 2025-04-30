@@ -151,11 +151,15 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
                 rotation = _random.NextAngle();
         }
 
+        var color = component.Color;
+        if (component.RandomColorList.Count != 0)
+            color = _random.Pick(component.RandomColorList);
+
         _decal.TryAddDecal(
             _random.Pick(component.Decals),
             position,
             out var decalId,
-            component.RandomColorList.Count == 0 ? component.Color : _random.Pick(component.RandomColorList),
+            color,
             rotation,
             component.zIndex,
             component.Cleanable
