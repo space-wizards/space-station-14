@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: nowaitstop
-  changes:
-  - message: New playing card colors! Good luck finding them lol
-    type: Add
-  id: 1088
-  time: '2025-02-10T18:05:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1623
-- author: Darkmajia
-  changes:
-  - message: '"Show all gases" has been added to the supermatter console.'
-    type: Add
-  id: 1089
-  time: '2025-02-10T21:00:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1624
-- author: Kandiyaki
-  changes:
-  - message: the guidebook page for the eldritch flask now exists.
-    type: Tweak
-  - message: the eldritch flask no longer works as a cryostasis container, and its
-      size has been reduced.
-    type: Tweak
-  - message: the eldritch flask's catalog entry now shows the correct items needed
-      to create it.
-    type: Tweak
-  - message: the ritual of knowledge no longer has a chance to eat its user's organs.
-    type: Fix
-  id: 1090
-  time: '2025-02-10T21:07:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1635
 - author: Pinkbat5
   changes:
   - message: Baton, disabler and utility tokens now start in seclinks instead of roundstart
@@ -4134,3 +4105,24 @@
   id: 1587
   time: '2025-04-28T10:40:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2363
+- author: DinnerCalzone
+  changes:
+  - message: Fixed Lone Operative appearing in the antag selection screen in the lobby.
+    type: Fix
+  id: 1588
+  time: '2025-04-30T05:26:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2365
+- author: TheGrimbeeper
+  changes:
+  - message: Gray blood now counts as radioactive when splashed on science rocks
+    type: Fix
+  id: 1589
+  time: '2025-04-30T05:27:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2371
+- author: meridiadottxt
+  changes:
+  - message: gate station is now the perfect map
+    type: Add
+  id: 1590
+  time: '2025-04-30T05:25:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2370
