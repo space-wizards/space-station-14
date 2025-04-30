@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Box Station's atmospherics department and supermatter chamber have been
-      revamped slightly.
-    type: Tweak
-  id: 1092
-  time: '2025-02-10T21:11:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1634
 - author: kipdotnet
   changes:
   - message: You can now take a Sip-u-lacrum.
@@ -4134,3 +4126,11 @@
   id: 1591
   time: '2025-04-30T14:18:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2306
+- author: TuttlePants, Ecramox, AvianMaiden
+  changes:
+  - message: Added the bounty hunter, a new midround free agent with the goal of capturing
+      an antagonist!
+    type: Add
+  id: 1592
+  time: '2025-04-30T20:10:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2280
