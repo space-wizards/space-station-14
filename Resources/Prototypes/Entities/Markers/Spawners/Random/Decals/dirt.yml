@@ -1,13 +1,8 @@
 - type: entity
-  parent: MarkerBase
-  id: SpawnDirtWide
-  name: Dirt Spawner
-  suffix: Wide
+  parent: DecalSpawnerBase
+  id: DecalSpawnerDirtBase
+  abstract: true
   components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: decal
   - type: RandomDecalSpawner
     decals:
     - Dirt
@@ -15,11 +10,9 @@
     - DirtyMedium
     - DirtHeavy
     - DirtHeavyMonotile
-    range: 10
-    falloff: 5
     snapPosition: true
-    maxDecalsPerTile: 3
-    zIndex: 5
+    maxDecalsPerTile: 1
+    zIndex: 1
     color: '#FFFFFF7F'
     cleanable: true
     tileBlacklist:

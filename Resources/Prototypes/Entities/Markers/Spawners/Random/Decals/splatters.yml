@@ -1,0 +1,22 @@
+- type: entity
+  parent: DecalSpawnerBase
+  id: DecalSpawnerBloodSplatters
+  suffix: blood
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: decal
+  - type: RandomDecalSpawner
+    decals:
+    - footprint
+    - splatter
+    range: 1
+    falloff: 1
+    randomRotation: true
+    snapPosition: false
+    snapRotation: false
+    maxDecalsPerTile: 2
+    zIndex: 5
+    color: '#CC00007F'
+    cleanable: true

@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Spawners.Components
 {
     [RegisterComponent, EntityCategory("Spawner")]
-    public sealed partial class RandomDecalSpawnerComponent : Component
+    public abstract partial class RandomDecalSpawnerComponent : Component
     {
         /// <summary>
         /// A list of decals to randomly select from when spawning.
@@ -44,12 +44,6 @@ namespace Content.Server.Spawners.Components
         /// </summary>
         [DataField]
         public bool SnapPosition = false;
-
-        /// <summary>
-        /// Per grid space, the maximum amount of decals that can spawn on any particular grid space.
-        /// </summary>
-        [DataField]
-        public int MaxDecalsPerTile = 1;
 
         /// <summary>
         /// zIndex for the generated decals

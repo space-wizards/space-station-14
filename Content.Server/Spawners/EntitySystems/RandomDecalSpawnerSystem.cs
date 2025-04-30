@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Server.Spawners.Components;
 using Content.Server.Decals;
@@ -12,7 +11,6 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly DecalSystem _decal = default!;
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefs = default!;
@@ -21,17 +19,18 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RandomDecalSpawnerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RandomDecalSpawnerDistributedComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RandomDecalSpawnerScatteredComponent, MapInitEvent>(OnMapInit);
     }
 
-    public void OnMapInit(EntityUid uid, RandomDecalSpawnerComponent component, MapInitEvent args)
+    public void OnMapInit(EntityUid uid, RandomDecalSpawnerDistributedComponent component, MapInitEvent args)
     {
         TrySpawn(uid, component);
     }
 
-    public bool TrySpawn(EntityUid uid, RandomDecalSpawnerComponent component)
+    public bool TrySpawn(EntityUid uid, RandomDecalSpawnerDistributedComponent component)
     {
-        if (!TryComp<RandomDecalSpawnerComponent>(uid, out var comp))
+        if (!TryComp<RandomDecalSpawnerDistributedComponent>(uid, out var comp))
             return false;
 
         if (component == null)
@@ -57,54 +56,22 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
                 localpos + new Vector2(component.Range, component.Range))
         );
 
-        foreach (var tileref in tilerefs)
+        foreach (var tileRef in tilerefs)
         {
-            if (tileBlacklist.Count > 0)
-            {
-                _tileDefs.TryGetDefinition(tileref.Tile.TypeId, out var currTileDef);
-                if (currTileDef is null || tileBlacklist.Contains(currTileDef))
-                    continue;
-            }
+
+
+            var basePosition = new EntityCoordinates(xform.GridUid.Value, tileRef.GridIndices * grid.TileSize);
 
             for (var i = 0; i < component.MaxDecalsPerTile; i++)
             {
-                var position = _map.ToCoordinates(tileref, grid);
-                if (component.SnapPosition)
-                    position = position.Offset(new Vector2(0.5f,0.5f));
-                else
-                    position = position.Offset(new Vector2(_random.NextFloat(), _random.NextFloat()));
-
-                var rotation = Angle.Zero;
-                if (component.RandomRotation)
-                {
-                    if (component.SnapPosition)
-                        rotation = MathF.PI / 2f * _random.Next(3);
-                    else
-                        rotation = _random.NextAngle();
-                }
-
-                if (!position.TryDistance(_entities, new EntityCoordinates(uid, 0f ,0f), out var distance))
-                    continue;
-
-                if (component.Falloff == 0 || _random.NextFloat() > (distance/component.Falloff))
-                {
-                    _decal.TryAddDecal(
-                        _random.Pick(component.Decals),
-                        position,
-                        out var decalId,
-                        component.Color,
-                        rotation,
-                        component.zIndex,
-                        component.Cleanable
-                    );
-                }
+                SpawnDecal(uid, component, basePosition);
             }
         }
 
         return true;
     }
 
-    // Gets a list of all the tile definitions in the current map that are also part of the whitelist
+    // Gets a list of all the tile definitions in the current map that are also part of the blacklist
     // This is so we can minimize the list size we have to work with.
     private List<ITileDefinition> GetTileDefs(List<String> tileNames)
     {
@@ -114,6 +81,47 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
             if (_tileDefs.TryGetDefinition(tileName, out var tileDef))
                 existingTileDefs.Add(tileDef);
         }
+
         return existingTileDefs;
+    }
+
+    private void SpawnDecal(EntityUid uid, RandomDecalSpawnerComponent component, EntityCoordinates basePosition, List<ITileDefinition> tileBlacklist)
+    {
+        var position = basePosition;
+        if (!component.SnapPosition)
+            position = position.Offset(new Vector2(_random.NextFloat(), _random.NextFloat()));
+
+        if (tileBlacklist.Count > 0)
+        {
+            _tileDefs.TryGetDefinition(tileRef.Tile.TypeId, out var currTileDef);
+            if (currTileDef is null || tileBlacklist.Contains(currTileDef))
+                return;
+        }
+
+        if (!position.TryDistance(_entities, new EntityCoordinates(uid, 0f, 0f), out var distance))
+            return;
+
+        if (component.Falloff > 0 && _random.NextFloat() < (distance / component.Falloff))
+            return;
+
+        var rotation = Angle.Zero;
+        if (component.RandomRotation)
+        {
+            if (component.SnapPosition)
+                rotation = (MathF.PI / 2f) * _random.Next(3);
+            else
+                rotation = _random.NextAngle();
+        }
+
+        _decal.TryAddDecal(
+            _random.Pick(component.Decals),
+            position,
+            out var decalId,
+            component.Color,
+            rotation,
+            component.zIndex,
+            component.Cleanable
+        );
+
     }
 }
