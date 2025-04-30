@@ -5343,4 +5343,27 @@ Entries:
   id: 740
   time: '2025-04-30T18:46:13.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/548
+- author: aedler
+  changes:
+  - message: Added new AI/Comms Console announcement sound. Now you know which announcement
+      is from the station or CC/events (previous default remains).
+    type: Add
+  id: 741
+  time: '2025-04-30T18:47:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/551
+- author: aedler
+  changes:
+  - message: Blue, Yellow, Red alert codes now have a bit of audio reverb of a grand
+      station.
+    type: Tweak
+  id: 742
+  time: '2025-04-30T18:47:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/551
+- author: aedler
+  changes:
+  - message: Changed Binary color. Easier for the eyes.
+    type: Tweak
+  id: 743
+  time: '2025-04-30T18:47:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/551
 
