@@ -47,6 +47,7 @@
 - type: entity
   parent: DrinkBase
   id: DrinkBottleSmallBaseFull
+  abstract: true
   suffix: Full
   components:
   - type: Item
@@ -81,7 +82,8 @@
         acts: [ "Destruction" ]
        - !type:SpillBehavior { }
   - type: DnaSubstanceTrace
-  - type: Sealable
+  - type: PressurizedSolution
+  - type: Shakeable
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -628,8 +630,7 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
-  - type: PressurizedSolution
-  - type: Shakeable
+  - type: Sealable
 
 # Small Bottles
 
