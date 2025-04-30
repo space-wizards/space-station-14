@@ -2,7 +2,7 @@
   id: CorvaxAvrite
   mapName: 'Avrite Station'
   mapPath: /Maps/corvax_avrit.yml
-  minPlayers: 45
+  minPlayers: 60
   stations:
     Avrit:
       stationProto: StandardNanotrasenStation
