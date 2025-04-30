@@ -49,16 +49,13 @@ public sealed class StationPowerTests
 
         var entMan = server.EntMan;
         var protoMan = server.ProtoMan;
-        var mapSystem = entMan.System<MapSystem>();
         var ticker = entMan.System<GameTicker>();
 
         // Load the map
         await server.WaitAssertion(() =>
         {
-            mapSystem.CreateMap(out var mapId);
-
             Assert.That(protoMan.TryIndex<GameMapPrototype>(mapProtoId, out var mapProto));
-            ticker.LoadGameMap(mapProto, mapId, null);
+            ticker.LoadGameMap(mapProto, out var mapId);
         });
 
         // Let powernet set up
