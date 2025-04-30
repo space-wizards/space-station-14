@@ -24,3 +24,12 @@
   components:
   - type: Flatpack
     entity: MailTrolley
+
+- type: entity
+  parent: BaseFlatpack
+  id: KitchenStoveFlatpack
+  name: stove flatpack
+  description: A flatpack used for constructing an stove.
+  components:
+  - type: Flatpack
+    entity: KitchenStove
