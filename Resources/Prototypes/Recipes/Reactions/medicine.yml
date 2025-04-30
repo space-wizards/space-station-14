@@ -562,7 +562,7 @@
 
 - type: reaction
   id: Opporozidone
-  maxTemp: 4.2 # Maybe if a method of reducing reagent temp exists one day, this could be -50
+  maxTemp: 30 # Maybe if a method of reducing reagent temp exists one day, this could be -50
   reactants:      # EDIT from LordZirconium: The day has come... Though I set it to liquid helium temperature.
     Cognizine:
       amount: 1
@@ -576,7 +576,7 @@
 - type: reaction
   id: Necrosol
   impact: Medium
-  maxTemp: 10 # Harder to make now.
+  maxTemp: 50 # Harder to make now.
   reactants:
     Blood:
       amount: 3

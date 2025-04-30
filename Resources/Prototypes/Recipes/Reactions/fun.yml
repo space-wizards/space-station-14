@@ -146,12 +146,11 @@
     Fresium: 5
 
 - type: reaction
-  id: EndothermicFreeze # This is for EXPERIENCED chemists. This CAN be jugmixed, yet not to full volume of the jug.
-  impact: Medium
-  priority: 5 # Flash freeze ice conflict. Add water or fresium last or get iced.
+  id: EndothermicFresiumCooling # This is for EXPERIENCED chemists. This CAN be jugmixed, yet not to full volume of the jug.
+  priority: 10 # Flash freeze ice conflict. Add water last or get iced.
   conserveEnergy: false # For reaction to actually work.
   reactants:
-    Ammonia:
+    Nitrogen:
       amount: 2
     Fresium:
       amount: 4
@@ -159,10 +158,51 @@
       amount: 1
     Water:
       amount: 3
+  products:
+    Ice: 2
   effects:
   - !type:AdjustSolutionTemperatureEffect
       delta: -25 # 100 units of this reaction makes 250 Kelvin temperature drop.
       scaled: true
+
+- type: reaction
+  id: SodiumAlkaliCooling
+  conserveEnergy: false # Required, don't change.
+  reactants:
+    Sodium:
+      amount: 2
+    Fersilicite:
+      amount: 2
+  effects:
+  - !type:AdjustSolutionTemperatureEffect
+      delta: -10
+      scaled: true
+
+- type: reaction
+  id: PotassiumAlkaliCooling
+  conserveEnergy: false # Required, don't change.
+  reactants:
+    Potassium:
+      amount: 2
+    Fersilicite:
+      amount: 2
+  effects:
+  - !type:AdjustSolutionTemperatureEffect
+    delta: -10
+    scaled: true
+
+- type: reaction
+  id: LithiumAlkaliCooling
+  conserveEnergy: false # Required, don't change.
+  reactants:
+    Lithium:
+      amount: 2
+    Fersilicite:
+      amount: 2
+  effects:
+  - !type:AdjustSolutionTemperatureEffect
+    delta: -10
+    scaled: true
 
 - type: reaction
   id: FiberBreakdown
@@ -241,7 +281,8 @@
     Gold:
       amount: 10
     Fresium:
-      amount: 10
+      amount: 1
+      catalyst: true
     Nitrogen:
       amount: 10
   effects:
@@ -269,7 +310,8 @@
     Silver:
       amount: 10
     Fresium:
-      amount: 10
+      amount: 1
+      catalyst: true
     Nitrogen:
       amount: 10
   effects:
@@ -282,9 +324,9 @@
   quantized: true
   reactants:
     Plasma:
-      amount: 10 # Because Plasma is really flameable and I think it should require more cooling.
+      amount: 10
     FrostOil:
-      amount: 20
+      amount: 10 # Because Plasma is really unstable and I think it should require more cooling.
   effects:
   - !type:CreateEntityReactionEffect
     entity: SheetPlasma1
@@ -297,9 +339,10 @@
     Plasma:
       amount: 10
     Fresium:
-      amount: 20 # Because Plasma is really flameable and I think it should require more cooling.
+      amount: 1
+      catalyst: true
     Nitrogen:
-      amount: 20
+      amount: 20 # Because Plasma is really flameable and I think it should require more cooling.
   effects:
   - !type:CreateEntityReactionEffect
     entity: SheetPlasma1
