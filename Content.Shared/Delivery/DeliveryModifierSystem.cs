@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Destructible;
 using Content.Shared.Examine;
 using Content.Shared.Explosion.EntitySystems;
@@ -18,6 +19,7 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
     [Dependency] private readonly NameModifierSystem _nameModifier = default!;
     [Dependency] private readonly SharedDeliverySystem _delivery = default!;
     [Dependency] private readonly SharedExplosionSystem _explosion = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
 
     public override void Initialize()
     {
@@ -40,6 +42,8 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
         SubscribeLocalEvent<DeliveryBombComponent, ExaminedEvent>(OnExplosiveExamine);
         SubscribeLocalEvent<DeliveryBombComponent, GetDeliveryMultiplierEvent>(OnGetExplosiveMultiplier);
         SubscribeLocalEvent<DeliveryBombComponent, DeliveryUnlockedEvent>(OnExplosiveUnlock);
+        SubscribeLocalEvent<DeliveryBombComponent, DeliveryPriorityExpiredEvent>(OnExplosiveExpire);
+        SubscribeLocalEvent<DeliveryBombComponent, BreakageEventArgs>(OnExplosiveBreak);
     }
 
     #region Random
@@ -129,14 +133,19 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
     #region Explosive
     private void OnExplosiveMapInit(Entity<DeliveryBombComponent> ent, ref MapInitEvent args)
     {
-        //_delivery.UpdateBrokenVisuals(ent, true);
+        _delivery.UpdateBombVisuals(ent);
+        ent.Comp.NextExplosionRetry = _timing.CurTime;
+        Dirty(ent);
     }
 
     private void OnExplosiveExamine(Entity<DeliveryBombComponent> ent, ref ExaminedEvent args)
     {
         var trueName = _nameModifier.GetBaseName(ent.Owner);
 
-        args.PushMarkup(Loc.GetString("delivery-bomb-examine", ("type", trueName)));
+        if (ent.Comp.Primed)
+            args.PushMarkup(Loc.GetString("delivery-bomb-primed-examine", ("type", trueName)));
+        else
+            args.PushMarkup(Loc.GetString("delivery-bomb-examine", ("type", trueName)));
     }
 
     private void OnGetExplosiveMultiplier(Entity<DeliveryBombComponent> ent, ref GetDeliveryMultiplierEvent args)
@@ -147,7 +156,37 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
 
     private void OnExplosiveUnlock(Entity<DeliveryBombComponent> ent, ref DeliveryUnlockedEvent args)
     {
-        _explosion.TriggerExplosive(ent, delete: false);
+        if (!ent.Comp.PrimeOnUnlock)
+            return;
+
+        PrimeBombDelivery(ent);
+    }
+
+    private void OnExplosiveExpire(Entity<DeliveryBombComponent> ent, ref DeliveryPriorityExpiredEvent args)
+    {
+        if (!ent.Comp.PrimeOnExpire)
+            return;
+
+        PrimeBombDelivery(ent);
+    }
+
+    private void OnExplosiveBreak(Entity<DeliveryBombComponent> ent, ref BreakageEventArgs args)
+    {
+        if (!ent.Comp.PrimeOnBreakage)
+            return;
+
+        PrimeBombDelivery(ent);
+    }
+
+    private void PrimeBombDelivery(Entity<DeliveryBombComponent> ent)
+    {
+        ent.Comp.Primed = true;
+
+        _delivery.UpdateBombVisuals(ent);
+
+        _ambientSound.SetAmbience(ent, true);
+
+        Dirty(ent);
     }
     #endregion
 
@@ -157,6 +196,7 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
         base.Update(frameTime);
 
         UpdatePriorty(frameTime);
+        UpdateBomb(frameTime);
     }
 
     private void UpdatePriorty(float frameTime)
@@ -178,6 +218,29 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
                 var ev = new DeliveryPriorityExpiredEvent();
                 RaiseLocalEvent(uid, ev);
             }
+        }
+    }
+
+    private void UpdateBomb(float frameTime)
+    {
+        var priorityQuery = EntityQueryEnumerator<DeliveryBombComponent>();
+        var curTime = _timing.CurTime;
+
+        while (priorityQuery.MoveNext(out var uid, out var bombData))
+        {
+            if (bombData.NextExplosionRetry > curTime)
+                continue;
+
+            bombData.NextExplosionRetry += bombData.ExplosionRetryDelay;
+
+            if (!bombData.Primed)
+                continue;
+
+            if (_random.NextFloat() < bombData.ExplosionChance)
+                _explosion.TriggerExplosive(uid);
+
+            bombData.ExplosionChance += bombData.ExplosionChanceRetryIncrease;
+            Dirty(uid, bombData);
         }
     }
     #endregion

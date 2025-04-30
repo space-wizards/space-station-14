@@ -259,6 +259,14 @@ public abstract class SharedDeliverySystem : EntitySystem
         _appearance.SetData(ent, DeliveryVisuals.IsFragile, isFragile);
     }
 
+    public void UpdateBombVisuals(Entity<DeliveryBombComponent> ent)
+    {
+        if (!HasComp<DeliveryComponent>(ent))
+            return;
+
+        _appearance.SetData(ent, DeliveryVisuals.IsBomb, ent.Comp.Primed ? DeliveryBombState.Primed : DeliveryBombState.Inactive);
+    }
+
     protected void UpdateDeliverySpawnerVisuals(EntityUid uid, int contents)
     {
         _appearance.SetData(uid, DeliverySpawnerVisuals.Contents, contents > 0);
