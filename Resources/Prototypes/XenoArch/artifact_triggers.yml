@@ -179,7 +179,7 @@
     groups:
       Acidic: [ Touch ]
     reactions:
-    - reagents: [ Uranium, Tritium, Radium, UnstableMutagen, Phalanximine ]
+    - reagents: [ Uranium, Tritium, Radium, UnstableMutagen, Phalanximine, GrayBlood ]
       methods: [ Touch ]
       effects:
       - !type:ActivateArtifact
