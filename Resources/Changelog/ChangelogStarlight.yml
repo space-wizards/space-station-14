@@ -5313,4 +5313,11 @@ Entries:
   id: 736
   time: '2025-04-28T21:33:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/554
+- author: Happyrobot33
+  changes:
+  - message: Added time requirements to Antag roles and Antag Ghost roles.
+    type: Tweak
+  id: 737
+  time: '2025-04-30T18:45:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/513
 
