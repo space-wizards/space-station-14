@@ -4,6 +4,7 @@ using Content.Shared.Foldable;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -37,7 +38,7 @@ public sealed class MaskSystem : EntitySystem
     private void OnToggleMask(Entity<MaskComponent> ent, ref ToggleMaskEvent args)
     {
         var (uid, mask) = ent;
-        if (mask.ToggleActionEntity == null || !mask.IsEnabled)
+        if (mask.ToggleActionEntity == null || !mask.IsToggleable)
             return;
 
         // Masks are currently only toggleable via the action while equipped.
@@ -61,7 +62,7 @@ public sealed class MaskSystem : EntitySystem
 
     private void OnGotUnequipped(EntityUid uid, MaskComponent mask, GotUnequippedEvent args)
     {
-        if (!mask.IsToggled || !mask.IsEnabled)
+        if (!mask.IsToggled || !mask.IsToggleable)
             return;
 
         mask.IsToggled = false;
@@ -77,10 +78,10 @@ public sealed class MaskSystem : EntitySystem
         if (mask.ToggleActionEntity is {} action)
             _actionSystem.SetToggled(action, mask.IsToggled);
 
-        var maskEv = new ItemMaskToggledEvent(wearer, equippedPrefix, mask.IsToggled, isEquip);
+        var maskEv = new ItemMaskToggledEvent((wearer, mask), wearer);
         RaiseLocalEvent(uid, ref maskEv);
 
-        var wearerEv = new WearerMaskToggledEvent(mask.IsToggled);
+        var wearerEv = new WearerMaskToggledEvent((wearer, mask));
         RaiseLocalEvent(wearer, ref wearerEv);
     }
 

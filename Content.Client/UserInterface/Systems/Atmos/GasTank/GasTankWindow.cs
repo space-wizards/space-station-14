@@ -4,6 +4,7 @@ using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Timing;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -218,6 +219,11 @@ public sealed class GasTankWindow
         {
             var canConnectInternals = _entManager.System<SharedGasTankSystem>().CanConnectToInternals((Entity, tank));
             _btnInternals.Disabled = !canConnectInternals;
+        }
+
+        if (!_btnInternals.Disabled)
+        {
+            _btnInternals.Disabled = _entManager.System<UseDelaySystem>().IsDelayed(Entity, id: SharedGasTankSystem.GasTankDelay);
         }
     }
 

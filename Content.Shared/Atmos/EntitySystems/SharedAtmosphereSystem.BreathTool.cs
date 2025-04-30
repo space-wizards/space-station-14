@@ -26,7 +26,7 @@ public abstract partial class SharedAtmosphereSystem
 
         entity.Comp.ConnectedInternalsEntity = null;
 
-        if (TryComp<InternalsComponent>(old, out var internalsComponent))
+        if (_internalsQuery.TryComp(old, out var internalsComponent))
         {
             _internals.DisconnectBreathTool((old.Value, internalsComponent), entity.Owner, forced: forced);
         }
@@ -36,15 +36,15 @@ public abstract partial class SharedAtmosphereSystem
 
     private void OnMaskToggled(Entity<BreathToolComponent> ent, ref ItemMaskToggledEvent args)
     {
-        if (args.IsToggled || args.IsEquip)
+        if (args.Mask.Comp.IsToggled)
         {
             DisconnectInternals(ent, forced: true);
         }
         else
         {
-            if (TryComp(args.Wearer, out InternalsComponent? internals))
+            if (_internalsQuery.TryComp(args.Wearer, out var internals))
             {
-                _internals.ConnectBreathTool((args.Wearer, internals), ent);
+                _internals.ConnectBreathTool((args.Wearer.Value, internals), ent);
             }
         }
     }
