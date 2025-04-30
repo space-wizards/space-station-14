@@ -14,20 +14,6 @@
 
 - type: entity
   parent: MarkerBase
-  id: SpawnMobCarpMagic
-  name: Magicarp Spawner
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: icon
-      sprite: Mobs/Aliens/Carps/magic.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobCarpMagic
-
-- type: entity
-  parent: MarkerBase
   id: SpawnMobCarpHolo
   name: Holocarp Spawner
   components:
@@ -39,6 +25,20 @@
   - type: ConditionalSpawner
     prototypes:
     - MobCarpHolo
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobCarpMagic
+  name: Magicarp Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/magic.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCarpMagic
 
 - type: entity
   parent: MarkerBase

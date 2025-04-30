@@ -16,6 +16,22 @@
 
 - type: entity
   parent: MarkerBase
+  id: SpawnMobXenoDrone
+  name: Xeno Spawner
+  suffix: Drone
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/drone.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoDrone
+
+- type: entity
+  parent: MarkerBase
   id: SpawnMobXenoPraetorian
   name: Xeno Spawner
   suffix: Praetorian
@@ -32,19 +48,19 @@
 
 - type: entity
   parent: MarkerBase
-  id: SpawnMobXenoDrone
+  id: SpawnMobXenoQueen
   name: Xeno Spawner
-  suffix: Drone
+  suffix: Queen
   components:
   - type: Sprite
     layers:
     - state: green
-    - sprite: Mobs/Aliens/Xenos/drone.rsi
+    - sprite: Mobs/Aliens/Xenos/queen.rsi
       state: running
     - state: ai
   - type: ConditionalSpawner
     prototypes:
-    - MobXenoDrone
+    - MobXenoQueen
 
 - type: entity
   parent: MarkerBase
@@ -93,19 +109,3 @@
   - type: ConditionalSpawner
     prototypes:
     - MobXenoSpitter
-
-- type: entity
-  parent: MarkerBase
-  id: SpawnMobXenoQueen
-  name: Xeno Spawner
-  suffix: Queen
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - sprite: Mobs/Aliens/Xenos/queen.rsi
-      state: running
-    - state: ai
-  - type: ConditionalSpawner
-    prototypes:
-    - MobXenoQueen
