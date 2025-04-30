@@ -56,6 +56,7 @@
 
 - type: reaction
   id: Cryoxadone
+  maxTemp: 77   # Liquid nitrogen boiling point.
   reactants:
     Dexalin:
       amount: 1
@@ -68,6 +69,7 @@
 
 - type: reaction
   id: Doxarubixadone
+  maxTemp: 125 # Cryo chems now require extra-cool temperatures.
   reactants:
     Cryoxadone:
       amount: 1
@@ -219,7 +221,7 @@
     Ambuzol: 4
 
 - type: reaction
-  id: AmbuzolPlus
+  id: AmbuzolPlus # Maybe this would require cooler temperatures in the future. like - maxTemp: 20
   reactants:
     Ambuzol:
       amount: 5
@@ -370,7 +372,8 @@
 
 - type: reaction
   id: Cognizine
-  reactants:
+  maxTemp: 57 # CMO: Jeez, why does Ian have so much cold damage? Chem: We don't know...
+  reactants:  # ( Doesn't actually deal cold damage )
     CarpoToxin:
       amount: 1
     Siderlac:
@@ -559,9 +562,9 @@
 
 - type: reaction
   id: Opporozidone
-  minTemp: 400 #Maybe if a method of reducing reagent temp exists one day, this could be -50
-  reactants:
-    Cognizine: 
+  maxTemp: 4.2 # Maybe if a method of reducing reagent temp exists one day, this could be -50
+  reactants:      # EDIT from LordZirconium: The day has come... Though I set it to liquid helium temperature.
+    Cognizine:
       amount: 1
     Plasma:
       amount: 2
@@ -573,11 +576,11 @@
 - type: reaction
   id: Necrosol
   impact: Medium
-  minTemp: 370
+  maxTemp: 10 # Harder to make now.
   reactants:
     Blood:
       amount: 3
-    Omnizine:
+    Omnizine:   # It was too simple to make, since it can revive the dead.
       amount: 1
     Cryoxadone:
       amount: 2
@@ -586,6 +589,7 @@
 
 - type: reaction
   id: Aloxadone
+  maxTemp: 67   # You can now heal cold with cold using cold.
   impact: Medium
   reactants:
     Cryoxadone:
