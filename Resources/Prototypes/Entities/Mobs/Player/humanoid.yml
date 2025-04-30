@@ -6,10 +6,12 @@
     - type: RandomHumanoidAppearance
       randomizeName: false
     - type: GhostTakeoverAvailable
+    - type: IdBind
 
 - type: randomHumanoidSettings
   id: EventHumanoidMindShielded
   parent: EventHumanoid
+  randomizeName: false
   components:
     - type: MindShield
     - type: AntagImmune
@@ -43,7 +45,6 @@
 - type: randomHumanoidSettings
   id: DeathSquad
   parent: EventHumanoidCentcomm
-  randomizeName: false
   components:
     - type: GhostRole
       name: ghost-role-information-Death-Squad-name
@@ -84,7 +85,6 @@
 - type: randomHumanoidSettings
   id: ERTLeader
   parent: EventHumanoidCentcomm
-  randomizeName: false
   components:
     - type: GhostRole
       name: ghost-role-information-ert-leader-name

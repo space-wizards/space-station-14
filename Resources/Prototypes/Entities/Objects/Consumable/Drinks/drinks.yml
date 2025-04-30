@@ -839,6 +839,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkEggnog
+  suffix: eggnog
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Eggnog
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/eggnogglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkElectricSharkGlass
   suffix: electric shark
   components:
