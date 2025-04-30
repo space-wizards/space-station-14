@@ -574,6 +574,7 @@
 
 - type: entity
   name: raw killer tomato meat
+  # TODO: make perishable once a proper cooked version is added
   parent: FoodMeatRawBase
   id: FoodMeatTomato
   description: A slice from a huge, living tomato.
@@ -1514,6 +1515,7 @@
 
 - type: entity
   name: raw killer tomato cutlet
+  # TODO: make perishable once a proper cooked version is added
   parent: FoodMeatRawBase
   id: FoodMeatTomatoCutlet
   description: A cutlet from a slab of living tomato.
