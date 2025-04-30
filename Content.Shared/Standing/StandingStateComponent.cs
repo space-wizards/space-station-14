@@ -18,7 +18,7 @@ namespace Content.Shared.Standing
         /// Time it takes us to stand up
         /// </summary>
         [DataField, AutoNetworkedField]
-        public TimeSpan StandTime = TimeSpan.FromSeconds(1);
+        public TimeSpan StandTime = TimeSpan.FromSeconds(2);
 
         /// <summary>
         ///     List of fixtures that had their collision mask changed when the entity was downed.

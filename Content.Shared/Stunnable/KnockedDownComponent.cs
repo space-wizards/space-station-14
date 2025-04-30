@@ -37,7 +37,7 @@ public sealed partial class KnockedDownComponent : Component
     /// Modifier to the maximum movement speed of a knocked down mover.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float SpeedModifier = 0.3f;
+    public float SpeedModifier = 0.4f;
 
     /// <summary>
     /// How long does it take us to get up?
