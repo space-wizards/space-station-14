@@ -24,6 +24,7 @@
   - MopItem
   - Holoprojector
   - WetFloorSign
+  - SqueezeBottle
 
 - type: latheRecipePack
   id: ServiceBoardsStatic
