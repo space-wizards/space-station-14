@@ -272,10 +272,10 @@
     enabled: true
     color: "#ffabdb"
     radius: 2.0
-    energy: 7.0
+    energy: 7.01
   - type: StunOnCollide
-    stunAmount: 5
-    knockdownAmount: 10
+    stunAmount: 10
+    knockdownAmount: 5
     slowdownAmount: 10
     walkSpeedMultiplier: 0.5
     sprintSpeedMultiplier: 0.5

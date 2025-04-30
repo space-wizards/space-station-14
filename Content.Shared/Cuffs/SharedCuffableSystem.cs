@@ -20,6 +20,7 @@ using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
@@ -88,6 +89,8 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
             SubscribeLocalEvent<HandcuffComponent, AddCuffDoAfterEvent>(OnAddCuffDoAfter);
             SubscribeLocalEvent<HandcuffComponent, VirtualItemDeletedEvent>(OnCuffVirtualItemDeleted);
+            SubscribeLocalEvent<CuffableComponent, StandupAttemptEvent>(OnCuffableStandup);
+            SubscribeLocalEvent<CuffableComponent, RefreshMovementSpeedModifiersEvent>(OnCuffableRefreshMovement);
         }
 
         private void CheckInteract(Entity<CuffableComponent> ent, ref InteractionAttemptEvent args)
@@ -412,6 +415,25 @@ namespace Content.Shared.Cuffs
             {
                 UpdateCuffState(ent.Owner, ent.Comp);
             }
+        }
+
+        /// <summary>
+        ///     Takes longer to stand up when cuffed
+        /// </summary>
+        private void OnCuffableStandup(Entity<CuffableComponent> ent, ref StandupAttemptEvent args)
+        {
+            if (args.Cancelled || !HasComp<KnockedDownComponent>(ent) || !IsCuffed(ent) || !TryComp<HandcuffComponent>(ent.Comp.LastAddedCuffs, out var handcuff))
+                return;
+
+            args.DoAfterTime *= handcuff.StandupMod;
+        }
+
+        private void OnCuffableRefreshMovement(Entity<CuffableComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
+        {
+            if (!IsCuffed(ent) || !TryComp<HandcuffComponent>(ent.Comp.LastAddedCuffs, out var handcuff))
+                return;
+
+            args.ModifySpeed(HasComp<KnockedDownComponent>(ent) ? handcuff.KnockedMovementMod : handcuff.MovementMod);
         }
 
         /// <summary>
