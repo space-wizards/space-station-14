@@ -1498,6 +1498,39 @@
     unlockOnClick: false
 
 - type: entity
+  parent: ComputerRoboticsControl
+  id: ComputerXenoborgsControl
+  name: xenoborgs control console
+  description: Used to remotely monitor all xenoborgs.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: robot # future : custom sprite
+    - map: ["computerLayerKeys"]
+      state: rd_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: RoboticsConsole
+    radioChannel: Xenoborg
+    destroyCooldown: 0
+  - type: ActiveRadio
+    channels:
+    - Xenoborg
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: Mothership
+    transmitFrequencyId: Xenoborg
+  - type: Computer
+    board: SamukaXenoborgRoboticsConsoleCircuitboard
+  - type: AccessReader # only used for dangerous things
+    access: [["Xenoborg"]]
+
+- type: entity
   id: StationAiUploadComputer
   parent: BaseComputer
   name: AI upload console
