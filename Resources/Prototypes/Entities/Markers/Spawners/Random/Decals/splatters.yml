@@ -1,22 +1,107 @@
 - type: entity
   parent: DecalSpawnerBase
   id: DecalSpawnerBloodSplatters
-  suffix: blood
+  suffix: Blood Splatters, Footprints
   components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: decal
-  - type: RandomDecalSpawner
+  - type: RandomDecalSpawnerScattered
     decals:
     - footprint
     - splatter
     range: 1
-    falloff: 1
     randomRotation: true
-    snapPosition: false
     snapRotation: false
-    maxDecalsPerTile: 2
+    maxDecals: 3
+    prob: 0.5
     zIndex: 5
-    color: '#CC00007F'
+    color: '#9900007F'
+    cleanable: true
+
+- type: entity
+  parent: DecalSpawnerBase
+  id: DecalSpawnerGraffiti
+  suffix: Graffiti
+  components:
+  - type: RandomDecalSpawnerScattered
+    decals:
+    - Blasto
+    - Clandestine
+    - Cyber
+    - Diablo
+    - Donk
+    - Gene
+    - Gib
+    - Max
+    - Newton
+    - North
+    - Omni
+    - Osiron
+    - Prima
+    - Psyke
+    - Sirius
+    - Tunnel
+    - Waffle
+    - amyjon
+    - beepsky
+    - biohazard
+    - blueprint
+    - bottle
+    - carp
+    - cat
+    - clown
+    - corgi
+    - credit
+    - cyka
+    - danger
+    - disk
+    - dwarf
+    - end
+    - engie
+    - face
+    - fireaxe
+    - firedanger
+    - food
+    - ghost
+    - guy
+    - heart
+    - like
+    - matt
+    - med
+    - nay
+    - peace
+    - prolizard
+    - radiation
+    - revolution
+    - safe
+    - scroll
+    - shotgun
+    - skull
+    - snake
+    - space
+    - star
+    - stickman
+    - taser
+    - toilet
+    - toolbox
+    - trade
+    - uboa
+    range: 1
+    randomRotation: true
+    snapRotation: false
+    maxDecals: 1
+    zIndex: 2
+    randomColorList:
+    - aqua
+    - betterviolet
+    - blue
+    - chartreuse
+    - cyan
+    - deeppink
+    - fuchsia
+    - green
+    - indigo
+    - lime
+    - pink
+    - red
+    - silver
+    - yellow
     cleanable: true

@@ -1,5 +1,8 @@
-﻿namespace Content.Server.Spawners.Components;
+﻿using Robust.Shared.Prototypes;
 
+namespace Content.Server.Spawners.Components;
+
+[RegisterComponent, EntityCategory("Spawner")]
 public sealed partial class RandomDecalSpawnerScatteredComponent : RandomDecalSpawnerComponent
 {
     /// <summary>

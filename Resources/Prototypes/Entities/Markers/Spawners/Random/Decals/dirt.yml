@@ -3,16 +3,14 @@
   id: DecalSpawnerDirtBase
   abstract: true
   components:
-  - type: RandomDecalSpawner
+  - type: RandomDecalSpawnerDistributed
     decals:
-    - Dirt
     - DirtLight
     - DirtyMedium
     - DirtHeavy
-    - DirtHeavyMonotile
     snapPosition: true
-    maxDecalsPerTile: 1
     zIndex: 1
+    prob: 0.8
     color: '#FFFFFF7F'
     cleanable: true
     tileBlacklist:
@@ -37,3 +35,61 @@
     - FloorGym
     - FloorGlass
     - FloorRGlass
+
+- type: entity
+  parent: DecalSpawnerDirtBase
+  id: DecalSpawnerDirtSingle
+  suffix: Dirt, 0 Radius
+  components:
+  - type: RandomDecalSpawnerDistributed
+    maxDecalsPerTile: 1
+    range: 0
+    prob: 1.0
+
+- type: entity
+  parent: DecalSpawnerDirtBase
+  id: DecalSpawnerDirtWide
+  suffix: Dirt, 1 Radius
+  components:
+  - type: RandomDecalSpawnerDistributed
+    maxDecalsPerTile: 3
+    range: 1
+
+- type: entity
+  parent: DecalSpawnerDirtBase
+  id: DecalSpawnerDirtThin
+  suffix: Dirt, 3 Radius
+  components:
+  - type: RandomDecalSpawnerDistributed
+    maxDecalsPerTile: 2
+    range: 3
+
+- type: entity
+  parent: DecalSpawnerDirtBase
+  id: DecalSpawnerDirtMonospace
+  suffix: Dirt, Monospace, 3 Radius
+  components:
+  - type: RandomDecalSpawnerDistributed
+    maxDecalsPerTile: 2
+    range: 3
+    decals:
+    - Dirt
+    - DirtHeavyMonotile
+    tileBlacklist:
+    - FloorSteelDiagonal
+    - FloorSteelOffset
+    - FloorSteelDiagonalMini
+    - FloorWhiteDiagonal
+    - FloorWhiteOffset
+    - FloorWhiteDiagonalMini
+    - FloorDarkDiagonal
+    - FloorDarkOffset
+    - FloorDarkDiagonalMini
+    - FloorArcadeBlue
+    - FloorArcadeBlue2
+    - FloorArcadeRed
+    - FloorEighties
+    - FloorCarpetClown
+    - FloorCarpetOffice
+    - FloorBoxing
+    - FloorGym
