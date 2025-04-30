@@ -19,15 +19,26 @@ public sealed class ShowJobIconsSystem : EquipmentHudSystem<ShowJobIconsComponen
 
     [ValidatePrototypeId<SecurityIconPrototype>]
     private const string CrewBorder = "CrewBorderIcon";
+    [ValidatePrototypeId<SecurityIconPrototype>]
+    private const string CrewUncertainBorder = "CrewUncertainBorderIcon";
 
     [ViewVariables]
     public bool IncludeCrewBorder = false;
+
+    [ViewVariables]
+    public bool UncertainCrewBorder = false;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<StatusIconComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
+        SubscribeLocalEvent<ShowJobIconsComponent, AfterAutoHandleStateEvent>(OnHandleState);
+    }
+
+    private void OnHandleState(Entity<ShowJobIconsComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        RefreshOverlay();
     }
 
     protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowJobIconsComponent> component)
@@ -35,13 +46,14 @@ public sealed class ShowJobIconsSystem : EquipmentHudSystem<ShowJobIconsComponen
         base.UpdateInternal(component);
 
         IncludeCrewBorder = false;
+        UncertainCrewBorder = false;
         foreach (var comp in component.Components)
         {
             if (comp.IncludeCrewBorder)
-            {
                 IncludeCrewBorder = true;
-                return;
-            }
+
+            if (comp.UncertainCrewBorder)
+                UncertainCrewBorder = true;
         }
     }
 
@@ -77,10 +89,18 @@ public sealed class ShowJobIconsSystem : EquipmentHudSystem<ShowJobIconsComponen
         if (_prototype.TryIndex<JobIconPrototype>(iconId, out var iconPrototype))
         {
             ev.StatusIcons.Add(iconPrototype);
-            if (IncludeCrewBorder && iconPrototype.IsCrewJob)
+            if (IncludeCrewBorder)
             {
-                if (_prototype.TryIndex<SecurityIconPrototype>(CrewBorder, out var crewBorderIconPrototype))
-                    ev.StatusIcons.Add(crewBorderIconPrototype);
+                if (!UncertainCrewBorder)
+                {
+                    if (iconPrototype.IsCrewJob && _prototype.TryIndex<SecurityIconPrototype>(CrewBorder, out var crewBorderIconPrototype))
+                        ev.StatusIcons.Add(crewBorderIconPrototype);
+                }
+                else
+                {
+                    if (_prototype.TryIndex<SecurityIconPrototype>(CrewUncertainBorder, out var crewBorderIconPrototype))
+                        ev.StatusIcons.Add(crewBorderIconPrototype);
+                }
             }
         }
         else

@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "CrewBorder and CrewUncertainBorder by SlamBamActionman (Github)",
+
+    "size": {
+        "x": 16,
+        "y": 16
+    },
+    "states": [
+        {
+            "name": "CrewBorder",
+            "delays":
+            [
+                [1.0,1.0]
+            ]
+        },
+        {
+            "name": "CrewUncertainBorder",
+            "delays":
+            [
+                [1.0,1.0]
+            ]
+        }
+    ]
+}
