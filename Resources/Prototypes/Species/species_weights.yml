@@ -2,11 +2,7 @@
 - type: weightedRandomSpecies
   id: SpeciesWeights
   weights:
-    Dwarf: 1
-    Moth: 1
-    Reptilian: 1
-    Human: 1
-    Archnid: 1
-    SlimePerson: 1
-    Diona: 1
-    Vox: 1
+    Human: 5
+    Reptilian: 4
+    SlimePerson: 4
+    Diona: 2
