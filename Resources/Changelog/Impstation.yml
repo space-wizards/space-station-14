@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: You can now take a Sip-u-lacrum.
-    type: Add
-  id: 1093
-  time: '2025-02-10T21:19:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1632
-- author: FutureExalt
-  changes:
-  - message: new roundstart coats for secoff, warden, and detective.
-    type: Add
-  id: 1094
-  time: '2025-02-10T22:41:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1612
-- author: Saeko-44
-  changes:
-  - message: The fishing rod, capable of reeling things in, as a tier 1 civilian tech
-    type: Add
-  id: 1095
-  time: '2025-02-10T22:49:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1482
 - author: Darkmajia
   changes:
   - message: Grays and dwarves have had their accents fixed up a little.
@@ -4134,3 +4113,31 @@
   id: 1592
   time: '2025-04-30T20:10:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2280
+- author: starlighthowls
+  changes:
+  - message: a normal new plushie!
+    type: Add
+  id: 1593
+  time: '2025-04-30T20:14:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2340
+- author: jtfg-dev
+  changes:
+  - message: 'Cyborgs now get the pronouns and detailed examine text set for the character
+      you join with, like any other job. (NOTE: For dedicated cyborg characters, if
+      you haven''t already, you should make a unique profile!)'
+    type: Add
+  - message: Altered the examine description of cyborgs to minimize misgendering.
+    type: Tweak
+  - message: Small piece of broken grammar on partly-consumed bodies.
+    type: Fix
+  id: 1594
+  time: '2025-04-30T20:13:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2335
+- author: CombustibleToast
+  changes:
+  - message: Atmos techs can now wear the engineering beret (with sufficient department
+      playtime)
+    type: Add
+  id: 1595
+  time: '2025-04-30T20:14:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2362
