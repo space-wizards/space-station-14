@@ -37,7 +37,7 @@ public abstract class SharedStunSystem : EntitySystem
     [Dependency] protected readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IComponentFactory _component = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] protected readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] protected readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
@@ -45,8 +45,6 @@ public abstract class SharedStunSystem : EntitySystem
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
-
-    private readonly HashSet<EntityUid> _toUpdate = new();
 
     public override void Initialize()
     {
@@ -162,7 +160,6 @@ public abstract class SharedStunSystem : EntitySystem
 
     private void OnKnockShutdown(Entity<KnockedDownComponent> ent, ref ComponentShutdown args)
     {
-        _toUpdate.Remove(ent);
         // This is jank but if we don't do this it'll still use the knockedDownComponent modifiers for friction because it hasn't been deleted quite yet.
         ent.Comp.FrictionModifier = 1f;
         ent.Comp.SpeedModifier = 1f;
@@ -242,8 +239,6 @@ public abstract class SharedStunSystem : EntitySystem
         };
         RaiseLocalEvent(uid, ref ev);
 
-        if (component.AutoStand)
-            _toUpdate.Add(uid);
         component.NextUpdate = _gameTiming.CurTime + time;
 
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
@@ -332,7 +327,6 @@ public abstract class SharedStunSystem : EntitySystem
         };
 
         // If we try standing don't try standing again
-        _toUpdate.Remove(ent);
         return _doAfter.TryStartDoAfter(doAfterArgs, out id);
     }
 
