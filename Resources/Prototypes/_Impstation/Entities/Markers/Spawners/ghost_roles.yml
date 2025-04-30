@@ -1,0 +1,25 @@
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostBountyHunter
+  components:
+  - type: GhostRole
+    name: "Bounty Hunter"
+    description: "Hunt down your target and get paid."
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleBountyHunter
+    raffle:
+      settings: default
+
+- type: entity
+  id: SpawnPointBountyHunter
+  parent: MarkerBase
+  name: bounty hunter
+  components:
+  - type: SpawnPoint
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Clothing/Head/Hats/cowboyhatbountyhunter.rsi
+      state: icon

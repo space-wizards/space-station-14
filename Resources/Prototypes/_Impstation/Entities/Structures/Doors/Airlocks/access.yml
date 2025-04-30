@@ -310,3 +310,31 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsSyndicateAgent ]
+
+# Freelance doors
+- type: entity
+  parent: AirlockGlass
+  id: AirlockGlassFreelanceLocked
+  suffix: Freelance, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsFreelance ]
+
+- type: entity
+  parent: Airlock
+  id: AirlockFreelanceLocked
+  suffix: Freelance, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsFreelance ]
+
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockShuttleFreelanceLocked
+  suffix: Freelance, Docking, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsFreelance ]

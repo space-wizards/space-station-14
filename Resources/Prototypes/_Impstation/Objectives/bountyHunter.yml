@@ -1,0 +1,32 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseBountyHunterObjective
+  components:
+  - type: Objective
+    issuer: objective-issuer-self
+    difficulty: 1
+  - type: RoleRequirement
+    roles:
+    - MindRoleBountyHunter
+
+- type: entity
+  parent: [BaseKillObjective, BaseBountyHunterObjective]
+  id: BountyHunterKillRandomAntagObjective
+  description: You don't know who wants them or why, and you don't care. You'll be paid more if they're alive, as long as they end up on your shuttle.
+  components:
+  - type: TargetObjective
+    title: objective-condition-kill-person-title
+  - type: PickRandomAntag
+
+- type: entity
+  parent: [BaseBountyHunterObjective, BaseSurviveObjective]
+  id: BountyHunterSurviveObjective
+  name: Survive
+  description: You can't get paid if you die.
+  components:
+  - type: Objective
+    icon:
+      sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+      state: icon
+

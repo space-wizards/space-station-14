@@ -1,0 +1,290 @@
+﻿# Bounty Hunter Kits
+- type: entity
+  parent: ToolboxThief
+  id: BountyHunterGear
+  name: bounty hunter toolbox
+  description: An assortment of contraband you've collected over your career, some more forbidden than others.
+  components:
+  - type: ThiefUndeterminedBackpack
+    maxSelectedSets: 2
+    possibleSets:
+    - BountyHunterRifle
+    - BountyHunterHardsuit
+    - BountyHunterDisguise
+    - BountyHunterSubverter
+    - BountyHunterRoboticist
+    - BountyHunterSamurai
+    - BountyHunterSyndie
+    - BountyHunterCaptain
+    - BountyHunterClown
+
+# Bounty Hunter Thermal + Flash Protection Glasses
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesBountyHunterGlasses
+  name: bounty hunter glasses
+  description: High-tech sunglasses that provide flash immunity and thermal vision.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Eyes/Glasses/bountyhunterglasses.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Eyes/Glasses/bountyhunterglasses.rsi
+  - type: ThermalVision
+    isEquipment: true
+    pulseTime: 2
+    toggleAction: PulseThermalVision
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+
+# Companion Cyborg Reinforcement Radio, borgdisabler, and nonlethal module
+- type: entity
+  parent: ReinforcementRadio
+  id: ReinforcementRadioBountyHunterCyborg
+  name: reclaimed cyborg reinforcement radio
+  description: Call in a rebuilt cyborg, kitted out with all the latest tech!
+  components:
+    - type: GhostRole
+      name: "Reclaimed Cyborg"
+      description: "A bounty hunter needs reinforcements. You, an illegal cyborg patched together by duct tape and dreams, will help them."
+      rules: ghost-role-information-silicon-rules
+      mindRoles:
+      - MindRoleGhostRoleSilicon
+      raffle:
+        settings: default
+    - type: GhostRoleMobSpawner
+      prototype: PlayerBorgBountyHunter
+
+- type: entity
+  name: borgdisabler
+  parent: [ WeaponDisablerPractice, BaseMajorContraband ]
+  id: WeaponBorgDisabler
+  description: A disabler modified to slowly recharge off a cyborg's internal battery.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/disabler.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 10
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 5
+
+- type: entity
+  name: borgstunbaton
+  parent: [BaseItem, BaseMajorContraband]
+  id: WeaponBorgStunBaton
+  description: An internally-stored implement capable of safely incapacitating any criminal, modified to self-charge at the cost of battery life. #imp
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Melee/stunbaton.rsi #imp
+    layers:
+    - state: stunbaton_off
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Stunbaton
+    energyPerUse: 1
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundDeactivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.250
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Blunt: 0
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 7
+    bluntStaminaDamageFactor: 2.0
+    angle: 60
+    animation: WeaponArcThrust
+  - type: StaminaDamageOnHit
+    damage: 35
+    sound: /Audio/Weapons/egloves.ogg
+  - type: Battery
+    maxCharge: 10
+    startingCharge: 10
+  - type: UseDelay
+  - type: Item
+    heldPrefix: off
+    size: Normal
+  - type: DisarmMalus
+    malus: 0.225
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+     enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: stunbaton_on}
+          False: {state: stunbaton_off}
+  - type: GuideHelp
+    guides:
+    - Security
+    - Antagonists
+  - type: ItemToggleDamageOtherOnHit
+  - type: DamageOtherOnHit
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 0.5
+
+
+- type: entity
+  id: BorgModuleDisabler
+  parent: [ BaseBorgModule, BaseProviderBorgModule, BaseMajorContraband ]
+  name: disabler cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: security
+    - state: icon-grappling-gun # couldn't figure out how to get the custom sprite working in imp namespace
+  - type: ItemBorgModule
+    items:
+    - WeaponBorgDisabler
+    - WeaponBorgStunBaton
+  - type: BorgModuleIcon
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: disabler-module }
+
+
+# Mercenary Hardsuit
+- type: entity
+  parent: [ ClothingOuterHardsuitBase, BaseMajorContraband ]
+  id: ClothingOuterHardsuitMercenary
+  name: mercenary hardsuit
+  description: A stylish hardsuit lined with lightweight armor-plating.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/bounty_merc.rsi
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/bounty_merc.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.6
+        Caustic: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMercenary
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: Tag
+    tags:
+    - Hardsuit
+    - WhitelistChameleon
+
+# Merc hardsuit helmet
+- type: entity
+  parent: [ ClothingHeadHardsuitBase ]
+  id: ClothingHeadHelmetHardsuitMercenary
+  name: mercenary hardsuit helmet
+  description: A stylish helmet lined with lightweight armor-plating.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hardsuits/bounty_merc.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hardsuits/bounty_merc.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+# Rocket Magboots
+- type: entity
+  parent: [ClothingShoesBootsMagBase, BaseJetpack, BaseMajorContraband]
+  id: ClothingShoesBootsMagRocket
+  name: rocket magboots
+  description: Custom-built magnetic boots with integrated thrusters. Can hold 0.75 L of gas.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/bountyhuntermagboots.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/bountyhuntermagboots.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.9
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 2 minutes of thrust
+      volume: 0.75
+      temperature: 293.15
+      moles:
+      - 0.153853429 # oxygen
+      - 0.153853429 # nitrogen
+  - type: Item
+    sprite: null
+    size: Normal
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 20
+    staminaCost: 25
+    soundHit:
+      path: /Audio/Weapons/smash.ogg
+
+# Damaged Laser Pistol
+- type: entity
+  name: dilapidated laser pistol
+  parent: [BaseWeaponBatterySmall, BaseMajorContraband]
+  id: WeaponBountyHunterLaser
+  description: A worn-down laser pistol that's clearly seen a lot of use. The battery has been damaged.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/bountyhunterantiquelaser.rsi #imp
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/bountyhunterantiquelaser.rsi #imp
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 100
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: Tag
+    tags:
+    - Sidearm

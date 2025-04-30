@@ -97,3 +97,6 @@
 
 - type: playTimeTracker
   id: AntagRogueAscended
+
+- type: playTimeTracker
+  id: AntagBountyHunter

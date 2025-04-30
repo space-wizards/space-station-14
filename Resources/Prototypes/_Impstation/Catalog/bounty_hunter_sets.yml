@@ -1,0 +1,146 @@
+- type: thiefBackpackSet
+  id: BountyHunterRifle
+  name: bounty-hunter-category-raider-name
+  description: bounty-hunter-category-raider-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+    state: icon
+  content:
+  - WeaponRifleAk
+  - BoxMagazineLightRifle
+  - C4
+  - C4
+  - C4
+  - FreedomImplanter
+  - ClothingOuterVestWebMerc
+
+- type: thiefBackpackSet
+  id: BountyHunterHardsuit
+  name: bounty-hunter-category-hardsuit-name
+  description: bounty-hunter-category-hardsuit-description
+  sprite:
+    sprite: _Impstation/Clothing/Shoes/Boots/bountyhuntermagboots.rsi
+    state: icon
+  content:
+  - ClothingOuterHardsuitMercenary
+  - ClothingShoesBootsMagRocket
+  - HandHeldMassScanner
+  - WeaponGrapplingGun
+  - Fulton
+  - FultonBeacon
+
+- type: thiefBackpackSet
+  id: BountyHunterDisguise
+  name: bounty-hunter-category-infiltrator-name
+  description: bounty-hunter-category-infiltrator-description
+  sprite:
+    sprite: Clothing/Eyes/Glasses/outlawglasses.rsi
+    state: icon
+  content:
+  - ClothingBackpackChameleonFill
+  - AgentIDCard
+  - ClothingMaskGasVoiceChameleon
+  - CyberPen
+  - DnaScramblerImplanter
+  - FakeMindShieldImplanter
+  - SpaceCash30000
+
+
+- type: thiefBackpackSet
+  id: BountyHunterSubverter
+  name: bounty-hunter-category-subverter-name
+  description: bounty-hunter-category-subverter-description
+  sprite:
+    sprite: Objects/Tools/emag.rsi
+    state: icon
+  content:
+  - CameraBug
+  - Emag
+  - AccessBreaker
+  - RadioJammer
+
+
+- type: thiefBackpackSet
+  id: BountyHunterRoboticist
+  name: bounty-hunter-category-roboticist-name
+  description: bounty-hunter-category-roboticist-description
+  sprite:
+    sprite: Objects/Specific/Robotics/borgmodule.rsi
+    state: generic
+  content:
+  - ReinforcementRadioBountyHunterCyborg
+  - BorgModuleSyndicateWeapon
+
+
+- type: thiefBackpackSet
+  id: BountyHunterSamurai
+  name: bounty-hunter-category-samurai-name
+  description: bounty-hunter-category-samurai-description
+  sprite:
+    sprite: Objects/Weapons/Melee/katana.rsi
+    state: icon
+  content:
+  - EnergyKatanaStun
+  - Stimpack
+  - Stimpack
+  - ClothingOuterDogi
+  - DeathAcidifierImplanter
+  - ScramImplanter
+
+- type: thiefBackpackSet
+  id: BountyHunterSyndie
+  name: bounty-hunter-category-syndie-name
+  description: bounty-hunter-category-syndie-description
+  sprite:
+    sprite: Clothing/Mask/gassyndicate.rsi
+    state: icon
+  content:
+  - SyndicateBusinessCard
+  - ClothingOuterArmorRaid
+  - ClothingHeadHelmetRaid
+  - EncryptionKeySyndie
+  - EnergySword
+  - EmpImplanter
+  - Telecrystal10
+  - ClothingMaskGasSyndicate
+
+- type: thiefBackpackSet
+  id: BountyHunterCaptain
+  name: bounty-hunter-category-captain-name
+  description: bounty-hunter-category-captain-description
+  sprite:
+    sprite: Clothing/Head/Hats/captain.rsi
+    state: icon
+  content:
+  - ClothingOuterArmorCaptainCarapace
+  - WeaponBountyHunterLaser
+  - ClothingBeltSheathFilled
+  - EncryptionKeyCommand
+  - ClothingUniformJumpsuitCaptain
+  - ClothingHeadHatCapcap
+
+- type: thiefBackpackSet
+  id: BountyHunterClown
+  name: bounty-hunter-category-clown-name
+  description: bounty-hunter-category-clown-description
+  sprite:
+    sprite: Objects/Fun/bikehorn.rsi
+    state: icon
+  content:
+  - CrateFunToyBox
+  - BaseLittleTykesCar
+  - LauncherCreamPie
+  - SadTromboneImplanter
+  - BoxHoloclown
+  - ClothingMaskClown
+  - ClothingShoesClown
+  - ClothingUniformJumpsuitClown
+  - FoodBanana
+  - FoodBanana
+  - FoodPieBananaCream
+  - FoodPieBananaCream
+  - FoodPieBananaCream
+  - FoodPieBananaCream
+  - FoodPieBananaCream
+  - FoodPieBananaCream
+  - BikeHorn

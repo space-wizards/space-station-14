@@ -102,3 +102,12 @@
   components:
   - type: AccessReader
     access: [["HospitalityDirector"]]
+
+# Freelance
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsFreelance
+  suffix: Freelance, Locked
+  components:
+  - type: AccessReader
+    access: [["Freelance"]]

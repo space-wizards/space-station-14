@@ -1,0 +1,38 @@
+﻿- type: entity
+  id: BorgChassisBountyHunter
+  parent: BaseBorgChassisBountyHunter
+  name: reclaimed cyborg
+  description: A man-machine hybrid that assists in station activity. This one is patched together with spare parts.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Silicon/chassis.rsi
+    layers:
+    - state: bounty
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: bounty_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: bounty_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 5
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleService
+      - BorgModuleEngineering
+      - BorgModuleJanitor
+      - BorgModuleMedical
+      - BorgModuleCargo
+    hasMindState: bounty_e
+    noMindState: bounty_e_r
+  - type: Construction
+    node: derelictcyborg
+  - type: InteractionPopup
+    interactSuccessString: petting-success-derelict-cyborg
+    interactFailureString: petting-failure-derelict-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg

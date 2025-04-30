@@ -921,6 +921,7 @@
     - NuclearOperative
     - SyndicateAgent
     - Wizard
+    - Freelance # (imp)
   - type: NanoChatCard # DeltaV
     notificationsMuted: true
     listNumber: false

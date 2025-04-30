@@ -1,0 +1,21 @@
+﻿- type: entity
+  id: PlayerBorgBountyHunter
+  parent: BorgChassisBountyHunter
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleDisabler
+        - BorgModuleAdvancedTool
+        - BorgModuleGrapplingGun
+        - BorgModuleMusique
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]

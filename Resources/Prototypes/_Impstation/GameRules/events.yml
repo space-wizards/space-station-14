@@ -43,3 +43,44 @@
         sound: "/Audio/_Goobstation/Ambience/Antag/changeling_start.ogg"
       mindRoles:
       - MindRoleChangeling
+
+# Bounty Hunter
+- type: entity
+  parent: BaseGameRule
+  id: BountyHunterSpawn
+  components:
+  - type: StationEvent
+    weight: 5
+    duration: 1
+    earliestStart: 25
+    reoccurrenceDelay: 20
+    minimumPlayers: 15
+  - type: AntagLoadProfileRule
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Impstation/Shuttles/ShuttleEvent/heron.yml
+  - type: AntagObjectives
+    objectives:
+    - BountyHunterKillRandomAntagObjective
+    - BountyHunterSurviveObjective
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostBountyHunter
+      min: 1
+      max: 1
+      pickPlayer: false
+      startingGear: BountyHunterGear
+      roleLoadout:
+      - RoleSurvivalEVA
+      briefing:
+        text: bounty-hunter-role-greeting
+        color: Orange
+        # TODO: Custom greeting sound
+        # sound: /Audio/Misc/ninja_greeting.ogg
+      mindRoles:
+      - MindRoleBountyHunter
+      components:
+      - type: RandomMetadata
+        nameSegments:
+        - NamesBountyHunterTitle
+        - NamesBountyHunter

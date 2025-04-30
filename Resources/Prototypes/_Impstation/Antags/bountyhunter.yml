@@ -1,0 +1,32 @@
+- type: antag
+  id: BountyHunter
+  name: roles-antag-bounty-hunter-name
+  antagonist: false
+  setPreference: false
+  playTimeTracker: AntagBountyHunter # imp
+  objective: roles-antag-bounty-hunter-objective
+  requirements: # Requiring some sec playtime, mainly to ensure people know escalation rules
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 18000 # 5 hours
+
+- type: startingGear
+  id: BountyHunterGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+    head: ClothingHeadHatCowboyBountyHunter
+    back: ClothingBackpackSatchel
+    eyes: ClothingEyesBountyHunterGlasses
+    outerClothing: ClothingOuterCoatBomber
+    shoes: ClothingShoesBootsMercFilled
+    gloves: ClothingHandsMercGlovesCombat
+    id: BountyHunterIDCard
+    ears: ClothingHeadsetFreelance
+    belt: ClothingBeltMercWebbing
+    pocket1: BaseSeclinkRadio
+    pocket2: BountyHunterGear
+  storage:
+    back:
+    - WeaponPistolMk58
+    - SmokeGrenade
+

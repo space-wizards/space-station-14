@@ -1,0 +1,30 @@
+﻿- type: entity
+  id: BaseBorgChassisBountyHunter
+  parent: BaseBorgChassis
+  abstract: true
+  components:
+  - type: Access
+    tags:
+    - Freelance
+    - Maintenance
+  - type: AccessReader
+    access: [["Freelance"]]
+  - type: StartIonStormed
+    ionStormAmount: 1
+  - type: IonStormTarget
+    chance: 1
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  - type: ShowJobIcons
+  - type: SiliconLawProvider
+    laws: Bountysimov
+    subverted: true
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Freelance
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Freelance
