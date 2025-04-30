@@ -77,152 +77,6 @@
     # once it would say bloated, turn into the rotten prototype
     stage: 1
 
-# Rotten
-
-- type: entity
-  name: rotten meat
-  parent: FoodMeatRawBase
-  id: FoodMeatRotten
-  description: Halfway to becoming fertilizer for your garden.
-  components:
-  - type: Tag
-    tags:
-    - Raw
-    - Meat
-    - Trash
-    - Recyclable
-  - type: Sprite
-    state: rotten
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
-        - ReagentId: GastroToxin
-          Quantity: 4
-        - ReagentId: Fat
-          Quantity: 4
-
-# Special
-
-- type: entity
-  name: prime-cut corgi meat
-  # can't rot since that would be very bad for syndies
-  parent: [FoodMeatRawBase, BaseGrandTheftContraband]
-  id: FoodMeatCorgi
-  description: The tainted gift of an evil crime. The meat may be delicious, but at what cost?
-  components:
-  - type: Tag
-    tags:
-    - Raw
-    - Meat
-    - HighRiskItem
-  - type: Sprite
-    state: corgi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Bicaridine
-          Quantity: 20
-  - type: StaticPrice
-    price: 750
-  - type: StealTarget
-    stealGroup: FoodMeatCorgi
-
-- type: entity
-  name: raw plant meat
-  parent: FoodMeatRawBase
-  id: FoodMeatPlant
-  description: All the joys of healthy eating with all the fun of cannibalism.
-  components:
-  - type: Sprite
-    state: plant
-
-- type: entity
-  name: meatwheat clump
-  parent: FoodMeatRawBase
-  id: FoodMeatWheat
-  description: This doesn't look like meat, but your standards aren't that high to begin with.
-  components:
-  - type: FlavorProfile
-    flavors:
-      - falsemeat
-  - type: Sprite
-    state: clump
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 1
-
-- type: entity
-  name: meat clown
-  parent: FoodMeatRawBase
-  id: FoodMeatClown
-  description: A delicious, round piece of meat clown. How horrifying.
-  components:
-  - type: FlavorProfile
-    flavors:
-      - meaty
-      - funny
-  - type: Sprite
-    state: clown
-  - type: SliceableFood
-    slice: FoodMeatSalamiSlice
-
-- type: entity
-  name: slimeball
-  parent: FoodMeatRawBase
-  id: FoodMeatSlime
-  description: A gelatinous shaping of slime jelly.
-  components:
-  - type: FlavorProfile
-    flavors:
-      - slimy
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Slime
-        Quantity: 10
-  - type: Sprite
-    state: slime
-
-# tagged as meat but is otherwise just a FoodBase because uhh... ask science?
-- type: entity
-  parent: FoodBase
-  id: MaterialSmileExtract
-  name: smile extract
-  description: It's a real panacea. But at what cost?
-  components:
-  - type: Extractable
-    grindableSolutionName: food
-  - type: FlavorProfile
-    flavors:
-      - sweet
-  - type: Sprite
-    sprite: Mobs/Aliens/slimes.rsi
-    layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: rainbow_slime_extract
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Omnizine
-          Quantity: 30
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Iron
-          Quantity: 10
-  - type: StaticPrice
-    price: 3000 #It has so much Omnizin in it
-  - type: Tag
-    tags:
-    - Meat
-
 # Raw
 
 - type: entity
@@ -418,6 +272,31 @@
     defaultTarget: cooked duck
 
 - type: entity
+  name: prime-cut corgi meat
+  # can't rot since that would be very bad for syndies
+  parent: [FoodMeatRawBase, BaseGrandTheftContraband]
+  id: FoodMeatCorgi
+  description: The tainted gift of an evil crime. The meat may be delicious, but at what cost?
+  components:
+  - type: Tag
+    tags:
+    - Raw
+    - Meat
+    - HighRiskItem
+  - type: Sprite
+    state: corgi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 20
+  - type: StaticPrice
+    price: 750
+  - type: StealTarget
+    stealGroup: FoodMeatCorgi
+
+- type: entity
   name: raw crab meat
   parent: FoodMeatRawPerishableBase
   id: FoodMeatCrab
@@ -540,6 +419,40 @@
     defaultTarget: lizard steak
 
 - type: entity
+  name: raw plant meat
+  parent: FoodMeatRawBase
+  id: FoodMeatPlant
+  description: All the joys of healthy eating with all the fun of cannibalism.
+  components:
+  - type: Sprite
+    state: plant
+
+- type: entity
+  name: rotten meat
+  parent: FoodMeatRawBase
+  id: FoodMeatRotten
+  description: Halfway to becoming fertilizer for your garden.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+    - Meat
+    - Trash
+    - Recyclable
+  - type: Sprite
+    state: rotten
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: GastroToxin
+          Quantity: 4
+        - ReagentId: Fat
+          Quantity: 4
+
+- type: entity
   name: raw spider meat
   parent: FoodMeatRawPerishableBase
   id: FoodMeatSpider
@@ -575,6 +488,24 @@
           Quantity: 10
         - ReagentId: Fat
           Quantity: 3
+
+- type: entity
+  name: meatwheat clump
+  parent: FoodMeatRawBase
+  id: FoodMeatWheat
+  description: This doesn't look like meat, but your standards aren't that high to begin with.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - falsemeat
+  - type: Sprite
+    state: clump
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 1
 
 - type: entity
   name: raw snake meat
@@ -664,6 +595,21 @@
         Blunt: 2
 
 - type: entity
+  name: meat clown
+  parent: FoodMeatRawBase
+  id: FoodMeatClown
+  description: A delicious, round piece of meat clown. How horrifying.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - funny
+  - type: Sprite
+    state: clown
+  - type: SliceableFood
+    slice: FoodMeatSalamiSlice
+
+- type: entity
   name: meatball
   parent: FoodMeatRawPerishableBase
   id: FoodMeatMeatball
@@ -691,6 +637,23 @@
     graph: CookedPatty
     node: start
     defaultTarget: cooked meat patty
+
+- type: entity
+  name: slimeball
+  parent: FoodMeatRawBase
+  id: FoodMeatSlime
+  description: A gelatinous shaping of slime jelly.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - slimy
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 10
+  - type: Sprite
+    state: slime
 
 - type: entity
   name: raw snail meat
@@ -741,6 +704,39 @@
     defaultTarget: anomaly steak
 
 # Cooked
+
+# tagged as meat but is otherwise just a FoodBase because uhh... ask science?
+- type: entity
+  parent: FoodBase
+  id: MaterialSmileExtract
+  name: smile extract
+  description: It's a real panacea. But at what cost?
+  components:
+  - type: Extractable
+    grindableSolutionName: food
+  - type: FlavorProfile
+    flavors:
+      - sweet
+  - type: Sprite
+    sprite: Mobs/Aliens/slimes.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: rainbow_slime_extract
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 30
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Iron
+          Quantity: 10
+  - type: StaticPrice
+    price: 3000 #It has so much Omnizin in it
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: steak
