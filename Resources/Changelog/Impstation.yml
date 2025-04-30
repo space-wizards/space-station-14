@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: Baton, disabler and utility tokens now start in seclinks instead of roundstart
-      security inventories.
-    type: Tweak
-  id: 1091
-  time: '2025-02-10T21:01:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1631
 - author: Darkmajia
   changes:
   - message: Box Station's atmospherics department and supermatter chamber have been
@@ -4126,3 +4118,19 @@
   id: 1590
   time: '2025-04-30T05:25:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2370
+- author: jtfg-dev, rosysaturniidae
+  changes:
+  - message: The Intergalactic Standards Association continues its silent war on inconsistency.
+    type: Tweak
+  - message: Some item descriptions explain what they do a little better.
+    type: Tweak
+  - message: A sabotaged Shining Spring no longer reveals its about-to-kill-nerds
+      nature on inspection. (Should you get your hands on one, the description IS
+      different, though...)
+    type: Fix
+  - message: The mail RPDS is not Syndicate contraband. Don't believe anyone who says
+      otherwise.
+    type: Fix
+  id: 1591
+  time: '2025-04-30T14:18:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2306
