@@ -346,10 +346,10 @@
     children:
     - id: SpaceCash100
       weight: 15
-    - id: DrinkSpaceGlue
+    - id: SqueezeBottleOfGlue
       amount: !type:RangeNumberSelector
         range: 1, 2
-    - id: DrinkSpaceLube
+    - id: SqueezeBottleOfLube
       amount: !type:RangeNumberSelector
         range: 1, 2
     - id: CrazyGlue
