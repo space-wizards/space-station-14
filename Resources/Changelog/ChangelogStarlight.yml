@@ -5366,4 +5366,18 @@ Entries:
   id: 743
   time: '2025-04-30T18:47:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/551
+- author: Rinary
+  changes:
+  - message: Added stove(check chefvend)
+    type: Add
+  id: 744
+  time: '2025-04-30T21:01:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/555
+- author: Rinary
+  changes:
+  - message: Added opened state at oven.
+    type: Add
+  id: 745
+  time: '2025-04-30T21:01:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/555
 
