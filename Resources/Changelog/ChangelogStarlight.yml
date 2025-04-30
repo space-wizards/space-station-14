@@ -5320,4 +5320,27 @@ Entries:
   id: 737
   time: '2025-04-30T18:45:33.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/513
+- author: choccy
+  changes:
+  - message: for starboard removed guns scattered around the map, replaced with practise
+      gear
+    type: Fix
+  id: 738
+  time: '2025-04-30T18:46:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/548
+- author: choccy
+  changes:
+  - message: for starboard removed contraband scattered around the map
+    type: Fix
+  id: 739
+  time: '2025-04-30T18:46:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/548
+- author: choccy
+  changes:
+  - message: for starboard added a wall to command, changed door locking and accesses,
+      added external engineering access to the
+    type: Fix
+  id: 740
+  time: '2025-04-30T18:46:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/548
 
