@@ -1,7 +1,6 @@
 using Content.Server.Administration.UI;
 using Content.Server.EUI;
 using Content.Server.Hands.Systems;
-using Content.Server.Preferences.Managers;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration;
 using Content.Shared.Clothing;
@@ -85,13 +84,9 @@ namespace Content.Server.Administration.Commands
             if (!prototypeManager.TryIndex<StartingGearPrototype>(gear, out var startingGear))
                 return false;
 
-            HumanoidCharacterProfile? profile = null;
-            ICommonSession? session = null;
-            // Check if we are setting the outfit of a player to respect the preferences
-            if (entityManager.TryGetComponent(target, out ActorComponent? actorComponent))
-            {
-                session = actorComponent.PlayerSession;
-            }
+            // Check if the entity was spawned in with a player's character profile to respect loadouts
+            var appearanceSystem = entityManager.System<SharedHumanoidAppearanceSystem>();
+            var profile = appearanceSystem.GetBaseProfile(target);
 
             var invSystem = entityManager.System<InventorySystem>();
             if (invSystem.TryGetSlots(target, out var slots))
@@ -150,6 +145,11 @@ namespace Content.Server.Administration.Commands
 
                 if (roleLoadout == null)
                 {
+                    // This session is required when making a default loadout to check requirements for loadout items
+                    ICommonSession? session = null;
+                    if (entityManager.TryGetComponent(target, out ActorComponent? actorComponent))
+                        session = actorComponent.PlayerSession;
+
                     // If they don't have a loadout for the role, make a default one
                     roleLoadout = new RoleLoadout(jobProtoId);
                     roleLoadout.SetDefault(profile, session, prototypeManager);
