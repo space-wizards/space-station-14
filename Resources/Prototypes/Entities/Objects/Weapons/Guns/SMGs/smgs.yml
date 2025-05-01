@@ -58,12 +58,6 @@
   - type: StaticPrice
     price: 500
 
-- type: soundCollection
-  id: AtreidesGunshot
-  caption: caption-gunshot
-  files:
-    - /Audio/Weapons/Guns/Gunshots/atreides.ogg
-
 - type: entity
   name: Atreides
   parent: [BaseWeaponSubMachineGun, BaseMajorContraband]
