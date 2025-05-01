@@ -25,7 +25,7 @@ public sealed partial class MultipartMachineComponent : Component
     /// Whether this multipart machine is assembled or not.
     /// Optional parts are not taken into account.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool IsAssembled = false;
 
     /// <summary>
