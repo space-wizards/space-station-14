@@ -16,25 +16,13 @@
 
 - type: entity
   id: OrganVoxStomach
-  parent: OrganAnimalStomach
-  name: vox stomach
+  parent: OrganHumanStomach
+  name: stomach
   description: "A stomach that smells of ammonia."
   components:
-  - type: Sprite
-    Sprite: Mobs/Species/Human/organs.rsi
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 50
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
   - type: Metabolizer #Skreeeee!
-    maxReagents: 3
     metabolizerTypes: [Vox]
-  - type: Stomach 
+  - type: Stomach
 #Bird vs tags
     specialDigestible:
       tags:
@@ -50,33 +38,18 @@
 
 - type: entity
   id: OrganVoxLiver
-  parent: OrganAnimalLiver
+  parent: OrganHumanLiver
   name: liver
   description: "Smells flammable."
   components:
-  - type: Sprite
-    state: liver
-    heldPrefix: liver
   - type: Metabolizer
-    maxReagents: 1
     metabolizerTypes: [Vox]
-    groups:
-    - id: Alcohol
-      rateModifier: 0.1
 
 - type: entity
   id: OrganVoxHeart
-  parent: BaseAnimalOrgan
+  parent: OrganHumanHeart
   name: heart
-  description: "The strange heart of a vox"
+  description: "The strange heart of a vox."
   components:
-  - type: Sprite
-    state: heart-on
   - type: Metabolizer
-    updateInterval: 1.5
-    maxReagents: 2
     metabolizerTypes: [Vox]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
