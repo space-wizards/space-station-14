@@ -36,6 +36,10 @@
             "directions": 4
         },
         {
+            "name": "conpipe-x",
+            "directions": 4
+        },
+        {
             "name": "conpipe-s",
             "directions": 4
         },
@@ -289,6 +293,14 @@
         },
         {
             "name": "pipe-j2sf",
+            "directions": 4
+        },
+        {
+            "name": "pipe-x",
+            "directions": 4
+        },
+        {
+            "name": "pipe-xf",
             "directions": 4
         },
         {

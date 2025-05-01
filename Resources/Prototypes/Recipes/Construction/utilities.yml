@@ -301,6 +301,20 @@
     state: conpipe-y
 
 - type: construction
+  name: disposal X junction
+  description: A four-way junction. The arrow indicates where items exit.
+  id: DisposalJunctionCross
+  graph: DisposalPipe
+  startNode: start
+  targetNode: xJunction
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-x
+
+- type: construction
   name: disposal bend
   description: A tube bent at a 90 degree angle.
   id: DisposalBend
@@ -373,7 +387,7 @@
   startNode: start
   targetNode: sensor
   category: construction-category-structures
-  description: Reports on the status of the gas within the attached pipe network. 
+  description: Reports on the status of the gas within the attached pipe network.
   icon:
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
     state: icon
