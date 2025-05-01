@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Grays and dwarves have had their accents fixed up a little.
-    type: Tweak
-  id: 1096
-  time: '2025-02-10T23:05:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1571
-- author: Darkmajia
-  changes:
   - message: Corpses no longer collide with plastic flaps.
     type: Fix
   id: 1097
@@ -4141,3 +4134,14 @@
   id: 1595
   time: '2025-04-30T20:14:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2362
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: you can now choose a Gunpet and a box of snap pops as your "pistol" and
+      "ammo" as a secoff.
+    type: Add
+  - message: security workers no longer have the opportunity to forget their service
+      weapon.
+    type: Tweak
+  id: 1596
+  time: '2025-05-01T07:26:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2368
