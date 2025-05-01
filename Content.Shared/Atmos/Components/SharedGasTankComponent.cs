@@ -9,9 +9,7 @@ public enum SharedGasTankUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class GasTankToggleInternalsMessage : BoundUserInterfaceMessage
-{
-}
+public sealed class GasTankToggleInternalsMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
 public sealed class GasTankSetPressureMessage : BoundUserInterfaceMessage
@@ -23,5 +21,4 @@ public sealed class GasTankSetPressureMessage : BoundUserInterfaceMessage
 public sealed class GasTankBoundUserInterfaceState : BoundUserInterfaceState
 {
     public float TankPressure;
-
 }

@@ -30,10 +30,10 @@ public abstract class SharedGasCanisterSystem : EntitySystem
         SubscribeLocalEvent<GasCanisterComponent, GasCanisterChangeReleaseValveMessage>(OnCanisterChangeReleaseValve);
     }
 
-    private void OnCanisterStartup(EntityUid uid, GasCanisterComponent comp, ComponentStartup args)
+    private void OnCanisterStartup(Entity<GasCanisterComponent> ent, ref ComponentStartup args)
     {
         // Ensure container
-        _slots.AddItemSlot(uid, comp.ContainerName, comp.GasTankSlot);
+        _slots.AddItemSlot(ent.Owner, ent.Comp.ContainerName, ent.Comp.GasTankSlot);
     }
 
     private void OnCanisterContainerModified(EntityUid uid, GasCanisterComponent component, ContainerModifiedMessage args)
