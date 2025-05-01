@@ -23,6 +23,8 @@
   color: "#757245"
   boilingPoint: 2977.0 # Aluminum oxide
   meltingPoint: 2030.0
+  chemComplexity: 3
+  finalProduct: true
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 2
@@ -43,6 +45,7 @@
   physicalDesc: reagent-physical-desc-soapy
   flavor: bitter
   color: "#FA00AF"
+  chemComplexity: 5
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 5
@@ -72,6 +75,9 @@
   physicalDesc: reagent-physical-desc-burning
   flavor: bitter
   color: "#D4872A"
+  chemComplexity: 5
+  consumesCatalyst: true
+  finalProduct: true
   metabolisms:
     Poison:
       effects:
@@ -140,6 +146,7 @@
   physicalDesc: reagent-physical-desc-foamy
   flavor: bitter
   color: "#215263"
+  chemComplexity: 2
   boilingPoint: 418.0 # I went with ammonium lauryl sulfate as the basis for this
   meltingPoint: 7.4 # I made this up
 
@@ -149,6 +156,7 @@
   parent: BasePyrotechnic
   desc: reagent-desc-welding-fuel
   physicalDesc: reagent-physical-desc-oily
+  chemComplexity: 1
   slipData:
     requiredSlipSpeed: 3.5
   flavor: bitter
@@ -178,5 +186,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: bitter
   color: "#9e6b38"
+  chemComplexity: 5
+  finalProduct: true
   boilingPoint: 190.0 # Perfluorooctanoic Acid.
   meltingPoint: 45.0

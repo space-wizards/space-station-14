@@ -8,6 +8,8 @@
   color: "#FAFAFA"
   boilingPoint: 212.0  # Dexosyephedrine vape when?
   meltingPoint: 170.0
+  chemComplexity: 11
+  finalProduct: true # might cause issues with botany being able to make it, but its a chem people will expect to be valuable
   metabolisms:
     Poison:
       effects:
@@ -65,6 +67,7 @@
   color: "#D2FFFA"
   boilingPoint: 255.0
   meltingPoint: 36.0
+  chemComplexity: 6
   metabolisms:
     Narcotic:
       effects:
@@ -118,6 +121,8 @@
   color: "#9A040E"
   boilingPoint: 212.0
   meltingPoint: 170.0
+  chemComplexity: 7
+  finalProduct: true
   metabolisms:
     Narcotic:
       metabolismRate: 1.0
@@ -190,6 +195,7 @@
   flavorMinimum: 0.05
   color: "#808080"
   physicalDesc: reagent-physical-desc-crystalline
+  chemComplexity: 1
   plantMetabolism:
   - !type:PlantAdjustNutrition
     amount: -5
@@ -226,6 +232,7 @@
   physicalDesc: reagent-physical-desc-acrid
   flavor: bitter
   color: "#215263"
+  chemComplexity: 3
   metabolisms:
     Narcotic:
       effects:
@@ -255,6 +262,8 @@
   physicalDesc: reagent-physical-desc-syrupy
   flavor: bitter
   color: "#63806e"
+  chemComplexity: 3
+  finalProduct: true
   metabolisms:
     Narcotic:
       effects:
@@ -273,6 +282,8 @@
   physicalDesc: reagent-physical-desc-powdery
   flavor: bitter
   color: "#ffff00"
+  chemComplexity: 8 # niche chem that nobody makes, should incentivise people to make it
+  finalProduct: true
   metabolisms:
     Narcotic:
       effects:
@@ -293,6 +304,8 @@
   color: "#128e80"
   boilingPoint: 444.0
   meltingPoint: 128.0
+  chemComplexity: 4
+  finalProduct: true
   metabolisms:
     Narcotic:
       effects:
@@ -315,6 +328,7 @@
   color: "#000000"
   boilingPoint: 255.0
   meltingPoint: 36.0
+  chemComplexity: 1 # can be made using chemistry, but nobody is going to do that
   metabolisms:
     Narcotic:
       effects:
@@ -335,6 +349,8 @@
   color: "#96a8b5"
   boilingPoint: 255.0
   meltingPoint: 36.0
+  chemComplexity: 8
+  finalProduct: true
   metabolisms:
     Narcotic:
       effects:
@@ -423,6 +439,7 @@
   physicalDesc: reagent-physical-desc-soothing
   flavor: paintthinner
   color: "#EE35FF"
+  chemComplexity: 1
   metabolisms:
     Narcotic:
       effects:

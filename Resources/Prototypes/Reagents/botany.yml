@@ -6,6 +6,7 @@
   flavor: bitter
   color: "#664330"
   physicalDesc: reagent-physical-desc-thick
+  chemComplexity: 3
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 2
@@ -25,6 +26,8 @@
   flavor: bitter
   color: "#5b406c"
   physicalDesc: reagent-physical-desc-heterogeneous
+  chemComplexity: 4
+  finalProduct: true
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 1
@@ -80,6 +83,7 @@
   flavor: bitter
   color: "#49002E"
   physicalDesc: reagent-physical-desc-bubbling
+  chemComplexity: 2
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: 6
@@ -111,6 +115,7 @@
   flavor: bitter
   color: "#3e901c"
   physicalDesc: reagent-physical-desc-robust
+  chemComplexity: 6
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 0.05
@@ -163,6 +168,8 @@
   flavor: bitter
   color: "#3CB371"
   physicalDesc: reagent-physical-desc-sickly
+  chemComplexity: 12
+  finalProduct: true
   plantMetabolism:
     - !type:PlantAdjustHealth
       amount: -2
@@ -205,6 +212,7 @@
   color: "#77b58e"
   boilingPoint: -33.0
   meltingPoint: -77.7
+  chemComplexity: 2
   plantMetabolism:
   - !type:PlantAdjustNutrition
     amount: 1
@@ -284,6 +292,7 @@
   color: "#a1000b"
   boilingPoint: 55.5
   meltingPoint: -50.0
+  chemComplexity: 3
   plantMetabolism:
   - !type:PlantAdjustNutrition
     amount: 0.1

@@ -7,6 +7,7 @@
   color: "#AF14B7"
   boilingPoint: 55.5
   meltingPoint: -50.0
+  chemComplexity: 5
 
 - type: reagent
   id: Phenol
@@ -17,6 +18,7 @@
   color: "#E7EA91"
   boilingPoint: 55.5
   meltingPoint: -50.0
+  chemComplexity: 4
   metabolisms:
     Poison:
       effects:
@@ -34,6 +36,7 @@
   color: "#22282b"
   boilingPoint: 4200.0
   meltingPoint: 3550.0
+  chemComplexity: 5
   metabolisms:
     Medicine:
       effects:
@@ -50,6 +53,7 @@
   desc: reagent-desc-ash
   physicalDesc: reagent-physical-desc-powdery
   color: white
+  chemComplexity: 4
 
 - type: reagent
   id: SodiumCarbonate
@@ -57,6 +61,7 @@
   desc: reagent-desc-sodium-carbonate
   physicalDesc: reagent-physical-desc-powdery
   color: white
+  chemComplexity: 7
 
 - type: reagent
   id: Artifexium
@@ -65,6 +70,8 @@
   flavor: metallic
   physicalDesc: reagent-physical-desc-crystalline
   color: "#776291"
+  chemComplexity: 10 # hard to get+ comes from science only
+  finalProduct: true
   metabolisms:
     Poison:
       effects:
@@ -89,6 +96,7 @@
   color: "#E7EA91"
   boilingPoint: 353.2
   meltingPoint: 278.7
+  chemComplexity: 2
   metabolisms:
     Poison:
       effects:
@@ -105,6 +113,7 @@
   color: "white"
   boilingPoint: 1661.0
   meltingPoint: 596.0
+  chemComplexity: 2
 
 - type: reagent
   id: SodiumHydroxide
@@ -114,6 +123,7 @@
   color: "white"
   boilingPoint: 1661.0
   meltingPoint: 596.0
+  chemComplexity: 3
   metabolisms:
     Poison:
       effects:
@@ -138,6 +148,7 @@
   color: "#434b4d"
   boilingPoint: 2962.0
   meltingPoint: 1638.0
+  chemComplexity: 2
 
 - type: reagent
   id: SodiumPolyacrylate
@@ -146,6 +157,8 @@
   flavor: bitter
   physicalDesc: reagent-physical-desc-grainy
   color: "#F0F0F0"
+  chemComplexity: 3
+  finalProduct: true
   metabolisms:
     Poison:
       effects:
@@ -165,6 +178,7 @@
   flavor: bitter
   color: "#E6E6DA"
   physicalDesc: reagent-physical-desc-crystalline
+  chemComplexity: 1
 
 - type: reagent
   id: Rororium

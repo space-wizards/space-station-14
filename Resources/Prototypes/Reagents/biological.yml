@@ -13,6 +13,7 @@
   metamorphicChangeColor: false
   recognizable: true
   physicalDesc: reagent-physical-desc-ferrous
+  chemComplexity: 1 # hope people don't start selling their blood with this one
   metabolisms:
     Drink:
       effects:
@@ -55,6 +56,7 @@
   color: "#808A51"
   recognizable: true
   physicalDesc: reagent-physical-desc-slimy
+  chemComplexity: 1
 
 - type: reagent
   id: Slime
@@ -66,6 +68,7 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-viscous
   viscosity: 0.25
+  chemComplexity: 1
   tileReactions:
     - !type:SpillTileReaction
   metabolisms:
@@ -89,6 +92,7 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-sticky
   viscosity: 0.10
+  chemComplexity: 1
   tileReactions:
     - !type:SpillTileReaction
   metabolisms:
@@ -114,6 +118,7 @@
   color: "#162581"
   recognizable: true
   physicalDesc: reagent-physical-desc-metallic
+  chemComplexity: 1
 
 - type: reagent
   parent: Blood
@@ -125,6 +130,7 @@
   color: "#7a8bf2"
   recognizable: true
   physicalDesc: reagent-physical-desc-pungent
+  chemComplexity: 1
 
 - type: reagent
   id: ZombieBlood
@@ -134,6 +140,7 @@
   physicalDesc: reagent-physical-desc-necrotic
   flavor: bitter
   color: "#2b0700"
+  chemComplexity: 1
   metabolisms:
     Drink:
       # Disgusting!
@@ -158,6 +165,8 @@
   flavor: metallic
   color: "#f4692e"
   recognizable: true
+  chemComplexity: 300 # it comes from a dragon, it has to be complex, also results in 620u spesos from grinding the 2 dragon flesh you get from killing one
+  finalProduct: true
   metabolisms:
     Drink:
       effects:
@@ -195,6 +204,7 @@
   flavor: terrible
   color: "#d8d8b0"
   physicalDesc: reagent-physical-desc-exotic-smelling
+  chemComplexity: 1
   footstepSound:
     collection: FootstepBlood
     params:
@@ -208,6 +218,7 @@
   flavor: terrible
   color: "#87ab08"
   physicalDesc: reagent-physical-desc-pungent
+  chemComplexity: 1
   slipData:
     requiredSlipSpeed: 4.0 #It's not as slippery as water
   friction: 0.4
@@ -232,6 +243,7 @@
   physicalDesc: reagent-physical-desc-neural
   flavor: mindful
   color: "#C584B8"
+  chemComplexity: 3
   metabolisms:
     Drink:
       effects:

@@ -18,6 +18,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
+using YamlDotNet.Core.Tokens;
 
 namespace Content.Shared.Chemistry.Reagent
 {
@@ -158,8 +159,25 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("plantMetabolism", serverOnly: true)]
         public List<EntityEffect> PlantMetabolisms = new(0);
 
+        /// <summary>
+        /// ChemComplexity should be the amount of unique elements per chem added up, eg inaprov being 3 complexity, and bic being 4 even though inaprov uses carbon too
+        /// </summary>
         [DataField]
-        public float PricePerUnit;
+        public float ChemComplexity = 0;
+
+        public float PricePerUnit => (ConsumesCatalyst ? 0.1f : 0.0f) + (FinalProduct ? 1.0f : 0.0f) + ChemComplexity * 0.1f;
+
+        /// <summary>
+        /// add FinalProduct: true for the final desirable product in a chain, like advanced brutes, but not razorium
+        /// </summary>
+        [DataField]
+        public bool FinalProduct = false;
+
+        /// <summary>
+        /// if it consumes a chem thats used as a catalyst, like phlog eating the plasma, set to true, however chems like dex should be set to false
+        /// </summary>
+        [DataField]
+        public bool ConsumesCatalyst = false;
 
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));

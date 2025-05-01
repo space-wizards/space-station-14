@@ -6,6 +6,7 @@
   flavor: bitter
   color: "#cf3600"
   physicalDesc: reagent-physical-desc-opaque
+  chemComplexity: 1
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -27,6 +28,7 @@
   flavor: bitter
   color: "#e2a38c"
   physicalDesc: reagent-physical-desc-exotic-smelling
+  chemComplexity: 2
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -53,6 +55,7 @@
   flavor: bitter
   color: "#000067"
   physicalDesc: reagent-physical-desc-nondescript
+  chemComplexity: 3
   metabolisms:
     Poison:
       effects:
@@ -86,6 +89,7 @@
   flavor: bitter
   color: "#acc91a"
   physicalDesc: reagent-physical-desc-putrid
+  chemComplexity: 1
   metabolisms:
     Poison:
       effects:
@@ -108,6 +112,7 @@
   color: "#8a9a5b"
   recognizable: true
   physicalDesc: reagent-physical-desc-fuzzy
+  chemComplexity: 2
   metabolisms:
     Poison:
       effects:
@@ -126,6 +131,9 @@
   color: "#a1000b"
   boilingPoint: 78.2 # This isn't a real chemical...
   meltingPoint: -19.4
+  chemComplexity: 5
+  consumesCatalyst: true
+  finalProduct: true
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 20
@@ -194,6 +202,7 @@
   color: "#5050ff"
   boilingPoint: 165
   meltingPoint: -87
+  chemComplexity: 6
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
@@ -235,6 +244,7 @@
   recognizable: true
   boilingPoint: 337.0
   meltingPoint: 10.31
+  chemComplexity: 3
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -282,6 +292,7 @@
   color: "#00ff5f"
   boilingPoint: 340282300000000000000000000000000000000 # Ethidium bromide, which doesn't boil.
   meltingPoint: 261.0
+  chemComplexity: 3
   plantMetabolism:
   - !type:PlantAdjustMutationLevel
     amount: 1
@@ -300,6 +311,7 @@
   desc: reagent-desc-heartbreaker-toxin
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#5f959c"
+  chemComplexity: 10
   metabolisms:
     Poison:
       effects:
@@ -318,6 +330,9 @@
   desc: reagent-desc-lexorin
   physicalDesc: reagent-physical-desc-pungent
   color: "#6b0007"
+  chemComplexity: 12
+  consumesCatalyst: true
+  finalProduct: true
   metabolisms:
     Poison:
       effects:
@@ -334,6 +349,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: bitter
   color: "#77b58e"
+  chemComplexity: 5
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -355,6 +371,7 @@
   desc: reagent-desc-histamine
   physicalDesc: reagent-physical-desc-abrasive
   color: "#FA6464"
+  chemComplexity: 1
   metabolisms:
     Poison:
       effects:
@@ -419,6 +436,7 @@
   desc: reagent-desc-amatoxin
   physicalDesc: reagent-physical-desc-nondescript
   color: "#D6CE7B"
+  chemComplexity: 1
   metabolisms:
     Poison:
       metabolismRate: 0.2
@@ -469,6 +487,7 @@
   physicalDesc: reagent-physical-desc-clumpy
   flavor: bitter
   color: "#FFFFE5"
+  chemComplexity: 1
   metabolisms:
     Food:
       effects:
@@ -511,6 +530,7 @@
   physicalDesc: reagent-physical-desc-pungent
   flavor: bitter
   color: "#F2E9D2"
+  chemComplexity: 1
   metabolisms:
     Poison:
       metabolismRate: 0.05
@@ -532,6 +552,7 @@
   desc: reagent-desc-pax
   physicalDesc: reagent-physical-desc-soothing
   color: "#AAAAAA"
+  chemComplexity: 5 # more complex but easily made by botany
   metabolisms:
     Poison:
       effects:
@@ -549,6 +570,7 @@
   physicalDesc: reagent-physical-desc-pungent
   flavor: bitter
   color: "#F2E9D2"
+  chemComplexity: 1
   metabolisms:
     Poison:
       metabolismRate: 0.05
@@ -576,6 +598,7 @@
   desc: reagent-desc-lead
   physicalDesc: reagent-physical-desc-metallic
   color: "#5C6274"
+  chemComplexity: 1
   metabolisms:
     Poison:
       metabolismRate: 0.03 # Effectively once every 30 seconds.
@@ -592,6 +615,7 @@
   desc: reagent-desc-bungotoxin
   physicalDesc: reagent-physical-desc-nondescript
   color: "#EBFF8E"
+  chemComplexity: 1
   metabolisms:
     Poison:
       metabolismRate: 0.2
@@ -609,6 +633,7 @@
   physicalDesc: reagent-physical-desc-shiny
   flavor: medicine
   color: "#435166"
+  chemComplexity: 1
   metabolisms:
     Poison:
       effects:
@@ -632,6 +657,7 @@
   physicalDesc: reagent-physical-desc-metallic
   flavor: shocking
   color: "#FDD023"
+  chemComplexity: 3
   metabolisms:
     Poison:
       effects:
@@ -646,6 +672,8 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: mothballs #why does weightloss juice taste like mothballs
   color: "#F0FFF0"
+  chemComplexity: 10
+  finalProduct: true
   metabolisms:
     Poison:
       effects:

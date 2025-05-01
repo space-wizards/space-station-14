@@ -6,6 +6,7 @@
   physicalDesc: reagent-physical-desc-fibrous
   flavor: carpet
   color: "#800000"
+  chemComplexity: 4
   tileReactions:
   - !type:CreateEntityTileReaction
     entity: Carpet
@@ -34,6 +35,7 @@
   physicalDesc: reagent-physical-desc-fibrous
   flavor: fiber
   color: "#808080"
+  chemComplexity: 1
   metabolisms:
     Food:
       effects:
@@ -50,6 +52,8 @@
   physicalDesc: reagent-physical-desc-buzzy
   flavor: bee
   color: "#FFD35D"
+  chemComplexity: 7
+  finalProduct: true
   tileReactions:
   - !type:CreateEntityTileReaction
     entity: MobBee
@@ -143,6 +147,7 @@
   physicalDesc: reagent-physical-desc-bee-guts
   flavor: bee
   color: "#86530E"
+  chemComplexity: 1
 
 - type: reagent
   id: Saxoite
@@ -151,6 +156,7 @@
   physicalDesc: reagent-physical-desc-ground-brass
   flavor: sax
   color: "#B8A603"
+  chemComplexity: 1
 
 - type: reagent
   id: Licoxide
@@ -160,6 +166,8 @@
   physicalDesc: reagent-physical-desc-electric
   flavor: shocking
   color: "#FDD023"
+  chemComplexity: 2
+  finalProduct: true
   metabolisms:
     Poison:
       effects:
@@ -176,6 +184,7 @@
   physicalDesc: reagent-physical-desc-reflective
   flavor: sharp
   color: "#e3fffb"
+  chemComplexity: 2 # its higher, but you shouldn't get any kind of reward for making this
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
@@ -216,6 +225,8 @@
   physicalDesc: reagent-physical-desc-frosty
   flavor: cold
   color: "#b3f1ff"
+  chemComplexity: 18 # lower, but this encourages atmos/chem interaction
+  finalProduct: true
   boilingPoint: 50.0
   meltingPoint: 45.0
   tileReactions:
@@ -307,6 +318,7 @@
   physicalDesc: reagent-physical-desc-funny
   flavor: funny
   color: "#FF4DD2"
+  chemComplexity: 8
   slipData:
     requiredSlipSpeed: 3.5 #clown juice gotta slip
   metabolisms:
@@ -329,6 +341,7 @@
   physicalDesc: reagent-physical-desc-vibrant
   flavor: weh
   color: "#59b23a"
+  chemComplexity: 1
   metabolisms:
     Poison:
       metabolismRate: 0.25
@@ -361,6 +374,7 @@
   physicalDesc: reagent-physical-desc-inversed
   flavor: hew
   color: "#a64dc5"
+  chemComplexity: 2
   metabolisms:
     Poison:
       metabolismRate: 0.25

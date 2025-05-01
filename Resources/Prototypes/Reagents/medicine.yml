@@ -6,6 +6,7 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: medicine
   color: "#081a80"
+  chemComplexity: 3
   metabolisms:
     Medicine:
       effects:
@@ -24,6 +25,7 @@
   physicalDesc: reagent-physical-desc-translucent
   flavor: medicine
   color: "#3a1d8a"
+  chemComplexity: 3
   metabolisms:
     Medicine:
       effects:
@@ -73,6 +75,8 @@
   physicalDesc: reagent-physical-desc-chalky
   flavor: medicine
   color: "#64ffe6"
+  chemComplexity: 9
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -102,6 +106,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
   color: "#2d5708"
+  chemComplexity: 5
   metabolisms:
     Medicine:
       effects:
@@ -122,6 +127,7 @@
   physicalDesc: reagent-physical-desc-cloudy
   flavor: medicine
   color: "#bd5902"
+  chemComplexity: 4
   metabolisms:
     Medicine:
       effects:
@@ -140,6 +146,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
   color: "#ffaa00"
+  chemComplexity: 4
   metabolisms:
     Medicine:
       effects:
@@ -174,6 +181,7 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: medicine
   color: "#0091ff"
+  chemComplexity: 4
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: -5
@@ -204,6 +212,7 @@
   physicalDesc: reagent-physical-desc-bubbling
   flavor: medicine
   color: "#32cd32"
+  chemComplexity: 7
   metabolisms:
     Medicine:
       effects:
@@ -223,6 +232,7 @@
   physicalDesc: reagent-physical-desc-translucent
   flavor: medicine
   color: "#215263"
+  chemComplexity: 4
   metabolisms:
     Medicine:
       effects:
@@ -255,6 +265,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
   color: "#0041a8"
+  chemComplexity: 2
   metabolisms:
     Medicine:
       effects:
@@ -280,6 +291,7 @@
   physicalDesc: reagent-physical-desc-cloudy
   flavor: medicine
   color: "#4da0bd"
+  chemComplexity: 4
   metabolisms:
     Medicine:
       effects:
@@ -313,6 +325,8 @@
   physicalDesc: reagent-physical-desc-odorless
   flavor: medicine
   color: "#d2fffa"
+  chemComplexity: 12
+  finalProduct: true #its used to make laughter, but that is absolutely not a desirable chem and is easily made by botany
   metabolisms:
     Medicine:
       effects:
@@ -378,6 +392,7 @@
   physicalDesc: reagent-physical-desc-cloudy
   flavor: medicine
   color: "#4cb580"
+  chemComplexity: 3
   metabolisms:
     Medicine:
       effects:
@@ -407,6 +422,8 @@
   physicalDesc: reagent-physical-desc-inky
   flavor: medicine
   color: "#422912"
+  chemComplexity: 4
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -424,6 +441,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
   color: "#731024"
+  chemComplexity: 3
   metabolisms:
     Medicine:
       metabolismRate: 0.1 # Smaller doses stabilize critical people for longer. Gives it a specific usecase as to not be entirely outclassed by dex+
@@ -447,6 +465,7 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: medicine
   color: "#bf3d19"
+  chemComplexity: 2
   metabolisms:
     Medicine:
       effects:
@@ -480,6 +499,7 @@
   physicalDesc: reagent-physical-desc-pungent
   flavor: medicine
   color: "#ff7db5"
+  chemComplexity: 4
   metabolisms:
     Medicine:
       effects:
@@ -514,6 +534,7 @@
   physicalDesc: reagent-physical-desc-viscous
   flavor: medicine
   color: "#ff867d"
+  chemComplexity: 0 #chem not currently used
   metabolisms:
     Medicine:
       effects:
@@ -558,6 +579,8 @@
   physicalDesc: reagent-physical-desc-acrid
   flavor: medicine
   color: "#c8ff75"
+  chemComplexity: 7
+  finalProduct: true
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: 6
@@ -599,6 +622,8 @@
   physicalDesc: reagent-physical-desc-pungent
   flavor: violets
   color: "#9423FF"
+  chemComplexity: 3 #requires a few mutations, niche chem and is useful
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -626,6 +651,7 @@
   physicalDesc: reagent-physical-desc-crisp
   flavor: medicine
   color: "#86caf7"
+  chemComplexity: 0 #this should NEVER be sold anyway
   metabolisms:
     Medicine:
       effects:
@@ -642,6 +668,7 @@
   physicalDesc: reagent-physical-desc-crisp
   flavor: medicine
   color: "#1274b5"
+  chemComplexity: 0 #should never be sold
   metabolisms:
     Medicine:
       effects:
@@ -659,6 +686,7 @@
   physicalDesc: reagent-physical-desc-pulpy
   flavor: medicine
   color: "#FFE774"
+  chemComplexity: 1
   metabolisms:
     Medicine:
       effects:
@@ -673,6 +701,8 @@
   physicalDesc: reagent-physical-desc-salty
   flavor: salty
   color: "#0064C8"
+  chemComplexity: 3
+  finalProduct: true
   metabolisms:
     Drink:
       effects:
@@ -689,6 +719,7 @@
   physicalDesc: reagent-physical-desc-milky
   flavor: medicine
   color: "#f4dab8"
+  chemComplexity: 2
   metabolisms:
     Medicine:
       effects:
@@ -705,6 +736,7 @@
   physicalDesc: reagent-physical-desc-starry
   flavor: medicine
   color: "#2b2f77"
+  chemComplexity: 1
   metabolisms:
     Medicine:
       effects:
@@ -728,6 +760,8 @@
   physicalDesc: reagent-physical-desc-pungent
   flavor: medicine
   color: "#d49a2f"
+  chemComplexity: 3
+  finalProduct: true #used to make pax, which isn't a poison but i don't think it should be counted as a desirable chem
   metabolisms:
     Poison:
       effects:
@@ -756,6 +790,7 @@
   physicalDesc: reagent-physical-desc-viscous
   flavor: medicine
   color: "#ba7d7d"
+  chemComplexity: 6
   metabolisms:
     Medicine:
       effects:
@@ -779,6 +814,8 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
   color: "#00e5ff"
+  chemComplexity: 5
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -803,6 +840,7 @@
   physicalDesc: reagent-physical-desc-oily
   flavor: medicine
   color: "#2690b5"
+  chemComplexity: 4
   metabolisms:
     Medicine:
       effects:
@@ -819,6 +857,7 @@
   physicalDesc: reagent-physical-desc-soothing
   flavor: medicine
   color: "#fcf7f9"
+  chemComplexity: 3 # rare ingredient, but mass produceable by a competent botany
   metabolisms:
     Medicine:
       effects:
@@ -838,6 +877,8 @@
   physicalDesc: reagent-physical-desc-thick-and-grainy
   flavor: medicine
   color: "#520e30"
+  chemComplexity: 3
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -881,6 +922,8 @@
   physicalDesc: reagent-physical-desc-translucent
   flavor: medicine
   color: "#404040"
+  chemComplexity: 5
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -894,6 +937,7 @@
   physicalDesc: reagent-physical-desc-enigmatic
   flavor: magical
   color: "#b50ee8"
+  chemComplexity: 10 # technically less, but requires either carps or koibeans so im increasing it
   metabolisms:
     Medicine:
       effects:
@@ -910,6 +954,8 @@
   physicalDesc: reagent-physical-desc-shiny
   flavor: medicine
   color: "#d5d5e4"
+  chemComplexity: 5
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -939,6 +985,8 @@
   physicalDesc: reagent-physical-desc-glowing
   flavor: medicine
   color: "#b0abaa"
+  chemComplexity: 19
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -964,6 +1012,8 @@
   physicalDesc: reagent-physical-desc-thick
   flavor: sweet
   color: "#e0a5b9"
+  chemComplexity: 11
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -1019,6 +1069,8 @@
   physicalDesc: reagent-physical-desc-viscous
   flavor: syrupy
   color: "#283332"
+  chemComplexity: 6
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -1042,6 +1094,8 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: fizzy
   color: "#b9bf93"
+  chemComplexity: 6
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -1066,6 +1120,8 @@
   physicalDesc: reagent-physical-desc-mucus-like
   flavor: sour
   color: "#ff3636"
+  chemComplexity: 6
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -1089,6 +1145,7 @@
   physicalDesc: reagent-physical-desc-holy
   flavor: holy
   color: "#91C3F7"
+  chemComplexity: 1
   metabolisms:
     Drink:
       effects:
@@ -1135,6 +1192,8 @@
   physicalDesc: reagent-physical-desc-thick
   flavor: syrupy
   color: "#aa4308"
+  chemComplexity: 9
+  finalProduct: true
   metabolisms:
     Medicine:
       metabolismRate: 0.1 # slow metabolism to not be a godly combat med, its for treating burn victims efficiently
@@ -1172,6 +1231,8 @@
   physicalDesc: reagent-physical-desc-frosty
   flavor: metallic
   color: "#8147ff"
+  chemComplexity: 7
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -1206,7 +1267,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 12
-          
+
 - type: reagent
   id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
   name: reagent-name-opporozidone
@@ -1215,6 +1276,8 @@
   physicalDesc: reagent-physical-desc-sickly
   flavor: acid
   color: "#b5e36d"
+  chemComplexity: 18
+  finalProduct: true
   worksOnTheDead: true
   metabolisms:
     Medicine:
@@ -1236,6 +1299,8 @@
   physicalDesc: reagent-physical-desc-necrotic
   flavor: medicine
   color: "#86a5bd"
+  chemComplexity: 8
+  finalProduct: true
   worksOnTheDead: true
   plantMetabolism:
   - !type:PlantAdjustToxins
@@ -1265,6 +1330,8 @@
   physicalDesc: reagent-physical-desc-soothing
   flavor: medicine
   color: "#89f77f"
+  chemComplexity: 16
+  finalProduct: true
   worksOnTheDead: true
   metabolisms:
     Medicine:
@@ -1287,6 +1354,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: sweet
   color: "#A0A0A0"
+  chemComplexity: 3
   metabolisms:
     Medicine:
       effects:
@@ -1307,6 +1375,8 @@
   physicalDesc: reagent-physical-desc-shiny
   flavor: bitter
   color: "#07E79E"
+  chemComplexity: 7
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:
@@ -1351,6 +1421,7 @@
   physicalDesc: reagent-physical-desc-grainy
   flavor: medicine
   color: "#baa15d"
+  chemComplexity: 2
   metabolisms:
     Medicine:
       effects:
@@ -1376,6 +1447,8 @@
   physicalDesc: reagent-physical-desc-crystalline
   flavor: medicine
   color: "#27870a"
+  chemComplexity: 8
+  finalProduct: true
   metabolisms:
     Medicine:
       effects:

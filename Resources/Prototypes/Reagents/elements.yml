@@ -8,6 +8,7 @@
   color: "#848789"
   boilingPoint: 2327.0
   meltingPoint: 660.0
+  chemComplexity: 1
 
 - type: reagent
   id: Carbon
@@ -19,6 +20,7 @@
   color: "#22282b"
   boilingPoint: 4200.0
   meltingPoint: 3550.0
+  chemComplexity: 1
 
 - type: reagent
   id: Chlorine
@@ -30,6 +32,7 @@
   color: "#a2ff00"
   meltingPoint: -101.5
   boilingPoint: -34.04
+  chemComplexity: 1
   plantMetabolism:
     - !type:PlantAdjustWater
       amount: -0.5
@@ -57,6 +60,7 @@
   color: "#b05b3c"
   boilingPoint: 2595.0
   meltingPoint: 1083.0
+  chemComplexity: 1
   metabolisms:
     Poison:
       metabolismRate: 0.1
@@ -88,6 +92,7 @@
   color: "#ba85cc"
   boilingPoint: -188.11
   meltingPoint: -219.67
+  chemComplexity: 1
   plantMetabolism:
     - !type:PlantAdjustWater
       amount: -0.5
@@ -105,6 +110,7 @@
           types:
             Caustic: 0.5
             Poison: 0.5
+
 - type: reagent
   id: Gold
   name: reagent-name-gold
@@ -115,6 +121,7 @@
   color: "#F7C430"
   boilingPoint: 2700.0
   meltingPoint: 1064.76
+  chemComplexity: 0 #gold can be solidified using frost oil, im not buffing botany into being even lazier
 
 - type: reagent
   id: Hydrogen
@@ -126,6 +133,7 @@
   color: "#cccccc"
   boilingPoint: -253.0
   meltingPoint: -259.2
+  chemComplexity: 1
 
 - type: reagent
   id: Iodine
@@ -137,6 +145,7 @@
   color: "#BC8A00"
   boilingPoint: 184.3
   meltingPoint: 113.7
+  chemComplexity: 1
 
 - type: reagent
   id: Iron
@@ -148,6 +157,7 @@
   color: "#434b4d"
   boilingPoint: 2862.0
   meltingPoint: 1538.0
+  chemComplexity: 1
   metabolisms:
     Poison:
       metabolismRate: 0.1
@@ -179,6 +189,7 @@
   color: "#d6c0a7"
   meltingPoint: 180.5
   boilingPoint: 1330.0
+  chemComplexity: 1
   metabolisms:
     Poison:
       metabolismRate: 0.1
@@ -206,6 +217,7 @@
   color: "#929296"
   meltingPoint: -38.83
   boilingPoint: 356.73
+  chemComplexity: 1
   metabolisms:
     Poison:
       effects:
@@ -227,6 +239,7 @@
   color: "#c6c8cc"
   meltingPoint: 65.5
   boilingPoint: 759.0
+  chemComplexity: 1
 
 - type: reagent
   id: Phosphorus
@@ -238,6 +251,7 @@
   color: "#f5da9a"
   meltingPoint: 44.2
   boilingPoint: 280.5
+  chemComplexity: 1
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 0.1
@@ -257,6 +271,7 @@
   color: "#00ff04"
   meltingPoint: 700.0
   boilingPoint: 1737.0
+  chemComplexity: 1
 
 - type: reagent
   id: Silicon
@@ -268,6 +283,7 @@
   color: "#364266"
   boilingPoint: 3265.0
   meltingPoint: 1414.0
+  chemComplexity: 1
   metabolisms:
     Poison:
       effects:
@@ -286,6 +302,7 @@
   color: "#d0d0d0"
   boilingPoint: 2212.0
   meltingPoint: 960.5
+  chemComplexity: 0 #can be solidified, no reason to make people sell it as a chem
 
 - type: reagent
   id: Sulfur
@@ -297,6 +314,7 @@
   color: "#fff385"
   boilingPoint: 445.0
   meltingPoint: 120.0
+  chemComplexity: 1
   metabolisms:
     Poison:
       effects:
@@ -315,6 +333,7 @@
   color: "#a7b3d6"
   meltingPoint: 97.8
   boilingPoint: 883.0
+  chemComplexity: 1
 
 - type: reagent
   id: Uranium
@@ -326,6 +345,7 @@
   color: "#8fa191"
   meltingPoint: 1133.0
   boilingPoint: 4131.0
+  chemComplexity: 2 #harder to get, and a byproduct of making radium if grinding uranium for maints chemistry
   plantMetabolism:
   - !type:PlantAdjustMutationLevel
     amount: 0.6
@@ -354,3 +374,4 @@
   color: "#bababa"
   meltingPoint: 419.5
   boilingPoint: 907.0
+  chemComplexity: 1

@@ -41,4 +41,5 @@ public abstract partial class ReagentData : IEquatable<ReagentData>
     public abstract override int GetHashCode();
 
     public abstract ReagentData Clone();
+
 }
