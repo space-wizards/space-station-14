@@ -46,7 +46,7 @@
 
 - type: entity
   parent: DrinkBase
-  id: DrinkBottleSmallBaseFull
+  id: DrinkBottlePlasticSmallBaseFull
   abstract: true
   suffix: Full
   components:
@@ -87,9 +87,12 @@
   - type: TrashOnSolutionEmpty
     solution: drink
   - type: Shakeable
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 100
 
 - type: entity
-  parent: DrinkBottleSmallBaseFull
+  parent: DrinkBottlePlasticSmallBaseFull
   id: DrinkBottleGlassSmallBaseFull
   abstract: true
   components:
@@ -705,7 +708,7 @@
 # Small Bottles
 
 - type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottleSmallBaseFull]
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticSmallBaseFull]
   id: DrinkWaterBottleFull
   name: water bottle
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
@@ -723,11 +726,6 @@
     inHandsFillBaseName: -fill-
   - type: Label
     currentLabel: reagent-name-water
-  - type: TrashOnSolutionEmpty
-    solution: drink
-  - type: PhysicalComposition
-    materialComposition:
-      Plastic: 100
   - type: Sealable
 
 - type: entity
