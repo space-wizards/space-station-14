@@ -590,6 +590,10 @@
 - type: Tag
   id: GeigerCounter
 
+# Used for warps
+- type: Tag
+  id: GhostOnlyWarp
+
 - type: Tag
   id: GlassAirlock
 
@@ -1422,5 +1426,20 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+- type: Tag
+  id: XenoborgModuleEngi
+
+- type: Tag
+  id: XenoborgModuleGeneric
+
+- type: Tag
+  id: XenoborgModuleHeavy
+
+- type: Tag
+  id: XenoborgModuleScout
+
+- type: Tag
+  id: XenoborgModuleStealth
 
 # ALPHABETICAL
