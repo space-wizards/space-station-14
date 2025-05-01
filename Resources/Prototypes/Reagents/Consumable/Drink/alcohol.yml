@@ -943,10 +943,10 @@
           max: 35
         damage:
           groups:
-            Burn: -.75
-            Toxin: -.75
-            Airloss: -.75
-            Brute: -.75
+            Burn: -1.5
+            Toxin: -1
+            Airloss: -1
+            Brute: -1.5
 
 
 - type: reagent
