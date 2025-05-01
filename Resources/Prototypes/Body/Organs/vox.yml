@@ -15,8 +15,8 @@
     heldPrefix: lungs
 
 - type: entity
-  id: OrganVoxStomach
   parent: OrganHumanStomach
+  id: OrganVoxStomach
   name: stomach
   description: "A stomach that smells of ammonia."
   components:
@@ -37,8 +37,8 @@
       - Vegetable
 
 - type: entity
-  id: OrganVoxLiver
   parent: OrganHumanLiver
+  id: OrganVoxLiver
   name: liver
   description: "Smells flammable."
   components:
@@ -46,8 +46,8 @@
     metabolizerTypes: [Vox]
 
 - type: entity
-  id: OrganVoxHeart
   parent: OrganHumanHeart
+  id: OrganVoxHeart
   name: heart
   description: "The strange heart of a vox."
   components:
