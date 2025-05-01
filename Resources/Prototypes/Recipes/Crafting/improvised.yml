@@ -253,3 +253,29 @@
   icon:
     sprite: Clothing/OuterClothing/Hardsuits/goliath.rsi
     state: icon
+
+- type: construction
+  name: scrap armor
+  id: scraparmor
+  graph: scraparmor
+  startNode: start
+  targetNode: scraparmorfinished
+  category: construction-category-clothing
+  description: A poorly-made set of armor, made of sheets of welded steel and spare cabling.
+  icon:
+    sprite: Clothing/OuterClothing/Armor/scrap_armor.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: scrap helmet
+  id: scraphelmet
+  graph: scraphelmet
+  startNode: start
+  targetNode: scraphelmet
+  category: construction-category-clothing
+  description: A bucket crudely refitted into a steel helmet.
+  icon:
+    sprite: Clothing/Head/Helmets/scrap_helmet.rsi
+    state: icon
+  objectType: Item
