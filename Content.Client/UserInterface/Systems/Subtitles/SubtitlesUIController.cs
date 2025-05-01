@@ -1,6 +1,7 @@
 using System.Numerics;
-using Content.Client.Gameplay;
 using JetBrains.Annotations;
+using Content.Client.Gameplay;
+using Content.Shared.CCVar;
 using Robust.Client.Audio;
 using Robust.Client.ComponentTrees;
 using Robust.Client.GameObjects;
@@ -10,7 +11,7 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
 using Robust.Shared.Audio.Components;
-using Robust.Shared.Audio.Components;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Timing;
@@ -28,13 +29,17 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+
     private readonly ISawmill _logMill = default!;
+    private bool _captionsEnabled;
 
     public SubtitlesUIController() : base()
     {
         IoCManager.InjectDependencies(this);
 
         _logMill = _logManager.GetSawmill("captions");
+        _cfg.OnValueChanged(CCVars.EnableCaptions, value => _captionsEnabled = value, true);
     }
 
     public void OnStateEntered(GameplayState state)
@@ -83,6 +88,10 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
     public override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
+        if (!_captionsEnabled)
+        {
+            return;
+        }
 
         var player = _player.LocalEntity;
         if (!EntityManager.TryGetComponent(player, out TransformComponent? xform))
