@@ -130,18 +130,14 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     }
 
     /// <summary>
-    /// Handles resolving the component type to a registration we can use for validating
-    /// the machine parts we find.
+    /// Handles any additional setup of the MultipartMachine component.
     /// </summary>
     /// <param name="ent">Entity/Component that just started.</param>
     /// <param name="args">Args for the startup.</param>
     private void OnComponentStartup(Entity<MultipartMachineComponent> ent, ref ComponentStartup args)
     {
-        foreach (var (name, part) in ent.Comp.Parts)
+        foreach (var (_, part) in ent.Comp.Parts)
         {
-            if (!_factory.TryGetRegistration(part.Component, out var registration))
-                throw new Exception($"Unable to resolve component type [{part.Component}] for machine part [{name}]");
-
             if (part.Offset.Length > ent.Comp.MaxRange)
                 ent.Comp.MaxRange = part.Offset.Length;
         }

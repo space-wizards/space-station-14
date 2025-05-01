@@ -2,6 +2,7 @@ using Content.Shared.Machines.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Machines.Components;
@@ -50,7 +51,7 @@ public sealed partial class MachinePart
     /// Component type that is expected for this part to have
     /// to be considered a "Part" of the machine.
     /// </summary>
-    [DataField(required: true)]
+    [DataField(required: true, customTypeSerializer: typeof(ComponentNameSerializer))]
     public string Component = "";
 
     /// <summary>
