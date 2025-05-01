@@ -21,13 +21,6 @@ public sealed partial class MultipartMachineComponent : Component
     public Dictionary<Enum, MachinePart> Parts = [];
 
     /// <summary>
-    /// Determined orientation of this machine, used when displaying
-    /// ghost entities to show machine part locations.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public Angle? Rotation = null;
-
-    /// <summary>
     /// Whether this multipart machine is assembled or not.
     /// Optional parts are not taken into account.
     /// </summary>

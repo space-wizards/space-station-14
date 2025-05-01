@@ -63,8 +63,6 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         if (gridUid == null || gridUid != xform.ParentUid || !TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
 
-        ent.Comp.Rotation = null; // Ensure we reset our expected orientation
-
         // Whichever component has the MultipartMachine component should be treated as the origin
         var machineOrigin = _mapSystem.TileIndicesFor(gridUid.Value, grid, xform.Coordinates);
 
@@ -72,6 +70,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         var stateHasChanged = false;
 
         var missingParts = false;
+        var machineRotation = xform.LocalRotation.GetCardinalDir().ToAngle();
         foreach (var (_, part) in ent.Comp.Parts)
         {
             var originalPart = part.Entity;
@@ -81,32 +80,8 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
                 break;
 
             var query = _entManager.GetEntityQuery(registration.Type);
-            if (ent.Comp.Rotation.HasValue)
-            {
-                // We have already found some entity that roughly matchesz, so we can
-                // use that direction for future lookups.
-                // Not using this means the orientations of the parts could be wildly different and still
-                // "Match" the expected offsets
-                ScanPart(machineOrigin, ent.Comp.Rotation.Value, query, gridUid.Value, grid, part);
-            }
-            else
-            {
-                // We have NO idea where our parts could be orientated so we'll have to iterate through 360 degrees
-                // to try and find a match
-                Angle curAngle = 0;
-                for (var j = 0; j < 4; ++j)
-                {
-                    if (ScanPart(machineOrigin, curAngle, query, gridUid.Value, grid, part))
-                    {
-                        // This entity succeeds, store the direction we used to get this one and expect all
-                        // future machine parts to match this direction.
-                        ent.Comp.Rotation = curAngle;
-                        break;
-                    }
 
-                    curAngle += Math.PI * 0.5;
-                }
-            }
+            ScanPart(machineOrigin, machineRotation, query, gridUid.Value, grid, part);
 
             if (!part.Entity.HasValue && !part.Optional)
                 missingParts = true;
