@@ -2,7 +2,6 @@
   id: FillSalvageSpecialistHardsuitSpatio
   table: !type:AllSelector
     children:
-    - id: NitrogenTankFilled
     - id: OxygenTankFilled
     - id: ClothingShoesBootsMag
     - id: ClothingOuterHardsuitSpatio

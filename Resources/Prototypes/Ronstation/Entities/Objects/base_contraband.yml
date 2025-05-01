@@ -1,7 +1,0 @@
-# non-stealth terragov stuff
-- type: entity
-  id: BaseTerragovContraband
-  abstract: true
-  components:
-  - type: Contraband
-    severity: Terragov

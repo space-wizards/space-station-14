@@ -135,7 +135,6 @@
       entities:
         - FloraTree
         - FloraTreeLarge
-        - Spaceshroom
     # Rock formations
     - !type:BiomeEntityLayer
       allowedTiles:
@@ -251,7 +250,6 @@
         - FloorBasalt
       entities:
         - FloraRockSolid
-        - Spaceshroom
     - !type:BiomeEntityLayer
       threshold: 0.2
       noise:
@@ -373,7 +371,6 @@
         - FloorSnow
       entities:
         - FloraTreeSnow
-        - Spaceshroom
     # Rock formations
     - !type:BiomeEntityLayer
       allowedTiles:
@@ -464,7 +461,6 @@
         - FloorChromite
       entities:
         - ShadowTree
-        - Spaceshroom
     # Rock formations
     - !type:BiomeEntityLayer
       threshold: -0.2
@@ -531,7 +527,6 @@
       - FloorAsteroidSand
       entities:
       - FloraStalagmite
-      - Spaceshroom
     - !type:BiomeEntityLayer
       threshold: -0.5
       invert: true
@@ -582,7 +577,6 @@
         - FloorAsteroidSand
       entities:
         - FloraStalagmite
-        - Spaceshroom
     - !type:BiomeEntityLayer
       threshold: -0.6
       invert: true

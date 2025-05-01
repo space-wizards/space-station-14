@@ -10,8 +10,6 @@
       - id: RadioHandheld
       - id: WelderMini
       - id: FireExtinguisherMini
-      - id: EmergencyOxygenTankFilled
-      - id: EmergencyNitrogenTankFilled
       # Random lighting item orGroup
       - id: FlashlightLantern
         orGroup: LightingItem
@@ -24,10 +22,6 @@
         prob: 0.15
       - id: HarmonicaInstrument
         prob: 0.15
-      - id: EmergencyOxygenTankFilled
-        prob: 0.5
-      - id: EmergencyNitrogenTankFilled
-        prob: 0.5
 
 - type: entity
   id: ToolboxElectricalFilled

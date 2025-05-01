@@ -1,9 +1,0 @@
-- type: cargoProduct
-  id: SmuggledWeaponry
-  icon:
-    sprite: Structures/Machines/bomb.rsi
-    state: training-bomb
-  product: ArmorySmuggledWeaponry
-  cost: 25000
-  category: cargoproduct-category-name-armory
-  group: market

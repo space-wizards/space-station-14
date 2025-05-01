@@ -1,9 +1,0 @@
-- type: entity
-  parent: [ClothingShoesBaseWinterBoots, ClothingShoesMilitaryBase, BaseCentcommCommandContraband]
-  id: ClothingShoesBootsWinterBlueshield
-  name: blueshield winter boots
-  components:
-  - type: Sprite
-    sprite: Ronstation/Clothing/Shoes/Boots/winterbootsblueshield.rsi
-  - type: Clothing
-    sprite: Ronstation/Clothing/Shoes/Boots/winterbootsblueshield.rsi

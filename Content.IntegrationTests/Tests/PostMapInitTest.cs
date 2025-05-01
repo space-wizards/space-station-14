@@ -82,10 +82,8 @@ namespace Content.IntegrationTests.Tests
             "Elkridge",
             "Convex",
             "Relic",
-            "dm01-entryway",
-            "Saltern2",
-            "Cluster2",
-            "Atlas2"
+            "dm01-entryway"
+
         };
 
         /// <summary>

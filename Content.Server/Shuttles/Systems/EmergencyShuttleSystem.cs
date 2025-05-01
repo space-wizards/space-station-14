@@ -648,11 +648,18 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         if (!EmergencyShuttleArrived)
             return false;
 
-        // check if target is on an emergency shuttle
+        // check each emergency shuttle
         var xform = Transform(target);
+        foreach (var stationData in EntityQuery<StationEmergencyShuttleComponent>())
+        {
+            if (stationData.EmergencyShuttle == null)
+                continue;
 
-        if (HasComp<EmergencyShuttleComponent>(xform.GridUid))
-            return true;
+            if (IsOnGrid(xform, stationData.EmergencyShuttle.Value))
+            {
+                return true;
+            }
+        }
 
         return false;
     }

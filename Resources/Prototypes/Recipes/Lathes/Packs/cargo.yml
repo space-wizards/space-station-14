@@ -5,14 +5,12 @@
   recipes:
   - AppraisalTool
   - Pickaxe
-  - CircuitImprinterMachineCircuitboardAutolathe
 
 - type: latheRecipePack
   id: CargoBoardsStatic
   recipes:
   - OreProcessorMachineCircuitboard
   - SalvageMagnetMachineCircuitboard
-  - OreProcessorBasicMachineCircuitboard
 
 ## Dynamic
 

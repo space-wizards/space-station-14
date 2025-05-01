@@ -21,7 +21,7 @@
     - id: SlimesSpawn
     - id: SolarFlare
     - id: SnakeSpawn
-#    - id: SpiderClownSpawn
+    - id: SpiderClownSpawn
     - id: SpiderSpawn
     - id: VentClog
 
@@ -79,7 +79,7 @@
     startAnnouncementColor: "#18abf5"
     startAudio:
       path: /Audio/Announcements/announce.ogg
-    weight: 5
+    weight: 8
     duration: 35
   - type: AnomalySpawnRule
 
@@ -95,7 +95,7 @@
     startAnnouncementColor: "#18abf5"
     startAudio:
       path: /Audio/Announcements/announce.ogg
-    weight: 5
+    weight: 8
     duration: 35
   - type: BluespaceArtifactRule
 
@@ -160,10 +160,10 @@
   id: DragonSpawn
   components:
   - type: StationEvent
-    weight: 4.5 # Ronstation - Made even more rarer.
+    weight: 6.5
     earliestStart: 40
     reoccurrenceDelay: 20
-    minimumPlayers: 27 # Ronstation - Made even more rarer.
+    minimumPlayers: 20
     duration: null
   - type: SpaceSpawnRule
     spawnDistance: 0
@@ -340,8 +340,7 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     endAnnouncement: station-event-gas-leak-end-announcement
-    weight: 4
-    minimumPlayers: 5
+    weight: 8
   - type: GasLeakRule
 
 - type: entity
@@ -360,7 +359,7 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    weight: 2
+    weight: 5
     startAnnouncement: station-event-power-grid-check-start-announcement
     endAnnouncement: station-event-power-grid-check-end-announcement
     startAudio:
@@ -369,7 +368,6 @@
         volume: -4
     duration: 60
     maxDuration: 120
-    minimumPlayers: 2
   - type: PowerGridCheckRule
 
 - type: entity
@@ -383,8 +381,7 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     duration: 120
-    maxDuration: 180
-    minimumPlayers: 5
+    maxDuration: 240
   - type: SolarFlareRule
     onlyJamHeadsets: true
     affectedChannels:
@@ -445,17 +442,17 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 20
-    minimumPlayers: 25 # Ronstation - should get to the point where there's enough sec.
+    minimumPlayers: 15
     weight: 5
-    duration: 30 # Ronstation - needs a reduction.
+    duration: 60
   - type: VentCrittersRule
     entries:
     - id: MobPurpleSnake
-      prob: 0.01
+      prob: 0.02
     - id: MobSmallPurpleSnake
-      prob: 0.01
+      prob: 0.02
     - id: MobCobraSpace
-      prob: 0.01
+      prob: 0.02
 
 - type: entity
   id: SpiderSpawn
@@ -466,30 +463,30 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 20
-    minimumPlayers: 25 # Ronstation - should get to the point where there's enough sec.
+    minimumPlayers: 15
     weight: 5
-    duration: 30 # Ronstation - needs a reduction.
+    duration: 60
   - type: VentCrittersRule
     entries:
     - id: MobGiantSpiderAngry
-      prob: 0.03
+      prob: 0.05
 
-#- type: entity
-#  id: SpiderClownSpawn
-#  parent: BaseStationEventShortDelay
-#  components:
-#  - type: StationEvent
-#    startAnnouncement: station-event-vent-creatures-start-announcement
-#    startAudio:
-#      path: /Audio/Announcements/attention.ogg
-#    earliestStart: 20
-#    minimumPlayers: 20
-#    weight: 1.5
-#    duration: 60
-#  - type: VentCrittersRule
-#    entries:
-#    - id: MobClownSpider
-#      prob: 0.05
+- type: entity
+  id: SpiderClownSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 20
+    minimumPlayers: 20
+    weight: 1.5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobClownSpider
+      prob: 0.05
 
 - type: entity
   id: ZombieOutbreak
@@ -593,7 +590,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    weight: 3
+    weight: 7
     duration: 150
     maxDuration: 300
     reoccurrenceDelay: 30
