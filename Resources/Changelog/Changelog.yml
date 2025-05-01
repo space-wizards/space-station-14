@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Observers now have a personal point light and can toggle it.
-    type: Add
-  id: 7900
-  time: '2025-02-04T23:26:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33607
 - author: whatston3
   changes:
   - message: Healing items that reduce bleeding can now be applied to undamaged mobs.
@@ -3918,3 +3911,14 @@
   id: 8401
   time: '2025-05-01T22:07:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36923
+- author: Nikitosych
+  changes:
+  - message: Fixed abrupt stamina damage reset and abrupt speed recovery after 3 seconds
+      (especially noticeable at high damage levels)
+    type: Fix
+  - message: Stamina damage no longer instantly resets when exiting critical state;
+      it now regenerates gradually.
+    type: Tweak
+  id: 8402
+  time: '2025-05-01T23:01:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36336
