@@ -1,7 +1,10 @@
-﻿- type: entity
+﻿# TODO reptilian organ sprites?
+
+- type: entity
+  parent: [ BaseHumanOrgan, BaseOrganStomach ]
   id: OrganReptilianStomach
-  parent: OrganAnimalStomach
   categories: [ HideSpawnMenu ]
+  name: stomach
   components:
   - type: Stomach
     specialDigestible:
@@ -12,12 +15,5 @@
       - Pill
       - Crayon
       - Paper
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 50
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+  - type: Metabolizer
+    metabolizerTypes: [ Animal ]

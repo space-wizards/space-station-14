@@ -1,6 +1,35 @@
 - type: entity
   abstract: true
   parent: BaseItem
+  id: BaseOrgan
+#  name: organ
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+  - type: Organ
+  - type: Food
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+    - people
+
+
+- type: entity
+  abstract: true
+  parent: BaseItem
   id: BaseOrganBrain
   name: brain
   description: The source of incredible, unending intelligence. Honk.
@@ -115,7 +144,7 @@
 
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: BaseOrganLungsSpriteless
   id: BaseOrganLungs
   components:
   - type: Sprite
@@ -193,3 +222,23 @@
     maxReagents: 5
     metabolizerTypes: [ Human ]
     removeEmpty: true
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseOrganTongue
+  name: tongue
+  description: A fleshy muscle mostly used for lying.
+  components:
+  - type: Sprite
+    state: tongue
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseOrganEars
+  name: ears
+  description: There are three parts to the ear. Inner, middle and outer. Only one of these parts should normally be visible.
+  components:
+  - type: Sprite
+    state: ears
