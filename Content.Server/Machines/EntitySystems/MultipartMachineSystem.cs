@@ -69,9 +69,13 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         // Set to true if any of the parts' state changes
         var stateHasChanged = false;
 
+        // Keep a track of what parts were added so we can inform listeners
+        List<Enum> partsAdded = [];
+        List<Enum> partsRemoved = [];
+
         var missingParts = false;
         var machineRotation = xform.LocalRotation.GetCardinalDir().ToAngle();
-        foreach (var (_, part) in ent.Comp.Parts)
+        foreach (var (key, part) in ent.Comp.Parts)
         {
             var originalPart = part.Entity;
             part.Entity = null;
@@ -97,12 +101,14 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
                     // it's a part of
                     var comp = EnsureComp<MultipartMachinePartComponent>(GetEntity(part.Entity.Value));
                     comp.Master = ent;
+                    partsAdded.Add(key);
                 }
                 else
                 {
                     // This part lost its entity, ensure we clean up the old entity so it's no longer marked
                     // as something we care about.
                     RemComp<MultipartMachinePartComponent>(GetEntity(originalPart!.Value));
+                    partsRemoved.Add(key);
                 }
             }
         }
@@ -110,7 +116,11 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         ent.Comp.IsAssembled = !missingParts;
         if (stateHasChanged)
         {
-            var ev = new MultipartMachineAssemblyStateChanged(ent, ent.Comp.IsAssembled, user);
+            var ev = new MultipartMachineAssemblyStateChanged(ent,
+                ent.Comp.IsAssembled,
+                user,
+                partsAdded,
+                partsRemoved);
             RaiseLocalEvent(ent, ref ev);
         }
 
