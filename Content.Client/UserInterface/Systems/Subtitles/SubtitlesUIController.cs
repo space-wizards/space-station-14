@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Client.Gameplay;
 using JetBrains.Annotations;
@@ -22,7 +21,8 @@ namespace Content.Client.UserInterface.Systems.Subtitles;
 public sealed class SubtitlesUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<AudioSystem>
 {
     private SubtitlesUI? UI => UIManager.GetActiveUIWidgetOrNull<SubtitlesUI>();
-    private List<Entity<CaptionComponent, TransformComponent>> _sounds = new();
+    private Dictionary<string, List<Entity<CaptionComponent, TransformComponent>>> _sounds = new();
+    private readonly List<string> _soundStrings = new();
     [UISystemDependency] private readonly CaptionTreeSystem _captionTree = default!;
     [UISystemDependency] private readonly TransformSystem _xformSystem = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -55,15 +55,35 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
     }
     private void AudioStart(Entity<CaptionComponent, TransformComponent> entity)
     {
-        _sounds.Add(entity);
+        if (entity.Comp1.LocalizedCaption is not {} caption)
+            return;
+
+        if (!_sounds.TryGetValue(caption, out var items))
+        {
+            items = new();
+            _sounds[caption] = items;
+        }
+        _sounds[caption].Add(entity);
     }
     private void AudioEnd(Entity<CaptionComponent, TransformComponent> entity)
     {
-        _sounds.Remove(entity);
+        if (entity.Comp1.LocalizedCaption is not {} caption)
+            return;
+
+        if (_sounds.TryGetValue(caption, out var items))
+        {
+            items.Remove(entity);
+            if (items.Count == 0)
+            {
+                _sounds.Remove(caption);
+            }
+        }
     }
 
     public override void FrameUpdate(FrameEventArgs args)
     {
+        base.FrameUpdate(args);
+
         var player = _player.LocalEntity;
         if (!EntityManager.TryGetComponent(player, out TransformComponent? xform))
         {
@@ -83,54 +103,49 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
         var worldAabb = new Box2(pos - maxVector, pos + maxVector);
         var data = _captionTree.QueryAabb(mapPos.MapId, worldAabb);
 
-        var groupedSounds = _sounds
-            // filter to audible sounds
-            .Where(a => data.Any(b => b.Component == a.Comp1))
-            // get the ones with non-null captions
-            .Where(sound => sound.Comp1.LocalizedCaption != null)
+        _soundStrings.Clear();
 
-            // turn the list of sounds into a list of (sound, count)
-            .GroupBy(sound => sound.Comp1.LocalizedCaption)
-            .Select(sounds => {
-                var left = false;
-                var right = false;
+        foreach (var (caption, sounds) in _sounds)
+        {
+            var left = false;
+            var right = false;
+            int countedSounds = 0;
 
-                foreach (var sound in sounds)
+            foreach (var sound in sounds)
+            {
+                if (!data.Contains((sound.Comp1, sound.Comp2)))
+                    continue;
+
+                countedSounds++;
+
+                var soundPos = _xformSystem.GetMapCoordinates(sound.Comp2);
+                var soundDelta = pos - soundPos.Position;
+                var dotProduct = Vector2.Dot(upAngle, soundDelta);
+                if (dotProduct <= 0.5)
                 {
-                    var soundPos = _xformSystem.GetMapCoordinates(sound.Comp2);
-                    var soundDelta = pos - soundPos.Position;
-                    var dotProduct = Vector2.Dot(upAngle, soundDelta);
-                    if (dotProduct <= 0.5)
-                    {
-                        left = true;
-                        right = true;
-                        break;
-                    }
-                    var rightDotProduct = Vector2.Dot(rightAngle, soundDelta);
-                    if (rightDotProduct > 0)
-                    {
-                        right = true;
-                    }
-                    else
-                    {
-                        left = true;
-                    }
-
-                    if (left && right)
-                    {
-                        break;
-                    }
+                    left = true;
+                    right = true;
                 }
+                var rightDotProduct = Vector2.Dot(rightAngle, soundDelta);
+                if (rightDotProduct > 0)
+                {
+                    right = true;
+                }
+                else
+                {
+                    left = true;
+                }
+            }
 
-                var item = sounds.Key;
-                var count = sounds.Count();
-                return Loc.GetString("subtitle-item", ("count", count), ("sound", item!), ("left", left), ("right", right));
-            })
-            .ToList();
+            if (!left && !right)
+            {
+                continue;
+            }
 
-        base.FrameUpdate(args);
+            _soundStrings.Add(Loc.GetString("subtitle-item", ("count", countedSounds), ("sound", caption), ("left", left), ("right", right)));
+        }
 
-        UI?.UpdateSounds(groupedSounds);
+        UI?.UpdateSounds(_soundStrings);
     }
 }
 
