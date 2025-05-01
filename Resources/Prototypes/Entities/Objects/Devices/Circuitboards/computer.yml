@@ -220,7 +220,7 @@
   - type: Sprite
     state: cpu_supply
   - type: ComputerBoard
-    prototype: ComputerShuttleCargo
+    prototype: ComputerCargoShuttle
   - type: StealTarget
     stealGroup: CargoShuttleComputerCircuitboard
 
