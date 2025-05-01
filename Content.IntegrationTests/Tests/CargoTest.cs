@@ -6,10 +6,8 @@ using Content.Server.Cargo.Systems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
-using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -67,7 +65,7 @@ public sealed class CargoTest
         var testMap = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
+        var mapSystem = server.System<SharedMapSystem>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var cargo = entManager.System<CargoSystem>();
 
@@ -93,7 +91,7 @@ public sealed class CargoTest
                 }
             });
 
-            mapManager.DeleteMap(mapId);
+            mapSystem.DeleteMap(mapId);
         });
 
         await pair.CleanReturnAsync();
@@ -151,6 +149,7 @@ public sealed class CargoTest
         var testMap = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
+        var mapSystem = server.System<SharedMapSystem>();
         var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var componentFactory = server.ResolveDependency<IComponentFactory>();
@@ -207,7 +206,7 @@ public sealed class CargoTest
 
                 entManager.DeleteEntity(ent);
             }
-            mapManager.DeleteMap(mapId);
+            mapSystem.DeleteMap(mapId);
         });
 
         await pair.CleanReturnAsync();

@@ -18,9 +18,14 @@
       behaviors:
       - !type:TriggerBehavior
   - type: ScatteringGrenade
+  - type: OnUseTimerTrigger
+    delay: 3
+  - type: Tag
+    tags:
+    - HandGrenade
 
 - type: entity
-  parent: [ScatteringGrenadeBase, BaseRestrictedContraband]
+  parent: [ScatteringGrenadeBase, BaseSecurityContraband]
   id: ClusterBang
   name: clusterbang
   description: Can be used only with flashbangs. Explodes several times.
@@ -36,8 +41,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/clusterbang.rsi
     state: base-0
-  - type: OnUseTimerTrigger
-    delay: 3.5
 
 - type: entity
   parent: ClusterBang
@@ -92,7 +95,6 @@
         volume: 5
     initialBeepDelay: 0
     beepInterval: 0.5
-    delay: 3.5
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Machines/door_lock_off.ogg"
@@ -168,7 +170,6 @@
         volume: 5
     initialBeepDelay: 0
     beepInterval: 2
-    delay: 3.5
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"

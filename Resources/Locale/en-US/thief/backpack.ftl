@@ -1,4 +1,4 @@
-thief-backpack-window-title = thief toolbox
+thief-backpack-window-title = thieving kit
 
 thief-backpack-window-description =
     Inside are your tools of the trade, which will dissolve when you're ready.
