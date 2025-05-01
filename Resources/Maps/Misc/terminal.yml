@@ -948,6 +948,7 @@ entities:
     - type: RadiationGridResistance
     - type: SpreaderGrid
     - type: GridPathfinding
+    - type: Godmode
 - proto: AirlockExternalGlass
   entities:
   - uid: 2
@@ -955,87 +956,86 @@ entities:
     - type: Transform
       pos: 6.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 3
     components:
     - type: Transform
       pos: -7.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 4
     components:
     - type: Transform
       pos: -7.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 5
     components:
     - type: Transform
       pos: 6.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 11
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 12.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 12
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 12.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 13
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -13.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 14
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -13.5,-10.5
       parent: 818
-- proto: AirlockExternalLocked
-  entities:
-  - uid: 589
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      pos: 4.5,8.5
-      parent: 818
-- proto: AirlockGlass
-  entities:
-  - uid: 252
-    components:
-    - type: Transform
-      pos: -9.5,-4.5
-      parent: 818
-  - uid: 253
-    components:
-    - type: Transform
-      pos: -10.5,-4.5
-      parent: 818
-  - uid: 254
-    components:
-    - type: Transform
-      pos: -11.5,-4.5
-      parent: 818
-  - uid: 255
-    components:
-    - type: Transform
-      pos: 8.5,-4.5
-      parent: 818
-  - uid: 256
-    components:
-    - type: Transform
-      pos: 9.5,-4.5
-      parent: 818
-  - uid: 257
-    components:
-    - type: Transform
-      pos: 10.5,-4.5
-      parent: 818
-- proto: AirlockGlassShuttleEasyPryLocked
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
+- proto: AirlockExternalGlassShuttleLocked
   entities:
   - uid: 1
     components:
@@ -1043,57 +1043,338 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -15.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 6
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -15.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 7
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 8
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 9
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 15
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 16
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 17
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+- proto: AirlockExternalLocked
+  entities:
+  - uid: 589
+    components:
+    - type: Transform
+      pos: 4.5,8.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
+- proto: AirlockGlass
+  entities:
+  - uid: 252
+    components:
+    - type: Transform
+      pos: -9.5,-4.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 253
+    components:
+    - type: Transform
+      pos: -10.5,-4.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 254
+    components:
+    - type: Transform
+      pos: -11.5,-4.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 255
+    components:
+    - type: Transform
+      pos: 8.5,-4.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 256
+    components:
+    - type: Transform
+      pos: 9.5,-4.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 257
+    components:
+    - type: Transform
+      pos: 10.5,-4.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
 - proto: AirlockMaint
   entities:
   - uid: 146
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
+- proto: AlwaysPoweredWallLight
+  entities:
+  - uid: 150
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -8.5,-5.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 188
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 11.5,2.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 195
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -2.5,-1.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 209
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 7.5,-5.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 341
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 1.5,-1.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 634
+    components:
+    - type: Transform
+      pos: 9.5,-16.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 636
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 9.5,-11.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 649
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -10.5,-11.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 650
+    components:
+    - type: Transform
+      pos: -10.5,-16.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 687
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -13.5,1.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 701
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -6.5,3.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 702
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 5.5,3.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 715
+    components:
+    - type: Transform
+      pos: -0.5,5.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 717
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -7.5,-3.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 742
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-3.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
 - proto: APCBasic
   entities:
   - uid: 205
@@ -1101,32 +1382,92 @@ entities:
     - type: Transform
       pos: 6.5,2.5
       parent: 818
+    - type: AccessReader
+      access:
+      - - CentralCommand
+    - type: Godmode
+    - type: BatterySelfRecharger
+      autoRechargeRate: 50000
+      autoRecharge: True
+    missingComponents:
+    - Construction
+    - Destructible
   - uid: 206
     components:
     - type: Transform
       pos: -13.5,2.5
       parent: 818
+    - type: AccessReader
+      access:
+      - - CentralCommand
+    - type: Godmode
+    - type: BatterySelfRecharger
+      autoRechargeRate: 50000
+      autoRecharge: True
+    missingComponents:
+    - Construction
+    - Destructible
   - uid: 211
     components:
     - type: Transform
       pos: -13.5,-11.5
       parent: 818
+    - type: AccessReader
+      access:
+      - - CentralCommand
+    - type: Godmode
+    - type: BatterySelfRecharger
+      autoRechargeRate: 50000
+      autoRecharge: True
+    missingComponents:
+    - Construction
+    - Destructible
   - uid: 212
     components:
     - type: Transform
       pos: 6.5,-11.5
       parent: 818
+    - type: AccessReader
+      access:
+      - - CentralCommand
+    - type: Godmode
+    - type: BatterySelfRecharger
+      autoRechargeRate: 50000
+      autoRecharge: True
+    missingComponents:
+    - Construction
+    - Destructible
   - uid: 355
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,6.5
       parent: 818
+    - type: AccessReader
+      access:
+      - - CentralCommand
+    - type: Godmode
+    - type: BatterySelfRecharger
+      autoRechargeRate: 50000
+      autoRecharge: True
+    missingComponents:
+    - Construction
+    - Destructible
   - uid: 846
     components:
     - type: Transform
       pos: 2.5,3.5
       parent: 818
+    - type: AccessReader
+      access:
+      - - CentralCommand
+    - type: Godmode
+    - type: BatterySelfRecharger
+      autoRechargeRate: 50000
+      autoRecharge: True
+    missingComponents:
+    - Construction
+    - Destructible
 - proto: ArrivalsShuttleTimer
   entities:
   - uid: 597
@@ -1134,21 +1475,33 @@ entities:
     - type: Transform
       pos: -7.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
   - uid: 633
     components:
     - type: Transform
       pos: 6.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
   - uid: 928
     components:
     - type: Transform
       pos: -6.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
   - uid: 929
     components:
     - type: Transform
       pos: 5.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
 - proto: AtmosDeviceFanTiny
   entities:
   - uid: 296
@@ -1156,46 +1509,55 @@ entities:
     - type: Transform
       pos: -6.5,-10.5
       parent: 818
+    - type: Godmode
   - uid: 297
     components:
     - type: Transform
       pos: -14.5,-10.5
       parent: 818
+    - type: Godmode
   - uid: 298
     components:
     - type: Transform
       pos: -14.5,-17.5
       parent: 818
+    - type: Godmode
   - uid: 299
     components:
     - type: Transform
       pos: -6.5,-17.5
       parent: 818
+    - type: Godmode
   - uid: 300
     components:
     - type: Transform
       pos: 5.5,-17.5
       parent: 818
+    - type: Godmode
   - uid: 301
     components:
     - type: Transform
       pos: 5.5,-10.5
       parent: 818
+    - type: Godmode
   - uid: 302
     components:
     - type: Transform
       pos: 13.5,-10.5
       parent: 818
+    - type: Godmode
   - uid: 303
     components:
     - type: Transform
       pos: 13.5,-17.5
       parent: 818
+    - type: Godmode
   - uid: 809
     components:
     - type: Transform
       pos: 4.5,8.5
       parent: 818
+    - type: Godmode
 - proto: BarSignEngineChange
   entities:
   - uid: 215
@@ -1203,6 +1565,10 @@ entities:
     - type: Transform
       pos: -10.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - ApcPowerReceiver
+    - Destructible
 - proto: BlockGameArcade
   entities:
   - uid: 727
@@ -1211,28 +1577,46 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -13.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - ApcPowerReceiver
+    - Anchorable
+    - Construction
+    - Destructible
   - uid: 728
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - ApcPowerReceiver
+    - Anchorable
+    - Construction
+    - Destructible
 - proto: BookshelfFilled
   entities:
   - uid: 442
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 7.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
+    - Construction
   - uid: 752
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 11.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
+    - Construction
 - proto: BoozeDispenser
   entities:
   - uid: 710
@@ -1240,1198 +1624,2152 @@ entities:
     - type: Transform
       pos: -11.5,4.5
       parent: 818
-- proto: CableApcExtension
+    - type: Godmode
+    missingComponents:
+    - ApcPowerReceiver
+    - Anchorable
+    - Destructible
+    - Construction
+- proto: CableApcExtensionUncuttable
   entities:
   - uid: 203
     components:
     - type: Transform
       pos: 1.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 208
     components:
     - type: Transform
       pos: -3.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 218
     components:
     - type: Transform
       pos: -4.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 402
     components:
     - type: Transform
       pos: -4.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 404
     components:
     - type: Transform
       pos: 2.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 410
     components:
     - type: Transform
       pos: 2.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 411
     components:
     - type: Transform
       pos: 3.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 412
     components:
     - type: Transform
       pos: 3.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 426
     components:
     - type: Transform
       pos: -2.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 427
     components:
     - type: Transform
       pos: -1.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 428
     components:
     - type: Transform
       pos: -0.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 429
     components:
     - type: Transform
       pos: 0.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 430
     components:
     - type: Transform
       pos: 1.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 431
     components:
     - type: Transform
       pos: 1.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 434
     components:
     - type: Transform
       pos: 0.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 435
     components:
     - type: Transform
       pos: -0.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 436
     components:
     - type: Transform
       pos: -1.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 437
     components:
     - type: Transform
       pos: -2.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 438
     components:
     - type: Transform
       pos: -3.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 439
     components:
     - type: Transform
       pos: -4.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 440
     components:
     - type: Transform
       pos: -2.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 443
     components:
     - type: Transform
       pos: 2.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 444
     components:
     - type: Transform
       pos: 3.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 445
     components:
     - type: Transform
       pos: 4.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 446
     components:
     - type: Transform
       pos: -5.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 447
     components:
     - type: Transform
       pos: -13.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 448
     components:
     - type: Transform
       pos: -13.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 449
     components:
     - type: Transform
       pos: -13.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 450
     components:
     - type: Transform
       pos: -13.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 451
     components:
     - type: Transform
       pos: -12.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 452
     components:
     - type: Transform
       pos: -11.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 453
     components:
     - type: Transform
       pos: -10.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 454
     components:
     - type: Transform
       pos: -9.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 455
     components:
     - type: Transform
       pos: -8.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 456
     components:
     - type: Transform
       pos: -7.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 457
     components:
     - type: Transform
       pos: -10.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 458
     components:
     - type: Transform
       pos: -10.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 459
     components:
     - type: Transform
       pos: -10.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 460
     components:
     - type: Transform
       pos: -10.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 461
     components:
     - type: Transform
       pos: -10.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 462
     components:
     - type: Transform
       pos: -10.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 463
     components:
     - type: Transform
       pos: -10.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 464
     components:
     - type: Transform
       pos: -11.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 465
     components:
     - type: Transform
       pos: -9.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 466
     components:
     - type: Transform
       pos: -11.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 467
     components:
     - type: Transform
       pos: -9.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 468
     components:
     - type: Transform
       pos: -13.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 469
     components:
     - type: Transform
       pos: -12.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 470
     components:
     - type: Transform
       pos: -11.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 471
     components:
     - type: Transform
       pos: -11.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 472
     components:
     - type: Transform
       pos: 10.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 473
     components:
     - type: Transform
       pos: 10.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 474
     components:
     - type: Transform
       pos: 10.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 475
     components:
     - type: Transform
       pos: 10.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 476
     components:
     - type: Transform
       pos: -11.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 477
     components:
     - type: Transform
       pos: -10.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 478
     components:
     - type: Transform
       pos: -10.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 479
     components:
     - type: Transform
       pos: -10.5,-19.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 480
     components:
     - type: Transform
       pos: -10.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 481
     components:
     - type: Transform
       pos: -11.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 482
     components:
     - type: Transform
       pos: -12.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 483
     components:
     - type: Transform
       pos: -13.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 484
     components:
     - type: Transform
       pos: -14.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 485
     components:
     - type: Transform
       pos: -9.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 486
     components:
     - type: Transform
       pos: -8.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 487
     components:
     - type: Transform
       pos: -7.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 488
     components:
     - type: Transform
       pos: -6.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 489
     components:
     - type: Transform
       pos: -10.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 490
     components:
     - type: Transform
       pos: -9.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 491
     components:
     - type: Transform
       pos: -8.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 492
     components:
     - type: Transform
       pos: -7.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 493
     components:
     - type: Transform
       pos: -6.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 494
     components:
     - type: Transform
       pos: -12.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 495
     components:
     - type: Transform
       pos: -13.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 496
     components:
     - type: Transform
       pos: -14.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 497
     components:
     - type: Transform
       pos: -11.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 498
     components:
     - type: Transform
       pos: -12.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 499
     components:
     - type: Transform
       pos: -9.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 500
     components:
     - type: Transform
       pos: -8.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 501
     components:
     - type: Transform
       pos: -10.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 502
     components:
     - type: Transform
       pos: -10.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 503
     components:
     - type: Transform
       pos: -10.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 504
     components:
     - type: Transform
       pos: -10.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 505
     components:
     - type: Transform
       pos: 6.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 506
     components:
     - type: Transform
       pos: 7.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 507
     components:
     - type: Transform
       pos: 7.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 508
     components:
     - type: Transform
       pos: 6.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 509
     components:
     - type: Transform
       pos: 5.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 510
     components:
     - type: Transform
       pos: 8.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 511
     components:
     - type: Transform
       pos: 8.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 512
     components:
     - type: Transform
       pos: 9.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 513
     components:
     - type: Transform
       pos: 10.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 514
     components:
     - type: Transform
       pos: 11.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 515
     components:
     - type: Transform
       pos: 12.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 516
     components:
     - type: Transform
       pos: 13.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 517
     components:
     - type: Transform
       pos: 8.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 518
     components:
     - type: Transform
       pos: 8.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 519
     components:
     - type: Transform
       pos: 8.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 520
     components:
     - type: Transform
       pos: 8.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 521
     components:
     - type: Transform
       pos: -11.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 522
     components:
     - type: Transform
       pos: 9.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 523
     components:
     - type: Transform
       pos: 9.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 524
     components:
     - type: Transform
       pos: 9.5,-19.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 525
     components:
     - type: Transform
       pos: 9.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 526
     components:
     - type: Transform
       pos: 8.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 527
     components:
     - type: Transform
       pos: 7.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 528
     components:
     - type: Transform
       pos: 6.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 529
     components:
     - type: Transform
       pos: 5.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 530
     components:
     - type: Transform
       pos: 10.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 531
     components:
     - type: Transform
       pos: 11.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 532
     components:
     - type: Transform
       pos: 12.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 533
     components:
     - type: Transform
       pos: 13.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 534
     components:
     - type: Transform
       pos: 8.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 535
     components:
     - type: Transform
       pos: 7.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 536
     components:
     - type: Transform
       pos: 10.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 537
     components:
     - type: Transform
       pos: 11.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 538
     components:
     - type: Transform
       pos: 9.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 539
     components:
     - type: Transform
       pos: 9.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 540
     components:
     - type: Transform
       pos: 9.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 541
     components:
     - type: Transform
       pos: 9.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 542
     components:
     - type: Transform
       pos: 6.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 543
     components:
     - type: Transform
       pos: 6.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 544
     components:
     - type: Transform
       pos: 6.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 545
     components:
     - type: Transform
       pos: 6.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 546
     components:
     - type: Transform
       pos: 7.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 547
     components:
     - type: Transform
       pos: 8.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 548
     components:
     - type: Transform
       pos: 9.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 549
     components:
     - type: Transform
       pos: 9.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 550
     components:
     - type: Transform
       pos: 9.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 551
     components:
     - type: Transform
       pos: 9.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 552
     components:
     - type: Transform
       pos: 9.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 553
     components:
     - type: Transform
       pos: 10.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 554
     components:
     - type: Transform
       pos: 8.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 555
     components:
     - type: Transform
       pos: 10.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 556
     components:
     - type: Transform
       pos: 11.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 557
     components:
     - type: Transform
       pos: 12.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 558
     components:
     - type: Transform
       pos: 9.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 559
     components:
     - type: Transform
       pos: 9.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 560
     components:
     - type: Transform
       pos: 9.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 561
     components:
     - type: Transform
       pos: 8.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 562
     components:
     - type: Transform
       pos: 10.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 563
     components:
     - type: Transform
       pos: 1.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 564
     components:
     - type: Transform
       pos: 2.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 565
     components:
     - type: Transform
       pos: 3.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 566
     components:
     - type: Transform
       pos: 3.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 579
     components:
     - type: Transform
       pos: 2.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 599
     components:
     - type: Transform
       pos: -4.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 601
     components:
     - type: Transform
       pos: -4.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 651
     components:
     - type: Transform
       pos: 10.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 652
     components:
     - type: Transform
       pos: -11.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 653
     components:
     - type: Transform
       pos: -11.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 654
     components:
     - type: Transform
       pos: -9.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 655
     components:
     - type: Transform
       pos: -9.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 656
     components:
     - type: Transform
       pos: -9.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 657
     components:
     - type: Transform
       pos: -9.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 658
     components:
     - type: Transform
       pos: -9.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 842
     components:
     - type: Transform
       pos: -4.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 843
     components:
     - type: Transform
       pos: -4.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 844
     components:
     - type: Transform
       pos: 2.5,3.5
       parent: 818
-- proto: CableHV
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
+- proto: CableHVUncuttable
   entities:
   - uid: 413
     components:
     - type: Transform
       pos: -3.5,8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 415
     components:
     - type: Transform
       pos: -4.5,8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 416
     components:
     - type: Transform
       pos: -2.5,8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 734
     components:
     - type: Transform
       pos: -0.5,8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 735
     components:
     - type: Transform
       pos: -1.5,8.5
       parent: 818
-- proto: CableMV
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
+- proto: CableMVUncuttable
   entities:
   - uid: 177
     components:
     - type: Transform
       pos: 3.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 201
     components:
     - type: Transform
       pos: 6.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 210
     components:
     - type: Transform
       pos: 6.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 214
     components:
     - type: Transform
       pos: 6.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 219
     components:
     - type: Transform
       pos: 7.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 221
     components:
     - type: Transform
       pos: 3.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 224
     components:
     - type: Transform
       pos: 1.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 226
     components:
     - type: Transform
       pos: 6.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 227
     components:
     - type: Transform
       pos: 8.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 228
     components:
     - type: Transform
       pos: 9.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 349
     components:
     - type: Transform
       pos: 9.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 350
     components:
     - type: Transform
       pos: 5.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 352
     components:
     - type: Transform
       pos: 2.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 353
     components:
     - type: Transform
       pos: 4.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 354
     components:
     - type: Transform
       pos: 1.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 356
     components:
     - type: Transform
       pos: 9.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 357
     components:
     - type: Transform
       pos: 9.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 358
     components:
     - type: Transform
       pos: 9.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 359
     components:
     - type: Transform
       pos: 9.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 360
     components:
     - type: Transform
       pos: 9.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 361
     components:
     - type: Transform
       pos: 9.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 362
     components:
     - type: Transform
       pos: 9.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 363
     components:
     - type: Transform
       pos: 9.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 364
     components:
     - type: Transform
       pos: 9.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 365
     components:
     - type: Transform
       pos: 9.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 366
     components:
     - type: Transform
       pos: 8.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 367
     components:
     - type: Transform
       pos: 7.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 368
     components:
     - type: Transform
       pos: 6.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 369
     components:
     - type: Transform
       pos: 0.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 370
     components:
     - type: Transform
       pos: -0.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 371
     components:
     - type: Transform
       pos: -1.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 372
     components:
     - type: Transform
       pos: -2.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 373
     components:
     - type: Transform
       pos: -3.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 374
     components:
     - type: Transform
       pos: -4.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 375
     components:
     - type: Transform
       pos: -5.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 376
     components:
     - type: Transform
       pos: -6.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 377
     components:
     - type: Transform
       pos: -7.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 378
     components:
     - type: Transform
       pos: -8.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 379
     components:
     - type: Transform
       pos: -9.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 380
     components:
     - type: Transform
       pos: -10.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 381
     components:
     - type: Transform
       pos: -11.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 382
     components:
     - type: Transform
       pos: -12.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 383
     components:
     - type: Transform
       pos: -13.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 384
     components:
     - type: Transform
       pos: -13.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 385
     components:
     - type: Transform
       pos: -13.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 386
     components:
     - type: Transform
       pos: -13.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 387
     components:
     - type: Transform
       pos: -10.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 388
     components:
     - type: Transform
       pos: -10.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 389
     components:
     - type: Transform
       pos: -10.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 390
     components:
     - type: Transform
       pos: -10.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 391
     components:
     - type: Transform
       pos: -10.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 392
     components:
     - type: Transform
       pos: -10.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 393
     components:
     - type: Transform
       pos: -10.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 394
     components:
     - type: Transform
       pos: -10.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 395
     components:
     - type: Transform
       pos: -10.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 396
     components:
     - type: Transform
       pos: -10.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 397
     components:
     - type: Transform
       pos: -10.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 398
     components:
     - type: Transform
       pos: -11.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 399
     components:
     - type: Transform
       pos: -12.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 400
     components:
     - type: Transform
       pos: -13.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 418
     components:
     - type: Transform
       pos: 3.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 419
     components:
     - type: Transform
       pos: 3.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 421
     components:
     - type: Transform
       pos: -0.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 422
     components:
     - type: Transform
       pos: 0.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 423
     components:
     - type: Transform
       pos: 1.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 424
     components:
     - type: Transform
       pos: 2.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 425
     components:
     - type: Transform
       pos: 3.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 567
     components:
     - type: Transform
       pos: 3.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 568
     components:
     - type: Transform
       pos: 3.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 569
     components:
     - type: Transform
       pos: 3.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 570
     components:
     - type: Transform
       pos: -0.5,8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 803
     components:
     - type: Transform
       pos: 3.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
   - uid: 845
     components:
     - type: Transform
       pos: 2.5,3.5
       parent: 818
-- proto: CableTerminal
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - RCDDeconstructable
+- proto: CableTerminalUncuttable
   entities:
   - uid: 417
     components:
@@ -2439,6 +3777,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
 - proto: Catwalk
   entities:
   - uid: 580
@@ -2446,56 +3789,111 @@ entities:
     - type: Transform
       pos: 3.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - RCDDeconstructable
   - uid: 584
     components:
     - type: Transform
       pos: 2.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - RCDDeconstructable
   - uid: 590
     components:
     - type: Transform
       pos: 3.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - RCDDeconstructable
   - uid: 596
     components:
     - type: Transform
       pos: 1.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - RCDDeconstructable
   - uid: 747
     components:
     - type: Transform
       pos: 3.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - RCDDeconstructable
   - uid: 810
     components:
     - type: Transform
       pos: 0.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - RCDDeconstructable
   - uid: 811
     components:
     - type: Transform
       pos: -0.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - RCDDeconstructable
   - uid: 812
     components:
     - type: Transform
       pos: -1.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - RCDDeconstructable
   - uid: 813
     components:
     - type: Transform
       pos: -2.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - RCDDeconstructable
   - uid: 814
     components:
     - type: Transform
       pos: -3.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - RCDDeconstructable
   - uid: 815
     components:
     - type: Transform
       pos: -4.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - RCDDeconstructable
 - proto: Chair
   entities:
   - uid: 592
@@ -2504,254 +3902,475 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -7.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 593
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 603
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 604
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 605
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -11.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 606
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -11.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 607
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -11.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 608
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -11.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 609
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 610
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 611
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 612
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 613
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 614
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 615
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 616
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 617
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 618
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 619
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 620
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 621
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 622
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 623
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 624
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 625
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 626
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 627
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 628
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 629
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 12.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 630
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 12.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 631
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 12.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 632
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 12.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 847
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -12.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 848
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -8.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 849
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -8.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 850
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -8.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
 - proto: ChairOfficeDark
   entities:
-  - uid: 591
+  - uid: 18
     components:
     - type: Transform
+      anchored: True
       rot: 3.141592653589793 rad
       pos: 9.5,3.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
 - proto: ChairWood
   entities:
   - uid: 577
     components:
     - type: Transform
+      anchored: True
       pos: 10.5,1.5
       parent: 818
-  - uid: 703
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - Anchorable
+  - uid: 591
     components:
     - type: Transform
+      anchored: True
       rot: 1.5707963267948966 rad
       pos: 8.5,0.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - Anchorable
+  - uid: 703
+    components:
+    - type: Transform
+      anchored: True
+      pos: 9.5,1.5
+      parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - Anchorable
   - uid: 704
     components:
     - type: Transform
-      pos: 9.5,1.5
-      parent: 818
-  - uid: 714
-    components:
-    - type: Transform
+      anchored: True
       rot: 1.5707963267948966 rad
       pos: 8.5,-0.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - Anchorable
 - proto: ChessBoard
   entities:
-  - uid: 918
+  - uid: 714
     components:
     - type: Transform
-      pos: 12.503689,-2.3981738
+      rot: 3.141592653589793 rad
+      pos: 12.5093775,-2.403601
       parent: 818
 - proto: ClosetWallEmergencyFilledRandom
   entities:
@@ -2760,6 +4379,10 @@ entities:
     - type: Transform
       pos: -5.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
 - proto: ClosetWallFireFilledRandom
   entities:
   - uid: 432
@@ -2767,6 +4390,10 @@ entities:
     - type: Transform
       pos: 4.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
 - proto: ComfyChair
   entities:
   - uid: 595
@@ -2775,28 +4402,53 @@ entities:
       rot: 3.141592653589793 rad
       pos: 6.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 718
     components:
     - type: Transform
       pos: 12.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 749
     components:
     - type: Transform
       pos: 12.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 759
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 12.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 760
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 12.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
 - proto: DisposalBend
   entities:
   - uid: 853
@@ -2805,40 +4457,75 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -10.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 862
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -10.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 891
     components:
     - type: Transform
       pos: 3.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 893
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -4.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 898
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 899
     components:
     - type: Transform
       pos: 9.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 900
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
 - proto: DisposalJunctionFlipped
   entities:
   - uid: 892
@@ -2847,6 +4534,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
 - proto: DisposalPipe
   entities:
   - uid: 854
@@ -2855,277 +4547,517 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -11.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 855
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -10.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 856
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -10.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 857
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -10.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 858
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -10.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 859
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -10.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 860
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -10.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 861
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -10.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 863
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 864
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -8.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 865
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 866
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -6.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 867
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 868
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -4.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 869
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -3.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 870
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -2.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 871
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 872
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -0.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 873
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 0.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 874
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 1.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 875
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 876
     components:
     - type: Transform
       pos: 3.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 877
     components:
     - type: Transform
       pos: 3.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 878
     components:
     - type: Transform
       pos: 3.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 879
     components:
     - type: Transform
       pos: 3.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 880
     components:
     - type: Transform
       pos: 3.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 881
     components:
     - type: Transform
       pos: 3.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 882
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 883
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 884
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 885
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 886
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 887
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -2.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 888
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 889
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 890
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 901
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 902
     components:
     - type: Transform
       pos: 9.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 903
     components:
     - type: Transform
       pos: 9.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 904
     components:
     - type: Transform
       pos: 9.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 905
     components:
     - type: Transform
       pos: 9.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 906
     components:
     - type: Transform
       pos: 9.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 907
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 908
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 909
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 910
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 911
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 912
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
 - proto: DisposalTrunk
   entities:
   - uid: 852
@@ -3134,18 +5066,33 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -12.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 894
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 897
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 11.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
 - proto: DisposalUnit
   entities:
   - uid: 851
@@ -3153,29 +5100,39 @@ entities:
     - type: Transform
       pos: -12.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - Anchorable
   - uid: 896
     components:
     - type: Transform
       pos: 11.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - Anchorable
 - proto: DrinkGlass
   entities:
+  - uid: 723
+    components:
+    - type: Transform
+      pos: -12.618602,2.5336328
+      parent: 818
   - uid: 915
     components:
     - type: Transform
-      pos: -12.587411,2.5765429
-      parent: 818
-  - uid: 916
-    components:
-    - type: Transform
-      pos: -12.321786,2.7171679
+      pos: -12.399852,2.6273828
       parent: 818
 - proto: DrinkShaker
   entities:
-  - uid: 914
+  - uid: 724
     components:
     - type: Transform
-      pos: -12.649911,2.7640429
+      pos: -12.722768,2.7627993
       parent: 818
 - proto: ExtinguisherCabinetFilled
   entities:
@@ -3184,11 +5141,17 @@ entities:
     - type: Transform
       pos: -6.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 816
     components:
     - type: Transform
       pos: 5.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: FirelockEdge
   entities:
   - uid: 690
@@ -3196,111 +5159,211 @@ entities:
     - type: Transform
       pos: -8.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 694
     components:
     - type: Transform
       pos: -12.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 695
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -8.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 696
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -12.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 697
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 698
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 11.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 699
     components:
     - type: Transform
       pos: 11.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 700
     components:
     - type: Transform
       pos: 7.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 822
     components:
     - type: Transform
       pos: 10.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 823
     components:
     - type: Transform
       pos: 9.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 824
     components:
     - type: Transform
       pos: 8.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 825
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 826
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 827
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 828
     components:
     - type: Transform
       pos: -9.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 829
     components:
     - type: Transform
       pos: -10.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 830
     components:
     - type: Transform
       pos: -11.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 831
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -11.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 832
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -10.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 833
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -9.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
 - proto: FirelockGlass
   entities:
   - uid: 194
@@ -3308,51 +5371,101 @@ entities:
     - type: Transform
       pos: 5.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 216
     components:
     - type: Transform
       pos: -10.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 220
     components:
     - type: Transform
       pos: -9.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 305
     components:
     - type: Transform
       pos: -6.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 345
     components:
     - type: Transform
       pos: 5.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 346
     components:
     - type: Transform
       pos: 5.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 347
     components:
     - type: Transform
       pos: -6.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 348
     components:
     - type: Transform
       pos: -6.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 586
     components:
     - type: Transform
       pos: -11.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 716
     components:
     - type: Transform
       pos: -12.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
 - proto: GeneratorBasic15kW
   entities:
   - uid: 124
@@ -3360,6 +5473,10 @@ entities:
     - type: Transform
       pos: -4.5,8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Anchorable
+    - Destructible
 - proto: GravityGeneratorMini
   entities:
   - uid: 808
@@ -3367,6 +5484,11 @@ entities:
     - type: Transform
       pos: 1.5,8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
+    - Construction
 - proto: Grille
   entities:
   - uid: 96
@@ -3374,479 +5496,918 @@ entities:
     - type: Transform
       pos: -14.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 97
     components:
     - type: Transform
       pos: -14.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 98
     components:
     - type: Transform
       pos: -14.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 99
     components:
     - type: Transform
       pos: -6.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 101
     components:
     - type: Transform
       pos: 5.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 102
     components:
     - type: Transform
       pos: 5.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 103
     components:
     - type: Transform
       pos: 13.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 104
     components:
     - type: Transform
       pos: 13.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 125
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-19.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 126
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 127
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -8.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 128
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -8.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 129
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 130
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -11.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 131
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -12.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 132
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -12.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 133
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 134
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-19.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 135
     components:
     - type: Transform
       pos: 5.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 136
     components:
     - type: Transform
       pos: 5.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 137
     components:
     - type: Transform
       pos: 13.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 138
     components:
     - type: Transform
       pos: 13.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 139
     components:
     - type: Transform
       pos: -14.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 140
     components:
     - type: Transform
       pos: -6.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 141
     components:
     - type: Transform
       pos: -6.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 142
     components:
     - type: Transform
       pos: -6.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 143
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 144
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 145
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 147
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 148
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 149
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 151
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 152
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 153
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 155
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 156
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 157
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 167
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-19.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 168
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 169
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 11.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 170
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 11.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 171
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 172
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 173
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 7.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 174
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 7.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 175
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 176
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-19.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 178
     components:
     - type: Transform
       pos: 3.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 183
     components:
     - type: Transform
       pos: -3.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 184
     components:
     - type: Transform
       pos: 4.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 191
     components:
     - type: Transform
       pos: -5.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 197
     components:
     - type: Transform
       pos: -4.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 229
     components:
     - type: Transform
       pos: 2.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 233
     components:
     - type: Transform
       pos: -8.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 234
     components:
     - type: Transform
       pos: 11.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 235
     components:
     - type: Transform
       pos: 7.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 244
     components:
     - type: Transform
       pos: -12.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 276
     components:
     - type: Transform
       pos: 13.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 277
     components:
     - type: Transform
       pos: 13.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 278
     components:
     - type: Transform
       pos: 13.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 279
     components:
     - type: Transform
       pos: 13.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 280
     components:
     - type: Transform
       pos: -14.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 281
     components:
     - type: Transform
       pos: -14.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 282
     components:
     - type: Transform
       pos: -14.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 283
     components:
     - type: Transform
       pos: -14.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 318
     components:
     - type: Transform
       pos: -13.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 319
     components:
     - type: Transform
       pos: -13.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 320
     components:
     - type: Transform
       pos: -12.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 321
     components:
     - type: Transform
       pos: -12.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 322
     components:
     - type: Transform
       pos: -11.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 323
     components:
     - type: Transform
       pos: -10.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 324
     components:
     - type: Transform
       pos: -9.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 325
     components:
     - type: Transform
       pos: -8.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 326
     components:
     - type: Transform
       pos: -8.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 327
     components:
     - type: Transform
       pos: -7.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 328
     components:
     - type: Transform
       pos: -7.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 329
     components:
     - type: Transform
       pos: 6.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 330
     components:
     - type: Transform
       pos: 6.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 331
     components:
     - type: Transform
       pos: 7.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 332
     components:
     - type: Transform
       pos: 7.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 333
     components:
     - type: Transform
       pos: 8.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 334
     components:
     - type: Transform
       pos: 9.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 335
     components:
     - type: Transform
       pos: 10.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 336
     components:
     - type: Transform
       pos: 11.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 337
     components:
     - type: Transform
       pos: 11.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 338
     components:
     - type: Transform
       pos: 12.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
   - uid: 339
     components:
     - type: Transform
       pos: 12.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Construction
+    - Destructible
 - proto: PaperBin10
   entities:
-  - uid: 737
+  - uid: 729
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 8.5,4.5
       parent: 818
 - proto: PosterLegitCohibaRobustoAd
@@ -3856,6 +6417,9 @@ entities:
     - type: Transform
       pos: -6.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: PosterLegitEnlist
   entities:
   - uid: 926
@@ -3863,6 +6427,9 @@ entities:
     - type: Transform
       pos: -14.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: PosterLegitHighClassMartini
   entities:
   - uid: 925
@@ -3870,6 +6437,9 @@ entities:
     - type: Transform
       pos: -6.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: PosterLegitJustAWeekAway
   entities:
   - uid: 821
@@ -3877,6 +6447,9 @@ entities:
     - type: Transform
       pos: 5.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: PosterLegitNanomichiAd
   entities:
   - uid: 820
@@ -3884,6 +6457,9 @@ entities:
     - type: Transform
       pos: -4.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: PosterLegitNanotrasenLogo
   entities:
   - uid: 246
@@ -3891,36 +6467,57 @@ entities:
     - type: Transform
       pos: -7.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 247
     components:
     - type: Transform
       pos: -13.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 248
     components:
     - type: Transform
       pos: 12.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 249
     components:
     - type: Transform
       pos: 6.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 250
     components:
     - type: Transform
       pos: -13.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 251
     components:
     - type: Transform
       pos: 12.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 922
     components:
     - type: Transform
       pos: -0.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: PosterLegitNTTGC
   entities:
   - uid: 924
@@ -3928,6 +6525,9 @@ entities:
     - type: Transform
       pos: 5.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: PosterLegitPDAAd
   entities:
   - uid: 920
@@ -3935,6 +6535,9 @@ entities:
     - type: Transform
       pos: 12.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: PosterLegitVacation
   entities:
   - uid: 921
@@ -3942,6 +6545,9 @@ entities:
     - type: Transform
       pos: -7.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: PosterLegitWorkForAFuture
   entities:
   - uid: 923
@@ -3949,6 +6555,9 @@ entities:
     - type: Transform
       pos: 12.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: PottedPlantRandom
   entities:
   - uid: 236
@@ -3956,31 +6565,37 @@ entities:
     - type: Transform
       pos: 7.5,-19.5
       parent: 818
+    - type: Godmode
   - uid: 237
     components:
     - type: Transform
       pos: -12.5,-19.5
       parent: 818
+    - type: Godmode
   - uid: 238
     components:
     - type: Transform
       pos: 11.5,-19.5
       parent: 818
+    - type: Godmode
   - uid: 239
     components:
     - type: Transform
       pos: -8.5,-19.5
       parent: 818
+    - type: Godmode
   - uid: 733
     components:
     - type: Transform
       pos: -8.5,-5.5
       parent: 818
+    - type: Godmode
   - uid: 741
     components:
     - type: Transform
       pos: -7.5,-3.5
       parent: 818
+    - type: Godmode
 - proto: PottedPlantRandomPlastic
   entities:
   - uid: 708
@@ -3988,130 +6603,13 @@ entities:
     - type: Transform
       pos: -13.5,1.5
       parent: 818
+    - type: Godmode
   - uid: 755
     components:
     - type: Transform
       pos: -13.5,-3.5
       parent: 818
-- proto: Poweredlight
-  entities:
-  - uid: 150
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -8.5,-5.5
-      parent: 818
-  - uid: 188
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 11.5,2.5
-      parent: 818
-  - uid: 195
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -2.5,-1.5
-      parent: 818
-  - uid: 209
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 7.5,-5.5
-      parent: 818
-  - uid: 341
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 1.5,-1.5
-      parent: 818
-  - uid: 634
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      pos: 9.5,-16.5
-      parent: 818
-  - uid: 636
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 9.5,-11.5
-      parent: 818
-  - uid: 649
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -10.5,-11.5
-      parent: 818
-  - uid: 650
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      pos: -10.5,-16.5
-      parent: 818
-  - uid: 687
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -13.5,1.5
-      parent: 818
-  - uid: 701
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -6.5,3.5
-      parent: 818
-  - uid: 702
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,3.5
-      parent: 818
-  - uid: 715
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      pos: -0.5,5.5
-      parent: 818
-  - uid: 717
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -7.5,-3.5
-      parent: 818
-  - uid: 742
-    components:
-    - type: MetaData
-      flags: PvsPriority
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 6.5,-3.5
-      parent: 818
+    - type: Godmode
 - proto: RandomSpawner
   entities:
   - uid: 895
@@ -4119,32 +6617,7 @@ entities:
     - type: Transform
       pos: -4.5,4.5
       parent: 818
-- proto: RandomVending
-  entities:
-  - uid: 835
-    components:
-    - type: Transform
-      pos: 9.5,-20.5
-      parent: 818
-  - uid: 836
-    components:
-    - type: Transform
-      pos: -10.5,-20.5
-      parent: 818
-- proto: RandomVendingDrinks
-  entities:
-  - uid: 692
-    components:
-    - type: Transform
-      pos: 11.5,-5.5
-      parent: 818
-- proto: RandomVendingSnacks
-  entities:
-  - uid: 834
-    components:
-    - type: Transform
-      pos: 11.5,-6.5
-      parent: 818
+    - type: Godmode
 - proto: ReinforcedWindow
   entities:
   - uid: 19
@@ -4153,472 +6626,912 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -7.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 20
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -8.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 21
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -8.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 22
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 24
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-19.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 25
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -11.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 26
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -12.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 27
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -12.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 28
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 29
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-19.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 30
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 31
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 7.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 32
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 7.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 33
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 34
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-19.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 35
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 36
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 11.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 37
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 11.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 38
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-20.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 39
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-19.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 91
     components:
     - type: Transform
       pos: -14.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 93
     components:
     - type: Transform
       pos: -14.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 94
     components:
     - type: Transform
       pos: -6.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 95
     components:
     - type: Transform
       pos: -6.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 100
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 105
     components:
     - type: Transform
       pos: 5.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 106
     components:
     - type: Transform
       pos: 5.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 107
     components:
     - type: Transform
       pos: 13.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 108
     components:
     - type: Transform
       pos: 13.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 109
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 110
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 111
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 113
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 115
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 116
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 117
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 118
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 121
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 122
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 123
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 159
     components:
     - type: Transform
       pos: -14.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 160
     components:
     - type: Transform
       pos: -14.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 161
     components:
     - type: Transform
       pos: -6.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 162
     components:
     - type: Transform
       pos: -6.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 163
     components:
     - type: Transform
       pos: 5.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 164
     components:
     - type: Transform
       pos: 13.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 165
     components:
     - type: Transform
       pos: 5.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 166
     components:
     - type: Transform
       pos: 13.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 185
     components:
     - type: Transform
       pos: -5.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 186
     components:
     - type: Transform
       pos: 2.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 192
     components:
     - type: Transform
       pos: 4.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 196
     components:
     - type: Transform
       pos: 3.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 198
     components:
     - type: Transform
       pos: -3.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 232
     components:
     - type: Transform
       pos: -4.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 240
     components:
     - type: Transform
       pos: -12.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 241
     components:
     - type: Transform
       pos: 11.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 242
     components:
     - type: Transform
       pos: 7.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 243
     components:
     - type: Transform
       pos: -8.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 268
     components:
     - type: Transform
       pos: -14.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 269
     components:
     - type: Transform
       pos: -14.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 270
     components:
     - type: Transform
       pos: -14.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 271
     components:
     - type: Transform
       pos: -14.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 272
     components:
     - type: Transform
       pos: 13.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 273
     components:
     - type: Transform
       pos: 13.5,-1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 274
     components:
     - type: Transform
       pos: 13.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 275
     components:
     - type: Transform
       pos: 13.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 284
     components:
     - type: Transform
       pos: -13.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 285
     components:
     - type: Transform
       pos: -12.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 286
     components:
     - type: Transform
       pos: -10.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 287
     components:
     - type: Transform
       pos: -11.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 288
     components:
     - type: Transform
       pos: -8.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 289
     components:
     - type: Transform
       pos: -8.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 290
     components:
     - type: Transform
       pos: -12.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 291
     components:
     - type: Transform
       pos: -13.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 292
     components:
     - type: Transform
       pos: -9.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 293
     components:
     - type: Transform
       pos: 6.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 294
     components:
     - type: Transform
       pos: -7.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 295
     components:
     - type: Transform
       pos: -7.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 308
     components:
     - type: Transform
       pos: 6.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 309
     components:
     - type: Transform
       pos: 7.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 310
     components:
     - type: Transform
       pos: 7.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 311
     components:
     - type: Transform
       pos: 8.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 312
     components:
     - type: Transform
       pos: 9.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 313
     components:
     - type: Transform
       pos: 10.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 314
     components:
     - type: Transform
       pos: 11.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 315
     components:
     - type: Transform
       pos: 11.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 316
     components:
     - type: Transform
       pos: 12.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 317
     components:
     - type: Transform
       pos: 12.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
 - proto: SignNanotrasen1
   entities:
   - uid: 721
@@ -4626,6 +7539,9 @@ entities:
     - type: Transform
       pos: -2.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: SignNanotrasen2
   entities:
   - uid: 722
@@ -4633,6 +7549,9 @@ entities:
     - type: Transform
       pos: -1.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: SignNanotrasen3
   entities:
   - uid: 719
@@ -4640,6 +7559,9 @@ entities:
     - type: Transform
       pos: -0.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: SignNanotrasen4
   entities:
   - uid: 801
@@ -4647,6 +7569,9 @@ entities:
     - type: Transform
       pos: 0.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: SignNanotrasen5
   entities:
   - uid: 802
@@ -4654,6 +7579,9 @@ entities:
     - type: Transform
       pos: 1.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: SignNosmoking
   entities:
   - uid: 720
@@ -4661,6 +7589,9 @@ entities:
     - type: Transform
       pos: -7.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: SignShipDock
   entities:
   - uid: 200
@@ -4668,11 +7599,17 @@ entities:
     - type: Transform
       pos: 6.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 245
     components:
     - type: Transform
       pos: -7.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: SignSpace
   entities:
   - uid: 571
@@ -4680,46 +7617,73 @@ entities:
     - type: Transform
       pos: 12.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 640
     components:
     - type: Transform
       pos: -7.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 688
     components:
     - type: Transform
       pos: -13.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 689
     components:
     - type: Transform
       pos: -7.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 691
     components:
     - type: Transform
       pos: -13.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 705
     components:
     - type: Transform
       pos: 12.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 709
     components:
     - type: Transform
       pos: 6.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 817
     components:
     - type: Transform
       pos: 6.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 819
     components:
     - type: Transform
       pos: 4.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: SinkWide
   entities:
   - uid: 913
@@ -4728,6 +7692,9 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -12.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: SmallLight
   entities:
   - uid: 598
@@ -4736,52 +7703,102 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -8.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
+    - RCDDeconstructable
   - uid: 641
     components:
     - type: Transform
       pos: -14.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
+    - RCDDeconstructable
   - uid: 642
     components:
     - type: Transform
       pos: -6.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
+    - RCDDeconstructable
   - uid: 643
     components:
     - type: Transform
       pos: -14.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
+    - RCDDeconstructable
   - uid: 644
     components:
     - type: Transform
       pos: -6.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
+    - RCDDeconstructable
   - uid: 645
     components:
     - type: Transform
       pos: 5.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
+    - RCDDeconstructable
   - uid: 646
     components:
     - type: Transform
       pos: 13.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
+    - RCDDeconstructable
   - uid: 647
     components:
     - type: Transform
       pos: 13.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
+    - RCDDeconstructable
   - uid: 648
     components:
     - type: Transform
       pos: 5.5,-17.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
+    - RCDDeconstructable
   - uid: 917
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
+    - RCDDeconstructable
 - proto: SMESBasic
   entities:
   - uid: 805
@@ -4789,13 +7806,24 @@ entities:
     - type: Transform
       pos: -2.5,8.5
       parent: 818
-- proto: soda_dispenser
+    - type: Godmode
+    missingComponents:
+    - Anchorable
+    - Destructible
+    - Construction
+- proto: SodaDispenser
   entities:
   - uid: 795
     components:
     - type: Transform
       pos: -10.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - ApcPowerReceiver
+    - Anchorable
+    - Destructible
+    - Construction
 - proto: SpaceVillainArcadeFilled
   entities:
   - uid: 731
@@ -4804,12 +7832,24 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -13.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - ApcPowerReceiver
+    - Anchorable
+    - Construction
+    - Destructible
   - uid: 732
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - ApcPowerReceiver
+    - Anchorable
+    - Construction
+    - Destructible
 - proto: SpawnPointLatejoin
   entities:
   - uid: 763
@@ -4817,161 +7857,193 @@ entities:
     - type: Transform
       pos: -7.5,-15.5
       parent: 818
+    - type: Godmode
   - uid: 764
     components:
     - type: Transform
       pos: -7.5,-14.5
       parent: 818
+    - type: Godmode
   - uid: 765
     components:
     - type: Transform
       pos: -7.5,-13.5
       parent: 818
+    - type: Godmode
   - uid: 766
     components:
     - type: Transform
       pos: -7.5,-12.5
       parent: 818
+    - type: Godmode
   - uid: 767
     components:
     - type: Transform
       pos: -9.5,-15.5
       parent: 818
+    - type: Godmode
   - uid: 768
     components:
     - type: Transform
       pos: -9.5,-14.5
       parent: 818
+    - type: Godmode
   - uid: 769
     components:
     - type: Transform
       pos: -9.5,-13.5
       parent: 818
+    - type: Godmode
   - uid: 770
     components:
     - type: Transform
       pos: -9.5,-12.5
       parent: 818
+    - type: Godmode
   - uid: 771
     components:
     - type: Transform
       pos: -11.5,-15.5
       parent: 818
+    - type: Godmode
   - uid: 772
     components:
     - type: Transform
       pos: -11.5,-14.5
       parent: 818
+    - type: Godmode
   - uid: 773
     components:
     - type: Transform
       pos: -11.5,-13.5
       parent: 818
+    - type: Godmode
   - uid: 774
     components:
     - type: Transform
       pos: -11.5,-12.5
       parent: 818
+    - type: Godmode
   - uid: 775
     components:
     - type: Transform
       pos: -13.5,-15.5
       parent: 818
+    - type: Godmode
   - uid: 776
     components:
     - type: Transform
       pos: -13.5,-14.5
       parent: 818
+    - type: Godmode
   - uid: 777
     components:
     - type: Transform
       pos: -13.5,-13.5
       parent: 818
+    - type: Godmode
   - uid: 778
     components:
     - type: Transform
       pos: -13.5,-12.5
       parent: 818
+    - type: Godmode
   - uid: 779
     components:
     - type: Transform
       pos: 6.5,-15.5
       parent: 818
+    - type: Godmode
   - uid: 780
     components:
     - type: Transform
       pos: 6.5,-14.5
       parent: 818
+    - type: Godmode
   - uid: 781
     components:
     - type: Transform
       pos: 6.5,-13.5
       parent: 818
+    - type: Godmode
   - uid: 782
     components:
     - type: Transform
       pos: 6.5,-12.5
       parent: 818
+    - type: Godmode
   - uid: 783
     components:
     - type: Transform
       pos: 8.5,-15.5
       parent: 818
+    - type: Godmode
   - uid: 784
     components:
     - type: Transform
       pos: 8.5,-14.5
       parent: 818
+    - type: Godmode
   - uid: 785
     components:
     - type: Transform
       pos: 8.5,-13.5
       parent: 818
+    - type: Godmode
   - uid: 786
     components:
     - type: Transform
       pos: 8.5,-12.5
       parent: 818
+    - type: Godmode
   - uid: 787
     components:
     - type: Transform
       pos: 10.5,-15.5
       parent: 818
+    - type: Godmode
   - uid: 788
     components:
     - type: Transform
       pos: 10.5,-14.5
       parent: 818
+    - type: Godmode
   - uid: 789
     components:
     - type: Transform
       pos: 10.5,-13.5
       parent: 818
+    - type: Godmode
   - uid: 790
     components:
     - type: Transform
       pos: 10.5,-12.5
       parent: 818
+    - type: Godmode
   - uid: 791
     components:
     - type: Transform
       pos: 12.5,-15.5
       parent: 818
+    - type: Godmode
   - uid: 792
     components:
     - type: Transform
       pos: 12.5,-14.5
       parent: 818
+    - type: Godmode
   - uid: 793
     components:
     - type: Transform
       pos: 12.5,-13.5
       parent: 818
+    - type: Godmode
   - uid: 794
     components:
     - type: Transform
       pos: 12.5,-12.5
       parent: 818
+    - type: Godmode
 - proto: SS13Memorial
   entities:
   - uid: 594
@@ -4979,56 +8051,121 @@ entities:
     - type: Transform
       pos: -0.5,4.5
       parent: 818
+    - type: Godmode
 - proto: Stool
   entities:
   - uid: 119
     components:
     - type: Transform
+      anchored: True
       rot: 3.141592653589793 rad
       pos: -11.5,-20.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 639
     components:
     - type: Transform
+      anchored: True
       rot: 3.141592653589793 rad
       pos: -9.5,-20.5
       parent: 818
-  - uid: 723
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 10.5,-20.5
-      parent: 818
-  - uid: 724
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 8.5,-20.5
-      parent: 818
-  - uid: 729
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -12.5,-1.5
-      parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 730
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -12.5,-2.5
+      anchored: True
+      rot: 3.141592653589793 rad
+      pos: 8.5,-20.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
+  - uid: 737
+    components:
+    - type: Transform
+      anchored: True
+      rot: 3.141592653589793 rad
+      pos: 10.5,-20.5
+      parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 738
     components:
     - type: Transform
+      anchored: True
       rot: -1.5707963267948966 rad
       pos: -12.5,-0.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 740
     components:
     - type: Transform
+      anchored: True
       rot: -1.5707963267948966 rad
       pos: -12.5,0.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
+  - uid: 761
+    components:
+    - type: Transform
+      anchored: True
+      rot: -1.5707963267948966 rad
+      pos: -12.5,-1.5
+      parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
+  - uid: 914
+    components:
+    - type: Transform
+      anchored: True
+      rot: -1.5707963267948966 rad
+      pos: -12.5,-2.5
+      parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
 - proto: StoolBar
   entities:
   - uid: 230
@@ -5037,18 +8174,33 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 342
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -11.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 433
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -10.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
 - proto: SubstationBasic
   entities:
   - uid: 807
@@ -5056,6 +8208,11 @@ entities:
     - type: Transform
       pos: -0.5,8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
+    - Construction
 - proto: TableCarpet
   entities:
   - uid: 572
@@ -5063,21 +8220,37 @@ entities:
     - type: Transform
       pos: 9.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
   - uid: 573
     components:
     - type: Transform
       pos: 9.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
   - uid: 574
     components:
     - type: Transform
       pos: 10.5,-0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
   - uid: 576
     components:
     - type: Transform
       pos: 10.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
 - proto: TableReinforced
   entities:
   - uid: 585
@@ -5086,36 +8259,60 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -9.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
   - uid: 707
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -10.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
   - uid: 751
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -11.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
   - uid: 796
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -10.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
   - uid: 797
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -12.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
   - uid: 798
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -11.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
 - proto: TableWood
   entities:
   - uid: 441
@@ -5123,31 +8320,55 @@ entities:
     - type: Transform
       pos: 12.5,0.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
   - uid: 575
     components:
     - type: Transform
       pos: 6.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
   - uid: 587
     components:
     - type: Transform
       pos: 12.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
   - uid: 706
     components:
     - type: Transform
       pos: 9.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
   - uid: 750
     components:
     - type: Transform
       pos: 10.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
   - uid: 756
     components:
     - type: Transform
       pos: 8.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Construction
 - proto: TelecomServerFilled
   entities:
   - uid: 919
@@ -5155,972 +8376,1162 @@ entities:
     - type: Transform
       pos: -1.5,8.5
       parent: 818
+    - type: EncryptionKeyHolder
+      keysUnlocked: False
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - ApcPowerReceiver
+    - Anchorable
+    - Construction
 - proto: VendingMachineBooze
   entities:
   - uid: 753
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: -9.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
+    - ApcPowerReceiver
+- proto: VendingMachineChang
+  entities:
+  - uid: 692
+    components:
+    - type: Transform
+      pos: 9.5,-20.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
 - proto: VendingMachineCigs
   entities:
   - uid: 744
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: -7.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
+    - ApcPowerReceiver
 - proto: VendingMachineCola
   entities:
   - uid: 635
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: -12.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
+    - ApcPowerReceiver
+- proto: VendingMachineColaBlack
+  entities:
+  - uid: 834
+    components:
+    - type: Transform
+      pos: -10.5,-20.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
+- proto: VendingMachineDiscount
+  entities:
+  - uid: 836
+    components:
+    - type: Transform
+      pos: 11.5,-6.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
+- proto: VendingMachineDrGibb
+  entities:
+  - uid: 835
+    components:
+    - type: Transform
+      pos: 11.5,-5.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
 - proto: VendingMachineGames
   entities:
   - uid: 748
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: 6.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
+    - ApcPowerReceiver
 - proto: VendingMachineSnack
   entities:
   - uid: 637
     components:
-    - type: MetaData
-      flags: SessionSpecific
     - type: Transform
       pos: -12.5,-6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
+    - ApcPowerReceiver
 - proto: WallRiveted
   entities:
   - uid: 10
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 23
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -10.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 40
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 9.5,-21.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 41
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 42
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 43
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 44
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 45
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 46
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 47
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 48
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -6.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 49
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 50
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 51
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -14.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 52
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -15.5,-18.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 53
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 54
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -14.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 55
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -15.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 56
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 57
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -6.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 58
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 59
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 60
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -6.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 61
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 62
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 63
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -14.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 64
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -15.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 65
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 66
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -14.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 67
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -15.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 68
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 69
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -6.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 70
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 71
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 72
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 73
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 74
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 75
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 76
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 77
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 78
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 79
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 80
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 81
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 82
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,-9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 83
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 84
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 85
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 86
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 87
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 88
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 89
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 90
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 92
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 112
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 114
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -13.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 120
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 5.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 154
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 12.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 158
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,-5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 179
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -2.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 180
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 5.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 182
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 187
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 189
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 5.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 190
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 193
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 5.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 199
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 202
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 207
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 217
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -4.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 222
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -2.5,9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 223
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -0.5,9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 225
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -1.5,9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 231
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -4.5,9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 258
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -14.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 259
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 13.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 260
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 13.5,-4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 261
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -14.5,-3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 262
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 13.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 263
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 13.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 264
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 12.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 265
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -14.5,1.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 266
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -14.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 267
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -13.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 304
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -7.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 306
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -6.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 307
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 6.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 340
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 5.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 343
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 0.5,9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 351
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -3.5,9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 401
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -5.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 403
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 405
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -1.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 406
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 407
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 2.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 408
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 2.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 409
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 2.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 414
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 420
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 2.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 578
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -3.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 581
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -3.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 582
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -3.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 583
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -3.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 588
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -2.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 602
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 0.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 693
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 711
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -1.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 712
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -0.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 713
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 0.5,-2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 725
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -5.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 726
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -5.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 736
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -5.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 739
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -5.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 743
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -5.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 745
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -5.5,8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 746
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 2.5,9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 754
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,7.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 757
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 758
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 762
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,5.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 799
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,4.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 800
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -5.5,9.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
   - uid: 804
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: -0.5,6.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
 - proto: WarpPoint
   entities:
   - uid: 638
@@ -6130,6 +9541,7 @@ entities:
       parent: 818
     - type: WarpPoint
       location: Terminal
+    - type: Godmode
 - proto: Windoor
   entities:
   - uid: 806
@@ -6137,11 +9549,21 @@ entities:
     - type: Transform
       pos: -8.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
   - uid: 841
     components:
     - type: Transform
       pos: -2.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - RCDDeconstructable
+    - Destructible
+    - Construction
 - proto: WindowReinforcedDirectional
   entities:
   - uid: 181
@@ -6150,198 +9572,373 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -9.5,2.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 204
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 0.5,8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 600
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,8.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 659
     components:
     - type: Transform
       pos: 9.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 660
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 661
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 9.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 662
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 9.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 663
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 9.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 664
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 9.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 665
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 666
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 667
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 668
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 669
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -10.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 670
     components:
     - type: Transform
       pos: -10.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 671
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -10.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 672
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -10.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 673
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -10.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 674
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -10.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 675
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -10.5,-12.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 676
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -10.5,-13.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 677
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -10.5,-14.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 678
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -10.5,-15.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 679
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -9.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 680
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -11.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 681
     components:
     - type: Transform
       pos: -11.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 682
     components:
     - type: Transform
       pos: -9.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 683
     components:
     - type: Transform
       pos: 10.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 684
     components:
     - type: Transform
       pos: 8.5,-11.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 685
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 686
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,-16.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 837
     components:
     - type: Transform
       pos: 1.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 838
     components:
     - type: Transform
       pos: 0.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 839
     components:
     - type: Transform
       pos: -0.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 840
     components:
     - type: Transform
       pos: -1.5,3.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
 ...

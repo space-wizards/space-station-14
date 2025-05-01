@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: PowerSink
-  parent: BaseMachine
+  parent: [BaseMachine, BaseSyndicateContraband]
   name: power sink
   description: Drains immense amounts of electricity from the grid.
   components:
@@ -45,5 +45,11 @@
     - type: Sprite
       sprite: Objects/Power/powersink.rsi
       state: powersink
+    - type: Tag
+      tags:
+      - GhostOnlyWarp
     - type: WarpPoint
       location: powersink
+      blacklist:
+        tags:
+        - GhostOnlyWarp

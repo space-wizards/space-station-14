@@ -170,7 +170,8 @@
   id: Razorium
   name: reagent-name-razorium
   group: Toxins
-  slippery: true
+  slipData:
+    requiredSlipSpeed: 3.5
   desc: reagent-desc-razorium
   physicalDesc: reagent-physical-desc-reflective
   flavor: sharp
@@ -209,7 +210,8 @@
   id: Fresium
   name: reagent-name-fresium
   group: Toxins
-  slippery: true
+  slipData:
+    requiredSlipSpeed: 3.5
   desc: reagent-desc-fresium
   physicalDesc: reagent-physical-desc-frosty
   flavor: cold
@@ -305,7 +307,8 @@
   physicalDesc: reagent-physical-desc-funny
   flavor: funny
   color: "#FF4DD2"
-  slippery: true #clown juice gotta slip
+  slipData:
+    requiredSlipSpeed: 3.5 #clown juice gotta slip
   metabolisms:
     Medicine:
       effects:
@@ -345,6 +348,38 @@
           min: 50
       - !type:AdjustReagent
         reagent: JuiceThatMakesYouWeh
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 50
+
+- type: reagent
+  id: JuiceThatMakesYouHew
+  name: reagent-name-hew
+  group: Toxins
+  desc: reagent-desc-hew
+  physicalDesc: reagent-physical-desc-inversed
+  flavor: hew
+  color: "#a64dc5"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.25
+      effects:
+      - !type:Emote
+        emote: Hew
+        showInChat: true
+        force: true
+        probability: 0.5
+      - !type:Polymorph
+        prototype: ArtifactLizard
+        conditions:
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
+        - !type:ReagentThreshold
+          min: 50
+      - !type:AdjustReagent
+        reagent: JuiceThatMakesYouHew
         amount: -20
         conditions:
         - !type:ReagentThreshold

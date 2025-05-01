@@ -31,7 +31,7 @@ public sealed partial class AnomalyScannerMenu : FancyWindow
             msg.PushNewline();
             var time = NextPulseTime.Value - _timing.CurTime;
             var timestring = $"{time.Minutes:00}:{time.Seconds:00}";
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-pulse-timer", ("time", timestring)));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-pulse-timer", ("time", timestring)));
         }
 
         TextDisplay.SetMarkup(msg.ToMarkup());

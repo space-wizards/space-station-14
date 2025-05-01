@@ -72,6 +72,12 @@ public sealed partial class NukeopsRuleComponent : Component
     public TimeSpan WarNukieArriveDelay = TimeSpan.FromMinutes(15);
 
     /// <summary>
+    ///     Time crew can't call emergency shuttle after war declaration.
+    /// </summary>
+    [DataField]
+    public TimeSpan WarEvacShuttleDisabled = TimeSpan.FromMinutes(25);
+
+    /// <summary>
     ///     Minimal operatives count for war declaration
     /// </summary>
     [DataField]
@@ -94,36 +100,6 @@ public sealed partial class NukeopsRuleComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/nukeops_start.ogg");
-}
-
-/// <summary>
-/// Stores the presets for each operative type
-/// Ie Commander, Agent and Operative
-/// </summary>
-[DataDefinition, Serializable]
-public sealed partial class NukeopSpawnPreset
-{
-
-    [DataField]
-    public ProtoId<AntagPrototype> AntagRoleProto = "Nukeops";
-
-    /// <summary>
-    /// The equipment set this operative will be given when spawned
-    /// </summary>
-    [DataField]
-    public ProtoId<StartingGearPrototype> GearProto = "SyndicateOperativeGearFull";
-
-    /// <summary>
-    /// The name prefix, ie "Agent"
-    /// </summary>
-    [DataField]
-    public LocId NamePrefix = "nukeops-role-operator";
-
-    /// <summary>
-    /// The entity name suffix will be chosen from this list randomly
-    /// </summary>
-    [DataField]
-    public ProtoId<DatasetPrototype> NameList = "SyndicateNamesNormal";
 }
 
 public enum WinType : byte

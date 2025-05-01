@@ -15,6 +15,7 @@ namespace Content.Shared.Movement.Components
         public const float DefaultMinimumFrictionSpeed = 0.005f;
         public const float DefaultWeightlessFriction = 1f;
         public const float DefaultWeightlessFrictionNoInput = 0.2f;
+        public const float DefaultOffGridFriction = 0.05f;
         public const float DefaultWeightlessModifier = 0.7f;
         public const float DefaultWeightlessAcceleration = 1f;
 
@@ -30,28 +31,6 @@ namespace Content.Shared.Movement.Components
 
         [AutoNetworkedField, ViewVariables]
         public float SprintSpeedModifier = 1.0f;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _baseWalkSpeedVV
-        {
-            get => BaseWalkSpeed;
-            set
-            {
-                BaseWalkSpeed = value;
-                Dirty();
-            }
-        }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _baseSprintSpeedVV
-        {
-            get => BaseSprintSpeed;
-            set
-            {
-                BaseSprintSpeed = value;
-                Dirty();
-            }
-        }
 
         /// <summary>
         /// Minimum speed a mob has to be moving before applying movement friction.
@@ -71,6 +50,12 @@ namespace Content.Shared.Movement.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField]
         public float WeightlessFrictionNoInput = DefaultWeightlessFrictionNoInput;
+
+        /// <summary>
+        /// The negative velocity applied for friction when weightless and not standing on a grid or mapgrid
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField]
+        public float OffGridFriction = DefaultOffGridFriction;
 
         /// <summary>
         /// The movement speed modifier applied to a mob's total input velocity when weightless.

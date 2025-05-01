@@ -105,6 +105,7 @@
   - type: GuideHelp
     guides:
     - Chef
+    - FoodRecipes
 
 - type: entity
   id: SyndicateMicrowave
@@ -114,6 +115,7 @@
   components:
   - type: Microwave
     cookTimeMultiplier: 0.5
+    baseHeatMultiplier: 200
     capacity: 10
     canMicrowaveIdsSafely: false
     explosionChance: 0.3
@@ -123,3 +125,7 @@
     snapCardinals: true
   - type: Machine
     board: SyndicateMicrowaveMachineCircuitboard
+  - type: FoodRecipeProvider
+    providedRecipes:
+    - RecipeBaguetteSword
+    - RecipeThrowingCroissant

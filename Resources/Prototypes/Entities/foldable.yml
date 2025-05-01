@@ -13,3 +13,11 @@
         unfoldedLayer:
           True: {visible: false}
           False: {visible: true}
+
+- type: entity
+  abstract: true
+  parent: BaseFoldable
+  id: BaseDeployFoldable
+  name: "deploy foldable"
+  components:
+  - type: DeployFoldable

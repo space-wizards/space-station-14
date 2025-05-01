@@ -16,6 +16,9 @@
 - files: ["cluster.yml"]
   authors: Scribbles0
 
+- files: ["elkridge.yml"]
+  authors: Deerstop
+
 - files: ["fland.yml"]
   authors: Emisse
 
@@ -51,3 +54,12 @@
 
 - files: ["oasis.yml"]
   authors: CptJeanLuc
+
+- files: ["cog.yml"]
+  authors: Spacemann
+
+- files: ["convex.yml"]
+  authors: Spacemann
+
+- file: ["amber.yml"]
+  authors: Southbridge, Flipsie27

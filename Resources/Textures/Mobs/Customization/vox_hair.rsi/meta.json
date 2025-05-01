@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/dcd1f5d88a8c5ba9634fc3fce67a76ada45f71dc/icons/mob/sprite_accessories/vox/vox_hair.dmi and greyscaled",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/dcd1f5d88a8c5ba9634fc3fce67a76ada45f71dc/icons/mob/sprite_accessories/vox/vox_hair.dmi and greyscaled. wise_braid_s modified from braid_s by Flareguy, spotty by Flareguy",
   "size": {
     "x": 32,
     "y": 32
@@ -76,6 +76,10 @@
       "directions": 4
     },
     {
+      "name": "wise_braid_s",
+      "directions": 4
+    },
+    {
       "name": "mange_s",
       "directions": 4
     },
@@ -89,6 +93,10 @@
     },
     {
       "name": "surf_s",
+      "directions": 4
+    },
+    {
+      "name": "spotty_s",
       "directions": 4
     },
     {

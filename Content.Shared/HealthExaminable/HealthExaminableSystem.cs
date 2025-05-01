@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
@@ -85,12 +85,12 @@ public sealed class HealthExaminableSystem : EntitySystem
             {
                 first = false;
             }
-            msg.AddMarkup(chosenLocStr);
+            msg.AddMarkupOrThrow(chosenLocStr);
         }
 
         if (msg.IsEmpty)
         {
-            msg.AddMarkup(Loc.GetString($"health-examinable-{component.LocPrefix}-none"));
+            msg.AddMarkupOrThrow(Loc.GetString($"health-examinable-{component.LocPrefix}-none"));
         }
 
         // Anything else want to add on to this?

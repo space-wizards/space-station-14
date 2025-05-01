@@ -41,3 +41,14 @@
   description: A power network checking device for signals.
   icon: { sprite: Objects/Devices/gates.rsi, state: power_sensor }
   objectType: Item
+
+- type: construction
+  name: memory cell
+  id: MemoryCell
+  graph: LogicGate
+  startNode: start
+  targetNode: memory_cell
+  category: construction-category-tools
+  description: A memory cell for signals.
+  icon: { sprite: Objects/Devices/gates.rsi, state: memory_cell }
+  objectType: Item

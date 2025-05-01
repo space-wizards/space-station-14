@@ -6,7 +6,7 @@ namespace Content.Server.Speech
 {
     public sealed class AccentSystem : EntitySystem
     {
-        public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?])", RegexOptions.Compiled);
+        public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?‽])(?![\.!\?‽])", RegexOptions.Compiled);
 
         public override void Initialize()
         {

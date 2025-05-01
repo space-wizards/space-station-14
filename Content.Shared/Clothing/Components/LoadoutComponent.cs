@@ -9,10 +9,8 @@ namespace Content.Shared.Clothing.Components;
 public sealed partial class LoadoutComponent : Component
 {
     /// <summary>
-    /// A list of starting gears, of which one will be given.
+    /// A list of starting gears, of which one will be given, before RoleLoadouts are equipped.
     /// All elements are weighted the same in the list.
-    ///
-    /// If not specified, <see cref="RoleLoadout"/> will be used instead.
     /// </summary>
     [DataField("prototypes")]
     [AutoNetworkedField]
@@ -21,8 +19,6 @@ public sealed partial class LoadoutComponent : Component
     /// <summary>
     /// A list of role loadouts, of which one will be given.
     /// All elements are weighted the same in the list.
-    ///
-    /// If not specified, <see cref="StartingGear"/> will be used instead.
     /// </summary>
     [DataField]
     [AutoNetworkedField]

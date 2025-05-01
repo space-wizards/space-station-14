@@ -1,4 +1,8 @@
+using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
+using Content.Shared.Gravity;
+using Content.Shared.Slippery;
 using Content.Shared.Whitelist;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -9,6 +13,7 @@ namespace Content.Shared.Movement.Systems;
 public sealed class SpeedModifierContactsSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
@@ -81,26 +86,60 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
         var walkSpeed = 0.0f;
         var sprintSpeed = 0.0f;
 
+        // Cache the result of the airborne check, as it's expensive and independent of contacting entities, hence need only be done once.
+        var isAirborne = physicsComponent.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(uid, physicsComponent);
+
         bool remove = true;
         var entries = 0;
         foreach (var ent in _physics.GetContactingEntities(uid, physicsComponent))
         {
-            if (!TryComp<SpeedModifierContactsComponent>(ent, out var slowContactsComponent))
-                continue;
+            bool speedModified = false;
 
-            if (_whitelistSystem.IsWhitelistPass(slowContactsComponent.IgnoreWhitelist, uid))
-                continue;
+            if (TryComp<SpeedModifierContactsComponent>(ent, out var slowContactsComponent))
+            {
+                if (_whitelistSystem.IsWhitelistPass(slowContactsComponent.IgnoreWhitelist, uid))
+                    continue;
 
-            walkSpeed += slowContactsComponent.WalkSpeedModifier;
-            sprintSpeed += slowContactsComponent.SprintSpeedModifier;
-            remove = false;
-            entries++;
+                // Entities that are airborne should not be affected by contact slowdowns that are specified to not affect airborne entities.
+                if (isAirborne && !slowContactsComponent.AffectAirborne)
+                    continue;
+
+                walkSpeed += slowContactsComponent.WalkSpeedModifier;
+                sprintSpeed += slowContactsComponent.SprintSpeedModifier;
+                speedModified = true;
+            }
+
+            // SpeedModifierContactsComponent takes priority over SlowedOverSlipperyComponent, effectively overriding the slippery slow.
+            if (TryComp<SlipperyComponent>(ent, out var slipperyComponent) && speedModified == false)
+            {
+                var evSlippery = new GetSlowedOverSlipperyModifierEvent();
+                RaiseLocalEvent(uid, ref evSlippery);
+
+                if (evSlippery.SlowdownModifier != 1)
+                {
+                    walkSpeed += evSlippery.SlowdownModifier;
+                    sprintSpeed += evSlippery.SlowdownModifier;
+                    speedModified = true;
+                }
+            }
+
+            if (speedModified)
+            {
+                remove = false;
+                entries++;
+            }
         }
 
         if (entries > 0)
         {
             walkSpeed /= entries;
             sprintSpeed /= entries;
+
+            var evMax = new GetSpeedModifierContactCapEvent();
+            RaiseLocalEvent(uid, ref evMax);
+
+            walkSpeed = MathF.Max(walkSpeed, evMax.MaxWalkSlowdown);
+            sprintSpeed = MathF.Max(sprintSpeed, evMax.MaxSprintSlowdown);
 
             args.ModifySpeed(walkSpeed, sprintSpeed);
         }
@@ -118,11 +157,19 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
 
     private void OnEntityEnter(EntityUid uid, SpeedModifierContactsComponent component, ref StartCollideEvent args)
     {
-        var otherUid = args.OtherEntity;
-        if (!HasComp<MovementSpeedModifierComponent>(otherUid))
+        AddModifiedEntity(args.OtherEntity);
+    }
+
+    /// <summary>
+    /// Add an entity to be checked for speed modification from contact with another entity.
+    /// </summary>
+    /// <param name="uid">The entity to be added.</param>
+    public void AddModifiedEntity(EntityUid uid)
+    {
+        if (!HasComp<MovementSpeedModifierComponent>(uid))
             return;
 
-        EnsureComp<SpeedModifiedByContactComponent>(otherUid);
-        _toUpdate.Add(otherUid);
+        EnsureComp<SpeedModifiedByContactComponent>(uid);
+        _toUpdate.Add(uid);
     }
 }

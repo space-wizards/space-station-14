@@ -35,7 +35,7 @@
   - type: Anchorable
   - type: Pullable
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -63,6 +63,7 @@
       whitelist:
         components:
         - FitsInDispenser
+      priority: 9
   - type: ItemSlots
   - type: ContainerContainer
     containers:

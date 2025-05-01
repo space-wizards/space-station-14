@@ -2,7 +2,7 @@
 - type: rcd
   id: Invalid   # Hidden prototype - do not add to RCDs
   mode: Invalid
-  
+
 - type: rcd
   id: Deconstruct
   name: rcd-component-deconstruct
@@ -13,14 +13,14 @@
   rotation: Camera
 
 - type: rcd
-  id: DeconstructLattice   # Hidden prototype - do not add to RCDs  
+  id: DeconstructLattice   # Hidden prototype - do not add to RCDs
   name: rcd-component-deconstruct
   mode: Deconstruct
   cost: 2
   delay: 0
   rotation: Camera
   fx: EffectRCDConstruct0
-    
+
 - type: rcd
   id: DeconstructTile      # Hidden prototype - do not add to RCDs
   name: rcd-component-deconstruct
@@ -30,7 +30,7 @@
   rotation: Camera
   fx: EffectRCDDeconstruct4
 
-# Flooring 
+# Flooring
 - type: rcd
   id: Plating
   name: rcd-component-plating
@@ -44,7 +44,7 @@
   rules:
     - CanBuildOnEmptyTile
   fx: EffectRCDConstruct1
-  
+
 - type: rcd
   id: FloorSteel
   name: rcd-component-floor-steel
@@ -80,7 +80,7 @@
   category: WallsAndFlooring
   sprite: /Textures/Interface/Radial/RCD/solid_wall.png
   mode: ConstructObject
-  prototype: WallSolid 
+  prototype: WallSolid
   cost: 4
   delay: 2
   collisionMask: FullTileMask
@@ -95,7 +95,7 @@
   prototype: Grille
   cost: 4
   delay: 2
-  collisionMask: FullTileMask
+  collisionMask: Impassable
   rotation: Fixed
   fx: EffectRCDConstruct2
 
@@ -108,12 +108,12 @@
   prototype: Window
   cost: 3
   delay: 2
-  collisionMask: FullTileMask
+  collisionMask: Impassable
   rules:
     - IsWindow
   rotation: Fixed
   fx: EffectRCDConstruct2
-  
+
 - type: rcd
   id: WindowDirectional
   category: WindowsAndGrilles
@@ -122,13 +122,13 @@
   prototype: WindowDirectional
   cost: 2
   delay: 1
-  collisionMask: FullTileMask
+  collisionMask: Impassable
   collisionBounds: "-0.23,-0.49,0.23,-0.36"
   rules:
     - IsWindow
   rotation: User
   fx: EffectRCDConstruct1
-  
+
 - type: rcd
   id: ReinforcedWindow
   category: WindowsAndGrilles
@@ -137,12 +137,12 @@
   prototype: ReinforcedWindow
   cost: 4
   delay: 3
-  collisionMask: FullTileMask
+  collisionMask: Impassable
   rules:
     - IsWindow
   rotation: User
   fx: EffectRCDConstruct3
-    
+
 - type: rcd
   id: WindowReinforcedDirectional
   category: WindowsAndGrilles
@@ -151,7 +151,7 @@
   prototype: WindowReinforcedDirectional
   cost: 3
   delay: 2
-  collisionMask: FullTileMask
+  collisionMask: Impassable
   collisionBounds: "-0.23,-0.49,0.23,-0.36"
   rules:
     - IsWindow
@@ -170,7 +170,7 @@
   collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstruct4
-  
+
 - type: rcd
   id: AirlockGlass
   category: Airlocks
@@ -182,7 +182,7 @@
   collisionMask: FullTileMask
   rotation: Camera
   fx: EffectRCDConstruct4
-  
+
 - type: rcd
   id: Firelock
   category: Airlocks
@@ -208,7 +208,7 @@
   collisionBounds: "-0.23,-0.49,0.23,-0.36"
   rotation: User
   fx: EffectRCDConstruct1
-  
+
 - type: rcd
   id: BulbLight
   category: Lighting
@@ -231,12 +231,11 @@
   prototype: CableApcExtension
   cost: 1
   delay: 0
-  collisionMask: InteractImpassable
   rules:
   - MustBuildOnSubfloor
   rotation: Fixed
   fx: EffectRCDConstruct0
-    
+
 - type: rcd
   id: MVCable
   category: Electrical
@@ -245,12 +244,11 @@
   prototype: CableMV
   cost: 1
   delay: 0
-  collisionMask: InteractImpassable
   rules:
   - MustBuildOnSubfloor
   rotation: Fixed
   fx: EffectRCDConstruct0
-    
+
 - type: rcd
   id: HVCable
   category: Electrical
@@ -259,12 +257,11 @@
   prototype: CableHV
   cost: 1
   delay: 0
-  collisionMask: InteractImpassable
   rules:
   - MustBuildOnSubfloor
   rotation: Fixed
   fx: EffectRCDConstruct0
-    
+
 - type: rcd
   id: CableTerminal
   category: Electrical
@@ -273,8 +270,6 @@
   prototype: CableTerminal
   cost: 1
   delay: 0
-  collisionMask: InteractImpassable
-  rules:
-  - MustBuildOnSubfloor
+  collisionMask: Impassable
   rotation: User
   fx: EffectRCDConstruct0

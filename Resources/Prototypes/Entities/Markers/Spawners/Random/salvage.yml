@@ -40,29 +40,6 @@
       offset: 0.0
 
 - type: entity
-  name: Salvage Canister Spawner
-  id: SalvageCanisterSpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Structures/Storage/canister.rsi
-          state: blue
-    - type: RandomSpawner
-      rarePrototypes:
-        - PlasmaCanister
-      rareChance: 0.03
-      prototypes:
-        - AirCanister
-        - NitrogenCanister
-        - OxygenCanister
-        - CarbonDioxideCanister
-        - WaterVaporCanister
-      chance: 0.9
-      offset: 0.0
-
-- type: entity
   name: salvage loot spawner
   id: SalvageLootSpawner
   parent: MarkerBase

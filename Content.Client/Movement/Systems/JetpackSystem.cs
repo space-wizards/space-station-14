@@ -49,13 +49,17 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
         // TODO: Please don't copy-paste this I beg
         // make a generic particle emitter system / actual particles instead.
-        var query = EntityQueryEnumerator<ActiveJetpackComponent>();
+        var query = EntityQueryEnumerator<ActiveJetpackComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out var uid, out var comp, out var xform))
         {
-            if (_timing.CurTime < comp.TargetTime)
-                continue;
+            if (_transform.InRange(xform.Coordinates, comp.LastCoordinates, comp.MaxDistance))
+            {
+                if (_timing.CurTime < comp.TargetTime)
+                    continue;
+            }
 
+            comp.LastCoordinates = _transform.GetMoverCoordinates(xform.Coordinates);
             comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
 
             CreateParticles(uid);
@@ -64,15 +68,15 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
     private void CreateParticles(EntityUid uid)
     {
+        var uidXform = Transform(uid);
         // Don't show particles unless the user is moving.
-        if (Container.TryGetContainingContainer(uid, out var container) &&
+        if (Container.TryGetContainingContainer((uid, uidXform, null), out var container) &&
             TryComp<PhysicsComponent>(container.Owner, out var body) &&
             body.LinearVelocity.LengthSquared() < 1f)
         {
             return;
         }
 
-        var uidXform = Transform(uid);
         var coordinates = uidXform.Coordinates;
         var gridUid = _transform.GetGrid(coordinates);
 

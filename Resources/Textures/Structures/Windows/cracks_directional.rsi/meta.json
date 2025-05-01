@@ -8,15 +8,15 @@
   "copyright": "Adapted from https://github.com/space-wizards/space-station-14/ at commit f57e8ec6b9b4b72ef56c8146be0bc159ed2691ee, originally added by Zumorica, and modified for directional use by Darkie",
   "states": [
     {
-      "name": "DamageOverlay_4",
+      "name": "DamageOverlay_5",
       "directions": 4
     },
     {
-      "name": "DamageOverlay_8",
+      "name": "DamageOverlay_10",
       "directions": 4
     },
     {
-      "name": "DamageOverlay_12",
+      "name": "DamageOverlay_20",
       "directions": 4
     }
   ]

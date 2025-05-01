@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Paradise Station from this PR https://github.com/ParadiseSS13/Paradise/pull/17000, original sprite by S34N (https://github.com/S34NW) and modified sprite by PuroSlavKing (https://github.com/PuroSlavKing)",
+  "copyright": "Taken from Paradise Station from this PR https://github.com/ParadiseSS13/Paradise/pull/17000, original sprite by S34N (https://github.com/S34NW) and modified sprite by PuroSlavKing (https://github.com/PuroSlavKing). Vox state by Flareguy",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-vox",
       "directions": 4
     },
     {

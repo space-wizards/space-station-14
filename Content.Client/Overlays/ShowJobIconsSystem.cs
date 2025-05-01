@@ -13,7 +13,7 @@ public sealed class ShowJobIconsSystem : EquipmentHudSystem<ShowJobIconsComponen
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
-    [ValidatePrototypeId<StatusIconPrototype>]
+    [ValidatePrototypeId<JobIconPrototype>]
     private const string JobIconForNoId = "JobIconNoId";
 
     public override void Initialize()
@@ -52,7 +52,7 @@ public sealed class ShowJobIconsSystem : EquipmentHudSystem<ShowJobIconsComponen
             }
         }
 
-        if (_prototype.TryIndex<StatusIconPrototype>(iconId, out var iconPrototype))
+        if (_prototype.TryIndex<JobIconPrototype>(iconId, out var iconPrototype))
             ev.StatusIcons.Add(iconPrototype);
         else
             Log.Error($"Invalid job icon prototype: {iconPrototype}");

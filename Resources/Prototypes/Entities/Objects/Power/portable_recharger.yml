@@ -2,7 +2,7 @@
   parent: Clothing
   id: PortableRecharger
   name: portable recharger
-  description: High-tech recharger adapted for portability
+  description: High-tech recharger adapted for portability.
   components:
   - type: Item
     size: Huge

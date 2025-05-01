@@ -6,6 +6,10 @@
         <BoxContainer Orientation="Horizontal">
             <LineEdit Name="AmountLineEdit" Access="Public" HorizontalExpand="True" PlaceHolder="{Loc 'ui-transfer-amount-line-edit-placeholder'}"/>
         </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+          <Label Name="MinimumAmount" Access="Public" HorizontalExpand="True" />
+          <Label Name="MaximumAmount" Access="Public" />
+        </BoxContainer>
         <Button Name="ApplyButton" Access="Public" Text="{Loc 'ui-transfer-amount-apply'}"/>
     </BoxContainer>
 </DefaultWindow>

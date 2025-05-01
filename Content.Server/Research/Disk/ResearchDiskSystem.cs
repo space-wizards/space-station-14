@@ -31,6 +31,7 @@ namespace Content.Server.Research.Disk
             _research.ModifyServerPoints(args.Target.Value, component.Points, server);
             _popupSystem.PopupEntity(Loc.GetString("research-disk-inserted", ("points", component.Points)), args.Target.Value, args.User);
             EntityManager.QueueDeleteEntity(uid);
+            args.Handled = true;
         }
 
         private void OnMapInit(EntityUid uid, ResearchDiskComponent component, MapInitEvent args)

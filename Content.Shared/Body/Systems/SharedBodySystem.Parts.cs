@@ -189,7 +189,7 @@ public partial class SharedBodySystem
     /// </summary>
     public EntityUid? GetParentPartOrNull(EntityUid uid)
     {
-        if (!Containers.TryGetContainingContainer(uid, out var container))
+        if (!Containers.TryGetContainingContainer((uid, null, null), out var container))
             return null;
 
         var parent = container.Owner;
@@ -205,7 +205,7 @@ public partial class SharedBodySystem
     /// </summary>
     public (EntityUid Parent, string Slot)? GetParentPartAndSlotOrNull(EntityUid uid)
     {
-        if (!Containers.TryGetContainingContainer(uid, out var container))
+        if (!Containers.TryGetContainingContainer((uid, null, null), out var container))
             return null;
 
         var slotId = GetPartSlotContainerIdFromContainer(container.ID);
@@ -235,7 +235,7 @@ public partial class SharedBodySystem
         parentUid = null;
         parentComponent = null;
 
-        if (Containers.TryGetContainingContainer(partUid, out var container) &&
+        if (Containers.TryGetContainingContainer((partUid, null, null), out var container) &&
             TryComp(container.Owner, out parentComponent))
         {
             parentUid = container.Owner;

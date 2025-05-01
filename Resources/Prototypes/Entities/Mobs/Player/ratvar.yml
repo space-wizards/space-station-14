@@ -49,18 +49,18 @@
         restitution: 0.8
         density: 1
         mask:
-        - AllMask
+        - SingularityLayer
         layer:
-        - AllMask
+        - SingularityLayer
       EventHorizonConsumer:
         shape:
           !type:PhysShapeCircle
             radius: 5
         hard: false
         mask:
-        - AllMask
+        - SingularityLayer
         layer:
-        - AllMask
+        - SingularityLayer
   - type: Input
     context: "ghost"
   - type: MovementIgnoreGravity
@@ -89,6 +89,12 @@
   - type: GravityWell
     baseRadialAcceleration: 6
     maxRange: 8
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
   - type: WarpPoint
     follow: true
     location: Ratvar
+    blacklist:
+      tags:
+      - GhostOnlyWarp

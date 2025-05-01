@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by EmoGarbage404",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "tooth"
+    },
+    {
+      "name": "tooth_2"
+    },
+    {
+      "name": "tooth_3"
+    }
+  ]
+}

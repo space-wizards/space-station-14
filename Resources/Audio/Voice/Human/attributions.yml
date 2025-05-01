@@ -80,10 +80,15 @@
   copyright: "thatkellytrna on freesound.org"
   source: "https://freesound.org/people/thatkellytrna/sounds/425777/"
 
+- files: ["male_cough_1.ogg"]
+  license: "CC0-1.0"
+  copyright: "dastudiospr on freesound.org"
+  source: "https://freesound.org/people/dastudiospr/sounds/537150/"
+
 - files: ["male_cough_2.ogg"]
   license: "CC0-1.0"
-  copyright: "Harris85 on freesound.org"
-  source: "https://freesound.org/people/Harris85/sounds/208761/"
+  copyright: "qubodup on freesound.org"
+  source: "https://freesound.org/people/qubodup/sounds/743360/"
 
 - files: ["female_sneeze_1.ogg"]
   license: "CC0-1.0"

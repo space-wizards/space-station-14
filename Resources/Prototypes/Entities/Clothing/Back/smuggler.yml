@@ -1,0 +1,120 @@
+- type: entity
+  abstract: true
+  id: BaseSubfloorAnchorStorage
+  components:
+  - type: Appearance
+  - type: SubFloorHide
+  - type: Anchorable
+  - type: CollideOnAnchor
+  - type: Transform
+    anchored: false
+  - type: AnchoredStorageFilter
+    blacklist:
+      components:
+      - HumanoidAppearance # for forks with felines
+  - type: BlockAnchorOn
+    blacklist:
+      components:
+      - AnchoredStorageFilter
+  - type: Visibility
+    layer: 1
+
+- type: entity
+  abstract: true
+  parent: BaseSubfloorAnchorStorage
+  id: BaseSubfloorAnchorStorageAnchored
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    canCollide: false
+    bodyType: Static
+
+- type: entity
+  parent: [ BaseSubfloorAnchorStorageAnchored, ClothingBackpackSatchel, BaseMinorContraband ]
+  id: ClothingBackpackSatchelSmuggler
+  name: smuggler's satchel
+  suffix: Empty
+  description: A handy, suspicious looking satchel. Just flat enough to fit underneath floor tiles.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/smuggler.rsi
+    state: icon
+
+- type: entity
+  parent: [ BaseSubfloorAnchorStorage, ClothingBackpackSatchel, BaseMinorContraband ]
+  id: ClothingBackpackSatchelSmugglerUnanchored
+  name: smuggler's satchel
+  suffix: Empty, Unanchored
+  description: A handy, suspicious looking satchel. Just flat enough to fit underneath floor tiles.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/smuggler.rsi
+    state: icon
+
+- type: entity
+  parent: [ BaseSubfloorAnchorStorageAnchored, BriefcaseSyndie, BaseMinorContraband ]
+  id: BriefcaseSmugglerCash
+  name: smuggler's briefcase
+  suffix: Smuggler, Do Not Map
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: SpaceCash5000
+          amount: !type:RangeNumberSelector
+            range: 1, 11
+
+- type: entity
+  parent: [ BaseSubfloorAnchorStorageAnchored, ClothingBackpackDuffelClown, BaseMinorContraband ]
+  id: ClothingBackpackDuffelClownSmuggler
+  name: smuggler's clown duffel bag
+  suffix: Smuggler, Do Not Map
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: SpeedLoaderCap
+          amount: !type:RangeNumberSelector
+            range: 4, 8
+        - !type:GroupSelector
+          children:
+          - id: RevolverCapGun
+            amount: !type:RangeNumberSelector
+              range: 4, 8
+            weight: 95
+          - id: RevolverCapGunFake
+            amount: !type:RangeNumberSelector
+              range: 1, 8
+            weight: 5
+
+- type: entity
+  parent: ClothingBackpackSatchelSmuggler
+  id: ClothingBackpackSatchelSmugglerFilled
+  suffix: Smuggler, Do Not Map
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/smuggler.rsi
+    state: icon
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: FillSmugglerBackpack
+
+- type: entity
+  parent: MarkerBase
+  id: RandomSatchelSpawner
+  name: random smuggler's satchel spawner
+  suffix: Do Not Map
+  components:
+  - type: Sprite
+    layers:
+      - sprite: Clothing/Back/Satchels/smuggler.rsi
+        state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomSatchelTable

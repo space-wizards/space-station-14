@@ -1,7 +1,6 @@
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Ghost.Roles;
 using Content.Shared.Ghost.Roles.Components;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
@@ -33,7 +32,7 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
 
     private void RefreshUI()
     {
-        // The main control that will contain all of the clickable options
+        // The main control that will contain all the clickable options
         var main = FindControl<RadialContainer>("Main");
 
         // The purpose of this radial UI is for ghost role radios that allow you to select
@@ -52,7 +51,6 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
 
             var button = new GhostRoleRadioMenuButton()
             {
-                StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64, 64),
                 ToolTip = Loc.GetString(ghostRoleProto.Name),
                 ProtoId = ghostRoleProto.ID,
@@ -70,7 +68,7 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
             if (_prototypeManager.TryIndex(ghostRoleProto.IconPrototype, out var iconProto))
                 entProtoView.SetPrototype(iconProto);
             else
-                entProtoView.SetPrototype(comp.Prototype);
+                entProtoView.SetPrototype(ghostRoleProto.EntityPrototype);
 
             button.AddChild(entProtoView);
             main.AddChild(button);
@@ -101,7 +99,7 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
     }
 }
 
-public sealed class GhostRoleRadioMenuButton : RadialMenuTextureButton
+public sealed class GhostRoleRadioMenuButton : RadialMenuTextureButtonWithSector
 {
     public ProtoId<GhostRolePrototype> ProtoId { get; set; }
 }

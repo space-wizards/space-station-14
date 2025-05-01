@@ -2,9 +2,12 @@ using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
+using Content.Shared.Chat;
+using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
+using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -16,7 +19,6 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -36,6 +38,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly SharedSuicideSystem _suicide = default!;
 
         public override void Initialize()
         {
@@ -48,31 +51,41 @@ namespace Content.Server.Kitchen.EntitySystems
             //DoAfter
             SubscribeLocalEvent<KitchenSpikeComponent, SpikeDoAfterEvent>(OnDoAfter);
 
-            SubscribeLocalEvent<KitchenSpikeComponent, SuicideEvent>(OnSuicide);
+            SubscribeLocalEvent<KitchenSpikeComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
 
             SubscribeLocalEvent<ButcherableComponent, CanDropDraggedEvent>(OnButcherableCanDrop);
         }
 
-        private void OnButcherableCanDrop(EntityUid uid, ButcherableComponent component, ref CanDropDraggedEvent args)
+        private void OnButcherableCanDrop(Entity<ButcherableComponent> entity, ref CanDropDraggedEvent args)
         {
             args.Handled = true;
-            args.CanDrop |= component.Type != ButcheringType.Knife;
+            args.CanDrop |= entity.Comp.Type != ButcheringType.Knife;
         }
 
-        private void OnSuicide(EntityUid uid, KitchenSpikeComponent component, SuicideEvent args)
+        /// <summary>
+        /// TODO: Update this so it actually meatspikes the user instead of applying lethal damage to them.
+        /// </summary>
+        private void OnSuicideByEnvironment(Entity<KitchenSpikeComponent> entity, ref SuicideByEnvironmentEvent args)
         {
             if (args.Handled)
                 return;
-            args.SetHandled(SuicideKind.Piercing);
-            var victim = args.Victim;
-            var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", victim));
-            _popupSystem.PopupEntity(othersMessage, victim);
 
-            var selfMessage = Loc.GetString("comp-kitchen-spike-suicide-self");
-            _popupSystem.PopupEntity(selfMessage, victim, victim);
+            if (!TryComp<DamageableComponent>(args.Victim, out var damageableComponent))
+                return;
+
+            _suicide.ApplyLethalDamage((args.Victim, damageableComponent), "Piercing");
+            var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other",
+                                                ("victim", Identity.Entity(args.Victim, EntityManager)),
+                                                ("this", entity));
+            _popupSystem.PopupEntity(othersMessage, args.Victim, Filter.PvsExcept(args.Victim), true);
+
+            var selfMessage = Loc.GetString("comp-kitchen-spike-suicide-self",
+                                            ("this", entity));
+            _popupSystem.PopupEntity(selfMessage, args.Victim, args.Victim);
+            args.Handled = true;
         }
 
-        private void OnDoAfter(EntityUid uid, KitchenSpikeComponent component, DoAfterEvent args)
+        private void OnDoAfter(Entity<KitchenSpikeComponent> entity, ref SpikeDoAfterEvent args)
         {
             if (args.Args.Target == null)
                 return;
@@ -82,49 +95,49 @@ namespace Content.Server.Kitchen.EntitySystems
 
             if (args.Cancelled)
             {
-                component.InUse = false;
+                entity.Comp.InUse = false;
                 return;
             }
 
             if (args.Handled)
                 return;
 
-            if (Spikeable(uid, args.Args.User, args.Args.Target.Value, component, butcherable))
-                Spike(uid, args.Args.User, args.Args.Target.Value, component);
+            if (Spikeable(entity, args.Args.User, args.Args.Target.Value, entity.Comp, butcherable))
+                Spike(entity, args.Args.User, args.Args.Target.Value, entity.Comp);
 
-            component.InUse = false;
+            entity.Comp.InUse = false;
             args.Handled = true;
         }
 
-        private void OnDragDrop(EntityUid uid, KitchenSpikeComponent component, ref DragDropTargetEvent args)
+        private void OnDragDrop(Entity<KitchenSpikeComponent> entity, ref DragDropTargetEvent args)
         {
             if (args.Handled)
                 return;
 
             args.Handled = true;
 
-            if (Spikeable(uid, args.User, args.Dragged, component))
-                TrySpike(uid, args.User, args.Dragged, component);
+            if (Spikeable(entity, args.User, args.Dragged, entity.Comp))
+                TrySpike(entity, args.User, args.Dragged, entity.Comp);
         }
 
-        private void OnInteractHand(EntityUid uid, KitchenSpikeComponent component, InteractHandEvent args)
+        private void OnInteractHand(Entity<KitchenSpikeComponent> entity, ref InteractHandEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (component.PrototypesToSpawn?.Count > 0)
+            if (entity.Comp.PrototypesToSpawn?.Count > 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-knife-needed"), uid, args.User);
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-knife-needed"), entity, args.User);
                 args.Handled = true;
             }
         }
 
-        private void OnInteractUsing(EntityUid uid, KitchenSpikeComponent component, InteractUsingEvent args)
+        private void OnInteractUsing(Entity<KitchenSpikeComponent> entity, ref InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (TryGetPiece(uid, args.User, args.Used))
+            if (TryGetPiece(entity, args.User, args.Used))
                 args.Handled = true;
         }
 
@@ -134,7 +147,11 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable))
                 return;
 
-            _logger.Add(LogType.Gib, LogImpact.Extreme, $"{ToPrettyString(userUid):user} kitchen spiked {ToPrettyString(victimUid):target}");
+            var logImpact = LogImpact.Medium;
+            if (HasComp<HumanoidAppearanceComponent>(victimUid))
+                logImpact = LogImpact.Extreme;
+
+            _logger.Add(LogType.Gib, logImpact, $"{ToPrettyString(userUid):user} kitchen spiked {ToPrettyString(victimUid):target}");
 
             // TODO VERY SUS
             component.PrototypesToSpawn = EntitySpawnCollection.GetSpawns(butcherable.SpawnedEntities, _random);
@@ -146,7 +163,11 @@ namespace Content.Server.Kitchen.EntitySystems
 
             UpdateAppearance(uid, null, component);
 
-            _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill", ("user", Identity.Entity(userUid, EntityManager)), ("victim", victimUid)), uid, PopupType.LargeCaution);
+            _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill",
+                                                    ("user", Identity.Entity(userUid, EntityManager)),
+                                                    ("victim", Identity.Entity(victimUid, EntityManager)),
+                                                    ("this", uid)),
+                                    uid, PopupType.LargeCaution);
 
             _transform.SetCoordinates(victimUid, Transform(uid).Coordinates);
             // THE WHAT?
@@ -156,7 +177,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 QueueDel(gib);
             }
 
-            _audio.PlayEntity(component.SpikeSound, Filter.Pvs(uid), uid, true);
+            _audio.PlayPvs(component.SpikeSound, uid);
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,
@@ -259,7 +280,8 @@ namespace Content.Server.Kitchen.EntitySystems
             {
                 BreakOnDamage = true,
                 BreakOnMove = true,
-                NeedHand = true
+                NeedHand = true,
+                BreakOnDropItem = false,
             };
 
             _doAfter.TryStartDoAfter(doAfterArgs);

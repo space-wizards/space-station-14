@@ -2,6 +2,7 @@
   id: VoxHairAfro
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -11,6 +12,7 @@
   id: VoxHairBraids
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -20,6 +22,7 @@
   id: VoxHairCrestedQuills
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -29,6 +32,7 @@
   id: VoxHairEmperorQuills
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -38,6 +42,7 @@
   id: VoxHairFlowing
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -47,6 +52,7 @@
   id: VoxHairHawk
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -56,6 +62,7 @@
   id: VoxHairHorns
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -65,6 +72,7 @@
   id: VoxHairKeelQuills
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -74,6 +82,7 @@
   id: VoxHairKeetQuills
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -83,6 +92,7 @@
   id: VoxHairKingly
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -92,15 +102,17 @@
   id: VoxHairLongBraid
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
-      state: afro_s
+      state: long_braid_s
 
 - type: marking
   id: VoxHairMange
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -110,6 +122,7 @@
   id: VoxHairMohawk
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -119,6 +132,7 @@
   id: VoxHairNights
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -128,6 +142,7 @@
   id: VoxHairPony
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -137,6 +152,7 @@
   id: VoxHairRazorClipped
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -146,6 +162,7 @@
   id: VoxHairRazor
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -155,6 +172,7 @@
   id: VoxHairSortBraid
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -164,15 +182,27 @@
   id: VoxHairShortQuills
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
       state: shortquills_s
 
 - type: marking
+  id: VoxHairSpotty
+  bodyPart: Hair
+  markingCategory: Hair
+  canBeDisplaced: false
+  speciesRestriction: [Vox]
+  sprites:
+    - sprite: Mobs/Customization/vox_hair.rsi
+      state: spotty_s
+
+- type: marking
   id: VoxHairSurf
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
@@ -182,15 +212,27 @@
   id: VoxHairTielQuills
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi
       state: tielquills_s
 
 - type: marking
+  id: VoxHairWiseBraid
+  bodyPart: Hair
+  markingCategory: Hair
+  canBeDisplaced: false
+  speciesRestriction: [Vox]
+  sprites:
+    - sprite: Mobs/Customization/vox_hair.rsi
+      state: wise_braid_s
+      
+- type: marking
   id: VoxHairYasu
   bodyPart: Hair
   markingCategory: Hair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_hair.rsi

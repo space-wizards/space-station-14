@@ -1,18 +1,10 @@
 # Jumpsuit
 - type: loadout
   id: ChemistJumpsuit
-  equipment: ChemistJumpsuit
-
-- type: startingGear
-  id: ChemistJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitChemistry
 
 - type: loadout
-  id: ChemistJumpskirt
-  equipment: ChemistJumpskirt
-
-- type: startingGear
   id: ChemistJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtChemistry
@@ -20,27 +12,15 @@
 # Back
 - type: loadout
   id: ChemistBackpack
-  equipment: ChemistBackpack
-
-- type: startingGear
-  id: ChemistBackpack
   equipment:
     back: ClothingBackpackChemistry
 
 - type: loadout
   id: ChemistSatchel
-  equipment: ChemistSatchel
-
-- type: startingGear
-  id: ChemistSatchel
   equipment:
     back: ClothingBackpackSatchelChemistry
 
 - type: loadout
-  id: ChemistDuffel
-  equipment: ChemistDuffel
-
-- type: startingGear
   id: ChemistDuffel
   equipment:
     back: ClothingBackpackDuffelChemistry
@@ -48,18 +28,10 @@
 # Outer clothing
 - type: loadout
   id: ChemistLabCoat
-  equipment: ChemistLabCoat
-
-- type: startingGear
-  id: ChemistLabCoat
   equipment:
     outerClothing: ClothingOuterCoatLabChem
 
 - type: loadout
-  id: ChemistWintercoat
-  equipment: ChemistWintercoat
-
-- type: startingGear
   id: ChemistWintercoat
   equipment:
     outerClothing: ClothingOuterWinterChem

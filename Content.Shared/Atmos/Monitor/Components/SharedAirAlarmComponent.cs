@@ -37,7 +37,7 @@ public interface IAtmosDeviceData
 [Serializable, NetSerializable]
 public sealed class AirAlarmUIState : BoundUserInterfaceState
 {
-    public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, Dictionary<string, IAtmosDeviceData> deviceData, AirAlarmMode mode, AirAlarmTab tab, AtmosAlarmType alarmType, bool autoMode)
+    public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, List<(string, IAtmosDeviceData)> deviceData, AirAlarmMode mode, AtmosAlarmType alarmType, bool autoMode)
     {
         Address = address;
         DeviceCount = deviceCount;
@@ -45,7 +45,6 @@ public sealed class AirAlarmUIState : BoundUserInterfaceState
         TemperatureAverage = temperatureAverage;
         DeviceData = deviceData;
         Mode = mode;
-        Tab = tab;
         AlarmType = alarmType;
         AutoMode = autoMode;
     }
@@ -57,25 +56,14 @@ public sealed class AirAlarmUIState : BoundUserInterfaceState
     /// <summary>
     ///     Every single device data that can be seen from this
     ///     air alarm. This includes vents, scrubbers, and sensors.
-    ///     The device data you get, however, depends on the current
-    ///     selected tab.
+    ///     Each entry is a tuple of device address and the device
+    ///     data. The same address may appear multiple times, if
+    ///     that device provides multiple functions.
     /// </summary>
-    public Dictionary<string, IAtmosDeviceData> DeviceData { get; }
+    public List<(string, IAtmosDeviceData)> DeviceData { get; }
     public AirAlarmMode Mode { get; }
-    public AirAlarmTab Tab { get; }
     public AtmosAlarmType AlarmType { get; }
     public bool AutoMode { get; }
-}
-
-[Serializable, NetSerializable]
-public sealed class AirAlarmTabSetMessage : BoundUserInterfaceMessage
-{
-    public AirAlarmTabSetMessage(AirAlarmTab tab)
-    {
-        Tab = tab;
-    }
-
-    public AirAlarmTab Tab { get; }
 }
 
 [Serializable, NetSerializable]
@@ -143,12 +131,4 @@ public sealed class AirAlarmUpdateAlarmThresholdMessage : BoundUserInterfaceMess
         Type = type;
         Gas = gas;
     }
-}
-
-public enum AirAlarmTab
-{
-    Vent,
-    Scrubber,
-    Sensors,
-    Settings
 }

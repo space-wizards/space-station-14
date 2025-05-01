@@ -17,10 +17,12 @@
     BriefcaseBrown: 2
     BookSpaceLaw: 3
     LuxuryPen: 2
+    HandLabeler: 2
   contrabandInventory:
     ClothingOuterRobesJudge: 1
     ClothingHeadHatPwig: 1
     # "Legally" obtained currency
     SpaceCash100: 2
+    ToyFigurineLawyer: 1
   emaggedInventory:
     CyberPen: 1

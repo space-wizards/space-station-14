@@ -2,7 +2,7 @@ using Content.Shared.CCVar;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-public sealed partial class ExplosionSystem : EntitySystem
+public sealed partial class ExplosionSystem
 {
     public int MaxIterations { get; private set; }
     public int MaxArea { get; private set; }
