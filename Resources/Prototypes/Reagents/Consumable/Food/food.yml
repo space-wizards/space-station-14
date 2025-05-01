@@ -7,6 +7,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: nutriment
   color: "#24591F"
+  chemComplexity: 1
   metabolisms:
     Food:
       effects:
@@ -16,7 +17,6 @@
     amount: 1.5
   - !type:PlantAdjustHealth
     amount: 0.75
-    chemComplexity: 1
 
 - type: reagent
   id: Vitamin #Anything "healthy"
@@ -26,6 +26,7 @@
   physicalDesc: reagent-physical-desc-chalky
   flavor: vitamin
   color: "#D3D3D3"
+  chemComplexity: 1
   metabolisms:
     Food: #This makes it not compete with medicines, a large bonus for something that can heal
       effects:
@@ -45,7 +46,6 @@
     amount: 0.5
   - !type:PlantAdjustHealth
     amount: 1.5
-  chemComplexity: 1
 
 - type: reagent
   id: Protein #Meat and beans
@@ -55,6 +55,7 @@
   physicalDesc: reagent-physical-desc-clumpy
   flavor: protein
   color: "#FFFFE5"
+  chemComplexity: 1
   metabolisms:
     Food:
       effects:
@@ -66,7 +67,6 @@
       - !type:ModifyBloodLevel
         amount: 1 # weaker than iron but pretty good all things considered
       - !type:SatiateHunger
-  chemComplexity: 1
 
 - type: reagent
   id: Sugar #Candy and grains
@@ -77,6 +77,7 @@
   flavor: sweet
   color: white
   meltingPoint: 146.0
+  chemComplexity: 1
   metabolisms:
     Food:
       effects:
