@@ -1,8 +1,6 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
-using Content.Server.Machines.Components;
 using Content.Shared.Machines.Components;
 using Content.Shared.Machines.EntitySystems;
 using Content.Shared.Machines.Events;
@@ -28,8 +26,8 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 
         SubscribeLocalEvent<MultipartMachineComponent, ComponentStartup>(OnComponentStartup);
 
-        SubscribeLocalEvent<ConstructionComponent, AfterConstructionChangeEntityEvent>(OnConstructionNodeChanged);
-        SubscribeLocalEvent<ConstructionComponent, AnchorStateChangedEvent>(OnConstructionAnchorChanged);
+        SubscribeLocalEvent<MultipartMachinePartComponent, AfterConstructionChangeEntityEvent>(OnConstructionNodeChanged);
+        SubscribeLocalEvent<MultipartMachinePartComponent, AnchorStateChangedEvent>(OnPartAnchorChanged);
     }
 
     /// <summary>
@@ -107,7 +105,8 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
                 {
                     // This part lost its entity, ensure we clean up the old entity so it's no longer marked
                     // as something we care about.
-                    RemComp<MultipartMachinePartComponent>(GetEntity(originalPart!.Value));
+                    var comp = EnsureComp<MultipartMachinePartComponent>(GetEntity(originalPart!.Value));
+                    comp.Master = null;
                     partsRemoved.Add(key);
                 }
             }
@@ -144,13 +143,13 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     }
 
     /// <summary>
-    /// Handles when a constructable entity has been created due to a move in a construction graph.
+    /// Handles when a machine part entity has been created due to a move in a construction graph.
     /// Rescans all known multipart machines within range that have a part which matches that specific graph
     /// and node IDs.
     /// </summary>
-    /// <param name="ent">Constructable entity that has moved in a graph.</param>
+    /// <param name="ent">Machine part entity that has moved in a graph.</param>
     /// <param name="args">Args for this event.</param>
-    private void OnConstructionNodeChanged(Entity<ConstructionComponent> ent,
+    private void OnConstructionNodeChanged(Entity<MultipartMachinePartComponent> ent,
         ref AfterConstructionChangeEntityEvent args)
     {
         if (!XformQuery.TryGetComponent(ent.Owner, out var constructXform))
@@ -176,14 +175,14 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     }
 
     /// <summary>
-    /// Handles when a constructable entity has been anchored or unanchored by a user.
-    /// We might be able to link an unanchored part to a machine, but anchoring a constructable
-    /// entity will require a rescan of all machines within range as we have no idea what machine it might be a
-    /// part of.
+    /// Handles when a machine part entity has been anchored or unanchored by a user.
+    /// We might be able to link an unanchored part to a machine, but anchoring a constructable entity,
+    /// which machine parts are, will require a rescan of all machines within range as we have no idea
+    /// what machine it might be a part of.
     /// </summary>
-    /// <param name="ent">Constructable entity that has been anchored or unanchored.</param>
+    /// <param name="ent">Machine part entity that has been anchored or unanchored.</param>
     /// <param name="args">Args for this event, notably the anchor status.</param>
-    private void OnConstructionAnchorChanged(Entity<ConstructionComponent> ent, ref AnchorStateChangedEvent args)
+    private void OnPartAnchorChanged(Entity<MultipartMachinePartComponent> ent, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
         {

@@ -1,4 +1,4 @@
-namespace Content.Server.Machines.Components;
+namespace Content.Shared.Machines.Components;
 
 /// <summary>
 /// Server side component for marking entities as part of a multipart machine.

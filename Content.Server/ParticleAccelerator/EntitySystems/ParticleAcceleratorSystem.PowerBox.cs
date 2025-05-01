@@ -1,6 +1,6 @@
-﻿using Content.Server.Machines.Components;
-using Content.Server.ParticleAccelerator.Components;
+﻿using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Machines.Components;
 using Content.Shared.ParticleAccelerator.Components;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
