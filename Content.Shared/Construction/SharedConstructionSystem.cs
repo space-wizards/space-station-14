@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Construction.Components;
-using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Interaction.SharedInteractionSystem;

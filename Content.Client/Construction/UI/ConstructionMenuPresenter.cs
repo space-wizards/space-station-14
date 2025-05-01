@@ -490,7 +490,7 @@ namespace Content.Client.Construction.UI
             if (_selectedCategory == FavoriteCatName)
             {
                 OnViewPopulateRecipes(_constructionView,
-                    _favoritedRecipes.Count > 0 ? (string.Empty, _favoriteCatName: FavoriteCatName) : (string.Empty, string.Empty));
+                    _favoritedRecipes.Count > 0 ? (string.Empty, FavoriteCatName) : (string.Empty, string.Empty));
             }
 
             PopulateInfo(_selected);

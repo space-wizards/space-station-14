@@ -32,7 +32,7 @@ namespace Content.Client.Construction
         private readonly Dictionary<int, EntityUid> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
 
-        private Dictionary<string, string> _recipesMetadataCache = [];
+        private readonly Dictionary<string, string> _recipesMetadataCache = [];
 
         public bool CraftingEnabled { get; private set; }
 
@@ -106,9 +106,14 @@ namespace Content.Client.Construction
                     {
                         // If the stack is not empty, there is a high probability that the loop will go to infinity.
                         if (stack.Count == 0)
+                        {
                             foreach (var edge in node.Edges)
+                            {
                                 if (graphProto.Nodes.TryGetValue(edge.Target, out var graphNode))
                                     stack.Push(graphNode);
+                            }
+                        }
+
                         continue;
                     }
 
@@ -166,7 +171,7 @@ namespace Content.Client.Construction
                     "construction-ghost-examine-message",
                     ("name", component.Prototype.Name)));
 
-                if (!PrototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
+                if (!PrototypeManager.TryIndex(component.Prototype.Graph, out var graph))
                     return;
 
                 var startNode = graph.Nodes[component.Prototype.StartNode];
@@ -290,7 +295,7 @@ namespace Content.Client.Construction
             var sprite = EntityManager.GetComponent<SpriteComponent>(ghost.Value);
             sprite.Color = new Color(48, 255, 48, 128);
 
-            if (targetProto.TryGetComponent(out IconComponent? icon))
+            if (targetProto.TryGetComponent(out IconComponent? icon, EntityManager.ComponentFactory))
             {
                 sprite.AddBlankLayer(0);
                 sprite.LayerSetSprite(0, icon.Icon);

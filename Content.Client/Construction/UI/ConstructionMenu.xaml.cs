@@ -120,6 +120,7 @@ namespace Content.Client.Construction.UI
                 button.AddChild(box);
                 button.ToolTip = prototype.Description;
                 button.AddStyleClass(ListContainer.StyleClassListContainerButton);
+                box.InvalidateArrange();
             };
 
             SearchBar.OnTextChanged += _ =>
@@ -158,7 +159,11 @@ namespace Content.Client.Construction.UI
         }
 
         public void SetRecipeInfo(
-            string name, string description, EntityPrototype? targetPrototype, bool isItem, bool isFavorite)
+            string name,
+            string description,
+            EntityPrototype? targetPrototype,
+            bool isItem,
+            bool isFavorite)
         {
             BuildButton.Disabled = false;
             BuildButton.Text = Loc.GetString(isItem ? "construction-menu-place-ghost" : "construction-menu-craft");
