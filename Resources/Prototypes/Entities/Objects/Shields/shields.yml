@@ -235,6 +235,60 @@
                   max: 2
 
 - type: entity
+  parent: BaseShield
+  id: SalamiShield
+  name: salami lid shield
+  description: Ain't gon' hit, Won't hit.
+  components:
+  - type: Sprite
+    state: salami-icon
+  - type: Item
+    heldPrefix: salami
+  - type: Blocking
+    passiveBlockModifier:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.95
+        Heat: 0.95
+    activeBlockModifier:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.9
+        Heat: 0.9
+      flatReductions:
+        Blunt: 1
+        Slash: 1
+        Piercing: .5
+        Heat: .5
+  - type: Construction
+    graph: SalamiShield
+    node: salamiShield
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic:
+            min: 1
+            max: 3
+
+- type: entity
   name: web shield
   parent: BaseShield
   id: WebShield
