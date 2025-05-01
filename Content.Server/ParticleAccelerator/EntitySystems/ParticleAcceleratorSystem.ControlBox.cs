@@ -406,8 +406,10 @@ public sealed partial class ParticleAcceleratorSystem
         if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))
             return;
 
+        // User has requested a manual rescan of the machine, if anything HAS changed that the multipart
+        // machine system has missed then a AssemblyStateChanged event will be raised at the machine.
         var machine = new Entity<MultipartMachineComponent>(uid, machineComp);
-        _multipartMachine.Rescan(machine, msg.Actor); // Raises an event if state has changed
+        _multipartMachine.Rescan(machine, msg.Actor);
     }
 
     public static int GetPANumericalLevel(ParticleAcceleratorPowerState state)
