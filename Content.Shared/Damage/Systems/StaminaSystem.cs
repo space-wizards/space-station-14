@@ -321,8 +321,8 @@ public sealed partial class StaminaSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        if (!_timing.IsFirstTimePredicted)
-            return;
+        //if (!_timing.IsFirstTimePredicted)
+        //    return;
 
         var stamQuery = GetEntityQuery<StaminaComponent>();
         var query = EntityQueryEnumerator<ActiveStaminaComponent>();
