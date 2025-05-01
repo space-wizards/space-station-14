@@ -159,11 +159,11 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         var query = EntityQueryEnumerator<MultipartMachineComponent>();
         while (query.MoveNext(out var uid, out var machineComp))
         {
-            var machine = new Entity<MultipartMachineComponent>(uid, machineComp);
+            var machine = (uid, machineComp);
             if (!IsMachineInRange(machine, constructXform.LocalPosition))
                 continue; // This part is outside the max range of the machine, ignore
 
-            foreach (var part in machine.Comp.Parts.Values)
+            foreach (var part in machineComp.Parts.Values)
             {
                 if (args.Graph == part.Graph &&
                     (args.PreviousNode == part.ExpectedNode || args.CurrentNode == part.ExpectedNode))
@@ -206,7 +206,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         var query = EntityQueryEnumerator<MultipartMachineComponent>();
         while (query.MoveNext(out var uid, out var machineComp))
         {
-            var machine = new Entity<MultipartMachineComponent>(uid, machineComp);
+            var machine = (uid, machineComp);
             if (!IsMachineInRange(machine, constructXform.LocalPosition))
                 continue; // This part is outside the max range of the machine, ignore
 
