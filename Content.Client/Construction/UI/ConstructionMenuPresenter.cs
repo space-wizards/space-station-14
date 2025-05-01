@@ -38,10 +38,15 @@ namespace Content.Client.Construction.UI
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
         private List<ConstructionPrototype> _favoritedRecipes = [];
+        private List<(int categoryDisplayId, string categoryName, ConstructionPrototype recipe)> _recipeHistory = [];
+        private int _recipeHistorySelectedIndex = -1;
         private Dictionary<string, TextureButton> _recipeButtons = new();
+        private Dictionary<ConstructionPrototype, TextureButton> _recipeToGridItemButtonMap = new();
         private string _selectedCategory = string.Empty;
         private string _favoriteCatName = "construction-category-favorites";
         private string _forAllCategoryName = "construction-category-all";
+        /// <summary>How many recipes to remember in recipe history.</summary>
+        private int _recipeHistoryLimit = 50;
         private bool CraftingAvailable
         {
             get => _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.Visible;
@@ -111,6 +116,10 @@ namespace Content.Client.Construction.UI
                 _constructionView.EraseButtonPressed = b;
             };
 
+            _constructionView.PreviousRecipeButtonPressed += OnPreviousRecipeButtonPressed;
+            _constructionView.NextRecipeButtonPressed += OnNextRecipeButtonPressed;
+            _constructionView.RecipeSelected += (_, _) => OnUpdateRecipeHistoryButtons();
+
             _constructionView.RecipeFavorited += (_, _) => OnViewFavoriteRecipe();
 
             PopulateCategories();
@@ -149,6 +158,9 @@ namespace Content.Client.Construction.UI
             }
 
             _selected = (ConstructionPrototype) item.Metadata!;
+
+            AddRecipeToRecipeHistory(_selected, _constructionView.OptionCategories.SelectedId);
+
             if (_placementManager.IsActive && !_placementManager.Eraser) UpdateGhostPlacement();
             PopulateInfo(_selected);
         }
@@ -163,6 +175,9 @@ namespace Content.Client.Construction.UI
             }
 
             _selected = recipe;
+
+            AddRecipeToRecipeHistory(recipe, _constructionView.OptionCategories.SelectedId);
+
             if (_placementManager.IsActive && !_placementManager.Eraser) UpdateGhostPlacement();
             PopulateInfo(_selected);
         }
@@ -221,6 +236,7 @@ namespace Content.Client.Construction.UI
 
             var recipesGrid = _constructionView.RecipesGrid;
             recipesGrid.RemoveAllChildren();
+            _recipeToGridItemButtonMap.Clear();
 
             _constructionView.RecipesGridScrollContainer.Visible = _constructionView.GridViewButtonPressed;
             _constructionView.Recipes.Visible = !_constructionView.GridViewButtonPressed;
@@ -245,22 +261,12 @@ namespace Content.Client.Construction.UI
                     };
 
                     itemButton.OnToggled += buttonToggledEventArgs =>
-                    {
-                        SelectGridButton(itemButton, buttonToggledEventArgs.Pressed);
+                        OnGridRecipeButtonToggled(recipe, itemButton, buttonToggledEventArgs.Pressed);
 
-                        if (buttonToggledEventArgs.Pressed &&
-                            _selected != null &&
-                            _recipeButtons.TryGetValue(_selected.Name, out var oldButton))
-                        {
-                            oldButton.Pressed = false;
-                            SelectGridButton(oldButton, false);
-                        }
-
-                        OnGridViewRecipeSelected(this, buttonToggledEventArgs.Pressed ? recipe : null);
-                    };
-
+                    _recipeToGridItemButtonMap[recipe] = itemButton;
                     recipesGrid.AddChild(itemButtonPanelContainer);
                     _recipeButtons[recipe.Name] = itemButton;
+
                     var isCurrentButtonSelected = _selected == recipe;
                     itemButton.Pressed = isCurrentButtonSelected;
                     SelectGridButton(itemButton, isCurrentButtonSelected);
@@ -273,6 +279,29 @@ namespace Content.Client.Construction.UI
                     recipesList.Add(GetItem(recipe, recipesList));
                 }
             }
+        }
+
+        /// <summary>
+        /// Handle recipe button toggle.
+        /// </summary>
+        /// <param name="recipe">Recipe associated with the button.</param>
+        /// <param name="button">Button.</param>
+        /// <param name="pressed">New pressed state.</param>
+        private void OnGridRecipeButtonToggled(ConstructionPrototype recipe, TextureButton button, bool pressed)
+        {
+            SelectGridButton(button, pressed);
+
+            if (pressed &&
+                _selected != null &&
+                _recipeButtons.TryGetValue(_selected.Name, out var oldButton))
+            {
+                oldButton.Pressed = false;
+                SelectGridButton(oldButton, false);
+            }
+
+            OnGridViewRecipeSelected(this, pressed ? recipe : null);
+
+            OnUpdateRecipeHistoryButtons();
         }
 
         private void SelectGridButton(TextureButton button, bool select)
@@ -329,6 +358,32 @@ namespace Content.Client.Construction.UI
             }
 
             _constructionView.Categories = categoriesArray;
+
+            // remap category indices in recipe history
+            for (var i = 0; i < _recipeHistory.Count; i++)
+            {
+                var entry = _recipeHistory[i];
+
+                // category index = category display ID, see "OptionCategories.AddItem" above.
+                if (entry.categoryDisplayId == 0)
+                {
+                    // 0 = "all" category. these should remain as is.
+                    continue;
+                }
+
+                var newCategoryDisplayId = Array.IndexOf(categoriesArray, entry.categoryName);
+                if (newCategoryDisplayId == -1)
+                {
+                    // set to "all" if category wasn't found
+                    newCategoryDisplayId = 0;
+                }
+
+                if (newCategoryDisplayId != entry.categoryDisplayId)
+                {
+                    entry.categoryDisplayId = newCategoryDisplayId;
+                    _recipeHistory[i] = entry;
+                }
+            }
         }
 
         private void PopulateInfo(ConstructionPrototype prototype)
@@ -367,6 +422,117 @@ namespace Content.Client.Construction.UI
                 var icon = entry.Icon != null ? _spriteSystem.Frame0(entry.Icon) : Texture.Transparent;
                 stepList.AddItem(text, icon, false);
             }
+        }
+
+        /// <summary>
+        /// Adds a recipe to the recipe history with respect to the currently selected recipe in recipe history.
+        ///
+        /// If the recipe is the same is previous recipe in recipe history, it will be ignored.
+        /// If there are recipes after the currently selected recipe in recipe history, they will be discarded.
+        /// </summary>
+        private void AddRecipeToRecipeHistory(ConstructionPrototype recipe, int categoryDisplayId)
+        {
+            var previousRecipeEntry = _recipeHistory.ElementAtOrDefault(_recipeHistorySelectedIndex);
+            if (previousRecipeEntry != default && previousRecipeEntry.recipe.ID == recipe.ID)
+            {
+                // do not add the same recipe
+                return;
+            }
+
+            // discard any next history entries, if any
+            if (_recipeHistorySelectedIndex != -1 && _recipeHistory.Count > _recipeHistorySelectedIndex + 1)
+            {
+                // we have elements to discard
+                var elementsToDiscardCount = _recipeHistory.Count - (_recipeHistorySelectedIndex + 1);
+                _recipeHistory.RemoveRange(_recipeHistorySelectedIndex + 1, elementsToDiscardCount);
+            }
+
+            _recipeHistory.Add((categoryDisplayId, recipe.Category, recipe));
+
+            _recipeHistorySelectedIndex++;
+
+
+            if (_recipeHistory.Count > _recipeHistoryLimit)
+            {
+                _recipeHistory.RemoveAt(0);
+                _recipeHistorySelectedIndex--;
+            }
+        }
+
+        /// <summary>
+        /// Updates recipe history buttons state (turning them off/on).
+        /// </summary>
+        private void OnUpdateRecipeHistoryButtons()
+        {
+            if (_recipeHistorySelectedIndex == -1)
+            {
+                return;
+            }
+
+            _constructionView.TogglePreviousRecipeButton(_recipeHistorySelectedIndex > 0);
+            _constructionView.ToggleNextRecipeButton(_recipeHistorySelectedIndex < _recipeHistory.Count - 1);
+        }
+
+        /// <summary>
+        /// Selects a recipe using a recipe history entry data.
+        /// </summary>
+        private void SelectRecipeUsingHistoryEntry(int categoryDisplayId, ConstructionPrototype recipe)
+        {
+            var isGridMode = _constructionView.GridViewButtonPressed;
+
+            _constructionView.TrySelectCategoryById(categoryDisplayId);
+
+            if (isGridMode)
+            {
+                _recipeToGridItemButtonMap.TryGetValue(recipe, out var gridItem);
+                if (gridItem != null)
+                {
+                    gridItem.Pressed = true;
+                    OnGridRecipeButtonToggled(recipe, gridItem, true);
+                }
+            }
+            else
+            {
+                _constructionView.TrySelectRecipeById(recipe.ID);
+            }
+
+            PopulateInfo(recipe);
+        }
+
+        /// <summary>
+        /// Handler for the previous recipe button press.
+        /// </summary>
+        private void OnPreviousRecipeButtonPressed(object? sender, EventArgs e)
+        {
+            if (_recipeHistorySelectedIndex == -1
+                || _recipeHistory.Count == 0
+                || _recipeHistorySelectedIndex == 0)
+            {
+                return;
+            }
+
+            _recipeHistorySelectedIndex--;
+
+            var previousRecipeEntry = _recipeHistory[_recipeHistorySelectedIndex];
+            SelectRecipeUsingHistoryEntry(previousRecipeEntry.categoryDisplayId, previousRecipeEntry.recipe);
+        }
+
+        /// <summary>
+        /// Handler for the next recipe button press.
+        /// </summary>
+        private void OnNextRecipeButtonPressed(object? sender, EventArgs e)
+        {
+            if (_recipeHistorySelectedIndex == -1
+                || _recipeHistory.Count == 0
+                || _recipeHistorySelectedIndex == _recipeHistory.Count - 1)
+            {
+                return;
+            }
+
+            _recipeHistorySelectedIndex++;
+
+            var nextRecipeEntry = _recipeHistory[_recipeHistorySelectedIndex];
+            SelectRecipeUsingHistoryEntry(nextRecipeEntry.categoryDisplayId, nextRecipeEntry.recipe);
         }
 
         private ItemList.Item GetItem(ConstructionPrototype recipe, ItemList itemList)
