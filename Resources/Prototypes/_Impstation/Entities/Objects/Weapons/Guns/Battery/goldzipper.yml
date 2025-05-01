@@ -29,7 +29,7 @@
       path: /Audio/_Impstation/Weapons/Guns/Gunshots/goldlaser.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletLaserGold
-    fireCost: 100
+    fireCost: 1
   - type: PointLight
     radius: 1.2
     energy: 1.34
@@ -45,4 +45,4 @@
   components:
   - type: ProjectileBatteryAmmoProvider
     proto: BulletLaserFGold
-    fireCost: 100
+    fireCost: 1

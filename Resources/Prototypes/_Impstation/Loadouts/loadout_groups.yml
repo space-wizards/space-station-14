@@ -952,8 +952,6 @@
 - type: loadoutGroup
   id: SecurityCommandFirearm
   name: loadout-group-security-gun-command
-  minLimit: 0
-  maxLimit: 1
   loadouts:
   - SecurityPistolMk58
   - SecurityPistolP2
@@ -962,8 +960,6 @@
 - type: loadoutGroup
   id: SecurityCommandAmmo
   name: loadout-group-security-ammo-command
-  minLimit: 0
-  maxLimit: 1
   loadouts:
   - SecurityAmmoPistol
   - SecurityAmmoP2
@@ -1025,8 +1021,6 @@
 - type: loadoutGroup
   id: DetectiveFirearm
   name: loadout-group-detective-gun
-  minLimit: 0
-  maxLimit: 1
   loadouts:
   - SecurityRevolverInspector
   - SecurityRevolverDerringer
@@ -1035,7 +1029,7 @@
 - type: loadoutGroup
   id: DetectiveAmmo
   name: loadout-group-detective-ammo
-  minLimit: 0
+  minLimit: 1
   maxLimit: 2
   loadouts:
   - SecurityAmmoSpeedloaderLethal
@@ -1112,22 +1106,20 @@
 - type: loadoutGroup
   id: SecurityOfficerFirearm
   name: loadout-group-security-gun
-  minLimit: 0
-  maxLimit: 1
   loadouts:
   - SecurityPistolMk58
   - SecurityPistolP2
   - SecurityPistolBlaster
+  - SecurityPistolGunpet
 
 - type: loadoutGroup
   id: SecurityOfficerAmmo
   name: loadout-group-security-ammo
-  minLimit: 0
-  maxLimit: 1
   loadouts:
   - SecurityAmmoPistol
   - SecurityAmmoP2
   - SecurityAmmoBlaster
+  - SecurityAmmoSnapPop
 
 - type: loadoutGroup
   id: GroupSpeciesBreathToolMedSec
