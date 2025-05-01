@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Spacemann
-  changes:
-  - message: Added 4 randomized maintenance rooms to in Convex station. These will
-      change every round with a different layout.
-    type: Add
-  id: 7899
-  time: '2025-02-04T22:58:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34866
 - author: Winkarst-cpu
   changes:
   - message: Observers now have a personal point light and can toggle it.
@@ -3918,3 +3910,11 @@
   id: 8400
   time: '2025-05-01T18:16:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35681
+- author: slarticodefast
+  changes:
+  - message: Added noir glasses, which make everything black and white. You can find
+      them in the detective's locker.
+    type: Add
+  id: 8401
+  time: '2025-05-01T22:07:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36923
