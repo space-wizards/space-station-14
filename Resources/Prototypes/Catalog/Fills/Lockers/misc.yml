@@ -31,8 +31,6 @@
       prob: 0.2
     - id: WeaponFlareGun
       prob: 0.1
-    - id: BoxMRE
-      prob: 0.1
 
 - type: entity
   id: ClosetEmergencyFilledRandom
