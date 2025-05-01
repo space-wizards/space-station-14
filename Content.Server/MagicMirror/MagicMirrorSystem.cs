@@ -12,6 +12,7 @@ using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.MagicMirror;
 
@@ -29,6 +30,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
     private static readonly ProtoId<TagPrototype> HidesHairTag = "HidesHair";
+    private GameTick? lastColorChangeTick = null;
 
     public override void Initialize()
     {
@@ -137,6 +139,9 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         if (component.Target is not { } target)
             return;
 
+        if (lastColorChangeTick != null && EntityManager.CurrentTick == lastColorChangeTick)
+            return;
+
                 // Check if the target getting their hair altered has any clothes that hides their hair
         if (CheckHeadSlotOrClothes(message.Actor, component.Target.Value))
         {
@@ -182,6 +187,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         }
 
         component.DoAfter = doAfterId;
+        lastColorChangeTick = EntityManager.CurrentTick;
     }
     private void OnChangeColorDoAfter(EntityUid uid, MagicMirrorComponent component, MagicMirrorChangeColorDoAfterEvent args)
     {
