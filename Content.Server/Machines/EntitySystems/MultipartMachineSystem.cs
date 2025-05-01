@@ -50,7 +50,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     /// </summary>
     /// <param name="ent">Entity to rescan for.</param>
     /// <param name="user">Optional user entity which has caused this rescan.</param>
-    /// <returns>True if all non-optional parts are found and match requirements, false otherwise.</returns>
+    /// <returns>True the state of the machine's assembly has changed, false otherwise.</returns>
     public bool Rescan(Entity<MultipartMachineComponent> ent, EntityUid? user = null)
     {
         // Get all required transform information to start looking for the other parts based on their offset
@@ -125,7 +125,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 
         Dirty(ent);
 
-        return !missingParts;
+        return stateHasChanged;
     }
 
     /// <summary>
@@ -209,7 +209,8 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             if (!IsMachineInRange(machine, constructXform.LocalPosition))
                 continue; // This part is outside the max range of the machine, ignore
 
-            Rescan(machine);
+            if (Rescan(machine) && HasPartEntity(machine, ent.Owner))
+                return; // This machine is using this entity so we don't need to go any further
         }
     }
 

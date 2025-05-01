@@ -37,6 +37,38 @@ public abstract class SharedMultipartMachineSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns whether a machine has a specifed EntityUid bound to one of its parts.
+    /// </summary>
+    /// <param name="machine">Entity, which might have a multpart machine attached, to use for the query.</param>
+    /// <param name="entity">EntityUid to search for.</param>
+    /// <returns>True if any part has the specified EntityUid, false otherwise.</returns>
+    public bool HasPartEntity(Entity<MultipartMachineComponent?> machine, EntityUid entity)
+    {
+        var netEnt = GetNetEntity(entity);
+        return HasPartEntity(machine, netEnt);
+    }
+
+    /// <summary>
+    /// Returns whether a machine has a specifed NetEntity bound to one of its parts.
+    /// </summary>
+    /// <param name="machine">Entity, which might have a multpart machine attached, to use for the query.</param>
+    /// <param name="entity">NetEntity to search for.</param>
+    /// <returns>True if any part has the specified NetEntity, false otherwise.</returns>
+    public bool HasPartEntity(Entity<MultipartMachineComponent?> machine, NetEntity entity)
+    {
+        if (!Resolve(machine, ref machine.Comp))
+            return false;
+
+        foreach (var part in machine.Comp.Parts.Values)
+        {
+            if (part.Entity.HasValue && part.Entity.Value == entity)
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Get the EntityUid for the entity bound to a specific part, if one exists.
     /// </summary>
     /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query.</param>
