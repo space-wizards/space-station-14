@@ -1,0 +1,14 @@
+- type: entity
+  id: DeviceDesynchronizer
+  parent: BaseItem
+  name: desynchronizer
+  description: An experimental device that can temporarily desynchronize the user from spacetime, effectively making them disappear while it's active.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/desynchronizer.rsi
+    state: icon
+  - type: TriggerOnUse
+  - type: PolymorphOnTrigger
+    polymorph: VoidPocket
+  - type: UseDelay
+    delay: 220 # long delay to ensure it can't be spammed, use it wisely

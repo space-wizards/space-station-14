@@ -11,6 +11,11 @@
   canWithdraw: false
 
 - type: currency
+  id: SiliconMemory
+  displayName: store-currency-display-silicon-memory
+  canWithdraw: false
+
+- type: currency
   id: WizCoin
   displayName: store-currency-display-wizcoin
   canWithdraw: false
