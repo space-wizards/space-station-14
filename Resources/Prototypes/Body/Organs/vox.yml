@@ -34,7 +34,8 @@
   - type: Metabolizer #Skreeeee!
     maxReagents: 3
     metabolizerTypes: [Vox]
-  - type: Stomach
+  - type: Stomach 
+#Bird vs tags
     specialDigestible:
       tags:
       - Trash
@@ -56,12 +57,12 @@
   - type: Sprite
     state: liver
     heldPrefix: liver
-  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+  - type: Metabolizer
     maxReagents: 1
     metabolizerTypes: [Vox]
     groups:
     - id: Alcohol
-      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+      rateModifier: 0.1
 
 - type: entity
   id: OrganVoxHeart

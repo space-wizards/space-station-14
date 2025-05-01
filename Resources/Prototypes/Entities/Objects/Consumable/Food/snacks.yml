@@ -10,6 +10,7 @@
   - type: Tag
     tags:
       - FoodSnack
+      - VoxFood
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
   - type: SolutionContainerManager
@@ -43,9 +44,6 @@
   - type: Food
     trash: 
     - FoodPacketBoritosTrash
-  - type: Tag
-    tags:
-    - VoxFood
 
 - type: entity
   name: C&Ds
@@ -62,9 +60,6 @@
   - type: Food
     trash: 
     - FoodPacketCnDsTrash
-  - type: Tag
-    tags:
-    - VoxFood
 
 - type: entity
   name: cheesie honkers
@@ -82,9 +77,6 @@
   - type: Food
     trash: 
     - FoodPacketCheesieTrash
-  - type: Tag
-    tags:
-    - VoxFood
 
 - type: entity
   name: chips
@@ -103,9 +95,6 @@
   - type: Food
     trash: 
     - FoodPacketChipsTrash
-  - type: Tag
-    tags:
-    - VoxFood
 
 - type: entity
   name: chocolate bar
@@ -188,9 +177,6 @@
   - type: Sprite
     state: energybar-open
   - type: Item
-  - type: Tag
-    tags:
-    - VoxFood
 
 - type: entity
   name: Sweetie's pistachios
@@ -231,9 +217,6 @@
   - type: Food
     trash: 
     - FoodPacketPopcornTrash
-  - type: Tag
-    tags:
-    - VoxFood
 
 - type: entity
   name: 4no raisins
@@ -269,9 +252,6 @@
   - type: Food
     trash: 
     - FoodPacketSemkiTrash
-  - type: Tag
-    tags:
-    - VoxFood
 
 - type: entity
   name: sus jerky
@@ -307,9 +287,6 @@
   - type: Food
     trash: 
     - FoodPacketSyndiTrash
-  - type: Tag
-    tags:
-    - VoxFood
 
 - type: entity
   parent: FoodSnackBase
@@ -335,9 +312,6 @@
   - type: Food
     trash: 
     - FoodPacketCupRamenTrash
-  - type: Tag
-    tags:
-    - VoxFood
 
 - type: entity
   parent: DrinkRamen
@@ -381,9 +355,6 @@
   - type: Food
     trash: 
     - FoodPacketChowMeinTrash
-  - type: Tag
-    tags:
-    - VoxFood
 
 - type: entity
   name: dan dan noodles
@@ -413,9 +384,6 @@
   - type: Food
     trash: 
     - FoodPacketDanDanTrash
-  - type: Tag
-    tags:
-    - VoxFood
 
 - type: entity
   name: fortune cookie
@@ -442,9 +410,6 @@
   - type: Food
     trash: 
     - FoodCookieFortune
-  - type: Tag
-    tags:
-    - VoxFood
 
 - type: entity
   id: FoodSnackNutribrick
