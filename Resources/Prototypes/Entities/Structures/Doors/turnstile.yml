@@ -5,7 +5,7 @@
   description: A mechanical door that permits one-way access and prevents tailgating.
   components:
   - type: Sprite
-    sprite: Structures/Doors/turnstile.rsi
+    sprite: Structures/Doors/Turnstile/turnstile.rsi
     snapCardinals: true
     drawdepth: Doors
     layers:
@@ -66,7 +66,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Structures/Doors/turnstile.rsi
+    sprite: Structures/Doors/Turnstile/turnstile.rsi
     color: "#FFFFFFBB"
     layers:
     - state: arrow
@@ -84,6 +84,8 @@
   parent: Turnstile
   suffix: Genpop Enter
   components:
+  - type: Sprite
+    sprite: Structures/Doors/Turnstile/turnstile-sec.rsi
   - type: AccessReader
     access: [["GenpopEnter"], ["Security"]]
 
@@ -92,5 +94,7 @@
   parent: Turnstile
   suffix: Genpop Leave
   components:
+  - type: Sprite
+    sprite: Structures/Doors/Turnstile/turnstile-sec.rsi
   - type: AccessReader
     access: [["GenpopLeave"], ["Security"]]
