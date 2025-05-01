@@ -1,0 +1,78 @@
+- type: entity
+  id: AdmemeERTMixed
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ERT-sent #!!
+    weight: 0 # shouldnt happen unless admeme
+    maxOccurrences: 0
+  - type: LoadMapRule
+    preloadedGrid: ERTMixed
+    
+- type: entity
+  id: AdmemeERTSec
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ERT-sent-sec #!!
+    weight: 0 # shouldnt happen unless admeme
+    maxOccurrences: 0
+  - type: LoadMapRule
+    preloadedGrid: ERTSec
+
+- type: entity
+  id: AdmemeERTMed
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ERT-sent-med #!!
+    weight: 0 # shouldnt happen unless admeme
+    maxOccurrences: 0
+  - type: LoadMapRule
+    preloadedGrid: ERTMed
+
+- type: entity
+  id: AdmemeERTCburn
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ERT-sent-cburn #!!
+    weight: 0 # shouldnt happen unless admeme
+    maxOccurrences: 0
+  - type: LoadMapRule
+    preloadedGrid: ERTCburn
+
+- type: entity
+  id: AdmemeERTEngi
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ERT-sent-engi #!!
+    weight: 0 # shouldnt happen unless admeme
+    maxOccurrences: 0
+  - type: LoadMapRule
+    preloadedGrid: ERTEngi
+
+- type: entity
+  id: AdmemeERTChap
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ERT-sent-chap #!!
+    weight: 0 # shouldnt happen unless admeme
+    maxOccurrences: 0
+  - type: LoadMapRule
+    preloadedGrid: ERTChap
+
+- type: entity
+  id: AdmemeERTDeathsquad
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ERT-sent-deathsquad #!!
+    weight: 0 # shouldnt happen unless admeme
+    maxOccurrences: 0
+  - type: LoadMapRule
+    preloadedGrid: ERTDeathsquad
+  - type: AlertLevelInterceptionRule
+    alertLevel: epsilon

@@ -1,0 +1,152 @@
+- type: entity
+  parent: BaseLathe
+  id: PaperPrinter
+  name: paper printer
+  description: This is a paper printer; it needs material paper sheets to print paper.
+  components:
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    sprite: Structures/Machines/uniform_printer.rsi
+    color: "#d1d1d1"
+    snapCardinals: false
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+  - type: Machine
+    board: PaperPrinterMachineCircuitboard
+  - type: Lathe
+    producingSound: /Audio/Machines/uniformprinter.ogg
+    idleState: icon
+    runningState: building
+    staticPacks:
+    - PrinterGeneralBasic
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - Document
+        - Paper
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterCommand
+  name: command paper printer
+  components:
+  - type: Sprite
+    color: "#a1a1d1"
+  - type: Machine
+    board: PaperPrinterCommandMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterSecurity
+  name: security paper printer
+  components:
+  - type: Sprite
+    color: "#ffd1d1"
+  - type: Machine
+    board: PaperPrinterSecurityMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+    - PrinterSecurityBasic
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterEngineering
+  name: engineering paper printer
+  components:
+  - type: Sprite
+    color: "#ffffd1"
+  - type: Machine
+    board: PaperPrinterEngineeringMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+    - PrinterEngineeringBasic
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterMedical
+  name: medical paper printer
+  components:
+  - type: Sprite
+    color: "#d1d1ff"
+  - type: Machine
+    board: PaperPrinterMedicalMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+    - PrinterMedicalBasic
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterSupply
+  name: cargo paper printer # Ronstation - while it may sound counterintuitive to name it 'supply', it is necessary, in my opinion, for standardization purposes.
+  components:
+  - type: Sprite
+    color: "#ffd1a1"
+  - type: Machine
+    board: PaperPrinterSupplyMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterScience
+  name: science paper printer
+  components:
+  - type: Sprite
+    color: "#ffd1ff"
+  - type: Machine
+    board: PaperPrinterScienceMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterService
+  name: service paper printer
+  components:
+  - type: Sprite
+    color: "#d1ffd1"
+  - type: Machine
+    board: PaperPrinterServiceMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterCaptain
+  name: Captain's paper printer
+  components:
+  - type: Sprite
+    color: "#a1a1d1"
+  - type: Machine
+    board: PaperPrinterCaptainMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+    - PrinterSecurityBasic
+    - PrinterEngineeringBasic
+
+- type: entity
+  parent: PaperPrinter
+  id: PaperPrinterHeadOfPersonnel
+  name: head of personnel's paper printer
+  components:
+  - type: Sprite
+    color: "#a1a1d1"
+  - type: Machine
+    board: PaperPrinterHeadOfPersonnelMachineCircuitboard
+  - type: Lathe
+    staticPacks:
+    - PrinterGeneralBasic
+    - PrinterEngineeringBasic

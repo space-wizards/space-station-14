@@ -1,0 +1,20 @@
+- type: lobbyBackground
+  id: WhatAMess
+  background: /Textures/Ronstation/LobbyScreens/whatamess.webp
+
+- type: lobbyBackground
+  id: Hallway
+  background: /Textures/Ronstation/LobbyScreens/hallway.webp
+
+- type: lobbyBackground
+  id: Error
+  background: /Textures/Ronstation/LobbyScreens/error.webp
+
+- type: lobbyBackground
+  id: JanitorialDuties
+  background: /Textures/Ronstation/LobbyScreens/janitorialduties.webp
+  
+- type: lobbyBackground
+  id: TerminalStation
+  background: /Textures/Ronstation/LobbyScreens/terminalstation.webp
+  

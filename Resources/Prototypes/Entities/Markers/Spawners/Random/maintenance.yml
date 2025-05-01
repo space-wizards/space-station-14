@@ -88,6 +88,7 @@
       - id: ClothingShoesTourist
       - id: ClothingUniformJumpsuitLoungewear
       - id: ClothingHeadHatCowboyRed
+      - id: CardBoxPokerFilled
     # Uncommon Group
     - !type:GroupSelector
       weight: 23

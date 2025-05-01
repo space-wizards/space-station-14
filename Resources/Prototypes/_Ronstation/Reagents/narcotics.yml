@@ -1,0 +1,69 @@
+- type: reagent
+  id: KronkusExtract
+  name: reagent-name-kronkus-extract
+  group: Narcotics
+  desc: reagent-desc-kronkus-extract
+  physicalDesc: reagent-physical-desc-clumpy
+  flavor: bitter
+  color: "#228f63"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: StaminaModifier
+        component: StaminaModifier
+        time: 2
+        type: Remove
+      - !type:AdjustReagent
+        probability: 0.3
+        reagent: Nutriment
+        amount: 0.30
+
+- type: reagent
+  id: Kronkaine
+  name: reagent-name-kronkaine
+  group: Narcotics
+  desc: reagent-desc-kronkaine
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: bitter
+  color: "#2cc98a"
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.75
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.2
+        sprintSpeedModifier: 1.2
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 20
+        damage:
+          types:
+            Poison: 1
+            Asphyxiation: 1
+      - !type:Jitter
+        conditions:
+          - !type:ReagentThreshold
+            min: 20
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 3
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 3
+        type: Remove
+      - !type:GenericStatusEffect
+        key: StaminaModifier
+        component: StaminaModifier
+        time: 3
+        type: Add
+      - !type:GenericStatusEffect
+        key: ForcedSleep
+        time: 3
+        type: Remove
+      - !type:AdjustReagent
+        probability: 0.2
+        reagent: Nutriment
+        amount: 0.10

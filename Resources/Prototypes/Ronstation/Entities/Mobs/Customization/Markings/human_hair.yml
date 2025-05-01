@@ -1,0 +1,7 @@
+- type: marking
+  id: HumanHairFluffyHair
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Ronstation/Mobs/Customization/human_hair.rsi
+      state: fluffyhair

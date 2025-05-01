@@ -29,18 +29,12 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
         if (jobList.Count == 0)
             return;
 
-        // Low chance to completely change up the late-join landscape by closing all positions except infinite slots.
+        // Low chance to make some infinite slots.
         // Lower chance than the /tg/ equivalent of this event.
         if (RobustRandom.Prob(0.25f))
         {
             var chosenJob = RobustRandom.PickAndTake(jobList);
             _stationJobs.MakeJobUnlimited(chosenStation.Value, chosenJob); // INFINITE chaos.
-            foreach (var job in jobList)
-            {
-                if (_stationJobs.IsJobUnlimited(chosenStation.Value, job))
-                    continue;
-                _stationJobs.TrySetJobSlot(chosenStation.Value, job, 0);
-            }
         }
         else
         {
@@ -54,7 +48,7 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
                 if (_stationJobs.IsJobUnlimited(chosenStation.Value, chosenJob))
                     continue;
 
-                _stationJobs.TryAdjustJobSlot(chosenStation.Value, chosenJob, RobustRandom.Next(-3, 6), clamp: true);
+                _stationJobs.TryAdjustJobSlot(chosenStation.Value, chosenJob, RobustRandom.Next(1, 6), clamp: true);
             }
         }
     }

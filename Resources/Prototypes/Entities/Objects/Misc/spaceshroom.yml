@@ -6,7 +6,7 @@
   description: A cluster of wild mushrooms that likes to grow in dark, moist environments.
   components:
     - type: Sprite
-      sprite: Objects/Misc/spaceshroom.rsi
+      sprite: Ronstation/Objects/Misc/spaceshroom.rsi
       state: structure
     - type: Transform
       anchored: true

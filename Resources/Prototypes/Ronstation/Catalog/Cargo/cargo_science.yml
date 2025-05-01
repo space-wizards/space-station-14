@@ -1,0 +1,60 @@
+
+- type: cargoProduct
+  id: ScienceBasePointSource
+  icon:
+    sprite: Structures/Machines/rndpointsource.rsi
+    state: rndpointsource-icon
+  product: BaseResearchAndDevelopmentPointSource
+  cost: 20000
+  category: cargoproduct-category-name-science
+  group: market
+
+- type: cargoProduct
+  id: ScienceServer
+  icon:
+    sprite: Structures/Machines/server.rsi
+    state: server
+  product: ResearchAndDevelopmentServer
+  cost: 15000
+  category: cargoproduct-category-name-science
+  group: market
+
+- type: cargoProduct
+  id: SciencePoints5K
+  icon:
+    sprite: Ronstation/Objects/Specific/Research/researchdisk.rsi
+    state: 5kdisk
+  product: ResearchDisk5000
+  cost: 3000
+  category: cargoproduct-category-name-science
+  group: market
+
+- type: cargoProduct
+  id: ScienceAutolatheFlatpack
+  icon:
+    sprite: Structures/Machines/autolathe.rsi
+    state: icon
+  product: CrateScienceAutolathe
+  cost: 6000
+  category: cargoproduct-category-name-science
+  group: market
+
+- type: cargoProduct
+  id: ScienceCircuitImprinterFlatpack
+  icon:
+    sprite: Structures/Machines/circuit_imprinter.rsi
+    state: icon
+  product: CrateScienceCircuitImprinter
+  cost: 6000
+  category: cargoproduct-category-name-science
+  group: market
+
+- type: cargoProduct
+  id: ScienceProtolatheFlatpack
+  icon:
+    sprite: Structures/Machines/protolathe.rsi
+    state: icon
+  product: CrateScienceProtolathe
+  cost: 6000
+  category: cargoproduct-category-name-science
+  group: market

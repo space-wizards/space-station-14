@@ -1,0 +1,64 @@
+- type: latheRecipe
+  id: BioGenNitrogen
+  resultReagents:
+    Nitrogen: 10
+  categories:
+  - Food
+  icon:
+    sprite: Objects/Consumable/Drinks/glass_clear.rsi
+    state: icon
+  completetime: 1
+  materials:
+    Biomass: 24
+
+- type: latheRecipe
+  id: BioGenHydrogen
+  resultReagents:
+    Hydrogen: 10
+  categories:
+  - Food
+  icon:
+    sprite: Objects/Consumable/Drinks/glass_clear.rsi
+    state: icon
+  completetime: 1
+  materials:
+    Biomass: 18
+
+- type: latheRecipe
+  id: BioGenOxygen
+  resultReagents:
+    Oxygen: 10
+  categories:
+  - Food
+  icon:
+    sprite: Objects/Consumable/Drinks/glass_clear.rsi
+    state: icon
+  completetime: 1
+  materials:
+    Biomass: 18
+
+- type: latheRecipe
+  id: BioGenPhosphorus
+  resultReagents:
+    Phosphorus: 10
+  categories:
+  - Food
+  icon:
+    sprite: Objects/Consumable/Drinks/glass_clear.rsi
+    state: icon
+  completetime: 1
+  materials:
+    Biomass: 24
+
+- type: latheRecipe
+  id: BioGenPotassium
+  resultReagents:
+    Potassium: 10
+  categories:
+  - Food
+  icon:
+    sprite: Objects/Consumable/Drinks/glass_clear.rsi
+    state: icon
+  completetime: 1
+  materials:
+    Biomass: 18

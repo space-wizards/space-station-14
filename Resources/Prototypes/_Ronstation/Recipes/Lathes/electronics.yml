@@ -1,0 +1,5 @@
+
+- type: latheRecipe
+  parent: BaseElectronicsRecipe
+  id: CircuitImprinterMachineCircuitboardAutolathe
+  result: CircuitImprinterMachineCircuitboard

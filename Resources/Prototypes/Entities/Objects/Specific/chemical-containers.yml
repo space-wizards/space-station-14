@@ -443,3 +443,18 @@
         reagents:
         - ReagentId: WeldingFuel
           Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: bromine
+  id: JugBromine
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-bromine
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Bromine
+          Quantity: 200

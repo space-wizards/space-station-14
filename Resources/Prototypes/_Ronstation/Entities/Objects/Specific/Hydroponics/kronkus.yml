@@ -1,0 +1,19 @@
+- type: entity
+  name: kronkus vine segment
+  parent: ProduceBase
+  id: KronkusVineSegment
+  description: "A piece of mature kronkus vine. It exudes a sharp and noxious odor."
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Objects/Specific/Hydroponics/kronkus_vine.rsi
+  - type: Produce
+    seedId: kronkusVine
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: KronkusExtract
+          Quantity: 10
+        - ReagentId: Nutriment
+          Quantity: 5

@@ -1,0 +1,11 @@
+- type: reaction
+  id: Kronkaine
+  reactants:
+    WeldingFuel:
+      amount: 1
+    Cyanide:
+      amount: 1
+    KronkusExtract:
+      amount: 1
+  products:
+    Kronkaine: 3

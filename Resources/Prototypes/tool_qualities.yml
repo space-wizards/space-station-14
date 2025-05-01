@@ -6,6 +6,13 @@
   icon: { sprite: Objects/Tools/wrench.rsi, state: icon }
 
 - type: tool
+  id: Axing
+  name: tool-quality-axing-name
+  toolName: tool-quality-axing-tool-name
+  spawn: FireAxe
+  icon: { sprite: Objects/Weapons/Melee/fireaxe.rsi, state: icon }
+
+- type: tool
   id: Prying
   name: tool-quality-prying-name
   toolName: tool-quality-prying-tool-name

@@ -1,0 +1,33 @@
+# Base prototypes
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseElectronicsRecipe
+  id: BaseElectronicsRecipeBasic
+  completetime: 1
+  materials:
+    Steel: 50
+    Plastic: 150
+
+## Recipes
+
+## Non-circuit imprinter (no second category)
+
+## Supply
+
+- type: latheRecipe
+  parent: [ BaseCheapCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
+  id: OreProcessorBasicMachineCircuitboard
+  result: OreProcessorBasicMachineCircuitboard
+
+## Medical
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
+  id: CloningPodMachineCircuitboard
+  result: CloningPodMachineCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
+  id: MedicalScannerMachineCircuitboard
+  result: MedicalScannerMachineCircuitboard

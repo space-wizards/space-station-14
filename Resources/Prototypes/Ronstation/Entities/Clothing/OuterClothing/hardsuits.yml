@@ -1,0 +1,13 @@
+#Heccdiver Hardsuit
+- type: entity
+  parent: [ BaseTerragovContraband, ClothingOuterHardsuitSecurity ]
+  id: ClothingOuterHardsuitHeccdiver
+  name: heccdiver hardsuit
+  description: An elite suit used by an elite task force.
+  components:
+  - type: Sprite
+    sprite: Ronstation/Clothing/OuterClothing/Hardsuits/heccdiver.rsi
+  - type: Clothing
+    sprite: Ronstation/Clothing/OuterClothing/Hardsuits/heccdiver.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitHeccdiver

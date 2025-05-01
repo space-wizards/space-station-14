@@ -19,6 +19,9 @@
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
+      - !type:AdjustReagent
+        reagent: Caffeine
+        amount: 0.03
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/coffeeglass.rsi
     state: icon_empty
@@ -109,6 +112,9 @@
         key: Drowsiness
         time: 2.0
         type: Remove
+      - !type:AdjustReagent
+        reagent: Caffeine
+        amount: 0.02
 
 - type: reagent
   id: GreenTea
@@ -167,6 +173,9 @@
         key: Drowsiness
         time: 2.0
         type: Remove
+      - !type:AdjustReagent
+        reagent: Caffeine
+        amount: 0.02
 
 - type: reagent
   id: IcedGreenTea

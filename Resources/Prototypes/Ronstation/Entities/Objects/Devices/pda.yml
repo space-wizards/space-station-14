@@ -1,0 +1,70 @@
+- type: entity
+  parent: [ BaseTerragovContraband, BasePDA ]
+  id: HeccdiverPDA
+  name: heccdiver PDA
+  description: Ok, time to be a productive member of- oh cool I'm a heccdiver time to give this world a taste of managed democracy!
+  components:
+  - type: Pda
+    id: HeccdiverIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-syndi
+  - type: PdaBorderColor
+    borderColor: "#891417"
+  - type: Icon
+    state: pda-syndi
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+    cartridgeSlot:
+      priority: -1
+      name: Cartridge
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Machines/id_insert.ogg
+      whitelist:
+        components:
+          - Cartridge
+
+- type: entity
+  parent: [ BasePDA, BaseCentcommCommandContraband ]
+  id: BlueshieldPDA
+  name: Blueshield PDA
+  description: Might allow you to see who to protect through the crew manifest.
+  components:
+  - type: Pda
+    id: BlueshieldIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-brigmedic #if it looks like a brigmedic ID card, it's because we don't know how to import our own sprites after the chameleon PDA pr.
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
+    accentHColor: "#d7d7d0"
+    accentVColor: "#d7d7d0"
+  - type: Icon
+    state: pda-brigmedic
+
+- type: entity
+  parent: [ BasePDA, BaseCommandContraband ]
+  id: CentcomBlueshieldPDA
+  name: Blueshield PDA
+  suffix: Central Command
+  description: Might allow you to see who to protect through the crew manifest.
+  components:
+  - type: Pda
+    id: BlueshieldIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-brigmedic #if it looks like a brigmedic ID card, it's because we don't know how to import our own sprites after the chameleon PDA pr.
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
+    accentHColor: "#d7d7d0"
+    accentVColor: "#d7d7d0"
+  - type: Icon
+    state: pda-brigmedic

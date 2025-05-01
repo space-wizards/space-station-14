@@ -6,6 +6,11 @@
   - BioGenMilk
   - BioGenMilkSoy
   - BioGenEthanol
+  - BioGenNitrogen # Ronstation
+  - BioGenPhosphorus # Ronstation
+  - BioGenHydrogen # Ronstation
+  - BioGenOxygen # Ronstation
+  - BioGenPotassium # Ronstation
   - BioGenCream
   - BioGenBlackpepper
   - BioGenEnzyme

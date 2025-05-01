@@ -25,3 +25,71 @@
   license: "CC-BY-SA-3.0"
   copyright: "Sunset by PigeonBeans. Exported in Mono OGG."
   source: "https://soundcloud.com/pigeonbeans/sunset"
+
+- files: ["space_asshole.ogg"]
+  license: "Custom"
+  copyright: "Space Asshole by Chris Remo is used with special permission from the author, under the condition that the project remains non-commercial and open source. The author also requested that a link to his bandcamp be included: https://chrisremo.bandcamp.com/"
+  source: "https://idlethumbs.bandcamp.com/track/space-asshole"
+  # The source is a direct link the the track, but not the "main" bandcamp of the author. Hence the link is also included separately in the copyright.
+
+- files: ["the_wizard.ogg"]
+  license: "Custom"
+  copyright: "The Wizard by Chris Remo is used with special permission from the author, under the condition that the project remains non-commercial and open source. The author also requested that a link to his bandcamp be included: https://chrisremo.bandcamp.com/"
+  source: "https://idlethumbs.bandcamp.com/track/the-wizard"
+  # The source is a direct link the the track, but not the "main" bandcamp of the author. Hence the link is also included separately in the copyright.
+  # Got permission from Chris for this song as well on 02/25/25, requires same attributions
+
+- files: ["lasers_rip_apart_the_bulkhead.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "lasers rip apart the bulkhead by Alexander Divine."
+  source: "https://soundcloud.com/alexanderdivine/lasers-rip-apart-the-bulkhead"
+
+- files: ["thunderdome.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "-Sector11 by MashedByMachines. Converted from MP3 to OGG."
+  source: "https://www.newgrounds.com/audio/listen/312622"
+
+- files: ["endless_space.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Endless Space by SolusLunes. Converted from MP3 to OGG."
+  source: "https://www.newgrounds.com/audio/listen/67583"
+
+- files: ["absconditus.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Absconditus by ZhayTee. Converted from MP3 to OGG."
+  source: "https://bandcamp.zhaytee.net/track/absconditus"
+
+- files: ["atomicamnesiammx.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Atomic Amnesia MMX by Philip Dyer. Converted from MP3 to OGG."
+  source: "https://soundcloud.com/3kliksphilip/atomic-amnesia-mmx-1"
+
+- files: ["singuloose.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Singuloose by Janis Schiedková. Converted from MP3 to OGG."
+  source: "https://soundcloud.com/js_m/singuloose"
+
+- files: ["title2.ogg"]
+  license: "Custom"
+  copyright: "Originally composed by Jonathan Dunn for Robocop 2 Gameboy published by Ocean Software. Remixed by Eric Shumaker for his video Dilbert 3. As of October 9th, 2008 nobody owns the rights to this song and copyright action has never been taken against anyone using this song in their projects."
+  source: "https://www.youtube.com/watch?v=4o6_8Unj2mQ"
+
+- files: ["comet_haley.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Comet Haley by Stellardrone. Converted from MP3 to OGG."
+  source: "https://freemusicarchive.org/music/Stellardrone/Light_Years_1227/07_Comet_Halley"
+
+- files: ["Spac_Stac.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Spac Stac by Hayabusa. Converted from MP3 to OGG."
+  source: "https://www.youtube.com/watch?v=grUBe-SZgr0"
+
+- files: ["pwmur.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "phoron will make us rich by Alexander Divine."
+  source: "https://soundcloud.com/alexanderdivine/phoron-will-make-us-rich"
+
+- files: ["every_light_is_blinking_at_once.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "every light is blinking at once by Alexander Divine."
+  source: "https://soundcloud.com/alexanderdivine/every-light-is-blinking-at-once"
