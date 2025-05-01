@@ -168,7 +168,7 @@ namespace Content.Shared.Chemistry.Reagent
         public float PricePerUnit => (ConsumesCatalyst ? 0.1f : 0.0f) + (FinalProduct ? 1.0f : 0.0f) + ChemComplexity * 0.1f;
 
         /// <summary>
-        /// add FinalProduct: true for the final desirable product in a chain, like advanced brutes, but not razorium
+        /// add FinalProduct: true for the final desirable product in a chain, like advanced brutes, but not chems like razorium
         /// </summary>
         [DataField]
         public bool FinalProduct = false;

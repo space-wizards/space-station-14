@@ -218,7 +218,7 @@
   flavor: terrible
   color: "#87ab08"
   physicalDesc: reagent-physical-desc-pungent
-  chemComplexity: 1
+  chemComplexity: 1 # might need to change this?
   slipData:
     requiredSlipSpeed: 4.0 #It's not as slippery as water
   friction: 0.4

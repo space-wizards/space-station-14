@@ -1330,7 +1330,7 @@
   physicalDesc: reagent-physical-desc-soothing
   flavor: medicine
   color: "#89f77f"
-  chemComplexity: 16
+  chemComplexity: 16 # sigy is also finalProduct but thats fine i think
   finalProduct: true
   worksOnTheDead: true
   metabolisms:

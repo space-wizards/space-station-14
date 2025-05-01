@@ -121,7 +121,7 @@
   color: "#F7C430"
   boilingPoint: 2700.0
   meltingPoint: 1064.76
-  chemComplexity: 0 #gold can be solidified using frost oil, im not buffing botany into being even lazier
+  chemComplexity: 0 #gold can be solidified using frost oil, im not buffing botany into being even lazier.
 
 - type: reagent
   id: Hydrogen

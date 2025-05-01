@@ -168,7 +168,7 @@
   flavor: bitter
   color: "#3CB371"
   physicalDesc: reagent-physical-desc-sickly
-  chemComplexity: 12
+  chemComplexity: 12 # i hate this chem
   finalProduct: true
   plantMetabolism:
     - !type:PlantAdjustHealth

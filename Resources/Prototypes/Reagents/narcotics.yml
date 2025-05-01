@@ -439,7 +439,7 @@
   physicalDesc: reagent-physical-desc-soothing
   flavor: paintthinner
   color: "#EE35FF"
-  chemComplexity: 1
+  chemComplexity: # could be higher but easily made by botany
   metabolisms:
     Narcotic:
       effects:

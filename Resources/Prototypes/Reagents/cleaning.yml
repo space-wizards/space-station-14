@@ -7,7 +7,7 @@
   color: "#a1000b"
   boilingPoint: 111.0
   meltingPoint: -5.0
-  chemComplexity: 8 # i would add final product, but its used to make mustard... why?????
+  chemComplexity: 8 # i would add final product, but its used to make mustard... why????
   metabolisms:
     Poison:
       effects:
