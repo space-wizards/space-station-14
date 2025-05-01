@@ -4,6 +4,10 @@
   name: appraisal tool
   description: A beancounter's best friend, with a quantum connection to the galactic market and the ability to appraise even the toughest items. It will also tell you if a crate contains a completed bounty.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
   - type: Sprite
     sprite: Objects/Tools/appraisal-tool.rsi
     state: icon
