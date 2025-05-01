@@ -83,6 +83,9 @@
        - !type:SpillBehavior { }
   - type: DnaSubstanceTrace
   - type: PressurizedSolution
+    solution: drink
+  - type: TrashOnSolutionEmpty
+    solution: drink
   - type: Shakeable
 
 - type: entity
@@ -121,13 +124,13 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 100
   - type: Tool
     qualities:
     - Rolling
     speedModifier: 0.75
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 100
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -678,6 +681,9 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sodawater-bottle.rsi
+  - type: Label
+    currentLabel: reagent-name-soda-water
+  - type: Sealable
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
@@ -694,8 +700,11 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tonic-bottle.rsi
+  - type: Label
+    currentLabel: reagent-name-tonic-water
+  - type: Sealable
 
-# Small Plastic Bottles
+# Small Bottles
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleSmallBaseFull]
@@ -714,14 +723,14 @@
   - type: SolutionContainerVisuals
     inHandsMaxFillLevels: 2
     inHandsFillBaseName: -fill-
+  - type: Label
+    currentLabel: reagent-name-water
   - type: TrashOnSolutionEmpty
     solution: drink
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
   - type: Sealable
-
-# Small Bottles
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassSmallBaseFull]
