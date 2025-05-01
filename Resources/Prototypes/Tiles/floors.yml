@@ -1548,6 +1548,7 @@
   id: FloorAsteroidSand
   parent: FloorAsteroidSandBorderless
   name: tiles-asteroid-sand
+  edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
     NorthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
@@ -1573,6 +1574,7 @@
   id: FloorAsteroidSandDug
   parent: FloorAsteroidSandDugBorderless
   name: tiles-asteroid-sand
+  edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
     NorthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
@@ -1613,6 +1615,7 @@
   id: FloorAsteroidSandRed
   parent: FloorAsteroidSandRedBorderless
   name: tiles-asteroid-sand
+  edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
     NorthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
@@ -1667,6 +1670,7 @@
   id: FloorAsteroidIronsand
   parent: FloorAsteroidIronsandBorderless
   name: tiles-asteroid-ironsand
+  edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/Tiles/Asteroid/iron_single_edge.png
     NorthEast: /Textures/Tiles/Asteroid/iron_single_edge.png
@@ -1692,6 +1696,7 @@
   id: FloorAsteroidSandUnvariantized
   parent: FloorAsteroidSandUnvariantizedBorderless
   name: tiles-asteroid-sand
+  edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
     NorthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
@@ -1717,6 +1722,7 @@
   id: FloorAsteroidIronsandUnvariantized
   parent: FloorAsteroidIronsandUnvariantizedBorderless
   name: tiles-asteroid-ironsand
+  edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/Tiles/Asteroid/iron_single_edge.png
     NorthEast: /Textures/Tiles/Asteroid/iron_single_edge.png
