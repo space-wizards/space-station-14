@@ -1,3 +1,4 @@
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.UserInterface;
@@ -14,8 +15,8 @@ public sealed class BatteryWeaponFireModesBoundUserInterface : BoundUserInterfac
 
     private SimpleRadialMenu? _menu;
 
-    private readonly Color _selectedModeBackgroundColor = Color.ToSrgb(new Color(90, 73, 102, 128));
-    private readonly Color _selectedModeHoverBackgroundColor = Color.ToSrgb(new Color(107, 91, 127, 128));
+    private readonly Color _selectedModeBackgroundColor = StyleNano.ButtonColorGoodDefault.WithAlpha(128);
+    private readonly Color _selectedModeHoverBackgroundColor = StyleNano.ButtonColorGoodHovered.WithAlpha(128);
 
     /// <inheritdoc />
     public BatteryWeaponFireModesBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
