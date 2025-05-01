@@ -301,6 +301,7 @@ flavor-complex-brave-bull = like being ran over by a truck
 flavor-complex-demons-blood = like the seventh circle of Hell
 flavor-complex-devils-kiss = like cannibalism
 flavor-complex-driest-martini = like a drunk mimic
+flavor-complex-eggnog = like melted custard
 flavor-complex-erika-surprise = like the bartender made a mistake
 flavor-complex-gin-fizz = refreshing and lemony
 flavor-complex-gildlager = like the Tzar's gold

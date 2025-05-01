@@ -29,7 +29,7 @@
       children:
       - !type:AllSelector
         weight: 0.2
-        children: 
+        children:
         - id: RubberStampApproved
         - id: RubberStampDenied
       - id: RubberStampGreytide
@@ -131,9 +131,6 @@
   id: filingCabinetDrawer
   description: A small drawer for all your filing needs, Now with wheels!
   components:
-  - type: Storage
-    grid:
-    - 0,0,7,2
   - type: Sprite
     state: chestdrawer
     layers:
