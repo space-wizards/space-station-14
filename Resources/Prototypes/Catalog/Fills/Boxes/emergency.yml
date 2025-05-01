@@ -247,7 +247,7 @@
     - id: ClothingMaskGasSyndicate
     - id: ExtendedEmergencyOxygenTankFilled
     - id: EmergencyMedipen
-    - id: FoodSnackNutriBrick
+    - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
@@ -264,7 +264,7 @@
     - id: ClothingMaskGasSyndicate
     - id: ExtendedEmergencyNitrogenTankFilled
     - id: EmergencyMedipen
-    - id: FoodSnackNutriBrick
+    - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
