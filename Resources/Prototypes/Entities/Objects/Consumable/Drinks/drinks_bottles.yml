@@ -693,7 +693,7 @@
         - ReagentId: TonicWater
           Quantity: 100
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/tonic_bottle.rsi
+    sprite: Objects/Consumable/Drinks/tonic-bottle.rsi
 
 # Small Plastic Bottles
 
