@@ -28,3 +28,9 @@
   caption: caption-explosion-small-far
   files:
   - /Audio/Effects/explosionsmallfar.ogg
+
+- type: soundCollection
+  id: ExplosionEMP
+  caption: caption-explosion-emp
+  files:
+  - /Audio/Effects/Lightning/lightningbolt.ogg
