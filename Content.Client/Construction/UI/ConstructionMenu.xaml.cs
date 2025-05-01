@@ -120,7 +120,6 @@ namespace Content.Client.Construction.UI
                 button.AddChild(box);
                 button.ToolTip = prototype.Description;
                 button.AddStyleClass(ListContainer.StyleClassListContainerButton);
-                box.InvalidateArrange();
             };
 
             SearchBar.OnTextChanged += _ =>
