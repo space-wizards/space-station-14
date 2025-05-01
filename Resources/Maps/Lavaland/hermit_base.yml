@@ -135,7 +135,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 11.5,2.5
       parent: 1
-- proto: AsteroidRock
+- proto: WallRockBasalt
   entities:
   - uid: 13
     components:

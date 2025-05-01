@@ -35,6 +35,12 @@ public sealed partial class CCVars
         CVarDef.Create("ic.flavor_text_length", 512, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
+    ///     Sets the maximum character length of a job on an ID.
+    /// </summary>
+    public static readonly CVarDef<int> MaxIdJobLength =
+        CVarDef.Create("ic.id_job_length", 30, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
     ///     Adds a period at the end of a sentence if the sentence ends in a letter.
     /// </summary>
     public static readonly CVarDef<bool> ChatPunctuation =
@@ -65,8 +71,15 @@ public sealed partial class CCVars
         CVarDef.Create("ic.show_ssd_indicator", true, CVar.CLIENTONLY);
 
     /// <summary>
-    ///     Sets the maximum character length of a job on an ID.
+    ///     Forces SSD characters to sleep after ICSSDSleepTime seconds
     /// </summary>
-    public static readonly CVarDef<int> MaxIdJobLength =
-        CVarDef.Create("ic.id_job_length", 30, CVar.SERVER | CVar.REPLICATED);
+    public static readonly CVarDef<bool> ICSSDSleep =
+        CVarDef.Create("ic.ssd_sleep", true, CVar.SERVER);
+
+    /// <summary>
+    ///     Time between character getting SSD status and falling asleep
+    ///     Won't work without ICSSDSleep
+    /// </summary>
+    public static readonly CVarDef<float> ICSSDSleepTime =
+        CVarDef.Create("ic.ssd_sleep_time", 600f, CVar.SERVER);
 }
