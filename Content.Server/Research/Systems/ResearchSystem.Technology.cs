@@ -119,15 +119,17 @@ public sealed partial class ResearchSystem
         }
 
         component.UnlockedTechnologies.Add(technology.ID);
+        var addedRecipes = new List<string>();
         foreach (var unlock in technology.RecipeUnlocks)
         {
             if (component.UnlockedRecipes.Contains(unlock))
                 continue;
             component.UnlockedRecipes.Add(unlock);
+            addedRecipes.Add(unlock);
         }
         Dirty(uid, component);
 
-        var ev = new TechnologyDatabaseModifiedEvent();
+        var ev = new TechnologyDatabaseModifiedEvent(addedRecipes);
         RaiseLocalEvent(uid, ref ev);
     }
 
