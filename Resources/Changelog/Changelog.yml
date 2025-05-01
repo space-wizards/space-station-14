@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Added binoculars. You can find them in maints loot and the warden's locker.
-    type: Add
-  id: 7898
-  time: '2025-02-04T21:46:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34687
 - author: Spacemann
   changes:
   - message: Added 4 randomized maintenance rooms to in Convex station. These will
@@ -3918,3 +3911,10 @@
   id: 8399
   time: '2025-05-01T05:35:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37085
+- author: MissKay1994
+  changes:
+  - message: Vox can now eat trash and drink welding fuel!
+    type: Add
+  id: 8400
+  time: '2025-05-01T18:16:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35681
