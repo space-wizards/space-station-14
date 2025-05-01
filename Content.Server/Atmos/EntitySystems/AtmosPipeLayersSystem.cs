@@ -5,6 +5,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Construction.Components;
 using Content.Shared.Popups;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -31,13 +32,8 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
         SetPipeLayer(ent, ent.Comp.CurrentPipeLayer);
     }
 
-    /// <summary>
-    /// Sets an entity's pipe layer to a specified value
-    /// </summary>
-    /// <param name="ent">The pipe entity</param>
-    /// <param name="layer"> The new layer value</param>
-    /// <param name="user">The player entity who adjusting the pipe layer</param>
-    public override void SetPipeLayer(Entity<AtmosPipeLayersComponent> ent, int layer, EntityUid? user = null)
+    /// <inheritdoc/>
+    public override void SetPipeLayer(Entity<AtmosPipeLayersComponent> ent, int layer, EntityUid? user = null, EntityUid? used = null)
     {
         if (ent.Comp.PipeLayersLocked)
             return;
@@ -62,16 +58,20 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
                 _nodeGroup.QueueRemakeGroup((BaseNodeGroup)pipeNode.NodeGroup);
         }
 
-        // Unanchor the pipe if the new layer overlaps with an existing one
+        // If a user wasn't responsible for unanchoring the pipe, leave it be
+        if (user == null || used == null)
+            return;
+
+        // Unanchor the pipe if its new layer overlaps with another pipe
         var xform = Transform(ent);
 
-        if (HasComp<PipeRestrictOverlapComponent>(ent) &&
-            _pipeRestrictOverlap.CheckOverlap((ent, nodeContainer, xform)))
-        {
-            if (user != null)
-                _popup.PopupEntity(Loc.GetString("pipe-restrict-overlap-popup-blocked", ("pipe", ent)), ent, user.Value);
+        if (!HasComp<PipeRestrictOverlapComponent>(ent) || !_pipeRestrictOverlap.CheckOverlap((ent, nodeContainer, xform)))
+            return;
 
-            _xform.Unanchor(ent, xform);
-        }
+        RaiseLocalEvent(ent, new BeforeUnanchoredEvent(user.Value, used.Value));
+        _xform.Unanchor(ent, xform);
+        RaiseLocalEvent(ent, new UserUnanchoredEvent(user.Value, used.Value));
+
+        _popup.PopupEntity(Loc.GetString("pipe-restrict-overlap-popup-blocked", ("pipe", ent)), ent, user.Value);
     }
 }

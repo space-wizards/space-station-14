@@ -154,7 +154,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        CyclePipeLayer(ent, args.User);
+        CyclePipeLayer(ent, args.User, args.Used);
     }
 
     private void OnSettingPipeLayerCompleted(Entity<AtmosPipeLayersComponent> ent, ref TrySettingPipeLayerCompletedEvent args)
@@ -162,7 +162,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        SetPipeLayer(ent, args.PipeLayer, args.User);
+        SetPipeLayer(ent, args.PipeLayer, args.User, args.Used);
     }
 
     /// <summary>
@@ -170,10 +170,11 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The pipe entity</param>
     /// <param name="user">The player entity who adjusting the pipe layer</param>
-    public void CyclePipeLayer(Entity<AtmosPipeLayersComponent> ent, EntityUid? user = null)
+    /// <param name="used">The tool used to adjust the pipe layer</param>
+    public void CyclePipeLayer(Entity<AtmosPipeLayersComponent> ent, EntityUid? user = null, EntityUid? used = null)
     {
         var newLayer = (ent.Comp.CurrentPipeLayer + 1) % ent.Comp.NumberOfPipeLayers;
-        SetPipeLayer(ent, (byte)newLayer, user);
+        SetPipeLayer(ent, (byte)newLayer, user, used);
     }
 
     /// <summary>
@@ -182,7 +183,8 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
     /// <param name="ent">The pipe entity</param>
     /// <param name="layer">The new layer value</param>
     /// <param name="user">The player entity who adjusting the pipe layer</param>
-    public virtual void SetPipeLayer(Entity<AtmosPipeLayersComponent> ent, int layer, EntityUid? user = null)
+    /// <param name="used">The tool used to adjust the pipe layer</param>
+    public virtual void SetPipeLayer(Entity<AtmosPipeLayersComponent> ent, int layer, EntityUid? user = null, EntityUid? used = null)
     {
         if (ent.Comp.PipeLayersLocked)
             return;
