@@ -1,11 +1,9 @@
 using System.Linq;
-using Content.Shared.Audio;
-using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Light.Components;
 using Content.Shared.Popups;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
@@ -22,8 +20,6 @@ public abstract class SharedLightReplacerSystem : EntitySystem
     [Dependency] private   readonly IGameTiming _timing = default!;
     [Dependency] private   readonly IRobustRandom _random = default!;
     [Dependency] private   readonly SharedTransformSystem _transformSystem = default!;
-
-    private float _ejectOffset = 0.4f;
 
     public override void Initialize()
     {
@@ -64,49 +60,47 @@ public abstract class SharedLightReplacerSystem : EntitySystem
         if (eventArgs.Handled)
             return;
 
-        eventArgs.Handled = TryEjectBulb(uid, component, eventArgs.User, true, true);
+        TryEjectBulb(uid, eventArgs.User, true, true);
+
+        eventArgs.Handled = true;
     }
 
     /// <summary>
-    ///     Tries to eject the a bulb from storage and onto the floor.
+    ///     Tries to eject a bulb from storage and onto the floor.
     /// </summary>
     /// <returns>
     ///     Returns true if storage contained at least one light bulb and was able to eject it.
     ///     False otherwise.
     /// </returns>
     private bool TryEjectBulb(
-        EntityUid replacerUid,
-        LightReplacerComponent? replacer = null,
+        Entity<LightReplacerComponent?> ent,
         EntityUid? userUid = null,
-        bool showTooltip = true,
+        bool showPopup = true,
         bool playSound = true)
     {
-        if (!Resolve(replacerUid, ref replacer))
+        if (!TryComp<LightReplacerComponent>(ent, out var replacer))
             return false;
 
         if (replacer.InsertedBulbs.Count <= 0)
         {
-            if (showTooltip && userUid != null)
+            if (showPopup && userUid != null)
             {
-                var msg = Loc.GetString("comp-light-replacer-missing-light", ("light-replacer", replacerUid));
-                PopupSystem.PopupEntity(msg, replacerUid, userUid.Value, PopupType.Medium);
+                var msg = Loc.GetString("comp-light-replacer-missing-light", ("light-replacer", ent));
+                PopupSystem.PopupEntity(msg, ent, userUid.Value, PopupType.Medium);
             }
             return false;
         }
 
         // take the bulb out of the container
         var bulbUid = replacer.InsertedBulbs.ContainedEntities.First();
-        if (!TryComp<LightBulbComponent>(bulbUid, out var bulb))
-            return false;
-
         Container.Remove(bulbUid, replacer.InsertedBulbs);
 
         // eject the bulb on the ground
-        // we use the newEntity here since this is predicted and it allows us to have consistent RNG
-        if (TryGetNetEntity(replacerUid, out var netEntity))
+        // we use the netEntity here since this is predicted and it allows us to have consistent RNG
+        if (TryGetNetEntity(ent, out var netEntity))
             _random.SetSeed((int) _timing.CurTick.Value + netEntity.Value.Id);
 
-        var offsetPos = _random.NextVector2(_ejectOffset);
+        var offsetPos = _random.NextVector2(replacer.EjectOffset);
         var xform = Transform(bulbUid);
 
         var coordinates = xform.Coordinates;
@@ -116,18 +110,17 @@ public abstract class SharedLightReplacerSystem : EntitySystem
         _transformSystem.SetCoordinates(bulbUid, coordinates);
 
         // play the sound
-        if (playSound)
+        if (playSound && TryComp<LightBulbComponent>(bulbUid, out var bulb))
         {
-            var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-3);
-            Audio.PlayPvs(replacer.CycleSound, replacerUid, audioParams);
+            Audio.PlayPvs(replacer.CycleSound, ent);
             Audio.PlayPvs(bulb.DropSound, bulbUid);
         }
 
-        // show the tooltip
-        if (showTooltip && userUid != null)
+        // show the popup
+        if (showPopup && userUid != null)
         {
             var msg = Loc.GetString("comp-light-replacer-eject-light", ("bulb", bulbUid));
-            PopupSystem.PopupEntity(msg, replacerUid, userUid.Value, PopupType.Medium);
+            PopupSystem.PopupEntity(msg, ent, userUid.Value, PopupType.Medium);
         }
         return true;
     }
