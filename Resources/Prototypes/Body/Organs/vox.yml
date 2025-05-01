@@ -18,14 +18,10 @@
   id: OrganVoxStomach
   parent: OrganAnimalStomach
   name: vox stomach
-  description: "A blue stomach that smells of ammonia."
+  description: "A stomach that smells of ammonia."
   components:
-  - type: Organ
   - type: Sprite
     Sprite: Mobs/Species/Human/organs.rsi
-  - type: Item
-    size: Small
-    heldPrefix: stomach
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -35,6 +31,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+  - type: Metabolizer #Skreeeee!
+    maxReagents: 3
+    metabolizerTypes: [Vox]
   - type: Stomach
     specialDigestible:
       tags:
@@ -52,12 +51,10 @@
   id: OrganVoxLiver
   parent: OrganAnimalLiver
   name: liver
-  description: "Blue and smells flammable."
+  description: "Smells flammable."
   components:
   - type: Sprite
     state: liver
-  - type: Item
-    size: Small
     heldPrefix: liver
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
     maxReagents: 1
@@ -70,13 +67,10 @@
   id: OrganVoxHeart
   parent: BaseAnimalOrgan
   name: heart
-  description: "The strange blue heart of a vox"
+  description: "The strange heart of a vox"
   components:
   - type: Sprite
     state: heart-on
-  - type: Item
-    size: Small
-    heldPrefix: heart
   - type: Metabolizer
     updateInterval: 1.5
     maxReagents: 2
