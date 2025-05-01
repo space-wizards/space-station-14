@@ -2,10 +2,10 @@ using System.Numerics;
 using Content.Server.Forensics;
 using Content.Server.Spawners.Components;
 using Content.Server.Spawners.EntitySystems;
-using Content.Server.Stack;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -21,13 +21,14 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
 {
     /// <summary>
-    ///     Spawn items in parent container, if one exists.
+    ///     Time in seconds to wait before spawning entities.
     /// </summary>
     /// <remarks>
-    ///     If true spawns will not be offset, even if they weren't in a container.
+    ///     If this is greater than 0 it overrides
+    ///     <see cref="SpawnInContainer"/> and <see cref="TransferForensics"/>.
     /// </remarks>
     [DataField]
-    public bool SpawnInContainer;
+    public float SpawnAfter;
 
     /// <summary>
     ///     How far from the destroyed entity to spawn.
@@ -37,14 +38,10 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
     public float Offset { get; set; } = 0.5f;
 
     /// <summary>
-    ///     Time in seconds to wait before spawning entities.
+    ///     Spawn items in parent container, if one exists.
     /// </summary>
-    /// <remarks>
-    ///     If this is greater than 0 it overrides
-    ///     <see cref="SpawnInContainer"/> and <see cref="TransferForensics"/>.
-    /// </remarks>
     [DataField]
-    public float SpawnAfter;
+    public bool SpawnInContainer;
 
     /// <summary>
     ///     Spawned items will try to copy the forensics of the destroyed entity.
@@ -59,28 +56,33 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
     public float ForensicsChance = .4f;
 
     /// <summary>
-    ///     How many times to spawn items, i.e. a stack got destroyed.
     ///     Set by <see cref="Execute"/>.
     /// </summary>
-    protected int Executions = 1;
+    public MapCoordinates Position;
 
-    /// <summary>
-    ///     Spawn position. Set by <see cref="Execute"/>.
-    /// </summary>
-    private MapCoordinates Position;
-
-    public virtual void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
     {
         Position = system.EntityManager.System<TransformSystem>().GetMapCoordinates(owner);
 
+        // How many items in the owner stack
+        var executions = 1;
         if (system.EntityManager.TryGetComponent<StackComponent>(owner, out var stack))
         {
-            Executions = stack.Count;
+            executions = stack.Count;
         }
 
-        /// Children will get a count and run <see cref="SpawnEntities"/> here.
+        for (var i = 0; i < executions; i++)
+        {
+            GetSpawns(system, owner);
+        }
     }
 
+    // Children override this and call <see cref="SpawnEntities"/> there.
+    protected abstract void GetSpawns(DestructibleSystem system, EntityUid owner);
+
+    /// <summary>
+    ///     The actual spawning is done here.
+    /// </summary>
     protected void SpawnEntities(EntProtoId toSpawn, int count, DestructibleSystem system, EntityUid owner)
     {
         // Offset function
@@ -106,7 +108,8 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
         // Spawn as a stack
         else if (EntityPrototypeHelpers.HasComponent<StackComponent>(toSpawn, system.PrototypeManager, system.ComponentFactory))
         {
-            var spawned = SpawnInContainer
+            // If in a container spawn there, otherwise offset and spawn on the floor
+            var spawned = SpawnInContainer && system.EntityManager.System<SharedContainerSystem>().IsEntityInContainer(owner)
                 ? system.EntityManager.SpawnNextToOrDrop(toSpawn, owner)
                 : system.EntityManager.SpawnEntity(toSpawn, Position.Offset(getRandomVector()));
             system.StackSystem.SetCount(spawned, count);
@@ -119,7 +122,8 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
         {
             for (var i = 0; i < count; i++)
             {
-                var spawned = SpawnInContainer
+                // If in a container spawn there, otherwise offset and spawn on the floor
+                var spawned = SpawnInContainer && system.EntityManager.System<SharedContainerSystem>().IsEntityInContainer(owner)
                     ? system.EntityManager.SpawnNextToOrDrop(toSpawn, owner)
                     : system.EntityManager.SpawnEntity(toSpawn, Position.Offset(getRandomVector()));
 

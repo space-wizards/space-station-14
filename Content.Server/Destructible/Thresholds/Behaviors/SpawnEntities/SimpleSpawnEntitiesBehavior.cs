@@ -10,17 +10,14 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 public sealed partial class SimpleSpawnEntitiesBehavior : BaseSpawnEntitiesBehavior
 {
     /// <summary>
-    ///     Entities spawned on reaching this threshold, and how many.
+    ///     Entities spawned by this behavior, and how many.
     /// </summary>
     [DataField(required: true)]
     public Dictionary<EntProtoId, int> Spawn = new();
 
-    public override void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+    protected override void GetSpawns(DestructibleSystem system, EntityUid owner)
     {
-        base.Execute(owner, system, cause);
-
-        for (var execution = 0; execution < Executions; execution++)
-            foreach (var (entityId, count) in Spawn)
-                SpawnEntities(entityId, count, system, owner);
+        foreach (var (toSpawn, count) in Spawn)
+            SpawnEntities(toSpawn, count, system, owner); // About as simple as it gets
     }
 }

@@ -16,16 +16,11 @@ public sealed partial class EntityTableSpawnEntitiesBehavior : BaseSpawnEntities
     [DataField(required: true)]
     public EntityTableSelector Spawn;
 
-    public override void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+    protected override void GetSpawns(DestructibleSystem system, EntityUid owner)
     {
-        base.Execute(owner, system, cause);
+        var table = system.EntityManager.System<EntityTableSystem>().GetSpawns(Spawn);
 
-        for (var execution = 0; execution < Executions; execution++)
-        {
-            var table = system.EntityManager.System<EntityTableSystem>().GetSpawns(Spawn);
-
-            foreach (var entityId in table)
-                SpawnEntities(entityId, 1, system, owner);
-        }
+        foreach (var entityId in table)
+            SpawnEntities(entityId, 1, system, owner); // Ugly, but saves overriding <see cref="SpawnEntities"/>.
     }
 }

@@ -1,39 +1,33 @@
 using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 /// <summary>
-///     Spawns entities with an even distribution between min and max.
+///     Spawns entities with an even distribution between min and max (inclusive).
 /// </summary>
 [Serializable]
 [DataDefinition]
 public sealed partial class SpawnEntitiesBehavior : BaseSpawnEntitiesBehavior
 {
     /// <summary>
-    ///     Entities spawned on reaching this threshold, from a min to a max.
+    ///     Entities spawned by this behavior, from a min to a max.
     /// </summary>
     [DataField(required: true)]
     public Dictionary<EntProtoId, MinMax> Spawn = new();
 
-    public override void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+    protected override void GetSpawns(DestructibleSystem system, EntityUid owner)
     {
-        base.Execute(owner, system, cause);
-
-        for (var execution = 0; execution < Executions; execution++)
+        foreach (var (entityId, minMax) in Spawn)
         {
-            foreach (var (entityId, minMax) in Spawn)
-            {
-                var count = minMax.Min >= minMax.Max
-                    ? minMax.Min
-                    : system.Random.Next(minMax.Min, minMax.Max + 1);
+            var count = minMax.Min >= minMax.Max
+                ? minMax.Min
+                : system.Random.Next(minMax.Min, minMax.Max + 1);
 
-                if (count == 0)
-                    continue;
+            if (count == 0)
+                continue;
 
-                SpawnEntities(entityId, count, system, owner);
-            }
+            SpawnEntities(entityId, count, system, owner);
         }
     }
 }
