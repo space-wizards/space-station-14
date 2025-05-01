@@ -1,20 +1,20 @@
+using System.Linq;
 using System.Numerics;
-using JetBrains.Annotations;
 using Content.Client.Gameplay;
+using JetBrains.Annotations;
 using Robust.Client.Audio;
+using Robust.Client.ComponentTrees;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface;
+using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.GameObjects;
-using Robust.Client.GameObjects;
-using Robust.Shared.Timing;
-using Robust.Shared.Audio.Components;
-using System.Collections.Generic;
-using Robust.Client.ComponentTrees;
-using System.Linq;
 using Robust.Shared.Localization;
+using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Subtitles;
 
@@ -22,11 +22,20 @@ namespace Content.Client.UserInterface.Systems.Subtitles;
 public sealed class SubtitlesUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<AudioSystem>
 {
     private SubtitlesUI? UI => UIManager.GetActiveUIWidgetOrNull<SubtitlesUI>();
-    private List<CaptionComponent> _sounds = new();
+    private List<Entity<CaptionComponent, TransformComponent>> _sounds = new();
     [UISystemDependency] private readonly CaptionTreeSystem _captionTree = default!;
     [UISystemDependency] private readonly TransformSystem _xformSystem = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private readonly ISawmill _logMill = default!;
+
+    public SubtitlesUIController() : base()
+    {
+        IoCManager.InjectDependencies(this);
+
+        _logMill = _logManager.GetSawmill("captions");
+    }
 
     public void OnStateEntered(GameplayState state)
     {
@@ -44,11 +53,11 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
         system.OnSubtitledAudioStart -= AudioStart;
         system.OnSubtitledAudioEnd -= AudioEnd;
     }
-    private void AudioStart(CaptionComponent entity)
+    private void AudioStart(Entity<CaptionComponent, TransformComponent> entity)
     {
         _sounds.Add(entity);
     }
-    private void AudioEnd(CaptionComponent entity)
+    private void AudioEnd(Entity<CaptionComponent, TransformComponent> entity)
     {
         _sounds.Remove(entity);
     }
@@ -65,8 +74,9 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
             return;
         }
 
-        var mapPos = _xformSystem.GetMapCoordinates(xform);
-        var angle = _eyeManager.CurrentEye.Rotation.ToVec();
+        var mapPos = _eyeManager.CurrentEye.Position;
+        var upAngle = _eyeManager.CurrentEye.Rotation.ToVec();
+        var rightAngle = new Vector2(-upAngle.Y, upAngle.X);
 
         var pos = mapPos.Position;
         var maxVector = new Vector2(1f, 1f);
@@ -75,16 +85,46 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
 
         var groupedSounds = _sounds
             // filter to audible sounds
-            .Where(a => data.Any(b => b.Component == a))
+            .Where(a => data.Any(b => b.Component == a.Comp1))
             // get the ones with non-null captions
-            .Where(sound => sound.LocalizedCaption != null)
+            .Where(sound => sound.Comp1.LocalizedCaption != null)
 
             // turn the list of sounds into a list of (sound, count)
-            .GroupBy(sound => sound)
+            .GroupBy(sound => sound.Comp1.LocalizedCaption)
             .Select(sounds => {
+                var left = false;
+                var right = false;
+
+                foreach (var sound in sounds)
+                {
+                    var soundPos = _xformSystem.GetMapCoordinates(sound.Comp2);
+                    var soundDelta = pos - soundPos.Position;
+                    var dotProduct = Vector2.Dot(upAngle, soundDelta);
+                    if (dotProduct <= 0.5)
+                    {
+                        left = true;
+                        right = true;
+                        break;
+                    }
+                    var rightDotProduct = Vector2.Dot(rightAngle, soundDelta);
+                    if (rightDotProduct > 0)
+                    {
+                        right = true;
+                    }
+                    else
+                    {
+                        left = true;
+                    }
+
+                    if (left && right)
+                    {
+                        break;
+                    }
+                }
+
                 var item = sounds.Key;
                 var count = sounds.Count();
-                return Loc.GetString("subtitle-item", ("count", count), ("sound", item));
+                return Loc.GetString("subtitle-item", ("count", count), ("sound", item!), ("left", left), ("right", right));
             })
             .ToList();
 
