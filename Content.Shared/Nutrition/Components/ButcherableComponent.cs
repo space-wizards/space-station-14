@@ -12,23 +12,13 @@ namespace Content.Shared.Nutrition.Components
         [DataField("spawned", required: true)]
         public List<EntitySpawnEntry> SpawnedEntities = new();
 
-        [ViewVariables(VVAccess.ReadWrite), DataField("butcherDelay")]
+        [DataField]
         public float ButcherDelay = 8.0f;
-
-        [ViewVariables(VVAccess.ReadWrite), DataField("butcheringType")]
-        public ButcheringType Type = ButcheringType.Knife;
 
         /// <summary>
         /// Prevents butchering same entity on two and more spikes simultaneously and multiple doAfters on the same Spike
         /// </summary>
         [ViewVariables]
         public bool BeingButchered;
-    }
-
-    public enum ButcheringType : byte
-    {
-        Knife, // e.g. goliaths
-        Spike, // e.g. monkeys
-        Gibber // e.g. humans. TODO
     }
 }

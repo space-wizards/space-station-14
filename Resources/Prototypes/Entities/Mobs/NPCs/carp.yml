@@ -5,86 +5,86 @@
   description: It's a space carp.
   abstract: true
   components:
-    - type: InputMover
-    - type: MobMover
-    - type: HTN
-      rootTask:
-        task: SimpleHostileCompound
-      blackboard:
-        NavSmash: !type:Bool
-          true
-    - type: NpcFactionMember
-      factions:
-      - Dragon
-    - type: Sprite
-      drawdepth: Mobs
-      sprite: Mobs/Aliens/Carps/space.rsi
-      layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-    - type: CombatMode
-    - type: Physics
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeCircle
-            radius: 0.40
-          density: 80
-          mask:
-            - FlyingMobMask
-          layer:
-            - FlyingMobLayer
-    - type: MobState
-    - type: MobThresholds
-      thresholds:
-        0: Alive
-        40: Dead
-    - type: MovementSpeedModifier
-      baseWalkSpeed: 2.5
-      baseSprintSpeed: 3.5
-    - type: Stamina
-      critThreshold: 100
-    - type: DamageStateVisuals
-      states:
-        Alive:
-          Base: alive
-          BaseUnshaded: mouth
-        Dead:
-          Base: dead
-          BaseUnshaded: dead_mouth
-    - type: Butcherable
-      spawned:
-        - id: FoodMeatFish
-          amount: 2
-        - id: MaterialToothSpaceCarp1
-          amount: 1
-          maxAmount: 4
-    - type: MeleeWeapon
-      altDisarm: false
-      angle: 0
-      animation: WeaponArcBite
-      soundHit:
-        path: /Audio/Effects/bite.ogg
-      damage:
-        types:
-          Blunt: 5
-          Slash: 7
-    - type: TypingIndicator
-      proto: alien
-    - type: Tag
-      tags:
-        - Carp
-        - DoorBumpOpener
-    - type: ReplacementAccent
-      accent: genericAggressive
-    - type: Speech
-      speechVerb: LargeMob
-    - type: InteractionPopup
-      interactSuccessString: petting-success-carp
-      interactFailureString: petting-failure-carp
-      interactFailureSound:
-        path: /Audio/Effects/bite.ogg
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      NavSmash: !type:Bool
+        true
+  - type: NpcFactionMember
+    factions:
+    - Dragon
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Carps/space.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+  - type: CombatMode
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 80
+        mask:
+          - FlyingMobMask
+        layer:
+          - FlyingMobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      40: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 3.5
+  - type: Stamina
+    critThreshold: 100
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+        BaseUnshaded: mouth
+      Dead:
+        Base: dead
+        BaseUnshaded: dead_mouth
+  - type: Sliceable
+    slices:
+    - id: FoodMeatFish
+      amount: 2
+    - id: MaterialToothSpaceCarp1
+      amount: 1
+      maxAmount: 4
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Blunt: 5
+        Slash: 7
+  - type: TypingIndicator
+    proto: alien
+  - type: Tag
+    tags:
+      - Carp
+      - DoorBumpOpener
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: Speech
+    speechVerb: LargeMob
+  - type: InteractionPopup
+    interactSuccessString: petting-success-carp
+    interactFailureString: petting-failure-carp
+    interactFailureSound:
+      path: /Audio/Effects/bite.ogg
 
 - type: entity
   parent: BaseMobCarp
@@ -110,10 +110,10 @@
   id: MobCarpMagic
   description: Looks like some kind of fish. Might be magical.
   components:
-    - type: Sprite
-      sprite: Mobs/Aliens/Carps/magic.rsi
-    - type: TypingIndicator
-      proto: guardian
+  - type: Sprite
+    sprite: Mobs/Aliens/Carps/magic.rsi
+  - type: TypingIndicator
+    proto: guardian
 
 - type: entity
   name: holocarp
@@ -121,22 +121,22 @@
   id: MobCarpHolo
   description: Carp made out of holographic energies. Sadly for you, it is very much real.
   components:
-    - type: Sprite
-      sprite: Mobs/Aliens/Carps/holo.rsi
-    - type: Physics
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeCircle
-            radius: 0.40
-          density: 10
-          mask:
-            - MobMask
-          layer:
-            - Opaque
-    - type: TypingIndicator
-      proto: robot
+  - type: Sprite
+    sprite: Mobs/Aliens/Carps/holo.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 10
+        mask:
+          - MobMask
+        layer:
+          - Opaque
+  - type: TypingIndicator
+    proto: robot
 
 - type: entity
   parent: MobCarp
@@ -155,7 +155,7 @@
   parent: MobCarp
   suffix: "Salvage Ruleset"
   components:
-    - type: SalvageMobRestrictions
+  - type: SalvageMobRestrictions
 
 - type: entity
   name: space carp
@@ -163,21 +163,21 @@
   suffix: DragonBrood
   parent: MobCarp
   components:
-    - type: GhostRole
-      allowMovement: true
-      allowSpeech: true
-      makeSentient: true
-      name: ghost-role-information-sentient-carp-name
-      description: ghost-role-information-sentient-carp-description
-      rules: ghost-role-information-space-dragon-summoned-carp-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonistFlock
-      raffle:
-        settings: short
-    - type: GhostTakeoverAvailable
-    - type: HTN
-      rootTask:
-        task: DragonCarpCompound
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-sentient-carp-name
+    description: ghost-role-information-sentient-carp-description
+    rules: ghost-role-information-space-dragon-summoned-carp-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonistFlock
+    raffle:
+      settings: short
+  - type: GhostTakeoverAvailable
+  - type: HTN
+    rootTask:
+      task: DragonCarpCompound
 
 - type: entity
   id: MobCarpDungeon
@@ -202,58 +202,58 @@
   id: MobShark
   description: A dangerous shark from the blackness of endless space, who loves to drink blood.
   components:
-    - type: Sprite
-      sprite: Mobs/Aliens/Carps/sharkminnow.rsi
-      layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-      - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-        state: mouth
-        shader: unshaded
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeCircle
-            radius: 0.40
-          density: 100
-          mask:
-            - FlyingMobMask
-          layer:
-            - FlyingMobLayer
-    - type: MobThresholds
-      thresholds:
-        0: Alive
-        150: Dead
-    - type: Stamina
-      critThreshold: 150
-    - type: DamageStateVisuals
-      states:
-        Alive:
-          Base: alive
-          BaseUnshaded: mouth
-        Dead:
-          Base: dead
-          BaseUnshaded: dead_mouth
-    - type: Body
-      prototype: Bloodsucker
-      requiredLegs: 1
-    - type: Butcherable
-      spawned:
-        - id: FoodMeatFish
-          amount: 4
-        - id: MaterialToothSharkminnow1
-          amount: 1
-          maxAmount: 3
-    - type: MeleeWeapon
-      damage:
-        types:
-          Slash: 10
-          Bloodloss: 5
+  - type: Sprite
+    sprite: Mobs/Aliens/Carps/sharkminnow.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: mouth
+      shader: unshaded
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 100
+        mask:
+          - FlyingMobMask
+        layer:
+          - FlyingMobLayer
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Dead
+  - type: Stamina
+    critThreshold: 150
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+        BaseUnshaded: mouth
+      Dead:
+        Base: dead
+        BaseUnshaded: dead_mouth
+  - type: Body
+    prototype: Bloodsucker
+    requiredLegs: 1
+  - type: Sliceable
+    slices:
+    - id: FoodMeatFish
+      amount: 4
+    - id: MaterialToothSharkminnow1
+      amount: 1
+      maxAmount: 3
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 10
+        Bloodloss: 5
 
 - type: entity
   id: MobSharkSalvage
   parent: MobShark
   suffix: "Salvage Ruleset"
   components:
-    - type: SalvageMobRestrictions
+  - type: SalvageMobRestrictions

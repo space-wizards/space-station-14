@@ -97,9 +97,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatCutlet
+  - type: Sliceable
+    slices:
+    - id: FoodMeatCutlet
+      amount: 3
   - type: InternalTemperature
     conductivity: 0.43
   - type: Construction
@@ -124,9 +125,10 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatCutlet
+  - type: Sliceable
+    slices:
+    - id: FoodMeatCutlet
+      amount: 3
 
 - type: entity
   name: raw carp fillet
@@ -202,9 +204,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatBearCutlet
+  - type: Sliceable
+    slices:
+    - id: FoodMeatBearCutlet
+      amount: 3
   - type: Construction
     graph: BearSteak
     node: start
@@ -226,9 +229,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatPenguinCutlet
+  - type: Sliceable
+    slices:
+    - id: FoodMeatPenguinCutlet
+      amount: 3
   - type: Construction
     graph: PenguinSteak
     node: start
@@ -250,9 +254,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatChickenCutlet
+  - type: Sliceable
+    slices:
+    - id: FoodMeatChickenCutlet
+      amount: 3
   - type: InternalTemperature
     conductivity: 0.41
   - type: Construction
@@ -276,9 +281,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatDuckCutlet
+  - type: Sliceable
+    slices:
+    - id: FoodMeatDuckCutlet
+      amount: 3
   - type: Construction
     graph: DuckSteak
     node: start
@@ -382,9 +388,10 @@
       reagents:
       - ReagentId: Ichor
         Quantity: 10
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatDragonCutlet
+  - type: Sliceable
+    slices:
+    - id: FoodMeatDragonCutlet
+      amount: 3
   - type: Construction
     graph: DragonSteak
     node: start
@@ -406,9 +413,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 3
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatCutlet
+  - type: Sliceable
+    slices:
+    - id: FoodMeatCutlet
+      amount: 3
 
 - type: entity
   name: raw lizard meat
@@ -426,9 +434,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatLizardCutlet
+  - type: Sliceable
+    slices:
+    - id: FoodMeatLizardCutlet
+      amount: 3
   - type: Construction
     graph: LizardSteak
     node: start
@@ -484,9 +493,10 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatSpiderCutlet
+  - type: Sliceable
+    slices:
+    - id: FoodMeatSpiderCutlet
+      amount: 3
 
 - type: entity
   name: raw spider leg
@@ -567,9 +577,10 @@
         reagents:
         - ReagentId: SulfuricAcid
           Quantity: 20
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatXenoCutlet
+  - type: Sliceable
+    slices:
+    - id: FoodMeatXenoCutlet
+      amount: 3
 
 - type: entity
   name: raw rouny meat
@@ -608,9 +619,10 @@
   components:
   - type: Sprite
     state: tomato
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatTomatoCutlet
+  - type: Sliceable
+    slices:
+    - id: FoodMeatTomatoCutlet
+      amount: 3
   - type: StaticPrice
     price: 100
 
@@ -627,8 +639,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/salami.rsi
     state: salami
-  - type: SliceableFood
-    slice: FoodMeatSalamiSlice
+  - type: Sliceable
+    slices:
+    - id: FoodMeatSalamiSlice
   - type: MeleeWeapon
     wideAnimationRotation: 100
     damage:
@@ -656,8 +669,9 @@
     - Meat
   - type: Sprite
     state: clown
-  - type: SliceableFood
-    slice: FoodMeatSalamiSlice
+  - type: Sliceable
+    slices:
+    - id: FoodMeatSalamiSlice
 
 - type: entity
   name: meatball
@@ -753,10 +767,11 @@
           Quantity: 90
         - ReagentId: Fat
           Quantity: 90
-  - type: SliceableFood
-    count: 10
+  - type: Sliceable
+    slices:
+    - id: FoodMeat #That's... So much meat
+      amount: 10
     sliceTime: 5
-    slice: FoodMeat #That's... So much meat
   - type: InternalTemperature
     conductivity: 0.43
   - type: Construction
@@ -823,9 +838,10 @@
           Quantity: 10
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatCutletCooked
+  - type: Sliceable
+    slices:
+    - id: FoodMeatCutletCooked
+      amount: 3
   - type: Construction
     graph: MeatSteak
     node: meat steak
@@ -891,9 +907,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatBearCutletCooked
+  - type: Sliceable
+    slices:
+    - id: FoodMeatBearCutletCooked
+      amount: 3
   - type: Construction
     graph: BearSteak
     node: filet migrawr
@@ -923,9 +940,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatPenguinCutletCooked
+  - type: Sliceable
+    slices:
+    - id: FoodMeatPenguinCutletCooked
+      amount: 3
   - type: Construction
     graph: PenguinSteak
     node: cooked penguin
@@ -955,9 +973,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatChickenCutletCooked
+  - type: Sliceable
+    slices:
+    - id: FoodMeatChickenCutletCooked
+      amount: 3
   - type: Construction
     graph: ChickenSteak
     node: cooked chicken
@@ -1019,9 +1038,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatDuckCutletCooked
+  - type: Sliceable
+    slices:
+    - id: FoodMeatDuckCutletCooked
+      amount: 3
   - type: Construction
     graph: DuckSteak
     node: cooked duck
@@ -1148,9 +1168,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatLizardCutletCooked
+  - type: Sliceable
+    slices:
+    - id: FoodMeatLizardCutletCooked
+      amount: 3
   - type: Construction
     graph: LizardSteak
     node: lizard steak
@@ -1292,10 +1313,11 @@
           Quantity: 100
         - ReagentId: Protein
           Quantity: 50
-  - type: SliceableFood
-    count: 10
+  - type: Sliceable
+    slices:
+    - id: FoodMeatCooked
+      amount: 10
     sliceTime: 5
-    slice: FoodMeatCooked
   - type: Construction
     graph: AnomalyMeatSteak
     node: anomaly steak
@@ -1324,9 +1346,10 @@
           Quantity: 6
         - ReagentId: Protein
           Quantity: 6
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatDragonCutletCooked
+  - type: Sliceable
+    slices:
+    - id: FoodMeatDragonCutletCooked
+      amount: 3
   - type: Construction
     graph: DragonSteak
     node: dragon steak

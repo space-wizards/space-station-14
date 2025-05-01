@@ -12,6 +12,9 @@ using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Content.Shared.Sliceable;
+using Content.Server.Sliceable;
+using Content.Shared.Storage;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -155,7 +158,7 @@ public sealed class CargoTest
         var componentFactory = server.ResolveDependency<IComponentFactory>();
         var whitelist = entManager.System<EntityWhitelistSystem>();
         var cargo = entManager.System<CargoSystem>();
-        var sliceableSys = entManager.System<SliceableFoodSystem>();
+        var sliceableSys = entManager.System<SliceableSystem>();
 
         var bounties = protoManager.EnumeratePrototypes<CargoBountyPrototype>().ToList();
 
@@ -168,14 +171,14 @@ public sealed class CargoTest
             var sliceableEntityProtos = protoManager.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.TryGetComponent<SliceableFoodComponent>(out _, componentFactory))
+                .Where(p => p.TryGetComponent<SliceableComponent>(out _, componentFactory))
                 .Select(p => p.ID)
                 .ToList();
 
             foreach (var proto in sliceableEntityProtos)
             {
                 var ent = entManager.SpawnEntity(proto, coord);
-                var sliceable = entManager.GetComponent<SliceableFoodComponent>(ent);
+                var sliceable = entManager.GetComponent<SliceableComponent>(ent);
 
                 // Check each bounty
                 foreach (var bounty in bounties)
@@ -188,19 +191,25 @@ public sealed class CargoTest
                             continue;
 
                         // Spawn a slice
-                        var slice = entManager.SpawnEntity(sliceable.Slice, coord);
 
-                        // See if the slice also counts for this bounty entry
-                        if (!cargo.IsValidBountyEntry(slice, entry))
+                        var slices = EntitySpawnCollection.GetSpawns(sliceable.Slices);
+
+                        foreach (var sliceProto in slices)
                         {
+                            var slice = entManager.SpawnEntity(sliceProto, coord);
+
+                            // See if the slice also counts for this bounty entry
+                            if (!cargo.IsValidBountyEntry(slice, entry))
+                            {
+                                entManager.DeleteEntity(slice);
+                                continue;
+                            }
+
                             entManager.DeleteEntity(slice);
-                            continue;
+
+                            // If for some reason it can only make one slice, that's okay, I guess
+                            Assert.That(slices.Count, Is.EqualTo(1), $"{proto} counts as part of cargo bounty {bounty.ID} and slices into {slices.Count} slices which count for the same bounty!");
                         }
-
-                        entManager.DeleteEntity(slice);
-
-                        // If for some reason it can only make one slice, that's okay, I guess
-                        Assert.That(sliceable.TotalCount, Is.EqualTo(1), $"{proto} counts as part of cargo bounty {bounty.ID} and slices into {sliceable.TotalCount} slices which count for the same bounty!");
                     }
                 }
 
