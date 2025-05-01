@@ -16,7 +16,7 @@
     amount: 1.5
   - !type:PlantAdjustHealth
     amount: 0.75
-  pricePerUnit: 2
+    chemComplexity: 1
 
 - type: reagent
   id: Vitamin #Anything "healthy"
@@ -45,7 +45,7 @@
     amount: 0.5
   - !type:PlantAdjustHealth
     amount: 1.5
-  pricePerUnit: 2.5
+  chemComplexity: 1
 
 - type: reagent
   id: Protein #Meat and beans
@@ -66,7 +66,7 @@
       - !type:ModifyBloodLevel
         amount: 1 # weaker than iron but pretty good all things considered
       - !type:SatiateHunger
-  pricePerUnit: 3
+  chemComplexity: 1
 
 - type: reagent
   id: Sugar #Candy and grains
