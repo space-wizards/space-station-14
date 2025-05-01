@@ -717,4 +717,4 @@
         conditions:
         - !type:OrganType
           type: Vox
-          shouldHave: false
+          shouldHave: true
