@@ -1,0 +1,195 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseOrganBrain
+  name: brain
+  description: The source of incredible, unending intelligence. Honk.
+  components:
+  - type: Sprite
+    state: brain
+  - type: Organ
+  - type: Input
+    context: "ghost"
+  - type: Brain
+  - type: InputMover
+  - type: Examiner
+  - type: BlockMovement
+  - type: BadFood
+  - type: Tag
+    tags:
+    - Meat
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+    - people
+  - type: FoodSequenceElement
+    entries:
+      Burger: Brain
+      Taco: Brain
+  - type: Item
+    size: Small
+    heldPrefix: brain
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseOrganHeart
+  name: heart
+  description: I feel bad for the heartless bastard who lost this.
+  components:
+  - type: Sprite
+    state: heart-on
+  - type: Organ
+  # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
+  # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
+  # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes: [ Human ]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+  - type: Item
+    size: Small
+    heldPrefix: heart
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseOrganEyes
+  name: eyes
+  description: I see you!
+  components:
+  - type: Sprite
+    layers:
+    - state: eyeball-l
+    - state: eyeball-r
+  - type: Item
+    size: Small
+    heldPrefix: eyeballs
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseOrganLungsSpriteless
+  name: lungs
+  description: Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier.
+  components:
+  - type: Item
+    size: Small
+    heldPrefix: lungs
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Human ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      Lung:
+        maxVol: 100.0
+        canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseOrganLungs
+  components:
+  - type: Sprite
+    layers:
+    - state: lung-l
+    - state: lung-r
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseOrganStomach
+  name: stomach
+  description: Gross. This is hard to stomach.
+  components:
+  - type: Sprite
+    state: stomach
+  - type: Item
+    size: Small
+    heldPrefix: stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Stomach
+  # The stomach metabolizes stuff like foods and drinks.
+  # TODO: Have it work off of the ent's solution container, and move this
+  # to intestines instead.
+  - type: Metabolizer
+    maxReagents: 3
+    metabolizerTypes: [ Human ]
+    groups:
+    - id: Food
+    - id: Drink
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseOrganLiver
+  name: liver
+  description: 'Pairing suggestion: chianti and fava beans.'
+  components:
+  - type: Sprite
+    state: liver
+  - type: Item
+    size: Small
+    heldPrefix: liver
+  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    maxReagents: 1
+    metabolizerTypes: [ Human ]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseOrganKidneys
+  name: kidneys
+  description: Filters toxins from the bloodstream.
+  components:
+  - type: Sprite
+    layers:
+    - state: kidney-l
+    - state: kidney-r
+  - type: Item
+    size: Small
+    heldPrefix: kidneys
+  # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes: [ Human ]
+    removeEmpty: true
