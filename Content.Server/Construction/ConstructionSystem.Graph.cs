@@ -281,7 +281,7 @@ namespace Content.Server.Construction
         /// <param name="userUid">An optional user entity, for actions.</param>
         /// <param name="newEntity">The entity prototype identifier for the new entity.</param>
         /// <param name="construction">The construction component of the target entity. Will be resolved if null.</param>
-        /// <param name="previousNode">The previous node, if any, this graph was on before changing entity</param>
+        /// <param name="previousNode">The previous node, if any, this graph was on before changing entity.</param>
         /// <param name="metaData">The metadata component of the target entity. Will be resolved if null.</param>
         /// <param name="transform">The transform component of the target entity. Will be resolved if null.</param>
         /// <param name="containerManager">The container manager component of the target entity. Will be resolved if null,
@@ -465,9 +465,9 @@ namespace Content.Server.Construction
     /// This event is raised after an entity changes prototype/uid during construction.
     /// This is only raised at the new entity, after it has been initialized.
     /// </summary>
-    /// <param name="Graph">Construction graph for this entity</param>
-    /// <param name="CurrentNode">New node that has become active</param>
-    /// <param name="PreviousNode">Previous node that was active on the graph</param>
+    /// <param name="Graph">Construction graph for this entity.</param>
+    /// <param name="CurrentNode">New node that has become active.</param>
+    /// <param name="PreviousNode">Previous node that was active on the graph.</param>
     [ByRefEvent]
     public record struct AfterConstructionChangeEntityEvent(string Graph, string CurrentNode, string? PreviousNode)
     {
