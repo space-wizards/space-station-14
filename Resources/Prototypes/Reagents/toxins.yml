@@ -710,17 +710,6 @@
   flavor: trashy
   physicalDesc: reagent-physical-desc-nondescript
   metabolisms:
-    Poison:
-      metabolismRate: 0.7
-      effects:
-      - !type:HealthChange
-        conditions:
-        - !type:OrganType
-          type: Vox
-          shouldHave: false
-        damage:
-          types:
-            Poison: 3.5
     Food:
       effects:
       - !type:SatiateHunger
