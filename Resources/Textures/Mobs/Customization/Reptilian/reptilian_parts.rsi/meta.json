@@ -1,0 +1,159 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Assets taken from Skyrat 13 (/tg/station Downstream) at https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297. horns_argali, horns_ayrshire, horns_myrsore, horns_bighorn and horns_demonic by Ubaser (github). horns_kobold_ears by Pigeonpeas, modified by Ubaser (github). horns_floppy_kobold_ears by Sadie-silly (github). body_fin by Blackern5000 (github). body_underbelly by Nairod (github). snout_splotch_primary and secondary modified from snout_sharp by KittenColony (github). frills_neckful taken from Bubberstation at https://github.com/Bubberstation/Bubberstation/commit/8bc6b83404803466a560b694bf22ef3c0ac266a2.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "snout_round",
+            "directions": 4
+        },
+        {
+            "name": "snout_roundlight",
+            "directions": 4
+        },
+        {
+            "name": "snout_sharp",
+            "directions": 4
+        },
+        {
+            "name": "snout_sharplight",
+            "directions": 4
+        },
+        {
+            "name": "horns_simple",
+            "directions": 4
+        },
+        {
+            "name": "horns_short",
+            "directions": 4
+        },
+        {
+            "name": "horns_curled",
+            "directions": 4
+        },
+        {
+            "name": "horns_ram",
+            "directions": 4
+        },
+        {
+            "name": "horns_angler",
+            "directions": 4
+        },
+        {
+            "name": "frills_simple",
+            "directions": 4
+        },
+        {
+            "name": "frills_short",
+            "directions": 4
+        },
+        {
+            "name": "frills_aquatic",
+            "directions": 4
+        },
+        {
+            "name": "frills_divinity",
+            "directions": 4
+        },
+        {
+            "name": "horns_double",
+            "directions": 4
+        },
+        {
+            "name": "frills_axolotl",
+            "directions": 4
+        },
+        {
+            "name": "frills_hood_primary",
+            "directions": 4
+        },
+        {
+            "name": "frills_hood_secondary",
+            "directions": 4
+        },
+        {
+            "name": "frills_big",
+            "directions": 4
+        },
+        {
+            "name": "body_tiger",
+            "directions": 4
+        },
+        {
+            "name": "head_tiger",
+            "directions": 4
+        },
+        {
+            "name": "l_arm_tiger",
+            "directions": 4
+        },
+        {
+            "name": "l_leg_tiger",
+            "directions": 4
+        },
+        {
+            "name": "r_arm_tiger",
+            "directions": 4
+        },
+        {
+            "name": "horns_argali",
+            "directions": 4
+        },
+        {
+            "name": "horns_ayrshire",
+            "directions": 4
+        },
+        {
+            "name": "horns_myrsore",
+            "directions": 4
+        },
+        {
+            "name": "horns_bighorn",
+            "directions": 4
+        },
+        {
+            "name": "horns_demonic",
+            "directions": 4
+        },
+        {
+            "name": "horns_kobold_ears",
+            "directions": 4
+        },
+        {
+            "name": "r_leg_tiger",
+            "directions": 4
+        },
+        {
+            "name": "horns_floppy_kobold_ears",
+            "directions": 4
+        },
+        {
+            "name": "body_underbelly",
+            "directions": 4
+        },
+        {
+            "name": "body_backspikes",
+            "directions": 4
+        },
+        {
+            "name": "body_fin",
+            "directions": 4
+        },
+        {
+            "name": "snout_splotch_primary",
+            "directions": 4
+        },
+        {
+            "name": "snout_splotch_secondary",
+            "directions": 4
+        },
+        {
+            "name": "frills_neckfull",
+            "directions": 4
+        }
+    ]
+}
