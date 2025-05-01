@@ -214,7 +214,7 @@ namespace Content.Shared.Movement.Systems
             }
             // If we went from grid -> grid OR grid -> map then snap the target to cardinal and lerp there.
             // OR just rotate to zero (depending on cvar)
-            else if (relative != null && _mapManager.IsGrid(relative.Value))
+            else if (relative != null && MapGridQuery.HasComp(relative.Value))
             {
                 if (CameraRotationLocked)
                     targetRotation = Angle.Zero;
