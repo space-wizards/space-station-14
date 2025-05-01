@@ -6,7 +6,7 @@
     - id: BoxFolderQmClipboard
     - id: CargoBountyComputerCircuitboard
     - id: CargoRequestComputerCircuitboard
-
+    - id: CargoSaleComputerCircuitboard
     - id: CargoShuttleComputerCircuitboard
     - id: SalvageMagnetMachineCircuitboard
     - id: CigPackGreen
