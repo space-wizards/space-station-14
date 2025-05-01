@@ -321,9 +321,6 @@ public sealed partial class StaminaSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        //if (!_timing.IsFirstTimePredicted)
-        //    return;
-
         var stamQuery = GetEntityQuery<StaminaComponent>();
         var query = EntityQueryEnumerator<ActiveStaminaComponent>();
         var curTime = _timing.CurTime;
@@ -407,9 +404,6 @@ public sealed partial class StaminaSystem : EntitySystem
     /// speed modifier using the stun system. If no threshold is met then the entity's speed is restored to normal.
     /// </summary>
     /// <param name="ent">Entity to update</param>
-    /// <param name="comp">
-    /// Stamina component of the entity. Can be null, in this case the method attempts to resolve it automatically.
-    /// </param>
     private void AdjustSlowdown(Entity<StaminaComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))

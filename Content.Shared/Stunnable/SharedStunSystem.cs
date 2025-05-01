@@ -265,10 +265,6 @@ public abstract class SharedStunSystem : EntitySystem
     /// <param name="ent">Entity whose movement speed should be updated.</param>
     /// <param name="walkSpeedModifier">New walk speed modifier. Default is 1f (normal speed).</param>
     /// <param name="runSpeedModifier">New run (sprint) speed modifier. Default is 1f (normal speed).</param>
-    /// <param name="component">
-    /// Optional <see cref="StaminaComponent"/> of the entity.
-    /// </param>
-
     public void UpdateStunModifiers(Entity<StaminaComponent?> ent,
         float walkSpeedModifier = 1f,
         float runSpeedModifier = 1f)

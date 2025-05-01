@@ -73,6 +73,6 @@ public sealed partial class StaminaComponent : Component
     /// <summary>
     /// Thresholds that determine an entity's slowdown as a function of stamina damage.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), DataField]
+    [DataField]
     public Dictionary<FixedPoint2, float> StunModifierThresholds = new() { {0, 1f }, { 60, 0.7f }, { 80, 0.5f } };
 }
