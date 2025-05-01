@@ -314,15 +314,15 @@ public sealed partial class ParticleAcceleratorSystem
         var machine = (uid, machineComp);
 
         // UpdatePartVisualState(ControlBox); (We are the control box)
-        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.FuelChamber, out var fuelChamber) && fuelChamber.HasValue)
+        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.FuelChamber, out var fuelChamber))
             _appearanceSystem.SetData(fuelChamber.Value, ParticleAcceleratorVisuals.VisualState, state);
-        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.PowerBox, out var powerBox) && powerBox.HasValue)
+        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.PowerBox, out var powerBox))
             _appearanceSystem.SetData(powerBox.Value, ParticleAcceleratorVisuals.VisualState, state);
-        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.PortEmitter, out var portEmitter) && portEmitter.HasValue)
+        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.PortEmitter, out var portEmitter))
             _appearanceSystem.SetData(portEmitter.Value, ParticleAcceleratorVisuals.VisualState, state);
-        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.ForeEmitter, out var foreEmitter) && foreEmitter.HasValue)
+        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.ForeEmitter, out var foreEmitter))
             _appearanceSystem.SetData(foreEmitter.Value, ParticleAcceleratorVisuals.VisualState, state);
-        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.StarboardEmitter, out var starboardEmitter) && starboardEmitter.HasValue)
+        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.StarboardEmitter, out var starboardEmitter))
             _appearanceSystem.SetData(starboardEmitter.Value, ParticleAcceleratorVisuals.VisualState, state);
         //no endcap because it has no powerlevel-sprites
     }
