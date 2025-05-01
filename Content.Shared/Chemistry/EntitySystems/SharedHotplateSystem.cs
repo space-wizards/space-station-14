@@ -3,7 +3,9 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Temperature.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -13,6 +15,8 @@ public abstract class SharedHotplateSystem : EntitySystem
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly ThermoregulatorSystem _thermoregulator = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     private EntityQuery<SolutionContainerManagerComponent> _solutionManagerQuery;
 
@@ -30,6 +34,7 @@ public abstract class SharedHotplateSystem : EntitySystem
         SubscribeLocalEvent<HotplateComponent, EntInsertedIntoContainerMessage>(OnEntInsertedIntoContainer);
         SubscribeLocalEvent<HotplateComponent, EntRemovedFromContainerMessage>(OnEntRemovedFromContainer);
         SubscribeLocalEvent<HotplateComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<HotplateComponent, ThermoregulatorUpdatedEvent>(OnThermoregulatorUpdated);
 
         Subs.BuiEvents<HotplateComponent>(HotplateUiKey.Key,
             subs =>
@@ -38,6 +43,37 @@ public abstract class SharedHotplateSystem : EntitySystem
         });
 
         _solutionManagerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
+    }
+
+    private void OnThermoregulatorUpdated(Entity<HotplateComponent> ent, ref ThermoregulatorUpdatedEvent args)
+    {
+        // Skip if no beaker inserted
+        if (!ent.Comp.HasBeaker)
+            return;
+
+        // Skip if not powered
+        if (!_power.IsPowered(ent.Owner))
+            return;
+
+        // Get beaker container
+        if (!_container.TryGetContainer(ent, BeakerSlotId, out var beakerSlot))
+            return;
+
+        foreach (var entity in beakerSlot.ContainedEntities)
+        {
+            if (!_solutionManagerQuery.TryComp(entity, out var solutionManager))
+                continue;
+
+            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutionManager)))
+            {
+                var solutionTemperature = soln.Comp.Solution.Temperature;
+                var solutionHeatCapacity = soln.Comp.Solution.GetHeatCapacity(_proto);
+
+                _thermoregulator.TransferHeatFromEntity((ent, args.Thermoregulator), solutionHeatCapacity, ref solutionTemperature);
+
+                _solutionContainer.SetTemperature(soln, solutionTemperature);
+            }
+        }
     }
 
     public override void Update(float frameTime)
@@ -66,7 +102,7 @@ public abstract class SharedHotplateSystem : EntitySystem
 
                 foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutionManager)))
                 {
-                    UpdateBeakerTemperature((uid, hotplate), soln, frameTime);
+                    // UpdateBeakerTemperature((uid, hotplate), soln, frameTime);
                 }
             }
         }
@@ -151,7 +187,7 @@ public abstract class SharedHotplateSystem : EntitySystem
         // Q = P × Δt
         var energy = netPower * frameTime;
 
-        // Apply energy to the solution (Q = P × Δt)
+        // Apply energy to the solution
         _solutionContainer.AddThermalEnergy(solnEnt, energy);
 
         // Update visual/active state for UI
