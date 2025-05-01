@@ -238,7 +238,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     /// component and rotation requirements.
     /// </summary>
     /// <param name="machineOrigin">Origin coordinates for the machine.</param>
-    /// <param name="rotation">Rotation we're expecting to use to.</param>
+    /// <param name="rotation">Rotation of the master entity to use when searching for this part.</param>
     /// <param name="query">Entity query for the specific component the entity must have.</param>
     /// <param name="gridUid">EntityUID of the grid to use for the lookup.</param>
     /// <param name="grid">Grid to use for the lookup.</param>
