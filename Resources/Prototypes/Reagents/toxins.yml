@@ -717,6 +717,22 @@
         sprintSpeedModifier: 0.4
 
 - type: reagent
+  id: ToxinTrash
+  name: reagent-name-toxintrash
+  group: Toxins
+  desc: reagent-desc-toxintrash
+  flavor: trashy
+  physicalDesc: reagent-physical-desc-nondescript
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1
+        conditions:
+        - !type:OrganType
+          type: Vox
+
+- type: reagent
   id: Nollazine # evil omnizine
   name: reagent-name-nollazine
   group: Toxins
@@ -746,18 +762,3 @@
             Toxin: 2
             Airloss: 2
             Brute: 2
-
-  id: ToxinTrash
-  name: reagent-name-toxintrash
-  group: Toxins
-  desc: reagent-desc-toxintrash
-  flavor: trashy
-  physicalDesc: reagent-physical-desc-nondescript
-  metabolisms:
-    Food:
-      effects:
-      - !type:SatiateHunger
-        factor: 1
-        conditions:
-        - !type:OrganType
-          type: Vox
