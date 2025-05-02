@@ -1,4 +1,4 @@
-﻿using Content.Shared.Buckle.Components;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
