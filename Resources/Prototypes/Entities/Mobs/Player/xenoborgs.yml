@@ -459,7 +459,7 @@
   id: XenoborgScout
   name: scout xenoborg
   suffix: with brain
-  description: A man-machine hybrid that aims to replicate itself. They love gibbing people and placing their brains into empty xenoborgs over and over. This is a scout type, its faster and is able to fly in space.
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This is a scout type, its nimble thrusters allow it to move quickly through space.
   components:
   - type: BorgTransponder
     name: scout xenoborg
