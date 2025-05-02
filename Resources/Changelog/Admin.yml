@@ -1132,5 +1132,12 @@ Entries:
   id: 136
   time: '2025-05-01T05:20:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37079
+- author: perryprog
+  changes:
+  - message: The pointing arrow smite no longer lasts forever.
+    type: Fix
+  id: 137
+  time: '2025-05-02T01:07:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37102
 Name: Admin
 Order: 2
