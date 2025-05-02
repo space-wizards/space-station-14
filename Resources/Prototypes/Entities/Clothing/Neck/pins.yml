@@ -135,6 +135,17 @@
 
 - type: entity
   parent: ClothingNeckPinBase
+  id: ClothingNeckPluralPin
+  name: plural pin
+  description: Be plural, do crimes.
+  components:
+  - type: Sprite
+    state: plural
+  - type: Clothing
+    equippedPrefix: plural
+
+- type: entity
+  parent: ClothingNeckPinBase
   id: ClothingNeckOmnisexualPin
   name: omnisexual pin
   description: Be omni do crime.
@@ -154,6 +165,17 @@
     state: gender
   - type: Clothing
     equippedPrefix: gender
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckGenderfluidPin
+  name: genderfluid pin
+  description: be gender, be fluid
+  components:
+  - type: Sprite
+    state: fluid
+  - type: Clothing
+    equippedPrefix: fluid
 
 - type: entity
   parent: ClothingNeckPinBase
