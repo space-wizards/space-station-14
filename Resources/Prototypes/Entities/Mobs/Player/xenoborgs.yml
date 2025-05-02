@@ -170,7 +170,7 @@
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: FootstepBorg
+      collection: FootstepXenoborg
   - type: SpamEmitSound # makes a creppy noise randomly
     minInterval: 30
     maxInterval: 45
@@ -481,7 +481,7 @@
         visible: false
   - type: FootstepModifier # it flies instead of walking
     footstepSoundCollection:
-      collection: FootstepHoverBorg
+      collection: FootstepHoverXenoborg
   - type: FlashImmunity
   - type: BorgChassis
     hasMindState: xenoborg_scout_e
@@ -533,7 +533,7 @@
         visible: false
   - type: FootstepModifier # it flies instead of walking
     footstepSoundCollection:
-      collection: FootstepHoverBorg
+      collection: FootstepHoverXenoborg
   - type: BorgChassis
     hasMindState: xenoborg_stealth_e
     noMindState: xenoborg_stealth_e_r
