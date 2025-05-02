@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Assets taken from Skyrat 13 (/tg/station Downstream) at https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297. horns_argali, horns_ayrshire, horns_myrsore, horns_bighorn and horns_demonic by Ubaser (github). horns_kobold_ears by Pigeonpeas, modified by Ubaser (github). horns_floppy_kobold_ears by Sadie-silly (github). body_fin by Blackern5000 (github). body_underbelly by Nairod (github). snout_splotch_primary and secondary modified from snout_sharp by KittenColony (github). frills_neckful taken from Bubberstation at https://github.com/Bubberstation/Bubberstation/commit/8bc6b83404803466a560b694bf22ef3c0ac266a2.",
+    "copyright": "Assets taken from Skyrat 13 (/tg/station Downstream) at https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297. horns_argali, horns_ayrshire, horns_myrsore, horns_bighorn and horns_demonic by Ubaser (github). horns_kobold_ears by Pigeonpeas (github), modified by Ubaser (github). horns_floppy_kobold_ears by Sadie-silly (github). body_fin by Blackern5000 (github). body_underbelly by Nairod (github). snout_splotch* modified from snout_sharp by KittenColony (github). frills_neckful taken from Bubberstation at https://github.com/Bubberstation/Bubberstation/commit/8bc6b83404803466a560b694bf22ef3c0ac266a2.",
     "size": {
         "x": 32,
         "y": 32
