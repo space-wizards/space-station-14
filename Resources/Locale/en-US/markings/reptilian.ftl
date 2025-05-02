@@ -117,3 +117,19 @@ marking-LizardChestFin = Lizard Fin
 marking-LizardSnoutSplotch = Lizard Snout (Splotch)
 marking-LizardSnoutSplotch-snout_splotch_primary = Muzzle
 marking-LizardSnoutSplotch-snout_splotch_secondary = Snoot
+
+marking-LizardTailSnake = Snake Tail
+marking-LizardTailSnake-tail_snake_primary = Primary Tone
+marking-LizardTailSnake-tail_snake_secondary = Secondary Tone
+
+marking-LizardTailSnakeStripe = Snake Tail (Striped)
+marking-LizardTailSnakeStripe-tail_snakestripe_primary = Primary Tone
+marking-LizardTailSnakeStripe-tail_snakestripe_secondary = Secondary Tone
+
+marking-LizardTailSnakeDual = Snake Tail (Dual)
+marking-LizardTailSnakeDual-tail_snakedual_primary = Primary Tone
+marking-LizardTailSnakeDual-tail_snakedual_secondary = Secondary Tone
+
+marking-LizardTailSnakeUnder = Snake Tail (Under)
+marking-LizardTailSnakeUnder-tail_snakeunder_primary = Primary Tone
+marking-LizardTailSnakeUnder-tail_snakeunder_secondary = Secondary Tone
