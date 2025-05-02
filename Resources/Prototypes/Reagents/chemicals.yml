@@ -53,7 +53,6 @@
   desc: reagent-desc-ash
   physicalDesc: reagent-physical-desc-powdery
   color: white
-  chemComplexity: 4
 
 - type: reagent
   id: SodiumCarbonate
