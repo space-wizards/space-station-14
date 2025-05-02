@@ -134,9 +134,15 @@ public sealed class GithubApiManager
     /// on what exactly is going on! Only await for it if you're willing to wait a long time.
     /// </summary>
     /// <param name="request">The request you want to make.</param>
-    /// <param name="attempts">The number of attempts so far. Probably don't set this yourself!</param>
     /// <returns>The direct HTTP response from the API. If null the request could not be made.</returns>
-    public async Task<HttpResponseMessage?> TryMakeRequestSafe(IGithubRequest request, uint attempts = 0)
+    public async Task<HttpResponseMessage?> TryMakeRequestSafe(IGithubRequest request)
+    {
+        return await TryMakeRequestSafe(request, 0);
+    }
+
+    /// <inheritdoc cref="TryMakeRequestSafe"/>
+    /// <param name="attempts">The number of attempts made for this request.</param>
+    private async Task<HttpResponseMessage?> TryMakeRequestSafe(IGithubRequest request, uint attempts)
     {
         try
         {
@@ -180,7 +186,7 @@ public sealed class GithubApiManager
     }
 
     /// <summary>
-    /// A simple helper function that just tries to a header value that is a long.
+    /// A simple helper function that just tries to parse a header value that is expected to be a long int.
     /// In general, there are just a lot of single value headers that are longs so this removes a lot of duplicate code.
     /// </summary>
     /// <param name="headers">The headers that you want to search.</param>
