@@ -128,7 +128,8 @@
     fillBaseName: syndie-
   - type: Slippery
     slipData:
-      paralyzeTime: 3
+      stunTime: 3
+      knockdownTime: 3
       launchForwardsMultiplier: 3
   - type: Item
     heldPrefix: syndie
@@ -154,7 +155,8 @@
     - state: syndie-soaplet
   - type: Slippery
     slipData:
-      paralyzeTime: 1.5 # these things are tiny
+      stunTime: 1.5 # these things are tiny
+      knockdownTime: 1.5
       launchForwardsMultiplier: 1.5
   - type: StepTrigger
     intersectRatio: 0.04
@@ -221,7 +223,8 @@
     fillBaseName: omega-
   - type: Slippery
     slipData:
-      paralyzeTime: 5.0
+      stunTime: 3
+      knockdownTime: 5.0
       launchForwardsMultiplier: 3.0
   - type: Item
     heldPrefix: omega
