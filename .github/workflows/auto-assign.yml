@@ -12,7 +12,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const labelToReviewer = {
+            const labelToAssign = {
               "Changes: Sprites": ["BORTBORTBORTBORTBORT"],
               "Changes: Map": ["PubliclyExecutedPig"],
               "Changes: UI": ["ss14-Starlight"],
@@ -22,20 +22,20 @@ jobs:
             };
 
             const labels = context.payload.pull_request.labels.map(label => label.name);
-            const reviewers = new Set();
+            const assinges = new Set();
 
             for (const label of labels) {
-              const assignees = labelToReviewer[label];
-              if (assignees) {
-                assignees.forEach(a => reviewers.add(a));
+              const tempAssing = labelToReviewer[label];
+              if (tempAssing) {
+                tempAssing.forEach(a => assinges.add(a));
               }
             }
 
-            if (reviewers.size > 0) {
-              await github.rest.pulls.requestReviewers({
+            if (assinges.size > 0) {
+              await github.rest.issues.addAssignees({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: context.payload.pull_request.number,
-                reviewers: Array.from(reviewers),
+                assinges: Array.from(assinges),
               });
             }
