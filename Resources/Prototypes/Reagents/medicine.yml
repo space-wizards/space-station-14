@@ -1258,7 +1258,7 @@
               Poison: -2
 
 - type: reagent
-  id : Aloxadone
+  id: Aloxadone
   name: reagent-name-aloxadone
   group: Medicine
   desc: reagent-desc-aloxadone
@@ -1280,13 +1280,13 @@
             Caustic: -1.0
 
 - type: reagent
-  id : Traumoxadone
+  id: Traumoxadone
   name: reagent-name-traumoxadone
   group: Medicine
   desc: reagent-desc-traumoxadone
   physicalDesc: reagent-physical-desc-cloudy
   flavor: medicine
-  color: "#B53F7C"
+  color: "#69304D"
   worksOnTheDead: true
   metabolisms:
     Medicine:
