@@ -2,6 +2,7 @@
 using Content.Shared.Conveyor;
 using Content.Shared.Friction;
 using Content.Shared.Gravity;
+using Content.Shared.Maps;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
@@ -13,6 +14,7 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Threading;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Physics.Controllers;
 
@@ -20,6 +22,7 @@ public abstract class SharedConveyorController : VirtualController
 {
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private   readonly IParallelManager _parallel = default!;
+    [Dependency] private   readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private   readonly CollisionWakeSystem _wake = default!;
     [Dependency] protected readonly EntityLookupSystem Lookup = default!;
     [Dependency] private   readonly FixtureSystem _fixtures = default!;
@@ -48,7 +51,8 @@ public abstract class SharedConveyorController : VirtualController
         UpdatesAfter.Add(typeof(SharedMoverController));
 
         SubscribeLocalEvent<ConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
-        SubscribeLocalEvent<ConveyedComponent, MobFrictionBulldozeEvent>(OnMobFrictionBulldoze);
+        SubscribeLocalEvent<ConveyedComponent, MoverTileDefEvent>(OnMoverTileDefEvent);
+        SubscribeLocalEvent<ConveyedComponent, MoverFrictionBulldozeEvent>(OnMoverFrictionBulldoze);
         SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
         SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
 
@@ -67,13 +71,23 @@ public abstract class SharedConveyorController : VirtualController
         args.Modifier = 0f;
     }
 
-    private void OnMobFrictionBulldoze(Entity<ConveyedComponent> ent, ref MobFrictionBulldozeEvent args)
+    private void OnMoverTileDefEvent(Entity<ConveyedComponent> ent, ref MoverTileDefEvent args)
     {
         if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
             return;
 
-        args.Friction = 20f;
-        args.Acceleration = 20f; // This is so that Ice Crust and such doesn't prevent you from moving on conveyors
+        var conveyor = new ContentTileDefinition(); // Just a default tile
+        args.TileDef = conveyor;
+
+    }
+
+    private void OnMoverFrictionBulldoze(Entity<ConveyedComponent> ent, ref MoverFrictionBulldozeEvent args)
+    {
+        if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
+            return;
+
+        //args.Friction = 20f;
+        //args.Acceleration = 20f; // This is so that Ice Crust and such doesn't prevent you from moving on conveyors
         args.MinFrictionSpeed = 0f;
     }
 

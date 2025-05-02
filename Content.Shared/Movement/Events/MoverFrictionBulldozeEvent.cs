@@ -8,7 +8,7 @@
 ///     This Event can and will break prediction if you don't know what you're doing.
 /// </summary>
 [ByRefEvent]
-public record struct MobFrictionBulldozeEvent
+public record struct MoverFrictionBulldozeEvent
 {
     public float Friction;
     public float Acceleration;

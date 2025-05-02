@@ -269,6 +269,14 @@ public abstract partial class SharedMoverController : VirtualController
                 && _mapSystem.TryGetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates, out var tile))
                 tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
+            var tileDefEv = new MoverTileDefEvent();
+            RaiseLocalEvent(uid, ref tileDefEv);
+            {
+                tileDefEv.TileDef = tileDef;
+            }
+
+            tileDef = tileDefEv.TileDef;
+
             var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
             var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
@@ -297,7 +305,7 @@ public abstract partial class SharedMoverController : VirtualController
         var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
 
         // DO NOT USE THIS EVENT UNLESS YOU KNOW WHAT YOU'RE DOING
-        var finalEv = new MobFrictionBulldozeEvent()
+        var finalEv = new MoverFrictionBulldozeEvent()
         {
             Friction = friction,
             Acceleration = accel,
