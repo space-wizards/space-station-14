@@ -408,7 +408,6 @@
       - state: base-stripes-inhand-right
         color: "#FF00CC"
 
-
 # generic modules
 - type: entity
   id: BorgModuleCable
