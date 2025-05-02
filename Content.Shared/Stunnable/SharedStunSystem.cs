@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Alert;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -28,17 +29,18 @@ namespace Content.Shared.Stunnable;
 public abstract partial class SharedStunSystem : EntitySystem
 {
     [Dependency] private readonly IComponentFactory _component = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] protected readonly AlertsSystem Alerts = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
+    [Dependency] protected readonly StaminaSystem Stamina = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
-    [Dependency] protected readonly StaminaSystem _stamina = default!;
 
     public override void Initialize()
     {
@@ -201,11 +203,13 @@ public abstract partial class SharedStunSystem : EntitySystem
         };
         RaiseLocalEvent(uid, ref knockedEv);
 
-        component.NextUpdate = _gameTiming.CurTime + knockedEv.KnockdownTime;
+        component.NextUpdate = GameTiming.CurTime + knockedEv.KnockdownTime;
 
         RefreshKnockedMovement(uid, component, standing);
 
         Dirty(uid, component);
+
+        Alerts.ShowAlert(uid, "Knockdown");
 
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} knocked down for {time.Seconds} seconds");
 

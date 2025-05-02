@@ -55,6 +55,7 @@ public abstract partial class SharedStunSystem
 
         // DoAfter event subscriptions
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
+        SubscribeLocalEvent<KnockedDownComponent, KnockedDownEvent>(OnSubsequentKnockdown);
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.ToggleKnockdown, InputCmdHandler.FromDelegate(HandleToggleKnockdown, handle: false))
@@ -63,7 +64,7 @@ public abstract partial class SharedStunSystem
 
     private void OnRejuvenate(Entity<KnockedDownComponent> entity, ref RejuvenateEvent args)
     {
-        entity.Comp.NextUpdate = _gameTiming.CurTime;
+        entity.Comp.NextUpdate = GameTiming.CurTime;
 
         if (entity.Comp.AutoStand)
             RemComp<KnockedDownComponent>(entity);
@@ -116,7 +117,7 @@ public abstract partial class SharedStunSystem
         if (!_blocker.CanMove(ent))
             return false;
 
-        if (ent.Comp.NextUpdate >= _gameTiming.CurTime)
+        if (ent.Comp.NextUpdate >= GameTiming.CurTime)
             return false;
 
         // TODO: Check if we even have space to stand
@@ -141,7 +142,7 @@ public abstract partial class SharedStunSystem
         };
 
         // If we try standing don't try standing again
-        return _doAfter.TryStartDoAfter(doAfterArgs, out id);
+        return DoAfter.TryStartDoAfter(doAfterArgs, out id);
     }
 
     private void OnInteractHand(EntityUid uid, KnockedDownComponent knocked, InteractHandEvent args)
@@ -189,13 +190,13 @@ public abstract partial class SharedStunSystem
 
         // TODO: Raise an event to modify the stamina damage?
 
-        if (_stamina.GetStaminaDamage(ent) + staminaDamage >= stamina.CritThreshold)
+        if (Stamina.GetStaminaDamage(ent) + staminaDamage >= stamina.CritThreshold)
         {
             _popup.PopupClient(Loc.GetString("knockdown-component-pushup-failure"), ent);
             return;
         }
 
-        if (_stamina.TryTakeStamina(ent, staminaDamage, stamina))
+        if (Stamina.TryTakeStamina(ent, staminaDamage, stamina))
             RemComp<KnockedDownComponent>(ent);
 
         _popup.PopupClient(Loc.GetString("knockdown-component-pushup-success"), ent);
@@ -215,7 +216,7 @@ public abstract partial class SharedStunSystem
 
     private void OnBuckleAttempt(Entity<KnockedDownComponent> ent, ref BuckleAttemptEvent args)
     {
-        if (args.User == ent && ent.Comp.NextUpdate > _gameTiming.CurTime)
+        if (args.User == ent && ent.Comp.NextUpdate > GameTiming.CurTime)
             args.Cancelled = true;
     }
 
@@ -230,12 +231,22 @@ public abstract partial class SharedStunSystem
         if (args.Cancelled)
         {
             if (entity.Comp.AutoStand)
-                entity.Comp.NextUpdate = _gameTiming.CurTime + TimeSpan.FromSeconds(0.5f); // TODO: Unhardcode this
+                entity.Comp.NextUpdate = GameTiming.CurTime + TimeSpan.FromSeconds(0.5f); // TODO: Unhardcode this
         }
 
         RemComp<KnockedDownComponent>(entity);
 
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} has stood up from knockdown.");
+    }
+
+    // TODO: This shit does not predict on the client at all
+    private void OnSubsequentKnockdown(Entity<KnockedDownComponent> ent, ref KnockedDownEvent args)
+    {
+        if (!ent.Comp.DoAfter.HasValue)
+            return;
+
+        DoAfter.Cancel(ent.Comp.DoAfter.Value);
+        ent.Comp.DoAfter = null;
     }
 
     #endregion
