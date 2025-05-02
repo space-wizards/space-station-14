@@ -143,6 +143,7 @@ namespace Content.Client.Actions
                 return;
 
             OnActionAdded?.Invoke(action);
+            ActionsUpdated?.Invoke();
         }
 
         protected override void ActionRemoved(Entity<ActionsComponent> performer, Entity<ActionComponent> action)
@@ -151,6 +152,7 @@ namespace Content.Client.Actions
                 return;
 
             OnActionRemoved?.Invoke(action);
+            ActionsUpdated?.Invoke();
         }
 
         public IEnumerable<Entity<ActionComponent>> GetClientActions()

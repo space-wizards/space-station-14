@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using Content.Shared.Interaction;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -16,6 +18,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
 
     public override void Initialize()
     {
@@ -55,6 +58,9 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (options.Count == 0)
             return;
 
+        if (!TryUseCharge((uid, component)))
+            return;
+
         // not predicted as this is in server due to random
         // TODO: use predicted random and move to shared?
         var (actId, action, comp) = _random.Pick(options);
@@ -88,6 +94,9 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
             if (entOptions.Count > 0)
             {
+                if (!TryUseCharge((uid, component)))
+                    return;
+
                 var (actionId, action, _) = _random.Pick(entOptions);
                 _actions.SetEventTarget(actionId, target);
                 _actions.PerformAction(args.User, (actionId, action), predicted: false);
@@ -95,7 +104,6 @@ public sealed class ActionOnInteractSystem : EntitySystem
                 return;
             }
         }
-
         // else: try world target actions
         var options = GetValidActions<WorldTargetActionComponent>(component.ActionEntities, args.CanReach);
         for (var i = options.Count - 1; i >= 0; i--)
@@ -106,6 +114,9 @@ public sealed class ActionOnInteractSystem : EntitySystem
         }
 
         if (options.Count == 0)
+            return;
+
+        if (!TryUseCharge((uid, component)))
             return;
 
         var (actId, comp, world) = _random.Pick(options);
@@ -139,5 +150,18 @@ public sealed class ActionOnInteractSystem : EntitySystem
         }
 
         return valid;
+    }
+
+    private bool TryUseCharge(Entity<ActionOnInteractComponent> ent)
+    {
+        if (!ent.Comp.RequiresCharge)
+            return true;
+
+        Entity<LimitedChargesComponent?> charges = ent.Owner;
+        if (_charges.IsEmpty(charges))
+            return false;
+
+        _charges.TryUseCharge(charges);
+        return true;
     }
 }

@@ -4,8 +4,6 @@
   name: Animate
   description: Bring an inanimate object to life!
   components:
-  - type: LimitedCharges
-    maxCharges: 5
   - type: Action
     useDelay: 0
     sound: !type:SoundPathSpecifier
@@ -16,7 +14,7 @@
   - type: EntityTargetAction
     whitelist:
       components:
-      - Animateable # Currently on: SeatBase, TableBase, ClosetBase, BaseMachine, ConstructibleMachine, BaseComputer, BaseItem, CrateGeneric, StorageTank, GasCanister, BaseTarget
+      - Animateable # Currently on: SeatBase, TableBase, ClosetBase, BaseMachine, ConstructibleMachine, BaseComputer, BaseItem, CrateGeneric, StorageTank, GasCanister
     blacklist:
       components:
       - MindContainer
@@ -25,7 +23,7 @@
       - AnomalyGenerator
       - TegGenerator
       - TegCirculator
-      - Artifact
+      - XenoArtifact
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: Animate
@@ -69,9 +67,11 @@
               collection: MetalBreak
       - type: Hands
       - type: CanEscapeInventory
+      - type: MobCollision
       toRemove:
       - RequireProjectileTarget
       - BlockMovement
       - Item
+      - MeleeRequiresWield
       speech: action-speech-spell-animate
       doSpeech: false
