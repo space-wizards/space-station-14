@@ -25,7 +25,7 @@ jobs:
             const assinges = new Set();
 
             for (const label of labels) {
-              const tempAssing = labelToReviewer[label];
+              const tempAssing = labelToAssign[label];
               if (tempAssing) {
                 tempAssing.forEach(a => assinges.add(a));
               }
