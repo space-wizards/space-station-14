@@ -199,6 +199,8 @@ public abstract partial class SharedStunSystem : EntitySystem
         };
         RaiseLocalEvent(uid, ref knockedEv);
 
+        component.NextUpdate = _gameTiming.CurTime + knockedEv.KnockdownTime;
+
         RefreshKnockedMovement(uid, component, standing);
 
         Dirty(uid, component);

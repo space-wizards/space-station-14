@@ -44,6 +44,7 @@ public abstract partial class SharedStunSystem
 
         // DoAfter event subscriptions
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
+        SubscribeLocalEvent<KnockedDownComponent, KnockedDownEvent>(OnSubsequentKnockdown);
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.ToggleKnockdown, InputCmdHandler.FromDelegate(HandleToggleKnockdown, handle: false))
@@ -180,6 +181,15 @@ public abstract partial class SharedStunSystem
             return;
 
         RemComp<KnockedDownComponent>(entity);
+    }
+
+    private void OnSubsequentKnockdown(Entity<KnockedDownComponent> ent, ref KnockedDownEvent args)
+    {
+        if (!ent.Comp.DoAfter.HasValue)
+            return;
+
+        _doAfter.Cancel(ent.Comp.DoAfter.Value);
+        ent.Comp.DoAfter = null;
     }
 
     #endregion

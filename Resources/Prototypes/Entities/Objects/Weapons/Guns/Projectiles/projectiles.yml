@@ -221,11 +221,11 @@
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     forceSound: true
   - type: TimedDespawn
-    lifetime: 0.170 # Same as PKA
+    lifetime: 0.170 # Very short range
   - type: StunOnCollide
     stunAmount: 0
-    knockdownAmount: 3 # Enough to subdue and follow up with a stun batong
-    slowdownAmount: 3
+    knockdownAmount: 2.5 # Enough to subdue and follow up with a stun batong
+    slowdownAmount: 2.5
     walkSpeedMultiplier: 0.5
     sprintSpeedMultiplier: 0.5
 
@@ -274,8 +274,8 @@
     radius: 2.0
     energy: 7.01
   - type: StunOnCollide
-    stunAmount: 10
-    knockdownAmount: 5
+    stunAmount: 5
+    knockdownAmount: 10
     slowdownAmount: 10
     walkSpeedMultiplier: 0.5
     sprintSpeedMultiplier: 0.5
