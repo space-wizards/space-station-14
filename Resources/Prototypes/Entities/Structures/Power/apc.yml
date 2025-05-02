@@ -87,6 +87,8 @@
   - type: ExtensionCableProvider
   - type: UserInterface
     interfaces:
+      enum.AiUi.Key:
+        type: StationAiBoundUserInterface
       enum.ApcUiKey.Key:
         type: ApcBoundUserInterface
   - type: ActivatableUI

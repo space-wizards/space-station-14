@@ -1,3 +1,4 @@
+using Content.Client.Power.APC;
 using Content.Shared.Doors.Components;
 using Content.Shared.Electrocution;
 using Content.Shared.Silicons.StationAi;
@@ -56,6 +57,9 @@ public sealed partial class StationAiSystem
 
     private void OnDoorElectrifiedGetRadial(Entity<ElectrifiedComponent> ent, ref GetStationAiRadialEvent args)
     {
+        if (HasComp<ApcVisualsComponent>(ent))
+            return;
+
         args.Actions.Add(
             new StationAiRadial
             {

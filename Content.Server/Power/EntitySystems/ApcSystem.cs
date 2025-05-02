@@ -8,6 +8,7 @@ using Content.Shared.APC;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
+using Content.Shared.Silicons.StationAi;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -25,6 +26,7 @@ public sealed class ApcSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedStationAiSystem _stationAiSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
@@ -37,8 +39,11 @@ public sealed class ApcSystem : EntitySystem
         SubscribeLocalEvent<ApcComponent, ComponentStartup>(OnApcStartup);
         SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
         SubscribeLocalEvent<ApcComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleBreakerVerb);
+        SubscribeLocalEvent<ApcComponent, GetStationAiRadialEvent>(OnApcGetRadial);
         SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreakerMessage);
+        SubscribeLocalEvent<ApcComponent, StationAiApcToggleMainBreakerEvent>(OnStationAiApcToggleMainBreaker);
         SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
+
 
         SubscribeLocalEvent<ApcComponent, EmpPulseEvent>(OnEmpPulse);
     }
@@ -93,15 +98,25 @@ public sealed class ApcSystem : EntitySystem
                 OnToggleMainBreaker(ent.Owner, ent.Comp, user);
             },
             Text = Loc.GetString("apc-component-verb-text-alternative"),
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
         };
 
         args.Verbs.Add(verb);
     }
 
+    private void OnApcGetRadial(Entity<ApcComponent> _, ref GetStationAiRadialEvent args)
+    {
+        _stationAiSystem.AddApcToggleMainBreakerAction(ref args);
+    }
+
     private void OnToggleMainBreakerMessage(Entity<ApcComponent> ent, ref ApcToggleMainBreakerMessage args)
     {
         OnToggleMainBreaker(ent.Owner, ent.Comp, args.Actor);
+    }
+
+    private void OnStationAiApcToggleMainBreaker(Entity<ApcComponent> ent, ref StationAiApcToggleMainBreakerEvent args)
+    {
+        OnToggleMainBreaker(ent.Owner, ent.Comp, args.User);
     }
 
     private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, EntityUid user)

@@ -168,6 +168,17 @@ public abstract partial class SharedStationAiSystem
 
         var target = args.Target;
 
+        var ev = new GetStationAiRadialEvent();
+        RaiseLocalEvent(target, ref ev);
+
+        var actions = ev.Actions;
+
+        // Pass through if there is only one action ex. APC main breaker
+        if (actions.Count == 1) {
+            RaiseLocalEvent(target, actions[0].Event);
+            return;
+        }
+
         var isOpen = _uiSystem.IsUiOpen(target, AiUi.Key, user);
 
         var verb = new AlternativeVerb
