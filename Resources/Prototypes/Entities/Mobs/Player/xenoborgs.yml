@@ -166,6 +166,7 @@
       Unsexed: UnisexSiliconXenoborg
     screamAction: null
   - type: DamagedSiliconAccent 
+    damageAtMaxCorruption: 375
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:
