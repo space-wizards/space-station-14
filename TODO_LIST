@@ -35,11 +35,6 @@ Somewhere, there is a holopad with no label.
 
 
 The big things:
-Set up evac shuttle (possibly shrink it, too)
-Cafeteria firelocks
-Cafeteria floor
-Possibly move Evac farther out to make room for shuttle
-	at north dock.
 Grime everything up a bit again.
 
 Check this stuff:
@@ -83,6 +78,7 @@ Not much vision of arti/anom hall
 Det/Prosc door bolt doesn't work. It bolts, then immediately unbolts.
 	nor instead of or gate?
 	I've attempted to fix. Gotta make sure both door bolt and shutter behave properly.
+Evac: Does the shuttle dock? Does the shuttle work?
 
 
 THINGS I COULD MAKE:
@@ -293,3 +289,8 @@ DONE:
 /* -	Rename + fill ore crates */
 /* -	Decals, of course */
 	/* Figure out mail chutes first, though. */
+/* Cafeteria firelocks */
+/* Cafeteria floor */
+/* Possibly move Evac farther out to make room for shuttle */
+/* 	at north dock. */
+/* Set up evac shuttle (possibly shrink it, too) */
