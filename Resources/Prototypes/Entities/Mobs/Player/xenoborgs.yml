@@ -439,6 +439,8 @@
         - cell_slot
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: DamagedSiliconAccent 
+    damageAtMaxCorruption: 1200
   - type: ContainerFill
     containers:
       borg_brain:
