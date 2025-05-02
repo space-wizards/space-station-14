@@ -209,7 +209,7 @@ public abstract partial class SharedStunSystem : EntitySystem
 
         Dirty(uid, component);
 
-        Alerts.ShowAlert(uid, "Knockdown");
+        Alerts.ShowAlert(uid, "Knockdown", null, (GameTiming.CurTime, component.NextUpdate));
 
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} knocked down for {time.Seconds} seconds");
 

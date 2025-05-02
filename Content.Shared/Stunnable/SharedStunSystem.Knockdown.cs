@@ -84,6 +84,7 @@ public abstract partial class SharedStunSystem
         ent.Comp.SpeedModifier = 1f;
 
         _standingState.Stand(ent);
+        Alerts.ClearAlert(ent, "Knockdown");
 
         _movementSpeedModifier.RefreshMovementSpeedModifiers(ent);
         _movementSpeedModifier.RefreshFrictionModifiers(ent);
