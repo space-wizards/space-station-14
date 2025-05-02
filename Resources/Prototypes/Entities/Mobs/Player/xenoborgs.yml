@@ -322,7 +322,7 @@
   id: XenoborgEngi
   name: engi xenoborg
   suffix: with brain
-  description: A man-machine hybrid that aims to replicate itself. They love gibbing people and placing their brains into empty xenoborgs over and over. This is a engi type, it has more tools and is better for supporting other xenoborgs.
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This one seems to be an engineering type, as it has more tools for supporting the other xenoborgs.
   components:
   - type: BorgTransponder
     name: engi xenoborg
