@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: keronshb
-  changes:
-  - message: Disabler - decreased fire cost, increased projectile speed.
-    type: Tweak
-  - message: Disabler SMG - decreased fire cost, increased fire rate.
-    type: Tweak
-  id: 7907
-  time: '2025-02-05T23:12:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34890
 - author: centcomofficer24
   changes:
   - message: Added a genderqueer pin!
@@ -3919,3 +3910,11 @@
   id: 8408
   time: '2025-05-02T17:12:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37111
+- author: murolem
+  changes:
+  - message: Updated PA crate order name and description to clarify that it only contains
+      boards.
+    type: Tweak
+  id: 8409
+  time: '2025-05-02T18:31:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37109
