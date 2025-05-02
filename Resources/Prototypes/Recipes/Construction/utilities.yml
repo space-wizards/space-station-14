@@ -303,7 +303,7 @@
 - type: construction
   name: disposal X junction
   description: A four-way junction. The arrow indicates where items exit.
-  id: DisposalJunctionCross
+  id: DisposalXJunction
   graph: DisposalPipe
   startNode: start
   targetNode: xJunction
