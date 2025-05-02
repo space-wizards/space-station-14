@@ -1,6 +1,7 @@
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.Gravity;
 using Content.Shared.Slippery;
 using Content.Shared.Whitelist;
 using Robust.Shared.Physics.Components;
@@ -12,6 +13,7 @@ namespace Content.Shared.Movement.Systems;
 public sealed class SpeedModifierContactsSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
@@ -84,6 +86,9 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
         var walkSpeed = 0.0f;
         var sprintSpeed = 0.0f;
 
+        // Cache the result of the airborne check, as it's expensive and independent of contacting entities, hence need only be done once.
+        var isAirborne = physicsComponent.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(uid, physicsComponent);
+
         bool remove = true;
         var entries = 0;
         foreach (var ent in _physics.GetContactingEntities(uid, physicsComponent))
@@ -93,6 +98,10 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
             if (TryComp<SpeedModifierContactsComponent>(ent, out var slowContactsComponent))
             {
                 if (_whitelistSystem.IsWhitelistPass(slowContactsComponent.IgnoreWhitelist, uid))
+                    continue;
+
+                // Entities that are airborne should not be affected by contact slowdowns that are specified to not affect airborne entities.
+                if (isAirborne && !slowContactsComponent.AffectAirborne)
                     continue;
 
                 walkSpeed += slowContactsComponent.WalkSpeedModifier;
