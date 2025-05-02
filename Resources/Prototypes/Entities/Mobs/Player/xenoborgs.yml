@@ -2,7 +2,7 @@
   parent: [BaseMob, StripableInventoryBase]
   id: XenoborgBaseChassi
   name: xenoborg
-  description: A man-machine hybrid that aims to replicate itself. They love gibbing people and placing their brains into empty xenoborgs over and over.
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army.
   save: false
   abstract: true
   components:
