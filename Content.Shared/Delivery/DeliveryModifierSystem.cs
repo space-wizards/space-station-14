@@ -3,6 +3,7 @@ using Content.Shared.Destructible;
 using Content.Shared.Examine;
 using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.NameModifier.EntitySystems;
+using JetBrains.Annotations;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -39,6 +40,7 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
         SubscribeLocalEvent<DeliveryFragileComponent, GetDeliveryMultiplierEvent>(OnGetFragileMultiplier);
 
         SubscribeLocalEvent<DeliveryBombComponent, MapInitEvent>(OnExplosiveMapInit);
+        SubscribeLocalEvent<PrimedDeliveryBombComponent, MapInitEvent>(OnPrimedExplosiveMapInit);
         SubscribeLocalEvent<DeliveryBombComponent, ExaminedEvent>(OnExplosiveExamine);
         SubscribeLocalEvent<DeliveryBombComponent, GetDeliveryMultiplierEvent>(OnGetExplosiveMultiplier);
         SubscribeLocalEvent<DeliveryBombComponent, DeliveryUnlockedEvent>(OnExplosiveUnlock);
@@ -134,7 +136,14 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
     private void OnExplosiveMapInit(Entity<DeliveryBombComponent> ent, ref MapInitEvent args)
     {
         _delivery.UpdateBombVisuals(ent);
-        ent.Comp.NextExplosionRetry = _timing.CurTime;
+    }
+
+    private void OnPrimedExplosiveMapInit(Entity<PrimedDeliveryBombComponent> ent, ref MapInitEvent args)
+    {
+        if (!TryComp<DeliveryBombComponent>(ent, out var bomb))
+            return;
+
+        bomb.NextExplosionRetry = _timing.CurTime;
         Dirty(ent);
     }
 
@@ -142,7 +151,9 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
     {
         var trueName = _nameModifier.GetBaseName(ent.Owner);
 
-        if (ent.Comp.Primed)
+        var isPrimed = HasComp<PrimedDeliveryBombComponent>(ent);
+
+        if (isPrimed)
             args.PushMarkup(Loc.GetString("delivery-bomb-primed-examine", ("type", trueName)));
         else
             args.PushMarkup(Loc.GetString("delivery-bomb-examine", ("type", trueName)));
@@ -178,9 +189,13 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
         PrimeBombDelivery(ent);
     }
 
-    private void PrimeBombDelivery(Entity<DeliveryBombComponent> ent)
+    [PublicAPI]
+    public void PrimeBombDelivery(Entity<DeliveryBombComponent> ent)
     {
-        ent.Comp.Primed = true;
+        if (HasComp<PrimedDeliveryBombComponent>(ent))
+            return;
+
+        EnsureComp<PrimedDeliveryBombComponent>(ent);
 
         _delivery.UpdateBombVisuals(ent);
 
@@ -223,19 +238,17 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
 
     private void UpdateBomb(float frameTime)
     {
-        var priorityQuery = EntityQueryEnumerator<DeliveryBombComponent>();
+        var bombQuery = EntityQueryEnumerator<DeliveryBombComponent, PrimedDeliveryBombComponent>();
         var curTime = _timing.CurTime;
 
-        while (priorityQuery.MoveNext(out var uid, out var bombData))
+        while (bombQuery.MoveNext(out var uid, out var bombData, out _))
         {
             if (bombData.NextExplosionRetry > curTime)
                 continue;
 
             bombData.NextExplosionRetry += bombData.ExplosionRetryDelay;
 
-            if (!bombData.Primed)
-                continue;
-
+            // TODO: Use RandomPredicted once we have that
             if (_random.NextFloat() < bombData.ExplosionChance)
                 _explosion.TriggerExplosive(uid);
 

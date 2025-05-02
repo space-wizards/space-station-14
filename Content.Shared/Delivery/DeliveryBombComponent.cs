@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Delivery;
 
@@ -7,16 +8,10 @@ namespace Content.Shared.Delivery;
 /// This delivery will "prime" based on circumstances defined in the datafield.
 /// When primed, it will attempt to explode every few seconds, with the chance increasing each time it fails to do so.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(DeliveryModifierSystem))]
 public sealed partial class DeliveryBombComponent : Component
 {
-    /// <summary>
-    /// Whether this bomb is primed and actively ticking.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Primed;
-
     /// <summary>
     /// How often will this bomb retry to explode.
     /// </summary>
@@ -26,7 +21,7 @@ public sealed partial class DeliveryBombComponent : Component
     /// <summary>
     /// The time at which the next retry will happen
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextExplosionRetry;
 
     /// <summary>
