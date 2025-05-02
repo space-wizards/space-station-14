@@ -15,5 +15,10 @@
       amount: 3
     - id: ClothingOuterWizardViolet
       amount: 3
+    - id: ClothingHeadHelmetWizardHelm
+      amount: 3
     - id: ClothingShoesWizard
       amount: 9
+    #TODO:
+    #only missing staff
+    #and if wizarditis reagent when hacked if we want this.
