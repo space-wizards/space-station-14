@@ -1,25 +1,46 @@
 - type: vendingMachineInventory
   id: CondimentInventory
   startingInventory:
-    FoodCondimentPacketAstrotame: 5
-    FoodCondimentPacketBbq: 5
-    FoodCondimentPacketColdsauce: 5
-    FoodCondimentPacketHorseradish: 5
-    FoodCondimentPacketHotsauce: 5
-    FoodCondimentPacketKetchup: 5
-    FoodCondimentPacketMustard: 5
-    FoodCondimentPacketPepper: 5
-    FoodCondimentPacketSalt: 5
-    FoodCondimentPacketSoy: 5
-    FoodCondimentPacketSugar: 5
-    FoodCondimentPacketCornoil: 5
-    ForkPlastic: 10
-    SpoonPlastic: 10
-    KnifePlastic: 10
-    FoodPlatePlastic: 10
-    FoodPlateSmallPlastic: 10
+    - id: FoodCondimentPacketAstrotame
+      amount: 5
+    - id: FoodCondimentPacketBbq
+      amount: 5
+    - id: FoodCondimentPacketColdsauce
+      amount: 5
+    - id: FoodCondimentPacketHorseradish
+      amount: 5
+    - id: FoodCondimentPacketHotsauce
+      amount: 5
+    - id: FoodCondimentPacketKetchup
+      amount: 5
+    - id: FoodCondimentPacketMustard
+      amount: 5
+    - id: FoodCondimentPacketPepper
+      amount: 5
+    - id: FoodCondimentPacketSalt
+      amount: 5
+    - id: FoodCondimentPacketSoy
+      amount: 5
+    - id: FoodCondimentPacketSugar
+      amount: 5
+    - id: FoodCondimentPacketCornoil
+      amount: 5
+    - id: ForkPlastic
+      amount: 10
+    - id: SpoonPlastic
+      amount: 10
+    - id: KnifePlastic
+      amount: 10
+    - id: FoodPlatePlastic
+      amount: 10
+    - id: FoodPlateSmallPlastic
+      amount: 10
   contrabandInventory:
-    FoodShakerSalt: 1
-    FoodShakerPepper: 1
-    FoodCondimentBottleKetchup: 1
-    ReagentContainerMayo: 1
+    - id: FoodShakerSalt
+      amount: 1
+    - id: FoodShakerPepper
+      amount: 1
+    - id: FoodCondimentBottleKetchup
+      amount: 1
+    - id: ReagentContainerMayo
+      amount: 1

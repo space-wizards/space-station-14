@@ -1,14 +1,24 @@
 - type: vendingMachineInventory
   id: SalvageEquipmentInventory
   startingInventory:
-    Crowbar: 2
-    Pickaxe: 4
-    OreBag: 4
-    Flare: 4
-    FlashlightLantern: 2
-    HandheldGPSBasic: 2
-    RadioHandheld: 2
-    WeaponGrapplingGun: 4
-    WeaponProtoKineticAccelerator: 4
+    - id: Crowbar
+      amount: 2
+    - id: Pickaxe
+      amount: 4
+    - id: OreBag
+      amount: 4
+    - id: Flare
+      amount: 4
+    - id: FlashlightLantern
+      amount: 2
+    - id: HandheldGPSBasic
+      amount: 2
+    - id: RadioHandheld
+      amount: 2
+    - id: WeaponGrapplingGun
+      amount: 4
+    - id: WeaponProtoKineticAccelerator
+      amount: 4
   contrabandInventory:
-    PlushieCarp: 1
+    - id: PlushieCarp
+      amount: 1

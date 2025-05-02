@@ -4,6 +4,8 @@ using Content.Server.Cargo.Systems;
 using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Station.Systems;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
@@ -11,6 +13,7 @@ using Content.Shared.Emp;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.Stacks;
 using Content.Shared.Throwing;
 using Content.Shared.UserInterface;
 using Content.Shared.VendingMachines;
@@ -29,6 +32,9 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly PricingSystem _pricing = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly SharedStackSystem _stack = default!;
+        [Dependency] private readonly CargoSystem _cargo = default!;
+        [Dependency] private readonly StationSystem _station = default!;
 
         private const float WallVendEjectDistanceFromWall = 1f;
 
@@ -210,6 +216,12 @@ namespace Content.Server.VendingMachines
             }
         }
 
+        protected override void EjectCash(EntityUid uid, int cash, VendingMachineComponent vendComponent)
+        {
+            var cashEnt = Spawn(vendComponent.CashType, Transform(uid).Coordinates);
+            _stack.SetCount(cashEnt, cash);
+        }
+
         protected override void EjectItem(EntityUid uid, VendingMachineComponent? vendComponent = null, bool forceEject = false)
         {
             if (!Resolve(uid, ref vendComponent))
@@ -265,6 +277,15 @@ namespace Content.Server.VendingMachines
             }
         }
 
+        protected override void AddCash(int value, EntityUid ent, VendingMachineComponent vendingMachineComponent)
+        {
+            if (_station.GetOwningStation(ent) is not { } station ||
+                !TryComp<StationBankAccountComponent>(station, out var bank))
+                return;
+
+            _cargo.UpdateBankAccount((station, bank), value, vendingMachineComponent.Account, dirty: true);
+        }
+
         public void TryRestockInventory(EntityUid uid, VendingMachineComponent? vendComponent = null)
         {
             if (!Resolve(uid, ref vendComponent))
@@ -287,10 +308,10 @@ namespace Content.Server.VendingMachines
 
                 if (PrototypeManager.TryIndex(vendingInventory, out VendingMachineInventoryPrototype? inventoryPrototype))
                 {
-                    foreach (var (item, amount) in inventoryPrototype.StartingInventory)
+                    foreach (var entry in inventoryPrototype.StartingInventory)
                     {
-                        if (PrototypeManager.TryIndex(item, out EntityPrototype? entity))
-                            total += _pricing.GetEstimatedPrice(entity) * amount;
+                        if (PrototypeManager.TryIndex(entry.ID, out EntityPrototype? entity))
+                            total += _pricing.GetEstimatedPrice(entity) * entry.Amount;
                     }
                 }
 

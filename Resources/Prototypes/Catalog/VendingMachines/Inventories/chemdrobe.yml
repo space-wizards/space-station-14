@@ -1,18 +1,32 @@
 - type: vendingMachineInventory
   id: ChemDrobeInventory
   startingInventory:
-    ClothingUniformJumpsuitChemistry: 2
-    ClothingUniformJumpskirtChemistry: 2
-    ClothingOuterCoatLabChem: 2
-    ClothingShoesColorWhite: 2
-    ClothingBackpackChemistry: 2
-    ClothingBackpackSatchelChemistry: 2
-    ClothingBackpackDuffelChemistry: 2
-    ChemBag: 2
-    HandLabeler: 3
-    ClothingBeltMedical: 2
-    ClothingHandsGlovesLatex: 2
-    ClothingHeadsetMedical: 2
-    ClothingOuterWinterChem: 2
+    - id: ClothingUniformJumpsuitChemistry
+      amount: 2
+    - id: ClothingUniformJumpskirtChemistry
+      amount: 2
+    - id: ClothingOuterCoatLabChem
+      amount: 2
+    - id: ClothingShoesColorWhite
+      amount: 2
+    - id: ClothingBackpackChemistry
+      amount: 2
+    - id: ClothingBackpackSatchelChemistry
+      amount: 2
+    - id: ClothingBackpackDuffelChemistry
+      amount: 2
+    - id: ChemBag
+      amount: 2
+    - id: HandLabeler
+      amount: 3
+    - id: ClothingBeltMedical
+      amount: 2
+    - id: ClothingHandsGlovesLatex
+      amount: 2
+    - id: ClothingHeadsetMedical
+      amount: 2
+    - id: ClothingOuterWinterChem
+      amount: 2
   contrabandInventory:
-    ToyFigurineChemist: 1
+    - id: ToyFigurineChemist
+      amount: 1

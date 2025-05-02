@@ -1,45 +1,85 @@
 - type: vendingMachineInventory
   id: MegaSeedServitorInventory
   startingInventory:
-    AloeSeeds: 3
-    AmbrosiaVulgarisSeeds: 3
-    AppleSeeds: 5
-    BananaSeeds: 5
-    BerrySeeds: 5
-    CarrotSeeds: 5
-    CabbageSeeds: 5
-    ChanterelleSeeds: 5
-    CherrySeeds: 5
-    ChiliSeeds: 5
-    CocoaSeeds: 3
-    CornSeeds: 5
-    CottonSeeds: 5
-    EggplantSeeds: 5
-    GalaxythistleSeeds: 3
-    GarlicSeeds: 3
-    GrapeSeeds: 5
-    LemonSeeds: 5
-    LimeSeeds: 5
-    PineappleSeeds: 5
-    LingzhiSeeds: 3
-    OatSeeds: 5
-    OnionSeeds: 5
-    OnionRedSeeds: 5
-    OrangeSeeds: 5
-    PeaSeeds: 5
-    PoppySeeds: 3
-    PotatoSeeds: 5
-    PumpkinSeeds: 5
-    RiceSeeds: 5
-    SoybeanSeeds: 5
-    SugarcaneSeeds: 5
-    TeaPlantSeeds: 5
-    TomatoSeeds: 5
-    TowercapSeeds: 5
-    WheatSeeds: 5
-    WatermelonSeeds: 5
+    - id: AloeSeeds
+      amount: 3
+    - id: AmbrosiaVulgarisSeeds
+      amount: 3
+    - id: AppleSeeds
+      amount: 5
+    - id: BananaSeeds
+      amount: 5
+    - id: BerrySeeds
+      amount: 5
+    - id: CarrotSeeds
+      amount: 5
+    - id: CabbageSeeds
+      amount: 5
+    - id: ChanterelleSeeds
+      amount: 5
+    - id: CherrySeeds
+      amount: 5
+    - id: ChiliSeeds
+      amount: 5
+    - id: CocoaSeeds
+      amount: 3
+    - id: CornSeeds
+      amount: 5
+    - id: CottonSeeds
+      amount: 5
+    - id: EggplantSeeds
+      amount: 5
+    - id: GalaxythistleSeeds
+      amount: 3
+    - id: GarlicSeeds
+      amount: 3
+    - id: GrapeSeeds
+      amount: 5
+    - id: LemonSeeds
+      amount: 5
+    - id: LimeSeeds
+      amount: 5
+    - id: PineappleSeeds
+      amount: 5
+    - id: LingzhiSeeds
+      amount: 3
+    - id: OatSeeds
+      amount: 5
+    - id: OnionSeeds
+      amount: 5
+    - id: OnionRedSeeds
+      amount: 5
+    - id: OrangeSeeds
+      amount: 5
+    - id: PeaSeeds
+      amount: 5
+    - id: PoppySeeds
+      amount: 3
+    - id: PotatoSeeds
+      amount: 5
+    - id: PumpkinSeeds
+      amount: 5
+    - id: RiceSeeds
+      amount: 5
+    - id: SoybeanSeeds
+      amount: 5
+    - id: SugarcaneSeeds
+      amount: 5
+    - id: TeaPlantSeeds
+      amount: 5
+    - id: TomatoSeeds
+      amount: 5
+    - id: TowercapSeeds
+      amount: 5
+    - id: WheatSeeds
+      amount: 5
+    - id: WatermelonSeeds
+      amount: 5
   contrabandInventory:
-    TobaccoSeeds: 2
-    FoodSnackSemki: 2
+    - id: TobaccoSeeds
+      amount: 2
+    - id: FoodSnackSemki
+      amount: 2
   emaggedInventory:
-    FlyAmanitaSeeds: 1
+    - id: FlyAmanitaSeeds
+      amount: 1

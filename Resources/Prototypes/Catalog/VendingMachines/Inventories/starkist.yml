@@ -1,16 +1,27 @@
 - type: vendingMachineInventory
   id: StarkistInventory
   startingInventory:
-    DrinkStarkistCan: 6
-    DrinkGrapeCan: 2
-    DrinkRootBeerCan: 2
-    DrinkIcedTeaCan: 2
-    DrinkSolDryCan: 2
-    DrinkLemonLimeCan: 2
-    DrinkLemonLimeCranberryCan: 2
-    DrinkFourteenLokoCan: 2
+    - id: DrinkStarkistCan
+      amount: 6
+    - id: DrinkGrapeCan
+      amount: 2
+    - id: DrinkRootBeerCan
+      amount: 2
+    - id: DrinkIcedTeaCan
+      amount: 2
+    - id: DrinkSolDryCan
+      amount: 2
+    - id: DrinkLemonLimeCan
+      amount: 2
+    - id: DrinkLemonLimeCranberryCan
+      amount: 2
+    - id: DrinkFourteenLokoCan
+      amount: 2
   contrabandInventory:
-    FoodBurgerCarp: 2
+    - id: FoodBurgerCarp
+      amount: 2
   emaggedInventory:
-    DrinkNukieCan: 2
-    DrinkChangelingStingCan: 2
+    - id: DrinkNukieCan
+      amount: 2
+    - id: DrinkChangelingStingCan
+      amount: 2

@@ -1,104 +1,192 @@
-# DO NOT ADD MORE, USE UNIFORM DYING
 - type: vendingMachineInventory
   id: ClothesMateInventory
   startingInventory:
-    ClothingBackpack: 5
-    ClothingBackpackDuffel: 5
-    ClothingBackpackSatchel: 3
-    ClothingBackpackSatchelLeather: 2
-    ClothingRandomSpawner: 8
-    ClothingUniformRandomShorts: 4
-    ClothingHeadHatBeret: 4
-    ClothingHeadBandBlack: 2
-    ClothingHeadBandBlue: 2
-    ClothingHeadBandGreen: 2
-    ClothingHeadBandRed: 2
-    ClothingHeadBandSkull: 2
-    ClothingHeadHatGreyFlatcap: 3
-    ClothingHeadHatBrownFlatcap: 3
-    ClothingUniformJumpsuitColorGrey: 8
-    ClothingUniformJumpskirtColorGrey: 8
-    ClothingUniformJumpsuitColorWhite: 3
-    ClothingUniformJumpskirtColorWhite: 3
-    ClothingUniformJumpsuitColorBlack: 3
-    ClothingUniformJumpskirtColorBlack: 3
-    ClothingUniformJumpsuitColorBlue: 2
-    ClothingUniformJumpskirtColorBlue: 2
-    ClothingUniformJumpsuitColorYellow: 2
-    ClothingUniformJumpskirtColorYellow: 2
-    ClothingUniformJumpsuitColorGreen: 2
-    # DO NOT ADD MORE, USE UNIFORM DYING
-    ClothingUniformJumpskirtColorGreen: 2
-    ClothingUniformJumpsuitColorOrange: 2
-    ClothingUniformJumpskirtColorOrange: 2
-    ClothingUniformJumpsuitColorRed: 2
-    ClothingUniformJumpskirtColorRed: 2
-    ClothingUniformJumpsuitColorPurple: 2
-    ClothingUniformJumpskirtColorPurple: 2
-    ClothingUniformJumpsuitColorPink: 2
-    ClothingUniformJumpskirtColorPink: 2
-    ClothingUniformJumpsuitColorDarkBlue: 2
-    ClothingUniformJumpskirtColorDarkBlue: 2
-    ClothingUniformJumpsuitColorDarkGreen:  2
-    ClothingUniformJumpskirtColorDarkGreen: 2
-    ClothingUniformJumpsuitColorTeal: 2
-    ClothingUniformJumpskirtColorTeal: 2
-    ClothingUniformJumpsuitHawaiBlack: 2
-    ClothingUniformJumpsuitHawaiBlue: 2
-    ClothingUniformJumpsuitHawaiRed: 2
-    ClothingUniformJumpsuitHawaiYellow: 2
-    ClothingUniformJumpsuitFlannel: 2
-    ClothingUniformJumpsuitCasualBlue: 2
-    ClothingUniformJumpskirtCasualBlue: 2
-    ClothingUniformJumpsuitCasualPurple: 2
-    ClothingUniformJumpskirtCasualPurple: 2
-    ClothingUniformJumpsuitCasualRed: 2
-    ClothingUniformJumpskirtCasualRed: 2
-    ClothingUniformJumpsuitCasualGreen: 2
-    ClothingUniformJumpskirtCasualGreen: 2
-    # DO NOT ADD MORE, USE UNIFORM DYING
-    ClothingShoesColorBlack: 8
-    ClothingShoesColorBrown: 4
-    ClothingShoesColorWhite: 3
-    ClothingShoesColorBlue: 2
-    ClothingShoesColorYellow: 2
-    ClothingShoesColorGreen: 2
-    ClothingShoesColorOrange: 2
-    ClothingShoesColorRed: 2
-    ClothingShoesColorPurple: 2
-    ClothingHeadHatGreysoft: 8
-    ClothingHeadHatMimesoft: 3
-    ClothingHeadHatBluesoft: 2
-    ClothingHeadHatYellowsoft: 2
-    ClothingHeadHatGreensoft: 2
-    ClothingHeadHatOrangesoft: 2
-    ClothingHeadHatRedsoft: 2
-    # DO NOT ADD MORE, USE UNIFORM DYING
-    ClothingHeadHatBlacksoft: 2
-    ClothingHeadHatPurplesoft: 2
-    ClothingHeadHatCorpsoft: 2
-    ClothingHeadFishCap: 2
-    ClothingHeadRastaHat: 2
-    ClothingBeltStorageWaistbag: 3
-    ClothingEyesGlasses: 6
-    ClothingHandsGlovesColorBlack: 4
-    ClothingHandsGlovesColorGray: 4
-    ClothingHandsGlovesColorBrown: 2
-    ClothingHandsGlovesColorWhite: 2
-    ClothingHandsGlovesColorRed: 2
-    ClothingHandsGlovesColorBlue: 2
-    ClothingHandsGlovesColorTeal: 2
-    ClothingHandsGlovesColorGreen: 2
-    ClothingHandsGlovesColorOrange: 2
-    ClothingHandsGlovesColorPurple: 2
-    ClothingEyesGlassesCheapSunglasses: 3
-    # DO NOT ADD MORE, USE UNIFORM DYING
+    - id: ClothingBackpack
+      amount: 5
+    - id: ClothingBackpackDuffel
+      amount: 5
+    - id: ClothingBackpackSatchel
+      amount: 3
+    - id: ClothingBackpackSatchelLeather
+      amount: 2
+    - id: ClothingRandomSpawner
+      amount: 8
+    - id: ClothingUniformRandomShorts
+      amount: 4
+    - id: ClothingHeadHatBeret
+      amount: 4
+    - id: ClothingHeadBandBlack
+      amount: 2
+    - id: ClothingHeadBandBlue
+      amount: 2
+    - id: ClothingHeadBandGreen
+      amount: 2
+    - id: ClothingHeadBandRed
+      amount: 2
+    - id: ClothingHeadBandSkull
+      amount: 2
+    - id: ClothingHeadHatGreyFlatcap
+      amount: 3
+    - id: ClothingHeadHatBrownFlatcap
+      amount: 3
+    - id: ClothingUniformJumpsuitColorGrey
+      amount: 8
+    - id: ClothingUniformJumpskirtColorGrey
+      amount: 8
+    - id: ClothingUniformJumpsuitColorWhite
+      amount: 3
+    - id: ClothingUniformJumpskirtColorWhite
+      amount: 3
+    - id: ClothingUniformJumpsuitColorBlack
+      amount: 3
+    - id: ClothingUniformJumpskirtColorBlack
+      amount: 3
+    - id: ClothingUniformJumpsuitColorBlue
+      amount: 2
+    - id: ClothingUniformJumpskirtColorBlue
+      amount: 2
+    - id: ClothingUniformJumpsuitColorYellow
+      amount: 2
+    - id: ClothingUniformJumpskirtColorYellow
+      amount: 2
+    - id: ClothingUniformJumpsuitColorGreen
+      amount: 2
+    - id: ClothingUniformJumpskirtColorGreen
+      amount: 2
+    - id: ClothingUniformJumpsuitColorOrange
+      amount: 2
+    - id: ClothingUniformJumpskirtColorOrange
+      amount: 2
+    - id: ClothingUniformJumpsuitColorRed
+      amount: 2
+    - id: ClothingUniformJumpskirtColorRed
+      amount: 2
+    - id: ClothingUniformJumpsuitColorPurple
+      amount: 2
+    - id: ClothingUniformJumpskirtColorPurple
+      amount: 2
+    - id: ClothingUniformJumpsuitColorPink
+      amount: 2
+    - id: ClothingUniformJumpskirtColorPink
+      amount: 2
+    - id: ClothingUniformJumpsuitColorDarkBlue
+      amount: 2
+    - id: ClothingUniformJumpskirtColorDarkBlue
+      amount: 2
+    - id: ClothingUniformJumpsuitColorDarkGreen
+      amount: 2
+    - id: ClothingUniformJumpskirtColorDarkGreen
+      amount: 2
+    - id: ClothingUniformJumpsuitColorTeal
+      amount: 2
+    - id: ClothingUniformJumpskirtColorTeal
+      amount: 2
+    - id: ClothingUniformJumpsuitHawaiBlack
+      amount: 2
+    - id: ClothingUniformJumpsuitHawaiBlue
+      amount: 2
+    - id: ClothingUniformJumpsuitHawaiRed
+      amount: 2
+    - id: ClothingUniformJumpsuitHawaiYellow
+      amount: 2
+    - id: ClothingUniformJumpsuitFlannel
+      amount: 2
+    - id: ClothingUniformJumpsuitCasualBlue
+      amount: 2
+    - id: ClothingUniformJumpskirtCasualBlue
+      amount: 2
+    - id: ClothingUniformJumpsuitCasualPurple
+      amount: 2
+    - id: ClothingUniformJumpskirtCasualPurple
+      amount: 2
+    - id: ClothingUniformJumpsuitCasualRed
+      amount: 2
+    - id: ClothingUniformJumpskirtCasualRed
+      amount: 2
+    - id: ClothingUniformJumpsuitCasualGreen
+      amount: 2
+    - id: ClothingUniformJumpskirtCasualGreen
+      amount: 2
+    - id: ClothingShoesColorBlack
+      amount: 8
+    - id: ClothingShoesColorBrown
+      amount: 4
+    - id: ClothingShoesColorWhite
+      amount: 3
+    - id: ClothingShoesColorBlue
+      amount: 2
+    - id: ClothingShoesColorYellow
+      amount: 2
+    - id: ClothingShoesColorGreen
+      amount: 2
+    - id: ClothingShoesColorOrange
+      amount: 2
+    - id: ClothingShoesColorRed
+      amount: 2
+    - id: ClothingShoesColorPurple
+      amount: 2
+    - id: ClothingHeadHatGreysoft
+      amount: 8
+    - id: ClothingHeadHatMimesoft
+      amount: 3
+    - id: ClothingHeadHatBluesoft
+      amount: 2
+    - id: ClothingHeadHatYellowsoft
+      amount: 2
+    - id: ClothingHeadHatGreensoft
+      amount: 2
+    - id: ClothingHeadHatOrangesoft
+      amount: 2
+    - id: ClothingHeadHatRedsoft
+      amount: 2
+    - id: ClothingHeadHatBlacksoft
+      amount: 2
+    - id: ClothingHeadHatPurplesoft
+      amount: 2
+    - id: ClothingHeadHatCorpsoft
+      amount: 2
+    - id: ClothingHeadFishCap
+      amount: 2
+    - id: ClothingHeadRastaHat
+      amount: 2
+    - id: ClothingBeltStorageWaistbag
+      amount: 3
+    - id: ClothingEyesGlasses
+      amount: 6
+    - id: ClothingHandsGlovesColorBlack
+      amount: 4
+    - id: ClothingHandsGlovesColorGray
+      amount: 4
+    - id: ClothingHandsGlovesColorBrown
+      amount: 2
+    - id: ClothingHandsGlovesColorWhite
+      amount: 2
+    - id: ClothingHandsGlovesColorRed
+      amount: 2
+    - id: ClothingHandsGlovesColorBlue
+      amount: 2
+    - id: ClothingHandsGlovesColorTeal
+      amount: 2
+    - id: ClothingHandsGlovesColorGreen
+      amount: 2
+    - id: ClothingHandsGlovesColorOrange
+      amount: 2
+    - id: ClothingHandsGlovesColorPurple
+      amount: 2
+    - id: ClothingEyesGlassesCheapSunglasses
+      amount: 3
   contrabandInventory:
-    ClothingMaskNeckGaiter: 2
-    ClothingUniformJumpsuitTacticool: 1
-    ClothingUniformJumpskirtTacticool: 1
-    ToyFigurinePassenger: 1
-    ToyFigurineGreytider: 1
-    ClothingBackpackSatchelSmugglerUnanchored: 1
-    ClothingHeadHatSolidHeadband: 2
-  # DO NOT ADD MORE, USE UNIFORM DYING
+    - id: ClothingMaskNeckGaiter
+      amount: 2
+    - id: ClothingUniformJumpsuitTacticool
+      amount: 1
+    - id: ClothingUniformJumpskirtTacticool
+      amount: 1
+    - id: ToyFigurinePassenger
+      amount: 1
+    - id: ToyFigurineGreytider
+      amount: 1
+    - id: ClothingBackpackSatchelSmugglerUnanchored
+      amount: 1
+    - id: ClothingHeadHatSolidHeadband
+      amount: 2

@@ -1,19 +1,34 @@
 - type: vendingMachineInventory
   id: DetDrobeInventory
   startingInventory:
-    ClothingUniformJumpsuitDetective: 2
-    ClothingUniformJumpskirtDetective: 2
-    ClothingShoesColorBrown: 2
-    ClothingOuterCoatDetectiveLoadout: 1
-    ClothingOuterCoatDetectiveLoadoutGrey: 1
-    ClothingHeadHatFedoraBrown: 2
-    ClothingUniformJumpsuitDetectiveGrey: 2
-    ClothingUniformJumpskirtDetectiveGrey: 2
-    ClothingOuterVestDetective: 2
-    ClothingNeckTieDet: 2
-    ClothingHeadHatFedoraGrey: 2
-    ClothingHandsGlovesColorBlack: 2
-    ClothingHandsGlovesLatex: 2
-    ClothingHeadsetSecurity: 2
+    - id: ClothingUniformJumpsuitDetective
+      amount: 2
+    - id: ClothingUniformJumpskirtDetective
+      amount: 2
+    - id: ClothingShoesColorBrown
+      amount: 2
+    - id: ClothingOuterCoatDetectiveLoadout
+      amount: 1
+    - id: ClothingOuterCoatDetectiveLoadoutGrey
+      amount: 1
+    - id: ClothingHeadHatFedoraBrown
+      amount: 2
+    - id: ClothingUniformJumpsuitDetectiveGrey
+      amount: 2
+    - id: ClothingUniformJumpskirtDetectiveGrey
+      amount: 2
+    - id: ClothingOuterVestDetective
+      amount: 2
+    - id: ClothingNeckTieDet
+      amount: 2
+    - id: ClothingHeadHatFedoraGrey
+      amount: 2
+    - id: ClothingHandsGlovesColorBlack
+      amount: 2
+    - id: ClothingHandsGlovesLatex
+      amount: 2
+    - id: ClothingHeadsetSecurity
+      amount: 2
   contrabandInventory:
-    ToyFigurineDetective: 1
+    - id: ToyFigurineDetective
+      amount: 1

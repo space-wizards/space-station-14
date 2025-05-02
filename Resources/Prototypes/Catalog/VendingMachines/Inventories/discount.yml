@@ -1,13 +1,22 @@
 - type: vendingMachineInventory
   id: DiscountDansInventory
   startingInventory:
-    FoodSnackCheesie: 3
-    FoodSnackChips: 3
-    FoodSnackBoritos: 3
-    DrinkEnergyDrinkCan: 4
-    FoodSnackPopcorn: 3
-    FoodSnackEnergy: 3
-    CigPackMixed: 2
+    - id: FoodSnackCheesie
+      amount: 3
+    - id: FoodSnackChips
+      amount: 3
+    - id: FoodSnackBoritos
+      amount: 3
+    - id: DrinkEnergyDrinkCan
+      amount: 4
+    - id: FoodSnackPopcorn
+      amount: 3
+    - id: FoodSnackEnergy
+      amount: 3
+    - id: CigPackMixed
+      amount: 2
   contrabandInventory:
-    FoodSnackDanDanNoodles: 3
-    FoodBakedBunHoney: 3
+    - id: FoodSnackDanDanNoodles
+      amount: 3
+    - id: FoodBakedBunHoney
+      amount: 3

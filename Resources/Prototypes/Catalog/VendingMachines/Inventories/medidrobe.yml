@@ -1,30 +1,56 @@
 - type: vendingMachineInventory
   id: MediDrobeInventory
   startingInventory:
-    ClothingBackpackDuffelMedical: 4
-    ClothingBackpackMedical: 4
-    ClothingBackpackSatchelMedical: 4
-    ClothingUniformJumpsuitMedicalDoctor: 4
-    ClothingUniformJumpskirtMedicalDoctor: 4
-    ClothingBeltMedical: 4
-    ClothingHeadHatBeretMedic: 4
-    ClothingHeadNurseHat: 4
-    ClothingOuterCoatLab: 4
-    ClothingShoesColorWhite: 4
-    ClothingHandsGlovesLatex: 4
-    ClothingHandsGlovesNitrile: 2
-    ClothingHeadsetMedical: 4
-    ClothingOuterWinterMed: 2
-    ClothingOuterHospitalGown: 5
-    UniformScrubsColorGreen: 4
-    UniformScrubsColorBlue: 4
-    UniformScrubsColorPurple: 4
-    ClothingHeadHatSurgcapGreen: 4 
-    ClothingHeadHatSurgcapBlue: 4
-    ClothingHeadHatSurgcapPurple: 4
-    ClothingShoesBootsWinterMed: 2
+    - id: ClothingBackpackDuffelMedical
+      amount: 4
+    - id: ClothingBackpackMedical
+      amount: 4
+    - id: ClothingBackpackSatchelMedical
+      amount: 4
+    - id: ClothingUniformJumpsuitMedicalDoctor
+      amount: 4
+    - id: ClothingUniformJumpskirtMedicalDoctor
+      amount: 4
+    - id: ClothingBeltMedical
+      amount: 4
+    - id: ClothingHeadHatBeretMedic
+      amount: 4
+    - id: ClothingHeadNurseHat
+      amount: 4
+    - id: ClothingOuterCoatLab
+      amount: 4
+    - id: ClothingShoesColorWhite
+      amount: 4
+    - id: ClothingHandsGlovesLatex
+      amount: 4
+    - id: ClothingHandsGlovesNitrile
+      amount: 2
+    - id: ClothingHeadsetMedical
+      amount: 4
+    - id: ClothingOuterWinterMed
+      amount: 2
+    - id: ClothingOuterHospitalGown
+      amount: 5
+    - id: UniformScrubsColorGreen
+      amount: 4
+    - id: UniformScrubsColorBlue
+      amount: 4
+    - id: UniformScrubsColorPurple
+      amount: 4
+    - id: ClothingHeadHatSurgcapGreen
+      amount: 4
+    - id: ClothingHeadHatSurgcapBlue
+      amount: 4
+    - id: ClothingHeadHatSurgcapPurple
+      amount: 4
+    - id: ClothingShoesBootsWinterMed
+      amount: 2
   contrabandInventory:
-    ClothingUniformJumpskirtOfLife: 1
-    ToyFigurineMedicalDoctor: 1
-    ToyFigurineParamedic: 1
-    ToyFigurineChiefMedicalOfficer: 1
+    - id: ClothingUniformJumpskirtOfLife
+      amount: 1
+    - id: ToyFigurineMedicalDoctor
+      amount: 1
+    - id: ToyFigurineParamedic
+      amount: 1
+    - id: ToyFigurineChiefMedicalOfficer
+      amount: 1

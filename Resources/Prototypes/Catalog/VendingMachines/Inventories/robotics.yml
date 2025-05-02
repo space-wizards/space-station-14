@@ -1,22 +1,38 @@
 - type: vendingMachineInventory
   id: RoboticsInventory
   startingInventory:
-    CableApcStack: 4
-    SciFlash: 4
-    ProximitySensor: 3
-    ClothingEyesHudDiagnostic: 2
-    ClothingEyesEyepatchHudDiag: 2
-    RemoteSignaller: 3
-    Igniter: 3 # its more ordnance but yeah
-    HandheldHealthAnalyzer: 3
-    Scalpel: 2
-    SawElectric: 2
-    #Bonesetter: 2 add when robotics
-    NitrousOxideTankFilled: 2
-    ClothingMaskBreathMedical: 5
-    ClothingHeadHatWeldingMaskFlame: 1
-    Welder: 1
-    Screwdriver: 2
-    Crowbar: 2
+    - id: CableApcStack
+      amount: 4
+    - id: SciFlash
+      amount: 4
+    - id: ProximitySensor
+      amount: 3
+    - id: ClothingEyesHudDiagnostic
+      amount: 2
+    - id: ClothingEyesEyepatchHudDiag
+      amount: 2
+    - id: RemoteSignaller
+      amount: 3
+    - id: Igniter
+      amount: 3
+    - id: HandheldHealthAnalyzer
+      amount: 3
+    - id: Scalpel
+      amount: 2
+    - id: SawElectric
+      amount: 2
+    - id: NitrousOxideTankFilled
+      amount: 2
+    - id: ClothingMaskBreathMedical
+      amount: 5
+    - id: ClothingHeadHatWeldingMaskFlame
+      amount: 1
+    - id: Welder
+      amount: 1
+    - id: Screwdriver
+      amount: 2
+    - id: Crowbar
+      amount: 2
   contrabandInventory:
-    FoodBurgerRobot: 1  
+    - id: FoodBurgerRobot
+      amount: 1
