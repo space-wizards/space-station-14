@@ -1,15 +1,25 @@
 - type: vendingMachineInventory
   id: ShamblersJuiceInventory
   startingInventory:
-    DrinkShamblersJuiceCan: 4
-    DrinkGrapeCan: 2
-    DrinkRootBeerCan: 2
-    DrinkIcedTeaCan: 2
-    DrinkSolDryCan: 2
-    DrinkLemonLimeCan: 2
-    DrinkLemonLimeCranberryCan: 2
-    DrinkFourteenLokoCan: 2
+    - id: DrinkShamblersJuiceCan
+      amount: 4
+    - id: DrinkGrapeCan
+      amount: 2
+    - id: DrinkRootBeerCan
+      amount: 2
+    - id: DrinkIcedTeaCan
+      amount: 2
+    - id: DrinkSolDryCan
+      amount: 2
+    - id: DrinkLemonLimeCan
+      amount: 2
+    - id: DrinkLemonLimeCranberryCan
+      amount: 2
+    - id: DrinkFourteenLokoCan
+      amount: 2
   contrabandInventory:
-    DrinkChangelingStingCan: 2
+    - id: DrinkChangelingStingCan
+      amount: 2
   emaggedInventory:
-    DrinkNukieCan: 2
+    - id: DrinkNukieCan
+      amount: 2

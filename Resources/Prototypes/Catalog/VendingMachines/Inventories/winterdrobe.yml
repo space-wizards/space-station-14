@@ -1,26 +1,46 @@
 - type: vendingMachineInventory
   id: WinterDrobeInventory
   startingInventory:
-    ClothingNeckScarfStripedRed: 3
-    ClothingNeckScarfStripedGreen: 3
-    ClothingNeckScarfStripedBlue: 3
-    ClothingNeckScarfStripedBlack: 3
-    ClothingNeckScarfStripedBrown: 3
-    ClothingNeckScarfStripedLightBlue: 3
-    ClothingNeckScarfStripedOrange: 3
-    ClothingNeckScarfStripedPurple: 3
-    ClothingOuterCoatTrench: 6
-    ClothingOuterWinterCoat: 6
-    ClothingShoesBootsWinter: 6
-    ClothingOuterFlannelRed: 2
-    ClothingOuterFlannelBlue: 2
-    ClothingOuterFlannelGreen: 2
-    ClothingOuterCoatBomber: 3
-    ClothingHeadHatCanadaBeanie: 4
-    ClothingHeadHatSantahat: 2
-    ClothingHeadHatXmasCrown: 2
-
+    - id: ClothingNeckScarfStripedRed
+      amount: 3
+    - id: ClothingNeckScarfStripedGreen
+      amount: 3
+    - id: ClothingNeckScarfStripedBlue
+      amount: 3
+    - id: ClothingNeckScarfStripedBlack
+      amount: 3
+    - id: ClothingNeckScarfStripedBrown
+      amount: 3
+    - id: ClothingNeckScarfStripedLightBlue
+      amount: 3
+    - id: ClothingNeckScarfStripedOrange
+      amount: 3
+    - id: ClothingNeckScarfStripedPurple
+      amount: 3
+    - id: ClothingOuterCoatTrench
+      amount: 6
+    - id: ClothingOuterWinterCoat
+      amount: 6
+    - id: ClothingShoesBootsWinter
+      amount: 6
+    - id: ClothingOuterFlannelRed
+      amount: 2
+    - id: ClothingOuterFlannelBlue
+      amount: 2
+    - id: ClothingOuterFlannelGreen
+      amount: 2
+    - id: ClothingOuterCoatBomber
+      amount: 3
+    - id: ClothingHeadHatCanadaBeanie
+      amount: 4
+    - id: ClothingHeadHatSantahat
+      amount: 2
+    - id: ClothingHeadHatXmasCrown
+      amount: 2
   emaggedInventory:
-    ClothingNeckScarfStripedSyndieGreen: 3
-    ClothingNeckScarfStripedSyndieRed: 3
-    ClothingNeckScarfStripedCentcom: 3
+    - id: ClothingNeckScarfStripedSyndieGreen
+      amount: 3
+    - id: ClothingNeckScarfStripedSyndieRed
+      amount: 3
+    - id: ClothingNeckScarfStripedCentcom
+      amount: 3

@@ -1,27 +1,49 @@
 - type: vendingMachineInventory
   id: SyndieDrobeInventory
   startingInventory:
-    ClothingHeadHatOutlawHat: 3
-    ClothingHeadHatSyndie: 5
-    ClothingMaskNeckGaiter: 5
-    ClothingOuterWinterSyndie: 5
-    ClothingHeadHatSyndieMAA: 3
-    ClothingOuterWinterSyndieCap: 3
-    ClothingOuterCoatSyndieCap: 3
-    ClothingUniformJumpsuitSyndieFormal: 5
-    ClothingUniformJumpskirtSyndieFormalDress: 5
-    ClothingUniformJumpsuitOperative: 5
-    ClothingUniformJumpskirtOperative: 5
-    ClothingNeckScarfStripedSyndieGreen: 2
-    ClothingNeckScarfStripedSyndieRed: 2
-    ClothingShoesBootsWinterSyndicate: 2
+    - id: ClothingHeadHatOutlawHat
+      amount: 3
+    - id: ClothingHeadHatSyndie
+      amount: 5
+    - id: ClothingMaskNeckGaiter
+      amount: 5
+    - id: ClothingOuterWinterSyndie
+      amount: 5
+    - id: ClothingHeadHatSyndieMAA
+      amount: 3
+    - id: ClothingOuterWinterSyndieCap
+      amount: 3
+    - id: ClothingOuterCoatSyndieCap
+      amount: 3
+    - id: ClothingUniformJumpsuitSyndieFormal
+      amount: 5
+    - id: ClothingUniformJumpskirtSyndieFormalDress
+      amount: 5
+    - id: ClothingUniformJumpsuitOperative
+      amount: 5
+    - id: ClothingUniformJumpskirtOperative
+      amount: 5
+    - id: ClothingNeckScarfStripedSyndieGreen
+      amount: 2
+    - id: ClothingNeckScarfStripedSyndieRed
+      amount: 2
+    - id: ClothingShoesBootsWinterSyndicate
+      amount: 2
   contrabandInventory:
-    ToyFigurineFootsoldier: 1
-    ToyFigurineNukieElite: 1
-    ToyFigurineNukieCommander: 1
+    - id: ToyFigurineFootsoldier
+      amount: 1
+    - id: ToyFigurineNukieElite
+      amount: 1
+    - id: ToyFigurineNukieCommander
+      amount: 1
   emaggedInventory:
-    ClothingOuterCoatSyndieCapArmored: 1
-    ClothingOuterWinterSyndieCapArmored: 1
-    ClothingHeadHatTacticalMaidHeadband: 5
-    ClothingUniformJumpskirtTacticalMaid: 5
-    ClothingHandsTacticalMaidGloves: 5 
+    - id: ClothingOuterCoatSyndieCapArmored
+      amount: 1
+    - id: ClothingOuterWinterSyndieCapArmored
+      amount: 1
+    - id: ClothingHeadHatTacticalMaidHeadband
+      amount: 5
+    - id: ClothingUniformJumpskirtTacticalMaid
+      amount: 5
+    - id: ClothingHandsTacticalMaidGloves
+      amount: 5

@@ -1,22 +1,40 @@
 - type: vendingMachineInventory
   id: CargoDrobeInventory
   startingInventory:
-    ClothingBackpackCargo: 3
-    ClothingBackpackSatchelCargo: 3
-    ClothingBackpackDuffelCargo: 3
-    ClothingUniformJumpsuitCargo: 3
-    ClothingUniformJumpskirtCargo: 3
-    ClothingShoesColorBlack: 3
-    ClothingHandsGlovesFingerless: 3
-    ClothingHeadHatCargosoft: 3
-    ClothingHeadBandBrown: 3
-    ClothingHeadsetCargo: 3
-    ClothingOuterWinterCargo: 2
-    ClothingOuterWinterMiner: 2
-    ClothingNeckScarfStripedBrown: 3
-    ClothingShoesBootsWinterCargo: 2
-    MailBag: 2
+    - id: ClothingBackpackCargo
+      amount: 3
+    - id: ClothingBackpackSatchelCargo
+      amount: 3
+    - id: ClothingBackpackDuffelCargo
+      amount: 3
+    - id: ClothingUniformJumpsuitCargo
+      amount: 3
+    - id: ClothingUniformJumpskirtCargo
+      amount: 3
+    - id: ClothingShoesColorBlack
+      amount: 3
+    - id: ClothingHandsGlovesFingerless
+      amount: 3
+    - id: ClothingHeadHatCargosoft
+      amount: 3
+    - id: ClothingHeadBandBrown
+      amount: 3
+    - id: ClothingHeadsetCargo
+      amount: 3
+    - id: ClothingOuterWinterCargo
+      amount: 2
+    - id: ClothingOuterWinterMiner
+      amount: 2
+    - id: ClothingNeckScarfStripedBrown
+      amount: 3
+    - id: ClothingShoesBootsWinterCargo
+      amount: 2
+    - id: MailBag
+      amount: 2
   contrabandInventory:
-    ToyFigurineCargoTech: 1
-    ToyFigurineSalvage: 1
-    ToyFigurineQuartermaster: 1
+    - id: ToyFigurineCargoTech
+      amount: 1
+    - id: ToyFigurineSalvage
+      amount: 1
+    - id: ToyFigurineQuartermaster
+      amount: 1
