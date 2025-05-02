@@ -10,6 +10,7 @@ namespace Content.Shared.Construction
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+        [Dependency] private readonly SharedMapSystem _map = default!;
         [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
 
         /// <summary>
@@ -20,10 +21,10 @@ namespace Content.Shared.Construction
             if (!canBuildInImpassable)
                 return null;
 
-            if (!_mapManager.TryFindGridAt(coords, out _, out var grid))
+            if (!_mapManager.TryFindGridAt(coords, out var gridUid, out var grid))
                 return null;
 
-            var ignored = grid.GetAnchoredEntities(coords).ToHashSet();
+            var ignored = _map.GetAnchoredEntities(gridUid, grid, coords).ToHashSet();
             return e => ignored.Contains(e);
         }
 
