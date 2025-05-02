@@ -32,10 +32,10 @@ jobs:
             }
 
             if (assinges.size > 0) {
-              await github.rest.pulls.addAssignees({
+              await github.rest.issues.addAssignees({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                pull_number: context.payload.pull_request.number,
+                issue_number: context.payload.pull_request.number,
                 assinges: Array.from(assinges),
               });
             }
