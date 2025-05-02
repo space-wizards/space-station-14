@@ -51,7 +51,7 @@ public abstract class SharedConveyorController : VirtualController
         UpdatesAfter.Add(typeof(SharedMoverController));
 
         SubscribeLocalEvent<ConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
-        SubscribeLocalEvent<ConveyedComponent, MoverTileDefEvent>(OnMoverTileDefEvent);
+        //SubscribeLocalEvent<ConveyedComponent, MoverTileDefEvent>(OnMoverTileDefEvent);
         SubscribeLocalEvent<ConveyedComponent, MoverFrictionBulldozeEvent>(OnMoverFrictionBulldoze);
         SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
         SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
@@ -71,23 +71,26 @@ public abstract class SharedConveyorController : VirtualController
         args.Modifier = 0f;
     }
 
-    private void OnMoverTileDefEvent(Entity<ConveyedComponent> ent, ref MoverTileDefEvent args)
+    /*private void OnMoverTileDefEvent(Entity<ConveyedComponent> ent, ref MoverTileDefEvent args)
     {
         if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
             return;
 
-        var conveyor = new ContentTileDefinition(); // Just a default tile
-        args.TileDef = conveyor;
+        args.MobFriction = 1f;
+        args.Friction = 1f;
+        args.MobAcceleration = 1f;
 
-    }
+    }*/
 
     private void OnMoverFrictionBulldoze(Entity<ConveyedComponent> ent, ref MoverFrictionBulldozeEvent args)
     {
-        if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
+        if(!TryComp<FixturesComponent>(ent, out var fixture)
+           || !IsConveyed((ent, fixture))
+           || !TryComp<MovementSpeedModifierComponent>(ent, out var move))
             return;
 
-        //args.Friction = 20f;
-        //args.Acceleration = 20f; // This is so that Ice Crust and such doesn't prevent you from moving on conveyors
+        args.Friction = 20f; // We bulldoze this so it always matches items
+        args.Acceleration = move.BaseAcceleration; // Prevent anything from modifying our acceleration
         args.MinFrictionSpeed = 0f;
     }
 

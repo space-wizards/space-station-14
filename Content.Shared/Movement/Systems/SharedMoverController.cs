@@ -269,13 +269,14 @@ public abstract partial class SharedMoverController : VirtualController
                 && _mapSystem.TryGetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates, out var tile))
                 tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
-            var tileDefEv = new MoverTileDefEvent();
-            RaiseLocalEvent(uid, ref tileDefEv);
+            var tileDefEv = new MoverTileDefEvent()
             {
-                tileDefEv.TileDef = tileDef;
-            }
+                Friction = tileDef?.Friction,
+                MobFriction = tileDef?.MobFriction,
+                MobAcceleration = tileDef?.MobAcceleration,
+            };
 
-            tileDef = tileDefEv.TileDef;
+            RaiseLocalEvent(uid, ref tileDefEv);
 
             var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
             var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
@@ -285,16 +286,16 @@ public abstract partial class SharedMoverController : VirtualController
             if (wishDir != Vector2.Zero)
             {
                 friction = moveSpeedComponent?.Friction ?? MovementSpeedModifierComponent.DefaultFriction;
-                friction *= tileDef?.MobFriction ?? tileDef?.Friction ?? 1f;
+                friction *= tileDefEv.MobFriction ?? tileDefEv.Friction ?? 1f;
             }
             else
             {
                 friction = moveSpeedComponent?.FrictionNoInput ?? MovementSpeedModifierComponent.DefaultFrictionNoInput;
-                friction *= tileDef?.Friction ?? 1f;
+                friction *= tileDefEv.Friction ?? 1f;
             }
 
             accel = moveSpeedComponent?.Acceleration ?? MovementSpeedModifierComponent.DefaultAcceleration;
-            accel *= tileDef?.MobAcceleration ?? 1f;
+            accel *= tileDefEv.MobAcceleration ?? 1f;
         }
 
         // This way friction never exceeds acceleration when you're trying to move.
