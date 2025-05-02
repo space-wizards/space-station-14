@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: whatston3
-  changes:
-  - message: Healing items that reduce bleeding can now be applied to undamaged mobs.
-    type: Tweak
-  id: 7901
-  time: '2025-02-05T03:23:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33526
 - author: DuckManZach
   changes:
   - message: Floor pills have some new interesting surprises!
@@ -3922,3 +3915,10 @@
   id: 8402
   time: '2025-05-01T23:01:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36336
+- author: YoungThugSS14
+  changes:
+  - message: The Wizard Helmet is now obtainable from the magic vend.
+    type: Tweak
+  id: 8403
+  time: '2025-05-02T01:56:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37084
