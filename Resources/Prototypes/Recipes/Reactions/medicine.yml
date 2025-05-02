@@ -662,3 +662,32 @@
       amount: 1
   products:
     Haloperidol: 5
+
+- type: reaction
+  id: H-32
+  reactants:
+    Arithrazine:
+      amount: 1
+    Bicaridine:
+      amount: 1
+    Cryoxadone:
+      amount: 1
+    Plasma:
+      amount: 1
+      catalyst: true
+  products:
+    H-32: 4
+
+- type: reaction
+  id: Celliminol
+  impact: High
+  minTemp: 500
+  reactants:
+    Doxarubixadone:
+      amount: 5
+    Omnizine:
+      amount: 1
+    Blood:
+      amount: 10
+  products:
+    Celliminol: 5
