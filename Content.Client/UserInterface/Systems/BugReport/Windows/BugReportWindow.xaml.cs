@@ -151,6 +151,10 @@ public sealed partial class BugReportWindow : DefaultWindow
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
+
+        if (!Visible) // Don't bother updating if no one can see the window anyway.
+            return;
+
         UpdateEnabled();
     }
 }
