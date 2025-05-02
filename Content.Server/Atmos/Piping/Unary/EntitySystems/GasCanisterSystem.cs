@@ -10,7 +10,6 @@ using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Systems;
 using Content.Shared.Database;
 using Content.Shared.NodeContainer;
-using GasCanisterComponent = Content.Shared.Atmos.Piping.Unary.Components.GasCanisterComponent;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 

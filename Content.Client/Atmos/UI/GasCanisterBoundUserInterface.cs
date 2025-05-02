@@ -3,7 +3,6 @@ using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.IdentityManagement;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI
