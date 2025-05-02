@@ -45,7 +45,7 @@ public abstract class SharedConveyorController : VirtualController
         PhysicsQuery = GetEntityQuery<PhysicsComponent>();
         XformQuery = GetEntityQuery<TransformComponent>();
 
-        UpdatesAfter.Add(typeof(TileFrictionController));
+        UpdatesAfter.Add(typeof(SharedMoverController));
 
         SubscribeLocalEvent<ConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
         SubscribeLocalEvent<ConveyedComponent, MobFrictionBulldozeEvent>(OnMobFrictionBulldoze);
@@ -72,8 +72,9 @@ public abstract class SharedConveyorController : VirtualController
         if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
             return;
 
-        args.friction = 20f;
-        args.minFrictionSpeed = 0f;
+        args.Friction = 20f;
+        args.Acceleration = 20f; // This is so that Ice Crust and such doesn't prevent you from moving on conveyors
+        args.MinFrictionSpeed = 0f;
     }
 
     private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)

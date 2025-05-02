@@ -10,6 +10,7 @@
 [ByRefEvent]
 public record struct MobFrictionBulldozeEvent
 {
-    public float friction;
-    public float minFrictionSpeed;
+    public float Friction;
+    public float Acceleration;
+    public float MinFrictionSpeed;
 }
