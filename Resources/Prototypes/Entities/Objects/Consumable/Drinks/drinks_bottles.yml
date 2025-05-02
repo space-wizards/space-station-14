@@ -216,6 +216,8 @@
     maxFillLevels: 5
     fillBaseName: fill-
 
+# Large Glass Bottles
+
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkAbsintheBottleFull
@@ -314,7 +316,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
   - type: Sealable
-
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
