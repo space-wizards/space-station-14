@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Gavin-TC
-  changes:
-  - message: Changed common utensil sprites to appear smaller and more proportionate.
-    type: Tweak
-  id: 7903
-  time: '2025-02-05T13:08:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34277
 - author: Booblesnoot42
   changes:
   - message: Inserting another person into a cryogenic sleeping unit is no longer
@@ -3922,3 +3915,10 @@
   id: 8404
   time: '2025-05-02T08:18:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36847
+- author: metalgearsloth
+  changes:
+  - message: Predict gas canisters, gas tanks, and internals.
+    type: Tweak
+  id: 8405
+  time: '2025-05-02T08:22:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33800
