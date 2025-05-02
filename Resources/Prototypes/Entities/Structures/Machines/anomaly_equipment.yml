@@ -162,7 +162,6 @@
     access: [[ "Research" ]]
   - type: Emitter
     onState: firing
-    boltType: AnomalousParticleDelta
     underpoweredState: underpowered
     setTypePorts:
       SetParticleDelta: 0
