@@ -1,0 +1,20 @@
+- type: entity
+  id: LockerMiningSpecialistFilled
+  suffix: Filled
+  parent: LockerMiningSpecialist
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitMiningSpecialist
+      - id: ClothingMaskGasExplorer
+      - id: OxygenTankFilled
+      - id: ClothingBeltUtilityFilled
+      - id: SurvivalKnife
+      - id: HandheldGPSBasic
+      - id: RadioHandheld
+      - id: AppraisalTool
+      - id: ClothingOuterHardsuitBasic
+      - id: Flare
+      - id: JetpackMiniFilled
+      - id: Pickaxe
+      - id: Shovel
