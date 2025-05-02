@@ -54,6 +54,12 @@
       "name": "heavylaser"
     },
     {
+        "name": "heavylaser-smg-spread"
+      },
+      {
+        "name": "heavylaser-spread"
+      },
+    {
       "name": "heavylaser_flash"
     }
   ]

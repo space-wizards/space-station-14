@@ -812,11 +812,27 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletLaserSpread
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: heavylaser
       fireCost: 150
     - proto: BulletLaserSpreadNarrow
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: heavylaser-spread
       fireCost: 200
     - proto: BulletDisablerSmgSpread
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: heavylaser-smg-spread
       fireCost: 120
+  - type: ActivatableUI
+    inHandsOnly: true
+    key: enum.BatteryWeaponFireModesUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.BatteryWeaponFireModesUiKey.Key:
+        type: BatteryWeaponFireModesBoundUserInterface
   - type: Item
     size: Large
     shape:
