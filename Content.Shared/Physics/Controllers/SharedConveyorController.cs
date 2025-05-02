@@ -48,6 +48,7 @@ public abstract class SharedConveyorController : VirtualController
         UpdatesAfter.Add(typeof(TileFrictionController));
 
         SubscribeLocalEvent<ConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
+        SubscribeLocalEvent<ConveyedComponent, MobFrictionBulldozeEvent>(OnMobFrictionBulldoze);
         SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
         SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
 
@@ -59,8 +60,20 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnConveyedFriction(Entity<ConveyedComponent> ent, ref TileFrictionEvent args)
     {
+        if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
+            return;
+
         // Conveyed entities don't get friction, they just get wishdir applied so will inherently slowdown anyway.
         args.Modifier = 0f;
+    }
+
+    private void OnMobFrictionBulldoze(Entity<ConveyedComponent> ent, ref MobFrictionBulldozeEvent args)
+    {
+        if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
+            return;
+
+        args.friction = 20f;
+        args.minFrictionSpeed = 0f;
     }
 
     private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)
@@ -139,6 +152,9 @@ public abstract class SharedConveyorController : VirtualController
             var velocity = physics.LinearVelocity;
             var targetDir = ent.Direction;
 
+            if (physics.BodyStatus != BodyStatus.OnGround)
+                continue;
+
             // If mob is moving with the conveyor then combine the directions.
             var wishDir = _mover.GetWishDir(ent.Entity.Owner);
 
@@ -156,10 +172,15 @@ public abstract class SharedConveyorController : VirtualController
                 // they'll go too slow.
                 if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
                 {
-                    _mover.Friction(0f, frameTime: frameTime, friction: 5f, ref velocity);
+                    var angularVelocity = physics.AngularVelocity;
+
+                    _mover.Friction(0f, frameTime: frameTime, friction: 20f, ref velocity);
+                    _mover.AngularFriction(0f, frameTime: frameTime, friction: 20f, ref angularVelocity);
+
+                    PhysicsSystem.SetAngularVelocity(ent.Entity.Owner, angularVelocity);
                 }
 
-                SharedMoverController.Accelerate(ref velocity, targetDir, 40f, frameTime);
+                SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
             }
             else if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
             {

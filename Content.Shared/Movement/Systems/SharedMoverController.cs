@@ -295,7 +295,15 @@ public abstract partial class SharedMoverController : VirtualController
             friction = Math.Min(friction, accel);
         friction = Math.Max(friction, _minDamping);
         var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
-        Friction(minimumFrictionSpeed, frameTime, friction, ref velocity);
+
+        var finalEv = new MobFrictionBulldozeEvent()
+        {
+            friction = friction,
+            minFrictionSpeed = minimumFrictionSpeed,
+        };
+        RaiseLocalEvent(uid, ref finalEv);
+
+        Friction(finalEv.minFrictionSpeed, frameTime, finalEv.friction, ref velocity);
 
         if (!weightless || touching)
             Accelerate(ref velocity, in wishDir, accel, frameTime);
@@ -415,6 +423,17 @@ public abstract partial class SharedMoverController : VirtualController
         // We re-use it here because Kinematic Controllers can't/shouldn't use the Physics Friction
         velocity *= Math.Clamp(1.0f - frameTime * friction, 0.0f, 1.0f);
 
+    }
+
+    public void AngularFriction(float minimumFrictionSpeed, float frameTime, float friction, ref float angularVelocity)
+    {
+        if (angularVelocity < minimumFrictionSpeed)
+            return;
+
+        // This equation is lifted from the Physics Island solver.
+        // We re-use it here because Kinematic Controllers can't/shouldn't use the Physics Friction
+        // And because I hate conveyors
+        angularVelocity *= Math.Clamp(1.0f - frameTime * friction, 0.0f, 1.0f);
     }
 
     /// <summary>
