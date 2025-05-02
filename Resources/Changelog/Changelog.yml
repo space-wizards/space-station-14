@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: centcomofficer24
-  changes:
-  - message: Added a genderqueer pin!
-    type: Add
-  id: 7908
-  time: '2025-02-06T05:49:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34561
 - author: SG6732
   changes:
   - message: Swapped the stick of butter with 5 u of olive oil in the boiled spaghetti
@@ -3918,3 +3911,11 @@
   id: 8409
   time: '2025-05-02T18:31:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37109
+- author: ScarKy0
+  changes:
+  - message: Added Traumoxadone! A cryochemical used to treat brute damage in living
+      patients as well as corpses.
+    type: Add
+  id: 8410
+  time: '2025-05-02T22:56:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37126
