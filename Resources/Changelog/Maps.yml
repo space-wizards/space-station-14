@@ -74,4 +74,11 @@
   id: 10
   time: '2025-05-01T22:03:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37061
+- author: Southbridge
+  changes:
+  - message: 'New salvage ruin: Atmos Interchange'
+    type: Add
+  id: 11
+  time: '2025-05-02T15:45:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37115
 Order: 1
