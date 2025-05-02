@@ -22,20 +22,20 @@ jobs:
             };
 
             const labels = context.payload.pull_request.labels.map(label => label.name);
-            const assinges = new Set();
+            const assignees = new Set();
 
             for (const label of labels) {
               const tempAssing = labelToAssign[label];
               if (tempAssing) {
-                tempAssing.forEach(a => assinges.add(a));
+                tempAssing.forEach(a => assignees.add(a));
               }
             }
 
-            if (assinges.size > 0) {
+            if (assignees.size > 0) {
               await github.rest.issues.addAssignees({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.payload.pull_request.number,
-                assinges: Array.from(assinges),
+                assignees: Array.from(assignees),
               });
             }
