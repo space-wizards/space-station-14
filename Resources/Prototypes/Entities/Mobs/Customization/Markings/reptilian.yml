@@ -15,7 +15,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_frills.rsi
     state: frills_aquatic
 
 - type: marking
@@ -24,7 +24,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_frills.rsi
     state: frills_short
 
 - type: marking
@@ -33,7 +33,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_frills.rsi
     state: frills_simple
 
 - type: marking
@@ -42,7 +42,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_frills.rsi
     state: frills_divinity
 
 - type: marking
@@ -51,7 +51,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_frills.rsi
     state: frills_big
 
 - type: marking
@@ -60,7 +60,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_frills.rsi
     state: frills_axolotl
 
 - type: marking
@@ -69,9 +69,9 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_frills.rsi
     state: frills_hood_primary
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_frills.rsi
     state: frills_hood_secondary
 
 - type: marking
@@ -80,7 +80,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_frills.rsi
     state: frills_neckfull
 
 - type: marking
@@ -89,7 +89,7 @@
   markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_horns.rsi
     state: horns_floppy_kobold_ears
 
 # HeadTop
@@ -99,7 +99,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_horns.rsi
     state: horns_angler
 
 - type: marking
@@ -108,7 +108,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_horns.rsi
     state: horns_curled
 
 - type: marking
@@ -117,7 +117,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_horns.rsi
     state: horns_ram
 
 - type: marking
@@ -126,7 +126,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_horns.rsi
     state: horns_short
 
 - type: marking
@@ -135,7 +135,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_horns.rsi
     state: horns_simple
 
 - type: marking
@@ -144,7 +144,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_horns.rsi
     state: horns_double
 
 - type: marking
@@ -153,7 +153,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_horns.rsi
     state: horns_argali
 
 - type: marking
@@ -162,7 +162,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_horns.rsi
     state: horns_ayrshire
 
 - type: marking
@@ -171,7 +171,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_horns.rsi
     state: horns_myrsore
 
 - type: marking
@@ -180,7 +180,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_horns.rsi
     state: horns_bighorn
 
 - type: marking
@@ -189,7 +189,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_horns.rsi
     state: horns_demonic
 
 - type: marking
@@ -198,7 +198,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_horns.rsi
     state: horns_kobold_ears
 
 # Snout
@@ -314,9 +314,9 @@
   markingCategory: Tail
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_smooth_primary
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_smooth_secondary
 
 - type: marking
@@ -325,7 +325,7 @@
   markingCategory: Tail
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_large
 
 - type: marking
@@ -334,7 +334,7 @@
   markingCategory: Tail
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_spikes
 
 - type: marking
@@ -343,7 +343,7 @@
   markingCategory: Tail
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_ltiger
 
 - type: marking
@@ -352,7 +352,7 @@
   markingCategory: Tail
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_dtiger
 
 - type: marking
@@ -361,7 +361,7 @@
   markingCategory: Tail
   speciesRestriction: [Reptilian]
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_aquatic
 
 # Tail Animation
@@ -371,9 +371,9 @@
   markingCategory: Tail
   speciesRestriction: []
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_smooth_wagging_primary
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_smooth_wagging_secondary
 
 - type: marking
@@ -382,7 +382,7 @@
   markingCategory: Tail
   speciesRestriction: []
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_spikes_wagging
 
 - type: marking
@@ -391,7 +391,7 @@
   markingCategory: Tail
   speciesRestriction: []
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_ltiger_wagging
 
 - type: marking
@@ -400,7 +400,7 @@
   markingCategory: Tail
   speciesRestriction: []
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_dtiger_wagging
 
 - type: marking
@@ -409,5 +409,5 @@
   markingCategory: Tail
   speciesRestriction: []
   sprites:
-  - sprite: Mobs/Customization/Reptilian/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_aquatic_wagging
