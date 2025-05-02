@@ -50,6 +50,9 @@ spellbook-slip-desc = Learn the ancient ways of the Janitor and curse your targe
 spellbook-item-recall-name = Item Recall
 spellbook-item-recall-description = Mark a held item and summon it back at any time with just a snap of your fingers!
 
+spellbook-ice-shard-name = Ice Shard
+spellbook-ice-shard-desc = Pierce the crew with shards of ice using this spell! Make them freeze in fear and with frostbite! Upgradeable!
+
 # Equipment
 
 spellbook-wand-polymorph-door-name = Wand of Entrance
@@ -87,3 +90,6 @@ spellbook-upgrade-fireball-description = Upgrades Fireball to a maximum of level
 
 spellbook-upgrade-jaunt-name = Upgrade Ethereal Jaunt
 spellbook-upgrade-jaunt-description = Upgrades Jaunt to a maximum of level 3!
+
+spellbook-upgrade-ice-shard-name = Upgrade Ice Shard
+spellbook-upgrade-ice-shard-description = Upgrades Ice Shard to a maximum of level 3!
