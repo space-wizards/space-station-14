@@ -13,7 +13,7 @@ jobs:
         with:
           script: |
             const labelToReviewer = {
-              "Changes: Sprites": ["spriteReviewer"],
+              "Changes: Sprites": ["BORTBORTBORTBORTBORT"],
               "Changes: Map": ["PubliclyExecutedPig"],
               "Changes: UI": ["ss14-Starlight"],
               "Changes: Shaders": ["ss14-Starlight"],
