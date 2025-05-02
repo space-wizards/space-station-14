@@ -758,11 +758,12 @@
   color: "#ba7d7d"
   metabolisms:
     Medicine:
+      metabolismRate: 0.2 # makes it viable for pre-combat rather than a burst post-combat
       effects:
       # Medium-large quantities can hurt you instead,
-      # but still technically stop your bleeding.
+      # but still stop your bleeding.
       - !type:ModifyBleedAmount
-        amount: -1.5
+        amount: -0.6
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -1206,7 +1207,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 12
-          
+
 - type: reagent
   id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
   name: reagent-name-opporozidone
