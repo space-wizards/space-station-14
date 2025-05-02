@@ -85,7 +85,7 @@ public sealed class FailAndStartPresetTest
         Assert.That(ticker.PlayerGameStatuses[client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
 
         // Try to start nukeops without readying up
-        await pair.WaitCommand("setgamepreset TestPresetTenPlayers");
+        await pair.WaitCommand("setgamepreset TestPresetTenPlayers 9999");
         await pair.WaitCommand("startround");
         await pair.RunTicksSync(10);
 
@@ -99,7 +99,7 @@ public sealed class FailAndStartPresetTest
         // Ready up and start nukeops
         await pair.WaitClientCommand("toggleready True");
         Assert.That(ticker.PlayerGameStatuses[client.User!.Value], Is.EqualTo(PlayerGameStatus.ReadyToPlay));
-        await pair.WaitCommand("setgamepreset TestPreset");
+        await pair.WaitCommand("setgamepreset TestPreset 9999");
         await pair.WaitCommand("startround");
         await pair.RunTicksSync(10);
 

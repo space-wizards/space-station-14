@@ -459,4 +459,13 @@ public enum LogType
     /// A player was selected or assigned antag status
     /// </summary>
     AntagSelection = 99,
+
+    /// <summary>
+    /// Logs related to botany, such as planting and harvesting crops
+    /// </summary>
+    Botany = 100,
+    /// <summary>
+    /// Artifact node got activated.
+    /// </summary>
+    ArtifactNode = 101
 }
