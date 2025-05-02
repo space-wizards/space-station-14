@@ -770,7 +770,7 @@
           min: 15
         damage:
           types:
-            Bloodloss: 3
+            Bloodloss: 1.5
 
 - type: reagent
   id: Tricordrazine
