@@ -179,6 +179,9 @@ public abstract partial class SharedStunSystem
         // That way if we fail to stand, the game will try to stand for us when we are able to
         ent.Comp.AutoStand = true;
 
+        if (!_blocker.CanMove(ent))
+            return;
+
         if (!TryComp<StaminaComponent>(ent, out var stamina))
             return;
 
