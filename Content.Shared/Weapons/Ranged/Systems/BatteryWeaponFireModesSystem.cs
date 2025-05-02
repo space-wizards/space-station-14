@@ -1,8 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Access.Systems;
-using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Prototypes;
@@ -21,7 +20,6 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BatteryWeaponFireModesComponent, GetVerbsEvent<Verb>>(OnGetVerb);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, BatteryWeaponFireModeChangeMessage>(OnModeSet);
     }
@@ -49,39 +47,12 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         return component.FireModes[component.CurrentFireMode];
     }
 
-    private void OnGetVerb(EntityUid uid, BatteryWeaponFireModesComponent component, GetVerbsEvent<Verb> args)
+    public bool TrySetFireMode(Entity<BatteryWeaponFireModesComponent?> ent, int index, EntityUid? user = null)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
-            return;
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
 
-        if (component.FireModes.Count < 2)
-            return;
-
-        if (!_accessReaderSystem.IsAllowed(args.User, uid))
-            return;
-
-        for (var i = 0; i < component.FireModes.Count; i++)
-        {
-            var fireMode = component.FireModes[i];
-            var entProto = _prototypeManager.Index<EntityPrototype>(fireMode.Prototype);
-            var index = i;
-
-            var v = new Verb
-            {
-                Priority = 1,
-                Category = VerbCategory.SelectType,
-                Text = entProto.Name,
-                Disabled = i == component.CurrentFireMode,
-                Impact = LogImpact.Medium,
-                DoContactInteraction = true,
-                Act = () =>
-                {
-                    TrySetFireMode(uid, component, index, args.User);
-                }
-            };
-
-            args.Verbs.Add(v);
-        }
+        return TrySetFireMode(ent, ent.Comp, index, user);
     }
 
     public bool TrySetFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, int index, EntityUid? user = null)
@@ -128,6 +99,26 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
             var updateClientAmmoEvent = new UpdateClientAmmoEvent();
             RaiseLocalEvent(uid, ref updateClientAmmoEvent);
         }
+    }
+
+    public bool TryGetFireMode(Entity<BatteryWeaponFireModesComponent?> ent, [NotNullWhen(true)] out BatteryWeaponFireMode? fireMode)
+    {
+        fireMode = null;
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        var fireModeIndex = ent.Comp.CurrentFireMode;
+        if (fireModeIndex < 0 || fireModeIndex >= ent.Comp.FireModes.Count)
+        {
+            Log.Warning(
+                $"Current fire mode is in unexpected state - current index is '{fireModeIndex}' "
+                + $"while fireModes contain '{ent.Comp.FireModes.Count}' elements."
+            );
+            return false;
+        }
+
+        fireMode = ent.Comp.FireModes[fireModeIndex];
+        return true;
     }
 }
 

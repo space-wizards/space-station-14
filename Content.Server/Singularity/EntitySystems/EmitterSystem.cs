@@ -15,8 +15,8 @@ using Content.Shared.Power;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -38,6 +38,7 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly ProjectileSystem _projectile = default!;
         [Dependency] private readonly GunSystem _gun = default!;
+        [Dependency] private readonly BatteryWeaponFireModesSystem _fireMode= default!;
 
         public override void Initialize()
         {
@@ -46,7 +47,6 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<EmitterComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
             SubscribeLocalEvent<EmitterComponent, PowerChangedEvent>(OnApcChanged);
             SubscribeLocalEvent<EmitterComponent, ActivateInWorldEvent>(OnActivate);
-            SubscribeLocalEvent<EmitterComponent, GetVerbsEvent<Verb>>(OnGetVerb);
             SubscribeLocalEvent<EmitterComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<EmitterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
             SubscribeLocalEvent<EmitterComponent, SignalReceivedEvent>(OnSignalReceived);
@@ -99,44 +99,12 @@ namespace Content.Server.Singularity.EntitySystems
             }
         }
 
-        private void OnGetVerb(EntityUid uid, EmitterComponent component, GetVerbsEvent<Verb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
-                return;
-
-            if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked)
-                return;
-
-            if (component.SelectableTypes.Count < 2)
-                return;
-
-            foreach (var type in component.SelectableTypes)
-            {
-                var proto = _prototype.Index<EntityPrototype>(type);
-
-                var v = new Verb
-                {
-                    Priority = 1,
-                    Category = VerbCategory.SelectType,
-                    Text = proto.Name,
-                    Disabled = type == component.BoltType,
-                    Impact = LogImpact.Medium,
-                    DoContactInteraction = true,
-                    Act = () =>
-                    {
-                        component.BoltType = type;
-                        _popup.PopupEntity(Loc.GetString("emitter-component-type-set", ("type", proto.Name)), uid);
-                    }
-                };
-                args.Verbs.Add(v);
-            }
-        }
-
         private void OnExamined(EntityUid uid, EmitterComponent component, ExaminedEvent args)
         {
-            if (component.SelectableTypes.Count < 2)
+            if(!_fireMode.TryGetFireMode((uid, null), out var fireMode ))
                 return;
-            var proto = _prototype.Index<EntityPrototype>(component.BoltType);
+
+            var proto = _prototype.Index<EntityPrototype>(fireMode.Prototype);
             args.PushMarkup(Loc.GetString("emitter-component-current-type", ("type", proto.Name)));
         }
 
@@ -190,12 +158,15 @@ namespace Content.Server.Singularity.EntitySystems
 
         public void SwitchOn(EntityUid uid, EmitterComponent component)
         {
+            if (!_fireMode.TryGetFireMode((uid, null), out var fireMode))
+                return;
+
             component.IsOn = true;
             if (TryComp<PowerConsumerComponent>(uid, out var powerConsumer))
-                powerConsumer.DrawRate = component.PowerUseActive;
+                powerConsumer.DrawRate = fireMode.FireCost;
             if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
             {
-                apcReceiver.Load = component.PowerUseActive;
+                apcReceiver.Load = fireMode.FireCost;
                 if (apcReceiver.Powered)
                     PowerOn(uid, component);
             }
@@ -273,8 +244,11 @@ namespace Content.Server.Singularity.EntitySystems
             if (!TryComp<GunComponent>(uid, out var gunComponent))
                 return;
 
+            if(!_fireMode.TryGetFireMode((uid, null), out var fireMode))
+                return;
+
             var xform = Transform(uid);
-            var ent = Spawn(component.BoltType, xform.Coordinates);
+            var ent = Spawn(fireMode.Prototype, xform.Coordinates);
             var proj = EnsureComp<ProjectileComponent>(ent);
             _projectile.SetShooter(ent, proj, uid);
 
@@ -326,9 +300,9 @@ namespace Content.Server.Singularity.EntitySystems
                     SwitchOn(uid, component);
                 }
             }
-            else if (component.SetTypePorts.TryGetValue(args.Port, out var boltType))
+            else if (component.SetTypePorts.TryGetValue(args.Port, out var index))
             {
-                component.BoltType = boltType;
+                _fireMode.TrySetFireMode((uid, null), index);
             }
         }
     }

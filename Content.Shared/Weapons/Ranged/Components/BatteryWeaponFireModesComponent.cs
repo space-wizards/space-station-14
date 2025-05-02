@@ -18,7 +18,6 @@ public sealed partial class BatteryWeaponFireModesComponent : Component
     /// A list of the different firing modes the weapon can switch between
     /// </summary>
     [DataField(required: true)]
-    [AutoNetworkedField]
     public List<BatteryWeaponFireMode> FireModes = new();
 
     /// <summary>
