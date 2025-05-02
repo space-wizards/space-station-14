@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Farrellka
-  changes:
-  - message: Removed the old long ears for human!
-    type: Remove
-  - message: Added more long (elf) ears for human!
-    type: Add
-  id: 7906
-  time: '2025-02-05T16:49:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33572
 - author: keronshb
   changes:
   - message: Disabler - decreased fire cost, increased projectile speed.
@@ -3921,3 +3912,10 @@
   id: 8407
   time: '2025-05-02T16:14:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37121
+- author: Errant
+  changes:
+  - message: Vox now only drop their organs when gibbed, not all of their bodyparts.
+    type: Fix
+  id: 8408
+  time: '2025-05-02T17:12:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37111
