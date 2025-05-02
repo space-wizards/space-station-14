@@ -192,7 +192,7 @@ binds:
   key: Y
 - function: BugReportMenu
   type: State
-  key: F12
+  key: O
 - function: TextCursorSelect
   # TextCursorSelect HAS to be above ExamineEntity
   # So that LineEdit receives it correctly.
