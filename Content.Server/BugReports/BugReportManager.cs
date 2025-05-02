@@ -46,9 +46,12 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
 
     private void ReceivedPlayerBugReport(BugReportMessage message)
     {
+        if (!_cfg.GetCVar(CCVars.EnablePlayerBugReports))
+            return;
+
         var netId = message.MsgChannel.UserId;
 
-        if (!CheckIfValid(message, netId))
+        if (!IsBugReportValid(message, netId) || !PlayerCanSendReport(message, netId))
             return;
 
         _bugReportsPerPlayerThisRound[netId] = (_bugReportsPerPlayerThisRound.GetValueOrDefault(netId).Item1 + 1, DateTime.UtcNow);
@@ -70,35 +73,11 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
     }
 
     /// <summary>
-    ///     Checks that the given report is valid. Includes various checks on the report and the player.
+    ///     Checks that the given report is valid (E.g. not too long etc...).
     /// </summary>
-    /// <returns>True if the report is valid, false there is an issue with the report or the user sending it.</returns>
-    private bool CheckIfValid(BugReportMessage message, NetUserId netId)
+    /// <returns>True if the report is valid, false there is an issue with the report.</returns>
+    private bool IsBugReportValid(BugReportMessage message, NetUserId netId)
     {
-        var session = _player.GetSessionById(netId);
-        var playtime = _playTime.GetOverallPlaytime(session);
-        var playerInfo = _bugReportsPerPlayerThisRound.GetValueOrDefault(netId);
-        var timeSinceLastReport = DateTime.UtcNow - playerInfo.Item2;
-        var timeBetweenBugReports = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.MinimumTimeBetweenBugReports));
-
-        if (!_cfg.GetCVar(CCVars.EnablePlayerBugReports))
-            return false;
-
-        if (TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MinimumPlaytimeBugReports)) > playtime)
-            return false;
-
-        if (playerInfo.Item1 >= _cfg.GetCVar(CCVars.MaximumBugReportsPerRound))
-        {
-            _sawmill.Warning($"{message.MsgChannel.UserName}, {netId}: has tried to submit more than {_cfg.GetCVar(CCVars.MaximumBugReportsPerRound)} bug reports this round.");
-            return false;
-        }
-
-        if (timeSinceLastReport <= timeBetweenBugReports)
-        {
-            _sawmill.Warning($"{message.MsgChannel.UserName}, {netId}: has tried to submit a bug report. Last bug report was {timeSinceLastReport.TotalMinutes:F2} minutes ago. The limit is {timeBetweenBugReports} minutes.");
-            return false;
-        }
-
         var titleMaxLen = _cfg.GetCVar(CCVars.MaximumBugReportTitleLength);
         var titleMinLen = _cfg.GetCVar(CCVars.MinimumBugReportTitleLength);
         var descriptionMaxLen = _cfg.GetCVar(CCVars.MaximumBugReportDescriptionLength);
@@ -117,6 +96,36 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
         if (descriptionLen < descriptionMinLen || descriptionLen > descriptionMaxLen)
         {
             _sawmill.Warning($"{message.MsgChannel.UserName}, {netId}: has tried to submit a bug report with a description of {descriptionLen} characters, min/max: {descriptionMinLen}/{descriptionMaxLen}.");
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Checks that the player sending the report is allowed to (E.g. not spamming etc...).
+    /// </summary>
+    /// <returns>True if the player can submit a report, false if they can't.</returns>
+    private bool PlayerCanSendReport(BugReportMessage message, NetUserId netId)
+    {
+        var session = _player.GetSessionById(netId);
+        var playtime = _playTime.GetOverallPlaytime(session);
+        var playerInfo = _bugReportsPerPlayerThisRound.GetValueOrDefault(netId);
+        var timeSinceLastReport = DateTime.UtcNow - playerInfo.Item2;
+        var timeBetweenBugReports = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.MinimumTimeBetweenBugReports));
+
+        if (TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MinimumPlaytimeBugReports)) > playtime)
+            return false;
+
+        if (playerInfo.Item1 >= _cfg.GetCVar(CCVars.MaximumBugReportsPerRound))
+        {
+            _sawmill.Warning($"{message.MsgChannel.UserName}, {netId}: has tried to submit more than {_cfg.GetCVar(CCVars.MaximumBugReportsPerRound)} bug reports this round.");
+            return false;
+        }
+
+        if (timeSinceLastReport <= timeBetweenBugReports)
+        {
+            _sawmill.Warning($"{message.MsgChannel.UserName}, {netId}: has tried to submit a bug report. Last bug report was {timeSinceLastReport.TotalMinutes:F2} minutes ago. The limit is {timeBetweenBugReports} minutes.");
             return false;
         }
 
