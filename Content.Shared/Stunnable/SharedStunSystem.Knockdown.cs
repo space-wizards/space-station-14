@@ -2,7 +2,7 @@
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
@@ -16,6 +16,7 @@ using Content.Shared.Standing;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Stunnable;
 
@@ -24,10 +25,9 @@ namespace Content.Shared.Stunnable;
 /// </summary>
 public abstract partial class SharedStunSystem
 {
-
-    [Dependency] private readonly StaminaSystem _stamina = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public void InitializeKnockdown()
     {
@@ -200,6 +200,8 @@ public abstract partial class SharedStunSystem
             RemComp<KnockedDownComponent>(ent);
 
         _popup.PopupClient(Loc.GetString("knockdown-component-pushup-success"), ent);
+
+        _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(ent):user} has force stood up from knockdown.");
     }
 
     #endregion
@@ -233,6 +235,8 @@ public abstract partial class SharedStunSystem
         }
 
         RemComp<KnockedDownComponent>(entity);
+
+        _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} has stood up from knockdown.");
     }
 
     #endregion
