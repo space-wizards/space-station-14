@@ -155,7 +155,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
-        AfterInsert(uid, component, args.Args.Target.Value, args.Args.User, doInsert: true);
+        DoInsertDisposalUnit(uid, args.Args.Target.Value, args.Args.User, component, doContainerInsert: true, doAfterInsert: true);
 
         args.Handled = true;
     }
@@ -461,31 +461,31 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     public void DoInsertDisposalUnit(EntityUid uid,
         EntityUid toInsert,
-        EntityUid user,
-        DisposalUnitComponent? disposal = null)
+        EntityUid? user,
+        DisposalUnitComponent? disposal = null,
+        bool doContainerInsert = false,
+        bool doAfterInsert = false)
     {
         if (!Resolve(uid, ref disposal))
             return;
 
-        if (!Containers.Insert(toInsert, disposal.Container))
+        if (doContainerInsert && !Containers.Insert(toInsert, disposal.Container))
             return;
 
         _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
-        AfterInsert(uid, disposal, toInsert, user);
+
+        if (doAfterInsert)
+        {
+            AfterInsert(uid, disposal, toInsert, user);
+        }
     }
 
     public virtual void AfterInsert(EntityUid uid,
         DisposalUnitComponent component,
         EntityUid inserted,
-        EntityUid? user = null,
-        bool doInsert = false)
+        EntityUid? user = null)
     {
         Audio.PlayPredicted(component.InsertSound, uid, user: user);
-        if (doInsert && !Containers.Insert(inserted, component.Container))
-            return;
-
-        if (user != inserted && user != null)
-            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user.Value):player} inserted {ToPrettyString(inserted)} into {ToPrettyString(uid)}");
 
         QueueAutomaticEngage(uid, component);
 
@@ -519,7 +519,8 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         if (delay <= 0 || userId == null)
         {
-            AfterInsert(unitId, unit, toInsertId, userId, doInsert: true);
+            DoInsertDisposalUnit(unitId, toInsertId, userId, unit, doContainerInsert: true, doAfterInsert: true);
+            AfterInsert(unitId, unit, toInsertId, userId);
             return true;
         }
 
