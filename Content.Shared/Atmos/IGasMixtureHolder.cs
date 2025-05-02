@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Atmos;
+namespace Content.Shared.Atmos;
 
 public interface IGasMixtureHolder
 {

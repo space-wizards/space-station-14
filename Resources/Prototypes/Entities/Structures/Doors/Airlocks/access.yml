@@ -30,6 +30,15 @@
 
 - type: entity
   parent: AirlockServiceLocked
+  id: AirlockServiceTheatreLocked
+  suffix: Service, Theatre, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsServiceTheatre ]
+
+- type: entity
+  parent: AirlockServiceLocked
   id: AirlockChapelLocked
   suffix: Chapel, Locked
   components:
@@ -469,6 +478,15 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsTheatre ]
+
+- type: entity
+  parent: AirlockServiceGlassLocked
+  id: AirlockServiceTheatreGlassLocked
+  suffix: Service, Theatre, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsServiceTheatre ]
 
 - type: entity
   parent: AirlockServiceGlassLocked
@@ -987,6 +1005,15 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsTheatre ]
+
+- type: entity
+  parent: AirlockMaintServiceLocked
+  id: AirlockMaintServiceTheatreLocked
+  suffix: Service, Theatre, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsServiceTheatre ]
 
 - type: entity
   parent: AirlockMaintServiceLocked
