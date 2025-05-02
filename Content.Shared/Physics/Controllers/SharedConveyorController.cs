@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using Content.Shared.Conveyor;
+using Content.Shared.Friction;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
@@ -44,7 +45,7 @@ public abstract class SharedConveyorController : VirtualController
         PhysicsQuery = GetEntityQuery<PhysicsComponent>();
         XformQuery = GetEntityQuery<TransformComponent>();
 
-        UpdatesAfter.Add(typeof(SharedMoverController));
+        UpdatesAfter.Add(typeof(TileFrictionController));
 
         SubscribeLocalEvent<ConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
         SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
@@ -158,7 +159,7 @@ public abstract class SharedConveyorController : VirtualController
                     _mover.Friction(0f, frameTime: frameTime, friction: 5f, ref velocity);
                 }
 
-                SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
+                SharedMoverController.Accelerate(ref velocity, targetDir, 40f, frameTime);
             }
             else if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
             {
