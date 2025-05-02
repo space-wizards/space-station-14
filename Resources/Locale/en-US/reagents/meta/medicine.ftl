@@ -149,7 +149,7 @@ reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
 
 reagent-name-h-32 = H-32
-reagent-desc-h-32 = A reagent developed in the field with increased radiation.
+reagent-desc-h-32 = A cryogenics chemical. A reagent developed in the field with increased radiation.
 
 reagent-name-celliminol = celliminol
 reagent-desc-celliminol = A cryogenics chemical. A powerful chemical developed by NanoTrasen.
