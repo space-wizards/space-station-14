@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Numerics;
-using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Decals;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -19,6 +18,7 @@ public sealed class TileSystem : EntitySystem
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly SharedDecalSystem _decal = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSys = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
 
     /// <summary>
@@ -157,7 +157,7 @@ public sealed class TileSystem : EntitySystem
         Transform(tileItem).LocalRotation = _robustRandom.NextDouble() * Math.Tau;
 
         // Destroy any decals on the tile
-        var decals = _decal.GetDecalsInRange(gridUid, coordinates.SnapToGrid(EntityManager, _mapManager).Position, 0.5f);
+        var decals = _decal.GetDecalsInRange(gridUid, _xformSys.SnapToGrid(coordinates).Position, 0.5f);
         foreach (var (id, _) in decals)
         {
             _decal.RemoveDecal(tileRef.GridUid, id);

@@ -6,7 +6,6 @@ using Content.Shared.Nutrition;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Buckle;
-using Content.Shared.Coordinates;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.EntitySystems;

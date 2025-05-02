@@ -1,7 +1,5 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Spreader;
-using Content.Shared.Audio;
-using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
@@ -79,7 +77,7 @@ public sealed partial class AreaReactionEffect : EntityEffect
                 return;
 
             var coords = mapSys.MapToGrid(gridUid, mapCoords);
-            var ent = reagentArgs.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
+            var ent = reagentArgs.EntityManager.SpawnEntity(_prototypeId, sys.SnapToGrid(coords));
 
             var smoke = reagentArgs.EntityManager.System<SmokeSystem>();
             smoke.StartSmoke(ent, splitSolution, _duration, spreadAmount);

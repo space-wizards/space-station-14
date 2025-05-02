@@ -6,7 +6,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
-using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
