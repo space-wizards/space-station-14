@@ -1,11 +1,16 @@
-﻿using Content.Shared.Bed.Sleep;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Standing;
 using Robust.Shared.Input.Binding;
@@ -19,7 +24,11 @@ namespace Content.Shared.Stunnable;
 /// </summary>
 public abstract partial class SharedStunSystem
 {
-    /// <inheritdoc/>
+
+    [Dependency] private readonly StaminaSystem _stamina = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+
     public void InitializeKnockdown()
     {
         SubscribeLocalEvent<KnockedDownComponent, RejuvenateEvent>(OnRejuvenate);
@@ -42,9 +51,11 @@ public abstract partial class SharedStunSystem
         SubscribeLocalEvent<KnockedDownComponent, DidEquipHandEvent>(OnHandEquipped);
         SubscribeLocalEvent<KnockedDownComponent, DidUnequipHandEvent>(OnHandUnequipped);
 
+        // Stuff
+        SubscribeAllEvent<ForceStandUpEvent>(OnForceStandup);
+
         // DoAfter event subscriptions
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
-        SubscribeLocalEvent<KnockedDownComponent, KnockedDownEvent>(OnSubsequentKnockdown);
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.ToggleKnockdown, InputCmdHandler.FromDelegate(HandleToggleKnockdown, handle: false))
@@ -80,22 +91,6 @@ public abstract partial class SharedStunSystem
 
     #endregion
 
-    #region Action Blockers
-
-    private void OnStandAttempt(Entity<KnockedDownComponent> ent, ref StandAttemptEvent args)
-    {
-        if (ent.Comp.LifeStage <= ComponentLifeStage.Running)
-            args.Cancel();
-    }
-
-    private void OnBuckleAttempt(Entity<KnockedDownComponent> ent, ref BuckleAttemptEvent args)
-    {
-        if (args.User == ent && ent.Comp.NextUpdate > _gameTiming.CurTime)
-            args.Cancelled = true;
-    }
-
-    #endregion
-
     #region Knockdown Logic
 
     private void HandleToggleKnockdown(ICommonSession? session)
@@ -107,7 +102,7 @@ public abstract partial class SharedStunSystem
             return;
 
         if (!TryComp<KnockedDownComponent>(playerEnt, out var component))
-            TryKnockdown(playerEnt, TimeSpan.FromSeconds(0.5), false, false);
+            TryKnockdown(playerEnt, TimeSpan.FromSeconds(0.5), false, false); // TODO: Unhardcode these numbers
         else
             component.AutoStand = TryStanding(playerEnt, out component.DoAfter); // Have a better way of doing this
     }
@@ -120,7 +115,7 @@ public abstract partial class SharedStunSystem
             return true;
 
         if (!_blocker.CanMove(ent))
-            return false; // We should also remove from update until we can move again.
+            return false;
 
         if (ent.Comp.NextUpdate >= _gameTiming.CurTime)
             return false;
@@ -169,6 +164,60 @@ public abstract partial class SharedStunSystem
         args.Handled = true;
     }
 
+    private void OnForceStandup(ForceStandUpEvent msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is not {} user)
+            return;
+
+        if (TryComp<KnockedDownComponent>(user, out var component))
+            ForceStandUp((user, component));
+    }
+
+    public void ForceStandUp(Entity<KnockedDownComponent> ent)
+    {
+        // That way if we fail to stand, the game will try to stand for us when we are able to
+        ent.Comp.AutoStand = true;
+
+        if (!TryComp<StaminaComponent>(ent, out var stamina))
+            return;
+
+        var staminaDamage = stamina.ForceStandStamina;
+
+        if (!_hands.TryCountEmptyHands(ent, out var hands) || hands <= 0)
+            return;
+
+        staminaDamage /= (float)hands; // TODO: Unhardcode this and make it part of an event
+
+        // TODO: Raise an event to modify the stamina damage?
+
+        if (_stamina.GetStaminaDamage(ent) + staminaDamage >= stamina.CritThreshold)
+        {
+            _popup.PopupClient(Loc.GetString("knockdown-component-pushup-failure"), ent);
+            return;
+        }
+
+        if (_stamina.TryTakeStamina(ent, staminaDamage, stamina))
+            RemComp<KnockedDownComponent>(ent);
+
+        _popup.PopupClient(Loc.GetString("knockdown-component-pushup-success"), ent);
+    }
+
+    #endregion
+
+    #region Action Blockers
+
+    private void OnStandAttempt(Entity<KnockedDownComponent> ent, ref StandAttemptEvent args)
+    {
+        if (ent.Comp.LifeStage <= ComponentLifeStage.Running)
+            args.Cancel();
+    }
+
+    private void OnBuckleAttempt(Entity<KnockedDownComponent> ent, ref BuckleAttemptEvent args)
+    {
+        if (args.User == ent && ent.Comp.NextUpdate > _gameTiming.CurTime)
+            args.Cancelled = true;
+    }
+
     #endregion
 
     #region DoAfter
@@ -177,19 +226,13 @@ public abstract partial class SharedStunSystem
     {
         entity.Comp.DoAfter = null;
 
-        if (args.Cancelled || !HasComp<KnockedDownComponent>(entity))
-            return;
+        if (args.Cancelled)
+        {
+            if (entity.Comp.AutoStand)
+                entity.Comp.NextUpdate = _gameTiming.CurTime + TimeSpan.FromSeconds(0.5f); // TODO: Unhardcode this
+        }
 
         RemComp<KnockedDownComponent>(entity);
-    }
-
-    private void OnSubsequentKnockdown(Entity<KnockedDownComponent> ent, ref KnockedDownEvent args)
-    {
-        if (!ent.Comp.DoAfter.HasValue)
-            return;
-
-        _doAfter.Cancel(ent.Comp.DoAfter.Value);
-        ent.Comp.DoAfter = null;
     }
 
     #endregion
@@ -286,6 +329,8 @@ public abstract partial class SharedStunSystem
     [ByRefEvent, Serializable, NetSerializable]
     public sealed partial class TryStandDoAfterEvent : SimpleDoAfterEvent;
 
+    [Serializable, NetSerializable]
+    public sealed class ForceStandUpEvent : EntityEventArgs;
 
     #endregion
 }

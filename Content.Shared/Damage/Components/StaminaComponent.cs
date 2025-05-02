@@ -83,6 +83,12 @@ public sealed partial class StaminaComponent : Component
     public float AfterCritDecayMultiplier = 5f;
 
     /// <summary>
+    /// This is how much stamina damage a mob takes when it forces itself to stand up
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float ForceStandStamina = 10f;
+
+    /// <summary>
     /// Thresholds that determine an entity's slowdown as a function of stamina damage.
     /// </summary>
     [DataField]

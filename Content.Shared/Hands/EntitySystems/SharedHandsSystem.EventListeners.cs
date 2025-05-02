@@ -32,6 +32,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!HasComp<KnockedDownComponent>(ent) || !TryCountEmptyHands(ent, out var hands) && !hands.HasValue)
             return;
 
+        // TODO: Instead of this being based on hands, it should be based on the bulk of the items we're holding
         args.SpeedModifier *= (float)(hands.Value + 1)/(ent.Comp.Count + 1); // TODO: Unhardcode this calculation a little bit
     }
 }
