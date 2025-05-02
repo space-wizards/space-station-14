@@ -890,13 +890,26 @@
     fireModes:
     - proto: BoltTempgunCold
       fireCost: 100
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: omnilaser
     - proto: BoltTempgunHot
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: heavylaser
       fireCost: 100
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
   - type: StaticPrice
     price: 100
+  - type: ActivatableUI
+    singleUser: true
+    key: enum.BatteryWeaponFireModesUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.BatteryWeaponFireModesUiKey.Key:
+        type: BatteryWeaponFireModesBoundUserInterface
 
 - type: entity
   name: xenoborg laser gun
