@@ -1,6 +1,6 @@
 - type: entity
   parent: [BaseMob, StripableInventoryBase]
-  id: XenoborgBaseChassi
+  id: XenoborgsBaseChassi
   name: xenoborg
   description: A man-machine hybrid that aims to replicate itself. They love gibbing people and placing their brains into empty xenoborgs over and over.
   save: false
@@ -317,7 +317,7 @@
 
 # the xenoborg types
 - type: entity
-  parent: [ XenoborgBaseChassi, XenoborgTransponder ]
+  parent: [ XenoborgsBaseChassi, XenoborgTransponder ]
   id: XenoborgEngi
   name: engi xenoborg
   suffix: with brain
@@ -370,7 +370,7 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ XenoborgBaseChassi, XenoborgTransponder ]
+  parent: [ XenoborgsBaseChassi, XenoborgTransponder ]
   id: XenoborgHeavy
   name: heavy xenoborg
   suffix: with brain
@@ -454,7 +454,7 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ XenoborgBaseChassi, XenoborgTransponder ]
+  parent: [ XenoborgsBaseChassi, XenoborgTransponder ]
   id: XenoborgScout
   name: scout xenoborg
   suffix: with brain
@@ -506,7 +506,7 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ XenoborgBaseChassi, XenoborgTransponder ]
+  parent: [ XenoborgsBaseChassi, XenoborgTransponder ]
   id: XenoborgStealth
   name: stealth xenoborg
   suffix: with brain
