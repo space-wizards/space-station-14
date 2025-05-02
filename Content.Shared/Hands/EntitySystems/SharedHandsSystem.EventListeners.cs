@@ -11,14 +11,14 @@ public abstract partial class SharedHandsSystem : EntitySystem
 {
     private void InitializeEventListeners()
     {
-        SubscribeLocalEvent<HandsComponent, StandupAttemptEvent>(OnStandupAttempt);
-        SubscribeLocalEvent<HandsComponent, KnockedDownRefreshEvent>(OnKnockDownRefresh);
+        SubscribeLocalEvent<HandsComponent, SharedStunSystem.StandupAttemptEvent>(OnStandupAttempt);
+        SubscribeLocalEvent<HandsComponent, SharedStunSystem.KnockedDownRefreshEvent>(OnKnockDownRefresh);
     }
 
     /// <summary>
     /// Reduces the time it takes to stand up based on the number of hands we have available.
     /// </summary>
-    private void OnStandupAttempt(Entity<HandsComponent> ent, ref StandupAttemptEvent args)
+    private void OnStandupAttempt(Entity<HandsComponent> ent, ref SharedStunSystem.StandupAttemptEvent args)
     {
         if (!HasComp<KnockedDownComponent>(ent) || !TryCountEmptyHands(ent, out var hands))
             return;
@@ -27,7 +27,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
 
     private void OnKnockDownRefresh(Entity<HandsComponent> ent,
-        ref KnockedDownRefreshEvent args)
+        ref SharedStunSystem.KnockedDownRefreshEvent args)
     {
         if (!HasComp<KnockedDownComponent>(ent) || !TryCountEmptyHands(ent, out var hands) && !hands.HasValue)
             return;

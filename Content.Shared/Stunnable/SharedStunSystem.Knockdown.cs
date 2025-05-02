@@ -50,6 +50,7 @@ public abstract partial class SharedStunSystem
 
         // DoAfter event subscriptions
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
+        SubscribeLocalEvent<KnockedDownComponent, KnockedDownEvent>(OnSubsequentKnockdown);
 
         // Knockdown Extenders
         SubscribeLocalEvent<KnockedDownComponent, DamageChangedEvent>(OnDamaged);
@@ -336,6 +337,15 @@ public abstract partial class SharedStunSystem
         RemComp<KnockedDownComponent>(entity);
 
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} has stood up from knockdown.");
+    }
+
+    private void OnSubsequentKnockdown(Entity<KnockedDownComponent> ent, ref KnockedDownEvent args)
+    {
+        if (!ent.Comp.DoAfter.HasValue)
+            return;
+
+        _doAfter.Cancel(ent.Comp.DoAfter.Value);
+        ent.Comp.DoAfter = null;
     }
 
     #endregion

@@ -89,8 +89,8 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
             SubscribeLocalEvent<HandcuffComponent, AddCuffDoAfterEvent>(OnAddCuffDoAfter);
             SubscribeLocalEvent<HandcuffComponent, VirtualItemDeletedEvent>(OnCuffVirtualItemDeleted);
-            SubscribeLocalEvent<CuffableComponent, StandupAttemptEvent>(OnCuffableStandup);
-            SubscribeLocalEvent<CuffableComponent, KnockedDownRefreshEvent>(OnCuffableKnockdownRefresh);
+            SubscribeLocalEvent<CuffableComponent, SharedStunSystem.StandupAttemptEvent>(OnCuffableStandup);
+            SubscribeLocalEvent<CuffableComponent, SharedStunSystem.KnockedDownRefreshEvent>(OnCuffableKnockdownRefresh);
         }
 
         private void CheckInteract(Entity<CuffableComponent> ent, ref InteractionAttemptEvent args)
@@ -420,7 +420,7 @@ namespace Content.Shared.Cuffs
         /// <summary>
         ///     Takes longer to stand up when cuffed
         /// </summary>
-        private void OnCuffableStandup(Entity<CuffableComponent> ent, ref StandupAttemptEvent args)
+        private void OnCuffableStandup(Entity<CuffableComponent> ent, ref SharedStunSystem.StandupAttemptEvent args)
         {
             if (args.Cancelled || !HasComp<KnockedDownComponent>(ent) || !IsCuffed(ent) || !TryComp<HandcuffComponent>(ent.Comp.LastAddedCuffs, out var handcuff))
                 return;
@@ -428,7 +428,7 @@ namespace Content.Shared.Cuffs
             args.DoAfterTime *= handcuff.StandupMod;
         }
 
-        private void OnCuffableKnockdownRefresh(Entity<CuffableComponent> ent, ref KnockedDownRefreshEvent args)
+        private void OnCuffableKnockdownRefresh(Entity<CuffableComponent> ent, ref SharedStunSystem.KnockedDownRefreshEvent args)
         {
             if (!IsCuffed(ent) || !TryComp<HandcuffComponent>(ent.Comp.LastAddedCuffs, out var handcuff))
                 return;

@@ -7,8 +7,6 @@ namespace Content.Server.Stunnable
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeLocalEvent<KnockedDownComponent, KnockedDownEvent>(OnSubsequentKnockdown);
         }
 
         public override void Update(float frameTime)
@@ -24,15 +22,6 @@ namespace Content.Server.Stunnable
 
                 TryStanding(uid, out knockedDown.DoAfter);
             }
-        }
-
-        private void OnSubsequentKnockdown(Entity<KnockedDownComponent> ent, ref KnockedDownEvent args)
-        {
-            if (!ent.Comp.DoAfter.HasValue)
-                return;
-
-            _doAfter.Cancel(ent.Comp.DoAfter.Value);
-            ent.Comp.DoAfter = null;
         }
     }
 }
