@@ -149,6 +149,14 @@
   description: alerts-stunned-desc
 
 - type: alert
+  id: Knockdown
+  icons:
+  - sprite: /Textures/Interface/Alerts/stunnable.rsi #Should definitely draw a proper icon
+    state: knocked-down-test
+  name: alerts-knockdown-name
+  description: alerts-knockdown-desc
+
+- type: alert
   id: Handcuffed
   clickEvent: !type:RemoveCuffsAlertEvent
   icons: [ /Textures/Interface/Alerts/Handcuffed/Handcuffed.png ]
