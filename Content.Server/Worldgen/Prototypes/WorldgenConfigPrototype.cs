@@ -7,7 +7,7 @@ namespace Content.Server.Worldgen.Prototypes;
 ///     This is a prototype for controlling overall world generation.
 ///     The components included are applied to the map that world generation is configured on.
 /// </summary>
-[Prototype("worldgenConfig")]
+[Prototype]
 public sealed partial class WorldgenConfigPrototype : IPrototype
 {
     /// <inheritdoc />
