@@ -29,6 +29,11 @@
     tags:
     - Kangaroo
     - WhitelistChameleon
+  - type: ThrowEquippedOnHit
+    throwChance: 0.5
+    whitelist:
+      tags:
+      - EvilGlove
 
 - type: entity
   parent: ClothingHandsGlovesBoxingRed
@@ -398,7 +403,7 @@
     attackRate: 4
     damage:
       types:
-       Blunt: 8
+       Blunt: 2.5
     soundHit:
       collection: Punch
     animation: WeaponArcFist
@@ -408,6 +413,8 @@
     fiberColor: fibers-blue
   - type: FingerprintMask
   - type: MeleeSpeech
+  - type: ThrowEquippedOnHit
+    throwChance: 0.025
   - type: ActivatableUI
     key: enum.MeleeSpeechUiKey.Key
     verbOnly: true
@@ -418,6 +425,11 @@
         type: MeleeSpeechBoundUserInterface
   - type: StaticPrice
     price: 0
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+    - EvilGlove
 
 - type: entity
   parent: [ClothingHandsBase, BaseSecurityContraband]
