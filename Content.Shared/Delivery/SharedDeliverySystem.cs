@@ -69,7 +69,7 @@ public abstract class SharedDeliverySystem : EntitySystem
             var multiplier = GetDeliveryMultiplier(ent);
             var totalSpesos = Math.Round(ent.Comp.BaseSpesoReward * multiplier);
 
-            args.PushMarkup(Loc.GetString("delivery-earnings-examine", ("spesos", totalSpesos)));
+            args.PushMarkup(Loc.GetString("delivery-earnings-examine", ("spesos", totalSpesos)), -1);
         }
     }
 
@@ -231,20 +231,39 @@ public abstract class SharedDeliverySystem : EntitySystem
         }
     }
 
+    #region Visual Updates
     // TODO: generic updateVisuals from component data
     private void UpdateAntiTamperVisuals(EntityUid uid, bool isLocked)
     {
         _appearance.SetData(uid, DeliveryVisuals.IsLocked, isLocked);
 
-        // If we're trying to unlock, always remove the priority tape
-        if (!isLocked)
-            _appearance.SetData(uid, DeliveryVisuals.IsPriority, false);
+        // If we're trying to unlock, mark priority as inactive
+        if (HasComp<DeliveryPriorityComponent>(uid))
+            _appearance.SetData(uid, DeliveryVisuals.PriorityState, DeliveryPriorityState.Inactive);
+    }
+
+    public void UpdatePriorityVisuals(Entity<DeliveryPriorityComponent> ent)
+    {
+        if (!TryComp<DeliveryComponent>(ent, out var delivery))
+            return;
+
+        if (delivery.IsLocked && !delivery.IsOpened)
+        {
+            _appearance.SetData(ent, DeliveryVisuals.PriorityState, ent.Comp.Expired ? DeliveryPriorityState.Inactive : DeliveryPriorityState.Active);
+        }
+    }
+
+    public void UpdateBrokenVisuals(Entity<DeliveryFragileComponent> ent, bool isFragile)
+    {
+        _appearance.SetData(ent, DeliveryVisuals.IsBroken, ent.Comp.Broken);
+        _appearance.SetData(ent, DeliveryVisuals.IsFragile, isFragile);
     }
 
     protected void UpdateDeliverySpawnerVisuals(EntityUid uid, int contents)
     {
         _appearance.SetData(uid, DeliverySpawnerVisuals.Contents, contents > 0);
     }
+    #endregion
 
     /// <summary>
     /// Gathers the total multiplier for a delivery.
@@ -257,7 +276,10 @@ public abstract class SharedDeliverySystem : EntitySystem
         var ev = new GetDeliveryMultiplierEvent();
         RaiseLocalEvent(ent, ref ev);
 
-        return ev.AdditiveMultiplier * ev.MultiplicativeMultiplier;
+        // Ensure the multiplier can never go below 0.
+        var totalMultiplier = Math.Max(ev.AdditiveMultiplier * ev.MultiplicativeMultiplier, 0);
+
+        return totalMultiplier;
     }
 
     protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }
