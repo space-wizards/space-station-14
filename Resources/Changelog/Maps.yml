@@ -51,4 +51,27 @@
     type: Tweak
   id: 7
   time: '2025-01-19T12:00:00Z'
+- author: IProduceWidgets
+  changes:
+  - message: On Oasis, the genpop prison has been added.
+    type: Add
+  - message: On Oasis, Security has been given a large department rework.
+    type: Tweak
+  id: 8
+  time: '2025-04-29T09:04:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37031
+- author: LaCumbiaDelCoronavirus
+  changes:
+  - message: Added a new salvage ruin, Telescience.
+    type: Add
+  id: 9
+  time: '2025-04-30T14:49:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36653
+- author: Southbridge
+  changes:
+  - message: 'New salvage ruin: Atmos Interchange'
+    type: Add
+  id: 10
+  time: '2025-05-02T15:45:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37115
 Order: 1

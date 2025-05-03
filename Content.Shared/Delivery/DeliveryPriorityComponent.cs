@@ -24,6 +24,12 @@ public sealed partial class DeliveryPriorityComponent : Component
     public float ExpiredMultiplierOffset = -0.1f;
 
     /// <summary>
+    /// Whether this delivery was delivered on time.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Delivered;
+
+    /// <summary>
     /// Whether this priority delivery has already ran out of time or not.
     /// </summary>
     [DataField, AutoNetworkedField]
