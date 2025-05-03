@@ -1,4 +1,5 @@
 using Content.Server.Forensics;
+using Content.Shared.Cloning;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Clothing.Components;
 using Content.Shared.FixedPoint;
@@ -22,7 +23,7 @@ namespace Content.Server.Cloning;
 ///     We only consider the most important components so the paradox clone gets similar equipment.
 ///     This method of using subscriptions was chosen to make it easy for forks to add their own custom components that need to be copied.
 /// </remarks>
-public sealed partial class CloningSystem : EntitySystem
+public sealed partial class CloningSystem : SharedCloningSystem
 {
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly LabelSystem _label = default!;
