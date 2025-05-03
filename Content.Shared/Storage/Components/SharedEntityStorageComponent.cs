@@ -150,6 +150,9 @@ public sealed class EntityStorageComponentState : ComponentState
 public record struct InsertIntoEntityStorageAttemptEvent(EntityUid ItemToInsert, bool Cancelled = false);
 
 [ByRefEvent]
+public record struct EntityStorageInsertedIntoAttemptEvent(EntityUid ItemToInsert, bool Cancelled = false);
+
+[ByRefEvent]
 public record struct StorageOpenAttemptEvent(EntityUid User, bool Silent, bool Cancelled = false);
 
 [ByRefEvent]
