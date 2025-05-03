@@ -45,10 +45,10 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly ClothingSystem _clothingSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!; //🌟Starlight🌟
+    [Dependency] private readonly ClothingSystem _clothingSystem = default!; //🌟Starlight🌟
+    [Dependency] private readonly InventorySystem _inventorySystem = default!; //🌟Starlight🌟
+    [Dependency] private readonly InventorySystem _inventory = default!; //🌟Starlight🌟
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
