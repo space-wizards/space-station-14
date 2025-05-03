@@ -60,15 +60,7 @@ public sealed partial class CloningSystem : EntitySystem
         clone = coords == null ? Spawn(speciesPrototype.Prototype) : Spawn(speciesPrototype.Prototype, coords.Value);
         _humanoidSystem.CloneAppearance(original, clone.Value);
 
-        var componentsToCopy = settings.Components;
-
-        if(!TryCloneComponents(original, clone.Value, componentsToCopy))
-            return false;
-
-        // don't make status effects permanent
-        if (TryComp<StatusEffectsComponent>(original, out var statusComp))
-            componentsToCopy.ExceptWith(statusComp.ActiveEffects.Values.Select(s => s.RelevantComponent).Where(s => s != null)!);
-
+        CloneComponents(original, clone.Value, settings);
 
         var cloningEv = new CloningEvent(settings, clone.Value);
         RaiseLocalEvent(original, ref cloningEv); // used for datafields that cannot be directly copied
@@ -101,8 +93,20 @@ public sealed partial class CloningSystem : EntitySystem
         return true;
     }
 
-    public bool TryCloneComponents(EntityUid original, EntityUid clone, HashSet<String> componentsToCopy)
+    /// <summary>
+    /// Clone components based on a cloneSetting list
+    /// </summary>
+    /// <param name="original">The orignal Entity to Clone components from</param>
+    /// <param name="clone">the target Entity to clone Components too</param>
+    /// <param name="settings">the Clone settings list of components to clone</param>
+    public void CloneComponents(EntityUid original, EntityUid clone, CloningSettingsPrototype settings)
     {
+        var componentsToCopy = settings.Components;
+        var componentsToEvent = settings.EventComponents;
+        // don't make status effects permanent
+        if (TryComp<StatusEffectsComponent>(original, out var statusComp))
+            componentsToCopy.ExceptWith(statusComp.ActiveEffects.Values.Select(s => s.RelevantComponent).Where(s => s != null)!);
+
         foreach (var componentName in componentsToCopy)
         {
             if (!_componentFactory.TryGetRegistration(componentName, out var componentRegistration))
@@ -111,14 +115,25 @@ public sealed partial class CloningSystem : EntitySystem
                 continue;
             }
 
+            RemComp(clone, componentRegistration.Type); // We remove components so that
             if (EntityManager.TryGetComponent(original, componentRegistration.Type, out var sourceComp)) // Does the original have this component?
             {
-                if (HasComp(clone, componentRegistration.Type)) // CopyComp cannot overwrite existing components
-                    RemComp(clone, componentRegistration.Type);
                 CopyComp(original, clone, sourceComp);
             }
         }
-        return true;
+
+        foreach (var componentName in componentsToEvent)
+        {
+            if (!_componentFactory.TryGetRegistration(componentName, out var componentRegistration))
+            {
+                Log.Error($"Tried to use invalid component registration for cloning: {componentName}");
+                continue;
+            }
+
+            RemComp(clone, componentRegistration.Type);
+        }
+        var cloningEv = new CloningEvent(settings, clone);
+        RaiseLocalEvent(original, ref cloningEv);
     }
 
     /// <summary>
