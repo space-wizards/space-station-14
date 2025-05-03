@@ -67,13 +67,21 @@
     stealGroup: ClothingShoesBootsMagAdv
 
 - type: entity
-  parent: [ClothingShoesBootsMagBase]
+  parent: [ClothingShoesBootsMagBase, PowerCellSlotMediumItem]
   id: ClothingShoesBootsMagSci
+  name: experimental magboots
+  description: Not every experiment is a success...
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/magboots-science.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-science.rsi
+  - type: PowerCellDraw
+    drawRate: 6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.7
+  - type: ToggleCellDraw
 
 - type: entity
   parent: ClothingShoesBootsMagBase
