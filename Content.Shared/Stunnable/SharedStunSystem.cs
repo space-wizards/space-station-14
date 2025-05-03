@@ -265,7 +265,7 @@ public abstract partial class SharedStunSystem : EntitySystem
     ///     Slows down the mob's walking/running speed temporarily
     /// </summary>
     public bool TrySlowdown(EntityUid uid, TimeSpan time, bool refresh,
-        float walkSpeedMultiplier = 1f, float sprintSpeedMultiplier = 1f,
+        float walkSpeedMod = 1f, float sprintSpeedMod = 1f,
         StatusEffectsComponent? status = null)
     {
         if (!Resolve(uid, ref status, false))
@@ -278,11 +278,11 @@ public abstract partial class SharedStunSystem : EntitySystem
         {
             var slowed = Comp<SlowedDownComponent>(uid);
             // Doesn't make much sense to have the "TrySlowdown" method speed up entities now does it?
-            walkSpeedMultiplier = Math.Clamp(walkSpeedMultiplier, 0f, 1f);
-            sprintSpeedMultiplier = Math.Clamp(sprintSpeedMultiplier, 0f, 1f);
+            walkSpeedMod = Math.Clamp(walkSpeedMod, 0f, 1f);
+            sprintSpeedMod = Math.Clamp(sprintSpeedMod, 0f, 1f);
 
-            slowed.WalkSpeedModifier *= walkSpeedMultiplier;
-            slowed.SprintSpeedModifier *= sprintSpeedMultiplier;
+            slowed.WalkSpeedModifier *= walkSpeedMod;
+            slowed.SprintSpeedModifier *= sprintSpeedMod;
 
             _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
             return true;

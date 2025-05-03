@@ -19,10 +19,10 @@ namespace Content.Server.Stunnable.Components
         public TimeSpan SlowdownAmount;
 
         [DataField]
-        public float WalkSpeedMultiplier = 1f;
+        public float WalkSpeedModifier = 1f;
 
         [DataField]
-        public float SprintSpeedMultiplier = 1f;
+        public float SprintSpeedModifier = 1f;
 
         [DataField]
         public bool Refresh = true;
