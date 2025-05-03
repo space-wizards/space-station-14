@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: 12rabbits
-  changes:
-  - message: Activating a DNA scrambler implant no longer retains the previous identity's
-      description.
-    type: Fix
-  id: 7911
-  time: '2025-02-06T19:09:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34920
 - author: GrownSamoyedDog
   changes:
   - message: Control Button in Guidebook has been redirected to Controls properly
@@ -3920,3 +3912,13 @@
   id: 8412
   time: '2025-05-03T12:10:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37143
+- author: Radezolid
+  changes:
+  - message: Fixed departmental maintenance airlocks not using it's wire layout.
+    type: Fix
+  - message: Command maintenance airlocks now have proper security like their regular
+      counterparts.
+    type: Tweak
+  id: 8413
+  time: '2025-05-03T15:07:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36735
