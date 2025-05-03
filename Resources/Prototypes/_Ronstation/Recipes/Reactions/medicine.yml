@@ -41,19 +41,19 @@
   products:
     Cordrazine: 2
 
-- type: reaction
-  id: SalicylicAcid
-  reactants:
-    Oxygen:
-      amount: 2
-    Carbon:
-      amount: 2
-    Phenol:
-      amount: 1
-    SulfuricAcid:
-      amount: 1
-  products:
-    SalicylicAcid: 3
+#- type: reaction
+#  id: SalicylicAcid
+#  reactants:
+#    Oxygen:
+#      amount: 2
+#    Carbon:
+#      amount: 2
+#    Phenol:
+#      amount: 1
+#    SulfuricAcid:
+#      amount: 1
+#  products:
+#    SalicylicAcid: 3
 
 - type: reaction
   minTemp: 316
