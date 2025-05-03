@@ -28,6 +28,19 @@ namespace Content.Shared.Slippery
         public bool AffectsSliding;
 
         /// <summary>
+        /// How long should this component apply the FrictionStatusComponent?
+        /// Note: This does stack with SlidingComponent since they are two separate Components
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public TimeSpan FrictionStatusTime = TimeSpan.FromSeconds(1);
+
+        /// <summary>
+        /// How much stamina damage should this component do on slip?
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public float StaminaDamage;
+
+        /// <summary>
         /// Loads the data needed to determine how slippery something is.
         /// </summary>
         [DataField, AutoNetworkedField]
@@ -75,6 +88,6 @@ namespace Content.Shared.Slippery
         /// This is used to store the friction modifier that is used on a sliding entity.
         /// </summary>
         [DataField]
-        public float SlipFriction;
+        public float SlipFriction = 0.5f;
     }
 }

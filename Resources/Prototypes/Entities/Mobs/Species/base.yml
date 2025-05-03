@@ -121,6 +121,7 @@
   - type: StatusEffects
     allowed:
     - Stun
+    - Friction
     - KnockedDown
     - SlowedDown
     - Stutter

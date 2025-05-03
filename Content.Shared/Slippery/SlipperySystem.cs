@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Robust.Shared.Network;
@@ -25,6 +26,7 @@ public sealed class SlipperySystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -123,9 +125,11 @@ public sealed class SlipperySystem : EntitySystem
         if (!HasComp<KnockedDownComponent>(other))
         {
             _stun.TryStun(other, component.SlipData.StunTime, true);
+            _stamina.TryTakeStamina(other, component.StaminaDamage); // Note that this should never stam-crit on its own
             _audio.PlayPredicted(component.SlipSound, other, other);
         }
         _stun.TryKnockdown(other, component.SlipData.KnockdownTime, true, true);
+        _stun.TryFriction(other, component.FrictionStatusTime, true, component.SlipData.SlipFriction, component.SlipData.SlipFriction);
 
         _adminLogger.Add(LogType.Slip, LogImpact.Low,
             $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");

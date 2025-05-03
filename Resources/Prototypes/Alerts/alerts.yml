@@ -152,7 +152,7 @@
   id: Knockdown
   icons:
   - sprite: /Textures/Interface/Alerts/stunnable.rsi #Should definitely draw a proper icon
-    state: knocked-down-test
+    state: knocked-down
   name: alerts-knockdown-name
   description: alerts-knockdown-desc
 
