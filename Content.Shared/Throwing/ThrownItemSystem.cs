@@ -110,10 +110,7 @@ namespace Content.Shared.Throwing
                 }
             }
 
-            var ev = new StopThrowEvent
-            {
-                User = thrownItemComponent.Thrower
-            };
+            var ev = new StopThrowEvent(thrownItemComponent.Thrower);
             RaiseLocalEvent(uid, ref ev);
             RemComp<ThrownItemComponent>(uid);
         }
