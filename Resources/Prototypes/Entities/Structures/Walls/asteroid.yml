@@ -62,18 +62,21 @@
           Primed:
             state: gibtonite_active
             shader: unshaded
-          Unprimed: { state: gibtonite_inactive }
+            visible: true
+          Unprimed:
+            state: gibtonite_inactive
+            visible: false
   - type: OnUseTimerTrigger
     examinable: false
   - type: RandomTimerTrigger
-    min: 3.2
-    max: 4
+    min: 8
+    max: 10
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: DemolitionCharge
     totalIntensity: 450
     intensitySlope: 2.5
-    maxIntensity: 15
+    maxIntensity: 10
     canCreateVacuum: false
   - type: Destructible
     thresholds:
@@ -87,7 +90,7 @@
           collection: GlassBreak
     - trigger:
         !type:DamageTrigger
-        damage: 250
+        damage: 300 # you have to really smack it for it to manually detonate.
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -398,7 +401,6 @@
 - type: entity
   id: AsteroidRockGibtonite
   parent: [ BaseRockGibtonite, AsteroidRock ]
-  description: A rock wall with a chunk of gibtonite sticking out of it. Steady, now!
   components:
   - type: Sprite
     layers:
@@ -412,6 +414,7 @@
     - map: [ "enum.EdgeLayer.West" ]
       state: rock_asteroid_west
     - state: gibtonite_inactive
+      visible: false
       map: [ "enum.MiningScannerVisualLayers.Overlay", "gib" ]
 
 - type: entity
@@ -697,7 +700,6 @@
 - type: entity
   id: IronRockGibtonite
   parent: [ BaseRockGibtonite, IronRock ]
-  description: A rock wall with a chunk of gibtonite sticking out of it. Steady, now!
   components:
   - type: Sprite
     layers:
@@ -711,6 +713,7 @@
     - map: [ "enum.EdgeLayer.West" ]
       state: ironrock_west
     - state: gibtonite_inactive
+      visible: false
       map: [ "enum.MiningScannerVisualLayers.Overlay", "gib" ]
 
 - type: entity
