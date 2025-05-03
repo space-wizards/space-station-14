@@ -90,7 +90,7 @@
           collection: GlassBreak
     - trigger:
         !type:DamageTrigger
-        damage: 300 # you have to really smack it for it to manually detonate.
+        damage: 500 # you have to really smack it for it to manually detonate. re-examine once defusal exists
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
