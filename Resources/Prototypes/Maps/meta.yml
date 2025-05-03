@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_meta.yml
         - type: StationJobs
-          availableJobs: # 62 jobs total roundstart, 80 jobs total w/ latejoins, 96 jobs w/ latejoins and interns.
+          availableJobs: # 63 jobs total roundstart, 81 jobs total w/ latejoins, 97 jobs w/ latejoins and interns.
             # Command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -38,11 +38,12 @@
             AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 4, 7 ]
             TechnicalAssistant: [ 4, 4 ] #intern, not counted
-            # Medical (7 - 10)
+            # Medical (8 - 11)
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 4, 5 ]
             MedicalIntern: [ 4, 4 ] #intern, not counted
             Paramedic: [ 1, 2 ]
+            Psychologist: [ 1, 1 ]
             # Science (5 - 7)
             Scientist: [ 5, 7 ]
             ResearchAssistant: [ 4, 4 ] #intern, not counted
