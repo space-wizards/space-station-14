@@ -180,7 +180,8 @@ namespace Content.Shared.StatusEffect
             var start = startTime ?? _gameTiming.CurTime;
             (TimeSpan, TimeSpan) cooldown = (start, start + time);
 
-            if (HasStatusEffect(uid, key, status))
+            var existing = HasStatusEffect(uid, key, status);
+            if (existing)
             {
                 status.ActiveEffects[key].CooldownRefresh = refresh;
                 if (refresh)
@@ -202,6 +203,8 @@ namespace Content.Shared.StatusEffect
             {
                 status.ActiveEffects.Add(key, new StatusEffectState(cooldown, refresh, null));
                 EnsureComp<ActiveStatusEffectsComponent>(uid);
+                // only raised when it gets added for the first time
+                RaiseLocalEvent(uid, new StatusEffectAddedEvent(uid, key));
             }
 
             if (proto.Alert != null)
@@ -211,8 +214,7 @@ namespace Content.Shared.StatusEffect
             }
 
             Dirty(uid, status);
-            RaiseLocalEvent(uid, new StatusEffectAddedEvent(uid, key));
-            return true;
+            return !existing;
         }
 
         /// <summary>
@@ -472,6 +474,10 @@ namespace Content.Shared.StatusEffect
     [ByRefEvent]
     public record struct BeforeStatusEffectAddedEvent(string Key, bool Cancelled=false);
 
+    /// <summary>
+    /// Raised on an entity after a status effect is added when not previously active.
+    /// Does not get raised when refreshing an existing effect.
+    /// </summary>
     public readonly struct StatusEffectAddedEvent
     {
         public readonly EntityUid Uid;

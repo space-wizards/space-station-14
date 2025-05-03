@@ -24,23 +24,7 @@ public sealed class RefCountSystem : EntitySystem
     /// <returns>True if the component was just added</returns>
     public bool Add<T>(Entity<RefCountComponent?> ent) where T: IComponent, new()
     {
-        if (!_timing.IsFirstTimePredicted)
-            return false;
-
-        ent.Comp ??= EnsureComp<RefCountComponent>(ent);
-        var name = _factory.GetComponentName<T>();
-        if (EnsureComp<T>(ent, out _) && GetCount(ent.Comp, name) == 0)
-        {
-            // increment it again if we already had the component and it wasn't refcounted before
-            // this means when Add is counted on an entity that has the component already, calling remove after won't actually remove it
-            // for prototypes this means they will never be removed by refcounting
-            // for other systems they are in control of removing
-            // example: reagent refcount-adds NoSlip to a mob, special mob that already has NoSlip drinks it. the reagent expiring shouldn't remove NoSlip.
-            // once the reagent wears off it stays having a count of 1, ensuring it doesn't get removed
-            Increment((ent, ent.Comp), name);
-        }
-
-        return Increment((ent, ent.Comp), name);
+        return Add(ent, _factory.GetRegistration<T>().GetType());
     }
 
     /// <summary>
@@ -54,20 +38,27 @@ public sealed class RefCountSystem : EntitySystem
 
         ent.Comp ??= EnsureComp<RefCountComponent>(ent);
         var name = _factory.GetComponentName(type);
-        if (!Increment((ent, ent.Comp), name))
-            return false;
 
         if (HasComp(ent, type))
         {
-            // same double increment as above
+            // increment it again if we already had the component and it wasn't refcounted before
+            // this means when Add is counted on an entity that has the component already, calling remove after won't actually remove it
+            // for prototypes this means they will never be removed by refcounting
+            // for other systems they are in control of removing
+            // example: reagent refcount-adds NoSlip to a mob, special mob that already has NoSlip drinks it. the reagent expiring shouldn't remove NoSlip.
+            // once the reagent wears off it stays having a count of 1, ensuring it doesn't get removed
             if (GetCount(ent.Comp, name) == 0)
                 Increment((ent, ent.Comp), name);
-            return false;
+            if (!force)
+            {
+                Increment((ent, ent.Comp), name);
+                return false;
+            }
         }
 
         var comp = (Component) _factory.GetComponent(type);
         AddComp(ent, comp, force);
-        return true;
+        return Increment((ent, ent.Comp), name);
     }
 
     /// <summary>
@@ -80,13 +71,14 @@ public sealed class RefCountSystem : EntitySystem
             return;
 
         ent.Comp ??= EnsureComp<RefCountComponent>(ent);
-        EntityManager.AddComponents(ent, components, force);
         foreach (var reg in components.Values)
         {
             var type = reg.Component.GetType();
             var name = _factory.GetComponentName(type);
-            Increment((ent, ent.Comp), name);
+            if (Increment((ent, ent.Comp), name) && HasComp(ent, type))
+                Increment((ent, ent.Comp), name);
         }
+        EntityManager.AddComponents(ent, components, force);
     }
 
     /// <summary>
