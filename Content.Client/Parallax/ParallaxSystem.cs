@@ -63,7 +63,7 @@ public sealed class ParallaxSystem : SharedParallaxSystem
 
     public string GetParallax(MapId mapId)
     {
-        return GetParallax(_map.GetMap(mapId));
+        return GetParallax(_map.GetMapOrInvalid(mapId));
     }
 
     public string GetParallax(EntityUid mapUid)
