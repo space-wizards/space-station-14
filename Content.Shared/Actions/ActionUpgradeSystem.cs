@@ -160,7 +160,7 @@ public sealed class ActionUpgradeSystem : EntitySystem
         var originalContainer = action.Comp.Container;
         var originalAttachedEntity = action.Comp.AttachedEntity;
 
-        _actionContainer.RemoveAction(action, action.Comp);
+        _actionContainer.RemoveAction((action, action.Comp));
 
         EntityUid? upgradedActionId = null;
         if (originalContainer != null
