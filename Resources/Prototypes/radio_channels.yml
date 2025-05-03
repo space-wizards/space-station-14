@@ -83,7 +83,7 @@
   name: chat-radio-binary
   keycode: 'b'
   frequency: 1001
-  color: "#1c51ff"
+  color: "#00a2ff"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
 

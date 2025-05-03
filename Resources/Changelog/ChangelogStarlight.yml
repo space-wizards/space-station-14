@@ -5429,4 +5429,18 @@ Entries:
   id: 752
   time: '2025-05-03T05:17:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/572
+- author: Happyrobot33
+  changes:
+  - message: Removed reverb on alert levels.
+    type: Remove
+  id: 753
+  time: '2025-05-03T09:59:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/574
+- author: Happyrobot33
+  changes:
+  - message: Made binary color brighter.
+    type: Tweak
+  id: 754
+  time: '2025-05-03T09:59:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/574
 
