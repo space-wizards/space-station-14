@@ -101,6 +101,7 @@ public sealed class EntityEffectSystem : EntitySystem
         SubscribeLocalEvent<ExecuteEntityEffectEvent<CauseZombieInfection>>(OnExecuteCauseZombieInfection);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<ChemCleanBloodstream>>(OnExecuteChemCleanBloodstream);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<ChemVomit>>(OnExecuteChemVomit);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<CreateEntityReactionEffect>>(OnExecuteCreateEntityReactionEffect);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<CreateGas>>(OnExecuteCreateGas);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<CureZombieInfection>>(OnExecuteCureZombieInfection);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<Emote>>(OnExecuteEmote);
@@ -565,6 +566,28 @@ public sealed class EntityEffectSystem : EntitySystem
                 return;
 
         _vomit.Vomit(args.Args.TargetEntity, args.Effect.ThirstAmount, args.Effect.HungerAmount);
+    }
+
+    private void OnExecuteCreateEntityReactionEffect(ref ExecuteEntityEffectEvent<CreateEntityReactionEffect> args)
+    {
+        var transform = Comp<TransformComponent>(args.Args.TargetEntity);
+        var quantity = (int)args.Effect.Number;
+        if (args.Args is EntityEffectReagentArgs reagentArgs)
+            quantity *= reagentArgs.Quantity.Int();
+
+        for (var i = 0; i < quantity; i++)
+        {
+            var uid = Spawn(args.Effect.Entity, _xform.GetMapCoordinates(args.Args.TargetEntity, xform: transform));
+            _xform.AttachToGridOrMap(uid);
+
+            // TODO figure out how to properly spawn inside of containers
+            // e.g. cheese:
+            // if the user is holding a bowl milk & enzyme, should drop to floor, not attached to the user.
+            // if reaction happens in a backpack, should insert cheese into backpack.
+            // --> if it doesn't fit, iterate through parent storage until it attaches to the grid (again, DON'T attach to players).
+            // if the reaction happens INSIDE a stomach? the bloodstream? I have no idea how to handle that.
+            // presumably having cheese materialize inside of your blood would have "disadvantages".
+        }
     }
 
     private void OnExecuteCreateGas(ref ExecuteEntityEffectEvent<CreateGas> args)

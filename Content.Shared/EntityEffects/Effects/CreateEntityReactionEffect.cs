@@ -26,24 +26,7 @@ public sealed partial class CreateEntityReactionEffect : EntityEffect
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var transform = args.EntityManager.GetComponent<TransformComponent>(args.TargetEntity);
-        var transformSystem = args.EntityManager.System<SharedTransformSystem>();
-        var quantity = (int)Number;
-        if (args is EntityEffectReagentArgs reagentArgs)
-            quantity *= reagentArgs.Quantity.Int();
-
-        for (var i = 0; i < quantity; i++)
-        {
-            var uid = args.EntityManager.SpawnEntity(Entity, transformSystem.GetMapCoordinates(args.TargetEntity, xform: transform));
-            transformSystem.AttachToGridOrMap(uid);
-
-            // TODO figure out how to properly spawn inside of containers
-            // e.g. cheese:
-            // if the user is holding a bowl milk & enzyme, should drop to floor, not attached to the user.
-            // if reaction happens in a backpack, should insert cheese into backpack.
-            // --> if it doesn't fit, iterate through parent storage until it attaches to the grid (again, DON'T attach to players).
-            // if the reaction happens INSIDE a stomach? the bloodstream? I have no idea how to handle that.
-            // presumably having cheese materialize inside of your blood would have "disadvantages".
-        }
+        var evt = new ExecuteEntityEffectEvent<CreateEntityReactionEffect>(this, args);
+        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
     }
 }
