@@ -50,9 +50,9 @@
             volume: -6
 
 - type: entity
+  abstract: true
   id: BaseRockGibtonite
   suffix: Gibtonite
-  abstract: true
   components:
   - type: Appearance
   - type: GenericVisualizer
@@ -399,8 +399,8 @@
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
-  id: AsteroidRockGibtonite
   parent: [ BaseRockGibtonite, AsteroidRock ]
+  id: AsteroidRockGibtonite
   components:
   - type: Sprite
     layers:
@@ -698,8 +698,8 @@
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
-  id: IronRockGibtonite
   parent: [ BaseRockGibtonite, IronRock ]
+  id: IronRockGibtonite
   components:
   - type: Sprite
     layers:
