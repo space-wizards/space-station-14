@@ -69,7 +69,7 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     ///     If you need to exclude data or do additional component initialization, then subscribe to CloningEvent instead!
     ///     Components in this list that the orginal does not have will be removed from the clone.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(CustomHashSetSerializer<string, ComponentNameSerializer>))]
+    [DataField]
     [AlwaysPushInheritance]
     public HashSet<string> Components = new();
 
@@ -77,7 +77,7 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     ///  Components to remove from the clone and copy over manually using a CloneEvent raised on the original.
     ///  Use this for example when the component cannot be copied using CopyComp, for example when having an Uid as a datafield.
     ///</summary>
-    [DataField(customTypeSerializer: typeof(CustomHashSetSerializer<string, ComponentNameSerializer>))]
+    [DataField]
     [AlwaysPushInheritance]
     public HashSet<string> EventComponents = new();
 }
