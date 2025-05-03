@@ -6,7 +6,7 @@
     "x": 32,
     "y": 32
   },
-  "states": [
+"states": [
     {
       "name": "alpha-filling"
     },
@@ -149,6 +149,12 @@
     },
     {
       "name": "uranium-slice"
+    },
+    {
+      "name": "worldpeas"
+    },
+    {
+      "name": "worldpeas-slice"
     }
   ]
 }
