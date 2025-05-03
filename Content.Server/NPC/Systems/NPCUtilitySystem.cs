@@ -31,6 +31,7 @@ using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Server.Temperature.Components;
 
 namespace Content.Server.NPC.Systems;
 
@@ -375,6 +376,13 @@ public sealed class NPCUtilitySystem : EntitySystem
                         return 1f;
 
                     return 0f;
+                }
+            case TargetLowTempCon con:
+                {
+                    if (!TryComp<TemperatureComponent>(targetUid, out var temperature))
+                        return 0f;
+
+                    return temperature.CurrentTemperature <= con.MinTemp ? 1f : 0f;
                 }
             default:
                 throw new NotImplementedException();
