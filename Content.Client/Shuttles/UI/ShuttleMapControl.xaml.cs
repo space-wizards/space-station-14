@@ -250,7 +250,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
         DrawParallax(handle);
 
-        var viewedMapUid = _mapSystem.GetMap(ViewingMap);
+        var viewedMapUid = _mapSystem.GetMapOrInvalid(ViewingMap);
         var matty = Matrix3Helpers.CreateInverseTransform(Offset, Angle.Zero);
         var realTime = _timing.RealTime;
         var viewBox = new Box2(Offset - WorldRangeVector, Offset + WorldRangeVector);
