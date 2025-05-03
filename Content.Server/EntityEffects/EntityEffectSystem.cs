@@ -171,11 +171,17 @@ public sealed class EntityEffectSystem : EntitySystem
     /// <param name="mustHaveAlivePlant">Whether to check if it has an alive plant or not</param>
     /// <returns></returns>
     private bool CanMetabolizePlant(EntityUid plantHolder, [NotNullWhen(true)] out PlantHolderComponent? plantHolderComponent,
-        bool mustHaveAlivePlant = true)
+        bool mustHaveAlivePlant = true, bool mustHaveMutableSeed = false)
     {
         plantHolderComponent = null;
 
-        if (!TryComp(plantHolder, out plantHolderComponent) || mustHaveAlivePlant && (plantHolderComponent.Seed == null || plantHolderComponent.Dead))
+        if (!TryComp(plantHolder, out plantHolderComponent))
+            return false;
+
+        if (mustHaveAlivePlant && (plantHolderComponent.Seed == null || plantHolderComponent.Dead))
+            return false;
+
+        if (mustHaveMutableSeed && (plantHolderComponent.Seed == null || plantHolderComponent.Seed.Immutable))
             return false;
 
         return true;
@@ -208,7 +214,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantAdjustNutrition(ref ExecuteEntityEffectEvent<PlantAdjustNutrition> args)
     {
-        if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp))
+        if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveAlivePlant: false))
             return;
 
         _plantHolder.AdjustNutrient(args.Args.TargetEntity, args.Effect.Amount, plantHolderComp);
@@ -244,7 +250,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantAdjustWater(ref ExecuteEntityEffectEvent<PlantAdjustWater> args)
     {
-        if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp))
+        if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveAlivePlant: false))
             return;
 
         _plantHolder.AdjustWater(args.Args.TargetEntity, args.Effect.Amount, plantHolderComp);
@@ -395,13 +401,10 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantDestroySeeds(ref ExecuteEntityEffectEvent<PlantDestroySeeds> args)
     {
-        if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp))
+        if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveMutableSeed: true))
             return;
 
-        if (plantHolderComp.Seed == null)
-            return;
-
-        if (plantHolderComp.Seed.Seedless == false)
+        if (plantHolderComp.Seed!.Seedless == false)
         {
             _plantHolder.EnsureUniqueSeed(args.Args.TargetEntity, plantHolderComp);
             _popup.PopupEntity(
@@ -415,45 +418,36 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantDiethylamine(ref ExecuteEntityEffectEvent<PlantDiethylamine> args)
     {
-        if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp))
-            return;
-
-        if (plantHolderComp.Seed == null)
+        if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveMutableSeed: true))
             return;
 
         if (_random.Prob(0.1f))
         {
             _plantHolder.EnsureUniqueSeed(args.Args.TargetEntity, plantHolderComp);
-            plantHolderComp.Seed.Lifespan++;
+            plantHolderComp.Seed!.Lifespan++;
         }
 
         if (_random.Prob(0.1f))
         {
             _plantHolder.EnsureUniqueSeed(args.Args.TargetEntity, plantHolderComp);
-            plantHolderComp.Seed.Endurance++;
+            plantHolderComp.Seed!.Endurance++;
         }
     }
 
     private void OnExecutePlantPhalanximine(ref ExecuteEntityEffectEvent<PlantPhalanximine> args)
     {
-        if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp))
+        if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveMutableSeed: true))
             return;
 
-        if (plantHolderComp.Seed == null)
-            return;
-
-        plantHolderComp.Seed.Viable = true;
+        plantHolderComp.Seed!.Viable = true;
     }
 
     private void OnExecutePlantRestoreSeeds(ref ExecuteEntityEffectEvent<PlantRestoreSeeds> args)
     {
-        if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp))
+        if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveMutableSeed: true))
             return;
 
-        if (plantHolderComp.Seed == null)
-            return;
-
-        if (plantHolderComp.Seed.Seedless)
+        if (plantHolderComp.Seed!.Seedless)
         {
             _plantHolder.EnsureUniqueSeed(args.Args.TargetEntity, plantHolderComp);
             _popup.PopupEntity(Loc.GetString("botany-plant-seedsrestored"), args.Args.TargetEntity);
