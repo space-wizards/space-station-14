@@ -79,10 +79,10 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         Can be used to calculate the amount of gas we need to transfer.
         */
 
-        var P1 = inletPipeNode.Air.Pressure;
-        var P2 = outletPipeNode.Air.Pressure;
+        var p1 = inletPipeNode.Air.Pressure;
+        var p2 = outletPipeNode.Air.Pressure;
 
-        if (P1 <= valveEntity.Comp.Threshold || P2 >= P1)
+        if (p1 <= valveEntity.Comp.Threshold || p2 >= p1)
         {
             valveEntity.Comp.Enabled = false;
             _ambientSoundSystem.SetAmbience(valveEntity, false);
@@ -107,7 +107,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         _ambientSoundSystem.SetAmbience(valveEntity, true);
         UpdateAppearance(valveEntity);
 
-        var T1 = inletPipeNode.Air.Temperature;
+        var t1 = inletPipeNode.Air.Temperature;
 
         // First, calculate the amount of gas we need to transfer to bring us below the threshold.
         var deltaMolesToPressureThreshold =
@@ -127,7 +127,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         var deltaMolesToTransfer = Math.Min(deltaMolesToPressureThreshold, deltaMolesToEqualizePressure);
 
         // Fourth, convert to the desired volume to transfer.
-        var desiredVolumeToTransfer = deltaMolesToTransfer * ((Atmospherics.R * T1) / P1);
+        var desiredVolumeToTransfer = deltaMolesToTransfer * ((Atmospherics.R * t1) / p1);
 
         // And finally, limit the transfer volume to the max flow rate of the valve.
         var actualVolumeToTransfer = Math.Min(desiredVolumeToTransfer,
