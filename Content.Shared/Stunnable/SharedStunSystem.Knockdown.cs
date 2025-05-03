@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Alert;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage.Components;
@@ -53,12 +54,13 @@ public abstract partial class SharedStunSystem
         SubscribeLocalEvent<KnockedDownComponent, DidEquipHandEvent>(OnHandEquipped);
         SubscribeLocalEvent<KnockedDownComponent, DidUnequipHandEvent>(OnHandUnequipped);
 
-        // Stuff
-        SubscribeAllEvent<ForceStandUpEvent>(OnForceStandup);
-
         // DoAfter event subscriptions
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
         SubscribeLocalEvent<KnockedDownComponent, KnockedDownEvent>(OnSubsequentKnockdown);
+
+        // Handling Alternative Inputs
+        SubscribeAllEvent<ForceStandUpEvent>(OnForceStandup);
+        SubscribeLocalEvent<KnockedDownComponent, KnockedDownAlertEvent>(OnKnockedDownAlert);
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.ToggleKnockdown, InputCmdHandler.FromDelegate(HandleToggleKnockdown, handle: false))
@@ -230,6 +232,17 @@ public abstract partial class SharedStunSystem
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(ent):user} has force stood up from knockdown.");
     }
 
+    private void OnKnockedDownAlert(Entity<KnockedDownComponent> ent, ref KnockedDownAlertEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryStanding(ent.Owner, out ent.Comp.DoAfter))
+            ForceStandUp(ent);
+
+        args.Handled = true;
+    }
+
     #endregion
 
     #region Action Blockers
@@ -369,6 +382,11 @@ public abstract partial class SharedStunSystem
         public bool AutoStand;
         public TimeSpan DoAfterTime;
     }
+
+    /// <summary>
+    ///     Raised when you click on the Knocked Down Alert
+    /// </summary>
+    public sealed partial class KnockedDownAlertEvent : BaseAlertEvent;
 
     [ByRefEvent, Serializable, NetSerializable]
     public sealed partial class TryStandDoAfterEvent : SimpleDoAfterEvent;
