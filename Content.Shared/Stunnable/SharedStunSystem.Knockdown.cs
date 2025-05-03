@@ -15,6 +15,7 @@ using Content.Shared.Rejuvenate;
 using Content.Shared.Standing;
 using Robust.Shared.Audio;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -28,6 +29,7 @@ public abstract partial class SharedStunSystem
 {
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public void InitializeKnockdown()
     {
@@ -119,18 +121,15 @@ public abstract partial class SharedStunSystem
         if (ent.Comp.NextUpdate >= GameTiming.CurTime)
             return false;
 
-        if (!CanStand((ent, ent.Comp)))
+        if (!CanStand((ent, state)))
             return false;
 
-        var ev = new StandupAttemptEvent()
+        var ev = new StandUpArgsEvent()
         {
             DoAfterTime = state.StandTime,
             AutoStand = ent.Comp.AutoStand,
         };
         RaiseLocalEvent(ent, ref ev);
-
-        if (ev.Cancelled)
-            return false;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, ent, ev.DoAfterTime, new TryStandDoAfterEvent(), ent, ent)
         {
@@ -145,12 +144,23 @@ public abstract partial class SharedStunSystem
         return DoAfter.TryStartDoAfter(doAfterArgs, out id);
     }
 
-    private bool CanStand(Entity<KnockedDownComponent> ent)
+    private bool CanStand(Entity<StandingStateComponent> ent)
     {
         if (!_blocker.CanMove(ent))
             return false;
 
-        // TODO: Check if we even have space to stand
+        var ev = new StandUpAttemptEvent();
+        RaiseLocalEvent(ent, ref ev);
+
+        if (ev.Cancelled)
+            return false;
+
+        // Check if we would intersect with any entities by standing up
+        if (ent.Comp.ChangedFixtures.Count > 0 && _physics.GetEntitiesIntersectingBody(ent, 4).Count > 0)
+        {
+            _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), ent, ent, PopupType.SmallCaution);
+            return false;
+        }
 
         return true;
     }
@@ -188,7 +198,7 @@ public abstract partial class SharedStunSystem
         // That way if we fail to stand, the game will try to stand for us when we are able to
         ent.Comp.AutoStand = true;
 
-        if (!CanStand(ent))
+        if (!TryComp<StandingStateComponent>(ent, out var stand) || !CanStand((ent, stand)))
             return;
 
         if (!TryComp<StaminaComponent>(ent, out var stamina))
@@ -205,7 +215,7 @@ public abstract partial class SharedStunSystem
 
         if (!Stamina.TryTakeStamina(ent, staminaDamage, stamina, visual: true))
         {
-            _popup.PopupClient(Loc.GetString("knockdown-component-pushup-failure"), ent);
+            _popup.PopupClient(Loc.GetString("knockdown-component-pushup-failure"), ent, ent, PopupType.MediumCaution);
             return;
         }
 
@@ -214,7 +224,7 @@ public abstract partial class SharedStunSystem
         // Remove Component
         RemComp<KnockedDownComponent>(ent);
 
-        _popup.PopupClient(Loc.GetString("knockdown-component-pushup-success"), ent);
+        _popup.PopupClient(Loc.GetString("knockdown-component-pushup-success"), ent, ent);
         _audio.PlayPredicted(stamina.ForceStandSuccessSound, ent.Owner, ent.Owner, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
 
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(ent):user} has force stood up from knockdown.");
@@ -351,7 +361,10 @@ public abstract partial class SharedStunSystem
     ///     Raised directed on an entity when it tries to stand up
     /// </summary>
     [ByRefEvent]
-    public record struct StandupAttemptEvent(bool Cancelled)
+    public record struct StandUpAttemptEvent(bool Cancelled);
+
+    [ByRefEvent]
+    public record struct StandUpArgsEvent()
     {
         public bool AutoStand;
         public TimeSpan DoAfterTime;
