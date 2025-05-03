@@ -23,7 +23,7 @@
   - !type:OreDunGen
     replacement: AsteroidRock
     entity: AsteroidRockGibtonite
-    count: 12
+    count: 8
     minGroupSize: 0
     maxGroupSize: 1
 
@@ -52,7 +52,7 @@
   - !type:OreDunGen
     replacement: AsteroidRock
     entity: AsteroidRockGibtonite
-    count: 12
+    count: 8
     minGroupSize: 0
     maxGroupSize: 1
 
@@ -81,7 +81,7 @@
   - !type:OreDunGen
     replacement: AsteroidRock
     entity: AsteroidRockGibtonite
-    count: 12
+    count: 8
     minGroupSize: 0
     maxGroupSize: 1
 
@@ -109,6 +109,6 @@
   - !type:OreDunGen
     replacement: AsteroidRock
     entity: AsteroidRockGibtonite
-    count: 12
+    count: 8
     minGroupSize: 0
     maxGroupSize: 1
