@@ -454,6 +454,24 @@
       state: sp
 
 - type: hitscan
+  id: BulletLightRifleTraceImprovised
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 7
+      Blunt: 7
+  armorPenetration: -0.35
+  staminaDamage: 3
+  pierceChance: 0.20
+  derivation: 0.05
+  ricochetChance: 0.30
+  pierceLevel: Metal
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: sp
+
+- type: hitscan
   id: BulletLightRifleTraceHP
   parent: BulletTrace
   damage:

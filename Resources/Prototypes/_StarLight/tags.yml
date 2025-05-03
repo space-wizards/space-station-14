@@ -19,6 +19,9 @@
   id: CartridgeMagnumImprovised
 
 - type: Tag
+  id: CartridgeLightRifleImprovised
+
+- type: Tag
   id: ModularBarrel
   
 - type: Tag

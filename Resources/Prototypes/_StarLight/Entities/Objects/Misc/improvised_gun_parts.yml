@@ -86,6 +86,27 @@
 
 - type: entity
   parent: BaseItem
+  id: UnfinishedSniperForged
+  name: forged sniper parts
+  description: Some assembly may be reqiured. Needs welding.
+  components:
+  - type: Item
+    size: Large
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Snipers/forged_rifle.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: WeaponSniperForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedSniperGraph
+    node: shotgun
+
+- type: entity
+  parent: BaseItem
   id: ModularBarrel
   name: modular barrel
   description: A vital component in guncrafting.

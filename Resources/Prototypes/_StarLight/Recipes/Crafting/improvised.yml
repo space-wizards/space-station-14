@@ -218,3 +218,55 @@
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/SMGs/improvised_smg_magazine.rsi
     state: base
+
+- type: construction
+  name: makeshift repeater rifle
+  id: WeaponSniperMakeshift
+  graph: MakeshiftSniperGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: Too big to fit in your pocket, but small enough to fit in your bag. An odd weapon indeed.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Snipers/makeshift_rifle.rsi
+    state: base
+
+- type: construction
+  name: improvised repeater rifle
+  id: WeaponSniperImprovised
+  graph: ImprovisedSniperGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: The weird in-between cousin, too big to be stored comfortably, but also not that inaccurate.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Snipers/improvised_rifle.rsi
+    state: base
+
+- type: construction
+  name: forged repeater rifle
+  id: WeaponSniperForged
+  graph: ForgedSniperGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: The peak of tider engineering. But does need welding supplies to finish.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Snipers/forged_rifle.rsi
+    state: base
+
+- type: construction
+  name: improvised rifle bullet
+  id: CartridgeLightRifleImprovised
+  graph: ImprovisedLightRifleBulletGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: Better than nothing. Fairly full with phosphorus but still won't hit as hard.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/improvised_casing.rsi
+    state: base

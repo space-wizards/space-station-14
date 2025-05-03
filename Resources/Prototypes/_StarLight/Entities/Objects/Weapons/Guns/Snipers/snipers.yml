@@ -1,0 +1,128 @@
+- type: entity
+  name: Makeshift Repeater Rifle
+  parent: [BaseWeaponSniper, BaseMinorContraband]
+  id: WeaponSniperMakeshift
+  description: It'll blow a hole in the guy you point this at, if it doesn't snap your wrist first.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Snipers/makeshift_rifle.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Snipers/makeshift_rifle.rsi
+  - type: Item
+    size: Normal # Small, but can't fit in your pocket.
+  - type: Gun
+    fireRate: 1
+    minAngle: 10
+    maxAngle: 20
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+  - type: KnockbackByUserTag
+    doestContain:
+      Resomi:
+        knockback: 1.5
+      Felionoid:
+        knockback: 0.5
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeLightRifle
+      - CartridgeLightRifleImprovised
+    capacity: 2
+    proto: null
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0.40
+    selfDamage:
+      types:
+        Blunt: 10
+        Heat: 10
+    items:
+      - id: ModularBarrel
+        launchAngle: 0
+        prob: 1
+      - id: ModularReceiver
+        launchAngle: 90
+        prob: 0.10
+      - id: RifleStock
+        launchAngle: 180
+        prob: 0.80
+  - type: Construction
+    graph: MakeshiftSniperGraph
+    node: shotgun
+
+- type: entity
+  name: Improvised Repeater Rifle
+  parent: WeaponSniperMakeshift
+  id: WeaponSniperImprovised
+  description: Can ALMOST reliably hit a target!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Snipers/improvised_rifle.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Snipers/improvised_rifle.rsi
+  - type: Item
+    size: Large
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -5
+    maxAngle: -10
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: BallisticAmmoProvider
+    capacity: 4
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0.20
+    items:
+      - id: ModularBarrel
+        launchAngle: 0
+        prob: 1
+      - id: ModularReceiver
+        launchAngle: 90
+        prob: 0.10
+      - id: SheetSteel1
+        launchAngle: 67
+        prob: 0.20
+      - id: SheetSteel1
+        launchAngle: 87
+        prob: 0.20
+      - id: SheetSteel1
+        launchAngle: 270
+        prob: 0.20
+      - id: RifleStock
+        launchAngle: 180
+        prob: 0.80
+  - type: Construction
+    graph: ImprovisedSniperGraph
+    node: shotgun
+
+
+- type: entity
+  name: Forged Repeater Rifle
+  parent: WeaponSniperMakeshift
+  id: WeaponSniperForged
+  description: The best a tider can achive, reliable fire-rate and accuracy with a satisfying lever-action system. What more can you ask for?
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Snipers/forged_rifle.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Snipers/forged_rifle.rsi
+  - type: Item
+    size: Huge
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -8
+    maxAngle: -15
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: BallisticAmmoProvider
+    capacity: 8
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0
