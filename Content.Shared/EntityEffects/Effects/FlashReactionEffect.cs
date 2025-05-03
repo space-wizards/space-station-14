@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects;
 
 [DataDefinition]
-public sealed partial class FlashReactionEffect : EntityEffect
+public sealed partial class FlashReactionEffect : EventEntityEffect<FlashReactionEffect>
 {
     /// <summary>
     ///     Flash range per unit of reagent.
@@ -45,10 +45,4 @@ public sealed partial class FlashReactionEffect : EntityEffect
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-flash-reaction-effect", ("chance", Probability));
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<FlashReactionEffect>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 }

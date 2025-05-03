@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects;
 
 [UsedImplicitly]
-public sealed partial class FlammableReaction : EntityEffect
+public sealed partial class FlammableReaction : EventEntityEffect<FlammableReaction>
 {
     [DataField]
     public float Multiplier = 0.05f;
@@ -20,10 +20,4 @@ public sealed partial class FlammableReaction : EntityEffect
         => Loc.GetString("reagent-effect-guidebook-flammable-reaction", ("chance", Probability));
 
     public override LogImpact LogImpact => LogImpact.Medium;
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<FlammableReaction>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 }

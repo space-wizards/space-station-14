@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 namespace Content.Shared.EntityEffects.Effects;
 
 [DataDefinition]
-public sealed partial class ExplosionReactionEffect : EntityEffect
+public sealed partial class ExplosionReactionEffect : EventEntityEffect<ExplosionReactionEffect>
 {
     /// <summary>
     ///     The type of explosion. Determines damage types and tile break chance scaling.
@@ -56,10 +56,4 @@ public sealed partial class ExplosionReactionEffect : EntityEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-explosion-reaction-effect", ("chance", Probability));
     public override LogImpact LogImpact => LogImpact.High;
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<ExplosionReactionEffect>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 }

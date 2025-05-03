@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects;
 
 [DataDefinition]
-public sealed partial class EmpReactionEffect : EntityEffect
+public sealed partial class EmpReactionEffect : EventEntityEffect<EmpReactionEffect>
 {
     /// <summary>
     ///     Impulse range per unit of quantity
@@ -31,10 +31,4 @@ public sealed partial class EmpReactionEffect : EntityEffect
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
             => Loc.GetString("reagent-effect-guidebook-emp-reaction-effect", ("chance", Probability));
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<EmpReactionEffect>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 }

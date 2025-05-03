@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
-public sealed partial class CreateGas : EntityEffect
+public sealed partial class CreateGas : EventEntityEffect<CreateGas>
 {
     [DataField(required: true)]
     public Gas Gas = default!;
@@ -29,10 +29,4 @@ public sealed partial class CreateGas : EntityEffect
     }
 
     public override LogImpact LogImpact => LogImpact.High;
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<CreateGas>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 }

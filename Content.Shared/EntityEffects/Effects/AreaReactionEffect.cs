@@ -12,7 +12,7 @@ namespace Content.Shared.EntityEffects.Effects;
 /// </summary>
 [UsedImplicitly]
 [DataDefinition]
-public sealed partial class AreaReactionEffect : EntityEffect
+public sealed partial class AreaReactionEffect : EventEntityEffect<AreaReactionEffect>
 {
     /// <summary>
     /// How many seconds will the effect stay, counting after fully spreading.
@@ -43,10 +43,4 @@ public sealed partial class AreaReactionEffect : EntityEffect
                 );
 
     public override LogImpact LogImpact => LogImpact.High;
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<AreaReactionEffect>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 }

@@ -2,7 +2,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
-public sealed partial class CureZombieInfection : EntityEffect
+public sealed partial class CureZombieInfection : EventEntityEffect<CureZombieInfection>
 {
     [DataField]
     public bool Innoculate;
@@ -13,12 +13,6 @@ public sealed partial class CureZombieInfection : EntityEffect
             return Loc.GetString("reagent-effect-guidebook-innoculate-zombie-infection", ("chance", Probability));
 
         return Loc.GetString("reagent-effect-guidebook-cure-zombie-infection", ("chance", Probability));
-    }
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<CureZombieInfection>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
     }
 }
 

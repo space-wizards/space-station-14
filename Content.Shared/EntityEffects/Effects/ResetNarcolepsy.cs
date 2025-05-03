@@ -8,7 +8,7 @@ namespace Content.Shared.EntityEffects.Effects;
 /// Reset narcolepsy timer
 /// </summary>
 [UsedImplicitly]
-public sealed partial class ResetNarcolepsy : EntityEffect
+public sealed partial class ResetNarcolepsy : EventEntityEffect<ResetNarcolepsy>
 {
     /// <summary>
     /// The # of seconds the effect resets the narcolepsy timer to
@@ -18,10 +18,4 @@ public sealed partial class ResetNarcolepsy : EntityEffect
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-reset-narcolepsy", ("chance", Probability));
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<ResetNarcolepsy>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 }

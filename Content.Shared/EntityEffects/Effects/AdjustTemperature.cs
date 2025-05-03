@@ -2,7 +2,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
-public sealed partial class AdjustTemperature : EntityEffect
+public sealed partial class AdjustTemperature : EventEntityEffect<AdjustTemperature>
 {
     [DataField]
     public float Amount;
@@ -12,10 +12,4 @@ public sealed partial class AdjustTemperature : EntityEffect
             ("chance", Probability),
             ("deltasign", MathF.Sign(Amount)),
             ("amount", MathF.Abs(Amount)));
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<AdjustTemperature>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 }

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.EntityEffects.Effects;
 
-public sealed partial class Polymorph : EntityEffect
+public sealed partial class Polymorph : EventEntityEffect<Polymorph>
 {
     /// <summary>
     ///     What polymorph prototype is used on effect
@@ -16,10 +16,4 @@ public sealed partial class Polymorph : EntityEffect
     => Loc.GetString("reagent-effect-guidebook-make-polymorph",
             ("chance", Probability), ("entityname",
                 prototype.Index<EntityPrototype>(prototype.Index<PolymorphPrototype>(PolymorphPrototype).Configuration.Entity).Name));
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<Polymorph>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 }

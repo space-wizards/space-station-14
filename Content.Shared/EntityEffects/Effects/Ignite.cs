@@ -7,7 +7,7 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <summary>
 ///     Ignites a mob.
 /// </summary>
-public sealed partial class Ignite : EntityEffect
+public sealed partial class Ignite : EventEntityEffect<Ignite>
 {
     public override bool ShouldLog => true;
 
@@ -15,10 +15,4 @@ public sealed partial class Ignite : EntityEffect
         => Loc.GetString("reagent-effect-guidebook-ignite", ("chance", Probability));
 
     public override LogImpact LogImpact => LogImpact.Medium;
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<Ignite>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 }

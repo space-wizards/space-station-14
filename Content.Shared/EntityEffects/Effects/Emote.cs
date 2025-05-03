@@ -9,7 +9,7 @@ namespace Content.Shared.EntityEffects.Effects;
 ///     Tries to force someone to emote (scream, laugh, etc). Still respects whitelists/blacklists and other limits unless specially forced.
 /// </summary>
 [UsedImplicitly]
-public sealed partial class Emote : EntityEffect
+public sealed partial class Emote : EventEntityEffect<Emote>
 {
     /// <summary>
     ///     The emote the entity will preform.
@@ -41,11 +41,5 @@ public sealed partial class Emote : EntityEffect
             return null; // JUSTIFICATION: Emoting is mostly flavor, so same reason popup messages are not in here.
 
         return Loc.GetString("reagent-effect-guidebook-emote", ("chance", Probability), ("emote", EmoteId));
-    }
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<Emote>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
     }
 }
