@@ -306,6 +306,3 @@ Resources/MapImages
 
 # Direnv stuff
 .direnv/
-
-# fuck voxes
-Resources/ConfigPresets/Build/development.toml
