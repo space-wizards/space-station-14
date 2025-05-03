@@ -213,6 +213,8 @@ public abstract partial class SharedStunSystem : EntitySystem
             AddComp(uid, knockedDown);
             component = knockedDown;
         }
+        else
+            RefreshKnockedMovement((uid, component), standing);
 
         var knockedEv = new KnockedDownEvent()
         {
@@ -221,8 +223,6 @@ public abstract partial class SharedStunSystem : EntitySystem
         RaiseLocalEvent(uid, ref knockedEv);
 
         component.NextUpdate = GameTiming.CurTime + knockedEv.KnockdownTime;
-
-        RefreshKnockedMovement(uid, component, standing);
 
         Dirty(uid, component);
 

@@ -78,6 +78,7 @@ public abstract partial class SharedStunSystem
     private void OnKnockInit(Entity<KnockedDownComponent> ent, ref ComponentInit args)
     {
         _standingState.Down(ent, true, ent.Comp.AutoStand);
+        RefreshKnockedMovement(ent);
     }
 
     private void OnKnockShutdown(Entity<KnockedDownComponent> ent, ref ComponentShutdown args)
@@ -88,6 +89,9 @@ public abstract partial class SharedStunSystem
 
         _standingState.Stand(ent);
         Alerts.ClearAlert(ent, "Knockdown");
+
+        var ev = new KnockdownEndEvent();
+        RaiseLocalEvent(ent, ref ev);
 
         _movementSpeedModifier.RefreshMovementSpeedModifiers(ent);
         _movementSpeedModifier.RefreshFrictionModifiers(ent);
@@ -291,9 +295,9 @@ public abstract partial class SharedStunSystem
 
     #region Movement and Friction
 
-    private void RefreshKnockedMovement(EntityUid uid, KnockedDownComponent component, StandingStateComponent? standing = null)
+    private void RefreshKnockedMovement(Entity<KnockedDownComponent> ent, StandingStateComponent? standing = null)
     {
-        if (!Resolve(uid, ref standing, false))
+        if (!Resolve(ent, ref standing, false))
             return;
 
         var ev = new KnockedDownRefreshEvent()
@@ -301,13 +305,13 @@ public abstract partial class SharedStunSystem
             SpeedModifier = standing.SpeedModifier,
             FrictionModifier = standing.FrictionModifier,
         };
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(ent, ref ev);
 
-        component.SpeedModifier = ev.SpeedModifier;
-        component.FrictionModifier = ev.FrictionModifier;
+        ent.Comp.SpeedModifier = ev.SpeedModifier;
+        ent.Comp.FrictionModifier = ev.FrictionModifier;
 
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
-        _movementSpeedModifier.RefreshFrictionModifiers(uid);
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(ent);
+        _movementSpeedModifier.RefreshFrictionModifiers(ent);
     }
 
     private void OnRefreshKnockedSpeed(EntityUid ent, KnockedDownComponent comp, RefreshMovementSpeedModifiersEvent args)
@@ -328,12 +332,12 @@ public abstract partial class SharedStunSystem
 
     private void OnHandEquipped(Entity<KnockedDownComponent> ent, ref DidEquipHandEvent args)
     {
-        RefreshKnockedMovement(ent, ent.Comp);
+        RefreshKnockedMovement(ent);
     }
 
     private void OnHandUnequipped(Entity<KnockedDownComponent> ent, ref DidUnequipHandEvent args)
     {
-        RefreshKnockedMovement(ent, ent.Comp);
+        RefreshKnockedMovement(ent);
     }
 
     #endregion
@@ -380,6 +384,10 @@ public abstract partial class SharedStunSystem
         public bool AutoStand;
         public TimeSpan DoAfterTime;
     }
+
+    [ByRefEvent]
+
+    public record struct KnockdownEndEvent;
 
     /// <summary>
     ///     Raised when you click on the Knocked Down Alert
