@@ -3678,6 +3678,12 @@
   - type: Inventory
     speciesId: dog
     templateId: smartcorgi
+    displacements:
+      belt:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/corgi.rsi
+            state: belt_displacement
   - type: Hands # HANDS!
   - type: Puller
   - type: Cuffable # bad dog!
@@ -3709,10 +3715,5 @@
     - VimPilot
     - CanPilot
     - DoorBumpOpener
-  - type: Storage #Slime-type storage; probably replace if it's deemed sensible to let corgis wear regular bags, or if a custom 'dog bag' is made
-    clickInsert: false
-    grid:
-    - 0,0,3,3
-    maxItemSize: Huge
   - type: StatusIcon # marks them as crew
     bounds: -0.5,-0.5,0.5,0.5
