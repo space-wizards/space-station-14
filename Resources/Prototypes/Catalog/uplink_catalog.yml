@@ -1538,6 +1538,7 @@
   categories:
   - UplinkWearables
 
+# TODO: Revert back to normal thieving gloves when clothes dyeing is added
 - type: listing
   id: UplinkgClothingThievingGloves
   name: uplink-clothing-chameleon-thieving-gloves-name
