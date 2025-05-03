@@ -28,8 +28,18 @@ public sealed class RefCountSystem : EntitySystem
             return false;
 
         ent.Comp ??= EnsureComp<RefCountComponent>(ent);
-        EnsureComp<T>(ent);
         var name = _factory.GetComponentName<T>();
+        if (EnsureComp<T>(ent, out _) && GetCount(ent.Comp, name) == 0)
+        {
+            // increment it again if we already had the component and it wasn't refcounted before
+            // this means when Add is counted on an entity that has the component already, calling remove after won't actually remove it
+            // for prototypes this means they will never be removed by refcounting
+            // for other systems they are in control of removing
+            // example: reagent refcount-adds NoSlip to a mob, special mob that already has NoSlip drinks it. the reagent expiring shouldn't remove NoSlip.
+            // once the reagent wears off it stays having a count of 1, ensuring it doesn't get removed
+            Increment((ent, ent.Comp), name);
+        }
+
         return Increment((ent, ent.Comp), name);
     }
 
