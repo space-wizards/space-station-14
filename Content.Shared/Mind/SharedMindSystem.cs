@@ -266,6 +266,7 @@ public abstract partial class SharedMindSystem : EntitySystem
         if (!HasComp<MobStateComponent>(mind.OwnedEntity))
             return true;
 
+        // Could use checks for the amount of damage they have, but with chemistry you can never tell what damage means someone is truly "unrevivable".
         return false;
     }
 
@@ -576,8 +577,8 @@ public abstract partial class SharedMindSystem : EntitySystem
     ///     True if this Mind is 'sufficiently unrevivable' IC (Objectives, EndText).
     ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.
     ///     "If administrators decide that zombies are unrevivable, this returns true for zombies."
-    ///     Alternative IsCharacterDeadIC that checks for whether they will be able to inherit their original body again.
-    ///     Cases when they must be given a new body to live (cloning, borging, being a brain, etc) should count as "unrevivable".
+    ///     Alternative IsCharacterDeadIC that checks for whether they will be able to inherit their body again.
+    ///     State in which they must be given a new body to "live" (borging, being a brain, etc) should count as "unrevivable".
     /// </summary>
     public bool IsCharacterUnrevivableIc(MindComponent mind)
     {
