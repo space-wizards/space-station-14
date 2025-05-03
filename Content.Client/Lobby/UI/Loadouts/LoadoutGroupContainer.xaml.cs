@@ -111,15 +111,27 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             {
                 var row = contentContainer;
 
-                var first = CreateLoadoutUI(protos[0], profile, loadout, session, collection);
+                var uiElements = protos
+                    .Select(proto =>
+                    {
+                        var elem = CreateLoadoutUI(proto, profile, loadout, session, collection);
+                        elem.HorizontalExpand = true;
+                        return elem;
+                    })
+                    .ToList();
+
+                var first = uiElements.FirstOrDefault(e => e.Select.Pressed) ?? uiElements[0];
+
+                var otherElements = uiElements.Where(e => !ReferenceEquals(e, first)).ToList();
+
                 first.HorizontalExpand = true;
-                var toggle = new Button { Text = "▶",
+                var toggle = new Button
+                {
+                    Text = "▶",
                     VerticalExpand = false,
                     HorizontalExpand = false,
                     HorizontalAlignment = HAlignment.Right,
                     VerticalAlignment = VAlignment.Bottom,
-
-
                 };
                 var subContainer = new SubLoadoutContainer(toggle)
                 {
@@ -142,8 +154,8 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 
                 first.Select.AddChild(toggle);
                 contentContainer.AddChild(first);
-                foreach (var proto in protos.Skip(1))
-                    subList.AddChild(CreateLoadoutUI(proto, profile, loadout, session, collection));
+                foreach (var proto in otherElements)
+                    subList.AddChild(proto);
                 UpdateToggleColor(toggle, subList);
             }
             else
