@@ -47,9 +47,9 @@ public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) 
         SendMessage(new SprayPainterDecalPickedMessage(protoId));
     }
 
-    private void OnTabChanged(int index)
+    private void OnTabChanged(int index, bool isSelectedTabWithDecals)
     {
-        SendMessage(new SprayPainterTabChangedMessage(index));
+        SendMessage(new SprayPainterTabChangedMessage(index, isSelectedTabWithDecals));
     }
 
     private void OnSpritePicked(string category, int index)

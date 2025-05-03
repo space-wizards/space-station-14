@@ -56,12 +56,9 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
                 layer.Rsi = sprite.BaseRSI;
             }
         }
-        else if (AppearanceSystem.TryGetData<string>(uid,
-                     PaintableVisuals.LockerRSI,
-                     out var prototype2,
-                     args.Component))
+        else if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.LockerRSI, out var prototype2, args.Component))
         {
-            if (!_prototypeManager.TryIndex(prototype1, out var proto))
+            if (!_prototypeManager.TryIndex(prototype2, out var proto))
                 return;
 
             if (!proto.TryGetComponent(out EntityStorageVisualsComponent? visuals, _componentFactory))

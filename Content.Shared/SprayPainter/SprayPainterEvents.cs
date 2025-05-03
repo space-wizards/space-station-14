@@ -31,9 +31,10 @@ public sealed class SprayPainterDecalAnglePickedMessage(int angle) : BoundUserIn
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterTabChangedMessage(int index) : BoundUserInterfaceMessage
+public sealed class SprayPainterTabChangedMessage(int index, bool isSelectedTabWithDecals) : BoundUserInterfaceMessage
 {
     public readonly int Index = index;
+    public readonly bool IsSelectedTabWithDecals = isSelectedTabWithDecals;
 }
 
 [Serializable, NetSerializable]

@@ -121,6 +121,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
     private void OnTabChanged(EntityUid uid, SprayPainterComponent component, SprayPainterTabChangedMessage args)
     {
         component.SelectedTab = args.Index;
+        component.IsSelectedTabWithDecals = args.IsSelectedTabWithDecals;
         Dirty(uid, component);
     }
 

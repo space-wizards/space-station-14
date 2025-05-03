@@ -32,6 +32,8 @@ public sealed partial class SprayPainterComponent : Component
     [DataField, AutoNetworkedField]
     public int SelectedTab;
 
+    public bool IsSelectedTabWithDecals = false;
+
     [DataField, AutoNetworkedField]
     public ProtoId<DecalPrototype>? SelectedDecal;
 

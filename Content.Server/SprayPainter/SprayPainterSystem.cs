@@ -61,11 +61,11 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             return;
         }
 
-        if (!ent.Comp.SelectedDecal.HasValue
-            || !_decals.TryAddDecal(ent.Comp.SelectedDecal.Value, args.ClickLocation.SnapToGrid(EntityManager).Offset(new(-0.5f)), out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, true))
-        {
+        if (!ent.Comp.IsSelectedTabWithDecals || !ent.Comp.SelectedDecal.HasValue)
             return;
-        }
+
+        if (!_decals.TryAddDecal(ent.Comp.SelectedDecal!.Value, args.ClickLocation.SnapToGrid(EntityManager).Offset(new(-0.5f)), out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, true))
+            return;
 
         _audio.PlayPvs(ent.Comp.SpraySound, ent);
 

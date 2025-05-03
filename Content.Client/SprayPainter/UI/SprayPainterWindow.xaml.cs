@@ -21,7 +21,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
 
     // Events
     public Action<string, int>? OnSpritePicked;
-    public Action<int>? OnTabChanged;
+    public Action<int, bool>? OnTabChanged;
     public Action<ProtoId<DecalPrototype>>? OnDecalChanged;
     public Action<ItemList.ItemListSelectedEventArgs>? OnColorPicked;
     public Action<Color?>? OnDecalColorChanged;
@@ -47,7 +47,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         _spriteSystem = _sysMan.GetEntitySystem<SpriteSystem>();
-        Tabs.OnTabChanged += (index) => OnTabChanged?.Invoke(index);
+        Tabs.OnTabChanged += (index) => OnTabChanged?.Invoke(index, _sprayPainterDecals?.GetPositionInParent() == index);
     }
 
     private string GetColorLocString(string? colorKey)
