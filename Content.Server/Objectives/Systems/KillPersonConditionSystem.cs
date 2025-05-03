@@ -46,9 +46,6 @@ public sealed class KillPersonConditionSystem : EntitySystem
             requireMaroon = false;
         }
 
-        Log.Debug(_emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value).ToString());
-        Log.Debug(_mind.IsCharacterUnrevivableIc(mind).ToString());
-
         if (requireDead && !targetDead)
             return 0f;
 
