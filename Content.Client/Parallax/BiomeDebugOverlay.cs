@@ -37,7 +37,7 @@ public sealed class BiomeDebugOverlay : Overlay
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
-        var mapUid = _maps.GetMap(args.MapId);
+        var mapUid = _maps.GetMapOrInvalid(args.MapId);
 
         return _entManager.HasComponent<BiomeComponent>(mapUid);
     }
