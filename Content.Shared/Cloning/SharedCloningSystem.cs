@@ -56,8 +56,21 @@ public abstract partial class SharedCloningSystem : EntitySystem
 
         var componentsToCopy = settings.Components;
 
-        if (!CloneComponents(original, clone.Value, componentsToCopy))
-            return false;
+        foreach (var componentName in componentsToCopy)
+        {
+            if (!_componentFactory.TryGetRegistration(componentName, out var componentRegistration))
+            {
+                Log.Error($"Tried to use invalid component registration for cloning: {componentName}");
+                return false;
+            }
+
+            if (EntityManager.TryGetComponent(original, componentRegistration.Type, out var sourceComp)) // Does the original have this component?
+            {
+                if (HasComp(clone.Value, componentRegistration.Type)) // CopyComp cannot overwrite existing components
+                    RemComp(clone.Value, componentRegistration.Type);
+                CopyComp(original, clone.Value, sourceComp);
+            }
+        }
 
         // don't make status effects permanent
         if (TryComp<StatusEffectsComponent>(original, out var statusComp))
@@ -91,25 +104,6 @@ public abstract partial class SharedCloningSystem : EntitySystem
         _metaData.SetEntityName(clone.Value, originalName);
 
         _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"The body of {original:player} was cloned as {clone.Value:player}");
-        return true;
-    }
-
-    public bool CloneComponents(EntityUid source, EntityUid clone,  HashSet<String> componentsToCopy)
-    {
-        foreach (var componentName in componentsToCopy)
-        {
-            if (!_componentFactory.TryGetRegistration(componentName, out var componentRegistration))
-            {
-                Log.Error($"Tried to use invalid component registration for cloning: {componentName}");
-                return false;
-            }
-
-            if (!EntityManager.TryGetComponent(source, componentRegistration.Type, out var sourceComp)) // Does the original have this component?
-                continue;
-            if (HasComp(clone, componentRegistration.Type)) // CopyComp cannot overwrite existing components
-                RemComp(clone, componentRegistration.Type);
-            CopyComp(source, clone, sourceComp);
-        }
         return true;
     }
 
