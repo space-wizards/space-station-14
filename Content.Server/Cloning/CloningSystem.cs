@@ -62,9 +62,6 @@ public sealed partial class CloningSystem : EntitySystem
 
         CloneComponents(original, clone.Value, settings);
 
-        var cloningEv = new CloningEvent(settings, clone.Value);
-        RaiseLocalEvent(original, ref cloningEv); // used for datafields that cannot be directly copied
-
         // Add equipment first so that SetEntityName also renames the ID card.
         if (settings.CopyEquipment != null)
             CopyEquipment(original, clone.Value, settings.CopyEquipment.Value, settings.Whitelist, settings.Blacklist);
@@ -96,16 +93,21 @@ public sealed partial class CloningSystem : EntitySystem
     /// <summary>
     /// Clone components based on a cloneSetting list
     /// </summary>
-    /// <param name="original">The orignal Entity to Clone components from</param>
-    /// <param name="clone">the target Entity to clone Components too</param>
-    /// <param name="settings">the Clone settings list of components to clone</param>
+    /// <param name="original">The orignal Entity to Clone components from.</param>
+    /// <param name="clone">The target Entity to clone components to.</param>
+    /// <param name="settings">The clone settings prototype containing the list components to clone.</param>
     public void CloneComponents(EntityUid original, EntityUid clone, CloningSettingsPrototype settings)
     {
         var componentsToCopy = settings.Components;
         var componentsToEvent = settings.EventComponents;
+
         // don't make status effects permanent
         if (TryComp<StatusEffectsComponent>(original, out var statusComp))
-            componentsToCopy.ExceptWith(statusComp.ActiveEffects.Values.Select(s => s.RelevantComponent).Where(s => s != null)!);
+        {
+            var statusComps = statusComp.ActiveEffects.Values.Select(s => s.RelevantComponent).Where(s => s != null).ToList();
+            componentsToCopy.ExceptWith(statusComps!);
+            componentsToEvent.ExceptWith(statusComps!);
+        }
 
         foreach (var componentName in componentsToCopy)
         {
@@ -115,7 +117,7 @@ public sealed partial class CloningSystem : EntitySystem
                 continue;
             }
 
-            RemComp(clone, componentRegistration.Type); // We remove components so that
+            RemComp(clone, componentRegistration.Type);
             if (EntityManager.TryGetComponent(original, componentRegistration.Type, out var sourceComp)) // Does the original have this component?
             {
                 CopyComp(original, clone, sourceComp);
@@ -132,8 +134,9 @@ public sealed partial class CloningSystem : EntitySystem
 
             RemComp(clone, componentRegistration.Type);
         }
+
         var cloningEv = new CloningEvent(settings, clone);
-        RaiseLocalEvent(original, ref cloningEv);
+        RaiseLocalEvent(original, ref cloningEv); // used for datafields that cannot be directly copied
     }
 
     /// <summary>
