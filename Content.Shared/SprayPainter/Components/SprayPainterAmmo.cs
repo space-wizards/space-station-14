@@ -11,6 +11,6 @@ public sealed partial class SprayPainterAmmoComponent : Component
     /// <summary>
     /// The value by which the charge in the spray painter will be recharged.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public int Charges;
 }
