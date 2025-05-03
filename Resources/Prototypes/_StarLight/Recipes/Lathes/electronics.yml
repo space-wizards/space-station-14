@@ -2,3 +2,8 @@
   parent: BaseCircuitboardRecipe
   id: OvenMachineCircuitboard
   result: OvenMachineCircuitboard
+  
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: StoveMachineCircuitboard
+  result: StoveMachineCircuitboard

@@ -67,3 +67,19 @@
     stateDoorClosed: bssecure_door
   - type: AccessReader
     access: [ [ "BlueShield" ] ]
+    
+# Mining Specialist
+- type: entity
+  id: LockerMiningSpecialist
+  parent: LockerBaseSecure
+  name: large mining specialist's locker
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Structures/Storage/closet.rsi
+  - type: EntityStorageVisuals
+    stateBaseClosed: miner
+    stateDoorOpen: miner_open
+    stateDoorClosed: miner_door
+  - type: AccessReader
+    access: [["Salvage"]]

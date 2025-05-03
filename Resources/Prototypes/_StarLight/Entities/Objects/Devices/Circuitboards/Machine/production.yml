@@ -27,3 +27,19 @@
     - type: Tag
       tags:
       - OvenMachineBoard
+      
+- type: entity
+  id: StoveMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: stove machine board
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: KitchenStove
+      stackRequirements:
+        Capacitor: 1
+        Cable: 5
+    - type: Tag
+      tags:
+      - StoveMachineBoard
