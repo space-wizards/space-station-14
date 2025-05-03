@@ -33,7 +33,7 @@ public sealed class RefCountSystem : EntitySystem
     /// <returns>True if the component was just added</returns>
     public bool Add<T>(Entity<RefCountComponent?> ent) where T: IComponent, new()
     {
-        return Add(ent, _factory.GetRegistration<T>().GetType());
+        return Add(ent, _factory.GetRegistration<T>().Type);
     }
 
     /// <summary>
