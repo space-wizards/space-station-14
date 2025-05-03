@@ -14,6 +14,15 @@ public sealed class RefCountSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     private IComponentFactory _factory => EntityManager.ComponentFactory;
 
+    private EntityQuery<RefCountComponent> _query;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _query = GetEntityQuery<RefCountComponent>();
+    }
+
     #region Public API
 
     /// <summary>
@@ -100,7 +109,7 @@ public sealed class RefCountSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return false;
 
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!_query.Resolve(ent, ref ent.Comp, false))
             return false;
 
         var name = _factory.GetComponentName(type);
@@ -120,7 +129,7 @@ public sealed class RefCountSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!_query.Resolve(ent, ref ent.Comp, false))
             return;
 
         foreach (var reg in components.Values)
@@ -129,9 +138,20 @@ public sealed class RefCountSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Get the number of sources for a component name an entity has.
+    /// </summary>
+    public uint GetCount(Entity<RefCountComponent?> ent, string name)
+    {
+        if (!_query.Resolve(ent, ref ent.Comp, false))
+            return 0;
+
+        return GetCount(ent.Comp, name);
+    }
+
     #endregion
 
-    private uint GetCount(RefCountComponent comp, string name)
+    public uint GetCount(RefCountComponent comp, string name)
     {
         return comp.Counts.GetValueOrDefault(name);
     }
