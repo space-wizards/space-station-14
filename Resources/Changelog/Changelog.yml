@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed huds showing for chameleon projector users.
-    type: Fix
-  id: 7910
-  time: '2025-02-06T13:45:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34825
 - author: 12rabbits
   changes:
   - message: Activating a DNA scrambler implant no longer retains the previous identity's
@@ -3919,3 +3912,11 @@
   id: 8411
   time: '2025-05-03T04:18:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33470
+- author: Errant
+  changes:
+  - message: Visiting Command and Security ghostroles, as well as some other rare
+      centcomm ghostroles, now have their names properly randomized.
+    type: Fix
+  id: 8412
+  time: '2025-05-03T12:10:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37143
