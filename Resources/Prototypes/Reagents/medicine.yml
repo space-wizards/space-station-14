@@ -1465,7 +1465,7 @@
 - type: reagent
   id: Celliminol
   name: reagent-name-celliminol
-  group: Special
+  group: Medicine
   desc: reagent-desc-celliminol
   physicalDesc: reagent-physical-desc-bloody
   flavor: medicine
