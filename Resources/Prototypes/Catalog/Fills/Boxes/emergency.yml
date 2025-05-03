@@ -12,7 +12,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FireExtinguisherMini
-    - id: RadioHandheld
+    - id: DrinkFlaskOld
   - type: Sprite
     layers:
     - state: internals
@@ -30,7 +30,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FireExtinguisherMini
-    - id: RadioHandheld
+    - id: DrinkFlaskOld
   - type: Sprite
     layers:
     - state: internals
@@ -52,7 +52,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FireExtinguisherMini
-    - id: RadioHandheld
+    - id: DrinkFlaskOld
   - type: Sprite
     layers:
     - state: internals
@@ -70,7 +70,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FireExtinguisherMini
-    - id: RadioHandheld
+    - id: DrinkFlaskOld
   - type: Sprite
     layers:
     - state: internals
@@ -93,7 +93,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FireExtinguisherMini
-    - id: RadioHandheld
+    - id: DrinkFlaskOld
   - type: Sprite
     layers:
     - state: internals
@@ -111,7 +111,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FireExtinguisherMini
-    - id: RadioHandheld
+    - id: DrinkFlaskOld
   - type: Sprite
     layers:
     - state: internals
@@ -134,7 +134,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FireExtinguisherMini
-    - id: RadioHandheld
+    - id: DrinkFlaskOld
   - type: Sprite
     layers:
     - state: internals
@@ -152,7 +152,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FireExtinguisherMini
-    - id: RadioHandheld
+    - id: DrinkFlaskOld
   - type: Sprite
     layers:
     - state: internals
@@ -180,7 +180,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FireExtinguisherMini
-    - id: RadioHandheld
+    - id: DrinkFlaskOld
   - type: Tag
     tags:
     - BoxHug
@@ -197,7 +197,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FireExtinguisherMini
-    - id: RadioHandheld
+    - id: DrinkFlaskOld
   - type: Label
     currentLabel: reagent-name-nitrogen
 
@@ -213,7 +213,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodBreadBaguette
-    - id: FireExtinguisherMini
+    - id: DrinkFlaskOld
 
 - type: entity
   parent: BoxSurvivalNitrogen
@@ -227,7 +227,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodBreadBaguette
-    - id: FireExtinguisherMini
+    - id: DrinkFlaskOld
   - type: Sprite
     layers:
     - state: internals
@@ -248,7 +248,7 @@
     - id: ExtendedEmergencyOxygenTankFilled
     - id: EmergencyMedipen
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
   - type: Sprite
     layers:
     - state: internals
@@ -265,7 +265,7 @@
     - id: ExtendedEmergencyNitrogenTankFilled
     - id: EmergencyMedipen
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
   - type: Sprite
     layers:
     - state: internals
