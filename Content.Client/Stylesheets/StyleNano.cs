@@ -1325,32 +1325,28 @@ namespace Content.Client.Stylesheets
 
                 // MonotoneButton (unfilled)
                 new StyleRule(
-                    new SelectorElement(typeof(MonotoneButton),
-                    null, null, null),
+                    new SelectorElement(typeof(MonotoneButton), null, null, null),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, monotoneButton),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(MonotoneButton),
-                    new[] {ButtonOpenLeft}, null, null),
+                    new SelectorElement(typeof(MonotoneButton), new[] { ButtonOpenLeft }, null, null),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, monotoneButtonOpenLeft),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(MonotoneButton),
-                    new[] {ButtonOpenRight}, null, null),
+                    new SelectorElement(typeof(MonotoneButton), new[] { ButtonOpenRight }, null, null),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, monotoneButtonOpenRight),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(MonotoneButton),
-                    new[] {ButtonOpenBoth}, null, null),
+                    new SelectorElement(typeof(MonotoneButton), new[] { ButtonOpenBoth }, null, null),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, monotoneButtonOpenBoth),
@@ -1358,32 +1354,28 @@ namespace Content.Client.Stylesheets
 
                 // MonotoneButton (filled)
                 new StyleRule(
-                    new SelectorElement(typeof(MonotoneButton),
-                    null, null, new[] {Button.StylePseudoClassPressed}),
+                    new SelectorElement(typeof(MonotoneButton), null, null, new[] { Button.StylePseudoClassPressed }),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, monotoneFilledButton),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(MonotoneButton),
-                    new[] {ButtonOpenLeft}, null, new[] {Button.StylePseudoClassPressed}),
+                    new SelectorElement(typeof(MonotoneButton), new[] { ButtonOpenLeft }, null, new[] { Button.StylePseudoClassPressed }),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, monotoneFilledButtonOpenLeft),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(MonotoneButton),
-                    new[] {ButtonOpenRight}, null, new[] {Button.StylePseudoClassPressed}),
+                    new SelectorElement(typeof(MonotoneButton), new[] { ButtonOpenRight }, null, new[] { Button.StylePseudoClassPressed }),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, monotoneFilledButtonOpenRight),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(MonotoneButton),
-                    new[] {ButtonOpenBoth}, null, new[] {Button.StylePseudoClassPressed}),
+                    new SelectorElement(typeof(MonotoneButton), new[] { ButtonOpenBoth }, null, new[] { Button.StylePseudoClassPressed }),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, monotoneFilledButtonOpenBoth),

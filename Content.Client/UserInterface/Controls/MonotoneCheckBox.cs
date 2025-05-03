@@ -2,6 +2,9 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls;
 
+/// <summary>
+/// A check box intended for use with a monotone color palette
+/// </summary>
 public sealed class MonotoneCheckBox : CheckBox
 {
     public new const string StyleClassCheckBox = "monotoneCheckBox";
@@ -16,9 +19,6 @@ public sealed class MonotoneCheckBox : CheckBox
     protected override void DrawModeChanged()
     {
         base.DrawModeChanged();
-
-        if (TextureRect == null)
-            return;
 
         // Update appearance
         if (Pressed)
