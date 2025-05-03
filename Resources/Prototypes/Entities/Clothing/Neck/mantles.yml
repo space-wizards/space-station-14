@@ -12,8 +12,8 @@
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckMantleCE
-  name: chief engineer's mantle
-  description: High visibility, check. RIG system, check. High capacity cell, check. Everything a chief engineer could need in a stylish mantle.
+  name: chief engineer's manica
+  description: A segmented arm covering for the experienced Chief Engineer, to signify the hazards of the job and the dangers faced to earn it.
   components:
   - type: Sprite
     sprite: Clothing/Neck/mantles/cemantle.rsi
@@ -84,4 +84,4 @@
   - type: Sprite
     sprite: Clothing/Neck/mantles/mantle.rsi
   - type: Clothing
-    sprite: Clothing/Neck/mantles/mantle.rsi 
+    sprite: Clothing/Neck/mantles/mantle.rsi

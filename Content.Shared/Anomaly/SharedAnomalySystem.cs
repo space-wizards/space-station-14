@@ -116,21 +116,26 @@ public abstract class SharedAnomalySystem : EntitySystem
     /// <summary>
     /// Begins the animation for going supercritical
     /// </summary>
-    /// <param name="uid"></param>
-    public void StartSupercriticalEvent(EntityUid uid)
+    /// <param name="ent">Entity to go supercritical</param>
+    public void StartSupercriticalEvent(Entity<AnomalyComponent?> ent)
     {
         // don't restart it if it's already begun
-        if (HasComp<AnomalySupercriticalComponent>(uid))
+        if (HasComp<AnomalySupercriticalComponent>(ent))
             return;
 
-        AdminLog.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(uid)} began to go supercritical.");
-        if (_net.IsServer)
-            Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(uid)}");
+        if(!Resolve(ent, ref ent.Comp))
+            return;
 
-        var super = AddComp<AnomalySupercriticalComponent>(uid);
+        AdminLog.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(ent.Owner)} began to go supercritical.");
+        if (_net.IsServer)
+            Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(ent.Owner)}");
+
+        Audio.PlayPvs(ent.Comp.SupercriticalSoundAtAnimationStart, Transform(ent).Coordinates);
+
+        var super = AddComp<AnomalySupercriticalComponent>(ent);
         super.EndTime = Timing.CurTime + super.SupercriticalDuration;
-        Appearance.SetData(uid, AnomalyVisuals.Supercritical, true);
-        Dirty(uid, super);
+        Appearance.SetData(ent, AnomalyVisuals.Supercritical, true);
+        Dirty(ent, super);
     }
 
     /// <summary>
@@ -148,10 +153,11 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
-        Audio.PlayPvs(component.SupercriticalSound, Transform(uid).Coordinates);
-
         if (_net.IsServer)
+        {
+            Audio.PlayPvs(component.SupercriticalSound, Transform(uid).Coordinates);
             Log.Info($"Raising supercritical event. Entity: {ToPrettyString(uid)}");
+        }
 
         var powerMod = 1f;
         if (component.CurrentBehavior != null)
@@ -181,7 +187,8 @@ public abstract class SharedAnomalySystem : EntitySystem
             // Logging before resolve, in case the anomaly has deleted itself.
             if (_net.IsServer)
                 Log.Info($"Ending anomaly. Entity: {ToPrettyString(uid)}");
-            AdminLog.Add(LogType.Anomaly, supercritical ? LogImpact.High : LogImpact.Low,
+            AdminLog.Add(LogType.Anomaly,
+                supercritical ? LogImpact.High : LogImpact.Low,
                 $"Anomaly {ToPrettyString(uid)} {(supercritical ? "went supercritical" : "decayed")}.");
         }
 
@@ -240,7 +247,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         var newVal = component.Severity + change;
 
         if (newVal >= 1)
-            StartSupercriticalEvent(uid);
+            StartSupercriticalEvent((uid, component));
 
         component.Severity = Math.Clamp(newVal, 0, 1);
         Dirty(uid, component);
@@ -350,7 +357,7 @@ public abstract class SharedAnomalySystem : EntitySystem
             if (Timing.CurTime <= super.EndTime)
                 continue;
             DoAnomalySupercriticalEvent(ent, anom);
-            RemComp(ent, super);
+            // Removal of the supercritical component is handled by DoAnomalySupercriticalEvent
         }
     }
 
@@ -396,7 +403,7 @@ public abstract class SharedAnomalySystem : EntitySystem
             if (!settings.CanSpawnOnEntities)
             {
                 var valid = true;
-                foreach (var ent in grid.GetAnchoredEntities(tileref.GridIndices))
+                foreach (var ent in _map.GetAnchoredEntities(xform.GridUid.Value, grid, tileref.GridIndices))
                 {
                     if (!physQuery.TryGetComponent(ent, out var body))
                         continue;
@@ -423,7 +430,7 @@ public abstract class SharedAnomalySystem : EntitySystem
 }
 
 [DataRecord]
-public partial record struct AnomalySpawnSettings()
+public record struct AnomalySpawnSettings()
 {
     /// <summary>
     /// should entities block spawning?
@@ -477,4 +484,4 @@ public partial record struct AnomalySpawnSettings()
     public bool SpawnOnSeverityChanged { get; set; } = false;
 }
 
-public sealed partial class ActionAnomalyPulseEvent : InstantActionEvent { }
+public sealed partial class ActionAnomalyPulseEvent : InstantActionEvent;
