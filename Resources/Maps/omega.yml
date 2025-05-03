@@ -41800,8 +41800,6 @@ entities:
       pos: -24.5,18.5
       parent: 4812
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 8070
       - 12220
