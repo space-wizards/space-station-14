@@ -82,7 +82,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         var P1 = inletPipeNode.Air.Pressure;
         var P2 = outletPipeNode.Air.Pressure;
 
-        if (P1 <= valveEntity.Comp.Threshold || P2 > P1)
+        if (P1 <= valveEntity.Comp.Threshold || P2 >= P1)
         {
             valveEntity.Comp.Enabled = false;
             _ambientSoundSystem.SetAmbience(valveEntity, false);
@@ -107,20 +107,19 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         _ambientSoundSystem.SetAmbience(valveEntity, true);
         UpdateAppearance(valveEntity);
 
-        var n1 = inletPipeNode.Air.TotalMoles;
-        var n2 = outletPipeNode.Air.TotalMoles;
-        var V1 = inletPipeNode.Air.Volume;
-        var V2 = outletPipeNode.Air.Volume;
         var T1 = inletPipeNode.Air.Temperature;
-        var T2 = outletPipeNode.Air.Temperature;
 
         // First, calculate the amount of gas we need to transfer to bring us below the threshold.
-        var deltaMolesToPressureThreshold = n1 - (valveEntity.Comp.Threshold * V1) / (Atmospherics.R * T1);
+        var deltaMolesToPressureThreshold =
+            AtmosphereSystem.MolesToPressureThreshold(inletPipeNode.Air, valveEntity.Comp.Threshold);
 
         // Second, calculate the moles required to equalize the pressure.
-        var numerator = n1 * T1 * V2 - n2 * T2 * V1;
-        var denominator = T2 * V1 + T1 * V2;
-        var deltaMolesToEqualizePressure = numerator / denominator;
+        // Cursed rounding to avoid the floating point error-inator.
+        var deltaMolesToEqualizePressure =
+            float.Round(_atmosphereSystem.FractionToEqualizePressure(inletPipeNode.Air, outletPipeNode.Air) *
+                        inletPipeNode.Air.TotalMoles,
+                digits: 3,
+                MidpointRounding.ToPositiveInfinity);
 
         // Third, make sure we only transfer the minimum of the two.
         // We do this so that we don't accidentally transfer so much gas to the point

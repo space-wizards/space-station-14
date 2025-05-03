@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
+using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
 using Robust.Shared.Prototypes;
@@ -250,6 +251,66 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             Merge(destination, buffer);
+        }
+
+        /// <summary>
+        ///     Calculates the dimensionless fraction of gas required to equalize pressure between two gas mixtures.
+        /// </summary>
+        /// <param name="gasMixture1">The first gas mixture involved in the pressure equalization.
+        /// This mixture should be the one you always expect to be the highest pressure.</param>
+        /// <param name="gasMixture2">The second gas mixture involved in the pressure equalization.</param>
+        /// <returns>A float (from 0 to 1) representing the dimensionless fraction of gas that needs to be transferred from the
+        /// mixture of higher pressure to the mixture of lower pressure.</returns>
+        /// <remarks>This properly takes into account the effect
+        /// of gas merging from inlet to outlet affecting the temperature
+        /// (and possibly expanding the pressure) in the outlet.</remarks>
+        /// <example>If you want to calculate the moles required to equalize pressure between an inlet and an outlet,
+        /// multiply the fraction returned by the source moles.</example>
+        public float FractionToEqualizePressure(GasMixture gasMixture1, GasMixture gasMixture2)
+        {
+            /*
+            Problem: the gas being merged from the inlet to the outlet could affect the
+            temp. of the gas and cause a pressure rise.
+
+            The solution to this problem takes on a quadratic form.
+
+            A series of dimensionless ratios are formed between inlet and outlet,
+            and the transfer fraction is solved for.
+            */
+
+            // Ensure that P_1 > P_2 so the quadratic works out.
+            if (gasMixture1.Pressure < gasMixture2.Pressure)
+            {
+                (gasMixture1, gasMixture2) = (gasMixture2, gasMixture1);
+            }
+
+            // Establish the dimensionless ratios.
+            var volumeRatio = gasMixture2.Volume / gasMixture1.Volume;
+            var molesRatio = gasMixture2.TotalMoles / gasMixture1.TotalMoles;
+            var temperatureRatio = gasMixture2.Temperature / gasMixture1.Temperature;
+            var heatCapacityRatio = GetHeatCapacity(gasMixture2) / GetHeatCapacity(gasMixture1);
+
+            // The quadratic equation is solved for the transfer fraction.
+            var quadraticA = 1 + volumeRatio;
+            var quadraticB = molesRatio - volumeRatio + heatCapacityRatio * (temperatureRatio * volumeRatio);
+            var quadraticC = heatCapacityRatio * (molesRatio * temperatureRatio - volumeRatio);
+
+            // Ahhh, Perry the Platypus, I see you've found my secret FLOATING POINT ERROR-INATOR!
+            return (-quadraticB + MathF.Sqrt(quadraticB * quadraticB - 4 * quadraticA * quadraticC)) / (2 * quadraticA);
+        }
+
+        /// <summary>
+        /// Determines the number of moles that need to be removed from a <see cref="GasMixture"/> to reach a target pressure threshold.
+        /// </summary>
+        /// <param name="gasMixture">The gas mixture whose moles and properties will be used in the calculation.</param>
+        /// <param name="targetPressure">The target pressure threshold to calculate against.</param>
+        /// <returns>The difference in moles required to reach the target pressure threshold.</returns>
+        /// <remarks>The temperature of the gas is assumed to be not changing due to a free expansion.</remarks>
+        public static float MolesToPressureThreshold(GasMixture gasMixture, float targetPressure)
+        {
+            // Kid named PV = nRT.
+            return gasMixture.TotalMoles -
+                   targetPressure * gasMixture.Volume / (Atmospherics.R * gasMixture.Temperature);
         }
 
         /// <summary>
