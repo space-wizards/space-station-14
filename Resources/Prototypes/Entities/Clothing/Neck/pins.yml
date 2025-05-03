@@ -168,6 +168,17 @@
 
 - type: entity
   parent: ClothingNeckPinBase
+  id: ClothingNeckGenderfluidPin
+  name: genderfluid pin
+  description: be gender, be fluid
+  components:
+  - type: Sprite
+    state: fluid
+  - type: Clothing
+    equippedPrefix: fluid
+
+- type: entity
+  parent: ClothingNeckPinBase
   id: ClothingNeckTransPin
   name: transgender pin
   description: Be trans do crime.
