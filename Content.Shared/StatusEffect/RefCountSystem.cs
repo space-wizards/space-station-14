@@ -57,7 +57,7 @@ public sealed class RefCountSystem : EntitySystem
         if (!Increment((ent, ent.Comp), name))
             return false;
 
-        if (HasComp(type))
+        if (HasComp(ent, type))
         {
             // same double increment as above
             if (GetCount(ent.Comp, name) == 0)
