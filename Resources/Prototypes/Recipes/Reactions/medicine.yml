@@ -664,7 +664,6 @@
     Haloperidol: 5
 
 - type: reaction
-
   id: Traumoxadone
   impact: Medium
   reactants:
