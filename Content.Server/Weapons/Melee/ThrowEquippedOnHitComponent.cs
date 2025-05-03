@@ -7,7 +7,7 @@ namespace Content.Server.Weapons.Melee;
 /// <summary>
 /// Throw equipped items when this weapon hits an entity. Knock their socks off - literally!
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class ThrowEquippedOnHitComponent : Component
 {
     /// <summary>
