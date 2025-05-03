@@ -74,4 +74,11 @@
   id: 10
   time: '2025-05-02T15:45:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37115
+- author: spanky-spanky
+  changes:
+  - message: Omega has been updated to include genpop.
+    type: Add
+  id: 11
+  time: '2025-05-03T21:19:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37157
 Order: 1
