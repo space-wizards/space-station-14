@@ -65,8 +65,8 @@
   components:
   - type: Sprite
     layers:
-    - state: handdrill
     - state: red
+    - state: handdrill
       sprite: Objects/Tools/handdrill.rsi
   - type: RandomSpawner
     prototypes:
