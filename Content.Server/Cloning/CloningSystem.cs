@@ -7,7 +7,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
-using Content.Shared.NameModifier.Components;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
@@ -36,6 +36,7 @@ public sealed partial class CloningSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     /// <summary>
     ///     Spawns a clone of the given humanoid mob at the specified location or in nullspace.
@@ -75,15 +76,9 @@ public sealed partial class CloningSystem : EntitySystem
         if (settings.CopyImplants)
             CopyImplants(original, clone.Value, settings.CopyInternalStorage, settings.Whitelist, settings.Blacklist);
 
-        var originalName = Name(original);
-        if (TryComp<NameModifierComponent>(original, out var nameModComp)) // if the originals name was modified, use the unmodified name
-            originalName = nameModComp.BaseName;
+        var originalName = _nameMod.GetBaseName(original);
 
-        // This will properly set the BaseName and EntityName for the clone.
-        // Adding the component first before renaming will make sure RefreshNameModifers is called.
-        // Without this the name would get reverted to Urist.
-        // If the clone has no name modifiers, NameModifierComponent will be removed again.
-        EnsureComp<NameModifierComponent>(clone.Value);
+        // Set the clone's name. The raised events will also adjust their PDA and ID card names.
         _metaData.SetEntityName(clone.Value, originalName);
 
         _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"The body of {original:player} was cloned as {clone.Value:player}");
@@ -91,11 +86,11 @@ public sealed partial class CloningSystem : EntitySystem
     }
 
     /// <summary>
-    /// Clone components based on a cloneSetting list
+    ///     Copy components from one entity to another based on a CloningSettingsPrototype.
     /// </summary>
-    /// <param name="original">The orignal Entity to Clone components from.</param>
+    /// <param name="original">The orignal Entity to clone components from.</param>
     /// <param name="clone">The target Entity to clone components to.</param>
-    /// <param name="settings">The clone settings prototype containing the list components to clone.</param>
+    /// <param name="settings">The clone settings prototype containing the list of components to clone.</param>
     public void CloneComponents(EntityUid original, EntityUid clone, CloningSettingsPrototype settings)
     {
         var componentsToCopy = settings.Components;
@@ -117,6 +112,7 @@ public sealed partial class CloningSystem : EntitySystem
                 continue;
             }
 
+            // If the original does not have the component, then the clone shouldn't have it either.
             RemComp(clone, componentRegistration.Type);
             if (EntityManager.TryGetComponent(original, componentRegistration.Type, out var sourceComp)) // Does the original have this component?
             {
@@ -132,11 +128,12 @@ public sealed partial class CloningSystem : EntitySystem
                 continue;
             }
 
+            // If the original does not have the component, then the clone shouldn't have it either.
             RemComp(clone, componentRegistration.Type);
         }
 
         var cloningEv = new CloningEvent(settings, clone);
-        RaiseLocalEvent(original, ref cloningEv); // used for datafields that cannot be directly copied
+        RaiseLocalEvent(original, ref cloningEv); // used for datafields that cannot be directly copied using CopyComp
     }
 
     /// <summary>

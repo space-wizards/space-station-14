@@ -74,8 +74,8 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     public HashSet<string> Components = new();
 
     /// <summary>
-    ///  Components to remove from the clone and copy over manually using a CloneEvent raised on the original.
-    ///  Use this when the component cannot be copied using CopyComp, for example when having an Uid as a datafield.
+    ///     Components to remove from the clone and copy over manually using a CloneEvent raised on the original.
+    ///     Use this when the component cannot be copied using CopyComp, for example when having an Uid as a datafield.
     ///</summary>
     [DataField]
     [AlwaysPushInheritance]
