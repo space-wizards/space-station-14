@@ -14,6 +14,7 @@ public sealed class PeacefulRoundEndSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ISharedPlayersRoleManager _sharedPlayersRoleManager = default!;
+
     private bool _isEnabled = false;
     private bool _roundedEnded = false;
     private readonly List<PlayerFlags> _bypassFlags =
@@ -22,8 +23,8 @@ public sealed class PeacefulRoundEndSystem : EntitySystem
         PlayerFlags.Staff,
         PlayerFlags.ExtRoles
     ]; // I would love to make this a CVar. but it is just not in the cards.
-    
-    
+
+
     public override void Initialize()
     {
         base.Initialize();
@@ -31,35 +32,35 @@ public sealed class PeacefulRoundEndSystem : EntitySystem
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnded);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnSpawnComplete);
         SubscribeLocalEvent<GotRehydratedEvent>(OnRehydrateEvent);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
     }
-    
+
     private void SpreadPeace(EntityUid target)
     {
         if (!_isEnabled || !_roundedEnded) return;
         if (_sharedPlayersRoleManager.HasAnyPlayerFlags(target, _bypassFlags)) return;
         EnsureComp<PacifiedComponent>(target);
     }
-    
+
     private void OnSpawnComplete(PlayerSpawnCompleteEvent ev)
-    {
-        SpreadPeace(ev.Mob);
-    }
+        => SpreadPeace(ev.Mob);
 
     private void OnRehydrateEvent(ref GotRehydratedEvent ev)
-    {
-        SpreadPeace(ev.Target);
-    }
+        => SpreadPeace(ev.Target);
+
+    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
+        => _roundedEnded = false;
 
     private void OnRoundEnded(RoundEndTextAppendEvent ev)
     {
         _roundedEnded = true;
-        foreach (var mob in EntityQuery<MobMoverComponent>())
-        {
-            SpreadPeace(mob.Owner);   
-        }
-        foreach (var mob in EntityQuery<MechComponent>())
-        {
-            SpreadPeace(mob.Owner);
-        }
+
+        var mobMoverQuery = EntityQueryEnumerator<MobMoverComponent>();
+        while (mobMoverQuery.MoveNext(out var uid, out _))
+            SpreadPeace(uid);
+
+        var mechQuery = EntityQueryEnumerator<MechComponent>();
+        while (mechQuery.MoveNext(out var uid, out _))
+            SpreadPeace(uid);
     }
 }
