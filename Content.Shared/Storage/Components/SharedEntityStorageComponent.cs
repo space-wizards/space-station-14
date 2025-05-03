@@ -146,15 +146,14 @@ public sealed class EntityStorageComponentState : ComponentState
     }
 }
 
-// Why does this even pass the entity being inserted if it's raised to the entity being inserted...
 /// <summary>
-/// Raised to the entity being inserted whenever checking if an entity can be inserted into a container.
+/// Raised on the entity being inserted whenever checking if an entity can be inserted into an entity storage.
 /// </summary>
 [ByRefEvent]
 public record struct InsertIntoEntityStorageAttemptEvent(EntityUid ItemToInsert, bool Cancelled = false);
 
 /// <summary>
-/// Raised to the container whenever checking if an entity can be inserted into it.
+/// Raised on the entity storage whenever checking if an entity can be inserted into it.
 /// </summary>
 [ByRefEvent]
 public record struct EntityStorageInsertedIntoAttemptEvent(EntityUid ItemToInsert, bool Cancelled = false);
