@@ -28,8 +28,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 using Content.Shared.Clothing.EntitySystems;
-using Content.Shared; // Added for RadioChimeComponent
-using Content.Server.Radio.Components; // Added for ActiveRadioComponent
+using Content.Shared;
+using Content.Server.Radio.Components;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -173,8 +173,7 @@ public sealed class RadioSystem : EntitySystem
             if (TryComp<ActorComponent>(messageSource, out var aiActor))
             {
                 var aiFilter = Filter.Empty().AddPlayer(aiActor.PlayerSession);
-                _audio.PlayGlobal(aiChimeSound, aiFilter, true, AudioParams.Default.WithVolume(-7f));
-                Logger.Debug("Played AI local chime sound to AI itself.");
+                _audio.PlayGlobal(aiChimeSound, aiFilter, true, AudioParams.Default.WithVolume(-14f));
             }
         }
 
@@ -188,24 +187,14 @@ public sealed class RadioSystem : EntitySystem
                 {
                     senderChimeSound = senderRadioChime.ChimeSound;
                 }
-                else
-                {
-                    Logger.Debug("Sender's headset does not have a RadioChimeComponent or chime sound is null.");
-                }
             }
-            else
-            {
-                Logger.Debug("Sender does not have a headset in ears slot.");
-            }
-
             if (senderChimeSound != null)
             {
                 var radioQueryChime = EntityQueryEnumerator<StationAiHeldComponent, ActorComponent>();
                 while (radioQueryChime.MoveNext(out var aiEntity, out var _, out var aiActorComp))
                 {
                     var aiFilter = Filter.Empty().AddPlayer(aiActorComp.PlayerSession);
-                    _audio.PlayGlobal(senderChimeSound, aiFilter, true, AudioParams.Default.WithVolume(-7f));
-                    Logger.Debug($"Played sender's chime sound locally to AI entity {aiEntity}.");
+                    _audio.PlayGlobal(senderChimeSound, aiFilter, true, AudioParams.Default.WithVolume(-14f));
                 }
             }
         }
@@ -213,18 +202,10 @@ public sealed class RadioSystem : EntitySystem
         // Play normal global chime sound for all listeners (headset conversations)
         if (_inventorySystem.TryGetSlotEntity(messageSource, "ears", out var headsetEntity))
         {
-            Logger.Debug($"Headset entity found in ears slot: {headsetEntity.Value}");
-
             if (TryComp<RadioChimeComponent>(headsetEntity.Value, out var radioChime) && radioChime.ChimeSound != null)
             {
-                Logger.Debug($"RadioChimeComponent found with sound: {radioChime.ChimeSound}");
                 soundPath = radioChime.ChimeSound;
             }
-            else
-            {
-                Logger.Debug("RadioChimeComponent not found or ChimeSound is null on headset entity.");
-            }
-
             if (soundPath != null)
             {
                 // Build filter of players who are actively listening on the radio channel
@@ -248,20 +229,14 @@ public sealed class RadioSystem : EntitySystem
                     if (parent == null || !TryComp<ActorComponent>(parent, out var actor))
                         continue;
 
-                    Logger.Debug($"Adding player entity {parent} listening on channel {channel.ID} to filter");
                     filterBuilder = filterBuilder.AddPlayer(actor.PlayerSession);
                     count++;
                 }
-                Logger.Debug($"Number of players listening to channel added to filter: {count}");
-
-                _audio.PlayGlobal(soundPath, filterBuilder, true, AudioParams.Default.WithVolume(-7f));
-                Logger.Debug("Played global chime sound.");
+                _audio.PlayGlobal(soundPath, filterBuilder, true, AudioParams.Default.WithVolume(-14f));
             }
         }
-        else
-        {
-            Logger.Debug("No headset entity found in ears slot.");
-        }
+
+        // End Starlight
 
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
             ("color", channel.Color),
@@ -320,11 +295,9 @@ public sealed class RadioSystem : EntitySystem
             // send the message
             RaiseLocalEvent(receiver, ref ev);
 
-            // Special case: if sender is AI and receiver is normal player, gaslight the player
-            Logger.Debug($"RadioSystem: Evaluating AI chime sound condition for receiver {receiver}");
+            // Starlight: if sender is AI and receiver is normal player, gaslight the player
             if (HasComp<StationAiHeldComponent>(messageSource) && !HasComp<StationAiHeldComponent>(receiver))
             {
-                Logger.Debug($"RadioSystem: Condition met for receiver {receiver}");
                 ActorComponent? receiverActor = null;
                 if (!TryComp<ActorComponent>(receiver, out receiverActor))
                 {
@@ -336,19 +309,12 @@ public sealed class RadioSystem : EntitySystem
 
                 if (receiverActor != null)
                 {
-                    Logger.Debug($"RadioSystem: Playing AI chime sound locally to normal player {receiver} because sender is AI.");
                     var receiverFilter = Filter.Empty().AddPlayer(receiverActor.PlayerSession);
-                    _audio.PlayGlobal(aiChimeSound, receiverFilter, true, AudioParams.Default.WithVolume(-7f));
-                }
-                else
-                {
-                    Logger.Debug($"RadioSystem: Receiver {receiver} and its parent do not have ActorComponent");
+                    _audio.PlayGlobal(aiChimeSound, receiverFilter, true, AudioParams.Default.WithVolume(-14f));
                 }
             }
-            else
-            {
-                Logger.Debug($"RadioSystem: Receiver {receiver} does not meet AI chime sound condition");
-            }
+
+            // Starlight End
         }
         RaiseLocalEvent(new RadioSpokeEvent
         {
@@ -356,11 +322,6 @@ public sealed class RadioSystem : EntitySystem
             Message = message,
             Receivers = [.. ev.Receivers]
         });
-
-        if (soundPath != null && canSend)
-        {
-            _audio.PlayGlobal(soundPath, filter, true, AudioParams.Default.WithVolume(-7f));
-        }
 
         if (name != Name(messageSource))
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");
