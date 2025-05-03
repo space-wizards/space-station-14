@@ -123,6 +123,7 @@
       components:
       - BorgChassis
   - type: WiresPanel
+    openingTool: Prying
   - type: ActivatableUIRequiresPanel
   - type: NameIdentifier
     group: Silicon
