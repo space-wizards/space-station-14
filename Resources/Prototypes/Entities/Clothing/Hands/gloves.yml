@@ -156,6 +156,8 @@
   - type: Fiber
     fiberMaterial: fibers-nitrile
   - type: FingerprintMask
+  - type: NonStickSurface
+
 ####
 - type: entity
   parent: ClothingHandsButcherable
@@ -434,7 +436,6 @@
     guides:
     - Forensics
 
-# TODO Make lubed items not slip in hands
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesJanitor
@@ -449,3 +450,4 @@
     fiberMaterial: fibers-rubber
     fiberColor: fibers-yellow
   - type: FingerprintMask
+  - type: NonStickSurface

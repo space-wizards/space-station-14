@@ -489,9 +489,6 @@
   id: DrinkGlass
 
 - type: Tag
-  id: DrinkSpaceGlue
-
-- type: Tag
   id: Dropper
 
 - type: Tag

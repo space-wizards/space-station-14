@@ -80,6 +80,8 @@
   tileReactions:
   - !type:SpillTileReaction
   friction: 0.0
+  applicationReactions:
+  - !type:ApplyLubeToItemEffect
 
 - type: reagent
   id: SpaceGlue
@@ -93,6 +95,8 @@
   tileReactions:
   - !type:SpillTileReaction
   viscosity: 0.5
+  applicationReactions:
+  - !type:ApplyGlueToItemEffect
   reactiveEffects:
     Acidic:
       methods: [ Touch ]

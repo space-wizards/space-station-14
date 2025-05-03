@@ -1,0 +1,44 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-NC-SA-4.0",
+    "copyright": "Created by discord: brainfood#7460 / github: brainfood1183 minor edits by Beck Thompson.",
+    "states": [
+        {
+            "name": "body"
+        },
+        {
+            "name": "front"
+        },
+        {
+            "name": "cap_closed"
+        },
+        {
+            "name": "cap_inbetween"
+        },
+        {
+            "name": "cap_open"
+        },
+        {
+            "name": "fill1"
+        },
+        {
+            "name": "fill2"
+        },
+        {
+            "name": "fill3"
+        },
+        {
+            "name": "fill4"
+        },
+        {
+            "name": "fill5"
+        },
+        {
+            "name": "fill6"
+        }
+    ]
+}

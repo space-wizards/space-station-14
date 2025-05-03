@@ -157,6 +157,35 @@ namespace Content.Shared.Hands
     }
 
     /// <summary>
+    ///     Raised right before picking an item up.
+    /// </summary>
+    [PublicAPI]
+    public abstract class AttemptedHandPickupEvent : CancellableEntityEventArgs
+    {
+        /// <summary>
+        ///     Entity that equipped the item.
+        /// </summary>
+        public EntityUid User { get; }
+
+        /// <summary>
+        ///     Item that was equipped.
+        /// </summary>
+        public EntityUid Equipped { get; }
+
+        /// <summary>
+        ///     Hand that the item was placed into.
+        /// </summary>
+        public Hand Hand { get; }
+
+        public AttemptedHandPickupEvent(EntityUid user, EntityUid equipped, Hand hand)
+        {
+            User = user;
+            Equipped = equipped;
+            Hand = hand;
+        }
+    }
+
+    /// <summary>
     ///     Raised when putting an entity into a hand slot
     /// </summary>
     [PublicAPI]
@@ -213,6 +242,23 @@ namespace Content.Shared.Hands
             Hand = hand;
         }
     }
+
+    /// <summary>
+    /// Raised on an entity right before it gets picked up.
+    /// </summary>
+    public sealed class GotAttemptedHandPickupEvent : AttemptedHandPickupEvent
+    {
+        public GotAttemptedHandPickupEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
+    }
+
+    /// <summary>
+    /// Raised directed on a user right before it picks something up.
+    /// </summary>
+    public sealed class DidAttemptedHandPickupEvent : AttemptedHandPickupEvent
+    {
+        public DidAttemptedHandPickupEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
+    }
+
 
     /// <summary>
     /// Raised directed on an entity when it is equipped into hands.
