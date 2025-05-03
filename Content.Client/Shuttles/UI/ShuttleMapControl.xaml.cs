@@ -110,7 +110,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         {
             if (args.Function == EngineKeyFunctions.UIClick)
             {
-                var mapUid = _mapSystem.GetMap(ViewingMap);
+                var mapUid = _mapSystem.GetMapOrInvalid(ViewingMap);
 
                 var beaconsOnly = EntManager.TryGetComponent(mapUid, out FTLDestinationComponent? destComp) &&
                                   destComp.BeaconsOnly;
