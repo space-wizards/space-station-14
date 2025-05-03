@@ -23,7 +23,6 @@ public sealed partial class LoadoutContainer : BoxContainer
 
     private readonly ExamineSystem _examineSystem;
     private readonly GuidebookSystem _guidebookSystem;
-    private readonly ISawmill _sawmill;
 
     private readonly EntityUid? _entity;
 
@@ -33,7 +32,6 @@ public sealed partial class LoadoutContainer : BoxContainer
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-        _sawmill = Logger.GetSawmill("Guidebook");
         _examineSystem = _systemManager.GetEntitySystem<ExamineSystem>();
         _guidebookSystem = _systemManager.GetEntitySystem<GuidebookSystem>();
 
@@ -78,7 +76,6 @@ public sealed partial class LoadoutContainer : BoxContainer
         // do examination?
         if (args.Function == ContentKeyFunctions.ExamineEntity)
         {
-            _sawmill.Debug($"Examine {entity}");
             _examineSystem.DoExamine(entity.Value,
                 userOverride: _guidebookSystem.GetGuidebookUser());
             args.Handle();
