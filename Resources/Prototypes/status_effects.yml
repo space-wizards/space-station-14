@@ -6,6 +6,9 @@
   alert: Stun
 
 - type: statusEffect
+  id: Friction
+
+- type: statusEffect
   id: KnockedDown
   alert: Stun
 

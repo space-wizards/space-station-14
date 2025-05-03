@@ -13,6 +13,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Standing;
+using Robust.Shared.Audio;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
@@ -115,13 +116,11 @@ public abstract partial class SharedStunSystem
         if (!Resolve(ent, ref ent.Comp, false) || !TryComp<StandingStateComponent>(ent, out var state))
             return true;
 
-        if (!_blocker.CanMove(ent))
-            return false;
-
         if (ent.Comp.NextUpdate >= GameTiming.CurTime)
             return false;
 
-        // TODO: Check if we even have space to stand
+        if (!CanStand((ent, ent.Comp)))
+            return false;
 
         var ev = new StandupAttemptEvent()
         {
@@ -144,6 +143,16 @@ public abstract partial class SharedStunSystem
 
         // If we try standing don't try standing again
         return DoAfter.TryStartDoAfter(doAfterArgs, out id);
+    }
+
+    private bool CanStand(Entity<KnockedDownComponent> ent)
+    {
+        if (!_blocker.CanMove(ent))
+            return false;
+
+        // TODO: Check if we even have space to stand
+
+        return true;
     }
 
     private void OnInteractHand(EntityUid uid, KnockedDownComponent knocked, InteractHandEvent args)
@@ -179,7 +188,7 @@ public abstract partial class SharedStunSystem
         // That way if we fail to stand, the game will try to stand for us when we are able to
         ent.Comp.AutoStand = true;
 
-        if (!_blocker.CanMove(ent))
+        if (!CanStand(ent))
             return;
 
         if (!TryComp<StaminaComponent>(ent, out var stamina))
@@ -194,16 +203,19 @@ public abstract partial class SharedStunSystem
 
         // TODO: Raise an event to modify the stamina damage?
 
-        if (Stamina.GetStaminaDamage(ent) + staminaDamage >= stamina.CritThreshold)
+        if (!Stamina.TryTakeStamina(ent, staminaDamage, stamina, visual: true))
         {
             _popup.PopupClient(Loc.GetString("knockdown-component-pushup-failure"), ent);
             return;
         }
 
-        if (Stamina.TryTakeStamina(ent, staminaDamage, stamina))
-            RemComp<KnockedDownComponent>(ent);
+        // If we have a DoAfter, cancel it
+        DoAfter.Cancel(ent.Comp.DoAfter);
+        // Remove Component
+        RemComp<KnockedDownComponent>(ent);
 
         _popup.PopupClient(Loc.GetString("knockdown-component-pushup-success"), ent);
+        _audio.PlayPredicted(stamina.ForceStandSuccessSound, ent.Owner, ent.Owner, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
 
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(ent):user} has force stood up from knockdown.");
     }
@@ -236,6 +248,7 @@ public abstract partial class SharedStunSystem
         {
             if (entity.Comp.AutoStand)
                 entity.Comp.NextUpdate = GameTiming.CurTime + TimeSpan.FromSeconds(0.5f); // TODO: Unhardcode this
+            return;
         }
 
         RemComp<KnockedDownComponent>(entity);

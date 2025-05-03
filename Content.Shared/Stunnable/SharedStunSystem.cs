@@ -48,6 +48,11 @@ public abstract partial class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
         SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
 
+        SubscribeLocalEvent<FrictionStatusComponent, ComponentInit>(OnFrictionInit);
+        SubscribeLocalEvent<FrictionStatusComponent, ComponentShutdown>(OnFrictionRemove);
+        SubscribeLocalEvent<FrictionStatusComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionStatus);
+        SubscribeLocalEvent<FrictionStatusComponent, TileFrictionEvent>(OnRefreshTileFrictionStatus);
+
         SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
         SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(UpdateCanMove);
 
@@ -140,6 +145,18 @@ public abstract partial class SharedStunSystem : EntitySystem
         component.SprintSpeedModifier = 1f;
         component.WalkSpeedModifier = 1f;
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+    }
+
+    private void OnFrictionInit(Entity<FrictionStatusComponent> ent, ref ComponentInit args)
+    {
+        _movementSpeedModifier.RefreshFrictionModifiers(ent);
+    }
+
+    private void OnFrictionRemove(Entity<FrictionStatusComponent> ent, ref ComponentShutdown args)
+    {
+        ent.Comp.FrictionModifier = 1f;
+        ent.Comp.AccelerationModifier = 1f;
+        _movementSpeedModifier.RefreshFrictionModifiers(ent);
     }
 
     // TODO STUN: Make events for different things. (Getting modifiers, attempt events, informative events...)
@@ -258,6 +275,32 @@ public abstract partial class SharedStunSystem : EntitySystem
         return false;
     }
 
+    public bool TryFriction(EntityUid uid,
+        TimeSpan time,
+        bool refresh,
+        float friction,
+        float acceleration,
+        StatusEffectsComponent? status = null)
+    {
+        if (!Resolve(uid, ref status, false))
+            return false;
+
+        if (time <= TimeSpan.Zero)
+            return false;
+
+        if (!_statusEffect.TryAddStatusEffect<FrictionStatusComponent>(uid, "Friction", time, refresh, status))
+            return false;
+
+        var frictionStatus = Comp<FrictionStatusComponent>(uid);
+
+        frictionStatus.FrictionModifier *= friction;
+        frictionStatus.AccelerationModifier *= acceleration;
+
+        _movementSpeedModifier.RefreshFrictionModifiers(uid);
+
+        return true;
+    }
+
     /// <summary>
     /// Updates the movement speed modifiers of an entity by applying or removing the <see cref="SlowedDownComponent"/>.
     /// If both walk and run modifiers are approximately 1 (i.e. normal speed) and <see cref="StaminaComponent.StaminaDamage"/> is 0,
@@ -314,6 +357,17 @@ public abstract partial class SharedStunSystem : EntitySystem
     private void OnRefreshMovespeed(EntityUid ent, SlowedDownComponent comp, RefreshMovementSpeedModifiersEvent args)
     {
         args.ModifySpeed(comp.WalkSpeedModifier, comp.SprintSpeedModifier);
+    }
+
+    private void OnRefreshFrictionStatus(Entity<FrictionStatusComponent> ent, ref RefreshFrictionModifiersEvent args)
+    {
+        args.ModifyFriction(ent.Comp.FrictionModifier);
+        args.ModifyAcceleration(ent.Comp.AccelerationModifier);
+    }
+
+    private void OnRefreshTileFrictionStatus(Entity<FrictionStatusComponent> ent, ref TileFrictionEvent args)
+    {
+        args.Modifier *= ent.Comp.FrictionModifier;
     }
 
     #endregion
