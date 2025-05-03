@@ -21,7 +21,7 @@ namespace Content.Client.Stunnable
 
             CommandBinds.Builder
                 .BindAfter(EngineKeyFunctions.UseSecondary, new PointerInputCmdHandler(OnUseSecondary, true, true), new[] { typeof(SharedInteractionSystem) })
-                .Register<SharedStunSystem>();
+                .Register<StunSystem>();
         }
 
         private bool OnUseSecondary(in PointerInputCmdHandler.PointerInputCmdArgs args)
