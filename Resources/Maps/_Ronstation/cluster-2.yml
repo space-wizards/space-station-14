@@ -4,8 +4,8 @@ meta:
   engineVersion: 255.1.0
   forkId: ""
   forkVersion: ""
-  time: 05/02/2025 19:19:50
-  entityCount: 14274
+  time: 05/03/2025 02:30:05
+  entityCount: 14264
 maps:
 - 12281
 grids:
@@ -8547,7 +8547,7 @@ entities:
       pos: 30.5,20.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -23081.682
+      secondsUntilStateChange: -23209.01
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -62260,12 +62260,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 22.5,-31.5
       parent: 1
-  - uid: 8518
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 17.5,-31.5
-      parent: 1
   - uid: 8522
     components:
     - type: Transform
@@ -62745,11 +62739,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 61.5,-1.5
       parent: 1
-  - uid: 13541
-    components:
-    - type: Transform
-      pos: 34.5,-28.5
-      parent: 1
   - uid: 13542
     components:
     - type: Transform
@@ -62761,23 +62750,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 35.5,-31.5
-      parent: 1
-  - uid: 13544
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 35.5,-31.5
-      parent: 1
-  - uid: 13545
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 35.5,-31.5
-      parent: 1
-  - uid: 13546
-    components:
-    - type: Transform
-      pos: 38.5,-32.5
       parent: 1
   - uid: 13547
     components:
@@ -62802,34 +62774,17 @@ entities:
       rot: 3.141592653589793 rad
       pos: 46.5,-32.5
       parent: 1
-  - uid: 13551
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 46.5,-32.5
-      parent: 1
   - uid: 13552
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 50.5,-32.5
       parent: 1
-  - uid: 13553
-    components:
-    - type: Transform
-      pos: 54.5,-30.5
-      parent: 1
   - uid: 13554
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 54.5,-30.5
-      parent: 1
-  - uid: 13555
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 54.5,-23.5
       parent: 1
   - uid: 13556
     components:
@@ -62851,11 +62806,6 @@ entities:
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: 53.5,-17.5
-      parent: 1
-  - uid: 13560
-    components:
-    - type: Transform
       pos: 53.5,-17.5
       parent: 1
   - uid: 13791
@@ -62904,12 +62854,6 @@ entities:
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 52.5,-1.5
-      parent: 1
-  - uid: 13965
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 52.5,-1.5
       parent: 1
   - uid: 14000
