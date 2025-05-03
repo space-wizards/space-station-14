@@ -29,6 +29,8 @@ uplink-fire-axe-flaming-desc = A classic-style weapon infused with advanced atmo
 uplink-gloves-north-star-name = Gloves of the North Star
 uplink-gloves-north-star-desc = A pair of gloves that reduce your punching cooldown drastically, allowing you to beat people to death in a flurry of punches.
 
+uplink-gloves-knuckleduster-name = Syndicate Knuckle Dusters
+uplink-gloves-knuckleduster-desc = A pair of plastitanium knuckle dusters that let you punch hard enough to break the captains jaw into pieces.
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade
 uplink-explosive-grenade-desc = A simplistic grenade with a 3.5 second long fuse that is geared towards injuring personnel. Causes minimal hull damage.
