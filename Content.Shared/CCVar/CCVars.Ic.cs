@@ -36,6 +36,7 @@ public sealed partial class CCVars
 
     /// <summary>
     ///     A weighted random prototype used to determine the species selected for random characters.
+    ///     If blank, will use a round start species picked at random.
     /// </summary>
     public static readonly CVarDef<string> ICRandomSpeciesWeights =
         CVarDef.Create("ic.random_species_weights", "SpeciesWeights", CVar.SERVER);

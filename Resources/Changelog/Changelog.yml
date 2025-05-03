@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: DuckManZach
-  changes:
-  - message: Floor pills have some new interesting surprises!
-    type: Add
-  id: 7902
-  time: '2025-02-05T08:42:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34843
-- author: Gavin-TC
-  changes:
-  - message: Changed common utensil sprites to appear smaller and more proportionate.
-    type: Tweak
-  id: 7903
-  time: '2025-02-05T13:08:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34277
-- author: Booblesnoot42
-  changes:
-  - message: Inserting another person into a cryogenic sleeping unit is no longer
-      instant.
-    type: Tweak
-  id: 7904
-  time: '2025-02-05T14:46:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34619
-- author: hyperDelegate
-  changes:
-  - message: The Nuclear Operative Reinforcement Teleporter now costs 30TC (was 35).
-    type: Tweak
-  id: 7905
-  time: '2025-02-05T14:54:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34675
 - author: Farrellka
   changes:
   - message: Removed the old long ears for human!
@@ -3922,3 +3893,31 @@
   id: 8403
   time: '2025-05-02T01:56:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37084
+- author: Pronana
+  changes:
+  - message: Items can now slide on ice crust
+    type: Add
+  id: 8404
+  time: '2025-05-02T08:18:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36847
+- author: metalgearsloth
+  changes:
+  - message: Predict gas canisters, gas tanks, and internals.
+    type: Tweak
+  id: 8405
+  time: '2025-05-02T08:22:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33800
+- author: metalgearsloth
+  changes:
+  - message: Fix AI eye movement.
+    type: Fix
+  id: 8406
+  time: '2025-05-02T10:07:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37114
+- author: themias
+  changes:
+  - message: Station beacons retain edited info when reopening their window.
+    type: Fix
+  id: 8407
+  time: '2025-05-02T16:14:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37121
