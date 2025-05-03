@@ -5422,4 +5422,11 @@ Entries:
   id: 751
   time: '2025-04-30T21:10:09.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/561
+- author: STARLIGHT TEAM
+  changes:
+  - message: Pacification is cleared at the end of the round.
+    type: Fix
+  id: 752
+  time: '2025-05-03T05:17:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/572
 
