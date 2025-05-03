@@ -229,7 +229,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
     #region Style caching
 
-    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    protected virtual void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
         if (!args.WasModified<PaintableGroupPrototype>())
             return;

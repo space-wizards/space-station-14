@@ -1,6 +1,5 @@
 using Content.Shared.Decals;
 using Content.Shared.DoAfter;
-using Content.Shared.SprayPainter.Components;
 using Content.Shared.SprayPainter.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -62,21 +61,6 @@ public sealed class SprayPainterColorPickedMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterBoundUserInterfaceState : BoundUserInterfaceState
-{
-    public Dictionary<string, int> SelectedStyles { get; }
-    public string? SelectedColorKey { get; }
-    public Dictionary<string, Color> Palette { get; }
-
-    public SprayPainterBoundUserInterfaceState(Dictionary<string, int> selectedStyles, string? selectedColorKey, Dictionary<string, Color> palette)
-    {
-        SelectedStyles = selectedStyles;
-        SelectedColorKey = selectedColorKey;
-        Palette = palette;
-    }
-}
-
-[Serializable, NetSerializable]
 public sealed partial class SprayPainterDoAfterEvent : DoAfterEvent
 {
     [DataField]
@@ -121,10 +105,10 @@ public sealed partial class SprayPainterCanisterDoAfterEvent : DoAfterEvent
 {
 
     [DataField]
-    public string Prototype;
+    public string Prototype = default!;
 
     [DataField]
-    public string Category;
+    public string Category = default!;
 
     public override DoAfterEvent Clone() => this;
 }

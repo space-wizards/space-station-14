@@ -27,7 +27,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
     public Action<Color?>? OnDecalColorChanged;
     public Action<int>? OnDecalAngleChanged;
 
-    private ItemList ColorList = default!;
+    private ItemList _colorList = default!;
     public Dictionary<string, int> ItemColorIndex = new();
 
     private Dictionary<string, Color> _currentPalette = new();
@@ -36,7 +36,6 @@ public sealed partial class SprayPainterWindow : DefaultWindow
 
     // Decals
     private List<SprayPainterDecalEntry> _currentDecals = [];
-    private string _selectedDecal = string.Empty;
     private SprayPainterDecals? _sprayPainterDecals;
 
     private readonly SpriteSpecifier _colorEntryIconTexture = new SpriteSpecifier.Rsi(
@@ -65,7 +64,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
 
     public string? IndexToColorKey(int index)
     {
-        return (string?)ColorList[index].Metadata;
+        return (string?)_colorList[index].Metadata;
     }
 
     private void OnItemSelected(BaseButton.ButtonEventArgs args, ListData data)
@@ -122,12 +121,12 @@ public sealed partial class SprayPainterWindow : DefaultWindow
             _currentPalette = palette;
             ItemColorIndex.Clear();
 
-            ColorList = new ItemList() { VerticalExpand = true };
+            _colorList = new ItemList() { VerticalExpand = true };
             var label = new Label() { Text = Loc.GetString("spray-painter-selected-color") };
             var box = new BoxContainer() { Orientation = BoxContainer.LayoutOrientation.Vertical };
 
             box.AddChild(label);
-            box.AddChild(ColorList);
+            box.AddChild(_colorList);
 
             Tabs.AddChild(box);
             TabContainer.SetTabTitle(box, Loc.GetString("spray-painter-tabs-pipes"));
@@ -135,11 +134,11 @@ public sealed partial class SprayPainterWindow : DefaultWindow
             foreach (var color in palette)
             {
                 var locString = GetColorLocString(color.Key);
-                var item = ColorList.AddItem(locString, _spriteSystem.Frame0(_colorEntryIconTexture));
+                var item = _colorList.AddItem(locString, _spriteSystem.Frame0(_colorEntryIconTexture));
                 item.IconModulate = color.Value;
                 item.Metadata = color.Key;
 
-                ItemColorIndex.Add(color.Key, ColorList.IndexOf(item));
+                ItemColorIndex.Add(color.Key, _colorList.IndexOf(item));
             }
         }
 
@@ -163,8 +162,8 @@ public sealed partial class SprayPainterWindow : DefaultWindow
         }
 
         var index = ItemColorIndex[selectedColorKey ?? _currentPalette.Keys.First()];
-        ColorList[index].Selected = true;
-        ColorList.OnItemSelected += OnColorPicked;
+        _colorList[index].Selected = true;
+        _colorList.OnItemSelected += OnColorPicked;
     }
 
     private void GenerateItems(ListData data, ListContainerButton button)
@@ -174,7 +173,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
 
         var box = new BoxContainer() { Orientation = BoxContainer.LayoutOrientation.Horizontal };
         var protoView = new EntityPrototypeView();
-        protoView.SetPrototype(spriteListData.Prototype?.ID);
+        protoView.SetPrototype(spriteListData.Prototype);
         var label = new Label()
             { Text = Loc.GetString($"spray-painter-style-{spriteListData.Category.ToLower()}-{spriteListData.Style}") };
 
@@ -188,4 +187,4 @@ public sealed partial class SprayPainterWindow : DefaultWindow
     }
 }
 
-record SpriteListData(string Category, string Style, EntityPrototype? Prototype, int SelectedIndex) : ListData;
+record SpriteListData(string Category, string Style, EntProtoId? Prototype, int SelectedIndex) : ListData;
