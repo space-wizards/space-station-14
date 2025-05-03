@@ -57,6 +57,14 @@ public sealed class RefCountSystem : EntitySystem
         if (!Increment((ent, ent.Comp), name))
             return false;
 
+        if (HasComp(type))
+        {
+            // same double increment as above
+            if (GetCount(ent.Comp, name) == 0)
+                Increment((ent, ent.Comp), name);
+            return false;
+        }
+
         var comp = (Component) _factory.GetComponent(type);
         AddComp(ent, comp, force);
         return true;
