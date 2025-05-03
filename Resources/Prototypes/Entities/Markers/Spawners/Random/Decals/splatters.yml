@@ -79,7 +79,7 @@
     - toilet
     - toolbox
     - uboa
-    range: 0.5
+    radius: 0.5
     randomRotation: true
     maxDecals: 1
     zIndex: 2

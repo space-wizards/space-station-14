@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: RandomDecalSpawner
-    range: 0.3
+    radius: 0.3
     zIndex: 1
     deleteSpawnerAfterSpawn: true
 
