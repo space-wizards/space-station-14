@@ -226,8 +226,8 @@
     stunAmount: 0
     knockdownAmount: 2.5 # Enough to subdue and follow up with a stun batong
     slowdownAmount: 2.5
-    walkSpeedMultiplier: 0.5
-    sprintSpeedMultiplier: 0.5
+    walkSpeedModifier: 0.5
+    sprintSpeedModifier: 0.5
 
 - type: entity
   name: taser bolt
@@ -277,8 +277,8 @@
     stunAmount: 5
     knockdownAmount: 10
     slowdownAmount: 10
-    walkSpeedMultiplier: 0.5
-    sprintSpeedMultiplier: 0.5
+    walkSpeedModifier: 0.5
+    sprintSpeedModifier: 0.5
 
 - type: entity
   name : disabler bolt
