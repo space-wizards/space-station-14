@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Movement.Events;
 using Content.Shared.Stunnable;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -20,11 +21,11 @@ namespace Content.Client.Stunnable
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StunnedComponent, StunnedEvent>(OnStunned);
+            SubscribeLocalEvent<StunnedComponent, ComponentInit>(OnStunned);
             SubscribeLocalEvent<StunnedComponent, AnimationCompletedEvent>(OnAnimationCompleted);
         }
 
-        private void OnStunned(Entity<StunnedComponent> ent, ref StunnedEvent args)
+        private void OnStunned(Entity<StunnedComponent> ent, ref ComponentInit args)
         {
             if (!TryComp<SpriteComponent>(ent, out var sprite) || !_timing.IsFirstTimePredicted)
                 return;
