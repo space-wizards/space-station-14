@@ -414,7 +414,7 @@
   - type: FingerprintMask
   - type: MeleeSpeech
   - type: ThrowEquippedOnHit
-    throwChance: 0.025
+    throwChance: 0.03
   - type: ActivatableUI
     key: enum.MeleeSpeechUiKey.Key
     verbOnly: true
