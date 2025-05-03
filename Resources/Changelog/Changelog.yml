@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SG6732
-  changes:
-  - message: Swapped the stick of butter with 5 u of olive oil in the boiled spaghetti
-      recipe.
-    type: Tweak
-  id: 7909
-  time: '2025-02-06T11:45:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34904
 - author: deltanedas
   changes:
   - message: Fixed huds showing for chameleon projector users.
@@ -3919,3 +3911,11 @@
   id: 8410
   time: '2025-05-02T22:56:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37126
+- author: Unkn0wnGh0st333
+  changes:
+  - message: Knuckle Dusters have arrived to Space Station 14. QM can now rule cargo
+      with a golden-covered fist!
+    type: Add
+  id: 8411
+  time: '2025-05-03T04:18:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33470
