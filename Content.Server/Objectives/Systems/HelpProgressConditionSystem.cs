@@ -1,31 +1,23 @@
-using Content.Server.GameTicking.Rules;
 using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
-using Content.Shared.Roles.Jobs;
-using Robust.Shared.Random;
-using System.Linq;
 
 namespace Content.Server.Objectives.Systems;
 
 /// <summary>
-/// Handles help progress condition logic and picking random help targets.
+/// Handles help progress condition logic.
 /// </summary>
 public sealed class HelpProgressConditionSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
-    [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<HelpProgressConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
-
-        SubscribeLocalEvent<RandomTraitorProgressComponent, ObjectiveAssignedEvent>(OnTraitorAssigned);
     }
 
     private void OnGetProgress(EntityUid uid, HelpProgressConditionComponent comp, ref ObjectiveGetProgressEvent args)
@@ -34,55 +26,6 @@ public sealed class HelpProgressConditionSystem : EntitySystem
             return;
 
         args.Progress = GetProgress(target.Value);
-    }
-
-    private void OnTraitorAssigned(EntityUid uid, RandomTraitorProgressComponent comp, ref ObjectiveAssignedEvent args)
-    {
-        // invalid prototype
-        if (!TryComp<TargetObjectiveComponent>(uid, out var target))
-        {
-            args.Cancelled = true;
-            return;
-        }
-
-        var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind).ToHashSet();
-
-        // cant help anyone who is tasked with helping:
-        // 1. thats boring
-        // 2. no cyclic progress dependencies!!!
-        foreach (var traitor in traitors)
-        {
-            // TODO: replace this with TryComp<ObjectivesComponent>(traitor) or something when objectives are moved out of mind
-            if (!TryComp<MindComponent>(traitor.Id, out var mind))
-                continue;
-
-            foreach (var objective in mind.Objectives)
-            {
-                if (HasComp<HelpProgressConditionComponent>(objective))
-                    traitors.RemoveWhere(x => x.Mind == mind);
-            }
-        }
-
-        // Can't have multiple objectives to help/save the same person
-        foreach (var objective in args.Mind.Objectives)
-        {
-            if (HasComp<RandomTraitorAliveComponent>(objective) || HasComp<RandomTraitorProgressComponent>(objective))
-            {
-                if (TryComp<TargetObjectiveComponent>(objective, out var help))
-                {
-                    traitors.RemoveWhere(x => x.Id == help.Target);
-                }
-            }
-        }
-
-        // no more helpable traitors
-        if (traitors.Count == 0)
-        {
-            args.Cancelled = true;
-            return;
-        }
-
-        _target.SetTarget(uid, _random.Pick(traitors).Id, target);
     }
 
     private float GetProgress(EntityUid target)

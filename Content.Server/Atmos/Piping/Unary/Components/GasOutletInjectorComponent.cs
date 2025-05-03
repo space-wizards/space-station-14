@@ -1,6 +1,6 @@
-using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Guidebook;
 
 namespace Content.Server.Atmos.Piping.Unary.Components

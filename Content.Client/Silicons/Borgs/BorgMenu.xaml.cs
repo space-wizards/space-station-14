@@ -1,6 +1,7 @@
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.NameIdentifier;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Preferences;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
@@ -15,6 +16,7 @@ namespace Content.Client.Silicons.Borgs;
 public sealed partial class BorgMenu : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entity = default!;
+    private readonly NameModifierSystem _nameModifier;
 
     public Action? BrainButtonPressed;
     public Action? EjectBatteryButtonPressed;
@@ -31,6 +33,8 @@ public sealed partial class BorgMenu : FancyWindow
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
+        _nameModifier = _entity.System<NameModifierSystem>();
 
         _lastValidName = NameLineEdit.Text;
 
@@ -54,9 +58,7 @@ public sealed partial class BorgMenu : FancyWindow
             NameIdentifierLabel.Visible = true;
             NameIdentifierLabel.Text = nameIdentifierComponent.FullIdentifier;
 
-            var fullName = _entity.GetComponent<MetaDataComponent>(Entity).EntityName;
-            var name = fullName.Substring(0, fullName.Length - nameIdentifierComponent.FullIdentifier.Length - 1);
-            NameLineEdit.Text = name;
+            NameLineEdit.Text = _nameModifier.GetBaseName(entity);
         }
         else
         {

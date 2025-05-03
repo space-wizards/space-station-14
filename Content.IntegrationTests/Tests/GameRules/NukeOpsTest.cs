@@ -155,7 +155,7 @@ public sealed class NukeOpsTest
         // The game rule exists, and all the stations/shuttles/maps are properly initialized
         var rule = entMan.AllComponents<NukeopsRuleComponent>().Single();
         var ruleComp = rule.Component;
-        var gridsRule = entMan.AllComponents<RuleGridsComponent>().Single().Component;
+        var gridsRule = entMan.GetComponent<RuleGridsComponent>(rule.Uid);
         foreach (var grid in gridsRule.MapGrids)
         {
             Assert.That(entMan.EntityExists(grid));
@@ -181,7 +181,7 @@ public sealed class NukeOpsTest
         }
 
         Assert.That(!entMan.EntityExists(nukieStationEnt)); // its not supposed to be a station!
-        Assert.That(server.MapMan.MapExists(gridsRule.Map));
+        Assert.That(mapSys.MapExists(gridsRule.Map));
         var nukieMap = mapSys.GetMap(gridsRule.Map!.Value);
 
         var targetStation = entMan.GetComponent<StationDataComponent>(ruleComp.TargetStation!.Value);

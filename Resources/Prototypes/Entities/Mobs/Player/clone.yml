@@ -4,6 +4,8 @@
 # The datafields of the components are only shallow copied using CopyComp.
 # Subscribe to CloningEvent instead if that is not enough.
 
+# for basic traits etc.
+# used by the random clone spawner
 - type: cloningSettings
   id: BaseClone
   components:
@@ -27,11 +29,13 @@
   - Clumsy
   - MindShield
   - MimePowers
+  - SpaceNinja
   # accents
   - Accentless
   - BackwardsAccent
   - BarkAccent
   - BleatingAccent
+  - DamagedSiliconAccent
   - FrenchAccent
   - GermanAccent
   - LizardAccent
@@ -56,19 +60,27 @@
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit
+    - HumanoidAppearance # will cause problems for downstream felinids getting cloned as Urists
+    - Implanter # they will spawn full again, but you already get the implant. And we can't do item slot copying yet
+    - VirtualItem
 
+# all antagonist roles
 - type: cloningSettings
   id: Antag
   parent: BaseClone
   components:
   - HeadRevolutionary
   - Revolutionary
+  - NukeOperative
 
+# for cloning pods
 - type: cloningSettings
   id: CloningPod
   parent: Antag
   forceCloning: false
   copyEquipment: null
+  copyInternalStorage: false
+  copyImplants: false
 
 # spawner
 
@@ -78,7 +90,7 @@
   suffix: Non-Antag
   components:
   - type: Sprite
-    sprite: Markers/paradox_clone.rsi
+    sprite: Mobs/Aliens/paradox_clone.rsi
     state: preview
   - type: RandomCloneSpawner
     settings: BaseClone

@@ -320,7 +320,6 @@
     - Deconstruct
   - type: LimitedCharges
     maxCharges: 30
-    charges: 30
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: icon
@@ -351,18 +350,17 @@
   suffix: Empty
   components:
   - type: LimitedCharges
-    charges: 0
+    lastCharges: -1
 
 - type: entity
   id: RCDRecharging
   parent: RCD
   name: experimental RCD
-  description: A bluespace-enhanced rapid construction device that passively generates its own compressed matter.
+  description: Cyborg-mounted Rapid Construction Device which creates compressed matter on the fly using an internal fabricator.
   suffix: AutoRecharge
   components:
   - type: LimitedCharges
     maxCharges: 20
-    charges: 20
   - type: AutoRecharge
     rechargeDuration: 10
 
