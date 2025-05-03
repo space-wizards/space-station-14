@@ -5,7 +5,7 @@ using Robust.Shared.Random;
 namespace Content.Shared.EntityEffects.Effects.PlantMetabolism;
 
 [UsedImplicitly]
-public sealed partial class PlantChangeStat : EntityEffect
+public sealed partial class PlantChangeStat : EventEntityEffect<PlantChangeStat>
 {
     [DataField]
     public string TargetValue;
@@ -18,12 +18,6 @@ public sealed partial class PlantChangeStat : EntityEffect
 
     [DataField]
     public int Steps;
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<PlantChangeStat>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {

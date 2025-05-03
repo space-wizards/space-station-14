@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.EntityEffects.Effects;
 
 [DataDefinition]
-public sealed partial class CreateEntityReactionEffect : EntityEffect
+public sealed partial class CreateEntityReactionEffect : EventEntityEffect<CreateEntityReactionEffect>
 {
     /// <summary>
     ///     What entity to create.
@@ -23,10 +23,4 @@ public sealed partial class CreateEntityReactionEffect : EntityEffect
             ("chance", Probability),
             ("entname", IoCManager.Resolve<IPrototypeManager>().Index<EntityPrototype>(Entity).Name),
             ("amount", Number));
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<CreateEntityReactionEffect>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 }

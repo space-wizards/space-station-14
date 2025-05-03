@@ -8,7 +8,7 @@ namespace Content.Shared.EntityEffects.EffectConditions;
 /// <summary>
 ///     Requires that the metabolizing organ is or is not tagged with a certain MetabolizerType
 /// </summary>
-public sealed partial class OrganType : EntityEffectCondition
+public sealed partial class OrganType : EventEntityEffectCondition<OrganType>
 {
     [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<MetabolizerTypePrototype>))]
     public string Type = default!;
@@ -18,13 +18,6 @@ public sealed partial class OrganType : EntityEffectCondition
     /// </summary>
     [DataField]
     public bool ShouldHave = true;
-
-    public override bool Condition(EntityEffectBaseArgs args)
-    {
-        var evt = new CheckEntityEffectConditionEvent<OrganType> { Condition = this, Args = args };
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-        return evt.Result;
-    }
 
     public override string GuidebookExplanation(IPrototypeManager prototype)
     {

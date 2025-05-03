@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Content.Shared.EntityEffects.Effects.PlantMetabolism;
 
 [ImplicitDataDefinitionForInheritors]
-public abstract partial class PlantAdjustAttribute : EntityEffect
+public abstract partial class PlantAdjustAttribute<T> : EventEntityEffect<T> where T : PlantAdjustAttribute<T>
 {
     [DataField]
     public float Amount { get; protected set; } = 1;

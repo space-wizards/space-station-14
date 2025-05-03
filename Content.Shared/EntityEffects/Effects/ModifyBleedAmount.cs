@@ -2,7 +2,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
-public sealed partial class ModifyBleedAmount : EntityEffect
+public sealed partial class ModifyBleedAmount : EventEntityEffect<ModifyBleedAmount>
 {
     [DataField]
     public bool Scaled = false;
@@ -13,10 +13,4 @@ public sealed partial class ModifyBleedAmount : EntityEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-modify-bleed-amount", ("chance", Probability),
             ("deltasign", MathF.Sign(Amount)));
-
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<ModifyBleedAmount>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 }

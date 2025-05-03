@@ -6,14 +6,8 @@ namespace Content.Shared.EntityEffects.Effects.PlantMetabolism;
 ///     Handles removal of seeds on a plant.
 /// </summary>
 
-public sealed partial class PlantDestroySeeds : EntityEffect
+public sealed partial class PlantDestroySeeds : EventEntityEffect<PlantDestroySeeds>
 {
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<PlantDestroySeeds>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
-
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Loc.GetString("reagent-effect-guidebook-plant-seeds-remove", ("chance", Probability));
 }

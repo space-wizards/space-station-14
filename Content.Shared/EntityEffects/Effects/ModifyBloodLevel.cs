@@ -1,11 +1,9 @@
-// using Content.Server.Body.Components;
-// using Content.Server.Body.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
-public sealed partial class ModifyBloodLevel : EntityEffect
+public sealed partial class ModifyBloodLevel : EventEntityEffect<ModifyBloodLevel>
 {
     [DataField]
     public bool Scaled = false;
@@ -16,26 +14,4 @@ public sealed partial class ModifyBloodLevel : EntityEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-modify-blood-level", ("chance", Probability),
             ("deltasign", MathF.Sign(Amount.Float())));
-
-    // public override void Effect(EntityEffectBaseArgs args)
-    // {
-    //     if (args.EntityManager.TryGetComponent<BloodstreamComponent>(args.TargetEntity, out var blood))
-    //     {
-    //         var sys = args.EntityManager.System<BloodstreamSystem>();
-    //         var amt = Amount;
-    //         if (args is EntityEffectReagentArgs reagentArgs)
-    //         {
-    //             if (Scaled)
-    //                 amt *= reagentArgs.Quantity;
-    //             amt *= reagentArgs.Scale;
-    //         }
-
-    //         sys.TryModifyBloodLevel(args.TargetEntity, amt, blood);
-    //     }
-    // }
-    public override void Effect(EntityEffectBaseArgs args)
-    {
-        var evt = new ExecuteEntityEffectEvent<ModifyBloodLevel>(this, args);
-        args.EntityManager.EventBus.RaiseEvent(EventSource.Local, ref evt);
-    }
 }
