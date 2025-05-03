@@ -212,6 +212,27 @@
     - ClothingNeckGoldAutismPin
   groupBy: "pin"
 
+- type: loadout
+  id: ClothingNeckAroacePin
+  storage:
+    back:
+    - ClothingNeckAroacePin
+  groupBy: "pin"
+
+- type: loadout
+  id: ClothingNeckPluralPin
+  storage:
+    back:
+    - ClothingNeckPluralPin
+  groupBy: "pin"
+
+- type: loadout
+  id: ClothingNeckGenderfluidPin
+  storage:
+    back:
+    - ClothingNeckGenderfluidPin
+  groupBy: "pin"
+
 # Towels
 - type: loadout
   id: TowelColorWhite
