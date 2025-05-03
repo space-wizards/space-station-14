@@ -111,7 +111,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return null;
 
         _actionQuery.Resolve(ref ent, logError);
-        return (ent, ent);
+        return (ent, ent.Comp);
     }
 
     public void SetCooldown(Entity<ActionComponent?>? action, TimeSpan start, TimeSpan end)
@@ -676,7 +676,7 @@ public abstract class SharedActionsSystem : EntitySystem
         DirtyField(ent, ent.Comp, nameof(ActionComponent.AttachedEntity));
         performer.Comp.Actions.Add(ent);
         Dirty(performer, performer.Comp);
-        ActionAdded(performer, (ent, ent));
+        ActionAdded(performer, ent);
         return true;
     }
 
@@ -833,7 +833,7 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(performer, performer.Comp);
         ent.Comp.AttachedEntity = null;
         DirtyField(ent, ent.Comp, nameof(ActionComponent.AttachedEntity));
-        ActionRemoved((performer, performer), ent);
+        ActionRemoved((performer, performer.Comp), ent);
 
         if (ent.Comp.Temporary)
             QueueDel(ent);

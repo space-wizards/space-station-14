@@ -208,7 +208,7 @@ public sealed class ActionContainerSystem : EntitySystem
             return;
 
         DebugTools.AssertEqual(ent.Comp.Container, newContainer);
-        _actions.AddActionDirect(newAttached, ent);
+        _actions.AddActionDirect(newAttached, (ent, ent.Comp));
 
         DebugTools.AssertEqual(ent.Comp.AttachedEntity, attached);
     }
@@ -284,7 +284,7 @@ public sealed class ActionContainerSystem : EntitySystem
             if (Exists(container))
                 Log.Error($"Failed to remove action {ToPrettyString(ent)} from its container {ToPrettyString(container)}?");
             ent.Comp.Container = null;
-            DirtyField(ent, nameof(ActionComponent.Container));
+            DirtyField(ent, ent.Comp, nameof(ActionComponent.Container));
         }
 
         // If the action was granted to some entity, then the removal from the container should have automatically removed it.
@@ -318,7 +318,7 @@ public sealed class ActionContainerSystem : EntitySystem
         if (action.Comp.Container != uid)
         {
             action.Comp.Container = uid;
-            DirtyField(action, nameof(ActionComponent.Container));
+            DirtyField(action, action.Comp, nameof(ActionComponent.Container));
         }
 
         var ev = new ActionAddedEvent(args.Entity, action);
@@ -340,7 +340,7 @@ public sealed class ActionContainerSystem : EntitySystem
             return;
 
         action.Comp.Container = null;
-        DirtyField(action, nameof(ActionComponent.Container));
+        DirtyField(action, action.Comp, nameof(ActionComponent.Container));
     }
 
     private void OnActionAdded(EntityUid uid, ActionsContainerComponent component, ActionAddedEvent args)
