@@ -131,6 +131,12 @@ public sealed partial class SprayPainterWindow : DefaultWindow
             Tabs.AddChild(box);
             TabContainer.SetTabTitle(box, Loc.GetString("spray-painter-tabs-pipes"));
 
+            var pos = box.GetPositionInParent();
+            if (tabIndex == pos)
+            {
+                Tabs.CurrentTab = pos;
+            }
+
             foreach (var color in palette)
             {
                 var locString = GetColorLocString(color.Key);
@@ -156,6 +162,12 @@ public sealed partial class SprayPainterWindow : DefaultWindow
 
                 Tabs.AddChild(_sprayPainterDecals);
                 TabContainer.SetTabTitle(_sprayPainterDecals, Loc.GetString("spray-painter-tabs-decals"));
+
+                var pos = _sprayPainterDecals.GetPositionInParent();
+                if (tabIndex == pos)
+                {
+                    Tabs.CurrentTab = pos;
+                }
             }
 
             _sprayPainterDecals.PopulateDecals(decals, _spriteSystem);
