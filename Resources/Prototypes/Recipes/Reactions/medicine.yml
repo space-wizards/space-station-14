@@ -676,6 +676,7 @@
   products:
     Traumoxadone: 2
     
+- type: reaction
   id: H-32
   reactants:
     Arithrazine:
