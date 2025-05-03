@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
-using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
 using Robust.Shared.Prototypes;
