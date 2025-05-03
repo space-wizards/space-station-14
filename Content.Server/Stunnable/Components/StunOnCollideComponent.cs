@@ -22,7 +22,7 @@ namespace Content.Server.Stunnable.Components
         public float WalkSpeedMultiplier = 1f;
 
         [DataField]
-        public float RunSpeedMultiplier = 1f;
+        public float SprintSpeedMultiplier = 1f;
 
         [DataField]
         public bool Refresh = true;
