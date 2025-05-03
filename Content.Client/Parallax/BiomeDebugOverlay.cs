@@ -50,7 +50,7 @@ public sealed class BiomeDebugOverlay : Overlay
         if (mousePos.MapId == MapId.Nullspace || mousePos.MapId != args.MapId)
             return;
 
-        var mapUid = _maps.GetMap(args.MapId);
+        var mapUid = _maps.GetMapOrInvalid(args.MapId);
 
         if (!_entManager.TryGetComponent(mapUid, out BiomeComponent? biomeComp) || !_entManager.TryGetComponent(mapUid, out MapGridComponent? grid))
             return;
