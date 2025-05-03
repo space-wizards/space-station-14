@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Combat bakery kit price is reduced from 6TC to 4TC, increased baguette
-      sword attack speed, throwing croissants ignore armor
-    type: Tweak
-  id: 7913
-  time: '2025-02-06T23:07:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34927
 - author: sowelipililimute
   changes:
   - message: You will no longer be told you need 0H 0M more minutes to play a role
@@ -3922,3 +3914,11 @@
   id: 8414
   time: '2025-05-03T19:19:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37151
+- author: Minemoder
+  changes:
+  - message: The traitor uplink thieving gloves have been replaced with chameleon
+      thieving gloves, the same used by the Thief.
+    type: Tweak
+  id: 8415
+  time: '2025-05-03T19:28:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36369
