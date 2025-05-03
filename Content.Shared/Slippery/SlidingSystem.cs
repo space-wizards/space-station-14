@@ -1,13 +1,9 @@
-using System.Diagnostics;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
-using Content.Shared.Stunnable;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Slippery;
 
@@ -34,10 +30,10 @@ public sealed class SlidingSystem : EntitySystem
     /// </summary>
     private void OnComponentInit(Entity<SlidingComponent> entity, ref ComponentInit args)
     {
-        if (!_timing.IsFirstTimePredicted)
+        if (!_timing.IsFirstTimePredicted || !TryComp<PhysicsComponent>(entity, out var body))
             return;
 
-        if (!CalculateSlidingModifier(entity))
+        if (!CalculateSlidingModifier(entity, physics: body))
             throw new Exception($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
 
         _speedModifierSystem.RefreshFrictionModifiers(entity);
@@ -85,12 +81,12 @@ public sealed class SlidingSystem : EntitySystem
     /// <summary>
     ///     Gets contacting slippery entities and averages their friction modifiers.
     /// </summary>
-    private bool CalculateSlidingModifier(Entity<SlidingComponent> entity, EntityUid? ignore = null)
+    private bool CalculateSlidingModifier(Entity<SlidingComponent> entity, EntityUid? ignore = null, PhysicsComponent? physics = null)
     {
         var friction = 0.0f;
         var count = 0;
 
-        foreach (var ent in _physics.GetContactingEntities(entity))
+        foreach (var ent in _physics.GetContactingEntities(entity, physics))
         {
             if (ent == ignore || !TryComp<SlipperyComponent>(ent, out var slippery) || !slippery.AffectsSliding)
                 continue;
