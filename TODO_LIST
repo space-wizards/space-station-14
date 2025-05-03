@@ -8,8 +8,6 @@ Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
 Command Meeting: Needs access to execution cameras
 Execution telescreens: Need access to execution cameras
 I'd really like the sec camera monitors to only see General if possible...
-	And I think I already have it on this list, but the Admin camera still no worky.
-	One missing Amogus camera: Admin (probably because of fix wiring)
 Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there...
 Among Us "clues" on detective notice boards
 Would it be too radical to totally left/right swap the Atmos
@@ -32,53 +30,38 @@ Nudge wall sign transform variables to make them line up better
 Salvage space arm is getting sensed as part of the room by air sensors?
 Weapons north maints door stuck open
 Somewhere, there is a holopad with no label.
-
-
-The big things:
 Grime everything up a bit again.
+
+- Execution telescreens have flat-out vanished?
+	Needs KnownSubnets to be different in SuveillanceCameraMonitorComponent
+	DeviceNetwork also has... I guess a subcomponent? with receiveFrequencyId and transmitFrequencyId
+		But these seem to have the same values for both TV and Telescreen
+	Camera monitors in Sec are at least restricted to General...
+- Lotta errors about entity cable terminals
+- Screens not showing evac ETA?
+	Broadcast not working either.
+Add financial whatever computers + lockboxes to depts
+Add silo to Sci
+Genpop (bah)
+
+Evac Shuttle:
+- Vent at bottom unpowered - whole APC unpowered?
+	Power just flat-out isn't working, it seems.
+- Distro pipeline needs pump, maybe? And mixer is off at start.
+
 
 Check this stuff:
 Holopads with custom names that aren't generic holopads
-Holopad perms
-Janitor air alarm not powered, even when power is fixed.
-	Moved Admin cable away a bit, maybe did the trick?
-Tider shop:
-	Should also be a light by the door. Maybe it turns off when
-		door is bolted?
-		Added one. CHECK IF IT WORKS. Make sure door's still
-			bolted at start, too.
 Execution telescreens see mounted cam networks, not wireless.
 	Having trouble figuring out where this is specified, so maybe I should
 		dig into the components while testing live.
-- Make sure I can interact with posters correctly
 AI scrubber vent pump starts off
 	Turned it on, should check it sticks when live
 	If this works, probs turn on some other Atmos stuff, too
 Check lighting
-Make sure arrivals meteor shield didn't block the shuttle
-Make sure det/prosc door switches do what they're supposed to. Especially wrt the shutter.
-Even without holopad, the hallway engie camera can see CE's outer office.
-	Moved it. Maybe fixed. There's always curtains.
-Vision of service hall little room near caf through the window
-	For some reason, this is the camera in the main arrivals hallway, even though it should have a wall blocking it.
-		Camera vision range is clearly screwy.
-			Would moving cameras off of the corners of walls fix this?
-				no.
-		I moved it.
-Atmos waste system isn't set to right filters?
-	Should be set now
-Cargo computer shutter button seems not to be hooked up.
-	It is, though...? Does the directional window block it?
-Weird color room in east service maints starts with lights on
-	I turned them off. Did it work?
-Chef's closets have stuff in 'em they shouldn't? Like, crowbars and N2 tanks.
-	Double-check if this is even true
-Not much vision of arti/anom hall
-	This is confusing, and I need to investigate more. The camera on the east side should see just fine, and the camera on the west side should get anything it misses.
-Det/Prosc door bolt doesn't work. It bolts, then immediately unbolts.
-	nor instead of or gate?
-	I've attempted to fix. Gotta make sure both door bolt and shutter behave properly.
-Evac: Does the shuttle dock? Does the shuttle work?
+Does tider shop light *start* off, or on? Should be off.
+- More fixerer the det/prosc door. The logic gates aren't working - they don't fit and are becoming unanchored I guess
+	Maybe they're anchored now? They are in the editor.
 
 
 THINGS I COULD MAKE:
@@ -294,3 +277,61 @@ DONE:
 /* Possibly move Evac farther out to make room for shuttle */
 /* 	at north dock. */
 /* Set up evac shuttle (possibly shrink it, too) */
+/* Make sure det/prosc door switches do what they're supposed to. Especially wrt the shutter. */
+/* Janitor air alarm not powered, even when power is fixed. */
+/* 	Moved Admin cable away a bit, maybe did the trick? */
+/* Tider shop: */
+	/* Should also be a light by the door. Maybe it turns off when */
+		/* door is bolted? */
+		/* Added one. CHECK IF IT WORKS. Make sure door's still */
+			/* bolted at start, too. */
+/* Holopad perms */
+/* Make sure arrivals meteor shield didn't block the shuttle */
+/* Vision of service hall little room near caf through the window */
+/* 	For some reason, this is the camera in the main arrivals hallway, even though it should have a wall blocking it. */
+/* 		Camera vision range is clearly screwy. */
+/* 			Would moving cameras off of the corners of walls fix this? */
+/* 				no. */
+/* 		I moved it. */
+/* Atmos waste system isn't set to right filters? */
+/* 	Should be set now */
+/* Cargo computer shutter button seems not to be hooked up. */
+/* 	It is, though...? Does the directional window block it? */
+/* Weird color room in east service maints starts with lights on */
+/* 	I turned them off. Did it work? */
+/* Chef's closets have stuff in 'em they shouldn't? Like, crowbars and N2 tanks. */
+/* 	Double-check if this is even true */
+		/* Crowbars, yes. N2 tanks, don't see 'em. Crowbars are fine, right? */
+/* - Singulo: Add soduim light to bottom emitter shelf? */
+* - Reinforce engineering angled window? Needs grilles outside */
+/* - Label engineering/atmo mailing units */
+/* - APC in meeting room unlabeled */
+/* - Eggplant won't stay under window at cafe */
+/* - Fire alarm under evac sec station is facing north, not south */
+/* - Doors from hall to Admin area mostly don't work, and this is kinda dumb. */
+/* - Arrivals east airlock needs power to east door */
+/* - Remove mailing unit from execution room, or route to somewhere specific + appropriate. (Chapel?) */
+/* - Service dock far docking airlocks unpowered */
+/* - Unfortunately, it's the cargo request computer itself that blocks the shutter. Maybe I move the shutter one tile up or something? */
+/* - Take chef closets out? They have ingredients (and crowbars,) not clothes. */
+/* - Maybe Admin cam should start wired? */
+/* - Medbay vent disposal chute doesn't flush */
+/* 	Missing trunk and first segment of pipe! */
+/* - Sec vent disposal chute doesn't have its amogus? Maybe a moff ate. */
+/* - Evac cafe floor tiling is ugly */
+/* - One of two firelocks under TEG is shut, the other is just an engie door that's bolted */
+/* 	Not sure why... maybe there was a tech arti or something? They seem to be set up right. */
+/* - Singuloose: Why? I think it wasn't a meteor, so probably a power outage issue? */
+/* 	Should have a self-feeding power loop. */
+/* 	It kind of does, doesn't it? or... */
+/* - Make sure I can interact with posters correctly */
+/* Det/Prosc door bolt doesn't work. It bolts, then immediately unbolts. */
+/* 	nor instead of or gate? */
+/* 	I've attempted to fix. Gotta make sure both door bolt and shutter behave properly. */
+/* Even without holopad, the hallway engie camera can see CE's outer office. */
+/* 	Moved it. Maybe fixed. There's always curtains. */
+/* Not much vision of arti/anom hall */
+/* 	This is confusing, and I need to investigate more. The camera on the east side should see just fine, and the camera on the west side should get anything it misses. */
+/* Evac: Does the shuttle dock? Does the shuttle work? */
+	/* And I think I already have it on this list, but the Admin camera still no worky. */
+	/* One missing Amogus camera: Admin (probably because of fix wiring) */
