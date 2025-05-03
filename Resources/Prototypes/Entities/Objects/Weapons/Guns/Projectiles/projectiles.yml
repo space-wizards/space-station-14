@@ -461,7 +461,7 @@
         Structural: 30
   # Short lifespan
   - type: TimedDespawn
-    lifetime: 0.4
+    lifetime: 0.22 # roughly 5.5 tiles
   - type: GatheringProjectile
 
 - type: entity
@@ -936,6 +936,7 @@
         - BulletImpassable
   - type: Vapor
     active: true
+    transferAmountPercentage: 1
   - type: Appearance
   - type: VaporVisuals
 

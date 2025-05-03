@@ -28,6 +28,7 @@ using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Tag;
+using Content.Shared.Warps;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -489,10 +490,10 @@ namespace Content.Server.Ghost
 
             if (mind.Comp.TimeOfDeath.HasValue)
             {
-                SetTimeOfDeath(ghost, mind.Comp.TimeOfDeath!.Value, ghostComponent);
+                SetTimeOfDeath((ghost, ghostComponent), mind.Comp.TimeOfDeath!.Value);
             }
 
-            SetCanReturnToBody(ghostComponent, canReturn);
+            SetCanReturnToBody((ghost, ghostComponent), canReturn);
 
             if (canReturn)
                 _minds.Visit(mind.Owner, ghost, mind.Comp);

@@ -12,8 +12,8 @@
   name: lathe-category-lights
 
 - type: latheCategory
-  id: Mech
-  name: lathe-category-mechs
+  id: Machines
+  name: lathe-category-machines
 
 - type: latheCategory
   id: Parts
@@ -43,6 +43,44 @@
 - type: latheCategory
   id: Materials
   name: lathe-category-materials
+
+# Circuit imprinter
+- type: latheCategory
+  id: Computers
+  name: lathe-category-computers
+
+- type: latheCategory
+  id: Engineering
+  name: lathe-category-engineering
+
+- type: latheCategory
+  id: General
+  name: lathe-category-general
+
+- type: latheCategory
+  id: Medical
+  name: lathe-category-medical
+
+- type: latheCategory
+  id: Research
+  name: lathe-category-research
+
+- type: latheCategory
+  id: Security
+  name: lathe-category-security
+
+- type: latheCategory
+  id: Service
+  name: lathe-category-service
+
+- type: latheCategory
+  id: Supply
+  name: lathe-category-supply
+
+# Science
+- type: latheCategory
+  id: Mech
+  name: lathe-category-mechs
 
 # Sec
 - type: latheCategory

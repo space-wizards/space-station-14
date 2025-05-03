@@ -270,6 +270,7 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitWizard
         - id: ClothingMaskBreath
-        - id: JetpackVoidFilled
+        # TODO: Gone until reworked to have no space protection
+        #- id: ClothingOuterHardsuitWizard
+        #- id: JetpackVoidFilled

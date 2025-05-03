@@ -232,6 +232,9 @@ public sealed class NPCUtilitySystem : EntitySystem
             {
                 if (_container.TryGetContainingContainer(targetUid, out var container))
                 {
+                    if (container.Owner == owner)
+                        return 0f;
+
                     if (TryComp<EntityStorageComponent>(container.Owner, out var storageComponent))
                     {
                         if (storageComponent is { Open: false } && _weldable.IsWelded(container.Owner))

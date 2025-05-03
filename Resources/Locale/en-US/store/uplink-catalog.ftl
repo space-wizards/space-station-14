@@ -29,6 +29,8 @@ uplink-fire-axe-flaming-desc = A classic-style weapon infused with advanced atmo
 uplink-gloves-north-star-name = Gloves of the North Star
 uplink-gloves-north-star-desc = A pair of gloves that reduce your punching cooldown drastically, allowing you to beat people to death in a flurry of punches.
 
+uplink-gloves-knuckleduster-name = Syndicate Knuckle Dusters
+uplink-gloves-knuckleduster-desc = A pair of plastitanium knuckle dusters that let you punch hard enough to break the captains jaw into pieces.
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade
 uplink-explosive-grenade-desc = A simplistic grenade with a 3.5 second long fuse that is geared towards injuring personnel. Causes minimal hull damage.
@@ -307,6 +309,9 @@ uplink-cluster-banana-peel-desc = Splits into 6 explosive banana peels after bei
 
 uplink-cane-blade-name = Cane Blade
 uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed.
+
+uplink-saw-advanced-name = Advanced Circular Saw
+uplink-saw-advanced-desc = A bleeding-edge surgical implement designed to cut through flesh and bone alike.
 
 # Armor
 uplink-chameleon-name = Chameleon Kit

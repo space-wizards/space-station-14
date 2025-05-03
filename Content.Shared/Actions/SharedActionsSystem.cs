@@ -517,13 +517,12 @@ public abstract class SharedActionsSystem : EntitySystem
             // even if we don't check for obstructions, we may still need to check the range.
             var xform = Transform(user);
 
-            if (xform.MapID != coords.GetMapId(EntityManager))
+            if (xform.MapID != _transformSystem.GetMapId(coords))
                 return false;
 
             if (range <= 0)
                 return true;
-
-            return coords.InRange(EntityManager, _transformSystem, Transform(user).Coordinates, range);
+            return _transformSystem.InRange(coords, xform.Coordinates, range);
         }
 
         return _interactionSystem.InRangeUnobstructed(user, coords, range: range);
