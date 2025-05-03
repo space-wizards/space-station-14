@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Alert;
+﻿using Content.Shared.Alert;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage.Components;
@@ -19,7 +18,6 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Stunnable;
 
@@ -377,7 +375,7 @@ public abstract partial class SharedStunSystem
     public record struct StandUpAttemptEvent(bool Cancelled);
 
     [ByRefEvent]
-    public record struct StandUpArgsEvent()
+    public record struct StandUpArgsEvent
     {
         public bool AutoStand;
         public TimeSpan DoAfterTime;
