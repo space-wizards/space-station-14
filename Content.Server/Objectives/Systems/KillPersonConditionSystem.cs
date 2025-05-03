@@ -29,36 +29,38 @@ public sealed class KillPersonConditionSystem : EntitySystem
         if (!_target.GetTarget(uid, out var target))
             return;
 
-        args.Progress = GetProgress(target.Value, comp.RequireDead);
+        args.Progress = GetProgress(target.Value, comp.RequireDead, comp.RequireMaroon);
     }
 
-    private float GetProgress(EntityUid target, bool requireDead)
+    private float GetProgress(EntityUid target, bool requireDead, bool requireMaroon)
     {
         // deleted or gibbed or something, counts as dead
         if (!TryComp<MindComponent>(target, out var mind) || mind.OwnedEntity == null)
             return 1f;
 
-        // dead is success
-        if (_mind.IsCharacterDeadIc(mind))
-            return 1f;
+        var targetDead = _mind.IsCharacterDeadIc(mind);
+        var targetOnShuttle = _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value);
+        if (!_config.GetCVar(CCVars.EmergencyShuttleEnabled) && requireMaroon)
+        {
+            requireDead = true;
+            requireMaroon = false;
+        }
 
-        // if the target has to be dead dead then don't check evac stuff
-        if (requireDead)
+        if (requireDead && !targetDead)
             return 0f;
 
-        // if evac is disabled then they really do have to be dead
-        if (!_config.GetCVar(CCVars.EmergencyShuttleEnabled))
+        // Always failed if the target needs to be marooned and the shuttle hasn't even arrived yet
+        if (requireMaroon && !_emergencyShuttle.EmergencyShuttleArrived)
             return 0f;
 
-        // target is escaping so you fail
-        if (_emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value))
-            return 0f;
+        // If the shuttle hasn't left, give 50% progress if the target isn't on the shuttle as a "almost there!"
+        if (requireMaroon && !_emergencyShuttle.ShuttlesLeft)
+            return targetOnShuttle ? 0f : 0.5f;
 
-        // evac has left without the target, greentext since the target is afk in space with a full oxygen tank and coordinates off.
-        if (_emergencyShuttle.ShuttlesLeft)
-            return 1f;
+        // If the shuttle has already left, and the target isn't on it, 100%
+        if (requireMaroon && _emergencyShuttle.ShuttlesLeft)
+            return targetOnShuttle ? 0f : 1f;
 
-        // if evac is still here and target hasn't boarded, show 50% to give you an indicator that you are doing good
-        return _emergencyShuttle.EmergencyShuttleArrived ? 0.5f : 0f;
+        return 1f; // Good job you did it woohoo
     }
 }

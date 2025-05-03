@@ -32,11 +32,8 @@ namespace Content.Server.GameTicking
             {
                 if (args.NewStatus != SessionStatus.Disconnected)
                 {
-                    mind.Session = session;
                     _pvsOverride.AddSessionOverride(mindId.Value, session);
                 }
-
-                DebugTools.Assert(mind.Session == session);
             }
 
             DebugTools.Assert(session.GetMind() == mindId);
@@ -126,10 +123,9 @@ namespace Content.Server.GameTicking
                 case SessionStatus.Disconnected:
                 {
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
-                    if (mind != null)
+                    if (mindId != null)
                     {
-                        _pvsOverride.ClearOverride(GetNetEntity(mindId!.Value));
-                        mind.Session = null;
+                        _pvsOverride.RemoveSessionOverride(mindId.Value, session);
                     }
 
                     _userDb.ClientDisconnected(session);
