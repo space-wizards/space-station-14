@@ -44,37 +44,37 @@
   id: SalvageLootSpawner
   name: salvage crusher spawner
   components:
-    - type: Sprite
-      layers:
-      - state: red
-      - state: icon
-        sprite: Objects/Weapons/Melee/crusher.rsi
-    - type: RandomSpawner
-      prototypes:
-      - WeaponCrusher
-      - WeaponCrusherGlaive
-      rarePrototypes:
-      - WeaponCrusherDagger
-      rareChance: 0.1
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - state: red
+    - state: icon
+      sprite: Objects/Weapons/Melee/crusher.rsi
+  - type: RandomSpawner
+    prototypes:
+    - WeaponCrusher
+    - WeaponCrusherGlaive
+    rarePrototypes:
+    - WeaponCrusherDagger
+    rareChance: 0.1
+    offset: 0.0
 
 - type: entity
   parent: MarkerBase
   id: SalvageToolSpawner
   name: salvage tool spawner
   components:
-    - type: Sprite
-      layers:
-      - state: red
-      - state: handdrill
-        sprite: Objects/Tools/handdrill.rsi
-    - type: RandomSpawner
-      prototypes:
-      - WeaponCrusher
-      - WeaponCrusherDagger
-      - WeaponCrusherGlaive
-      - MiningDrill
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - state: red
+    - state: handdrill
+      sprite: Objects/Tools/handdrill.rsi
+  - type: RandomSpawner
+    prototypes:
+    - WeaponCrusher
+    - WeaponCrusherDagger
+    - WeaponCrusherGlaive
+    - MiningDrill
+    offset: 0.0
 
 - type: entity
   name: Salvage Mob Spawner
