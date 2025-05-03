@@ -3,7 +3,7 @@
   id: DecalSpawnerFloraBase
   abstract: true
   components:
-  - type: RandomDecalSpawnerScattered
+  - type: RandomDecalSpawner
     range: 0.3
     zIndex: 1
     deleteSpawnerAfterSpawn: true
@@ -19,7 +19,7 @@
     - state: decal
     - sprite: Decals/Flora/flora_rocks.rsi
       state: rock01
-  - type: RandomDecalSpawnerScattered
+  - type: RandomDecalSpawner
     decals:
     - Rock01
     - Rock02
@@ -40,7 +40,7 @@
     - state: decal
     - sprite: Decals/basalt.rsi
       state: basalt1
-  - type: RandomDecalSpawnerScattered
+  - type: RandomDecalSpawner
     decals:
     - Basalt1
     - Basalt2
@@ -63,7 +63,7 @@
     - state: decal
     - sprite: Decals/Flora/flora_bushes.rsi
       state: busha1
-  - type: RandomDecalSpawnerScattered
+  - type: RandomDecalSpawner
     decals:
     - Busha1
     - Busha2
@@ -88,7 +88,7 @@
     - state: decal
     - sprite: Decals/Flora/flora_flowers.rsi
       state: flowersbr1
-  - type: RandomDecalSpawnerScattered
+  - type: RandomDecalSpawner
     decals:
     - Flowersbr1
     - Flowersbr2
@@ -112,7 +112,7 @@
     - state: decal
     - sprite: Decals/Flora/flora_grass.rsi
       state: grassa1
-  - type: RandomDecalSpawnerScattered
+  - type: RandomDecalSpawner
     decals:
     - Grassa1
     - Grassa2
@@ -136,7 +136,7 @@
     - state: decal
     - sprite: Decals/Flora/flora_grass.rsi
       state: grassc1
-  - type: RandomDecalSpawnerScattered
+  - type: RandomDecalSpawner
     decals:
     - Grassc1
     - Grassc2
@@ -154,7 +154,7 @@
     - state: decal
     - sprite: Decals/Flora/flora_grass.rsi
       state: grassd1
-  - type: RandomDecalSpawnerScattered
+  - type: RandomDecalSpawner
     decals:
     - Grassd1
     - Grassd2

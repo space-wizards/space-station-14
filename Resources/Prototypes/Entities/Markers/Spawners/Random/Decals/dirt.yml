@@ -3,17 +3,17 @@
   id: DecalSpawnerDirtBase
   abstract: true
   components:
-  - type: RandomDecalSpawnerDistributed
+  - type: RandomDecalSpawner
     decals:
     - DirtLight
     - DirtMedium
     - DirtHeavy
+    maxDecalsPerTile: 1
     snapPosition: true
     zIndex: 1
     prob: 0.8
     color: '#FFFFFF7F'
     cleanable: true
-    maxDecalsPerTile: 1
     tileBlacklist: # Everything here just looks bad if it gets regular dirt on it
     - FloorSteelMono
     - FloorSteelDiagonal
@@ -68,34 +68,38 @@
   id: DecalSpawnerDirtSingle
   suffix: Dirt, 0 Radius
   components:
-  - type: RandomDecalSpawnerDistributed
-    range: 0
+  - type: RandomDecalSpawner
+    radius: 0
     prob: 1.0
+    maxDecals: 1
 
 - type: entity
   parent: DecalSpawnerDirtBase
   id: DecalSpawnerDirtNear
-  suffix: Dirt, 1 Radius
+  suffix: Dirt, 1.5 Radius
   components:
-  - type: RandomDecalSpawnerDistributed
-    range: 1
+  - type: RandomDecalSpawner
+    radius: 1.5
+    maxDecals: 5
 
 - type: entity
   parent: DecalSpawnerDirtBase
   id: DecalSpawnerDirtWide
   suffix: Dirt, 3 Radius
   components:
-  - type: RandomDecalSpawnerDistributed
+  - type: RandomDecalSpawner
+    radius: 3
+    maxDecals: 20
     maxDecalsPerTile: 2
-    range: 3
 
 - type: entity
   parent: DecalSpawnerDirtBase
   id: DecalSpawnerDirtMonospace
   suffix: Dirt, Monospace, 1 Radius
   components:
-  - type: RandomDecalSpawnerDistributed
-    range: 1
+  - type: RandomDecalSpawner
+    radius: 1
+    maxDecals: 5
     decals:
     - Dirt
     - DirtHeavyMonotile
@@ -144,7 +148,7 @@
   id: DecalSpawnerBurns
   suffix: Burns, 1 Radius
   components:
-  - type: RandomDecalSpawnerDistributed
+  - type: RandomDecalSpawner
     decals:
     - burnt1
     - burnt2

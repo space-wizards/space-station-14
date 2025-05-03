@@ -1,9 +1,15 @@
 using Robust.Shared.Prototypes;
 using Content.Shared.Maps;
+using Content.Shared.Decals;
 
 namespace Content.Server.Spawners.Components;
 
-public abstract partial class RandomDecalSpawnerComponent : Component
+/// <summary>
+/// This component spawns decals around the entity on MapInit.
+/// See doc strings for the various parameters for more information.
+/// </summary>
+[RegisterComponent, EntityCategory("Spawner")]
+public sealed partial class RandomDecalSpawnerComponent : Component
 {
     /// <summary>
     /// A list of decals to randomly select from when spawning.
@@ -12,16 +18,31 @@ public abstract partial class RandomDecalSpawnerComponent : Component
     public List<String> Decals = new();
 
     /// <summary>
-    /// Radius (in tiles) to spawn decals in.
+    /// Radius (in tiles) to spawn decals in. 0 will target only the tile the entity is on.
     /// </summary>
     [DataField]
-    public float Range = 1f;
+    public float Radius = 1f;
 
     /// <summary>
     /// Probability that a particular decal gets spawned.
     /// </summary>
     [DataField]
     public float Prob = 1f;
+
+    /// <summary>
+    /// The maximum amount of decals to spawn across the entire radius.
+    /// </summary>
+    [DataField]
+    public int MaxDecals = 1;
+
+    /// <summary>
+    /// The maximum amount of decals to spawn within a tile.
+    /// </summary>
+    /// <remarks>
+    /// A value <= 0 is considered unlimited.
+    /// </remarks>
+    [DataField]
+    public int MaxDecalsPerTile = 0;
 
     /// <summary>
     /// Whether decals should have a random rotation applied to them.
@@ -36,13 +57,19 @@ public abstract partial class RandomDecalSpawnerComponent : Component
     public bool SnapRotation = false;
 
     /// <summary>
+    /// Whether decals should snap to the center omf a grid space or be placed randoly.
+    /// </summary>
+    [DataField]
+    public bool SnapPosition = false;
+
+    /// <summary>
     /// zIndex for the generated decals
     /// </summary>
     [DataField]
-    public int zIndex = 0;
+    public int ZIndex = 0;
 
     /// <summary>
-    /// Color for the generated decals
+    /// Color for the generated decals. Does nothing if RandomColorList is set.
     /// </summary>
     [DataField]
     public Color Color = Color.White;
@@ -60,7 +87,7 @@ public abstract partial class RandomDecalSpawnerComponent : Component
     public bool Cleanable = false;
 
     /// <summary>
-    /// A list of tile names to avoid placing decals on.
+    /// A list of tile prototype IDs to avoid placing decals on.
     /// </summary>
     /// <remarks>
     /// Note that due to the nature of tile-based placement, it's possible for decals to "spill over" onto nearby tiles.
