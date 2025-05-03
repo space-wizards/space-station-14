@@ -30,7 +30,7 @@ namespace Content.Server.Stunnable
 
             _stunSystem.TryKnockdown(target, component.KnockdownAmount, component.Refresh, component.AutoStand, status);
 
-            _stunSystem.TrySlowdown(target, component.SlowdownAmount, component.Refresh, component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status);
+            _stunSystem.TrySlowdown(target, component.SlowdownAmount, component.Refresh, component.WalkSpeedMultiplier, component.SprintSpeedMultiplier, status);
         }
         private void HandleCollide(EntityUid uid, StunOnCollideComponent component, ref StartCollideEvent args)
         {
