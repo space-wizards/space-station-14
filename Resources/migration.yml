@@ -614,3 +614,9 @@ VariedXenoArtifactItem: ComplexXenoArtifactItem
 # 2025-04-26
 ComputerCargoShuttle: ComputerShuttleCargo
 CargoShuttleComputerCircuitboard: CargoShuttleConsoleCircuitboard
+
+# 2025-05-03
+ExtendedEmergencyOxygenTank: null
+ExtendedEmergencyOxygenTankFilled: null
+ExtendedEmergencyNitrogenTank: null
+ExtendedEmergencyNitrogenTankFilled: null

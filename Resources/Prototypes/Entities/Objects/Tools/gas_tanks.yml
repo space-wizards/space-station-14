@@ -130,36 +130,6 @@
 
 - type: entity
   parent: EmergencyOxygenTank
-  id: ExtendedEmergencyOxygenTank
-  name: extended-capacity emergency oxygen tank
-  description: An emergency tank with extended capacity. Technically rated for prolonged use. It can hold 1.5 L of gas.
-  components:
-  - type: Sprite
-    sprite: Objects/Tanks/emergency_extended.rsi
-  - type: Item
-    sprite: Objects/Tanks/emergency_extended.rsi
-  - type: GasTank
-    air:
-      volume: 1.5
-      temperature: 293.15
-  - type: Clothing
-    sprite: Objects/Tanks/emergency_extended.rsi
-
-- type: entity
-  parent: ExtendedEmergencyOxygenTank
-  id: ExtendedEmergencyNitrogenTank
-  name: extended-capacity emergency nitrogen tank
-  description: An emergency tank with extended capacity. Technically rated for prolonged use. It can hold 1.5 L of gas.
-  components:
-  - type: Sprite
-    sprite: Objects/Tanks/emergency_extended_red.rsi
-  - type: Item
-    sprite: Objects/Tanks/emergency_extended_red.rsi
-  - type: Clothing
-    sprite: Objects/Tanks/emergency_extended_red.rsi
-
-- type: entity
-  parent: ExtendedEmergencyOxygenTank
   id: DoubleEmergencyOxygenTank
   name: double emergency oxygen tank
   description: A high-grade dual-tank emergency life support container. It holds a decent amount of oxygen for its small size. It can hold 2.5 L of gas.

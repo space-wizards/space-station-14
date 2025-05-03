@@ -225,8 +225,8 @@
       - id: ClothingOuterHardsuitSyndicate
       - id: ClothingMaskGasSyndicate
       - id: ClothingHandsGlovesColorYellowBudget
-      - id: DoubleEmergencyOxygenTankFilled
-      - id: DoubleEmergencyNitrogenTankFilled
+      - id: DoubleEmergencyOxygenTankFilledLiquid
+      - id: DoubleEmergencyNitrogenTankFilledLiquid
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -239,8 +239,8 @@
       - id: ClothingOuterHardsuitSyndie
       - id: ClothingMaskGasSyndicate
       - id: ClothingHandsGlovesCombat
-      - id: DoubleEmergencyOxygenTankFilled
-      - id: DoubleEmergencyNitrogenTankFilled
+      - id: DoubleEmergencyOxygenTankFilledLiquid
+      - id: DoubleEmergencyNitrogenTankFilledLiquid
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -253,8 +253,8 @@
       - id: ClothingOuterHardsuitSyndieElite
       - id: ClothingMaskGasSyndicate
       - id: ClothingHandsGlovesCombat
-      - id: DoubleEmergencyOxygenTankFilled
-      - id: DoubleEmergencyNitrogenTankFilled
+      - id: DoubleEmergencyOxygenTankFilledLiquid
+      - id: DoubleEmergencyNitrogenTankFilledLiquid
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -266,8 +266,8 @@
     contents:
       - id: ClothingMaskGasSyndicate
       - id: ClothingHandsGlovesCombat
-      - id: DoubleEmergencyOxygenTankFilled
-      - id: DoubleEmergencyNitrogenTankFilled
+      - id: DoubleEmergencyOxygenTankFilledLiquid
+      - id: DoubleEmergencyNitrogenTankFilledLiquid
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

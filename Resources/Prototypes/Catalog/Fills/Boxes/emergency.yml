@@ -48,7 +48,7 @@
   - type: StorageFill
     contents:
     - id: ClothingMaskBreath
-    - id: ExtendedEmergencyOxygenTankFilled
+    - id: EmergencyOxygenTank
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
@@ -66,7 +66,7 @@
   - type: StorageFill
     contents:
     - id: ClothingMaskBreath
-    - id: ExtendedEmergencyNitrogenTankFilled
+    - id: EmergencyNitrogenTank
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
@@ -245,7 +245,7 @@
   - type: StorageFill
     contents:
     - id: ClothingMaskGasSyndicate
-    - id: ExtendedEmergencyOxygenTankFilled
+    - id: EmergencyOxygenTank
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
@@ -262,7 +262,7 @@
   - type: StorageFill
     contents:
     - id: ClothingMaskGasSyndicate
-    - id: ExtendedEmergencyNitrogenTankFilled
+    - id: EmergencyNitrogenTank
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick

@@ -19,8 +19,8 @@
       - id: ClothingOuterHardsuitJuggernaut
       - id: ClothingMaskGasSyndicate
       - id: ClothingHandsGlovesCombat
-      - id: DoubleEmergencyOxygenTankFilled
-      - id: DoubleEmergencyNitrogenTankFilled
+      - id: DoubleEmergencyOxygenTankFilledLiquid
+      - id: DoubleEmergencyNitrogenTankFilledLiquid
 
 - type: entity
   id: CrateSyndicateSuperSurplusBundle

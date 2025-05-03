@@ -63,37 +63,6 @@
         - 0.270782035 # nitrogen
       temperature: 293.15
 
-
-- type: entity
-  id: ExtendedEmergencyOxygenTankFilled
-  parent: ExtendedEmergencyOxygenTank
-  suffix: Filled
-  components:
-  - type: GasTank
-    outputPressure: 21.3
-    air:
-      # 9 minutes
-      volume: 1.5
-      moles:
-        - 0.615413715 # oxygen
-      temperature: 293.15
-
-- type: entity
-  id: ExtendedEmergencyNitrogenTankFilled
-  parent: ExtendedEmergencyNitrogenTank
-  suffix: Filled
-  components:
-  - type: GasTank
-    outputPressure: 21.3
-    air:
-      # 9 minutes
-      volume: 1.5
-      moles:
-        - 0 # oxygen
-        - 0.615413715 # nitrogen
-      temperature: 293.15
-
-
 - type: entity
   id: DoubleEmergencyOxygenTankFilled
   parent: DoubleEmergencyOxygenTank
@@ -102,11 +71,25 @@
   - type: GasTank
     outputPressure: 21.3
     air:
-      # 15 minutes
-      volume: 2.5
+      # 8 minutes
+      volume: 1.32
       moles:
-        - 1.025689525 # oxygen
+        - 0.541564070 # oxygen
       temperature: 293.15
+
+- type: entity
+  id: DoubleEmergencyOxygenTankFilledLiquid
+  parent: DoubleEmergencyOxygenTankFilled
+  suffix: Filled, Liquid
+  components:
+  - type: GasTank
+    outputPressure: 5
+    air:
+      # 80 minutes
+      volume: 1.32
+      moles:
+        - 4.23 # oxygen
+      temperature: 72
 
 - type: entity
   id: DoubleEmergencyNitrogenTankFilled
@@ -116,12 +99,27 @@
   - type: GasTank
     outputPressure: 21.3
     air:
-      # 15 minutes
-      volume: 2.5
+      # 8 minutes
+      volume: 1.32
       moles:
         - 0 # oxygen
-        - 1.025689525 # nitrogen
+        - 0.541564070 # nitrogen
       temperature: 293.15
+
+- type: entity
+  id: DoubleEmergencyNitrogenTankFilledLiquid
+  parent: DoubleEmergencyNitrogenTankFilled
+  suffix: Filled, Liquid
+  components:
+  - type: GasTank
+    outputPressure: 5
+    air:
+      # 80 minutes
+      volume: 1.32
+      moles:
+        - 0 # oxygen
+        - 4.23 # nitrogen
+      temperature: 72
 
 - type: entity
   id: EmergencyFunnyOxygenTankFilled
