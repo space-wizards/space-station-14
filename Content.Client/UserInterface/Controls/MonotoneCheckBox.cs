@@ -7,24 +7,16 @@ namespace Content.Client.UserInterface.Controls;
 /// </summary>
 public sealed class MonotoneCheckBox : CheckBox
 {
-    public new const string StyleClassCheckBox = "monotoneCheckBox";
-    public new const string StyleClassCheckBoxChecked = "monotoneCheckBoxChecked";
+    public const string StyleClassMonotoneCheckBox = "monotoneCheckBox";
 
     public MonotoneCheckBox()
     {
-        TextureRect.RemoveStyleClass(CheckBox.StyleClassCheckBox);
-        TextureRect.AddStyleClass(StyleClassCheckBox);
+        TextureRect.AddStyleClass(StyleClassMonotoneCheckBox);
     }
 
     protected override void DrawModeChanged()
     {
         base.DrawModeChanged();
-
-        // Update appearance
-        if (Pressed)
-            TextureRect.AddStyleClass(StyleClassCheckBoxChecked);
-        else
-            TextureRect.RemoveStyleClass(StyleClassCheckBoxChecked);
 
         // Appearance modulations
         Modulate = Disabled ? Color.Gray : Color.White;

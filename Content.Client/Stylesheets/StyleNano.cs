@@ -995,19 +995,14 @@ namespace Content.Client.Stylesheets
                 }),
 
                 // MonotoneCheckBox
-                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { MonotoneCheckBox.StyleClassCheckBox }, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { MonotoneCheckBox.StyleClassMonotoneCheckBox }, null, null), new[]
                 {
                     new StyleProperty(TextureRect.StylePropertyTexture, monotoneCheckBoxTextureUnchecked),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { MonotoneCheckBox.StyleClassCheckBox, MonotoneCheckBox.StyleClassCheckBoxChecked }, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { MonotoneCheckBox.StyleClassMonotoneCheckBox, CheckBox.StyleClassCheckBoxChecked }, null, null), new[]
                 {
                     new StyleProperty(TextureRect.StylePropertyTexture, monotoneCheckBoxTextureChecked),
-                }),
-
-                new StyleRule(new SelectorElement(typeof(BoxContainer), new [] { MonotoneCheckBox.StyleClassCheckBox }, null, null), new[]
-                {
-                    new StyleProperty(BoxContainer.StylePropertySeparation, 10),
                 }),
 
                 // Tooltip
