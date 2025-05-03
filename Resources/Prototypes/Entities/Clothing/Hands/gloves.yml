@@ -550,7 +550,7 @@
 
 - type: entity
   name: stun knuckle dusters
-  parent: [ClothingHandsBase, BaseToggleClothing, BaseRestrictedContraband]
+  parent: [ClothingHandsBase, BaseToggleClothing, BaseSecurityContraband]
   id: ClothingHandsKnuckleDustersStun
   description: A pair of knuckle dusters combined with the tech of a stun baton. This makes beating tiders a whole lot easier.
   components:
