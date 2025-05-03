@@ -18,10 +18,10 @@ public sealed class ThrowEquippedOnHitSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ThrowEquippedOnHitComponent, MeleeHitEvent>(OnSpeechHit);
+        SubscribeLocalEvent<ThrowEquippedOnHitComponent, MeleeHitEvent>(OnMeleeHit);
     }
 
-    private void OnSpeechHit(Entity<ThrowEquippedOnHitComponent> ent, ref MeleeHitEvent args)
+    private void OnMeleeHit(Entity<ThrowEquippedOnHitComponent> ent, ref MeleeHitEvent args)
     {
         if (!args.IsHit || args.HitEntities.Count == 0)
             return;
