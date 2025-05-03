@@ -263,6 +263,7 @@ public abstract partial class SharedMindSystem : EntitySystem
         if (mind.OwnedEntity == null)
             return true;
 
+        // This entity cannot be dead, alive or crit, so it makes sense it cannot be revived to begin with.
         if (!HasComp<MobStateComponent>(mind.OwnedEntity))
             return true;
 
