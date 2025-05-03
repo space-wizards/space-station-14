@@ -49,6 +49,50 @@
           params:
             volume: -6
 
+- type: entity
+  id: BaseRockGibtonite
+  suffix: Gibtonite
+  abstract: true
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        "gib":
+          Primed:
+            state: gibtonite_active
+            shader: unshaded
+          Unprimed: { state: gibtonite_inactive }
+  - type: OnUseTimerTrigger
+    examinable: false
+  - type: RandomTimerTrigger
+    min: 3.2
+    max: 4
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: DemolitionCharge
+    totalIntensity: 450
+    intensitySlope: 2.5
+    maxIntensity: 15
+    canCreateVacuum: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 3
+      behaviors:
+      - !type:TimerStartBehavior
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:TriggerBehavior
+
 # Ore veins
 - type: entity
   id: AsteroidRockCoal
@@ -352,6 +396,25 @@
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
+  id: AsteroidRockGibtonite
+  parent: [ BaseRockGibtonite, AsteroidRock ]
+  description: A rock wall with a chunk of gibtonite sticking out of it. Steady, now!
+  components:
+  - type: Sprite
+    layers:
+    - state: rock_asteroid
+    - map: [ "enum.EdgeLayer.South" ]
+      state: rock_asteroid_south
+    - map: [ "enum.EdgeLayer.East" ]
+      state: rock_asteroid_east
+    - map: [ "enum.EdgeLayer.North" ]
+      state: rock_asteroid_north
+    - map: [ "enum.EdgeLayer.West" ]
+      state: rock_asteroid_west
+    - state: gibtonite_inactive
+      map: [ "enum.MiningScannerVisualLayers.Overlay", "gib" ]
+
+- type: entity
   id: AsteroidRockMining
   parent: AsteroidRock
   name: asteroid rock
@@ -630,6 +693,25 @@
       state: ironrock_west
     - state: rock_artifact_fragment
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+
+- type: entity
+  id: IronRockGibtonite
+  parent: [ BaseRockGibtonite, IronRock ]
+  description: A rock wall with a chunk of gibtonite sticking out of it. Steady, now!
+  components:
+  - type: Sprite
+    layers:
+    - state: ironrock
+    - map: [ "enum.EdgeLayer.South" ]
+      state: ironrock_south
+    - map: [ "enum.EdgeLayer.East" ]
+      state: ironrock_east
+    - map: [ "enum.EdgeLayer.North" ]
+      state: ironrock_north
+    - map: [ "enum.EdgeLayer.West" ]
+      state: ironrock_west
+    - state: gibtonite_inactive
+      map: [ "enum.MiningScannerVisualLayers.Overlay", "gib" ]
 
 - type: entity
   id: IronRockDiamond
