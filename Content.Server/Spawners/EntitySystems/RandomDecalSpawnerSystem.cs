@@ -1,5 +1,5 @@
 using System.Numerics;
-using System.Collections.Generic;
+using Content.Shared.Decals;
 using Content.Server.Spawners.Components;
 using Content.Server.Decals;
 using Content.Shared.Maps;

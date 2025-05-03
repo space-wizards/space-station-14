@@ -15,7 +15,7 @@ public sealed partial class RandomDecalSpawnerComponent : Component
     /// A list of decals to randomly select from when spawning.
     /// </summary>
     [DataField]
-    public List<String> Decals = new();
+    public List<ProtoId<DecalPrototype>> Decals = new();
 
     /// <summary>
     /// Radius (in tiles) to spawn decals in. 0 will target only the tile the entity is on.
