@@ -14,7 +14,6 @@ public sealed class WormSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<WormComponent, SharedStunSystem.StandUpAttemptEvent>(OnStandAttempt);
-        SubscribeLocalEvent<WormComponent, SharedStunSystem.KnockdownEndEvent>(OnKnockdownEnd);
         SubscribeLocalEvent<WormComponent, SharedStunSystem.KnockedDownRefreshEvent>(OnKnockedDownRefresh);
         SubscribeLocalEvent<WormComponent, MapInitEvent>(OnMapInit);
     }
@@ -37,25 +36,5 @@ public sealed class WormSystem : EntitySystem
     {
         args.FrictionModifier *= ent.Comp.FrictionModifier;
         args.SpeedModifier *= ent.Comp.SpeedModifier;
-    }
-
-    private void OnKnockdownEnd(Entity<WormComponent> ent, ref SharedStunSystem.KnockdownEndEvent args)
-    {
-        //░░░░░▄▄▄▄▀▀▀▀▀▀▀▀▄▄▄▄▄▄░░░░░░░
-        //░░░░░█░░░░▒▒▒▒▒▒▒▒▒▒▒▒░░▀▀▄░░░░
-        //░░░░█░░░▒▒▒▒▒▒░░░░░░░░▒▒▒░░█░░░
-        //░░░█░░░░░░▄██▀▄▄░░░░░▄▄▄░░░░█░░
-        //░▄▀▒▄▄▄▒░█▀▀▀▀▄▄█░░░██▄▄█░░░░█░
-        //█░▒█▒▄░▀▄▄▄▀░░░░░░░░█░░░▒▒▒▒▒░█
-        //█░▒█░█▀▄▄░░░░░█▀░░░░▀▄░░▄▀▀▀▄▒█
-        //░█░▀▄░█▄░█▀▄▄░▀░▀▀░▄▄▀░░░░█░░█░
-        //░░█░░░▀▄▀█▄▄░█▀▀▀▄▄▄▄▀▀█▀██░█░░
-        //░░░█░░░░██░░▀█▄▄▄█▄▄█▄████░█░░░
-        //░░░░█░░░░▀▀▄░█░░░█░█▀██████░█░░
-        //░░░░░▀▄░░░░░▀▀▄▄▄█▄█▄█▄█▄▀░░█░░
-        //░░░░░░░▀▄▄░▒▒▒▒░░░░░░░░░░▒░░░█░
-        //░░░░░░░░░░▀▀▄▄░▒▒▒▒▒▒▒▒▒▒░░░░█░
-        //░░░░░░░░░░░░░░▀▄▄▄▄▄░░░░░░░░█░░
-        EnsureComp<KnockedDownComponent>(ent);
     }
 }
