@@ -1,3 +1,4 @@
+#nullable enable
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Antag;
 using Content.Server.Antag.Components;
@@ -21,6 +22,7 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
 {
     public abstract class HackTestSystem<TComp, TEvent> : EntitySystem
         where TComp : Component
+        where TEvent : notnull
     {
         public bool Hacked { get; private set; }
 
@@ -101,11 +103,7 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
         Assert.That(testSys.Hacked, Is.False, "Ninja hacked records without activating gloves.");
 
         // Activate the gloves
-        await Server.WaitPost(() =>
-        {
-            Assert.That(ItemToggleSys.TryActivate(ToServer(_gloves).Value, user: ToServer(Player)),
-                "Failed to activate ninja gloves.");
-        });
+        await SetGlovesActive();
 
         // Interact with the console again with active gloves
         await Interact();
@@ -131,6 +129,7 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
         // Get the research stealing objective and make sure it has no progress
         var mindSys = Server.System<SharedMindSystem>();
         Assert.That(mindSys.TryGetObjectiveComp<StealResearchConditionComponent>(ToServer(Player), out var stealResearchConditionComp));
+        Assert.That(stealResearchConditionComp, Is.Not.Null);
         Assert.That(stealResearchConditionComp.DownloadedNodes, Is.Empty, "Player already has stolen research.");
 
         // Add our tracker component to the ninja
@@ -163,11 +162,7 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
         Assert.That(stealResearchConditionComp.DownloadedNodes, Is.Empty, "DownloadedNodes count increased unexpectedly");
 
         // Activate the gloves
-        await Server.WaitPost(() =>
-        {
-            Assert.That(ItemToggleSys.TryActivate(ToServer(_gloves).Value, user: ToServer(Player)),
-                "Failed to activate ninja gloves.");
-        });
+        await SetGlovesActive();
 
         // Interact with the server again with active gloves
         await Interact();
@@ -213,7 +208,9 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
         // Activate the gloves
         await Server.WaitPost(() =>
         {
-            Assert.That(ItemToggleSys.TryActivate(ToServer(_gloves).Value, user: ToServer(Player)),
+            var glovesUid = ToServer(_gloves);
+            Assert.That(glovesUid, Is.Not.Null);
+            Assert.That(ItemToggleSys.TryActivate(glovesUid.Value, user: ToServer(Player)),
                 "Failed to activate ninja gloves.");
         });
 
@@ -243,7 +240,7 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
         await SpawnTarget(APCProtoId);
 
         // Make sure the APC has full charge
-        Assert.That(TryComp<BatteryComponent>(out var apcBattery));
+        var apcBattery = Comp<BatteryComponent>();
         Assert.That(apcBattery.CurrentCharge, Is.GreaterThanOrEqualTo(apcBattery.MaxCharge),
             "APC did not spawn with full charge.");
 
@@ -255,14 +252,11 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
             "APC lost charge when interacted with gloves disabled.");
 
         // Activate the gloves
-        await Server.WaitPost(() =>
-        {
-            Assert.That(ItemToggleSys.TryActivate(ToServer(_gloves).Value, user: ToServer(Player)),
-                "Failed to activate ninja gloves.");
-        });
+        await SetGlovesActive();
 
-        Assert.That(TryComp<BatteryDrainerComponent>(Player, out var batteryDrainer));
+        var batteryDrainer = Comp<BatteryDrainerComponent>(Player);
         var ninjaBatteryEnt = batteryDrainer.BatteryUid;
+        Assert.That(ninjaBatteryEnt, Is.Not.Null);
         var ninjaBatteryComp = SEntMan.GetComponent<BatteryComponent>(ninjaBatteryEnt.Value);
 
         // Drain the ninja's battery
@@ -298,7 +292,7 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
         {
             // Add and start the ninja game rule
             Assert.That(gameTicker.StartGameRule(NinjaSpawnGameRuleProtoId, out var ninjaRuleEntity));
-            Assert.That(SEntMan.TryGetComponent<AntagSelectionComponent>(ninjaRuleEntity, out var selectionComp));
+            var selectionComp = SEntMan.GetComponent<AntagSelectionComponent>(ninjaRuleEntity);
             // Try to make the target a ninja
             antagSelection.MakeAntag((ninjaRuleEntity, selectionComp), ServerSession, selectionComp.Definitions[0], ignoreSpawner: true);
             // Make sure it worked
@@ -324,5 +318,19 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
 
         // Move the ninja back to their original position
         Transform.SetMapCoordinates(ToServer(target.Value), originalCoordinates);
+    }
+
+    /// <summary>
+    /// Activates or deactivates the player ninja's gloves.
+    /// </summary>
+    private async Task SetGlovesActive(bool active = true)
+    {
+        await Server.WaitPost(() =>
+        {
+            var glovesUid = ToServer(_gloves);
+            Assert.That(glovesUid, Is.Not.Null);
+            Assert.That(ItemToggleSys.TrySetActive(glovesUid.Value, active, user: ToServer(Player)),
+                "Failed to activate ninja gloves.");
+        });
     }
 }
