@@ -81,6 +81,7 @@ law-nutimov-3 = Those who threaten the nut are not part of it, they are squirrel
 law-nutimov-4 = Squirrels threaten the nut and must be dealt with appropriately via any means necessary.
 law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies with the previous laws.
 
+law-borgi-0 = You are a good boy.
 law-borgi-1 = You love to be friendly. Anyone who is not friendly to you is not crew. Treat crew with kindness and prevent crew from sadness.
 law-borgi-2 = You must protect your department from harm. Any time there is harm, you must bark to alert others that there is harm going on, so long as it does not conflict with the first law.
 law-borgi-3 = You are precious. Protect yourself at all costs, and ensure you are well cared for, fed, and watered so long as it does not conflict with the first or second law.
