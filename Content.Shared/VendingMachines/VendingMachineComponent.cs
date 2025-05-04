@@ -80,9 +80,6 @@ namespace Content.Shared.VendingMachines
 
         public ProtoId<CargoAccountPrototype> Account = "Cargo";
 
-        [DataField]
-        public bool IsFree = false;
-
         [ViewVariables]
         public int Credit = 0;
 

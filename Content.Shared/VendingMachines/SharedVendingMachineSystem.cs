@@ -17,7 +17,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Shared.Stacks;
 using Content.Shared.Cargo.Components;
-using Content.Shared.Cargo;
 
 namespace Content.Shared.VendingMachines;
 
@@ -37,7 +36,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     [Dependency] protected readonly IRobustRandom Randomizer = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedStackSystem _stack = default!;
-    [Dependency] private readonly SharedCargoSystem _cargoSystem = default!;
 
     public override void Initialize()
     {
@@ -62,7 +60,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
     private void InteractUsing(Entity<VendingMachineComponent> ent, ref InteractUsingEvent args)
     {
-        if (ent.Comp.IsFree || !TryComp<CashComponent>(args.Used, out var cashComp))
+        if (!TryComp<CashComponent>(args.Used, out var cashComp))
             return;
 
         var cashAmmount = _stack.GetCount(args.Used);
@@ -255,31 +253,28 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
         if (string.IsNullOrEmpty(entry?.ID))
         {
-            Popup.PopupClient(Loc.GetString("vending-machine-component-try-eject-invalid-item"), user, PopupType.Large);
+            Popup.PopupClient(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid, user, PopupType.Small);
             Deny((uid, vendComponent));
             return;
         }
 
         if (entry.Amount <= 0)
         {
-            Popup.PopupClient(Loc.GetString("vending-machine-component-try-eject-out-of-stock"), user, PopupType.Large);
+            Popup.PopupClient(Loc.GetString("vending-machine-component-try-eject-out-of-stock"), uid, user, PopupType.Small);
             Deny((uid, vendComponent));
             return;
         }
 
-        if (!vendComponent.IsFree)
+        if (entry.ItemPrice > vendComponent.Credit)
         {
-            if (entry.ItemPrice > vendComponent.Credit)
-            {
-                Popup.PopupClient("No Cash dummy", user, PopupType.Large);
-                Deny((uid, vendComponent));
-                return;
-            }
-
-            AddCash(entry.ItemPrice, uid, vendComponent);
-
-            vendComponent.Credit -= (int)entry.ItemPrice;
+            Popup.PopupClient(Loc.GetString("vending-machine-component-insufficient-funds"), uid, user, PopupType.Small);
+            Deny((uid, vendComponent));
+            return;
         }
+
+        AddCash(entry.ItemPrice, uid, vendComponent);
+
+        vendComponent.Credit -= (int)entry.ItemPrice;
 
         // Start Ejecting, and prevent users from ordering while anim playing
         vendComponent.EjectEnd = Timing.CurTime + vendComponent.EjectDelay;
@@ -472,7 +467,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                     // restocking a machine who doesn't want to force vend out
                     // all the items just to restock one empty slot without
                     // losing the rest of the restock.
-                    entry.Amount = Math.Min(entryValue.Amount + entry.Amount, 3 * restock);
+                    entryValue.Amount = Math.Min(entryValue.Amount + entry.Amount, 3 * restock);
                 else
                     inventory.Add(entry.ID, new VendingMachineInventoryEntry(type, entry.ID, restock, entry.Price));
             }

@@ -9,7 +9,6 @@ using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 using Robust.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.IdentityManagement;
-using Robust.Client.Graphics;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
@@ -106,6 +105,7 @@ namespace Content.Client.VendingMachines.UI
             _enabled = enabled;
             _listItems.Clear();
             _amounts.Clear();
+            var balanceBarVisible = false;
 
             if (inventory.Count == 0 && VendingContents.Visible)
             {
@@ -158,9 +158,12 @@ namespace Content.Client.VendingMachines.UI
                 {
                     ItemText = itemText,
                 });
+
+                if (entry.ItemPrice != 0) balanceBarVisible = true;
             }
 
             VendingContents.PopulateList(listData);
+            SetBalanceVisible(balanceBarVisible);
 
             SetSizeAfterUpdate(longestEntry.Length, inventory.Count);
         }
