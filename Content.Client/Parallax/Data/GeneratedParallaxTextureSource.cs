@@ -126,7 +126,7 @@ public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSou
     {
         var resManager = IoCManager.Resolve<IResourceManager>();
         using var imageStream = resManager.UserData.OpenRead(ParallaxCachedImagePath);
-        return Texture.LoadFromPNGStream(imageStream, "Parallax");
+        return Texture.LoadFromPNGStream(imageStream, $"Parallax {Identifier}");
     }
 
     private string? GetParallaxConfig()
