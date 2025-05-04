@@ -1,5 +1,5 @@
 - type: body
-  id: smartcorgi
+  id: Smartcorgi
   name: "corgi"
   root: torso
   slots:

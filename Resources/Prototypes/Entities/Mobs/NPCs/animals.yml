@@ -2751,17 +2751,12 @@
     - VimPilot
 
 - type: entity
-  name: corgi
+  abstract: true
   parent: [SimpleMobBase, StripableInventoryBase]
-  id: MobCorgi
+  id: MobCorgiBase
+  name: corgi
   description: Finally, a space corgi!
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: corgi
   - type: Physics
   - type: Speech
     speechVerb: Canine
@@ -2780,6 +2775,28 @@
   - type: Inventory
     speciesId: dog
     templateId: pet
+  - type: InteractionPopup
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: MobPrice
+    price: 200
+
+- type: entity
+  parent: MobCorgiBase
+  id: MobCorgi
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: corgi
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2794,19 +2811,8 @@
       amount: 2
   - type: ReplacementAccent
     accent: dog
-  - type: InteractionPopup
-    interactSuccessString: petting-success-dog
-    interactFailureString: petting-failure-generic
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/small_dog_bark_happy.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-corgi
-  - type: MobPrice
-    price: 200
   - type: Tag
     tags:
     - VimPilot
@@ -3635,8 +3641,8 @@
         Base: reindeer_doe_dead
 
 - type: entity
-  parent: [SimpleMobBase, StripableInventoryBase]
-  id: MobSmartCorgi
+  parent: MobCorgiBase
+  id: MobCorgiSmart
   name: smart corgi
   description: An unusually smart dog.
   components:
@@ -3652,22 +3658,6 @@
       sprite: Objects/Misc/handcuffs.rsi # Would do a custom dog handcuff sprite but unfortunately handcuffs have their overlay baked-in to the cuff itself so this is mostly filler
       state: body-overlay-2
       visible: false
-  - type: Physics
-  # Apply canine dog speech
-  - type: Speech
-    speechVerb: Canine
-    speechSounds: Dog
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 50
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
   - type: UserInterface
     interfaces:
       enum.StrippingUiKey.Key:
@@ -3692,24 +3682,14 @@
   - type: ComplexInteraction
   # Implement custom borgi body type
   - type: Body
-    prototype: smartcorgi
+    prototype: Smartcorgi
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 180
-  - type: InteractionPopup
-    interactSuccessString: petting-success-dog
-    interactFailureString: petting-failure-generic
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/small_dog_bark_happy.ogg
   - type: Grammar
     attributes:
       gender: epicene # Gender neutral
       proper: true
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-corgi
-  - type: MobPrice
-    price: 200
   - type: Tag
     tags:
     - VimPilot
