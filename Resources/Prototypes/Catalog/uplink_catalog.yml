@@ -67,6 +67,25 @@
   - UplinkWeaponry
 
 - type: listing
+  id: UplinkHyperEutacticBlade
+  name: uplink-hypereutactic-blade-name
+  description: uplink-hypereutactic-blade-desc
+  icon: { sprite: /Textures/Objects/Weapons/Melee/hypereutactic_blade.rsi, state: icon }
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 15
+  productEntity: HyperEutacticBlade
+  cost:
+    Telecrystal: 18
+  categories:
+  - UplinkWeaponry
+  conditions:
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+
+- type: listing
   id: UplinkEnergyDagger
   name: uplink-edagger-name
   description: uplink-edagger-desc
