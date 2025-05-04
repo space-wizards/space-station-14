@@ -158,8 +158,8 @@
   - type: Transform
     anchored: True
   - type: Physics
-    bodyType: Dynamic
-    canCollide: true
+    bodyType: Static
+    canCollide: false
   - type: Sprite
     sprite: Mobs/Aliens/Asteroid/goliath.rsi
   - type: InteractionOutline
