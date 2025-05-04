@@ -11,7 +11,7 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmentbottom.rsi #imp
     state: boxers
 
 - type: marking
@@ -24,7 +24,7 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmentbottom.rsi #imp
     state: briefs
 
 - type: marking
@@ -37,7 +37,7 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmentbottom.rsi #imp
     state: satin
 
 - type: marking
@@ -50,7 +50,7 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmenttop.rsi #imp
     state: classic
 
 - type: marking
@@ -64,7 +64,7 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmenttop.rsi #imp
     state: sports
 
 - type: marking
@@ -78,7 +78,7 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmenttop.rsi #imp
     state: binder
 
 - type: marking
@@ -92,7 +92,7 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmenttop.rsi #imp
     state: tanktop
 
 - type: marking
@@ -105,8 +105,8 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
-    state: boxers_vox
+  - sprite: _Impstation/Mobs/Customization/Vox/undergarmentbottom.rsi #imp
+    state: boxers
 
 - type: marking
   id: UndergarmentBottomBriefsVox
@@ -118,8 +118,8 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
-    state: briefs_vox
+  - sprite: _Impstation/Mobs/Customization/Vox/undergarmentbottom.rsi #imp
+    state: briefs2
 
 - type: marking
   id: UndergarmentBottomSatinVox
@@ -131,8 +131,8 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
-    state: satin_vox
+  - sprite: _Impstation/Mobs/Customization/Vox/undergarmentbottom.rsi #imp
+    state: satin
 
 - type: marking
   id: UndergarmentTopBraVox
@@ -144,8 +144,8 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
-    state: classic_vox
+  - sprite: _Impstation/Mobs/Customization/Vox/undergarmenttop.rsi #imp
+    state: classic
 
 - type: marking
   id: UndergarmentTopSportsbraVox
@@ -157,8 +157,8 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
-    state: sports_vox
+  - sprite: _Impstation/Mobs/Customization/Vox/undergarmenttop.rsi #imp
+    state: sports
 
 - type: marking
   id: UndergarmentTopBinderVox
@@ -170,8 +170,8 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
-    state: binder_vox
+  - sprite: _Impstation/Mobs/Customization/Vox/undergarmenttop.rsi #imp
+    state: binder
 
 - type: marking
   id: UndergarmentTopTanktopVox
@@ -183,8 +183,8 @@
       type: null
       fallbackColor: '#FFFFFF'
   sprites:
-  - sprite: _Impstation/Mobs/Customization/undergarments.rsi #imp
-    state: tanktop_vox
+  - sprite: _Impstation/Mobs/Customization/Vox/undergarmenttop.rsi #imp
+    state: tanktop
 
 - type: marking
   id: UndergarmentBottomBoxersReptilian

@@ -1,0 +1,63 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "bigslash, roadrash, slash by LandsharkRAWR, rest by crocodilecarousel (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bigslashleft",
+            "directions": 4
+        },
+        {
+            "name": "bigslashright",
+            "directions": 4
+        },
+        {
+            "name": "cheeks",
+            "directions": 4
+        },
+        {
+            "name": "earhole",
+            "directions": 4
+        },
+        {
+            "name": "gradient1",
+            "directions": 4
+        },
+        {
+            "name": "gradient2",
+            "directions": 4
+        },
+        {
+            "name": "gradient3",
+            "directions": 4
+        },
+        {
+            "name": "neckband",
+            "directions": 4
+        },
+        {
+            "name": "roadrashleft",
+            "directions": 4
+        },
+        {
+            "name": "roadrashright",
+            "directions": 4
+        },
+        {
+            "name": "scarblasted",
+            "directions": 4
+        },
+        {
+            "name": "slashleft",
+            "directions": 4
+        },
+        {
+            "name": "slashright",
+            "directions": 4
+        }
+    ]
+}

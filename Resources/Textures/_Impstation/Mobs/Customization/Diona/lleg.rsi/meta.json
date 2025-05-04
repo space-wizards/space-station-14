@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "from https://github.com/TauCetiStation/TauCetiClassic/blob/a8c097fd0e749dcd6f66f05cf5325e51f6b081dd/icons/mob/human_face.dmi, modified by atdoop (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "overlay",
+            "directions": 4
+        }
+    ]
+}

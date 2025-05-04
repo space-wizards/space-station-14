@@ -1,0 +1,27 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprited by crocodilecarousel (github) for impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "crackedhead",
+            "directions": 4
+        },
+        {
+            "name": "gaudyclownhead1",
+            "directions": 4
+        },
+        {
+            "name": "gaudyclownhead2",
+            "directions": 4
+        },
+        {
+            "name": "highlight",
+            "directions": 4
+        }
+    ]
+}

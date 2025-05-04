@@ -1,168 +1,5 @@
-# hair
-marking-KodaBob1 = Bob
-marking-KodaBob2 = Bob With Bangs
-marking-KodaCIA = CIA
-marking-KodaCornrows = Cornrows
-marking-KodaCurls = Curls
-marking-KodaDandy = Pompadour
-marking-KodaDoubleBun = Double Bun With Eyes
-marking-KodaDoubleBunNormal = Double Bun
-marking-KodaEmo = Emo
-marking-KodaHalfShaved = Half Shaved
-marking-KodaHime = Hime
-marking-KodaMessy = Messy
-marking-KodaPonytail = Ponytail
-marking-KodaSpiky = Spiky
-marking-KodaShort = Short
-marking-KodaLong = Long
+# Chest
 
-# eyes
-marking-BigSquareEyes = Eyes (Big Square)
-marking-BigSquareEyes-bigsquareeyes1 = Iris
-marking-BigSquareEyes-bigsquareeyes2 = Pupil
-
-marking-BigSquareEyesUneven = Eyes (Big Square Uneven)
-marking-BigSquareEyesUneven-bigsquareeyeseneven1 = Iris
-marking-BigSquareEyesUneven-bigsquareeyeseneven2 = Pupil
-
-marking-KodeEyestalk = Eyes (Eyestalks)
-marking-KodeEyestalk-eyestalk1 = Stalk
-marking-KodeEyestalk-eyestalk2 = Eye
-
-marking-KodeGrayEyes = Eyes (Gray)
-marking-KodeGrayEyes-grayeyes = Eyes
-
-marking-KodeGrayEyesUneven = Eyes (Gray Uneven)
-marking-KodeGrayEyesUneven-grayeyesuneven = Eyes
-
-marking-KodeHumanEyes = Eyes (Human)
-marking-KodeHumanEyes-humaneyes = Eyes
-
-marking-KodeHumanEyesUnshaded = Eyes (Human Reflective)
-marking-KodeHumanEyesUnshaded-humaneyes = Eyes
-
-marking-KodeHumanEyesUneven = Eyes (Human Uneven)
-marking-KodeHumanEyesUneven-humaneyeseneven1 = Right
-marking-KodeHumanEyesUneven-humaneyeseneven2 = Left
-
-marking-KodeHumanEyesUnevenUnshaded = Eyes (Human Uneven Reflective)
-marking-KodeHumanEyesUnevenUnshaded-humaneyeseneven1 = Right
-marking-KodeHumanEyesUnevenUnshaded-humaneyeseneven2 = Left
-
-marking-KodeJamjar1 = Eyes (Jamjar)
-marking-KodeJamjar1-jamjareyes = Eyes
-
-marking-KodeJamjar2 = Eyes (Jamjar Vacant)
-marking-KodeJamjar2-jamjareyes2 = Eyes
-
-marking-MaskEyes = Eyes (Mask)
-marking-MaskEyes-maskeyes = Eyes
-
-marking-KodeMothEyes = Eyes (Moth)
-marking-KodeMothEyes-motheyes = Eyes
-
-marking-KodeMothEyesUneven = Eyes (Moth Uneven)
-marking-KodeMothEyesUneven-motheyes1 = Right
-marking-KodeMothEyesUneven-motheyes2 = Left
-
-marking-KodeSideEye = Eyes (Young)
-marking-KodeSideEye-sideeye1 = Schlera
-marking-KodeSideEye-sideeye2 = Pupil
-
-marking-SquareEyes = Eyes (Square)
-marking-SquareEyes-squareeyes = Eyes
-
-marking-SquareEyesUnshaded = Eyes (Square Reflective)
-marking-SquareEyesUnshaded-squareeyes = Eyes
-
-marking-SquareEyesUneven = Eyes (Square Uneven)
-marking-SquareEyesUneven-squareeyesuneven = Eyes
-
-marking-SquareEyesUnevenUnshaded = Eyes (Square Uneven Reflective)
-marking-SquareEyesUnevenUnshaded-squareeyesuneven = Eyes
-
-# head
-marking-KodeAntennaeBasic = Antennae (Basic)
-marking-KodeAntennaeBasic-antennae = Antennae
-
-marking-Basilisk = Basilisk
-marking-Basilisk-basilisk1 = Hair
-marking-Basilisk-basilisk2 = Eye
-marking-Basilisk-basilisk3 = Pupil
-
-marking-KodeBeak = Beak
-marking-KodeBeak-beak = Beak
-
-marking-KodeBunnyEars = Ears (Bunny)
-marking-KodeBunnyEars-bunnyears1 = Inner
-marking-KodeBunnyEars-bunnyears2 = Outer
-
-marking-KodeCheekFins = Cheek Fins
-marking-KodeCheekFins-cheekfins = Fins
-
-marking-KodeGillsDeca = Bloatgills
-marking-KodeGillsDeca-decagills = Gills
-
-marking-KodeEyeSplotch = Eye Splotch
-marking-KodeEyeSplotch-eyesplotch = Eye Splotch
-
-marking-FakeVoxHead = Fake Head (Vox)
-marking-FakeVoxHead-fakevoxhead = Head
-
-marking-KodeFoxEars = Ears (Fox)
-marking-KodeFoxEars-foxears = Ears
-
-marking-KodeGrayHead = Head (Gray)
-marking-KodeGrayHead-grayhead = Head
-
-marking-HappySmiler = Happy Smiler
-marking-HappySmiler-happysmiler = Happy Smiler
-
-marking-KodeFrillsHead = Thin Frills
-marking-KodeFrillsHead-headfrill = Frills
-
-marking-KodeHeadSlime = Head (Slime)
-marking-KodeHeadSlime-headslime = Head
-
-marking-KodeHornsCurly = Horns (Curly)
-marking-KodeHornsCurly-hornscurly = Horns
-
-marking-KodeHornsStraight = Horns (Straight)
-marking-KodeHornsStraight-hornsstraight = Horns
-
-marking-KodeHornsSweptBack = Horns (Swept Back)
-marking-KodeHornsSweptBack-hornssweptback = Horns
-
-marking-KodeAntennaeMaple = Antennae (Maple)
-marking-KodeAntennaeMaple-mapleantennae = Antennae
-
-marking-KodeMoustacheLong = Moustache (Long)
-marking-KodeMoustacheLong-moustachelong = Moustache (Long)
-
-marking-KodeMoustacheShort = Moustache (Short)
-marking-KodeMoustacheShort-moustacheshort = Moustache (Short)
-
-marking-KodeScorpion = Scorpion Tail
-marking-KodeScorpion-scorpion1 = Antenna
-marking-KodeScorpion-scorpion2 = Upper
-marking-KodeScorpion-scorpion3 = Upper mid
-marking-KodeScorpion-scorpion4 = Upper bot
-marking-KodeScorpion-scorpion5 = Bottom
-
-marking-KodeSnoutSimple = Snout (Simple)
-marking-KodeSnoutSimple-simplesnout = Snout
-
-marking-KodeSmallBeak = Beak (Small)
-marking-KodeSmallBeak-smallbeak = Beak
-
-marking-KodeThavenEars = Ears (Thaven)
-marking-KodeThavenEars-thavenears = Ears
-
-marking-KodeWolfEars = Ears (Wolf)
-marking-KodeWolfEars-wolf1 = Outer
-marking-KodeWolfEars-wolf2 = Inner
-
-# chest
 marking-KodeBarsChest = Bars
 marking-KodeBarsChest-bars = Bars
 
@@ -181,11 +18,25 @@ marking-KodeCanvas-canvas8 = Pixel 8
 marking-KodeCanvas-canvas9 = Pixel 9
 
 marking-KodeChestEye = Large Eye (Chest)
-marking-KodeChestEye-chesteye1 = Schlera
-marking-KodeChestEye-chesteyes2 = Iris
+marking-KodeChestEye-eye1 = Schlera
+marking-KodeChestEye-eye2 = Iris
 
 marking-KodeChestGills = Chest Gills
-marking-KodeChestGills-kodechestgills = Gills
+marking-KodeChestGills-gills = Gills
+
+marking-KodeOrgans = Organs
+marking-KodeOrgans-organs1 = Skin
+marking-KodeOrgans-organs2 = Primary Organs
+marking-KodeOrgans-organs3 = Secondary Organs
+
+marking-KodeStripesChest = Stripes
+marking-KodeStripesChest-stripes = Stripes
+
+marking-KodeStripesChestUnshaded = Stripes (Bioluminescent)
+marking-KodeStripesChestUnshaded-stripes = Stripes
+
+marking-KodeTeethChest = Teeth
+marking-KodeTeethChest-tummyteeth = Teeth
 
 marking-KoiChest = Koi Spots
 marking-KoiChest-koispots1 = Spots
@@ -195,137 +46,273 @@ marking-MantleShade = Mantle Shade
 marking-MantleShade-mantleshade1 = Primary
 marking-MantleShade-mantleshade2 = Secondary
 
-marking-KodeOrgans = Organs
-marking-KodeOrgans-organs1 = Skin
-marking-KodeOrgans-organs2 = Primary Organs
-marking-KodeOrgans-organs3 = Secondary Organs
+# Head
 
-marking-KodeStripesChest = Stripes
-marking-KodeStripesChest-stripes = Stripes
-marking-KodeStripesChestUnshaded = Stripes (Bioluminescent)
-marking-KodeStripesChestUnshaded-stripes = Stripes
+marking-FakeVoxHead = Fake Head (Vox)
+marking-FakeVoxHead-fakevoxhead = Head
 
-marking-KodeTeethChest = Teeth
-marking-KodeTeethChest-tummyteeth = Teeth
+marking-HappySmiler = Happy Smiler
+marking-HappySmiler-happysmiler = Happy Smiler
 
-# arms
-marking-KodeWingsBlade = Arms (Blade)
-marking-KodeWingsBlade-bladewings = Upper
-marking-KodeWingsBlade-bladewingtips = Tip
+marking-KodeEyeSplotch = Eye Splotch
+marking-KodeEyeSplotch-eyesplotch = Eye Splotch
 
-marking-KodeCloakArms = Arms (Human)
-marking-KodeCloakArms-cloakarms1 = Arms
-marking-KodeCloakArms-cloakarms2 = Top Band
-marking-KodeCloakArms-cloakarms3 = Middle Band
-marking-KodeCloakArms-cloakarms4 = Bottom Band
+marking-KodeFoxEars = Ears (Fox)
+marking-KodeFoxEars-foxears = Ears
 
+# Snout
 
-marking-KodeArmsCrab = Arms (Decapoid)
-marking-KodeArmsCrab-crabclaws = Arms
+marking-KodeBeak = Beak
+marking-KodeBeak-beak = Beak
 
-marking-KodeCapeJelly = Cape (Jelly)
-marking-KodeCapeJelly-jellycloak1 = Bell
-marking-KodeCapeJelly-jellycloak2 = Spots
+marking-KodeMoustacheLong = Moustache (Long)
+marking-KodeMoustacheLong-moustachelong = Moustache (Long)
 
-marking-KodeWingsMoth = Wings (Moth)
-marking-KodeWingsMoth-mothwings1 = Wings
-marking-KodeWingsMoth-mothwings2 = Spots
+marking-KodeMoustacheShort = Moustache (Short)
+marking-KodeMoustacheShort-moustacheshort = Moustache (Short)
 
-marking-KodeMyFirstWings = My First Wings
-marking-KodeMyFirstWings-myfirstwings1 = Main
-marking-KodeMyFirstWings-myfirstwings2 = Tips
+marking-KodeSmallBeak = Beak (Small)
+marking-KodeSmallBeak-smallbeak = Beak
 
-marking-KodeCapePuffy = Cape (Puffy)
-marking-KodeCapePuffy-puffycape = Cape
+marking-KodeSnoutSimple = Snout (Simple)
+marking-KodeSnoutSimple-simple = Snout
 
-marking-KodeSlimeArms = Arms (Slime)
-marking-KodeSlimeArms-slimearms1 = Hair
-marking-KodeSlimeArms-slimearms2 = Arms
+# Eyes
 
-marking-KodeCapeSpines = Cape (Spines)
-marking-KodeCapeSpines-spinecloak = Cape
+marking-BigSquareEyes = Eyes (Big Square)
+marking-BigSquareEyes-bigsquare1 = Iris
+marking-BigSquareEyes-bigsquare2 = Pupil
 
-marking-KodeCapeSquid = Cape (Squid)
-marking-KodeCapeSquid-squidcape = Cape
+marking-BigSquareEyesUneven = Eyes (Big Square Uneven)
+marking-BigSquareEyesUneven-bigsquareuneven1 = Iris
+marking-BigSquareEyesUneven-bigsquareuneven2 = Pupil
 
-marking-KodeSwanWings = Wings (Swan)
-marking-KodeSwanWings-swanwings1 = Main
-marking-KodeSwanWings-swanwings2 = Stripes
-marking-KodeSwanWings-swanwings3 = Spots
+marking-KodeGrayEyes = Eyes (Gray)
+marking-KodeGrayEyes-gray = Eyes
 
-marking-KodeTentaWings = Cape (Tentacles)
-marking-KodeTentaWings-tentawings = Cape
+marking-KodeGrayEyesUneven = Eyes (Gray Uneven)
+marking-KodeGrayEyesUneven-grayuneven = Eyes
 
-marking-KodeWingsThing = Wings (Thing)
-marking-KodeWingsThing-thingwings1 = Wings
-marking-KodeWingsThing-thingwings2 = Spots
+marking-KodeHumanEyes = Eyes (Human)
+marking-KodeHumanEyes-human = Eyes
 
-marking-KodeUnevenArmsSimple = Arms (Uneven Simple)
-marking-KodeUnevenArmsSimple-unevenarmssimple = Arms
+marking-KodeHumanEyesUnshaded = Eyes (Human Reflective)
+marking-KodeHumanEyesUnshaded-human = Eyes
 
-marking-KodeVariableWings = Variable Wings
-marking-KodeVariableWings-variablewings1 = Arms
-marking-KodeVariableWings-variablewings2 = Wing Base
-marking-KodeVariableWings-variablewings3 = Wing Stripes
-marking-KodeVariableWings-variablewings4 = Wing Palms
+marking-KodeHumanEyesUneven = Eyes (Human Uneven)
+marking-KodeHumanEyesUneven-humanuneven1 = Right
+marking-KodeHumanEyesUneven-humanuneven2 = Left
 
-# legs
-marking-KodeBarLegL = Bar (L Leg)
-marking-KodeBarLegL-barlleg = Bar (L Leg)
+marking-KodeHumanEyesUnevenUnshaded = Eyes (Human Uneven Reflective)
+marking-KodeHumanEyesUnevenUnshaded-humanuneven1 = Right
+marking-KodeHumanEyesUnevenUnshaded-humanuneven2 = Left
+
+marking-KodeJamjar1 = Eyes (Jamjar)
+marking-KodeJamjar1-jamjar = Eyes
+
+marking-KodeJamjar2 = Eyes (Jamjar Vacant)
+marking-KodeJamjar2-jamjar2 = Eyes
+
+marking-MaskEyes = Eyes (Mask)
+marking-MaskEyes-mask = Eyes
+
+marking-KodeMothEyes = Eyes (Moth)
+marking-KodeMothEyes-moth = Eyes
+
+marking-KodeMothEyesUneven = Eyes (Moth Uneven)
+marking-KodeMothEyesUneven-moth1 = Right
+marking-KodeMothEyesUneven-moth2 = Left
+
+marking-SquareEyes = Eyes (Square)
+marking-SquareEyes-squareeyes = Eyes
+
+marking-SquareEyesUnshaded = Eyes (Square Reflective)
+marking-SquareEyesUnshaded-square = Eyes
+
+marking-SquareEyesUneven = Eyes (Square Uneven)
+marking-SquareEyesUneven-squareuneven = Eyes
+
+marking-SquareEyesUnevenUnshaded = Eyes (Square Uneven Reflective)
+marking-SquareEyesUnevenUnshaded-squareuneven = Eyes
+
+# RArm
+
+# LArm
+
+# RLeg
 
 marking-KodeBarLegR = Bar (R Leg)
-marking-KodeBarLegR-barrleg = Bar (R Leg)
-
-marking-KodeClawFootR = Claw (R Foot)
-marking-KodeClawFootR-clawrfoot = Claw (R Foot)
-
-marking-KodeClawFootL = Claw (L Foot)
-marking-KodeClawFootL-clawlfoot = Claw (L Foot)
+marking-KodeBarLegR-bar = Bar (R Leg)
 
 marking-KodePinstripeLegR = Pinstripe (R Leg)
-marking-KodePinstripeLegR-pinstriperleg = Pinstripe (R Leg)
-
-marking-KodePinstripeLegL = Pinstripe (L Leg)
-marking-KodePinstripeLegL-pinstripelleg = Pinstripe (L Leg)
-
-marking-KodeSockLFoot = Socks (L Foot)
-marking-KodeSockLFoot-socklfoot = Socks (L Foot)
-
-marking-KodeSockLLeg = Socks (L Leg)
-marking-KodeSockLLeg-socklleg = Socks (L Leg)
-
-marking-KodeSockRFoot = Socks (R Foot)
-marking-KodeSockRFoot-sockrfoot = Socks (R Foot)
+marking-KodePinstripeLegR-pinstripe = Pinstripe (R Leg)
 
 marking-KodeSockRLeg = Socks (R Leg)
-marking-KodeSockRLeg-sockrleg = Socks (R Leg)
+marking-KodeSockRLeg-sock = Socks (R Leg)
 
-# tail
+# LLeg
+
+marking-KodeBarLegL = Bar (L Leg)
+marking-KodeBarLegL-bar = Bar (L Leg)
+
+marking-KodePinstripeLegL = Pinstripe (L Leg)
+marking-KodePinstripeLegL-pinstripe = Pinstripe (L Leg)
+
+marking-KodeSockLLeg = Socks (L Leg)
+marking-KodeSockLLeg-sock = Socks (L Leg)
+
+# UndergarmentBottom
+
+# UndergarmentTop
+
+# LFoot
+
+marking-KodeClawFootL = Claw (L Foot)
+marking-KodeClawFootL-claw = Claw (L Foot)
+
+marking-KodeSockLFoot = Socks (L Foot)
+marking-KodeSockLFoot-sock = Socks (L Foot)
+
+# RFoot
+
+marking-KodeClawFootR = Claw (R Foot)
+marking-KodeClawFootR-claw = Claw (R Foot)
+
+marking-KodeSockRFoot = Socks (R Foot)
+marking-KodeSockRFoot-sock = Socks (R Foot)
+
+# LHand
+
+# RHand
+
+# FacialHair
+
+# Hair
+
+marking-KodaBob1 = Bob
+
+marking-KodaBob2 = Bob With Bangs
+
+marking-KodaCIA = CIA
+
+marking-KodaCornrows = Cornrows
+
+marking-KodaCurls = Curls
+
+marking-KodaDandy = Pompadour
+
+marking-KodaDoubleBun = Double Bun With Eyes
+
+marking-KodaDoubleBunNormal = Double Bun
+
+marking-KodaEmo = Emo
+
+marking-KodaHalfShaved = Half Shaved
+
+marking-KodaHime = Hime
+
+marking-KodaMessy = Messy
+
+marking-KodaPonytail = Ponytail
+
+marking-KodaSpiky = Spiky
+
+marking-KodaShort = Short
+
+marking-KodaLong = Long
+
+# HeadSide
+
+marking-KodeSideEye = Eyes (Young)
+marking-KodeSideEye-sideeye1 = Schlera
+marking-KodeSideEye-sideeye2 = Pupil
+
+marking-KodeCheekFins = Cheek Fins
+marking-KodeCheekFins-cheekfins = Fins
+
+marking-KodeGillsDeca = Bloatgills
+marking-KodeGillsDeca-decagills = Gills
+
+marking-KodeFrillsHead = Thin Frills
+marking-KodeFrillsHead-headfrill = Frills
+
+marking-KodeThavenEars = Ears (Thaven)
+marking-KodeThavenEars-thaven = Ears
+
+# HeadTop
+
+marking-Basilisk = Basilisk
+marking-Basilisk-basilisk1 = Hair
+marking-Basilisk-basilisk2 = Eye
+marking-Basilisk-basilisk3 = Pupil
+
+marking-KodeAntennaeBasic = Antennae (Basic)
+marking-KodeAntennaeBasic-antennae = Antennae
+
+marking-KodeAntennaeMaple = Antennae (Maple)
+marking-KodeAntennaeMaple-mapleantennae = Antennae
+
+marking-KodeBunnyEars = Ears (Bunny)
+marking-KodeBunnyEars-bunny1 = Inner
+marking-KodeBunnyEars-bunny2 = Outer
+
+marking-KodeEyestalk = Eyes (Eyestalks)
+marking-KodeEyestalk-eyestalk1 = Stalk
+marking-KodeEyestalk-eyestalk2 = Eye
+
+marking-KodeGrayHead = Head (Gray)
+marking-KodeGrayHead-grayhead = Head
+
+marking-KodeHeadSlime = Head (Slime)
+marking-KodeHeadSlime-headslime = Head
+
+marking-KodeHornsCurly = Horns (Curly)
+marking-KodeHornsCurly-hornscurly = Horns
+
+marking-KodeHornsStraight = Horns (Straight)
+marking-KodeHornsStraight-hornsstraight = Horns
+
+marking-KodeHornsSweptBack = Horns (Swept Back)
+marking-KodeHornsSweptBack-hornssweptback = Horns
+
+marking-KodeScorpion = Scorpion Tail
+marking-KodeScorpion-scorpion1 = Antenna
+marking-KodeScorpion-scorpion2 = Upper
+marking-KodeScorpion-scorpion3 = Upper mid
+marking-KodeScorpion-scorpion4 = Upper bot
+marking-KodeScorpion-scorpion5 = Bottom
+
+marking-KodeWolfEars = Ears (Wolf)
+marking-KodeWolfEars-wolf1 = Outer
+marking-KodeWolfEars-wolf2 = Inner
+
+# Tail
+
 marking-KodeAmalgamTail = Tail (Amalgamate)
-marking-KodeAmalgamTail-amalgamtail1 = Tail
-marking-KodeAmalgamTail-amalgamtail2 = Undertail
-marking-KodeAmalgamTail-amalgamtail3 = Fins
-marking-KodeAmalgamTail-amalgamtail4 = Spines
+marking-KodeAmalgamTail-amalgam1 = Tail
+marking-KodeAmalgamTail-amalgam2 = Undertail
+marking-KodeAmalgamTail-amalgam3 = Fins
+marking-KodeAmalgamTail-amalgam4 = Spines
 
 marking-KodeCrabLegs = Legs (Crab)
 marking-KodeCrabLegs-crablegs = Legs
 
 marking-KodeFluffyTail = Tail (Fluffy)
-marking-KodeFluffyTail-fluffytail = Tail
+marking-KodeFluffyTail-fluffy = Tail
 
 marking-KodeLizardTail = Tail (Lizard)
-marking-KodeLizardTail-lizardtail = Tail
+marking-KodeLizardTail-lizard = Tail
 
 marking-KodeMultiArms = Arms (Many)
 marking-KodeMultiArms-multiarms1 = Upper
 marking-KodeMultiArms-multiarms2 = Middle
 marking-KodeMultiArms-multiarms3 = Lower
 
-marking-KodePauldronRoundR-pauldroundr = Pauldron
 marking-KodePauldronRoundL = Pauldron (Round L)
+marking-KodePauldronRoundL-pauldroundl = Pauldron
 
 marking-KodePauldronRoundR = Pauldron (Round R)
-marking-KodePauldronRoundL-pauldroundl = Pauldron
+marking-KodePauldronRoundR-pauldroundr = Pauldron
 
 marking-KodePauldronSharpL = Pauldron (Sharp L)
 marking-KodePauldronSharpL-pauldsharpl = Pauldron
@@ -335,10 +322,6 @@ marking-KodePauldronSharpR-pauldsharpr = Pauldron
 
 marking-KodePauldronSpikes = Pauldron (Spikes)
 marking-KodePauldronSpikes-pauldspines = Spikes
-
-marking-SeafoamMantle = Wings (Foamfly)
-marking-SeafoamMantle-seafoam1 = Foam
-marking-SeafoamMantle-seafoam2 = Wings
 
 marking-KodeShell = Shell
 marking-KodeShell-shell = Shell
@@ -350,8 +333,73 @@ marking-KodeSpiderLegs = Tendrils (Long)
 marking-KodeSpiderLegs-spider1 = Top
 marking-KodeSpiderLegs-spider2 = Bottom
 
+marking-SeafoamMantle = Wings (Foamfly)
+marking-SeafoamMantle-seafoam1 = Foam
+marking-SeafoamMantle-seafoam2 = Wings
+
 marking-KodeTailStubby = Tail (Stubby)
 marking-KodeTailStubby-stubby = Tail
 
 marking-KodeVoxTail = Tail (Vox)
-marking-KodeVoxTail-voxtail = Tail
+marking-KodeVoxTail-vox = Tail
+
+# RArmExtension
+
+marking-KodeArmsCrab = Arms (Decapoid)
+marking-KodeArmsCrab-crabclaws = Arms
+
+marking-KodeCapeJelly = Cape (Jelly)
+marking-KodeCapeJelly-jellycloak1 = Bell
+marking-KodeCapeJelly-jellycloak2 = Spots
+
+marking-KodeCapePuffy = Cape (Puffy)
+marking-KodeCapePuffy-puffycape = Cape
+
+marking-KodeCapeSpines = Cape (Spines)
+marking-KodeCapeSpines-spinecloak = Cape
+
+marking-KodeCapeSquid = Cape (Squid)
+marking-KodeCapeSquid-squidcape = Cape
+
+marking-KodeCloakArms = Arms (Human)
+marking-KodeCloakArms-cloakarms1 = Arms
+marking-KodeCloakArms-cloakarms2 = Top Band
+marking-KodeCloakArms-cloakarms3 = Middle Band
+marking-KodeCloakArms-cloakarms4 = Bottom Band
+
+marking-KodeMyFirstWings = My First Wings
+marking-KodeMyFirstWings-myfirstwings1 = Main
+marking-KodeMyFirstWings-myfirstwings2 = Tips
+
+marking-KodeSlimeArms = Arms (Slime)
+marking-KodeSlimeArms-slimearms1 = Hair
+marking-KodeSlimeArms-slimearms2 = Arms
+
+marking-KodeSwanWings = Wings (Swan)
+marking-KodeSwanWings-swanwings1 = Main
+marking-KodeSwanWings-swanwings2 = Stripes
+marking-KodeSwanWings-swanwings3 = Spots
+
+marking-KodeTentaWings = Cape (Tentacles)
+marking-KodeTentaWings-tentawings = Cape
+
+marking-KodeUnevenArmsSimple = Arms (Uneven Simple)
+marking-KodeUnevenArmsSimple-unevenarmssimple = Arms
+
+marking-KodeVariableWings = Variable Wings
+marking-KodeVariableWings-variablewings1 = Arms
+marking-KodeVariableWings-variablewings2 = Wing Base
+marking-KodeVariableWings-variablewings3 = Wing Stripes
+marking-KodeVariableWings-variablewings4 = Wing Palms
+
+marking-KodeWingsBlade = Arms (Blade)
+marking-KodeWingsBlade-bladewings = Upper
+marking-KodeWingsBlade-bladewingtips = Tip
+
+marking-KodeWingsMoth = Wings (Moth)
+marking-KodeWingsMoth-mothwings1 = Wings
+marking-KodeWingsMoth-mothwings2 = Spots
+
+marking-KodeWingsThing = Wings (Thing)
+marking-KodeWingsThing-thingwings1 = Wings
+marking-KodeWingsThing-thingwings2 = Spots

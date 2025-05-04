@@ -1,55 +1,10 @@
-- type: marking
-  id: ApidAntennaeDefault
-  bodyPart: Hair
-  markingCategory: Hair
-  followSkinColor: false
-  forcedColoring: true
-  speciesRestriction: [ Apid ]
-  sprites: 
-  - sprite: _Impstation/Mobs/Customization/apid.rsi
-    state: defaultAntennae
-    
-- type: marking
-  id: ApidAntennaeSad
-  bodyPart: Hair
-  markingCategory: Hair
-  followSkinColor: false
-  forcedColoring: true
-  speciesRestriction: [ Apid ]
-  sprites: 
-  - sprite: _Impstation/Mobs/Customization/apid.rsi
-    state: antennaeSad
+# Chest
 
-- type: marking
-  id: ApidAntennaeForward
-  bodyPart: Hair
-  markingCategory: Hair
-  followSkinColor: false
-  forcedColoring: true
-  speciesRestriction: [ Apid ]
-  sprites: 
-  - sprite: _Impstation/Mobs/Customization/apid.rsi
-    state: antennaeForward
+# Head
 
-- type: marking
-  id: ApidAntennaeDroopy
-  bodyPart: Hair
-  markingCategory: Hair
-  followSkinColor: false
-  forcedColoring: true
-  speciesRestriction: [ Apid ]
-  sprites: 
-  - sprite: _Impstation/Mobs/Customization/apid.rsi
-    state: antennaeDroopy
+# Snout
 
-- type: marking
-  id: ApidWingsAnimatedDefault
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [ Apid ]
-  sprites:
-  - sprite: _Impstation/Mobs/Customization/apid.rsi
-    state: apidWingsDefault
+# Eyes
 
 - type: marking
   id: ApidEyesDefault
@@ -65,3 +20,83 @@
   sprites:
   - sprite: _Impstation/Mobs/Species/Apid/parts.rsi
     state: eyes
+
+# RArm
+
+# LArm
+
+# RLeg
+
+# LLeg
+
+# UndergarmentBottom
+
+# UndergarmentTop
+
+# LFoot
+
+# RFoot
+
+# LHand
+
+# RHand
+
+# FacialHair
+
+# Hair
+- type: marking
+  id: ApidAntennaeDefault
+  bodyPart: Hair
+  markingCategory: Hair
+  forcedColoring: true
+  speciesRestriction: [ Apid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Apid/hair.rsi
+    state: defaultAntennae
+
+- type: marking
+  id: ApidAntennaeDroopy
+  bodyPart: Hair
+  markingCategory: Hair
+  forcedColoring: true
+  speciesRestriction: [ Apid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Apid/hair.rsi
+    state: antennaeDroopy
+
+- type: marking
+  id: ApidAntennaeSad
+  bodyPart: Hair
+  markingCategory: Hair
+  forcedColoring: true
+  speciesRestriction: [ Apid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Apid/hair.rsi
+    state: antennaeSad
+
+- type: marking
+  id: ApidAntennaeForward
+  bodyPart: Hair
+  markingCategory: Hair
+  forcedColoring: true
+  speciesRestriction: [ Apid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Apid/hair.rsi
+    state: antennaeForward
+
+# HeadSide
+
+# HeadTop
+
+# Tail
+
+- type: marking
+  id: ApidWingsAnimatedDefault
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Apid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Apid/tail.rsi
+    state: apidWingsDefault
+
+# RArmExtension

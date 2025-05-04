@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "eyesplotch, foxears, and happysmiler by UndertaleSex. fakevoxhead by ThatKidConnor.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "eyesplotch",
+            "directions": 4
+        },
+        {
+            "name": "fakevoxhead",
+            "directions": 4
+        },
+        {
+            "name": "foxears",
+            "directions": 4
+        },
+        {
+            "name": "happysmiler",
+            "directions": 4
+        }
+    ]
+}

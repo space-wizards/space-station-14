@@ -1,0 +1,96 @@
+﻿# Chest
+
+- type: marking
+  id: DionaFirefly
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/chest.rsi
+    state: firefly
+  shader: unshaded
+
+- type: marking
+  id: DionaLivingNymph
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/chest.rsi
+    state: livingnymph
+
+- type: marking
+  id: DionaMossChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/chest.rsi
+    state: moss
+
+# Head
+
+- type: marking
+  id: DionaBigFirefly
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi
+    state: bigfirefly
+  shader: unshaded
+
+- type: marking
+  id: DionaPollenDust
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi
+    state: pollendust
+
+# Snout
+
+# Eyes
+
+# RArm
+
+# LArm
+
+# RLeg
+
+# LLeg
+
+# UndergarmentBottom
+
+# UndergarmentTop
+
+# LFoot
+
+# RFoot
+
+# LHand
+
+# RHand
+
+# FacialHair
+
+# Hair
+
+# HeadSide
+
+# HeadTop
+
+- type: marking
+  id: DionaMoonBloom
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/headtop.rsi
+    state: moonbloom
+  shader: unshaded
+
+# Tail
+
+# RArmExtension

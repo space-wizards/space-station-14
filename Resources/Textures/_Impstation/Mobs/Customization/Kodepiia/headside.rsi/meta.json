@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "cheekfins and thaven by UndertaleSex. decagills and headfrill by crocodilecarousel (github). sideeye by mqole",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cheekfins",
+            "directions": 4
+        },
+        {
+            "name": "decagills",
+            "directions": 4
+        },
+        {
+            "name": "headfrill",
+            "directions": 4
+        },
+        {
+            "name": "sideeye1",
+            "directions": 4
+        },
+        {
+            "name": "sideeye2",
+            "directions": 4
+        },
+        {
+            "name": "thaven",
+            "directions": 4
+        }
+    ]
+}

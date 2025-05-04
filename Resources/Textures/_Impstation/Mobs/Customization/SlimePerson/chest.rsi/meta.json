@@ -1,0 +1,121 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "bone, core, lungs by Sha-Seng (GitHub). bubble and fishbowl by crocodilecarousel (github).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bone",
+            "directions": 4
+        },
+        {
+            "name": "bubble",
+            "directions": 4,
+            "delays": [
+                [
+                    0.4,
+                    0.4,
+                    0.4,
+                    0.4
+                ],
+                [
+                    0.4,
+                    0.4,
+                    0.4,
+                    0.4
+                ],
+                [
+                    0.4,
+                    0.4,
+                    0.4,
+                    0.4
+                ],
+                [
+                    0.4,
+                    0.4,
+                    0.4,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "core",
+            "directions": 4
+        },
+        {
+            "name": "fishbowl1",
+            "directions": 4,
+            "delays": [
+                [
+                    0.4,
+                    0.3,
+                    0.2,
+                    0.3,
+                    0.4
+                ],
+                [
+                    0.4,
+                    0.3,
+                    0.2,
+                    0.3,
+                    0.4
+                ],
+                [
+                    0.4,
+                    0.3,
+                    0.2,
+                    0.3,
+                    0.4
+                ],
+                [
+                    0.4,
+                    0.3,
+                    0.2,
+                    0.3,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "fishbowl2",
+            "directions": 4,
+            "delays": [
+                [
+                    0.4,
+                    0.3,
+                    0.2,
+                    0.3,
+                    0.4
+                ],
+                [
+                    0.4,
+                    0.3,
+                    0.2,
+                    0.3,
+                    0.4
+                ],
+                [
+                    0.4,
+                    0.3,
+                    0.2,
+                    0.3,
+                    0.4
+                ],
+                [
+                    0.4,
+                    0.3,
+                    0.2,
+                    0.3,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "lungs",
+            "directions": 4
+        }
+    ]
+}

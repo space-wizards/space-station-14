@@ -1,0 +1,43 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "ears 1-4 by widgetbeck, fins, fishears and noears by crocodilecarousel (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bigfins",
+            "directions": 4
+        },
+        {
+            "name": "bigfins2",
+            "directions": 4
+        },
+        {
+            "name": "ears1",
+            "directions": 4
+        },
+        {
+            "name": "ears2",
+            "directions": 4
+        },
+        {
+            "name": "ears3",
+            "directions": 4
+        },
+        {
+            "name": "ears4",
+            "directions": 4
+        },
+        {
+            "name": "fishears",
+            "directions": 4
+        },
+        {
+            "name": "noears",
+            "directions": 4
+        }
+    ]
+}

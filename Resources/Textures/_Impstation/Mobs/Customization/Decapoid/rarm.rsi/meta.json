@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "pauldron by widgetbeck. pauldronarmored, pauldronencrusted and stripes by crocodilecarousel (github)",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "pauldron",
+            "directions": 4
+        },
+        {
+            "name": "pauldronarmored",
+            "directions": 4
+        },
+        {
+            "name": "pauldronencrusted1",
+            "directions": 4
+        },
+        {
+            "name": "pauldronencrusted2",
+            "directions": 4
+        },
+        {
+            "name": "pauldronencrusted3",
+            "directions": 4
+        },
+        {
+            "name": "stripes",
+            "directions": 4
+        }
+    ]
+}

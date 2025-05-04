@@ -17,8 +17,8 @@
   id: VoxLArmScales
   bodyPart: LArm
   markingCategory: Arms
-  forcedColoring: false #imp
-  followSkinColor: false #imp
+  # forcedColoring: true #imp
+  # followSkinColor: false #imp
   speciesRestriction: [Vox]
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
@@ -33,8 +33,8 @@
   id: VoxLLegScales
   bodyPart: LLeg
   markingCategory: Legs
-  forcedColoring: false #imp
-  followSkinColor: false #imp
+  # forcedColoring: true #imp
+  # followSkinColor: false #imp
   speciesRestriction: [Vox]
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
@@ -49,8 +49,8 @@
   id: VoxRArmScales
   bodyPart: RArm
   markingCategory: Arms
-  forcedColoring: false #imp
-  followSkinColor: false #imp
+  # forcedColoring: true #imp
+  # followSkinColor: false #imp
   speciesRestriction: [Vox]
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
@@ -65,8 +65,8 @@
   id: VoxRLegScales
   bodyPart: RLeg
   markingCategory: Legs
-  forcedColoring: false #imp
-  followSkinColor: false #imp
+  # forcedColoring: true #imp
+  # followSkinColor: false #imp
   speciesRestriction: [Vox]
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
@@ -81,8 +81,8 @@
   id: VoxRHandScales
   bodyPart: RHand
   markingCategory: Arms
-  forcedColoring: false #imp
-  followSkinColor: false #imp
+  # forcedColoring: true #imp
+  # followSkinColor: false #imp
   speciesRestriction: [Vox]
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
@@ -97,8 +97,8 @@
   id: VoxLHandScales
   bodyPart: LHand
   markingCategory: Arms
-  forcedColoring: false #imp
-  followSkinColor: false #imp
+  # forcedColoring: true #imp
+  # followSkinColor: false #imp
   speciesRestriction: [Vox]
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
@@ -113,8 +113,8 @@
   id: VoxLFootScales
   bodyPart: LFoot
   markingCategory: Legs
-  forcedColoring: false #imp
-  followSkinColor: false #imp
+  # forcedColoring: true #imp
+  # followSkinColor: false #imp
   speciesRestriction: [Vox]
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi
@@ -129,8 +129,8 @@
   id: VoxRFootScales
   bodyPart: RFoot
   markingCategory: Legs
-  forcedColoring: false #imp
-  followSkinColor: false #imp
+  # forcedColoring: true #imp
+  # followSkinColor: false #imp
   speciesRestriction: [Vox]
   sprites:
   - sprite: Mobs/Customization/vox_parts.rsi

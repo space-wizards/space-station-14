@@ -1,0 +1,95 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "antennae, bunny, mapleantennae, and wolf by UndertaleSex. basilisk, eyestalk, grayhead, headslime, hornscurly, hornsstraight, hornssweptback, and scorpion by crocodilecarousel (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "antennae",
+            "directions": 4
+        },
+        {
+            "name": "basilisk1",
+            "directions": 4
+        },
+        {
+            "name": "basilisk2",
+            "directions": 4
+        },
+        {
+            "name": "basilisk3",
+            "directions": 4
+        },
+        {
+            "name": "bunny1",
+            "directions": 4
+        },
+        {
+            "name": "bunny2",
+            "directions": 4
+        },
+        {
+            "name": "eyestalk1",
+            "directions": 4
+        },
+        {
+            "name": "eyestalk2",
+            "directions": 4
+        },
+        {
+            "name": "grayhead",
+            "directions": 4
+        },
+        {
+            "name": "headslime",
+            "directions": 4
+        },
+        {
+            "name": "hornscurly",
+            "directions": 4
+        },
+        {
+            "name": "hornsstraight",
+            "directions": 4
+        },
+        {
+            "name": "hornssweptback",
+            "directions": 4
+        },
+        {
+            "name": "mapleantennae",
+            "directions": 4
+        },
+        {
+            "name": "scorpion1",
+            "directions": 4
+        },
+        {
+            "name": "scorpion2",
+            "directions": 4
+        },
+        {
+            "name": "scorpion3",
+            "directions": 4
+        },
+        {
+            "name": "scorpion4",
+            "directions": 4
+        },
+        {
+            "name": "scorpion5",
+            "directions": 4
+        },
+        {
+            "name": "wolf1",
+            "directions": 4
+        },
+        {
+            "name": "wolf2",
+            "directions": 4
+        }
+    ]
+}

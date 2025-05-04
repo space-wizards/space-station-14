@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "bar and pinstripe by crocodilecarousel (github). sock by UndertaleSex",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bar",
+            "directions": 4
+        },
+        {
+            "name": "pinstripe",
+            "directions": 4
+        },
+        {
+            "name": "sock",
+            "directions": 4
+        }
+    ]
+}

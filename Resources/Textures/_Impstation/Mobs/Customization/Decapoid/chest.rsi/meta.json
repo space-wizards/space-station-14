@@ -1,0 +1,81 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "abdominalplate, lowerplate, and pectoralplate by widgetbeck (github). biopulse, corset, crackechest, flowermoonupper, masked, and spine by crocodilecarousel (github) for impstation.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "abdominalplate",
+            "directions": 4
+        },
+        {
+            "name": "biopulse1",
+            "directions": 4
+        },
+        {
+            "name": "biopulse2",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "corset",
+            "directions": 4
+        },
+        {
+            "name": "crackedchest",
+            "directions": 4
+        },
+        {
+            "name": "flowermoonupper1",
+            "directions": 4
+        },
+        {
+            "name": "flowermoonupper2",
+            "directions": 4
+        },
+        {
+            "name": "flowermoonupper3",
+            "directions": 4
+        },
+        {
+            "name": "lowerplate",
+            "directions": 4
+        },
+        {
+            "name": "masked",
+            "directions": 4
+        },
+        {
+            "name": "pectoralplate",
+            "directions": 4
+        },
+        {
+            "name": "spine",
+            "directions": 4
+        }
+    ]
+}

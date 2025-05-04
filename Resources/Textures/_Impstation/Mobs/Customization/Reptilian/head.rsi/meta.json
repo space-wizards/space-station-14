@@ -1,0 +1,23 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "drawn by crocodilecarousel (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "badmolt",
+            "directions": 4
+        },
+        {
+            "name": "snoutscar",
+            "directions": 4
+        },
+        {
+            "name": "talonscar",
+            "directions": 4
+        }
+    ]
+}

@@ -1,0 +1,443 @@
+﻿# Chest
+
+- type: marking
+  id: CrabChestBiopulse
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/chest.rsi
+    state: biopulse1
+  - sprite: _Impstation/Mobs/Customization/Decapoid/chest.rsi
+    state: biopulse2
+  shader: unshaded
+
+- type: marking
+  id: CrabChestMasked
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Decapoid ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/chest.rsi
+    state: masked
+
+- type: marking
+  id: CrabCorset
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/chest.rsi
+    state: corset
+
+- type: marking
+  id: CrabCrackedChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/chest.rsi
+    state: crackedchest
+
+- type: marking
+  id: CrabSpine
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/chest.rsi
+    state: spine
+
+- type: marking
+  id: DecapoidAbPlate
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/chest.rsi
+    state: abdominalplate
+
+- type: marking
+  id: DecapoidLowerPlate
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/chest.rsi
+    state: lowerplate
+
+- type: marking
+  id: DecapoidPecPlate
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/chest.rsi
+    state: pectoralplate
+
+- type: marking
+  id: FlowerMoonPlate
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/chest.rsi
+    state: flowermoonupper1
+  - sprite: _Impstation/Mobs/Customization/Decapoid/chest.rsi
+    state: flowermoonupper2
+  - sprite: _Impstation/Mobs/Customization/Decapoid/chest.rsi
+    state: flowermoonupper3
+
+# Head
+
+- type: marking
+  id: CrabCrackedHead
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/head.rsi
+    state: crackedhead
+
+- type: marking
+  id: CrabHeadHighlight
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/head.rsi
+    state: highlight
+
+- type: marking
+  id: GaudyClownHead
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/head.rsi
+    state: gaudyclownhead1
+  - sprite: _Impstation/Mobs/Customization/Decapoid/head.rsi
+    state: gaudyclownhead2
+
+# Snout
+
+- type: marking
+  id: DecapoidGills1
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: gills
+
+- type: marking
+  id: GillStripes
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/snout.rsi
+    state: gillstripes1
+  - sprite: _Impstation/Mobs/Customization/Decapoid/snout.rsi
+    state: gillstripes2
+
+# Eyes
+
+- type: marking
+  id: CrabTallEyes
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/eyes.rsi
+    state: tall1
+  - sprite: _Impstation/Mobs/Customization/Decapoid/eyes.rsi
+    state: tall2
+
+- type: marking
+  id: DecapoidEyesDefault
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Decapoid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/eyes.rsi
+    state: eyes1
+
+- type: marking
+  id: DecapoidEyesSpider
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Decapoid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/eyes.rsi
+    state: eyes6
+
+- type: marking
+  id: DecapoidEyesStalks
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Decapoid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/eyes.rsi
+    state: eyes4
+
+- type: marking
+  id: DecapoidEyesThree
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Decapoid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/eyes.rsi
+    state: eyes2
+
+- type: marking
+  id: DecapoidEyesWideClose
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Decapoid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/eyes.rsi
+    state: eyes3
+
+- type: marking
+  id: DecapoidEyesWideFar
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Decapoid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/eyes.rsi
+    state: eyes5
+
+# RArm
+
+- type: marking
+  id: CrabRArmStripes
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/rarm.rsi
+    state: stripes
+
+- type: marking
+  id: DecapoidPauldronRight
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/rarm.rsi
+    state: pauldron
+
+- type: marking
+  id: RightEncrustedPauldron
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/rarm.rsi
+    state: pauldronencrusted1
+  - sprite: _Impstation/Mobs/Customization/Decapoid/rarm.rsi
+    state: pauldronencrusted2
+  - sprite: _Impstation/Mobs/Customization/Decapoid/rarm.rsi
+    state: pauldronencrusted3
+
+- type: marking
+  id: RPauldronArmored
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/rarm.rsi
+    state: pauldronarmored
+
+# LArm
+
+- type: marking
+  id: DecapoidPauldronLeft
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
+    state: pauldron
+
+- type: marking
+  id: DecapoidPauldronSpike
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
+    state: pauldronspike
+
+- type: marking
+  id: FlowerMoonPauldron
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
+    state: flowermoonpauldron1
+  - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
+    state: flowermoonpauldron2
+
+- type: marking
+  id: LeftEncrustedPauldron
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
+    state: pauldronencrusted1
+  - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
+    state: pauldronencrusted2
+  - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
+    state: pauldronencrusted3
+
+- type: marking
+  id: LPauldronArmored
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
+    state: pauldronarmored
+
+- type: marking
+  id: PauldronCracked
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
+    state: pauldroncracked
+
+- type: marking
+  id: PauldronSheerspine
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
+    state: sheerspine
+
+- type: marking
+  id: PauldronWarlord
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
+    state: warlord
+
+# RLeg
+
+# LLeg
+
+# UndergarmentBottom
+
+# UndergarmentTop
+
+# LFoot
+
+# RFoot
+
+# LHand
+
+- type: marking
+  id: CrabSplitClaw
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/lhand.rsi
+    state: splitclaw1
+  - sprite: _Impstation/Mobs/Customization/Decapoid/lhand.rsi
+    state: splitclaw2
+
+- type: marking
+  id: DecapoidClawGradient
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/lhand.rsi
+    state: gradient
+
+- type: marking
+  id: DecapoidClawPlate
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/lhand.rsi
+    state: plate
+
+# RHand
+
+- type: marking
+  id: DecapoidRHandGradient
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/rhand.rsi
+    state: gradient
+
+- type: marking
+  id: DecapoidRHandPlate
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/rhand.rsi
+    state: plate
+
+# FacialHair
+
+# Hair
+
+- type: marking
+  id: DecapoidFlatHead
+  bodyPart: Hair
+  markingCategory: Head
+  followSkinColor: true
+  forcedColoring: true
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/hair.rsi
+    state: flathead
+
+# HeadSide
+
+# HeadTop
+
+# Tail
+
+# RArmExtension

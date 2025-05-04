@@ -1,0 +1,51 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Drawn by crocodilecarousel (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "balding",
+            "directions": 4
+        },
+        {
+            "name": "emover",
+            "directions": 4
+        },
+        {
+            "name": "hijabchic",
+            "directions": 4
+        },
+        {
+            "name": "hijabsimple",
+            "directions": 4
+        },
+        {
+            "name": "largecomb",
+            "directions": 4
+        },
+        {
+            "name": "padovana",
+            "directions": 4
+        },
+        {
+            "name": "polish",
+            "directions": 4
+        },
+        {
+            "name": "tichelfashionable",
+            "directions": 4
+        },
+        {
+            "name": "tichelsimple",
+            "directions": 4
+        },
+        {
+            "name": "windswept",
+            "directions": 4
+        }
+    ]
+}

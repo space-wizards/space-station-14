@@ -1,0 +1,73 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "lobster, predator, prey, spots, stripes and tentacle by Widgetbeck (github). cheekglow and cheeks by crocodilecarousel (github).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cheekglow",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0,
+                    0.3,
+                    0.2,
+                    0.3
+                ],
+                [
+                    1.0,
+                    0.3,
+                    0.2,
+                    0.3
+                ],
+                [
+                    1.0,
+                    0.3,
+                    0.2,
+                    0.3
+                ],
+                [
+                    1.0,
+                    0.3,
+                    0.2,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "cheeks",
+            "directions": 4
+        },
+        {
+            "name": "lobster",
+            "directions": 4
+        },
+        {
+            "name": "predator",
+            "directions": 4
+        },
+        {
+            "name": "prey",
+            "directions": 4
+        },
+        {
+            "name": "spotsleft",
+            "directions": 4
+        },
+        {
+            "name": "spotsright",
+            "directions": 4
+        },
+        {
+            "name": "stripes",
+            "directions": 4
+        },
+        {
+            "name": "tentacle",
+            "directions": 4
+        }
+    ]
+}

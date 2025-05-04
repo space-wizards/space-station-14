@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "glow and sharkminnow made by Sha-Seng (github). sharkminnoweyeliner by crocodilecarousel (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "glowleft",
+            "directions": 4
+        },
+        {
+            "name": "glowright",
+            "directions": 4
+        },
+        {
+            "name": "sharkminnow",
+            "directions": 4
+        },
+        {
+            "name": "sharkminnoweyeliner",
+            "directions": 4
+        }
+    ]
+}

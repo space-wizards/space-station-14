@@ -1,0 +1,103 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "amalgam, crablegs, lizard, multiarms, pauld, seafoam, shellcone, spider, stubby and vox by crocodilecarousel (github). fluffy, shell by UndertaleSex",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "amalgam1",
+            "directions": 4
+        },
+        {
+            "name": "amalgam2",
+            "directions": 4
+        },
+        {
+            "name": "amalgam3",
+            "directions": 4
+        },
+        {
+            "name": "amalgam4",
+            "directions": 4
+        },
+        {
+            "name": "crablegs",
+            "directions": 4
+        },
+        {
+            "name": "fluffy",
+            "directions": 4
+        },
+        {
+            "name": "lizard",
+            "directions": 4
+        },
+        {
+            "name": "multiarms1",
+            "directions": 4
+        },
+        {
+            "name": "multiarms2",
+            "directions": 4
+        },
+        {
+            "name": "multiarms3",
+            "directions": 4
+        },
+        {
+            "name": "pauldroundl",
+            "directions": 4
+        },
+        {
+            "name": "pauldroundr",
+            "directions": 4
+        },
+        {
+            "name": "pauldsharpl",
+            "directions": 4
+        },
+        {
+            "name": "pauldsharpr",
+            "directions": 4
+        },
+        {
+            "name": "pauldspines",
+            "directions": 4
+        },
+        {
+            "name": "seafoam1",
+            "directions": 4
+        },
+        {
+            "name": "seafoam2",
+            "directions": 4
+        },
+        {
+            "name": "shell",
+            "directions": 4
+        },
+        {
+            "name": "shellcone",
+            "directions": 4
+        },
+        {
+            "name": "spider1",
+            "directions": 4
+        },
+        {
+            "name": "spider2",
+            "directions": 4
+        },
+        {
+            "name": "stubby",
+            "directions": 4
+        },
+        {
+            "name": "vox",
+            "directions": 4
+        }
+    ]
+}

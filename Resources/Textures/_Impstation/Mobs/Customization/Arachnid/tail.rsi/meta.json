@@ -1,0 +1,103 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "abdomenbasic, creepy, and widow by crocodilecarousel (github) for Impstation. rest made by PixelTheKermit (github) for SS14 and edited by Sha-Seng (github) for Impstation.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "abdomenbasic1",
+            "directions": 4
+        },
+        {
+            "name": "abdomenbasic2",
+            "directions": 4
+        },
+        {
+            "name": "chipped1",
+            "directions": 4
+        },
+        {
+            "name": "chipped2",
+            "directions": 4
+        },
+        {
+            "name": "creepy",
+            "directions": 4
+        },
+        {
+            "name": "curled1",
+            "directions": 4
+        },
+        {
+            "name": "curled2",
+            "directions": 4
+        },
+        {
+            "name": "freaky1",
+            "directions": 4
+        },
+        {
+            "name": "freaky2",
+            "directions": 4
+        },
+        {
+            "name": "harvest1",
+            "directions": 4
+        },
+        {
+            "name": "harvest2",
+            "directions": 4
+        },
+        {
+            "name": "long1",
+            "directions": 4
+        },
+        {
+            "name": "long2",
+            "directions": 4
+        },
+        {
+            "name": "sharp1",
+            "directions": 4
+        },
+        {
+            "name": "sharp2",
+            "directions": 4
+        },
+        {
+            "name": "short1",
+            "directions": 4
+        },
+        {
+            "name": "short2",
+            "directions": 4
+        },
+        {
+            "name": "stingers1",
+            "directions": 4
+        },
+        {
+            "name": "stingers2",
+            "directions": 4
+        },
+        {
+            "name": "widow1",
+            "directions": 4
+        },
+        {
+            "name": "widow2",
+            "directions": 4
+        },
+        {
+            "name": "zigzag1",
+            "directions": 4
+        },
+        {
+            "name": "zigzag2",
+            "directions": 4
+        }
+    ]
+}

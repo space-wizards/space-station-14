@@ -1,9 +1,57 @@
+# Chest
+
+- type: marking
+  id: ArachnidOverlayFluffy
+  bodyPart: Chest
+  markingCategory: Overlay
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi
+    state: fluffy
+
+- type: marking
+  id: ArachnidTorsoSegments
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi
+    state: segments1
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi
+    state: segments2
+
+- type: marking
+  id: SpiderMirror
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi
+    state: mirror
+  shader: unshaded
+
+# Head
+
+- type: marking
+  id: ArachnidHeadSegments
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/head.rsi
+    state: segments1
+  - sprite: _Impstation/Mobs/Customization/Arachnid/head.rsi
+    state: segments2
+
+# Snout
+
 # Eyes
+
 - type: marking
   id: ArachnidEyesDefault
   bodyPart: Eyes
   markingCategory: Eyes
-  speciesRestriction: [Arachnid]
+  speciesRestriction: [ Arachnid ]
   forcedColoring: true
   coloring:
     default:
@@ -14,176 +62,339 @@
     state: eyes
 
 - type: marking
-  id: ArachnidEyesRound
-  bodyPart: Eyes
-  markingCategory: Eyes
-  speciesRestriction: [Arachnid]
-  coloring:
-    default:
-      type:
-        !type:EyeColoring
-  sprites:
-  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_round1
-  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_round2
-  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_round3
-  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_round4
-
-- type: marking
-  id: ArachnidEyesRoundGlowing
-  bodyPart: Eyes
-  markingCategory: Eyes
-  speciesRestriction: [Arachnid]
-  coloring:
-    default:
-      type:
-        !type:EyeColoring
-  sprites:
-  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_round1
-  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_round2
-  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_round3
-  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_round4
-  shader: unshaded
-
-- type: marking
   id: ArachnidEyesJumper
   bodyPart: Eyes
   markingCategory: Eyes
-  speciesRestriction: [Arachnid]
+  speciesRestriction: [ Arachnid ]
   coloring:
     default:
       type:
         !type:EyeColoring
   sprites:
   - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_jumper1
+    state: jumper1
   - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_jumper2
+    state: jumper2
   - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_jumper3
+    state: jumper3
   - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_jumper4
+    state: jumper4
 
 - type: marking
   id: ArachnidEyesJumperGlowing
   bodyPart: Eyes
   markingCategory: Eyes
-  speciesRestriction: [Arachnid]
+  speciesRestriction: [ Arachnid ]
   coloring:
     default:
       type:
         !type:EyeColoring
   sprites:
   - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_jumper1
+    state: jumper1
   - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_jumper2
+    state: jumper2
   - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_jumper3
+    state: jumper3
   - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
-    state: eyes_jumper4
+    state: jumper4
   shader: unshaded
 
-# Head
 - type: marking
-  id: ArachnidHeadSegments
-  bodyPart: Head
-  markingCategory: Head
-  speciesRestriction: [Arachnid]
-  forcedColoring: false
+  id: ArachnidEyesRound
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Arachnid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
   sprites:
-  - sprite: _Impstation/Mobs/Customization/Arachnid/head.rsi
-    state: head_segments1
-  - sprite: _Impstation/Mobs/Customization/Arachnid/head.rsi
-    state: head_segments2
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: round1
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: round2
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: round3
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: round4
 
-# Chelicerae
 - type: marking
-  id: ArachnidCheliceraeSmall
-  bodyPart: HeadSide
-  markingCategory: HeadSide
-  speciesRestriction: [Arachnid]
-  forcedColoring: false
+  id: ArachnidEyesRoundGlowing
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Arachnid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
   sprites:
-  - sprite: _Impstation/Mobs/Customization/Arachnid/chelicerae.rsi
-    state: small
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: round1
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: round2
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: round3
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: round4
+  shader: unshaded
 
-# Chest
 - type: marking
-  id: ArachnidTorsoSegments
-  bodyPart: Chest
-  markingCategory: Chest
-  speciesRestriction: [Arachnid]
-  forcedColoring: false
+  id: SpiderEyesMulti
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Arachnid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
   sprites:
-  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi
-    state: chest_segments1
-  - sprite: _Impstation/Mobs/Customization/Arachnid/chest.rsi
-    state: chest_segments2
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: multi1
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: multi2
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: multi3
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: multi4
 
-# Arms
 - type: marking
-  id: ArachnidLArmSegments
-  bodyPart: LArm
-  markingCategory: Arms
-  speciesRestriction: [Arachnid]
-  forcedColoring: false
+  id: SpiderGlowEyes
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Arachnid ]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
   sprites:
-  - sprite: _Impstation/Mobs/Customization/Arachnid/arms.rsi
-    state: arm_l_segments1
-  - sprite: _Impstation/Mobs/Customization/Arachnid/arms.rsi
-    state: arm_l_segments2
+  - sprite: _Impstation/Mobs/Customization/Arachnid/eyes.rsi
+    state: glow
+  shader: unshaded
+
+# RArm
 
 - type: marking
   id: ArachnidRArmSegments
   bodyPart: RArm
   markingCategory: Arms
-  speciesRestriction: [Arachnid]
-  forcedColoring: false
+  speciesRestriction: [ Arachnid ]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/Arachnid/arms.rsi
-    state: arm_r_segments1
-  - sprite: _Impstation/Mobs/Customization/Arachnid/arms.rsi
-    state: arm_r_segments2
+  - sprite: _Impstation/Mobs/Customization/Arachnid/rarm.rsi
+    state: segments1
+  - sprite: _Impstation/Mobs/Customization/Arachnid/rarm.rsi
+    state: segments2
 
-# Legs
+# LArm
+
 - type: marking
-  id: ArachnidLLegSegments
-  bodyPart: LLeg
-  markingCategory: Legs
-  speciesRestriction: [Arachnid]
-  forcedColoring: false
+  id: ArachnidLArmSegments
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Arachnid ]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/Arachnid/legs.rsi
-    state: leg_l_segments1
-  - sprite: _Impstation/Mobs/Customization/Arachnid/legs.rsi
-    state: leg_l_segments2
+  - sprite: _Impstation/Mobs/Customization/Arachnid/larm.rsi
+    state: segments1
+  - sprite: _Impstation/Mobs/Customization/Arachnid/larm.rsi
+    state: segments2
+
+# RLeg
 
 - type: marking
   id: ArachnidRLegSegments
   bodyPart: RLeg
   markingCategory: Legs
-  speciesRestriction: [Arachnid]
-  forcedColoring: false
+  speciesRestriction: [ Arachnid ]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/Arachnid/legs.rsi
-    state: leg_r_segments1
-  - sprite: _Impstation/Mobs/Customization/Arachnid/legs.rsi
-    state: leg_r_segments2
+  - sprite: _Impstation/Mobs/Customization/Arachnid/rleg.rsi
+    state: segments1
+  - sprite: _Impstation/Mobs/Customization/Arachnid/rleg.rsi
+    state: segments2
 
-# Overlay
+# LLeg
+
 - type: marking
-  id: ArachnidOverlayFluffy
-  bodyPart: Chest
-  markingCategory: Overlay
-  speciesRestriction: [Arachnid]
+  id: ArachnidLLegSegments
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [ Arachnid ]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/Arachnid/overlay.rsi
-    state: fluffy
+  - sprite: _Impstation/Mobs/Customization/Arachnid/lleg.rsi
+    state: segments1
+  - sprite: _Impstation/Mobs/Customization/Arachnid/lleg.rsi
+    state: segments2
+
+# UndergarmentBottom
+
+# UndergarmentTop
+
+- type: marking
+  id: UndergarmentTopBinderA
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Arachnid ]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmenttop.rsi
+    state: binder
+
+- type: marking
+  id: UndergarmentTopTanktopA
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Arachnid ]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmenttop.rsi
+    state: tanktop
+
+- type: marking
+  id: UndershirtBraSportsA
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Arachnid ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmenttop.rsi
+    state: sports
+
+- type: marking
+  id: UndershirtBraStraplessA
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Arachnid ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmenttop.rsi
+    state: strapless
+
+- type: marking
+  id: UndershirtDefaultA
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Arachnid ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmenttop.rsi
+    state: undershirt
+
+- type: marking
+  id: UndershirtGrossSleevelessA
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Arachnid ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmenttop.rsi
+    state: grosssleeveless
+
+- type: marking
+  id: UndershirtNanotrasenA
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Arachnid ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmenttop.rsi
+    state: nanotrasen
+
+- type: marking
+  id: UndershirtRolledA
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Arachnid ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmenttop.rsi
+    state: rolledundershirt
+
+# LFoot
+
+# RFoot
+
+# LHand
+
+# RHand
+
+# FacialHair
+
+# Hair
+
+# HeadSide
+
+- type: marking
+  id: ArachnidCheliceraeSmall
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/headside.rsi
+    state: small
+
+# HeadTop
+
+# Tail
+
+- type: marking
+  id: AbdomenBasic
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/tail.rsi
+    state: abdomenbasic1
+  - sprite: _Impstation/Mobs/Customization/Arachnid/tail.rsi
+    state: abdomenbasic2
+
+- type: marking
+  id: AbdomenWidow
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/tail.rsi
+    state: widow1
+  - sprite: _Impstation/Mobs/Customization/Arachnid/tail.rsi
+    state: widow2
+
+- type: marking
+  id: CreepyArms
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/tail.rsi
+    state: creepy
+
+# RArmExtension

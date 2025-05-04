@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "sprites by crocodilecarousel (github) for impstation",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "largewattle",
+            "directions": 4
+        },
+        {
+            "name": "padovana",
+            "directions": 4
+        },
+        {
+            "name": "smallwattle",
+            "directions": 4
+        }
+    ]
+}

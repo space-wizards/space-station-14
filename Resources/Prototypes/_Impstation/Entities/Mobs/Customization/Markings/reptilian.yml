@@ -1,76 +1,294 @@
+# Chest
+
+- type: marking
+  id: BadMoltChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/chest.rsi
+    state: badmolt
+
+# Head
+
+- type: marking
+  id: BadMoltHead
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/head.rsi
+    state: badmolt
+
+- type: marking
+  id: ScarSlash
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/head.rsi
+    state: snoutscar
+
+- type: marking
+  id: ScarTalons
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/head.rsi
+    state: talonscar
+
+# Snout
+
 - type: marking
   id: Fangs
   bodyPart: Snout
   markingCategory: Overlay
-  speciesRestriction: [Reptilian]
+  speciesRestriction: [ Reptilian ]
   coloring:
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+        color: "#FFFFFF"
   sprites:
-  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
+  - sprite: _Impstation/Mobs/Customization/Reptilian/snout.rsi
     state: fangs
 
 - type: marking
   id: LizardBeard
   bodyPart: Snout
   markingCategory: Overlay
-  speciesRestriction: [Reptilian]
+  speciesRestriction: [ Reptilian ]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
+  - sprite: _Impstation/Mobs/Customization/Reptilian/snout.rsi
     state: beard
-
-- type: marking
-  id: LizardSnoutTall
-  bodyPart: Snout
-  forcedColoring: true
-  markingCategory: Snout
-  speciesRestriction: [Reptilian]
-  sprites:
-  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
-    state: snout_tall
-
-- type: marking
-  id: LizardHornsKoboldEarspiercings
-  bodyPart: HeadTop
-  markingCategory: HeadTop
-  speciesRestriction: [Reptilian]
-  sprites:
-  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
-    state: horns_kobold_ears
-  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
-    state: horns_kobold_ears_piercings
-
-- type: marking
-  id: LizardHornsNubby
-  bodyPart: HeadTop
-  markingCategory: HeadTop
-  speciesRestriction: [Reptilian]
-  sprites:
-  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
-    state: horns_nubby
 
 - type: marking
   id: LizardSnoutpiercings
   bodyPart: Snout
   markingCategory: Overlay
   forcedColoring: true
-  speciesRestriction: [Reptilian]
+  speciesRestriction: [ Reptilian ]
   coloring:
     default:
       type:
         !type:SimpleColoring
-          color: "#FFFFFF"
+        color: "#FFFFFF"
   sprites:
-  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
+  - sprite: _Impstation/Mobs/Customization/Reptilian/snout.rsi
     state: piercings1
+
+- type: marking
+  id: LizardSnoutTall
+  bodyPart: Snout
+  forcedColoring: true
+  markingCategory: Snout
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/snout.rsi
+    state: tall
+
+# Eyes
+
+# RArm
+
+- type: marking
+  id: BadMoltRArm
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/rarm.rsi
+    state: badmolt
+
+# LArm
+
+- type: marking
+  id: BadMoltLArm
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/larm.rsi
+    state: badmolt
+
+# RLeg
+
+# LLeg
+
+# UndergarmentBottom
+
+- type: marking
+  id: UnderwearLowridersR
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [ Reptilian ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/undergarmentbottom.rsi
+    state: lowriders
+
+- type: marking
+  id: UnderwearTangaR
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [ Reptilian ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/undergarmentbottom.rsi
+    state: tanga
+
+# UndergarmentTop
+
+# LFoot
+
+# RFoot
+
+# LHand
+
+# RHand
+
+# FacialHair
+
+# Hair
+
+# HeadSide
+
+- type: marking
+  id: BurqaSolidLizard
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headside.rsi
+    state: burqa
+
+- type: marking
+  id: HijabFashionableLizard
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headside.rsi
+    state: hijabchic
+
+- type: marking
+  id: HijabSimpleLizard
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headside.rsi
+    state: hijabsimple
+
+- type: marking
+  id: NiqabLizard
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headside.rsi
+    state: niqab
+
+- type: marking
+  id: TichelSimpleLizard
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headside.rsi
+    state: tichelsimple
+
+- type: marking
+  id: TichelFashionableLizard
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headside.rsi
+    state: tichelfashionable
+
+# HeadTop
 
 - type: marking
   id: LizardHeadFlat
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Reptilian]
+  speciesRestriction: [ Reptilian ]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/reptilian_parts.rsi
-    state: head_flat
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headtop.rsi
+    state: flat
+
+- type: marking
+  id: LizardHornsKoboldEarspiercings
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headtop.rsi
+    state: koboldears
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headtop.rsi
+    state: koboldearspiercings
+
+- type: marking
+  id: LizardHornsNubby
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headtop.rsi
+    state: nubby
+
+# Tail
+
+- type: marking
+  id: TailDropped
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/tail.rsi
+    state: dropped
+
+- type: marking
+  id: TailDroppedAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/tail.rsi
+    state: droppedwagging
+
+- type: marking
+  id: TailGecko
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/tail.rsi
+    state: gecko1
+  - sprite: _Impstation/Mobs/Customization/Reptilian/tail.rsi
+    state: gecko2
+
+- type: marking
+  id: TailSnailLizard
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/tail.rsi
+    state: snizard1
+  - sprite: _Impstation/Mobs/Customization/Reptilian/tail.rsi
+    state: snizard2
+  - sprite: _Impstation/Mobs/Customization/Reptilian/tail.rsi
+    state: snizard3
+
+# RArmExtension

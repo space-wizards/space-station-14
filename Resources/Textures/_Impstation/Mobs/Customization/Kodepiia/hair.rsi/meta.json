@@ -1,0 +1,75 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprited by UndertaleSex",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bob4",
+            "directions": 4
+        },
+        {
+            "name": "bob5",
+            "directions": 4
+        },
+        {
+            "name": "cia",
+            "directions": 4
+        },
+        {
+            "name": "cornrowbraid",
+            "directions": 4
+        },
+        {
+            "name": "curls",
+            "directions": 4
+        },
+        {
+            "name": "dandypompadour",
+            "directions": 4
+        },
+        {
+            "name": "doublebun",
+            "directions": 4
+        },
+        {
+            "name": "doublebunnoeyes",
+            "directions": 4
+        },
+        {
+            "name": "emo2",
+            "directions": 4
+        },
+        {
+            "name": "halfshaved",
+            "directions": 4
+        },
+        {
+            "name": "himecut2",
+            "directions": 4
+        },
+        {
+            "name": "messy",
+            "directions": 4
+        },
+        {
+            "name": "ponytail3",
+            "directions": 4
+        },
+        {
+            "name": "spiky",
+            "directions": 4
+        },
+        {
+            "name": "veryshortovereyealternate",
+            "directions": 4
+        },
+        {
+            "name": "vlongfringe",
+            "directions": 4
+        }
+    ]
+}

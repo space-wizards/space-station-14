@@ -1,63 +1,113 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Made by PixelTheKermit (github) for SS14. Arrows, core, fiddleback, skull and target made by Nairodian (github) for SS14. Segments marking and all east/west sprites made and edited by Sha-Seng (Github) for Impstation",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "chest_segments1",
-      "directions": 4
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright":  "cross, heart, hourglass, nailandhammer, slashes, scar, stripes, target and x by PixelTheKermit (github) for SS14. Core, skull and target made by Nairodian (github) for SS14. Segments marking, fluffy, and all east/west sprites sprited and edited by Sha-Seng (Github). mirror sprited by crocodilecarousel (github), both for Impstation.",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "chest_segments2",
-      "directions": 4
-    },
-    {
-      "name": "stripes",
-      "directions": 4
-    },
-    {
-      "name": "slashes",
-      "directions": 4
-    },
-    {
-      "name": "x",
-      "directions": 4
-    },
-    {
-      "name": "cross",
-      "directions": 4
-    },
-    {
-      "name": "heart",
-      "directions": 4
-    },
-    {
-      "name": "hourglass",
-      "directions": 4
-    },
-    {
-      "name": "nail-and-hammer",
-      "directions": 4
-    },
-    {
-      "name": "star",
-      "directions": 4
-    },
-    {
-      "name": "core",
-      "directions": 4
-    },
-    {
-      "name": "skull",
-      "directions": 4
-    },
-    {
-      "name": "target",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "core",
+            "directions": 4
+        },
+        {
+            "name": "cross",
+            "directions": 4
+        },
+        {
+            "name": "fluffy",
+            "directions": 4
+        },
+        {
+            "name": "heart",
+            "directions": 4
+        },
+        {
+            "name": "hourglass",
+            "directions": 4
+        },
+        {
+            "name": "nailandhammer",
+            "directions": 4
+        },
+        {
+            "name": "segments1",
+            "directions": 4
+        },
+        {
+            "name": "segments2",
+            "directions": 4
+        },
+        {
+            "name": "skull",
+            "directions": 4
+        },
+        {
+            "name": "slashes",
+            "directions": 4
+        },
+        {
+            "name": "mirror",
+            "directions": 4,
+            "delays": [
+                [
+                    5.0,
+                    0.1,
+                    0.1,
+                    0.1,
+                    1.0,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    5.0,
+                    0.1,
+                    0.1,
+                    0.1,
+                    1.0,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    5.0,
+                    0.1,
+                    0.1,
+                    0.1,
+                    1.0,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    5.0,
+                    0.1,
+                    0.1,
+                    0.1,
+                    1.0,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "star",
+            "directions": 4
+        },
+        {
+            "name": "stripes",
+            "directions": 4
+        },
+        {
+            "name": "target",
+            "directions": 4
+        },
+        {
+            "name": "x",
+            "directions": 4
+        }
+    ]
 }

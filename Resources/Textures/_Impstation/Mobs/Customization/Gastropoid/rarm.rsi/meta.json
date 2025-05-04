@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprited by Widgetbeck (github) for Impstation\n",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "spots",
+            "directions": 4
+        },
+        {
+            "name": "stripes",
+            "directions": 4
+        }
+    ]
+}

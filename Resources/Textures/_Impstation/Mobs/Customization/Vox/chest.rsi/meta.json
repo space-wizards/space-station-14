@@ -1,0 +1,63 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "claw by LandsharkRAWR, rest by crocodilecarousel (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "belly",
+            "directions": 4
+        },
+        {
+            "name": "claw",
+            "directions": 4
+        },
+        {
+            "name": "plumage",
+            "directions": 4
+        },
+        {
+            "name": "scarincision",
+            "directions": 4
+        },
+        {
+            "name": "scarmangled",
+            "directions": 4
+        },
+        {
+            "name": "scarspinal",
+            "directions": 4
+        },
+        {
+            "name": "spots1",
+            "directions": 4
+        },
+        {
+            "name": "spots2",
+            "directions": 4
+        },
+        {
+            "name": "tailsinglestripe",
+            "directions": 4
+        },
+        {
+            "name": "tailstripes",
+            "directions": 4
+        },
+        {
+            "name": "v1",
+            "directions": 4
+        },
+        {
+            "name": "v2",
+            "directions": 4
+        },
+        {
+            "name": "v3",
+            "directions": 4
+        }
+    ]
+}

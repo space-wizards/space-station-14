@@ -1,0 +1,182 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprites by crocodilecarousel (github) for impstation",
+
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "backstabbed",
+            "directions": 4
+        },
+        {
+            "name": "bee1",
+            "directions": 4
+        },
+        {
+            "name": "bee2",
+            "directions": 4
+        },
+        {
+            "name": "bee3",
+            "directions": 4
+        },
+        {
+            "name": "beetle1",
+            "directions": 4
+        },
+        {
+            "name": "beetle2",
+            "directions": 4
+        },
+        {
+            "name": "beetle3",
+            "directions": 4
+        },
+        {
+            "name": "firefly1",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "firefly2",
+            "directions": 4
+        },
+        {
+            "name": "glasswing1",
+            "directions": 4
+        },
+        {
+            "name": "glasswing2",
+            "directions": 4
+        },
+        {
+            "name": "glasswing3",
+            "directions": 4
+        },
+        {
+            "name": "luna1",
+            "directions": 4
+        },
+        {
+            "name": "luna2",
+            "directions": 4
+        },
+        {
+            "name": "rhinobeetle1",
+            "directions": 4
+        },
+        {
+            "name": "rhinobeetle2",
+            "directions": 4
+        },
+        {
+            "name": "rhinobeetle3",
+            "directions": 4
+        },
+        {
+            "name": "snoth1",
+            "directions": 4
+        },
+        {
+            "name": "snoth2",
+            "directions": 4
+        },
+        {
+            "name": "truebutterfly1",
+            "directions": 4
+        },
+        {
+            "name": "truebutterfly2",
+            "directions": 4
+        },
+        {
+            "name": "truebutterfly3",
+            "directions": 4
+        }
+    ]
+}

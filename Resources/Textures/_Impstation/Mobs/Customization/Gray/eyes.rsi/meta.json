@@ -1,24 +1,28 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Cute and Cool eyes Made by sageuu for Impstation 14, and Wide eyes made by Honeyed_Lemons_ for Impstation 14",
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Cute and Cool eyes Made by sageuu for Impstation; wide eyes made by Honeyed_Lemons_ for Impstation. fakelashes by crocodilecarousel (github)",
 
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "eyes_cute",
-      "directions": 4
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "eyes_cool",
-      "directions": 4
-    },
-    {
-      "name": "eyes_wide",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "cute",
+            "directions": 4
+        },
+        {
+            "name": "cool",
+            "directions": 4
+        },
+        {
+            "name": "fakelashes",
+            "directions": 4
+        },
+        {
+            "name": "wide",
+            "directions": 4
+        }
+    ]
 }

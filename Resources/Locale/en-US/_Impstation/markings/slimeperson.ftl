@@ -1,47 +1,102 @@
-marking-SlimeNose-nose = Nose (Profile)
-marking-SlimeNose = Nose (Profile)
+# Chest
 
-marking-SlimeMouth-mouth = Mouth
-marking-SlimeMouth = Mouth
+marking-bubble = Bubbles
+marking-bubble-bubble = Bubbles
 
-marking-SlimeBrain-brain = Brain
-marking-SlimeBrain = Brain
+marking-fishbowl = Fishbowl
+marking-fishbowl-fishbowl1 = Fish
+marking-fishbowl-fishbowl2 = Fish bubbles
 
-marking-SlimeEyeglow-eyeglow = Eye Glow
-marking-SlimeEyeglow = Eye Glow
-
-marking-SlimeCore-core = Core
-marking-SlimeCore = Core
-
-marking-SlimeLungs-lungs = Lungs
-marking-SlimeLungs = Lungs
-
-marking-SlimeBonehead-bonehead = Floating Skull
-marking-SlimeBonehead = Floating Skull
-
-marking-SlimeBonechest-bonechest = Floating Ribcage
 marking-SlimeBonechest = Floating Ribcage
+marking-SlimeBonechest-bone = Floating Ribcage
 
-marking-SlimeBonearmleft-bonearmleft = Floating Bones (Left Arm)
-marking-SlimeBonearmleft = Floating Bones (Left Arm)
+marking-SlimeCore = Core
+marking-SlimeCore-core = Core
 
-marking-SlimeBonearmright-bonearmright = Floating Bones (Right Arm)
+marking-SlimeLungs = Lungs
+marking-SlimeLungs-lungs = Lungs
+
+# Head
+
+marking-FadingStars = Fading Starlight
+marking-FadingStars-fadingstars1 = Brightest
+marking-FadingStars-fadingstars2 = Middling
+marking-FadingStars-fadingstars3 = Darkest
+
+marking-fizz = Fizz
+marking-fizz-fizz = Fizz
+
+marking-SlimeBonehead = Floating Skull
+marking-SlimeBonehead-bone = Floating Skull
+
+marking-SlimeNose = Nose (Profile)
+marking-SlimeNose-nose = Nose (Profile)
+
+marking-SlimeMouth = Mouth
+marking-SlimeMouth-mouth = Mouth
+
+marking-SlimeBrain = Brain
+marking-SlimeBrain-brain = Brain
+
+# Snout
+
+# Eyes
+
+marking-SlimeEyeglow = Eye Glow
+marking-SlimeEyeglow-glow = Eye Glow
+
+# RArm
+
 marking-SlimeBonearmright = Floating Bones (Right Arm)
+marking-SlimeBonearmright-bone = Floating Bones (Right Arm)
 
-marking-SlimeBonefootleft-bonefootleft = Floating Bones (Left Foot)
-marking-SlimeBonefootleft = Floating Bones (Left Foot)
+# LArm
 
-marking-SlimeBonefootright-bonefootright = Floating Bones (Right Foot)
-marking-SlimeBonefootright = Floating Bones (Right Foot)
+marking-SlimeBonearmleft = Floating Bones (Left Arm)
+marking-SlimeBonearmleft-bone = Floating Bones (Left Arm)
 
-marking-SlimeBonehandleft-bonehandleft = Floating Bones (Left Hand)
-marking-SlimeBonehandleft = Floating Bones (Left Hand)
+# RLeg
 
-marking-SlimeBonehandright-bonehandright = Floating Bones (Right Hand)
-marking-SlimeBonehandright = Floating Bones (Right Hand)
-
-marking-SlimeBonelegleft-bonelegleft = Floating Bones (Left Leg)
-marking-SlimeBonelegleft = Floating Bones (Left Leg)
-
-marking-SlimeBonelegright-bonelegright = Floating Bones (Right Leg)
 marking-SlimeBonelegright = Floating Bones (Right Leg)
+marking-SlimeBonelegright-bone = Floating Bones (Right Leg)
+
+# LLeg
+
+marking-SlimeBonelegleft = Floating Bones (Left Leg)
+marking-SlimeBonelegleft-bone = Floating Bones (Left Leg)
+
+# UndergarmentBottom
+
+# UndergarmentTop
+
+# LFoot
+
+marking-SlimeBonefootleft = Floating Bones (Left Foot)
+marking-SlimeBonefootleft-bone = Floating Bones (Left Foot)
+
+# RFoot
+
+marking-SlimeBonefootright = Floating Bones (Right Foot)
+marking-SlimeBonefootright-bone = Floating Bones (Right Foot)
+
+# LHand
+
+marking-SlimeBonehandleft = Floating Bones (Left Hand)
+marking-SlimeBonehandleft-bone = Floating Bones (Left Hand)
+
+# RHand
+
+marking-SlimeBonehandright = Floating Bones (Right Hand)
+marking-SlimeBonehandright-bone = Floating Bones (Right Hand)
+
+# FacialHair
+
+# Hair
+
+# HeadSide
+
+# HeadTop
+
+# Tail
+
+# RArmExtension

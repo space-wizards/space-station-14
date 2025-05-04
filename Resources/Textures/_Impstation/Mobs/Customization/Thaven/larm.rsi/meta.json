@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "tat1 by widgetbeck, scales and tiger by crocodilecarousel (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "scales",
+            "directions": 4
+        },
+        {
+            "name": "tat1",
+            "directions": 4
+        },
+        {
+            "name": "tiger",
+            "directions": 4
+        }
+    ]
+}

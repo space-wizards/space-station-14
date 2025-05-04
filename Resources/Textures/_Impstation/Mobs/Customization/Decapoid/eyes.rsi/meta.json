@@ -1,0 +1,43 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "eyes 1-6 by widgetbeck (github), tall by crocodilecarousel (github) for impstation.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "eyes1",
+            "directions": 4
+        },
+        {
+            "name": "eyes2",
+            "directions": 4
+        },
+        {
+            "name": "eyes3",
+            "directions": 4
+        },
+        {
+            "name": "eyes4",
+            "directions": 4
+        },
+        {
+            "name": "eyes5",
+            "directions": 4
+        },
+        {
+            "name": "eyes6",
+            "directions": 4
+        },
+        {
+            "name": "tall1",
+            "directions": 4
+        },
+        {
+            "name": "tall2",
+            "directions": 4
+        }
+    ]
+}

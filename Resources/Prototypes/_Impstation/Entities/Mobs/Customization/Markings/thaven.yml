@@ -1,192 +1,2521 @@
+# Chest
+
 - type: marking
-  id: ThavenEars1
-  bodyPart: HeadSide
-  markingCategory: HeadSide
-  speciesRestriction: [Thaven]
-  forcedColoring: true
+  id: BodyhairThaven
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: hair
+
+- type: marking
+  id: Gills
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: gills
+
+- type: marking
+  id: ThavenAbs
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Thaven ]
   followSkinColor: true
   sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: ears1
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: muscular
 
 - type: marking
-  id: ThavenEars2
-  bodyPart: HeadSide
-  markingCategory: HeadSide
-  speciesRestriction: [Thaven]
-  forcedColoring: true
-  followSkinColor: true
+  id: ThavenBiteMark
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Thaven ]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: ears2
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: bitemark
 
 - type: marking
-  id: ThavenEars3
-  bodyPart: HeadSide
-  markingCategory: HeadSide
-  speciesRestriction: [Thaven]
-  forcedColoring: true
-  followSkinColor: true
+  id: ThavenBodyStripes
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Thaven ]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: ears3
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: stripes
 
 - type: marking
-  id: ThavenEars4
-  bodyPart: HeadSide
-  markingCategory: HeadSide
-  speciesRestriction: [Thaven]
-  forcedColoring: true
-  followSkinColor: true
+  id: ThavenChestScales
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Thaven ]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: ears4
-
-- type: marking
-  id: ThavenPiercings
-  bodyPart: HeadTop
-  markingCategory: HeadTop
-  speciesRestriction: [Thaven]
-  forcedColoring: false
-  followSkinColor: false
-  coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
-  sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: piercings
-
-- type: marking
-  id: ThavenPiercings2
-  bodyPart: HeadTop
-  markingCategory: HeadTop
-  speciesRestriction: [Thaven]
-  forcedColoring: false
-  followSkinColor: false
-  coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
-  sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: piercings2
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: scales
 
 - type: marking
   id: ThavenChestTattoo1
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Thaven]
+  speciesRestriction: [ Thaven ]
   coloring:
     default:
       type:
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: chesttat1
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: tat1
 
 - type: marking
-  id: ThavenLArmTattoo1
-  bodyPart: LArm
-  markingCategory: Arms
-  speciesRestriction: [Thaven]
-  coloring:
-    default:
-      type:
-        !type:TattooColoring
-      fallbackColor: "#666666"
-  sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: larmtat1
-
-- type: marking
-  id: ThavenRArmTattoo1
-  bodyPart: RArm
-  markingCategory: Arms
-  speciesRestriction: [Thaven]
-  coloring:
-    default:
-      type:
-        !type:TattooColoring
-      fallbackColor: "#666666"
-  sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: rarmtat1
-
-- type: marking
-  id: ThavenREyeGlow
-  bodyPart: Eyes
-  markingCategory: Head
-  speciesRestriction: [Thaven]
+  id: ThavenSpinechill
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Thaven ]
   coloring:
     default:
       type:
         !type:EyeColoring
-          negative: false
+        negative: false
   sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: reyeglow
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: spinechill
+  shader: unshaded
+
+- type: marking
+  id: ThavenSpines
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: spines
+  shader: unshaded
+
+- type: marking
+  id: ThavenTattooWave
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: tattoowave
+
+- type: marking
+  id: ThavenTattooVines
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: tattoovines
+
+- type: marking
+  id: ThavenTiger
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: tiger1
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: tiger2
+
+- type: marking
+  id: ThavenTopSurgery
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Thaven ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/chest.rsi
+    state: nonaturals
+
+# Head
+
+- type: marking
+  id: ThavenHeadCap
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/head.rsi
+    state: cap1
+  - sprite: _Impstation/Mobs/Customization/Thaven/head.rsi
+    state: cap2
+
+- type: marking
+  id: ThavenHeadScales
+  bodyPart: Head
+  markingCategory: HeadTop
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/head.rsi
+    state: scales
+
+- type: marking
+  id: ThavenHeadStripes
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/head.rsi
+    state: stripes
+
+# Snout
+
+# Eyes
+
+- type: marking
+  id: SharkminnowEyeliner
+  bodyPart: Eyes
+  markingCategory: HeadTop
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/eyes.rsi
+    state: sharkminnoweyeliner
+
+- type: marking
+  id: ThavenEyesSharkminnow
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+        negative: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/eyes.rsi
+    state: sharkminnow
+
+- type: marking
+  id: ThavenEyesSharkminnowGlowing
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+        negative: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/eyes.rsi
+    state: sharkminnow
   shader: unshaded
 
 - type: marking
   id: ThavenLEyeGlow
   bodyPart: Eyes
   markingCategory: Head
-  speciesRestriction: [Thaven]
+  speciesRestriction: [ Thaven ]
   coloring:
     default:
       type:
         !type:EyeColoring
-          negative: false
+        negative: false
   sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: leyeglow
+  - sprite: _Impstation/Mobs/Customization/Thaven/eyes.rsi
+    state: glowleft
   shader: unshaded
 
 - type: marking
-  id: ThavenEyesSharkminnow
+  id: ThavenREyeGlow
   bodyPart: Eyes
   markingCategory: Head
-  speciesRestriction: [Thaven]
+  speciesRestriction: [ Thaven ]
   coloring:
     default:
       type:
         !type:EyeColoring
-          negative: false
+        negative: false
   sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: eyessharkminnow
+  - sprite: _Impstation/Mobs/Customization/Thaven/eyes.rsi
+    state: glowright
+  shader: unshaded
+
+# RArm
 
 - type: marking
-  id: ThavenEyesSharkminnowGlowing
-  bodyPart: Eyes
-  markingCategory: Head
-  speciesRestriction: [Thaven]
+  id: ThavenRArmScales
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/rarm.rsi
+    state: scales
+
+- type: marking
+  id: ThavenRArmTattoo1
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Thaven ]
   coloring:
     default:
       type:
-        !type:EyeColoring
-          negative: false
+        !type:TattooColoring
+      fallbackColor: "#666666"
   sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: eyessharkminnow
-  shader: unshaded
+  - sprite: _Impstation/Mobs/Customization/Thaven/rarm.rsi
+    state: tat1
+
+- type: marking
+  id: ThavenTigerRArm
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/rarm.rsi
+    state: tiger
+
+# LArm
+
+- type: marking
+  id: ThavenLArmScales
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/larm.rsi
+    state: scales
+
+- type: marking
+  id: ThavenLArmTattoo1
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/larm.rsi
+    state: tat1
+
+- type: marking
+  id: ThavenTigerLArm
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/larm.rsi
+    state: tiger
+
+# RLeg
+
+- type: marking
+  id: ThavenRLegScales
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/rleg.rsi
+    state: scales
+
+# LLeg
+
+- type: marking
+  id: ThavenLLegScales
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/lleg.rsi
+    state: scales
+
+# UndergarmentBottom
+
+- type: marking
+  id: UnderwearBriefsT
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/undergarmentbottom.rsi
+    state: briefs
+
+- type: marking
+  id: UnderwearDefaultT
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/undergarmentbottom.rsi
+    state: boxers
+
+- type: marking
+  id: UnderwearLowridersT
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/undergarmentbottom.rsi
+    state: lowriders
+
+- type: marking
+  id: UnderwearSatinT
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/undergarmentbottom.rsi
+    state: satin
+
+- type: marking
+  id: UnderwearTangaT
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/undergarmentbottom.rsi
+    state: tanga
+
+# UndergarmentTop
+
+- type: marking
+  id: UndergarmentTopBinderT
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/undergarmenttop.rsi
+    state: binder
+
+- type: marking
+  id: UndergarmentTopTanktopT
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/undergarmenttop.rsi #imp
+    state: tanktop
+
+- type: marking
+  id: UndershirtBraClassicT
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/undergarmenttop.rsi
+    state: classic
+
+- type: marking
+  id: UndershirtBraSportsT
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/undergarmenttop.rsi
+    state: sports
+
+- type: marking
+  id: UndershirtBraStraplessT
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/undergarmenttop.rsi
+    state: strapless
+
+- type: marking
+  id: UndershirtDefaultT
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/undergarmenttop.rsi
+    state: undershirt
+
+- type: marking
+  id: UndershirtGrossSleevelessT
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/undergarmenttop.rsi
+    state: grosssleeveless
+
+- type: marking
+  id: UndershirtNanotrasenT
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/undergarmenttop.rsi
+    state: nanotrasen
+
+- type: marking
+  id: UndershirtRolledT
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/undergarmenttop.rsi
+    state: rolledundershirt
+
+# LFoot
+
+# RFoot
+
+# LHand
+
+# RHand
+
+# FacialHair
+
+# Hair
+# i cant wait until marking displacements are real and i can set this entire category on fire
+
+- type: marking
+  id: BurqaSolidThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: burqa
+
+- type: marking
+  id: HijabFashionableThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: hijabchic
+
+- type: marking
+  id: HijabSimpleThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: hijabsimple
+
+- type: marking
+  id: MessyPonytailThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: messyponytail
+
+- type: marking
+  id: NiqabThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: niqab
+
+- type: marking
+  id: ThavenHair80s
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: 80s
+
+- type: marking
+  id: ThavenHairA
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: a
+
+- type: marking
+  id: ThavenHairB
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: b
+
+- type: marking
+  id: ThavenHairBald
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bald
+
+- type: marking
+  id: ThavenHairBaldfade
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: baldface
+
+- type: marking
+  id: ThavenHairBalding
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: e
+
+- type: marking
+  id: ThavenHairBedhead
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bedhead
+
+- type: marking
+  id: ThavenHairBedheadv2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bedhead2
+
+- type: marking
+  id: ThavenHairBedheadv3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bedhead3
+
+- type: marking
+  id: ThavenHairBeehive
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: beehive
+
+- type: marking
+  id: ThavenHairBeehive2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: beehive2
+
+- type: marking
+  id: ThavenHairBigflattop
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bigflattop
+
+- type: marking
+  id: ThavenHairBigpompadour
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bigpompadour
+
+- type: marking
+  id: ThavenHairBob
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bob
+
+- type: marking
+  id: ThavenHairBob2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bob2
+
+- type: marking
+  id: ThavenHairBob4
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bob4
+
+- type: marking
+  id: ThavenHairBob5
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bob5
+
+- type: marking
+  id: ThavenHairBobcurl
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bobcurl
+
+- type: marking
+  id: ThavenHairBobcut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bobcut
+
+- type: marking
+  id: ThavenHairBowlcut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bowlcut
+
+- type: marking
+  id: ThavenHairBowlcut2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bowlcut2
+
+- type: marking
+  id: ThavenHairBraid
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: braid
+
+- type: marking
+  id: ThavenHairBraid2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: braid2
+
+- type: marking
+  id: ThavenHairBraided
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: braided
+
+- type: marking
+  id: ThavenHairBraidfront
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: braidfront
+
+- type: marking
+  id: ThavenHairBraidtail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: braidtail
+
+- type: marking
+  id: ThavenHairBun
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bun
+
+- type: marking
+  id: ThavenHairBun3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bun3
+
+- type: marking
+  id: ThavenHairBunhead2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: bunhead2
+
+- type: marking
+  id: ThavenHairBusiness
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: business
+
+- type: marking
+  id: ThavenHairBusiness2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: business2
+
+- type: marking
+  id: ThavenHairBusiness3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: business3
+
+- type: marking
+  id: ThavenHairBusiness4
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: business4
+
+- type: marking
+  id: ThavenHairBuzzcut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: buzzcut
+
+- type: marking
+  id: ThavenHairC
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: c
+
+- type: marking
+  id: ThavenHairCia
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: cia
+
+- type: marking
+  id: ThavenHairClassicAfro
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: classicafro
+
+- type: marking
+  id: ThavenHairClassicCia
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: classiccia
+
+- type: marking
+  id: ThavenHairClassicciaBusiness
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: classicciabusiness
+
+- type: marking
+  id: ThavenHairClassicCornrows
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: classiccornrows
+
+- type: marking
+  id: ThavenHairClassicFloorlengthBedhead
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: classicfloorlengthbedhead
+
+- type: marking
+  id: ThavenHairClassicLong2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: classiclong2
+
+- type: marking
+  id: ThavenHairClassicLong3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: classiclong3
+
+- type: marking
+  id: ThavenHairClassicModern
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: classicmodern
+
+- type: marking
+  id: ThavenHairClassicMulder
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: classicmulder
+
+- type: marking
+  id: ThavenHairClassicWisp
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: classicwisp
+
+- type: marking
+  id: ThavenHairCoffeeHouse
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: coffeehouse
+
+- type: marking
+  id: ThavenHairCombover
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: combover
+
+- type: marking
+  id: ThavenHairCornrowbraid
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: cornrowbraid
+
+- type: marking
+  id: ThavenHairCornrowbun
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: cornrowbun
+
+- type: marking
+  id: ThavenHairCornrows
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: cornrows
+
+- type: marking
+  id: ThavenHairCornrows2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: cornrows2
+
+- type: marking
+  id: ThavenHairCornrowtail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: cornrowtail
+
+- type: marking
+  id: ThavenHairCountry
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: country
+
+- type: marking
+  id: ThavenHairCrewcut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: crewcut
+
+- type: marking
+  id: ThavenHairCrewcut2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: crewcut2
+
+- type: marking
+  id: ThavenHairCurls
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: curls
+
+- type: marking
+  id: ThavenHairDandypompadour
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: dandypompadour
+
+- type: marking
+  id: ThavenHairDevilock
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: devilock
+
+- type: marking
+  id: ThavenHairDoublebun
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: doublebun
+
+- type: marking
+  id: ThavenHairDoublebunLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: doublebunlong
+
+- type: marking
+  id: ThavenHairDreads
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: dreads
+
+- type: marking
+  id: ThavenHairDrillHair
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: drillhair
+
+- type: marking
+  id: ThavenHairDrillhairextended
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: drillhairextended
+
+- type: marking
+  id: ThavenHairDrillruru
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: drillruru
+
+- type: marking
+  id: ThavenHairEmo2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: emo2
+
+- type: marking
+  id: ThavenHairEmofringe
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: emofringe
+
+- type: marking
+  id: ThavenHairFather
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: father
+
+- type: marking
+  id: ThavenHairFeather
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: feather
+
+- type: marking
+  id: ThavenHairFlair
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: flair
+
+- type: marking
+  id: ThavenHairFloorlengthBedhead
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: floorlengthbedhead
+
+- type: marking
+  id: ThavenHairFlow
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: f
+
+- type: marking
+  id: ThavenHairFrenchbraid
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: frenchbraid
+
+- type: marking
+  id: ThavenHairFringetail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: fringetail
+
+- type: marking
+  id: ThavenHairGelled
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: gelled
+
+- type: marking
+  id: ThavenHairGentle
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: gentle
+
+- type: marking
+  id: ThavenHairHalfbang
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: halfbang
+
+- type: marking
+  id: ThavenHairHalfbang2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: halfbang2
+
+- type: marking
+  id: ThavenHairHalfshaved
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: halfshaved
+
+- type: marking
+  id: ThavenHairHalfUpLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: halfuplong
+
+- type: marking
+  id: ThavenHairHalfUpShort
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: halfupshort
+
+- type: marking
+  id: ThavenHairHalfUpUndercut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: halfupundercut
+
+- type: marking
+  id: ThavenHairHbraid
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: hbraid
+
+- type: marking
+  id: ThavenHairHedgehog
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: hedgehog
+
+- type: marking
+  id: ThavenHairHighfade
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: highfade
+
+- type: marking
+  id: ThavenHairHighponytail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: highponytail
+
+- type: marking
+  id: ThavenHairHimecut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: himecut
+
+- type: marking
+  id: ThavenHairHimecut2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: himecut2
+
+- type: marking
+  id: ThavenHairHimeup
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: himeup
+
+- type: marking
+  id: ThavenHairHitop
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: hitop
+
+- type: marking
+  id: ThavenHairJade
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: jade
+
+- type: marking
+  id: ThavenHairJensen
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: jensen
+
+- type: marking
+  id: ThavenHairJoestar
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: joestar
+
+- type: marking
+  id: ThavenHairKagami
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: kagami
+
+- type: marking
+  id: ThavenHairKeanu
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: keanu
+
+- type: marking
+  id: ThavenHairKusanagi
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: kusanagi
+
+- type: marking
+  id: ThavenHairLargebun
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: largebun
+
+- type: marking
+  id: ThavenHairLbangs
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: lbangs
+
+- type: marking
+  id: ThavenHairLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: long
+
+- type: marking
+  id: ThavenHairLong2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: long2
+
+- type: marking
+  id: ThavenHairLong3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: long3
+
+- type: marking
+  id: ThavenHairLongBedhead
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: longbedhead
+
+- type: marking
+  id: ThavenHairLongBedhead2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: longbedhead2
+
+- type: marking
+  id: ThavenHairLongeremo
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: longeremo
+
+- type: marking
+  id: ThavenHairLongest
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: longest
+
+- type: marking
+  id: ThavenHairLongest2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: longest2
+
+- type: marking
+  id: ThavenHairLongfringe
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: longfringe
+
+- type: marking
+  id: ThavenHairLongovereye
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: longovereye
+
+- type: marking
+  id: ThavenHairLongsidepart
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: longsidepart
+
+- type: marking
+  id: ThavenHairLongstraightponytail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: longstraightponytail
+
+- type: marking
+  id: ThavenHairLongWithBundles
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: longbundled
+
+- type: marking
+  id: ThavenHairLowfade
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: lowfade
+
+- type: marking
+  id: ThavenHairManbun
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: manbun
+
+- type: marking
+  id: ThavenHairMedfade
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: medfade
+
+- type: marking
+  id: ThavenHairMediumSidepart
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: mediumsidepart
+
+- type: marking
+  id: ThavenHairMegaeyebrows
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: megaeyebrows
+
+- type: marking
+  id: ThavenHairMessy
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: messy
+
+- type: marking
+  id: ThavenHairMidPartLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: midpartlong
+
+- type: marking
+  id: ThavenHairMidPartLonger
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: midpartlonger
+
+- type: marking
+  id: ThavenHairModern
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: modern
+
+- type: marking
+  id: ThavenHairMohawk
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: d
+
+- type: marking
+  id: ThavenHairMulder
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: mulder
+
+- type: marking
+  id: ThavenHairMullet
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: mullet
+
+- type: marking
+  id: ThavenHairMulletSideshave
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: mulletsideshave
+
+- type: marking
+  id: ThavenHairNitori
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: nitori
+
+- type: marking
+  id: ThavenHairNofade
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: nofade
+
+- type: marking
+  id: ThavenHairOdango
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: odango
+
+- type: marking
+  id: ThavenHairOmbre
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: ombre
+
+- type: marking
+  id: ThavenHairOneshoulder
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: oneshoulder
+
+- type: marking
+  id: ThavenHairOxton
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: oxton
+
+- type: marking
+  id: ThavenHairPart
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: part
+
+- type: marking
+  id: ThavenHairParted
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: parted
+
+- type: marking
+  id: ThavenHairPigtails
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: pigtails
+
+- type: marking
+  id: ThavenHairPigtails2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: pigtails2
+
+- type: marking
+  id: ThavenHairPixie
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: pixie
+
+- type: marking
+  id: ThavenHairPompadour
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: pompadour
+
+- type: marking
+  id: ThavenHairPonytail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: ponytail
+
+- type: marking
+  id: ThavenHairPonytail2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: ponytail2
+
+- type: marking
+  id: ThavenHairPonytail3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: ponytail3
+
+- type: marking
+  id: ThavenHairPonytail4
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: ponytail4
+
+- type: marking
+  id: ThavenHairPonytail5
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: ponytail5
+
+- type: marking
+  id: ThavenHairPonytail6
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: ponytail6
+
+- type: marking
+  id: ThavenHairPonytail7
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: ponytail7
+
+- type: marking
+  id: ThavenHairPoofy
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: poofy
+
+- type: marking
+  id: ThavenHairProtagonist
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: protagonist
+
+- type: marking
+  id: ThavenHairQuiff
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: quiff
+
+- type: marking
+  id: ThavenHairReversemohawk
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: reversemohawk
+
+- type: marking
+  id: ThavenHairRonin
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: ronin
+
+- type: marking
+  id: ThavenHairRosa
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: rosa
+
+- type: marking
+  id: ThavenHairSargeant
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: sargeant
+
+- type: marking
+  id: ThavenHairShaved
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: shaved
+
+- type: marking
+  id: ThavenHairShavedMohawk
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: shavedmohawk
+
+- type: marking
+  id: ThavenHairShavedpart
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: shavedpart
+
+- type: marking
+  id: ThavenHairShortbangs
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: shortbangs
+
+- type: marking
+  id: ThavenHairShortbraid
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: shortbraid
+
+- type: marking
+  id: ThavenHairShorthair2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: shorthair2
+
+- type: marking
+  id: ThavenHairShorthair3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: shorthair3
+
+- type: marking
+  id: ThavenHairShorthair9
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: shorthair9
+
+- type: marking
+  id: ThavenHairShorthime
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: shorthime
+
+- type: marking
+  id: ThavenHairShortovereye
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: shortovereye
+
+- type: marking
+  id: ThavenHairShoulderLengthOverEye
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: shoulderlengthovereye
+
+- type: marking
+  id: ThavenHairSidecut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: sidecut
+
+- type: marking
+  id: ThavenHairSideshaveCurly
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: sideshavecurly
+
+- type: marking
+  id: ThavenHairSidetail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: sidetail
+
+- type: marking
+  id: ThavenHairSidetail2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: sidetail2
+
+- type: marking
+  id: ThavenHairSidetail3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: sidetail3
+
+- type: marking
+  id: ThavenHairSidetail4
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: sidetail4
+
+- type: marking
+  id: ThavenHairSkinhead
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: skinhead
+
+- type: marking
+  id: ThavenHairSpiky
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: spiky
+
+- type: marking
+  id: ThavenHairSpikyponytail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: spikyponytail
+
+- type: marking
+  id: ThavenHairSpookyLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: spookylong
+
+- type: marking
+  id: ThavenHairStail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: stail
+
+- type: marking
+  id: ThavenHairSwept
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: swept
+
+- type: marking
+  id: ThavenHairSwept2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: swept2
+
+- type: marking
+  id: ThavenHairTailed
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: tailed
+
+- type: marking
+  id: ThavenHairThinning
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: thinning
+
+- type: marking
+  id: ThavenHairThinningfront
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: thinningfront
+
+- type: marking
+  id: ThavenHairThinningrear
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: thinningrear
+
+- type: marking
+  id: ThavenHairTightbun
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: tightbun
+
+- type: marking
+  id: ThavenHairTopknot
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: topknot
+
+- type: marking
+  id: ThavenHairTressshoulder
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: tressshoulder
+
+- type: marking
+  id: ThavenHairTrimflat
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: trimflat
+
+- type: marking
+  id: ThavenHairTrimmed
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: trimmed
+
+- type: marking
+  id: ThavenHairTwintail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: twintail
+
+- type: marking
+  id: ThavenHairTwoStrands
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: twostrands
+
+- type: marking
+  id: ThavenHairUndercut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: undercut
+
+- type: marking
+  id: ThavenHairUndercutCurly
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: undercutcurly
+
+- type: marking
+  id: ThavenHairUndercutleft
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: undercutleft
+
+- type: marking
+  id: ThavenHairUndercutright
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: undercutright
+
+- type: marking
+  id: ThavenHairUneven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: uneven
+
+- type: marking
+  id: ThavenHairUnkept
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: unkept
+
+- type: marking
+  id: ThavenHairVeryshortovereyealternate
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: veryshortovereyealternate
+
+- type: marking
+  id: ThavenHairVlong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: vlong
+
+- type: marking
+  id: ThavenHairVlongfringe
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: vlongfringe
+
+- type: marking
+  id: ThavenHairVolaju
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: volaju
+
+- type: marking
+  id: ThavenHairWisp
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: wisp
+
+- type: marking
+  id: TichelFashionableThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: tichelfashionable
+
+- type: marking
+  id: TichelSimpleThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: tichelsimple
+
+# HeadSide
+
+- type: marking
+  id: ThavenEars1
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Thaven ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/headside.rsi
+    state: ears1
+
+- type: marking
+  id: ThavenEars2
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Thaven ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/headside.rsi
+    state: ears2
+
+- type: marking
+  id: ThavenEars3
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Thaven ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/headside.rsi
+    state: ears3
+
+- type: marking
+  id: ThavenEars4
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Thaven ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/headside.rsi
+    state: ears4
+
+- type: marking
+  id: ThavenEarsBigFins
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/headside.rsi
+    state: bigfins
+  - sprite: _Impstation/Mobs/Customization/Thaven/headside.rsi
+    state: bigfins2
+
+- type: marking
+  id: ThavenFishEars
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Thaven ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/headside.rsi
+    state: fishears
+
+- type: marking
+  id: ThavenNoEars
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/headside.rsi
+    state: noears
+
+# HeadTop
+
+- type: marking
+  id: ThavenPiercings
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/headtop.rsi
+    state: piercings
+
+- type: marking
+  id: ThavenPiercings2
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/headtop.rsi
+    state: piercings2
+
+# Tail
+
+- type: marking
+  id: ThavenBasicTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: basic
+
+- type: marking
+  id: ThavenBigTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: big1
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: big2
+
+- type: marking
+  id: ThavenTadpoleTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: tadpole1
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: tadpole2
 
 - type: marking
   id: ThavenTailEel
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Thaven ]
-  forcedColoring: false
   followSkinColor: true
   sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: taileel1
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: taileel2
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: eel1
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: eel2
 
 - type: marking
   id: ThavenTailEelOverlay
@@ -197,10 +2526,10 @@
     default:
       type:
         !type:EyeColoring
-          negative: false
+        negative: false
   sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: taileel3
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: eel3
   shader: unshaded
 
 - type: marking
@@ -208,23 +2537,23 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Thaven ]
-  forcedColoring: false
   followSkinColor: true
   sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: tailnurse1
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: tailnurse2
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: nurse1
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: nurse2
 
 - type: marking
   id: ThavenTailStub
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Thaven ]
-  forcedColoring: false
   followSkinColor: true
   sprites:
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: tailstub1
-  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: tailstub2
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: stub1
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: stub2
+
+# RArmExtension

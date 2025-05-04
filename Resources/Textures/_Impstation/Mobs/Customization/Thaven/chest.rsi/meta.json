@@ -1,0 +1,101 @@
+{
+    "version": 1,
+    "copyright": "hair by Honeyed_Lemons_, tat1 by widgetbeck, rest by crocodilecarousel (github)",
+    "license": "CC-BY-SA-4.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bitemark",
+            "directions": 4
+        },
+        {
+            "name": "gills",
+            "directions": 4
+        },
+        {
+            "name": "hair",
+            "directions": 4
+        },
+        {
+            "name": "muscular",
+            "directions": 4
+        },
+        {
+            "name": "scales",
+            "directions": 4
+        },
+        {
+            "name": "stripes",
+            "directions": 4
+        },
+        {
+            "name": "spinechill",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "spines",
+            "directions": 4
+        },
+        {
+            "name": "tat1",
+            "directions": 4
+        },
+        {
+            "name": "tattoovines",
+            "directions": 4
+        },
+        {
+            "name": "tattoowave",
+            "directions": 4
+        },
+        {
+            "name": "tiger1",
+            "directions": 4
+        },
+        {
+            "name": "tiger2",
+            "directions": 4
+        },
+        {
+            "name": "nonaturals",
+            "directions": 4
+        }
+    ]
+}

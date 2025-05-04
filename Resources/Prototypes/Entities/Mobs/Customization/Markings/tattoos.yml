@@ -27,20 +27,6 @@
     state: tattoo_nightling
 
 - type: marking
-  id: TattooNanotrasenChest
-  bodyPart: Chest
-  markingCategory: Chest
-  speciesRestriction: [Human, Dwarf, SlimePerson]
-  coloring:
-    default:
-      type:
-        !type:TattooColoring
-      fallbackColor: "#666666"
-  sprites:
-  - sprite: Mobs/Customization/tattoos.rsi
-    state: tattoo_nanotrasen_chest
-
-- type: marking
   id: TattooSilverburghLeftLeg
   bodyPart: LLeg
   markingCategory: Legs

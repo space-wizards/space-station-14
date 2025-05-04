@@ -1,0 +1,87 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "gatheredlow sprited by Sha-Seng (Github), lowpigtails by Skeleskitty (Discord), frenchbraid by AftrLite (Github), halfup styles, midpart styles, mullet styles, undercut_curly and sideshave_curly sprited by argentsunshine (github), messyponytail and headcovers by crocodilecarousel (github)",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "burqasolid",
+            "directions": 4
+        },
+        {
+            "name": "frenchbraid",
+            "directions": 4
+        },
+        {
+            "name": "gatheredlow",
+            "directions": 4
+        },
+        {
+            "name": "halfuplong",
+            "directions": 4
+        },
+        {
+            "name": "halfupshort",
+            "directions": 4
+        },
+        {
+            "name": "halfupundercut",
+            "directions": 4
+        },
+        {
+            "name": "hijabchic",
+            "directions": 4
+        },
+        {
+            "name": "hijabsimple",
+            "directions": 4
+        },
+        {
+            "name": "lowpigtails",
+            "directions": 4
+        },
+        {
+            "name": "messyponytail",
+            "directions": 4
+        },
+        {
+            "name": "midpartlong",
+            "directions": 4
+        },
+        {
+            "name": "midpartlonger",
+            "directions": 4
+        },
+        {
+            "name": "mullet",
+            "directions": 4
+        },
+        {
+            "name": "mulletsideshave",
+            "directions": 4
+        },
+        {
+            "name": "niqab",
+            "directions": 4
+        },
+        {
+            "name": "sideshavecurly",
+            "directions": 4
+        },
+        {
+            "name": "tichelfashionable",
+            "directions": 4
+        },
+        {
+            "name": "tichelsimple",
+            "directions": 4
+        },
+        {
+            "name": "undercutcurly",
+            "directions": 4
+        }
+    ]
+}

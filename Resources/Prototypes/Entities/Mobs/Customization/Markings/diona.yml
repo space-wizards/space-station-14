@@ -4,8 +4,8 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: thorns_head
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: thorns
 
 - type: marking
   id: DionaThornsBody
@@ -13,8 +13,8 @@
   markingCategory: Chest
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: thorns_body
+  - sprite: _Impstation/Mobs/Customization/Diona/chest.rsi # imp
+    state: thorns
 
 - type: marking
   id: DionaFlowersHead
@@ -22,10 +22,10 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: flowers_head_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: flowers_head_secondary
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: flowers1
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: flowers2
 
 - type: marking
   id: DionaFlowersBody
@@ -33,10 +33,10 @@
   markingCategory: Chest
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: flowers_body_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: flowers_body_secondary
+  - sprite: _Impstation/Mobs/Customization/Diona/chest.rsi # imp
+    state: flowers1
+  - sprite: _Impstation/Mobs/Customization/Diona/chest.rsi # imp
+    state: flowers2
 
 - type: marking
   id: DionaLeafCover
@@ -48,8 +48,8 @@
       type:
         !type:SkinColoring
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: leaf_cover
+  - sprite: _Impstation/Mobs/Customization/Diona/chest.rsi # imp
+    state: leafcover
 
 - type: marking
   id: DionaBloomHead
@@ -57,10 +57,10 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: bloom_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: bloom_secondary
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: bloom1
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: bloom2
 
 - type: marking
   id: DionaBracketHead
@@ -72,7 +72,7 @@
       type:
         !type:EyeColoring
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
     state: bracket
 
 - type: marking
@@ -85,7 +85,7 @@
       type:
         !type:SkinColoring
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
     state: brush
 
 - type: marking
@@ -94,12 +94,12 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: cornflower_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: cornflower_secondary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: cornflower_flowers
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: cornflower1
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: cornflower2
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: cornflower3
 
 - type: marking
   id: DionaFicusHead
@@ -107,7 +107,7 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
     state: ficus
 
 - type: marking
@@ -116,16 +116,16 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: garland_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: garland_secondary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: garland_flowers1
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: garland_flowers2
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: garland_flowers3
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: garland1
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: garland2
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: garland3
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: garland4
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: garland5
 
 - type: marking
   id: DionaKingHead
@@ -133,10 +133,10 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: king_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: king_secondary
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: king1
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: king2
 
 - type: marking
   id: DionaLaurelHead
@@ -144,7 +144,7 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
     state: laurel
 
 - type: marking
@@ -153,7 +153,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
+  - sprite: _Impstation/Mobs/Customization/Diona/headtop.rsi # imp
     state: leafy
 
 - type: marking
@@ -162,10 +162,10 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: lotus_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: lotus_secondary
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: lotus1
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: lotus2
 
 - type: marking
   id: DionaMeadowHeadTop
@@ -173,7 +173,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
+  - sprite: _Impstation/Mobs/Customization/Diona/headtop.rsi # imp
     state: meadow
 
 - type: marking
@@ -182,7 +182,7 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
     state: oak
 
 - type: marking
@@ -191,7 +191,7 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
     state: palm
 
 - type: marking
@@ -200,7 +200,7 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
     state: root
 
 - type: marking
@@ -209,10 +209,10 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: rose_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: rose_secondary
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: rose1
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: rose2
 
 - type: marking
   id: DionaRoseyHead
@@ -220,12 +220,12 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: rosey_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: rosey_secondary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: rosey_flowers
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: rosey1
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: rosey2
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: rosey3
 
 - type: marking
   id: DionaShrubHeadTop
@@ -233,7 +233,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
+  - sprite: _Impstation/Mobs/Customization/Diona/headtop.rsi # imp
     state: shrub
 
 - type: marking
@@ -242,10 +242,10 @@
   markingCategory: HeadSide
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: spinner_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: spinner_secondary
+  - sprite: _Impstation/Mobs/Customization/Diona/headside.rsi # imp
+    state: spinner1
+  - sprite: _Impstation/Mobs/Customization/Diona/headside.rsi # imp
+    state: spinner2
 
 - type: marking
   id: DionaSproutHeadSide
@@ -253,10 +253,10 @@
   markingCategory: HeadSide
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: sprout_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: sprout_secondary
+  - sprite: _Impstation/Mobs/Customization/Diona/headside.rsi # imp
+    state: sprout1
+  - sprite: _Impstation/Mobs/Customization/Diona/headside.rsi # imp
+    state: sprout2
 
 - type: marking
   id: DionaVineHeadTop
@@ -264,10 +264,10 @@
   markingCategory: HeadTop
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: vine_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: vine_secondary
+  - sprite: _Impstation/Mobs/Customization/Diona/headtop.rsi # imp
+    state: vine1
+  - sprite: _Impstation/Mobs/Customization/Diona/headtop.rsi # imp
+    state: vine2
 
 - type: marking
   id: DionaVinelHead
@@ -275,10 +275,10 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: vinel_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: vinel_secondary
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: vinel1
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: vinel2
 
 - type: marking
   id: DionaVinesHead
@@ -286,10 +286,10 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: vines_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: vines_secondary
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: vines1
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: vines2
 
 - type: marking
   id: DionaWildflowerHead
@@ -297,18 +297,18 @@
   markingCategory: Head
   speciesRestriction: [Diona]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: wildflower_primary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: wildflower_secondary
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: wildflower_flowers1
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: wildflower_flowers2
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: wildflower_flowers3
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
-    state: wildflower_flowers4
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: wildflower1
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: wildflower2
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: wildflower3
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: wildflower4
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: wildflower5
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi # imp
+    state: wildflower6
 
 - type: marking
   id: DionaVineOverlay
@@ -321,5 +321,5 @@
 #        !type:SimpleColoring
 #        color: "#5f7039"
   sprites:
-  - sprite: _Impstation/Mobs/Customization/diona.rsi
+  - sprite: _Impstation/Mobs/Customization/Diona/lleg.rsi # imp
     state: overlay

@@ -4,41 +4,43 @@ marking-ArachnidCheliceraeDownwards-downwards = Chelicerae
 marking-ArachnidCheliceraeInwards = Chelicerae (Inwards)
 marking-ArachnidCheliceraeInwards-inwards = Chelicerae
 
+# imp edit - renamed a lot of textures below to match namespace standards
+
 marking-ArachnidAppendagesDefault = Appendages (Long)
-marking-ArachnidAppendagesDefault-long_primary = Appendage
-marking-ArachnidAppendagesDefault-long_secondary = Stripes
+marking-ArachnidAppendagesDefault-long1 = Appendage
+marking-ArachnidAppendagesDefault-long2 = Stripes
 
 marking-ArachnidAppendagesSharp = Appendages (Sharp)
-marking-ArachnidAppendagesSharp-sharp_primary = Appendage
-marking-ArachnidAppendagesSharp-sharp_secondary = Stripes
+marking-ArachnidAppendagesSharp-sharp1 = Appendage
+marking-ArachnidAppendagesSharp-sharp2 = Stripes
 
 marking-ArachnidAppendagesZigZag = Appendages (ZigZag)
-marking-ArachnidAppendagesZigZag-zigzag_primary = Appendage
-marking-ArachnidAppendagesZigZag-zigzag_secondary = Stripes
+marking-ArachnidAppendagesZigZag-zigzag1 = Appendage
+marking-ArachnidAppendagesZigZag-zigzag2 = Stripes
 
 marking-ArachnidAppendagesCurled = Appendages (Curled)
-marking-ArachnidAppendagesCurled-curled_primary = Appendage
-marking-ArachnidAppendagesCurled-curled_secondary = Stripes
+marking-ArachnidAppendagesCurled-curled1 = Appendage
+marking-ArachnidAppendagesCurled-curled2 = Stripes
 
 marking-ArachnidAppendagesStingers = Appendages (Stingers)
-marking-ArachnidAppendagesStingers-stingers_primary = Appendage
-marking-ArachnidAppendagesStingers-stingers_secondary = Stripes
+marking-ArachnidAppendagesStingers-stingers1 = Appendage
+marking-ArachnidAppendagesStingers-stingers2 = Stripes
 
 marking-ArachnidAppendagesChipped = Appendages (Chipped)
-marking-ArachnidAppendagesChipped-chipped_primary = Appendage
-marking-ArachnidAppendagesChipped-chipped_secondary = Stripes
+marking-ArachnidAppendagesChipped-chipped1 = Appendage
+marking-ArachnidAppendagesChipped-chipped2 = Stripes
 
 marking-ArachnidAppendagesHarvest = Appendages (Harvest)
-marking-ArachnidAppendagesHarvest-harvest_primary = Appendage
-marking-ArachnidAppendagesHarvest-harvest_secondary = Stripes
+marking-ArachnidAppendagesHarvest-harvest1 = Appendage
+marking-ArachnidAppendagesHarvest-harvest2 = Stripes
 
 marking-ArachnidAppendagesShort = Appendages (Short)
-marking-ArachnidAppendagesShort-short_primary = Appendage
-marking-ArachnidAppendagesShort-short_secondary = Stripes
+marking-ArachnidAppendagesShort-short1 = Appendage
+marking-ArachnidAppendagesShort-short2 = Stripes
 
 marking-ArachnidAppendagesFreaky = Appendages (Freaky long)
-marking-ArachnidAppendagesFreaky-freaky_primary = Appendage
-marking-ArachnidAppendagesFreaky-freaky_secondary = Stripes
+marking-ArachnidAppendagesFreaky-freaky1 = Appendage
+marking-ArachnidAppendagesFreaky-freaky2 = Stripes
 
 marking-ArachnidTorsoStripes = Stripes
 marking-ArachnidTorsoStripes-stripes = Design
@@ -59,7 +61,7 @@ marking-ArachnidTorsoHourglass = Hourglass
 marking-ArachnidTorsoHourglass-hourglass = Design
 
 marking-ArachnidTorsoNailAndHammer = Nail and Hammer
-marking-ArachnidTorsoNailAndHammer-nail-and-hammer = Design
+marking-ArachnidTorsoNailAndHammer-nailandhammer = Design
 
 marking-ArachnidTorsoStar = Star
 marking-ArachnidTorsoStar-star = Design

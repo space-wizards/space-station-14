@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Drawn by crocodilecarousel (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "color",
+            "directions": 4
+        },
+        {
+            "name": "split1",
+            "directions": 4
+        },
+        {
+            "name": "split2",
+            "directions": 4
+        },
+        {
+            "name": "tipped",
+            "directions": 4
+        }
+    ]
+}

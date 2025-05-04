@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Drawn by crocodilecarousel (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "burqa",
+            "directions": 4
+        },
+        {
+            "name": "hijabchic",
+            "directions": 4
+        },
+        {
+            "name": "hijabsimple",
+            "directions": 4
+        },
+        {
+            "name": "niqab",
+            "directions": 4
+        },
+        {
+            "name": "tichelfashionable",
+            "directions": 4
+        },
+        {
+            "name": "tichelsimple",
+            "directions": 4
+        }
+    ]
+}

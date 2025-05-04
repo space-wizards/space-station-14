@@ -1,39 +1,130 @@
+# Chest
+
 - type: marking
-  id: GrayCuteEyes
-  bodyPart: Eyes
-  markingCategory: Head
-  speciesRestriction: [Gray]
-  forcedColoring: true
-  coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+  id: BellyGem
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Gray ]
   sprites:
-  - sprite: _Impstation/Mobs/Customization/Gray/eyes.rsi
-    state: eyes_cute
+  - sprite: _Impstation/Mobs/Customization/Gray/chest.rsi
+    state: bellygem
+
+- type: marking
+  id: GrayObject
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Gray ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/chest.rsi
+    state: object1
+  - sprite: _Impstation/Mobs/Customization/Gray/chest.rsi
+    state: object2
+
+- type: marking
+  id: GrayTattooCar
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Gray ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/chest.rsi
+    state: car1
+  - sprite: _Impstation/Mobs/Customization/Gray/chest.rsi
+    state: car2
+
+- type: marking
+  id: GrayTattooPlane
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Gray ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/chest.rsi
+    state: plane1
+  - sprite: _Impstation/Mobs/Customization/Gray/chest.rsi
+    state: plane2
+
+- type: marking
+  id: RadiumGlow
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Gray ]
+  forcedColoring: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/chest.rsi
+    state: radiumglow
+  shader: unshaded
+
+# Head
+
+- type: marking
+  id: RadiumGlowBrain
+  bodyPart: Head
+  markingCategory: HeadTop
+  speciesRestriction: [ Gray ]
+  forcedColoring: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/head.rsi
+    state: radiumglowbrain
+  shader: unshaded
+
+- type: marking
+  id: RadiumGlowCheeks
+  bodyPart: Head
+  markingCategory: HeadTop
+  speciesRestriction: [ Gray ]
+  forcedColoring: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/head.rsi
+    state: radiumglowcheeks
+  shader: unshaded
+
+# Snout
+
+# Eyes
 
 - type: marking
   id: GrayCoolEyes
   bodyPart: Eyes
-  markingCategory: Head
-  speciesRestriction: [Gray]
+  markingCategory: Eyes
+  speciesRestriction: [ Gray ]
   forcedColoring: true
   coloring:
     default:
       type:
         !type:SimpleColoring
-          color: "#000000"
+        color: "#000000"
   sprites:
   - sprite: _Impstation/Mobs/Customization/Gray/eyes.rsi
-    state: eyes_cool
+    state: cool
+
+- type: marking
+  id: GrayCuteEyes
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Gray ]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/eyes.rsi
+    state: cute
+
+- type: marking
+  id: GrayFakeLashes
+  bodyPart: Eyes
+  markingCategory: HeadTop
+  speciesRestriction: [ Gray ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/eyes.rsi
+    state: fakelashes
 
 - type: marking
   id: GrayWideEyes
   bodyPart: Eyes
-  markingCategory: Head
-  speciesRestriction: [Gray]
-  forcedColoring: false
+  markingCategory: Eyes
+  speciesRestriction: [ Gray ]
   coloring:
     default:
       type:
@@ -41,26 +132,92 @@
         color: "#3D3D3D"
   sprites:
   - sprite: _Impstation/Mobs/Customization/Gray/eyes.rsi
-    state: eyes_wide
+    state: wide
+
+# RArm
+
+# LArm
+
+# RLeg
+
+# LLeg
+
+# UndergarmentBottom
+
+- type: marking
+  id: GrayUnderwearClassic
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [ Gray ]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/undergarmentbottom.rsi
+    state: classic
+
+- type: marking
+  id: GrayUnderwearStriped
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [ Gray ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/undergarmentbottom.rsi
+    state: striped1
+  - sprite: _Impstation/Mobs/Customization/Gray/undergarmentbottom.rsi
+    state: striped2
+
+- type: marking
+  id: GrayUnderwearToga
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [ Gray ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/undergarmentbottom.rsi
+    state: toga
+
+# UndergarmentTop
+
+# LFoot
+
+# RFoot
+
+# LHand
+
+# RHand
+
+# FacialHair
+
+# Hair
+
+# HeadSide
 
 - type: marking
   id: GrayCuteEars
-  bodyPart: Eyes
+  bodyPart: HeadSide
   markingCategory: HeadSide
-  speciesRestriction: [Gray]
+  speciesRestriction: [ Gray ]
   forcedColoring: true
   followSkinColor: true
   sprites:
-  - sprite: _Impstation/Mobs/Customization/Gray/ears.rsi
-    state: ears_cute
+  - sprite: _Impstation/Mobs/Customization/Gray/headside.rsi
+    state: cute
+
+# HeadTop
 
 - type: marking
   id: GrayClassicAntenna
-  bodyPart: Head
+  bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Gray]
-  forcedColoring: false
+  speciesRestriction: [ Gray ]
   followSkinColor: true
   sprites:
-  - sprite: _Impstation/Mobs/Customization/Gray/antenna.rsi
-    state: antenna_classic
+  - sprite: _Impstation/Mobs/Customization/Gray/headtop.rsi
+    state: classic
+
+# Tail
+
+# RArmExtension

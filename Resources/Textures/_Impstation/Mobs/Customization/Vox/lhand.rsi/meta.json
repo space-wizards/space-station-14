@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Drawn by crocodilecarousel (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "gradient1",
+            "directions": 4
+        },
+        {
+            "name": "gradient2",
+            "directions": 4
+        },
+        {
+            "name": "gradient3",
+            "directions": 4
+        },
+        {
+            "name": "prosthetic",
+            "directions": 4
+        }
+    ]
+}

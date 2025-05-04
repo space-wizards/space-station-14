@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "by starlighthowls, tall/beard by rainyatrium",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "beard",
+            "directions": 4
+        },
+        {
+            "name": "fangs",
+            "directions": 4
+        },
+        {
+            "name": "piercings1",
+            "directions": 4
+        },
+        {
+            "name": "tall",
+            "directions": 4
+        }
+    ]
+}

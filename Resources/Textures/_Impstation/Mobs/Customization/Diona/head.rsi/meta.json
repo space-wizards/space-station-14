@@ -1,0 +1,239 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "flowers and thorns from https://github.com/Citadel-Station-13/Citadel-Station-13-RP/commit/38051f45d3b26bd31f6e292239f43adb36ff01fe, modified by EmoGarbage and atdoop (github). bloom, bracket, brush, cornflower, ficus, garland, king, laurel, lotus, oak, palm, root, rose, rosey, thorns, vinel, vines, and wildflower from https://github.com/TauCetiStation/TauCetiClassic/blob/a8c097fd0e749dcd6f66f05cf5325e51f6b081dd/icons/mob/human_face.dmi and modified by atdoop (github). bigfirefly and pollendust by crocodilecarousel (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bigfirefly",
+            "directions": 4,
+            "delays": [
+                [
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
+                ],
+                [
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
+                ],
+                [
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
+                ],
+                [
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
+                ]
+            ]
+        },
+        {
+            "name": "bloom1",
+            "directions": 4
+        },
+        {
+            "name": "bloom2",
+            "directions": 4
+        },
+        {
+            "name": "bracket",
+            "directions": 4
+        },
+        {
+            "name": "brush",
+            "directions": 4
+        },
+        {
+            "name": "cornflower1",
+            "directions": 4
+        },
+        {
+            "name": "cornflower2",
+            "directions": 4
+        },
+        {
+            "name": "cornflower3",
+            "directions": 4
+        },
+        {
+            "name": "ficus",
+            "directions": 4
+        },
+        {
+            "name": "flowers1",
+            "directions": 4
+        },
+        {
+            "name": "flowers2",
+            "directions": 4
+        },
+        {
+            "name": "garland1",
+            "directions": 4
+        },
+        {
+            "name": "garland2",
+            "directions": 4
+        },
+        {
+            "name": "garland3",
+            "directions": 4
+        },
+        {
+            "name": "garland4",
+            "directions": 4
+        },
+        {
+            "name": "garland5",
+            "directions": 4
+        },
+        {
+            "name": "king1",
+            "directions": 4
+        },
+        {
+            "name": "king2",
+            "directions": 4
+        },
+        {
+            "name": "laurel",
+            "directions": 4
+        },
+        {
+            "name": "lotus1",
+            "directions": 4
+        },
+        {
+            "name": "lotus2",
+            "directions": 4
+        },
+        {
+            "name": "oak",
+            "directions": 4
+        },
+        {
+            "name": "palm",
+            "directions": 4
+        },
+        {
+            "name": "pollendust",
+            "directions": 4,
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "root",
+            "directions": 4
+        },
+        {
+            "name": "rose1",
+            "directions": 4
+        },
+        {
+            "name": "rose2",
+            "directions": 4
+        },
+        {
+            "name": "rosey1",
+            "directions": 4
+        },
+        {
+            "name": "rosey2",
+            "directions": 4
+        },
+        {
+            "name": "rosey3",
+            "directions": 4
+        },
+        {
+            "name": "thorns",
+            "directions": 4
+        },
+        {
+            "name": "vinel1",
+            "directions": 4
+        },
+        {
+            "name": "vinel2",
+            "directions": 4
+        },
+        {
+            "name": "vines1",
+            "directions": 4
+        },
+        {
+            "name": "vines2",
+            "directions": 4
+        },
+        {
+            "name": "wildflower1",
+            "directions": 4
+        },
+        {
+            "name": "wildflower2",
+            "directions": 4
+        },
+        {
+            "name": "wildflower3",
+            "directions": 4
+        },
+        {
+            "name": "wildflower4",
+            "directions": 4
+        },
+        {
+            "name": "wildflower5",
+            "directions": 4
+        },
+        {
+            "name": "wildflower6",
+            "directions": 4
+        }
+    ]
+}

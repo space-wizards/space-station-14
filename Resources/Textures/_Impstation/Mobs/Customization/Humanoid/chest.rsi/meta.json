@@ -1,0 +1,75 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "bodyhair by Honeyed_Lemons_, backstabbed, incision, muscular, twisting, star and vitiligo by crocodilecarousel (github). cuthere, heavy and necklace by Sha-Seng (GitHub).",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "backstabbed",
+            "directions": 4
+        },
+        {
+            "name": "bodyhairfemale",
+            "directions": 4
+        },
+        {
+            "name": "bodyhairmale",
+            "directions": 4
+        },
+        {
+            "name": "cuthere",
+            "directions": 4
+        },
+        {
+            "name": "heavy1",
+            "directions": 4
+        },
+        {
+            "name": "heavy2",
+            "directions": 4
+        },
+        {
+            "name": "heavy3",
+            "directions": 4
+        },
+        {
+            "name": "incision",
+            "directions": 4
+        },
+        {
+            "name": "muscular",
+            "directions": 4
+        },
+        {
+            "name": "nanotrasen",
+            "directions": 4
+        },
+        {
+            "name": "necklace",
+            "directions": 4
+        },
+        {
+            "name": "star",
+            "directions": 4
+        },
+        {
+            "name": "twistingleft",
+            "directions": 4
+        },
+        {
+            "name": "twistingright",
+            "directions": 4
+        },
+        {
+            "name": "vitiligo",
+            "directions": 4
+        },
+        {
+            "name": "vitiligospots",
+            "directions": 4
+        }
+    ]
+}

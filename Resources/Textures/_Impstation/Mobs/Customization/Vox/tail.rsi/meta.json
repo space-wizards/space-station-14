@@ -1,0 +1,95 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "sprites by crocodilecarousel (github) for impstation, tweaked by mousesweater",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "balled",
+            "directions": 4
+        },
+        {
+            "name": "bell1",
+            "directions": 4
+        },
+        {
+            "name": "bell2",
+            "directions": 4
+        },
+        {
+            "name": "bloom1",
+            "directions": 4
+        },
+        {
+            "name": "bloom2",
+            "directions": 4
+        },
+        {
+            "name": "bloom3",
+            "directions": 4
+        },
+        {
+            "name": "chains",
+            "directions": 4
+        },
+        {
+            "name": "cocktail1",
+            "directions": 4
+        },
+        {
+            "name": "cocktail2",
+            "directions": 4
+        },
+        {
+            "name": "cocktail3",
+            "directions": 4
+        },
+        {
+            "name": "cocktail4",
+            "directions": 4
+        },
+        {
+            "name": "colorable",
+            "directions": 4
+        },
+        {
+            "name": "footspines",
+            "directions": 4
+        },
+        {
+            "name": "friendsfeather1",
+            "directions": 4
+        },
+        {
+            "name": "friendsfeather2",
+            "directions": 4
+        },
+        {
+            "name": "lantern",
+            "directions": 4
+        },
+        {
+            "name": "smallplume",
+            "directions": 4
+        },
+        {
+            "name": "spines",
+            "directions": 4
+        },
+        {
+            "name": "split",
+            "directions": 4
+        },
+        {
+            "name": "spots",
+            "directions": 4
+        },
+        {
+            "name": "sunandmoon",
+            "directions": 4
+        }
+    ]
+}

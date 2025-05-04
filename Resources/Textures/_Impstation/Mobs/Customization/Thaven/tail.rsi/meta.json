@@ -1,0 +1,93 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "stub/nurse/eel made by Sha-Seng (github), rest by crocodilecarousel (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "basic",
+            "directions": 4
+        },
+        {
+            "name": "big1",
+            "directions": 4
+        },
+        {
+            "name": "big2",
+            "directions": 4
+        },
+        {
+            "name": "eel1",
+            "directions": 4
+        },
+        {
+            "name": "eel2",
+            "directions": 4
+        },
+        {
+            "name": "eel3",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "nurse1",
+            "directions": 4
+        },
+        {
+            "name": "nurse2",
+            "directions": 4
+        },
+        {
+            "name": "stub1",
+            "directions": 4
+        },
+        {
+            "name": "stub2",
+            "directions": 4
+        },
+        {
+            "name": "tadpole1",
+            "directions": 4
+        },
+        {
+            "name": "tadpole2",
+            "directions": 4
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "beak by UndertaleSex. mustache, simple, and smallbeak by crocodilecarousel (github), ",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "beak",
+            "directions": 4
+        },
+        {
+            "name": "moustachelong",
+            "directions": 4
+        },
+        {
+            "name": "moustacheshort",
+            "directions": 4
+        },
+        {
+            "name": "simple",
+            "directions": 4
+        },
+        {
+            "name": "smallbeak",
+            "directions": 4
+        }
+    ]
+}

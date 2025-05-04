@@ -1,43 +1,63 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Round eyes made by Sha-Seng (github) and Jumper eyes made by Crekulon (github) for Impstation",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "eyes_round1",
-      "directions": 4
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Round eyes made by Sha-Seng (github), Jumper eyes made by Crekulon (github), multi and glow made by crocodilecarousel (github) for Impstation.",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "eyes_round2",
-      "directions": 4
-    },
-    {
-      "name": "eyes_round3",
-      "directions": 4
-    },
-    {
-      "name": "eyes_round4",
-      "directions": 4
-    },
-    {
-      "name": "eyes_jumper1",
-      "directions": 4
-    },
-    {
-      "name": "eyes_jumper2",
-      "directions": 4
-    },
-    {
-      "name": "eyes_jumper3",
-      "directions": 4
-    },
-    {
-      "name": "eyes_jumper4",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "glow",
+            "directions": 4
+        },
+        {
+            "name": "jumper1",
+            "directions": 4
+        },
+        {
+            "name": "jumper2",
+            "directions": 4
+        },
+        {
+            "name": "jumper3",
+            "directions": 4
+        },
+        {
+            "name": "jumper4",
+            "directions": 4
+        },
+        {
+            "name": "multi1",
+            "directions": 4
+        },
+        {
+            "name": "multi2",
+            "directions": 4
+        },
+        {
+            "name": "multi3",
+            "directions": 4
+        },
+        {
+            "name": "multi4",
+            "directions": 4
+        },
+        {
+            "name": "round1",
+            "directions": 4
+        },
+        {
+            "name": "round2",
+            "directions": 4
+        },
+        {
+            "name": "round3",
+            "directions": 4
+        },
+        {
+            "name": "round4",
+            "directions": 4
+        }
+    ]
 }

@@ -1,14 +1,91 @@
-marking-GrayCuteEyes-eyes_cute = Gray Eyes (Cute)
+# Chest
+
+marking-BellyGem = Belly Gem
+marking-BellyGem-bellygem = Belly Gem
+
+marking-GrayObject = Inscrutable Objects
+marking-GrayObject-object1 = Keb Orb
+marking-GrayObject-object2 = Yaer Keb Orb
+
+marking-GrayTattooCar = Car Tattoo
+marking-GrayTattooCar-car1 = Car
+marking-GrayTattooCar-car2 = Wheels
+
+marking-GrayTattooPlane = Plane Tattoo
+marking-GrayTattooPlane-plane1 = Body
+marking-GrayTattooPlane-plane2 = Livery
+
+marking-RadiumGlow = Radium Glow
+marking-RadiumGlow-radiumglow = Radium Glow
+
+# Head
+
+marking-RadiumGlowBrain = Radium Glow Brain
+marking-RadiumGlowBrain-radiumglowbrain = Radium Glow Brain
+
+marking-RadiumGlowCheeks = Radium Glow Blush
+marking-RadiumGlowCheeks-radiumglowcheeks = Radium Glow Blush
+
+# Snout
+
+# Eyes
+
+marking-GrayCuteEyes-cute = Gray Eyes (Cute)
 marking-GrayCuteEyes = Gray Eyes (Cute)
 
-marking-GrayCoolEyes-eyes_cool = Gray Eyes (Cool)
+marking-GrayCoolEyes-cool = Gray Eyes (Cool)
 marking-GrayCoolEyes = Gray Eyes (Cool)
 
-marking-GrayWideEyes-eyes_wide = Gray Eyes (Wide)
+marking-GrayFakeLashes = Fake Lashes
+marking-GrayFakeLashes-fakelashes = Fake Lashes
+
+marking-GrayWideEyes-wide = Gray Eyes (Wide)
 marking-GrayWideEyes = Gray Eyes (Wide)
 
-marking-GrayCuteEars-ears_cute = Gray Ears (Cute)
-marking-GrayCuteEars = Gray Ears (Cute)
+# RArm
 
-marking-GrayClassicAntenna-antenna_classic = Gray Antenna (Classic)
+# LArm
+
+# RLeg
+
+# LLeg
+
+# UndergarmentBottom
+
+marking-GrayUnderwearClassic = Classics Of Stupee Culture
+marking-GrayUnderwearClassic-classic = Classics Of Stupee Culture
+
+marking-GrayUnderwearStriped = Striped Underwear
+marking-GrayUnderwearStriped-striped1 = Stripes
+marking-GrayUnderwearStriped-striped2 = Stripes
+
+marking-GrayUnderwearToga = Toga
+marking-GrayUnderwearToga-toga = Toga
+
+# UndergarmentTop
+
+# LFoot
+
+# RFoot
+
+# LHand
+
+# RHand
+
+# FacialHair
+
+# Hair
+
+# HeadSide
+
+marking-GrayCuteEars = Gray Ears (Cute)
+marking-GrayCuteEars-cute = Gray Ears (Cute)
+
+# HeadTop
+
 marking-GrayClassicAntenna = Gray Antenna (Classic)
+marking-GrayClassicAntenna-classic = Gray Antenna (Classic)
+
+# Tail
+
+# RArmExtension

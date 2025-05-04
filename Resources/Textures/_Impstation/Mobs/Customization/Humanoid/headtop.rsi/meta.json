@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By Sha-Seng (Github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "earrings1",
+            "directions": 4
+        },
+        {
+            "name": "earrings2",
+            "directions": 4
+        },
+        {
+            "name": "earringsdrop1",
+            "directions": 4
+        },
+        {
+            "name": "earringsdrop2",
+            "directions": 4
+        },
+        {
+            "name": "earringsweights1",
+            "directions": 4
+        },
+        {
+            "name": "earringsweights2",
+            "directions": 4
+        }
+    ]
+}

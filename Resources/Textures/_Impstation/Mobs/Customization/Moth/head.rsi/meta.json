@@ -1,0 +1,47 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "drawn by Snavian and crocodilecarousel (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "badmolt",
+            "directions": 4
+        },
+        {
+            "name": "burnleft",
+            "directions": 4
+        },
+        {
+            "name": "burnright",
+            "directions": 4
+        },
+        {
+            "name": "chimera",
+            "directions": 4
+        },
+        {
+            "name": "claw",
+            "directions": 4
+        },
+        {
+            "name": "eyebags",
+            "directions": 4
+        },
+        {
+            "name": "slashleft",
+            "directions": 4
+        },
+        {
+            "name": "slashright",
+            "directions": 4
+        },
+        {
+            "name": "twisting",
+            "directions": 4
+        }
+    ]
+}

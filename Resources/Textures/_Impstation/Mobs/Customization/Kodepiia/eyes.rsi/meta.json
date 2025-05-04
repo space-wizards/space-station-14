@@ -1,0 +1,79 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "bigsquare, human, moth, and square by UndertaleSex. gray and jamjar by pinkbat5. mask by mqole",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bigsquare1",
+            "directions": 4
+        },
+        {
+            "name": "bigsquare2",
+            "directions": 4
+        },
+        {
+            "name": "bigsquareuneven1",
+            "directions": 4
+        },
+        {
+            "name": "bigsquareuneven2",
+            "directions": 4
+        },
+        {
+            "name": "gray",
+            "directions": 4
+        },
+        {
+            "name": "grayuneven",
+            "directions": 4
+        },
+        {
+            "name": "human",
+            "directions": 4
+        },
+        {
+            "name": "humanuneven1",
+            "directions": 4
+        },
+        {
+            "name": "humanuneven2",
+            "directions": 4
+        },
+        {
+            "name": "jamjar",
+            "directions": 4
+        },
+        {
+            "name": "jamjar2",
+            "directions": 4
+        },
+        {
+            "name": "mask",
+            "directions": 4
+        },
+        {
+            "name": "moth",
+            "directions": 4
+        },
+        {
+            "name": "moth1",
+            "directions": 4
+        },
+        {
+            "name": "moth2",
+            "directions": 4
+        },
+        {
+            "name": "square",
+            "directions": 4
+        },
+        {
+            "name": "squareuneven",
+            "directions": 4
+        }
+    ]
+}

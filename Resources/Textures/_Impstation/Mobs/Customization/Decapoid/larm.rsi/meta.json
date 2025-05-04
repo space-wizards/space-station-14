@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "pauldron and pauldronspike by widgetbeck. flowermoonpauldron, pauldronarmored, pauldroncracked, pauldronencrusted, sheerspine, and warlord by crocodilecarousel (github)",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "flowermoonpauldron1",
+            "directions": 4
+        },
+        {
+            "name": "flowermoonpauldron2",
+            "directions": 4
+        },
+        {
+            "name": "pauldron",
+            "directions": 4
+        },
+        {
+            "name": "pauldronarmored",
+            "directions": 4
+        },
+        {
+            "name": "pauldroncracked",
+            "directions": 4
+        },
+        {
+            "name": "pauldronencrusted1",
+            "directions": 4
+        },
+        {
+            "name": "pauldronencrusted2",
+            "directions": 4
+        },
+        {
+            "name": "pauldronencrusted3",
+            "directions": 4
+        },
+        {
+            "name": "pauldronspike",
+            "directions": 4
+        },
+        {
+            "name": "sheerspine",
+            "directions": 4
+        },
+        {
+            "name": "warlord",
+            "directions": 4
+        }
+    ]
+}

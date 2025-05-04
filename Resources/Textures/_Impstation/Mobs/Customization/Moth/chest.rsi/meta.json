@@ -1,0 +1,47 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "drawn by Snavian and crocodilecarousel (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "chimeraf",
+            "directions": 4
+        },
+        {
+            "name": "chimeram",
+            "directions": 4
+        },
+        {
+            "name": "claw",
+            "directions": 4
+        },
+        {
+            "name": "incision",
+            "directions": 4
+        },
+        {
+            "name": "star",
+            "directions": 4
+        },
+        {
+            "name": "twistingleftf",
+            "directions": 4
+        },
+        {
+            "name": "twistingleftm",
+            "directions": 4
+        },
+        {
+            "name": "twistingrightf",
+            "directions": 4
+        },
+        {
+            "name": "twistingrightm",
+            "directions": 4
+        }
+    ]
+}

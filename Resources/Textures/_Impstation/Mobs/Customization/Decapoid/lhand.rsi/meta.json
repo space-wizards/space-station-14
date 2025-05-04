@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "gradient and plate by widgetbeck. splitclaw by crocodilecarousel (github)",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "gradient",
+            "directions": 4
+        },
+        {
+            "name": "plate",
+            "directions": 4
+        },
+        {
+            "name": "splitclaw1",
+            "directions": 4
+        },
+        {
+            "name": "splitclaw2",
+            "directions": 4
+        }
+    ]
+}

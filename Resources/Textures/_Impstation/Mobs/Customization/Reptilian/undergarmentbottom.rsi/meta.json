@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "reptilian tanga and lowriders made by Sha-Seng",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "lowriders",
+            "directions": 4
+        },
+        {
+            "name": "tanga",
+            "directions": 4
+        }
+    ]
+}

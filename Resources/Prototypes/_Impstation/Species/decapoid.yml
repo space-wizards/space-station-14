@@ -67,8 +67,8 @@
 - type: humanoidBaseSprite
   id: MobDecapoidEyes
   baseSprite:
-    sprite: _Impstation/Mobs/Customization/decapoid.rsi
-    state: eyes-1
+    sprite: _Impstation/Mobs/Customization/Decapoid/eyes.rsi
+    state: eyes1
 
 - type: humanoidBaseSprite
   id: MobDecapoidHead
