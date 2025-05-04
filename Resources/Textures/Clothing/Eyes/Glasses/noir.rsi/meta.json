@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "taken from goonstation at commit https://github.com/goonstation/goonstation/commit/9affe47cd1b192f6d1900a64a5b5a07a54251e37",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "equipped-EYES",
+      "directions": 4
+    },
+    {
+      "name": "icon"
+    }
+  ]
+}
