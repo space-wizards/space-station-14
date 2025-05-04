@@ -372,7 +372,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         // we're at the entity parented directly to the grid.
         while (source.Comp is { ParentUid.Valid: true } && source.Comp.ParentUid != source.Comp.GridUid)
         {
-            source = (source.Owner, Transform(source.Comp.ParentUid));
+            source = (source.Comp.ParentUid, Transform(source.Comp.ParentUid));
         }
 
         if (source.Comp is null)
