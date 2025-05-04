@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: YoungThugSS14
-  changes:
-  - message: Gave the SyndieVisitor the free agent mindrole.
-    type: Fix
-  id: 7916
-  time: '2025-02-08T21:16:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34836
 - author: lzk228
   changes:
   - message: Straight ally pin added to loadouts and to the Pride-O-Mat.
@@ -3924,3 +3917,11 @@
   id: 8417
   time: '2025-05-04T02:39:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37149
+- author: EmoGarbage404
+  changes:
+  - message: Mob corpses brought back from salvage pulls will no longer despawn with
+      the pull.
+    type: Fix
+  id: 8418
+  time: '2025-05-04T05:47:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37169
