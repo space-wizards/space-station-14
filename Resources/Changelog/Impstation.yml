@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Corpses no longer collide with plastic flaps.
-    type: Fix
-  id: 1097
-  time: '2025-02-10T23:11:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1572
-- author: Darkmajia
-  changes:
   - message: Bonfires can be built, lit, and extinguished.
     type: Add
   id: 1098
@@ -4145,3 +4138,10 @@
   id: 1596
   time: '2025-05-01T07:26:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2368
+- author: crekulon
+  changes:
+  - message: The kodepiiae 'ring' emote now may play a new sound.
+    type: Tweak
+  id: 1597
+  time: '2025-05-04T00:39:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2401
