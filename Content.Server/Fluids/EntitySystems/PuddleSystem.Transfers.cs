@@ -2,11 +2,14 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
+using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Server.Fluids.EntitySystems;
 
 public sealed partial class PuddleSystem
 {
+    [Dependency] private readonly OpenableSystem _openable = default!;
+
     private void InitializeTransfers()
     {
         SubscribeLocalEvent<RefillableSolutionComponent, DragDropDraggedEvent>(OnRefillableDragged);
@@ -30,6 +33,12 @@ public sealed partial class PuddleSystem
         if (TryComp<DumpableSolutionComponent>(args.Target, out var dump))
         {
             if (!_solutionContainerSystem.TryGetDumpableSolution((args.Target, dump, null), out var dumpableSoln, out var dumpableSolution))
+                return;
+
+            if (!_solutionContainerSystem.TryGetDrainableSolution(entity.Owner, out _, out _))
+                return;
+
+            if (_openable.IsClosed(entity))
                 return;
 
             bool success = true;
