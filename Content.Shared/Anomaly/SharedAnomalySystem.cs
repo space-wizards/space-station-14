@@ -366,16 +366,26 @@ public abstract class SharedAnomalySystem : EntitySystem
     /// </summary>
     public List<TileRef>? GetSpawningPoints(EntityUid uid, float stability, float severity, AnomalySpawnSettings settings, float powerModifier = 1f)
     {
-        var xform = Transform(uid);
+        Entity<TransformComponent?> source = (uid, Transform(uid));
 
-        if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
+        // If the anomaly is in a container or buckled to a chair (hosted anomaly), make sure we traverse until
+        // we're at the entity parented directly to the grid.
+        while (source.Comp is { ParentUid.Valid: true } && source.Comp.ParentUid != source.Comp.GridUid)
+        {
+            source = (source.Owner, Transform(source.Comp.ParentUid));
+        }
+
+        if (source.Comp is null)
+            return null;
+
+        if (!TryComp<MapGridComponent>(source.Comp.GridUid, out var grid))
             return null;
 
         var amount = (int) (MathHelper.Lerp(settings.MinAmount, settings.MaxAmount, severity * stability * powerModifier) + 0.5f);
 
-        var localpos = xform.Coordinates.Position;
+        var localpos = _transform.GetGridTilePositionOrDefault((source.Owner, source.Comp), grid);
         var tilerefs = _map.GetLocalTilesIntersecting(
-            xform.GridUid.Value,
+            source.Comp.GridUid.Value,
             grid,
             new Box2(localpos + new Vector2(-settings.MaxRange, -settings.MaxRange), localpos + new Vector2(settings.MaxRange, settings.MaxRange)))
             .ToList();
@@ -391,7 +401,7 @@ public abstract class SharedAnomalySystem : EntitySystem
                 break;
 
             var tileref = Random.Pick(tilerefs);
-            var distance = MathF.Sqrt(MathF.Pow(tileref.X - xform.LocalPosition.X, 2) + MathF.Pow(tileref.Y - xform.LocalPosition.Y, 2));
+            var distance = MathF.Sqrt(MathF.Pow(tileref.X - source.Comp.LocalPosition.X, 2) + MathF.Pow(tileref.Y - source.Comp.LocalPosition.Y, 2));
 
             //cut outer & inner circle
             if (distance > settings.MaxRange || distance < settings.MinRange)
@@ -403,7 +413,7 @@ public abstract class SharedAnomalySystem : EntitySystem
             if (!settings.CanSpawnOnEntities)
             {
                 var valid = true;
-                foreach (var ent in _map.GetAnchoredEntities(xform.GridUid.Value, grid, tileref.GridIndices))
+                foreach (var ent in _map.GetAnchoredEntities((source.Comp.GridUid.Value, grid), tileref.GridIndices))
                 {
                     if (!physQuery.TryGetComponent(ent, out var body))
                         continue;
