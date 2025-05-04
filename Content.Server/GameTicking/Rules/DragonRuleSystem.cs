@@ -16,7 +16,6 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly RoleSystem _roleSystem = default!;
     [Dependency] private readonly MindSystem _mind = default!;
 
