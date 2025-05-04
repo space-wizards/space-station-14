@@ -41,36 +41,21 @@ namespace Content.Client.Forensics
 
             var text = new StringBuilder();
 
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
-            foreach (var fingerprint in msg.Fingerprints)
+            if (msg.Evidence.Count == 0)
+                text.AppendLine(Loc.GetString("forensic-scanner-interface-empty"));
+            else
             {
-                text.AppendLine(fingerprint);
+                foreach (var type in Enum.GetValues<ForensicEvidence>())
+                {
+                    text.AppendLine(Loc.GetString($"forensic-scanner-interface-{type.ToString().ToLower()}"));
+                    foreach (var evidence in msg.Evidence[type])
+                    {
+                        text.AppendLine(evidence);
+                    }
+                    text.AppendLine();
+                }
+                Diagnostics.Text = text.ToString();
             }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fibers"));
-            foreach (var fiber in msg.Fibers)
-            {
-                text.AppendLine(fiber);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
-            foreach (var dna in msg.TouchDNAs)
-            {
-                text.AppendLine(dna);
-            }
-            foreach (var dna in msg.SolutionDNAs)
-            {
-                if (msg.TouchDNAs.Contains(dna))
-                    continue;
-                text.AppendLine(dna);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
-            foreach (var residue in msg.Residues)
-            {
-                text.AppendLine(residue);
-            }
-            Diagnostics.Text = text.ToString();
         }
     }
 }

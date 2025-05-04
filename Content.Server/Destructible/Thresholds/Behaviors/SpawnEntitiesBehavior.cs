@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Server.Forensics;
 using Content.Server.Stack;
 using Content.Shared.Destructible.Thresholds;
+using Content.Shared.Forensics;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
@@ -84,12 +85,12 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 return;
 
             var comp = system.EntityManager.EnsureComponent<ForensicsComponent>(spawned);
-            comp.DNAs = forensicsComponent.DNAs;
+            comp.Evidence[ForensicEvidence.DNAs] = forensicsComponent.Evidence[ForensicEvidence.DNAs];
 
             if (!system.Random.Prob(0.4f))
                 return;
-            comp.Fingerprints = forensicsComponent.Fingerprints;
-            comp.Fibers = forensicsComponent.Fibers;
+            comp.Evidence[ForensicEvidence.Fingerprints] = forensicsComponent.Evidence[ForensicEvidence.Fingerprints];
+            comp.Evidence[ForensicEvidence.Fibers] = forensicsComponent.Evidence[ForensicEvidence.Fibers];
         }
     }
 }
