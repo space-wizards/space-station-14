@@ -47,10 +47,13 @@ namespace Content.Client.Forensics
             {
                 foreach (var type in Enum.GetValues<ForensicEvidence>())
                 {
+                    if (!msg.Evidence.TryGetValue(type, out var evidence) || evidence.Count == 0)
+                        continue; // Don't put a title when there's no evidence for it
+
                     text.AppendLine(Loc.GetString($"forensic-scanner-interface-{type.ToString().ToLower()}"));
-                    foreach (var evidence in msg.Evidence[type])
+                    foreach (var item in evidence)
                     {
-                        text.AppendLine(evidence);
+                        text.AppendLine(item);
                     }
                     text.AppendLine();
                 }
