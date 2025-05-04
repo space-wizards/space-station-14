@@ -112,6 +112,7 @@ public abstract partial class InteractionTest
     protected SharedMapSystem MapSystem = default!;
     protected ISawmill SLogger = default!;
     protected SharedUserInterfaceSystem SUiSys = default!;
+    protected StationSystem StationSys = default!;
 
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
@@ -140,7 +141,7 @@ public abstract partial class InteractionTest
     /// <summary>
     /// The station entity spawned if <see cref="StationPrototype"/> is not null.
     /// </summary>
-    protected EntityUid? Station;
+    protected NetEntity? Station;
 
     // Simple mob that has one hand and can perform misc interactions.
     [TestPrototypes]
@@ -186,6 +187,7 @@ public abstract partial class InteractionTest
         STestSystem = SEntMan.System<InteractionTestSystem>();
         Stack = SEntMan.System<StackSystem>();
         SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
+        StationSys = SEntMan.System<StationSystem>();
         SUiSys = Client.System<SharedUserInterfaceSystem>();
 
         // client dependencies
@@ -211,7 +213,8 @@ public abstract partial class InteractionTest
         {
             await Server.WaitPost(() =>
             {
-                SEntMan.System<StationSystem>().InitializeNewStation(new StationConfig() { StationPrototype = StationPrototype }, [MapData.Grid]);
+                var station = StationSys.InitializeNewStation(new StationConfig() { StationPrototype = StationPrototype }, [MapData.Grid]);
+                Station = SEntMan.GetNetEntity(station);
             });
         }
 
@@ -282,6 +285,11 @@ public abstract partial class InteractionTest
     public async Task TearDownInternal()
     {
         await Server.WaitPost(() => MapSystem.DeleteMap(MapId));
+        // Clean up the station entity if we spawned one
+        if (SEntMan.TryGetEntity(Station, out var stationUid))
+        {
+            await Server.WaitPost(() => StationSys.DeleteStation(stationUid.Value));
+        }
         await Pair.CleanReturnAsync();
         await TearDown();
     }
