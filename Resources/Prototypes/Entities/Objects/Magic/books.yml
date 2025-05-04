@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: BaseSpellbook
   name: spellbook
-  parent: BaseItem
+  parent: [ BaseItem, BaseMagicalContraband ]
   abstract: true
   components:
     - type: Sprite
@@ -25,7 +25,7 @@
   id: WizardsGrimoire
   name: wizards grimoire
   suffix: Wizard
-  parent: [ BaseItem, StorePresetSpellbook ]
+  parent: [ BaseItem, StorePresetSpellbook, BaseMagicalContraband ]
   components:
     - type: Sprite
       sprite: Objects/Misc/books.rsi

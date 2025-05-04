@@ -9,6 +9,11 @@
     state: icon
   - type: Item
     size: Normal
+  - type: Clothing
+    sprite: Objects/Tools/binoculars.rsi
+    quickEquip: false
+    slots:
+    - Neck
   - type: Wieldable
   - type: UseDelay
     delay: 1.0

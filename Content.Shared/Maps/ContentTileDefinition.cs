@@ -27,7 +27,7 @@ namespace Content.Shared.Maps
         [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
-        [IdDataField] public string ID { get; } = string.Empty;
+        [IdDataField] public string ID { get; private set; } = string.Empty;
 
         public ushort TileId { get; private set; }
 
@@ -62,7 +62,10 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("barestepSounds")] public SoundSpecifier? BarestepSounds { get; private set; } = new SoundCollectionSpecifier("BarestepHard");
 
-        [DataField("friction")] public float Friction { get; set; } = 0.2f;
+        /// <summary>
+        /// Base friction modifier for this tile.
+        /// </summary>
+        [DataField("friction")] public float Friction { get; set; } = 1f;
 
         [DataField("variants")] public byte Variants { get; set; } = 1;
 
@@ -92,12 +95,6 @@ namespace Content.Shared.Maps
         public float? MobFriction { get; private set; }
 
         /// <summary>
-        ///     No-input friction override for mob mover in <see cref="SharedMoverController"/>
-        /// </summary>
-        [DataField("mobFrictionNoInput")]
-        public float? MobFrictionNoInput { get; private set; }
-
-        /// <summary>
         ///     Accel override for mob mover in <see cref="SharedMoverController"/>
         /// </summary>
         [DataField("mobAcceleration")]
@@ -119,12 +116,5 @@ namespace Content.Shared.Maps
         {
             TileId = id;
         }
-    }
-
-    [Flags]
-    public enum TileFlag : byte
-    {
-        None = 0,
-        Roof = 1 << 0,
     }
 }
