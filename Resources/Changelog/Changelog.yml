@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Chaboricks
-  changes:
-  - message: Changed the sound of paper doors.
-    type: Tweak
-  id: 7915
-  time: '2025-02-08T07:24:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34857
 - author: YoungThugSS14
   changes:
   - message: Gave the SyndieVisitor the free agent mindrole.
@@ -3923,3 +3916,11 @@
   id: 8416
   time: '2025-05-04T00:38:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37160
+- author: EmoGarbage404
+  changes:
+  - message: You can no longer scrap coins and other salvaging treasures. They're
+      simply too valuable to junk.
+    type: Remove
+  id: 8417
+  time: '2025-05-04T02:39:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37149
