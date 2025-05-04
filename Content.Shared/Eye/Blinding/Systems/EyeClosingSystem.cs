@@ -36,7 +36,7 @@ public sealed class EyeClosingSystem : EntitySystem
 
     private void OnShutdown(Entity<EyeClosingComponent> eyelids, ref ComponentShutdown args)
     {
-        _actionsSystem.RemoveAction(eyelids, eyelids.Comp.EyeToggleActionEntity);
+        _actionsSystem.RemoveAction(eyelids.Owner, eyelids.Comp.EyeToggleActionEntity);
 
         SetEyelids((eyelids.Owner, eyelids.Comp), false);
     }

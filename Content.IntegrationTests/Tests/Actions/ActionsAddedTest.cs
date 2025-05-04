@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.CombatMode;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -46,24 +47,26 @@ public sealed class ActionsAddedTest
         // This action should have a non-null event both on the server & client.
         var evType = typeof(ToggleCombatActionEvent);
 
+        var sQuery = sEntMan.GetEntityQuery<InstantActionComponent>();
+        var cQuery = cEntMan.GetEntityQuery<InstantActionComponent>();
         var sActions = sActionSystem.GetActions(serverEnt).Where(
-            x => x.Comp is InstantActionComponent act && act.Event?.GetType() == evType).ToArray();
+            ent => sQuery.CompOrNull(ent)?.Event?.GetType() == evType).ToArray();
         var cActions = cActionSystem.GetActions(clientEnt).Where(
-            x => x.Comp is InstantActionComponent act && act.Event?.GetType() == evType).ToArray();
+            ent => cQuery.CompOrNull(ent)?.Event?.GetType() == evType).ToArray();
 
         Assert.That(sActions.Length, Is.EqualTo(1));
         Assert.That(cActions.Length, Is.EqualTo(1));
 
-        var sAct = sActions[0].Comp;
-        var cAct = cActions[0].Comp;
+        var sAct = sActions[0];
+        var cAct = cActions[0];
 
-        Assert.That(sAct, Is.Not.Null);
-        Assert.That(cAct, Is.Not.Null);
+        Assert.That(sAct.Comp, Is.Not.Null);
+        Assert.That(cAct.Comp, Is.Not.Null);
 
         // Finally, these two actions are not the same object
         // required, because integration tests do not respect the [NonSerialized] attribute and will simply events by reference.
-        Assert.That(ReferenceEquals(sAct, cAct), Is.False);
-        Assert.That(ReferenceEquals(sAct.BaseEvent, cAct.BaseEvent), Is.False);
+        Assert.That(ReferenceEquals(sAct.Comp, cAct.Comp), Is.False);
+        Assert.That(ReferenceEquals(sQuery.GetComponent(sAct).Event, cQuery.GetComponent(cAct).Event), Is.False);
 
         await pair.CleanReturnAsync();
     }

@@ -28,24 +28,16 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         if (!Resolve(user, ref user.Comp, false))
             return false;
 
-        if (!TryComp<EntityWorldTargetActionComponent>(user.Comp.ActionEnt, out var action))
+        if (_actions.GetAction(user.Comp.ActionEnt) is not {} action)
             return false;
 
         if (!_actions.ValidAction(action))
             return false;
 
-        if (action.Event != null)
-        {
-            action.Event.Coords = Transform(target).Coordinates;
-        }
+        _actions.SetEventTarget(action, target);
 
-        _actions.PerformAction(user,
-            null,
-            user.Comp.ActionEnt.Value,
-            action,
-            action.BaseEvent,
-            _timing.CurTime,
-            false);
+        // NPC is serverside, no prediction :(
+        _actions.PerformAction(user.Owner, action, predicted: false);
         return true;
     }
 
