@@ -305,14 +305,16 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (Deleted(uid))
             return null;
 
-        var parent = component.Parent;
+        if (component.Parent is not { } parent)
+            return null;
+
         // Clear our reference to the original entity
         component.Parent = null;
         if (Deleted(parent))
             return null;
 
         var uidXform = Transform(uid);
-        var parentXform = Transform(parent.Value);
+        var parentXform = Transform(parent);
 
         // Don't swap back onto a terminating grid
         if (TerminatingOrDeleted(uidXform.ParentUid))
@@ -321,24 +323,24 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (component.Configuration.ExitPolymorphSound != null)
             _audio.PlayPvs(component.Configuration.ExitPolymorphSound, uidXform.Coordinates);
 
-        _transform.SetParent(parent.Value, parentXform, uidXform.ParentUid);
-        _transform.SetCoordinates(parent.Value, parentXform, uidXform.Coordinates, uidXform.LocalRotation);
+        _transform.SetParent(parent, parentXform, uidXform.ParentUid);
+        _transform.SetCoordinates(parent, parentXform, uidXform.Coordinates, uidXform.LocalRotation);
 
         if (component.Configuration.TransferDamage &&
             TryComp<DamageableComponent>(parent, out var damageParent) &&
-            _mobThreshold.GetScaledDamage(uid, parent.Value, out var damage) &&
+            _mobThreshold.GetScaledDamage(uid, parent, out var damage) &&
             damage != null)
         {
-            _damageable.SetDamage(parent.Value, damageParent, damage);
+            _damageable.SetDamage(parent, damageParent, damage);
         }
 
         if (component.Configuration.Inventory == PolymorphInventoryChange.Transfer)
         {
-            _inventory.TransferEntityInventories(uid, parent.Value);
+            _inventory.TransferEntityInventories(uid, parent);
             foreach (var held in _hands.EnumerateHeld(uid))
             {
                 _hands.TryDrop(uid, held);
-                _hands.TryPickupAnyHand(parent.Value, held, checkActionBlocker: false);
+                _hands.TryPickupAnyHand(parent, held, checkActionBlocker: false);
             }
         }
         else if (component.Configuration.Inventory == PolymorphInventoryChange.Drop)
@@ -364,17 +366,17 @@ public sealed partial class PolymorphSystem : EntitySystem
             polymorphableComponent.LastPolymorphEnd = _gameTiming.CurTime;
 
         // if an item polymorph was picked up, put it back down after reverting
-        _transform.AttachToGridOrMap(parent.Value, parentXform);
+        _transform.AttachToGridOrMap(parent, parentXform);
 
         // Raise an event to inform anything that wants to know about the entity swap
-        var ev = new PolymorphedEvent(uid, parent.Value, true);
+        var ev = new PolymorphedEvent(uid, parent, true);
         RaiseLocalEvent(uid, ref ev);
 
         if (component.Configuration.ExitPolymorphPopup != null)
             _popup.PopupEntity(Loc.GetString(component.Configuration.ExitPolymorphPopup,
                 ("parent", Identity.Entity(uid, EntityManager)),
-                ("child", Identity.Entity(parent.Value, EntityManager))),
-                parent.Value);
+                ("child", Identity.Entity(parent, EntityManager))),
+                parent);
         QueueDel(uid);
 
         return parent;
