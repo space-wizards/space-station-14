@@ -4,7 +4,7 @@
   description: Bring an inanimate object to life!
   components:
   - type: SpeakOnAction
-    sentence: action-speech-spell-summon-magic
+    sentence: action-speech-spell-animate
   - type: EntityTargetAction
     useDelay: 0
     itemIconStyle: BigAction
