@@ -17,6 +17,27 @@
     {
       "name": "inhand-right",
       "directions": 4
+    },
+    {
+      "name": "growing",
+      "delays": [
+        [ 0.25, 0.25, 0.25, 0.25 ]
+      ]
+    },
+    {
+      "name": "decaying",
+      "delays": [
+        [ 0.25, 0.25, 0.25, 0.25 ]
+      ]
+    },
+    {
+      "name": "severity_mask",
+      "delays": [
+        [ 0.25, 0.25, 0.25, 0.25 ]
+      ]
+    },
+    {
+      "name": "icon-frame"
     }
   ]
 }

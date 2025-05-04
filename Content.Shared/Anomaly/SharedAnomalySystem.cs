@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Prototypes;
@@ -426,6 +427,38 @@ public abstract class SharedAnomalySystem : EntitySystem
             resultList.Add(tileref);
         }
         return resultList;
+    }
+
+    public bool TryGetStabilityVisual(Entity<AnomalyComponent?> ent, [NotNullWhen(true)] out AnomalyStabilityVisuals? visual)
+    {
+        visual = null;
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
+            return false;
+
+        visual = AnomalyStabilityVisuals.Stable;
+        if (ent.Comp.Stability <= ent.Comp.DecayThreshold)
+        {
+            visual = AnomalyStabilityVisuals.Decaying;
+        }
+        else if (ent.Comp.Stability >= ent.Comp.GrowthThreshold)
+        {
+            visual = AnomalyStabilityVisuals.Growing;
+        }
+        return true;
+    }
+
+    public AnomalyStabilityVisuals GetStabilityVisualOrStable(Entity<AnomalyComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
+            return AnomalyStabilityVisuals.Stable;
+
+        if (ent.Comp.Stability <= ent.Comp.DecayThreshold)
+            return AnomalyStabilityVisuals.Decaying;
+
+        if (ent.Comp.Stability >= ent.Comp.GrowthThreshold)
+            return AnomalyStabilityVisuals.Growing;
+
+        return AnomalyStabilityVisuals.Stable;
     }
 }
 

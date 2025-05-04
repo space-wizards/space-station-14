@@ -13,6 +13,7 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     private void InitializeScanner()
     {
         SubscribeLocalEvent<AnomalyScannerComponent, BoundUIOpenedEvent>(OnScannerUiOpened);
@@ -33,7 +34,9 @@ public sealed partial class AnomalySystem
                 continue;
 
             _ui.CloseUi(uid, AnomalyScannerUiKey.Key);
+            _appearance.SetData(uid, AnomalyScannerVisuals.HasAnomaly, false);
         }
+
     }
 
     private void OnScannerAnomalySeverityChanged(ref AnomalySeverityChangedEvent args)
@@ -44,6 +47,8 @@ public sealed partial class AnomalySystem
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
             UpdateScannerUi(uid, component);
+            _appearance.SetData(uid, AnomalyScannerVisuals.AnomalySeverity, args.Severity);
+            // RaiseNetworkEvent(new AnomalyChangedEvent(GetNetEntity(uid), args.Severity));
         }
     }
 
@@ -55,6 +60,8 @@ public sealed partial class AnomalySystem
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
             UpdateScannerUi(uid, component);
+            // RaiseNetworkEvent(new AnomalyChangedEvent(GetNetEntity(uid), args.Severity));
+            _appearance.SetData(uid, AnomalyScannerVisuals.AnomalyStability, GetStabilityVisualOrStable(args.Anomaly));
         }
     }
 
@@ -125,6 +132,7 @@ public sealed partial class AnomalySystem
 
         var state = new AnomalyScannerUserInterfaceState(GetScannerMessage(component), nextPulse);
         _ui.SetUiState(uid, AnomalyScannerUiKey.Key, state);
+
     }
 
     public void UpdateScannerWithNewAnomaly(EntityUid scanner, EntityUid anomaly, AnomalyScannerComponent? scannerComp = null, AnomalyComponent? anomalyComp = null)
@@ -134,6 +142,11 @@ public sealed partial class AnomalySystem
 
         scannerComp.ScannedAnomaly = anomaly;
         UpdateScannerUi(scanner, scannerComp);
+        AppearanceComponent? appearanceComp = null;
+        _appearance.SetData(scanner, AnomalyScannerVisuals.HasAnomaly, true, appearanceComp);
+        _appearance.SetData(scanner, AnomalyScannerVisuals.AnomalyStability, GetStabilityVisualOrStable((anomaly, anomalyComp)), appearanceComp);
+        _appearance.SetData(scanner, AnomalyScannerVisuals.AnomalySeverity, anomalyComp.Severity, appearanceComp);
+        // RaiseNetworkEvent(new AnomalyChangedEvent(GetNetEntity(scanner), anomalyComp.Severity));
     }
 
     public FormattedMessage GetScannerMessage(AnomalyScannerComponent component)

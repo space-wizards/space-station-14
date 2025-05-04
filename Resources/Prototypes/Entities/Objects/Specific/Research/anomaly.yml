@@ -5,8 +5,26 @@
   description: A hand-held scanner built to collect information on various anomalous objects.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Research/anomalyscanner.rsi
-    state: icon
+    layers:
+      - state: icon
+        sprite: Objects/Specific/Research/anomalyscanner.rsi
+      - map: ["enum.AnomalyScannerVisualLayers.Screen"]
+        shader: unshaded
+        visible: false
+      - state: severity_mask
+        sprite: Objects/Specific/Research/anomalyscanner.rsi
+        map: ["enum.AnomalyScannerVisualLayers.SeverityMask"]
+        shader: unshaded
+        visible: false
+      - state: icon-frame
+        sprite: Objects/Specific/Research/anomalyscanner.rsi
+        map: [ "enum.AnomalyScannerVisualLayers.StabilityFrame" ]
+        shader: unshaded
+        visible: false
+      - sprite: Objects/Specific/Research/anomalyscanner.rsi
+        map: ["enum.AnomalyScannerVisualLayers.Stability"]
+        shader: unshaded
+        visible: false
   - type: ActivatableUI
     key: enum.AnomalyScannerUiKey.Key
     requireActiveHand: false
@@ -15,6 +33,25 @@
     interfaces:
       enum.AnomalyScannerUiKey.Key:
         type: AnomalyScannerBoundUserInterface
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnomalyScannerVisuals.HasAnomaly:
+        enum.AnomalyScannerVisualLayers.Screen:
+          True: { visible: true }
+          False: { visible: false }
+        enum.AnomalyScannerVisualLayers.SeverityMask:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AnomalyScannerVisuals.AnomalyStability:
+        enum.AnomalyScannerVisualLayers.StabilityFrame:
+          Stable: { visible: false }
+          Decaying: { visible: true }
+          Growing: { visible: true }
+        enum.AnomalyScannerVisualLayers.Stability:
+          Stable: { visible: false }
+          Decaying: { visible: true, state: decaying }
+          Growing: { visible: true, state: growing }
   - type: AnomalyScanner
   - type: GuideHelp
     guides:

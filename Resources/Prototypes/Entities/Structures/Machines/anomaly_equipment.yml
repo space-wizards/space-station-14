@@ -53,15 +53,15 @@
         enum.AnomalyVesselVisualLayers.Base:
           True: { visible: true }
           False: { visible: false }
-      enum.AnomalyVesselVisuals.AnomalyState:
+      enum.AnomalyVesselVisuals.AnomalySeverity:
         enum.PowerDeviceVisualLayers.Powered:
-          1: { state: powered-1 }
-          2: { state: powered-2 }
-          3: { state: powered-3 }
+          Stable: { state: powered-1 }
+          Decaying: { state: powered-2 }
+          Growing: { state: powered-3 }
         enum.AnomalyVesselVisualLayers.Base:
-          1: { state: anomaly-1 }
-          2: { state: anomaly-2 }
-          3: { state: anomaly-3 }
+          Stable: { state: anomaly-1 }
+          Decaying: { state: anomaly-2 }
+          Growing: { state: anomaly-3 }
       enum.WiresVisuals.MaintenancePanelState:
         enum.WiresVisualLayers.MaintenancePanel:
           True: { visible: false }

@@ -54,7 +54,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         SubscribeLocalEvent<AnomalyComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AnomalyComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<AnomalyComponent, StartCollideEvent>(OnStartCollide);
-
+        SubscribeLocalEvent<AnomalyStabilityChangedEvent>(OnStabilityChanged);
 
         InitializeGenerator();
         InitializeScanner();
@@ -71,6 +71,12 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         ShuffleParticlesEffect(anomaly);
         anomaly.Comp.Continuity = _random.NextFloat(anomaly.Comp.MinContituty, anomaly.Comp.MaxContituty);
         SetBehavior(anomaly, GetRandomBehavior());
+    }
+
+    private void OnStabilityChanged(ref AnomalyStabilityChangedEvent args)
+    {
+        OnVesselAnomalyStabilityChanged(ref args);
+        OnScannerAnomalyStabilityChanged(ref args);
     }
 
     public void ShuffleParticlesEffect(Entity<AnomalyComponent> anomaly)

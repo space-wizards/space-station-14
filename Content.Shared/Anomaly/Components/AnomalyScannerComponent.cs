@@ -1,13 +1,15 @@
 ﻿using Content.Shared.Anomaly;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Anomaly.Components;
+namespace Content.Shared.Anomaly.Components;
 
 /// <summary>
 /// This is used for scanning anomalies and
 /// displaying information about them in the ui
 /// </summary>
 [RegisterComponent, Access(typeof(SharedAnomalySystem))]
+[NetworkedComponent]
 public sealed partial class AnomalyScannerComponent : Component
 {
     /// <summary>
@@ -27,4 +29,5 @@ public sealed partial class AnomalyScannerComponent : Component
     /// </summary>
     [DataField("completeSound")]
     public SoundSpecifier? CompleteSound = new SoundPathSpecifier("/Audio/Items/beep.ogg");
+
 }
