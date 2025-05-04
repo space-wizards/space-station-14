@@ -142,6 +142,10 @@
     staminaCost: 5
   - type: ThrowingAngle
     angle: 45
+  - type: Utensil #literally shoveling food in your mouth
+    types:
+    - Spoon
+    - Fork
   # end imp edits #
 
 - type: entity
