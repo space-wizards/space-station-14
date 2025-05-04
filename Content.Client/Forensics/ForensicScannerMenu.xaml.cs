@@ -41,9 +41,7 @@ namespace Content.Client.Forensics
 
             var text = new StringBuilder();
 
-            if (msg.Evidence.Count == 0 && msg.CleaningAgents.Count == 0)
-                text.AppendLine(Loc.GetString("forensic-scanner-interface-empty"));
-            else
+            if (msg.Evidence.Count > 0)
             {
                 foreach (var type in Enum.GetValues<ForensicEvidence>())
                 {
@@ -57,18 +55,20 @@ namespace Content.Client.Forensics
                     }
                     text.AppendLine();
                 }
-
-                if (msg.CleaningAgents.Count > 0)
-                {
-                    text.AppendLine(Loc.GetString("forensic-scanner-interface-cleaning-agents"));
-                    foreach (var item in msg.CleaningAgents)
-                    {
-                        text.AppendLine(item);
-                    }
-                    text.AppendLine();
-                }
-                Diagnostics.Text = text.ToString();
             }
+
+            if (msg.CleaningAgents.Count > 0)
+            {
+                text.AppendLine(Loc.GetString("forensic-scanner-interface-cleaning-agents"));
+                foreach (var item in msg.CleaningAgents)
+                {
+                    text.AppendLine(item);
+                }
+                text.AppendLine();
+            }
+
+            if (text.Length != 0)
+                Diagnostics.Text = text.ToString();
         }
     }
 }
