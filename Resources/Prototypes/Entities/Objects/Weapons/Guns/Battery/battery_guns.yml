@@ -228,6 +228,7 @@
     fireCost: 62.5
   - type: StaticPrice
     price: 300
+  - type: PacifismAllowedGun
 
 - type: entity
   name: laser rifle
