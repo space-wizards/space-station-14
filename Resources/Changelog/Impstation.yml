@@ -1,59 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Bonfires can be built, lit, and extinguished.
-    type: Add
-  id: 1098
-  time: '2025-02-10T23:35:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1613
-- author: Sha-Seng
-  changes:
-  - message: Detectives and brigmeds can now spawn with sec armor vests if they wanna
-    type: Add
-  id: 1099
-  time: '2025-02-10T23:35:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1608
-- author: Darkmajia
-  changes:
-  - message: Surplus crates can no longer contain more surplus crates.
-    type: Remove
-  id: 1100
-  time: '2025-02-10T23:36:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1637
-- author: DinnerCalzone
-  changes:
-  - message: Courier support has been added to Cluster and Saltern.
-    type: Add
-  id: 1101
-  time: '2025-02-11T07:19:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1646
-- author: mqole
-  changes:
-  - message: Supply and Command intern roles! If you've already played a lot of the
-      department, don't worry. You won't need to reunlock anything!
-    type: Add
-  - message: QM now requires 6 hours of Salvage time, bumped up from 3.
-    type: Tweak
-  id: 1102
-  time: '2025-02-11T09:17:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1640
-- author: Darkmajia
-  changes:
-  - message: Supply assistant locks out after 15 hours of cargo department playtime.
-    type: Fix
-  id: 1103
-  time: '2025-02-11T20:52:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1654
-- author: Darkmajia
-  changes:
-  - message: Administrative assistant's HUD has been removed from its roundstart equipment,
-      and added to its locker.
-    type: Tweak
-  id: 1104
-  time: '2025-02-11T21:04:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1649
-- author: Darkmajia
-  changes:
   - message: Supply assistant's loadout options reduced to be in line with other intern
       roles.
     type: Remove
@@ -4145,3 +4092,54 @@
   id: 1597
   time: '2025-05-04T00:39:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2401
+- author: TheGrimbeeper
+  changes:
+  - message: Allow Kodepaiia to use subjuzine
+    type: Fix
+  id: 1598
+  time: '2025-05-04T23:50:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2399
+- author: Sha-Seng
+  changes:
+  - message: Logistics 101 is now properly in the Guidebookshelf
+    type: Add
+  id: 1599
+  time: '2025-05-04T23:54:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2383
+- author: CrystalClover
+  changes:
+  - message: Added ability to eat food with Shovels/Spades
+    type: Add
+  id: 1600
+  time: '2025-05-04T23:53:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2396
+- author: AvianMaiden
+  changes:
+  - message: Vox working atmospherics should now look fashionable in the burn chamber.
+    type: Add
+  id: 1601
+  time: '2025-05-04T23:54:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2393
+- author: meridiadottxt
+  changes:
+  - message: many small changes to Gate Station, possible last update for a while?
+    type: Tweak
+  id: 1602
+  time: '2025-05-04T23:52:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2395
+- author: AvianMaiden
+  changes:
+  - message: Space mobs and snakes can now be like every other creature; if it bleeds,
+      you can flash it.
+    type: Tweak
+  id: 1603
+  time: '2025-05-04T23:52:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2387
+- author: Darkmajia
+  changes:
+  - message: Thieving beacons have been given minor contraband status, and can be
+      anchored under tiles similar to the smuggler's satchel.
+    type: Tweak
+  id: 1604
+  time: '2025-05-04T23:55:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2382
