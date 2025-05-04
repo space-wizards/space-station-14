@@ -55,4 +55,13 @@ public sealed partial class WelderComponent : Component
 
     [DataField]
     public float WelderUpdateTimer = 1f;
+
+    [DataField, AutoNetworkedField]
+    public bool RequiresFuel = true;
+
+    [DataField, AutoNetworkedField]
+    public bool ShowFuelInExamine = true;
+
+    [DataField, AutoNetworkedField]
+    public bool LogUsage = true;
 }
