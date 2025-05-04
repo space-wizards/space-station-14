@@ -29,6 +29,8 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: eyes
       shader: unshaded
+  - type: TypingIndicator
+    proto: regal
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
