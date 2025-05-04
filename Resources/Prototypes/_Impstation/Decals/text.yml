@@ -1,0 +1,419 @@
+- type: decal
+  id: 0-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: 0
+
+- type: decal
+  id: 1-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: 1
+
+- type: decal
+  id: 2-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: 2
+
+- type: decal
+  id: 3-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: 3
+
+- type: decal
+  id: 4-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: 4
+
+- type: decal
+  id: 5-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: 5
+
+- type: decal
+  id: 6-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: 6
+
+- type: decal
+  id: 7-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: 7
+
+- type: decal
+  id: 8-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: 8
+
+- type: decal
+  id: 9-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: 9
+
+- type: decal
+  id: a-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: a
+
+- type: decal
+  id: b-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: b
+
+- type: decal
+  id: c-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: c
+
+- type: decal
+  id: d-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: d
+
+- type: decal
+  id: e-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: e
+
+- type: decal
+  id: f-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: f
+
+- type: decal
+  id: g-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: g
+
+- type: decal
+  id: h-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: h
+
+- type: decal
+  id: i-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: i
+
+- type: decal
+  id: j-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: j
+
+- type: decal
+  id: k-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: k
+
+- type: decal
+  id: l-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: l
+
+- type: decal
+  id: m-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: m
+
+- type: decal
+  id: n-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: n
+
+- type: decal
+  id: o-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: o
+
+- type: decal
+  id: p-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: p
+
+- type: decal
+  id: q-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: q
+
+- type: decal
+  id: r-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: r
+
+- type: decal
+  id: s-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: s
+
+- type: decal
+  id: t-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: t
+
+- type: decal
+  id: u-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: u
+
+- type: decal
+  id: v-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: v
+
+- type: decal
+  id: w-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: w
+
+- type: decal
+  id: x-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: x
+
+- type: decal
+  id: y-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: y
+
+- type: decal
+  id: z-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: z
+
+- type: decal
+  id: dash-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: dash
+
+- type: decal
+  id: plus-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: plus
+
+- type: decal
+  id: exclamation-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: exclamation
+
+- type: decal
+  id: question-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: question
+
+- type: decal
+  id: colon-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: colon
+
+- type: decal
+  id: star-stationtext
+  tags: ["station", "text"]
+  defaultCleanable: false
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Impstation/Decals/text.rsi
+    state: star

@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Jellvisk.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "squareGradient"
+    },
+    {
+      "name": "squareGradientDiagonal"
+    },
+    {
+      "name": "squareGradientInnerDiagonal"
+    },
+    {
+      "name": "squareGradientInnerDiagonalFilled"
+    },
+    {
+      "name": "squareGradientRoundedInverted"
+    },
+    {
+      "name": "squareGradientRounded"
+    },
+    {
+      "name": "rectangle1x2Gradient"
+    },
+    {
+      "name": "rectangle1x2GradientDiagonal"
+    },
+    {
+      "name": "rectangle1x2GradientInnerDiagonal"
+    },
+    {
+      "name": "rectangle1x2GradientInnerDiagonalFilled"
+    },
+    {
+      "name": "rectangle1x2GradientRounded"
+    },
+    {
+      "name": "rectangle1x2GradientRoundedInverted"
+    },
+    {
+      "name": "stairGradient"
+    },
+    {
+      "name": "stairGradientCorner"
+    },
+    {
+      "name": "stairGradientInnerCorner"
+    },
+    {
+      "name": "stairGradientDiagonalFull"
+    },
+    {
+      "name": "stairGradientDiagonalStart"
+    },
+    {
+      "name": "stairGradientDiagonalStartInverted"
+    },
+    {
+      "name": "stairGradientDiagonalTop"
+    },
+    {
+      "name": "stairGradientDiagonalBottom"
+    },
+    {
+      "name": "stepGradient"
+    },
+    {
+      "name": "stepGradientCorner"
+    }
+  ]
+}

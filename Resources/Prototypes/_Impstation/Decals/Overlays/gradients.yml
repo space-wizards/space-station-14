@@ -1,0 +1,176 @@
+﻿- type: decal
+  id: SquareGradient
+  tags: ["gradient", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: squareGradient
+
+- type: decal
+  id: SquareGradientDiagonal
+  tags: ["gradient", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: squareGradientDiagonal
+
+- type: decal
+  id: SquareGradientInnerDiagonal
+  tags: ["gradient", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: squareGradientInnerDiagonal
+
+- type: decal
+  id: SquareGradientInnerDiagonalFilled
+  tags: ["gradient", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: squareGradientInnerDiagonalFilled
+
+- type: decal
+  id: SquareGradientRounded
+  tags: ["gradient", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: squareGradientRounded
+
+- type: decal
+  id: SquareGradientRoundedInverted
+  tags: ["gradient", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: squareGradientRoundedInverted
+
+- type: decal
+  id: Rectangle1x2Gradient
+  tags: ["gradient", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: rectangle1x2Gradient
+
+- type: decal
+  id: Rectangle1x2GradientDiagonal
+  tags: ["gradient", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: rectangle1x2GradientDiagonal
+
+- type: decal
+  id: Rectangle1x2GradientInnerDiagonal
+  tags: ["gradient", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: rectangle1x2GradientInnerDiagonal
+
+- type: decal
+  id: Rectangle1x2GradientInnerDiagonalFilled
+  tags: ["gradient", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: rectangle1x2GradientInnerDiagonalFilled
+
+
+- type: decal
+  id: Rectangle1x2GradientRounded
+  tags: ["gradient", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: rectangle1x2GradientRounded
+
+- type: decal
+  id: Rectangle1x2GradientRoundedInverted
+  tags: ["gradient", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: rectangle1x2GradientRoundedInverted
+
+- type: decal
+  id: StairGradient
+  tags: ["gradient", "overlay", "stair"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: stairGradient
+
+- type: decal
+  id: StairGradientCorner
+  tags: ["gradient", "overlay", "stair"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: stairGradientCorner
+
+- type: decal
+  id: StairGradientInnerCorner
+  tags: ["gradient", "overlay", "stair"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: stairGradientInnerCorner
+
+- type: decal
+  id: StairGradientDiagonalStart
+  tags: ["gradient", "overlay", "stair"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: stairGradientDiagonalStart
+
+- type: decal
+  id: StairGradientDiagonalStartInverted
+  tags: ["gradient", "overlay", "stair"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: stairGradientDiagonalStartInverted
+
+- type: decal
+  id: StairGradientDiagonalFull
+  tags: ["gradient", "overlay", "stair"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: stairGradientDiagonalFull
+
+- type: decal
+  id: StairGradientDiagonalTop
+  tags: ["gradient", "overlay", "stair"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: stairGradientDiagonalTop
+
+- type: decal
+  id: StairGradientDiagonalBottom
+  tags: ["gradient", "overlay", "stair"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: stairGradientDiagonalBottom
+
+- type: decal
+  id: StepGradient
+  tags: ["gradient", "overlay", "stair"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: stepGradient
+
+- type: decal
+  id: StepGradientCorner
+  tags: ["gradient", "overlay", "stair"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Impstation/Decals/Overlays/gradients.rsi
+    state: stepGradientCorner
