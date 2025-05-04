@@ -377,7 +377,7 @@ public abstract partial class InteractionTest
     {
         var actualTarget = SEntMan.GetCoordinates(target ?? TargetCoords);
         var result = false;
-        await Server.WaitPost(() => result = HandSys.ThrowHeldItem(SEntMan.GetEntity(Player), actualTarget, minDistance));
+        await Server.WaitPost(() => result = HandSys.ThrowHeldItem(SEntMan.GetEntity(Player), actualTarget, null,minDistance));
         return result;
     }
 
