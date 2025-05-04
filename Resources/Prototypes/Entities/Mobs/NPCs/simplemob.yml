@@ -67,6 +67,21 @@
   - type: MobPrice
     price: 1000 # Living critters are valuable in space.
   - type: Perishable
+  - type: StatusEffects #imp edit to make space mobs stunnable
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
+    - ForcedSleep
+    - TemporaryBlindness
+    - Pacified
+    - StaminaModifier
+    - Flashed
+    - RadiationProtection
+    - Drowsiness
+    - Adrenaline
 
 - type: entity
   parent:
@@ -93,21 +108,22 @@
       Parched: 50
       Dead: 0
     baseDecayRate: 0.04
-  - type: StatusEffects
-    allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
-    - Stutter
-    - Electrocution
-    - ForcedSleep
-    - TemporaryBlindness
-    - Pacified
-    - StaminaModifier
-    - Flashed
-    - RadiationProtection
-    - Drowsiness
-    - Adrenaline
+# imp; moved status effects to space mob parent
+#  - type: StatusEffects
+#    allowed:
+#    - Stun
+#    - KnockedDown
+#    - SlowedDown
+#    - Stutter
+#    - Electrocution
+#    - ForcedSleep
+#    - TemporaryBlindness
+#    - Pacified
+#    - StaminaModifier
+#    - Flashed
+#    - RadiationProtection
+#    - Drowsiness
+#    - Adrenaline
   - type: Bloodstream
     bloodMaxVolume: 150
   - type: MobPrice
