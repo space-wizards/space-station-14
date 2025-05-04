@@ -1,5 +1,5 @@
 - type: reaction
-  id: UncookedAnimalProteinsBreakdown
+  id: AnimalProteinsBreakdown
   source: true
   requiredMixerCategories:
   - Centrifuge
