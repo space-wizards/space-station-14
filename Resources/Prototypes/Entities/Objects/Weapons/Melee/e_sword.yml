@@ -108,7 +108,7 @@
   - type: Item
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: Tool
-    speedModifier: 0.1
+    speedModifier: 0.2
 
 - type: entity
   name: energy dagger
@@ -289,7 +289,7 @@
   - type: Item
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
   - type: Tool
-    speedModifier: 0.05
+    speedModifier: 0.1
 
 - type: entity
   name: double-bladed energy sword
@@ -355,6 +355,8 @@
   - type: Reflect
     reflectProb: .75
     spread: 75
+  - type: Tool
+    speedModifier: 0.1
 
 # Item will look weird in handslot. Will need to adjust handstorage visuals in a future PR
 - type: entity
