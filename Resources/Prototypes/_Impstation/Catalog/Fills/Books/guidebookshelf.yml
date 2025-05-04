@@ -18,6 +18,7 @@
     - id: BookHowToSurvive #how to survive
     - id: BookKeelBay #Keel-Ree's guide to medical (imp)
     - id: BookLeafLoversSecret #leaf lover's secret
+    - id: BookLogistics #logistics 101
     - id: BookMedicalReferenceBook #medical reference book
     - id: BookAtmosAirAlarms #Newton's Guide to Atmos: Air Alarms
     - id: BookAtmosDistro #Newton's Guide to Atmos: The Distro
