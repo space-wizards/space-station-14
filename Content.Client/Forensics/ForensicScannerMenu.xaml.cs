@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
 using Content.Shared.Forensics;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Forensics
 {
@@ -25,12 +26,14 @@ namespace Content.Client.Forensics
 
         public void UpdateState(ForensicScannerBoundUserInterfaceState msg)
         {
+            Diagnostics.Children.Clear();
+            EmptyDiagnostics.Visible = true;
+
             if (string.IsNullOrEmpty(msg.LastScannedName))
             {
                 Print.Disabled = true;
                 Clear.Disabled = true;
                 NameLabel.Text = string.Empty;
-                Diagnostics.Text = string.Empty;
                 return;
             }
 
@@ -39,36 +42,30 @@ namespace Content.Client.Forensics
 
             NameLabel.Text = msg.LastScannedName;
 
-            var text = new StringBuilder();
-
             if (msg.Evidence.Count > 0)
             {
+                EmptyDiagnostics.Visible = false;
                 foreach (var type in Enum.GetValues<ForensicEvidence>())
                 {
                     if (!msg.Evidence.TryGetValue(type, out var evidence) || evidence.Count == 0)
                         continue; // Don't put a title when there's no evidence for it
 
-                    text.AppendLine(Loc.GetString($"forensic-scanner-interface-{type.ToString().ToLower()}"));
-                    foreach (var item in evidence)
-                    {
-                        text.AppendLine(item);
-                    }
-                    text.AppendLine();
+                    Diagnostics.AddChild(new ForensicEvidenceEntry(
+                        Loc.GetString($"forensic-scanner-interface-{type.ToString().ToLower()}"),
+                        evidence)
+                    );
                 }
             }
 
             if (msg.CleaningAgents.Count > 0)
             {
-                text.AppendLine(Loc.GetString("forensic-scanner-interface-cleaning-agents"));
-                foreach (var item in msg.CleaningAgents)
-                {
-                    text.AppendLine(item);
-                }
-                text.AppendLine();
-            }
+                EmptyDiagnostics.Visible = false;
 
-            if (text.Length != 0)
-                Diagnostics.Text = text.ToString();
+                Diagnostics.AddChild(new ForensicEvidenceEntry(
+                    Loc.GetString($"forensic-scanner-interface-cleaning-agents"),
+                    msg.CleaningAgents)
+                );
+           }
         }
     }
 }
