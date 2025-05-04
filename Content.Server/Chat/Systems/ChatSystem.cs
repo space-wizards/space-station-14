@@ -449,6 +449,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
 
         var clients = Filter.Empty();
+        var receivers = new List<EntityUid>();
         var mindQuery = EntityQueryEnumerator<CollectiveMindComponent, ActorComponent>();
         while (mindQuery.MoveNext(out var uid, out var collectMindComp, out var actorComp))
         {
@@ -458,6 +459,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (collectMindComp.Minds.ContainsKey(collectiveMind.ID))
             {
                 clients.AddPlayer(actorComp.PlayerSession);
+                receivers.Add(uid);
             }
         }
         
@@ -501,7 +503,11 @@ public sealed partial class ChatSystem : SharedChatSystem
             collectiveMind.Color);
 
         //raise event so TTS and other related things work
-        var ev = new EntitySpokeEvent(source, message, null, null);
+        var ev = new CollectiveMindSpokeEvent{
+            Source = source,
+            Message = message,
+            Receivers = receivers.ToArray()
+        };
         RaiseLocalEvent(source, ev, true);
     }
 
