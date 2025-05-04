@@ -172,3 +172,17 @@
 #    contents:
 #      - id: WaterTankFull
 #        amount: 1
+
+# DS14-start
+
+- type: entity
+  id: CrateMaterialArmory
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  name: materials crate
+  description: 30 sheets of steel, 30 sheets of glass and 30 sheets of plastic.
+  components:
+  - type: StorageFill
+    contents:
+      - id: SheetSteel
+      - id: SheetGlass
+      - id: SheetPlastic

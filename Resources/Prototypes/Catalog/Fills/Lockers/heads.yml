@@ -345,7 +345,7 @@
     - id: ClothingBeltSecurityFilled
     - id: ClothingEyesGlassesSecurity
     - id: ClothingHeadsetAltSecurity
-    - id: ClothingMaskNeckGaiter
+    # - id: ClothingMaskNeckGaiter # DS14
     - id: ClothingOuterCoatHoSTrench
     - id: ClothingOuterCoatHoSGreatcoat # Corvax-Resprite
     - id: ClothingShoesBootsJack
@@ -365,6 +365,10 @@
     - id: ClothingNeckBodyCamera # DS14
     - id: PortableCameraMonitor # DS14
     - id: PetBowlWater # DS14
+    - id: WeaponSubMachineGunWt550 # DS14
+    - id: MagazinePistolSubMachineGunTopMounted # DS14
+      amount: !type:ConstantNumberSelector
+        value: 4
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable

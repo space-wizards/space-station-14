@@ -183,16 +183,6 @@
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
-  id: GunSafeDominator
-  name: dominators safe
-  components:
-  - type: StorageFill
-    contents:
-    - id: PistolDominator
-      amount: 3
-
-- type: entity
-  parent: [GunSafeBaseSecure, BaseSecurityContraband]
   id: GunSafePistolMk58
   name: mk58 safe
   components:
@@ -273,6 +263,30 @@
     contents:
     - id: WeaponLaserCarbine
       amount: 3
+
+# DS14-start
+
+- type: entity
+  parent: [GunSafeBaseSecure, BaseSecurityContraband]
+  id: GunSafeDominator
+  name: dominators safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: PistolDominator
+      amount: 3
+
+- type: entity
+  parent: [GunSafeBaseSecure, BaseSecurityContraband]
+  id: GunSafeArmorHeavy
+  name: armor heavy safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterArmorHeavy
+    - id: ClothingShoesSwat
+    - id: ClothingMaskGasSwat
+    - id: ClothingHeadHelmetSwat
 
 - type: entity
   id: LockerBlueShieldFilled
