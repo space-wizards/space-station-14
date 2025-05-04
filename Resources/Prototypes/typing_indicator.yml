@@ -58,3 +58,8 @@
   id: diona
   typingState: diona0
   offset: 0, 0.125
+
+- type: typingIndicator
+  id: regal
+  typingState: regal0
+  offset: 0, 0.125
