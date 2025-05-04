@@ -66,7 +66,7 @@ public sealed class PlanetCommand : LocalizedEntityCommands
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));
     }
 
-    public new CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
             return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entManager), "Map Id");
