@@ -68,6 +68,9 @@
             visible: false
   - type: OnUseTimerTrigger
     examinable: false
+    beepInterval: 0.4
+    beepSound:
+      collection: GlassCrack
   - type: RandomTimerTrigger
     min: 8
     max: 10
