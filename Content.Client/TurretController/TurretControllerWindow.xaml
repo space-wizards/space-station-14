@@ -79,11 +79,11 @@
 
                             <BoxContainer Orientation="Horizontal" Margin="10 10 10 10">
                                 <controls:MonotoneButton Name="SafeButton" Text="{Loc 'turret-controls-window-safe'}"
-                                                   Shape="OpenRight" Pressed="False" ToggleMode="True" HorizontalExpand="True"/>
+                                                   StyleClasses="OpenRight" Pressed="False" ToggleMode="True" HorizontalExpand="True"/>
                                 <controls:MonotoneButton Name="StunButton" Text="{Loc 'turret-controls-window-stun'}"
-                                                   Shape="OpenBoth" Pressed="False" ToggleMode="True" HorizontalExpand="True"/>
+                                                   StyleClasses="OpenBoth" Pressed="False" ToggleMode="True" HorizontalExpand="True"/>
                                 <controls:MonotoneButton Name="LethalButton" Text="{Loc 'turret-controls-window-lethal'}"
-                                                   Shape="OpenLeft" Pressed="False" ToggleMode="True" HorizontalExpand="True"/>
+                                                   StyleClasses="OpenLeft" Pressed="False" ToggleMode="True" HorizontalExpand="True"/>
                             </BoxContainer>
 
                         </BoxContainer>

@@ -95,8 +95,6 @@
   # Turret related
   - type: TurretTargetSettings
     exemptAccessLevels:
-    - Captain
-    - HeadOfSecurity
     - Security
     - Borg
     - BasicSilicon
@@ -205,6 +203,9 @@
   #  containers:
   #    board: 
   #    - WeaponEnergyTurretAIControlPanelElectronics
+  - type: DeviceNetwork
+    receiveFrequencyId: TurretAI
+    transmitFrequencyId: TurretControlAI
   - type: TurretTargetSettings
     exemptAccessLevels:
     - BasicSilicon

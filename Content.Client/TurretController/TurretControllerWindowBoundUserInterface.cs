@@ -5,15 +5,17 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.TurretController;
 
-public sealed class TurretControllerBoundUserInterface : BoundUserInterface
+public sealed class TurretControllerWindowBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private TurretControllerWindow? _window;
 
-    public TurretControllerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
+    public TurretControllerWindowBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
 
     protected override void Open()
     {
+        base.Open();
+
         if (UiKey is not DeployableTurretControllerUiKey)
         {
             Close();
@@ -35,7 +37,7 @@ public sealed class TurretControllerBoundUserInterface : BoundUserInterface
         if (_window == null)
             return;
 
-        if (state is not DeployableTurretControllerWindowBoundInterfaceState { } castState)
+        if (state is not DeployableTurretControllerBoundInterfaceState { } castState)
             return;
 
         _window.UpdateState(castState);

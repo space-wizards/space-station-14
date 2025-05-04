@@ -1,8 +1,8 @@
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Access;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.TurretController;
 using Content.Shared.Turrets;
@@ -114,31 +114,14 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
     {
         var turretStates = new List<(string, string)>();
 
-        foreach (var (address, turret) in ent.Comp.LinkedTurrets)
-            turretStates.Add((address, GetTurretStateDescription(turret)));
-
-        var state = new DeployableTurretControllerBoundInterfaceState(turretStates);
-        _userInterfaceSystem.SetUiState(ent.Owner, DeployableTurretControllerUiKey.Key, state);
-    }
-
-    private string GetTurretStateDescription(DeployableTurretState state)
-    {
-        switch (state)
+        foreach (var (address, state) in ent.Comp.LinkedTurrets)
         {
-            case DeployableTurretState.Disabled:
-                return "turret-controls-window-turret-disabled";
-            case DeployableTurretState.Firing:
-                return "turret-controls-window-turret-firing";
-            case DeployableTurretState.Deploying:
-                return "turret-controls-window-turret-deploying";
-            case DeployableTurretState.Deployed:
-                return "turret-controls-window-turret-deployed";
-            case DeployableTurretState.Retracting:
-                return "turret-controls-window-turret-retracting";
-            case DeployableTurretState.Retracted:
-                return "turret-controls-window-turret-retracted";
+            var stateName = state.ToString().ToLower();
+            var stateDesc = Loc.GetString("turret-controls-window-turret-" + stateName);
+            turretStates.Add((address, stateDesc));
         }
 
-        return "turret-controls-window-turret-error";
+        var uiState = new DeployableTurretControllerBoundInterfaceState(turretStates);
+        _userInterfaceSystem.SetUiState(ent.Owner, DeployableTurretControllerUiKey.Key, uiState);
     }
 }
