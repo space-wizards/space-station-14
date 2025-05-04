@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: You will no longer be told you need 0H 0M more minutes to play a role
-    type: Fix
-  id: 7914
-  time: '2025-02-08T06:12:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34961
 - author: Chaboricks
   changes:
   - message: Changed the sound of paper doors.
@@ -3922,3 +3915,11 @@
   id: 8415
   time: '2025-05-03T19:28:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36369
+- author: EmoGarbage404
+  changes:
+  - message: Added gibtonite! This secret ore becomes visible when struck and explodes
+      violently. It can be detected early using a mineral scanner.
+    type: Add
+  id: 8416
+  time: '2025-05-04T00:38:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37160
