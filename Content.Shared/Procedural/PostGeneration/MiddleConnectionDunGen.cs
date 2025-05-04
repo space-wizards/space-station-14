@@ -25,8 +25,8 @@ public sealed partial class MiddleConnectionDunGen : IDunGenLayer
     public ProtoId<ContentTileDefinition> Tile;
 
     [DataField(required: true)]
-    public List<EntitySpawnEntry> Contents = new();
+    public ProtoId<EntitySpawnEntryPrototype> Contents;
 
     [DataField]
-    public List<EntitySpawnEntry>? Flank;
+    public ProtoId<EntitySpawnEntryPrototype>? Flank;
 }

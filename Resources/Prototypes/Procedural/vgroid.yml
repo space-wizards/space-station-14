@@ -177,9 +177,13 @@
   - !type:MobsDunGen
     minCount: 8
     maxCount: 15
-    groups:
-    - id: SalvageSpawnerMobMiningAsteroid
-      amount: 1
+    contents: VGRoidExteriorDungeonsMobs
+
+- type: entitySpawnEntry
+  id: VGRoidExteriorDungeonsMobs
+  entries:
+  - id: SalvageSpawnerMobMiningAsteroid
+    amount: 1
 
 #- type: dungeonConfig
 #  id: VGRoidInteriorDungeons
@@ -207,9 +211,13 @@
   - !type:MobsDunGen
     minCount: 25
     maxCount: 35
-    groups:
-    - id: SalvageSpawnerMobMiningAsteroid
-      amount: 1
+    contents: VGRoidSmallPathsMobs
+
+- type: entitySpawnEntry
+  id: VGRoidSmallPathsMobs
+  entries:
+  - id: SalvageSpawnerMobMiningAsteroid
+    amount: 1
 
 #- type: dungeonConfig
 #  id: VGRoidOres

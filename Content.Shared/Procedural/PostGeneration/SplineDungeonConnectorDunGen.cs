@@ -6,7 +6,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Connects dungeons via points that get subdivided.
 /// </summary>
-public sealed partial class SplineDungeonConnector : IDunGenLayer
+public sealed partial class SplineDungeonConnectorDunGen : IDunGenLayer
 {
     [DataField(required: true)]
     public ProtoId<ContentTileDefinition> Tile;

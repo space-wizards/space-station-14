@@ -7,11 +7,6 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Selects [count] rooms and places external doors to them.
 /// </summary>
-/// <remarks>
-/// Dungeon data keys are:
-/// - Entrance
-/// - FallbackTile
-/// </remarks>
 public sealed partial class DungeonEntranceDunGen : IDunGenLayer
 {
     /// <summary>
@@ -24,5 +19,5 @@ public sealed partial class DungeonEntranceDunGen : IDunGenLayer
     public ProtoId<ContentTileDefinition> Tile;
 
     [DataField(required: true)]
-    public List<EntitySpawnEntry> Contents = new();
+    public ProtoId<EntitySpawnEntryPrototype> Contents;
 }

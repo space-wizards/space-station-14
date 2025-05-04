@@ -31,7 +31,7 @@ public sealed partial class DungeonJob
 
             _maps.SetTile(_gridUid, _grid, neighbor, _tile.GetVariantTile(tileDef, random));
             var gridPos = _maps.GridTileToLocal(_gridUid, _grid, neighbor);
-            var protoNames = EntitySpawnCollection.GetSpawns(gen.Contents, random);
+            var protoNames = EntitySpawnCollection.GetSpawns(gen.Contents, random, _prototype);
 
             _entManager.SpawnEntities(gridPos, protoNames);
             count += protoNames.Count;

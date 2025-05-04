@@ -274,7 +274,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
             case RoomEntranceDunGen rEntrance:
                 await PostGen(rEntrance, dungeons[^1], reservedTiles, random);
                 break;
-            case SplineDungeonConnector spline:
+            case SplineDungeonConnectorDunGen spline:
                 dungeons.Add(await PostGen(spline, dungeons, reservedTiles, random));
                 break;
             case WallMountDunGen wall:

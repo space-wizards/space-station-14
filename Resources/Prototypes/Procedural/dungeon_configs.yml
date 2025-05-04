@@ -1,58 +1,3 @@
-# Base configs
-- type: dungeonConfig
-  id: PlanetBase
-  layers:
-  - !type:PrefabDunGen
-    presets:
-    - Bucket
-    - Wow
-    - SpaceShip
-    - Tall
-
-  - !type:CorridorDunGen
-    width: 3
-
-  - !type:DungeonEntranceDunGen
-    count: 2
-
-  - !type:RoomEntranceDunGen
-
-  - !type:EntranceFlankDunGen
-
-  - !type:ExternalWindowDunGen
-
-  - !type:WallMountDunGen
-
-  - !type:BoundaryWallDunGen
-
-  - !type:JunctionDunGen
-    width: 1
-
-  - !type:JunctionDunGen
-
-  - !type:AutoCablingDunGen
-    entity: CableApcExtension
-
-  - !type:CornerClutterDunGen
-    contents: BaseClutter
-
-  - !type:CorridorDecalSkirtingDunGen
-    cardinalDecals:
-      South: BrickTileWhiteLineS
-      East: BrickTileWhiteLineE
-      North: BrickTileWhiteLineN
-      West: BrickTileWhiteLineW
-    cornerDecals:
-      SouthEast: BrickTileWhiteCornerSe
-      SouthWest: BrickTileWhiteCornerSw
-      NorthEast: BrickTileWhiteCornerNe
-      NorthWest: BrickTileWhiteCornerNw
-    pocketDecals:
-      SouthWest: BrickTileWhiteInnerSw
-      SouthEast: BrickTileWhiteInnerSe
-      NorthWest: BrickTileWhiteInnerNw
-      NorthEast: BrickTileWhiteInnerNe
-
 # Setups
 - type: dungeonConfig
   id: Experiment
@@ -90,6 +35,7 @@
 
   - !type:WallMountDunGen
     contents: ScienceLabsWalls
+    tile: FloorSteel
 
   - !type:BoundaryWallDunGen
     wall: WallSolid
@@ -141,6 +87,7 @@
 
   - !type:WormCorridorDunGen
     width: 3
+    tile: FloorCaveDrought
 
   - !type:CorridorClutterDunGen
     contents: FloraStalagmite
@@ -185,6 +132,7 @@
 
   - !type:WallMountDunGen
     contents: ScienceLabsWalls
+    tile: FloorDark
 
   - !type:BoundaryWallDunGen
     wall: WallSolid
@@ -316,6 +264,7 @@
 
   - !type:WallMountDunGen
     contents: SnowyLabsWalls
+    tile: FloorSteel
 
   - !type:BoundaryWallDunGen
     wall: WallSilver

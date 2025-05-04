@@ -13,5 +13,5 @@ public sealed partial class RoomEntranceDunGen : IDunGenLayer
     public ProtoId<ContentTileDefinition> Tile;
 
     [DataField]
-    public List<EntitySpawnEntry> Contents = new();
+    public ProtoId<EntitySpawnEntryPrototype> Contents;
 }

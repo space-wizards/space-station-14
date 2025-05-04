@@ -13,5 +13,5 @@ public sealed partial class InternalWindowDunGen : IDunGenLayer
     public ProtoId<ContentTileDefinition> Tile;
 
     [DataField(required: true)]
-    public List<EntitySpawnEntry> Contents = new();
+    public ProtoId<EntitySpawnEntryPrototype> Contents;
 }

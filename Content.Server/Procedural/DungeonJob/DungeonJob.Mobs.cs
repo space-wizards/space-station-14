@@ -25,7 +25,7 @@ public sealed partial class DungeonJob
         availableRooms.AddRange(dungeon.Rooms);
         var availableTiles = new ValueList<Vector2i>(dungeon.AllTiles);
 
-        var entities = EntitySpawnCollection.GetSpawns(gen.Groups, random);
+        var entities = EntitySpawnCollection.GetSpawns(gen.Contents, random);
         var count = random.Next(gen.MinCount, gen.MaxCount + 1);
         var npcs = _entManager.System<NPCSystem>();
 

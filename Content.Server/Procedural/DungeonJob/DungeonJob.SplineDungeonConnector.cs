@@ -11,10 +11,10 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="SplineDungeonConnector"/>
+    /// <see cref="SplineDungeonConnectorDunGen"/>
     /// </summary>
     private async Task<Dungeon> PostGen(
-        SplineDungeonConnector gen,
+        SplineDungeonConnectorDunGen gen,
         List<Dungeon> dungeons,
         HashSet<Vector2i> reservedTiles,
         Random random)
