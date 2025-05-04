@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Decals;
@@ -111,9 +112,17 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         List<IDunGenLayer> layers,
         HashSet<Vector2i> reservedTiles,
         int seed,
-        Random random)
+        Random random,
+        List<Dungeon>? existing = null)
     {
         var dungeons = new List<Dungeon>();
+
+        // Don't pass dungeons back up the "stack". They are ref types though it's a caller problem if they start trying to mutate it.
+        if (existing != null)
+        {
+            dungeons.AddRange(existing);
+        }
+
         var count = random.Next(config.MinCount, config.MaxCount + 1);
 
         for (var i = 0; i < count; i++)
@@ -126,6 +135,21 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
                 if (config.ReserveTiles)
                 {
+                    // Remove any dungeons passed in so we don't interfere with them
+                    // This is kinda goofy but okay for now.
+                    if (existing != null)
+                    {
+                        for (var j = 0; j < dungeons.Count; j++)
+                        {
+                            var dung = dungeons[j];
+
+                            if (existing.Contains(dung))
+                            {
+                                dungeons.RemoveSwap(j);
+                            }
+                        }
+                    }
+
                     foreach (var dungeon in dungeons)
                     {
                         reservedTiles.UnionWith(dungeon.AllTiles);
@@ -228,7 +252,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 dungeons.AddRange(await GenerateExteriorDungen(position, exterior, reservedTiles, random));
                 break;
             case FillGridDunGen fill:
-                await GenerateFillDunGen(fill, dungeons[^1], reservedTiles);
+                await GenerateFillDunGen(fill, dungeons, reservedTiles);
                 break;
             case JunctionDunGen junc:
                 await PostGen(junc, dungeons[^1], reservedTiles, random);
@@ -266,10 +290,23 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
             case PrototypeDunGen prototypo:
                 var groupConfig = _prototype.Index(prototypo.Proto);
                 position = (position + random.NextPolarVector2(groupConfig.MinOffset, groupConfig.MaxOffset)).Floored();
-                dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random));
+
+                switch (prototypo.InheritDungeons)
+                {
+                    case DungeonInheritance.All:
+                        dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random, existing: dungeons));
+                        break;
+                    case DungeonInheritance.Last:
+                        dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random, existing: dungeons.GetRange(dungeons.Count - 1, 1)));
+                        break;
+                    case DungeonInheritance.None:
+                        dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random));
+                        break;
+                }
+
                 break;
             case ReplaceTileDunGen replace:
-                await GenerateTileReplacementDunGen(replace, dungeons[^1], reservedTiles, random);
+                await GenerateTileReplacementDunGen(replace, dungeons, reservedTiles, random);
                 break;
             case RoomEntranceDunGen rEntrance:
                 await PostGen(rEntrance, dungeons[^1], reservedTiles, random);

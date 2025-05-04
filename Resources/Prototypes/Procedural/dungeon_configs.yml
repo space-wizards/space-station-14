@@ -90,11 +90,16 @@
     tile: FloorCaveDrought
 
   - !type:CorridorClutterDunGen
-    contents: FloraStalagmite
+    contents: HauntedClutter
 
   - !type:BoundaryWallDunGen
     tile: FloorCaveDrought
     wall: WallRock
+
+- type: entitySpawnEntry
+  id: HauntedClutter
+  entries:
+  - id: FloraStalagmite
 
 - type: dungeonConfig
   id: LavaBrig

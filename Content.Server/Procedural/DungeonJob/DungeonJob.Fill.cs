@@ -9,28 +9,31 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="Shared.Procedural.DungeonLayers.FillGridDunGen"/>
     /// </summary>
-    private async Task GenerateFillDunGen(FillGridDunGen fill, Dungeon dungeon, HashSet<Vector2i> reservedTiles)
+    private async Task GenerateFillDunGen(FillGridDunGen fill, List<Dungeon> dungeons, HashSet<Vector2i> reservedTiles)
     {
-        foreach (var tile in dungeon.AllTiles)
+        foreach (var dungeon in dungeons)
         {
-            if (reservedTiles.Contains(tile))
-                continue;
+            foreach (var tile in dungeon.AllTiles)
+            {
+                if (reservedTiles.Contains(tile))
+                    continue;
 
-            if (!_maps.TryGetTileDef(_grid, tile, out var tileDef))
-                continue;
+                if (!_maps.TryGetTileDef(_grid, tile, out var tileDef))
+                    continue;
 
-            if (fill.AllowedTiles != null && !fill.AllowedTiles.Contains(tileDef.ID))
-                continue;
+                if (fill.AllowedTiles != null && !fill.AllowedTiles.Contains(tileDef.ID))
+                    continue;
 
-            if (!_anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
-                continue;
+                if (!_anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+                    continue;
 
-            var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile);
-            _entManager.SpawnEntity(fill.Entity, gridPos);
+                var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile);
+                _entManager.SpawnEntity(fill.Entity, gridPos);
 
-            await SuspendDungeon();
-            if (!ValidateResume())
-                break;
+                await SuspendDungeon();
+                if (!ValidateResume())
+                    break;
+            }
         }
     }
 }
