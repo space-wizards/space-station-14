@@ -147,6 +147,7 @@
   - /Audio/Machines/ding.ogg
   - /Audio/Machines/double_ring.ogg
   - /Audio/Machines/warning_buzzer.ogg
+  - /Audio/Effects/kaching.ogg
 
 - type: soundCollection
   id: KodepiiaHonks
