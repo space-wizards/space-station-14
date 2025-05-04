@@ -270,3 +270,16 @@
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/improvised_casing.rsi
     state: base
+
+- type: construction
+  name: improvised magazine box
+  id: BaseMagazineBoxImprovised
+  graph: ImprovisedMagazineBoxGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: Organization is not the strong suit of any tider. Can hold all kinds of bullets.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Boxes/improvised.rsi
+    state: base
