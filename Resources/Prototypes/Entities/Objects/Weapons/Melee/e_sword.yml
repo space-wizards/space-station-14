@@ -71,6 +71,12 @@
   - type: Reflect
   - type: IgnitionSource
     temperature: 700
+  
+- type: entity
+  id: BaseMeleeWeaponEnergyWelding
+  parent: BaseItem
+  abstract: true
+  components:
   - type: Tool
     useSound:
       collection: Welder
@@ -86,7 +92,7 @@
 
 - type: entity
   name: energy sword
-  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband, BaseMeleeWeaponEnergyWelding]
   id: EnergySword
   description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
@@ -102,11 +108,11 @@
   - type: Item
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: Tool
-    speedModifier: 0.8
+    speedModifier: 0.1
 
 - type: entity
   name: energy dagger
-  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband, BaseMeleeWeaponEnergyWelding]
   id: EnergyDaggerLoud
   description: A not as loud and dangerous dagger with a beam made of pure, concentrated plasma. This one is completely undisguised.
   components:
@@ -168,11 +174,11 @@
     color: white
     netsync: false
   - type: Tool
-    speedModifier: 0.9
+    speedModifier: 0.7
 
 - type: entity
   name: pen
-  parent: BaseMeleeWeaponEnergy
+  parent: [BaseMeleeWeaponEnergy, BaseMeleeWeaponEnergyWelding]
   id: EnergyDagger
   suffix: E-Dagger
   description: 'A dark ink pen.'
@@ -239,7 +245,7 @@
     tags:
     - Write
   - type: Tool
-    speedModifier: 0.9
+    speedModifier: 0.8
 
 - type: entity
   parent: [BaseItem, BaseSyndicateContraband]
@@ -261,7 +267,7 @@
 
 - type: entity
   name: energy cutlass
-  parent: [BaseMeleeWeaponEnergy, BaseMajorContraband]
+  parent: [BaseMeleeWeaponEnergy, BaseMajorContraband, BaseMeleeWeaponEnergyWelding]
   id: EnergyCutlass
   description: An exotic energy weapon.
   components:
@@ -283,7 +289,7 @@
   - type: Item
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
   - type: Tool
-    speedModifier: 0.7
+    speedModifier: 0.05
 
 - type: entity
   name: double-bladed energy sword
@@ -349,12 +355,10 @@
   - type: Reflect
     reflectProb: .75
     spread: 75
-  - type: Tool
-    speedModifier: 0.6
 
 # Item will look weird in handslot. Will need to adjust handstorage visuals in a future PR
 - type: entity
-  parent: EnergySwordDouble
+  parent: [EnergySwordDouble, BaseMeleeWeaponEnergyWelding]
   id: HyperEutacticBlade
   name: hypereutactic-blade
   description: A supermassive weapon envisioned to cleave the very fabric of space and time itself in twain, the hypereutactic blade dynamically flash-forges a hypereutactic crystaline nanostructure capable of passing through most known forms of matter like a hot knife through butter.
@@ -416,8 +420,6 @@
   components: # could add energy-draining like the L6C
   - type: Wieldable
     freeHandsRequired: 0 # because borg has no off-hand to wield with.  Without this, it will be unable to activate the esword
-  - type: Tool
-    speedModifier: 0.6
 
 - type: entity
   parent: [ EnergyDaggerLoud, BaseXenoborgContraband ]
