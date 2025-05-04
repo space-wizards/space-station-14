@@ -71,6 +71,18 @@
   - type: Reflect
   - type: IgnitionSource
     temperature: 700
+  - type: Tool
+    useSound:
+      collection: Welder
+    qualities: Welding
+  - type: Welder
+    fuelConsumption: 0
+    fuelLitCost: 0
+    logUsage: false
+    requiresFuel: false
+    showFuelInExamine: false
+  - type: RequiresEyeProtection
+  
 
 - type: entity
   name: energy sword
@@ -89,6 +101,8 @@
       map: [ "blade" ]
   - type: Item
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
+  - type: Tool
+    speedModifier: 0.8
 
 - type: entity
   name: energy dagger
@@ -153,6 +167,8 @@
     energy: 1.5
     color: white
     netsync: false
+  - type: Tool
+    speedModifier: 0.9
 
 - type: entity
   name: pen
@@ -222,6 +238,8 @@
   - type: Tag
     tags:
     - Write
+  - type: Tool
+    speedModifier: 0.9
 
 - type: entity
   parent: [BaseItem, BaseSyndicateContraband]
@@ -264,6 +282,8 @@
         map: [ "blade" ]
   - type: Item
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
+  - type: Tool
+    speedModifier: 0.7
 
 - type: entity
   name: double-bladed energy sword
@@ -329,6 +349,8 @@
   - type: Reflect
     reflectProb: .75
     spread: 75
+  - type: Tool
+    speedModifier: 0.6
 
 # Item will look weird in handslot. Will need to adjust handstorage visuals in a future PR
 - type: entity
@@ -382,6 +404,8 @@
   - type: Reflect
     reflectProb: 1.0
     spread: 75
+  - type: Tool
+    speedModifier: 2
 
 # Borgs
 - type: entity
@@ -392,6 +416,8 @@
   components: # could add energy-draining like the L6C
   - type: Wieldable
     freeHandsRequired: 0 # because borg has no off-hand to wield with.  Without this, it will be unable to activate the esword
+  - type: Tool
+    speedModifier: 0.6
 
 - type: entity
   parent: [ EnergyDaggerLoud, BaseXenoborgContraband ]
