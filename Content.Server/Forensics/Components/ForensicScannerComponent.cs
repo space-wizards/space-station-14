@@ -19,6 +19,12 @@ namespace Content.Server.Forensics
         public Dictionary<ForensicEvidence, List<string>> Evidence = [];
 
         /// <summary>
+        /// List of cleaning agents found on the entity, separate from actual evidence
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public List<string> CleaningAgents = [];
+
+        /// <summary>
         /// What is the name of the entity that was scanned last?
         /// </summary>
         /// <remarks>

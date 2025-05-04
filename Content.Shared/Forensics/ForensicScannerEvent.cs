@@ -6,17 +6,20 @@ namespace Content.Shared.Forensics
     public sealed class ForensicScannerBoundUserInterfaceState : BoundUserInterfaceState
     {
         public readonly Dictionary<ForensicEvidence, List<string>> Evidence = [];
+        public readonly List<string> CleaningAgents = [];
         public readonly string LastScannedName = string.Empty;
         public readonly TimeSpan PrintCooldown = TimeSpan.Zero;
         public readonly TimeSpan PrintReadyAt = TimeSpan.Zero;
 
         public ForensicScannerBoundUserInterfaceState(
             Dictionary<ForensicEvidence, List<string>> evidence,
+            List<string> cleaningAgents,
             string lastScannedName,
             TimeSpan printCooldown,
             TimeSpan printReadyAt)
         {
             Evidence = evidence;
+            CleaningAgents = cleaningAgents;
             LastScannedName = lastScannedName;
             PrintCooldown = printCooldown;
             PrintReadyAt = printReadyAt;

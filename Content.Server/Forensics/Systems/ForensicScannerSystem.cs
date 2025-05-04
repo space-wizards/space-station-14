@@ -53,6 +53,7 @@ namespace Content.Server.Forensics
         {
             var state = new ForensicScannerBoundUserInterfaceState(
                 component.Evidence,
+                component.CleaningAgents,
                 component.LastScannedName,
                 component.PrintCooldown,
                 component.PrintReadyAt);
@@ -83,6 +84,8 @@ namespace Content.Server.Forensics
                             scanner.Evidence[type] = [.. value];
                         }
                     }
+
+                    scanner.CleaningAgents = forensics.CleaningAgents;
                 }
 
                 if (_tag.HasTag(args.Args.Target.Value, DNASolutionScannableTag))
@@ -213,6 +216,16 @@ namespace Content.Server.Forensics
 
                 text.AppendLine(Loc.GetString($"forensic-scanner-interface-{type.ToString().ToLower()}"));
                 foreach (var item in evidence)
+                {
+                    text.AppendLine(item);
+                }
+                text.AppendLine();
+            }
+
+            if (component.CleaningAgents.Count > 0)
+            {
+                text.AppendLine(Loc.GetString("forensic-scanner-interface-cleaning-agents"));
+                foreach (var item in component.CleaningAgents)
                 {
                     text.AppendLine(item);
                 }
