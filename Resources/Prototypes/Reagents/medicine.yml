@@ -763,7 +763,7 @@
       # Medium-large quantities can hurt you instead,
       # but still stop your bleeding.
       - !type:ModifyBleedAmount
-        amount: -0.6
+        amount: -1.0
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
