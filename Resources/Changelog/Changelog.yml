@@ -1,146 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Added binoculars. You can find them in maints loot and the warden's locker.
-    type: Add
-  id: 7898
-  time: '2025-02-04T21:46:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34687
-- author: Spacemann
-  changes:
-  - message: Added 4 randomized maintenance rooms to in Convex station. These will
-      change every round with a different layout.
-    type: Add
-  id: 7899
-  time: '2025-02-04T22:58:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34866
-- author: Winkarst-cpu
-  changes:
-  - message: Observers now have a personal point light and can toggle it.
-    type: Add
-  id: 7900
-  time: '2025-02-04T23:26:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33607
-- author: whatston3
-  changes:
-  - message: Healing items that reduce bleeding can now be applied to undamaged mobs.
-    type: Tweak
-  id: 7901
-  time: '2025-02-05T03:23:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33526
-- author: DuckManZach
-  changes:
-  - message: Floor pills have some new interesting surprises!
-    type: Add
-  id: 7902
-  time: '2025-02-05T08:42:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34843
-- author: Gavin-TC
-  changes:
-  - message: Changed common utensil sprites to appear smaller and more proportionate.
-    type: Tweak
-  id: 7903
-  time: '2025-02-05T13:08:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34277
-- author: Booblesnoot42
-  changes:
-  - message: Inserting another person into a cryogenic sleeping unit is no longer
-      instant.
-    type: Tweak
-  id: 7904
-  time: '2025-02-05T14:46:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34619
-- author: hyperDelegate
-  changes:
-  - message: The Nuclear Operative Reinforcement Teleporter now costs 30TC (was 35).
-    type: Tweak
-  id: 7905
-  time: '2025-02-05T14:54:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34675
-- author: Farrellka
-  changes:
-  - message: Removed the old long ears for human!
-    type: Remove
-  - message: Added more long (elf) ears for human!
-    type: Add
-  id: 7906
-  time: '2025-02-05T16:49:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33572
-- author: keronshb
-  changes:
-  - message: Disabler - decreased fire cost, increased projectile speed.
-    type: Tweak
-  - message: Disabler SMG - decreased fire cost, increased fire rate.
-    type: Tweak
-  id: 7907
-  time: '2025-02-05T23:12:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34890
-- author: centcomofficer24
-  changes:
-  - message: Added a genderqueer pin!
-    type: Add
-  id: 7908
-  time: '2025-02-06T05:49:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34561
-- author: SG6732
-  changes:
-  - message: Swapped the stick of butter with 5 u of olive oil in the boiled spaghetti
-      recipe.
-    type: Tweak
-  id: 7909
-  time: '2025-02-06T11:45:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34904
-- author: deltanedas
-  changes:
-  - message: Fixed huds showing for chameleon projector users.
-    type: Fix
-  id: 7910
-  time: '2025-02-06T13:45:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34825
-- author: 12rabbits
-  changes:
-  - message: Activating a DNA scrambler implant no longer retains the previous identity's
-      description.
-    type: Fix
-  id: 7911
-  time: '2025-02-06T19:09:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34920
-- author: GrownSamoyedDog
-  changes:
-  - message: Control Button in Guidebook has been redirected to Controls properly
-    type: Fix
-  id: 7912
-  time: '2025-02-06T19:16:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34914
-- author: themias
-  changes:
-  - message: Combat bakery kit price is reduced from 6TC to 4TC, increased baguette
-      sword attack speed, throwing croissants ignore armor
-    type: Tweak
-  id: 7913
-  time: '2025-02-06T23:07:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34927
-- author: sowelipililimute
-  changes:
-  - message: You will no longer be told you need 0H 0M more minutes to play a role
-    type: Fix
-  id: 7914
-  time: '2025-02-08T06:12:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34961
-- author: Chaboricks
-  changes:
-  - message: Changed the sound of paper doors.
-    type: Tweak
-  id: 7915
-  time: '2025-02-08T07:24:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34857
-- author: YoungThugSS14
-  changes:
-  - message: Gave the SyndieVisitor the free agent mindrole.
-    type: Fix
-  id: 7916
-  time: '2025-02-08T21:16:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34836
 - author: lzk228
   changes:
   - message: Straight ally pin added to loadouts and to the Pride-O-Mat.
@@ -3918,3 +3776,152 @@
   id: 8399
   time: '2025-05-01T05:35:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37085
+- author: MissKay1994
+  changes:
+  - message: Vox can now eat trash and drink welding fuel!
+    type: Add
+  id: 8400
+  time: '2025-05-01T18:16:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35681
+- author: slarticodefast
+  changes:
+  - message: Added noir glasses, which make everything black and white. You can find
+      them in the detective's locker.
+    type: Add
+  id: 8401
+  time: '2025-05-01T22:07:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36923
+- author: Nikitosych
+  changes:
+  - message: Fixed abrupt stamina damage reset and abrupt speed recovery after 3 seconds
+      (especially noticeable at high damage levels)
+    type: Fix
+  - message: Stamina damage no longer instantly resets when exiting critical state;
+      it now regenerates gradually.
+    type: Tweak
+  id: 8402
+  time: '2025-05-01T23:01:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36336
+- author: YoungThugSS14
+  changes:
+  - message: The Wizard Helmet is now obtainable from the magic vend.
+    type: Tweak
+  id: 8403
+  time: '2025-05-02T01:56:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37084
+- author: Pronana
+  changes:
+  - message: Items can now slide on ice crust
+    type: Add
+  id: 8404
+  time: '2025-05-02T08:18:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36847
+- author: metalgearsloth
+  changes:
+  - message: Predict gas canisters, gas tanks, and internals.
+    type: Tweak
+  id: 8405
+  time: '2025-05-02T08:22:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33800
+- author: metalgearsloth
+  changes:
+  - message: Fix AI eye movement.
+    type: Fix
+  id: 8406
+  time: '2025-05-02T10:07:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37114
+- author: themias
+  changes:
+  - message: Station beacons retain edited info when reopening their window.
+    type: Fix
+  id: 8407
+  time: '2025-05-02T16:14:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37121
+- author: Errant
+  changes:
+  - message: Vox now only drop their organs when gibbed, not all of their bodyparts.
+    type: Fix
+  id: 8408
+  time: '2025-05-02T17:12:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37111
+- author: murolem
+  changes:
+  - message: Updated PA crate order name and description to clarify that it only contains
+      boards.
+    type: Tweak
+  id: 8409
+  time: '2025-05-02T18:31:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37109
+- author: ScarKy0
+  changes:
+  - message: Added Traumoxadone! A cryochemical used to treat brute damage in living
+      patients as well as corpses.
+    type: Add
+  id: 8410
+  time: '2025-05-02T22:56:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37126
+- author: Unkn0wnGh0st333
+  changes:
+  - message: Knuckle Dusters have arrived to Space Station 14. QM can now rule cargo
+      with a golden-covered fist!
+    type: Add
+  id: 8411
+  time: '2025-05-03T04:18:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33470
+- author: Errant
+  changes:
+  - message: Visiting Command and Security ghostroles, as well as some other rare
+      centcomm ghostroles, now have their names properly randomized.
+    type: Fix
+  id: 8412
+  time: '2025-05-03T12:10:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37143
+- author: Radezolid
+  changes:
+  - message: Fixed departmental maintenance airlocks not using it's wire layout.
+    type: Fix
+  - message: Command maintenance airlocks now have proper security like their regular
+      counterparts.
+    type: Tweak
+  id: 8413
+  time: '2025-05-03T15:07:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36735
+- author: youtissoum
+  changes:
+  - message: Skeletons will no longer spawn inside of folded body bags.
+    type: Fix
+  id: 8414
+  time: '2025-05-03T19:19:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37151
+- author: Minemoder
+  changes:
+  - message: The traitor uplink thieving gloves have been replaced with chameleon
+      thieving gloves, the same used by the Thief.
+    type: Tweak
+  id: 8415
+  time: '2025-05-03T19:28:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36369
+- author: EmoGarbage404
+  changes:
+  - message: Added gibtonite! This secret ore becomes visible when struck and explodes
+      violently. It can be detected early using a mineral scanner.
+    type: Add
+  id: 8416
+  time: '2025-05-04T00:38:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37160
+- author: EmoGarbage404
+  changes:
+  - message: You can no longer scrap coins and other salvaging treasures. They're
+      simply too valuable to junk.
+    type: Remove
+  id: 8417
+  time: '2025-05-04T02:39:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37149
+- author: EmoGarbage404
+  changes:
+  - message: Mob corpses brought back from salvage pulls will no longer despawn with
+      the pull.
+    type: Fix
+  id: 8418
+  time: '2025-05-04T05:47:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37169
