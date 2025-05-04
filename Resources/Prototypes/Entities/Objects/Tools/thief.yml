@@ -1,4 +1,5 @@
 - type: entity
+  parent: BaseMinorContraband
   id: ThiefBeacon
   name: thieving beacon
   description: A device that will teleport everything around it to the thief's vault at the end of the shift.
@@ -37,6 +38,15 @@
       layers:
         - state: extraction_point
           map: [ "foldedLayer" ]
+    # imp edit start
+    - type: SubFloorHide
+    - type: Anchorable
+    - type: CollideOnAnchor
+    - type: Transform
+      anchored: false
+    - type: Visibility
+      layer: 1
+    # imp edit end
 
 - type: entity
   id: ToolboxThief
