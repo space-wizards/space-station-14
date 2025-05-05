@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Added four new big snake tail markings for reptilians.
-    type: Add
-  id: 1107
-  time: '2025-02-11T22:32:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1658
-- author: Darkmajia
-  changes:
-  - message: Solar panels can be directly upgraded to their plasma/uranium variants,
-      similarly to window upgrading.
-    type: Add
-  id: 1108
-  time: '2025-02-11T22:31:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1656
 - author: Pivotbash
   changes:
   - message: Sec Space Blade, Portable Criminal Records Computer, and the Pribar now
@@ -4156,3 +4141,21 @@
   id: 1606
   time: '2025-05-05T00:02:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2402
+- author: rainyatrium
+  changes:
+  - message: Basic pirate accent without forced Yarr! and Garr! before sentences
+    type: Add
+  id: 1607
+  time: '2025-05-05T00:04:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2375
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: Hey my disablers and blasters don't use the standard muzzle flash sprite
+      anymore
+    type: Add
+  - message: Hey the standard muzzle flash sprite is different and animated now what
+      the heck
+    type: Tweak
+  id: 1608
+  time: '2025-05-05T00:05:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2351
