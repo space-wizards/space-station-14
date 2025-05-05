@@ -560,6 +560,12 @@ public sealed class RCDSystem : EntitySystem
                 {
                     // Deconstruct tile (either converts the tile to lattice, or removes lattice)
                     var tileDef = (tile.Tile.GetContentTileDefinition().ID != "Lattice") ? new Tile(_tileDefMan["Lattice"].TileId) : Tile.Empty;
+
+                    var ev = new ReplaceTileAttempt(tile.Tile.GetContentTileDefinition(), tileDef.GetContentTileDefinition());
+                    RaiseLocalEvent(gridUid, ref ev);
+                    if (ev.Cancelled)
+                        break;
+
                     _mapSystem.SetTile(gridUid, mapGrid, position, tileDef);
                     _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to set grid: {gridUid} tile: {position} open to space");
                 }

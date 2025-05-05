@@ -21,6 +21,22 @@ public sealed class TileSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
 
+    [ValidatePrototypeId<ContentTileDefinition>]
+    private const string BaseLatticeId = "Lattice";
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<BlockLatticeRemovalComponent, ReplaceTileAttempt>(OnReplaceTileAttempt);
+    }
+
+    public void OnReplaceTileAttempt(Entity<BlockLatticeRemovalComponent> entity, ref ReplaceTileAttempt replaceTileAttempt)
+    {
+        if (replaceTileAttempt.OldTile.ID == BaseLatticeId && replaceTileAttempt.NewTile.ID == replaceTileAttempt.OldTile.BaseTurf)
+            replaceTileAttempt.Cancelled = true;
+    }
+
     /// <summary>
     ///     Returns a weighted pick of a tile variant.
     /// </summary>
@@ -141,6 +157,13 @@ public sealed class TileSystem : EntitySystem
         if (string.IsNullOrEmpty(tileDef.BaseTurf))
             return false;
 
+        var plating = (ContentTileDefinition) _tileDefinitionManager[tileDef.BaseTurf];
+
+        var ev = new ReplaceTileAttempt(tileDef, plating);
+        RaiseLocalEvent(tileRef.GridUid, ref ev);
+        if (ev.Cancelled)
+            return false;
+
         var gridUid = tileRef.GridUid;
         var mapGrid = Comp<MapGridComponent>(gridUid);
 
@@ -163,9 +186,14 @@ public sealed class TileSystem : EntitySystem
             _decal.RemoveDecal(tileRef.GridUid, id);
         }
 
-        var plating = _tileDefinitionManager[tileDef.BaseTurf];
         _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, new Tile(plating.TileId));
 
         return true;
     }
 }
+
+/// <summary>
+/// Raised on the grid whenever a tile is to be replaced by another.
+/// </summary>
+[ByRefEvent]
+public record struct ReplaceTileAttempt(ContentTileDefinition OldTile, ContentTileDefinition NewTile, bool Cancelled = false);

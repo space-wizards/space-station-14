@@ -507,7 +507,8 @@ public sealed partial class ExplosionSystem
         int maxTileBreak,
         bool canCreateVacuum,
         List<(Vector2i GridIndices, Tile Tile)> damagedTiles,
-        ExplosionPrototype type)
+        ExplosionPrototype type,
+        EntityUid gridUid)
     {
         if (_tileDefinitionManager[tileRef.Tile.TypeId] is not ContentTileDefinition tileDef
             || tileDef.Indestructible)
@@ -532,6 +533,11 @@ public sealed partial class ExplosionSystem
                 break;
 
             if (newDef.MapAtmosphere && !canCreateVacuum)
+                break;
+
+            var ev = new ReplaceTileAttempt(tileDef, newDef);
+            RaiseLocalEvent(gridUid, ref ev);
+            if (ev.Cancelled)
                 break;
 
             tileDef = newDef;
@@ -864,7 +870,7 @@ sealed class Explosion
 
                 // If the floor is not blocked by some dense object, damage the floor tiles.
                 if (canDamageFloor)
-                    _system.DamageFloorTile(tileRef, _currentIntensity * _tileBreakScale, _maxTileBreak, _canCreateVacuum, tileUpdateList, ExplosionType);
+                    _system.DamageFloorTile(tileRef, _currentIntensity * _tileBreakScale, _maxTileBreak, _canCreateVacuum, tileUpdateList, ExplosionType, _currentGrid.Owner);
             }
             else
             {
