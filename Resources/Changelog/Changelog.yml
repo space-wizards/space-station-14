@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Straight ally pin added to loadouts and to the Pride-O-Mat.
-    type: Add
-  id: 7917
-  time: '2025-02-08T23:02:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34977
-- author: Ian321
-  changes:
-  - message: Seeds can now have paper labels attached to them.
-    type: Add
-  id: 7918
-  time: '2025-02-08T23:16:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34450
 - author: august-sun
   changes:
   - message: Reworked Lecter and magazine sprites.
@@ -3925,3 +3911,17 @@
   id: 8418
   time: '2025-05-04T05:47:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37169
+- author: perryprog
+  changes:
+  - message: Shelves built from the construction menu can now be placed in all orientations.
+    type: Fix
+  id: 8419
+  time: '2025-05-04T22:42:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37186
+- author: brainfood1183
+  changes:
+  - message: A stack of Whoopie Cushions no longer launches you into oblivion!
+    type: Fix
+  id: 8420
+  time: '2025-05-04T23:01:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36984
