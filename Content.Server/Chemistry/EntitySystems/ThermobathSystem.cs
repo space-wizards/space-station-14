@@ -2,4 +2,4 @@ using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-public sealed class HotplateSystem : SharedHotplateSystem;
+public sealed class ThermobathSystem : SharedThermobathSystem;
