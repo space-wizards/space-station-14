@@ -40,6 +40,8 @@ public sealed class ThrowEquippedOnHitSystem : EntitySystem
             if (!_whitelist.CheckBoth(slot.ContainedEntity, ent.Comp.Blacklist, ent.Comp.Whitelist))
                 continue;
 
+            // TODO: Should this apply forensics from the glove -> punched item?
+
             if (!_inventory.TryUnequip(target, slot.ID, out var removedItem))
                 continue;
 
