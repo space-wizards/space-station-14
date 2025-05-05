@@ -113,7 +113,7 @@
 - type: entity
   id: MedicalPouchCorpsmanFilled
   suffix: Corpsman, Filled
-  parent: MedicalPouch
+  parent: CorpsmanMedicalPouch
   components:
   - type: StorageFill
     contents:

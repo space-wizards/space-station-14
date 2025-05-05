@@ -660,16 +660,15 @@
   components:
   - type: Item
     size: Small
-    sprite: Objects/Specific/Chemistry/medical_pouch.rsi
+    sprite: Objects/Specific/Chemistry/medical-pouch.rsi
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/medical_pouch.rsi
+    sprite: Objects/Specific/Chemistry/medical-pouch.rsi
     layers:
     - state: closed
       map: ["closeLayer"]
     - state: open
       map: ["openLayer"]
       visible: false
-    state: icon
   - type: Storage
     grid:
     - 0,0,3,2
@@ -681,3 +680,14 @@
       - Syringe
       components:
       - Hypospray
+
+- type: entity
+  name: corpsman's medical pouch
+  id: CorpsmanMedicalPouch
+  parent: MedicalPouch
+  description: Holds up to 12 tiny medical items.
+  components:
+  - type: Item
+    sprite: Objects/Specific/Chemistry/corpsman_medical_pouch.rsi
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/corpsman_medical_pouch.rsi
