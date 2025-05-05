@@ -13,6 +13,11 @@ namespace Content.Shared.Decals
         [DataField("showMenu")] public bool ShowMenu = true;
 
         /// <summary>
+        /// imp edit - shaders for decals. not a ShaderPrototype protoID because for some reason they're not in shared
+        /// </summary>
+        [DataField] public string ShaderID = string.Empty;
+
+        /// <summary>
         /// If the decal is rotated compared to our eye should we snap it to south.
         /// </summary>
         [DataField("snapCardinals")] public bool SnapCardinals = false;

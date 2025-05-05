@@ -106,12 +106,19 @@ namespace Content.Client.Decals.Overlays
                     cardinal = worldAngle.GetCardinalDir().ToAngle();
                 }
 
+                //imp edit - use the shader if one is present, else set it to null
+                handle.UseShader(!string.IsNullOrEmpty(decal.ShaderID)
+                    ? _prototypeManager.Index<ShaderPrototype>(decal.ShaderID).Instance()
+                    : null);
+
+
                 var angle = decal.Angle - cardinal;
 
                 if (angle.Equals(Angle.Zero))
                     handle.DrawTexture(cache.Texture, decal.Coordinates, decal.Color);
                 else
                     handle.DrawTexture(cache.Texture, decal.Coordinates, angle, decal.Color);
+                
             }
 
             handle.SetTransform(Matrix3x2.Identity);

@@ -306,6 +306,9 @@ namespace Content.Server.Decals
             if (!TryComp(gridId, out DecalGridComponent? comp))
                 return false;
 
+            //imp edit - set the decal's shader
+            decal.ShaderID = PrototypeManager.Index<DecalPrototype>(decal.Id).ShaderID;
+
             decalId = comp.ChunkCollection.NextDecalId++;
             var chunkIndices = GetChunkIndices(decal.Coordinates);
             var chunk = comp.ChunkCollection.ChunkCollection.GetOrNew(chunkIndices);

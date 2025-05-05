@@ -13,3 +13,8 @@
     func: NotEqual
   params:
     displacementSize: 127
+
+- type: shader
+  id: RedSquare
+  kind: source
+  path: "/Textures/_Impstation/Shaders/red_square.swsl"

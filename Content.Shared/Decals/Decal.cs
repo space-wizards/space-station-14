@@ -1,4 +1,5 @@
 using System.Numerics;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Decals
@@ -14,6 +15,9 @@ namespace Content.Shared.Decals
         [DataField("angle")] public  Angle Angle = Angle.Zero;
         [DataField("zIndex")] public  int ZIndex;
         [DataField("cleanable")] public  bool Cleanable;
+
+        // imp edit - shaders for decals
+        [DataField] public string ShaderID = string.Empty;
 
         public Decal() {}
 
