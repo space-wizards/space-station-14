@@ -108,7 +108,7 @@
   - type: Item
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: Tool
-    speedModifier: 0.2
+    speedModifier: 0.5
 
 - type: entity
   name: energy dagger
@@ -289,11 +289,11 @@
   - type: Item
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
   - type: Tool
-    speedModifier: 0.1
+    speedModifier: 0.4
 
 - type: entity
   name: double-bladed energy sword
-  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband, BaseMeleeWeaponEnergyWelding]
   id: EnergySwordDouble
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
   components:
@@ -356,7 +356,7 @@
     reflectProb: .75
     spread: 75
   - type: Tool
-    speedModifier: 0.1
+    speedModifier: 0.4
 
 # Item will look weird in handslot. Will need to adjust handstorage visuals in a future PR
 - type: entity
