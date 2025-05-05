@@ -23,6 +23,7 @@ using Robust.Server.GameObjects;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Server.StationEvents;
+using Content.Shared.Bed.Cryostorage;
 
 //this is kind of badly named since we're doing infinite archives stuff now but i dont feel like changing it :)
 
@@ -154,6 +155,11 @@ namespace Content.Server._Goobstation.Heretic.EntitySystems
         {
             //get all possible spawn points, choose one, then get the place
             var spawnPoints = EntityManager.GetAllComponents(typeof(MidRoundAntagSpawnLocationComponent)).ToImmutableList();
+            if (spawnPoints.Count == 0)
+            {
+                //fallback to cryo, incase someone forgot to map points
+                spawnPoints = EntityManager.GetAllComponents(typeof(CryostorageComponent)).ToImmutableList();
+            }
             var newSpawn = _random.Pick(spawnPoints);
             var spawnTgt = Transform(newSpawn.Uid).Coordinates;
 
