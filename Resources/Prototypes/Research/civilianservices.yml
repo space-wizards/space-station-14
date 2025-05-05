@@ -188,6 +188,18 @@
   recipeUnlocks:
   - CargoTelepadMachineCircuitboard
 
+- type: technology
+  id: PushHorn
+  name: research-technology-clowning-utilities
+  icon:
+    sprite: Objects/Fun/push_horn.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 2
+  cost: 4000
+  recipeUnlocks:
+  - PushHorn
+
 # Tier 3
 
 - type: technology
