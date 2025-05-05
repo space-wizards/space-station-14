@@ -18,6 +18,7 @@ Here are some of the major types of ghost roles that you'll encounter:
 ## Non-Antagonist:
 <Box>
   <GuideEntityEmbed Entity="MobMonkeyPunpun" Caption=""/>
+  <GuideEntityEmbed Entity="MobApidBotanist" Caption=""/>
 </Box>
 Non-Antagonist ghost roles are not explicitly "good guys," but should avoid harming the station and its crew, directly or otherwise.
 
@@ -26,6 +27,7 @@ Non-Antagonist ghost roles are not explicitly "good guys," but should avoid harm
   <GuideEntityEmbed Entity="MobSkeletonCloset" Caption=""/>
   <GuideEntityEmbed Entity="MobGoblinStowaway" Caption=""/>
   <GuideEntityEmbed Entity="MobMouse" Caption=""/>
+  <GuideEntityEmbed Entity="ClothingOuterHardsuitMercenary" Caption=""/>
 </Box>
 Free Agent ghost roles are free to act as they please, with some limitations. [color=red]They are not allowed to cause excessive destruction or death without proper escalation.[/color]
 

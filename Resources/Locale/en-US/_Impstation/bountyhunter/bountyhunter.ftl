@@ -70,6 +70,7 @@ bounty-hunter-category-clown-description =
 
 
 
+name-format-bounty-hunter = {$part0} {$part1}
 
 names-bounty-hunter-dataset-1 = Flint
 names-bounty-hunter-dataset-2 = Raider

@@ -15,6 +15,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
     head: ClothingHeadHatCowboyBountyHunter
+    mask: ClothingMaskGasSecurity
     back: ClothingBackpackSatchel
     eyes: ClothingEyesBountyHunterGlasses
     outerClothing: ClothingOuterCoatBomber

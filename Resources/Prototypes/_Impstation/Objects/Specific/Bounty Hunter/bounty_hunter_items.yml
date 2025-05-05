@@ -17,6 +17,7 @@
     - BountyHunterSyndie
     - BountyHunterCaptain
     - BountyHunterClown
+    spawnedStoragePrototype: ClothingBackpackSCargoDuffelPurple
 
 # Bounty Hunter Thermal + Flash Protection Glasses
 - type: entity
@@ -60,6 +61,7 @@
   parent: [ WeaponDisablerPractice, BaseMajorContraband ]
   id: WeaponBorgDisabler
   description: A disabler modified to slowly recharge off a cyborg's internal battery.
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Battery/disabler.rsi
@@ -80,10 +82,11 @@
   name: borgstunbaton
   parent: [BaseItem, BaseMajorContraband]
   id: WeaponBorgStunBaton
-  description: An internally-stored implement capable of safely incapacitating any criminal, modified to self-charge at the cost of battery life. #imp
+  description: An internally-stored implement capable of safely incapacitating any criminal, modified to self-charge at the cost of battery life.
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Weapons/Melee/stunbaton.rsi #imp
+    sprite: _Impstation/Objects/Weapons/Melee/stunbaton.rsi
     layers:
     - state: stunbaton_off
       map: [ "enum.ToggleVisuals.Layer" ]

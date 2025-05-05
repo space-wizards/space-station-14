@@ -1,0 +1,61 @@
+<Document>
+  # Bounty Hunter
+
+  <Box>
+    [color=#999999][italic]"I can bring you in warm, or I can bring you in cold."[/italic][/color]
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="PosterContrabandBountyHunters" Caption=""/>
+  </Box>
+
+  Bounty hunters are [color=yellow]free agents[/color] who align themselves with whoever they feel, as long as it furthers their goals. Causing less damage incurs fewer expenses, but bounty hunters often will do whatever deemed necessary to get the job done.
+
+  ## Objectives
+  Bounty hunters [color=red]are not antagonists,[/color] nor are they crew-aligned. The mission? Capture a lucrative target for a fat stack of spesos. At minimum, the target must not make it back to CentComm.
+
+  However, there is more money to be made taking someone alive, and even more money with fewer damages to pay for, or not as hot of a trail.
+
+  Dead or alive, it is best practice to take your target back to your ship, [color=cyan]the Heron[/color], as proof of kill or capture.
+
+  Do your job and get paid.
+
+  ## Rules
+  As free agents, bounty hunters are beholden to escalation rules; [color=red]they are not allowed to cause excessive destruction or death without proper escalation.[/color]
+
+  For the target, escalation can be bypassed, but you are [bold]strongly encouraged to engage in dialogue and roleplay with your target over winning.[/bold]
+
+  ## Tools of the Trade
+  Starting out, bounty hunters come equipped with an array of basic security gear, thermal goggles, and a set of tools aboard a small shuttle.
+
+  In addition, you start out with a [color=cyan]special toolbox[/color] filled with all your favorite gear. [bold]You can select two pre-made kits[/bold] to help you complete the hunt.
+
+  <Box>
+    <GuideEntityEmbed Entity="BountyHunterGear" Caption="bounty hunter's toolbox"/>
+  </Box>
+
+  There are nine kits to choose from:
+
+  <Box>
+    <GuideEntityEmbed Entity="WeaponRifleAk" Caption="Raider"/>
+    <GuideEntityEmbed Entity="ClothingShoesBootsMagRocket" Caption="Spacer"/>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesOutlawGlasses" Caption="Infiltrator"/>
+    <GuideEntityEmbed Entity="Emag" Caption="Subverter"/>
+    <GuideEntityEmbed Entity="BorgChassisBountyHunter" Caption="Roboticist"/>
+    <GuideEntityEmbed Entity="Katana" Caption="Samurai"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ClothingOuterArmorRaid" Caption="Rogue Operative"/>
+    <GuideEntityEmbed Entity="ClothingUniformJumpskirtCapFormalDress" Caption="Rogue Captain"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="PosterContrabandClown" Caption="Rogue Clown"/>
+  </Box>
+
+  ## The Heron
+  Your pride and joy. A decent shuttle to house yourself and your target, along with all the basics. Not the top-of-the-line, but she's yours and so are the stars.
+
+  The IND-Heron is an independently-registered vessel with the ability to stop broadcasting IFF. It does [bold]not[/bold] come with mass-scanner cloaking.
+
+  Take your captive, or what's left of them, here to confirm job completion.
+
+</Document>

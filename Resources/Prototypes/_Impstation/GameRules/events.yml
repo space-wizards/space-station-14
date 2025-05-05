@@ -50,7 +50,7 @@
   id: BountyHunterSpawn
   components:
   - type: StationEvent
-    weight: 5
+    weight: 7
     duration: 1
     earliestStart: 25
     reoccurrenceDelay: 20
@@ -84,3 +84,4 @@
         nameSegments:
         - NamesBountyHunterTitle
         - NamesBountyHunter
+        nameFormat: name-format-bounty-hunter

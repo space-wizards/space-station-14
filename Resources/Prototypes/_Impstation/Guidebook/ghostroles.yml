@@ -6,6 +6,7 @@
   - ImpGoblins
   - ImpApids
   - ImpLuggage
+  - ImpBountyHunter
 
 - type: guideEntry
   id: ImpGoblins
@@ -34,3 +35,8 @@
   id: ImpLuggage
   name: guide-entry-impluggage
   text: "/ServerInfo/_Impstation/Guidebook/Ghostroles/Luggage.xml"
+
+- type: guideEntry
+  id: ImpBountyHunter
+  name: guide-entry-impbountyhunter
+  text: "/ServerInfo/_Impstation/Guidebook/Ghostroles/BountyHunter.xml"
