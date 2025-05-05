@@ -1046,7 +1046,6 @@
   components:
   - type: Item
     size: Normal
-    state: icon
   - type: Sprite
     sprite: Objects/Fun/Plushies/xeno.rsi
     state: icon

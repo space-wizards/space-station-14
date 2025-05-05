@@ -1297,7 +1297,7 @@
   id: HamptrPlushie
   name: food-sequence-cotton-burger-content-plushie-hamptr
   sprites:
-  - sprite: Objects/Fun/Plushie/hampter.rsi
+  - sprite: Objects/Fun/Plushies/hampter.rsi
     state: icon
 
 # Nukie Plushie
@@ -1307,7 +1307,7 @@
   scale: 0.8, 0.8
   name: food-sequence-cotton-burger-content-plushie-nukie
   sprites:
-  - sprite: Objects/Fun/Plushie/nukie.rsi
+  - sprite: Objects/Fun/Plushies/nukie.rsi
     state: icon
 
 # Rouny Plushie
@@ -1316,7 +1316,7 @@
   id: RounyPlushie
   name: food-sequence-cotton-burger-content-plushie-rouny
   sprites:
-  - sprite: Objects/Fun/Plushie/rouny.rsi
+  - sprite: Objects/Fun/Plushies/rouny.rsi
     state: icon
 
 # Lamp Plushie
@@ -1325,7 +1325,7 @@
   id: LampPlushie
   name: food-sequence-cotton-burger-content-plushie-lamp
   sprites:
-  - sprite: Objects/Fun/Plushie/lamp.rsi
+  - sprite: Objects/Fun/Plushies/lamp.rsi
     state: icon
 
 # Arachnid Plushie
@@ -1335,7 +1335,7 @@
   scale: 0.8, 0.8
   name: food-sequence-cotton-burger-content-plushie-arachnid
   sprites:
-  - sprite: Objects/Fun/Plushie/arachnid.rsi
+  - sprite: Objects/Fun/Plushies/arachnid.rsi
     state: icon
 
 # Lizard Plushies
@@ -1351,14 +1351,14 @@
   id: SpaceLizardPlushie
   name: food-sequence-cotton-burger-content-plushie-spacelizard
   sprites:
-  - sprite: Objects/Fun/Plushie/lizard.rsi
+  - sprite: Objects/Fun/Plushies/lizard.rsi
     state: plushie_spacelizard
 
 - type: foodSequenceElement
   id: InversedLizardPlushie
   name: food-sequence-cotton-burger-content-plushie-lizard-inversed #Hew!
   sprites:
-  - sprite: Objects/Fun/Plushie/lizard.rsi
+  - sprite: Objects/Fun/Plushies/lizard.rsi
     state: plushie_lizard_inversed
 
 # Experiment Plushie
@@ -1378,7 +1378,7 @@
   scale: 0.8, 0.8
   name: food-sequence-cotton-burger-content-plushie-diona
   sprites:
-  - sprite: Objects/Fun/Plushie/diona.rsi
+  - sprite: Objects/Fun/Plushies/diona.rsi
     state: icon
 
 #Shark Plushies
@@ -1414,7 +1414,7 @@
   scale: 0.8, 0.8
   name: food-sequence-cotton-burger-content-plushie-ratvar
   sprites:
-  - sprite: Objects/Fun/Plushie/ratvar.rsi
+  - sprite: Objects/Fun/Plushies/ratvar.rsi
     state: icon
 
 #Nar'sie Plushie
@@ -1424,7 +1424,7 @@
   scale: 0.75, 0.75
   name: food-sequence-cotton-burger-content-plushie-narsie
   sprites:
-  - sprite: Objects/Fun/Plushie/narsie.rsi
+  - sprite: Objects/Fun/Plushies/narsie.rsi
     state: icon
 
 #Carp Plushies
@@ -1433,14 +1433,14 @@
   id: CarpPlushie
   name: food-sequence-cotton-burger-content-plushie-carp
   sprites:
-  - sprite: Objects/Fun/Plushie/carp.rsi
+  - sprite: Objects/Fun/Plushies/carp.rsi
     state: carpplush
 
 - type: foodSequenceElement
   id: MagicarpPlushie
   name: food-sequence-cotton-burger-content-plushie-magicarp
   sprites:
-  - sprite: Objects/Fun/Plushie/carp.rsi
+  - sprite: Objects/Fun/Plushies/carp.rsi
     state: magicplush
 
 - type: foodSequenceElement
@@ -1456,7 +1456,7 @@
   id: SlimePlushie
   name: food-sequence-cotton-burger-content-plushie-slime
   sprites:
-  - sprite: Objects/Fun/Plushie/slime.rsi
+  - sprite: Objects/Fun/Plushies/slime.rsi
     state: icon
 
 #Snake Plushie
@@ -1465,7 +1465,7 @@
   id: SnakePlushie
   name: food-sequence-cotton-burger-content-plushie-snake
   sprites:
-  - sprite: Objects/Fun/Plushie/snake.rsi
+  - sprite: Objects/Fun/Plushies/snake.rsi
     state: icon
 
 #Mouse Toy
@@ -1483,7 +1483,7 @@
   id: VoxPlushie
   name: food-sequence-cotton-burger-content-plushie-vox
   sprites:
-  - sprite: Objects/Fun/Plushie/vox.rsi
+  - sprite: Objects/Fun/Plushies/vox.rsi
     state: icon
 
 #Atmosian Plushie
@@ -1493,7 +1493,7 @@
   scale: 0.8, 0.8
   name: food-sequence-cotton-burger-content-plushie-atmosian
   sprites:
-  - sprite: Objects/Fun/Plushie/atmosian.rsi
+  - sprite: Objects/Fun/Plushies/atmosian.rsi
     state: icon
 
 #Xeno Plushie
@@ -1503,7 +1503,7 @@
   scale: 0.8, 0.8
   name: food-sequence-cotton-burger-content-plushie-xeno
   sprites:
-  - sprite: Objects/Fun/Plushie/xeno.rsi
+  - sprite: Objects/Fun/Plushies/xeno.rsi
     state: icon
 
 #Penguin Plushie
@@ -1513,7 +1513,7 @@
   scale: 0.8, 0.8
   name: food-sequence-cotton-burger-content-plushie-penguin
   sprites:
-  - sprite: Objects/Fun/Plushie/penguin.rsi
+  - sprite: Objects/Fun/Plushies/penguin.rsi
     state: icon
 
 #Human Plushie
@@ -1523,7 +1523,7 @@
   scale: 0.8, 0.8
   name: food-sequence-cotton-burger-content-plushie-human
   sprites:
-  - sprite: Objects/Fun/Plushie/human.rsi
+  - sprite: Objects/Fun/Plushies/human.rsi
     state: icon
 
 #Moth Plushie
@@ -1533,7 +1533,7 @@
   scale: 0.8, 0.8
   name: food-sequence-cotton-burger-content-plushie-moth
   sprites:
-  - sprite: Objects/Fun/Plushie/moth.rsi
+  - sprite: Objects/Fun/Plushies/moth.rsi
     state: icon
 
 #Ian Toy

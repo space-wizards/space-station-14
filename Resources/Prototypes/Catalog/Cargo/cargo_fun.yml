@@ -121,7 +121,7 @@
 - type: cargoProduct
   id: FunSharkPlushies
   icon:
-    sprite: Objects/Fun/Plushie/shark.rsi
+    sprite: Objects/Fun/Plushies/shark.rsi
     state: blue
   product: CrateFunSharkPlushieBulk
   cost: 500
