@@ -321,14 +321,21 @@ namespace Content.Server.Chemistry.EntitySystems
             ClickSound(chemMaster);
         }
 
-        private bool WithdrawFromBuffer(
+        private bool WithdrawFromBeaker(
             Entity<ChemMasterComponent> chemMaster,
             FixedPoint2 neededVolume, EntityUid? user,
             [NotNullWhen(returnValue: true)] out Solution? outputSolution)
         {
             outputSolution = null;
 
-            if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out var solution))
+            //if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out var solution))
+            //{
+            //    return false;
+            //}
+            
+            var container = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
+            if (container is null ||
+                !_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSoln, out var solution)) // Imported from Delta-V
             {
                 return false;
             }
@@ -349,6 +356,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             outputSolution = solution.SplitSolution(neededVolume);
+            _solutionContainerSystem.UpdateChemicals(containerSoln.Value); // DeltaV Beaker Change
             return true;
         }
 
