@@ -174,7 +174,6 @@ public sealed partial class ChangelingSystem : EntitySystem
         _alerts.ShowAlert(uid, "ChangelingBiomass");
 
         var random = _rand.Prob(0.5f);
-        random = true;
 
         if (comp.Biomass <= 0)
         {
