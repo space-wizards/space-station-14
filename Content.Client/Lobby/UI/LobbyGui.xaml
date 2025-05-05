@@ -105,7 +105,8 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Top"
                                 Margin="0 2 2 0"
-                                ModulateSelfOverride="#DEDEDE"/>
+                                ModulateSelfOverride="#DEDEDE"
+                                Scale="0.5 0.5"/>
             </PanelContainer>
         </SplitContainer>
         <PanelContainer Name="ExpandPanel"
@@ -118,7 +119,8 @@
                         TexturePath="filled_left_arrow.svg.192dpi"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        ModulateSelfOverride="#DEDEDE"/>
+                        ModulateSelfOverride="#DEDEDE"
+                        Scale="0.5 0.5"/>
         </PanelContainer>
     </BoxContainer>
 </lobbyUi:LobbyGui>
