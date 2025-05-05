@@ -80,7 +80,8 @@ public sealed partial class StaminaComponent : Component
     #region Animation Data
 
     /// <summary>
-    /// Threshold at which low stamina animations begin playing. This should be equal to the dictionary value if able
+    /// Threshold at which low stamina animations begin playing. This should be set to a value that means something.
+    /// At 50, it is aligned so when you hit 60 stun the entity will be breathing once per second (well above hyperventilation).
     /// </summary>
     [DataField]
     public float AnimationThreshold = 50;
@@ -107,7 +108,7 @@ public sealed partial class StaminaComponent : Component
     /// Maximum vector amount we add to the JitterAmplitudeMin
     /// </summary>
     [AutoNetworkedField, DataField]
-    public float JitterAmplitudeMod = 0.05f;
+    public float JitterAmplitudeMod = 0.025f;
 
     /// <summary>
     /// Minimum total animations per second
@@ -119,13 +120,13 @@ public sealed partial class StaminaComponent : Component
     /// Maximum amount we add to the Frequency min just before crit
     /// </summary>
     [AutoNetworkedField, DataField]
-    public float FrequencyMod = 1.5f;
+    public float FrequencyMod = 2.5f;
 
     /// <summary>
     /// Jitter keyframes per animation
     /// </summary>
     [AutoNetworkedField, DataField]
-    public int Jitters = 6;
+    public int Jitters = 4;
 
     [AutoNetworkedField, DataField]
     public Vector2 LastJitter;

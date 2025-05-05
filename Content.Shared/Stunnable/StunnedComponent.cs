@@ -22,7 +22,7 @@ public sealed partial class StunnedComponent : Component
     /// X vector displacement for our heavy breathing
     /// </summary>
     [AutoNetworkedField, DataField]
-    public float BreathingAmplitude = 0.15f;
+    public float BreathingAmplitude = 0.05f;
 
     /// <summary>
     /// Max angular displacement for our jittering in radians
@@ -34,10 +34,10 @@ public sealed partial class StunnedComponent : Component
     /// Total Animations per second
     /// </summary>
     [AutoNetworkedField, DataField]
-    public float Frequency = 2f;
+    public float Frequency = 3f;
 
     /// <summary>
-    /// Total Animations per second
+    /// Total Rotation Animations per second
     /// </summary>
     [AutoNetworkedField, DataField]
     public float RotationFrequency = 4f;
@@ -53,7 +53,7 @@ public sealed partial class StunnedComponent : Component
     /// Jitters per Animation
     /// </summary>
     [AutoNetworkedField, DataField]
-    public int Jitters = 6;
+    public int Jitters = 4;
 
     /// <summary>
     ///     The offset that an entity had before animation has started,

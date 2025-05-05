@@ -16,8 +16,8 @@ namespace Content.Client.Stunnable
         [Dependency] private readonly IGameTiming _timing = default!;
 
         private readonly int[] _sign = [-1, 1];
-        private const string StunnedAnimationKey1 = "stunnedVector";
-        private const string StunnedAnimationKey2 = "stunnedAngle";
+        public const string StunnedAnimationKeyVector = "stunnedVector";
+        public const string StunnedAnimationKeyRotation = "stunnedAngle";
         public override void Initialize()
         {
             base.Initialize();
@@ -31,7 +31,7 @@ namespace Content.Client.Stunnable
             if (!TryComp<SpriteComponent>(ent, out var sprite) || !_timing.IsFirstTimePredicted)
                 return;
 
-            if (_animation.HasRunningAnimation(ent, StunnedAnimationKey1) || _animation.HasRunningAnimation(ent, StunnedAnimationKey2))
+            if (_animation.HasRunningAnimation(ent, StunnedAnimationKeyVector) || _animation.HasRunningAnimation(ent, StunnedAnimationKeyRotation))
                 return;
 
             var newTime = _timing.CurTime + args.Time;
@@ -48,50 +48,83 @@ namespace Content.Client.Stunnable
         {
             base.OnStunShutdown(ent, ref args);
 
-            if (!_timing.IsFirstTimePredicted || !TryComp<AnimationPlayerComponent>(ent, out var animation))
+            if (!_timing.IsFirstTimePredicted)
+                return;
+
+            var ev = new StunAnimationEndEvent();
+            RaiseLocalEvent(ent, ref ev);
+
+            if (!TryComp<AnimationPlayerComponent>(ent, out var animation))
                 return;
 
             // Standing system should handle the angle offset so we don't need to update that
             if (TryComp(ent, out SpriteComponent? sprite))
                 sprite.Offset = ent.Comp.StartOffset;
 
-            _animation.Stop(ent.Owner, animation, StunnedAnimationKey1);
-            _animation.Stop(ent.Owner, animation, StunnedAnimationKey2);
+            _animation.Stop(ent.Owner, animation, StunnedAnimationKeyVector);
+            _animation.Stop(ent.Owner, animation, StunnedAnimationKeyRotation);
         }
 
         private void OnAnimationCompleted(Entity<StunnedComponent> ent, ref AnimationCompletedEvent args)
         {
-            if(args.Key != StunnedAnimationKey1 && args.Key != StunnedAnimationKey2)
+            if (args.Key != StunnedAnimationKeyVector && args.Key != StunnedAnimationKeyRotation || !args.Finished)
                 return;
 
-            if (!args.Finished || _timing.CurTime < ent.Comp.AnimationEnd)
+            if (_timing.CurTime < ent.Comp.AnimationEnd)
+            {
+                var ev = new StunAnimationEndEvent();
+                RaiseLocalEvent(ent, ref ev);
+                return;
+            }
+
+            if (!HasComp<AnimationPlayerComponent>(ent)
+                || !TryComp<SpriteComponent>(ent, out var sprite))
                 return;
 
-            if (HasComp<AnimationPlayerComponent>(ent)
-                && TryComp<SpriteComponent>(ent, out var sprite))
-                PlayStunnedAnimation(ent, sprite);
+            switch (args.Key)
+            {
+                case StunnedAnimationKeyVector:
+                    _animation.Play(ent.Owner,
+                        GetFatigueAnimation(sprite,
+                            ent.Comp.Frequency,
+                            ent.Comp.Jitters,
+                            (ent.Comp.Amplitude/2, ent.Comp.Amplitude),
+                            (ent.Comp.Amplitude/8, ent.Comp.Amplitude/4),
+                            ent.Comp.BreathingAmplitude,
+                            ent.Comp.StartOffset,
+                            ref ent.Comp.LastJitter),
+                        StunnedAnimationKeyVector);
+                    break;
+                case StunnedAnimationKeyRotation:
+                    _animation.Play(ent.Owner,
+                        GetTwitchAnimation(sprite,
+                            ent.Comp.RotationFrequency,
+                            (ent.Comp.Torque/4, ent.Comp.Torque),
+                            ent.Comp.StartAngle),
+                        StunnedAnimationKeyRotation);
+                    break;
+            }
         }
 
         private void PlayStunnedAnimation(Entity<StunnedComponent> ent, SpriteComponent sprite)
         {
-            // Disabled because we're letting stamina component handle it
-            /*_animation.Play(ent.Owner,
+            _animation.Play(ent.Owner,
                 GetFatigueAnimation(sprite,
                     ent.Comp.Frequency,
-                    entity.Comp.Jitters,
+                    ent.Comp.Jitters,
                     (ent.Comp.Amplitude/2, ent.Comp.Amplitude),
                     (ent.Comp.Amplitude/8, ent.Comp.Amplitude/4),
                     ent.Comp.BreathingAmplitude,
                     ent.Comp.StartOffset,
                     ref ent.Comp.LastJitter),
-                StunnedAnimationKey1);*/
+                StunnedAnimationKeyVector);
 
             _animation.Play(ent.Owner,
                 GetTwitchAnimation(sprite,
                 ent.Comp.RotationFrequency,
                 (ent.Comp.Torque/4, ent.Comp.Torque),
                 ent.Comp.StartAngle),
-                StunnedAnimationKey2);
+                StunnedAnimationKeyRotation);
         }
 
         public Animation GetTwitchAnimation(SpriteComponent sprite, float frequency, (float, float) rotateClamp, Angle startAngle)
@@ -201,5 +234,12 @@ namespace Content.Client.Stunnable
                 }
             };
         }
+
+        /// <summary>
+        ///     Raised on an entity when its stun animation ends.
+        ///     This is because animations bulldoze each other so they need to know who is next in line
+        /// </summary>
+        [ByRefEvent]
+        public record struct StunAnimationEndEvent;
     }
 }

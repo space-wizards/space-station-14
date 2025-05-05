@@ -1,6 +1,7 @@
 ﻿using Content.Client.Stunnable;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Stunnable;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Damage.Systems;
@@ -18,12 +19,40 @@ public sealed class StaminaSystem : SharedStaminaSystem
 
         SubscribeLocalEvent<StaminaComponent, AnimationCompletedEvent>(OnAnimationCompleted);
         SubscribeLocalEvent<ActiveStaminaComponent, ComponentShutdown>(OnActiveStaminaShutdown);
+        SubscribeLocalEvent<StaminaComponent, StunAnimationEvent>(OnStunAnimation);
+        SubscribeLocalEvent<StaminaComponent, StunSystem.StunAnimationEndEvent>(OnStunAnimationEnd);
     }
 
     protected override void UpdateStaminaVisuals(Entity<StaminaComponent> entity)
     {
         base.UpdateStaminaVisuals(entity);
 
+        TryStartAnimation(entity);
+    }
+
+    private void OnActiveStaminaShutdown(Entity<ActiveStaminaComponent> entity, ref ComponentShutdown args)
+    {
+        // If we don't have active stamina, we shouldn't have stamina damage. If the update loop can trust it we can trust it.
+        if (!TryComp<StaminaComponent>(entity, out var stamina))
+            return;
+
+        StopAnimation((entity, stamina));
+    }
+
+    private void OnStunAnimation(Entity<StaminaComponent> entity, ref StunAnimationEvent args)
+    {
+        StopAnimation(entity);
+    }
+
+    protected override void OnShutdown(Entity<StaminaComponent> entity, ref ComponentShutdown args)
+    {
+        base.OnShutdown(entity, ref args);
+
+        StopAnimation(entity);
+    }
+
+    private void TryStartAnimation(Entity<StaminaComponent> entity)
+    {
         if (!TryComp<SpriteComponent>(entity, out var sprite))
             return;
 
@@ -38,22 +67,6 @@ public sealed class StaminaSystem : SharedStaminaSystem
         PlayAnimation(entity, sprite);
     }
 
-    private void OnActiveStaminaShutdown(Entity<ActiveStaminaComponent> entity, ref ComponentShutdown args)
-    {
-        // If we don't have active stamina, we shouldn't have stamina damage. If the update loop can trust it we can trust it.
-        if (!TryComp<StaminaComponent>(entity, out var stamina))
-            return;
-
-        StopAnimation((entity, stamina));
-    }
-
-    protected override void OnShutdown(Entity<StaminaComponent> entity, ref ComponentShutdown args)
-    {
-        base.OnShutdown(entity, ref args);
-
-        StopAnimation(entity);
-    }
-
     private void StopAnimation(Entity<StaminaComponent> entity, SpriteComponent? sprite = null)
     {
         if(!Resolve(entity, ref sprite))
@@ -61,6 +74,11 @@ public sealed class StaminaSystem : SharedStaminaSystem
 
         _animation.Stop(entity.Owner, StaminaAnimationKey);
         entity.Comp.StartOffset = sprite.Offset;
+    }
+
+    private void OnStunAnimationEnd(Entity<StaminaComponent> entity, ref StunSystem.StunAnimationEndEvent args)
+    {
+        TryStartAnimation(entity);
     }
 
     private void OnAnimationCompleted(Entity<StaminaComponent> entity, ref AnimationCompletedEvent args)

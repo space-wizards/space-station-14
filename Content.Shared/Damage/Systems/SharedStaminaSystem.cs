@@ -376,9 +376,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
             return;
         }
 
-        // To make the difference between a stun and a stamcrit clear
-        // TODO: Mask?
-
         component.Critical = true;
         component.StaminaDamage = component.CritThreshold;
 
