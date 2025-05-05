@@ -5443,4 +5443,11 @@ Entries:
   id: 754
   time: '2025-05-03T09:59:24.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/574
+- author: aedler
+  changes:
+  - message: Toned down the announce2 volume.
+    type: Tweak
+  id: 755
+  time: '2025-05-05T23:34:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/575
 
