@@ -59,18 +59,18 @@ public sealed class CollectiveMindUpdateSystem : EntitySystem
         foreach (var prototype in _prototypeManager.EnumeratePrototypes<CollectiveMindPrototype>())
         {
             var components = StringsToRegs(prototype.RequiredComponents);
+            _sawmill.Info($"Got {components.Count} components for {prototype.ID}");
+
+            bool meetsRequirements = false;
+
             foreach (var component in components)
             {
+                _sawmill.Info($"Checking {component.Name} for {prototype.ID}");
                 bool hasComponent = EntityManager.HasComponent(uid, component);
 
                 if (hasComponent)
                 {
-                    CollectiveMindMemberData newData = CreateNewCollectiveMindMemberData(prototype);
-                    collective.Minds.TryAdd(prototype, newData);
-                }
-                else
-                {
-                    collective.Minds.Remove(prototype);
+                    meetsRequirements = true;
                 }
             }
 
@@ -80,12 +80,17 @@ public sealed class CollectiveMindUpdateSystem : EntitySystem
 
                 if (hasTag)
                 {
-                    collective.Minds.TryAdd(prototype, CreateNewCollectiveMindMemberData(prototype));
+                    meetsRequirements = true;
                 }
-                else
-                {
-                    collective.Minds.Remove(prototype);
-                }
+            }
+
+            if (meetsRequirements)
+            {
+                collective.Minds.TryAdd(prototype, CreateNewCollectiveMindMemberData(prototype));
+            }
+            else
+            {
+                collective.Minds.Remove(prototype);
             }
         }
     }
