@@ -127,13 +127,15 @@ namespace Content.Client.Stunnable
                 StunnedAnimationKeyRotation);
         }
 
-        public Animation GetTwitchAnimation(SpriteComponent sprite, float frequency, (float, float) rotateClamp, Angle startAngle)
+        public Animation GetTwitchAnimation(SpriteComponent sprite,
+            float frequency,
+            (float, float) rotateClamp,
+            Angle startAngle)
         {
             // avoid animations with negative length or infinite length
             if (frequency <= 0)
                 return new Animation();
 
-            // This is only half the animation, the other hal
             var rotation = new Angle(_random.NextFloat(rotateClamp.Item1, rotateClamp.Item2));
 
             rotation *= _random.Pick(_sign);
@@ -160,7 +162,14 @@ namespace Content.Client.Stunnable
             };
         }
 
-        public Animation GetFatigueAnimation(SpriteComponent sprite, float frequency, int jitters, (float, float) jitterX, (float, float) jitterY, float breathing, Vector2 startOffset, ref Vector2 lastJitter)
+        public Animation GetFatigueAnimation(SpriteComponent sprite,
+            float frequency,
+            int jitters,
+            (float, float) jitterX,
+            (float, float) jitterY,
+            float breathing,
+            Vector2 startOffset,
+            ref Vector2 lastJitter)
         {
             // avoid animations with negative length or infinite length
             if (frequency <= 0)

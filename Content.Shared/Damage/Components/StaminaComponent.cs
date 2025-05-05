@@ -102,13 +102,13 @@ public sealed partial class StaminaComponent : Component
     /// Minimum vector displacement for jittering at AnimationThreshold
     /// </summary>
     [AutoNetworkedField, DataField]
-    public float JitterAmplitudeMin = 0.025f;
+    public float JitterAmplitudeMin;
 
     /// <summary>
     /// Maximum vector amount we add to the JitterAmplitudeMin
     /// </summary>
     [AutoNetworkedField, DataField]
-    public float JitterAmplitudeMod = 0.025f;
+    public float JitterAmplitudeMod = 0.05f;
 
     /// <summary>
     /// Minimum total animations per second
