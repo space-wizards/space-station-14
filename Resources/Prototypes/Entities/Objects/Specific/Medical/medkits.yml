@@ -55,9 +55,9 @@
   id: MedkitO2
   components:
   - type: Sprite
-    state: o2
+    state: airloss
   - type: Item
-    heldPrefix: o2
+    heldPrefix: airloss
 
 - type: entity
   name: toxin treatment kit
@@ -66,9 +66,9 @@
   id: MedkitToxin
   components:
   - type: Sprite
-    state: toxin
+    state: poison
   - type: Item
-    heldPrefix: toxin
+    heldPrefix: poison
 
 - type: entity
   name: radiation treatment kit
