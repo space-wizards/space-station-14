@@ -59,13 +59,11 @@ public sealed class CollectiveMindUpdateSystem : EntitySystem
         foreach (var prototype in _prototypeManager.EnumeratePrototypes<CollectiveMindPrototype>())
         {
             var components = StringsToRegs(prototype.RequiredComponents);
-            _sawmill.Info($"Got {components.Count} components for {prototype.ID}");
 
             bool meetsRequirements = false;
 
             foreach (var component in components)
             {
-                _sawmill.Info($"Checking {component.Name} for {prototype.ID}");
                 bool hasComponent = EntityManager.HasComponent(uid, component);
 
                 if (hasComponent)
