@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Supply assistant's loadout options reduced to be in line with other intern
-      roles.
-    type: Remove
-  id: 1105
-  time: '2025-02-11T21:05:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1655
-- author: mqole
-  changes:
-  - message: Command playtime is no longer required for most command roles.
-    type: Tweak
-  id: 1106
-  time: '2025-02-11T22:31:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1659
 - author: Blackern5000
   changes:
   - message: Added four new big snake tail markings for reptilians.
@@ -4143,3 +4128,31 @@
   id: 1604
   time: '2025-05-04T23:55:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2382
+- author: AvianMaiden
+  changes:
+  - message: Station-specific category no longer appears on the job selection menu,
+      as the jobs are not station-specific.
+    type: Tweak
+  id: 1605
+  time: '2025-05-05T00:03:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2394
+- author: TuttlePants, AvianMaiden
+  changes:
+  - message: Added a Bounty Hunter guidebook entry
+    type: Add
+  - message: Bounty Hunters now spawn with a gas mask
+    type: Tweak
+  - message: A few minor changes the Heron
+    type: Tweak
+  - message: borgdisabler and borgstunbaton no longer show up in the spawning menu
+    type: Tweak
+  - message: Bounty Hunters now spawn more often
+    type: Tweak
+  - message: Bounty Hunter gear is now (mostly) put into a bag instead of spilling
+      onto the floor
+    type: Fix
+  - message: Bounty Hunters now have last names
+    type: Fix
+  id: 1606
+  time: '2025-05-05T00:02:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2402
