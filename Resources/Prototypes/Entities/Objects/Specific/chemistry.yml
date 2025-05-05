@@ -602,8 +602,6 @@
     solutions:
       food:
         maxVol: 20
-  - type: ExplosionResistance
-    damageCoefficient: 0.025 # survives conventional explosives but not minibombs and nukes
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -653,3 +651,27 @@
       tags:
       - Pill
   - type: Dumpable
+
+- type: entity
+  name: medical pouch
+  id: MedicalPouch
+  parent: PillCanister
+  description: Holds up to 12 tiny medical items.
+  components:
+  - type: Item
+    size: Small
+    sprite: Objects/Specific/Chemistry/medical_pouch.rsi
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/medical_pouch.rsi
+    state: icon
+  - type: Storage
+    grid:
+    - 0,0,3,2
+    whitelist:
+      tags:
+      - Pill
+      - Bottle
+      - Vial
+      - Syringe
+      components:
+      - Inejector
