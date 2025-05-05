@@ -8,18 +8,18 @@
   },
   "states": [
     {
-      "name": "expi"
+      "name": "icon"
     },
     {
-      "name": "expi-inhand-left",
+      "name": "inhand-left",
       "directions": 4
     },
     {
-      "name": "expi-inhand-right",
+      "name": "inhand-right",
       "directions": 4
     },
     {
-      "name": "expi-equipped-HELMET",
+      "name": "equipped-HELMET",
       "directions": 4
     }
   ]
