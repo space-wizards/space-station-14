@@ -1,0 +1,54 @@
+<Document>
+
+## Character Records
+
+You can create records for your characters in the records tab of the character
+creator. Simply fill in the values and save. Entries should typically be
+written from the perspective of a CentComm official or other supervisor.
+
+The records available from all records computers include height, weight, age,
+species, pronouns, job (in-round), and place of residency.
+
+## General/Employment Entries
+
+Employee Entries should include your character's education, previous jobs, and
+anything that you think Nanotrasen would log about your character's past that is
+employment-related. This also serves as a catch-all for any non-medical, non-security
+entries that are on file.
+
+The other records available here are the length of time your character has worked at
+Nanotrasen in years, and if your character has been approved for work.
+
+## Medical Entries
+
+Medical Entries should include anything a doctor should know before treating
+your character; major surgeries, prescriptions, and any psychological evaluations.
+
+The other records available here are allergies/drug allergies, other medical
+concerns—such as if you play with random unrevivable and wish to detail such with a lore
+explanation—and instructions for what to do with your character's corpse.
+
+## Security Entries
+
+Security Entries should include any major arrests/incidents your character has
+had in the past or while working with Nanotrasen. Minor incidents should
+generally be avoided.
+
+Other records available here are identifying features, plus the standard Criminal
+Records Computer data for gameplay.
+
+## Accessing Records
+You can access the records of your crewmates in-game from their respective consoles.
+These consoles are typically found in their respective departments!
+
+<Box>
+<GuideEntityEmbed Entity="ComputerMedicalRecords" Caption="Medical"/>
+<GuideEntityEmbed Entity="ComputerCriminalRecords" Caption="Security"/>
+<GuideEntityEmbed Entity="ComputerStationRecords" Caption="Station"/>
+</Box>
+
+Entries can only be written in the character customization menu and not during
+a round. It is not required that you make any records or entries; interact with
+this feature as much or as little as you want!
+
+</Document>

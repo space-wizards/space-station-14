@@ -1,0 +1,14 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+               Title="{Loc cd-actions-admin-modify-records}"
+               MinSize="300 300">
+    <BoxContainer Orientation="Vertical">
+        <LineEdit Name="EntityEdit" PlaceHolder="Entity" HorizontalExpand="True" />
+        <OptionButton Name="EntityEntryType" HorizontalExpand="True" />
+        <LineEdit Name="EntityEntryIndex" PlaceHolder="Index"/>
+        <BoxContainer Orientation="Horizontal" >
+            <cc:CommandButton Name="PurgeCommand" Text="{Loc cd-actions-admin-modify-reset}"/>
+            <cc:CommandButton Name="DelCommand" Text="{Loc cd-actions-admin-modify-del-entry}"/>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

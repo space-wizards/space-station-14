@@ -34,6 +34,11 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
+// Begin CD - Character Records
+using System.Globalization;
+using Content.Client._CD.Records.UI;
+using Content.Shared._CD.Records;
+// End CD - Character Records
 
 namespace Content.Client.Lobby.UI
 {
@@ -98,6 +103,10 @@ namespace Content.Client.Lobby.UI
         private ColorSelectorSliders _rgbSkinColorSelector;
 
         private bool _isDirty;
+
+        // Begin CD - Station Records
+        private readonly RecordEditorGui _recordsTab;
+        // End CD - Station Records
 
         [ValidatePrototypeId<GuideEntryPrototype>]
         private const string DefaultSpeciesGuidebook = "Species";
@@ -416,6 +425,16 @@ namespace Content.Client.Lobby.UI
             Markings.OnMarkingRankChange += OnMarkingChange;
 
             #endregion Markings
+
+            // Begin CD - Character Records
+            #region CosmaticRecords
+
+            _recordsTab = new RecordEditorGui(UpdateProfileRecords);
+            TabContainer.AddChild(_recordsTab);
+            TabContainer.SetTabTitle(TabContainer.ChildCount - 1, Loc.GetString("humanoid-profile-editor-cd-records-tab"));
+
+            #endregion CosmaticRecords
+            // End CD - Character Records
 
             RefreshFlavorText();
 
@@ -761,6 +780,10 @@ namespace Content.Client.Lobby.UI
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
 
+            // Begin CD - Character Records
+            _recordsTab.Update(profile);
+            // End CD - Character Records
+
             RefreshAntags();
             RefreshJobs();
             RefreshLoadouts();
@@ -1056,6 +1079,16 @@ namespace Content.Client.Lobby.UI
 
             UpdateJobPriorities();
         }
+
+        // Start CD - Character Records
+        private void UpdateProfileRecords(PlayerProvidedCharacterRecords records)
+        {
+            if (Profile is null)
+                return;
+            Profile = Profile.WithCDCharacterRecords(records);
+            IsDirty = true;
+        }
+        // End CD - Character Records
 
         private void OnFlavorTextChange(string content)
         {
@@ -1588,6 +1621,8 @@ namespace Content.Client.Lobby.UI
             var name = HumanoidCharacterProfile.GetName(Profile.Species, Profile.Gender);
             SetName(name);
             UpdateNameEdit();
+
+            _recordsTab.Update(Profile); // CD - Character Records
         }
 
         private async void ExportImage()

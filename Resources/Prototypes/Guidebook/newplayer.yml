@@ -26,6 +26,7 @@
   children:
   - YourFirstCharacter
   - Species
+  - Records # DeltaV - CD records page goes here
 
 - type: guideEntry
   id: YourFirstCharacter
