@@ -1,23 +1,23 @@
-﻿parse-minutes-fail = Unable to parse '{$minutes}' as minutes
+﻿parse-time-fail = Unable to parse '{$time}' as time
 parse-session-fail = Did not find session for '{$username}'
 
 ## Role Timer Commands
 
 # - playtime_addoverall
-cmd-playtime_addoverall-desc = Adds the specified minutes to a player's overall playtime
-cmd-playtime_addoverall-help = Usage: {$command} <user name> <minutes>
+cmd-playtime_addoverall-desc = Adds the specified timespan to a player's overall playtime.
+cmd-playtime_addoverall-help = Usage: {$command} <user name> <brief alphanumeric timespan, such as "90m" or "1.5h">
 cmd-playtime_addoverall-succeed = Increased overall time for {$username} to {TOSTRING($time, "dddd\\:hh\\:mm")}
 cmd-playtime_addoverall-arg-user = <user name>
-cmd-playtime_addoverall-arg-minutes = <minutes>
+cmd-playtime_addoverall-arg-minutes = <brief alphanumeric timespan>
 cmd-playtime_addoverall-error-args = Expected exactly two arguments
 
 # - playtime_addrole
-cmd-playtime_addrole-desc = Adds the specified minutes to a player's role playtime
-cmd-playtime_addrole-help = Usage: {$command} <user name> <role> <minutes>
+cmd-playtime_addrole-desc = Adds the specified timespan to a player's role playtime
+cmd-playtime_addrole-help = Usage: {$command} <user name> <role> <brief alphanumeric timespan, such as "90m" or "1.5h">
 cmd-playtime_addrole-succeed = Increased role playtime for {$username} / \'{$role}\' to {TOSTRING($time, "dddd\\:hh\\:mm")}
 cmd-playtime_addrole-arg-user = <user name>
 cmd-playtime_addrole-arg-role = <role>
-cmd-playtime_addrole-arg-minutes = <minutes>
+cmd-playtime_addrole-arg-minutes = <brief alphanumeric timespan>
 cmd-playtime_addrole-error-args = Expected exactly three arguments
 
 # - playtime_getoverall

@@ -3,6 +3,7 @@ using Content.Shared.Administration;
 using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Commands;
 
@@ -24,9 +25,18 @@ public sealed class PlayTimeAddOverallCommand : IConsoleCommand
             return;
         }
 
-        if (!int.TryParse(args[1], out var minutes))
+        TimeSpan? time;
+
+        // Interpreting numbers as minutes contrary to our typical handling of TimeSpans
+        // to preserve the legacy behavior of the command
+        if (int.TryParse(args[1], out var minutes))
         {
-            shell.WriteError(Loc.GetString("parse-minutes-fail", ("minutes", args[1])));
+            time = TimeSpan.FromMinutes(minutes);
+        }
+        else if (TimeSpanExt.TryTimeSpan(args[1], out time)) { }
+        else
+        {
+            shell.WriteError(Loc.GetString("parse-time-fail", ("time", args[1])));
             return;
         }
 
@@ -36,7 +46,7 @@ public sealed class PlayTimeAddOverallCommand : IConsoleCommand
             return;
         }
 
-        _playTimeTracking.AddTimeToOverallPlaytime(player, TimeSpan.FromMinutes(minutes));
+        _playTimeTracking.AddTimeToOverallPlaytime(player, time.Value);
         var overall = _playTimeTracking.GetOverallPlaytime(player);
 
         shell.WriteLine(Loc.GetString(
@@ -84,20 +94,27 @@ public sealed class PlayTimeAddRoleCommand : IConsoleCommand
         }
 
         var role = args[1];
+        TimeSpan? time;
 
-        var m = args[2];
-        if (!int.TryParse(m, out var minutes))
+        // Interpreting numbers as minutes contrary to our typical handling of TimeSpans
+        // to preserve the legacy behavior of the command
+        if (int.TryParse(args[2], out var minutes))
         {
-            shell.WriteError(Loc.GetString("parse-minutes-fail", ("minutes", minutes)));
+            time = TimeSpan.FromMinutes(minutes);
+        }
+        else if (TimeSpanExt.TryTimeSpan(args[2], out time)) { }
+        else
+        {
+            shell.WriteError(Loc.GetString("parse-time-fail", ("time", args[2])));
             return;
         }
 
-        _playTimeTracking.AddTimeToTracker(player, role, TimeSpan.FromMinutes(minutes));
-        var time = _playTimeTracking.GetPlayTimeForTracker(player, role);
+        _playTimeTracking.AddTimeToTracker(player, role, time.Value);
+        var overall = _playTimeTracking.GetPlayTimeForTracker(player, role);
         shell.WriteLine(Loc.GetString("cmd-playtime_addrole-succeed",
             ("username", userName),
             ("role", role),
-            ("time", time)));
+            ("time", overall)));
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
