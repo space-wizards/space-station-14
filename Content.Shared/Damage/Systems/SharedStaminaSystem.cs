@@ -24,22 +24,22 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed partial class StaminaSystem : EntitySystem
+public abstract partial class SharedStaminaSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] protected readonly SharedStunSystem StunSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
 
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
     /// </summary>
-    private static readonly TimeSpan StamCritBufferTime = TimeSpan.FromSeconds(3f);
+    protected static readonly TimeSpan StamCritBufferTime = TimeSpan.FromSeconds(3f);
 
     public float UniversalStaminaDamageModifier { get; private set; } = 1f;
 
@@ -79,18 +79,18 @@ public sealed partial class StaminaSystem : EntitySystem
         }
     }
 
-    private void OnShutdown(EntityUid uid, StaminaComponent component, ComponentShutdown args)
+    protected virtual void OnShutdown(Entity<StaminaComponent> entity, ref ComponentShutdown args)
     {
-        if (MetaData(uid).EntityLifeStage < EntityLifeStage.Terminating)
+        if (MetaData(entity).EntityLifeStage < EntityLifeStage.Terminating)
         {
-            RemCompDeferred<ActiveStaminaComponent>(uid);
+            RemCompDeferred<ActiveStaminaComponent>(entity);
         }
-        _alerts.ClearAlert(uid, component.StaminaAlert);
+        _alerts.ClearAlert(entity, entity.Comp.StaminaAlert);
     }
 
-    private void OnStartup(EntityUid uid, StaminaComponent component, ComponentStartup args)
+    private void OnStartup(Entity<StaminaComponent> entity, ref ComponentStartup args)
     {
-        SetStaminaAlert(uid, component);
+        UpdateStaminaVisuals(entity);
     }
 
     [PublicAPI]
@@ -99,23 +99,23 @@ public sealed partial class StaminaSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return 0f;
 
-        var curTime = _timing.CurTime;
+        var curTime = Timing.CurTime;
         var pauseTime = _metadata.GetPauseTime(uid);
         return MathF.Max(0f, component.StaminaDamage - MathF.Max(0f, (float) (curTime - (component.NextUpdate + pauseTime)).TotalSeconds * component.Decay));
     }
 
-    private void OnRejuvenate(EntityUid uid, StaminaComponent component, RejuvenateEvent args)
+    private void OnRejuvenate(Entity<StaminaComponent> entity, ref RejuvenateEvent args)
     {
-        if (component.StaminaDamage >= component.CritThreshold)
+        if (entity.Comp.StaminaDamage >= entity.Comp.CritThreshold)
         {
-            ExitStamCrit(uid, component);
+            ExitStamCrit(entity, entity.Comp);
         }
 
-        component.StaminaDamage = 0;
-        AdjustSlowdown(uid);
-        RemComp<ActiveStaminaComponent>(uid);
-        SetStaminaAlert(uid, component);
-        Dirty(uid, component);
+        entity.Comp.StaminaDamage = 0;
+        AdjustSlowdown(entity.Owner);
+        RemComp<ActiveStaminaComponent>(entity);
+        UpdateStaminaVisuals(entity);
+        Dirty(entity);
     }
 
     private void OnDisarmed(EntityUid uid, StaminaComponent component, ref DisarmedEvent args)
@@ -212,6 +212,11 @@ public sealed partial class StaminaSystem : EntitySystem
         TakeStaminaDamage(target, component.Damage, source: uid, sound: component.Sound);
     }
 
+    protected virtual void UpdateStaminaVisuals(Entity<StaminaComponent> entity)
+    {
+        SetStaminaAlert(entity, entity.Comp);
+    }
+
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
     {
         if (!Resolve(uid, ref component, false) || component.Deleted)
@@ -268,7 +273,7 @@ public sealed partial class StaminaSystem : EntitySystem
         // Reset the decay cooldown upon taking damage.
         if (oldDamage < component.StaminaDamage)
         {
-            var nextUpdate = _timing.CurTime + TimeSpan.FromSeconds(component.Cooldown);
+            var nextUpdate = Timing.CurTime + TimeSpan.FromSeconds(component.Cooldown);
 
             if (component.NextUpdate < nextUpdate)
                 component.NextUpdate = nextUpdate;
@@ -276,7 +281,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
         AdjustSlowdown(uid);
 
-        SetStaminaAlert(uid, component);
+        UpdateStaminaVisuals((uid, component));
 
         // Checking if the stamina damage has decreased to zero after exiting the stamcrit
         if (component.AfterCritical && oldDamage > component.StaminaDamage && component.StaminaDamage <= 0f)
@@ -330,7 +335,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
         var stamQuery = GetEntityQuery<StaminaComponent>();
         var query = EntityQueryEnumerator<ActiveStaminaComponent>();
-        var curTime = _timing.CurTime;
+        var curTime = Timing.CurTime;
 
         while (query.MoveNext(out var uid, out _))
         {
@@ -377,10 +382,11 @@ public sealed partial class StaminaSystem : EntitySystem
         component.Critical = true;
         component.StaminaDamage = component.CritThreshold;
 
-        _stunSystem.TryParalyze(uid, component.StunTime, true);
+        if (StunSystem.TryParalyze(uid, component.StunTime, true))
+            StunSystem.PlayStunAnimation(uid, component.StunTime);
 
         // Give them buffer before being able to be re-stunned
-        component.NextUpdate = _timing.CurTime + component.StunTime + StamCritBufferTime;
+        component.NextUpdate = Timing.CurTime + component.StunTime + StamCritBufferTime;
         EnsureComp<ActiveStaminaComponent>(uid);
         Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} entered stamina crit");
@@ -396,9 +402,9 @@ public sealed partial class StaminaSystem : EntitySystem
 
         component.Critical = false;
         component.AfterCritical = true;  // Set to true to indicate that stamina will be restored after exiting stamcrit
-        component.NextUpdate = _timing.CurTime;
+        component.NextUpdate = Timing.CurTime;
 
-        SetStaminaAlert(uid, component);
+        UpdateStaminaVisuals((uid, component));
         Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{ToPrettyString(uid):user} recovered from stamina crit");
     }
@@ -427,6 +433,6 @@ public sealed partial class StaminaSystem : EntitySystem
                 closest = thres.Key;
         }
 
-        _stunSystem.UpdateStunModifiers(ent, ent.Comp.StunModifierThresholds[closest]);
+        StunSystem.UpdateStunModifiers(ent, ent.Comp.StunModifierThresholds[closest]);
     }
 }
