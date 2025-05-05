@@ -29,9 +29,9 @@
   id: MedkitBurn
   components:
   - type: Sprite
-    state: burnkit
+    state: burn
   - type: Item
-    heldPrefix: burnkit
+    heldPrefix: burn
 
 - type: entity
   name: toxin treatment kit
@@ -40,9 +40,9 @@
   id: MedkitToxin
   components:
   - type: Sprite
-    state: toxinkit
+    state: toxin
   - type: Item
-    heldPrefix: toxinkit
+    heldPrefix: toxin
 
 - type: entity
   name: oxygen deprivation treatment kit
@@ -51,9 +51,9 @@
   id: MedkitO2
   components:
   - type: Sprite
-    state: o2kit
+    state: o2
   - type: Item
-    heldPrefix: o2kit
+    heldPrefix: o2
 
 - type: entity
   name: brute trauma treatment kit
@@ -62,9 +62,9 @@
   id: MedkitBrute
   components:
   - type: Sprite
-    state: brutekit
+    state: brute
   - type: Item
-    heldPrefix: brutekit
+    heldPrefix: brute
 
 - type: entity
   name: advanced first aid kit
@@ -73,9 +73,9 @@
   id: MedkitAdvanced
   components:
   - type: Sprite
-    state: advkit
+    state: advanced
   - type: Item
-    heldPrefix: advkit
+    heldPrefix: advanced
 
 - type: entity
   name: radiation treatment kit
@@ -84,9 +84,9 @@
   id: MedkitRadiation
   components:
   - type: Sprite
-    state: radkit
+    state: radiation
   - type: Item
-    heldPrefix: radkit
+    heldPrefix: radiation
 
 - type: entity
   name: combat medical kit
@@ -95,8 +95,7 @@
   id: MedkitCombat
   components:
   - type: Sprite
-    state: blackkit
+    state: combat
   - type: Item
-    heldPrefix: blackkit
+    heldPrefix: combat
     size: Normal
-
