@@ -63,7 +63,9 @@ public sealed partial class MansusGraspSystem : EntitySystem
                 break;
 
             case "Flesh":
-                if (TryComp<MobStateComponent>(target, out var mobState) && mobState.CurrentState == Shared.Mobs.MobState.Dead)
+                if (TryComp<MobStateComponent>(target, out var mobState)
+                    && mobState.CurrentState == Shared.Mobs.MobState.Dead
+                    && !TryComp<HellVictimComponent>(target, out var _))
                 {
                     var ghoul = EnsureComp<GhoulComponent>(target);
                     ghoul.BoundHeretic = performer;
