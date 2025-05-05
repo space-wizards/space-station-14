@@ -88,27 +88,26 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             if (!part.Entity.HasValue && !part.Optional)
                 missingParts = true;
 
-            // Even optional parts should trigger state updates
-            if (part.Entity != originalPart)
-            {
-                stateHasChanged = true;
+            if (part.Entity == originalPart)
+                continue; // Nothing has changed here
 
-                if (part.Entity.HasValue)
-                {
-                    // This part gained an entity, add the Part component so it can find out which machine
-                    // it's a part of
-                    var comp = EnsureComp<MultipartMachinePartComponent>(GetEntity(part.Entity.Value));
-                    comp.Master = ent;
-                    partsAdded.Add(key);
-                }
-                else
-                {
-                    // This part lost its entity, ensure we clean up the old entity so it's no longer marked
-                    // as something we care about.
-                    var comp = EnsureComp<MultipartMachinePartComponent>(GetEntity(originalPart!.Value));
-                    comp.Master = null;
-                    partsRemoved.Add(key);
-                }
+            stateHasChanged = true;
+
+            if (part.Entity.HasValue)
+            {
+                // This part gained an entity, add the Part component so it can find out which machine
+                // it's a part of
+                var comp = EnsureComp<MultipartMachinePartComponent>(GetEntity(part.Entity.Value));
+                comp.Master = ent;
+                partsAdded.Add(key);
+            }
+            else
+            {
+                // This part lost its entity, ensure we clean up the old entity so it's no longer marked
+                // as something we care about.
+                var comp = EnsureComp<MultipartMachinePartComponent>(GetEntity(originalPart!.Value));
+                comp.Master = null;
+                partsRemoved.Add(key);
             }
         }
 
