@@ -1288,7 +1288,7 @@
   name: food-sequence-cotton-burger-content-plushie-bee
   scale: 0.75, 0.75
   sprites:
-  - sprite: Objects/Fun/Pluishes/bee.rsi
+  - sprite: Objects/Fun/Plushies/bee.rsi
     state: icon
 
 # Hamptr Plushie
@@ -1368,8 +1368,8 @@
   scale: 0.8, 0.8
   name: food-sequence-cotton-burger-content-plushie-experiment
   sprites:
-  - sprite: Objects/Fun/expiplush.rsi
-    state: expi
+  - sprite: Objects/Fun/Plushies/expi.rsi
+    state: icon
 
 #Diona Plushie
 
