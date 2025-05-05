@@ -27,7 +27,7 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
         SubscribeLocalEvent<DragonRoleComponent, GetBriefingEvent>(UpdateBriefing);
     }
 
-    private void UpdateBriefing(Entity<DragonRuleComponent> entity, ref GetBriefingEvent args)
+    private void UpdateBriefing(Entity<DragonRoleComponent> entity, ref GetBriefingEvent args)
     {
         var ent = args.Mind.Comp.OwnedEntity;
 
