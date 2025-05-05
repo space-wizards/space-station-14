@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": "CC0-1.0",
-  "copyright": "Based on flatpacker sprites from vgstation, adapted by EmoGarbage404 (github)",
+  "license": "CC-BY-NC-3.0",
+  "copyright": "vectorassembly (Based on flatpacker sprites from vgstation)",
   "size": {
     "x": 32,
     "y": 32
