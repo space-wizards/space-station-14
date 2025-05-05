@@ -23,9 +23,6 @@ lathe-category-security = Security
 lathe-category-service = Service
 lathe-category-supply = Supply
 
-# Science
-lathe-category-mechs = Mechs
-
 # Sec
 lathe-category-ammo = Ammo
 lathe-category-boxes = Boxes

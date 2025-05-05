@@ -188,7 +188,6 @@ public sealed class ReflectSystem : EntitySystem
         if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
             (reflect.Reflects & hitscanReflectType) == 0x0 ||
             !_toggle.IsActivated(reflector) ||
-            (reflect.Reflects & reflectType) == 0x0 ||  //🌟Starlight🌟
             !_random.Prob(reflect.ReflectProb))
         {
             newDirection = null;

@@ -22,7 +22,6 @@ public sealed class IdCardSystem : SharedIdCardSystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly CookingDeviceSystem _microwave = default!; // Starlight-edit
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly MicrowaveSystem _microwave = default!;
 
     public override void Initialize()
     {

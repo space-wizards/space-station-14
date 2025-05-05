@@ -77,11 +77,6 @@
   id: Supply
   name: lathe-category-supply
 
-# Science
-- type: latheCategory
-  id: Mech
-  name: lathe-category-mechs
-
 # Sec
 - type: latheCategory
   id: Ammo

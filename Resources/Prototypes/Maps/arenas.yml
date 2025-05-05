@@ -25,3 +25,4 @@
           mapNameTemplate: "DM01 Entryway"
         - type: StationJobs
           availableJobs:
+            Assistant: [ -1, -1 ]

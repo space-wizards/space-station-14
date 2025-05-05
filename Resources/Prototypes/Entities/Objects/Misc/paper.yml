@@ -53,7 +53,6 @@
       SheetPrinter: 100
   - type: Item
     size: Tiny
-  - type: PhysicalComposition
 
 - type: entity
   name: paper

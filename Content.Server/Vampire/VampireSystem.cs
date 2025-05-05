@@ -41,6 +41,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Server.Charges;
+using Content.Shared.Charges.Components;
 
 namespace Content.Server.Vampire;
 
@@ -78,6 +80,7 @@ public sealed partial class VampireSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedVampireSystem _vampire = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly ChargesSystem _charges = default!;
 
     public override void Initialize()
     {
@@ -241,7 +244,8 @@ public sealed partial class VampireSystem : EntitySystem
         if (mutationsAction == null)
             return;
 
-        _action.SetCharges(mutationsAction, chargeDisplay);
+        if(TryComp<LimitedChargesComponent>(mutationsAction, out var charges))
+            _charges.SetCharges((mutationsAction.Value, charges), chargeDisplay);
     }
     
     private void OnVampireBloodChangedEvent(EntityUid uid, VampireComponent component, VampireBloodChangedEvent args)

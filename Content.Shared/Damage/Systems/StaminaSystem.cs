@@ -411,12 +411,6 @@ public sealed partial class StaminaSystem : EntitySystem
     }
 }
 
-/// <summary>
-///     Raised before stamina damage is dealt to allow other systems to cancel it.
-/// </summary>
-[ByRefEvent]
-public record struct BeforeStaminaDamageEvent(float Value, bool Cancelled = false);
-
 public sealed class StaminaModifyEvent: EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;

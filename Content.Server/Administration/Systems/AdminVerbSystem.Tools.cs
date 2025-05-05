@@ -78,31 +78,18 @@ public sealed partial class AdminVerbSystem
                     : new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/bolt.png")),
                 Act = () =>
                 {
-        if (_adminManager.HasAdminFlag(player, AdminFlags.Admin))
-        {
-            if (TryComp<DoorBoltComponent>(args.Target, out var bolts))
-            {
-                Verb bolt = new()
-                {
-                    Text = bolts.BoltsDown ? "Unbolt" : "Bolt",
-                    Category = VerbCategory.Tricks,
-                    Icon = bolts.BoltsDown
-                        ? new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/unbolt.png"))
-                        : new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/bolt.png")),
-                    Act = () =>
-                    {
-                        _door.SetBoltsDown((args.Target, bolts), !bolts.BoltsDown);
-                    },
-                    Impact = LogImpact.Medium,
-                    Message = Loc.GetString(bolts.BoltsDown
-                        ? "admin-trick-unbolt-description"
-                        : "admin-trick-bolt-description"),
-                    Priority = (int) (bolts.BoltsDown ? TricksVerbPriorities.Unbolt : TricksVerbPriorities.Bolt),
-                };
-                args.Verbs.Add(bolt);
-            }
+                    _door.SetBoltsDown((args.Target, bolts), !bolts.BoltsDown);
+                },
+                Impact = LogImpact.Medium,
+                Message = Loc.GetString(bolts.BoltsDown
+                    ? "admin-trick-unbolt-description"
+                    : "admin-trick-bolt-description"),
+                Priority = (int) (bolts.BoltsDown ? TricksVerbPriorities.Unbolt : TricksVerbPriorities.Bolt),
+            };
+            args.Verbs.Add(bolt);
+        }
             
-            if (TryComp<ElectrifiedComponent>(args.Target, out var electrified) && HasComp<DoorComponent>(args.Target))
+        if (TryComp<ElectrifiedComponent>(args.Target, out var electrified) && HasComp<DoorComponent>(args.Target))
             {
                 Verb electrify = new()
                 {
