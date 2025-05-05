@@ -165,11 +165,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ChemistryBottleEpinephrine
-        amount: 2
-      - id: ChemistryBottleEphedrine
-        amount: 2
-      - id: ChemistryBottleOmnizine
+      - di: MedicalPouchCorpsmanFilled
       - id: MedkitCombatFilled
 
 - type: entity
