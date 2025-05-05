@@ -94,6 +94,12 @@
   - type: GravityWell
     baseRadialAcceleration: 6
     maxRange: 8
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
   - type: WarpPoint
     follow: true
     location: Nar'Sie
+    blacklist:
+      tags:
+      - GhostOnlyWarp

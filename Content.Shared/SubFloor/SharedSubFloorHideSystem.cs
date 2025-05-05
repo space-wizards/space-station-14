@@ -1,7 +1,10 @@
 using Content.Shared.Audio;
+using Content.Shared.Construction.Components;
 using Content.Shared.Explosion;
+using Content.Shared.Eye;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -19,10 +22,16 @@ namespace Content.Shared.SubFloor
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] protected readonly SharedMapSystem Map = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+        [Dependency] private readonly SharedVisibilitySystem _visibility = default!;
+        [Dependency] protected readonly SharedPopupSystem _popup = default!;
+
+        private EntityQuery<SubFloorHideComponent> _hideQuery;
 
         public override void Initialize()
         {
             base.Initialize();
+
+            _hideQuery = GetEntityQuery<SubFloorHideComponent>();
 
             SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
@@ -32,6 +41,32 @@ namespace Content.Shared.SubFloor
             SubscribeLocalEvent<SubFloorHideComponent, GettingInteractedWithAttemptEvent>(OnInteractionAttempt);
             SubscribeLocalEvent<SubFloorHideComponent, GettingAttackedAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<SubFloorHideComponent, GetExplosionResistanceEvent>(OnGetExplosionResistance);
+            SubscribeLocalEvent<SubFloorHideComponent, AnchorAttemptEvent>(OnAnchorAttempt);
+            SubscribeLocalEvent<SubFloorHideComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
+        }
+
+        private void OnAnchorAttempt(EntityUid uid, SubFloorHideComponent component, AnchorAttemptEvent args)
+        {
+            // No teleporting entities through floor tiles when anchoring them.
+            var xform = Transform(uid);
+
+            if (TryComp<MapGridComponent>(xform.GridUid, out var grid)
+                && HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates)))
+            {
+                _popup.PopupClient(Loc.GetString("subfloor-anchor-failure", ("entity", uid)), args.User);
+                args.Cancel();
+            }
+        }
+
+        private void OnUnanchorAttempt(EntityUid uid, SubFloorHideComponent component, UnanchorAttemptEvent args)
+        {
+            // No un-anchoring things under the floor. Only required for something like vents, which are still interactable
+            // despite being partially under the floor.
+            if (component.IsUnderCover)
+            {
+                _popup.PopupClient(Loc.GetString("subfloor-unanchor-failure", ("entity", uid)), args.User);
+                args.Cancel();
+            }
         }
 
         private void OnGetExplosionResistance(EntityUid uid, SubFloorHideComponent component, ref GetExplosionResistanceEvent args)
@@ -67,7 +102,7 @@ namespace Content.Shared.SubFloor
                 return;
 
             // Regardless of whether we're on a subfloor or not, unhide.
-            component.IsUnderCover = false;
+            SetUnderCover((uid, component), false);
             UpdateAppearance(uid, component);
         }
 
@@ -80,7 +115,7 @@ namespace Content.Shared.SubFloor
             }
             else if (component.IsUnderCover)
             {
-                component.IsUnderCover = false;
+                SetUnderCover((uid, component), false);
                 UpdateAppearance(uid, component);
             }
         }
@@ -93,7 +128,7 @@ namespace Content.Shared.SubFloor
             if (args.NewTile.Tile.IsEmpty)
                 return; // Anything that was here will be unanchored anyways.
 
-            UpdateTile(args.NewTile.GridUid, Comp<MapGridComponent>(args.NewTile.GridUid), args.NewTile.GridIndices);
+            UpdateTile(args.NewTile.GridUid, args.Entity.Comp, args.NewTile.GridIndices);
         }
 
         /// <summary>
@@ -105,11 +140,22 @@ namespace Content.Shared.SubFloor
                 return;
 
             if (xform.Anchored && TryComp<MapGridComponent>(xform.GridUid, out var grid))
-                component.IsUnderCover = HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates));
+                SetUnderCover((uid, component), HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates)));
             else
-                component.IsUnderCover = false;
+                SetUnderCover((uid, component), false);
 
             UpdateAppearance(uid, component);
+        }
+
+        private void SetUnderCover(Entity<SubFloorHideComponent> entity, bool value)
+        {
+            // If it's not undercover or it always has visible layers then normal visibility.
+            _visibility.SetLayer(entity.Owner, value && entity.Comp.VisibleLayers.Count == 0 ? (ushort) VisibilityFlags.Subfloor : (ushort) VisibilityFlags.Normal);
+
+            if (entity.Comp.IsUnderCover == value)
+                return;
+
+            entity.Comp.IsUnderCover = value;
         }
 
         public bool HasFloorCover(EntityUid gridUid, MapGridComponent grid, Vector2i position)
@@ -125,13 +171,13 @@ namespace Content.Shared.SubFloor
 
             foreach (var uid in Map.GetAnchoredEntities(gridUid, grid, position))
             {
-                if (!TryComp(uid, out SubFloorHideComponent? hideComp))
+                if (!_hideQuery.TryComp(uid, out var hideComp))
                     continue;
 
                 if (hideComp.IsUnderCover == covered)
                     continue;
 
-                hideComp.IsUnderCover = covered;
+                SetUnderCover((uid, hideComp), covered);
                 UpdateAppearance(uid, hideComp);
             }
         }
@@ -153,6 +199,12 @@ namespace Content.Shared.SubFloor
             {
                 Appearance.SetData(uid, SubFloorVisuals.Covered, hideComp.IsUnderCover, appearance);
             }
+        }
+
+        [Serializable, NetSerializable]
+        protected sealed class ShowSubfloorRequestEvent : EntityEventArgs
+        {
+            public bool Value;
         }
     }
 

@@ -49,12 +49,16 @@ public sealed class ThirstSystem : EntitySystem
             component.CurrentThirst = _random.Next(
                 (int) component.ThirstThresholds[ThirstThreshold.Thirsty] + 10,
                 (int) component.ThirstThresholds[ThirstThreshold.Okay] - 1);
+
+            DirtyField(uid, component, nameof(ThirstComponent.CurrentThirst));
         }
         component.NextUpdateTime = _timing.CurTime;
         component.CurrentThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
         component.LastThirstThreshold = ThirstThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
         // TODO: Check all thresholds make sense and throw if they don't.
         UpdateEffects(uid, component);
+
+        DirtyFields(uid, component, null, nameof(ThirstComponent.NextUpdateTime), nameof(ThirstComponent.CurrentThirstThreshold), nameof(ThirstComponent.LastThirstThreshold));
 
         TryComp(uid, out MovementSpeedModifierComponent? moveMod);
             _movement.RefreshMovementSpeedModifiers(uid, moveMod);
@@ -103,7 +107,7 @@ public sealed class ThirstSystem : EntitySystem
             component.ThirstThresholds[ThirstThreshold.OverHydrated]
         );
 
-        EntityManager.DirtyField(uid, component, nameof(ThirstComponent.CurrentThirst));
+        DirtyField(uid, component, nameof(ThirstComponent.CurrentThirst));
     }
 
     private bool IsMovementThreshold(ThirstThreshold threshold)
@@ -163,6 +167,9 @@ public sealed class ThirstSystem : EntitySystem
         {
             _alerts.ClearAlertCategory(uid, component.ThirstyCategory);
         }
+
+        DirtyField(uid, component, nameof(ThirstComponent.LastThirstThreshold));
+        DirtyField(uid, component, nameof(ThirstComponent.ActualDecayRate));
 
         switch (component.CurrentThirstThreshold)
         {

@@ -13,7 +13,7 @@ namespace Content.Shared.Explosion;
 ///     entities is evaluated and stored by the explosion system. Adding or removing a prototype would require updating
 ///     that map of airtight entities. This could be done, but is just not yet implemented.
 /// </remarks>
-[Prototype("explosion")]
+[Prototype]
 public sealed partial class ExplosionPrototype : IPrototype
 {
     [IdDataField]

@@ -34,6 +34,10 @@ public sealed class SpeakOnTriggerSystem : EntitySystem
             return;
 
         var message = Loc.GetString(_random.Pick(messagePack.Values));
+        // Chatcode moment: messages starting with "." are considered radio messages.
+        // Prepending ">" forces the message to be spoken instead.
+        // TODO chat refactor: remove this
+        message = '>' + message;
         _chat.TrySendInGameICMessage(ent.Owner, message, InGameICChatType.Speak, true);
 
         if (useDelay != null)

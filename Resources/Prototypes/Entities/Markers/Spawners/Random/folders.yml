@@ -8,7 +8,7 @@
   - type: Transform
     anchored: false
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: Objects/Misc/folders.rsi
     layers:
       - state: folder-base
       - state: folder-colormap

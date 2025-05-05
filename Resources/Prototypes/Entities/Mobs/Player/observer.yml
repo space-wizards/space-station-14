@@ -65,6 +65,7 @@
     - BypassInteractionRangeChecks
   - type: PointLight
     radius: 6
+    castShadows: false
     enabled: false
 
 # proto for player ghosts specifically

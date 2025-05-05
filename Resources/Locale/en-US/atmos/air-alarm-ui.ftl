@@ -15,12 +15,21 @@ air-alarm-ui-window-resync-devices-label = Resync
 air-alarm-ui-window-mode-label = Mode
 air-alarm-ui-window-auto-mode-label = Auto mode
 
+-air-alarm-state-name = { $state ->
+    [normal] Normal
+    [warning] Warning
+    [danger] Danger
+    [emagged] Emagged
+   *[invalid] Invalid
+}
+
+air-alarm-ui-window-listing-title = {$address} : {-air-alarm-state-name(state:$state)}
 air-alarm-ui-window-pressure = {$pressure} kPa
 air-alarm-ui-window-pressure-indicator = Pressure: [color={$color}]{$pressure} kPa[/color]
 air-alarm-ui-window-temperature = {$tempC} C ({$temperature} K)
 air-alarm-ui-window-temperature-indicator = Temperature: [color={$color}]{$tempC} C ({$temperature} K)[/color]
-air-alarm-ui-window-alarm-state = [color={$color}]{$state}[/color]
-air-alarm-ui-window-alarm-state-indicator = Status: [color={$color}]{$state}[/color]
+air-alarm-ui-window-alarm-state = [color={$color}]{-air-alarm-state-name(state:$state)}[/color]
+air-alarm-ui-window-alarm-state-indicator = Status: [color={$color}]{-air-alarm-state-name(state:$state)}[/color]
 
 air-alarm-ui-window-tab-vents = Vents
 air-alarm-ui-window-tab-scrubbers = Scrubbers

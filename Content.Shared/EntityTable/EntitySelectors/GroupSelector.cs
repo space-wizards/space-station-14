@@ -18,6 +18,10 @@ public sealed partial class GroupSelector : EntityTableSelector
         var children = new Dictionary<EntityTableSelector, float>(Children.Count);
         foreach (var child in Children)
         {
+            // Don't include invalid groups
+            if (!child.CheckConditions(entMan, proto))
+                continue;
+
             children.Add(child, child.Weight);
         }
 

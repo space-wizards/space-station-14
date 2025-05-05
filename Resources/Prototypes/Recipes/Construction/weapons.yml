@@ -1,197 +1,167 @@
 - type: construction
-  name: grey bladed flatcap
   id: BladedFlatcapGrey
   graph: BladedFlatcapGrey
   startNode: start
   targetNode: icon
   category: construction-category-weapons
-  description: An inconspicuous hat with glass shards sewn into the brim.
-  icon: { sprite: Clothing/Head/Hats/greyflatcap.rsi, state: icon }
   objectType: Item
 
 - type: construction
-  name: brown bladed flatcap
   id: BladedFlatcapBrown
   graph: BladedFlatcapBrown
   startNode: start
   targetNode: icon
   category: construction-category-weapons
-  description: An inconspicuous hat with glass shards sewn into the brim.
-  icon: { sprite: Clothing/Head/Hats/brownflatcap.rsi, state: icon }
   objectType: Item
 
 - type: construction
-  name: glass shiv
   id: Shiv
   graph: Shiv
   startNode: start
   targetNode: icon
   category: construction-category-weapons
-  description: A glass shard with a piece of cloth wrapped around it.
-  icon: { sprite: Objects/Weapons/Melee/shiv.rsi, state: icon }
   objectType: Item
 
 - type: construction
-  name: reinforced shiv
   id: ReinforcedShiv
   graph: ReinforcedShiv
   startNode: start
   targetNode: icon
   category: construction-category-weapons
-  description: A reinforced glass shard with a piece of cloth wrapped around it.
-  icon: { sprite: Objects/Weapons/Melee/reinforced_shiv.rsi, state: icon }
   objectType: Item
 
 - type: construction
-  name: plasma shiv
   id: PlasmaShiv
   graph: PlasmaShiv
   startNode: start
   targetNode: icon
   category: construction-category-weapons
-  description: A plasma shard with a piece of cloth wrapped around it.
-  icon: { sprite: Objects/Weapons/Melee/plasma_shiv.rsi, state: icon }
   objectType: Item
 
 - type: construction
-  name: uranium shiv
   id: UraniumShiv
   graph: UraniumShiv
   startNode: start
   targetNode: icon
   category: construction-category-weapons
-  description: A uranium shard with a piece of cloth wrapped around it.
-  icon: { sprite: Objects/Weapons/Melee/uranium_shiv.rsi, state: icon }
   objectType: Item
 
 - type: construction
-  name: crude spear
   id: Spear
   graph: Spear
   startNode: start
   targetNode: spear
   category: construction-category-weapons
-  description: A crude spear for when you need to put holes in somebody.
-  icon: { sprite: Objects/Weapons/Melee/spear.rsi, state: spear }
   objectType: Item
 
 - type: construction
-  name: crude reinforced spear
   id: SpearReinforced
   graph: SpearReinforced
   startNode: start
   targetNode: spear
   category: construction-category-weapons
-  description: A crude reinforced spear for when you need to put holes in somebody.
-  icon: { sprite: Objects/Weapons/Melee/reinforced_spear.rsi, state: spear }
   objectType: Item
 
 - type: construction
-  name: crude plasma spear
   id: SpearPlasma
   graph: SpearPlasma
   startNode: start
   targetNode: spear
   category: construction-category-weapons
-  description: A crude plasma spear for when you need to put holes in somebody.
-  icon: { sprite: Objects/Weapons/Melee/plasma_spear.rsi, state: spear }
   objectType: Item
 
 - type: construction
-  name: crude uranium spear
   id: SpearUranium
   graph: SpearUranium
   startNode: start
   targetNode: spear
   category: construction-category-weapons
-  description: A crude uranium spear for when you need to put holes in somebody.
-  icon: { sprite: Objects/Weapons/Melee/uranium_spear.rsi, state: spear }
   objectType: Item
 
 - type: construction
-  name: makeshift bola
+  id: SpearSharkMinnow
+  graph: SpearSharkMinnow
+  startNode: start
+  targetNode: spear
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
   id: Bola
   graph: Bola
   startNode: start
   targetNode: bola
   category: construction-category-weapons
-  description: A simple weapon for tripping someone at a distance.
-  icon: { sprite: Objects/Weapons/Throwable/bola.rsi, state: icon }
   objectType: Item
 
 - type: construction
-  name: wooden buckler
   id: WoodenBuckler
   graph: WoodenBuckler
   startNode: start
   targetNode: woodenBuckler
   category: construction-category-weapons
-  description: A nicely carved wooden shield!
-  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: buckler-icon }
   objectType: Item
 
 - type: construction
-  name: makeshift shield
   id: MakeshiftShield
   graph: MakeshiftShield
   startNode: start
   targetNode: makeshiftShield
   category: construction-category-weapons
-  description: Crude and falling apart. Why would you make this?
-  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: makeshift-icon }
   objectType: Item
 
 - type: construction
-  name: glass shard arrow
   id: ImprovisedArrow
   graph: ImprovisedArrow
   startNode: start
   targetNode: ImprovisedArrow
   category: construction-category-weapons
-  description: An arrow tipped with pieces of a glass shard, for use with a bow.
-  icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: wielded-arrow }
   objectType: Item
 
 - type: construction
-  name: plasma glass shard arrow
+  id: ImprovisedArrowCarp
+  graph: ImprovisedArrowCarp
+  startNode: start
+  targetNode: ImprovisedArrowCarp
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
   id: ImprovisedArrowPlasma
   graph: ImprovisedArrowPlasma
   startNode: start
   targetNode: ImprovisedArrowPlasma
   category: construction-category-weapons
-  description: An arrow tipped with pieces of a plasma glass shard, for use with a bow.
-  icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: wielded-arrow }
   objectType: Item
 
 - type: construction
-  name: uranium glass shard arrow
   id: ImprovisedArrowUranium
   graph: ImprovisedArrowUranium
   startNode: start
   targetNode: ImprovisedArrowUranium
   category: construction-category-weapons
-  description: An arrow tipped with pieces of a uranium glass shard, for use with a bow.
-  icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: wielded-arrow }
   objectType: Item
 
 - type: construction
-  name: improvised bow
   id: ImprovisedBow
   graph: ImprovisedBow
   startNode: start
   targetNode: ImprovisedBow
   category: construction-category-weapons
-  description: A shoddily constructed bow made out of wood and cloth. It's not much, but it's gotten the job done for millennia.
-  icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: unwielded }
   objectType: Item
 
 - type: construction
-  name: bone spear
   id: SpearBone
   graph: SpearBone
   startNode: start
   targetNode: spear
   category: construction-category-weapons
-  description: Bones and silk combined together.
-  icon: { sprite: Objects/Weapons/Melee/bone_spear.rsi, state: spear }
+  objectType: Item
+
+- type: construction
+  id: ClothingHandsKnuckleDustersBrass
+  graph: ClothingHandsKnuckleDustersBrass
+  startNode: start
+  targetNode: icon
+  category: construction-category-weapons
   objectType: Item

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
@@ -37,7 +37,7 @@ public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent
             if (TryComp(uid, out AnimationPlayerComponent? animPlayer)
                 && !AnimationSystem.HasRunningAnimation(uid, animPlayer, FoamVisualsComponent.AnimationKey))
             {
-                AnimationSystem.Play(uid, animPlayer, comp.Animation, FoamVisualsComponent.AnimationKey);
+                AnimationSystem.Play((uid, animPlayer), comp.Animation, FoamVisualsComponent.AnimationKey);
             }
         }
     }

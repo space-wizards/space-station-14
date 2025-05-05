@@ -5,6 +5,7 @@
   description: Something seems to be missing.
   components:
   - type: Sprite
+    drawdepth: ThinPipe
     sprite: Objects/Devices/gates.rsi
     layers:
     - state: base

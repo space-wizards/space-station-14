@@ -66,9 +66,15 @@
     - SingularityEngine
     - SingularityTeslaEngine
     - Power
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
   - type: WarpPoint
     follow: true
     location: singularity
+    blacklist:
+      tags:
+      - GhostOnlyWarp
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     shader: unshaded

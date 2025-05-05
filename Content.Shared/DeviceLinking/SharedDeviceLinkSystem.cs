@@ -4,6 +4,7 @@ using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DeviceLinking;
@@ -14,6 +15,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public const string InvokedPort = "link_port";
 
@@ -525,4 +527,30 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         // NOOP on client for the moment.
     }
     #endregion
+
+    /// <summary>
+    /// Gets how many times a <see cref="DeviceLinkSinkComponent"/> has been invoked recently.
+    /// </summary>
+    /// <remarks>
+    /// The return value of this function goes up by one every time a sink is invoked, and goes down by one every tick.
+    /// </remarks>
+    public int GetEffectiveInvokeCounter(DeviceLinkSinkComponent sink)
+    {
+        // Shouldn't be possible but just to be safe.
+        var curTick = _gameTiming.CurTick;
+        if (curTick < sink.InvokeCounterTick)
+            return 0;
+
+        var tickDelta = curTick.Value - sink.InvokeCounterTick.Value;
+        if (tickDelta >= sink.InvokeCounter)
+            return 0;
+
+        return Math.Max(0, sink.InvokeCounter - (int)tickDelta);
+    }
+
+    protected void SetInvokeCounter(DeviceLinkSinkComponent sink, int value)
+    {
+        sink.InvokeCounterTick = _gameTiming.CurTick;
+        sink.InvokeCounter = value;
+    }
 }

@@ -80,8 +80,8 @@
 - type: entity
   id: CrateEngineeringParticleAccelerator
   parent: CrateEngineeringSecure
-  name: PA crate
-  description: Complex to setup, but rewarding as fuck.
+  name: PA board crate
+  description: Complex to setup, but rewarding as fuck. Contains boards for all particle accelerator components.
   components:
   - type: StorageFill
     contents:

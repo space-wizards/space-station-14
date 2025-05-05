@@ -4,6 +4,10 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: Reactive
+    groups:
+      Extinguish: [ Touch ]
+  - type: ExtinguishableSetCollisionWake
   - type: Smokable
   - type: Sprite
   - type: Appearance

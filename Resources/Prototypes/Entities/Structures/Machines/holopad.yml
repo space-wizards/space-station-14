@@ -14,17 +14,6 @@
           radius: 0.25
         mask:
         - Impassable
-        - HighImpassable
-        - MidImpassable
-      fix2:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.25
-        mask:
-        - MachineLayer
-        layer:
-        - LowImpassable
-        hard: false
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: StationAiVision

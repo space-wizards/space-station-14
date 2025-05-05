@@ -76,6 +76,12 @@ public sealed partial class AlertPrototype : IPrototype
     public bool SupportsSeverity => MaxSeverity != -1;
 
     /// <summary>
+    /// If true, this alert is being handled by the client and will not be overwritten when handling server -> client states.
+    /// </summary>
+    [DataField]
+    public bool ClientHandled = false;
+
+    /// <summary>
     /// Event raised on the user when they click on this alert.
     /// Can be null.
     /// </summary>

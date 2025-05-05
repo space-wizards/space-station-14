@@ -24,6 +24,138 @@
     chance: 0.7
     offset: 0.0
 
+- type: entityTable
+  id: LowValueInstrumentCrateTable
+  table: !type:GroupSelector
+    children:
+    - id: CrateFunInstrumentsVariety
+    - id: CrateFunInstrumentsBrass
+    - id: CrateFunInstrumentsString
+    - id: CrateFunInstrumentsWoodwind
+    - id: CrateFunInstrumentsKeyedPercussion
+    - id: CrateFunInstrumentsSpecial
+      weight: 0.01
+    - id: CrateFunSadTromboneImplants
+      weight: 0.01
+
+- type: entityTable
+  id: LowValueFunCrateTable
+  table: !type:GroupSelector
+    children:
+    - id: CrateFunPlushie
+      weight: 2
+    - id: CrateFunLizardPlushieBulk
+    - id: CrateFunSharkPlushieBulk
+    - id: CrateCandles
+    - id: CrateFunArtSupplies
+    - id: CrateFunFoamGuns
+      weight: 0.01
+
+- type: entityTable
+  id: LowValueMaterialCrateTable
+  table: !type:GroupSelector
+    children:
+    - id: CrateMaterialGlass
+    - id: CrateMaterialSteel
+    - id: CrateMaterialPlastic
+    - id: CrateMaterialWood
+    - id: CrateMaterialPlasteel
+    - id: CrateMaterialBasicResource
+    - id: CrateMaterialRandom
+      weight: 4
+
+- type: entityTable
+  id: LowValueEmergencyCrateTable
+  table: !type:GroupSelector
+    children:
+    - id: CrateEmergencyFire
+    - id: CrateEmergencyInternals
+    - id: CrateEmergencyInflatablewall
+      weight: 0.5
+
+- type: entityTable
+  id: LowValueServiceCrateTable
+  table: !type:GroupSelector
+    children:
+    - id: CrateServiceColorfulLights
+    - id: CrateServiceReplacementLights
+    - id: CrateServiceBureaucracy
+    - id: PetCarrier
+    - id: CrateHydroponicsTools
+    - id: CrateHydroponicsSeeds
+    - id: CrateHydroponicsSeedsExotic
+      weight: 0.5
+    - id: CrateHydroponicsSeedsMedicinal
+      weight: 0.5
+    - id: CrateServiceJanitorialSupplies
+    - id: JanitorialTrolley
+      weight: 0.2
+
+- type: entityTable
+  id: LowValueEngineeringCrateTable
+  table: !type:GroupSelector
+    children:
+    - id: CrateEngineeringCableLV
+    - id: CrateEngineeringCableMV
+    - id: CrateEngineeringCableHV
+    - id: CrateEngineeringCableBulk
+    - id: CrateTechBoardRandom
+    - id: CrateEngineeringSpaceHeater
+    - id: StorageCanister
+      weight: 0.5
+
+- type: entityTable
+  id: LowValueMedicalCrateTable
+  table: !type:GroupSelector
+    children:
+    - id: CrateEmergencyBurnKit
+    - id: CrateEmergencyToxinKit
+    - id: CrateEmergencyBruteKit
+    - id: CrateEmergencyO2Kit
+    - id: CrateEmergencyRadiationKit
+    - id: CrateBodyBags
+    - id: CrateChemistrySupplies
+    - id: CrateChemistryP
+      weight: 0.5
+    - id: CrateChemistryS
+      weight: 0.5
+    - id: CrateChemistryD
+      weight: 0.5
+
+- type: entityTable
+  id: LowValueScienceCrateTable
+  table: !type:GroupSelector
+    children:
+    - id: CrateArtifactContainer
+    - id: HandheldArtifactContainer
+      weight: 0.2
+    - id: CrateMaterialPlasma
+
+- type: entityTable
+  id: LowValueCrateTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: LowValueFunCrateTable
+    - !type:NestedSelector
+      tableId: LowValueInstrumentCrateTable
+      weight: 0.2
+    - !type:NestedSelector
+      tableId: LowValueMaterialCrateTable
+      weight: 2
+    - !type:NestedSelector
+      tableId: LowValueEmergencyCrateTable
+    - !type:NestedSelector
+      tableId: LowValueServiceCrateTable
+    - !type:NestedSelector
+      tableId: LowValueEngineeringCrateTable
+    - !type:NestedSelector
+      tableId: LowValueMedicalCrateTable
+      weight: 0.2
+    - !type:NestedSelector
+      tableId: LowValueScienceCrateTable
+      weight: 0.2
+
 - type: entity
   name: Filled Crate Spawner
   id: CrateFilledSpawner
@@ -35,34 +167,10 @@
     - state: red
     - sprite: Structures/Storage/Crates/o2.rsi
       state: icon
-  - type: RandomSpawner
-    prototypes:
-    - CrateServiceReplacementLights
-    - CrateServiceBureaucracy
-    - CrateChemistrySupplies
-    - CrateMaterialGlass
-    - CrateMaterialSteel
-    - CrateMaterialPlastic
-    - CrateMaterialWood
-    - CrateMaterialPlasteel
-    - CrateMaterialRandom
-    - CrateFunArtSupplies
-    - CrateEngineeringCableLV
-    - CrateEngineeringCableMV
-    - CrateEngineeringCableHV
-    - CrateEngineeringCableBulk
-    - CrateTechBoardRandom
-    - CrateEmergencyFire
-    - CrateEmergencyInternals
-    - CrateEmergencyInflatablewall
-    - CrateHydroponicsTools
-    - CrateHydroponicsSeeds
-    - PetCarrier
-    chance: 0.7
-    rarePrototypes:
-    - CrateMaterialPlasma
-    - CrateHydroponicsSeedsExotic
-    rareChance: 0.1
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: LowValueCrateTable
+      prob: 0.8
     offset: 0.0
 
 - type: entity
@@ -138,4 +246,31 @@
     - CrateEmergencyExplosive
     - CrateSecurityBiosuit
     chance: 0.9
+    offset: 0.0
+
+- type: entityTable
+  id: LockboxTable
+  table: !type:GroupSelector
+    children:
+    - id: CrateLockBoxEngineering
+    - id: CrateLockBoxMedical
+    - id: CrateLockBoxSecurity
+    - id: CrateLockBoxScience
+    - id: CrateLockBoxService
+
+- type: entity
+  name: random lockbox spawner
+  id: LootSpawnerRandomLockbox
+  parent: MarkerBase
+  suffix: 90%
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Storage/Crates/lockbox.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: LockboxTable
+      prob: 0.9
     offset: 0.0

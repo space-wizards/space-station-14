@@ -7,6 +7,7 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
+using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -73,10 +74,13 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
 
             _suicide.ApplyLethalDamage((args.Victim, damageableComponent), "Piercing");
-            var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", args.Victim));
+            var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other",
+                                                ("victim", Identity.Entity(args.Victim, EntityManager)),
+                                                ("this", entity));
             _popupSystem.PopupEntity(othersMessage, args.Victim, Filter.PvsExcept(args.Victim), true);
 
-            var selfMessage = Loc.GetString("comp-kitchen-spike-suicide-self");
+            var selfMessage = Loc.GetString("comp-kitchen-spike-suicide-self",
+                                            ("this", entity));
             _popupSystem.PopupEntity(selfMessage, args.Victim, args.Victim);
             args.Handled = true;
         }
@@ -143,7 +147,11 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable))
                 return;
 
-            _logger.Add(LogType.Gib, LogImpact.Extreme, $"{ToPrettyString(userUid):user} kitchen spiked {ToPrettyString(victimUid):target}");
+            var logImpact = LogImpact.Medium;
+            if (HasComp<HumanoidAppearanceComponent>(victimUid))
+                logImpact = LogImpact.Extreme;
+
+            _logger.Add(LogType.Gib, logImpact, $"{ToPrettyString(userUid):user} kitchen spiked {ToPrettyString(victimUid):target}");
 
             // TODO VERY SUS
             component.PrototypesToSpawn = EntitySpawnCollection.GetSpawns(butcherable.SpawnedEntities, _random);
@@ -155,7 +163,11 @@ namespace Content.Server.Kitchen.EntitySystems
 
             UpdateAppearance(uid, null, component);
 
-            _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill", ("user", Identity.Entity(userUid, EntityManager)), ("victim", victimUid)), uid, PopupType.LargeCaution);
+            _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill",
+                                                    ("user", Identity.Entity(userUid, EntityManager)),
+                                                    ("victim", Identity.Entity(victimUid, EntityManager)),
+                                                    ("this", uid)),
+                                    uid, PopupType.LargeCaution);
 
             _transform.SetCoordinates(victimUid, Transform(uid).Coordinates);
             // THE WHAT?

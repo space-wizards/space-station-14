@@ -1,0 +1,42 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                     xmlns:ui="clr-namespace:Content.Client.Materials.UI"
+                     Title="{Loc 'ore-silo-ui-title'}"
+                     MinSize="400 260"
+                     SetSize="400 460">
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True"
+                  VerticalExpand="True"
+                  Margin="10 10 10 10">
+        <BoxContainer VerticalExpand="True"
+                      HorizontalExpand="True"
+                      Orientation="Vertical"
+                      SizeFlagsStretchRatio="3">
+            <Label Text="{Loc 'ore-silo-ui-label-clients'}" Margin="5 5 5 5" HorizontalAlignment="Center" StyleClasses="LabelKeyText"/>
+            <PanelContainer VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                </PanelContainer.PanelOverride>
+                <ItemList Name="ClientList" SelectMode="Button" VerticalExpand="True"/>
+            </PanelContainer>
+        </BoxContainer>
+        <BoxContainer VerticalExpand="True"
+                      HorizontalExpand="True"
+                      Orientation="Vertical"
+                      SizeFlagsStretchRatio="2">
+            <Label Text="{Loc 'ore-silo-ui-label-mats'}" Margin="5 5 5 5" HorizontalAlignment="Center" StyleClasses="LabelKeyText"/>
+            <PanelContainer VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer
+                    Orientation="Vertical"
+                    VerticalExpand="True"
+                    HorizontalExpand="True">
+                    <ui:MaterialStorageControl Name="Materials"/>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

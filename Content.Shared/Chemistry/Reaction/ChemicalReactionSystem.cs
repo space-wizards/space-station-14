@@ -16,6 +16,11 @@ namespace Content.Shared.Chemistry.Reaction
     public sealed class ChemicalReactionSystem : EntitySystem
     {
         /// <summary>
+        /// Foam reaction protoId.
+        /// </summary>
+        public static readonly ProtoId<ReactionPrototype> FoamReaction = "Foam";
+
+        /// <summary>
         ///     The maximum number of reactions that may occur when a solution is changed.
         /// </summary>
         private const int MaxReactionIterations = 20;

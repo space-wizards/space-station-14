@@ -99,8 +99,38 @@
   - type: Tag
     tags:
       - Spray
-# Vapor
 
+- type: entity
+  parent: SprayBottle
+  id: BorgSprayBottle
+  name: internal spray jet
+  suffix: Filled
+  description: A pressurized vessel for spraying reagents, installed directly into a custodial cyborg. Typically filled with space cleaner for dealing with those nasty spills.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 200
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 200
+
+- type: entity
+  parent: MegaSprayBottle
+  id: BorgMegaSprayBottle
+  name: adv. internal spray jet
+  suffix: Filled
+  description: An upgraded version of the integrated spray bottle, installed directly into a custodial cyborg. Typically filled with space cleaner for dealing with those nasty spills.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 500
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 500
+
+# Vapor
 - type: entity
   id: Vapor
   name: "vapor"
@@ -111,6 +141,8 @@
       vapor:
         maxVol: 50
   - type: Vapor
+    active: true
+    transferAmountPercentage: 0.5
   - type: AnimationPlayer
   - type: Sprite
     sprite: Effects/chempuff.rsi
@@ -130,6 +162,8 @@
         mask:
         - FullTileMask
         - Opaque
+        layer:
+        - ItemMask
   - type: Appearance
   - type: VaporVisuals
 

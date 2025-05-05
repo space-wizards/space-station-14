@@ -130,14 +130,14 @@ public sealed partial class MindTests
         ActorComponent actor = default!;
         Assert.Multiple(() =>
         {
-            Assert.That(player, Is.EqualTo(mind.Session), "Player session does not match mind session");
+            Assert.That(player.UserId, Is.EqualTo(mind.UserId), "Player UserId does not match mind UserId");
             Assert.That(entMan.System<MindSystem>().GetMind(player.UserId), Is.EqualTo(mindId));
             Assert.That(player.AttachedEntity, Is.EqualTo(mind.CurrentEntity), "Player is not attached to the mind's current entity.");
             Assert.That(entMan.EntityExists(mind.OwnedEntity), "The mind's current entity does not exist");
             Assert.That(mind.VisitingEntity == null || entMan.EntityExists(mind.VisitingEntity), "The minds visited entity does not exist.");
             Assert.That(entMan.TryGetComponent(mind.CurrentEntity, out actor));
         });
-        Assert.That(actor.PlayerSession, Is.EqualTo(mind.Session));
+        Assert.That(actor.PlayerSession.UserId, Is.EqualTo(mind.UserId));
 
         return (mindId, mind);
     }
@@ -161,7 +161,6 @@ public sealed partial class MindTests
         {
             Assert.That(player.Status, Is.EqualTo(SessionStatus.Disconnected));
             Assert.That(mind.UserId, Is.Not.Null);
-            Assert.That(mind.Session, Is.Null);
         });
     }
 

@@ -1,0 +1,42 @@
+- type: cargoAccount
+  id: Cargo
+  name: cargo-account-cargo-name
+  code: cargo-account-cargo-code
+  color: "#b48b57"
+  radioChannel: Supply
+
+- type: cargoAccount
+  id: Engineering
+  name: cargo-account-engineering-name
+  code: cargo-account-engineering-code
+  color: "#ff733c"
+  radioChannel: Engineering
+
+- type: cargoAccount
+  id: Medical
+  name: cargo-account-medical-name
+  code: cargo-account-medical-code
+  color: "#57b8f0"
+  radioChannel: Medical
+
+- type: cargoAccount
+  id: Science
+  name: cargo-account-science-name
+  code: cargo-account-science-code
+  color: "#cd7ccd"
+  radioChannel: Science
+
+- type: cargoAccount
+  id: Security
+  name: cargo-account-security-name
+  code: cargo-account-security-code
+  color: "#ff4242"
+  radioChannel: Security
+
+- type: cargoAccount
+  id: Service
+  name: cargo-account-service-name
+  code: cargo-account-service-code
+  color: "#539c00"
+  radioChannel: Service
+

@@ -144,3 +144,18 @@
   license: "CC0-1.0"
   copyright: "Original sound by vestibule-door on freesound.org, processed by DylanWhittingham"
   source: "https://freesound.org/people/vestibule-door/sounds/668985/"
+
+- files: [ "toolbox_close.ogg", "toolbox_open.ogg" ]
+  license: "CC0-1.0"
+  copyright: "Original sound by Nox_Sound on freesound.org. Converted to ogg and edited by themias."
+  source: "https://freesound.org/people/Nox_Sound/sounds/556648/"
+  
+- files: [ "toolbox_insert.ogg" ]
+  license: "CC0-1.0"
+  copyright: "Original sound by j1987 on freesound.org. Converted to ogg and edited by themias."
+  source: "https://freesound.org/people/j1987/sounds/532137/"
+  
+- files: [ "toolbox_remove.ogg" ]
+  license: "CC0-1.0"
+  copyright: "Original sound by kooust on freesound.org. Converted to ogg and edited by themias."
+  source: "https://freesound.org/people/kooust/sounds/452712/"

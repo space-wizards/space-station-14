@@ -1,0 +1,5195 @@
+meta:
+  format: 7
+  category: Grid
+  engineVersion: 255.0.0
+  forkId: ""
+  forkVersion: ""
+  time: 04/30/2025 11:12:40
+  entityCount: 485
+maps: []
+grids:
+- 1
+orphans:
+- 1
+nullspace: []
+tilemap:
+  3: Space
+  5: FloorMetalDiamond
+  0: FloorReinforced
+  4: FloorWhitePlastic
+  2: Lattice
+  1: Plating
+entities:
+- proto: ""
+  entities:
+  - uid: 1
+    components:
+    - type: MetaData
+      name: grid
+    - type: Transform
+      pos: -1.0027034,-0.2303276
+      parent: invalid
+    - type: MapGrid
+      chunks:
+        0,0:
+          ind: 0,0
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAgAAAAAAAwAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAQAAAAAAAQAAAAAAAgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAQAAAAAAAwAAAAAAAgAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAQAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAA
+          version: 6
+        0,-1:
+          ind: 0,-1
+          tiles: AwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAQAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAABAAAAAAABAAAAAAAAQAAAAAAAQAAAAAABAAAAAAABAAAAAAABAAAAAAAAQAAAAAAAgAAAAAAAgAAAAAAAQAAAAAABAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAAAgAAAAAAAgAAAAAABAAAAAAAAQAAAAAABAAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAAAQAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAABAAAAAAABAAAAAAABAAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAgAAAAAAAQAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAAgAAAAAAAgAAAAAAAQAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAA
+          version: 6
+        -1,-1:
+          ind: -1,-1
+          tiles: AwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAQAAAAAAAgAAAAAABQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAABAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAQAAAAAAAgAAAAAAAgAAAAAAAQAAAAAAAQAAAAAABAAAAAAABAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAQAAAAAAAgAAAAAAAgAAAAAAAQAAAAAAAQAAAAAABAAAAAAABAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAQAAAAAAAgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAQAAAAAAAgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAQAAAAAAAgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAAAAAAAA
+          version: 6
+        -1,0:
+          ind: -1,0
+          tiles: AwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAQAAAAAAAgAAAAAAAQAAAAAAAQAAAAAABQAAAAAABQAAAAAAAQAAAAAAAQAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAQAAAAAAAgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAQAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAABAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAA
+          version: 6
+    - type: Broadphase
+    - type: Physics
+      bodyStatus: InAir
+      angularDamping: 0.05
+      linearDamping: 0.05
+      fixedRotation: False
+      bodyType: Dynamic
+    - type: Fixtures
+      fixtures: {}
+    - type: OccluderTree
+    - type: SpreaderGrid
+    - type: Shuttle
+    - type: GridPathfinding
+    - type: Gravity
+      gravityShakeSound: !type:SoundPathSpecifier
+        path: /Audio/Effects/alert.ogg
+    - type: DecalGrid
+      chunkCollection:
+        version: 2
+        nodes:
+        - node:
+            zIndex: 2
+            color: '#FFFFFFFF'
+            id: Caution
+          decals:
+            1400: 4,-7
+        - node:
+            angle: 1.5707963267948966 rad
+            color: '#FFFFFFFF'
+            id: Caution
+          decals:
+            1023: 11.112959,-8.596471
+        - node:
+            zIndex: 2
+            angle: 1.5707963267948966 rad
+            color: '#9C2020FF'
+            id: CautionGreyscale
+          decals:
+            1399: -1,-8
+        - node:
+            zIndex: 1
+            color: '#FFFFFFFF'
+            id: WarnBox
+          decals:
+            1401: 2,-2
+        - node:
+            zIndex: 2
+            color: '#9C2020FF'
+            id: WarnBoxGreyscale
+          decals:
+            1395: -4,-10
+        - node:
+            zIndex: 2
+            color: '#FFFFFFFF'
+            id: WarnBoxGreyscale
+          decals:
+            1393: 5,-9
+        - node:
+            color: '#FFFFFFFF'
+            id: WarnCornerNE
+          decals:
+            0: 2,-6
+        - node:
+            color: '#FFFFFFFF'
+            id: WarnCornerNW
+          decals:
+            1: 0,-6
+        - node:
+            zIndex: 2
+            color: '#9C2020FF'
+            id: WarnCornerSmallGreyscaleNW
+          decals:
+            1397: -1,-9
+        - node:
+            zIndex: 2
+            color: '#334E6DFF'
+            id: WarnCornerSmallGreyscaleSE
+          decals:
+            16: -1,-5
+        - node:
+            zIndex: 2
+            color: '#334E6DFF'
+            id: WarnCornerSmallGreyscaleSW
+          decals:
+            17: 5,-5
+        - node:
+            zIndex: 2
+            color: '#9C2020FF'
+            id: WarnCornerSmallGreyscaleSW
+          decals:
+            1398: -1,-7
+        - node:
+            color: '#FFFFFFFF'
+            id: WarnCornerSmallNE
+          decals:
+            3: 2,-7
+            6: 4,-7
+            10: -1,-7
+            1405: 5,-3
+        - node:
+            color: '#FFFFFFFF'
+            id: WarnCornerSmallNW
+          decals:
+            2: 0,-7
+            4: 4,-7
+            1404: -1,-3
+        - node:
+            color: '#FFFFFFFF'
+            id: WarnCornerSmallSE
+          decals:
+            1406: 5,-1
+        - node:
+            color: '#FFFFFFFF'
+            id: WarnCornerSmallSW
+          decals:
+            1403: -1,-1
+        - node:
+            color: '#FFFFFFFF'
+            id: WarnLineE
+          decals:
+            8: 4,-6
+            1026: 9,-8
+            1407: 5,-2
+        - node:
+            zIndex: 2
+            color: '#334E6DFF'
+            id: WarnLineGreyscaleS
+          decals:
+            11: 0,-5
+            12: 1,-5
+            13: 2,-5
+            14: 3,-5
+            15: 4,-5
+        - node:
+            zIndex: 2
+            color: '#9C2020FF'
+            id: WarnLineGreyscaleW
+          decals:
+            1396: -1,-8
+        - node:
+            color: '#FFFFFFFF'
+            id: WarnLineS
+          decals:
+            7: 4,-6
+            1024: 11,-8
+            1025: 11,-9
+            1402: -1,-2
+        - node:
+            color: '#FFFFFFFF'
+            id: WarnLineW
+          decals:
+            5: 3,-7
+            9: 1,-6
+        - node:
+            cleanable: True
+            color: '#FFFFFFFF'
+            id: burnt1
+          decals:
+            975: 0,-3
+            976: 3,-1
+            1006: -7,0
+            1007: -6,1
+        - node:
+            cleanable: True
+            zIndex: 2
+            color: '#FFFFFFFF'
+            id: burnt1
+          decals:
+            1074: -3,-10
+            1075: -4,-6
+            1076: -3,-3
+            1077: -3,-1
+            1078: -2,-1
+            1079: -3,0
+            1080: -7,-4
+            1081: 4,-6
+        - node:
+            cleanable: True
+            color: '#FFFFFFFF'
+            id: burnt2
+          decals:
+            971: 2,-2
+            972: 1,-2
+            977: 0,-4
+        - node:
+            cleanable: True
+            zIndex: 2
+            color: '#FFFFFFFF'
+            id: burnt2
+          decals:
+            1034: 11,-8
+            1036: -3,-9
+            1037: -4,-8
+            1038: -4,-7
+            1039: -7,-7
+            1040: -7,-8
+            1041: -6,-10
+            1048: -3,5
+            1049: -3,5
+            1050: -3,5
+            1056: 7,0
+            1057: 7,-1
+            1058: 8,-1
+            1391: 7,-3
+            1392: 8,-3
+        - node:
+            cleanable: True
+            color: '#FFFFFFFF'
+            id: burnt3
+          decals:
+            973: 3,-2
+            978: 1,-3
+            979: 3,-3
+            980: 1,-1
+            981: 1,0
+            985: 1,-2
+            986: 3,-4
+            987: 4,-5
+            988: 5,-1
+            1002: -3,-1
+            1003: -2,-1
+            1004: -3,0
+            1005: -3,-1
+            1008: -6,0
+            1009: -6,1
+            1010: -6,-1
+            1014: -7,0
+            1015: -6,-1
+            1016: -6,-3
+        - node:
+            cleanable: True
+            zIndex: 2
+            color: '#FFFFFFFF'
+            id: burnt3
+          decals:
+            1031: 7,-6
+            1032: 8,-5
+            1033: 11,-9
+            1051: -3,5
+            1052: 0,3
+            1061: 7,-2
+            1062: 7,1
+            1063: 7,-4
+            1064: 8,-5
+            1065: 10,-4
+        - node:
+            cleanable: True
+            color: '#FFFFFFFF'
+            id: burnt4
+          decals:
+            974: 2,-3
+            982: 2,-2
+            983: 2,-2
+            984: 2,-2
+            1011: -8,1
+            1012: -8,1
+            1013: -6,1
+        - node:
+            cleanable: True
+            zIndex: 2
+            color: '#FFFFFFFF'
+            id: burnt4
+          decals:
+            1027: 11,-8
+            1028: 11,-9
+            1029: 9,-8
+            1030: 7,-9
+            1042: -9,-4
+            1043: -8,-2
+            1044: -7,0
+            1045: -7,-1
+            1046: -8,2
+            1047: -6,2
+            1053: -1,3
+            1054: 7,3
+            1055: 7,2
+            1066: 7,-7
+            1067: 7,-6
+            1068: 9,-8
+            1069: -7,-8
+            1070: -6,-10
+            1073: -3,-7
+        - node:
+            cleanable: True
+            zIndex: 3
+            color: '#57121237'
+            id: shortline
+          decals:
+            758: 3.0981808,-4.063937
+            759: 2.9263058,-4.1264696
+            760: 2.9106808,-4.1264696
+            761: 3.0278683,-3.8841565
+            762: 3.0200558,-3.8841565
+            763: 3.0200558,-4.2046356
+            764: 2.9888058,-4.1811857
+            765: 2.9184933,-3.9154227
+            766: 2.9028683,-3.7200081
+            767: 3.0981808,-4.087387
+        - node:
+            cleanable: True
+            zIndex: 3
+            angle: 0.2617993877991494 rad
+            color: '#57121237'
+            id: shortline
+          decals:
+            768: 3.0278683,-4.0483046
+            769: 2.9575558,-4.0952034
+            770: 2.8872433,-3.9857724
+            771: 2.8716183,-3.7200081
+            772: 2.8716183,-3.6809256
+            773: 3.0044308,-4.063937
+            774: 2.9106808,-4.001405
+            775: 2.8403683,-3.6731093
+            776: 2.8794308,-3.7121918
+        - node:
+            cleanable: True
+            zIndex: 3
+            color: '#57121246'
+            id: shortline
+          decals:
+            452: 1.8425634,-2.4546344
+            453: 1.7800634,-2.5327995
+            454: 1.6941259,-2.8220127
+            455: 2.037876,-3.1268594
+            456: 2.3581884,-2.82983
+            457: 2.241001,-2.6578653
+            458: 1.9910009,-2.751664
+            459: 1.7566259,-3.1346757
+            460: 1.3816259,-3.1112258
+            461: 1.5222509,-2.4390008
+            462: 1.4441259,-2.1966875
+            463: 1.3816259,-2.1810539
+            464: 1.0378759,-2.3608358
+            465: 1.3035009,-2.80638
+            466: 1.4050634,-3.1503093
+            467: 1.6394384,-3.4707887
+            468: 1.7956884,-3.4629714
+            469: 1.8425634,-2.6344154
+            470: 1.7253759,-2.6813152
+        - node:
+            cleanable: True
+            zIndex: 3
+            angle: 0.2617993877991494 rad
+            color: '#57121246'
+            id: shortline
+          decals:
+            777: 2.9653683,-4.0404873
+            778: 2.9263058,-3.9076064
+            779: 2.8169308,-3.7356417
+            780: 2.7700558,-3.6183932
+            781: 2.9184933,-3.845074
+            782: 2.9888058,-4.0717545
+            783: 2.9263058,-4.0404873
+            784: 2.7231808,-3.641843
+            785: 2.7856808,-3.5402272
+            786: 3.0747433,-3.9701388
+            787: 3.0278683,-4.0483046
+            788: 2.8169308,-3.6965592
+        - node:
+            cleanable: True
+            zIndex: 3
+            color: '#57121257'
+            id: shortline
+          decals:
+            620: 1.3269384,-4.5729256
+            621: 1.4597509,-4.526026
+            622: 1.4675634,-4.2915287
+            623: 1.5769384,-4.064848
+            624: 1.6706884,-3.9475992
+            625: 1.6863134,-4.330611
+            626: 1.6003759,-4.9012213
+            627: 1.6628759,-4.9559374
+            628: 2.2956884,-4.588558
+            629: 2.4206884,-4.479126
+            630: 2.147251,-4.7839727
+            631: 2.2644384,-4.557292
+            632: 2.209751,-4.862138
+            633: 2.3894384,-4.666724
+            634: 2.6394384,-4.557292
+            635: 2.4675634,-4.408777
+            636: 2.5456884,-4.1351967
+            637: 2.553501,-4.0335817
+            638: 2.616001,-3.8069007
+            639: 2.6550634,-4.0492153
+            640: 2.569126,-4.4947596
+            641: 2.6394384,-4.846505
+            642: 2.8581884,-4.940304
+            643: 2.959751,-4.8230553
+            644: 2.647251,-4.479126
+            645: 2.850376,-4.8543215
+            646: 2.912876,-4.8074226
+            647: 3.4675634,-4.846505
+            648: 2.725376,-4.690174
+            649: 1.8035009,-4.580742
+            650: 1.4206884,-4.7448893
+            651: 1.1863134,-4.893405
+            652: 1.7019384,-4.088298
+            653: 1.4519384,-4.2133627
+            654: 1.2410009,-4.557292
+            655: 1.2019384,-4.6745405
+            656: 1.3894384,-4.6432743
+            657: 1.4831884,-4.557292
+        - node:
+            cleanable: True
+            zIndex: 3
+            color: '#57121284'
+            id: shortline
+          decals:
+            471: 1.6628759,-2.5327995
+            472: 1.6785009,-2.2826698
+            473: 1.7644384,-2.493717
+            474: 1.7800634,-2.7907465
+            475: 1.7956884,-3.0955932
+            476: 1.8738134,-3.1893919
+            477: 2.0925634,-2.8141963
+            478: 2.131626,-2.5327995
+            479: 1.9675634,-2.5875156
+            480: 2.037876,-2.2670362
+            481: 1.9831884,-2.673498
+            482: 2.037876,-2.9705274
+            483: 2.2019384,-2.7125814
+            484: 2.147251,-2.5249832
+            498: 1.8035009,-2.9392612
+            499: 1.9285009,-2.313936
+            500: 2.209751,-2.5406168
+            501: 2.069126,-3.0955932
+            502: 1.9050634,-3.2050254
+            503: 1.9363134,-2.6578653
+            504: 2.1550634,-2.9783447
+            505: 1.8503759,-3.4395225
+            506: 1.7253759,-3.8772504
+            507: 1.8113134,-3.6740196
+            508: 2.334751,-3.087777
+            509: 2.2331884,-3.60367
+            510: 2.272251,-3.971049
+            511: 2.256626,-3.6114862
+            512: 2.0769384,-3.1112258
+            513: 1.9285009,-3.4707887
+            514: 1.8035009,-4.0570316
+            515: 1.7878759,-3.7443683
+            516: 1.7878759,-3.1268594
+            517: 1.7488134,-3.5958536
+            518: 1.8660009,-3.1503093
+            519: 1.8113134,-3.4473388
+            520: 1.7722509,-3.8694332
+            521: 1.7644384,-4.2133627
+            522: 1.7566259,-4.3931437
+            523: 1.8738134,-4.690174
+            524: 1.8894384,-4.846505
+            525: 1.9441259,-4.5416584
+            526: 1.8347509,-3.9866817
+            527: 1.8347509,-4.17428
+            528: 1.8269384,-4.5416584
+            529: 2.069126,-3.1815755
+            530: 2.0925634,-2.9783447
+            531: 1.9519384,-3.658386
+            532: 1.8816259,-4.143014
+            533: 1.9753759,-4.1039305
+            534: 2.006626,-3.1581256
+            535: 2.022251,-2.931445
+            536: 1.9128759,-3.8772504
+            537: 1.9675634,-4.377511
+            538: 2.084751,-3.5724037
+            539: 2.1706884,-3.2128417
+            540: 2.1706884,-4.3071613
+            541: 2.162876,-4.455677
+            542: 2.069126,-4.588558
+            543: 1.9831884,-4.6276407
+            544: 1.9519384,-5.01847
+            545: 2.0925634,-4.510392
+            546: 2.053501,-4.0023155
+            547: 2.0613134,-4.346245
+            548: 1.7644384,-4.7527065
+            549: 1.6628759,-4.3696947
+            550: 1.5378759,-3.892883
+            551: 1.5769384,-3.5333211
+            552: 1.5613134,-3.1737583
+            553: 1.6316259,-2.7907465
+            554: 1.7410009,-2.6109655
+            555: 1.7488134,-2.7047641
+            556: 1.4988134,-3.7052858
+            557: 1.6160009,-3.60367
+            558: 1.7566259,-2.9939773
+            559: 1.3581884,-3.9006994
+            560: 1.3581884,-4.377511
+            561: 1.3972509,-4.6276407
+            562: 1.3972509,-4.8230553
+            563: 1.4753759,-5.0419197
+            564: 1.6003759,-4.3071613
+            565: 1.5300634,-4.0335817
+            566: 1.4441259,-4.635458
+            567: 1.7097509,-3.634936
+            568: 1.5535009,-4.2915287
+            569: 1.6003759,-4.0257654
+            570: 1.5066259,-3.892883
+            571: 1.4597509,-4.1820965
+            572: 1.5456884,-2.7125814
+            573: 1.6003759,-2.4624507
+            574: 1.6785009,-2.3608358
+            575: 1.4831884,-3.119043
+            576: 1.3660009,-3.9241493
+            577: 1.6160009,-3.5333211
+            578: 1.6472509,-3.4473388
+            579: 1.5769384,-4.354061
+            580: 1.4753759,-4.6979904
+            581: 1.6550634,-4.893405
+            582: 2.0925634,-4.580742
+            583: 2.428501,-3.7052858
+            584: 2.506626,-3.142492
+            585: 2.3425634,-2.7203977
+            586: 2.2331884,-2.4390008
+            587: 2.319126,-3.0486934
+            588: 2.1863134,-4.252446
+            589: 2.319126,-4.604192
+            590: 2.5144384,-4.9012213
+            591: 2.7019384,-3.8538005
+            592: 2.287876,-4.3071613
+            593: 1.6550634,-4.9793863
+            594: 1.4519384,-4.580742
+            595: 1.5300634,-4.354061
+            596: 1.5925634,-4.8230553
+            597: 1.7410009,-3.838167
+            598: 1.6706884,-3.3769891
+            599: 2.4675634,-3.3300903
+            600: 2.537876,-4.354061
+            601: 2.4831884,-4.7761564
+            602: 2.678501,-4.4713097
+            603: 2.5300634,-3.7678182
+            604: 2.5769384,-3.0486934
+            605: 2.3581884,-2.7672966
+            606: 2.2800634,-2.7047641
+            607: 2.209751,-3.5880373
+            608: 1.3269384,-3.4082563
+            609: 1.6941259,-2.7203977
+            610: 1.7097509,-2.5015333
+            611: 1.6706884,-2.3217523
+            612: 2.037876,-2.25922
+            613: 2.4363134,-2.7751138
+            614: 2.459751,-3.3926227
+            615: 2.459751,-4.17428
+            616: 2.350376,-4.8074226
+            617: 1.6706884,-4.322795
+            618: 1.5300634,-3.9788654
+            619: 1.7019384,-3.8459842
+        - node:
+            cleanable: True
+            zIndex: 3
+            angle: 0.2617993877991494 rad
+            color: '#67121244'
+            id: shortline
+          decals:
+            789: 3.0044308,-4.189003
+            790: 2.9263058,-4.056121
+            791: 2.8638058,-3.9154227
+            792: 2.9653683,-4.001405
+            793: 3.0200558,-4.1030207
+            794: 2.9184933,-3.9310563
+            795: 2.9106808,-3.6731093
+            796: 3.0044308,-3.8372567
+            797: 3.0356808,-4.087387
+            798: 2.9809933,-3.8763402
+            799: 2.9809933,-3.6262095
+            800: 3.0747433,-3.5402272
+            801: 3.0122433,-3.845074
+            802: 3.0122433,-4.1811857
+            803: 2.7700558,-3.923239
+            804: 2.8091183,-3.5714934
+            805: 2.9575558,-3.8372567
+            806: 2.9653683,-3.946689
+            807: 2.7934933,-3.5167773
+            808: 2.8247433,-4.063937
+            809: 2.9184933,-4.1499195
+            810: 2.6450558,-3.6183932
+            811: 2.6606808,-3.3682625
+            812: 2.8794308,-3.821624
+            813: 2.9575558,-3.9857724
+            814: 2.6684933,-3.6731093
+            815: 2.6372433,-3.2900975
+            816: 2.6528683,-3.1103156
+            817: 2.4888058,-2.891452
+            818: 2.3950558,-2.7976534
+            819: 2.7388058,-3.5011446
+            820: 2.9497433,-4.1186533
+            821: 2.9341183,-3.6340258
+            822: 2.9341183,-3.3682625
+            823: 2.8716183,-3.30573
+            824: 2.9731808,-4.001405
+            825: 2.9888058,-4.134287
+            826: 2.9419308,-4.220269
+            827: 2.7075558,-3.946689
+            828: 2.6216183,-3.6027596
+            829: 2.5122433,-3.3135464
+            830: 2.4497433,-3.016517
+            831: 2.3091183,-2.7742035
+            832: 2.1606808,-2.6178725
+            833: 2.3950558,-2.9305346
+            834: 2.8481808,-4.0873938
+            835: 2.8559933,-4.423408
+            836: 2.6450558,-3.7436194
+            837: 2.4966183,-3.3918738
+            838: 2.6684933,-3.4387727
+            839: 2.8403683,-3.782702
+            840: 2.6528683,-3.524755
+            841: 2.5747433,-3.344974
+            842: 2.8091183,-3.6889033
+            843: 2.8325558,-3.5169387
+            844: 2.9184933,-3.524755
+            845: 3.0278683,-4.19698
+            846: 2.9653683,-4.2673297
+            847: 2.8716183,-4.22043
+            848: 3.0825558,-4.501827
+            849: 2.9966183,-4.353312
+            850: 3.0669308,-4.173531
+            851: 3.1450558,-4.353312
+            852: 2.9653683,-4.353312
+            853: 2.7778683,-4.1891637
+            854: 2.8481808,-4.353312
+            855: 3.1450558,-4.306412
+            856: 3.1763058,-4.400211
+            857: 2.9888058,-4.5956254
+            858: 2.9966183,-4.329862
+            859: 3.1528683,-4.19698
+            860: 2.9653683,-4.384578
+            861: 2.9966183,-4.165714
+            862: 2.9263058,-4.19698
+            863: 2.9888058,-4.3923945
+            864: 2.9419308,-4.579993
+        - node:
+            cleanable: True
+            zIndex: 3
+            color: '#76121284'
+            id: shortline
+          decals:
+            485: 1.7019384,-2.8923624
+            486: 1.6238134,-2.5249832
+            487: 1.7566259,-2.3295686
+            488: 1.8035009,-2.3061197
+            489: 1.9675634,-2.6656816
+            490: 1.8035009,-2.907995
+            491: 1.7878759,-2.6578653
+            492: 1.8894384,-2.392102
+            493: 2.1081884,-2.290486
+            494: 2.1238134,-2.4311845
+            495: 1.9285009,-2.5796993
+            496: 2.1706884,-2.337386
+            497: 1.8972509,-2.6969478
+        - node:
+            cleanable: True
+            zIndex: 2
+            color: '#0600000A'
+            id: smallbrush
+          decals:
+            1085: -1.6858704,-7.2935915
+            1086: -1.5139954,-7.309224
+            1087: -1.3811828,-7.199792
+            1088: -1.2405578,-7.0121946
+            1089: -1.0764953,-6.7464314
+            1090: -1.1311828,-6.7229815
+            1091: -1.4046203,-6.86368
+            1092: -1.2874328,-6.582283
+            1093: -1.1546203,-6.613549
+            1094: -1.4593078,-6.8558636
+            1095: -1.2874328,-6.730798
+            1096: -1.2093078,-6.84023
+            1097: -1.4514953,-6.81678
+            1098: -1.2561828,-6.5979166
+            1099: -1.0999328,-6.683899
+            1100: -1.2093078,-6.88713
+            1101: -1.1468078,-6.996561
+            1102: -1.3811828,-7.0903606
+            1103: -1.2952453,-6.9809284
+            1104: -1.2718078,-6.918396
+            1105: -1.3811828,-7.129443
+            1106: -1.3811828,-7.145076
+            1107: -1.4124328,-6.9105787
+            1108: -1.1858703,-6.5900993
+            1109: -1.0296203,-6.5041175
+            1110: -0.8108703,-6.5353837
+            1111: -0.9514953,-6.715165
+            1112: -1.3968078,-6.941845
+            1113: -1.4827453,-6.4650345
+            1114: -1.4046203,-6.636999
+            1115: -1.4280578,-6.660449
+            1116: -1.3264953,-6.582283
+            1117: -1.3968078,-6.621366
+            1118: -1.4436828,-6.715165
+            1119: -1.3968078,-6.81678
+            1120: -1.3733703,-6.7542477
+            1121: -1.3499328,-6.6682653
+            1122: -1.2718078,-6.551017
+            1123: -1.1077453,-6.527567
+            1124: -0.8343078,-6.551017
+            1125: -0.6624328,-6.605733
+            1126: -0.8499328,-6.660449
+            1127: -1.0999328,-6.715165
+            1128: -1.3264953,-6.9809284
+            1129: -1.3811828,-7.199792
+            1130: -1.3889953,-7.3639402
+            1131: 0.5250672,-6.636999
+            1132: 0.4625672,-6.6760817
+            1133: 0.3922547,-6.8793125
+            1134: 0.3453797,-7.043461
+            1135: 0.3610047,-7.0590935
+            1136: 0.5563172,-6.6917152
+            1137: 0.5485047,-6.683899
+            1138: 0.3688172,-6.949662
+            1139: 0.2985047,-7.309224
+            1140: 0.3219422,-7.3952065
+            1141: 0.6891297,-6.9105787
+            1142: 0.5719422,-7.0356445
+            1143: 0.3766297,-7.403023
+            1144: 0.7438172,-7.0356445
+            1145: 0.5485047,-7.231058
+            1146: 0.4625672,-7.3483067
+            1147: 0.7594422,-7.020011
+            1148: 0.5016297,-7.5984373
+            1149: 0.6422547,-7.0669107
+            1150: 0.5953797,-6.9809284
+            1151: 0.3531922,-7.5828037
+            1152: 0.4391297,-7.379573
+            1153: 0.5485047,-7.0669107
+            1154: 0.2672547,-7.5202713
+            1155: 0.4235047,-6.996561
+            1156: 0.3219422,-7.2154255
+            1157: 0.3688172,-7.043461
+            1158: 0.4781922,-6.8245964
+            1159: 0.2985047,-7.3483067
+            1160: 0.4000672,-7.403023
+            1161: 0.6422547,-7.0590935
+            1162: 0.3766297,-7.535905
+            1163: 0.6266297,-7.2154255
+            1164: 0.6344422,-7.1607094
+            1165: 0.4469422,-7.5046387
+            1166: 0.7047547,-7.1841593
+            1167: 0.5406922,-7.3483067
+            1168: 0.5953797,-7.0278273
+            1169: 0.4547547,-7.3717566
+            1170: 0.5485047,-7.0903606
+            1171: 0.5797547,-7.2623243
+            1172: 0.3844422,-6.6917152
+            1173: 0.3297547,-6.79333
+            1174: -0.40273905,-6.3165197
+            1175: -0.31680155,-6.347786
+            1176: -0.31680155,-6.715165
+            1177: -0.30117655,-6.5744667
+            1178: -0.21523905,-6.3399696
+            1179: -0.37148905,-6.7229815
+            1180: -0.30117655,-6.6682653
+            1181: -0.16836405,-6.332153
+            1182: -0.32461405,-6.5119343
+            1183: -0.39492655,-6.6917152
+            1184: -0.27773905,-6.5197506
+            1185: -0.23867655,-6.379052
+            1186: -0.34805155,-6.629183
+            1187: -0.30117655,-6.660449
+            1188: -0.004301548,-6.379052
+            1189: -0.09805155,-6.6917152
+            1190: 0.011323452,-6.5353837
+            1191: 0.042573452,-6.457218
+            1192: -0.13711405,-6.683899
+            1193: 0.08944845,-6.3946857
+            1194: 0.12069845,-6.402502
+            1195: 0.15976095,-6.5041175
+            1196: 0.26913595,-6.4103184
+            1197: 0.15194845,-6.621366
+            1198: 0.29257345,-6.425952
+            1199: 0.15194845,-6.558833
+            1200: 0.26132345,-6.5119343
+            1201: 0.18319845,-6.5432005
+            1202: -0.043364048,-6.605733
+            1203: 0.17538595,-6.386869
+            1204: -0.012114048,-6.6526327
+            1205: 0.33944845,-6.5041175
+            1206: 0.09726095,-6.6526327
+            1207: 0.30038595,-6.418135
+            1208: 0.003510952,-6.6448154
+            1209: -0.09805155,-6.558833
+            1210: -0.26992655,-6.4806676
+            1211: -0.06680155,-6.2852535
+            1212: -0.40273905,-6.6448154
+            1213: -0.16055155,-6.5041175
+            1214: 0.019135952,-6.4806676
+            1215: -0.11367655,-6.56665
+            1216: 0.14413595,-6.4415846
+            1217: -0.24648905,-6.7464314
+            1218: 0.26132345,-6.402502
+            1219: 0.13632345,-6.5041175
+            1220: 0.19101095,-6.56665
+        - node:
+            cleanable: True
+            zIndex: 2
+            color: '#0600000E'
+            id: smallbrush
+          decals:
+            1349: 5.524046,-8.350655
+            1350: 5.3443584,-8.061441
+            1351: 5.3443584,-7.5924473
+            1352: 5.3912334,-7.35795
+            1353: 5.383421,-8.506986
+            1354: 5.3912334,-9.155762
+            1355: 5.4068584,-9.27301
+            1356: 4.9849834,-9.421525
+            1357: 4.7818584,-9.437158
+            1358: 5.2037334,-9.280827
+            1359: 5.4849834,-9.1244955
+            1360: 5.4849834,-8.827465
+            1361: 5.4537334,-8.7493
+            1362: 5.3443584,-9.22611
+            1363: 5.1881084,-9.421525
+            1364: 4.5943584,-9.452791
+            1365: 3.242796,-9.0463295
+            1366: 3.320921,-9.194844
+            1367: 3.461546,-9.319909
+            1368: 3.602171,-9.476241
+            1369: 3.5474834,-9.054146
+            1370: 3.5006084,-8.882181
+            1371: 3.711546,-9.312093
+            1372: 3.586546,-9.007247
+            1373: 3.5162334,-8.827465
+            1374: 3.7818584,-9.132312
+            1375: 3.492796,-8.671134
+            1376: 3.4849834,-9.054146
+            1377: 3.2974834,-9.101046
+            1378: 2.758421,-9.163578
+            1379: 2.0162334,-9.218294
+            1380: 1.758421,-9.077596
+            1381: 1.6099834,-8.897815
+            1382: 1.2974834,-9.202661
+            1383: 1.5162334,-8.639868
+            1384: 1.461546,-8.819649
+            1385: 1.352171,-9.202661
+            1386: 1.758421,-9.140128
+            1387: 1.7506084,-9.218294
+            1388: 1.4381084,-9.398075
+            1389: 1.6881084,-9.22611
+        - node:
+            cleanable: True
+            zIndex: 2
+            color: '#0600001A'
+            id: smallbrush
+          decals:
+            1221: -7.9557114,-1.0246365
+            1222: -7.9088364,-1.1809676
+            1223: -7.8932114,-1.2513173
+            1224: -7.9088364,-1.5561631
+            1225: -7.9244614,-1.6499617
+            1226: -7.7057114,-1.2669499
+            1227: 1.630085,-2.3143704
+            1228: 1.52071,-2.5254185
+            1229: 1.661335,-2.4628851
+            1230: 1.80196,-2.3221877
+            1231: 1.7316475,-2.5566847
+            1232: 1.8722725,-2.4785187
+            1233: 1.8722725,-2.5410511
+            1234: 2.0597725,-2.4394362
+            1235: 2.1535225,-2.5488675
+            1236: 2.2628975,-2.4550688
+            1237: 2.33321,-2.38472
+            1238: 5.3267717,-2.5057006
+            1239: 5.2486467,-2.6542153
+            1240: 5.256459,-2.544783
+            1241: 5.3892717,-1.9507241
+            1242: 5.3892717,-1.7709432
+            1243: 5.2486467,-1.661511
+            1244: 5.2017717,-1.6927772
+            1245: 5.303334,-2.5369668
+            1246: 5.2330217,-2.0132565
+            1247: 5.2486467,-1.5755286
+            1248: 5.4517717,-1.4270139
+            1249: 5.490834,-1.8647418
+            1250: 5.3736467,-2.2633872
+            1251: 5.3267717,-2.153955
+            1252: 5.2486467,-1.8881917
+            1253: 5.272084,-2.2790198
+            1254: 5.4986467,-2.4822507
+            1255: 5.4048967,-2.4822507
+            1256: 5.2330217,-2.0679727
+            1257: 5.287709,-1.3644814
+            1258: 5.381459,-1.2550492
+            1259: -1.3281441,-2.3571858
+            1260: -1.2890816,-2.4353514
+            1261: -1.1406441,-2.0210729
+            1262: -1.1406441,-1.7709432
+            1263: -1.3125191,-1.5442624
+            1264: -1.3203316,-1.5208125
+            1265: -1.2187691,-2.372819
+            1266: -1.3359566,-2.1930375
+            1267: -1.1718941,-1.5129962
+            1268: -1.3672066,-1.5520787
+            1269: 5.3689404,-2.388452
+            1270: 5.220503,-2.5057006
+            1271: 5.111128,-2.1930375
+            1272: 5.111128,-1.7865758
+            1273: 5.1970654,-1.4973626
+            1274: 5.345503,-1.3879309
+            1275: 5.345503,-1.8491087
+            1276: 5.2439404,-2.4588008
+            1277: 5.4470654,-2.8339963
+            1278: 5.361128,-2.5760498
+            1279: 5.2283154,-2.075789
+            1280: 4.595503,0.5709276
+            1281: 4.876753,0.60219383
+            1282: 5.064253,0.5240283
+            1283: 5.220503,0.45367908
+            1284: 5.376753,0.41459632
+            1285: 5.4470654,0.27389812
+            1286: 5.470503,0.07066727
+            1287: 5.439253,-0.1403799
+            1288: 5.4626904,0.10193348
+            1289: 5.4001904,0.3833301
+            1290: 5.079878,0.46931243
+            1291: 4.8064404,0.3989632
+            1292: 5.2908154,0.29734778
+            1293: 5.4001904,0.023767948
+            1294: 5.4001904,-0.19509602
+            1295: 5.408003,-0.60155773
+            1296: 5.392378,-0.7813387
+            1297: 5.376753,-0.1872797
+            1298: 5.236128,0.26608157
+            1299: 4.9001904,0.44586277
+            1300: 5.0408154,0.28171468
+            1301: 5.329878,-1.8834753
+            1302: 5.2908154,-3.9705
+            1303: 5.2126904,-5.0648193
+            1304: 5.189253,-5.3384
+            1305: 5.033003,-5.447832
+            1306: 5.283003,-5.3305836
+            1307: 5.5095654,-5.010104
+            1308: 5.564253,-4.752157
+            1309: 5.376753,-5.1742516
+            1310: 5.2595654,-5.3227663
+            1311: -1.1537471,-5.236784
+            1312: -1.252366,-5.424382
+            1313: -1.361741,-5.1273527
+            1314: -1.3695534,-4.7912397
+            1315: -1.361741,-4.4551277
+            1316: -1.3695534,-4.259713
+            1317: -1.221116,-5.2289677
+            1318: -1.002366,-5.2993174
+            1319: -0.91642845,-5.3305836
+            1320: 9.306587,-7.8899517
+            1321: 9.236275,-7.850868
+            1322: 9.2519,-7.796152
+            1323: 9.275337,-7.7023535
+            1324: 9.048775,-7.8117857
+            1325: 9.337837,-7.8352356
+            1326: 10.87957,-8.248169
+            1327: 10.7623825,-8.17782
+            1328: 10.91082,-7.786991
+            1329: 10.84832,-8.052754
+            1330: 10.582695,-8.388867
+            1331: 10.7780075,-7.810441
+            1332: 10.59832,-8.13933
+            1333: 10.7311325,-8.700693
+            1334: 10.7780075,-8.569519
+            1335: 10.5123825,-8.514803
+            1336: 10.707695,-7.9832754
+            1337: 10.645195,-8.413187
+            1338: 10.75457,-7.522098
+            1339: 10.8092575,-7.959826
+            1340: 10.738945,-8.882181
+            1341: 10.94207,-8.944714
+        - node:
+            cleanable: True
+            zIndex: 2
+            color: '#0600001C'
+            id: smallbrush
+          decals:
+            1082: -1.4358703,-7.0043783
+            1083: -1.3499328,-6.7698812
+            1084: -1.0686828,-6.5119343
+        - node:
+            cleanable: True
+            zIndex: 3
+            color: '#57121246'
+            id: smallbrush
+          decals:
+            424: 1.8347509,-2.2045038
+            425: 1.6238134,-1.9543736
+            426: 2.3894384,-1.9700067
+            427: 2.1706884,-2.548433
+            428: 1.5613134,-2.4233682
+            429: 1.9753759,-2.079439
+            430: 1.9910009,-2.7203977
+            431: 1.8113134,-3.0174272
+            432: 2.1706884,-2.4390008
+            433: 2.2019384,-2.4390008
+            434: 1.7566259,-2.9470785
+            435: 1.6472509,-2.5093505
+            436: 2.162876,-2.7203977
+            437: 2.0144384,-3.0799596
+            438: 1.8503759,-2.7907465
+            439: 1.6160009,-2.2983024
+            440: 2.4363134,-1.9387405
+            441: 2.522251,-2.7438476
+            442: 1.5066259,-2.650048
+            443: 1.8269384,-2.0481727
+            444: 2.272251,-2.4233682
+            445: 2.131626,-2.728214
+            446: 2.6394384,-2.6578653
+            447: 2.4050634,-2.0638053
+            448: 1.9363134,-1.9309242
+            449: 1.5769384,-2.1185215
+            450: 2.3113134,-2.673498
+            451: 2.6081884,-2.4859006
+        - node:
+            cleanable: True
+            color: '#5712121D'
+            id: splatter
+          decals:
+            989: -0.6406853,-0.7189672
+            990: -0.5859978,-0.54700303
+            991: 1.1952522,-0.16399074
+            992: 1.3358772,-0.4141209
+            993: 1.4140022,-0.18744016
+            994: 1.2421272,0.21902156
+            995: 3.1327522,0.10958934
+            996: 3.4921272,-0.14054132
+            997: 2.7108772,-0.15617394
+            998: 2.7108772,-0.062375307
+            999: 4.21869,-0.18744016
+            1000: 4.0077524,-0.47665334
+            1001: 5.0077524,-0.8205826
+        - node:
+            cleanable: True
+            zIndex: 1
+            color: '#57121227'
+            id: splatter
+          decals:
+            24: 1.6378884,-2.129091
+            25: 1.7238259,-1.8398778
+            26: 2.1847634,-1.3318012
+            27: 2.255076,-1.8867776
+            28: 1.5050759,-2.4808366
+            29: 1.9269509,-0.9566057
+            30: 2.2941384,-1.1832864
+            31: 2.1378884,-1.8711445
+            32: 1.8878884,-1.5506651
+            33: 2.2160134,-1.1363866
+            34: 1.6691384,-1.8789613
+            35: 2.208201,-1.042588
+            36: 2.692576,-1.4724996
+            37: 1.9660134,-1.5506651
+            38: 3.0285134,-1.1598365
+            39: 2.645701,-1.6053808
+            40: 2.442576,-1.4334161
+            41: 2.973826,-1.1676528
+            42: 2.3566384,-2.207257
+            43: 3.2003884,-1.8398778
+            44: 3.2003884,-1.4490497
+            45: 2.3410134,-2.2697895
+            46: 2.661326,-2.6293519
+            47: 2.958201,-1.8789613
+            48: 2.8878884,-1.9024107
+            49: 1.8488259,-2.6528013
+            50: 2.723826,-1.636647
+            51: 1.5597634,-2.191624
+            52: 1.6691384,-1.2536352
+            53: 2.036326,-1.456866
+            54: 1.3410134,-1.5975645
+            55: 1.8488259,-1.198919
+            56: 1.7394509,-2.387038
+            57: 1.8019509,-2.7934997
+            58: 2.6222634,-2.902932
+            59: 1.5988259,-2.621535
+            60: 2.9347634,-1.535032
+            61: 2.2785134,-3.035813
+            62: 1.0910134,-3.0514467
+            63: 1.6925759,-2.0978248
+            64: 1.9113259,-2.824766
+            65: 1.6144509,-3.0436304
+            66: 3.005076,-2.4339378
+            67: 1.8488259,-2.7075174
+            68: 2.7316384,-2.2697895
+            69: 2.895701,-2.152541
+            70: 2.2316384,-2.6059024
+            71: 1.3800759,-1.8398778
+            72: 1.4347634,-1.261452
+            73: 1.5675759,-1.1129367
+            74: 1.2863259,-1.1363866
+            75: 1.7160134,-1.9414937
+            76: 1.2472634,-2.879482
+            77: 2.458201,-3.0748966
+            78: 1.6222634,-3.059263
+            79: 2.223826,-2.3792217
+            80: 2.192576,-3.3093936
+            81: 1.5910134,-3.6142395
+            82: 3.067576,-3.29376
+            83: 2.7160134,-3.551707
+            84: 1.8644509,-3.1217954
+            85: 2.223826,-2.6918848
+            86: 2.1847634,-3.395376
+            87: 1.5988259,-3.575157
+            88: 1.7707009,-2.981098
+            89: 1.6144509,-3.0670793
+            90: 0.86445093,-2.3401387
+            91: 2.020701,-2.7466
+            92: 1.1300759,-3.0279968
+            93: 2.270701,-2.7309673
+            94: 1.5363259,-3.4422748
+            95: 2.864451,-2.9654644
+            96: 1.5832009,-3.4344585
+            97: 2.583201,-2.8091333
+            98: 2.3410134,-3.6220567
+            99: 1.9894509,-3.6767719
+            100: 2.2003884,-3.8409202
+            101: 2.567576,-3.9347188
+            102: 2.0441384,-4.083234
+            103: 1.4582009,-3.9738023
+            104: 2.5441384,-3.833104
+        - node:
+            cleanable: True
+            zIndex: 1
+            color: '#5712122D'
+            id: splatter
+          decals:
+            233: -1.3699241,-0.026433706
+            234: -1.1121116,0.3565781
+            235: -0.44023657,0.43474412
+            236: -0.74492407,0.301862
+            237: -1.3386741,0.301862
+            238: -1.3542991,0.380028
+            239: -1.2683616,0.45037723
+            240: -0.95586157,0.38784432
+            241: -0.19023657,0.24714637
+            242: 0.88788843,0.18461347
+            243: 1.6144509,0.22369647
+            244: 1.4269509,0.17679715
+            245: -0.18242407,-0.15931535
+            246: -0.65117407,-0.80027413
+            247: -1.0886741,-1.4803159
+            248: -1.2605491,-2.1212747
+            249: -1.2996116,-2.4339378
+            250: -1.3386741,-3.035813
+            251: -1.2839866,-3.371926
+            252: -1.1746116,-3.6845891
+        - node:
+            cleanable: True
+            zIndex: 1
+            color: '#5712122F'
+            id: splatter
+          decals:
+            262: -0.97929907,-4.5678616
+            263: -1.0105491,-5.2322702
+            264: 0.22382593,-5.302619
+            265: 1.8488259,-5.3417025
+            266: 2.130076,-5.3104362
+            267: -0.08867407,-5.271353
+            268: -1.5027361,-5.068122
+            269: -1.1667991,-4.5209618
+            270: -1.0808616,-5.0524893
+            271: -0.81523657,-5.326069
+            272: -1.5027361,-5.3886013
+            273: -0.10429907,-5.3182526
+            274: -0.22148657,-5.3417025
+            275: 1.8957009,-5.1306543
+            276: 3.7160134,-5.224454
+            277: 4.4503884,-5.2869864
+            278: 4.8488264,-5.2088203
+            279: 5.278514,-5.0603056
+            280: 5.3644514,-5.0368557
+            281: 4.4347634,-5.169738
+            282: 4.2316384,-4.9821396
+            283: 5.153514,-4.810175
+            284: 5.1457014,-5.1072054
+            285: 4.2160134,-5.146288
+            286: 4.1222634,-5.1150217
+        - node:
+            cleanable: True
+            zIndex: 3
+            color: '#5712122F'
+            id: splatter
+          decals:
+            287: 4.3097634,-5.177554
+            288: 3.755076,-5.146288
+            289: 4.395701,-4.9586897
+            290: 5.1613264,-4.943057
+            291: 5.2550764,-4.786726
+            292: 5.044139,-5.1072054
+            293: 3.786326,-5.201004
+            294: 3.114451,-5.1931877
+            295: 2.630076,-5.201004
+            296: 3.286326,-5.099388
+            297: 3.614451,-5.1150217
+            298: 1.7316384,-4.911791
+            299: 0.87226343,-4.997773
+            300: 0.75507593,-5.044672
+            301: 2.9191384,-5.021223
+            302: 2.989451,-5.075939
+            303: 1.8410134,-5.224454
+            304: 0.75507593,-5.091572
+            305: -0.09648657,-5.0837555
+            306: -1.0105491,-5.0290394
+            307: -1.0339866,-4.7476425
+            308: 2.114451,-4.997773
+            309: 4.067576,-4.786726
+            310: 4.7707014,-4.6694775
+            311: 4.856639,-3.9034526
+            312: 4.8332014,-3.5438907
+            313: 4.8488264,-3.0436304
+            314: 5.247264,-2.957648
+            315: 5.075389,-4.4115305
+            316: 4.9425764,-5.1384716
+            317: 5.3957014,-3.8252876
+            318: 5.309764,-3.2234113
+            319: 5.2082014,-2.9341981
+            320: 4.6769514,-4.2082996
+            321: 3.3410134,-4.6929264
+            322: 3.567576,-4.763276
+            323: 4.997264,-3.6376894
+            324: 5.0363264,-2.8951156
+            325: 5.012889,-2.644985
+            326: 4.145701,-4.083234
+            327: 4.1535134,-4.4427967
+            328: 4.8332014,-3.0905292
+            329: 4.653514,-2.51992
+            330: 4.9582014,-3.0201805
+            331: 5.122264,-2.7153337
+            332: 5.2082014,-1.894594
+            333: 4.919139,-1.1754696
+            334: 5.325389,-2.566819
+            335: 5.278514,-2.981098
+            336: 5.1925764,-4.1066837
+            337: 5.2707014,-4.4896955
+            338: 5.0050764,-4.810175
+            339: 4.934764,-3.9581687
+            340: 5.0832014,-3.0123641
+            341: 5.325389,-2.5121033
+            342: 5.488742,-5.533588
+            343: 5.3245764,-5.2044697
+            344: 5.2942553,-3.7432704
+            345: 5.2317553,-2.8209147
+            346: 5.2317553,-1.9298258
+            347: 5.1848803,-0.655725
+            348: 4.5989428,-0.28052926
+            349: 4.2551928,-0.09293175
+            350: 4.6067553,-0.10074806
+        - node:
+            cleanable: True
+            zIndex: 1
+            color: '#57121235'
+            id: splatter
+          decals:
+            105: 1.4425759,-2.6528013
+            106: 1.3410134,-2.168174
+            107: 2.3253884,-1.6210144
+            108: 2.8097634,-1.7773454
+            109: 2.2628884,-3.3250263
+            110: 1.5988259,-3.0436304
+            111: 1.8722634,-2.4573872
+            112: 1.5597634,-4.1535835
+            113: 1.1300759,-4.4896955
+            114: 1.5207009,-3.371926
+            115: 1.3722634,-3.6767719
+            116: 1.0675759,-4.7241926
+            117: 1.8957009,-3.911269
+            118: 1.9347634,-3.5907896
+            119: 1.6378884,-5.122838
+            120: 1.7238259,-4.528779
+            121: 1.8332009,-4.1223173
+            122: 2.0285134,-4.864891
+            123: 2.161326,-4.294282
+            124: 2.208201,-3.5126245
+            125: 2.0597634,-3.0045469
+            126: 1.8332009,-2.7544172
+            127: 2.145701,-3.9190862
+            128: 2.2160134,-4.2630157
+            129: 2.161326,-2.8951156
+            130: 1.8566384,-3.4579084
+            131: 1.8332009,-3.5126245
+            132: 1.8410134,-3.215595
+            133: 2.114451,-4.270832
+            134: 2.098826,-4.497513
+            135: 2.005076,-3.6767719
+            136: 1.9269509,-4.2082996
+            137: 1.9269509,-4.0754175
+            138: 1.9894509,-3.6767719
+            139: 1.8410134,-3.9816186
+            140: 1.6378884,-2.0821922
+            141: 1.5519509,-1.8555114
+            142: 1.0675759,-1.6131976
+            143: 1.2082009,-1.5428483
+            144: 2.083201,-1.4099667
+            145: 2.7316384,-1.9180439
+            146: 2.9191384,-2.5277364
+            147: 2.7003884,-2.981098
+            148: 2.458201,-3.3015773
+            149: 2.145701,-3.5282571
+            150: 1.6925759,-3.6845891
+            151: 0.75507593,-3.3328435
+            152: 0.47382593,-2.5824525
+            153: 0.41132593,-1.9180439
+            154: 0.59101343,-1.4334161
+            155: 1.2863259,-1.0894873
+            156: 2.7785134,-1.042588
+            157: 3.583201,-1.0660379
+            158: 3.7003884,-2.1212747
+            159: 3.2472634,-2.7387836
+            160: 1.8878884,-3.0905292
+            161: 0.98163843,-2.2541564
+            162: 1.0910134,-1.9571264
+            163: 0.93476343,-2.8560321
+            164: 0.68476343,-2.0509255
+            165: 1.1457009,-1.4803159
+            166: 0.66132593,-2.4339378
+            167: 1.5519509,-1.6835468
+            168: 1.5207009,-2.3401387
+            169: 0.93476343,-2.51992
+            170: 1.0910134,-2.0352924
+            171: 1.2863259,-2.9498308
+            172: 2.286326,-2.9420145
+            173: 2.973826,-2.3557718
+            174: 3.067576,-1.8007953
+            175: 2.770701,-1.2145526
+            176: 2.036326,-0.84717345
+            177: 1.4503884,-0.7377417
+            178: 0.66132593,-0.8315408
+            179: 0.39570093,-1.4412329
+            180: 0.42695093,-2.0665586
+            181: 0.44257593,-2.7309673
+            182: 1.1925759,-3.1843288
+            183: 2.458201,-3.395376
+            184: 3.395701,-3.0045469
+            185: 3.8253884,-1.7851622
+            186: 3.364451,-1.2849014
+            187: 2.7316384,-0.90188956
+            188: 2.395701,-0.82372403
+            189: 3.067576,-1.2770851
+            190: 3.7316384,-1.9962099
+            191: 3.4972634,-2.3479555
+            192: 3.176951,-1.6210144
+            193: 2.692576,-0.84717345
+            194: 2.0128884,-0.5266943
+            195: 1.0675759,-0.7611911
+            196: 0.60663843,-1.1207535
+            197: 0.34101343,-1.4490497
+            198: 0.23945093,-1.7617128
+            199: 0.56757593,-1.8711445
+            200: 0.37226343,0.31749558
+            201: 0.37226343,-0.0029838085
+            202: 0.14570093,-0.5970433
+            203: 0.85663843,-0.46416163
+            204: 0.95820093,-0.83935714
+            205: 0.09882593,-0.7299249
+            206: 0.41132593,-0.13586569
+            207: -1.2605491,-0.17494845
+            208: -0.73711157,0.39566112
+            209: -1.2839866,0.028282404
+            210: -1.2605491,0.19243026
+            211: -1.2605491,0.21587968
+            212: -1.3230491,-0.42507887
+            213: -1.2683616,-0.89407325
+            214: -1.2996116,-0.40944552
+            215: -1.2292991,0.012649298
+            216: -1.2058616,0.004832506
+            217: -0.76054907,0.3096788
+            218: -0.85429907,0.2705958
+            219: 0.20820093,0.3565781
+            220: 0.26288843,0.3253119
+            221: 0.84101343,0.31749558
+            222: 0.48945093,0.25496268
+            223: -0.44804907,0.07518172
+            224: -0.81523657,-0.104599476
+            225: -1.1277366,-0.3625462
+            226: -0.44804907,-0.073333025
+            227: -0.32304907,-0.049883604
+            228: -1.2058616,-0.6361263
+            229: -1.4246116,-0.7221086
+            230: -0.13554907,0.15334725
+            231: 0.63007593,0.31749558
+            232: 1.3644509,0.09863114
+        - node:
+            cleanable: True
+            zIndex: 3
+            color: '#57121237'
+            id: splatter
+          decals:
+            658: -0.35274917,-4.064848
+            659: -0.28243667,-3.8772504
+            660: -0.33712417,-3.3144567
+            661: 0.45975083,-4.017948
+            662: -0.48556167,-4.455677
+            663: 0.41287583,-3.4629714
+            664: 0.6706884,-4.5963745
+            665: 0.17850083,-4.0257654
+            666: -0.07931167,-2.962711
+            667: 0.7566259,-3.1112258
+            668: 0.6863134,-4.19773
+            669: -0.25899917,-3.5645874
+            670: -0.36056167,-2.3295686
+            671: -0.32149917,-1.8840244
+            672: -0.5246241,-1.3603141
+            673: -0.29024917,-2.4546344
+            674: -0.27462417,-1.6729772
+            675: -0.31368667,-1.6573436
+            676: -0.47774917,-1.110184
+            677: -0.24337417,-0.8444207
+            678: 0.26443833,-0.5708406
+            679: 2.053501,-0.32071042
+            680: 2.381626,-0.35979342
+            681: 3.9675636,-0.6177404
+            682: 4.241001,-1.2899654
+            683: 3.9128761,-2.2748535
+            684: 4.3894386,-2.4859006
+            685: 4.2488136,-3.165942
+            686: 4.209751,-3.3300903
+            687: 4.241001,-2.8689125
+            688: 4.2175636,-2.9392612
+            689: 4.459751,-3.9241493
+            690: 4.1706886,-4.244629
+            691: 3.6238136,-3.1893919
+            692: 4.147251,-3.2910068
+            693: 3.4050634,-3.7287357
+            694: 3.6550636,-3.1815755
+            695: 3.6160011,-3.6740196
+            696: 3.412876,-4.0023155
+            697: 3.2175634,-3.814717
+            698: 3.7488136,-3.5880373
+            699: 3.2175634,-4.2368126
+            700: 4.1550636,-3.9319665
+            701: 4.491001,-2.470267
+            702: 4.2800636,-1.4931962
+            703: 4.459751,-1.0632846
+            704: 4.459751,-1.8918412
+            705: 4.037876,-1.2508824
+            706: 3.2019384,-0.36760974
+            707: 1.9206884,-0.2269113
+            708: 3.7253761,-3.4551551
+            709: 3.131626,-4.1351967
+            710: 3.7488136,-4.4947596
+            711: 4.0456886,-4.166464
+            712: 0.7253759,-4.2133627
+            713: 0.030063331,-3.4395225
+            714: 0.9597509,-3.6662023
+            715: 0.14725083,-4.064848
+            716: 0.26443833,-2.82983
+            717: -0.26681167,-2.3999183
+            718: -0.17306167,-1.5400951
+            719: 0.44412583,-0.813154
+            720: 0.47628975,-1.2430656
+            721: 0.76535225,-0.71153903
+            722: 2.1012897,-0.46922517
+            723: 3.5153522,-0.6802728
+            724: 2.4137897,-0.5630243
+            725: 0.37472725,-0.6802728
+            726: -1.0705848,-1.6729772
+            727: 4.3591022,-1.602628
+            728: 4.6091022,-1.344681
+            729: 4.7184772,-2.5093505
+            730: 4.2028522,-2.986161
+            731: 0.4284668,-2.3842847
+            732: 1.4669219,-1.602628
+            733: 3.6153593,-1.4697464
+            734: 4.1778593,-2.0169065
+            735: 2.8184845,-3.6505697
+            736: 1.4825469,-4.3149786
+            737: 0.6700469,-4.408777
+            738: -0.025265574,-3.2128417
+            739: 0.17004693,-2.6344154
+            740: 1.4747344,-2.4859006
+            741: 0.037234426,-3.681836
+            742: 1.7091093,-3.9319665
+            743: 3.1622345,-3.4395225
+            744: -0.62056875,-3.0556004
+            745: -0.40963125,-2.0707123
+            746: -0.01900673,-1.0936406
+            747: 3.0278683,-4.2984343
+            748: 3.1059933,-4.220269
+            749: 3.1372433,-4.243718
+            750: 2.9809933,-4.368784
+            751: 2.9419308,-4.157736
+            752: 3.1684933,-4.212452
+            753: 3.0981808,-4.243718
+            754: 3.0591183,-4.1811857
+            755: 3.0825558,-4.4078665
+            756: 3.1138058,-4.2828016
+            757: 3.1450558,-4.157736
+        - node:
+            cleanable: True
+            zIndex: 3
+            color: '#57121246'
+            id: splatter
+          decals:
+            351: 4.0208178,0.2171719
+            352: 3.7473803,0.2249887
+            353: 4.7630053,0.28752112
+            354: 5.2317553,-0.0016920567
+            355: 5.4192553,-0.9005978
+            356: 5.3880053,-1.7682374
+            357: 5.3723803,-0.853698
+            358: 5.2630053,0.084290266
+            359: 4.9192553,0.34223723
+            360: 4.1926928,0.31097102
+            361: 2.9973805,0.26407123
+            362: 2.0598805,0.1859057
+            363: 1.5911305,0.20935512
+            364: 0.927068,0.19372249
+            365: 1.052068,0.2797048
+            366: 3.7473803,0.38913655
+            367: 4.7083178,0.27188802
+            368: 5.0989428,0.04520774
+            369: 5.3801928,-0.99439645
+            370: 5.3176928,-2.0652668
+            371: 5.3645678,-0.68173337
+            372: 5.1614428,0.41258597
+            373: 5.2317553,0.5142019
+            374: 5.3411303,0.053024054
+            375: 5.1926928,-0.39252067
+            376: 3.5442553,0.33442044
+            377: 2.755193,0.2797048
+            378: 2.0442555,0.34223723
+            379: 1.708318,0.40476966
+            380: 2.4817555,0.5376513
+            381: 2.8567555,0.5376513
+            382: 2.770818,0.46730208
+            383: 3.5364428,0.45166898
+            384: 4.2005053,0.45166898
+            385: 4.9583178,0.27188802
+            386: 5.2395678,-0.35343766
+            387: 5.3489428,-0.9240477
+            388: 5.2786303,-1.4790242
+            389: 5.1380053,-2.1277993
+            390: 5.3176928,-2.8156579
+            391: 5.3020678,-3.7145636
+            392: 5.2942553,-4.144474
+            393: 5.1770678,-4.5509357
+            394: 5.1692553,-4.527486
+            395: 5.3333178,-3.3940842
+            396: 5.2942553,-4.2148237
+            397: 5.2630053,-5.4092684
+            398: 4.7630053,-5.556517
+            399: 3.208318,-5.284233
+            400: 2.2630055,-5.2373333
+            401: 0.844975,-5.2451506
+            402: -0.37195456,-5.2920494
+            403: -0.13951898,-5.2451506
+            404: 2.422981,-5.2685995
+            405: 2.2901685,-3.8303506
+            406: 1.594856,-1.7745926
+            407: 2.1339185,-1.4462965
+            408: 1.1339185,-1.9856403
+            409: 0.985481,-1.8371251
+            410: 2.016731,-1.7042434
+            411: 1.860481,-2.4546344
+            412: 3.2901685,-2.079439
+            413: 3.3214185,-1.8918412
+            414: 2.7432935,-1.2665155
+            415: 3.204231,-1.0007522
+            416: 2.9151685,-0.68808913
+            417: 2.876106,-0.6099231
+            418: 3.1651685,-0.9929354
+            419: 3.3057935,-1.0945508
+            420: 3.3839185,-1.2665155
+            421: 3.001106,-1.821492
+            422: 2.8995435,-2.415551
+            423: 1.9932935,-2.368652
+        - node:
+            cleanable: True
+            zIndex: 1
+            color: '#57121248'
+            id: splatter
+          decals:
+            253: -1.3230491,-3.4891746
+            254: -1.2996116,-2.6918848
+            255: -1.0808616,-1.9102275
+            256: -1.2449241,-1.0660379
+            257: -1.2292991,-1.5741146
+            258: -1.2683616,-2.9263818
+            259: -1.2449241,-4.270832
+            260: -1.0886741,-4.7945423
+            261: 0.20820093,-4.8258085
+        - node:
+            cleanable: True
+            zIndex: 1
+            color: '#57121265'
+            id: splatter
+          decals:
+            18: 1.7472634,-1.8733788
+            19: 1.8800759,-1.8421125
+            20: 1.9972634,-2.2407575
+            21: 1.6925759,-2.3032904
+            22: 2.239451,-1.7014141
+            23: 2.4660134,-1.6779644
+        - node:
+            cleanable: True
+            zIndex: 3
+            angle: 0.2617993877991494 rad
+            color: '#6712122D'
+            id: splatter
+          decals:
+            912: -1.8834603,-1.2950897
+            913: -2.3131478,-1.2169242
+            914: -2.4068978,-1.146575
+            915: -1.7350228,-0.9746103
+            916: -1.8678353,-1.0918589
+            917: -2.5709603,-1.0371428
+            918: -2.4225228,-0.8495455
+            919: -2.4303353,-0.70103073
+            920: -3.1568978,-0.41181755
+            921: -2.7506478,-0.33365154
+            922: -2.3834603,-0.72448015
+            923: -2.7818978,-1.1153088
+            924: -3.0631478,-1.404522
+            925: -2.6490853,-1.2403736
+            926: -2.6725228,-1.3419895
+            927: -3.0553353,-1.7015514
+            928: -2.5318978,-1.0684094
+            929: -2.6100228,-0.9355278
+            930: -2.7037728,-1.9829483
+            931: -2.8287728,-2.3190603
+            932: -3.2272103,-1.7875338
+            933: -2.9850228,-0.8104625
+            934: -2.8443978,-0.43526745
+            935: -3.5006478,-1.404522
+            936: -3.3209603,-0.79482937
+            937: -3.0318978,-0.5368824
+            938: -3.3131478,-0.76356316
+            939: -3.1647103,-0.41181755
+            940: -2.7350228,-0.2398529
+            941: -2.8756478,-0.8339119
+            942: -2.9068978,-0.43526745
+            943: -2.7506478,-0.10697079
+            944: -2.5006478,-0.74011326
+            945: -2.2428353,-1.1309419
+            946: -1.9537728,-1.2560072
+            947: -1.8053353,-1.2794571
+            948: -1.8131478,-1.2481904
+            949: -2.1959603,-1.0371428
+            950: -2.8131478,-1.0918589
+            951: -3.3443978,-1.3732557
+            952: -3.1568978,-2.1080132
+            953: -2.9459603,-2.4206762
+            954: -2.9303353,-2.725522
+            955: -2.9772103,-3.0303688
+            956: -2.5162728,-2.4597588
+            957: -2.7272103,-1.6155691
+            958: -2.7506478,-1.4670544
+            959: -3.1022103,-2.569191
+            960: -2.9303353,-2.1001968
+            961: -2.7272103,-1.4748707
+            962: -2.7428353,-1.4748707
+            963: -2.8209603,-1.975132
+            964: -3.1647103,-0.8339119
+            965: -3.1959603,0.1509757
+            966: -3.0397103,0.25259113
+            967: -2.6647103,0.1118927
+            968: -1.7428353,-0.8964448
+            969: -1.4693978,-0.9589777
+            970: -1.4381478,-1.2950897
+        - node:
+            cleanable: True
+            zIndex: 3
+            angle: 0.2617993877991494 rad
+            color: '#67121244'
+            id: splatter
+          decals:
+            865: 3.3503788,-3.440471
+            866: 3.4128788,-3.2919562
+            867: 2.8972538,-3.3075888
+            868: 2.8972538,-3.4561036
+            869: 3.2253788,-3.8938315
+            870: 2.4910038,-3.104358
+            871: 2.6785038,-2.7369788
+            872: 2.9363163,-3.1278079
+            873: 2.7488163,-3.4326537
+            874: 2.2488163,-3.0340092
+            875: 2.7488163,-4.2143106
+            876: 3.1160038,-4.761471
+            877: 3.4206913,-4.847453
+            878: 2.8581913,-4.1361456
+            879: 3.897254,-4.3706427
+            880: 3.631629,-4.6442223
+            881: 3.4285038,-4.4488077
+            882: 2.7878788,-4.5191574
+            883: 2.8738163,-3.8469326
+            884: 3.2956913,-4.401909
+            885: 1.094368,-2.6882396
+            886: 0.609993,-3.1259675
+            887: 0.03968048,-4.25937
+            888: 0.14124298,-4.4782343
+            889: -0.51500654,-3.446447
+            890: 0.8365555,-2.9305534
+            891: 4.1803055,-2.6022573
+            892: 3.6803055,-3.9232578
+            893: 4.688118,-3.774743
+            894: 4.4615555,-4.6970987
+            895: 3.6803055,-4.7674475
+            896: -1.288444,-3.9701576
+            897: -0.94469404,-3.024352
+            898: -0.42906904,-2.0543013
+            899: -0.022819519,-0.82043004
+            900: -0.23375702,-0.2696948
+            901: -0.61656904,-0.06405425
+            902: 2.1803055,-0.27538848
+            903: 3.4615555,-0.18101573
+            904: 4.6334305,-0.56402755
+            905: 4.1334305,-1.5489156
+            906: -1.8678353,-0.77919626
+            907: -1.8678353,-0.77919626
+            908: -2.0162728,-0.8339119
+            909: -2.7428353,-0.8729954
+            910: -2.8287728,-0.8417287
+            911: -2.3912728,-0.67758083
+    - type: GridAtmosphere
+      version: 2
+      data:
+        chunkSize: 4
+    - type: GasTileOverlay
+    - type: RadiationGridResistance
+  - uid: 476
+    mapInit: true
+    paused: true
+    components:
+    - type: MetaData
+      name: solution - beaker
+    - type: Transform
+      parent: 15
+    - type: Solution
+      solution:
+        maxVol: 30
+        name: beaker
+        reagents:
+        - data: []
+          ReagentId: Frezon
+          Quantity: 20
+        - data: []
+          ReagentId: Fresium
+          Quantity: 10
+    - type: ContainedSolution
+      containerName: beaker
+      container: 15
+- proto: AirAlarm
+  entities:
+  - uid: 2
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 4.5,-9.5
+      parent: 1
+    - type: DeviceList
+      devices:
+      - 306
+      - 307
+      - 229
+      - 230
+      - 231
+  - uid: 3
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -4.5,-2.5
+      parent: 1
+    - type: DeviceList
+      devices:
+      - 308
+  - uid: 4
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 6.5,-0.5
+      parent: 1
+    - type: DeviceList
+      devices:
+      - 228
+      - 229
+      - 225
+      - 226
+      - 227
+      - 10
+- proto: AirlockAssemblyCommand
+  entities:
+  - uid: 5
+    components:
+    - type: MetaData
+      desc: It opens, it closes, and maybe crushes you. This one will probably crush you.
+      name: broken command airlock
+    - type: Transform
+      pos: 4.5,-5.5
+      parent: 1
+    missingComponents:
+    - Anchorable
+- proto: AirlockCommandGlass
+  entities:
+  - uid: 6
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 6.5,-7.5
+      parent: 1
+  - uid: 7
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,-7.5
+      parent: 1
+    - type: Door
+      secondsUntilStateChange: -5362.1104
+      state: Opening
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
+- proto: AirlockEngineering
+  entities:
+  - uid: 8
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,-0.5
+      parent: 1
+  - uid: 9
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,-1.5
+      parent: 1
+- proto: AirSensor
+  entities:
+  - uid: 10
+    components:
+    - type: Transform
+      pos: 1.5,1.5
+      parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 4
+- proto: AnomalyElectricity
+  entities:
+  - uid: 11
+    components:
+    - type: MetaData
+      desc: An impossible object. Arcs flash between it and the telepad. There's a slight blue glow around it.
+    - type: Transform
+      pos: 2.5000086,-1.333174
+      parent: 1
+    - type: Anomaly
+      healthChangePerSecond: 0
+      minPulseLength: 1500
+      maxPulseLength: 1800
+      pulseVariation: 0
+      pulseStabilityVariation: 0,0
+      supercriticalSound: !type:SoundPathSpecifier
+        params:
+          variation: null
+          playOffsetSeconds: 0
+          loop: False
+          referenceDistance: 1
+          rolloffFactor: 1
+          maxDistance: 250
+          pitch: 1
+          volume: 1.7
+        path: /Audio/Ambience/ambiruin3.ogg
+      supercriticalSoundAtAnimationStart: !type:SoundPathSpecifier
+        params:
+          variation: null
+          playOffsetSeconds: 0
+          loop: False
+          referenceDistance: 1
+          rolloffFactor: 1
+          maxDistance: 15
+          pitch: 1
+          volume: 2
+        path: /Audio/Ambience/ambiruin2.ogg
+      minPointsPerSecond: 40
+      maxPointsPerSecond: 170
+      growingPointMultiplier: 0
+      corePrototype: AnomalyBluespace
+      coreInertPrototype: MobAbomination
+      animationTime: 7
+      offset: 0,0.05
+    - type: AmbientSound
+      volume: 0
+      range: 10
+      sound: !type:SoundPathSpecifier
+        params:
+          variation: null
+          playOffsetSeconds: 0
+          loop: False
+          referenceDistance: 1
+          rolloffFactor: 1
+          maxDistance: 10
+          pitch: 1
+          volume: 0
+        path: /Audio/Ambience/ambiruin5.ogg
+    - type: RadiationSource
+      slope: 0.7
+      intensity: 4.5
+- proto: APCBasic
+  entities:
+  - uid: 12
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -7.5,-5.5
+      parent: 1
+- proto: APCHighCapacity
+  entities:
+  - uid: 13
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -0.5,-9.5
+      parent: 1
+- proto: BaseChemistryEmptyVial
+  entities:
+  - uid: 15
+    mapInit: true
+    paused: true
+    components:
+    - type: MetaData
+      name: vial (frezon coolant)
+    - type: Transform
+      parent: 14
+    - type: Tag
+      tags:
+      - CentrifugeCompatible
+    - type: SolutionContainerManager
+      solutions: null
+      containers:
+      - beaker
+    - type: MeleeWeapon
+      nextAttack: -32.1421018
+    - type: EmitSoundOnCollide
+      nextSound: -1171.0409639
+    - type: Physics
+      canCollide: False
+    - type: ContainerContainer
+      containers:
+        solution@beaker: !type:ContainerSlot
+          ent: 476
+    - type: Label
+      currentLabel: frezon coolant
+    - type: NameModifier
+      baseName: vial
+    - type: InsideEntityStorage
+- proto: BaseComputer
+  entities:
+  - uid: 19
+    components:
+    - type: MetaData
+      desc: The monitor is displaying readings from an array of sensors. They're all flashing red.
+      name: telescience computer
+    - type: Transform
+      pos: 0.5,-5.5
+      parent: 1
+- proto: BlastDoor
+  entities:
+  - uid: 20
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,2.5
+      parent: 1
+  - uid: 21
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -2.5,2.5
+      parent: 1
+  - uid: 22
+    components:
+    - type: Transform
+      pos: 10.5,-7.5
+      parent: 1
+  - uid: 23
+    components:
+    - type: Transform
+      pos: 10.5,-8.5
+      parent: 1
+- proto: BlastDoorFrame
+  entities:
+  - uid: 24
+    components:
+    - type: Transform
+      anchored: True
+      pos: -5.5,-8.5
+      parent: 1
+  - uid: 25
+    components:
+    - type: Transform
+      anchored: True
+      pos: -5.5,-7.5
+      parent: 1
+- proto: BlueprintFulton
+  entities:
+  - uid: 382
+    components:
+    - type: MetaData
+      name: blueprint
+    - type: Transform
+      pos: 1.579378,-6.642523
+      parent: 1
+- proto: BluespaceBeaker
+  entities:
+  - uid: 471
+    components:
+    - type: Transform
+      rot: -2.9363906402140856 rad
+      pos: -7.928747,0.6358436
+      parent: 1
+- proto: ButtonFrameCaution
+  entities:
+  - uid: 26
+    components:
+    - type: Transform
+      pos: 1.5,-5.25
+      parent: 1
+- proto: ButtonFrameCautionSecurity
+  entities:
+  - uid: 27
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -5.5,-2.5
+      parent: 1
+- proto: CableApcExtension
+  entities:
+  - uid: 28
+    components:
+    - type: Transform
+      pos: 5.5,-7.5
+      parent: 1
+  - uid: 29
+    components:
+    - type: Transform
+      pos: -7.5,-5.5
+      parent: 1
+  - uid: 30
+    components:
+    - type: Transform
+      pos: -7.5,-4.5
+      parent: 1
+  - uid: 31
+    components:
+    - type: Transform
+      pos: -6.5,-4.5
+      parent: 1
+  - uid: 32
+    components:
+    - type: Transform
+      pos: -6.5,-3.5
+      parent: 1
+  - uid: 33
+    components:
+    - type: Transform
+      pos: -0.5,-9.5
+      parent: 1
+  - uid: 34
+    components:
+    - type: Transform
+      pos: -0.5,-8.5
+      parent: 1
+  - uid: 35
+    components:
+    - type: Transform
+      pos: -0.5,-7.5
+      parent: 1
+  - uid: 36
+    components:
+    - type: Transform
+      pos: 0.5,-7.5
+      parent: 1
+  - uid: 37
+    components:
+    - type: Transform
+      pos: 1.5,-7.5
+      parent: 1
+  - uid: 38
+    components:
+    - type: Transform
+      pos: 2.5,-7.5
+      parent: 1
+  - uid: 39
+    components:
+    - type: Transform
+      pos: 3.5,-7.5
+      parent: 1
+  - uid: 40
+    components:
+    - type: Transform
+      pos: 4.5,-7.5
+      parent: 1
+  - uid: 41
+    components:
+    - type: Transform
+      pos: 4.5,-6.5
+      parent: 1
+  - uid: 42
+    components:
+    - type: Transform
+      pos: 4.5,-5.5
+      parent: 1
+  - uid: 43
+    components:
+    - type: Transform
+      pos: 4.5,-4.5
+      parent: 1
+  - uid: 44
+    components:
+    - type: Transform
+      pos: 4.5,-3.5
+      parent: 1
+  - uid: 45
+    components:
+    - type: Transform
+      pos: 4.5,-2.5
+      parent: 1
+  - uid: 46
+    components:
+    - type: Transform
+      pos: 1.5,-2.5
+      parent: 1
+  - uid: 47
+    components:
+    - type: Transform
+      pos: 3.5,-5.5
+      parent: 1
+  - uid: 48
+    components:
+    - type: Transform
+      pos: 7.5,-7.5
+      parent: 1
+  - uid: 49
+    components:
+    - type: Transform
+      pos: 6.5,-7.5
+      parent: 1
+  - uid: 50
+    components:
+    - type: Transform
+      pos: -1.5,-7.5
+      parent: 1
+  - uid: 51
+    components:
+    - type: Transform
+      pos: -2.5,-7.5
+      parent: 1
+  - uid: 52
+    components:
+    - type: Transform
+      pos: -3.5,-7.5
+      parent: 1
+  - uid: 53
+    components:
+    - type: Transform
+      pos: -4.5,-7.5
+      parent: 1
+  - uid: 54
+    components:
+    - type: Transform
+      pos: 4.5,-1.5
+      parent: 1
+  - uid: 55
+    components:
+    - type: Transform
+      pos: 4.5,-0.5
+      parent: 1
+  - uid: 56
+    components:
+    - type: Transform
+      pos: 3.5,0.5
+      parent: 1
+  - uid: 57
+    components:
+    - type: Transform
+      pos: 2.5,0.5
+      parent: 1
+  - uid: 58
+    components:
+    - type: Transform
+      pos: 1.5,0.5
+      parent: 1
+  - uid: 59
+    components:
+    - type: Transform
+      pos: 0.5,0.5
+      parent: 1
+  - uid: 60
+    components:
+    - type: Transform
+      pos: -0.5,0.5
+      parent: 1
+  - uid: 61
+    components:
+    - type: Transform
+      pos: 4.5,0.5
+      parent: 1
+  - uid: 62
+    components:
+    - type: Transform
+      pos: -0.5,-0.5
+      parent: 1
+  - uid: 63
+    components:
+    - type: Transform
+      pos: -0.5,-1.5
+      parent: 1
+  - uid: 64
+    components:
+    - type: Transform
+      pos: -0.5,-2.5
+      parent: 1
+  - uid: 65
+    components:
+    - type: Transform
+      pos: 1.5,-3.5
+      parent: 1
+  - uid: 66
+    components:
+    - type: Transform
+      pos: 2.5,-3.5
+      parent: 1
+  - uid: 67
+    components:
+    - type: Transform
+      pos: 3.5,-3.5
+      parent: 1
+  - uid: 68
+    components:
+    - type: Transform
+      pos: 8.5,-7.5
+      parent: 1
+  - uid: 69
+    components:
+    - type: Transform
+      pos: 9.5,-7.5
+      parent: 1
+  - uid: 70
+    components:
+    - type: Transform
+      pos: 10.5,-7.5
+      parent: 1
+  - uid: 71
+    components:
+    - type: Transform
+      pos: 11.5,-7.5
+      parent: 1
+  - uid: 72
+    components:
+    - type: Transform
+      pos: 12.5,-7.5
+      parent: 1
+  - uid: 459
+    components:
+    - type: Transform
+      pos: -6.5,-2.5
+      parent: 1
+- proto: CableApcStack1
+  entities:
+  - uid: 73
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -6.777521,-2.6875072
+      parent: 1
+  - uid: 74
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 12.546303,-7.5623555
+      parent: 1
+  - uid: 75
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 12.874428,-7.2262425
+      parent: 1
+- proto: CableHV
+  entities:
+  - uid: 76
+    components:
+    - type: Transform
+      pos: -5.5,0.5
+      parent: 1
+  - uid: 77
+    components:
+    - type: Transform
+      pos: -5.5,1.5
+      parent: 1
+  - uid: 78
+    components:
+    - type: Transform
+      pos: -7.5,1.5
+      parent: 1
+  - uid: 79
+    components:
+    - type: Transform
+      pos: -5.5,-0.5
+      parent: 1
+  - uid: 80
+    components:
+    - type: Transform
+      pos: -5.5,-1.5
+      parent: 1
+  - uid: 81
+    components:
+    - type: Transform
+      pos: -5.5,-2.5
+      parent: 1
+  - uid: 82
+    components:
+    - type: Transform
+      pos: -5.5,-3.5
+      parent: 1
+  - uid: 83
+    components:
+    - type: Transform
+      pos: -5.5,-4.5
+      parent: 1
+  - uid: 84
+    components:
+    - type: Transform
+      pos: -6.5,-4.5
+      parent: 1
+  - uid: 85
+    components:
+    - type: Transform
+      pos: -7.5,-4.5
+      parent: 1
+  - uid: 86
+    components:
+    - type: Transform
+      pos: -8.5,-3.5
+      parent: 1
+  - uid: 87
+    components:
+    - type: Transform
+      pos: -7.5,-3.5
+      parent: 1
+  - uid: 88
+    components:
+    - type: Transform
+      pos: -8.5,-2.5
+      parent: 1
+  - uid: 89
+    components:
+    - type: Transform
+      pos: -6.5,-0.5
+      parent: 1
+  - uid: 90
+    components:
+    - type: Transform
+      pos: -7.5,-0.5
+      parent: 1
+  - uid: 463
+    components:
+    - type: Transform
+      pos: -8.5,-0.5
+      parent: 1
+- proto: CableHVStack1
+  entities:
+  - uid: 91
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -6.114647,1.358743
+      parent: 1
+  - uid: 92
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -5.917657,-3.1817186
+      parent: 1
+  - uid: 93
+    components:
+    - type: Transform
+      pos: -5.245782,-0.60224986
+      parent: 1
+  - uid: 94
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -7.083397,-0.34526896
+      parent: 1
+  - uid: 95
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -7.2162094,0.09245896
+      parent: 1
+  - uid: 458
+    components:
+    - type: Transform
+      rot: -2.9466295252230505 rad
+      pos: -8.780957,-0.45470548
+      parent: 1
+  - uid: 464
+    components:
+    - type: Transform
+      rot: 2.9480044841766357 rad
+      pos: -9.499638,-0.5635517
+      parent: 1
+- proto: CableMV
+  entities:
+  - uid: 96
+    components:
+    - type: Transform
+      pos: -8.5,-2.5
+      parent: 1
+  - uid: 97
+    components:
+    - type: Transform
+      pos: -7.5,-2.5
+      parent: 1
+  - uid: 98
+    components:
+    - type: Transform
+      pos: -6.5,-4.5
+      parent: 1
+  - uid: 99
+    components:
+    - type: Transform
+      pos: -7.5,-4.5
+      parent: 1
+  - uid: 100
+    components:
+    - type: Transform
+      pos: -7.5,-1.5
+      parent: 1
+  - uid: 101
+    components:
+    - type: Transform
+      pos: -7.5,-0.5
+      parent: 1
+  - uid: 102
+    components:
+    - type: Transform
+      pos: -6.5,-0.5
+      parent: 1
+  - uid: 103
+    components:
+    - type: Transform
+      pos: -5.5,-0.5
+      parent: 1
+  - uid: 104
+    components:
+    - type: Transform
+      pos: -4.5,-0.5
+      parent: 1
+  - uid: 105
+    components:
+    - type: Transform
+      pos: -3.5,-0.5
+      parent: 1
+  - uid: 106
+    components:
+    - type: Transform
+      pos: -2.5,-0.5
+      parent: 1
+  - uid: 107
+    components:
+    - type: Transform
+      pos: -1.5,-0.5
+      parent: 1
+  - uid: 108
+    components:
+    - type: Transform
+      pos: -0.5,-0.5
+      parent: 1
+  - uid: 109
+    components:
+    - type: Transform
+      pos: 0.5,-0.5
+      parent: 1
+  - uid: 110
+    components:
+    - type: Transform
+      pos: -2.5,-1.5
+      parent: 1
+  - uid: 111
+    components:
+    - type: Transform
+      pos: -2.5,-2.5
+      parent: 1
+  - uid: 112
+    components:
+    - type: Transform
+      pos: -1.5,-2.5
+      parent: 1
+  - uid: 113
+    components:
+    - type: Transform
+      pos: -0.5,-2.5
+      parent: 1
+  - uid: 114
+    components:
+    - type: Transform
+      pos: 1.5,-2.5
+      parent: 1
+  - uid: 115
+    components:
+    - type: Transform
+      pos: -7.5,-5.5
+      parent: 1
+  - uid: 116
+    components:
+    - type: Transform
+      pos: 2.5,-1.5
+      parent: 1
+  - uid: 117
+    components:
+    - type: Transform
+      pos: 1.5,-0.5
+      parent: 1
+  - uid: 118
+    components:
+    - type: Transform
+      pos: 2.5,-0.5
+      parent: 1
+  - uid: 119
+    components:
+    - type: Transform
+      pos: 4.5,-0.5
+      parent: 1
+  - uid: 120
+    components:
+    - type: Transform
+      pos: 5.5,-0.5
+      parent: 1
+  - uid: 121
+    components:
+    - type: Transform
+      pos: 5.5,-1.5
+      parent: 1
+  - uid: 122
+    components:
+    - type: Transform
+      pos: 5.5,-2.5
+      parent: 1
+  - uid: 123
+    components:
+    - type: Transform
+      pos: 4.5,-2.5
+      parent: 1
+  - uid: 124
+    components:
+    - type: Transform
+      pos: 3.5,-2.5
+      parent: 1
+  - uid: 125
+    components:
+    - type: Transform
+      pos: -6.5,-3.5
+      parent: 1
+  - uid: 126
+    components:
+    - type: Transform
+      pos: -5.5,-3.5
+      parent: 1
+  - uid: 127
+    components:
+    - type: Transform
+      pos: -4.5,-3.5
+      parent: 1
+  - uid: 128
+    components:
+    - type: Transform
+      pos: -3.5,-3.5
+      parent: 1
+  - uid: 129
+    components:
+    - type: Transform
+      pos: -3.5,-4.5
+      parent: 1
+  - uid: 130
+    components:
+    - type: Transform
+      pos: -3.5,-5.5
+      parent: 1
+  - uid: 131
+    components:
+    - type: Transform
+      pos: -3.5,-7.5
+      parent: 1
+  - uid: 132
+    components:
+    - type: Transform
+      pos: -3.5,-6.5
+      parent: 1
+  - uid: 133
+    components:
+    - type: Transform
+      pos: -2.5,-7.5
+      parent: 1
+  - uid: 134
+    components:
+    - type: Transform
+      pos: -1.5,-7.5
+      parent: 1
+  - uid: 135
+    components:
+    - type: Transform
+      pos: -0.5,-7.5
+      parent: 1
+  - uid: 136
+    components:
+    - type: Transform
+      pos: 0.5,-7.5
+      parent: 1
+  - uid: 137
+    components:
+    - type: Transform
+      pos: -0.5,-8.5
+      parent: 1
+  - uid: 138
+    components:
+    - type: Transform
+      pos: -0.5,-9.5
+      parent: 1
+  - uid: 139
+    components:
+    - type: Transform
+      pos: 1.5,-7.5
+      parent: 1
+  - uid: 140
+    components:
+    - type: Transform
+      pos: 2.5,-7.5
+      parent: 1
+  - uid: 141
+    components:
+    - type: Transform
+      pos: 3.5,-7.5
+      parent: 1
+  - uid: 142
+    components:
+    - type: Transform
+      pos: 4.5,-7.5
+      parent: 1
+  - uid: 143
+    components:
+    - type: Transform
+      pos: 5.5,-7.5
+      parent: 1
+  - uid: 144
+    components:
+    - type: Transform
+      pos: 6.5,-7.5
+      parent: 1
+  - uid: 145
+    components:
+    - type: Transform
+      pos: 7.5,-7.5
+      parent: 1
+  - uid: 146
+    components:
+    - type: Transform
+      pos: 7.5,-8.5
+      parent: 1
+  - uid: 147
+    components:
+    - type: Transform
+      pos: 8.5,-8.5
+      parent: 1
+  - uid: 148
+    components:
+    - type: Transform
+      pos: 9.5,-8.5
+      parent: 1
+  - uid: 149
+    components:
+    - type: Transform
+      pos: 10.5,-8.5
+      parent: 1
+- proto: CableMVStack1
+  entities:
+  - uid: 150
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -8.309632,-4.3932867
+      parent: 1
+  - uid: 151
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -7.7783823,-4.268222
+      parent: 1
+  - uid: 152
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.3402357,-0.5727961
+      parent: 1
+  - uid: 153
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.029247046,-2.2611752
+      parent: 1
+  - uid: 154
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 0.74799705,-2.1673765
+      parent: 1
+  - uid: 155
+    components:
+    - type: Transform
+      pos: 2.232372,-2.2220926
+      parent: 1
+- proto: CableTerminal
+  entities:
+  - uid: 156
+    components:
+    - type: Transform
+      pos: -5.5,-3.5
+      parent: 1
+  - uid: 157
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,-1.5
+      parent: 1
+- proto: CargoTelepad
+  entities:
+  - uid: 158
+    components:
+    - type: MetaData
+      desc: An experimental telepad, akin to cargo telepads. Something went horribly wrong with this one.
+      name: experimental telepad
+    - type: Transform
+      pos: 2.5,-1.5
+      parent: 1
+    missingComponents:
+    - DeviceLinkSink
+    - CargoTelepad
+    - Anchorable
+    - Construction
+- proto: Catwalk
+  entities:
+  - uid: 159
+    components:
+    - type: Transform
+      pos: -2.5,-5.5
+      parent: 1
+  - uid: 160
+    components:
+    - type: Transform
+      pos: -2.5,-4.5
+      parent: 1
+  - uid: 161
+    components:
+    - type: Transform
+      pos: -2.5,-3.5
+      parent: 1
+  - uid: 162
+    components:
+    - type: Transform
+      pos: -3.5,-4.5
+      parent: 1
+  - uid: 163
+    components:
+    - type: Transform
+      pos: -3.5,-3.5
+      parent: 1
+  - uid: 164
+    components:
+    - type: Transform
+      pos: -3.5,-2.5
+      parent: 1
+  - uid: 165
+    components:
+    - type: Transform
+      pos: -3.5,-1.5
+      parent: 1
+  - uid: 166
+    components:
+    - type: Transform
+      pos: -2.5,-1.5
+      parent: 1
+  - uid: 167
+    components:
+    - type: Transform
+      pos: -3.5,0.5
+      parent: 1
+  - uid: 168
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,1.5
+      parent: 1
+  - uid: 169
+    components:
+    - type: Transform
+      pos: -2.5,1.5
+      parent: 1
+  - uid: 170
+    components:
+    - type: Transform
+      pos: 2.5,-8.5
+      parent: 1
+  - uid: 171
+    components:
+    - type: Transform
+      pos: 3.5,-8.5
+      parent: 1
+- proto: ChairOfficeDark
+  entities:
+  - uid: 172
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 1.2353792,-6.0455465
+      parent: 1
+- proto: ClockworkGrilleBroken
+  entities:
+  - uid: 173
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 3.5,1.5
+      parent: 1
+  - uid: 174
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 1.5,1.5
+      parent: 1
+- proto: ClosetRadiationSuit
+  entities:
+  - uid: 175
+    components:
+    - type: Transform
+      pos: -9.5,-0.5
+      parent: 1
+- proto: ClothingHandsGlovesCombat
+  entities:
+  - uid: 483
+    components:
+    - type: Transform
+      parent: 477
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: ClothingShoesBootsJack
+  entities:
+  - uid: 176
+    components:
+    - type: Transform
+      pos: 2.4916928,-1.5949614
+      parent: 1
+- proto: CrateEngineeringSecure
+  entities:
+  - uid: 477
+    components:
+    - type: Transform
+      pos: -7.0570393,2.6675224
+      parent: 1
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 483
+          - 482
+          - 481
+          - 480
+          - 479
+          - 478
+          - 484
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+    - type: Pullable
+      prevFixedRotation: True
+- proto: CrateSecure
+  entities:
+  - uid: 14
+    components:
+    - type: MetaData
+      desc: A secure crate supposedly holding highly fragile vials of frezon. It's dented on the edges.
+      name: secure frezon vial crate
+    - type: Transform
+      pos: 7.842639,-6.7983217
+      parent: 1
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape: !type:PolygonShape
+            radius: 0.01
+            vertices:
+            - -0.4,-0.4
+            - 0.4,-0.4
+            - 0.4,0.29
+            - -0.4,0.29
+          mask:
+          - Impassable
+          - HighImpassable
+          - LowImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          density: 50
+          hard: True
+          restitution: 0
+          friction: 0.4
+    - type: PlaceableSurface
+      isPlaceable: True
+    - type: Pullable
+      prevFixedRotation: True
+    - type: AccessReader
+      access:
+      - - ResearchDirector
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 21.349998
+        moles:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 720
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 15
+          - 18
+          - 17
+          - 16
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+- proto: DimLightBulb
+  entities:
+  - uid: 179
+    components:
+    - type: Transform
+      parent: 178
+    - type: Physics
+      canCollide: False
+- proto: DisposalJunction
+  entities:
+  - uid: 180
+    components:
+    - type: Transform
+      pos: -3.5,5.5
+      parent: 1
+- proto: DisposalJunctionFlipped
+  entities:
+  - uid: 181
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 5.5,-7.5
+      parent: 1
+- proto: DisposalPipe
+  entities:
+  - uid: 182
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 6.5,-7.5
+      parent: 1
+  - uid: 183
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 7.5,-7.5
+      parent: 1
+  - uid: 184
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 8.5,-7.5
+      parent: 1
+  - uid: 185
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 9.5,-7.5
+      parent: 1
+  - uid: 186
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 10.5,-7.5
+      parent: 1
+  - uid: 187
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 11.5,-7.5
+      parent: 1
+  - uid: 188
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,-7.5
+      parent: 1
+  - uid: 189
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 3.5,-7.5
+      parent: 1
+  - uid: 190
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,-7.5
+      parent: 1
+  - uid: 191
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 1.5,-7.5
+      parent: 1
+  - uid: 192
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,-7.5
+      parent: 1
+  - uid: 193
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -0.5,-7.5
+      parent: 1
+  - uid: 194
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.5,-7.5
+      parent: 1
+  - uid: 195
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -2.5,-7.5
+      parent: 1
+  - uid: 196
+    components:
+    - type: Transform
+      pos: -3.5,4.5
+      parent: 1
+  - uid: 197
+    components:
+    - type: Transform
+      pos: -3.5,3.5
+      parent: 1
+  - uid: 198
+    components:
+    - type: Transform
+      pos: -3.5,2.5
+      parent: 1
+  - uid: 199
+    components:
+    - type: Transform
+      pos: -3.5,1.5
+      parent: 1
+  - uid: 200
+    components:
+    - type: Transform
+      pos: -3.5,0.5
+      parent: 1
+  - uid: 201
+    components:
+    - type: Transform
+      pos: -3.5,-0.5
+      parent: 1
+  - uid: 202
+    components:
+    - type: Transform
+      pos: -3.5,-1.5
+      parent: 1
+  - uid: 203
+    components:
+    - type: Transform
+      pos: -3.5,-2.5
+      parent: 1
+  - uid: 204
+    components:
+    - type: Transform
+      pos: -3.5,-3.5
+      parent: 1
+  - uid: 205
+    components:
+    - type: Transform
+      pos: -3.5,-4.5
+      parent: 1
+  - uid: 206
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-5.5
+      parent: 1
+  - uid: 207
+    components:
+    - type: Transform
+      pos: -3.5,-6.5
+      parent: 1
+  - uid: 208
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -7.5,-7.5
+      parent: 1
+- proto: DisposalPipeBroken
+  entities:
+  - uid: 209
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 12.5,-7.5
+      parent: 1
+  - uid: 210
+    components:
+    - type: Transform
+      pos: -3.5,6.5
+      parent: 1
+  - uid: 211
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -4.5,-7.5
+      parent: 1
+  - uid: 212
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -6.5,-7.5
+      parent: 1
+  - uid: 213
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -8.5,-7.5
+      parent: 1
+- proto: DisposalTrunk
+  entities:
+  - uid: 214
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 5.5,-8.5
+      parent: 1
+- proto: DisposalUnit
+  entities:
+  - uid: 215
+    components:
+    - type: Transform
+      pos: 5.5,-8.5
+      parent: 1
+- proto: DisposalYJunction
+  entities:
+  - uid: 216
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-7.5
+      parent: 1
+- proto: DoubleEmergencyOxygenTankFilled
+  entities:
+  - uid: 355
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 9.016434,-3.9197845
+      parent: 1
+- proto: EmergencyLight
+  entities:
+  - uid: 217
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.5,-4.5
+      parent: 1
+  - uid: 218
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,-8.5
+      parent: 1
+  - uid: 219
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 7.5,-8.5
+      parent: 1
+  - uid: 220
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -5.5,-2.5
+      parent: 1
+  - uid: 221
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -3.5,1.5
+      parent: 1
+- proto: ExtinguisherCabinetOpen
+  entities:
+  - uid: 222
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 6.5,-6.5
+      parent: 1
+- proto: FaxMachineBase
+  entities:
+  - uid: 223
+    components:
+    - type: MetaData
+      desc: Bluespace technologies on the application of bureaucracy. This one looks really old.
+      name: old long range fax machine
+    - type: Transform
+      pos: 4.5,-8.5
+      parent: 1
+    - type: FaxMachine
+      name: Telescience Research Laboratory
+    - type: Pullable
+      prevFixedRotation: True
+- proto: FireAlarmAssembly
+  entities:
+  - uid: 224
+    components:
+    - type: MetaData
+      desc: A fire alarm. It's busted.
+      name: broken fire alarm
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,-3.5
+      parent: 1
+    missingComponents:
+    - Construction
+- proto: FirelockEdge
+  entities:
+  - uid: 225
+    components:
+    - type: Transform
+      pos: 2.5,-4.5
+      parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 4
+  - uid: 226
+    components:
+    - type: Transform
+      pos: 1.5,-4.5
+      parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 4
+  - uid: 227
+    components:
+    - type: Transform
+      pos: 0.5,-4.5
+      parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 4
+  - uid: 228
+    components:
+    - type: Transform
+      pos: 3.5,-4.5
+      parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 4
+- proto: FirelockGlass
+  entities:
+  - uid: 229
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,-5.5
+      parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 2
+      - 4
+  - uid: 230
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,-7.5
+      parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 2
+  - uid: 231
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-7.5
+      parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 2
+- proto: FloorTileItemWhite
+  entities:
+  - uid: 232
+    components:
+    - type: Transform
+      rot: 4.427054287049856 rad
+      pos: -5.8714786,-9.549382
+      parent: 1
+  - uid: 233
+    components:
+    - type: Transform
+      rot: 2.229738708211938 rad
+      pos: -6.362634,-7.4310646
+      parent: 1
+  - uid: 234
+    components:
+    - type: Transform
+      rot: 5.098679819562537 rad
+      pos: 7.1832304,-7.5247245
+      parent: 1
+  - uid: 235
+    components:
+    - type: Transform
+      rot: 1.9395802012722982 rad
+      pos: 8.443088,-8.874636
+      parent: 1
+  - uid: 236
+    components:
+    - type: Transform
+      rot: 5.511605602261332 rad
+      pos: 12.312578,-7.6115174
+      parent: 1
+  - uid: 237
+    components:
+    - type: Transform
+      rot: 1.6469409036108125 rad
+      pos: -2.8823411,-7.337399
+      parent: 1
+  - uid: 238
+    components:
+    - type: Transform
+      rot: 3.9097657833244788 rad
+      pos: -3.4943893,-8.840513
+      parent: 1
+- proto: FultonBeacon
+  entities:
+  - uid: 474
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 10.177677,-3.9586577
+      parent: 1
+- proto: GasPipeBend
+  entities:
+  - uid: 239
+    components:
+    - type: Transform
+      pos: 0.5,3.5
+      parent: 1
+- proto: GasPipeBroken
+  entities:
+  - uid: 240
+    components:
+    - type: Transform
+      pos: 4.5,3.5
+      parent: 1
+  - uid: 241
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,3.5
+      parent: 1
+- proto: GasPipeHalf
+  entities:
+  - uid: 242
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 8.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 243
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -5.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 244
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -6.5,-1.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 245
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,3.5
+      parent: 1
+  - uid: 246
+    components:
+    - type: Transform
+      pos: 4.5,3.5
+      parent: 1
+- proto: GasPipeStraight
+  entities:
+  - uid: 247
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 248
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 1.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 249
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 0.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 250
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 251
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 252
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -3.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 253
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -4.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 254
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -5.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 255
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 0.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 256
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 257
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 258
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 4.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 259
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 5.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 260
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 261
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 7.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 262
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 263
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 3.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 264
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 4.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 265
+    components:
+    - type: Transform
+      pos: 3.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 266
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 5.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 267
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 6.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 268
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 7.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 269
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -2.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 270
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -4.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 271
+    components:
+    - type: Transform
+      pos: -3.5,-6.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 272
+    components:
+    - type: Transform
+      pos: -3.5,-5.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 273
+    components:
+    - type: Transform
+      pos: -3.5,-4.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 274
+    components:
+    - type: Transform
+      pos: -3.5,-3.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 275
+    components:
+    - type: Transform
+      pos: -3.5,-0.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 276
+    components:
+    - type: Transform
+      pos: -3.5,0.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 277
+    components:
+    - type: Transform
+      pos: -3.5,1.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 278
+    components:
+    - type: Transform
+      pos: -3.5,2.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 279
+    components:
+    - type: Transform
+      pos: -3.5,-2.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 280
+    components:
+    - type: Transform
+      pos: -3.5,3.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 281
+    components:
+    - type: Transform
+      pos: -2.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 282
+    components:
+    - type: Transform
+      pos: -2.5,-6.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 283
+    components:
+    - type: Transform
+      pos: -2.5,-5.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 284
+    components:
+    - type: Transform
+      pos: -2.5,-4.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 285
+    components:
+    - type: Transform
+      pos: -2.5,-3.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 286
+    components:
+    - type: Transform
+      pos: -2.5,-2.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 287
+    components:
+    - type: Transform
+      pos: -2.5,-1.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 288
+    components:
+    - type: Transform
+      pos: -2.5,1.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 289
+    components:
+    - type: Transform
+      pos: -2.5,2.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 290
+    components:
+    - type: Transform
+      pos: -2.5,3.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 291
+    components:
+    - type: Transform
+      pos: -2.5,4.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 292
+    components:
+    - type: Transform
+      pos: -2.5,0.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 293
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -4.5,-1.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 294
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -5.5,-1.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 295
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -3.5,-0.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 296
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -4.5,-0.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 297
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -5.5,-0.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 298
+    components:
+    - type: Transform
+      pos: 4.5,2.5
+      parent: 1
+  - uid: 299
+    components:
+    - type: Transform
+      pos: 0.5,2.5
+      parent: 1
+- proto: GasPipeTJunction
+  entities:
+  - uid: 300
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 1.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 301
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 302
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -2.5,-8.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 303
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 304
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -2.5,-0.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 305
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -3.5,-1.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+- proto: GasVentPump
+  entities:
+  - uid: 306
+    components:
+    - type: Transform
+      pos: 1.5,-6.5
+      parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 2
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+- proto: GasVentScrubber
+  entities:
+  - uid: 307
+    components:
+    - type: Transform
+      pos: 3.5,-6.5
+      parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 2
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 308
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -6.5,-0.5
+      parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 3
+    - type: AtmosPipeColor
+      color: '#990000FF'
+- proto: GeneratorRTG
+  entities:
+  - uid: 310
+    components:
+    - type: Transform
+      pos: -5.5,0.5
+      parent: 1
+- proto: GeneratorRTGDamaged
+  entities:
+  - uid: 311
+    components:
+    - type: Transform
+      pos: -7.5,1.5
+      parent: 1
+  - uid: 312
+    components:
+    - type: Transform
+      pos: -5.5,1.5
+      parent: 1
+- proto: Girder
+  entities:
+  - uid: 314
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,0.5
+      parent: 1
+  - uid: 315
+    components:
+    - type: Transform
+      anchored: False
+      rot: -0.4829698940131326 rad
+      pos: -2.9930477,-0.07659909
+      parent: 1
+    - type: Physics
+      bodyType: Dynamic
+    - type: Pullable
+      prevFixedRotation: True
+- proto: GravityGeneratorMini
+  entities:
+  - uid: 465
+    components:
+    - type: Transform
+      pos: -8.5,-3.5
+      parent: 1
+- proto: Grille
+  entities:
+  - uid: 316
+    components:
+    - type: Transform
+      pos: 3.5,-5.5
+      parent: 1
+  - uid: 317
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,1.5
+      parent: 1
+  - uid: 318
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,1.5
+      parent: 1
+- proto: GrilleBroken
+  entities:
+  - uid: 319
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,1.5
+      parent: 1
+  - uid: 320
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.5,1.5
+      parent: 1
+  - uid: 321
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 1.5,1.5
+      parent: 1
+- proto: HeadHuman
+  entities:
+  - uid: 456
+    components:
+    - type: MetaData
+      desc: You swear that you can see it blinking when you look away. It still looks fresh no matter how much time passes.
+      name: severed human head
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.4745088,-4.8270464
+      parent: 1
+    - type: StaticPrice
+      price: 1200
+- proto: HeatExchanger
+  entities:
+  - uid: 322
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 3.5,1.5
+      parent: 1
+  - uid: 323
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,1.5
+      parent: 1
+  - uid: 324
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 1.5,1.5
+      parent: 1
+- proto: HeatExchangerBend
+  entities:
+  - uid: 325
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,1.5
+      parent: 1
+  - uid: 326
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 0.5,1.5
+      parent: 1
+- proto: HellfireFreezerMachineCircuitBoard
+  entities:
+  - uid: 462
+    components:
+    - type: Transform
+      parent: 461
+    - type: Physics
+      canCollide: False
+- proto: IngotGold1
+  entities:
+  - uid: 478
+    components:
+    - type: Transform
+      parent: 477
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 484
+    components:
+    - type: Transform
+      parent: 477
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: IngotSilver
+  entities:
+  - uid: 481
+    components:
+    - type: Transform
+      parent: 477
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: IntercomAll
+  entities:
+  - uid: 469
+    components:
+    - type: MetaData
+      desc: An intercom for emergency situations. It's in pristine condition.
+      name: emergency intercom
+    - type: Transform
+      anchored: False
+      rot: 3.141592653589793 rad
+      pos: 0.125,-9.5
+      parent: 1
+- proto: LeftArmHuman
+  entities:
+  - uid: 327
+    components:
+    - type: MetaData
+      desc: There's a faint amount of blood flowing through it with no apparent source. Holy shit.
+      name: severed human arm
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 3.4338455,-3.8538203
+      parent: 1
+- proto: LightTubeBroken
+  entities:
+  - uid: 328
+    components:
+    - type: Transform
+      rot: -1.416310431090404 rad
+      pos: 0.57831144,-2.58745
+      parent: 1
+- proto: MachineFrame
+  entities:
+  - uid: 329
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.5,-8.5
+      parent: 1
+    - type: ContainerContainer
+      containers:
+        machine_board: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 330
+        machine_parts: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+  - uid: 461
+    components:
+    - type: Transform
+      anchored: False
+      rot: -2.8760533769938608 rad
+      pos: 8.73963,-1.5786963
+      parent: 1
+    - type: Physics
+      bodyType: Dynamic
+    - type: Pullable
+      prevFixedRotation: True
+    - type: ContainerContainer
+      containers:
+        machine_board: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 462
+        machine_parts: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+- proto: MagazinePistolIncendiary
+  entities:
+  - uid: 331
+    components:
+    - type: Transform
+      pos: 5.019086,-7.5772476
+      parent: 1
+- proto: NTFlag
+  entities:
+  - uid: 309
+    components:
+    - type: Transform
+      rot: 0.13962634015954636 rad
+      pos: 3.5,-9.5
+      parent: 1
+    - type: Physics
+      fixedRotation: False
+    missingComponents:
+    - Rotatable
+- proto: OrganHumanHeart
+  entities:
+  - uid: 353
+    components:
+    - type: MetaData
+      desc: It's still beating, with blood flowing out of it.
+    - type: Transform
+      rot: -1.9273808757450919 rad
+      pos: -2.6602058,0.56129754
+      parent: 1
+- proto: Paper
+  entities:
+  - uid: 332
+    components:
+    - type: Transform
+      rot: -0.20943951023931956 rad
+      pos: 2.037424,-5.5461926
+      parent: 1
+    - type: Paper
+      content: Why did they turn it on?
+- proto: PaperBin5
+  entities:
+  - uid: 333
+    components:
+    - type: Transform
+      pos: 2.6850836,-5.5076914
+      parent: 1
+- proto: PartRodMetal1
+  entities:
+  - uid: 334
+    components:
+    - type: Transform
+      rot: 3.5735224829460006 rad
+      pos: 2.8325648,-2.6332126
+      parent: 1
+  - uid: 335
+    components:
+    - type: Transform
+      rot: 5.415333711435719 rad
+      pos: 4.5388713,-2.242306
+      parent: 1
+  - uid: 336
+    components:
+    - type: Transform
+      rot: 1.072605518318313 rad
+      pos: 3.2665815,-1.8669751
+      parent: 1
+  - uid: 337
+    components:
+    - type: Transform
+      rot: 0.0825442216232209 rad
+      pos: 1.3239778,-1.7438174
+      parent: 1
+  - uid: 338
+    components:
+    - type: Transform
+      rot: 3.317215669866568 rad
+      pos: 1.8479091,-2.4235706
+      parent: 1
+  - uid: 339
+    components:
+    - type: Transform
+      rot: 2.623097249808306 rad
+      pos: 0.4738374,-6.1469135
+      parent: 1
+  - uid: 340
+    components:
+    - type: Transform
+      rot: 2.8105587448093674 rad
+      pos: 3.7485664,-0.12830475
+      parent: 1
+  - uid: 341
+    components:
+    - type: Transform
+      rot: 0.24859504401683807 rad
+      pos: -2.495243,1.0401144
+      parent: 1
+  - uid: 342
+    components:
+    - type: Transform
+      rot: -0.90249103307724 rad
+      pos: -2.3941262,1.0222735
+      parent: 1
+  - uid: 343
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -2.6789339,-2.7247334
+      parent: 1
+  - uid: 344
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.6711214,-5.3432846
+      parent: 1
+- proto: PenCentcom
+  entities:
+  - uid: 177
+    components:
+    - type: Transform
+      pos: 1.7905452,-5.500127
+      parent: 1
+- proto: PhoneInstrument
+  entities:
+  - uid: 468
+    components:
+    - type: Transform
+      pos: 2.330452,-5.4928937
+      parent: 1
+- proto: PlasmaChemistryVial
+  entities:
+  - uid: 479
+    components:
+    - type: Transform
+      parent: 477
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: PlasmaReinforcedWindowDirectional
+  entities:
+  - uid: 345
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 1.5,-5.5
+      parent: 1
+  - uid: 346
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,-5.5
+      parent: 1
+  - uid: 347
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 0.5,-5.5
+      parent: 1
+- proto: PosterBroken
+  entities:
+  - uid: 466
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 6.482854,-4.201713
+      parent: 1
+- proto: PosterLegit50thAnniversaryVintageReprint
+  entities:
+  - uid: 350
+    components:
+    - type: MetaData
+      desc: A poster advertising the 50th anniversary of this research facility - the year on this poster is 22 years ahead of now.
+    - type: Transform
+      pos: 2.5,-9.5
+      parent: 1
+- proto: PosterLegitHelpOthers
+  entities:
+  - uid: 349
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 1.3414617,-9.541878
+      parent: 1
+- proto: PosterLegitJustAWeekAway
+  entities:
+  - uid: 354
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 1.769932,-9.483023
+      parent: 1
+- proto: PosterLegitSafetyEyeProtection
+  entities:
+  - uid: 352
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 6.431637,-3.7712698
+      parent: 1
+- proto: PosterLegitSafetyInternals
+  entities:
+  - uid: 351
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 6.5175743,-3.3569915
+      parent: 1
+- proto: PosterLegitScience
+  entities:
+  - uid: 348
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -4.598712,-4.6862397
+      parent: 1
+- proto: PottedPlantBioluminscent
+  entities:
+  - uid: 356
+    components:
+    - type: Transform
+      pos: -0.45099998,-6.104999
+      parent: 1
+    - type: Pullable
+      prevFixedRotation: True
+- proto: PoweredlightCyan
+  entities:
+  - uid: 357
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 5.5,-1.5
+      parent: 1
+- proto: PoweredlightEmpty
+  entities:
+  - uid: 358
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-1.5
+      parent: 1
+  - uid: 359
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 1.5,-8.5
+      parent: 1
+- proto: PoweredStrobeLightEmpty
+  entities:
+  - uid: 178
+    components:
+    - type: Transform
+      pos: 3.5,-6.5
+      parent: 1
+    - type: AmbientSound
+      volume: -12
+      range: 6
+      sound: !type:SoundPathSpecifier
+        params:
+          variation: null
+          playOffsetSeconds: 0
+          loop: False
+          referenceDistance: 1
+          rolloffFactor: 1
+          maxDistance: 15
+          pitch: 1
+          volume: 0
+        path: /Audio/Misc/adminlarm.ogg
+    - type: ContainerContainer
+      containers:
+        light_bulb: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: 179
+    - type: PoweredLight
+      on: True
+    - type: ApcPowerReceiver
+      powerLoad: 0
+    - type: DamageOnInteract
+      isDamageActive: False
+- proto: PoweredWarmSmallLight
+  entities:
+  - uid: 360
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -6.5,-4.5
+      parent: 1
+  - uid: 361
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -5.5,0.5
+      parent: 1
+- proto: Railing
+  entities:
+  - uid: 362
+    components:
+    - type: Transform
+      pos: 2.5,-4.5
+      parent: 1
+  - uid: 363
+    components:
+    - type: Transform
+      pos: 0.5,-4.5
+      parent: 1
+  - uid: 364
+    components:
+    - type: Transform
+      pos: 1.5,-4.5
+      parent: 1
+  - uid: 365
+    components:
+    - type: Transform
+      pos: 3.5,-4.5
+      parent: 1
+- proto: RailingCorner
+  entities:
+  - uid: 366
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,-8.5
+      parent: 1
+  - uid: 367
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 3.5,-8.5
+      parent: 1
+- proto: RailingCornerSmall
+  entities:
+  - uid: 368
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -0.5,-4.5
+      parent: 1
+- proto: RandomCommandCorpseSpawner
+  entities:
+  - uid: 369
+    components:
+    - type: Transform
+      pos: 9.5,-3.5
+      parent: 1
+- proto: RandomEngineerCorpseSpawner
+  entities:
+  - uid: 370
+    components:
+    - type: Transform
+      pos: -6.5,-7.5
+      parent: 1
+  - uid: 371
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -6.5,-2.5
+      parent: 1
+- proto: RandomScienceCorpseSpawner
+  entities:
+  - uid: 372
+    components:
+    - type: Transform
+      pos: 1.5,-6.5
+      parent: 1
+- proto: RandomSecurityCorpseSpawner
+  entities:
+  - uid: 373
+    components:
+    - type: Transform
+      pos: 4.5,-7.5
+      parent: 1
+- proto: ReinforcedGirder
+  entities:
+  - uid: 374
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,-2.5
+      parent: 1
+  - uid: 375
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,-3.5
+      parent: 1
+  - uid: 376
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -7.5,-6.5
+      parent: 1
+  - uid: 377
+    components:
+    - type: Transform
+      pos: -1.5,-8.5
+      parent: 1
+  - uid: 378
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,2.5
+      parent: 1
+- proto: ReinforcedPlasmaWindow
+  entities:
+  - uid: 379
+    components:
+    - type: Transform
+      pos: 3.5,-5.5
+      parent: 1
+- proto: ResearchAndDevelopmentServerMachineCircuitboard
+  entities:
+  - uid: 330
+    components:
+    - type: Transform
+      parent: 329
+    - type: Physics
+      canCollide: False
+- proto: SalvageCanisterSpawner
+  entities:
+  - uid: 457
+    components:
+    - type: Transform
+      pos: -7.5,-4.5
+      parent: 1
+- proto: SalvageLootSpawner
+  entities:
+  - uid: 380
+    components:
+    - type: Transform
+      pos: -7.5,-7.5
+      parent: 1
+- proto: SalvageMaterialCrateSpawner
+  entities:
+  - uid: 381
+    components:
+    - type: Transform
+      pos: -5.5,2.5
+      parent: 1
+  - uid: 473
+    components:
+    - type: Transform
+      pos: -8.5,-4.5
+      parent: 1
+- proto: SalvageSpawnerTreasureValuable
+  entities:
+  - uid: 475
+    components:
+    - type: Transform
+      pos: 11.5,-8.5
+      parent: 1
+  - uid: 485
+    components:
+    - type: Transform
+      pos: -3.5,6.5
+      parent: 1
+- proto: ScrapFireExtinguisher
+  entities:
+  - uid: 470
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 4.492197,-6.3380527
+      parent: 1
+- proto: ScrapFirelock3
+  entities:
+  - uid: 384
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 4.3577194,-6.0863066
+      parent: 1
+- proto: ScrapGeneratorUraniumLeaking
+  entities:
+  - uid: 383
+    components:
+    - type: Transform
+      pos: -5.5,-3.5
+      parent: 1
+- proto: ScrapSteel
+  entities:
+  - uid: 385
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -6.479542,-1.5957811
+      parent: 1
+- proto: ShardGlass
+  entities:
+  - uid: 16
+    components:
+    - type: Transform
+      parent: 14
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 17
+    components:
+    - type: Transform
+      parent: 14
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 18
+    components:
+    - type: Transform
+      parent: 14
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 386
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.53894794,-1.957128
+      parent: 1
+  - uid: 387
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -0.09363544,-1.148113
+      parent: 1
+  - uid: 388
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -7.4977655,-7.5847235
+      parent: 1
+- proto: SheetPlasma10
+  entities:
+  - uid: 480
+    components:
+    - type: Transform
+      parent: 477
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 482
+    components:
+    - type: Transform
+      parent: 477
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: SignalButtonDirectional
+  entities:
+  - uid: 389
+    components:
+    - type: Transform
+      pos: 1.5,-5.25
+      parent: 1
+- proto: SignalSwitchDirectional
+  entities:
+  - uid: 390
+    components:
+    - type: MetaData
+      desc: It's a switch for toggling power to the telepad. It's popping out of it's frame.
+      name: telepad power switch
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -5.5,-2.5
+      parent: 1
+    - type: SignalSwitch
+      state: True
+    - type: DeviceLinkSource
+      linkedPorts:
+        178:
+        - - On
+          - On
+        - - Off
+          - Off
+- proto: SignRadiationMed
+  entities:
+  - uid: 313
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 5.5,-5.5
+      parent: 1
+  - uid: 391
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,0.35
+      parent: 1
+- proto: SignScience
+  entities:
+  - uid: 467
+    components:
+    - type: Transform
+      pos: -1.5797484,-9.469645
+      parent: 1
+- proto: SignSecureSmallRed
+  entities:
+  - uid: 392
+    components:
+    - type: Transform
+      pos: -1.5,-6.75
+      parent: 1
+  - uid: 393
+    components:
+    - type: Transform
+      pos: 6.5,-8.25
+      parent: 1
+- proto: SMESBasic
+  entities:
+  - uid: 394
+    components:
+    - type: Transform
+      pos: -5.5,-4.5
+      parent: 1
+- proto: SubstationBasic
+  entities:
+  - uid: 395
+    components:
+    - type: MetaData
+      name: main substation
+    - type: Transform
+      pos: -6.5,-4.5
+      parent: 1
+  - uid: 396
+    components:
+    - type: MetaData
+      desc: Increases the voltage of electricity put into it. The chassis looks severely dented. This one doesn't look very safe...
+      name: teleportation room substation
+    - type: Transform
+      pos: -8.5,-2.5
+      parent: 1
+    - type: Explosive
+      intensitySlope: 1.5
+    - type: Electrified
+      highVoltageDamageMultiplier: 8
+      highVoltageTimeMultiplier: 3
+      shockDamage: 12
+      shockNoises: !type:SoundPathSpecifier
+        params:
+          variation: null
+          playOffsetSeconds: 0
+          loop: False
+          referenceDistance: 1
+          rolloffFactor: 1
+          maxDistance: 15
+          pitch: 1
+          volume: 0
+        path: /Audio/Effects/tesla_consume.ogg
+      shockVolume: 25
+    - type: AmbientSound
+      range: 6
+- proto: SurveillanceCameraAssembly
+  entities:
+  - uid: 397
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 5.5,-0.5
+      parent: 1
+  - uid: 398
+    components:
+    - type: Transform
+      pos: 0.5,-8.5
+      parent: 1
+  - uid: 399
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -5.5,-2.5
+      parent: 1
+  - uid: 400
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -3.5,-4.5
+      parent: 1
+- proto: SyringeBluespace
+  entities:
+  - uid: 472
+    components:
+    - type: Transform
+      rot: -2.750853778794408 rad
+      pos: -7.858965,-0.85789263
+      parent: 1
+- proto: TableReinforced
+  entities:
+  - uid: 401
+    components:
+    - type: Transform
+      pos: 2.5,-5.5
+      parent: 1
+  - uid: 402
+    components:
+    - type: Transform
+      pos: 1.5,-5.5
+      parent: 1
+  - uid: 403
+    components:
+    - type: Transform
+      pos: -5.5,-2.5
+      parent: 1
+  - uid: 404
+    components:
+    - type: Transform
+      pos: 4.5,-8.5
+      parent: 1
+- proto: TelecomServer
+  entities:
+  - uid: 405
+    components:
+    - type: Transform
+      pos: 2.5,-8.5
+      parent: 1
+    - type: AmbientSound
+      volume: -15
+- proto: ToolboxEmergency
+  entities:
+  - uid: 406
+    components:
+    - type: Transform
+      rot: -0.4363323129985824 rad
+      pos: -7.315751,-2.832624
+      parent: 1
+- proto: WallReinforced
+  entities:
+  - uid: 407
+    components:
+    - type: Transform
+      pos: -0.5,-5.5
+      parent: 1
+  - uid: 408
+    components:
+    - type: Transform
+      pos: -1.5,-5.5
+      parent: 1
+  - uid: 409
+    components:
+    - type: Transform
+      pos: -1.5,-4.5
+      parent: 1
+  - uid: 410
+    components:
+    - type: Transform
+      pos: -1.5,-3.5
+      parent: 1
+  - uid: 411
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,-5.5
+      parent: 1
+  - uid: 412
+    components:
+    - type: Transform
+      pos: -1.5,-1.5
+      parent: 1
+  - uid: 413
+    components:
+    - type: Transform
+      pos: -1.5,1.5
+      parent: 1
+  - uid: 414
+    components:
+    - type: Transform
+      pos: -0.5,1.5
+      parent: 1
+  - uid: 415
+    components:
+    - type: Transform
+      pos: 5.5,1.5
+      parent: 1
+  - uid: 416
+    components:
+    - type: Transform
+      pos: 6.5,1.5
+      parent: 1
+  - uid: 417
+    components:
+    - type: Transform
+      pos: 6.5,0.5
+      parent: 1
+  - uid: 418
+    components:
+    - type: Transform
+      pos: 6.5,-0.5
+      parent: 1
+  - uid: 419
+    components:
+    - type: Transform
+      pos: 6.5,-1.5
+      parent: 1
+  - uid: 420
+    components:
+    - type: Transform
+      pos: 6.5,-2.5
+      parent: 1
+  - uid: 421
+    components:
+    - type: Transform
+      pos: 6.5,-3.5
+      parent: 1
+  - uid: 422
+    components:
+    - type: Transform
+      pos: 6.5,-4.5
+      parent: 1
+  - uid: 423
+    components:
+    - type: Transform
+      pos: 6.5,-5.5
+      parent: 1
+  - uid: 424
+    components:
+    - type: Transform
+      pos: 5.5,-5.5
+      parent: 1
+  - uid: 425
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,-6.5
+      parent: 1
+  - uid: 426
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,-9.5
+      parent: 1
+  - uid: 427
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-9.5
+      parent: 1
+  - uid: 428
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 0.5,-9.5
+      parent: 1
+  - uid: 429
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 1.5,-9.5
+      parent: 1
+  - uid: 430
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.5,-9.5
+      parent: 1
+  - uid: 431
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 5.5,-9.5
+      parent: 1
+  - uid: 432
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 4.5,-9.5
+      parent: 1
+  - uid: 433
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.5,-9.5
+      parent: 1
+  - uid: 434
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-9.5
+      parent: 1
+  - uid: 435
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,2.5
+      parent: 1
+  - uid: 436
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -0.5,2.5
+      parent: 1
+  - uid: 437
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,2.5
+      parent: 1
+  - uid: 438
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.5,2.5
+      parent: 1
+  - uid: 439
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 4.5,2.5
+      parent: 1
+  - uid: 440
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 6.5,2.5
+      parent: 1
+  - uid: 441
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,-4.5
+      parent: 1
+  - uid: 442
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,-2.5
+      parent: 1
+  - uid: 443
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,0.5
+      parent: 1
+  - uid: 444
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,1.5
+      parent: 1
+  - uid: 445
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -5.5,-5.5
+      parent: 1
+  - uid: 446
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -6.5,-5.5
+      parent: 1
+  - uid: 447
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -7.5,-5.5
+      parent: 1
+  - uid: 448
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-6.5
+      parent: 1
+  - uid: 449
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-8.5
+      parent: 1
+  - uid: 450
+    components:
+    - type: Transform
+      pos: 5.5,2.5
+      parent: 1
+  - uid: 451
+    components:
+    - type: Transform
+      pos: 1.5,2.5
+      parent: 1
+  - uid: 452
+    components:
+    - type: Transform
+      pos: 0.5,2.5
+      parent: 1
+- proto: WeaponTurretHostile
+  entities:
+  - uid: 453
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-9.5
+      parent: 1
+- proto: WeldingFuelTankHighCapacity
+  entities:
+  - uid: 454
+    components:
+    - type: Transform
+      pos: -8.9164915,2.2247021
+      parent: 1
+    - type: Pullable
+      prevFixedRotation: True
+- proto: WindowReinforcedDirectional
+  entities:
+  - uid: 455
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 5.5,-1.5
+      parent: 1
+- proto: ZiptiesBroken
+  entities:
+  - uid: 460
+    components:
+    - type: MetaData
+      desc: They smell like burning plastic, yet are cold to the touch.
+      name: twisted zipties
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 3.358805,-3.7183802
+      parent: 1
+...

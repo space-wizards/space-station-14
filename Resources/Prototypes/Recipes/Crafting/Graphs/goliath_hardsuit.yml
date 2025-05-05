@@ -10,7 +10,7 @@
         icon:
           sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
           state: icon
-        name: spationaut hardsuit
+        name: construction-graph-tag-spationaut-hardsuit
         doAfter: 10
       - material: Durathread
         amount: 5

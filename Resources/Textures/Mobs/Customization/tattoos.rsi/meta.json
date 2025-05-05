@@ -46,6 +46,14 @@
     {
       "name": "tattoo_eye_l",
       "directions": 4
+    },
+    {
+      "name": "tattoo_eye_moth_r",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_eye_moth_l",
+      "directions": 4
     }
   ]
 }

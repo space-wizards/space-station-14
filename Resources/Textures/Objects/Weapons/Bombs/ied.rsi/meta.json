@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created by deltanedas (github) for SS14, icon and base based on cola sprite from cev-eris",
+  "copyright": "Created by deltanedas (github) for SS14, icon and base based on cola sprite from cev-eris, Inhands by TiniestShark (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -27,6 +27,14 @@
           0.5
         ]
       ]
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
     }
   ]
 }

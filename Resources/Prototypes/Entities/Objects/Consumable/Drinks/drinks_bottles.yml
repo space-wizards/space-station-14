@@ -771,7 +771,7 @@
 #boring jugs some more sprites are made
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkSugarJug
   name: sugar jug
   suffix: For Drinks, Full
@@ -789,7 +789,7 @@
     currentLabel: reagent-name-sugar
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkLemonLimeJug
   name: Smite jug
   description: A dual citrus sensation.
@@ -806,7 +806,7 @@
     currentLabel: reagent-name-lemon-lime
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkMeadJug
   name: mead jug
   description: Storing mead in a plastic jug should be a crime.
@@ -823,7 +823,7 @@
     currentLabel: reagent-name-mead
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkIceJug
   name: ice jug
   description: Stubborn water. Pretty cool.
@@ -840,7 +840,7 @@
     currentLabel: reagent-name-ice
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkCoconutWaterJug
   name: coconut water jug
   description: It's on the inside of the coconut that counts.
@@ -857,7 +857,7 @@
     currentLabel: reagent-name-coconut-water
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkCoffeeJug
   name: coffee jug
   description: Wake up juice, of the heated kind.
@@ -874,7 +874,7 @@
     currentLabel: reagent-name-coffee
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkTeaJug
   name: tea jug
   description: The drink of choice for the Bri'ish and hipsters.
@@ -891,7 +891,7 @@
     currentLabel: reagent-name-tea
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkGreenTeaJug
   name: green tea jug
   description: It's like tea... but green! great for settling the stomach.
@@ -908,7 +908,7 @@
     currentLabel: reagent-name-green-tea
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkIcedTeaJug
   name: iced tea jug
   description: For when the regular tea is too hot for you. Boohoo.
@@ -925,7 +925,7 @@
     currentLabel: reagent-name-iced-tea
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkDrGibbJug
   name: Dr. Gibb jug
   description: 42 different flavours... in a jug!
@@ -942,7 +942,7 @@
     currentLabel: reagent-name-dr-gibb
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkRootBeerJug
   name: root beer jug
   description: This drink makes Australians giggle.
@@ -959,7 +959,7 @@
     currentLabel: reagent-name-root-beer
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkWaterMelonJuiceJug
   name: watermelon juice jug
   description: May include leftover seeds.
@@ -976,7 +976,7 @@
     currentLabel: reagent-name-juice-watermelon
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkEnergyDrinkJug
   name: Red Bool jug
   description: A jug of Red Bool, with enough caffeine to kill a whole station.
@@ -993,7 +993,7 @@
     currentLabel: reagent-name-energy-drink
 
 - type: entity
-  parent: DrinkBottlePlasticBaseFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: CustomDrinkJug
   name: beverage jug
   description: A jug for storing custom made drinks.

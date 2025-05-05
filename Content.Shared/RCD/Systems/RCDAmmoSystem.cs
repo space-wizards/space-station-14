@@ -10,7 +10,7 @@ namespace Content.Shared.RCD.Systems;
 
 public sealed class RCDAmmoSystem : EntitySystem
 {
-    [Dependency] private readonly SharedChargesSystem _charges = default!;
+    [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -41,9 +41,10 @@ public sealed class RCDAmmoSystem : EntitySystem
             !TryComp<LimitedChargesComponent>(target, out var charges))
             return;
 
+        var current = _sharedCharges.GetCurrentCharges((target, charges));
         var user = args.User;
         args.Handled = true;
-        var count = Math.Min(charges.MaxCharges - charges.Charges, comp.Charges);
+        var count = Math.Min(charges.MaxCharges - current, comp.Charges);
         if (count <= 0)
         {
             _popup.PopupClient(Loc.GetString("rcd-ammo-component-after-interact-full"), target, user);
@@ -51,7 +52,7 @@ public sealed class RCDAmmoSystem : EntitySystem
         }
 
         _popup.PopupClient(Loc.GetString("rcd-ammo-component-after-interact-refilled"), target, user);
-        _charges.AddCharges(target, count, charges);
+        _sharedCharges.AddCharges(target, count);
         comp.Charges -= count;
         Dirty(uid, comp);
 

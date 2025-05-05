@@ -251,11 +251,17 @@
     - id: BlueprintSeismicCharge
     - id: WeaponCrusherGlaive
     - id: ClothingOuterHardsuitSalvage
-    - id: OmnizineChemistryBottle
+    - id: ChemistryBottleOmnizine
     - !type:GroupSelector
       children:
       - id: JetpackBlueFilled
       - id: JetpackBlackFilled
+    - !type:GroupSelector
+      children:
+      - id: PKAUpgradeDamage
+      - id: PKAUpgradeRange
+      - id: PKAUpgradeFireRate
+
 
 - type: entityTable
   id: RandomGeneratorTable

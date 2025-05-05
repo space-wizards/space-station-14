@@ -45,12 +45,12 @@ namespace Content.Server.Tabletop
         /// </summary>
         private void EnsureTabletopMap()
         {
-            if (TabletopMap != MapId.Nullspace && _mapManager.MapExists(TabletopMap))
+            if (TabletopMap != MapId.Nullspace && _map.MapExists(TabletopMap))
                 return;
 
-            TabletopMap = _mapManager.CreateMap();
+            var mapUid = _map.CreateMap(out var mapId);
+            TabletopMap = mapId;
             _tabletops = 0;
-            var mapUid = _mapManager.GetMapEntityId(TabletopMap);
 
             var mapComp = EntityManager.GetComponent<MapComponent>(mapUid);
 
@@ -89,11 +89,11 @@ namespace Content.Server.Tabletop
 
         private void OnRoundRestart(RoundRestartCleanupEvent _)
         {
-            if (TabletopMap == MapId.Nullspace || !_mapManager.MapExists(TabletopMap))
+            if (TabletopMap == MapId.Nullspace || !_map.MapExists(TabletopMap))
                 return;
 
             // This will usually *not* be the case, but better make sure.
-            _mapManager.DeleteMap(TabletopMap);
+            _map.DeleteMap(TabletopMap);
 
             // Reset tabletop count.
             _tabletops = 0;

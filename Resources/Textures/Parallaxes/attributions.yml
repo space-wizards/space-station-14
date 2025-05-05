@@ -22,3 +22,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Drawn by Ubaser"
   source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Parallaxes/core_planet.png"
+
+- files: ["debris_small.png"]
+  license: "CC-BY-NC-SA-4.0"
+  copyright: "Drawn by Southbridge"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Parallaxes/debris_small.png"

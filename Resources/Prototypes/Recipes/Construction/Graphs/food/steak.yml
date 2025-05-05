@@ -190,6 +190,21 @@
   - node: anomaly steak
     entity: FoodMeatAnomalyCooked
 
+- type: constructionGraph
+  id: DragonSteak
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: dragon steak
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 445
+  - node: dragon steak
+    entity: FoodMeatDragonCooked
+
 # cutlets
 
 - type: constructionGraph
@@ -311,3 +326,18 @@
       - minTemperature: 345
   - node: xeno cutlet
     entity: FoodMeatXenoCutletCooked
+
+- type: constructionGraph
+  id: DragonCutlet
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: dragon cutlet
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 445
+  - node: dragon cutlet
+    entity: FoodMeatDragonCutletCooked

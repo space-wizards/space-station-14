@@ -7,7 +7,7 @@
         - to: bananiumHorn
           steps:
             - tag: Pipe
-              name: pipe
+              name: construction-graph-tag-pipe
               icon:
                 sprite: Structures/Piping/Atmospherics/pipe.rsi
                 state: pipeStraight
@@ -16,7 +16,7 @@
               amount: 4
               doAfter: 1
             - tag: BikeHorn
-              name: bike horn
+              name: construction-graph-tag-clown-bike-horn
               icon:
                 sprite: Objects/Fun/bikehorn.rsi
                 state: icon

@@ -21,7 +21,7 @@
           bounds: "-0.5,-0.5,-0.2,-0.15"
         density: 190
         mask:
-        - TabletopMachineMask
+        - None
         layer:
         - TabletopMachineLayer
   - type: LightOnCollide

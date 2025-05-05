@@ -51,11 +51,10 @@
     powerLoad: 12000
     needsPower: false #only turns on when scanning
   - type: ArtifactAnalyzer
-  - type: TraversalDistorter
   - type: ItemPlacer
     whitelist:
       components:
-      - Artifact
+      - XenoArtifact
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: BasicDevice
@@ -90,7 +89,7 @@
   - type: ArtifactCrusher
     crushingWhitelist:
       components:
-      - Artifact
+      - XenoArtifact
     crushingDamage:
       types:
         Blunt: 10
@@ -127,7 +126,7 @@
     capacity: 1
     whitelist:
       components:
-      - Artifact
+      - XenoArtifact
       tags:
       - CanPilot # People
       - VimPilot # Pets

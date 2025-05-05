@@ -48,3 +48,13 @@
   id: slime
   typingState: slime0
   offset: 0, 0.125
+
+- type: typingIndicator
+  id: gingerbread
+  typingState: gingerbread0
+  offset: 0, 0.125
+
+- type: typingIndicator
+  id: diona
+  typingState: diona0
+  offset: 0, 0.125

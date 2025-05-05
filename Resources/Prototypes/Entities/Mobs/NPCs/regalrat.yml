@@ -117,6 +117,7 @@
     nameSegments:
     - NamesRegalratKingdom
     - NamesRegalratTitle
+    nameFormat: name-format-regal-rat
   - type: GuideHelp
     guides:
     - MinorAntagonists
