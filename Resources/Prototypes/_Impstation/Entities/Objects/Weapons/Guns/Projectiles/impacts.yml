@@ -15,3 +15,93 @@
   - type: Tag
     tags:
       - HideContextMenu
+
+- type: entity
+  id: BulletImpactEffectSyndicate
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: TimedDespawn
+      lifetime: 0.2
+    - type: Sprite
+      drawdepth: Effects
+      layers:
+        - shader: unshaded
+          map: ["enum.EffectLayers.Unshaded"]
+          sprite: _Impstation/Objects/Weapons/Guns/Projectiles/impacts.rsi
+          state: synd
+    - type: EffectVisuals
+    - type: Tag
+      tags:
+        - HideContextMenu
+
+- type: entity
+  id: BulletImpactEffectGold
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: TimedDespawn
+      lifetime: 0.2
+    - type: Sprite
+      drawdepth: Effects
+      layers:
+        - shader: unshaded
+          map: ["enum.EffectLayers.Unshaded"]
+          sprite: _Impstation/Objects/Weapons/Guns/Projectiles/impacts.rsi
+          state: gold
+    - type: EffectVisuals
+    - type: Tag
+      tags:
+        - HideContextMenu
+
+- type: entity
+  id: BulletImpactEffectPurple
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: TimedDespawn
+      lifetime: 0.2
+    - type: Sprite
+      drawdepth: Effects
+      layers:
+        - shader: unshaded
+          map: ["enum.EffectLayers.Unshaded"]
+          sprite: _Impstation/Objects/Weapons/Guns/Projectiles/impacts.rsi
+          state: purp
+    - type: EffectVisuals
+    - type: Tag
+      tags:
+        - HideContextMenu
+
+- type: entity
+  id: BulletImpactEffectHot
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: TimedDespawn
+      lifetime: 0.2
+    - type: Sprite
+      drawdepth: Effects
+      layers:
+        - shader: unshaded
+          map: ["enum.EffectLayers.Unshaded"]
+          sprite: _Impstation/Objects/Weapons/Guns/Projectiles/impacts.rsi
+          state: hot
+    - type: EffectVisuals
+    - type: Tag
+      tags:
+        - HideContextMenu
+
+- type: entity
+  id: BulletImpactEffectCold
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: TimedDespawn
+      lifetime: 0.2
+    - type: Sprite
+      drawdepth: Effects
+      layers:
+        - shader: unshaded
+          map: ["enum.EffectLayers.Unshaded"]
+          sprite: _Impstation/Objects/Weapons/Guns/Projectiles/impacts.rsi
+          state: cold
+    - type: EffectVisuals
+    - type: Tag
+      tags:
+        - HideContextMenu

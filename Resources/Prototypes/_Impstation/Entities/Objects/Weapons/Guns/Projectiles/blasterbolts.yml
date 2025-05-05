@@ -4,6 +4,11 @@
   parent: BulletLaser
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/energybolts.rsi
+    layers:
+    - state: medium
+      shader: unshaded
   - type: Ammo
   - type: Projectile
     impactEffect: BulletImpactEffectOrangeDisabler
@@ -36,6 +41,11 @@
   parent: BulletLaser
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/energybolts.rsi
+    layers:
+    - state: heavy
+      shader: unshaded
   - type: TriggerOnCollide
     fixtureID: projectile
   - type: ExplodeOnTrigger

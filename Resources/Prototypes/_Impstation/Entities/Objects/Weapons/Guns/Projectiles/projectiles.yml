@@ -184,6 +184,11 @@
   parent: BulletLaser
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/energybolts.rsi
+    layers:
+    - state: medium
+      shader: unshaded
   - type: Projectile
     damage:
       types:
@@ -204,9 +209,9 @@
       params:
         volume: 5
   - type: Sprite
-    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/goldzipper.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/energybolts.rsi
     layers:
-    - state: goldlaser
+    - state: heavygold
       shader: unshaded
   - type: Physics
   - type: Fixtures
@@ -221,6 +226,7 @@
         - BulletImpassable
       fly-by: *flybyfixture
   - type: Ammo
+    muzzleFlash: MuzzleFlashEffectGoldLaser
   - type: Projectile
     impactEffect: GZipImpactEffect
     damage:
@@ -246,6 +252,11 @@
   parent: BulletLaserGold
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/energybolts.rsi
+    layers:
+    - state: lightgold
+      shader: unshaded
   - type: Projectile
     damage:
       types:

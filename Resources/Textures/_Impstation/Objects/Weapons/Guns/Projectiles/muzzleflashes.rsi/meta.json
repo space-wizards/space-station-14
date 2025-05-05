@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "by DVD Player for Impstation.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "kinetic",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          1.00
+        ]
+      ]
+    },
+    {
+      "name": "kineticsmall",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          1.00
+        ]
+      ]
+    },
+    {
+      "name": "energy",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          1.00
+        ]
+      ]
+    },
+    {
+      "name": "energygold",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          1.00
+        ]
+      ]
+    },
+    {
+      "name": "energypurp",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          1.00
+        ]
+      ]
+    },
+    {
+      "name": "energystun",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          1.00
+        ]
+      ]
+    },
+    {
+      "name": "energysynd",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          1.00
+        ]
+      ]
+    },
+    {
+      "name": "tempcold",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          1.00
+        ]
+      ]
+    },
+    {
+      "name": "temphot",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          1.00
+        ]
+      ]
+    }
+  ]
+}

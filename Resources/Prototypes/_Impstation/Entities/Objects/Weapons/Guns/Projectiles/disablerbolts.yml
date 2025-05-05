@@ -5,9 +5,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/disablerbolts.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/energybolts.rsi
     layers:
-    - state: litelaser
+    - state: lightstun
       shader: unshaded
   - type: Ammo
   - type: StaminaDamageOnCollide

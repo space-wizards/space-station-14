@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "by DVD Player for Impstation.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "heavy"
+    },
+	{
+      "name": "heavygold"
+    },
+    {
+      "name": "heavypurp"
+    },
+    {
+      "name": "heavystun"
+    },
+    {
+      "name": "heavysynd"
+    },
+    {
+      "name": "light"
+    },
+    {
+      "name": "lightgold"
+    },
+    {
+      "name": "lightpurp"
+    },
+    {
+      "name": "lightstun"
+    },
+    {
+      "name": "lightsynd"
+    },
+    {
+      "name": "medium"
+    },
+    {
+      "name": "mediumgold"
+    },
+    {
+      "name": "mediumpurp"
+    },
+    {
+      "name": "mediumstun"
+    },
+    {
+      "name": "mediumsynd"
+    },
+    {
+      "name": "mediumtemp"
+    },
+    {
+      "name": "mediumtemp2"
+    }
+  ]
+}
