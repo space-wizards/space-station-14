@@ -32,6 +32,7 @@ namespace Content.Shared.Movement.Components
         [AutoNetworkedField, ViewVariables]
         public float SprintSpeedModifier = 1.0f;
 
+        //🌟Starlight🌟 start
         [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
         public float SpeciesWalkSpeedModifier = 1.0f;
 
@@ -59,7 +60,8 @@ namespace Content.Shared.Movement.Components
                 Dirty();
             }
         }
-
+        //🌟Starlight🌟 end
+        
         /// <summary>
         /// Minimum speed a mob has to be moving before applying movement friction.
         /// </summary>

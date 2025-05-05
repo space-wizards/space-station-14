@@ -76,6 +76,23 @@ public sealed class ItemToggleSystem : EntitySystem
 
         var user = args.User;
 
+        if (ent.Comp.Activated)
+        {
+            var ev = new ItemToggleActivateAttemptEvent(args.User);
+            RaiseLocalEvent(ent.Owner, ref ev);
+
+            if (ev.Cancelled)
+                return;
+        }
+        else
+        {
+            var ev = new ItemToggleDeactivateAttemptEvent(args.User);
+            RaiseLocalEvent(ent.Owner, ref ev);
+
+            if (ev.Cancelled)
+                return;
+        }
+
         args.Verbs.Add(new ActivationVerb()
         {
             Text = !ent.Comp.Activated ? Loc.GetString(ent.Comp.VerbToggleOn) : Loc.GetString(ent.Comp.VerbToggleOff),
@@ -133,15 +150,20 @@ public sealed class ItemToggleSystem : EntitySystem
         if (comp.Activated)
             return true;
 
-        if (!comp.Predictable && _netManager.IsClient)
-            return true;
-
         var attempt = new ItemToggleActivateAttemptEvent(user);
         RaiseLocalEvent(uid, ref attempt);
 
-        if (!comp.Predictable) predicted = false;
+        if (!comp.Predictable)
+            predicted = false;
+
+        if (!predicted && _netManager.IsClient)
+            return false;
+
         if (attempt.Cancelled)
         {
+            if (attempt.Silent)
+                return false;
+
             if (predicted)
                 _audio.PlayPredicted(comp.SoundFailToActivate, uid, user);
             else
@@ -159,7 +181,6 @@ public sealed class ItemToggleSystem : EntitySystem
         }
 
         Activate((uid, comp), predicted, user);
-
         return true;
     }
 
@@ -176,16 +197,31 @@ public sealed class ItemToggleSystem : EntitySystem
         if (!comp.Activated)
             return true;
 
-        if (!comp.Predictable && _netManager.IsClient)
-            return true;
+        if (!comp.Predictable)
+            predicted = false;
 
         var attempt = new ItemToggleDeactivateAttemptEvent(user);
         RaiseLocalEvent(uid, ref attempt);
 
-        if (attempt.Cancelled)
+        if (!predicted && _netManager.IsClient)
             return false;
 
-        if (!comp.Predictable) predicted = false;
+        if (attempt.Cancelled)
+        {
+            if (attempt.Silent)
+                return false;
+
+            if (attempt.Popup != null && user != null)
+            {
+                if (predicted)
+                    _popup.PopupClient(attempt.Popup, uid, user.Value);
+                else
+                    _popup.PopupEntity(attempt.Popup, uid, user.Value);
+            }
+
+            return false;
+        }
+
         Deactivate((uid, comp), predicted, user);
         return true;
     }

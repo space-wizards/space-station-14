@@ -54,7 +54,7 @@
   name: Deckard
   parent: [BaseWeaponRevolver, BaseSecurityCommandContraband]
   id: WeaponRevolverDeckard
-  description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test. Uses .45 magnum ammo.
+  description: A beautifully machined, custom-built revolver. Used when there is no time for the Voight-Kampff test. Loads 5 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
@@ -82,7 +82,7 @@
   name: Inspector
   parent: [BaseWeaponRevolver, BaseSecurityContraband]
   id: WeaponRevolverInspector
-  description: A detective's best friend. Uses .45 magnum ammo.
+  description: A single-action revolver manufactured by various companies. It is readily available on the civilian market, making it a popular choice among private investigators. You feel lucky just holding it. Loads 6 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
@@ -97,7 +97,7 @@
   name: Mateba
   parent: [BaseWeaponRevolver, BaseMajorContraband]
   id: WeaponRevolverMateba
-  description: The iconic sidearm of the dreaded death squads. Uses .45 magnum ammo.
+  description: A modern revolver used by Nanotrasen’s elite, near mythical ‘Death Squad’ task force. Its unique trigger action and barrel placement enable a high fire rate with minimal muzzle flip. Many have looked down this barrel, but few have lived to tell of it. Loads 6 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
@@ -120,7 +120,7 @@
   name: Python
   parent: [BaseWeaponRevolver, BaseSyndicateContraband]
   id: WeaponRevolverPython
-  description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
+  description: A powerful double-action revolver manufactured by the Syndicate. Loud and flashy, perfect for any agent looking to make a statement. Loads 6 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
@@ -151,9 +151,9 @@
 
 - type: entity
   name: pirate revolver
-  parent: [BaseWeaponRevolver, BaseMinorContraband]
+  parent: [BaseWeaponRevolver, BaseMajorContraband]
   id: WeaponRevolverPirate
-  description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.
+  description: A crude single-action revolver handmade by a space pirate. Old and covered in rust, it somehow still works. Loads 5 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
@@ -168,3 +168,17 @@
     capacity: 5
     chambers: [ True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null ]
+
+- type: entity
+  name: pirate revolver
+  parent: WeaponRevolverPirate
+  id: WeaponRevolverPirateEmpty
+  description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.
+  suffix: Empty
+  components:
+  - type: RevolverAmmoProvider
+    proto: null
+    capacity: 5
+    chambers: [ null, null, null, null, null ]
+    ammoSlots: [ null, null, null, null, null ]
+    

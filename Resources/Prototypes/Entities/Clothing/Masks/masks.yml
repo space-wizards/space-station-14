@@ -142,6 +142,10 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 50
 
 - type: entity
   parent: ClothingMaskBreathMedical

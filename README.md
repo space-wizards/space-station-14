@@ -34,7 +34,7 @@ Space-Station 14 has [docs site](https://docs.spacestation14.io/) documentation 
 ## License
 
 > [!CAUTION]
-> The repository code is licensed both under MIT - this applies to Space Wizards Federation code - and under its own license - this applies to our changes, defined in the text of LICENSE-STARLIGHT. We do not seek to fully distinguish our code from Space Wizards Federation code, so it is recommended to take their code from their repository to avoid incidents.
+> The repository code is licensed both under MIT - this applies to Space Wizards Federation code - and under modified MIT - this applies to our changes.
 
 ### Click each banner for further information
 
@@ -50,10 +50,4 @@ Space-Station 14 has [docs site](https://docs.spacestation14.io/) documentation 
 <summary><a href="#"><img src="https://img.shields.io/badge/licence-CC_3.0_BY--SA-lightblue?style=for-the-badge" alt="Creative Commons 3.0 BY-SA"></a></summary>
 
 >All other non-code STARLIGHT Assets, including icons and sound files, are licensed under the [Creative Commons 3.0 BY-SA](https://creativecommons.org/licenses/by-sa/3.0/) license unless otherwise noted in the folder or file.
-</details>
-
-<details>
-<summary><a href="#"><img src="https://img.shields.io/badge/licence-STARLIGHT-darkblue?style=for-the-badge" alt="CLA"></a></summary>
-
->All code as well as STARLIGHT assemblies are protected by the [STARLIGHT](LICENSE-Starlight.md) license.
 </details>

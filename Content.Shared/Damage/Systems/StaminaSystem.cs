@@ -51,6 +51,7 @@ public sealed partial class StaminaSystem : EntitySystem
         base.Initialize();
 
         InitializeModifier();
+        InitializeResistance();
 
         SubscribeLocalEvent<StaminaComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StaminaComponent, ComponentShutdown>(OnShutdown);
@@ -119,7 +120,7 @@ public sealed partial class StaminaSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private void OnDisarmed(EntityUid uid, StaminaComponent component, DisarmedEvent args)
+    private void OnDisarmed(EntityUid uid, StaminaComponent component, ref DisarmedEvent args)
     {
         if (args.Handled)
             return;
@@ -241,15 +242,21 @@ public sealed partial class StaminaSystem : EntitySystem
     }
 
     public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null,
-        EntityUid? source = null, EntityUid? with = null, bool visual = true, SoundSpecifier? sound = null)
+        EntityUid? source = null, EntityUid? with = null, bool visual = true, SoundSpecifier? sound = null, bool ignoreResist = false)
     {
         if (!Resolve(uid, ref component, false))
             return;
 
-        var beforeStamina = new BeforeStaminaDamageEvent(value);
-        RaiseLocalEvent(uid, ref beforeStamina);
-        if (beforeStamina.Cancelled)
+        var ev = new BeforeStaminaDamageEvent(value);
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.Cancelled)
             return;
+
+        // Allow stamina resistance to be applied.
+        if (!ignoreResist)
+        {
+            value = ev.Value;
+        }
 
         value = UniversalStaminaDamageModifier * value;
 
@@ -257,11 +264,11 @@ public sealed partial class StaminaSystem : EntitySystem
         if (component.Critical)
             return;
         
-        var ev = new StaminaModifyEvent(value);
-        RaiseLocalEvent(uid, ev);
+        var staminaModifyEvent = new StaminaModifyEvent(value);
+        RaiseLocalEvent(uid, staminaModifyEvent);
 
         var oldDamage = component.StaminaDamage;
-        component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + (value * ev.Modifier));
+        component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + (value * staminaModifyEvent.Modifier));
 
         // Reset the decay cooldown upon taking damage.
         if (oldDamage < component.StaminaDamage)

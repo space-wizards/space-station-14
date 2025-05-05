@@ -44,6 +44,7 @@ research-technology-energy_barriers = Energy Barriers
 research-technology-basic-shuttle-armament = Shuttle basic armament
 research-technology-advanced-shuttle-weapon = Advanced shuttle weapons
 research-technology-explosive-mech-ammunition = Explosive Mech Ammunition
+research-technology-thermal-weaponry = Thermal Weaponry
 
 research-technology-basic-robotics = Basic Robotics
 research-technology-basic-anomalous-research = Basic Anomalous Research
@@ -55,6 +56,7 @@ research-technology-anomaly-harnessing = Anomaly Core Harnessing
 research-technology-abnormal-artifact-manipulation = Artifact Recycling
 research-technology-gravity-manipulation = Gravity Manipulation
 research-technology-quantum-leaping = Quantum Leaping
+research-technology-bluespace-time-manipulation = Bluespace Time Manipulation
 research-technology-advanced-anomaly-research = Advanced Anomaly Research
 research-technology-rped = Rapid Part Exchange
 research-technology-super-parts = Super Parts

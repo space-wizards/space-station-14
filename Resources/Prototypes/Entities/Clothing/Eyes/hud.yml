@@ -210,8 +210,8 @@
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons, BaseSyndicateContraband]
   id: ClothingEyesHudSyndicateAgent
-  name: syndicate agent visor
-  description: The Syndicate Agent's professional heads-up display, designed for quick diagnosis of their team's status.
+  name: syndicate medical visor
+  description: The Syndicate Corpsman's professional heads-up display, designed for quick diagnosis of their team's status.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Hud/syndagent.rsi

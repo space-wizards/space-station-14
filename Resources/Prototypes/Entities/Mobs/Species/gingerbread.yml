@@ -43,6 +43,8 @@
           - MobMask
         layer:
           - MobLayer
+  - type: TypingIndicator
+    proto: gingerbread
   - type: Inventory
     femaleDisplacements:
       jumpsuit:

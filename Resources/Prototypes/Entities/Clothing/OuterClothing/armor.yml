@@ -142,6 +142,8 @@
     ingoreKnockdown: true
   - type: ExplosionResistance
     damageCoefficient: 0.35
+  #- type: StaminaResistance
+  #  damageCoefficient: 0.45
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1.1
@@ -191,6 +193,8 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 2
+  - type: Item
+    size: Normal
 
 - type: entity
   parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]

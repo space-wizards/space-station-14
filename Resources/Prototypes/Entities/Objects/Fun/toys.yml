@@ -363,6 +363,62 @@
     - PlushieLizard
 
 - type: entity
+  parent: BasePlushie
+  id: PlushieExperiment #Arf!
+  name: experiment plushie
+  description: A plushie of a canid of sorts, it yearns to be detonated on a landmine.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/expiplush.rsi
+    state: expi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: expi-inhand-left
+        shader: shaded
+      right:
+      - state: expi-inhand-right
+        shader: shaded
+    heldPrefix: plushielizard
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/arf.ogg
+  - type: Tag
+    tags:
+    - ClothMade
+    - Payload
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: expi-equipped-HELMET
+        shader: shaded
+    quickEquip: false
+    sprite: Objects/Fun/toys.rsi
+    equippedPrefix: expi
+    slots:
+    - HEAD
+
+- type: entity
   parent: PlushieLizard
   id: PlushieRainbowLizard #Weh but gay
   description: An adorable stuffed toy that resembles a lizardperson of every color. You just might trip while staring at it...
@@ -1481,8 +1537,6 @@
   description: New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!
   components:
     - type: EnergySword
-      colorOptions:
-        - DodgerBlue
     - type: ItemToggle
       soundActivate:
         path: /Audio/Weapons/ebladeon.ogg
@@ -1492,7 +1546,7 @@
       activeSound:
         path: /Audio/Weapons/ebladehum.ogg
     - type: Sprite
-      sprite: Objects/Fun/toy_sword.rsi
+      sprite: Objects/Weapons/Melee/e_sword.rsi
       layers:
         - state: e_sword
         - state: e_sword_blade
@@ -1502,7 +1556,7 @@
           map: [ "blade" ]
     - type: Item
       size: Small
-      sprite: Objects/Fun/toy_sword.rsi
+      sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
     - type: UseDelay
       delay: 1.0
     - type: PointLight
@@ -1686,7 +1740,8 @@
   - type: UseDelay
     delay: 0.8
   - type: Slippery
-    paralyzeTime: 0
+    slipData:
+      paralyzeTime: 0
     slipSound:
       collection: Parp
       params:
