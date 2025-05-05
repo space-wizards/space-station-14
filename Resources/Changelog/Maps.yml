@@ -67,18 +67,26 @@
   id: 9
   time: '2025-04-30T14:49:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36653
-- author: K-Dynamic
-  changes:
-  - message: Atmos air (6500 kPa) markers are available for mapping.
-    type: Add
-  id: 10
-  time: '2025-05-01T22:03:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37061
 - author: Southbridge
   changes:
   - message: 'New salvage ruin: Atmos Interchange'
     type: Add
-  id: 11
+  id: 10
   time: '2025-05-02T15:45:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37115
+- author: spanky-spanky
+  changes:
+  - message: Omega has been updated to include genpop.
+    type: Add
+  id: 11
+  time: '2025-05-03T21:19:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37157
+- author: Southbridge
+  changes:
+  - message: On Bagel, removed the very convenient Captain's ID sitting out in deep
+      space.
+    type: Remove
+  id: 12
+  time: '2025-05-04T07:20:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37171
 Order: 1
