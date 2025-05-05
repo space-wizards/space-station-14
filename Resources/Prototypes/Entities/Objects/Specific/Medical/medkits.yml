@@ -1,3 +1,4 @@
+## General Medkits
 - type: entity
   name: first aid kit
   description: It's an emergency medical kit for those serious boo-boos.
@@ -22,6 +23,18 @@
     tags:
     - Medkit
 
+## Specific Medkits
+- type: entity
+  name: brute trauma treatment kit
+  description: "A first aid kit for when you get toolboxed."
+  parent: Medkit
+  id: MedkitBrute
+  components:
+  - type: Sprite
+    state: brute
+  - type: Item
+    heldPrefix: brute
+
 - type: entity
   name: burn treatment kit
   description: "A specialized medical kit for when the toxins lab spontaneously burns down."
@@ -32,17 +45,6 @@
     state: burn
   - type: Item
     heldPrefix: burn
-
-- type: entity
-  name: toxin treatment kit
-  description: "Used to treat toxic blood content."
-  parent: Medkit
-  id: MedkitToxin
-  components:
-  - type: Sprite
-    state: toxin
-  - type: Item
-    heldPrefix: toxin
 
 - type: entity
   name: oxygen deprivation treatment kit
@@ -56,26 +58,15 @@
     heldPrefix: o2
 
 - type: entity
-  name: brute trauma treatment kit
-  description: "A first aid kit for when you get toolboxed."
+  name: toxin treatment kit
+  description: "Used to treat toxic blood content."
   parent: Medkit
-  id: MedkitBrute
+  id: MedkitToxin
   components:
   - type: Sprite
-    state: brute
+    state: toxin
   - type: Item
-    heldPrefix: brute
-
-- type: entity
-  name: advanced first aid kit
-  description: "An advanced kit to help deal with advanced wounds."
-  parent: Medkit
-  id: MedkitAdvanced
-  components:
-  - type: Sprite
-    state: advanced
-  - type: Item
-    heldPrefix: advanced
+    heldPrefix: toxin
 
 - type: entity
   name: radiation treatment kit
@@ -87,6 +78,18 @@
     state: radiation
   - type: Item
     heldPrefix: radiation
+
+## Superior Medkits
+- type: entity
+  name: advanced first aid kit
+  description: "An advanced kit to help deal with advanced wounds."
+  parent: Medkit
+  id: MedkitAdvanced
+  components:
+  - type: Sprite
+    state: advanced
+  - type: Item
+    heldPrefix: advanced
 
 - type: entity
   name: combat medical kit
