@@ -1390,7 +1390,7 @@
   name: food-sequence-cotton-burger-content-plushie-diona
   sprites:
   - sprite: Objects/Fun/Plushies/diona.rsi
-    state: icon
+    state: plushie_diona
 
 #Shark Plushies
 

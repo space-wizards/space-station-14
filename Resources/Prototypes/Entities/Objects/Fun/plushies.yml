@@ -598,8 +598,8 @@
     - type: Sprite
       sprite: Objects/Fun/Plushies/diona.rsi
       layers:
-        - state: icon
-        - state: garland
+        - state: plushie_diona
+        - state: plushie_diona1
           map: [ "enum.SolutionContainerLayers.Fill" ]
           visible: false
     - type: EmitSoundOnUse
