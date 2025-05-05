@@ -96,6 +96,7 @@
     nameSegments:
     - NamesFirstERTLeader
     - NamesLastERT
+    nameFormat: name-format-ert
 
 - type: randomHumanoidSettings
   id: CBURNSoldierSCST
@@ -126,6 +127,7 @@
     nameSegments:
     - NamesFirstERT
     - NamesLastERT
+    nameFormat: name-format-ert
 
 - type: entity
   id: RandomHumanoidCBURNSoldierSCST

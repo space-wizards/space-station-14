@@ -135,6 +135,7 @@
     nameSegments:
     - NamesSyndicateNormal
     - NamesLastDeathSquad
+    nameFormat: name-format-ert
   - type: Loadout
     prototypes: [ DeathSquadGear ]
   - type: TTS
@@ -154,6 +155,7 @@
       nameSegments:
       - NamesFirstERTLeader
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
       settings: ERTLeaderAmber
 
@@ -184,6 +186,7 @@
       nameSegments:
       - NamesFirstERTLeader
       - NamesLastERT
+      nameFormat: name-format-ert
 
 ### Red
 - type: entity
@@ -224,6 +227,7 @@
       nameSegments:
       - NamesFirstERTLeader
       - NamesLastERT
+      nameFormat: name-format-ert
 
 ### Gamma
 - type: entity
@@ -264,6 +268,7 @@
       nameSegments:
       - NamesFirstERTLeader
       - NamesLastERT
+      nameFormat: name-format-ert
 
 ### CBURN
 - type: entity
@@ -302,6 +307,7 @@
       nameSegments:
       - NamesFirstERTLeader
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ CBURNLeaderGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -320,6 +326,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
       settings: ERTSecurityAmber
 
@@ -345,6 +352,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ ERTSecurityGearAmber ]
 
@@ -422,6 +430,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
       settings: ERTMedicalAmber
 
@@ -447,6 +456,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ ERTMedicalGearAmber ]
 
@@ -524,6 +534,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
       settings: ERTJanitorAmber
 
@@ -546,6 +557,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ ERTJanitorGearAmber ]
 
@@ -617,6 +629,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
       settings: ERTEngineerAmber
 
@@ -642,6 +655,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ ERTEngineerGearAmber ]
 
@@ -718,6 +732,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
       settings: CBURNAgent
 
@@ -743,6 +758,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ CBURNAgentGear ]
 
@@ -781,6 +797,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ CentcomBlueShieldGear ]
       roleLoadout: [ RoleSurvivalEVA ]

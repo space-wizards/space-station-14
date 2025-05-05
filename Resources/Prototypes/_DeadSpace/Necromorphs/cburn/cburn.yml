@@ -122,6 +122,7 @@
       nameSegments:
       - NamesFirstERTLeader
       - NamesLastERT
+      nameFormat: name-format-ert
 
 - type: entity
   id: RandomHumanoidSpawnerCBURNSoldierNECRO
@@ -161,3 +162,4 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
