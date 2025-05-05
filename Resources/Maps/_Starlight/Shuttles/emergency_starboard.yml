@@ -1903,6 +1903,18 @@ entities:
     - type: Transform
       pos: 25.5,6.5
       parent: 2
+  - uid: 852
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 25.5,7.5
+      parent: 2
+  - uid: 853
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 25.5,8.5
+      parent: 2
 - proto: ChairPilotSeat
   entities:
   - uid: 190
@@ -2330,19 +2342,18 @@ entities:
       parent: 2
 - proto: ComputerStationRecords
   entities:
-  - uid: 252
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 25.5,5.5
-      parent: 2
-- proto: ComputerSurveillanceWirelessCameraMonitor
-  entities:
   - uid: 253
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 26.5,8.5
+      parent: 2
+- proto: CrewMonitoringServer
+  entities:
+  - uid: 252
+    components:
+    - type: Transform
+      pos: 25.5,5.5
       parent: 2
 - proto: Crowbar
   entities:
