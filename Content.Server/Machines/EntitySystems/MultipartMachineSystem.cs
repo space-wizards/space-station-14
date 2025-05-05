@@ -121,9 +121,9 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
                 partsAdded,
                 partsRemoved);
             RaiseLocalEvent(ent, ref ev);
-        }
 
-        Dirty(ent);
+            Dirty(ent);
+        }
 
         return stateHasChanged;
     }
