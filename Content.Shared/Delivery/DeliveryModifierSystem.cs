@@ -4,6 +4,7 @@ using Content.Shared.Examine;
 using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.NameModifier.EntitySystems;
 using JetBrains.Annotations;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -17,6 +18,7 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly NameModifierSystem _nameModifier = default!;
     [Dependency] private readonly SharedDeliverySystem _delivery = default!;
     [Dependency] private readonly SharedExplosionSystem _explosion = default!;
@@ -144,7 +146,6 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
             return;
 
         bomb.NextExplosionRetry = _timing.CurTime;
-        Dirty(ent);
     }
 
     private void OnExplosiveExamine(Entity<DeliveryBombComponent> ent, ref ExaminedEvent args)
@@ -192,16 +193,11 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
     [PublicAPI]
     public void PrimeBombDelivery(Entity<DeliveryBombComponent> ent)
     {
-        if (HasComp<PrimedDeliveryBombComponent>(ent))
-            return;
-
         EnsureComp<PrimedDeliveryBombComponent>(ent);
 
         _delivery.UpdateBombVisuals(ent);
 
         _ambientSound.SetAmbience(ent, true);
-
-        Dirty(ent);
     }
     #endregion
 
@@ -238,18 +234,18 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
 
     private void UpdateBomb(float frameTime)
     {
-        var bombQuery = EntityQueryEnumerator<DeliveryBombComponent, PrimedDeliveryBombComponent>();
+        var bombQuery = EntityQueryEnumerator<PrimedDeliveryBombComponent, DeliveryBombComponent>();
         var curTime = _timing.CurTime;
 
-        while (bombQuery.MoveNext(out var uid, out var bombData, out _))
+        while (bombQuery.MoveNext(out var uid, out _, out var bombData))
         {
             if (bombData.NextExplosionRetry > curTime)
                 continue;
 
             bombData.NextExplosionRetry += bombData.ExplosionRetryDelay;
 
-            // TODO: Use RandomPredicted once we have that
-            if (_random.NextFloat() < bombData.ExplosionChance)
+            // Explosions cannot be predicted.
+            if (_net.IsServer && _random.NextFloat() < bombData.ExplosionChance)
                 _explosion.TriggerExplosive(uid);
 
             bombData.ExplosionChance += bombData.ExplosionChanceRetryIncrease;
