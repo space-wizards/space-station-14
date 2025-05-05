@@ -72,6 +72,13 @@ public sealed partial class ChangelingComponent : Component
     [DataField, AutoNetworkedField]
     public float MaxBiomass = 60f;
 
+    [DataField, AutoNetworkedField]
+    public float BiomassDeficitWarningPercent = 0.5f;
+    [DataField, AutoNetworkedField]
+    public float BiomassDeficitJitterPercent = 0.33f;
+    [DataField, AutoNetworkedField]
+    public float BiomassDeficitVomitPercent = 0.1f;
+
     /// <summary>
     ///     How much biomass should be removed per cycle.
     /// </summary>
