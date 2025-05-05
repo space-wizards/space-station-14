@@ -662,6 +662,7 @@
     size: Small
     sprite: Objects/Specific/Chemistry/medical_pouch.rsi
   - type: Sprite
+    sprite: Objects/Specific/Chemistry/medical_pouch.rsi
     layers:
     - state: closed
       map: ["closeLayer"]
@@ -679,4 +680,4 @@
       - Vial
       - Syringe
       components:
-      - Inejector
+      - Hypospray
