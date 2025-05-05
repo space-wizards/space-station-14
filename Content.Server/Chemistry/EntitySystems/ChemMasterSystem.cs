@@ -217,7 +217,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
 
             var needed = message.Dosage * message.Number;
-            if (!WithdrawFromBuffer(chemMaster, needed, user, out var withdrawal))
+            if (!WithdrawFromBeaker(chemMaster, needed, user, out var withdrawal))
                 return;
 
             _labelSystem.Label(container, message.Label);
@@ -268,7 +268,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
             
             var needed = message.Dosage * message.Number;
-            if (!WithdrawFromBuffer(chemMaster, needed, user, out var withdrawal))
+            if (!WithdrawFromBeaker(chemMaster, needed, user, out var withdrawal))
                 return;
 
             for (var i = 0; i < message.Number; i++)
@@ -307,7 +307,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (message.Label.Length > SharedChemMaster.LabelMaxLength)
                 return;
 
-            if (!WithdrawFromBuffer(chemMaster, message.Dosage, user, out var withdrawal))
+            if (!WithdrawFromBeaker(chemMaster, message.Dosage, user, out var withdrawal))
                 return;
 
             _labelSystem.Label(container, message.Label);
@@ -335,7 +335,7 @@ namespace Content.Server.Chemistry.EntitySystems
             
             var container = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
             if (container is null ||
-                !_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSoln, out var solution)) // Imported from Delta-V
+               !_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSoln, out var solution)) // Imported from Delta-V
             {
                 return false;
             }
@@ -343,7 +343,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (solution.Volume == 0)
             {
                 if (user.HasValue)
-                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-empty-text"), user.Value);
+                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-beaker-empty-text"), user.Value);
                 return false;
             }
 
@@ -351,7 +351,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (neededVolume > solution.Volume)
             {
                 if (user.HasValue)
-                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-low-text"), user.Value);
+                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-beaker-low-text"), user.Value);
                 return false;
             }
 
