@@ -5450,4 +5450,12 @@ Entries:
   id: 755
   time: '2025-05-05T23:34:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/575
+- author: neurovermi
+  changes:
+  - message: Adds missing locale text for organ tree and the word "seeds" to the seed
+      packet
+    type: Fix
+  id: 756
+  time: '2025-05-05T23:36:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/577
 
