@@ -112,9 +112,9 @@
 ## Other Medical Fills
 - type: entity
   id: MedicalPouchCorpsmanFilled
-  suffix: Corpsman Filled
+  suffix: Corpsman, Filled
   parent: MedicalPouch
-  comoponents:
+  components:
   - type: StorageFill
     contents:
       - id: ChemistryBottleEpinephrine

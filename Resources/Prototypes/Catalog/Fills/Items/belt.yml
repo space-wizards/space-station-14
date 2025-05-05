@@ -165,8 +165,8 @@
   components:
   - type: StorageFill
     contents:
-      - di: MedicalPouchCorpsmanFilled
       - id: MedkitCombatFilled
+      - id: MedicalPouchCorpsmanFilled
 
 - type: entity
   parent: ClothingBeltWand
