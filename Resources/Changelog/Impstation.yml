@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Thief access breaker is back in the box.
-    type: Fix
-  id: 1110
-  time: '2025-02-11T22:36:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1662
 - author: TheGrimbeeper
   changes:
   - message: 'New artifact trigger: Expressiveness'
@@ -4156,3 +4149,13 @@
   id: 1609
   time: '2025-05-05T01:26:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2392
+- author: AvianMaiden, ruddygreat
+  changes:
+  - message: Updates to Nanotrasen's data infrastructure now permit accessing employees'
+      historical records from the respective consoles. Please ensure all information
+      is correct before your shift. Thank you, and thank you to our friends in the
+      Delta and Cosmatic sectors.
+    type: Add
+  id: 1610
+  time: '2025-05-05T03:18:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2307
