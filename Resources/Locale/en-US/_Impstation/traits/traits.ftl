@@ -44,6 +44,9 @@ trait-sharpinflection-desc = You mumble... When you aren't shouting!!
 trait-monotonous-name = Monotonous
 trait-monotonous-desc = You speak in a way that others see as total disinterest. Always.
 
+trait-basicpirate-accent-name = Pirate (Basic)
+trait-basicpirate-accent-desc = You can't stop speaking like a pirate! No involuntary yarr-ing and garr-ing.
+
 trait-basicfrench-name = French (Basic)
 trait-basicfrench-desc = You speak with the cadence of someone who has cast off their vow of silence, with far fewer word replacements.
 
@@ -77,7 +80,7 @@ trait-imperfect-clone-accent-desc = For whatever reason, your accent fluctuates 
                                     You will roll 0-2 random accents at the start of each shift.
 
 trait-inconsistent-handwriting-name = Inconsistent handwriting
-trait-inconsistent-handwriting-desc = For whatever reason, you just can't keep a signature locked down. 
+trait-inconsistent-handwriting-desc = For whatever reason, you just can't keep a signature locked down.
                                       Your signature font will be randomized at the start of each round.
 
 trait-chaos-magic-victim-name = Chaos magic victim

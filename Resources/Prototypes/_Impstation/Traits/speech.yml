@@ -68,6 +68,15 @@
   - type: TransatlanticAccent
 
 - type: trait
+  id: BasicPirateAccent
+  name: trait-basicpirate-accent-name
+  description: trait-basicpirate-accent-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: BasicPirateAccent
+
+- type: trait
   id: BasicFrenchAccent
   name: trait-basicfrench-name
   description: trait-basicfrench-desc
