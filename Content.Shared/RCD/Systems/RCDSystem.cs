@@ -561,7 +561,7 @@ public sealed class RCDSystem : EntitySystem
                     // Deconstruct tile (either converts the tile to lattice, or removes lattice)
                     var tileDef = (tile.Tile.GetContentTileDefinition().ID != "Lattice") ? new Tile(_tileDefMan["Lattice"].TileId) : Tile.Empty;
 
-                    var ev = new ReplaceTileAttempt(tile.Tile.GetContentTileDefinition(), tileDef.GetContentTileDefinition());
+                    var ev = new ReplaceTileAttemptEvent(tile.Tile.GetContentTileDefinition(), tileDef.GetContentTileDefinition());
                     RaiseLocalEvent(gridUid, ref ev);
                     if (ev.Cancelled)
                         break;

@@ -28,13 +28,13 @@ public sealed class TileSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BlockLatticeRemovalComponent, ReplaceTileAttempt>(OnReplaceTileAttempt);
+        SubscribeLocalEvent<BlockLatticeRemovalComponent, ReplaceTileAttemptEvent>(OnReplaceTileAttempt);
     }
 
-    public void OnReplaceTileAttempt(Entity<BlockLatticeRemovalComponent> entity, ref ReplaceTileAttempt replaceTileAttempt)
+    public void OnReplaceTileAttempt(Entity<BlockLatticeRemovalComponent> entity, ref ReplaceTileAttemptEvent args)
     {
-        if (replaceTileAttempt.OldTile.ID == BaseLatticeId && replaceTileAttempt.NewTile.ID == replaceTileAttempt.OldTile.BaseTurf)
-            replaceTileAttempt.Cancelled = true;
+        if (args.OldTile.ID == BaseLatticeId && args.NewTile.ID == args.OldTile.BaseTurf)
+            args.Cancelled = true;
     }
 
     /// <summary>
@@ -159,7 +159,7 @@ public sealed class TileSystem : EntitySystem
 
         var plating = (ContentTileDefinition) _tileDefinitionManager[tileDef.BaseTurf];
 
-        var ev = new ReplaceTileAttempt(tileDef, plating);
+        var ev = new ReplaceTileAttemptEvent(tileDef, plating);
         RaiseLocalEvent(tileRef.GridUid, ref ev);
         if (ev.Cancelled)
             return false;
@@ -196,4 +196,4 @@ public sealed class TileSystem : EntitySystem
 /// Raised on the grid whenever a tile is to be replaced by another.
 /// </summary>
 [ByRefEvent]
-public record struct ReplaceTileAttempt(ContentTileDefinition OldTile, ContentTileDefinition NewTile, bool Cancelled = false);
+public record struct ReplaceTileAttemptEvent(ContentTileDefinition OldTile, ContentTileDefinition NewTile, bool Cancelled = false);

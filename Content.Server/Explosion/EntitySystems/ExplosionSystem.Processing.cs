@@ -535,7 +535,7 @@ public sealed partial class ExplosionSystem
             if (newDef.MapAtmosphere && !canCreateVacuum)
                 break;
 
-            var ev = new ReplaceTileAttempt(tileDef, newDef);
+            var ev = new ReplaceTileAttemptEvent(tileDef, newDef);
             RaiseLocalEvent(gridUid, ref ev);
             if (ev.Cancelled)
                 break;
