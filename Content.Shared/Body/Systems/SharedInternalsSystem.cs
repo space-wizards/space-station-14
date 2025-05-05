@@ -50,17 +50,18 @@ public abstract class SharedInternalsSystem : EntitySystem
 
         InteractionVerb verb = new()
         {
-            Act = () => ToggleInternals(ent, user, force: false, ent),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/dot.svg.192dpi.png")),
         };
 
-         if (AreInternalsWorking(ent))
+        if (AreInternalsWorking(ent))
         {
+            verb.Act = () => ToggleInternals(ent, user, force: false, ent, ToggleMode.Off);
             verb.Message = Loc.GetString("action-description-internals-toggle-off");
             verb.Text = Loc.GetString("action-name-internals-toggle-off");
         }
         else
         {
+            verb.Act = () => ToggleInternals(ent, user, force: false, ent, ToggleMode.On);
             verb.Message = Loc.GetString("action-description-internals-toggle-on");
             verb.Text = Loc.GetString("action-name-internals-toggle-on");
         }
@@ -68,11 +69,12 @@ public abstract class SharedInternalsSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    public bool ToggleInternals(
+    protected bool ToggleInternals(
         EntityUid uid,
         EntityUid user,
         bool force,
-        InternalsComponent? internals = null)
+        InternalsComponent? internals = null,
+        ToggleMode mode = ToggleMode.Toggle)
     {
         if (!Resolve(uid, ref internals, logMissing: false))
             return false;
@@ -87,42 +89,50 @@ public abstract class SharedInternalsSystem : EntitySystem
         // Start the toggle do-after if it's on someone else.
         if (!force && user != uid)
         {
-            return StartToggleInternalsDoAfter(user, (uid, internals));
+            return StartToggleInternalsDoAfter(user, (uid, internals), mode);
         }
 
         // Toggle off.
         if (TryComp(internals.GasTankEntity, out GasTankComponent? gas))
         {
+            if (mode == ToggleMode.On)
+                return false;
+
             return _gasTank.DisconnectFromInternals((internals.GasTankEntity.Value, gas), user);
         }
-        else
+
+        // No tank was connected, we’ll try to toggle internals on
+
+        // If the intent was to disable internals there’s nothing left to do
+        if (mode == ToggleMode.Off)
+            return false;
+
+        // Check if tank is present.
+        var tank = FindBestGasTank(uid);
+
+        // If they're not on then check if we have a mask to use
+        if (tank == null)
         {
-            // Check if tank is present.
-            var tank = FindBestGasTank(uid);
-
-            // If they're not on then check if we have a mask to use
-            if (tank == null)
-            {
-                _popupSystem.PopupClient(Loc.GetString("internals-no-tank"), uid, user);
-                return false;
-            }
-
-            return _gasTank.ConnectToInternals(tank.Value, user: user);
+            _popupSystem.PopupClient(Loc.GetString("internals-no-tank"), uid, user);
+            return false;
         }
+
+        return _gasTank.ConnectToInternals(tank.Value, user: user);
     }
 
-    private bool StartToggleInternalsDoAfter(EntityUid user, Entity<InternalsComponent> targetEnt)
+    private bool StartToggleInternalsDoAfter(EntityUid user, Entity<InternalsComponent> targetEnt, ToggleMode mode)
     {
         // Is the target not you? If yes, use a do-after to give them time to respond.
         var isUser = user == targetEnt.Owner;
         var delay = !isUser ? targetEnt.Comp.Delay : TimeSpan.Zero;
 
-        return _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new InternalsDoAfterEvent(), targetEnt, target: targetEnt)
-        {
-            BreakOnDamage = true,
-            BreakOnMove =  true,
-            MovementThreshold = 0.1f,
-        });
+        return _doAfter.TryStartDoAfter(
+            new DoAfterArgs(EntityManager, user, delay, new InternalsDoAfterEvent(mode), targetEnt, target: targetEnt)
+            {
+                BreakOnDamage = true,
+                BreakOnMove = true,
+                MovementThreshold = 0.1f,
+            });
     }
 
     private void OnDoAfter(Entity<InternalsComponent> ent, ref InternalsDoAfterEvent args)
@@ -130,7 +140,7 @@ public abstract class SharedInternalsSystem : EntitySystem
         if (args.Cancelled || args.Handled)
             return;
 
-        ToggleInternals(ent, args.User, force: true, ent);
+        ToggleInternals(ent, args.User, force: true, ent, args.ToggleMode);
 
         args.Handled = true;
     }
