@@ -13,6 +13,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Research.Prototypes;
+using Content.Shared.Stealth.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -274,6 +275,26 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
     }
 
     /// <summary>
+    /// Makes the player a ninja, and toggles their suit on and off,
+    /// making sure that they gain and lose the stealth effect.
+    /// </summary>
+    [Test]
+    public async Task SuitToggleTest()
+    {
+        await MakeNinja();
+
+        // Suit on
+        await SetSuitActive();
+        AssertComp<StealthComponent>(true, Player);
+
+        await RunTicks(5);
+
+        // Suit off
+        await SetSuitActive(false);
+        AssertComp<StealthComponent>(false, Player);
+    }
+
+    /// <summary>
     /// Turns the target entity into a ninja antag and makes sure that they got their equipment.
     /// </summary>
     /// <param name="target">Entity to turn into a ninja.</param>
@@ -330,7 +351,23 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
             var glovesUid = ToServer(_gloves);
             Assert.That(glovesUid, Is.Not.Null);
             Assert.That(ItemToggleSys.TrySetActive(glovesUid.Value, active, user: ToServer(Player)),
-                "Failed to activate ninja gloves.");
+                $"Failed to {(active ? "activate" : "deactivate")} ninja gloves.");
+        });
+    }
+
+    /// <summary>
+    /// Activates or deactivates the player ninja's suit cloak.
+    /// </summary>
+    /// <param name="active"></param>
+    /// <returns></returns>
+    private async Task SetSuitActive(bool active = true)
+    {
+        await Server.WaitPost(() =>
+        {
+            var suitUid = ToServer(_suit);
+            Assert.That(suitUid, Is.Not.Null);
+            Assert.That(ItemToggleSys.TrySetActive(suitUid.Value, active, user: ToServer(Player)),
+                $"Failed to {(active ? "activate" : "deactivate")} ninja suit.");
         });
     }
 }
