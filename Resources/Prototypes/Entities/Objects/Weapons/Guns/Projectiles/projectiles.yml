@@ -457,11 +457,11 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Blunt: 15
-        Structural: 15
+        Blunt: 25
+        Structural: 30
   # Short lifespan
   - type: TimedDespawn
-    lifetime: 0.170 # ~4 tiles of range.
+    lifetime: 0.22 # roughly 5.5 tiles
   - type: GatheringProjectile
 
 - type: entity
