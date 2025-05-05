@@ -245,120 +245,119 @@ public sealed partial class NewBiomeSystem : EntitySystem
 
  public sealed class BiomeLoadJob : Job<bool>
  {
-     private IEntityManager _entManager = default!;
-        private NewBiomeSystem System = default!;
+     [Dependency] private IEntityManager _entManager = default!;
+     [Dependency] private IPrototypeManager _protoManager = default!;
+     private NewBiomeSystem System = default!;
 
-        public Entity<MapGridComponent> Grid;
+    public Entity<MapGridComponent> Grid;
 
-        /// <summary>
-        /// Biome that is getting loaded.
-        /// </summary>
-        public NewBiomeComponent Biome = default!;
+    /// <summary>
+    /// Biome that is getting loaded.
+    /// </summary>
+    public NewBiomeComponent Biome = default!;
 
-        public BiomeLoadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
-        {
-        }
-
-        public BiomeLoadJob(double maxTime, IStopwatch stopwatch, CancellationToken cancellation = default) : base(maxTime, stopwatch, cancellation)
-        {
-        }
-
-        protected override async Task<bool> Process()
-        {
-            foreach (var bound in Biome.LoadedBounds)
-            {
-                foreach (var (layerId, layer) in Biome.Layers)
-                {
-                    await LoadLayer(layerId, layer, bound);
-                }
-            }
-
-            // Finished
-            DebugTools.Assert(Biome.Loading);
-            Biome.Loading = false;
-            return true;
-        }
-
-        private async Task LoadLayer(string layerId, NewBiomeMetaLayer layer, Box2i parentBounds)
-        {
-            var loadBounds = System.GetLayerBounds(layer, parentBounds);
-
-            // Make sure our dependencies are loaded first.
-            if (layer.DependsOn != null)
-            {
-                foreach (var sub in layer.DependsOn)
-                {
-                    var actualLayer = Biome.Layers[sub];
-
-                    await LoadLayer(sub, actualLayer, loadBounds);
-                }
-            }
-
-            // Okay all of our dependencies loaded so we can send it.
-            var chunkEnumerator = new ChunkIndicesEnumerator(loadBounds, layer.Size);
-
-            while (chunkEnumerator.MoveNext(out var chunk))
-            {
-                var layerLoaded = Biome.LoadedData.GetOrNew(layerId);
-
-                // Layer already loaded for this chunk.
-                // This can potentially happen if we're moving and the player's bounds changed but some existing chunks remain.
-                if (layerLoaded.ContainsKey(chunk.Value))
-                {
-                    continue;
-                }
-
-                // Start loading here.
-                // TODO: Port dungeonloadeddata.
-                // Add dungeon method to dump it into dungeonloadeddata
-                var loadedData = new BiomeLoadedData()
-                {
-
-                };
-
-                int seedOffset;
-
-                unchecked
-                {
-                    seedOffset = chunk.Value.X * 256 + chunk.Value.Y + Biome.Seed;
-                }
-
-                // Load dungeon here async await and all that jaz.
-                var dungeons = await _entManager
-                    .System<DungeonSystem>()
-                    .GenerateDungeonAsync(IoCManager.Resolve<IPrototypeManager>().Index(layer.Dungeon), Grid.Owner, Grid.Comp, chunk.Value, seedOffset);
-
-                // If we can unload it then store the data to check for later.
-                if (layer.CanUnload)
-                {
-                    foreach (var dungeon in dungeons)
-                    {
-                        // TODO: Add dungeon loaded data structure to it.
-                    }
-                }
-
-                // Cleanup loading
-                layerLoaded.Add(chunk.Value, loadedData);
-            }
-        }
-    }
-
-    public sealed class BiomeUnloadJob : Job<bool>
+    public BiomeLoadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
-        public List<Vector2i> Chunks = new();
+        IoCManager.InjectDependencies(this);
+        System = _entManager.System<NewBiomeSystem>();
+    }
 
-        public BiomeUnloadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
+    protected override async Task<bool> Process()
+    {
+        foreach (var bound in Biome.LoadedBounds)
         {
+            foreach (var (layerId, layer) in Biome.Layers)
+            {
+                await LoadLayer(layerId, layer, bound);
+            }
         }
 
-        public BiomeUnloadJob(double maxTime, IStopwatch stopwatch, CancellationToken cancellation = default) : base(maxTime, stopwatch, cancellation)
+        // Finished
+        DebugTools.Assert(Biome.Loading);
+        Biome.Loading = false;
+        return true;
+    }
+
+    private async Task LoadLayer(string layerId, NewBiomeMetaLayer layer, Box2i parentBounds)
+    {
+        var loadBounds = System.GetLayerBounds(layer, parentBounds);
+
+        // Make sure our dependencies are loaded first.
+        if (layer.DependsOn != null)
         {
+            foreach (var sub in layer.DependsOn)
+            {
+                var actualLayer = Biome.Layers[sub];
+
+                await LoadLayer(sub, actualLayer, loadBounds);
+            }
         }
 
-        protected override async Task<bool> Process()
-        {
-            //
+        // Okay all of our dependencies loaded so we can send it.
+        var chunkEnumerator = new ChunkIndicesEnumerator(loadBounds, layer.Size);
 
-            return true;
+        while (chunkEnumerator.MoveNext(out var chunk))
+        {
+            var layerLoaded = Biome.LoadedData.GetOrNew(layerId);
+
+            // Layer already loaded for this chunk.
+            // This can potentially happen if we're moving and the player's bounds changed but some existing chunks remain.
+            if (layerLoaded.ContainsKey(chunk.Value))
+            {
+                continue;
+            }
+
+            // Start loading here.
+            // TODO: Port dungeonloadeddata.
+            // Add dungeon method to dump it into dungeonloadeddata
+            var loadedData = new BiomeLoadedData()
+            {
+
+            };
+
+            int seedOffset;
+
+            unchecked
+            {
+                seedOffset = chunk.Value.X * 256 + chunk.Value.Y + Biome.Seed;
+            }
+
+            // Load dungeon here async await and all that jaz.
+            var dungeons = await _entManager
+                .System<DungeonSystem>()
+                .GenerateDungeonAsync(IoCManager.Resolve<IPrototypeManager>().Index(layer.Dungeon), Grid.Owner, Grid.Comp, chunk.Value, seedOffset);
+
+            // If we can unload it then store the data to check for later.
+            if (layer.CanUnload)
+            {
+                foreach (var dungeon in dungeons)
+                {
+                    // TODO: Add dungeon loaded data structure to it.
+                }
+            }
+
+            // Cleanup loading
+            layerLoaded.Add(chunk.Value, loadedData);
         }
     }
+}
+
+public sealed class BiomeUnloadJob : Job<bool>
+{
+    public List<Vector2i> Chunks = new();
+
+    public BiomeUnloadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
+    {
+    }
+
+    public BiomeUnloadJob(double maxTime, IStopwatch stopwatch, CancellationToken cancellation = default) : base(maxTime, stopwatch, cancellation)
+    {
+    }
+
+    protected override async Task<bool> Process()
+    {
+        //
+
+        return true;
+    }
+}

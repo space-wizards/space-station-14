@@ -311,6 +311,15 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
             case RoomEntranceDunGen rEntrance:
                 await PostGen(rEntrance, dungeons[^1], reservedTiles, random);
                 break;
+            case SampleDecalDunGen sdec:
+                await PostGen(sdec, dungeons, reservedTiles, random);
+                break;
+            case SampleEntityDunGen sent:
+                await PostGen(sent, dungeons, reservedTiles, random);
+                break;
+            case SampleTileDunGen stile:
+                await PostGen(stile, dungeons, reservedTiles, random);
+                break;
             case SplineDungeonConnectorDunGen spline:
                 dungeons.Add(await PostGen(spline, dungeons, reservedTiles, random));
                 break;
@@ -323,11 +332,6 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
             default:
                 throw new NotImplementedException();
         }
-    }
-
-    private void LogDataError(Type type)
-    {
-        _sawmill.Error($"Unable to find dungeon data keys for {type}");
     }
 
     [Pure]
