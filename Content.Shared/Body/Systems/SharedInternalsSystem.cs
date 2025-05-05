@@ -50,14 +50,20 @@ public abstract class SharedInternalsSystem : EntitySystem
 
         InteractionVerb verb = new()
         {
-            Act = () =>
-            {
-                ToggleInternals(ent, user, force: false, ent);
-            },
-            Message = Loc.GetString("action-description-internals-toggle"),
+            Act = () => ToggleInternals(ent, user, force: false, ent),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/dot.svg.192dpi.png")),
-            Text = Loc.GetString("action-name-internals-toggle"),
         };
+
+         if (AreInternalsWorking(ent))
+        {
+            verb.Message = Loc.GetString("action-description-internals-toggle-off");
+            verb.Text = Loc.GetString("action-name-internals-toggle-off");
+        }
+        else
+        {
+            verb.Message = Loc.GetString("action-description-internals-toggle-on");
+            verb.Text = Loc.GetString("action-name-internals-toggle-on");
+        }
 
         args.Verbs.Add(verb);
     }
