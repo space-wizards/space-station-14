@@ -1,10 +1,10 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.DeviceLinking.Systems;
 
@@ -18,23 +18,6 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
 
         SubscribeLocalEvent<DeviceLinkSinkComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<DeviceLinkSourceComponent, NewLinkEvent>(OnNewLink);
-    }
-
-    public override void Update(float frameTime)
-    {
-        var query = EntityQueryEnumerator<DeviceLinkSinkComponent>();
-
-        while (query.MoveNext(out var component))
-        {
-            if (component.InvokeLimit < 1)
-            {
-                component.InvokeCounter = 0;
-                continue;
-            }
-
-            if(component.InvokeCounter > 0)
-                component.InvokeCounter--;
-        }
     }
 
     #region Sending & Receiving
@@ -67,16 +50,17 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
         if (!Resolve(sink, ref sink.Comp))
             return;
 
-        if (sink.Comp.InvokeCounter > sink.Comp.InvokeLimit)
+        var invokeCounter = GetEffectiveInvokeCounter(sink.Comp);
+        if (invokeCounter > sink.Comp.InvokeLimit)
         {
-            sink.Comp.InvokeCounter = 0;
+            SetInvokeCounter(sink.Comp, 0);
             var args = new DeviceLinkOverloadedEvent();
             RaiseLocalEvent(sink, ref args);
             RemoveAllFromSink(sink, sink.Comp);
             return;
         }
 
-        sink.Comp.InvokeCounter++;
+        SetInvokeCounter(sink.Comp, invokeCounter + 1);
 
         //Just skip using device networking if the source or the sink doesn't support it
         if (!HasComp<DeviceNetworkComponent>(source) || !TryComp<DeviceNetworkComponent>(sink, out var sinkNetwork))

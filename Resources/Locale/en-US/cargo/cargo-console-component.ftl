@@ -72,7 +72,11 @@ cargo-funding-alloc-console-label-code = [bold] Code [/bold]
 cargo-funding-alloc-console-label-balance = [bold] Balance [/bold]
 cargo-funding-alloc-console-label-cut = [bold] Revenue Division (%) [/bold]
 
-cargo-funding-alloc-console-label-help = Cargo receives {$percent}% of all profits. The rest is split as specified below:
+cargo-funding-alloc-console-label-primary-cut = Cargo's cut of funds from non-lockbox sources (%):
+cargo-funding-alloc-console-label-lockbox-cut = Cargo's cut of funds from lockbox sales (%):
+
+cargo-funding-alloc-console-label-help-non-adjustible = Cargo receives {$percent}% of profits from non-lockbox sales. The rest is split as specified below:
+cargo-funding-alloc-console-label-help-adjustible = Remaining funds from non-lockbox sources are distributed as specified below:
 cargo-funding-alloc-console-button-save = Save Changes
 cargo-funding-alloc-console-label-save-fail = [bold]Revenue Divisions Invalid![/bold] [color=red]({$pos ->
     [1] +
