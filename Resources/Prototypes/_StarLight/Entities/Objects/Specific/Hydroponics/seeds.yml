@@ -1,6 +1,6 @@
 - type: entity
   parent: SeedBase
-  name: packet of organ tree
+  name: packet of organ tree seeds
   id: OrganTreeSeeds
   components:
   - type: Seed
