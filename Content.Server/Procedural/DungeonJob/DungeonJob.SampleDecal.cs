@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonLayers;
+using Robust.Shared.Map;
 using Robust.Shared.Random;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -31,7 +32,8 @@ public sealed partial class DungeonJob
                 if (value < gen.Threshold)
                     continue;
 
-                AddLoadedDecal(tile, random.Pick(gen.Decals));
+                _decals.TryAddDecal(random.Pick(gen.Decals), new EntityCoordinates(_gridUid, tile), out var did);
+                AddLoadedDecal(tile, did);
             }
         }
     }

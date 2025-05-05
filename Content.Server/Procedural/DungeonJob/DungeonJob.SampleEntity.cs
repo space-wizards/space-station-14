@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonLayers;
+using Robust.Shared.Map;
 using Robust.Shared.Random;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -31,7 +32,8 @@ public sealed partial class DungeonJob
                 if (value < gen.Threshold)
                     continue;
 
-                AddLoadedEntity(random.Pick(gen.Entities), tile);
+                var uid = _entManager.SpawnAttachedTo(random.Pick(gen.Entities), _maps.GridTileToLocal(_gridUid, _grid, tile));
+                AddLoadedEntity(tile, uid);
             }
         }
     }

@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonLayers;
+using Robust.Shared.Map;
+using Robust.Shared.Random;
 
 namespace Content.Server.Procedural.DungeonJob;
 
@@ -15,6 +17,8 @@ public sealed partial class DungeonJob
         Random random)
     {
         gen.Noise.SetSeed(random.Next());
+        var tiles = new List<(Vector2i Index, Tile Tile)>();
+        var tileDef = _prototype.Index(gen.Tile);
 
         foreach (var dungeon in dungeons)
         {
@@ -30,8 +34,15 @@ public sealed partial class DungeonJob
                 if (value < gen.Threshold)
                     continue;
 
-                AddLoadedTile(tile, gen.Tile);
+                tiles.Add((tile, new Tile(tileDef.TileId)));
             }
+        }
+
+        _maps.SetTiles(_gridUid, _grid, tiles);
+
+        foreach (var tile in tiles)
+        {
+            AddLoadedTile(tile.Index, tile.Tile);
         }
     }
 }

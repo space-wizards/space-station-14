@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Decals;
@@ -7,6 +8,7 @@ using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
@@ -57,6 +59,8 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
     private readonly ISawmill _sawmill;
 
+    private DungeonData _data = new();
+
     public DungeonJob(
         ISawmill sawmill,
         double maxTime,
@@ -105,7 +109,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
     /// <summary>
     /// Gets the relevant dungeon, running recursively as relevant.
     /// </summary>
-    /// <param name="reserve">Should we reserve tiles even if the config doesn't specify.</param>
+    /// <param name="reservedTiles">Should we reserve tiles even if the config doesn't specify.</param>
     private async Task<List<Dungeon>> GetDungeons(
         Vector2i position,
         DungeonConfig config,
@@ -355,4 +359,31 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
         await SuspendIfOutOfTime();
     }
+
+    private void AddLoadedEntity(Vector2 tile, EntityUid ent)
+    {
+        _data.Entities[tile] = ent;
+    }
+
+    private void AddLoadedDecal(Vector2 tile, uint decal)
+    {
+        _data.Decals[tile] = decal;
+    }
+
+    private void AddLoadedTile(Vector2i index, Tile tile)
+    {
+        _data.Tiles[index] = tile;
+    }
+}
+
+/// <summary>
+/// Contains the loaded data for a dungeon.
+/// </summary>
+public sealed class DungeonData
+{
+    public Dictionary<Vector2, uint> Decals = new();
+
+    public Dictionary<Vector2, EntityUid> Entities = new();
+
+    public Dictionary<Vector2i, Tile> Tiles = new();
 }
