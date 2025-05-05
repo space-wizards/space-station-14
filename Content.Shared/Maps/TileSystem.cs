@@ -135,6 +135,10 @@ public sealed class TileSystem : EntitySystem
         if (!Resolve(grid, ref component))
             return false;
 
+        var ev = new ReplaceTileAttemptEvent(tileref.Tile.GetContentTileDefinition(), replacementTile);
+        RaiseLocalEvent(grid, ref ev);
+        if (ev.Cancelled)
+            return false;
 
         var variant = PickVariant(replacementTile);
         var decals = _decal.GetDecalsInRange(tileref.GridUid, _turf.GetTileCenter(tileref).Position, 0.5f);

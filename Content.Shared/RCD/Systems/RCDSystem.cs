@@ -531,6 +531,12 @@ public sealed class RCDSystem : EntitySystem
         switch (prototype.Mode)
         {
             case RcdMode.ConstructTile:
+
+                var evConstruct = new ReplaceTileAttemptEvent(tile.Tile.GetContentTileDefinition(), (ContentTileDefinition) _tileDefMan[prototype.Prototype]);
+                RaiseLocalEvent(gridUid, ref evConstruct);
+                if (evConstruct.Cancelled)
+                    break;
+
                 _mapSystem.SetTile(gridUid, mapGrid, position, new Tile(_tileDefMan[prototype.Prototype].TileId));
                 _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to set grid: {gridUid} {position} to {prototype.Prototype}");
                 break;
@@ -561,9 +567,9 @@ public sealed class RCDSystem : EntitySystem
                     // Deconstruct tile (either converts the tile to lattice, or removes lattice)
                     var tileDef = (tile.Tile.GetContentTileDefinition().ID != "Lattice") ? new Tile(_tileDefMan["Lattice"].TileId) : Tile.Empty;
 
-                    var ev = new ReplaceTileAttemptEvent(tile.Tile.GetContentTileDefinition(), tileDef.GetContentTileDefinition());
-                    RaiseLocalEvent(gridUid, ref ev);
-                    if (ev.Cancelled)
+                    var evDeconstruct = new ReplaceTileAttemptEvent(tile.Tile.GetContentTileDefinition(), tileDef.GetContentTileDefinition());
+                    RaiseLocalEvent(gridUid, ref evDeconstruct);
+                    if (evDeconstruct.Cancelled)
                         break;
 
                     _mapSystem.SetTile(gridUid, mapGrid, position, tileDef);
