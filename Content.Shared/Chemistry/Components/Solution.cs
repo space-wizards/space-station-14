@@ -836,17 +836,32 @@ namespace Content.Shared.Chemistry.Components
                 {
                     first = false;
                     mixColor = proto.SubstanceColor;
+                    List<ReagentData> reagentData = reagent.EnsureReagentData();
+                    BloodColorData? bloodData = reagentData.OfType<BloodColorData>().FirstOrDefault();
+                    if (null != bloodData)
+                    {
+                        Logger.InfoS("SERVER", "GetColor blood data was not null...");
+                        mixColor = bloodData.SubstanceColor;
+                    }
+                    else
+                    {
+                        Logger.InfoS("SERVER", "GetColor blood data was indeed null...");
+                    }
+
                     continue;
                 }
 
+
                 var interpolateValue = quantity.Float() / runningTotalQuantity.Float();
                 mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
+                // TODO: very cursed hacky, delete
             }
             return mixColor;
         }
 
         public Color GetColor(IPrototypeManager? protoMan)
         {
+            Logger.InfoS("SERVER", "GetColor called...");
             return GetColorWithout(protoMan);
         }
 

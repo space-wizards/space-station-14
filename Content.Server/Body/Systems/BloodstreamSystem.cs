@@ -14,6 +14,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.HealthExaminable;
+using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
@@ -477,7 +478,7 @@ public sealed class BloodstreamSystem : EntitySystem
             foreach (var reagent in bloodSolution.Contents)
             {
                 List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
-                reagentData.RemoveAll(x => x is DnaData);
+                reagentData.Clear();
                 reagentData.AddRange(GetEntityBloodData(entity.Owner));
             }
         }
@@ -492,13 +493,32 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         var bloodData = new List<ReagentData>();
         var dnaData = new DnaData();
+        var bloodColorData = new BloodColorData();
 
         if (TryComp<DnaComponent>(uid, out var donorComp) && donorComp.DNA != null)
             dnaData.DNA = donorComp.DNA;
         else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
 
+        if (TryComp<BloodstreamComponent>(uid, out var bloodstreamComp))
+        {
+            var bloodProto = _prototypeManager.Index<ReagentPrototype>(bloodstreamComp.BloodReagent);
+            bloodColorData.SubstanceColor = bloodProto.SubstanceColor;
+        }
+        // Color.White is the default color that gets set if
+        // the blood color is unconfigured.
+        // So we use this as an indicator to set the blood color
+        // to the skin color.
+        if (Color.White == bloodColorData.SubstanceColor)
+        {
+            if (TryComp<HumanoidAppearanceComponent>(uid, out var appearanceComp))
+            {
+                bloodColorData.SubstanceColor = appearanceComp.SkinColor;
+            }
+        }
+
         bloodData.Add(dnaData);
+        bloodData.Add(bloodColorData);
 
         return bloodData;
     }

@@ -9,6 +9,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Body.Components
 {

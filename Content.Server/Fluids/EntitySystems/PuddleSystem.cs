@@ -69,7 +69,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [ValidatePrototypeId<ReagentPrototype>]
     private const string CopperBlood = "CopperBlood";
 
-    private static string[] _standoutReagents = [Blood, Slime, CopperBlood];
+    private static string[] _standoutReagents = [Blood, CopperBlood];
 
     // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
     // loses & then gains reagents in a single tick.

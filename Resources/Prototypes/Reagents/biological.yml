@@ -62,7 +62,7 @@
   group: Biological
   desc: reagent-desc-slime
   flavor: slimy
-  color: "#2cf274"
+  color: "#FFFFFF"
   recognizable: true
   physicalDesc: reagent-physical-desc-viscous
   viscosity: 0.25
