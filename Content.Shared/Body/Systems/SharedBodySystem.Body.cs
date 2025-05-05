@@ -285,6 +285,7 @@ public partial class SharedBodySystem
 
     public virtual HashSet<EntityUid> GibBody(
         EntityUid bodyId,
+        bool gibOrgans = false,
         bool acidify = false,
         BodyComponent? body = null,
         bool launchGibs = true,
@@ -312,7 +313,7 @@ public partial class SharedBodySystem
                 playAudio: false, launchGibs:true, launchDirection:splatDirection, launchImpulse: GibletLaunchImpulse * splatModifier,
                 launchImpulseVariance:GibletLaunchImpulseVariance, launchCone: splatCone);
 
-            if (!acidify)
+            if (!gibOrgans)
                 continue;
 
             foreach (var organ in GetPartOrgans(part.Id, part.Component))
