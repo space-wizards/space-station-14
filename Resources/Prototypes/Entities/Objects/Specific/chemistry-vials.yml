@@ -9,6 +9,7 @@
   - type: Tag
     tags:
     - Trash
+    - Vial
     - CentrifugeCompatible
   - type: PhysicalComposition
     materialComposition:
