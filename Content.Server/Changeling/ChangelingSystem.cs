@@ -204,13 +204,16 @@ public sealed partial class ChangelingSystem : EntitySystem
                 _popup.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
             }
         }
-        else if (comp.Biomass <= comp.MaxBiomass * comp.BiomassDeficitJitterPercent && random)
+        else if (comp.Biomass <= comp.MaxBiomass * comp.BiomassDeficitJitterPercent)
         {
             // the funny itch is not real
             _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-medium"), uid, uid, PopupType.MediumCaution);
-            _jitter.DoJitter(uid, TimeSpan.FromSeconds(.5f), true, amplitude: 5, frequency: 10);
+            if (random)
+            {
+                _jitter.DoJitter(uid, TimeSpan.FromSeconds(.5f), true, amplitude: 5, frequency: 10);
+            }
         }
-        else if (comp.Biomass <= comp.MaxBiomass * comp.BiomassDeficitWarningPercent && random)
+        else if (comp.Biomass <= comp.MaxBiomass * comp.BiomassDeficitWarningPercent) //always do this every update
         {
             _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-low"), uid, uid, PopupType.SmallCaution);
         }
