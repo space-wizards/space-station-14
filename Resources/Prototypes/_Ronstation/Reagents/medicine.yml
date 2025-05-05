@@ -107,31 +107,6 @@
               Cellular: 0.5
 
 - type: reagent
-  id: SalicylicAcid
-  name: reagent-name-salicylic-acid
-  group: Medicine
-  desc: reagent-desc-salicylic-acid
-  physicalDesc: reagent-physical-desc-powdery
-  flavor: medicine
-  color: "#D2D2D2"
-  metabolisms:
-    Medicine:
-      metabolismRate: 0.1
-      effects:
-        - !type:HealthChange
-          probability: 0.55
-          damage:
-            groups:
-              Brute: -3
-        - !type:HealthChange
-          conditions:
-          - !type:ReagentThreshold
-            min: 30
-          damage:
-            groups:
-              Toxin: 1
-
-- type: reagent
   id: Spaceacillin
   name: reagent-name-spaceacillin
   group: Medicine
