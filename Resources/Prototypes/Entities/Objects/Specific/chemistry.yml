@@ -655,14 +655,19 @@
 - type: entity
   name: medical pouch
   id: MedicalPouch
-  parent: PillCanister
+  parent: [ PillCanister, BaseBagOpenClose ]
   description: Holds up to 12 tiny medical items.
   components:
   - type: Item
     size: Small
     sprite: Objects/Specific/Chemistry/medical_pouch.rsi
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/medical_pouch.rsi
+    layers:
+    - state: closed
+      map: ["closeLayer"]
+    - state: open
+      map: ["openLayer"]
+      visible: false
     state: icon
   - type: Storage
     grid:
