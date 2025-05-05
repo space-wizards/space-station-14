@@ -10,17 +10,14 @@ public sealed class ThermoregulatorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
 
+    public const float DefaultThermalConductivity = 2f;
+
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ThermoregulatorComponent, MapInitEvent>(OnMapInit);
-    }
-
-    private void OnMapInit(Entity<ThermoregulatorComponent> ent, ref MapInitEvent args)
-    {
-        ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
-        DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.NextUpdate));
     }
 
     /// <inheritdoc/>
@@ -35,7 +32,7 @@ public sealed class ThermoregulatorSystem : EntitySystem
         {
             if (!comp.Enabled)
             {
-                // Set to idle if not already
+                // Set to idle if it somehow changed through VV or something
                 if (comp.ActiveMode != ThermoregulatorActiveMode.Idle)
                 {
                     comp.ActiveMode = ThermoregulatorActiveMode.Idle;
@@ -51,9 +48,15 @@ public sealed class ThermoregulatorSystem : EntitySystem
         }
     }
 
+    private void OnMapInit(Entity<ThermoregulatorComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
+        DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.NextUpdate));
+    }
+
     private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent, TimeSpan curTime)
     {
-        var dt = ent.Comp.UpdateInterval.TotalSeconds;    // Time between updates
+        var dt = ent.Comp.UpdateInterval.TotalSeconds;      // Time between updates
         var T = ent.Comp.Temperature;                        // Current temperature
         var C = ent.Comp.HeatCapacity;                       // Heat capacity
         var Ts = ent.Comp.Setpoint;                          // Temperature setpoint
@@ -155,7 +158,12 @@ public sealed class ThermoregulatorSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        TransferHeatFromEntity(ent.Comp.HeatCapacity, ref ent.Comp.Temperature, heatCapacity, ref temperature);
+        TransferHeatFromEntity(ent.Comp.HeatCapacity,
+            ref ent.Comp.Temperature,
+            heatCapacity,
+            ref temperature,
+            (float) ent.Comp.UpdateInterval.TotalSeconds);
+        DirtyField(ent, nameof(ThermoregulatorComponent.Temperature));
     }
 
     [PublicAPI]
@@ -163,7 +171,9 @@ public sealed class ThermoregulatorSystem : EntitySystem
         float regulatorHeatCapacity,
         ref float regulatorTemperature,
         float heatCapacity,
-        ref float temperature)
+        ref float temperature,
+        float deltaTime,
+        float thermalConductivity = DefaultThermalConductivity)
     {
         var T1 = regulatorTemperature;
         var C1 = regulatorHeatCapacity;
@@ -171,15 +181,28 @@ public sealed class ThermoregulatorSystem : EntitySystem
         var T2 = temperature;
         var C2 = heatCapacity;
 
-        // Compute equilibrium temperature
-        var T_eq = (C1 * T1 + C2 * T2) / (C1 + C2);
+        // According to Newton's Law of Cooling:
+        //     ΔQ/Δt = k * (T2 - T1)
+        // Where:
+        //     ΔQ = heat transferred
+        //     Δt = time
+        //     k = thermal conductivity
+        //
+        // Over a small time interval deltaTime, total heat flow is:
+        //     ΔQ = k * (T2 - T1) * deltaTime
+        var heatFlow = thermalConductivity * (T2 - T1) * deltaTime;
 
-        temperature = T_eq;
-        regulatorTemperature = T_eq;
+        // Now we distribute this heat between the two bodies.
+        // ΔT = ΔQ / C   (change in temperature = heat / heat capacity)
+        //
+        // One body gains heat, the other loses it.
+        regulatorTemperature += heatFlow / C1;
+        temperature           -= heatFlow / C2;
     }
 
     /// <summary>
     /// Sets the setpoint of the thermoregulator.
+    /// This will be capped between the min and max temperatures.
     /// </summary>
     [PublicAPI]
     public void SetSetpoint(Entity<ThermoregulatorComponent?> ent, float setpoint)
