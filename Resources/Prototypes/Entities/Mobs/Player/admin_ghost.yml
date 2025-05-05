@@ -95,6 +95,7 @@
   - type: SolutionScanner
   - type: IgnoreUIRange
   - type: ShowAntagIcons
+  - type: ShowContrabandDetails
   - type: Inventory
     templateId: aghost
   - type: Loadout
