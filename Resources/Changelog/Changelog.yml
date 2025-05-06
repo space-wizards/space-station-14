@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Deconstructing disposal pipes will no longer delete all the contents.
-    type: Fix
-  id: 7926
-  time: '2025-02-10T09:05:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34986
 - author: themias
   changes:
   - message: Pacified players can no longer attack living creatures with mechs
@@ -3927,3 +3920,10 @@
   id: 8427
   time: '2025-05-06T17:24:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37140
+- author: Morty, lzk228
+  changes:
+  - message: Speech bubbles now indicate when a person is thinking of what to say.
+    type: Tweak
+  id: 8428
+  time: '2025-05-06T17:49:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29349
