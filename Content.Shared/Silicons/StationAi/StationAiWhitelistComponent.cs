@@ -10,4 +10,7 @@ public sealed partial class StationAiWhitelistComponent : Component
 {
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
+
+    [DataField, AutoNetworkedField]
+    public bool ShowContextMenu = false;
 }

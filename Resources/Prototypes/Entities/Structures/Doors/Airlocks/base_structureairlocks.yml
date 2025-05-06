@@ -5,6 +5,7 @@
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: StationAiWhitelist
+    showContextMenu: true
   - type: MeleeSound
     soundGroups:
       Brute:

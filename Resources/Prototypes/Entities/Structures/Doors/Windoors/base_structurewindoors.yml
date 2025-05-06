@@ -12,6 +12,7 @@
         collection: GlassSmash
   - type: InteractionOutline
   - type: StationAiWhitelist
+    showContextMenu: true
   - type: Physics
   - type: Fixtures
     fixtures:

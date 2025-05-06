@@ -7,6 +7,7 @@
     mode: SnapgridCenter
   components:
   - type: StationAiWhitelist
+    showContextMenu: true
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Doors/Airlocks/highsec/highsec.rsi
