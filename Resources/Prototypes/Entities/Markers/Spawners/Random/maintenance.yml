@@ -358,6 +358,7 @@
       - id: Shiv
       - id: SawImprov
       - id: HydroponicsToolMiniHoe
+      - id: ClothingHandsKnuckleDusters
 
 - type: entity
   name: Maint Loot Spawner
