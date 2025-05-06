@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: notquitehadouken
-  changes:
-  - message: Added loungewear to uniform printer
-    type: Add
-  id: 7923
-  time: '2025-02-09T22:16:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35008
 - author: Vortebo
   changes:
   - message: Added Relic station.
@@ -3924,3 +3917,11 @@
   id: 8424
   time: '2025-05-06T16:57:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37183
+- author: Quantum-cross
+  changes:
+  - message: Hosted anomaly effects not appearing at host when host is in container
+      or buckled
+    type: Fix
+  id: 8425
+  time: '2025-05-06T17:01:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37179
