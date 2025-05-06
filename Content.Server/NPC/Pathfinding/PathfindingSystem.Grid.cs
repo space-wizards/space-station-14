@@ -55,7 +55,7 @@ public sealed partial class PathfindingSystem
             if (change.OldTile.IsEmpty == change.NewTile.Tile.IsEmpty)
                 return;
 
-            DirtyChunk(ev.Entity, _maps.GridTileToLocal(ev.Entity, Comp<MapGridComponent>(ev.Entity), change.NewTile.GridIndices));
+            DirtyChunk(ev.Entity, _maps.GridTileToLocal(ev.Entity, ev.Entity.Comp, change.NewTile.GridIndices));
         }
     }
 
