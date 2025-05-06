@@ -55,6 +55,7 @@ public sealed partial class SharedStatusEffectNewSystem
         //Technically, on the client, all checks have been successful and we do not need to execute further code related to entity spawning, as this is the server's responsibility
         if (_net.IsClient)
             return true;
+
         EnsureComp<StatusEffectContainerComponent>(uid, out var container);
 
         //And only if all checks passed we spawn the effect

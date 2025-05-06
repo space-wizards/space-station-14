@@ -1,0 +1,20 @@
+- type: entity
+  id: StatusEffectBase
+  abstract: true
+  components:
+  - type: Sprite
+    drawDepth: Effects
+    noRot: true
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  id: StatusEffectForcedSleeping
+  components:
+  - type: StatusEffectNew
+    components:
+    - ForcedSleeping
+    whitelist:
+      components:
+      - MobState
