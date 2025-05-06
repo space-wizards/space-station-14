@@ -5458,4 +5458,53 @@ Entries:
   id: 756
   time: '2025-05-05T23:36:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/577
+- author: choccy
+  changes:
+  - message: (Starboard) Barratrification!
+    type: Tweak
+  id: 757
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Tweaks many small features
+    type: Tweak
+  id: 758
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Tweaked security, doors and rechargers
+    type: Tweak
+  id: 759
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Tweaks the emergency shuttle to have a new security room
+    type: Tweak
+  id: 760
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Lots of new maints
+    type: Add
+  id: 761
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Killed the honkbot
+    type: Tweak
+  id: 762
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) New stoves, and mining lockers
+    type: Add
+  id: 763
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
 
