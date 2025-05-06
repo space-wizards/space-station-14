@@ -166,6 +166,8 @@
     sprite: Clothing/Head/Misc/fancycrown.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/fancycrown.rsi
+  - type: TypingIndicatorClothing
+    proto: regal
   - type: MobPrice
     price: 3000
   - type: AddAccentClothing
