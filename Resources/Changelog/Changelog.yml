@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed an exploit using multiple R&D computers to research multiple discipline
-      tier 3 technologies
-    type: Fix
-  id: 7930
-  time: '2025-02-11T02:52:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34334
 - author: K-Dynamic
   changes:
   - message: Flashbangs, stinger grenades, EMP grenades, smoke grenades, and tear
@@ -3927,3 +3919,11 @@
   id: 8431
   time: '2025-05-06T19:04:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36944
+- author: Ghagliiarghii
+  changes:
+  - message: Fixed a bug which allowed Janitor borgs to delete a held item and acquire
+      an empty hand.
+    type: Fix
+  id: 8432
+  time: '2025-05-06T19:10:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36961
