@@ -1274,9 +1274,10 @@
           max: 213.0
         damage:
           types:
-            Heat: -3.0
-            Shock: -3.0
-            Caustic: -1.0
+            Cold: -4.0
+            Heat: -4.0
+            Shock: -4.0
+            Caustic: -1.5
 
 - type: reagent
   id: Traumoxadone
