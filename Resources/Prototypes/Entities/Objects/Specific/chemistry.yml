@@ -684,10 +684,13 @@
 - type: entity
   name: corpsman's medical pouch
   id: CorpsmanMedicalPouch
-  parent: MedicalPouch
-  description: Holds up to 12 tiny medical items.
+  parent: [ MedicalPouch, BaseSyndicateContraband]
+  description: Holds up to 15 tiny medical items.
   components:
   - type: Item
     sprite: Objects/Specific/Chemistry/corpsman_medical_pouch.rsi
   - type: Sprite
     sprite: Objects/Specific/Chemistry/corpsman_medical_pouch.rsi
+  - type: Storage
+    grid:
+    - 0,0,4,2 #syndie stuffs always bigger
