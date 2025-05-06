@@ -94,6 +94,11 @@ public abstract class SharedGenpopSystem : EntitySystem
             return;
         }
 
+        // allow security to unlock in case someone is stuck, more items need to be added,
+        // contraband needs to be confiscated, etc.
+        if (_accessReader.IsAllowed(args.User, ent.Owner))
+            return;
+
         // Make sure that we both have the linked ID on our person AND the ID has actually expired.
         // That way, even if someone escapes early, they can't get ahold of their things.
         if (!_accessReader.FindPotentialAccessItems(args.User).Contains(ent.Comp.LinkedId.Value))
