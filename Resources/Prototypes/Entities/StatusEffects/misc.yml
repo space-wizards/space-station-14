@@ -4,7 +4,7 @@
   components:
   - type: StatusEffectNew
   - type: Sprite
-    drawDepth: Effects
+    drawdepth: Effects
     noRot: true
   - type: Tag
     tags:
@@ -17,7 +17,15 @@
   name: forced sleep
   categories: [ HideSpawnMenu ]
   components:
+  #
+  - type: Sprite
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: ian
+  #
   - type: StatusEffectNew
+    alert: LowNitrogen
     components:
     - type: ForcedSleepingStatusEffect
     whitelist:

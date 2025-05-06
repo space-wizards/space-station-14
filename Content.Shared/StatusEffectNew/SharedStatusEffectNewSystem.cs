@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.StatusEffectNew;
 
-public sealed partial class StatusEffectNewSystem : EntitySystem
+public abstract partial class SharedStatusEffectNewSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -23,8 +23,6 @@ public sealed partial class StatusEffectNewSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<StatusEffectContainerComponent, ComponentShutdown>(OnContainerShutdown);
 
         SubscribeLocalEvent<StatusEffectNewComponent, StatusEffectApplied>(OnStatusEffectApplied);
         SubscribeLocalEvent<StatusEffectNewComponent, StatusEffectRemoved>(OnStatusEffectRemoved);
@@ -58,15 +56,7 @@ public sealed partial class StatusEffectNewSystem : EntitySystem
         }
     }
 
-    private void OnContainerShutdown(Entity<StatusEffectContainerComponent> ent, ref ComponentShutdown args)
-    {
-        foreach (var effect in ent.Comp.ActiveStatusEffects)
-        {
-            QueueDel(effect);
-        }
-    }
-
-    private void AddStatusEffectTime(EntityUid effect, TimeSpan duration)
+    private void EditStatusEffectTime(EntityUid effect, TimeSpan delta)
     {
         if (!_effectQuery.TryComp(effect, out var effectComp))
             return;
@@ -76,7 +66,7 @@ public sealed partial class StatusEffectNewSystem : EntitySystem
 
         if (effectComp.Alert is not null)
         {
-            effectComp.EndEffectTime += duration;
+            effectComp.EndEffectTime += delta;
             _alerts.ShowAlert(
                 effectComp.AppliedTo.Value,
                 effectComp.Alert.Value,
@@ -115,7 +105,8 @@ public sealed partial class StatusEffectNewSystem : EntitySystem
                 cooldown: ent.Comp.EndEffectTime is null ? null : (_timing.CurTime, ent.Comp.EndEffectTime.Value));
         }
 
-        EntityManager.AddComponents(args.Target, ent.Comp.Components);
+        if (_net.IsServer)
+            EntityManager.AddComponents(args.Target, ent.Comp.Components);
     }
 
     private void OnStatusEffectRemoved(Entity<StatusEffectNewComponent> ent, ref StatusEffectRemoved args)
@@ -128,7 +119,8 @@ public sealed partial class StatusEffectNewSystem : EntitySystem
             _alerts.ClearAlert(ent.Comp.AppliedTo.Value, ent.Comp.Alert.Value);
         }
 
-        EntityManager.RemoveComponents(args.Target, ent.Comp.Components);
+        if (_net.IsServer)
+            EntityManager.RemoveComponents(args.Target, ent.Comp.Components);
     }
 }
 

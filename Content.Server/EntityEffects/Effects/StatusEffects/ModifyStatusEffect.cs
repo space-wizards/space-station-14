@@ -31,7 +31,7 @@ public sealed partial class ModifyStatusEffect : EntityEffect
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<StatusEffectNewSystem>();
+        var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedStatusEffectNewSystem>();
 
         var time = Time;
         if (args is EntityEffectReagentArgs reagentArgs)
@@ -43,7 +43,7 @@ public sealed partial class ModifyStatusEffect : EntityEffect
                 statusSys.TryAddStatusEffect(args.TargetEntity, EffectProto, TimeSpan.FromSeconds(time), Refresh);
                 break;
             case StatusEffectMetabolismType.Remove:
-                statusSys.TryRemoveTime(args.TargetEntity, EffectProto, TimeSpan.FromSeconds(time));
+                statusSys.TryEditTime(args.TargetEntity, EffectProto, -TimeSpan.FromSeconds(time));
                 break;
             case StatusEffectMetabolismType.Set:
                 statusSys.TrySetTime(args.TargetEntity, EffectProto, TimeSpan.FromSeconds(time));

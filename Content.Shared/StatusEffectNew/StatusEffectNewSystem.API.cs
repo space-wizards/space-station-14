@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.StatusEffectNew;
 
-public sealed partial class StatusEffectNewSystem
+public abstract partial class SharedStatusEffectNewSystem
 {
     /// <summary>
     /// Check whether a status effect can be imposed on a particular entity.
@@ -57,7 +57,7 @@ public sealed partial class StatusEffectNewSystem
                 if (resetCooldown)
                     SetStatusEffectTime(existedEffect.Value, duration.Value);
                 else
-                    AddStatusEffectTime(existedEffect.Value, duration.Value);
+                    EditStatusEffectTime(existedEffect.Value, duration.Value);
                 return true;
             }
         }
@@ -95,6 +95,9 @@ public sealed partial class StatusEffectNewSystem
     /// </summary>
     public bool TryRemoveStatusEffect(EntityUid uid, EntProtoId effectProto)
     {
+        if (_net.IsClient) //We cant remove the effect on the client (we need someone more robust at networking than me)
+            return false;
+
         if (!_containerQuery.TryComp(uid, out var container))
             return false;
 
@@ -195,12 +198,12 @@ public sealed partial class StatusEffectNewSystem
     }
 
     /// <summary>
-    /// Attempts to remove a specific amount of time from a status effect's duration.
+    /// Attempts to edit the remaining time for a status effect on an entity.
     /// </summary>
     /// <param name="uid">The target entity on which the effect is applied.</param>
     /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
-    /// <param name="time">The amount of time to remove from the status effect's duration.</param>
-    public bool TryRemoveTime(EntityUid uid, EntProtoId effectProto, TimeSpan time)
+    /// <param name="time">The time adjustment to apply to the status effect. Positive values extend the duration, while negative values reduce it.</param>
+    public bool TryEditTime(EntityUid uid, EntProtoId effectProto, TimeSpan time)
     {
         if (!_containerQuery.TryComp(uid, out var container))
             return false;
@@ -210,13 +213,7 @@ public sealed partial class StatusEffectNewSystem
             var meta = MetaData(effect);
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
             {
-                if (!_effectQuery.TryComp(effect, out var effectComp))
-                    return false;
-
-                if (effectComp.EndEffectTime is null)
-                    return false;
-
-                effectComp.EndEffectTime -= time;
+                EditStatusEffectTime(effect, time);
                 return true;
             }
         }
@@ -239,10 +236,7 @@ public sealed partial class StatusEffectNewSystem
             var meta = MetaData(effect);
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
             {
-                if (!_effectQuery.TryComp(effect, out var effectComp))
-                    return false;
-
-                effectComp.EndEffectTime = _timing.CurTime + time;
+                SetStatusEffectTime(effect, time);
                 return true;
             }
         }

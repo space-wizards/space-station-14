@@ -43,7 +43,7 @@ public sealed class DrowsinessOverlay : Overlay
         if (!_entityManager.HasComponent<DrowsinessComponent>(playerEntity))
             return;
 
-        var statusSys = _sysMan.GetEntitySystem<StatusEffectNewSystem>();
+        var statusSys = _sysMan.GetEntitySystem<SharedStatusEffectNewSystem>();
         if (!statusSys.TryGetTime(playerEntity.Value, SleepingSystem.StatusEffectForcedSleeping, out var time))
             return;
 

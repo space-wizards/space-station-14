@@ -1,8 +1,6 @@
-﻿using Content.Shared.Bed.Sleep;
+﻿using Content.Server.StatusEffectNew;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Drowsiness;
-using Content.Shared.StatusEffect;
-using Content.Shared.StatusEffectNew;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
