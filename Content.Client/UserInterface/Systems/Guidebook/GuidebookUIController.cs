@@ -204,11 +204,14 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
                 selected = _configuration.GetCVar(CCVars.DefaultGuide);
             }
         }
-        _guideWindow.UpdateGuides(guides, rootEntries, forceRoot, selected);
+        var changed = _guideWindow.UpdateGuides(guides, rootEntries, forceRoot, selected);
 
         // Expand up to depth-2.
-        _guideWindow.Tree.SetAllExpanded(false);
-        _guideWindow.Tree.SetAllExpanded(true, 1);
+        if (changed)
+        {
+            _guideWindow.Tree.SetAllExpanded(false);
+            _guideWindow.Tree.SetAllExpanded(true, 1);
+        }
 
         _guideWindow.OpenCenteredRight();
     }
