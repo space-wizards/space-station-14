@@ -225,17 +225,12 @@ namespace Content.Server.Hands.Systems
             direction *= distance / length;
 
             var throwSpeed = hands.BaseThrowspeed;
-            // Checks for and applies a throwing speed modifier
-            if (TryComp<ThrowSpeedModifierComponent>(throwEnt, out _))
-            {
-                var speedModifierEvent = new ThrowSpeedModifierEvent();
-                RaiseLocalEvent(player, ref speedModifierEvent);
-            }
 
             // Let other systems change the thrown entity (useful for virtual items)
             // or the throw strength.
             var ev = new BeforeThrowEvent(throwEnt, direction, throwSpeed, player);
             RaiseLocalEvent(player, ref ev);
+            RaiseLocalEvent(throwEnt, ref ev);
 
             if (ev.Cancelled)
                 return true;
