@@ -18,9 +18,12 @@ namespace Content.Server.Research.Systems
         [Dependency] private readonly IAdminLogManager _adminLog = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly RadioSystem _radio = default!;
+
+        private static readonly HashSet<Entity<ResearchServerComponent>> ClientLookup = new();
 
         public override void Initialize()
         {
@@ -92,17 +95,16 @@ namespace Content.Server.Research.Systems
             return list;
         }
 
-        public IEnumerable<Entity<ResearchServerComponent>> GetServers(EntityUid client)
+        public HashSet<Entity<ResearchServerComponent>> GetServers(EntityUid client)
         {
-            var clientXform = Transform(client);
-            var query = AllEntityQuery<ResearchServerComponent, TransformComponent>();
-            while (query.MoveNext(out var uid, out var comp, out var xform))
-            {
-                if (xform.GridUid != clientXform.GridUid)
-                    continue;
+            ClientLookup.Clear();
 
-                yield return (uid, comp);
-            }
+            var clientXform = Transform(client);
+            if (clientXform.GridUid is not { } grid)
+                return ClientLookup;
+
+            _lookup.GetGridEntities(grid, ClientLookup);
+            return ClientLookup;
         }
 
         public override void Update(float frameTime)
