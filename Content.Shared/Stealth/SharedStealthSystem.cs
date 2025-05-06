@@ -1,12 +1,13 @@
 using Content.Shared.Examine;
 using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Stealth.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Stealth;
 
-public abstract partial class SharedStealthSystem : EntitySystem
+public abstract class SharedStealthSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -14,24 +15,16 @@ public abstract partial class SharedStealthSystem : EntitySystem
     {
         base.Initialize();
 
-        InitializeMove();
-        InitializeTemporary();
-
         SubscribeLocalEvent<StealthComponent, ComponentGetState>(OnStealthGetState);
         SubscribeLocalEvent<StealthComponent, ComponentHandleState>(OnStealthHandleState);
+        SubscribeLocalEvent<StealthOnMoveComponent, MoveEvent>(OnMove);
+        SubscribeLocalEvent<StealthOnMoveComponent, GetVisibilityModifiersEvent>(OnGetVisibilityModifiers);
         SubscribeLocalEvent<StealthComponent, EntityPausedEvent>(OnPaused);
         SubscribeLocalEvent<StealthComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<StealthComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<StealthComponent, ExamineAttemptEvent>(OnExamineAttempt);
         SubscribeLocalEvent<StealthComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<StealthComponent, MobStateChangedEvent>(OnMobStateChanged);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        UpdateTemporary(frameTime);
     }
 
     private void OnExamineAttempt(EntityUid uid, StealthComponent component, ExamineAttemptEvent args)
@@ -116,6 +109,24 @@ public abstract partial class SharedStealthSystem : EntitySystem
         SetEnabled(uid, cast.Enabled, component);
         component.LastVisibility = cast.Visibility;
         component.LastUpdated = cast.LastUpdated;
+    }
+
+    private void OnMove(EntityUid uid, StealthOnMoveComponent component, ref MoveEvent args)
+    {
+        if (_timing.ApplyingState)
+            return;
+
+        if (args.NewPosition.EntityId != args.OldPosition.EntityId)
+            return;
+
+        var delta = component.MovementVisibilityRate * (args.NewPosition.Position - args.OldPosition.Position).Length();
+        ModifyVisibility(uid, delta);
+    }
+
+    private void OnGetVisibilityModifiers(EntityUid uid, StealthOnMoveComponent component, GetVisibilityModifiersEvent args)
+    {
+        var mod = args.SecondsSinceUpdate * component.PassiveVisibilityRate;
+        args.FlatModifier += mod;
     }
 
     /// <summary>
