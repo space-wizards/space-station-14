@@ -1,4 +1,3 @@
-using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Gravity;
@@ -19,15 +18,15 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
 
     // TODO full-game-save
     // Either these need to be processed before a map is saved, or slowed/slowing entities need to update on init.
-    private HashSet<EntityUid> _toUpdate = new();
-    private HashSet<EntityUid> _toRemove = new();
+    private readonly HashSet<EntityUid> _toUpdate = new();
+    private readonly HashSet<EntityUid> _toRemove = new();
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<SpeedModifierContactsComponent, StartCollideEvent>(OnEntityEnter);
         SubscribeLocalEvent<SpeedModifierContactsComponent, EndCollideEvent>(OnEntityExit);
-        SubscribeLocalEvent<SpeedModifiedByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
+        SubscribeLocalEvent<SpeedModifiedByContactComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         SubscribeLocalEvent<SpeedModifierContactsComponent, ComponentShutdown>(OnShutdown);
 
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
@@ -52,17 +51,16 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
         _toUpdate.Clear();
     }
 
-    public void ChangeModifiers(EntityUid uid, float speed, SpeedModifierContactsComponent? component = null)
+    public void ChangeSpeedModifiers(EntityUid uid, float speed, SpeedModifierContactsComponent? component = null)
     {
-        ChangeModifiers(uid, speed, speed, component);
+        ChangeSpeedModifiers(uid, speed, speed, component);
     }
 
-    public void ChangeModifiers(EntityUid uid, float walkSpeed, float sprintSpeed, SpeedModifierContactsComponent? component = null)
+    public void ChangeSpeedModifiers(EntityUid uid, float walkSpeed, float sprintSpeed, SpeedModifierContactsComponent? component = null)
     {
         if (!Resolve(uid, ref component))
-        {
             return;
-        }
+
         component.WalkSpeedModifier = walkSpeed;
         component.SprintSpeedModifier = sprintSpeed;
         Dirty(uid, component);
@@ -78,7 +76,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
         _toUpdate.UnionWith(_physics.GetContactingEntities(uid, phys));
     }
 
-    private void MovementSpeedCheck(EntityUid uid, SpeedModifiedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
+    private void OnRefreshMovementSpeedModifiers(EntityUid uid, SpeedModifiedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
             return;
@@ -110,12 +108,12 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
             }
 
             // SpeedModifierContactsComponent takes priority over SlowedOverSlipperyComponent, effectively overriding the slippery slow.
-            if (TryComp<SlipperyComponent>(ent, out var slipperyComponent) && speedModified == false)
+            if (HasComp<SlipperyComponent>(ent) && speedModified == false)
             {
                 var evSlippery = new GetSlowedOverSlipperyModifierEvent();
                 RaiseLocalEvent(uid, ref evSlippery);
 
-                if (evSlippery.SlowdownModifier != 1)
+                if (MathHelper.CloseTo(evSlippery.SlowdownModifier, 1))
                 {
                     walkSpeed += evSlippery.SlowdownModifier;
                     sprintSpeed += evSlippery.SlowdownModifier;
@@ -130,7 +128,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
             }
         }
 
-        if (entries > 0)
+        if (entries > 0 && (!MathHelper.CloseTo(walkSpeed, entries) || !MathHelper.CloseTo(sprintSpeed, entries)))
         {
             walkSpeed /= entries;
             sprintSpeed /= entries;
