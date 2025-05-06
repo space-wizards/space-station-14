@@ -4,7 +4,7 @@
   markingCategory: Tail
   speciesRestriction: [Kobolt]
   sprites:
-  - sprite: Mobs/Customization/reptilian_kobalt_parts.rsi
+  - sprite: Mobs/Customization/reptilian_kobolt_parts.rsi
     state: tail_smooth
 
 - type: marking
@@ -13,7 +13,7 @@
   markingCategory: Tail
   speciesRestriction: [Kobolt]
   sprites:
-  - sprite: Mobs/Customization/reptilian_kobalt_parts.rsi
+  - sprite: Mobs/Customization/reptilian_kobolt_parts.rsi
     state: tail_spikes
 
 - type: marking
@@ -22,7 +22,7 @@
   markingCategory: Tail
   speciesRestriction: [Kobolt]
   sprites:
-  - sprite: Mobs/Customization/reptilian_kobalt_parts.rsi
+  - sprite: Mobs/Customization/reptilian_kobolt_parts.rsi
     state: tail_ltiger
 
 - type: marking
@@ -31,5 +31,5 @@
   markingCategory: Tail
   speciesRestriction: [Kobolt]
   sprites:
-  - sprite: Mobs/Customization/reptilian_kobalt_parts.rsi
+  - sprite: Mobs/Customization/reptilian_kobolt_parts.rsi
     state: tail_dtiger
