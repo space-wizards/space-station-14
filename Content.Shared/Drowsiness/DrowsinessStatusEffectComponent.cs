@@ -8,7 +8,7 @@ namespace Content.Shared.Drowsiness;
 ///     Exists for use as a status effect. Adds a shader to the client that scales with the effect duration.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
-public sealed partial class DrowsinessComponent : Component
+public sealed partial class DrowsinessStatusEffectComponent : Component
 {
     /// <summary>
     /// The random time between sleeping incidents, (min, max).

@@ -16,33 +16,33 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DrowsinessComponent, ComponentInit>(OnDrowsinessInit);
-        SubscribeLocalEvent<DrowsinessComponent, ComponentShutdown>(OnDrowsinessShutdown);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, ComponentInit>(OnDrowsinessInit);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, ComponentShutdown>(OnDrowsinessShutdown);
 
-        SubscribeLocalEvent<DrowsinessComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<DrowsinessComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
         _overlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, DrowsinessComponent component, LocalPlayerAttachedEvent args)
+    private void OnPlayerAttached(EntityUid uid, DrowsinessStatusEffectComponent component, LocalPlayerAttachedEvent args)
     {
         _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnPlayerDetached(EntityUid uid, DrowsinessComponent component, LocalPlayerDetachedEvent args)
+    private void OnPlayerDetached(EntityUid uid, DrowsinessStatusEffectComponent component, LocalPlayerDetachedEvent args)
     {
         _overlay.CurrentPower = 0;
         _overlayMan.RemoveOverlay(_overlay);
     }
 
-    private void OnDrowsinessInit(EntityUid uid, DrowsinessComponent component, ComponentInit args)
+    private void OnDrowsinessInit(EntityUid uid, DrowsinessStatusEffectComponent component, ComponentInit args)
     {
         if (_player.LocalEntity == uid)
             _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnDrowsinessShutdown(EntityUid uid, DrowsinessComponent component, ComponentShutdown args)
+    private void OnDrowsinessShutdown(EntityUid uid, DrowsinessStatusEffectComponent component, ComponentShutdown args)
     {
         if (_player.LocalEntity == uid)
         {

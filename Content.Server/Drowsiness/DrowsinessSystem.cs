@@ -16,10 +16,10 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<DrowsinessComponent, ComponentStartup>(OnInit);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, ComponentStartup>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, DrowsinessComponent component, ComponentStartup args)
+    private void OnInit(EntityUid uid, DrowsinessStatusEffectComponent component, ComponentStartup args)
     {
         component.NextIncidentTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.TimeBetweenIncidents.X, component.TimeBetweenIncidents.Y));
     }
@@ -27,7 +27,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DrowsinessComponent>();
+        var query = EntityQueryEnumerator<DrowsinessStatusEffectComponent>();
         while (query.MoveNext(out var uid, out var component))
         {
             if (_timing.CurTime < component.NextIncidentTime)

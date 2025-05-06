@@ -27,7 +27,6 @@
     - Pacified
     - Flashed
     - RadiationProtection
-    - Drowsiness
     - Adrenaline
   - type: Buckle
   - type: StandingState
@@ -104,7 +103,6 @@
     - StaminaModifier
     - Flashed
     - RadiationProtection
-    - Drowsiness
     - Adrenaline
   - type: Bloodstream
     bloodMaxVolume: 150

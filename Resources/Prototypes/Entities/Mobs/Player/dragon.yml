@@ -103,11 +103,9 @@
     - SlowedDown
     - Stutter
     - Electrocution
-    - ForcedSleep
     - TemporaryBlindness
     - Pacified
     - RadiationProtection
-    - Drowsiness
     - Adrenaline
   - type: Temperature
     heatDamageThreshold: 800
