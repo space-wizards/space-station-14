@@ -53,9 +53,9 @@
   - WeaponPistolCHIMP
   - WeaponForceGun
   - WeaponProtoKineticAccelerator
-  - PKAUpgradeDamage
-  - PKAUpgradeRange
-  - PKAUpgradeFireRate
+  # - PKAUpgradeDamage
+  # - PKAUpgradeRange
+  # - PKAUpgradeFireRate
   - WeaponTetherGun
   - WeaponGauntletGorilla
 
