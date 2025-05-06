@@ -4,8 +4,8 @@ meta:
   engineVersion: 255.1.0
   forkId: ""
   forkVersion: ""
-  time: 05/06/2025 11:13:20
-  entityCount: 594
+  time: 05/06/2025 11:31:45
+  entityCount: 603
 maps: []
 grids:
 - 2
@@ -465,8 +465,8 @@ entities:
             0: 30580
           0,-1:
             0: 30480
-            2: 96
-            1: 8
+            1: 96
+            2: 8
           -1,0:
             0: 48051
           0,1:
@@ -484,7 +484,7 @@ entities:
           0,4:
             0: 30522
           1,1:
-            1: 12560
+            2: 12560
           1,2:
             0: 12592
           1,3:
@@ -492,39 +492,55 @@ entities:
           1,4:
             0: 12593
           -2,1:
-            1: 12832
+            2: 12832
             0: 34824
           -2,2:
             0: 65276
           -2,3:
             0: 61166
           -2,4:
-            0: 47670
+            0: 14902
+            3: 32768
           -2,0:
             0: 34952
           -2,-1:
             0: 32768
-            1: 1024
+            2: 1024
           -1,-1:
             0: 47232
-            1: 4
+            2: 4
           -1,4:
             0: 30577
           -2,5:
-            1: 48
+            2: 48
             0: 8
           -1,5:
             0: 7
           0,5:
             0: 7
           1,5:
-            1: 48
+            2: 48
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
           moles:
           - 21.824879
           - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 1400.0662
+          - 5266.916
           - 0
           - 0
           - 0
@@ -551,10 +567,10 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 293.15
+          temperature: 293.14975
           moles:
-          - 1400.0662
-          - 5266.916
+          - 21.824879
+          - 82.10312
           - 0
           - 0
           - 0
@@ -923,6 +939,11 @@ entities:
     - type: Transform
       pos: 2.5,-0.5
       parent: 2
+  - uid: 159
+    components:
+    - type: Transform
+      pos: -3.5,11.5
+      parent: 2
   - uid: 164
     components:
     - type: Transform
@@ -1058,11 +1079,6 @@ entities:
     - type: Transform
       pos: -3.5,1.5
       parent: 2
-  - uid: 338
-    components:
-    - type: Transform
-      pos: 3.5,3.5
-      parent: 2
   - uid: 341
     components:
     - type: Transform
@@ -1142,6 +1158,11 @@ entities:
     components:
     - type: Transform
       pos: -4.5,-0.5
+      parent: 2
+  - uid: 443
+    components:
+    - type: Transform
+      pos: -3.5,10.5
       parent: 2
   - uid: 460
     components:
@@ -1357,6 +1378,41 @@ entities:
     components:
     - type: Transform
       pos: 0.5,0.5
+      parent: 2
+  - uid: 594
+    components:
+    - type: Transform
+      pos: -2.5,10.5
+      parent: 2
+  - uid: 596
+    components:
+    - type: Transform
+      pos: -3.5,12.5
+      parent: 2
+  - uid: 597
+    components:
+    - type: Transform
+      pos: -0.5,10.5
+      parent: 2
+  - uid: 598
+    components:
+    - type: Transform
+      pos: 0.5,10.5
+      parent: 2
+  - uid: 599
+    components:
+    - type: Transform
+      pos: 1.5,10.5
+      parent: 2
+  - uid: 600
+    components:
+    - type: Transform
+      pos: 1.5,11.5
+      parent: 2
+  - uid: 601
+    components:
+    - type: Transform
+      pos: 1.5,12.5
       parent: 2
 - proto: CableHV
   entities:
@@ -2109,6 +2165,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -5.5,19.5
       parent: 2
+    - type: EntityStorage
+      open: True
   - uid: 158
     components:
     - type: Transform
@@ -2659,12 +2717,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -1.5,21.5
       parent: 2
-  - uid: 443
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 3.5,3.5
-      parent: 2
   - uid: 447
     components:
     - type: Transform
@@ -2903,6 +2955,18 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.5,2.5
       parent: 2
+  - uid: 593
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,1.5
+      parent: 2
+  - uid: 595
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,3.5
+      parent: 2
 - proto: Rack
   entities:
   - uid: 426
@@ -3064,12 +3128,6 @@ entities:
     components:
     - type: Transform
       pos: -7.5,14.5
-      parent: 2
-  - uid: 159
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 3.5,3.5
       parent: 2
   - uid: 184
     components:
@@ -3786,6 +3844,12 @@ entities:
     components:
     - type: Transform
       pos: 4.5,8.5
+      parent: 2
+  - uid: 338
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 3.5,3.5
       parent: 2
   - uid: 351
     components:
