@@ -1,6 +1,8 @@
 ﻿using Content.Shared.Bed.Sleep;
 using Content.Shared.Drowsiness;
 using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -8,12 +10,10 @@ namespace Content.Server.Drowsiness;
 
 public sealed class DrowsinessSystem : SharedDrowsinessSystem
 {
-    [ValidatePrototypeId<StatusEffectPrototype>]
-    private const string SleepKey = "ForcedSleep"; // Same one used by N2O and other sleep chems.
 
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly StatusEffectNewSystem _statusEffects = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -44,7 +44,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
             // Make sure the sleep time doesn't cut into the time to next incident.
             component.NextIncidentTime += duration;
 
-            _statusEffects.TryAddStatusEffect<ForcedSleepingComponent>(uid, SleepKey, duration, false);
+            _statusEffects.TryAddStatusEffect(uid, SleepingSystem.StatusEffectForcedSleeping, duration);
         }
     }
 }

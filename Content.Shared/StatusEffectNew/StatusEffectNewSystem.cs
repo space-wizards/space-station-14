@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.StatusEffectNew;
 
-public sealed partial class SharedStatusEffectNewSystem : EntitySystem
+public sealed partial class StatusEffectNewSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly IGameTiming _timing = default!;

@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.StatusEffectNew;
 
-public sealed partial class SharedStatusEffectNewSystem
+public sealed partial class StatusEffectNewSystem
 {
     /// <summary>
     /// Attempts to add a status effect to the specified entity. Returns True if the effect is added or exists
@@ -139,6 +139,31 @@ public sealed partial class SharedStatusEffectNewSystem
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
             {
                 effect = e;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool TryGetTime(EntityUid uid, EntProtoId effectProto, out (EntityUid, TimeSpan) time, StatusEffectContainerComponent? container = null)
+    {
+        time = default;
+        if (container == null)
+        {
+            if (!_containerQuery.TryComp(uid, out container))
+                return false;
+        }
+
+        foreach (var effect in container.ActiveStatusEffects)
+        {
+            var meta = MetaData(effect);
+            if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
+            {
+                if (!_effectQuery.TryComp(effect, out var effectComp))
+                    return false;
+
+                time = (effect, effectComp.EndEffectTime ?? TimeSpan.Zero);
                 return true;
             }
         }
