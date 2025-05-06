@@ -2,7 +2,7 @@ using Content.Shared.Damage.Components;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed partial class StaminaSystem
+public partial class SharedStaminaSystem
 {
     private void InitializeModifier()
     {
