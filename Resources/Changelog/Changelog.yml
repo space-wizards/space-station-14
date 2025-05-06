@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Radio frequencies are now displayed with a decimal point.
-    type: Tweak
-  id: 7929
-  time: '2025-02-11T02:36:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35046
 - author: themias
   changes:
   - message: Fixed an exploit using multiple R&D computers to research multiple discipline
@@ -3926,3 +3919,11 @@
   id: 8430
   time: '2025-05-06T18:31:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37106
+- author: sowelipililimute
+  changes:
+  - message: Departmental cargo request computers now print slips that can be given
+      to Cargo for final approval, rather than directly approving the orders themselves
+    type: Tweak
+  id: 8431
+  time: '2025-05-06T19:04:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36944
