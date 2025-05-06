@@ -1,6 +1,5 @@
 using Content.Shared.Inventory;
 using Content.Shared.Whitelist;
-using Robust.Shared.GameStates;
 
 namespace Content.Server.Weapons.Melee;
 
