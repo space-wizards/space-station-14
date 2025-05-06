@@ -419,6 +419,12 @@
     sprite: Clothing/Head/Hats/redwizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/redwizard.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - HamsterWearable
+    - ClothMade
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -534,6 +540,12 @@
     sprite: Clothing/Head/Hats/violetwizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/violetwizard.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - HamsterWearable
+    - ClothMade
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -600,6 +612,7 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+    - CorgiWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -690,6 +703,17 @@
     sprite: Clothing/Head/Hats/fishcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/fishcap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadWehcellentCap
+  name: wehcellent cap
+  description: It was a net hat! Tiders wear them all the time! It's got airholes in the back to keep a cross-breeze going and everything!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/wehcellentcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/wehcellentcap.rsi
 
 - type: entity
   parent: ClothingHeadBase

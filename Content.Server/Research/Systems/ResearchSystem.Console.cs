@@ -7,6 +7,8 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
+using System.Linq;
+using Content.Shared.Radio;
 
 namespace Content.Server.Research.Systems;
 
@@ -55,7 +57,17 @@ public sealed partial class ResearchSystem
                 ("amount", technologyPrototype.Cost),
                 ("approver", getIdentityEvent.Title ?? string.Empty)
             );
+
             _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
+
+            if (technologyPrototype.RadioChannels.Any())
+                foreach (var radioChannelId in technologyPrototype.RadioChannels)
+                {
+                    if (PrototypeManager.TryIndex<RadioChannelPrototype>(radioChannelId, out var radioChannel))
+                    {
+                        _radio.SendRadioMessage(uid, message, radioChannel, uid, escapeMarkup: false);
+                    }
+                }
         }
 
         SyncClientWithServer(uid);

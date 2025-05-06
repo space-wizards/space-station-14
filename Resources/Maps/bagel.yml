@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 249.0.0
+  engineVersion: 250.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/23/2025 08:00:27
+  time: 03/27/2025 06:48:27
   entityCount: 25710
 maps:
 - 943
@@ -75883,6 +75883,9 @@ entities:
     - type: Transform
       pos: -14.52124,-43.447884
       parent: 60
+    - type: CollisionWake
+      enabled: False
+    - type: Conveyed
 - proto: FoodBoxDonkpocketPizza
   entities:
   - uid: 15714

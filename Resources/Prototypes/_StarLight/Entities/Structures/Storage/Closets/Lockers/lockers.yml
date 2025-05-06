@@ -24,6 +24,34 @@
   - type: AccessReader
     access: [["Security"]]
 
+# Warden
+- type: entity
+  id: LockerWardenLarge
+  parent: LockerLargeBaseSecure
+  name: large warden's locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: warden
+    stateDoorOpen: sec_open
+    stateDoorClosed: warden_door
+  - type: AccessReader
+    access: [["Armory"]]
+  
+# Brigmedic
+- type: entity
+  id: LockerBrigmedicLarge
+  parent: LockerLargeBaseSecure
+  name: large brigmedic's locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: brigmedic
+    stateDoorOpen: sec_open
+    stateDoorClosed: brigmedic_door
+  - type: AccessReader
+    access: [["Brigmedic"]]
+
 # NanoTrasen Representives
 - type: entity
   id: LockerBlueshield
@@ -39,3 +67,19 @@
     stateDoorClosed: bssecure_door
   - type: AccessReader
     access: [ [ "BlueShield" ] ]
+    
+# Mining Specialist
+- type: entity
+  id: LockerMiningSpecialist
+  parent: LockerBaseSecure
+  name: large mining specialist's locker
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Structures/Storage/closet.rsi
+  - type: EntityStorageVisuals
+    stateBaseClosed: miner
+    stateDoorOpen: miner_open
+    stateDoorClosed: miner_door
+  - type: AccessReader
+    access: [["Salvage"]]

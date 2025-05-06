@@ -7,6 +7,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
@@ -29,6 +30,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -39,6 +41,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
         SubscribeLocalEvent<EmbeddableProjectileComponent, RemoveEmbeddedProjectileEvent>(OnEmbedRemove);
+        SubscribeLocalEvent<EmbeddableProjectileComponent, ComponentShutdown>(OnEmbeddableCompShutdown);
 
         SubscribeLocalEvent<EmbeddedContainerComponent, EntityTerminatingEvent>(OnEmbeddableTermination);
     }
@@ -65,14 +68,18 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     private void OnEmbedRemove(Entity<EmbeddableProjectileComponent> embeddable, ref RemoveEmbeddedProjectileEvent args)
     {
-        // Whacky prediction issues.
-        if (args.Cancelled || _net.IsClient)
+        if (args.Cancelled)
             return;
 
         EmbedDetach(embeddable, embeddable.Comp, args.User);
 
         // try place it in the user's hand
         _hands.TryPickupAnyHand(args.User, embeddable);
+    }
+
+    private void OnEmbeddableCompShutdown(Entity<EmbeddableProjectileComponent> embeddable, ref ComponentShutdown arg)
+    {
+        EmbedDetach(embeddable, embeddable.Comp);
     }
 
     private void OnEmbedThrowDoHit(Entity<EmbeddableProjectileComponent> embeddable, ref ThrowDoHitEvent args)
@@ -130,16 +137,21 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.DeleteOnRemove)
-        {
-            QueueDel(uid);
-            return;
-        }
-
         if (component.EmbeddedIntoUid is not null)
         {
             if (TryComp<EmbeddedContainerComponent>(component.EmbeddedIntoUid.Value, out var embeddedContainer))
+            {
                 embeddedContainer.EmbeddedObjects.Remove(uid);
+                Dirty(component.EmbeddedIntoUid.Value, embeddedContainer);
+                if (embeddedContainer.EmbeddedObjects.Count == 0)
+                    RemCompDeferred<EmbeddedContainerComponent>(component.EmbeddedIntoUid.Value);
+            }
+        }
+
+        if (component.DeleteOnRemove && _net.IsServer)
+        {
+            QueueDel(uid);
+            return;
         }
 
         var xform = Transform(uid);
@@ -147,7 +159,12 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             return;
         TryComp<PhysicsComponent>(uid, out var physics);
         _physics.SetBodyType(uid, BodyType.Dynamic, body: physics, xform: xform);
-        _transform.AttachToGridOrMap(uid, xform);
+        //starlight, check if its in a inventory
+        if (!_containerSystem.TryGetContainingContainer((uid, null, null), out var container))
+        {
+            _transform.AttachToGridOrMap(uid, xform);
+        }
+        //starlight end
         component.EmbeddedIntoUid = null;
         Dirty(uid, component);
 

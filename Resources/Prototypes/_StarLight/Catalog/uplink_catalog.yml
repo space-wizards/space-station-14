@@ -132,8 +132,8 @@
   productEntity: ClothingBackpackDufelSyndicateFilledMantisBladeArms
   discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 14
+    Telecrystal: 12
   cost:
-    Telecrystal: 18
+    Telecrystal: 15
   categories:
   - UplinkCybernetics

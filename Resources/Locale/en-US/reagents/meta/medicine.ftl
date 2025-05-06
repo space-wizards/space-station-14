@@ -5,7 +5,7 @@ reagent-name-dylovene = dylovene
 reagent-desc-dylovene = A broad-spectrum anti-toxin, which treats toxin damage in organisms. Overdosing will cause vomiting, dizzyness and pain.
 
 reagent-name-diphenhydramine = diphenhydramine
-reagent-desc-diphenhydramine = Rapidly purges the body of histamine, reduces jitteriness, and treats poison damage.
+reagent-desc-diphenhydramine = Rapidly purges the body of histamine, reduces jitteriness, causes drowsiness, and treats poison damage. Often included in sleep medication.
 
 reagent-name-arithrazine = arithrazine
 reagent-desc-arithrazine = A mildly unstable medication used for the most extreme case of radiation poisoning. Exerts minor stress on the body.

@@ -658,10 +658,10 @@ namespace Content.Server.Administration.Systems
             
             var currentTime = _timing.RealTime;
 
-            if (IsOnCooldown(message.UserId, currentTime))
+            if (IsOnCooldown(message.UserId, currentTime) && senderAdmin == null)
                 return;
             
-            if (IsSpam(message.UserId, message.Text))
+            if (IsSpam(message.UserId, message.Text) && senderAdmin == null)
                 _banManager.CreateServerBan(senderSession.UserId, senderSession.Name, null, null, null, 0, NoteSeverity.High, "Automatic AHELP Antispam system Ban, If this ban is wrong, file an appeal.");
 
             AddToRecentMessages(message.UserId, message.Text, currentTime);

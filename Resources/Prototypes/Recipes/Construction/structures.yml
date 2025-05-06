@@ -59,7 +59,7 @@
   startNode: start
   targetNode: wall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   icon:
     sprite: Structures/Walls/solid.rsi
     state: full
@@ -77,7 +77,7 @@
   startNode: start
   targetNode: reinforcedWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   icon:
     sprite: Structures/Walls/solid.rsi
     state: rgeneric
@@ -95,7 +95,7 @@
   startNode: start
   targetNode: clockworkWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   icon:
     sprite: Structures/Walls/clock.rsi
     state: full
@@ -113,7 +113,7 @@
   startNode: start
   targetNode: woodWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   icon:
     sprite: Structures/Walls/wood.rsi
     state: full
@@ -131,7 +131,7 @@
   startNode: start
   targetNode: uraniumWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   icon:
     sprite: Structures/Walls/uranium.rsi
     state: full
@@ -149,7 +149,7 @@
   startNode: start
   targetNode: silverWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   icon:
     sprite: Structures/Walls/silver.rsi
     state: full
@@ -167,7 +167,7 @@
   startNode: start
   targetNode: plasticWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   icon:
     sprite: Structures/Walls/plastic.rsi
     state: full
@@ -185,7 +185,7 @@
   startNode: start
   targetNode: plasmaWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   icon:
     sprite: Structures/Walls/plasma.rsi
     state: full
@@ -203,7 +203,7 @@
   startNode: start
   targetNode: goldWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   icon:
     sprite: Structures/Walls/gold.rsi
     state: full
@@ -221,7 +221,7 @@
   startNode: start
   targetNode: shuttleWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   icon:
     sprite: Structures/Walls/shuttle.rsi
     state: full
@@ -239,7 +239,7 @@
   startNode: start
   targetNode: shuttleInteriorWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   icon:
     sprite: Structures/Walls/shuttleinterior.rsi
     state: full
@@ -257,7 +257,7 @@
   startNode: start
   targetNode: diagonalshuttleWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   icon:
     sprite: Structures/Walls/shuttle_diagonal.rsi
     state: state0
@@ -275,7 +275,7 @@
   startNode: start
   targetNode: bananiumWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   icon:
     sprite: Structures/Walls/clown.rsi
     state: full

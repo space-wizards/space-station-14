@@ -1,6 +1,8 @@
 # For use by Role Types
 # Do not touch these
 
+# If you change/add a color here, also change it in role-types.ftl!
+
 - type: roleType
   id: Neutral
   name: role-type-crew-aligned-name

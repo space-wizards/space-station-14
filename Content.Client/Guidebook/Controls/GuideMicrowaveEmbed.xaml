@@ -26,6 +26,11 @@
                 <Label Text="{Loc 'guidebook-microwave-cook-time-header'}"/>
                 <RichTextLabel Name="CookTimeLabel"/>
             </BoxContainer>
+            
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <Label Text="{Loc 'guidebook-microwave-device-type-header'}"/>
+                <RichTextLabel Name="DeviceTypeLabel"/>
+            </BoxContainer>
         </GridContainer>
 
         <BoxContainer Margin="10">

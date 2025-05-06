@@ -21,14 +21,15 @@ public sealed class TextToSpeechSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _sharedAudio = default!;
     [Dependency] private readonly IAudioManager _audioManager = default!;
 
-    private readonly ConcurrentQueue<(byte[] file, SoundSpecifier? specifier)> _ttsQueue = [];
+    private readonly ConcurrentQueue<(byte[] file, SoundSpecifier? specifier, float volume)> _ttsQueue = [];
     private ISawmill _sawmill = default!;
     private readonly MemoryContentRoot _contentRoot = new();
     private (EntityUid Entity, AudioComponent Component)? _currentPlaying;
 
     private float _volume;
     private float _radioVolume;
-    private float _volumeAnnounce;
+    private float _announceVolume;
+    private bool _ttsQueueEnabled;
 
     public override void Initialize()
     {
@@ -36,6 +37,7 @@ public sealed class TextToSpeechSystem : EntitySystem
         _cfg.OnValueChanged(StarlightCCVars.TTSVolume, OnTtsVolumeChanged, true);
         _cfg.OnValueChanged(StarlightCCVars.TTSAnnounceVolume, OnTtsAnnounceVolumeChanged, true);
         _cfg.OnValueChanged(StarlightCCVars.TTSRadioVolume, OnTtsRadioVolumeChanged, true);
+        _cfg.OnValueChanged(StarlightCCVars.TTSRadioQueueEnabled, OnTtsRadioQueueChanged, true);
         _cfg.OnValueChanged(StarlightCCVars.TTSClientEnabled, OnTtsClientOptionChanged, true);
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
         SubscribeNetworkEvent<AnnounceTtsEvent>(OnAnnounceTTSPlay);
@@ -47,6 +49,7 @@ public sealed class TextToSpeechSystem : EntitySystem
         _cfg.UnsubValueChanged(StarlightCCVars.TTSVolume, OnTtsVolumeChanged);
         _cfg.UnsubValueChanged(StarlightCCVars.TTSAnnounceVolume, OnTtsAnnounceVolumeChanged);
         _cfg.UnsubValueChanged(StarlightCCVars.TTSRadioVolume, OnTtsRadioVolumeChanged);
+        _cfg.UnsubValueChanged(StarlightCCVars.TTSRadioQueueEnabled, OnTtsRadioQueueChanged);
         _cfg.UnsubValueChanged(StarlightCCVars.TTSClientEnabled, OnTtsClientOptionChanged);
         _contentRoot.Dispose();
     }
@@ -59,22 +62,25 @@ public sealed class TextToSpeechSystem : EntitySystem
 
     private void OnTtsRadioVolumeChanged(float volume)
         => _radioVolume = volume;
+    
+    private void OnTtsRadioQueueChanged(bool enabled)
+        => _ttsQueueEnabled = enabled;
 
     private void OnTtsAnnounceVolumeChanged(float volume)
-        => _volumeAnnounce = volume;
+        => _announceVolume = volume;
 
     private void OnTtsClientOptionChanged(bool option)
         => RaiseNetworkEvent(new ClientOptionTTSEvent { Enabled = option });
 
     private void OnAnnounceTTSPlay(AnnounceTtsEvent ev)
-        => _ttsQueue.Enqueue((ev.Data, ev.AnnouncementSound));
+        => _ttsQueue.Enqueue((ev.Data, ev.AnnouncementSound, _announceVolume));
 
     private void PlayQueue()
     {
         if (!_ttsQueue.TryDequeue(out var entry))
             return;
 
-        var volume = SharedAudioSystem.GainToVolume(_volumeAnnounce);
+        var volume = SharedAudioSystem.GainToVolume(entry.volume);
         var finalParams = AudioParams.Default.WithVolume(volume);
 
         if (entry.specifier != null)
@@ -86,8 +92,8 @@ public sealed class TextToSpeechSystem : EntitySystem
     {
         var volume = ev.IsRadio ? _radioVolume : _volume;
 
-        if (ev.IsRadio)
-            _ttsQueue.Enqueue((ev.Data, null));
+        if (ev.IsRadio && _ttsQueueEnabled)
+            _ttsQueue.Enqueue((ev.Data, null, _radioVolume));
         else
         {
             volume = SharedAudioSystem.GainToVolume(volume * ev.VolumeModifier);

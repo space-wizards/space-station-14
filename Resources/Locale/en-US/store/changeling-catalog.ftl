@@ -4,6 +4,7 @@
 evolutionmenu-combat-armblade-name = Arm Blade
 evolutionmenu-combat-armblade-desc =
     Reform one of your arms into a grotesque blade, composed of bone and flesh, able to pry open airlocks and cut through your foes like butter.
+    WARNING: Requires you to absorb at least 2 organics to use the ability.
     Costs 15 chemicals.
 
 evolutionmenu-combat-boneshard-name = Bone Shard

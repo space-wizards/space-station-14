@@ -1,6 +1,34 @@
 # All spelling mistakes and broken english are intentional!
 # I hate saving paper contents in ftl files
 
+-delivery-header-nanotrasen = [color=blue]
+                                                                      ╔══════════════════╗
+                                                                      ║███░███░░░░██░░░░░║
+                                                                      ║░██░████░░░██░░░░░║
+                                                                      ║░░█░██░██░░██░█░░░║
+                                                                      ║░░░░██░░██░██░██░░║
+                                                                      ║░░░░██░░░████░███░║
+                                                                      ╚══════════════════╝[/color]
+
+-delivery-header-nanotrasen-alternate-timeline = [color=red]
+                                                                ╔══════════════════╗
+                                                                ║███░███░░░░██░░░░░║
+                                                                ║░██░████░░░██░░░░░║
+                                                                ║░░█░██░██░░██░█░░░║
+                                                                ║░░░░██░░██░██░██░░║
+                                                                ║░░░░██░░░████░███░║
+                                                                ╚══════════════════╝[/color]
+
+-delivery-header-syndicate = [color=#ff0000]
+                                                                          ╔══════════════════╗
+                                                                          ║░░░░░████████░░░░░║
+                                                                          ║░░░░░██░░░░░░░░░░░║
+                                                                          ║░░░░░████████░░░░░║
+                                                                          ║░░░░░░░░░░░██░░░░░║
+                                                                          ║░░░░░████████░░░░░║
+                                                                          ╚══════════════════╝[/color]
+
+
 delivery-spam-robust-toolboxes = [color=blue][head=1]
                                  ░░▄▀░░
                                  ░▄█▄▄▀ [head=3]ROBUST - TOOLBOXES AND TOOLS[/head]
@@ -18,14 +46,7 @@ delivery-spam-robust-toolboxes = [color=blue][head=1]
                                  -CHEAP! ONLY ONE ORGAN! THAT'S LESS THAN TWO ORGANS!
                                  -DOESN'T HAVE TO BE YOUR ORGAN! WE DON'T JUDGE!
 
-delivery-spam-reasons-to-chose-nanotrasen = [color=blue]
-                                                                      ╔══════════════════╗
-                                                                      ║███░███░░░░██░░░░░║
-                                                                      ║░██░████░░░██░░░░░║
-                                                                      ║░░█░██░██░░██░█░░░║
-                                                                      ║░░░░██░░██░██░██░░║
-                                                                      ║░░░░██░░░████░███░║
-                                                                      ╚══════════════════╝[/color]
+delivery-spam-reasons-to-chose-nanotrasen = {-delivery-header-nanotrasen}
 
                                        {"[head=2]TOP THREE REASONS WHY THE SYNDICATE IS INCOMPETENT[/head]"}
 
@@ -38,14 +59,7 @@ delivery-spam-reasons-to-chose-nanotrasen = [color=blue]
                                        {"[bold]NUMBER THREE[/bold]"}
                                        THEIR LOGO IS HORRIBLE! THEY THINK THEY'RE COOL WITH THEIR LOGO! OOH, LOOK AT ME, I'M SO COOL! OOH, SNAKE THAT'S ALSO AN S! HOW CREATIVE! MY THREE YEAR OLD SON COULD DRAW A BETTER LOGO!
 
-delivery-spam-reasons-to-choose-syndicate = [color=#ff0000]
-                                                                          ╔══════════════════╗
-                                                                          ║░░░░░████████░░░░░║
-                                                                          ║░░░░░██░░░░░░░░░░░║
-                                                                          ║░░░░░████████░░░░░║
-                                                                          ║░░░░░░░░░░░██░░░░░║
-                                                                          ║░░░░░████████░░░░░║
-                                                                          ╚══════════════════╝[/color]
+delivery-spam-reasons-to-choose-syndicate = {-delivery-header-syndicate}
 
                                             {"[head=2]TOP THREE REASONS WHY NANOTRASEN IS INCOMPETENT[/head]"}
 
@@ -98,14 +112,7 @@ delivery-spam-centcomm-retribution = [color=red] THIS IS AN OFICAL NOTICE FROM T
 
                                      {"[head=2][color=red]IGNORE THIS ORDER AT RISK OF RETRIBUTON FROM [color=green]CENTCO[/color]!!!!![/head][/color]"}
 
-delivery-spam-alternate-timeline = [color=red]
-                                                                ╔══════════════════╗
-                                                                ║███░███░░░░██░░░░░║
-                                                                ║░██░████░░░██░░░░░║
-                                                                ║░░█░██░██░░██░█░░░║
-                                                                ║░░░░██░░██░██░██░░║
-                                                                ║░░░░██░░░████░███░║
-                                                                ╚══════════════════╝[/color]
+delivery-spam-alternate-timeline = {-delivery-header-nanotrasen-alternate-timeline}
                                    {"[head=2]This is an official notice from the [color=red]Chief Security Officer[/color] at a Nanotrasen's Space Station 15.[/head]"}
 
                                    To whoever receives this letter. I am Sergeant Rigel. My occupation is the CSO. We need immediate assistance.

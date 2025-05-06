@@ -98,6 +98,12 @@
       - id: BoxSterileMask
       - id: ClothingHeadHatBeretBrigmedic
       - id: ClothingOuterCoatAMG
+      - id: ClothingOuterCoatCorpsman
+      - id: ClothingUniformJumpsuitCorpsman
+      - id: ClothingUniformJumpskirtCorpsman
+      - id: ClothingHeadHatBeretCorpsman
+      - id: ClothingBeltCorpsmanFilled
+      - id: ClothingHandsGlovesBlackNitrile
       - id: ClothingUniformJumpsuitBrigmedic
       - id: ClothingUniformJumpskirtBrigmedic
       - id: ClothingUniformJumpskirtOfLife

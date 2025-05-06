@@ -13,3 +13,6 @@ guidebook-microwave-reagent-quantity-display = × {$amount}u
 
 guidebook-microwave-solid-name-display = [bold]{$ingredient}[/bold]
 guidebook-microwave-solid-quantity-display = × {$amount}
+
+guidebook-microwave-device-type-header = Device Type
+guidebook-microwave-device-type = Device Necessary for cooking: {$type}

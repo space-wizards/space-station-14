@@ -7,8 +7,7 @@
     issuer: objective-issuer-thief
   - type: RoleRequirement
     roles:
-      mindRoles:
-      - ThiefRole
+    - ThiefRole
 
 - type: entity
   abstract: true

@@ -10,6 +10,18 @@
   ## Sounds
   Resomi make sounds akin to common bird noises found on Earth, such as chirping and squawking.
 
+  ## Nexus Technological Hivemind
+  Due to a implant that all Resomi are given at birth, they have a neural connection to the Nexus.
+  This allows them to communicate with others of their species over a technological network.
+  Use the [color=orange]+n[/color] prefix in chat to send a message to all Resomi anonymously.
+
+  ## Age and names
+  Resomi are hatched from eggs, and enter eligibility for CC and NT employment at the age of [color=yellow]23[/color] standard galactic years.  
+  Resomi can live up to [color=yellow]430[/color] years old.
+  Their names are usually nicknames as most other species have trouble pronouncing their native names.
+  Resomi station identities will list their nickname first, followed by their pack name. For example, [color=yellow]Tashira, Darkfeathers Pack[/color].
+  Some Resomi forego this system and go by other nicknames or names.
+
   ## Nightvision
   Resomi have a innate nightvision given to them by their eyes.
   This allows them to see in pure darkness farther than any normal handheld lightsource would provide.
@@ -32,45 +44,14 @@
   Resomi are able to slash at others with their claws.
   These attacks deal [color=red]5[/color] points of Slash damage with a hit rate that is the same as humans fists attack.
   
-  ## Weapon Restrictions
-  Resomi have a few restrictions on what weapons they can hold due to their hands being too small.
-  [color=yellow]Due to these restrictions, the Syndicate has opted to not use Resomi for Nuclear Operatives at this time.[/color]
-  These are all the current weapons they cannot use.
-  <Box>
-    <GuideEntityEmbed Entity="WeaponMinigun"/>
-    <GuideEntityEmbed Entity="WeaponLauncherChinaLake"/>
-    <GuideEntityEmbed Entity="WeaponLauncherRocket"/>
-    <GuideEntityEmbed Entity="WeaponLauncherPirateCannon"/>
-    <GuideEntityEmbed Entity="WeaponLauncherAdmemeMeteorLarge"/>
-  </Box>
-  <Box>
-    <GuideEntityEmbed Entity="WeaponLauncherAdmemeImmovableRodSlow"/>
-    <GuideEntityEmbed Entity="WeaponLightMachineGunL6"/>
-    <GuideEntityEmbed Entity="WeaponSniperMosin"/>
-    <GuideEntityEmbed Entity="WeaponSniperHristov"/>
-    <GuideEntityEmbed Entity="Musket"/>
-  </Box>
-  <Box>
-    <GuideEntityEmbed Entity="WeaponPistolFlintlock"/>
-    <GuideEntityEmbed Entity="WeaponShotgunBulldog"/>
-    <GuideEntityEmbed Entity="WeaponShotgunDoubleBarreled"/>
-    <GuideEntityEmbed Entity="WeaponShotgunEnforcer"/>
-  </Box>
-  <Box>
-    <GuideEntityEmbed Entity="WeaponShotgunKammerer"/>
-    <GuideEntityEmbed Entity="WeaponShotgunSawn"/>
-    <GuideEntityEmbed Entity="WeaponShotgunHandmade"/>
-    <GuideEntityEmbed Entity="WeaponShotgunBlunderbuss"/>
-  </Box>
-  <Box>
-    <GuideEntityEmbed Entity="WeaponShotgunImprovised"/>
-    <GuideEntityEmbed Entity="WeaponRifleAk"/>
-    <GuideEntityEmbed Entity="WeaponRifleM90GrenadeLauncher"/>
-    <GuideEntityEmbed Entity="WeaponRifleLecter"/>
-  </Box>
-  <Box>
-    <GuideEntityEmbed Entity="WeaponRifleFoam"/>
-  </Box>
+  ## Weapon Knockback
+  Resomi are very lightweight, and as such take so much knockback from large caliber weapons that they get pushed around.
+  Resomi also will receive [color=yellow]Stun Damage[/color] from large caliber weapons for each shot.
+  In general, the weapons that will give you knockback are [color=yellow]Rifles, Sniper Rifles, Shotguns, LMGs, HMGs, and Grenade Launchers.[/color]
+  Look out especially on Rocket launchers, as since they are recoil-less, you will actually get [color=red]pulled forward with the rocket[/color] for a short distance.
+  The safest weapons to use that will give you no knockback are [color=green]Pistols and SMGs[/color].
+  No slips can help mitigate some of the knockback from firing weapons, but not all of it!
+  Also keep in mind that any stamina resistance you have DOES work to reduce the stamina damage from these weapons.
 
   ## Jumping
   Resomi are able to jump, allowing them to move around station hallways quickly, and to jump ahead of others in a chase.

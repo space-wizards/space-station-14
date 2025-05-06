@@ -53,6 +53,7 @@
   - AllHostile
   - Wizard
   - Dragon
+  - HonkHostile
 
 - type: npcFaction
   id: SimpleHostile

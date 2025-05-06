@@ -5,13 +5,16 @@
   playTimeTracker: JobCentralCommandOfficial
   setPreference: false
   startingGear: CentcomGear
-  icon: "JobIconNanotrasen"
+  icon: "JobIconCentComm"
   supervisors: job-supervisors-hos
   canBeAntag: false
   accessGroups:
   - AllAccess
   access:
   - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 - type: startingGear
   id: CentcomGear
@@ -19,7 +22,7 @@
     jumpsuit: ClothingUniformJumpsuitCentcomOfficial
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatCentcom
-    eyes: ClothingEyesGlassesSunglasses
+    eyes: ClothingEyesGlassesCentComm
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterArmorBasic
     id: CentcomPDA

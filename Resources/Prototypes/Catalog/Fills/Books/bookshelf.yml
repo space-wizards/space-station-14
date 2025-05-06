@@ -60,6 +60,10 @@
     - id: BookTruth
     - id: BookWatched
     - id: BookWorld
+    - id: BookConspiracies #This is a Starlight edit
+    - id: BookMoreConspiracies #This is a Starlight edit
+    - id: BookClownMimeWar #This is a Starlight edit
+    - id: BookMarsIncident #This is a Starlight edit
 
 - type: entityTable
   id: RandomGuidebookTable

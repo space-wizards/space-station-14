@@ -1,0 +1,10 @@
+- type: cargoBounty
+  id: BountyOvenMachineBoard
+  reward: 6000
+  description: bounty-description-oven-machine-board
+  entries:
+  - name: bounty-item-oven-machine-board
+    amount: 2
+    whitelist:
+      tags:
+      - OvenMachineBoard

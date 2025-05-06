@@ -45,6 +45,18 @@
         },
         {
             "name": "sec_open"
+        },
+        {
+            "name": "brigmedic"
+        },
+        {
+            "name": "brigmedic_door"
+        },
+        {
+            "name": "warden"
+        },
+        {
+            "name": "warden_door"
         }
     ]
 }

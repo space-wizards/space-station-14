@@ -15,6 +15,9 @@ quick_lottery = true
 [gateway]
 generator_enabled = false
 
+[movement]
+mob_pushing = true
+
 [physics]
 # Makes mapping annoying
 grid_splitting = false

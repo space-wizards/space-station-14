@@ -39,13 +39,13 @@ accent-italian-words-replace-10 = pappa
 accent-italian-words-11 = good
 accent-italian-words-replace-11 = molto bene
 
-accent-italian-words-12 = greytide
+accent-italian-words-12 = assist
 accent-italian-words-replace-12 = curvisti
 
-accent-italian-words-13 = greytider
+accent-italian-words-13 = assistant
 accent-italian-words-replace-13 = curvisti
 
-accent-italian-words-14 = greytiders
+accent-italian-words-14 = assistants
 accent-italian-words-replace-14 = curvisti
 
 accent-italian-words-15 = hello

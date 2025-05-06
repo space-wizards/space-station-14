@@ -173,11 +173,21 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
 
         CookTimeLabel.SetMessage(msg);
     }
+    
+    private void GenerateDeviceType(FoodRecipePrototype recipe)
+    {
+        var msg = new FormattedMessage();
+        msg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-device-type", ("type", recipe.DeviceType.ToString())));
+        msg.Pop();
+
+        DeviceTypeLabel.SetMessage(msg);
+    }
 
     private void GenerateControl(FoodRecipePrototype recipe)
     {
         GenerateHeader(recipe);
         GenerateIngredients(recipe);
         GenerateCookTime(recipe);
+        GenerateDeviceType(recipe);
     }
 }
