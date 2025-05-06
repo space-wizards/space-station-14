@@ -278,6 +278,7 @@
     canCreateVacuum: false # its for killing the borg not the station
   - type: SignatureFont # imp
     font: Sixtyfour
+  - type: SkipLoadingCharacterRecords #imp edit - make it so borgs doesn't show up in the character records list
 
 - type: entity
   id: BaseBorgChassisNT

@@ -196,8 +196,8 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: station_records } #imp edit - use a real sprite for this since it's going on the AI as well.
+    iconOn: Interface/Actions/actions_ai.rsi/station_records.png
     keywords: [ "AI", "console", "interface" ]
     priority: -10
     event: !type:ToggleIntrinsicUIEvent { key: enum.CharacterRecordConsoleKey.Key }

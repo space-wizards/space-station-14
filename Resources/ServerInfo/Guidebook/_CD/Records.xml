@@ -2,6 +2,10 @@
 
 ## Character Records
 
+Entries can only be written in the character customization menu and not during
+a round. It is not required that you make any records or entries; interact with
+this feature as much or as little as you want!
+
 You can create records for your characters in the records tab of the character
 creator. Simply fill in the values and save. Entries should typically be
 written from the perspective of a CentComm official or other supervisor.
@@ -46,9 +50,4 @@ These consoles are typically found in their respective departments!
 <GuideEntityEmbed Entity="ComputerCriminalRecords" Caption="Security"/>
 <GuideEntityEmbed Entity="ComputerStationRecords" Caption="Station"/>
 </Box>
-
-Entries can only be written in the character customization menu and not during
-a round. It is not required that you make any records or entries; interact with
-this feature as much or as little as you want!
-
 </Document>
