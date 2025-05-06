@@ -120,6 +120,9 @@
     - type: PipeColorVisuals
     - type: GasVolumePump
       enabled: false
+    - type: ActivatableUI
+      key: enum.GasVolumePumpUiKey.Key
+    - type: ActivatableUIRequiresAnchor
     - type: UserInterface
       interfaces:
         enum.GasVolumePumpUiKey.Key:

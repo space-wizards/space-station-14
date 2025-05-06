@@ -212,7 +212,7 @@
   id: FigurinesFootsoldier
   values:
     prefix: figurines-footsoldier-
-    count: 2
+    count: 5
 
 - type: localizedDataset
   id: FigurinesWizard
