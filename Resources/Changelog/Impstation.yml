@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: (Most) antag roles now have playtime tracking in the stats menu.
-    type: Add
-  - message: Antag rolling is now slightly weighted towards people with lower playtime
-      in a given antag role.
-    type: Tweak
-  id: 1113
-  time: '2025-02-13T14:38:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1673
-- author: DinnerCalzone
-  changes:
-  - message: Courier support has been added to Plasma.
-    type: Add
-  id: 1114
-  time: '2025-02-13T14:44:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1663
 - author: Sha-Seng
   changes:
   - message: Body bags now have high-vis tape on them
@@ -4159,3 +4142,17 @@
   id: 1612
   time: '2025-05-06T22:42:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2409
+- author: ruddygreat
+  changes:
+  - message: The AI and cyborgs no longer show up in the station records computer.
+    type: Fix
+  id: 1613
+  time: '2025-05-06T22:43:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2410
+- author: Cutinup99
+  changes:
+  - message: the pride vend can finally be restocked!
+    type: Tweak
+  id: 1614
+  time: '2025-05-06T22:43:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2411
