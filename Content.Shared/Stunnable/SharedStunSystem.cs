@@ -38,7 +38,7 @@ public abstract partial class SharedStunSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
-    [Dependency] protected readonly StaminaSystem Stamina = default!;
+    [Dependency] protected readonly SharedStaminaSystem Stamina = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
 
