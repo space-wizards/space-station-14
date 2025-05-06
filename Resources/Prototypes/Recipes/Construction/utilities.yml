@@ -265,9 +265,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeHalf
   alternativePrototypes:
   - GasPipeHalf
   - GasPipeHalfAlt1
@@ -282,9 +279,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-    state: pipeHalf
   alternativePrototypes:
   - GasPipeHalf
   - GasPipeHalfAlt1
@@ -299,9 +293,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-    state: pipeHalf
   alternativePrototypes:
   - GasPipeHalf
   - GasPipeHalfAlt1
@@ -315,9 +306,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeStraight
   alternativePrototypes:
   - GasPipeStraight
   - GasPipeStraightAlt1
@@ -332,9 +320,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-    state: pipeStraight
   alternativePrototypes:
   - GasPipeStraight
   - GasPipeStraightAlt1
@@ -349,9 +334,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-    state: pipeStraight
   alternativePrototypes:
   - GasPipeStraight
   - GasPipeStraightAlt1
@@ -365,9 +347,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeBend
   alternativePrototypes:
   - GasPipeBend
   - GasPipeBendAlt1
@@ -382,9 +361,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-    state: pipeBend
   alternativePrototypes:
   - GasPipeBend
   - GasPipeBendAlt1
@@ -399,9 +375,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-    state: pipeBend
   alternativePrototypes:
   - GasPipeBend
   - GasPipeBendAlt1
@@ -415,9 +388,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeTJunction
   alternativePrototypes:
   - GasPipeTJunction
   - GasPipeTJunctionAlt1
@@ -432,9 +402,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-    state: pipeTJunction
   alternativePrototypes:
   - GasPipeTJunction
   - GasPipeTJunctionAlt1
@@ -449,9 +416,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-    state: pipeTJunction
   alternativePrototypes:
   - GasPipeTJunction
   - GasPipeTJunctionAlt1
@@ -465,9 +429,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeFourway
   alternativePrototypes:
   - GasPipeFourway
   - GasPipeFourwayAlt1
@@ -482,9 +443,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-    state: pipeFourway
   alternativePrototypes:
   - GasPipeFourway
   - GasPipeFourwayAlt1
@@ -499,9 +457,6 @@
   category: construction-category-utilities
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-    state: pipeFourway
   alternativePrototypes:
   - GasPipeFourway
   - GasPipeFourwayAlt1
@@ -515,9 +470,6 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-  icon:
-    sprite: Structures/Piping/Atmospherics/manifold.rsi
-    state: pipeManifold
 
 # ATMOS UNARY
 - type: construction
