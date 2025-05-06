@@ -213,7 +213,7 @@
 
 - type: entity
   parent: [BaseComputerCircuitboard, BaseCargoContraband]
-  id: CargoShuttleComputerCircuitboard
+  id: CargoShuttleConsoleCircuitboard
   name: cargo shuttle console board
   description: A computer printed circuit board for a cargo shuttle console.
   components:
