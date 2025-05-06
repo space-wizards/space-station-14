@@ -328,7 +328,12 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             outputSolution = null;
 
-            if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out var solution))
+            var container = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName); // Changes to take solution from Beaker, same line as Transfer Reagant/Discard Reagant
+            if (container == null) // Checks if there's no beaker
+            {
+                return false;
+            }
+            if (!_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var beakerSolution, out var solution))
             {
                 return false;
             }
@@ -350,6 +355,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             outputSolution = solution.SplitSolution(neededVolume);
+            _solutionContainerSystem.UpdateChemicals(beakerSolution.Value); // Update the beaker solution to reflect the new amount of chemicals in it. Taken from metabolising system.
             return true;
         }
 
