@@ -1,15 +1,12 @@
 -Make flare spent
 --	Give: Passenger PDA/ID (name?), Ancient jumpsuit, gas mask, budget insuls,
 		shoes, bling, ID computer board in pocket
-- Stuff that gets flushed down toilets, aside from the mime and clowns', goes to the QM's shower for some reason.
 - Make the station move forward!
 - Job numbers in the prototype file
 Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
 Command Meeting: Needs access to execution cameras
-Execution telescreens: Need access to execution cameras
 I'd really like the sec camera monitors to only see General if possible...
 Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there...
-Among Us "clues" on detective notice boards
 Would it be too radical to totally left/right swap the Atmos
 	gas chambers so that the disposal pipeline linkup is less terrible?
 	This impacts distro pipeline as well, naturally, so dunno.
@@ -17,8 +14,6 @@ Would it be too radical to totally left/right swap the Atmos
 		and the burn chamber, just for a bit of a buffer zone.
 		Ditto the public hallway, too, though...
 Cryo piping
-Telecoms: Change reinforced walls?
-Move warden's office?
 Make easier to navigate in general, + add standard colors around more
 	Maybe crappy scribble decals on top of the MIRI flooring?
 Take out empty trit can?
@@ -62,6 +57,7 @@ Check lighting
 Does tider shop light *start* off, or on? Should be off.
 - More fixerer the det/prosc door. The logic gates aren't working - they don't fit and are becoming unanchored I guess
 	Maybe they're anchored now? They are in the editor.
+Atmos. Just in general. (But especially my oxygen cabbage nonsense)
 
 
 THINGS I COULD MAKE:
@@ -335,3 +331,8 @@ DONE:
 /* Evac: Does the shuttle dock? Does the shuttle work? */
 	/* And I think I already have it on this list, but the Admin camera still no worky. */
 	/* One missing Amogus camera: Admin (probably because of fix wiring) */
+/* - Stuff that gets flushed down toilets, aside from the mime and clowns', goes to the QM's shower for some reason. */
+/* Execution telescreens: Need access to execution cameras */
+/* Among Us "clues" on detective notice boards */
+/* Telecoms: Change reinforced walls? */
+/* Move warden's office? Yes, when I do genpop. */
