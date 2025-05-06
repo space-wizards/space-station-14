@@ -1,0 +1,19 @@
+- type: entity
+  id: RandomFoodMeal
+  name: random food spawner
+  suffix: Meal
+  parent: MarkerBase
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Consumable/Food/meals.rsi
+        state: cornedbeef
+  - type: RandomSpawner
+    prototypes:
+      - FoodBreakfastAmerican
+      - FoodBreakfastEnglish
+    chance: 0.8
+    offset: 0.0
