@@ -215,7 +215,7 @@ public sealed class GibbingSystem : EntitySystem
         }
 
         _transformSystem.AttachToGridOrMap(gibbable);
-        _transformSystem.SetCoordinates(gibbable, parentXform.Coordinates);
+        _transformSystem.SetWorldPosition(gibbable, _transformSystem.GetWorldPosition(parentXform));
         _transformSystem.SetWorldRotation(gibbable, _random.NextAngle());
         droppedEntities.Add(gibbable);
         if (flingEntity)
