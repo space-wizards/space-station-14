@@ -66,6 +66,8 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-viscous
   viscosity: 0.25
+  tileReactions:
+    - !type:SpillTileReaction
   metabolisms:
     Food:
       # Delicious!
@@ -87,6 +89,8 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-sticky
   viscosity: 0.10
+  tileReactions:
+    - !type:SpillTileReaction
   metabolisms:
     Food:
       # Sweet!
@@ -160,8 +164,6 @@
       - !type:SatiateThirst
         factor: 1.5
     # Dragon doesn't require airloss healing, so omnizine is still best for humans.
-    Medicine:
-      effects:
       - !type:ModifyBloodLevel
         amount: 3
       - !type:HealthChange

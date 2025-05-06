@@ -8,6 +8,7 @@ using Content.Shared.Hands;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Polymorph;
+using Content.Shared.Silicons.StationAi;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -50,6 +51,7 @@ public sealed class FollowerSystem : EntitySystem
         SubscribeLocalEvent<FollowedComponent, EntityTerminatingEvent>(OnFollowedTerminating);
         SubscribeLocalEvent<BeforeSerializationEvent>(OnBeforeSave);
         SubscribeLocalEvent<FollowedComponent, PolymorphedEvent>(OnFollowedPolymorphed);
+        SubscribeLocalEvent<FollowedComponent, StationAiRemoteEntityReplacementEvent>(OnFollowedStationAiRemoteEntityReplaced);
     }
 
     private void OnFollowedAttempt(Entity<FollowedComponent> ent, ref ComponentGetStateAttemptEvent args)
@@ -167,6 +169,17 @@ public sealed class FollowerSystem : EntitySystem
             // Stop following the target's old entity and start following the new one
             StartFollowingEntity(follower, args.NewEntity);
         }
+    }
+
+    // TODO: Slartibarfast mentioned that ideally this should be generalized and made part of SetRelay in SharedMoverController.Relay.cs.
+    // This would apply to polymorphed entities as well
+    private void OnFollowedStationAiRemoteEntityReplaced(Entity<FollowedComponent> entity, ref StationAiRemoteEntityReplacementEvent args)
+    {
+        if (args.NewRemoteEntity == null)
+            return;
+
+        foreach (var follower in entity.Comp.Following)
+            StartFollowingEntity(follower, args.NewRemoteEntity.Value);
     }
 
     /// <summary>

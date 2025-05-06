@@ -1107,5 +1107,37 @@ Entries:
   id: 133
   time: '2025-04-22T12:34:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36790
+- author: qrwas
+  changes:
+  - message: 'Added new Cvar: game.contraband_examine_only_in_hud to display contraband
+      only in security glasses **disabled by default**'
+    type: Add
+  id: 134
+  time: '2025-04-26T21:06:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36412
+- author: K-Dynamic
+  changes:
+  - message: CC officials now wear a centcomm carapace for body armour, which have
+      identical stats to the command carapace.
+    type: Add
+  id: 135
+  time: '2025-04-30T00:40:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35301
+- author: Samuka
+  changes:
+  - message: universal access config now starts with a universal ID
+    type: Tweak
+  - message: admins can now use any access config from any range
+    type: Fix
+  id: 136
+  time: '2025-05-01T05:20:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37079
+- author: perryprog
+  changes:
+  - message: The pointing arrow smite no longer lasts forever.
+    type: Fix
+  id: 137
+  time: '2025-05-02T01:07:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37102
 Name: Admin
-Order: 1
+Order: 2
