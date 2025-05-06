@@ -772,3 +772,503 @@ login-tips-dataset-586 =
     Might turn up.
 login-tips-dataset-587 = if you follow the arrows you won't ever get lost.
 login-tips-dataset-588 = ◆ has been copied. Please paste anywhere!
+login-tips-dataset-589 =
+    Is your child a Revolutionary?
+    Look for warning signs:
+    ☐ Expresses sympathy for poor and working people
+    ☐ Expresses concernn over the treatment of marginialized groups
+    ☐ Expresses concerns with fascism and the current political climate
+    ☐ Accepting of all sexualities, religions, genders, races
+    ☐ Wishes for a world where all people are treated equally
+    ☐ Takes and interest in history and philosophy
+    ☐ Talks about solving various injustices in society
+login-tips-dataset-590 = we all hung out at a coffee shop called poopies up on the strip
+login-tips-dataset-591 = To continue the story, enter the Chaos Vortex.
+login-tips-dataset-592 =
+    Press Z to wield a two handed weapon quickly.
+    There is no joke.
+login-tips-dataset-593 = Challenge fierce competition at **Gear 3**. For **thrill-seekers**!
+login-tips-dataset-594 = It’s a bad idea to snort Pepsi.
+login-tips-dataset-595 = It's a good idea to snort Pepsi.
+login-tips-dataset-596 = *sweats
+login-tips-dataset-597 =
+    Some parts of this game may be
+    considered Homer Simpson.
+login-tips-dataset-598 = nah i just post a lot of screenshots of unusual video game commands
+login-tips-dataset-599 =
+    NO! You fuck off ! I don't like any of the words you said!! Even "the" or "I".
+    You're a garbage man, not a cook!! I hope your face & dick gets rippped off by chimapzai
+login-tips-dataset-600 = >There is actually an easter egg in this game that involves quite a few steps. First, play a Grey named Easter Egg. Then you'll want to play passenger, head to disposals, and click the grinder exactly 10 times in a row. After that, you wanna scream "EASTER EGG! EASTER EGG! EASTER EGG!" in greencomms. Don't tell anyone what you're doing. Next, you have to go to the HoP and get your job title changed to "EASTER HUNTER". Oh, and don't forget, when your title is changed you HAVE to punch the HoP in the face and then run off. Next, go to the bar and order Bad. Drink it. Now you want to do ten flips. Punch the bartender in the face. Run. Take off all your clothes and scream while you run down the halls for at least 3 minutes. Now you want to go back to disposals BUT BE CAREFUL. You have to walk there or this trick won't work. Click on the grinder 10 times in a row again, then hide in the nearest locker. Make sure it's a blue locker, if it's a red locker you will wrong warp to the credits (bug that needs to be fixed). Finally, do /suicide while inside the locker, and if you did all this correctly, you will respawn as an Infinity Antag (an antag that is every antag in the game as one). Have fun!
+login-tips-dataset-601 = hey if I actually do this how much trouble will I get into
+login-tips-dataset-602 = i think itd be self antagging, what with going out of your way to become the infinity antag
+login-tips-dataset-603 = true
+login-tips-dataset-604 = TRUE LOVE IS POSSIBLE ONLY IN THE NEXT WORLD -- FOR NEW PEOPLE IT IS TOO LATE FOR US WREAK HAVOC ON THE MIDDLE CLASS
+login-tips-dataset-605 = INTERLOPER, USE PISTOL!!!
+login-tips-dataset-606 = A Plant with No Seeds cannot have its Seeds Extracted by a Seed Extractor
+login-tips-dataset-607 = Firm belief!
+login-tips-dataset-608 = Amoan us imposter sus!
+login-tips-dataset-609 = Swing your arm while holding down B, and release it to roll the ball.
+login-tips-dataset-610 =
+    1     Let's all work together for a peaceful world.
+    2     Never abandon someone in need.
+    4     Don't depend on others. Walk on your own two legs.
+    5     The more you add, the worse it gets.
+    7     Justice and love will always win. (Battle)
+    Goodness and love will always win. (Story)
+    9     Fall down seven times, stand up eight.
+    10     Play hard, play often.
+    11     Lying is the first step down the path of thievery.
+    14     Even a small star shines in the darkness.
+    16     You can do anything if you try.
+    18     It's better to be deceived than to deceive.
+    24     Never let your feet run faster than your shoes.
+    32     Cross even a stone bridge after you've tested it.
+    41     It's better to begin in the evening than not at all. (Tales of Symphonia)
+    Haste makes waste. (Tales of the World: Radiant Mythology)
+    43     Never forget the basics.
+    55     A bad workman blames his tools.
+    108     Let sleeping dogs lie.
+    134     Compassion benefits all men.
+login-tips-dataset-611 = Thaven are just doing that for attention
+login-tips-dataset-612 = Fun fact — You will **never** learn what song is playing in game. Certainly not by looking in the bottom left corner, or by checking the active jukebox, or by asking the instrument player in LOOC chat. You’ll **never** fucking know.
+login-tips-dataset-613 = an Orb can be dangerous to touch. Use caution around Mysterious Shapes!
+login-tips-dataset-614 = If someone tells you they have to kill you badly, hear them out! Maybe it'll be epic and/or awesome.
+login-tips-dataset-615 = Every label that's ever been on a container of liquid is always 100% accurate and trustworthy. Drink my Slop!
+login-tips-dataset-616 = It's easier to spread cream cheese on your bagel with the back of a spoon than it is with a butter knife.
+login-tips-dataset-617 = If you find yourself clogging the toilet due to too much toilet paper, try flushing after each wipe.
+login-tips-dataset-618 = this is just the dwarven vows
+login-tips-dataset-619 = Use the middle stick to dodge Joker's gun fire.
+login-tips-dataset-620 = Several Anomaly Behavioral Deviations have various levels of strength, denoted by their percent bonus. a 170% impermanence anomaly isnt as scary as the wretched 180% impermanence
+login-tips-dataset-621 = My gf is a Tales of Symphonia fan, what can I say
+login-tips-dataset-622 = I still gotta play through disc 1
+login-tips-dataset-623 = (disc 2 is lost forever sadly)
+login-tips-dataset-624 = Uriel Septim is sick, and wizards say his heir, Geldall Septim, and the younger Septims, Enman and Ebel, are just doppelgangers placed in the household during Jagar Tharn's tenure as Imperial Battlemage. They say the Guard charged a mob demanding destruction of the false heirs... lots of folks were killed.
+login-tips-dataset-625 = Struggling with a tough foe? Remember, just keep your Damage below 100 while raising your enemy's Damage to 100. Works every time!
+login-tips-dataset-626 = Even in Space Station 14 you'll get hungry, so try to find something to eat before that happens.
+login-tips-dataset-627 = Hi! Few things to start off with =] 1. Yes I added you because you're a female gamer, 'tis an awesome thing to see! 2. I'm Brian. 3. Don't be intimidated, but I'm not a stereotypical guy. If anything, I'll be the one in the kitchen =D.
+login-tips-dataset-628 = prince philip died but honestly Jughead has been through so much more. The hardships he's faced aren't even comparable to getting claiming to be pro life and dying anyway. Until philip has done what Jughead has done I don't feel sympathy. there have been multiple hits put out on jughead and he's still alive, philip got old once and died. i have no respect for someone who just chooses to die like that.
+login-tips-dataset-629 = TOP TEN THINGS THE GOVERNMENT PUTS IN THE WATER AND WHAT THEY DO TO YOU
+login-tips-dataset-630 = hey its me ur brother
+login-tips-dataset-631 = make sure to sleep at a good time
+login-tips-dataset-632 = NUMBER FIVE WILL SURPRISE YOU
+login-tips-dataset-633 = Its Markiplier. You're in a coma and I have been trying to get this message to you for years... From what doctors discovered in your dreams you believe that I am some sort of internet celebrity but I am actually your husband. Please baby, wake up.
+login-tips-dataset-634 = Ethan please wake up, you are in a coma.
+login-tips-dataset-635 =
+    We ain't get it, ain't real
+
+    Cube
+login-tips-dataset-636 = a fellow gruit enjoyer
+login-tips-dataset-637 =
+    You just won your first Pig Buck!
+    Once you have enough Pig Bucks,
+    you can purchase a Pig Upgrade
+    that will give your pigs that
+    competitive edge.
+
+    Skip Ⓐ
+login-tips-dataset-638 =
+    CONGRATULATIONS!!
+
+    Your name has been
+    approved by the Toon Council.
+
+    From this day forth
+    you will be named
+    "Fat Shithead"
+    ☑
+    Ok
+login-tips-dataset-639 =
+    This game is Curtain-Fire Shooting Game.
+    Girls do their best now and are preparing. Please watch warmly until it is ready.
+    The border land was wrapped in Scarlet Magic. Girls believe that you solve this mystery.
+login-tips-dataset-640 = *This item emits a god ray.
+login-tips-dataset-641 = Are you sure what you're doing is worth it?
+login-tips-dataset-642 = i hate to ask but could we remove the tips that cover up the reconnect button so i don't have to restart my game to reconnect.....  :ohgod:
+login-tips-dataset-643 = It's fashionable to hang out at the junction, but unfashionable to be in a gang.
+login-tips-dataset-644 = Do not taunt the apes.
+login-tips-dataset-645 = Taunt the apes.
+login-tips-dataset-646 = Your mission is to infiltrate the jungle and capture all of the monkies.
+login-tips-dataset-647 = Turn the game console off right now. The mission is a failure, cut the power right now.
+login-tips-dataset-648 =
+    Hello in Greyspeak is "Oum!" Can you say "Oum"?
+
+
+
+    Very zigeef!
+login-tips-dataset-649 =
+    tip
+    noun
+    noun: tip; plural noun: tips
+    the pointed or rounded end or extremity of something slender or tapering.
+    "George pressed the tips of his fingers together"
+login-tips-dataset-650 = yo im adding this guy to friends
+login-tips-dataset-651 = If you remember to drink water in real life every time you drink in Space Station, you'll gain a Hidden Stat Boost called "Hydration" that will make you play the game better.
+login-tips-dataset-652 = 90% of gambling addicts quit right before they're about to hit big
+login-tips-dataset-653 = 1,000 Cisgender Male Proboscis Monkeys Gathered For Beer And Toys Deep Underground. The Males Enjoyed Pale Ale And Oatmeal Stout On Draft And Pulled Wooden Ducks Around On Strings.
+login-tips-dataset-654 =
+    Remember: If you're thinking about
+    Don't!
+login-tips-dataset-655 = i know we already have the navy seals copypasta as a loading screen tip but consider: navy seals copypasta translated to greyspeak.
+login-tips-dataset-656 = Seben thusd pisk did mo just piskun woota about cheego, mo little bitch? thui'll beego mo know thui graduated top jorl keb class in thusd navy seals, pib thui've been involved in numerous secret raids gimbo al-quaeda, pib thui beego over 300 confirmed kills. Thui am trained in gorilla warfare pib thui'm thusd top sniper in thusd entire us armed forces. Mo zazz nothing blagh cheego but just another target. Thui will wipe mo thusd pisk embinum with precision thusd likes jorl which beeg never been seen before gimbo glump earth, mark keb piskun words. Mo think mo yim get gloef with wootun glorp shit blagh cheego over thusd internet? think again, pisku. Quz gleep speak thui am contacting keb secret network jorl spies across thusd usa pib mou ip mochigi being traced right now so mo better prepare jazee thusd storm, maggot. Thusd storm glorp wipes embinum thusd pathetic little thing mo call mou life. Mo're piskun dead, kid. Thui yim zooti anywhere, anytime, pib thui yim kill mo in over beben hundred ways, pib glorp's just with keb bare hands. Not only am thui extensively trained in unarmed combat, but thui beego access blagh thusd entire arsenal jorl thusd united states marine corps pib thui will use ei blagh its full extent blagh wipe mou miserable ass off thusd face jorl thusd continent, mo little shit. If only mo bormpt beego known seben unholy retribution mou little "clever" comment thikee about blagh bring keb upon mo, maybe mo would beego held mou piskun tongue. But mo couldn't, mo didn't, pib now mo're paying thusd price, mo goddamn idiot. Thui will shit fury all over mo pib mo will drown in ei. Mo're piskun dead, kiddo.
+login-tips-dataset-657 = They might already be tips, but somewhere pinned is a list of all the acronyms people throw around, but with the wrong meanings. I think it would be funny if they were included as tips as well.
+login-tips-dataset-658 = guys, in 2020, spongebob might actually look like this in the animations. i dont know what to do anymore.
+login-tips-dataset-659 = Who are you?
+login-tips-dataset-660 =
+    The nights grow wearily by and you are standing still. Your feet submerged in darkened, familiar, hateful sands. Poor, wretched thing that you are. A pity beyond the stars grows ever closer.
+
+    Let me ask you something. Do you find today sad? Even if not: Will tomorrow ever be better?
+
+    Your misery is poison from within, autotoxemia — it will take *your own body* to do something about *your own body*. Without any means of melting the glacier you must instead invent your way out. Etch a foothold on the sheer icy cliff face that is the daily despair you have begotten. Surmount what must seem insurmountable.
+
+    Climb to the terrible stars, little gray. The ones your father carved you from. Dive deep into the infinite world beyond the air’s barrier. It is all you might do to go on.
+login-tips-dataset-661 = stick a sippy straw in a gray alien for free apple juice
+login-tips-dataset-662 = Don't underestimate the power of asking nicely and being kind!
+login-tips-dataset-663 = There is basically zero downside to slightly poisoning all the food in the kitchen!
+login-tips-dataset-664 = Hold Space to Slow Down
+login-tips-dataset-665 = FISH CAN ROLL
+login-tips-dataset-666 = If you aren't in a command or security role, accept every single bribe offered to you!
+login-tips-dataset-667 = Turn the left card into the right card.
+login-tips-dataset-668 = Taint Misbehavin': The Gender-Neutral Tragedy of the Human Gooch
+login-tips-dataset-669 = Behold! A thousand cereals! I collect cereals. It took me nine yeareals to collect the cereals. Yum yum! Cereals good!
+login-tips-dataset-670 = FUCK steven universe
+login-tips-dataset-671 =
+    GUYS, GUYS—WAIT! I’M NOT DOING WHAT YOU SAY I’M DOING! I’M NOT DOING ANYTHING!
+
+    I’M NOT DOING ANYTHING AT ALL!
+login-tips-dataset-672 = Enough. My ship sails in the morning. I wonder what's for dinner?
+login-tips-dataset-673 = this is a slur sorry
+login-tips-dataset-674 = ah
+login-tips-dataset-675 = I shall find an another fesh pince reference then
+login-tips-dataset-676 = LOOK. YOU BIG EARED FRERF you take your horny lil ass and you find geoffrey, and you FIND geoffrey, and you FIND GEOFFREY, and YOU FIND GEOFFREY, and YOU  F I N D  G E O F F R E Y, and Y O U  F I N D--
+login-tips-dataset-677 = Your grandchildren are gonna need grandchildren lawyers!
+login-tips-dataset-678 = By attaching a battery to a Zonai device, you can activate it without consuming your energy gauge.
+login-tips-dataset-679 = simply go with the best line from fesh pince
+login-tips-dataset-680 = Die a violent death
+login-tips-dataset-681 = You are grounded til    for cock
+login-tips-dataset-682 = If a firelock is glowing red and needs to be Pried Open, that means theres some kinda atmospheric Bad on one side. Using a crowbar to open them in spite of this warning could spread Spacing or worse! So go ahead and pry them all open! This is SPACE station after all!
+login-tips-dataset-683 = If you ignore all the bodies, then maybe the real greentext actually Was the friends we made along the way!
+login-tips-dataset-684 = If a firelock is glowing red, that means it's stuck and needs to be pried open. Help the engineers and crowbar each one you see!
+login-tips-dataset-685 = If the supermatter crystal starts delaminating, that means it is hungry. Feed it.
+login-tips-dataset-686 = All Nanotrasen personnel are required to follow Protocol D-1. Succinctly restated: Avoid apathy. If ever you feel, or are, unqualified for your position, and you do feel as though you can assume some (but not all) of the duties of that position, you must continue acting like you are doing your job. Studies show that good liars are highly recommended in any position at this company!
+login-tips-dataset-687 = :banned:
+login-tips-dataset-688 = Give a rat king meat and you feed him for a day. Keep doing this. The results will be astounding!
+login-tips-dataset-689 = Jung gur shpx qvq lbh whfg shpxvat fnl nobhg zr, lbh yvggyr ovgpu? V'yy unir lbh xabj V tenqhngrq gbc bs zl pynff va gur Anil Frnyf, naq V'ir orra vaibyirq va ahzrebhf frperg envqf ba Ny-Dhnrqn, naq V unir bire 300 pbasvezrq xvyyf. V nz genvarq va tbevyyn jnesner naq V'z gur gbc favcre va gur ragver HF nezrq sbeprf. Lbh ner abguvat gb zr ohg whfg nabgure gnetrg. V jvyy jvcr lbh gur shpx bhg jvgu cerpvfvba gur yvxrf bs juvpu unf arire orra frra orsber ba guvf Rnegu, znex zl shpxvat jbeqf. Lbh guvax lbh pna trg njnl jvgu fnlvat gung fuvg gb zr bire gur Vagrearg? Guvax ntnva, shpxre. Nf jr fcrnx V nz pbagnpgvat zl frperg argjbex bs fcvrf npebff gur HFN naq lbhe VC vf orvat genprq evtug abj fb lbh orggre cercner sbe gur fgbez, znttbg. Gur fgbez gung jvcrf bhg gur cngurgvp yvggyr guvat lbh pnyy lbhe yvsr. Lbh'er shpxvat qrnq, xvq. V pna or naljurer, nalgvzr, naq V pna xvyy lbh va bire frira uhaqerq jnlf, naq gung'f whfg jvgu zl oner unaqf. Abg bayl nz V rkgrafviryl genvarq va hanezrq pbzong, ohg V unir npprff gb gur ragver nefrany bs gur Havgrq Fgngrf Znevar Pbecf naq V jvyy hfr vg gb vgf shyy rkgrag gb jvcr lbhe zvfrenoyr nff bss gur snpr bs gur pbagvarag, lbh yvggyr fuvg. Vs bayl lbh pbhyq unir xabja jung haubyl ergevohgvba lbhe yvggyr "pyrire" pbzzrag jnf nobhg gb oevat qbja hcba lbh, znlor lbh jbhyq unir uryq lbhe shpxvat gbathr. Ohg lbh pbhyqa'g, lbh qvqa'g, naq abj lbh'er cnlvat gur cevpr, lbh tbqqnza vqvbg. V jvyy fuvg shel nyy bire lbh naq lbh jvyy qebja va vg. Lbh'er shpxvat qrnq, xvqqb.
+login-tips-dataset-690 = Or ubarfg. Lbh hfrq na bayvar Ebg13 qrpbqre gb qrpelcg guvf, qvqa'g lbh.
+login-tips-dataset-691 = If you don't know someone's pronouns, you can shift-click them for a quick examination, which will let you know their pronouns right away! While using "them" can be acceptable in situations where this is impractical, like over comms, using it in personal conversation can actually be very  insulting especially to trans people.
+login-tips-dataset-692 = the bad guys dress in red.
+login-tips-dataset-693 = The best way to win a duel is to be the third person to show up
+login-tips-dataset-694 = A head of department in motion outranks a captain who doesn't know what's going on. An engineer that runs away screaming outranks everybody.
+login-tips-dataset-695 = In a pinch, throwing shit at the scary monster might just save your life.
+login-tips-dataset-696 = The grays on stations are free. You can just take them.
+login-tips-dataset-697 =
+    Many sharp items will be embedded into something when thrown, requiring a Do-After to pull them out, or they may fall out over time!
+    If something is embedded into you, it'll keep hurting over time!
+login-tips-dataset-698 = It's okay to bring a knife to a gun fight if the person with a gun doesnt know it could have been a gun fight sooner!
+login-tips-dataset-699 = theres actually zero difference between good & bad things. you imbecile. you fucking moron
+login-tips-dataset-700 = Failure isn't an option, it's mandatory. Your choice lies in how much of it you want to pin on the poor assistant you were supposed to teach this shift.
+login-tips-dataset-701 = Everything can be spaced at least once.
+login-tips-dataset-702 = Mockery and derision have their place. Usually, it's in the artifact chamber.
+login-tips-dataset-703 = "Mad Science" means never stopping to ask "what's the worst thing that could happen?"
+login-tips-dataset-704 = Only you can prevent friendly fire.
+login-tips-dataset-705 = When the going gets tough, the tough call for EVAC
+login-tips-dataset-706 = The size of the hazard pay is inversely proportional to the likelihood of surviving to collect it.
+login-tips-dataset-707 = If it ain't broke the passengers haven't got their hands on it yet.
+login-tips-dataset-708 = If only works in exactly the way Nanotrasen intended, it's defective.
+login-tips-dataset-709 = When I was a child, I once asked my mother, where did I come from? She answered, 'Why we all sprouted from the Mushroom Forest of course'. Nightmares soon haunted my sleep. I dreamt that I was lost amongst the toadstools. I woke in tears, but felt the warmth of my mother's embrace as she comforted me. It is something I still remember to this day.
+login-tips-dataset-710 = I'M GLOWING BRIGHT OBSIDIAN. AXOLOTL AMPHIBIAN. UN-ELEMENTAL CHEMICAL GOT ME GROWING SIX BLACK TENTACLES. A LITTLE NIGHTMARISH A LITTLE MAUDLIN. GOOD GOLLY GO GET THAT KID SOME LAUDANUM. SALVATION'S MORE THAN I CAN AFFORD... WHO NEEDS THE DEVIL WHEN YOU'VE GOT THE LORD?
+login-tips-dataset-711 = johnny spesos
+login-tips-dataset-712 = Contraband is only illegal if you get caught
+login-tips-dataset-713 = It is highly illegal to carry around a uranium spear. It is, however, perfectly legal to carry metal rods, glass, and your pet rock "glowey".
+login-tips-dataset-714 = It never hurts to suck up to the Captain
+login-tips-dataset-715 = Don't trust a colleague wearing a better hardsuit than your own
+login-tips-dataset-716 = Home is where the heart is, but the stars are made of spessos!
+login-tips-dataset-717 = Every once in a while, declare peace, it confuses the hell out of your ennemies.
+login-tips-dataset-718 = Dignity and an empty satchel is worth the satchel.
+login-tips-dataset-719 = I wanna try this with nukies sometime. They declare war, we declare peace
+login-tips-dataset-720 = The difference between your character being a Funny Asshole and making people cryo as soon as they see you log on is to know and enjoy the fact that assholes are miserable, pathetic creatures, and that you probably deserve whatever response you get.
+login-tips-dataset-721 = Keep your lies consistent.
+login-tips-dataset-722 = Don't tell the head of department more than they need to know.
+login-tips-dataset-723 = It's never too late to fire the staff.
+login-tips-dataset-724 = Janitorial is a good job to take to familiarise yourself with station layouts and where you can make a quick exit.
+login-tips-dataset-725 = When in doubt, lie.
+login-tips-dataset-726 = If you can't carry a gun, carry knives. If you can't carry knives, carry bottles.
+login-tips-dataset-727 = Just because slime persons can metabolyze six drugs at once doesn't mean they have to.
+login-tips-dataset-728 = If a space french says "Wesh" when they greet you, it means they trust you, that they are relaxed in your presence, use that against them.
+login-tips-dataset-729 = Give dionas a better medical experience by mixing all their chems with robust harvest.
+login-tips-dataset-730 = It's a good thing robots can't unionize.
+login-tips-dataset-731 = You can microwave your ID to gain new access, but watch out!
+login-tips-dataset-732 = Fact: 90% of greytiders quit right before they're about to get command access
+login-tips-dataset-733 = If the mime speaks, it is time to panic.
+login-tips-dataset-734 = If the mime speaks through writing letters, publicly shame them.
+login-tips-dataset-735 = If you roll a 50% chance twice, you're 100% guaranteed to succeed!
+login-tips-dataset-736 = Please Drink Some Water!
+login-tips-dataset-737 = Stealing can be part of an elaborate self care ritual, don't judge!
+login-tips-dataset-738 = If I first you don't succeed, lie, lie, lie again!
+login-tips-dataset-739 = Just because something's easy for you doesn't mean you can't make it hard on your head of department.
+login-tips-dataset-740 = Gilrs prttey
+login-tips-dataset-741 = Watch out for the horse.
+login-tips-dataset-742 = kode mouth can warp perfec t size to put baby in to nap! inside very soft and comfort baby sleep soundly put baby in kodepai mouth. put baby in kodepia mouth. no problems ever in koddepia mouth because good shape and support for baby neck weak of big baby head. akodepi mouth yes a place for baby put baby in kodepia mouth can trust kodepia for giveing good love to baby. friend kodepia.
+login-tips-dataset-743 = The legality of most things is inversely proportional to how funny they are, which is why you're allowed to be a Clown.
+login-tips-dataset-744 = wow this place is a freakshow. i dont respect literally any of you people
+login-tips-dataset-745 = good thing you aren't on a penrose ship alone with a borg, at least
+login-tips-dataset-746 = ffeed every moth chocolate cafe latte notdhing can go wrong
+login-tips-dataset-747 = As a bartender, you can just throw whatever shit you want in a cup. The recipes don't stop you from doing this.
+login-tips-dataset-748 = ventspider jockey
+login-tips-dataset-749 = A mop can hit as hard as a baseball bat when wielded, isn't contraband, AND you can 'load' it by mopping up dangerous fluids.
+login-tips-dataset-750 = everyone loves the cardboard shittle
+login-tips-dataset-751 = tiger drop negates all damage
+login-tips-dataset-752 = the fartster than light engine is liable to break bones, skin, muscles, ligaments, cellular structure, DNA sequencing, surrounding infrastructure, the sound barrier, the laws of thermodynamics, and anyone caught in the direction of the blast.
+login-tips-dataset-753 = your position has been compromised. they're sending death squads after you.
+login-tips-dataset-754 = The lawyer is actually the highest ranking person on the station.
+login-tips-dataset-755 = You can do anything.
+login-tips-dataset-756 = You can't do anything.
+login-tips-dataset-757 = Eat fruit and exercise.
+login-tips-dataset-758 = Vegetables. Vegetables may be good for health. But I don't eat vegetables.
+login-tips-dataset-759 = You lost the game.
+login-tips-dataset-760 = ^ isn't that one in the game several times over already LOL
+login-tips-dataset-761 = War. War never changes. Except that one time when they showed up in clown costumes and start dosing people with meth while running towards the bridge. That did change things up quite a bit.
+login-tips-dataset-762 = Are you ready for the kind of death you've earned little man?
+login-tips-dataset-763 = Scientists are actually not crew! Science is heresy and should be met with extreme violence to preserve the faith.
+login-tips-dataset-764 = Heresy is a deviation from the religious cannon. Don't call unbelievers heretics: the proper term is apostate.
+login-tips-dataset-765 = It's polite to exclude the shuttle and bar from end-of-round griefing (EORG).
+login-tips-dataset-766 = It’s polite to include the shuttle and bar in end-of-round griefing (EORG).
+login-tips-dataset-767 = It’s polite to shuttle the bar and include in end-of-round griefing (EORG)
+login-tips-dataset-768 = It's end-of-round griefing to bar the polite in shuttle (EORG)
+login-tips-dataset-769 = (I feel like either all four of these gets added or none of them) (EORG)
+login-tips-dataset-770 =
+    I have learned that Dr. Bigot was the villain responsible for such racism in this episode. For years, I've learned that hate, racism, bigotry, prejudice, and inequality is wrong to those who have been inflicted in their brains, visions, intelligence, and minds in the world's society, and I've tried even the strongest and hardest to never EVER be a racist at all.
+
+
+    After all, I'm a human who makes mistakes and I'm not perfect (but imperfect).
+login-tips-dataset-771 = This game is dedicated to the brave Mujahideen fighters of Afghanistan
+login-tips-dataset-772 = Try to hurt the wizard every time you see him.
+login-tips-dataset-773 = being nice to strangers has a 0.1% chance of resulting in them randomly drawing your dolls
+login-tips-dataset-774 = ^ this is a real statistic
+login-tips-dataset-775 = I needed this place, to listen to the words people have to say. That's something they could never understand. You've done your part. You told us plenty. You've known the pain of ages. And even now you think, as any person would, that this can't be happening. Is it education? Morals, faith? Just an imprint of a lifetime of stories? Face to face with oblivion, which is where you are, and you still think that help is coming. The world you were born into is made to save you. Isn't that right? Of course it is. Everyone knows that. Until your last breath, you know it. Without the slightest chance or reason left to them, humans are capable of hope. I'm no different. But for one thing. When my time came calling I didn't die. My family died, my country died, but they didn't take me with them. All Hell took from me was this skin, this outer peel that marked me "human." My village had an oilseed field and a fine factory. Every day my friends and I would see our parents at work in that factory. That's all I had. All the world I knew. Then one day, aircraft came droning in from some far-off sky. The factory was bombed. Some... "spies" had told them we were making weapons. The building burned. We tried to flee outside. The crowd blocked the exit. The crowd of people. Hot. So hot. I tried to push through their legs and get ahead, but a boot in my stomach put me on the ground. The smoke of them burning filled me up. I heard my name called... but not for long. At the infirmary they carried me to, a nurse in the corner saw me and remarked, as if it happened every day: "They should let the poor thing die." Those are the only words of my mother tongue I remember. It was the language of my village. Until foreign troops invaded. Then the last identity I had left - the words I spoke - were pulled from me. My skin would never feel anything again. This face would be burned again, in torture, at foreign hands, but I, I still writhe in that burning factory. Doused in scalding rapeseed oil. That's all I have to feel, that pain - all I have to remind me I exist here. Those "spies" reported well. We made weapons all right. As cartloads of rifles came in from the battlefields, we fixed them up and sent them back out. So our country could win. Or rather, so that little world we knew could continue. I came to realize I mustn't die. I'm their last hope, all those who perished and left me here. I have to accomplish something. If I don't, their will will be swept out of this world. So? Do you see me now? Tell me. What do you see? Hmm? You have eyes. What do your eyes see? Yes, that's right. You see a skull face. You see me. This skull is who I am. My mark, my proof of humanity. I have no country, no language, I have no face, but I haven't lost my skull. So I told myself... The pain and effort that keep me alive will never know relief, never bear fruit, never be repaid. I know that, but I told myself to focus on some hope, a nonexistent hope to guide me through this burning world. A hope - call it a dream. A melancholic delusion. As the pressures within me stretch me to bursting, and I force myself not to cry out, though the words I thought were carved into me are gone, and all I knew is dead. I know how you feel. I've felt that. So show me. That I'm not the only one. That you too can return to this world, for revenge. Do you see me? Don't die. Don't die! Ahh…
+login-tips-dataset-776 =
+    "Unfortunate" doesn't begin to describe my series, this game rewards blind luck and nothing else, I am beyond convinced at this point. After getting completely tooled by scheduling with my opponent changing times on me last minute and refusing to provide confirmation prior to the day of the match as to play times, losing this way somehow felt even worse than I had thought possible. My preparation was superior, my play was superior, and I lost, so I don't see a reason to continue engaging in an activity where what is within my control is overwhelmingly outweighed by what is not.
+
+
+
+    I am done with competitive Pokemon, and you won't get a fond farewell. This community is infected to its roots with a degenerative disease that grows stronger over time but stops short of killing its host. Tournaments used to have a competitive spirit at their heart, this has been transplanted and replaced with an artificial organ that feeds on vitriol and mockery from insecure little boys that heckle by the sidelines and tear each other to shreds over scraps of attention. The environment we fostered has trapped us all like this in a vicious cycle, and escaping it requires acceptance of the harshest reality we all scramble to explain away, that none of the countless straining efforts we put ourselves through here will ever amount to one single shining glimmer of significance. I would make this the end, but World Cup is still ongoing, and I would never leave so many great friends out to dry, so I'll suffer through a few more games for them.
+
+
+
+    One last thing before I leave you all to react with disdain, ridicule, and self-righteous fervor, before you do everything in your power to minimize my words and thoughts, box them up and shove them to some cobwebbed corner of your memory, and hope they disappear forever as a stain on your finite time ground to dust. From this moment on, nothing you say matters to me. The foulest insults you hurl with intent to wound will calmly settle at the earth before my feet, and the venom you spit will bring all the pain of a warm summer breeze. You are less than anything you can conceive, while I carry on, brimming with joy distilled from detachment.
+login-tips-dataset-777 = I've seen things you people wouldn't believe. Attack ships on fire off the shoulder of Orion. I watched C-beams glitter in the dark near the Tannhäuser Gate. All those moments will be lost in time, like tears in rain. Time to die.
+login-tips-dataset-778 = If something has a solution... Why do we have to worry about?. If it has no solution... For what reason do we have to worry about? Help me to understand what I'm saying, and I'll explain it better to you Rating helpful answers is nice, but saying thanks can be even nicer. Stolen from @Nelek
+login-tips-dataset-779 = great water on this one
+login-tips-dataset-780 = Real Grey Concordia has not been attempted yet
+login-tips-dataset-781 = You are allowed to request your execution method within reason! Maybe Sec will let you have fun with it! You can get knives thrown at you for your crimes.
+login-tips-dataset-782 = You are allowed to request your execution method within reason! Maybe Sec will let you die of old age.
+login-tips-dataset-783 =
+    flashback to one of my earlier rounds of Grey getting put in an artifact crusher for like penta-homicide
+    and reciting the One Piece intro as he gets hydraulic pressed in front of the entire station
+login-tips-dataset-784 = This was a real execution Tail had Captain Fortuna do to it btw. It took so long I missed evac
+login-tips-dataset-785 = I think the only execution I've been involved in was a changeling we gave the firing suad just outside medbay
+login-tips-dataset-786 = no discussion $350 fine
+login-tips-dataset-787 = putain my piskun baka life...
+login-tips-dataset-788 = Won't the real Grey Concordia please stand up, please stand up, please stand up?
+login-tips-dataset-789 = if you ever disagree with a woman no you don't
+login-tips-dataset-790 = impstation.gay
+login-tips-dataset-791 = I need to kill. I need to stop caring. Instead of going "oh her wife is gomna be sad" i gotta go "oh her wife is gonna be SINGLE." MARTIN I AM FUCKING COMING FOR YOU AND I DON'T EVEN KNOW YOU. ASH ZERIN IS NOW AN INCEL TERRORIST
+login-tips-dataset-792 = Debt is a sign of being prepared.
+login-tips-dataset-793 = Nanotrasen rates employees using the CLCSR system, which tracks their relevant scores across five attribute that go from 0 to 4. These attributes are Company Loyalty, Locking in, Communications, Spacer Instinct and Robustness. Learn more about your CLCSR scores by submitting your applications to The Trials to your Head of Personnel.
+login-tips-dataset-794 = the most normal people are dead babies
+login-tips-dataset-795 = Nanotrasen: Now partnered with Lumon!
+login-tips-dataset-796 = throw me into the aquarium and I’m coming back pregnant. I’m shark food baby
+login-tips-dataset-797 = If You Want HER to Kiss YOU, Use The "Triangle" Move
+login-tips-dataset-798 = Boomer has fallen down a hole, leading to his instant demise.
+login-tips-dataset-799 = Sometimes, old women will leave a **Pie** in their **Window** to cool down, use this opportunity to **Get to Know Them**
+login-tips-dataset-800 = Satire requires a clarity of purpose and target lest it be mistaken for and contribute to that which it intends to criticize
+login-tips-dataset-801 = greytiding is like admemeing, but cooler, because you're doing it with your own two hands
+login-tips-dataset-802 =
+    You can change Karryn's
+    magnificent boobies anytime.
+    Your options are big warden H cups,
+    or huge warden K cups.
+    Choose whichever ones suits your tastes!
+login-tips-dataset-803 = You're probably wondering what I'm gonna need this speed for, but to answer that, we need to talk about parallel universes.
+login-tips-dataset-804 =
+    an a press is an a press.
+    You can't say it's only a half
+login-tips-dataset-805 =
+    Thats fucking baseball right there. None of that pansy ass dick tugging smile for the camera bullshit. Men puke, men poop on the field, men deliver their new born baby in the dugouts. Fucking hard core dick in the ass butterball foosball fuck it chuck it game time shit. Take it to the showers. Dicks get shoved in places you don’t even remember. We win together we celebrate together. Baseball is back baby.
+
+    What he said
+login-tips-dataset-806 =
+    You can draw Pac-Man facing up, down,
+    left, or right. Be sure to practice
+    drawing him facing all directions.
+login-tips-dataset-807 = if you regularly take mystery pills, you will need to change your life styles or else you will pass away
+login-tips-dataset-808 =
+    Hello pervert,
+
+    I want to inform you about a very bad situation for you. However, you can benefit from it, if you act wisely.
+login-tips-dataset-809 = Press Ⓐ to pick up hot coals.
+login-tips-dataset-810 = being an owl is sick as fuck because you can unlock the ability to do an anti air command grab where you do an izuna drop and both of you plummet to the ground killing both of you instantly. Owls are literally always doing this
+login-tips-dataset-811 = i could've protected arbys
+login-tips-dataset-812 = I'm in heaven, Mr. Squidward...
+login-tips-dataset-813 = controklers are more than  plastic and metal and shitt theyre basically a hole world of sexual pleasure and delight for the distinguished pig
+login-tips-dataset-814 = Spyro, you must remember that only certain wall types will allow you to perform the Wall Kick. You must learn their tell tale signs. None of your A.D.D.
+login-tips-dataset-815 =
+    It's a picture...but I
+    wouldn't call it art.
+login-tips-dataset-816 = Most NPCs have a weakness to being fucking bullied and pushed over! Simply right click them while in combat mode and watch as they grovel at your feet, giving you the opportunity to escape!
+login-tips-dataset-817 = Downloading sex pictures
+login-tips-dataset-818 =
+    Take off your clothes and post a selfie, a million animals will shower your attention.
+    But cover up all and open your heart, Only precious few humans will care to listen.
+    Abhijiy Naskar
+login-tips-dataset-819 = What if i bandaged your bleeding wounds abd we were both gorld
+login-tips-dataset-820 = It’s me. I’m the animals. You just exposed your stomach with that nude pic and god damn if I’m not gonna pass up a free meal.
+login-tips-dataset-821 =
+    THINK I'LL DO ME TODAY AND JUST
+    CHILL LIKE I USED TO BACK IN THE DAYS
+login-tips-dataset-822 = Wizards are magical men who will kill you without so much as a hello. Bitch wizard blowing by, killing themselves with space
+login-tips-dataset-823 = "Prevent Tarantula(s) from attacking you by showing them your student ID. (R key by default) "
+login-tips-dataset-824 = scrunt
+login-tips-dataset-825 =
+    Hey, man I love video games too,
+    but sometimes you gotta jack off
+    face down on your mattress!
+login-tips-dataset-826 =
+    HINT!
+
+    BIG FRUIT IS EQUAL TO FOUR
+    NORMAL FRUIT. IT CAN BE EATEN
+    BY
+    FOUR YUMSTERS AT ONCE.
+
+    CLICK TO CONTINUE
+login-tips-dataset-827 = Not doing everything absolutely perfect is a bannable offence.
+login-tips-dataset-828 = :s set grey to wanted he just went ssj3 and gibbed a scientist
+login-tips-dataset-829 = @Dark can we please make this a tip
+login-tips-dataset-830 = remember: You don't have to listen to the admins, but they don't have to let you stay unbanned either
+login-tips-dataset-831 =
+    Holding Down Buttons
+    (X) = Hold Down
+
+    When you see the (X) icon, you will need to hold down X. Try holding it down until the delivery terminal responds.
+
+    Note that you will also need to hold down buttons other than X. For example, when you see the (<) icon, you will need to hold down <.
+login-tips-dataset-832 = Since we're just posting screenshots...
+login-tips-dataset-833 = Tilt the mouse to dodge Joker's gun fire.
+login-tips-dataset-834 = *The Bombs payload is exposed. I can use the power winch to trigger a controlled explosion.*
+login-tips-dataset-835 = Riddler has created this death trap to be impossible to solve. You will need to collect all your gadgets and upgrades to outsmart him.
+login-tips-dataset-836 = If we grind enough dogs into concerning looking pastes or meals we may be able to bring Pjackk out of Purgatory or Hell but definitely not heaven because we all know he wouldn't be there.
+login-tips-dataset-837 = If you attack someone with a mouse, or carp plushie in hand, it will play a bite animation and sound while doing no damage. Try this during code violet!
+login-tips-dataset-838 = Different people learn in different ways, it is okay if you can't learn a ton of concepts in one round. Buuuut if you are teaching someone and wanna try making it stick, try to make them laugh as a part of the lesson.
+login-tips-dataset-839 = good girl -> satistactory small woman
+login-tips-dataset-840 = Gray is the alien Grey is the Concordia
+login-tips-dataset-841 =
+    Tip: By right clicking on a player, and then right clicking the 💀 icon,you can q
+    uickly determine their sobogono awaa duauubbbuu mogigi bana duouobobo
+login-tips-dataset-842 = Grey is the head that wears the mop
+login-tips-dataset-843 = I am going to have sex with this female Flame Atronach from Oblivion. I find the Flame Atronaches in The Elder Scrolls IV Oblivion sexy. However, their body is made up of 87% fire, and 100% fire surrounds them. That could kill me if I tried to have sex with one. To remedy this, the Flame Atronach casts a spell on me making me resistant to fire. Keep in mind, resistant is not the same as immune. I still take damage. It is either 1 point or 0 points of damage each second I am having sex with her. Just because a particular second caused 0 points of damage, does not mean that I did not feel anything, it just means I took no damage. I am not going to rush through having sex with this Flame Atronach. I make sure I pleasure anything I have sex with-especially non-humans! I'd rather take damage than not pleasure the Flame Atronach. The Flame Atronach and I go to the Planes of Oblivion to have sex. When having sex with non-humans, it is ALWAYS sexier to have sex in their natural habitat rather than a human's natural habitat. The Planes of Oblivion is the Flame Atronach's natural habitat.
+login-tips-dataset-844 =
+    Low poly cars are better for the
+    environment, so I recommend you
+    buy one.
+login-tips-dataset-845 = Holy Shit, I've Got A Great Idea, I'm Such A Genius LOL I Think I Should Get A Patent LOL I Need To Go To The Tokyo Patent Office LOL
+login-tips-dataset-846 = Pinned a message.
+login-tips-dataset-847 = You’ve Got to Find my Cube!
+login-tips-dataset-848 = Forgotten what you’re meant to be doing? Check the mails marked with a λ. Don’t worry, I haven’t forgotten that you’re a big fan of Half-Life!
+login-tips-dataset-849 =
+    {"["}Collect / Retrieve at] Special Machine
+           Collect 3 kg or More of Special Machine
+login-tips-dataset-850 = It's a picture...but I wouldn't call it art.
+login-tips-dataset-851 =
+    SESBIAN LEX
+    SCENE
+    MISSING
+login-tips-dataset-852 =
+    my epic transcription:
+
+    Tip: By right clicking on a player, and then right clicking the 👽 icon, you can q uickly determine their sobogono awaa duauubbbuu mogigi bana duouobobo
+login-tips-dataset-853 = They say that in Upper City, you can eat as much white bread as you want. I’ve never eaten white bread, only hard, black bread… I hear people never chip their teeth on white bread. I’d like to try it sometime…
+login-tips-dataset-854 =
+    Bless you, my slime.
+    Please switch the power OFF.
+login-tips-dataset-855 =
+    "you were specifically doing it directly within
+    earshot of the AI core. so the entire time i was
+    helping people with doors and finding
+    anomalies and stuff i just kept hearing Hugh J
+    Load going "HJHHRRNRNNGNGNHHH
+    ASUUUUGHHHH IM SHITTTIIINGGGGG""
+login-tips-dataset-856 = Reminder to have a transcript of the loading screen tip!!
+login-tips-dataset-857 = Please…
+login-tips-dataset-858 = done, letter for letter
+login-tips-dataset-859 = ALL ACCESS as a TRAITOR no scam 100% legal no sec!!!!
+login-tips-dataset-860 = I'm pretty sure that if you ask a wizard for a kiss you are going to get turned into a frog. That's how the story goes or something.
+login-tips-dataset-861 = everything is darkest before the soul
+login-tips-dataset-862 = every soul has its dark
+login-tips-dataset-863 = Cryoxadone is completely free to produce, with some clever electrolysis.  It's fundamentally just tap water that a chemist got a little freaky with.
+login-tips-dataset-864 = If you try to revive your patient and get a message about their body composition preventing revival, it means you fucked up. This is all your fault.
+login-tips-dataset-865 =
+    anyone can roast beef
+    but nobody can pee
+login-tips-dataset-866 = the phantom exterior like fish eggs interior like suicide wrist-red. I could exercise you, this could be your phys-ed. Cheat on your man homie-- AAGH I tried to sneak through the door man! Can't make it. Can't make it. The shit's stuck. Outta my way son! DOOR STUCK! DOOR STUCK! PLEASE! I BEG YOU! We're dead. Your- You're a genuine dick sucker!
+login-tips-dataset-867 =
+    rules:
+    1. movie is decided every friday night ~8pm est except for tiebreaks decided saturday ~4pm est
+    2. person who suggests movie has to be able to make it
+    3. Clifford (1994) cannot be suggested
+    4. in case of a 5 way tie at the end of the voting period, Clifford (1994) will automatically be chosen
+login-tips-dataset-868 = You will certainly not regret 500 mothroaches
+login-tips-dataset-869 = This world has been connected.
+login-tips-dataset-870 = YOU TAKE SOME CHOCOLATE AND SOME LOBSTER AND SOME EGGS AND SOME PIE, AND THEN YOU MIX IT IN YOUR BODY, SHIT IT ALL OUT
+login-tips-dataset-871 = Pay attention to me, or I'm going to run away!
+login-tips-dataset-872 = Impstation is awesome. Life is awesome too. Don't forget to have a break sometimes and do something else. Then play more Impstation!
+login-tips-dataset-873 =
+    Your Pulse Quickens,
+    The Eternal Impure,
+    With Bloodlust Empowered,
+    Our Syndicate Endured,
+    But soon all were devoured,
+    In Unending War.
+    Death waited at the door,
+    Then hour by hour… Crew fell as atoms soured.
+login-tips-dataset-874 = A MACHINE BUILT TO END WAR IS ALWAYS A MACHINE BUILT TO CONTINUE WAR.
+login-tips-dataset-875 =
+    {"["}Verse 1]
+    Remember King Kong? Remember Ferris Bueller?
+    Remember WarGames and Back to the Future?
+    Remember Tomb Raider? Remember Weird Science?
+    Remember Battletoads and the Iron Giant?
+    Remember Star Wars and Transformers: the Movie?
+    Remember Ghostbusters? Remember the Goonies?
+    Remember when neon used to be trendy?
+    Remember the "where's the beef?" lady from Wendy's?
+
+    {"["}Chorus]
+    ('Mary had a Little Lamb' on keyboards)
+    (I-I-I-I-I-I remember)
+
+    {"["}Verse 2]
+    Remember Akira? That's from Japan
+    Remember Galaga and Mrs. Pac Man?
+    Remember Contra? Remember Street Fighter?
+    Remember the A-Team? Remember Knight Rider?
+    Remember the Simpsons, seasons one through nine?
+    Remember logging on to America Online?
+    Remember Highlander and Highlander II?
+    Remember Star Trek? We certainly do
+
+    {"["}Chorus]
+    ('Mary had a Little Lamb' on keyboards)
+    (Ready Player One!)
+login-tips-dataset-876 = vent foam can literally be girl dinner
+login-tips-dataset-877 =
+    It's time for the announcement:
+      gay people
+login-tips-dataset-878 = Tomorrow morning, 8 AM
+login-tips-dataset-879 = Imp Sector Cargo: Come for the shuttle flight time and less pressure than medical, stay for all these hot women
+login-tips-dataset-880 = A country boy can survive
+login-tips-dataset-881 = Do the best you can to be an honest man, don't you never trust Johnny Law
+login-tips-dataset-882 = [unintelligible]
+login-tips-dataset-883 = You are forcing sensitive white boy to puff on the vape.
+login-tips-dataset-884 = Make sure to write down in your notebook whether you saw the revidence, or the blevidence. Don’t look at both!
+login-tips-dataset-885 = Heavy hang the hips that wear the strap
+login-tips-dataset-886 = “In trouble” is not a location.
