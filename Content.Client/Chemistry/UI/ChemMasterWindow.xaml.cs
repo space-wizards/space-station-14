@@ -144,14 +144,17 @@ namespace Content.Client.Chemistry.UI
         public void UpdateState(BoundUserInterfaceState state)
         {
             var castState = (ChemMasterBoundUserInterfaceState)state;
-
+            var outputCreationSolutionVariable = new Label
+            {
+                Text = $" {castState.InputContainerInfo?.CurrentVolume ?? 0}u",
+            }; // Creates a variable for how much solution is in the input beaker to be used for Pill/Patches creation
+          
             if (castState.UpdateLabel)
                 LabelLine = GenerateLabel(castState);
 
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
-
-            BufferCurrentVolume.Text = $" {castState.InputContainerInfo?.CurrentVolume.Int() ?? 0}u"; // Imported from Delta-V
+            BufferCurrentVolume.Text = outputCreationSolutionVariable.Text; // Beaker Changes for Pills/Patches creation
 
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
             OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
