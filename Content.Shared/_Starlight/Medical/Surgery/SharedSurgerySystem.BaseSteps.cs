@@ -44,6 +44,16 @@ public abstract partial class SharedSurgerySystem
                 Dirty(args.Target.Value, dirtyPart, Comp<MetaDataComponent>(args.Target.Value));
             return;
         }
+
+        if (_net.IsServer)
+        {
+            if (TryComp<MetaDataComponent>(step, out var meta))
+            {
+                
+                var surgeonName = MetaData(args.User).EntityName;
+                _popup.PopupEntity($"{surgeonName} performs {meta.EntityName}", part, PopupType.LargeCaution);
+            }
+        }
         
         if (!_random.Prob(args.SuccessRate))
         {
