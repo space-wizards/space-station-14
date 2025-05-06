@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Smart equipping into your backpack w/ a nested storage window open no
-      longer bugs out
-    type: Fix
-  id: 7928
-  time: '2025-02-11T02:15:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35048
 - author: Tayrtahn
   changes:
   - message: Radio frequencies are now displayed with a decimal point.
@@ -3927,3 +3919,10 @@
   id: 8429
   time: '2025-05-06T18:13:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37108
+- author: OnyxTheBrave
+  changes:
+  - message: Holy water now correctly metabolizes at .5 unites per second
+    type: Fix
+  id: 8430
+  time: '2025-05-06T18:31:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37106
