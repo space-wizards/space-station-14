@@ -30,8 +30,6 @@ Grime everything up a bit again.
 - Lotta errors about entity cable terminals
 - Screens not showing evac ETA?
 	Broadcast not working either.
-Add financial whatever computers + lockboxes to depts
-Add silo to Sci
 Genpop (bah)
 
 Evac Shuttle:
@@ -54,6 +52,7 @@ Does tider shop light *start* off, or on? Should be off.
 	Maybe they're anchored now? They are in the editor.
 Atmos. Just in general. (But especially my oxygen cabbage nonsense)
 Execution telescreens - I swapped out components, they should see the entertainment network now
+Make sure disposal ejector firelocks actually work under the plastic/with the air sensor under the conveyor belts.
 
 
 THINGS I COULD MAKE:
@@ -338,3 +337,5 @@ DONE:
 /* 		But these seem to have the same values for both TV and Telescreen */
 /* 	It's "WirelessNetworkComponent" vs "WiredNetworkComponent" */
 	/* Camera monitors in Sec are at least restricted to General... */
+/* Add financial whatever computers + lockboxes to depts */
+/* Add silo to Sci */
