@@ -1,25 +1,28 @@
--Make flare spent
---	Give: Passenger PDA/ID (name?), Ancient jumpsuit, gas mask, budget insuls,
-		shoes, bling, ID computer board in pocket
-- Make the station move forward!
-- Job numbers in the prototype file
-Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
-Command Meeting: Needs access to execution cameras
-I'd really like the sec camera monitors to only see General if possible...
-Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there...
+MAYBE:
 Would it be too radical to totally left/right swap the Atmos
 	gas chambers so that the disposal pipeline linkup is less terrible?
 	This impacts distro pipeline as well, naturally, so dunno.
 	It might be nice to have the spaced area between the tanks
 		and the burn chamber, just for a bit of a buffer zone.
 		Ditto the public hallway, too, though...
-Cryo piping
-Make easier to navigate in general, + add standard colors around more
-	Maybe crappy scribble decals on top of the MIRI flooring?
 Take out empty trit can?
 Deal with very long TEG pipeline somehow.
 Swap nuke/PA? Move nuke to vault?
 Move oxy miner to where the other gasses are?
+
+
+
+
+-Make flare spent
+--	Give: Passenger PDA/ID (name?), Ancient jumpsuit, gas mask, budget insuls,
+		shoes, bling, ID computer board in pocket
+- Make the station move forward!
+- Job numbers in the prototype file
+Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
+Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there...
+Cryo piping
+Make easier to navigate in general, + add standard colors around more
+	Maybe crappy scribble decals on top of the MIRI flooring?
 Set ejection chamber button access (cap and HoS)
 Nudge wall sign transform variables to make them line up better
 Salvage space arm is getting sensed as part of the room by air sensors?
@@ -339,3 +342,5 @@ DONE:
 	/* Camera monitors in Sec are at least restricted to General... */
 /* Add financial whatever computers + lockboxes to depts */
 /* Add silo to Sci */
+/* Command Meeting: Needs access to execution cameras */
+/* I'd really like the sec camera monitors to only see General if possible... */
