@@ -140,8 +140,29 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (_randomizeCharacters)
         {
             var weightId = _configurationManager.GetCVar(CCVars.ICRandomSpeciesWeights);
-            var weights = _prototypeManager.Index<WeightedRandomSpeciesPrototype>(weightId);
-            speciesId = weights.Pick(_random);
+
+            // If blank, choose a round start species.
+            if (string.IsNullOrEmpty(weightId))
+            {
+                var roundStart = new List<ProtoId<SpeciesPrototype>>();
+
+                var speciesPrototypes = _prototypeManager.EnumeratePrototypes<SpeciesPrototype>();
+                foreach (var proto in speciesPrototypes)
+                {
+                    if (proto.RoundStart)
+                        roundStart.Add(proto.ID);
+                }
+
+                if (roundStart.Count == 0)
+                    speciesId = SharedHumanoidAppearanceSystem.DefaultSpecies;
+                else
+                    speciesId = _random.Pick(roundStart);
+            }
+            else
+            {
+                var weights = _prototypeManager.Index<WeightedRandomSpeciesPrototype>(weightId);
+                speciesId = weights.Pick(_random);
+            }
         }
         else if (profile != null)
         {

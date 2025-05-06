@@ -1059,7 +1059,7 @@
     collection: FootstepCarpet
   barestepSounds:
     collection: BarestepCarpet
-  friction: 0.25
+  friction: 1.25
   itemDrop: FloorTileItemArcadeBlue
   heatCapacity: 10000
 
@@ -1074,7 +1074,7 @@
     collection: FootstepCarpet
   barestepSounds:
     collection: BarestepCarpet
-  friction: 0.25
+  friction: 1.25
   itemDrop: FloorTileItemArcadeBlue2
   heatCapacity: 10000
 
@@ -1089,7 +1089,7 @@
     collection: FootstepCarpet
   barestepSounds:
     collection: BarestepCarpet
-  friction: 0.25
+  friction: 1.25
   itemDrop: FloorTileItemArcadeRed
   heatCapacity: 10000
 
@@ -1104,7 +1104,7 @@
     collection: FootstepCarpet
   barestepSounds:
     collection: BarestepCarpet
-  friction: 0.25
+  friction: 1.25
   itemDrop: FloorTileItemEighties
   heatCapacity: 10000
 
@@ -1119,7 +1119,7 @@
     collection: FootstepCarpet
   barestepSounds:
     collection: BarestepCarpet
-  friction: 0.25
+  friction: 1.25
   itemDrop: FloorTileItemCarpetClown
   heatCapacity: 10000
 
@@ -1134,7 +1134,7 @@
     collection: FootstepCarpet
   barestepSounds:
     collection: BarestepCarpet
-  friction: 0.25
+  friction: 1.25
   itemDrop: FloorTileItemCarpetOffice
   heatCapacity: 10000
 
@@ -1153,7 +1153,7 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  friction: 0.25
+  friction: 1.25
   itemDrop: FloorTileItemBoxing
   heatCapacity: 10000
 
@@ -1172,7 +1172,7 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  friction: 0.25
+  friction: 1.25
   itemDrop: FloorTileItemGym
   heatCapacity: 10000
 
@@ -1548,6 +1548,7 @@
   id: FloorAsteroidSand
   parent: FloorAsteroidSandBorderless
   name: tiles-asteroid-sand
+  edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
     NorthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
@@ -1573,6 +1574,7 @@
   id: FloorAsteroidSandDug
   parent: FloorAsteroidSandDugBorderless
   name: tiles-asteroid-sand
+  edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
     NorthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
@@ -1613,6 +1615,7 @@
   id: FloorAsteroidSandRed
   parent: FloorAsteroidSandRedBorderless
   name: tiles-asteroid-sand
+  edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
     NorthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
@@ -1667,6 +1670,7 @@
   id: FloorAsteroidIronsand
   parent: FloorAsteroidIronsandBorderless
   name: tiles-asteroid-ironsand
+  edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/Tiles/Asteroid/iron_single_edge.png
     NorthEast: /Textures/Tiles/Asteroid/iron_single_edge.png
@@ -1692,6 +1696,7 @@
   id: FloorAsteroidSandUnvariantized
   parent: FloorAsteroidSandUnvariantizedBorderless
   name: tiles-asteroid-sand
+  edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
     NorthEast: /Textures/Tiles/Asteroid/asteroid_single_edge.png
@@ -1717,6 +1722,7 @@
   id: FloorAsteroidIronsandUnvariantized
   parent: FloorAsteroidIronsandUnvariantizedBorderless
   name: tiles-asteroid-ironsand
+  edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/Tiles/Asteroid/iron_single_edge.png
     NorthEast: /Textures/Tiles/Asteroid/iron_single_edge.png
@@ -1783,7 +1789,7 @@
   footstepSounds:
     collection: FootstepBlood
   itemDrop: FloorTileItemFlesh
-  friction: 0.05 #slippy
+  friction: 0.25 #slippy
   heatCapacity: 10000
 
 - type: tile
@@ -1985,9 +1991,8 @@
   deconstructTools: [ Prying ]
   friction: 0.05
   heatCapacity: 10000
-  mobFriction: 0.5
-  mobFrictionNoInput: 0.05
-  mobAcceleration: 2
+  mobFriction: 0.05
+  mobAcceleration: 0.1
   itemDrop: FloorTileItemAstroIce
 
 - type: tile
