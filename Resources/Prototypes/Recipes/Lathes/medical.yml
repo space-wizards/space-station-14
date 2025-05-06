@@ -167,7 +167,7 @@
   completetime: 4
   materials:
     Plastic: 300
-    Durathread: 100
+    Durathread: 200
 
 - type: latheRecipe
   parent: Medkit
