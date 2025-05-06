@@ -135,9 +135,10 @@
         - !type:VisualizerDataInt
           key: "enum.MechAssemblyVisuals.State"
           data: 16
-
+    
       - tag: MechAirTank
         name: exosuit air tank
+        store: gas-tank-container
         icon:
           sprite: Objects/Specific/Mech/mecha_equipment.rsi
           state: mecha_air_tank
