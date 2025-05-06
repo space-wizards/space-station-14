@@ -5528,4 +5528,11 @@ Entries:
   id: 766
   time: '2025-05-06T04:34:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/580
+- author: Happyrobot33
+  changes:
+  - message: Speculative fix for event scheduler issues.
+    type: Fix
+  id: 767
+  time: '2025-05-06T04:35:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/583
 
