@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: 'New artifact trigger: Expressiveness'
-    type: Add
-  id: 1111
-  time: '2025-02-11T22:36:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1642
-- author: rainyatrium
-  changes:
-  - message: Added 21 new Syndicate factions from character backstories
-    type: Add
-  id: 1112
-  time: '2025-02-13T10:39:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1675
 - author: widgetbeck
   changes:
   - message: (Most) antag roles now have playtime tracking in the stats menu.
@@ -4159,3 +4145,17 @@
   id: 1610
   time: '2025-05-05T03:18:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2307
+- author: irismessage
+  changes:
+  - message: CONGRATULATIONS!! Your name has been approved by the Toon Council.
+    type: Add
+  id: 1611
+  time: '2025-05-06T22:41:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2406
+- author: honeyed-lemons
+  changes:
+  - message: Atmos Techs in Xeno might feel more confident taking their chute to engineering
+    type: Fix
+  id: 1612
+  time: '2025-05-06T22:42:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2409
