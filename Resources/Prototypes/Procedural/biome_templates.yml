@@ -98,6 +98,17 @@
 - type: dungeonConfig
   id: GrasslandsTiles
   layers:
+  # Water sand
+  - !type:SampleTileDunGen
+    tile: FloorPlanetDirt
+    threshold: 0.95
+    noise:
+      seed: 3
+      noiseType: OpenSimplex2
+      frequency: 0.003
+      lacunarity: 1.50
+      fractalType: Ridged
+      octaves: 1
   # Rock formation sand
   - !type:SampleTileDunGen
     tile: FloorPlanetDirt
@@ -111,17 +122,6 @@
       octaves: 5
       cellularDistanceFunction: Euclidean
       cellularReturnType: Distance2
-  # Water sand
-  - !type:SampleTileDunGen
-    tile: FloorPlanetDirt
-    threshold: 0.95
-    noise:
-      seed: 3
-      noiseType: OpenSimplex2
-      frequency: 0.003
-      lacunarity: 1.50
-      fractalType: Ridged
-      octaves: 1
   - !type:SampleTileDunGen
     threshold: -0.90
     tile: FloorPlanetGrass
