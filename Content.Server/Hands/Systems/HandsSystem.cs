@@ -226,12 +226,10 @@ namespace Content.Server.Hands.Systems
 
             var throwSpeed = hands.BaseThrowspeed;
             // Checks for and applies a throwing speed modifier
-            if (TryComp<ThrowSpeedModifierComponent>(throwEnt, out var speedComp))
+            if (TryComp<ThrowSpeedModifierComponent>(throwEnt, out _))
             {
-                throwSpeed += speedComp.FlatModifier;
-                throwSpeed *= speedComp.Multiplier;
-
-                throwSpeed = Math.Max(0, throwSpeed);
+                var speedModifierEvent = new ThrowSpeedModifierEvent();
+                RaiseLocalEvent(player, ref speedModifierEvent);
             }
 
             // Let other systems change the thrown entity (useful for virtual items)
