@@ -14,6 +14,9 @@ public sealed partial class PrototypeDunGen : IDunGenLayer
     [DataField]
     public DungeonInheritance InheritDungeons = DungeonInheritance.None;
 
+    [DataField]
+    public ReservedInheritance InheritReserved = ReservedInheritance.None;
+
     [DataField(required: true)]
     public ProtoId<DungeonConfigPrototype> Proto;
 }
@@ -32,6 +35,19 @@ public enum DungeonInheritance : byte
 
     /// <summary>
     /// Inherit all of the current layer's dungeons.
+    /// </summary>
+    All,
+}
+
+public enum ReservedInheritance : byte
+{
+    /// <summary>
+    /// Don't inherit any reserved tiles.
+    /// </summary>
+    None,
+
+    /// <summary>
+    /// Inherit reserved tiles,
     /// </summary>
     All,
 }

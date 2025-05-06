@@ -8,6 +8,12 @@ namespace Content.Shared.Procedural.DungeonLayers;
 
 public sealed partial class SampleDecalDunGen : IDunGenLayer
 {
+    /// <summary>
+    /// Reserve any tiles we update.
+    /// </summary>
+    [DataField]
+    public bool ReserveTiles = true;
+
     [DataField(customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
     public List<string> AllowedTiles { get; private set; } = new();
 

@@ -16,7 +16,8 @@ public sealed partial class DungeonJob
         HashSet<Vector2i> reservedTiles,
         Random random)
     {
-        gen.Noise.SetSeed(random.Next());
+        var oldSeed = gen.Noise.GetSeed();
+        gen.Noise.SetSeed(_seed + oldSeed);
 
         foreach (var dungeon in dungeons)
         {
@@ -34,7 +35,14 @@ public sealed partial class DungeonJob
 
                 _decals.TryAddDecal(random.Pick(gen.Decals), new EntityCoordinates(_gridUid, tile), out var did);
                 AddLoadedDecal(tile, did);
+
+                if (gen.ReserveTiles)
+                {
+                    reservedTiles.Add(tile);
+                }
             }
         }
+
+        gen.Noise.SetSeed(oldSeed);
     }
 }

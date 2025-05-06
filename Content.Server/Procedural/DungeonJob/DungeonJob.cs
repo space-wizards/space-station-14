@@ -114,12 +114,18 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         Vector2i position,
         DungeonConfig config,
         List<IDunGenLayer> layers,
-        HashSet<Vector2i> reservedTiles,
         int seed,
         Random random,
+        HashSet<Vector2i>? reserved = null,
         List<Dungeon>? existing = null)
     {
         var dungeons = new List<Dungeon>();
+        var reservedTiles = new HashSet<Vector2i>();
+
+        if (reserved != null)
+        {
+            reservedTiles.UnionWith(reserved);
+        }
 
         // Don't pass dungeons back up the "stack". They are ref types though it's a caller problem if they start trying to mutate it.
         if (existing != null)
@@ -176,10 +182,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         var random = new Random(_seed);
         var position = (_position + random.NextPolarVector2(_gen.MinOffset, _gen.MaxOffset)).Floored();
 
-        // Tiles we can no longer generate on due to being reserved elsewhere.
-        var reservedTiles = new HashSet<Vector2i>();
-
-        var dungeons = await GetDungeons(position, _gen, _gen.Layers, reservedTiles, _seed, random);
+        var dungeons = await GetDungeons(position, _gen, _gen.Layers, _seed, random);
         // To make it slightly more deterministic treat this RNG as separate ig.
 
         // Post-processing after finishing loading.
@@ -236,6 +239,9 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 break;
             case BoundaryWallDunGen boundary:
                 await PostGen(boundary, dungeons[^1], reservedTiles, random);
+                break;
+            case ChunkDunGen chunk:
+                dungeons.Add(await PostGen(chunk, reservedTiles, random));
                 break;
             case CornerClutterDunGen clutter:
                 await PostGen(clutter, dungeons[^1], reservedTiles, random);
@@ -294,19 +300,35 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
             case PrototypeDunGen prototypo:
                 var groupConfig = _prototype.Index(prototypo.Proto);
                 position = (position + random.NextPolarVector2(groupConfig.MinOffset, groupConfig.MaxOffset)).Floored();
+                List<Dungeon>? inheritedDungeons = null;
+                HashSet<Vector2i>? inheritedReserved = null;
+
+                switch (prototypo.InheritReserved)
+                {
+                    case ReservedInheritance.All:
+                        inheritedReserved = reservedTiles;
+                        break;
+                    case ReservedInheritance.None:
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
 
                 switch (prototypo.InheritDungeons)
                 {
                     case DungeonInheritance.All:
-                        dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random, existing: dungeons));
+                        inheritedDungeons = dungeons;
                         break;
                     case DungeonInheritance.Last:
-                        dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random, existing: dungeons.GetRange(dungeons.Count - 1, 1)));
+                        inheritedDungeons = dungeons.GetRange(dungeons.Count - 1, 1);
                         break;
                     case DungeonInheritance.None:
-                        dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random));
                         break;
+                    default:
+                        throw new NotImplementedException();
                 }
+
+                dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, seed, random, reserved: inheritedReserved, existing: inheritedDungeons));
 
                 break;
             case ReplaceTileDunGen replace:

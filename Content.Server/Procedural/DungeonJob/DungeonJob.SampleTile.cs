@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonLayers;
 using Robust.Shared.Map;
+using Robust.Shared.Noise;
 using Robust.Shared.Random;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -16,7 +17,8 @@ public sealed partial class DungeonJob
         HashSet<Vector2i> reservedTiles,
         Random random)
     {
-        gen.Noise.SetSeed(random.Next());
+        var oldSeed = gen.Noise.GetSeed();
+        gen.Noise.SetSeed(_seed + oldSeed);
         var tiles = new List<(Vector2i Index, Tile Tile)>();
         var tileDef = _prototype.Index(gen.Tile);
 
@@ -38,10 +40,16 @@ public sealed partial class DungeonJob
             }
         }
 
+        gen.Noise.SetSeed(oldSeed);
         _maps.SetTiles(_gridUid, _grid, tiles);
 
         foreach (var tile in tiles)
         {
+            if (gen.ReserveTiles)
+            {
+                reservedTiles.Add(tile.Index);
+            }
+
             AddLoadedTile(tile.Index, tile.Tile);
         }
     }

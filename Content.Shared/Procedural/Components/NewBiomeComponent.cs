@@ -12,10 +12,7 @@ public sealed record NewBiomeMetaLayer
     /// <summary>
     /// Chunk dimensions for this meta layer.
     /// </summary>
-    public int Size = 8;
-
-    [ViewVariables]
-    public Vector2 ChunkSize => new Vector2i(Size, Size);
+    public int Size = 16;
 
     /// <summary>
     /// Meta layers that this one requires to be loaded first.

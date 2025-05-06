@@ -11,6 +11,12 @@ namespace Content.Shared.Procedural.DungeonLayers;
 [Serializable, NetSerializable]
 public sealed partial class SampleTileDunGen : IDunGenLayer
 {
+    /// <summary>
+    /// Reserve any tiles we update.
+    /// </summary>
+    [DataField]
+    public bool ReserveTiles = true;
+
     [DataField] public FastNoiseLite Noise { get; private set; } = new(0);
 
     [DataField]

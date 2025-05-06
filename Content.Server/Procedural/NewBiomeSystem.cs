@@ -5,13 +5,11 @@ using Content.Shared.CCVar;
 using Content.Shared.Ghost;
 using Content.Shared.Procedural.Components;
 using Robust.Server.Player;
-using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Map.Enumerators;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -48,7 +46,7 @@ public sealed partial class NewBiomeSystem : EntitySystem
         _ghostQuery = GetEntityQuery<GhostComponent>();
         _biomeQuery = GetEntityQuery<NewBiomeComponent>();
 
-        Subs.CVar(_cfgManager, CCVars.BiomeLoadRange, OnLoadRange);
+        Subs.CVar(_cfgManager, CCVars.BiomeLoadRange, OnLoadRange, true);
         Subs.CVar(_cfgManager, CCVars.BiomeLoadTime, OnLoadTime, true);
         Subs.CVar(_cfgManager, CCVars.BiomeCheckUnloadTime, OnCheckUnload, true);
     }
@@ -106,11 +104,13 @@ public sealed partial class NewBiomeSystem : EntitySystem
             // Work out chunks not in range and unload.
             UnloadChunks();
 
-            _checkUnloadTime -= _checkUnloadAccumulator;
+            _checkUnloadAccumulator -= _checkUnloadTime;
         }
 
+        var loadQuery = AllEntityQuery<NewBiomeComponent, MapGridComponent>();
+
         // Check if any biomes are intersected and queue up loads.
-        while (query.MoveNext(out var biome))
+        while (loadQuery.MoveNext(out var uid, out var biome, out var grid))
         {
             if (biome.Loading || biome.LoadedBounds.Count == 0)
                 continue;
@@ -118,6 +118,7 @@ public sealed partial class NewBiomeSystem : EntitySystem
             biome.Loading = true;
             var job = new BiomeLoadJob(_loadTime)
             {
+                Grid = (uid, grid),
                 Biome = biome,
             };
             _biomeQueue.EnqueueJob(job);
@@ -131,7 +132,7 @@ public sealed partial class NewBiomeSystem : EntitySystem
     {
         var query = AllEntityQuery<NewBiomeComponent>();
 
-        while (query.MoveNext(out var biome))
+        while (query.MoveNext(out var uid, out var biome))
         {
             // Only start unloading if it's currently not loading anything.
             if (biome.Loading)
@@ -171,7 +172,10 @@ public sealed partial class NewBiomeSystem : EntitySystem
 
             // Queue up unloads.
             biome.Loading = true;
-            var job = new BiomeUnloadJob(_loadTime);
+            var job = new BiomeUnloadJob(_loadTime)
+            {
+                Biome = (uid, biome),
+            };
             _biomeQueue.EnqueueJob(job);
         }
     }
@@ -208,10 +212,6 @@ public sealed partial class NewBiomeSystem : EntitySystem
     /// </summary>
     private void TryAddBiomeBounds(EntityUid uid)
     {
-        // Ghosts can't load in.
-        if (_ghostQuery.HasComp(uid))
-            return;
-
         var xform = Transform(uid);
 
         // No biome to load
@@ -231,7 +231,7 @@ public sealed partial class NewBiomeSystem : EntitySystem
 
     public Box2i GetLayerBounds(NewBiomeMetaLayer layer, Box2i layerBounds)
     {
-        var chunkSize = layer.ChunkSize;
+        var chunkSize = new Vector2(layer.Size, layer.Size);
 
         // Need to round the bounds to our chunk size to ensure we load whole chunks.
         // We also need to know the minimum bounds for our dependencies to load.
@@ -315,17 +315,10 @@ public sealed partial class NewBiomeSystem : EntitySystem
 
             };
 
-            int seedOffset;
-
-            unchecked
-            {
-                seedOffset = chunk.Value.X * 256 + chunk.Value.Y + Biome.Seed;
-            }
-
             // Load dungeon here async await and all that jaz.
-            var dungeons = await _entManager
+            var dungeons = await WaitAsyncTask(_entManager
                 .System<DungeonSystem>()
-                .GenerateDungeonAsync(IoCManager.Resolve<IPrototypeManager>().Index(layer.Dungeon), Grid.Owner, Grid.Comp, chunk.Value, seedOffset);
+                .GenerateDungeonAsync(_protoManager.Index(layer.Dungeon), Grid.Owner, Grid.Comp, chunk.Value * layer.Size, Biome.Seed));
 
             // If we can unload it then store the data to check for later.
             if (layer.CanUnload)
@@ -345,6 +338,7 @@ public sealed partial class NewBiomeSystem : EntitySystem
 public sealed class BiomeUnloadJob : Job<bool>
 {
     public List<Vector2i> Chunks = new();
+    public Entity<NewBiomeComponent> Biome;
 
     public BiomeUnloadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
@@ -358,6 +352,7 @@ public sealed class BiomeUnloadJob : Job<bool>
     {
         //
 
+        Biome.Comp.Loading = false;
         return true;
     }
 }
