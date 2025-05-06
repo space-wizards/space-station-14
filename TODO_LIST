@@ -27,11 +27,6 @@ Weapons north maints door stuck open
 Somewhere, there is a holopad with no label.
 Grime everything up a bit again.
 
-- Execution telescreens have flat-out vanished?
-	Needs KnownSubnets to be different in SuveillanceCameraMonitorComponent
-	DeviceNetwork also has... I guess a subcomponent? with receiveFrequencyId and transmitFrequencyId
-		But these seem to have the same values for both TV and Telescreen
-	Camera monitors in Sec are at least restricted to General...
 - Lotta errors about entity cable terminals
 - Screens not showing evac ETA?
 	Broadcast not working either.
@@ -58,6 +53,7 @@ Does tider shop light *start* off, or on? Should be off.
 - More fixerer the det/prosc door. The logic gates aren't working - they don't fit and are becoming unanchored I guess
 	Maybe they're anchored now? They are in the editor.
 Atmos. Just in general. (But especially my oxygen cabbage nonsense)
+Execution telescreens - I swapped out components, they should see the entertainment network now
 
 
 THINGS I COULD MAKE:
@@ -336,3 +332,9 @@ DONE:
 /* Among Us "clues" on detective notice boards */
 /* Telecoms: Change reinforced walls? */
 /* Move warden's office? Yes, when I do genpop. */
+/* - Execution telescreens have flat-out vanished? */
+/* 	Needs KnownSubnets to be different in SuveillanceCameraMonitorComponent */
+/* 	DeviceNetwork also has... I guess a subcomponent? with receiveFrequencyId and transmitFrequencyId */
+/* 		But these seem to have the same values for both TV and Telescreen */
+/* 	It's "WirelessNetworkComponent" vs "WiredNetworkComponent" */
+	/* Camera monitors in Sec are at least restricted to General... */
