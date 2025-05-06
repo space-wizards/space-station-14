@@ -6,7 +6,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Damage.Systems;
 
-public sealed class StaminaSystem : SharedStaminaSystem
+public sealed partial class StaminaSystem : SharedStaminaSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly StunSystem _stun = default!;
