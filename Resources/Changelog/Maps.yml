@@ -89,4 +89,13 @@
   id: 12
   time: '2025-05-04T07:20:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37171
+- author: Spessmann
+  changes:
+  - message: On Convex, reconstructed genpop. It can now hold 8 prisoners.
+    type: Tweak
+  - message: On Convex, removed the prisoner eva room.
+    type: Remove
+  id: 13
+  time: '2025-05-06T06:56:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37216
 Order: 1

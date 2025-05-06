@@ -96,6 +96,36 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// Secondary radio channel which always receives order announcements.
     /// </summary>
     public static readonly ProtoId<RadioChannelPrototype> BaseAnnouncementChannel = "Supply";
+
+    /// <summary>
+    /// If set to true, restricts this console from ordering and has it print slips instead
+    /// </summary>
+    [DataField]
+    public bool SlipPrinter;
+
+    /// <summary>
+    /// The time at which the console will be able to print a slip again.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextPrintTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The time between prints.
+    /// </summary>
+    [DataField]
+    public TimeSpan PrintDelay = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// The sound made when printing occurs
+    /// </summary>
+    [DataField]
+    public SoundSpecifier PrintSound = new SoundCollectionSpecifier("PrinterPrint");
+
+    /// <summary>
+    /// The sound made when an order slip is scanned
+    /// </summary>
+    [DataField]
+    public SoundSpecifier ScanSound = new SoundCollectionSpecifier("CargoBeep");
 }
 
 /// <summary>

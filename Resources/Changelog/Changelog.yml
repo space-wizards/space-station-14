@@ -1,91 +1,4 @@
 ﻿Entries:
-- author: august-sun
-  changes:
-  - message: Reworked Lecter and magazine sprites.
-    type: Tweak
-  id: 7919
-  time: '2025-02-09T00:12:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34974
-- author: rokudara-sen
-  changes:
-  - message: Anchored shuttle console will no longer rotate.
-    type: Fix
-  id: 7920
-  time: '2025-02-09T12:15:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35000
-- author: Boaz1111
-  changes:
-  - message: Long Bacon Scarf(Lesbian scarf but long) can now be found in the pride-o-mat's
-      hacked inventory!
-    type: Add
-  id: 7921
-  time: '2025-02-09T15:10:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34950
-- author: Spacemann
-  changes:
-  - message: Removed Cog station
-    type: Remove
-  id: 7922
-  time: '2025-02-09T21:01:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34996
-- author: notquitehadouken
-  changes:
-  - message: Added loungewear to uniform printer
-    type: Add
-  id: 7923
-  time: '2025-02-09T22:16:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35008
-- author: Vortebo
-  changes:
-  - message: Added Relic station.
-    type: Add
-  id: 7924
-  time: '2025-02-09T23:24:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34988
-- author: IProduceWidgets
-  changes:
-  - message: Pacifists can throw things that break.
-    type: Fix
-  id: 7925
-  time: '2025-02-10T01:24:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31060
-- author: lzk228
-  changes:
-  - message: Deconstructing disposal pipes will no longer delete all the contents.
-    type: Fix
-  id: 7926
-  time: '2025-02-10T09:05:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34986
-- author: themias
-  changes:
-  - message: Pacified players can no longer attack living creatures with mechs
-    type: Fix
-  id: 7927
-  time: '2025-02-10T22:17:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34954
-- author: sowelipililimute
-  changes:
-  - message: Smart equipping into your backpack w/ a nested storage window open no
-      longer bugs out
-    type: Fix
-  id: 7928
-  time: '2025-02-11T02:15:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35048
-- author: Tayrtahn
-  changes:
-  - message: Radio frequencies are now displayed with a decimal point.
-    type: Tweak
-  id: 7929
-  time: '2025-02-11T02:36:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35046
-- author: themias
-  changes:
-  - message: Fixed an exploit using multiple R&D computers to research multiple discipline
-      tier 3 technologies
-    type: Fix
-  id: 7930
-  time: '2025-02-11T02:52:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34334
 - author: K-Dynamic
   changes:
   - message: Flashbangs, stinger grenades, EMP grenades, smoke grenades, and tear
@@ -3925,3 +3838,92 @@
   id: 8420
   time: '2025-05-04T23:01:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36984
+- author: spanky-spanky
+  changes:
+  - message: On Fland, modified security to include genpop.
+    type: Add
+  id: 8421
+  time: '2025-05-06T01:29:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37207
+- author: B-Kirill
+  changes:
+  - message: Added a search by profession and species in station records.
+    type: Add
+  id: 8422
+  time: '2025-05-06T16:21:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37213
+- author: Cojoke-dot
+  changes:
+  - message: Pacifists can now throw bola
+    type: Tweak
+  id: 8423
+  time: '2025-05-06T16:55:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37188
+- author: themias
+  changes:
+  - message: Fixed being unable to roll dough flat
+    type: Fix
+  id: 8424
+  time: '2025-05-06T16:57:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37183
+- author: Quantum-cross
+  changes:
+  - message: Hosted anomaly effects not appearing at host when host is in container
+      or buckled
+    type: Fix
+  id: 8425
+  time: '2025-05-06T17:01:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37179
+- author: ScarKy0
+  changes:
+  - message: Borgs, brains, zombies and similiar now correctly count as "marooned"
+      even while on the evac shuttle.
+    type: Fix
+  id: 8426
+  time: '2025-05-06T17:24:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37148
+- author: B-Kirill
+  changes:
+  - message: Added a collapse button for the lobby right panel, improving visibility
+      of the background artwork.
+    type: Add
+  id: 8427
+  time: '2025-05-06T17:24:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37140
+- author: Morty, lzk228
+  changes:
+  - message: Speech bubbles now indicate when a person is thinking of what to say.
+    type: Tweak
+  id: 8428
+  time: '2025-05-06T17:49:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29349
+- author: Prole0
+  changes:
+  - message: Water bottles now fit in dispensers!
+    type: Tweak
+  id: 8429
+  time: '2025-05-06T18:13:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37108
+- author: OnyxTheBrave
+  changes:
+  - message: Holy water now correctly metabolizes at .5 unites per second
+    type: Fix
+  id: 8430
+  time: '2025-05-06T18:31:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37106
+- author: sowelipililimute
+  changes:
+  - message: Departmental cargo request computers now print slips that can be given
+      to Cargo for final approval, rather than directly approving the orders themselves
+    type: Tweak
+  id: 8431
+  time: '2025-05-06T19:04:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36944
+- author: Ghagliiarghii
+  changes:
+  - message: Fixed a bug which allowed Janitor borgs to delete a held item and acquire
+      an empty hand.
+    type: Fix
+  id: 8432
+  time: '2025-05-06T19:10:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36961
