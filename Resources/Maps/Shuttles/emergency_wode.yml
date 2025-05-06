@@ -4,8 +4,8 @@ meta:
   engineVersion: 255.1.0
   forkId: ""
   forkVersion: ""
-  time: 05/06/2025 11:31:45
-  entityCount: 603
+  time: 05/06/2025 11:39:26
+  entityCount: 604
 maps: []
 grids:
 - 2
@@ -2165,8 +2165,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -5.5,19.5
       parent: 2
-    - type: EntityStorage
-      open: True
   - uid: 158
     components:
     - type: Transform
@@ -2980,6 +2978,13 @@ entities:
     components:
     - type: Transform
       pos: -0.5,8.5
+      parent: 2
+- proto: RandomDrinkSoda
+  entities:
+  - uid: 602
+    components:
+    - type: Transform
+      pos: -1.5,8.5
       parent: 2
 - proto: RandomFoodSingle
   entities:
