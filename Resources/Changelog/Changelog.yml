@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: august-sun
-  changes:
-  - message: Reworked Lecter and magazine sprites.
-    type: Tweak
-  id: 7919
-  time: '2025-02-09T00:12:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34974
 - author: rokudara-sen
   changes:
   - message: Anchored shuttle console will no longer rotate.
@@ -3925,3 +3918,10 @@
   id: 8420
   time: '2025-05-04T23:01:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36984
+- author: spanky-spanky
+  changes:
+  - message: On Fland, modified security to include genpop.
+    type: Add
+  id: 8421
+  time: '2025-05-06T01:29:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37207
