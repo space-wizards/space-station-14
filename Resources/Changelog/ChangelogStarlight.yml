@@ -5507,4 +5507,18 @@ Entries:
   id: 763
   time: '2025-05-06T04:21:27.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: Happyrobot33
+  changes:
+  - message: Raised ling biomass maximum to 60, lings start at 30 now.
+    type: Tweak
+  id: 764
+  time: '2025-05-06T04:29:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/560
+- author: Happyrobot33
+  changes:
+  - message: Fixed ling biomass warning and jitter system.
+    type: Fix
+  id: 765
+  time: '2025-05-06T04:29:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/560
 
