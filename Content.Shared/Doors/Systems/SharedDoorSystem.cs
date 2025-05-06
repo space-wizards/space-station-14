@@ -358,6 +358,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return;
 
+        if (Paused(uid))
+            return;
+
         var lastState = door.State;
 
         if (!SetState(uid, DoorState.Opening, door))
@@ -451,6 +454,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
     public void StartClosing(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
     {
         if (!Resolve(uid, ref door))
+            return;
+
+        if (Paused(uid))
             return;
 
         if (!SetState(uid, DoorState.Closing, door))
