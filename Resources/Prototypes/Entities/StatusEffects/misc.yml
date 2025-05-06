@@ -5,7 +5,6 @@
   - type: StatusEffectNew
   - type: Sprite
     drawdepth: Effects
-    noRot: true
   - type: Tag
     tags:
     - HideContextMenu
@@ -17,15 +16,7 @@
   name: forced sleep
   categories: [ HideSpawnMenu ]
   components:
-  #
-  - type: Sprite
-    sprite: Mobs/Pets/corgi.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: ian
-  #
   - type: StatusEffectNew
-    alert: Magboots
     components:
     - type: ForcedSleepingStatusEffect
     whitelist:

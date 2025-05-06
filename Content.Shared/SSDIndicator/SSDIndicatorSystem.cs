@@ -37,7 +37,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
             component.FallAsleepTime = TimeSpan.Zero;
             if (component.ForcedSleepAdded) // Remove component only if it has been added by this system
             {
-                EntityManager.RemoveComponent<ForcedSleepingComponent>(uid);
+                EntityManager.RemoveComponent<ForcedSleepingStatusEffectComponent>(uid);
                 component.ForcedSleepAdded = false;
             }
         }
@@ -82,9 +82,9 @@ public sealed class SSDIndicatorSystem : EntitySystem
             if(ssd.IsSSD &&
                 ssd.FallAsleepTime <= _timing.CurTime &&
                 !TerminatingOrDeleted(uid) &&
-                !HasComp<ForcedSleepingComponent>(uid)) // Don't add the component if the entity has it from another sources
+                !HasComp<ForcedSleepingStatusEffectComponent>(uid)) // Don't add the component if the entity has it from another sources
             {
-                EnsureComp<ForcedSleepingComponent>(uid);
+                EnsureComp<ForcedSleepingStatusEffectComponent>(uid);
                 ssd.ForcedSleepAdded = true;
             }
         }

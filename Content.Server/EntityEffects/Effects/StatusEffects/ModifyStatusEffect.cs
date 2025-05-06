@@ -1,5 +1,5 @@
+using Content.Server.StatusEffectNew;
 using Content.Shared.EntityEffects;
-using Content.Shared.StatusEffectNew;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
@@ -31,7 +31,7 @@ public sealed partial class ModifyStatusEffect : EntityEffect
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedStatusEffectNewSystem>();
+        var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<StatusEffectNewSystem>();
 
         var time = Time;
         if (args is EntityEffectReagentArgs reagentArgs)
