@@ -353,10 +353,14 @@ namespace Content.Shared.StatusEffect
             if (!Resolve(uid, ref status, false))
                 return false;
 
-            var ev = new BeforeStatusEffectAddedEvent(key);
-            RaiseLocalEvent(uid, ref ev);
-            if (ev.Cancelled)
-                return false;
+            // This check was only used in godmodeSystem. Given that the status effects system is now in the process of
+            // migrating to a new system, this event and check have been moved to the new system, and are essentially
+            // unnecessary here.
+
+            //var ev = new BeforeStatusEffectAddedEvent(key);
+            //RaiseLocalEvent(uid, ref ev);
+            //if (ev.Cancelled)
+            //    return false;
 
             if (!_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto))
                 return false;
@@ -480,12 +484,6 @@ namespace Content.Shared.StatusEffect
             return true;
         }
     }
-
-    /// <summary>
-    ///     Raised on an entity before a status effect is added to determine if adding it should be cancelled.
-    /// </summary>
-    [ByRefEvent]
-    public record struct BeforeStatusEffectAddedEvent(string Key, bool Cancelled=false);
 
     public readonly struct StatusEffectAddedEvent
     {

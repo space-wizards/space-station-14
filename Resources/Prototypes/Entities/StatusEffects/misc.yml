@@ -2,6 +2,7 @@
   id: StatusEffectBase
   abstract: true
   components:
+  - type: StatusEffectNew
   - type: Sprite
     drawDepth: Effects
     noRot: true
@@ -9,12 +10,16 @@
     tags:
     - HideContextMenu
 
+#The creature sleeps so heavily that nothing can wake him up. Not even its own death.
 - type: entity
+  parent: StatusEffectBase
   id: StatusEffectForcedSleeping
+  name: forced sleep
+  categories: [ HideSpawnMenu ]
   components:
   - type: StatusEffectNew
     components:
-    - ForcedSleeping
+    - type: ForcedSleepingStatusEffect
     whitelist:
       components:
       - MobState

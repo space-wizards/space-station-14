@@ -143,3 +143,9 @@ public readonly record struct StatusEffectApplied(EntityUid Target, Entity<Statu
 /// </summary>
 [ByRefEvent]
 public readonly record struct StatusEffectRemoved(EntityUid Target, Entity<StatusEffectNewComponent> Effect);
+
+/// <summary>
+/// Raised on an entity before a status effect is added to determine if adding it should be cancelled.
+/// </summary>
+[ByRefEvent]
+public record struct BeforeStatusEffectAddedEvent(EntProtoId Effect, bool Cancelled = false);

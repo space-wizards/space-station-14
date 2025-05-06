@@ -49,6 +49,6 @@ public sealed partial class StatusEffectNewComponent : Component
     /// <remarks>
     /// Important: Only use components that you are sure cannot be added or removed by other systems! At least check that it won't break anything.
     /// </remarks>
-    [DataField]
+    [DataField(serverOnly: true)]
     public ComponentRegistry Components = new();
 }

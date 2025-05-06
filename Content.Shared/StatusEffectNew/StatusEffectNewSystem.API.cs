@@ -6,6 +6,32 @@ namespace Content.Shared.StatusEffectNew;
 public sealed partial class StatusEffectNewSystem
 {
     /// <summary>
+    /// Check whether a status effect can be imposed on a particular entity.
+    /// </summary>
+    /// <param name="uid">The target entity on which the effect is added</param>
+    /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has CP14StatusEffectComponent on it</param>
+    public bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
+    {
+        if (!_proto.TryIndex(effectProto, out var effectProtoData))
+            return false;
+
+        if (!effectProtoData.TryGetComponent<StatusEffectNewComponent>(out var effectProtoComp,
+                _compFactory))
+            return false;
+
+        if (!_whitelist.CheckBoth(uid, effectProtoComp.Blacklist, effectProtoComp.Whitelist))
+            return false;
+
+        var ev = new BeforeStatusEffectAddedEvent(effectProto);
+        RaiseLocalEvent(uid, ref ev);
+
+        if (ev.Cancelled)
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
     /// Attempts to add a status effect to the specified entity. Returns True if the effect is added or exists
     /// and has been successfully extended in time, returns False if the status effect cannot be applied to this entity,
     /// or for any other reason
@@ -15,7 +41,6 @@ public sealed partial class StatusEffectNewSystem
     /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c></param>
     /// <param name="resetCooldown">if True, the effect duration time will be reset and reapplied. If False, the effect duration time will be overlaid with the existing one.
     /// In the other case, the effect will either be added for the specified time or its time will be extended for the specified time.</param>
-    /// <returns></returns>
     public bool TryAddStatusEffect(EntityUid uid,
         EntProtoId effectProto,
         TimeSpan? duration = null,
@@ -37,19 +62,7 @@ public sealed partial class StatusEffectNewSystem
             }
         }
 
-        // We make this checks before status effect entity spawned
-        if (!_proto.TryIndex(effectProto, out var effectProtoData))
-            return false;
-
-        if (!effectProtoData.TryGetComponent<StatusEffectNewComponent>(out var effectProtoComp,
-                _compFactory))
-        {
-            Log.Error(
-                $"Entity {effectProto} does not have a {nameof(StatusEffectNewComponent)} component, but tried to apply it as a status effect on {ToPrettyString(uid)}.");
-            return false;
-        }
-
-        if (!_whitelist.CheckBoth(uid, effectProtoComp.Blacklist, effectProtoComp.Whitelist))
+        if (!CanAddStatusEffect(uid, effectProto))
             return false;
 
         //Technically, on the client, all checks have been successful and we do not need to execute further code related to entity spawning, as this is the server's responsibility
@@ -146,7 +159,17 @@ public sealed partial class StatusEffectNewSystem
         return false;
     }
 
-    public bool TryGetTime(EntityUid uid, EntProtoId effectProto, out (EntityUid, TimeSpan) time, StatusEffectContainerComponent? container = null)
+    /// <summary>
+    /// Attempting to retrieve the time of a status effect from an entity.
+    /// </summary>
+    /// <param name="uid">The target entity on which the effect is applied.</param>
+    /// <param name="effectProto">The prototype ID of the status effect to retrieve.</param>
+    /// <param name="time">The output tuple containing the effect entity and its remaining time.</param>
+    /// <param name="container">Optional. The status effect container component of the entity.</param>
+    public bool TryGetTime(EntityUid uid,
+        EntProtoId effectProto,
+        out (EntityUid, TimeSpan) time,
+        StatusEffectContainerComponent? container = null)
     {
         time = default;
         if (container == null)
@@ -168,6 +191,61 @@ public sealed partial class StatusEffectNewSystem
             }
         }
 
+        return false;
+    }
+
+    /// <summary>
+    /// Attempts to remove a specific amount of time from a status effect's duration.
+    /// </summary>
+    /// <param name="uid">The target entity on which the effect is applied.</param>
+    /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
+    /// <param name="time">The amount of time to remove from the status effect's duration.</param>
+    public bool TryRemoveTime(EntityUid uid, EntProtoId effectProto, TimeSpan time)
+    {
+        if (!_containerQuery.TryComp(uid, out var container))
+            return false;
+
+        foreach (var effect in container.ActiveStatusEffects)
+        {
+            var meta = MetaData(effect);
+            if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
+            {
+                if (!_effectQuery.TryComp(effect, out var effectComp))
+                    return false;
+
+                if (effectComp.EndEffectTime is null)
+                    return false;
+
+                effectComp.EndEffectTime -= time;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Attempts to set the remaining time for a status effect on an entity.
+    /// </summary>
+    /// <param name="uid">The target entity on which the effect is applied.</param>
+    /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
+    /// <param name="time">The new duration for the status effect.</param>
+    public bool TrySetTime(EntityUid uid, EntProtoId effectProto, TimeSpan time)
+    {
+        if (!_containerQuery.TryComp(uid, out var container))
+            return false;
+
+        foreach (var effect in container.ActiveStatusEffects)
+        {
+            var meta = MetaData(effect);
+            if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
+            {
+                if (!_effectQuery.TryComp(effect, out var effectComp))
+                    return false;
+
+                effectComp.EndEffectTime = _timing.CurTime + time;
+                return true;
+            }
+        }
         return false;
     }
 }
