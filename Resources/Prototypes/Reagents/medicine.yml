@@ -1095,11 +1095,11 @@
       - !type:SatiateThirst
         factor: 3
       - !type:HealthChange
-         conditions:
-         - !type:TotalDamage
-           max: 50
-         damage:
-           types:
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
             Blunt: -0.2
             Poison: -0.2
             Heat: -0.2
