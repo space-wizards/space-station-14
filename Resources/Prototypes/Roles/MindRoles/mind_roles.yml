@@ -95,7 +95,6 @@
     antagPrototype: GenericTeamAntagonist
 
 # This should be used (or inherited) for team antags that are summoned or converted in large quantities, and are "secondary" to other antags
-# TODO: sort weight
 - type: entity
   parent: MindRoleGhostRoleTeamAntagonist
   id: MindRoleGhostRoleTeamAntagonistFlock
@@ -130,6 +129,7 @@
   - type: MindRole
     antagPrototype: SubvertedSilicon
     roleType: SiliconAntagonist
+    subtype: role-subtype-subverted
   - type: SubvertedSiliconRole
 
 # Dragon
@@ -141,6 +141,7 @@
   - type: MindRole
     antagPrototype: Dragon
     roleType: TeamAntagonist
+    subtype: role-subtype-dragon
     exclusiveAntag: true
   - type: DragonRole
   - type: RoleBriefing
@@ -154,6 +155,7 @@
   components:
   - type: MindRole
     antagPrototype: SpaceNinja
+    subtype: role-subtype-ninja
     exclusiveAntag: true
   - type: NinjaRole
 
@@ -165,7 +167,7 @@
   components:
   - type: MindRole
     antagPrototype: ParadoxClone
-    roleType: SoloAntagonist
+    subtype: role-subtype-paradox-clone
   - type: ParadoxCloneRole
 
 # Nukies
@@ -176,6 +178,7 @@
   components:
   - type: MindRole
     roleType: TeamAntagonist
+    subtype: role-subtype-nukie
     exclusiveAntag: true
     antagPrototype: Nukeops
   - type: NukeopsRole
@@ -206,6 +209,7 @@
     antagPrototype: HeadRev
     exclusiveAntag: true
     roleType: TeamAntagonist
+    subtype: role-subtype-head-revolutionary
   - type: RevolutionaryRole
 
 - type: entity
@@ -215,6 +219,7 @@
   components:
   - type: MindRole
     antagPrototype: Rev
+    subtype: role-subtype-revolutionary
 
 # Survivors (Wizard)
 - type: entity
@@ -225,6 +230,7 @@
   - type: MindRole
     antagPrototype: Survivor
     roleType: FreeAgent
+    subtype: role-subtype-survivor
   - type: SurvivorRole
 
 # Thief
@@ -235,6 +241,7 @@
   components:
   - type: MindRole
     antagPrototype: Thief
+    subtype: role-subtype-thief
   - type: ThiefRole
 
 # Traitors
@@ -246,6 +253,7 @@
   - type: MindRole
     antagPrototype: Traitor
     exclusiveAntag: true
+    subtype: role-subtype-traitor
   - type: TraitorRole
 
 - type: entity
@@ -263,6 +271,7 @@
   components:
   - type: MindRole
     roleType: TeamAntagonist
+    subtype: role-subtype-traitor-reinforcement
     antagPrototype: GenericTeamAntagonist
 
 # Wizards
@@ -274,6 +283,7 @@
   - type: MindRole
     antagPrototype: Wizard
     exclusiveAntag: true
+    subtype: role-subtype-wizard
   - type: WizardRole
 
 # Zombie Squad
@@ -286,6 +296,7 @@
     antagPrototype: InitialInfected
     exclusiveAntag: true
     roleType: TeamAntagonist
+    subtype: role-subtype-initial-infected
   - type: InitialInfectedRole
 
 - type: entity
@@ -296,5 +307,5 @@
   - type: MindRole
     antagPrototype: Zombie
     exclusiveAntag: true
-    roleType: TeamAntagonist
+    subtype: role-subtype-zombie
   - type: ZombieRole

@@ -50,6 +50,7 @@ public sealed partial class StaminaSystem : EntitySystem
         base.Initialize();
 
         InitializeModifier();
+        InitializeResistance();
 
         SubscribeLocalEvent<StaminaComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StaminaComponent, ComponentShutdown>(OnShutdown);
@@ -118,7 +119,7 @@ public sealed partial class StaminaSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private void OnDisarmed(EntityUid uid, StaminaComponent component, DisarmedEvent args)
+    private void OnDisarmed(EntityUid uid, StaminaComponent component, ref DisarmedEvent args)
     {
         if (args.Handled)
             return;
@@ -240,7 +241,7 @@ public sealed partial class StaminaSystem : EntitySystem
     }
 
     public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null,
-        EntityUid? source = null, EntityUid? with = null, bool visual = true, SoundSpecifier? sound = null)
+        EntityUid? source = null, EntityUid? with = null, bool visual = true, SoundSpecifier? sound = null, bool ignoreResist = false)
     {
         if (!Resolve(uid, ref component, false))
             return;
@@ -249,6 +250,12 @@ public sealed partial class StaminaSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
         if (ev.Cancelled)
             return;
+
+        // Allow stamina resistance to be applied.
+        if (!ignoreResist)
+        {
+            value = ev.Value;
+        }
 
         value = UniversalStaminaDamageModifier * value;
 
@@ -399,9 +406,3 @@ public sealed partial class StaminaSystem : EntitySystem
         _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{ToPrettyString(uid):user} recovered from stamina crit");
     }
 }
-
-/// <summary>
-///     Raised before stamina damage is dealt to allow other systems to cancel it.
-/// </summary>
-[ByRefEvent]
-public record struct BeforeStaminaDamageEvent(float Value, bool Cancelled = false);
