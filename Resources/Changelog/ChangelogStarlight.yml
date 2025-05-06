@@ -5521,4 +5521,11 @@ Entries:
   id: 765
   time: '2025-05-06T04:29:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/560
+- author: Happyrobot33
+  changes:
+  - message: Updated Resomi guidebook.
+    type: Tweak
+  id: 766
+  time: '2025-05-06T04:34:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/580
 
