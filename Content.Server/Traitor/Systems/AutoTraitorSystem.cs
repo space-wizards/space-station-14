@@ -1,6 +1,7 @@
 using Content.Server.Antag;
 using Content.Server.Traitor.Components;
 using Content.Shared.Mind.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traitor.Systems;
@@ -11,9 +12,7 @@ namespace Content.Server.Traitor.Systems;
 public sealed class AutoTraitorSystem : EntitySystem
 {
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
-
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string DefaultTraitorRule = "Traitor";
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
 
     public override void Initialize()
     {
@@ -24,6 +23,9 @@ public sealed class AutoTraitorSystem : EntitySystem
 
     private void OnMindAdded(EntityUid uid, AutoTraitorComponent comp, MindAddedMessage args)
     {
-        _antag.ForceMakeAntag<AutoTraitorComponent>(args.Mind.Comp.Session, DefaultTraitorRule);
+        if (!_player.TryGetSessionById(args.Mind.Comp.UserId, out var session))
+            return;
+
+        _antag.ForceMakeAntag<AutoTraitorComponent>(session, comp.Profile);
     }
 }

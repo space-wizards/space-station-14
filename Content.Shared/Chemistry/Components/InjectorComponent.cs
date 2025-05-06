@@ -46,6 +46,15 @@ public sealed partial class InjectorComponent : Component
     public bool IgnoreMobs;
 
     /// <summary>
+    /// Whether or not the injector is able to draw from or inject into containers that are closed/sealed
+    /// </summary>
+    /// <remarks>
+    ///     for example: droppers can not inject into cans, but syringes can
+    /// </remarks>
+    [DataField]
+    public bool IgnoreClosed = true;
+
+    /// <summary>
     ///     The minimum amount of solution that can be transferred at once from this solution.
     /// </summary>
     [DataField("minTransferAmount")]

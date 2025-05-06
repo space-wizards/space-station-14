@@ -1,0 +1,311 @@
+- type: entity
+  id: BaseMindRole
+  name: Mind Role
+  description: Mind Role entity
+  abstract: true
+  components:
+  - type: MindRole
+
+- type: entity
+  parent: BaseMindRole
+  id: BaseMindRoleAntag
+  abstract: true
+  components:
+  - type: MindRole
+    antag: true
+    antagPrototype: GenericAntagonist
+    roleType: SoloAntagonist
+    sortWeight: 50
+
+#Observer
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleObserver
+  name: Observer Role
+  components:
+  - type: ObserverRole
+  - type: MindRole
+    sortWeight: -10
+
+#Ghost Roles
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleNeutral
+  name: Ghost Role
+  components:
+  - type: GhostRoleMarkerRole
+
+- type: entity
+  parent: MindRoleGhostRoleNeutral
+  id: MindRoleGhostRoleFamiliar
+  name: Ghost Role (Familiar)
+  components:
+  - type: MindRole
+    roleType: Familiar
+
+- type: entity
+  parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
+  id: MindRoleGhostRoleFreeAgent
+  name: Ghost Role (Free Agent)
+  components:
+  - type: MindRole
+    roleType: FreeAgent
+    antagPrototype: GenericFreeAgent
+    sortWeight: 30
+
+- type: entity
+  parent: MindRoleGhostRoleNeutral
+  id: MindRoleGhostRoleFreeAgentHarmless
+  name: Ghost Role (Free Agent)
+  components:
+  - type: MindRole
+    roleType: FreeAgent
+    sortWeight: 0 # Maybe 10?
+
+- type: entity
+  parent: MindRoleGhostRoleNeutral
+  id: MindRoleGhostRoleSilicon
+  name: Ghost Role (Silicon)
+  components:
+  - type: MindRole
+    roleType: Silicon
+
+- type: entity
+  parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
+  id: MindRoleGhostRoleSiliconAntagonist
+  name: Ghost Role (Silicon Antagonist)
+  components:
+  - type: MindRole
+    roleType: SiliconAntagonist
+    antagPrototype: GenericSiliconAntagonist
+    sortWeight: 30
+
+- type: entity
+  parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
+  id: MindRoleGhostRoleSoloAntagonist
+  name: Ghost Role (Solo Antagonist)
+
+- type: entity
+  parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
+  id: MindRoleGhostRoleTeamAntagonist
+  name: Ghost Role (Team Antagonist)
+  components:
+  - type: MindRole
+    roleType: TeamAntagonist
+    antagPrototype: GenericTeamAntagonist
+
+# This should be used (or inherited) for team antags that are summoned or converted in large quantities, and are "secondary" to other antags
+- type: entity
+  parent: MindRoleGhostRoleTeamAntagonist
+  id: MindRoleGhostRoleTeamAntagonistFlock
+  name: Ghost Role (Team Antagonist)
+  components:
+  - type: MindRole
+    sortWeight: 40
+
+# The Job MindRole holds the mob's Job prototype
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleJob
+  name: Job Role
+  # JobPrototype is filled by SharedJobSystem
+
+# Silicon
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleSiliconBrain
+  name: Borg Brain Role
+  components:
+  - type: MindRole
+    roleType: Silicon
+  - type: SiliconBrainRole
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleSubvertedSilicon
+  name: Subverted Silicon Role
+  description:
+  components:
+  - type: MindRole
+    antagPrototype: SubvertedSilicon
+    roleType: SiliconAntagonist
+    subtype: role-subtype-subverted
+  - type: SubvertedSiliconRole
+
+# Dragon
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleDragon
+  name: Dragon Role
+  components:
+  - type: MindRole
+    antagPrototype: Dragon
+    roleType: TeamAntagonist
+    subtype: role-subtype-dragon
+    exclusiveAntag: true
+  - type: DragonRole
+  - type: RoleBriefing
+    briefing: dragon-role-briefing
+
+# Ninja
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleNinja
+  name: Space Ninja Role
+  components:
+  - type: MindRole
+    antagPrototype: SpaceNinja
+    subtype: role-subtype-ninja
+    exclusiveAntag: true
+  - type: NinjaRole
+
+# Paradox Clone
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleParadoxClone
+  name: Paradox Clone Role
+  components:
+  - type: MindRole
+    antagPrototype: ParadoxClone
+    subtype: role-subtype-paradox-clone
+  - type: ParadoxCloneRole
+
+# Nukies
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleNukeops
+  name: Nukeops Operative Role
+  components:
+  - type: MindRole
+    roleType: TeamAntagonist
+    subtype: role-subtype-nukie
+    exclusiveAntag: true
+    antagPrototype: Nukeops
+  - type: NukeopsRole
+
+- type: entity
+  parent: MindRoleNukeops
+  id: MindRoleNukeopsMedic
+  name: Nukeops Medic Role
+  components:
+  - type: MindRole
+    antagPrototype: NukeopsMedic
+
+- type: entity
+  parent: MindRoleNukeops
+  id: MindRoleNukeopsCommander
+  name: Nukeops Commander Role
+  components:
+  - type: MindRole
+    antagPrototype: NukeopsCommander
+
+# Revolutionaries
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleHeadRevolutionary
+  name: Head Revolutionary Role
+  components:
+  - type: MindRole
+    antagPrototype: HeadRev
+    exclusiveAntag: true
+    roleType: TeamAntagonist
+    subtype: role-subtype-head-revolutionary
+  - type: RevolutionaryRole
+
+- type: entity
+  parent: MindRoleHeadRevolutionary
+  id: MindRoleRevolutionary
+  name: Revolutionary Role
+  components:
+  - type: MindRole
+    antagPrototype: Rev
+    subtype: role-subtype-revolutionary
+
+# Survivors (Wizard)
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleSurvivor
+  name: Survivor Role
+  components:
+  - type: MindRole
+    antagPrototype: Survivor
+    roleType: FreeAgent
+    subtype: role-subtype-survivor
+  - type: SurvivorRole
+
+# Thief
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleThief
+  name: Thief Role
+  components:
+  - type: MindRole
+    antagPrototype: Thief
+    subtype: role-subtype-thief
+  - type: ThiefRole
+
+# Traitors
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleTraitor
+  name: Traitor Role
+  components:
+  - type: MindRole
+    antagPrototype: Traitor
+    exclusiveAntag: true
+    subtype: role-subtype-traitor
+  - type: TraitorRole
+
+- type: entity
+  parent: MindRoleTraitor
+  id: MindRoleTraitorSleeper
+  name: Sleeper Agent Role
+  components:
+  - type: MindRole
+    antagPrototype: TraitorSleeper
+
+- type: entity
+  parent: MindRoleTraitor
+  id: MindRoleTraitorReinforcement
+  name: Syndicate Reinforcement Role
+  components:
+  - type: MindRole
+    roleType: TeamAntagonist
+    subtype: role-subtype-traitor-reinforcement
+    antagPrototype: GenericTeamAntagonist
+
+# Wizards
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleWizard
+  name: Wizard Role
+  components:
+  - type: MindRole
+    antagPrototype: Wizard
+    exclusiveAntag: true
+    subtype: role-subtype-wizard
+  - type: WizardRole
+
+# Zombie Squad
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleInitialInfected
+  name: Initial Infected Role
+  components:
+  - type: MindRole
+    antagPrototype: InitialInfected
+    exclusiveAntag: true
+    roleType: TeamAntagonist
+    subtype: role-subtype-initial-infected
+  - type: InitialInfectedRole
+
+- type: entity
+  parent: MindRoleGhostRoleTeamAntagonistFlock
+  id: MindRoleZombie
+  name: Zombie Role
+  components:
+  - type: MindRole
+    antagPrototype: Zombie
+    exclusiveAntag: true
+    subtype: role-subtype-zombie
+  - type: ZombieRole

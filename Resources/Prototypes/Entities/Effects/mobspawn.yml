@@ -40,6 +40,18 @@
     prototype: MobIronCrab
 
 - type: entity
+  id: MobSpawnCrabCoal
+  parent: MobSpawnCrabQuartz
+  name: mobspawner coalcrab
+  categories: [ HideSpawnMenu, Spawner ]
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/mobspawn.rsi
+    state: crab_coal
+  - type: SpawnOnDespawn
+    prototype: MobCoalCrab
+
+- type: entity
   id: MobSpawnCrabSilver
   parent: MobSpawnCrabQuartz
   name: mobspawner silvercrab
@@ -50,6 +62,18 @@
     state: crab_silver
   - type: SpawnOnDespawn
     prototype: MobSilverCrab
+
+- type: entity
+  id: MobSpawnCrabGold
+  parent: MobSpawnCrabQuartz
+  name: mobspawner goldcrab
+  categories: [ HideSpawnMenu, Spawner ]
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/mobspawn.rsi
+    state: crab_gold
+  - type: SpawnOnDespawn
+    prototype: MobGoldCrab
 
 - type: entity
   id: MobSpawnCrabUranium

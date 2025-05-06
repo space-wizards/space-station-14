@@ -86,7 +86,7 @@ namespace Content.Server.Stack
         public EntityUid Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
         {
             // Set the output result parameter to the new stack entity...
-            var entity = Spawn(prototype.Spawn, spawnPosition);
+            var entity = SpawnAtPosition(prototype.Spawn, spawnPosition);
             var stack = Comp<StackComponent>(entity);
 
             // And finally, set the correct amount!
@@ -100,6 +100,13 @@ namespace Content.Server.Stack
         /// </summary>
         public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityCoordinates spawnPosition)
         {
+            if (amount <= 0)
+            {
+                Log.Error(
+                    $"Attempted to spawn an invalid stack: {entityPrototype}, {amount}. Trace: {Environment.StackTrace}");
+                return new();
+            }
+
             var spawns = CalculateSpawns(entityPrototype, amount);
 
             var spawnedEnts = new List<EntityUid>();
@@ -116,6 +123,13 @@ namespace Content.Server.Stack
         /// <inheritdoc cref="SpawnMultiple(string,int,EntityCoordinates)"/>
         public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityUid target)
         {
+            if (amount <= 0)
+            {
+                Log.Error(
+                    $"Attempted to spawn an invalid stack: {entityPrototype}, {amount}. Trace: {Environment.StackTrace}");
+                return new();
+            }
+
             var spawns = CalculateSpawns(entityPrototype, amount);
 
             var spawnedEnts = new List<EntityUid>();

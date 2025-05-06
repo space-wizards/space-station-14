@@ -1,9 +1,11 @@
 using Content.Shared.Atmos;
+using Content.Shared.Light.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
@@ -25,7 +27,7 @@ namespace Content.Shared.Maps
         [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
-        [IdDataField] public string ID { get; } = string.Empty;
+        [IdDataField] public string ID { get; private set; } = string.Empty;
 
         public ushort TileId { get; private set; }
 
@@ -60,7 +62,10 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("barestepSounds")] public SoundSpecifier? BarestepSounds { get; private set; } = new SoundCollectionSpecifier("BarestepHard");
 
-        [DataField("friction")] public float Friction { get; set; } = 0.2f;
+        /// <summary>
+        /// Base friction modifier for this tile.
+        /// </summary>
+        [DataField("friction")] public float Friction { get; set; } = 1f;
 
         [DataField("variants")] public byte Variants { get; set; } = 1;
 
@@ -88,12 +93,6 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("mobFriction")]
         public float? MobFriction { get; private set; }
-
-        /// <summary>
-        ///     No-input friction override for mob mover in <see cref="SharedMoverController"/>
-        /// </summary>
-        [DataField("mobFrictionNoInput")]
-        public float? MobFrictionNoInput { get; private set; }
 
         /// <summary>
         ///     Accel override for mob mover in <see cref="SharedMoverController"/>

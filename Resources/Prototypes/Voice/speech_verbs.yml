@@ -111,6 +111,14 @@
   - chat-speech-verb-canine-3
 
 - type: speechVerb
+  id: Goat
+  name: chat-speech-verb-name-goat
+  speechVerbStrings:
+  - chat-speech-verb-goat-1
+  - chat-speech-verb-goat-2
+  - chat-speech-verb-goat-3
+
+- type: speechVerb
   id: LargeMob
   name: chat-speech-verb-name-large-mob
   speechVerbStrings:
