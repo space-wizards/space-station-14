@@ -1,0 +1,23 @@
+- type: constructionGraph
+  id: Cardwall
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: Cardwall
+          steps:
+            - material: Cardboard #MaterialCardboard?
+              amount: 3
+              doAfter: 2
+    - node: Cardwall
+      entity: Cardwall
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: MaterialCardboard1
+                amount: 3
+                doAfter: 2
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Slicing
