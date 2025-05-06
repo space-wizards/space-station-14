@@ -5542,4 +5542,18 @@ Entries:
   id: 768
   time: '2025-05-06T14:42:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/594
+- author: CringeCursed
+  changes:
+  - message: Changed Resomi Weight
+    type: Tweak
+  id: 769
+  time: '2025-05-06T15:24:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/593
+- author: CringeCursed
+  changes:
+  - message: Changed Resomi/Felinoids health thresholds for slowdown
+    type: Tweak
+  id: 770
+  time: '2025-05-06T15:24:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/593
 
