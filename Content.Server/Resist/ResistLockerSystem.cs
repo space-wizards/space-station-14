@@ -33,7 +33,7 @@ public sealed class ResistLockerSystem : EntitySystem
         if (component.IsResisting)
             return;
 
-        if (!TryComp(uid, out EntityStorageComponent? storageComponent))
+        if (!TryComp(uid, out EntityStorageComponent? storageComponent) || !storageComponent.OpenOnMove)
             return;
 
         if (!_actionBlocker.CanMove(args.Entity))
@@ -64,19 +64,17 @@ public sealed class ResistLockerSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, ResistLockerComponent component, DoAfterEvent args)
     {
-        if (args.Cancelled)
-        {
-            component.IsResisting = false;
-            _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-resist-interrupted"), args.Args.User, args.Args.User, PopupType.Medium);
-            return;
-        }
-
         if (args.Handled || args.Args.Target == null)
             return;
 
         component.IsResisting = false;
 
-        if (HasComp<EntityStorageComponent>(uid))
+        if (args.Cancelled) {
+            _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-resist-interrupted"), args.Args.User, args.Args.User, PopupType.Medium);
+            return;
+        }
+
+        if (TryComp<EntityStorageComponent>(uid, out EntityStorageComponent? storageComponent))
         {
             WeldableComponent? weldable = null;
             if (_weldable.IsWelded(uid, weldable))
@@ -85,7 +83,8 @@ public sealed class ResistLockerSystem : EntitySystem
             if (TryComp<LockComponent>(args.Args.Target.Value, out var lockComponent))
                 _lockSystem.Unlock(uid, args.Args.User, lockComponent);
 
-            _entityStorage.TryOpenStorage(args.Args.User, uid);
+            if (storageComponent.OpenOnMove)
+                _entityStorage.TryOpenStorage(args.Args.User, uid);
         }
 
         args.Handled = true;
