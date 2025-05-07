@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: centcomofficer24
-  changes:
-  - message: Increased the armor crates price from 725 spesos to 1250 spesos.
-    type: Tweak
-  id: 7935
-  time: '2025-02-11T12:17:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34541
 - author: pheenty
   changes:
   - message: The interrogator lamp is now considered security contraband.
@@ -3929,3 +3922,10 @@
   id: 8436
   time: '2025-05-07T12:44:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37065
+- author: themias
+  changes:
+  - message: Genpop prisoner closets can be ordered from cargo
+    type: Tweak
+  id: 8437
+  time: '2025-05-07T20:28:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37237
