@@ -5563,4 +5563,11 @@ Entries:
   id: 771
   time: '2025-05-07T04:18:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/584
+- author: PubliclyExecutedPig
+  changes:
+  - message: Updated the Gamma Armoury!
+    type: Tweak
+  id: 772
+  time: '2025-05-07T04:23:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/587
 
