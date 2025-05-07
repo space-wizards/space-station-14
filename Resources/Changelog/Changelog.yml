@@ -1,61 +1,4 @@
 ﻿Entries:
-- author: NazrinNya
-  changes:
-  - message: Flesh Kudzu now contains razorium, making it unsafe to eat.
-    type: Tweak
-  id: 7888
-  time: '2025-02-01T12:10:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32821
-- author: Boaz1111
-  changes:
-  - message: 'New Reagent: Coldsauce! It can be made using the Frost Oil from Chilly
-      Peppers, similar to Hotsauce from Capsaicin Oil!'
-    type: Add
-  - message: Coldsauce packets and bottles now contain Coldsauce, instead of Frost
-      Oil.
-    type: Tweak
-  id: 7889
-  time: '2025-02-01T15:20:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34458
-- author: Toxic, Nox
-  changes:
-  - message: Changed Packed armory.
-    type: Tweak
-  id: 7890
-  time: '2025-02-01T21:19:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34808
-- author: Minty642
-  changes:
-  - message: Added Gold and Silver Solidification, just mix with frost oil.
-    type: Add
-  id: 7891
-  time: '2025-02-02T01:00:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33239
-- author: Tayrtahn
-  changes:
-  - message: Ghosts and anomaly cores no longer jitter when starting to follow a target.
-    type: Fix
-  id: 7892
-  time: '2025-02-02T01:38:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34797
-- author: DieselMohawk
-  changes:
-  - message: Renamed ablative shield to laser shield
-    type: Tweak
-  - message: Changed description for laser shield & ballistic shield
-    type: Tweak
-  id: 7893
-  time: '2025-02-03T01:04:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34841
-- author: keronshb
-  changes:
-  - message: The Hypereutactic Blade has been added to the game as an alternative
-      to the double bladed energy sword. It's a massive sword with high attack power,
-      100% reflect chance, but slow movement and use speed.
-    type: Add
-  id: 7894
-  time: '2025-02-03T21:22:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32414
 - author: AgentSmithRadio
   changes:
   - message: Added manager wire hacking menus to nearly all vending machines. Get
@@ -3923,3 +3866,54 @@
   id: 8389
   time: '2025-04-29T16:36:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31257
+- author: whatston3
+  changes:
+  - message: Speso stacks now show different denominations depending on their size.
+    type: Add
+  id: 8390
+  time: '2025-04-29T21:44:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37030
+- author: themias
+  changes:
+  - message: Toolboxes have new sound effects
+    type: Tweak
+  id: 8391
+  time: '2025-04-29T22:17:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37048
+- author: ScarKy0
+  changes:
+  - message: Priority mail now indicates whether it was delivered on time or not.
+    type: Tweak
+  id: 8392
+  time: '2025-04-29T22:55:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37049
+- author: PJB3005
+  changes:
+  - message: Wallmount substations now have an interface too.
+    type: Fix
+  id: 8393
+  time: '2025-04-30T00:34:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37047
+- author: EmoGarbage404
+  changes:
+  - message: Fixed NPCs stalling out when too many exist.
+    type: Fix
+  id: 8394
+  time: '2025-04-30T00:51:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37056
+- author: BIGZi0348, slarticodefast
+  changes:
+  - message: Reflective vest now reflects lasers only while equipped.
+    type: Tweak
+  - message: Energy katana now reflects lasers and projectiles only while in hands.
+    type: Tweak
+  id: 8395
+  time: '2025-04-30T14:10:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37039
+- author: themias
+  changes:
+  - message: Firelocks can now close over turnstiles
+    type: Fix
+  id: 8396
+  time: '2025-04-30T15:51:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37074
