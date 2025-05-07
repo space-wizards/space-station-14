@@ -438,7 +438,7 @@
     variation: 0.05
   sounds:
     Laugh:
-      path: /Audio/Voice/Xenoborg/xenoborg_laugh.ogg
+      collection: XenoborgLaugh
     Beep:
       path: /Audio/Voice/Xenoborg/xenoborg_twobeep.ogg
     Chime:

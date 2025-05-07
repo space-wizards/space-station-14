@@ -1,8 +1,8 @@
 - type: entity
   parent: [BaseMob, StripableInventoryBase]
-  id: XenoborgBaseChassi
+  id: XenoborgsBaseChassi
   name: xenoborg
-  description: A man-machine hybrid that aims to replicate itself. They love gibbing people and placing their brains into empty xenoborgs over and over.
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army.
   save: false
   abstract: true
   components:
@@ -106,7 +106,7 @@
     - Binary
   - type: ZombieImmune
   - type: Repairable
-    doAfterDelay: 10
+    doAfterDelay: 13 # 25% more HP, so 30% more time to heal
     allowSelfRepair: false
   - type: BorgChassis
     maxModules: 7
@@ -123,6 +123,7 @@
       components:
       - BorgChassis
   - type: WiresPanel
+    openingTool: Prying
   - type: ActivatableUIRequiresPanel
   - type: NameIdentifier
     group: Silicon
@@ -166,15 +167,16 @@
       Unsexed: UnisexSiliconXenoborg
     screamAction: null
   - type: DamagedSiliconAccent 
+    damageAtMaxCorruption: 375
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: FootstepBorg
+      collection: FootstepXenoborg
   - type: SpamEmitSound # makes a creppy noise randomly
     minInterval: 30
     maxInterval: 45
     sound:
-      path: /Audio/Voice/Xenoborg/xenoborg_spam.ogg
+      path: /Audio/Machines/genetics.ogg
       params:
         volume: -8
         maxDistance: 5
@@ -317,11 +319,11 @@
 
 # the xenoborg types
 - type: entity
-  parent: [ XenoborgBaseChassi, XenoborgTransponder ]
+  parent: [ XenoborgsBaseChassi, XenoborgTransponder ]
   id: XenoborgEngi
   name: engi xenoborg
   suffix: with brain
-  description: A man-machine hybrid that aims to replicate itself. They love gibbing people and placing their brains into empty xenoborgs over and over. This is a engi type, it has more tools and is better for supporting other xenoborgs.
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This one seems to be an engineering type, as it has more tools for supporting the other xenoborgs.
   components:
   - type: BorgTransponder
     name: engi xenoborg
@@ -370,11 +372,11 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ XenoborgBaseChassi, XenoborgTransponder ]
+  parent: [ XenoborgsBaseChassi, XenoborgTransponder ]
   id: XenoborgHeavy
   name: heavy xenoborg
   suffix: with brain
-  description: A man-machine hybrid that aims to replicate itself. They love gibbing people and placing their brains into empty xenoborgs over and over. This is a heavy type, its slower but tougher and it shoots lasers.
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This type is has heavy lasers and is covered in thick armor plates. It may be tougher, but its speed matches its brawn.
   components:
   - type: BorgTransponder
     name: heavy xenoborg
@@ -406,8 +408,8 @@
   - type: MobThresholds # tankier
     thresholds:
       0: Alive
-      400: Critical
-      800: Dead
+      250: Critical
+      500: Dead
     stateAlertDict:
       Alive: BorgHealth
       Critical: BorgCrit
@@ -418,7 +420,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 190
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -427,7 +429,7 @@
             volume: 5
     - trigger:
         !type:DamageTrigger
-        damage: 1200
+        damage: 750
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -438,6 +440,10 @@
         - cell_slot
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Repairable
+    doAfterDelay: 25 # more HP, more time to heal
+  - type: DamagedSiliconAccent 
+    damageAtMaxCorruption: 750
   - type: ContainerFill
     containers:
       borg_brain:
@@ -454,11 +460,11 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ XenoborgBaseChassi, XenoborgTransponder ]
+  parent: [ XenoborgsBaseChassi, XenoborgTransponder ]
   id: XenoborgScout
   name: scout xenoborg
   suffix: with brain
-  description: A man-machine hybrid that aims to replicate itself. They love gibbing people and placing their brains into empty xenoborgs over and over. This is a scout type, its faster and is able to fly in space.
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This is a scout type, its nimble thrusters allow it to move quickly through space.
   components:
   - type: BorgTransponder
     name: scout xenoborg
@@ -478,7 +484,7 @@
         visible: false
   - type: FootstepModifier # it flies instead of walking
     footstepSoundCollection:
-      collection: FootstepHoverBorg
+      collection: FootstepHoverXenoborg
   - type: FlashImmunity
   - type: BorgChassis
     hasMindState: xenoborg_scout_e
@@ -506,11 +512,11 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ XenoborgBaseChassi, XenoborgTransponder ]
+  parent: [ XenoborgsBaseChassi, XenoborgTransponder ]
   id: XenoborgStealth
   name: stealth xenoborg
   suffix: with brain
-  description: A man-machine hybrid that aims to replicate itself. They love gibbing people and placing their brains into empty xenoborgs over and over. This is a stealth type, it can become invisible.
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This one is a stealth type. Its armor shimmers in the light like no other material you've seen.
   components:
   - type: BorgTransponder
     name: stealth xenoborg
@@ -530,7 +536,7 @@
         visible: false
   - type: FootstepModifier # it flies instead of walking
     footstepSoundCollection:
-      collection: FootstepHoverBorg
+      collection: FootstepHoverXenoborg
   - type: BorgChassis
     hasMindState: xenoborg_stealth_e
     noMindState: xenoborg_stealth_e_r
