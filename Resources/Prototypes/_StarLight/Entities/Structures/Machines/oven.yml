@@ -4,7 +4,7 @@
   name: oven
   description: It's a huge magic.
   components:
-  - type: Microwave
+  - type: CookingDevice
     capacity: 10
     deviceType: Oven
   - type: Appearance
@@ -19,6 +19,9 @@
           Idle: { state: "on" }
           Broken: { state: "on" }
           Cooking: { state: "enabled" }
+        enum.MicrowaveVisualizerLayers.Opened:
+          Opened: { visible: true }
+          Closed: { visible: false }
       enum.PowerDeviceVisuals.Powered:
         enum.MicrowaveVisualizerLayers.BaseUnlit:
           True: { visible: true }
@@ -59,6 +62,9 @@
     - state: on
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+    - state: opened
+      visible: false
+      map: ["enum.MicrowaveVisualizerLayers.Opened"]
   - type: Destructible
     thresholds:
     - trigger:

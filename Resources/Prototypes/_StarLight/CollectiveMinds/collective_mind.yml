@@ -63,3 +63,12 @@
   color: "#39c675"
   requiredComponents:
   - Cluwne
+
+- type: collectiveMind
+  id: Nexus #for resomi and future avali nexus connection. Also allow the station to connect to this somehow maybe?
+  name: collective-mind-nexus
+  keycode: 'n'
+  color: "#FF7922"
+  requiredTags: 
+  - Resomi
+  #- Avali #Add avali here later

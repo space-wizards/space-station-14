@@ -4,6 +4,7 @@ using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Flash.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Starlight.Overlay;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -85,6 +86,8 @@ public sealed class CycloritesVisionSystem : EntitySystem
 
     private void AddNightVision(EntityUid uid)
     {
+        if (!TryComp<CycloritesVisionComponent>(uid, out var cycloVision) || cycloVision.blockedByFlashImmunity) return;
+
         _effect = SpawnAttachedTo(_effectPrototype, Transform(uid).Coordinates);
         _xformSys.SetParent(_effect.Value, uid);
     }
