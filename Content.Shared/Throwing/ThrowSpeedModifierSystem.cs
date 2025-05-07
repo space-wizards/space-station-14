@@ -14,5 +14,7 @@ public sealed class ThrowSpeedModifierSystem : EntitySystem
         //Apply speed modifiers
         args.ThrowSpeed += ent.Comp.FlatModifier;
         args.ThrowSpeed *= ent.Comp.Multiplier;
+        //Make sure it's at least 0
+        if (args.ThrowSpeed < 0) { args.ThrowSpeed = 0; }
     }
 }
