@@ -32,7 +32,7 @@
     pocket2: WeaponLaserGun
     belt: ClothingBeltBandolierIncendiary
   inhand:
-  - WeaponShotgunEnforcerIncendiary
+  - WeaponShotgunKammererIncendiary
   storage:
     back:
     - PillAmbuzolPlus

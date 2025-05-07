@@ -158,14 +158,6 @@
     proto: ShellShotgunBeanbag
 
 - type: entity
-  parent: WeaponShotgunEnforcer
-  id: WeaponShotgunEnforcerIncendiary
-  suffix: Incendiary
-  components:
-  - type: BallisticAmmoProvider
-    proto: ShellShotgunIncendiary
-
-- type: entity
   name: Kammerer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponShotgunKammerer
@@ -186,6 +178,14 @@
   - type: Tag
     tags:
     - WeaponShotgunKammerer
+
+- type: entity
+  parent: WeaponShotgunKammerer
+  id: WeaponShotgunKammererIncendiary
+  suffix: Incendiary
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunIncendiary
 
 - type: entity
   name: sawn-off shotgun
