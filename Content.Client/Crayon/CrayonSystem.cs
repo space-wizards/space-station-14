@@ -94,10 +94,9 @@ public sealed class CrayonSystem : SharedCrayonSystem
         }
     }
 
-    private DecalPrototype? GetDecal(string decalId)
+    private DecalPrototype? GetDecal(ProtoId<DecalPrototype>? decalId)
     {
-        return decalId != null ?
-            _protoMan.Index<DecalPrototype>(decalId) : null;
+        return decalId is { } id ? _protoMan.Index(id) : null;
     }
 
     private void UpdateOverlayInternal(string state, float rotation, Color color, bool previewMode)
