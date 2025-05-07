@@ -93,9 +93,9 @@ public sealed partial class CargoSystem
         if (TryComp<AccessReaderComponent>(uid, out var accessReaderComponent) &&
             !_accessReaderSystem.IsAllowed(mob, uid, accessReaderComponent))
         {
-            if (Timing.CurTime >= component.NextDenialSoundTime)
+            if (Timing.CurTime >= component.NextDenySoundTime)
             {
-                component.NextDenialSoundTime = Timing.CurTime + component.DenySoundDelay;
+                component.NextDenySoundTime = Timing.CurTime + component.DenySoundDelay;
                 _audio.PlayPvs(component.DenySound, uid);
             }
             return;
