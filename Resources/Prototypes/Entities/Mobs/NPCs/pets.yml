@@ -260,17 +260,6 @@
   parent: MobCatCaracal
   description: He out here.
   components:
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 40
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
   - type: Grammar
     attributes:
       gender: male
@@ -283,43 +272,10 @@
 
 - type: entity
   name: Bingus
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: MobCatSphynx
   id: MobBingus
   description: Bingus my beloved...
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/bingus.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: bingus
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 12
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: Inventory
-    speciesId: cat
-    templateId: pet
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: bingus
-      Critical:
-        Base: bingus_dead
-      Dead:
-        Base: bingus_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 2
   - type: InteractionPopup
     successChance: 0.9
     interactSuccessString: petting-success-bingus

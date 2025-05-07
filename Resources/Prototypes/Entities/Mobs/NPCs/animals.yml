@@ -2513,10 +2513,21 @@
   description: Hilarious.
   components:
   - type: Sprite
-    sprite: Mobs/Pets/caracal.rsi
+    sprite: Mobs/Animals/caracal.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: caracal_flop
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 40
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2525,6 +2536,41 @@
         Base: caracal_dead
       Dead:
         Base: caracal_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 2
+
+- type: entity
+  name: spyhynx cat
+  id: MobCatSphynx
+  parent: MobCat
+  description: Beloved.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/sphynx.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: sphynx
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 12
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: sphynx
+      Critical:
+        Base: sphynx_dead
+      Dead:
+        Base: sphynx_dead
 
 - type: entity
   name: kitten
