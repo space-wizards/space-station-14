@@ -1,4 +1,4 @@
-### Inesects/Bugs
+##  Inesects/Bugs
 ##  -Roaches
 - type: entity # TODO: figure out how to make these guys gib when stepped on
   name: cockroach
@@ -723,7 +723,7 @@
   - type: Bloodstream
     bloodMaxVolume: 50
 
-### Avian
+##  Avian
 ##  -Chickens
 - type: entity
   name: chicken
@@ -1243,7 +1243,7 @@
   - type: Bloodstream
     bloodMaxVolume: 50
 
-### Ancestors
+##  Ancestors
 ##  -Monkeys
 - type: entity
   name: genetic ancestor
@@ -1703,7 +1703,7 @@
   - type: ReplacementAccent
     accent: nymph
 
-### Mammals
+##  Mammals
 ##  -Kangaroos
 - type: entity
   name: kangaroo
@@ -3406,7 +3406,7 @@
     rootTask:
       task: RuminantCompound
 
-### Reptiles/Amphibians/Crustaceans
+##  Reptiles/Amphibians/Crustaceans
 - type: entity
   name: lizard #Weh
   parent: SimpleMobBase
