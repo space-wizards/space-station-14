@@ -5584,4 +5584,11 @@ Entries:
   id: 774
   time: '2025-05-07T04:45:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/589
+- author: CringeCursed
+  changes:
+  - message: pop up message on surgeon actions
+    type: Add
+  id: 775
+  time: '2025-05-07T17:56:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/597
 
