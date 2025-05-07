@@ -468,10 +468,10 @@
     state: plushie_thavenweird
   - type: EmitSoundOnUse
     sound:
-      path: /Audio/_Impstation/Thaven/moods_changed.ogg
+      path: /Audio/_Impstation/Thaven/moods_changed_mono.ogg
   - type: EmitSoundOnActivate
     sound:
-      path: /Audio/_Impstation/Thaven/moods_changed.ogg
+      path: /Audio/_Impstation/Thaven/moods_changed_mono.ogg
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Effects/desecration-03.ogg
