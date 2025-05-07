@@ -58,5 +58,5 @@
 
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
-  id: XenoborgModuleFastSwordRecipe
-  result: XenoborgModuleFastSword
+  id: XenoborgModuleEnergySwordRecipe
+  result: XenoborgModuleEnergySword
