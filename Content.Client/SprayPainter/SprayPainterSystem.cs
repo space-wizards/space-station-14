@@ -70,17 +70,9 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 /// <summary>
 /// Used for convenient data storage.
 /// </summary>
-public sealed class SprayPainterEntry(string name, EntProtoId? proto)
-{
-    public string Name = name;
-    public EntProtoId? Proto = proto;
-}
+public sealed record SprayPainterEntry(string Name, EntProtoId? Proto);
 
 /// <summary>
 /// Used for convenient data storage.
 /// </summary>
-public sealed class SprayPainterDecalEntry(string name, SpriteSpecifier spriteSpecifier)
-{
-    public string Name = name;
-    public SpriteSpecifier Sprite = spriteSpecifier;
-}
+public sealed record SprayPainterDecalEntry(string Name, SpriteSpecifier Sprite);
