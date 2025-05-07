@@ -214,7 +214,6 @@
       path: /Audio/Items/bikehorn.ogg
       params:
         variation: 0.125
-  - type: Alerts
 
 - type: entity
   parent: MobHonkBot
@@ -254,7 +253,6 @@
     totalIntensity: 10
     intensitySlope: 5
     canCreateVacuum: false
-  - type: Alerts
 
 - type: entity
   parent: MobSiliconBase
@@ -380,7 +378,6 @@
     interactFailureString: petting-failure-mimebot
   - type: Inventory
     templateId: head
-  - type: Alerts
 
 - type: entity
   parent: MobSiliconBase
@@ -450,4 +447,3 @@
     - Supply
   - type: Puller
     needsHands: false
-  - type: Alerts
