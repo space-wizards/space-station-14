@@ -158,6 +158,14 @@
     proto: ShellShotgunBeanbag
 
 - type: entity
+  parent: WeaponShotgunEnforcer
+  id: WeaponShotgunEnforcerIncendiary
+  suffix: Incendiary
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunIncendiary
+
+- type: entity
   name: Kammerer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponShotgunKammerer
