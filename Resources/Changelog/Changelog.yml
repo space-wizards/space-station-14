@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Flashbangs, stinger grenades, EMP grenades, smoke grenades, and tear
-      gas grenades have new appearances.
-    type: Tweak
-  - message: Projectile grenades (including stinger and shrapnel grenades) should
-      now play animations when triggered.
-    type: Fix
-  id: 7931
-  time: '2025-02-11T03:23:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34421
 - author: themias
   changes:
   - message: You can no longer use pulled objects as tools.
@@ -3927,3 +3916,11 @@
   id: 8432
   time: '2025-05-06T19:10:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36961
+- author: UpAndLeaves
+  changes:
+  - message: wearing an elite web vest and an atmos fire helmet will no longer heal
+      your burn damage when on fire.
+    type: Fix
+  id: 8433
+  time: '2025-05-07T02:03:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37241
