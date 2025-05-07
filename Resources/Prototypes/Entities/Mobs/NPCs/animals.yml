@@ -2384,6 +2384,52 @@
     interactSuccessSound:
       path: /Audio/Animals/small_dog_bark_happy.ogg
 
+- type: entity
+  name: Pug
+  parent: MobDogBase
+  id: MobPug
+  description: A bull terrier! Adorable?..
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/pug.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: pug
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 20
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: pug
+      Critical:
+        Base: pug_dead
+      Dead:
+        Base: pug_dead
+  - type: Inventory
+    speciesId: puppy
+    templateId: pet
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 2
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+
 ##  -Cats
 - type: entity
   name: cat
