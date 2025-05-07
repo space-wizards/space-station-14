@@ -50,6 +50,7 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
 
             foreach (var layer in args.Sprite.AllLayers)
             {
+                // Without it, after painting, the texture comes out with a paper.
                 if (layer.RsiState.Name == "paper")
                     continue;
 
