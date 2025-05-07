@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: pheenty
   changes:
-  - message: The interrogator lamp is now considered security contraband.
-    type: Tweak
-  id: 7936
-  time: '2025-02-11T16:15:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35064
-- author: pheenty
-  changes:
   - message: Chief Engineer's hardsuit storage unit now has an atmospheric gas mask.
     type: Add
   id: 7937
@@ -3929,3 +3922,10 @@
   id: 8437
   time: '2025-05-07T20:28:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37237
+- author: JuneSzalkowska, SlamBamActionman
+  changes:
+  - message: 3 new exomorph-themed posters have been added!
+    type: Add
+  id: 8438
+  time: '2025-05-07T23:26:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37260
