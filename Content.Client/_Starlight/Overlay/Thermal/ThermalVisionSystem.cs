@@ -10,6 +10,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Flash.Components;
+using Content.Shared.Starlight.Overlay;
 
 namespace Content.Client._Starlight.Overlay.Thermal;
 
@@ -33,26 +34,8 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
         SubscribeLocalEvent<ThermalVisionComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ThermalVisionComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
-        SubscribeLocalEvent<ThermalVisionComponent, FlashImmunityChangedEvent>(OnFlashImmunityChanged);
-
         _throughWallsOverlay = new();
         _overlay = new();
-    }
-
-    private void OnFlashImmunityChanged(Entity<ThermalVisionComponent> ent, ref FlashImmunityChangedEvent args)
-    {
-        if (_player.LocalSession?.AttachedEntity != ent.Owner) return;
-
-        if (args.IsImmune)
-        {
-            ent.Comp.blockedByFlashImmunity = true;
-            RemoveNightVision();
-        }
-        else
-        {
-            ent.Comp.blockedByFlashImmunity = false;
-            AddNightVision(ent.Owner);
-        }
     }
 
     private void OnPlayerAttached(Entity<ThermalVisionComponent> ent, ref LocalPlayerAttachedEvent args)
@@ -84,6 +67,11 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
 
     private void AddNightVision(EntityUid uid)
     {
+        //only add if its active
+        if (!TryComp<ThermalVisionComponent>(uid, out var thermalVision) || !thermalVision.Active || thermalVision.blockedByFlashImmunity) return;
+
+        if (_effect != null) return;
+        
         _overlayMan.AddOverlay(_throughWallsOverlay);
         _overlayMan.AddOverlay(_overlay);
         _effect = SpawnAttachedTo(_effectPrototype, Transform(uid).Coordinates);

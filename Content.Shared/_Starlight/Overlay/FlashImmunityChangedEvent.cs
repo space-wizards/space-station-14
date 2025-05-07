@@ -1,4 +1,4 @@
-namespace Content.Client._Starlight.Overlay;
+namespace Content.Shared.Starlight.Overlay;
 
 public sealed class FlashImmunityChangedEvent : EntityEventArgs
 {
