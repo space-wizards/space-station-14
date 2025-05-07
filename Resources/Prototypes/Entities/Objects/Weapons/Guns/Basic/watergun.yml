@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: WeaponWaterGunBase
   abstract: true
   parent: BaseItem
@@ -71,7 +71,7 @@
   id: WeaponWaterBlaster
   parent: WeaponWaterGunBase
   name: water blaster
-  description: With this bad boy, you'll be the cooleste kid at the summer barbecue.
+  description: With this bad boy, you'll be the coolest kid at the summer barbecue.
   components:
   - type: Gun
     cameraRecoilScalar: 0 #no recoil

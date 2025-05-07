@@ -11,8 +11,8 @@ public sealed partial class PathfindingSystem
     /// </summary>
     public record struct BreadthPathArgs()
     {
-        public Vector2i Start;
-        public List<Vector2i> Ends;
+        public required Vector2i Start;
+        public required List<Vector2i> Ends;
 
         public bool Diagonals = false;
 

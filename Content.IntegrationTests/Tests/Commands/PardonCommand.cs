@@ -32,9 +32,9 @@ namespace Content.IntegrationTests.Tests.Commands
             // No bans on record
             Assert.Multiple(async () =>
             {
-                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Null);
+                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null, null), Is.Null);
                 Assert.That(await sDatabase.GetServerBanAsync(1), Is.Null);
-                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Is.Empty);
+                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null, null), Is.Empty);
             });
 
             // Try to pardon a ban that does not exist
@@ -43,9 +43,9 @@ namespace Content.IntegrationTests.Tests.Commands
             // Still no bans on record
             Assert.Multiple(async () =>
             {
-                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Null);
+                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null, null), Is.Null);
                 Assert.That(await sDatabase.GetServerBanAsync(1), Is.Null);
-                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Is.Empty);
+                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null, null), Is.Empty);
             });
 
             var banReason = "test";
@@ -57,9 +57,9 @@ namespace Content.IntegrationTests.Tests.Commands
             // Should have one ban on record now
             Assert.Multiple(async () =>
             {
-                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Not.Null);
+                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null, null), Is.Not.Null);
                 Assert.That(await sDatabase.GetServerBanAsync(1), Is.Not.Null);
-                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
+                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null, null), Has.Count.EqualTo(1));
             });
 
             await pair.RunTicksSync(5);
@@ -70,13 +70,13 @@ namespace Content.IntegrationTests.Tests.Commands
             await server.WaitPost(() => sConsole.ExecuteCommand("pardon 2"));
 
             // The existing ban is unaffected
-            Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Not.Null);
+            Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null, null), Is.Not.Null);
 
             var ban = await sDatabase.GetServerBanAsync(1);
             Assert.Multiple(async () =>
             {
                 Assert.That(ban, Is.Not.Null);
-                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
+                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null, null), Has.Count.EqualTo(1));
 
                 // Check that it matches
                 Assert.That(ban.Id, Is.EqualTo(1));
@@ -95,7 +95,7 @@ namespace Content.IntegrationTests.Tests.Commands
             await server.WaitPost(() => sConsole.ExecuteCommand("pardon 1"));
 
             // No bans should be returned
-            Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Null);
+            Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null, null), Is.Null);
 
             // Direct id lookup returns a pardoned ban
             var pardonedBan = await sDatabase.GetServerBanAsync(1);
@@ -105,7 +105,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(pardonedBan, Is.Not.Null);
 
                 // The list is still returned since that ignores pardons
-                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
+                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null, null), Has.Count.EqualTo(1));
 
                 Assert.That(pardonedBan.Id, Is.EqualTo(1));
                 Assert.That(pardonedBan.UserId, Is.EqualTo(clientId));
@@ -133,13 +133,13 @@ namespace Content.IntegrationTests.Tests.Commands
             Assert.Multiple(async () =>
             {
                 // No bans should be returned
-                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null), Is.Null);
+                Assert.That(await sDatabase.GetServerBanAsync(null, clientId, null, null), Is.Null);
 
                 // Direct id lookup returns a pardoned ban
                 Assert.That(await sDatabase.GetServerBanAsync(1), Is.Not.Null);
 
                 // The list is still returned since that ignores pardons
-                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
+                Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null, null), Has.Count.EqualTo(1));
             });
 
             // Reconnect client. Slightly faster than dirtying the pair.

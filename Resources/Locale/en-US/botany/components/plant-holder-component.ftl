@@ -31,3 +31,4 @@ plant-holder-component-heat-improper-warning = The [color=orange]improper temper
 plant-holder-component-pressure-improper-warning = The [color=lightblue]improper environment pressure alert[/color] is blinking.
 plant-holder-component-gas-missing-warning = The [color=cyan]improper gas environment alert[/color] is blinking.
 plant-holder-component-early-sample-message = The plant hasn't grown enough to take a sample yet.
+plant-holder-component-ligneous-cant-harvest-message = The plant is too tough to harvest with your bare hands.

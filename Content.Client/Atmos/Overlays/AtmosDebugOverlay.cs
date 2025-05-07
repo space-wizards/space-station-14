@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using Content.Client.Atmos.EntitySystems;
@@ -101,14 +102,9 @@ public sealed class AtmosDebugOverlay : Overlay
         else
         {
             // Red-Green-Blue interpolation
-            if (interp < 0.5f)
-            {
-                res = Color.InterpolateBetween(Color.Red, Color.LimeGreen, interp * 2);
-            }
-            else
-            {
-                res = Color.InterpolateBetween(Color.LimeGreen, Color.Blue, (interp - 0.5f) * 2);
-            }
+            res = interp < 0.5f
+                ? Color.InterpolateBetween(Color.Red, Color.LimeGreen, interp * 2)
+                : Color.InterpolateBetween(Color.LimeGreen, Color.Blue, (interp - 0.5f) * 2);
         }
 
         res = res.WithAlpha(0.75f);
@@ -181,7 +177,10 @@ public sealed class AtmosDebugOverlay : Overlay
             handle.DrawCircle(tileCentre, 0.05f, Color.Black);
     }
 
-    private void CheckAndShowBlockDir(AtmosDebugOverlayData data, DrawingHandleWorld handle, AtmosDirection dir,
+    private void CheckAndShowBlockDir(
+        AtmosDebugOverlayData data,
+        DrawingHandleWorld handle,
+        AtmosDirection dir,
         Vector2 tileCentre)
     {
         if (!data.BlockDirection.HasFlag(dir))
@@ -243,7 +242,7 @@ public sealed class AtmosDebugOverlay : Overlay
 
         var moles = data.Moles == null
             ? "No Air"
-            : data.Moles.Sum().ToString();
+            : data.Moles.Sum().ToString(CultureInfo.InvariantCulture);
 
         handle.DrawString(_font, pos, $"Moles: {moles}");
         pos += offset;
@@ -263,7 +262,12 @@ public sealed class AtmosDebugOverlay : Overlay
     private void GetGrids(MapId mapId, Box2Rotated box)
     {
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(mapId, box, ref _grids, (EntityUid uid, MapGridComponent grid,
+        _mapManager.FindGridsIntersecting(
+            mapId,
+            box,
+            ref _grids,
+            (EntityUid uid,
+                MapGridComponent grid,
             ref List<(Entity<MapGridComponent>, DebugMessage)> state) =>
         {
             if (_system.TileData.TryGetValue(uid, out var data))

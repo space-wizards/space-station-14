@@ -1,13 +1,10 @@
 namespace Content.Shared.Inventory.Events;
 
-public sealed class RefreshEquipmentHudEvent<T> : EntityEventArgs, IInventoryRelayEvent where T : IComponent
+[ByRefEvent]
+public record struct RefreshEquipmentHudEvent<T>(SlotFlags TargetSlots) : IInventoryRelayEvent
+    where T : IComponent
 {
-    public SlotFlags TargetSlots { get; init; }
+    public SlotFlags TargetSlots { get; } = TargetSlots;
     public bool Active = false;
     public List<T> Components = new();
-
-    public RefreshEquipmentHudEvent(SlotFlags targetSlots)
-    {
-        TargetSlots = targetSlots;
-    }
 }
