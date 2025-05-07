@@ -232,7 +232,7 @@
           - !type:Temperature
             max: 213.0
           - !type:ReagentThreshold
-            reagent: Cryoxadone
+            reagent: Stelloxadone
             min: 1
           damage:
             types:
