@@ -10,7 +10,6 @@ namespace Content.Client.Crayon
         [ViewVariables(VVAccess.ReadWrite)] public bool UIUpdateNeeded;
         [ViewVariables] public int Charges { get; set; }
         [ViewVariables] public int Capacity { get; set; }
-        [DataField] public string State;
         [DataField] public float Rotation;
         [DataField] public bool PreviewMode;
     }

@@ -55,7 +55,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         component.SelectedState = state.State;
         component.Charges = state.Charges;
         component.Capacity = state.Capacity;
-        component.State = state.State;
+        component.SelectedState = state.State;
         component.Rotation = state.Rotation;
         component.PreviewMode = state.PreviewMode;
 
@@ -121,12 +121,12 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     private void OnCrayonColorMessage(EntityUid uid, CrayonComponent component, ref CrayonColorMessage args)
     {
-        UpdateOverlayInternal(component.State, component.Rotation, args.Color, component.PreviewMode);
+        UpdateOverlayInternal(component.SelectedState, component.Rotation, args.Color, component.PreviewMode);
     }
 
     private void OnCrayonRotationMessage(EntityUid uid, CrayonComponent component, ref CrayonRotationMessage args)
     {
-        UpdateOverlayInternal(component.State, args.Rotation, component.Color, component.PreviewMode);
+        UpdateOverlayInternal(component.SelectedState, args.Rotation, component.Color, component.PreviewMode);
     }
 
     private void OnPlayerDetached(LocalPlayerDetachedEvent args)
