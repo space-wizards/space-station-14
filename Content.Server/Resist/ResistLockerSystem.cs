@@ -64,10 +64,13 @@ public sealed class ResistLockerSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, ResistLockerComponent component, DoAfterEvent args)
     {
-        if (args.Handled || args.Target == null)
+        if (args.Handled)
             return;
 
         component.IsResisting = false;
+
+        if (args.Target != uid)
+            return;
 
         if (args.Cancelled) {
             _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-resist-interrupted"), args.User, args.User, PopupType.Medium);
