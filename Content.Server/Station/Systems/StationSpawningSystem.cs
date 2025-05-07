@@ -89,10 +89,9 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
                         roundStart.Add(proto.ID);
                 }
 
-                if (roundStart.Count == 0)
-                    speciesId = SharedHumanoidAppearanceSystem.DefaultSpecies;
-                else
-                    speciesId = _random.Pick(roundStart);
+                speciesId = roundStart.Count == 0
+                    ? SharedHumanoidAppearanceSystem.DefaultSpecies
+                    : _random.Pick(roundStart);
             }
             else
             {
