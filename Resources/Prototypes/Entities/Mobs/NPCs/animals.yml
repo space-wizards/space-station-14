@@ -2177,12 +2177,11 @@
       Dead:
         Base: possum_dead_old
 
-##  -Corgis
+##  -Dogs
 - type: entity
-  name: corgi
   parent: [SimpleMobBase, StripableInventoryBase]
-  id: MobCorgi
-  description: Finally, a space corgi!
+  id: MobDogBase
+  abstract: true
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -2216,6 +2215,15 @@
         Base: corgi_dead
       Dead:
         Base: corgi_dead
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 3
+        Slash: 2
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -2232,7 +2240,7 @@
     attributes:
       gender: epicene
   - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-corgi
+    flavorKind: station-event-random-sentience-flavor-dog
   - type: MobPrice
     price: 200
   - type: Tag
@@ -2240,8 +2248,26 @@
     - VimPilot
 
 - type: entity
+  name: corgi
+  parent: [MobDogBase, StripableInventoryBase]
+  id: MobCorgi
+  description: Finally, a space corgi!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: corgi
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-corgi
+  - type: MobPrice
+    price: 200
+
+- type: entity ## Chaplains hellhound
   name: corrupted corgi
-  parent: [ MobCorgi, MobCombat ]
+  parent: MobCorgi
   id: MobCorgiNarsi
   description: Ian! No!
   components:
@@ -2268,8 +2294,6 @@
       types:
         Piercing: 5
         Slash: 5
-  - type: InputMover
-  - type: MobMover
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
@@ -2277,12 +2301,9 @@
     factions:
     - SimpleHostile
   - type: InteractionPopup
-    successChance: 0 # Override the automatic success that would normally be inherited from MobCorgi.
-    interactSuccessString: petting-success-corrupted-corgi # Normally impossible but added an easter egg just in case.
+    successChance: 0
+    interactSuccessString: petting-success-corrupted-corgi # Easter egg
     interactFailureString: petting-failure-corrupted-corgi
-  - type: Grammar
-    attributes:
-      gender: epicene
   - type: Bloodstream
     bloodReagent: DemonsBlood
   - type: Damageable
@@ -2294,11 +2315,11 @@
     currentTemperature: 310.15
     coldDamage:
       types:
-        Cold : 1 #per second, scales with temperature & other constants
+        Cold : 1
     specificHeat: 42
     heatDamage:
       types:
-        Heat : 1 #per second, scales with temperature & other constants
+        Heat : 1
 
 - type: entity
   name: corgi puppy
@@ -2312,6 +2333,17 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: puppy
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.275
+        density: 25
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Inventory
     speciesId: puppy
     templateId: pet
@@ -2323,9 +2355,34 @@
         Base: puppy_dead
       Dead:
         Base: puppy_dead
-  - type: Grammar
-    attributes:
-      gender: epicene
+
+- type: entity
+  name: bull terrier
+  parent: MobDogBase
+  id: MobBullTerrier
+  description: A bull terrier!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/bullterrier.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: bullterrier
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: bullterrier
+      Critical:
+        Base: bullterrier_dead
+      Dead:
+        Base: bullterrier_dead
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
 
 ##  -Cats
 - type: entity
