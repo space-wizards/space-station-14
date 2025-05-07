@@ -210,7 +210,7 @@
   parent: [ClothingHandsBase, BaseToggleClothing, BaseMajorContraband]
   id: ClothingHandsGlovesSpaceNinja
   name: space ninja gloves
-  description: These black nano-enhanced gloves insulate from electricity and provide fire resistance.
+  description: These black nano-enhanced gloves insulate from electricity and interface with various machines.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
