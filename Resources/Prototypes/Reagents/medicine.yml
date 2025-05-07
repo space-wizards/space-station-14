@@ -215,8 +215,8 @@
           damage:
             types:
              Cellular: -3
-             Radiation: 1.5
-             Caustic: 1.5
+             Radiation: 1
+             Caustic: 1
         - !type:HealthChange
           conditions:
           - !type:Temperature
