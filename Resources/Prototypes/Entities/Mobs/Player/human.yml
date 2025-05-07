@@ -68,8 +68,8 @@
   - type: NukeOperative
   - type: RandomMetadata
     nameSegments:
-    - NamesNukieFirstOperator
     - NamesSyndicateNormal
+    nameFormat: name-format-nukie-operator
   - type: Loadout
     prototypes: [SyndicateOperativeGearFullNoUplink]
 
@@ -99,6 +99,7 @@
     nameSegments:
     - NamesSyndicatePrefix
     - NamesSyndicateNormal
+    nameFormat: name-format-nukie-generic
   - type: NpcFactionMember
     factions:
     - Syndicate
