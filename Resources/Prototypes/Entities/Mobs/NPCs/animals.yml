@@ -166,7 +166,6 @@
     bloodMaxVolume: 0.1
   - type: ZombieImmune
 
-
 - type: entity
   name: chicken
   parent: SimpleMobBase
@@ -609,10 +608,8 @@
             sprite: Mobs/Animals/mothroach/displacement.rsi
             state: neck
 
-
 # Note that the mallard duck is actually a male drake mallard, with the brown duck being the female variant of the same species, however ss14 lacks sex specific textures
 # The white duck is more akin to a pekin or call duck.
-
 - type: entity
   name: mallard duck #Quack
   parent: SimpleMobBase
@@ -1380,8 +1377,6 @@
       effects:
       - !type:WashCreamPieReaction
 
-
-
 - type: entity
   name: monkey
   id: MobMonkey
@@ -1413,7 +1408,6 @@
         Burn: 3
     clumsySound:
       path: /Audio/Animals/monkey_scream.ogg
-
 
 - type: entity
   name: monkey
@@ -2284,6 +2278,7 @@
       - !type:ExplodeBehavior
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
+
 - type: entity
   name: snake
   parent: SimpleMobBase
@@ -3557,13 +3552,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: reindeer_buck
       sprite: Mobs/Animals/reindeer_buck.rsi
-#  - type: SpriteMovement  # One day when this shit isnt broken as hell. For now they hoppity hop.
-#    movementLayers:
-#      movement:
-#        state: reindeer_buck
-#    noMovementLayers:
-#      movement:
-#        state: reindeer_buck_still
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -3623,13 +3611,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: reindeer_doe
       sprite: Mobs/Animals/reindeer_doe.rsi
-#  - type: SpriteMovement  # One day when this shit isnt broken as hell. For now they hoppity hop.
-#    movementLayers:
-#      movement:
-#        state: reindeer_doe
-#    noMovementLayers:
-#      movement:
-#        state: reindeer_doe_still
   - type: DamageStateVisuals
     states:
       Alive:
