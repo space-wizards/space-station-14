@@ -45,16 +45,6 @@ public abstract partial class SharedSurgerySystem
             return;
         }
 
-        if (_net.IsServer)
-        {
-            if (TryComp<MetaDataComponent>(step, out var meta))
-            {
-                
-                var surgeonName = MetaData(args.User).EntityName;
-                _popup.PopupEntity($"{surgeonName} performs {meta.EntityName}", part, PopupType.LargeCaution);
-            }
-        }
-        
         if (!_random.Prob(args.SuccessRate))
         {
             if (_net.IsClient) return;
@@ -232,8 +222,13 @@ public abstract partial class SharedSurgerySystem
             return;
         }
 
+        if (_net.IsServer && TryComp(step, out MetaDataComponent? meta))
+        {
+            var surgeonName = MetaData(user).EntityName;
+            _popup.PopupEntity($"{surgeonName.ToLower()} starts {meta.EntityName.ToLower()}", part, PopupType.LargeCaution);
+        }
+
         var duration = stepComp.Duration;
-        
         float SmallestSuccessRate = 1f;
 
         foreach (var tool in validTools)
@@ -241,7 +236,7 @@ public abstract partial class SharedSurgerySystem
             {
                 duration *= toolComp.Speed;
                 if (toolComp.StartSound != null) _audio.PlayPvs(toolComp.StartSound, tool);
-                
+
                 if(toolComp.SuccessRate < SmallestSuccessRate)
                     SmallestSuccessRate = toolComp.SuccessRate;
             }
