@@ -63,10 +63,6 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/fox_squeak.ogg
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 1
   - type: Grammar
     attributes:
       proper: true
