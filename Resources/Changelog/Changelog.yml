@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: You can no longer use pulled objects as tools.
-    type: Fix
-  id: 7932
-  time: '2025-02-11T03:29:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34587
 - author: Nox38
   changes:
   - message: Vendomats now contain 2 Screwdrivers, and an addition Wirecutter.
@@ -3924,3 +3917,10 @@
   id: 8433
   time: '2025-05-07T02:03:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37241
+- author: Flareguy
+  changes:
+  - message: Moth clothing now visually conforms to their body type, similar to Vox.
+    type: Add
+  id: 8434
+  time: '2025-05-07T10:06:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37231
