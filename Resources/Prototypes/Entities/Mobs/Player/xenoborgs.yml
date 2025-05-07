@@ -106,7 +106,7 @@
     - Binary
   - type: ZombieImmune
   - type: Repairable
-    doAfterDelay: 12.5 # 25% more HP, so 25% more time to heal
+    doAfterDelay: 13 # 25% more HP, so 30% more time to heal
     allowSelfRepair: false
   - type: BorgChassis
     maxModules: 7
