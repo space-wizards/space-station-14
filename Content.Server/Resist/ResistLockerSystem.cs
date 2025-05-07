@@ -62,6 +62,7 @@ public sealed class ResistLockerSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
     }
 
+    // TODO: Convert to DoAfterAttemptEvent
     private void OnDoAfter(EntityUid uid, ResistLockerComponent component, DoAfterEvent args)
     {
         if (args.Handled)
@@ -83,7 +84,7 @@ public sealed class ResistLockerSystem : EntitySystem
             if (_weldable.IsWelded(uid, weldable))
                 _weldable.SetWeldedState(uid, false, weldable);
 
-            if (TryComp<LockComponent>(args.Target.Value, out var lockComponent))
+            if (TryComp<LockComponent>(uid, out var lockComponent))
                 _lockSystem.Unlock(uid, args.User, lockComponent);
 
             if (storageComponent.OpenOnMove)
