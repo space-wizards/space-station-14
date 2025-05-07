@@ -157,27 +157,27 @@ public sealed class CrayonSystem : SharedCrayonSystem
         }
     }
 
-    private void OnBuiClosed(EntityUid uid, CrayonComponent component, BoundUIClosedEvent args)
+    private void OnBuiClosed(Entity<CrayonComponent> ent, ref BoundUIClosedEvent args)
     {
-        DisablePreviewMode(uid, component);
+        DisablePreviewMode(ent);
     }
 
-    private void OnHandDeselected(EntityUid uid, CrayonComponent component, ref HandDeselectedEvent args)
+    private void OnHandDeselected(Entity<CrayonComponent> ent, ref HandDeselectedEvent args)
     {
-        DisablePreviewMode(uid, component);
+        DisablePreviewMode(ent);
     }
 
-    private void OnGotUnequipped(EntityUid uid, CrayonComponent component, ref GotUnequippedEvent args)
+    private void OnGotUnequipped(Entity<CrayonComponent> ent, ref GotUnequippedEvent args)
     {
-        DisablePreviewMode(uid, component);
+        DisablePreviewMode(ent);
     }
 
-    private void DisablePreviewMode(EntityUid uid, CrayonComponent component)
+    private void DisablePreviewMode(Entity<CrayonComponent> ent)
     {
-        component.PreviewMode = false;
-        Dirty(uid, component);
-        _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color, component.Rotation, component.PreviewMode));
-        RaiseNetworkEvent(new CrayonOverlayUpdateEvent(component.SelectedState, component.Rotation, component.Color, component.PreviewMode));
+        ent.Comp.PreviewMode = false;
+        Dirty(ent);
+        _uiSystem.SetUiState(ent.Owner, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(ent.Comp.SelectedState, ent.Comp.SelectableColor, ent.Comp.Color, ent.Comp.Rotation, ent.Comp.PreviewMode));
+        RaiseNetworkEvent(new CrayonOverlayUpdateEvent(ent.Comp.SelectedState, ent.Comp.Rotation, ent.Comp.Color, ent.Comp.PreviewMode));
     }
 
     private void OnCrayonInit(EntityUid uid, CrayonComponent component, ComponentInit args)
