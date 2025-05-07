@@ -330,6 +330,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (door.State == DoorState.Welded)
             return false;
 
+        if (Paused(uid))
+            return false;
+
         var ev = new BeforeDoorOpenedEvent() { User = user };
         RaiseLocalEvent(uid, ev);
         if (ev.Cancelled)
@@ -356,9 +359,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
     public void StartOpening(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
     {
         if (!Resolve(uid, ref door))
-            return;
-
-        if (Paused(uid))
             return;
 
         var lastState = door.State;
@@ -440,6 +440,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (door.State is DoorState.Welded or DoorState.Closed)
             return false;
 
+        if (Paused(uid))
+            return false;
+
         var ev = new BeforeDoorClosedEvent(door.PerformCollisionCheck, partial);
         RaiseLocalEvent(uid, ev);
         if (ev.Cancelled)
@@ -454,9 +457,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
     public void StartClosing(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
     {
         if (!Resolve(uid, ref door))
-            return;
-
-        if (Paused(uid))
             return;
 
         if (!SetState(uid, DoorState.Closing, door))
