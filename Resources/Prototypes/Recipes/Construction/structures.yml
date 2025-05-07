@@ -207,6 +207,18 @@
   - !type:TileNotBlocked
 
 - type: construction
+  id: Cardwall
+  graph: Cardwall
+  startNode: start
+  targetNode: cardwall
+  category: construction-category-structures
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
   id: Grille
   graph: Grille
   startNode: start
@@ -1162,6 +1174,16 @@
   graph: DoorGraph
   startNode: start
   targetNode: paperDoor
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  id: CardDoor
+  graph: cardDoor #was DoorGraph              also was CardDoor
+  startNode: start
+  targetNode: cardDoor
   category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter

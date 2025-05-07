@@ -68,6 +68,10 @@
       "directions": 4
     },
     {
+      "name": "card-stool",
+      "directions": 4
+    },
+    {
       "name": "wooden",
       "directions": 4
     },

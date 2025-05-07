@@ -78,7 +78,7 @@ public enum CollisionGroup
     WallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
     GlassLayer = Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
     HalfWallLayer = MidImpassable | LowImpassable,
-    FlimsyLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | InteractImpassable,
+    FlimsyLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | InteractImpassable,
 
     // Statue, monument, airlock, window
     FullTileMask = Impassable | HighImpassable | MidImpassable | LowImpassable | InteractImpassable,
