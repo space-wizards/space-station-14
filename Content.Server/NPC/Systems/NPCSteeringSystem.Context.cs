@@ -506,7 +506,7 @@ public sealed partial class NPCSteeringSystem
         var objectRadius = 0.25f;
         var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
         var ents = _entSetPool.Get();
-        _lookup.GetEntitiesInRange(uid, detectionRadius, ents, LookupFlags.Dynamic | LookupFlags.Static);
+        _lookup.GetEntitiesInRange(uid, detectionRadius, ents, LookupFlags.Dynamic | LookupFlags.Static | LookupFlags.Approximate);
 
         foreach (var ent in ents)
         {
@@ -585,7 +585,7 @@ public sealed partial class NPCSteeringSystem
         var ourVelocity = body.LinearVelocity;
         _factionQuery.TryGetComponent(uid, out var ourFaction);
         var ents = _entSetPool.Get();
-        _lookup.GetEntitiesInRange(uid, detectionRadius, ents, LookupFlags.Dynamic);
+        _lookup.GetEntitiesInRange(uid, detectionRadius, ents, LookupFlags.Dynamic | LookupFlags.Approximate);
 
         foreach (var ent in ents)
         {

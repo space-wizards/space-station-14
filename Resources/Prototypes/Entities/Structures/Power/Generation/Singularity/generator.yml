@@ -31,5 +31,7 @@
   - type: Anchorable
   - type: Pullable
   - type: GuideHelp
-    guides: [ Singularity, Power ]
+    guides:
+    - SingularityEngine
+    - Power
 

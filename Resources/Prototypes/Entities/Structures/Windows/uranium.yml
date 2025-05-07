@@ -117,6 +117,9 @@
     drawdepth: WallTops
     sprite: Structures/Windows/uranium_window_diagonal.rsi
     state: state0
+  - type: Tag
+    tags:
+    - Diagonal
   - type: IconSmooth
     mode: Diagonal
     key: windows

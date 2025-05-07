@@ -21,6 +21,7 @@
   - type: Tag
     tags:
     - Wall
+  - type: IsRoof
   - type: Sprite
     drawdepth: Walls
   - type: Icon
@@ -49,15 +50,13 @@
   - type: RadiationBlocker
     resistance: 2
   - type: BlockWeather
+  - type: SunShadowCast
 
 - type: entity
   parent: BaseWall
   id: WallBrick
   name: brick wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/brick.rsi
   - type: Icon
@@ -81,7 +80,7 @@
         acts: [ "Destruction" ]
 
   - type: IconSmooth
-    key: bricks
+    key: walls
     base: brick
 
 - type: entity
@@ -545,6 +544,7 @@
   - type: Tag
     tags:
     - Wall
+    - Diagonal
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/plastitanium_diagonal.rsi
@@ -638,7 +638,6 @@
 - type: entity
   parent: WallReinforced
   id: WallReinforcedRust
-  name: reinforced wall
   suffix: rusted
   components:
   - type: Sprite
@@ -652,6 +651,29 @@
   - type: IconSmooth
     key: walls
     base: reinf_over
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+    - trigger:
+        !type:DamageTrigger
+        damage: 350
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
 
 - type: entity
   parent: WallShuttleDiagonal
@@ -663,6 +685,9 @@
     snap:
     - Wall
   components:
+  - type: Tag
+    tags:
+    - Diagonal
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/reinforced_diagonal.rsi
@@ -805,6 +830,7 @@
   - type: Tag
     tags:
     - Wall
+    - Diagonal
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/shuttle_diagonal.rsi
@@ -871,7 +897,6 @@
   parent: BaseWall
   id: WallShuttle
   name: shuttle wall
-  suffix: Reinforced, Exterior
   components:
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -925,51 +950,6 @@
           3: { state: shuttle_construct-3, visible: true}
           4: { state: shuttle_construct-4, visible: true}
           5: { state: shuttle_construct-5, visible: true}
-  - type: Reflect
-    reflectProb: 1
-
-- type: entity
-  parent: BaseWall
-  id: WallShuttleInterior
-  name: shuttle wall
-  suffix: Interior
-  components:
-  - type: RCDDeconstructable
-    cost: 6
-    delay: 8
-    fx: EffectRCDDeconstruct8
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-      - !type:ChangeConstructionNodeBehavior
-        node: girder
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: Sprite
-    sprite: Structures/Walls/shuttleinterior.rsi
-  - type: Icon
-    sprite: Structures/Walls/shuttleinterior.rsi
-  - type: Construction
-    graph: Girder
-    node: shuttleInteriorWall
-  - type: IconSmooth
-    key: walls
-    base: state
   - type: Reflect
     reflectProb: 1
 
@@ -1044,7 +1024,6 @@
 - type: entity
   parent: WallSolid
   id: WallSolidRust
-  name: solid wall
   suffix: rusted
   components:
   - type: Sprite
@@ -1058,6 +1037,28 @@
   - type: IconSmooth
     key: walls
     base: solid
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   parent: BaseWall

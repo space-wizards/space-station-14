@@ -268,8 +268,8 @@
         - Sheet
     materialWhiteList:
     - Plasma
+  - type: OreSiloClient
   - type: Physics
-    bodyType: Static
     fixtures:
       fix1:
         shape:

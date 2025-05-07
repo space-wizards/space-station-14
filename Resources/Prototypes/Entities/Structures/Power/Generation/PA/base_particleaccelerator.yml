@@ -25,7 +25,8 @@
   - type: Pullable
   - type: Clickable
   - type: GuideHelp
-    guides: [ Singularity, Power ]
+    guides:
+    - SingularityTeslaEngine
   - type: Appearance
 
 - type: entity

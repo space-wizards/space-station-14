@@ -91,9 +91,9 @@ public sealed class BeamSystem : SharedBeamSystem
             collisionLayer: (int)CollisionGroup.MobLayer,
             body: physics);
 
-        _physics.SetBodyType(ent, BodyType.Dynamic, body: physics);
-        _physics.SetCanCollide(ent, true, body: physics);
-        _broadphase.RegenerateContacts(ent, physics);
+        _physics.SetBodyType(ent, BodyType.Dynamic, manager: manager, body: physics);
+        _physics.SetCanCollide(ent, true, manager: manager, body: physics);
+        _broadphase.RegenerateContacts((ent, physics, manager));
 
         var distanceLength = distanceCorrection.Length();
 

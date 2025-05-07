@@ -14,25 +14,28 @@
     key: full
     base: carpet_
   - type: Tag
-    tags: [ Carpet ]
+    tags:
+    - Carpet
+    - ForceFixRotations
   - type: Physics
     canCollide: false
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
         behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Butcherable
     butcheringType: Knife
     butcherDelay: 2
     spawned:
     - id: MaterialCloth1
       amount: 1
+  - type: TrayScanReveal
 
 - type: entity
   id: Carpet
@@ -360,3 +363,4 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+  - type: TrayScanReveal
