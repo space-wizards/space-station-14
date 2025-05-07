@@ -424,8 +424,8 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public bool CanClose(EntityUid target, EntityUid? user = null, bool silent = false)
     {
-        var ev = new StorageCloseAttemptEvent(user, silent);
-        RaiseLocalEvent(target, ref ev, true);
+        var ev = new StorageCloseAttemptEvent(user);
+        RaiseLocalEvent(target, ref ev, silent);
 
         return !ev.Cancelled;
     }
