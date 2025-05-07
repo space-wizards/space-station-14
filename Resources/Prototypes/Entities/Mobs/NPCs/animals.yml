@@ -2685,6 +2685,17 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: kitten
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 10
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2707,6 +2718,7 @@
     thresholds:
       0: Alive
       25: Dead
+  - type: OwOAccent #Kitty
 
 ##  -Deer
 - type: entity
