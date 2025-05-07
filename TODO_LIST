@@ -13,26 +13,46 @@ Move oxy miner to where the other gasses are?
 
 
 
--Make flare spent
---	Give: Passenger PDA/ID (name?), Ancient jumpsuit, gas mask, budget insuls,
-		shoes, bling, ID computer board in pocket
 - Make the station move forward!
-- Job numbers in the prototype file
 Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
-Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there...
-Cryo piping
 Make easier to navigate in general, + add standard colors around more
 	Maybe crappy scribble decals on top of the MIRI flooring?
 Set ejection chamber button access (cap and HoS)
-Nudge wall sign transform variables to make them line up better
 Salvage space arm is getting sensed as part of the room by air sensors?
 Weapons north maints door stuck open
-Somewhere, there is a holopad with no label.
 Grime everything up a bit again.
-
 - Lotta errors about entity cable terminals
-- Screens not showing evac ETA?
-	Broadcast not working either.
+-Remove lightbulb behind cryopod
+-Lowercase cryo room beakers
+-Oppo beaker has graphic showing there's liquid in it, but it still claims to be empty + I can't drink it.
+-I am wrong about sec monitors being restricted to general.
+-Nav cam not working.
+	It works, just the power runs out super fast.
+-Not that it matters, given genpop, but holobarrier projectors on Warden's front desk are too cluttery.
+	Oh, probably they're from a spawner. But even still.
+-Tider shop shutters are see-through...?
+-Need moar SMES. Station starts to lose power way too quickly.
+-Prosc. bottle and flask on dresser start weirdly positioned.
+-Sec monitor shutters don't work. Shutters on computers overall don't work. :C
+-Det/Prosc door shutter closes correctly, but doesn't open when it should.
+-Wired/wireless network component apparently has nothing to do with entertainment/security
+-Execution room holopad name overflows the window
+-Last set of disposal ejection conveyors don't seem to be hooked up.
+	That, or they're unpowered.
+-Disposal ejection should maybe have an actual gas vent, too, so it won't just never reoxygenize
+-Since shutter doesn't work, lockable windoor over public cargo request computer
+-Get rid of light in secret robot room, or it's too obvious
+-Evac escape pod airlock doors need to be linked
+	-Probably ditto the secondary evac
+-Evac maints space chamber firelocks seem not to both engage?
+-AI approach: Grille on top of wall
+-Some random colored lights in nuke hallway
+-Atmospheric network monitor to TEG area
+-Heater and cooler near TEG should start off, not on
+-Grille protecting Sci window
+-Tider shop light starts on (but still behaves correctly with door status)
+	Multicolor room lights do start off, though.
+-Present in mime room doesn't work?
 Genpop (bah)
 
 Evac Shuttle:
@@ -42,20 +62,9 @@ Evac Shuttle:
 
 
 Check this stuff:
-Holopads with custom names that aren't generic holopads
 Execution telescreens see mounted cam networks, not wireless.
 	Having trouble figuring out where this is specified, so maybe I should
 		dig into the components while testing live.
-AI scrubber vent pump starts off
-	Turned it on, should check it sticks when live
-	If this works, probs turn on some other Atmos stuff, too
-Check lighting
-Does tider shop light *start* off, or on? Should be off.
-- More fixerer the det/prosc door. The logic gates aren't working - they don't fit and are becoming unanchored I guess
-	Maybe they're anchored now? They are in the editor.
-Atmos. Just in general. (But especially my oxygen cabbage nonsense)
-Execution telescreens - I swapped out components, they should see the entertainment network now
-Make sure disposal ejector firelocks actually work under the plastic/with the air sensor under the conveyor belts.
 
 
 THINGS I COULD MAKE:
@@ -344,3 +353,30 @@ DONE:
 /* Add silo to Sci */
 /* Command Meeting: Needs access to execution cameras */
 /* I'd really like the sec camera monitors to only see General if possible... */
+/* -Make flare spent */
+/* --	Give: Passenger PDA/ID (name?), Ancient jumpsuit, gas mask, budget insuls, */
+/* 		shoes, bling, ID computer board in pocket */
+/* Nudge wall sign transform variables to make them line up better */
+/* Somewhere, there is a holopad with no label. */
+/* 	It's the tider shop, and that's probably fine. */
+/* - Screens not showing evac ETA? */
+/* 	Broadcast not working either. */
+/* 		Apparently, these just don't work when hosting locally or something? */
+/* Cryo piping */
+/* Add grape juice residue to the Oppo beaker */
+/* Check lighting */
+/* - More fixerer the det/prosc door. The logic gates aren't working - they don't fit and are becoming unanchored I guess */
+/* 	Maybe they're anchored now? They are in the editor. */
+/* Holopads with custom names that aren't generic holopads */
+/* Execution telescreens - I swapped out components, they should see the entertainment network now */
+/* Check the beakers in the chem cabinet */
+/* Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there... */
+/* AI scrubber vent pump starts off */
+/* 	Turned it on, should check it sticks when live */
+/* 	If this works, probs turn on some other Atmos stuff, too */
+/* Atmos. Just in general. (But especially my oxygen cabbage nonsense) */
+/* Make sure disposal ejector firelocks actually work under the plastic/with the air sensor under the conveyor belts. */
+/* Cryonics? */
+/* Does tider shop light *start* off, or on? Should be off. */
+/* 	I still need to check this *first thing* at round start. */
+/* - Job numbers in the prototype file */
