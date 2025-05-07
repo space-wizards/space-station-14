@@ -18,6 +18,7 @@
     - state: icon_flipped
       map: ["foldedLayer"]
       visible: false
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
@@ -39,6 +40,7 @@
     - state: icon_flipped
       map: ["foldedLayer"]
       visible: true
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable

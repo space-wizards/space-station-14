@@ -405,6 +405,32 @@ namespace Content.Shared.Damage
             return true;
         }
 
+        /// <summary>
+        /// Strictly Greater than or Equal to other DamageSpecifier.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns> True when the OTHER damagespecifier is STRICTLY less than the inlined specifier.</returns>
+        public bool GEQ(DamageSpecifier? other)
+        {
+            if (other == null)
+                return true;
+
+            if (DamageDict.Count < other.DamageDict.Count)
+                return false;
+
+            foreach (var (key, value) in DamageDict)
+            {
+                if (!other.DamageDict.TryGetValue(key, out var otherValue))
+                    continue;
+
+                // this is done converse because thats easier in a loop.
+                if (value < otherValue)
+                    return false;
+            }
+
+            return true;
+        }
+
         public FixedPoint2 this[string key] => DamageDict[key];
     }
     #endregion

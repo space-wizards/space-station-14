@@ -23,6 +23,7 @@
   - type: HideLayerClothing
     slots:
     - Snout
+  - type: RockableItem
 
 - type: entity
   parent: WeldingMaskBase

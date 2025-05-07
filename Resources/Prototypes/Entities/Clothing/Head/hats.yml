@@ -8,6 +8,7 @@
     sprite: Clothing/Head/Hats/beaver_hat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beaver_hat.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -19,6 +20,7 @@
     sprite: Clothing/Head/Hats/beret.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -37,6 +39,7 @@
     sprite: Clothing/Head/Hats/beret_french.rsi
   - type: AddAccentClothing
     accent: FrenchAccent
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -52,6 +55,7 @@
     sprite: Clothing/Head/Hats/beret_security.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_security.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -68,6 +72,7 @@
     sprite: Clothing/Head/Hats/security_trooper_hat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/security_trooper_hat.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -83,6 +88,7 @@
       sprite: Clothing/Head/Hats/casa.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/casa.rsi
+    - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -94,6 +100,7 @@
     sprite: Clothing/Head/Hats/beret_rnd.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_rnd.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -110,6 +117,7 @@
     sprite: Clothing/Head/Hats/beret_engineering.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_engineering.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -126,6 +134,7 @@
     sprite: Clothing/Head/Hats/beret_qm.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_qm.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -142,6 +151,7 @@
     sprite: Clothing/Head/Hats/beret_hos.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_hos.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -158,6 +168,7 @@
     sprite: Clothing/Head/Hats/beret_warden.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_warden.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -169,6 +180,7 @@
     sprite: Clothing/Head/Hats/beret_physician.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_physician.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -180,6 +192,7 @@
     sprite: Clothing/Head/Hats/beret_brigmedic.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_brigmedic.rsi
+  - type: RockableItem
 
 - type: entity
   parent: [ ClothingHeadBase ]
@@ -191,6 +204,7 @@
     sprite: Clothing/Head/Hats/beret_merc.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_merc.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -218,6 +232,7 @@
     sprite: Clothing/Head/Hats/bowler_hat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/bowler_hat.rsi
+  - type: RockableItem
 
 - type: entity
   parent: [ClothingHeadBase, BaseCommandContraband]
@@ -229,6 +244,7 @@
     sprite: Clothing/Head/Hats/captain.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/captain.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -249,6 +265,7 @@
     proto: robot
   - type: IdentityBlocker
   - type: IngestionBlocker
+  - type: RockableItem
 
 - type: entity
   parent: [ ClothingHeadBase, BaseCentcommContraband ]
@@ -260,6 +277,7 @@
     sprite: Clothing/Head/Hats/centcom.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/centcom.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -285,6 +303,7 @@
     pilotWhitelist:
       tags:
         - ChefPilot
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -301,6 +320,7 @@
     sprite: Clothing/Head/Hats/brownfedora.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/brownfedora.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -317,6 +337,7 @@
     sprite: Clothing/Head/Hats/greyfedora.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/greyfedora.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -328,6 +349,7 @@
     sprite: Clothing/Head/Hats/fez.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/fez.rsi
+  - type: RockableItem
 
 - type: entity
   parent: [ClothingHeadBase, BaseCommandContraband]
@@ -339,6 +361,7 @@
     sprite: Clothing/Head/Hats/hopcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/hopcap.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -355,6 +378,7 @@
     sprite: Clothing/Head/Hats/hoshat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/hoshat.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -371,6 +395,7 @@
     sprite: Clothing/Head/Hats/outlawhat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/outlawhat.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -382,6 +407,7 @@
     sprite: Clothing/Head/Hats/witchhat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/witchhat.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -393,6 +419,8 @@
     sprite: Clothing/Head/Hats/paper.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/paper.rsi
+  - type: RockableItem
+    chance: .80
 
 - type: entity
   parent: ClothingHeadBase
@@ -404,6 +432,7 @@
     sprite: Clothing/Head/Hats/pirate.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/pirate.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -415,6 +444,7 @@
     sprite: Clothing/Head/Hats/plaguedoctor.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/plaguedoctor.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -435,6 +465,7 @@
     sprite: Clothing/Head/Hats/redwizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/redwizard.rsi
+  - type: RockableItem
 
 - type: entity
   parent: [ClothingHeadBase, BaseFoldable]
@@ -444,6 +475,7 @@
   components:
   - type: Clothing
     sprite: Clothing/Head/Hats/santahat.rsi
+  - type: RockableItem
   - type: Appearance
   - type: Foldable
     canFoldInsideContainer: true
@@ -458,7 +490,6 @@
     - state: icon-nobeard
       map: [ "foldedLayer" ]
       visible: true
-    
 
 - type: entity
   parent: ClothingHeadBase
@@ -472,6 +503,7 @@
     sprite: Clothing/Head/Hats/sombrero.rsi
   - type: AddAccentClothing
     accent: SpanishAccent
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -521,6 +553,7 @@
     sprite: Clothing/Head/Hats/tophat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/tophat.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -551,6 +584,7 @@
     - state: icon-up
       map: ["foldedLayer"]
       visible: false
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -613,6 +647,7 @@
     sprite: Clothing/Head/Hats/warden.rsi
   - type: StealTarget
     stealGroup: ClothingHeadHatWarden
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -625,6 +660,7 @@
     sprite: Clothing/Head/Hats/witch.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/witch.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -643,6 +679,7 @@
     sprite: Clothing/Head/Hats/wizard_fake.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/wizard_fake.rsi
+  - type: RockableItem
 
 - type: entity
   abstract: true
@@ -650,6 +687,7 @@
   id: ClothingHeadHatWizardBase
   components:
   - type: WizardClothes
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadHatWizardBase
@@ -677,6 +715,8 @@
     sprite: Clothing/Head/Hats/xmascrown.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/xmascrown.rsi
+  - type: RockableItem
+    chance: .20
 
 - type: entity
   parent: ClothingHeadBase
@@ -688,6 +728,7 @@
     sprite: Clothing/Head/Hats/truckershat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/truckershat.rsi
+  - type: RockableItem
 
 - type: entity
   parent: [ ClothingHeadBase, BaseSyndicateContraband ]
@@ -699,6 +740,7 @@
     sprite: Clothing/Head/Hats/pyjamasyndicateblack.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/pyjamasyndicateblack.rsi
+  - type: RockableItem
 
 - type: entity
   parent: [ ClothingHeadBase, BaseSyndicateContraband ]
@@ -709,7 +751,8 @@
   - type: Sprite
     sprite: Clothing/Head/Hats/pyjamasyndicatepink.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/pyjamasyndicatepink.rsi
+    sprite: Clothing/Head/Hats/pyjamasyndicatepink.rsi\
+  - type: RockableItem
 
 - type: entity
   parent: [ ClothingHeadBase, BaseSyndicateContraband ]
@@ -721,6 +764,7 @@
     sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -733,6 +777,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/papersack.rsi
   - type: IdentityBlocker
+  - type: RockableItem
+    chance: .20
 
 - type: entity
   parent: ClothingHeadBase
@@ -745,6 +791,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/papersacksmile.rsi
   - type: IdentityBlocker
+  - type: RockableItem
+    chance: .20
 
 - type: entity
   parent: ClothingHeadBase
@@ -756,6 +804,7 @@
     sprite: Clothing/Head/Hats/fishcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/fishcap.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -778,6 +827,7 @@
     sprite: Clothing/Head/Hats/nursehat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/nursehat.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -794,6 +844,7 @@
     sprite: Clothing/Head/Hats/rasta.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/rasta.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -805,6 +856,7 @@
     sprite: Clothing/Head/Hats/safarihat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/safarihat.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -816,6 +868,7 @@
       sprite: Clothing/Head/Hats/jester.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/jester.rsi
+    - type: RockableItem
 
 - type: entity
   parent: ClothingHeadHatJester
@@ -825,6 +878,7 @@
       sprite: Clothing/Head/Hats/jester2.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/jester2.rsi
+    - type: RockableItem
 
 - type: entity
   parent: [ClothingHeadBase, BaseCommandContraband]
@@ -836,6 +890,7 @@
     sprite: Clothing/Head/Hats/beret_cmo.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_cmo.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -852,6 +907,7 @@
     sprite: Clothing/Head/Hats/piratetricord.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/piratetricord.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -867,6 +923,7 @@
     modifiers:
       coefficients:
         Blunt: 0.95
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -882,6 +939,7 @@
     modifiers:
       coefficients:
         Caustic: 0.95
+  - type: RockableItem
 
 - type: entity
   parent: [ClothingHeadBase, BaseSyndicateContraband]
@@ -893,6 +951,7 @@
     sprite: Clothing/Head/Hats/syndiecap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/syndiecap.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -904,6 +963,7 @@
     sprite: Clothing/Head/Hats/syndiecap_maa.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/syndiecap_maa.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -926,6 +986,7 @@
     sprite: Clothing/Head/Hats/hetman_hat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/hetman_hat.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -959,6 +1020,7 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+  - type: RockableItem
   - type: Tag
 
 - type: entity
@@ -973,6 +1035,7 @@
     sprite: Clothing/Head/Hats/capcap.rsi
   - type: Item
     sprite: Clothing/Head/Hats/capcap.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -995,6 +1058,7 @@
     sprite: Clothing/Head/Hats/comcap.rsi
   - type: Item
     sprite: Clothing/Head/Hats/comcap.rsi
+  - type: RockableItem
   - type: Tag
     tags:
     - ClothMade
@@ -1022,6 +1086,8 @@
     sprite: Clothing/Head/Hats/party_red.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/party_red.rsi
+  - type: RockableItem
+    chance: .50
   - type: Tag
     tags:
       - WhitelistChameleon
@@ -1081,6 +1147,7 @@
     sprite: Clothing/Head/Hats/greyflatcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/greyflatcap.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -1095,6 +1162,7 @@
     sprite: Clothing/Head/Hats/brownflatcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/brownflatcap.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -1109,6 +1177,7 @@
     - type: AddAccentClothing
       accent: ReplacementAccent
       replacement: cowboy
+    - type: RockableItem
 
 - type: entity
   parent: ClothingHeadHatCowboyBrown
@@ -1203,6 +1272,7 @@
               max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -1214,6 +1284,7 @@
     sprite: Clothing/Head/Hats/beret_medic.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_medic.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
