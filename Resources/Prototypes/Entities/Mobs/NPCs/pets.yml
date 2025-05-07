@@ -522,10 +522,6 @@
         Base: paperwork_dead
       Dead:
         Base: paperwork_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 3
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: petting-success-sloth
