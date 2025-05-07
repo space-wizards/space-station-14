@@ -204,6 +204,7 @@
   physicalDesc: reagent-physical-desc-bubbling
   flavor: medicine
   color: "#32cd32"
+  worksOnTheDead: true
   metabolisms:
     Medicine:
       effects:
@@ -213,7 +214,29 @@
             max: 213.0
           damage:
             types:
-             Cellular: -2
+             Cellular: -3
+             Radiation: 1.5
+             Caustic: 1.5
+        - !type:HealthChange
+          conditions:
+          - !type:Temperature
+            max: 213.0
+          - !type:ReagentThreshold
+            reagent: Arithrazine
+            min: 1
+          damage:
+            types:
+              Caustic: 3
+        - !type:HealthChange
+          conditions:
+          - !type:Temperature
+            max: 213.0
+          - !type:ReagentThreshold
+            reagent: Cryoxadone
+            min: 1
+          damage:
+            types:
+              Caustic: 3
 
 - type: reagent
   id: Dermaline
