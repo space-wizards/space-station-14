@@ -20,11 +20,6 @@ public sealed class ThrowingSystem : EntitySystem
 {
     public const float ThrowAngularImpulse = 5f;
 
-    /// <summary>
-    /// Speed cap on rotation in case of click-spam.
-    /// </summary>
-    public const float ThrowAngularCap = 3f * MathF.PI;
-
     public const float PushbackDefault = 2f;
 
     public const float FlyTimePercentage = 0.8f;
