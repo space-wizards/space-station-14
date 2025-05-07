@@ -42,11 +42,6 @@ public sealed class CrayonSystem : SharedCrayonSystem
         SubscribeLocalEvent<CrayonComponent, ComponentShutdown>(OnShutdown);
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-    }
-
     private static void OnCrayonHandleState(EntityUid uid, CrayonComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not CrayonComponentState state) return;
