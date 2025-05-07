@@ -48,12 +48,13 @@
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndie
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsCombat
     id: SyndiPDA
     pocket2: PlushieCarp
     belt: ClothingBeltMilitaryWebbing
   storage:
     back:
+    - CombatKnife
     - WeaponPistolViper
     - PinpointerSyndicateNuclear
     - DeathAcidifierImplanter
@@ -64,6 +65,9 @@
   parent: SyndicateOperativeGearFullNoUplink
   equipment:
     pocket2: BaseUplinkRadio40TC
+    shoes: ClothingShoesChameleonNoSlips
+  inhand:
+  - AgentIDCard
 
 #Nuclear Operative Commander Gear
 - type: startingGear
@@ -75,6 +79,7 @@
   inhand:
   - NukeOpsDeclarationOfWar
 
+
 #Nuclear Operative Medic Gear
 - type: startingGear
   id: SyndicateOperativeMedicFull
@@ -82,7 +87,6 @@
   equipment:
     eyes: ClothingEyesHudSyndicateAgent
     outerClothing: ClothingOuterHardsuitSyndieMedic
-    shoes: ClothingShoesBootsMagSyndie
     id: SyndiAgentPDA
     belt: ClothingBeltMilitaryWebbingMedFilled
   storage:
