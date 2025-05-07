@@ -204,6 +204,9 @@ public abstract partial class SharedBuckleSystem
         if (!args.CanAccess || !args.CanInteract || !component.Buckled)
             return;
 
+        if (!CanUnbuckle((uid, component), args.User, false))
+            return;
+
         InteractionVerb verb = new()
         {
             Act = () => TryUnbuckle(uid, args.User, buckleComp: component),
