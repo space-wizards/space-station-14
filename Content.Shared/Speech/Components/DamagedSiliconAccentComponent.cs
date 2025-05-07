@@ -30,7 +30,7 @@ public sealed partial class DamagedSiliconAccentComponent : Component
     ///     total damage is at or above this value.
     /// </summary>
     [DataField]
-    public FixedPoint2 DamageAtMaxCorruption = 300;
+    public FixedPoint2? DamageAtMaxCorruption;
 
     /// <summary>
     ///     Enable charge level corruption effects
