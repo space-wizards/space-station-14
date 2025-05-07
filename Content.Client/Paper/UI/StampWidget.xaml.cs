@@ -21,11 +21,14 @@ public sealed partial class StampWidget : PanelContainer
         set => StampedByLabel.Orientation = value;
     }
 
-    public StampDisplayInfo StampInfo {
+      public StampDisplayInfo StampInfo {
         set {
-            StampedByLabel.Text = Loc.GetString(value.StampedName);
+            // Umbra: If it's a signature, don't bother doing a string lookup.
+            StampedByLabel.Text = value.Type is StampType.Signature ? value.StampedName : Loc.GetString(value.StampedName);
             StampedByLabel.FontColorOverride = value.StampedColor;
             ModulateSelfOverride = value.StampedColor;
+            // Umbra: PanelOverride is the border texture, as inferred from ctor. Set null if the stamp is a signature to hide the border.
+            PanelOverride = value.Type is StampType.Signature ? null : _borderTexture;
         }
     }
 
