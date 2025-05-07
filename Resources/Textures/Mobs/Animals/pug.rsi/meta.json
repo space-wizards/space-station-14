@@ -10,12 +10,12 @@
   "states":
   [
     {
-      "name": "mcgriff",
+      "name": "pug",
       "directions": 4
     },
 
     {
-      "name": "mcgriff_dead",
+      "name": "pug_dead",
       "directions": 1
     }
   ]
