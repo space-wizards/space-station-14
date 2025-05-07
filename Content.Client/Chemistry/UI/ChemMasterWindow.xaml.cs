@@ -173,10 +173,10 @@ namespace Content.Client.Chemistry.UI
             var holdsReagents = output?.Reagents != null;
             var pillNumberMax = holdsReagents ? 0 : remainingCapacity;
             var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
-            var bufferVolume = castState.BufferCurrentVolume?.Int() ?? 0;
+            var beakerVolume = castState.InputContainerInfo?.CurrentVolume.Int() ?? 0;
 
-            PillDosage.Value = (int)Math.Min(bufferVolume, castState.PillDosageLimit);
-            PatchDosage.Value = (int)Math.Min(bufferVolume, castState.PatchDosageLimit); // Starlight-edit
+            PillDosage.Value = (int)Math.Min(beakerVolume, castState.PillDosageLimit);
+            PatchDosage.Value = (int)Math.Min(beakerVolume, castState.PatchDosageLimit); // Starlight-edit
             
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
 
@@ -199,7 +199,7 @@ namespace Content.Client.Chemistry.UI
             // Avoid division by zero
             if (PillDosage.Value > 0)
             {
-                PillNumber.Value = Math.Min(bufferVolume / PillDosage.Value, pillNumberMax);
+                PillNumber.Value = Math.Min(beakerVolume / PillDosage.Value, pillNumberMax);
             }
             else
             {
@@ -209,7 +209,7 @@ namespace Content.Client.Chemistry.UI
             // Starlight-start
             if (PatchDosage.Value > 0)
             {
-                PatchNumber.Value = Math.Min(bufferVolume / PatchDosage.Value, pillNumberMax);
+                PatchNumber.Value = Math.Min(beakerVolume / PatchDosage.Value, pillNumberMax);
             }
             else
             {
@@ -217,7 +217,7 @@ namespace Content.Client.Chemistry.UI
             }
             // Starlight-end
 
-            BottleDosage.Value = Math.Min(bottleAmountMax, bufferVolume);
+            BottleDosage.Value = Math.Min(bottleAmountMax, beakerVolume);
         }
         /// <summary>
         /// Generate a product label based on reagents in the buffer.
