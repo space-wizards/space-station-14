@@ -59,7 +59,7 @@
 - type: entity
   id: StealthBox
   suffix: stealth
-  parent: BaseBigBox
+  parent: BigBox
   description: Kept ya waiting, huh?
   components:
     - type: Damageable
