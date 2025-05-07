@@ -14,8 +14,6 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
-using Content.Shared.Random;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Station;
 using JetBrains.Annotations;
@@ -23,7 +21,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Station.Systems;
@@ -44,16 +41,6 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly PdaSystem _pdaSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-
-    private bool _randomizeCharacters;
-
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-        Subs.CVar(_configurationManager, CCVars.ICRandomCharacters, e => _randomizeCharacters = e, true);
-    }
 
     /// <summary>
     /// Attempts to spawn a player character onto the given station.
@@ -71,36 +58,6 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     {
         if (station != null && !Resolve(station.Value, ref stationSpawning))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
-
-        string speciesId;
-        if (_randomizeCharacters)
-        {
-            var weightId = _configurationManager.GetCVar(CCVars.ICRandomSpeciesWeights);
-
-            // If blank, choose a round start species.
-            if (string.IsNullOrEmpty(weightId))
-            {
-                var roundStart = new List<ProtoId<SpeciesPrototype>>();
-
-                var speciesPrototypes = _prototypeManager.EnumeratePrototypes<SpeciesPrototype>();
-                foreach (var proto in speciesPrototypes)
-                {
-                    if (proto.RoundStart)
-                        roundStart.Add(proto.ID);
-                }
-
-                speciesId = roundStart.Count == 0
-                    ? SharedHumanoidAppearanceSystem.DefaultSpecies
-                    : _random.Pick(roundStart);
-            }
-            else
-            {
-                var weights = _prototypeManager.Index<WeightedRandomSpeciesPrototype>(weightId);
-                speciesId = weights.Pick(_random);
-            }
-
-            profile = HumanoidCharacterProfile.RandomWithSpecies(speciesId);
-        }
 
         var ev = new PlayerSpawningEvent(job, profile, station);
 
