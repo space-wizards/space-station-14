@@ -5577,4 +5577,11 @@ Entries:
   id: 773
   time: '2025-05-07T04:29:39.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/588
+- author: Happyrobot33
+  changes:
+  - message: All puddles will now be transparent regardless of if its blood or not.
+    type: Tweak
+  id: 774
+  time: '2025-05-07T04:45:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/589
 
