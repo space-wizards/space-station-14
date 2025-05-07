@@ -75,4 +75,5 @@
 - type: typingIndicator
   id: regal
   typingState: regal0
+  idleState: regal0
   offset: 0, 0.125
