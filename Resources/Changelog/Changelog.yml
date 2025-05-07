@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nox38
-  changes:
-  - message: Vendomats now contain 2 Screwdrivers, and an addition Wirecutter.
-    type: Tweak
-  id: 7933
-  time: '2025-02-11T06:35:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35059
 - author: pheenty
   changes:
   - message: Python now costs only 4 TC!
@@ -3924,3 +3917,15 @@
   id: 8434
   time: '2025-05-07T10:06:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37231
+- author: K-Dynamic
+  changes:
+  - message: Disposal x-junctions can be constructed, which feeds from three directions
+      towards one.
+    type: Add
+  - message: Disposal junctions now properly swap to all other possible junctions
+      when a screwdriver is applied - disposal junction -> y-junction -> flipped junction
+      -> x-junction -> disposal junction...
+    type: Fix
+  id: 8435
+  time: '2025-05-07T11:37:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37092
