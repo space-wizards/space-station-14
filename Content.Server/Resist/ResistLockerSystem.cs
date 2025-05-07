@@ -50,6 +50,9 @@ public sealed class ResistLockerSystem : EntitySystem
         if (!Resolve(target, ref storageComponent, ref resistLockerComponent))
             return;
 
+        if (!_actionBlocker.CanComplexInteract(user))
+            return;
+
         var doAfterEventArgs = new DoAfterArgs(EntityManager, user, resistLockerComponent.ResistTime, new ResistLockerDoAfterEvent(), target, target: target)
         {
             BreakOnMove = true,
