@@ -17,9 +17,9 @@
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'spray-painter-angle-rotation'}" />
             <SpinBox Name="AngleSpinBox" HorizontalExpand="True" />
-            <Button Text="-90°" Name="SubAngleButton" />
-            <Button Text="0°" Name="SetZeroAngleButton" />
-            <Button Text="+90°" Name="AddAngleButton" />
+            <Button Text="{Loc 'spray-painter-angle-rotation-90-sub'}" Name="SubAngleButton" />
+            <Button Text="{Loc 'spray-painter-angle-rotation-reset'}" Name="SetZeroAngleButton" />
+            <Button Text="{Loc 'spray-painter-angle-rotation-90-add'}" Name="AddAngleButton" />
         </BoxContainer>
     </BoxContainer>
 </controls:SprayPainterDecals>

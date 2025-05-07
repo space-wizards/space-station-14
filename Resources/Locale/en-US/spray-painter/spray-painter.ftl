@@ -11,8 +11,12 @@ spray-painter-selected-style = Selected style:
 
 spray-painter-selected-decals = Selected decal:
 spray-painter-use-custom-color = Use custom color
-spray-painter-angle-rotation = Rotation:
 spray-painter-invalid-location = Can't reach there!
+
+spray-painter-angle-rotation = Rotation:
+spray-painter-angle-rotation-90-sub = -90°
+spray-painter-angle-rotation-reset = 0°
+spray-painter-angle-rotation-90-add = +90°
 
 spray-painter-selected-color = Selected color:
 spray-painter-color-red = red
