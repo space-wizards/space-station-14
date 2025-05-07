@@ -14,6 +14,7 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<JumpAbilityComponent, GravityJumpEvent>(OnGravityJump);
     }
 
