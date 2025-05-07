@@ -10,4 +10,7 @@ examinable-anchored = It is [color=darkgreen]anchored[/color] to the floor.
 
 examinable-unanchored = It is [color=darkred]unanchored[/color] from the floor.
 
-examinable-show-despawn = [color=lightblue]{$seconds}[/color] seconds before it dissappear.
+examinable-show-despawn = it will disappear in [color=lightblue]{$seconds}[/color] {$seconds ->
+    [one] second
+    *[other] seconds
+    } before it dissappear.
