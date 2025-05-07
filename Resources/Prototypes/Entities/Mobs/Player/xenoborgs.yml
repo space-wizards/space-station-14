@@ -408,8 +408,8 @@
   - type: MobThresholds # tankier
     thresholds:
       0: Alive
-      400: Critical
-      800: Dead
+      250: Critical
+      500: Dead
     stateAlertDict:
       Alive: BorgHealth
       Critical: BorgCrit
@@ -420,7 +420,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 190
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -429,7 +429,7 @@
             volume: 5
     - trigger:
         !type:DamageTrigger
-        damage: 1200
+        damage: 750
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -440,6 +440,8 @@
         - cell_slot
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Repairable
+    doAfterDelay: 25 # more HP, more time to heal
   - type: DamagedSiliconAccent 
     damageAtMaxCorruption: 1200
   - type: ContainerFill
