@@ -127,16 +127,15 @@
     id: ERTChaplainPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltStorageWaistbag
-    pocket1: Flare
+    pocket1: Bible
     pocket2: DrinkWaterBottleFull
+  inhand:
+  - BoxCandle
   storage:
     back:
-    - BoxCandle
     - BoxBodyBag
-    - DrinkWaterMelonJuiceJug
     - Lantern
     - Lantern
-    - Bible
     - CrowbarRed
     - FoodBakedBunHotX
     - FoodBakedBunHotX
@@ -158,16 +157,15 @@
     id: ERTChaplainPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltStorageWaistbag
-    pocket1: Flare
+    pocket1: Bible
     pocket2: DrinkWaterBottleFull
+  inhand:
+  - BoxCandle
   storage:
     back:
-    - BoxCandle
     - BoxBodyBag
-    - DrinkWaterMelonJuiceJug
     - Lantern
     - Lantern
-    - Bible
     - CrowbarRed
     - FoodBakedBunHotX
     - FoodBakedBunHotX
@@ -207,20 +205,18 @@
     id: ERTEngineerPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltChiefEngineerFilled
-    pocket1: Flare
-    pocket2: GasAnalyzer
+    pocket1: RCDAmmo
+    pocket2: RCDAmmo
+  inhand:
+  - RCD
   storage:
     back:
-    - trayScanner
-    - RCD
-    - RCDAmmo
-    - RCDAmmo
-    - CableMVStack
-    - CableHVStack
-    - CableApcStack
     - SheetPlasteel
     - SheetSteel
     - SheetGlass
+    - CableMVStack
+    - CableHVStack
+    - CableApcStack
 
 - type: startingGear
   id: ERTEngineerGearEVA
@@ -235,20 +231,18 @@
     id: ERTEngineerPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltChiefEngineerFilled
-    pocket1: Flare
-    pocket2: GasAnalyzer
+    pocket1: RCDAmmo
+    pocket2: RCDAmmo
+  inhand:
+  - RCD
   storage:
     back:
-    - trayScanner
-    - RCD
-    - RCDAmmo
-    - RCDAmmo
-    - CableMVStack
-    - CableHVStack
-    - CableApcStack
     - SheetPlasteel
     - SheetSteel
     - SheetGlass
+    - CableMVStack
+    - CableHVStack
+    - CableApcStack
 
 # Security
 - type: job
@@ -441,15 +435,14 @@
     id: ERTJanitorPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltJanitorFilled
-    pocket1: Flare
+    pocket1: Soap
+  inhand:
+  - AdvMopItem
   storage:
     back:
-    - LightReplacer
     - BoxLightMixed
     - BoxLightMixed
-    - Soap
     - CrowbarRed
-    - AdvMopItem
 
 - type: startingGear
   id: ERTJanitorGearEVA
@@ -463,12 +456,11 @@
     id: ERTJanitorPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltJanitorFilled
-    pocket1: Flare
+    pocket1: Soap
+  inhand:
+  - AdvMopItem
   storage:
     back:
-    - LightReplacer
     - BoxLightMixed
     - BoxLightMixed
-    - Soap
     - CrowbarRed
-    - AdvMopItem
