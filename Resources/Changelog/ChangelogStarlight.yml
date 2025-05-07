@@ -5450,4 +5450,110 @@ Entries:
   id: 755
   time: '2025-05-05T23:34:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/575
+- author: neurovermi
+  changes:
+  - message: Adds missing locale text for organ tree and the word "seeds" to the seed
+      packet
+    type: Fix
+  id: 756
+  time: '2025-05-05T23:36:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/577
+- author: choccy
+  changes:
+  - message: (Starboard) Barratrification!
+    type: Tweak
+  id: 757
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Tweaks many small features
+    type: Tweak
+  id: 758
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Tweaked security, doors and rechargers
+    type: Tweak
+  id: 759
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Tweaks the emergency shuttle to have a new security room
+    type: Tweak
+  id: 760
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Lots of new maints
+    type: Add
+  id: 761
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Killed the honkbot
+    type: Tweak
+  id: 762
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) New stoves, and mining lockers
+    type: Add
+  id: 763
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: Happyrobot33
+  changes:
+  - message: Raised ling biomass maximum to 60, lings start at 30 now.
+    type: Tweak
+  id: 764
+  time: '2025-05-06T04:29:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/560
+- author: Happyrobot33
+  changes:
+  - message: Fixed ling biomass warning and jitter system.
+    type: Fix
+  id: 765
+  time: '2025-05-06T04:29:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/560
+- author: Happyrobot33
+  changes:
+  - message: Updated Resomi guidebook.
+    type: Tweak
+  id: 766
+  time: '2025-05-06T04:34:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/580
+- author: Happyrobot33
+  changes:
+  - message: Speculative fix for event scheduler issues.
+    type: Fix
+  id: 767
+  time: '2025-05-06T04:35:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/583
+- author: Happyrobot33
+  changes:
+  - message: Lings start at 40 biomass
+    type: Tweak
+  id: 768
+  time: '2025-05-06T14:42:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/594
+- author: CringeCursed
+  changes:
+  - message: Changed Resomi Weight
+    type: Tweak
+  id: 769
+  time: '2025-05-06T15:24:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/593
+- author: CringeCursed
+  changes:
+  - message: Changed Resomi/Felinoids health thresholds for slowdown
+    type: Tweak
+  id: 770
+  time: '2025-05-06T15:24:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/593
 

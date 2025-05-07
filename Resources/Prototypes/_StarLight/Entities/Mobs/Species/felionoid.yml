@@ -31,6 +31,10 @@
       0: Alive
       75: Critical
       150: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      45: 0.7 
+      60: 0.5
   - type: Butcherable
     butcheringType: Spike
     spawned:
