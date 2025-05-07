@@ -1,131 +1,216 @@
-# Bounds Guide
-#1D2L3U4R
-
+## Command
 - type: entity
-  name: Ian
-  parent: MobCorgi
-  id: MobCorgiIan
-  description: Favorite pet corgi.
+  name: Renault
+  parent: MobFox
+  id: MobFoxRenault
+  description: The captain's trustworthy fox.
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: ian
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: ian
-      Critical:
-        Base: ian_dead
-      Dead:
-        Base: ian_dead
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      collection: Fox
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+    - id: Telecrystal5
+      amount: 1
   - type: Grammar
     attributes:
       proper: true
-      gender: male
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatCorgi
-      amount: 2
-    - id: MaterialHideCorgi
+      gender: female
   - type: Tag
     tags:
     - CannotSuicide
     - VimPilot
   - type: StealTarget
-    stealGroup: AnimalIan
+    stealGroup: AnimalRenault
 
 - type: entity
-  name: Old Ian
-  parent: MobCorgiIan
-  id: MobCorgiIanOld
-  description: Still the favorite pet corgi. Love his wheels.
+  name: Hamlet
+  parent: MobHamster
+  id: MobHamsterHamlet
+  description: A grumpy, cute and fluffy hamster.
   components:
   - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Pets/hamlet.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: old_ian
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: old_ian
-      Critical:
-        Base: old_ian_dead
-      Dead:
-        Base: old_ian_dead
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: hamster-0
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: hamster-moving-0
+    noMovementLayers:
+      movement:
+        state: hamster-0
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-hamlet-name
+    description: ghost-role-information-hamlet-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-hamster
+    interactFailureString: petting-failure-hamster
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/fox_squeak.ogg
   - type: Butcherable
     spawned:
-    - id: FoodMeatCorgi
-      amount: 2
-    - id: SheetSteel1
-    - id: MaterialHideCorgi
-
-- type: entity
-  name: Lisa
-  parent: MobCorgiIan
-  id: MobCorgiLisa
-  description: Ian's favorite corgi.
-  components:
-  - type: Sprite
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: lisa
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: lisa
-      Critical:
-        Base: lisa_dead
-      Dead:
-        Base: lisa_dead
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: female
-
-- type: entity
-  name: real mouse
-  parent: MobCorgiIan
-  id: MobCorgiMouse
-  description: It's 100% a real hungry mouse.
-  components:
-  - type: Sprite
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: real_mouse
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: real_mouse
-      Critical:
-        Base: real_mouse_dead
-      Dead:
-        Base: real_mouse_dead
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: female
-
-- type: entity
-  name: Puppy Ian
-  parent: MobCorgiPuppy
-  id: MobCorgiIanPup
-  description: Favourite puppy corgi. Awww.
-  components:
+    - id: FoodMeat
+      amount: 1
   - type: Grammar
     attributes:
       proper: true
       gender: male
-  - type: Butcherable # A puppy? You monster...
-    spawned:
-    - id: FoodMeatCorgi
-      amount: 2
-    - id: MaterialHideCorgi
-  - type: StealTarget
-    stealGroup: AnimalIan
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - Hamster
+    - VimPilot
+    - ChefPilot
+  - type: FlavorProfile
+    flavors:
+    - meaty
+    - sadness
 
+## Sec
+- type: entity
+  name: McGriff
+  parent: [SimpleMobBase, StripableInventoryBase]
+  id: MobMcGriff
+  description: This dog can tell something smells around here, and that something is CRIME!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/mcgriff.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mcgriff
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 20
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Inventory
+    speciesId: puppy
+    templateId: pet
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: mcgriff
+      Critical:
+        Base: mcgriff_dead
+      Dead:
+        Base: mcgriff_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 2
+  - type: ReplacementAccent
+    accent: dog
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Speech
+    speechVerb: Canine
+    speechSounds: Dog
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalMcGriff
+
+- type: entity
+  name: Shiva
+  parent: MobGiantSpider
+  id: MobSpiderShiva
+  description: The first defender of the station.
+  components:
+  - type: InteractionPopup
+    successChance: 0.5 # spider is mean
+    interactSuccessString: petting-success-tarantula
+    interactFailureString: petting-failure-hamster
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/snake_hiss.ogg
+  - type: NpcFactionMember
+    factions:
+      - PetsNT
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: shiva
+      sprite: Mobs/Pets/shiva.rsi
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: shiva-moving
+    noMovementLayers:
+      movement:
+        state: shiva
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: Physics
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: shiva
+      Dead:
+        Base: shiva_dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Dead
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 8
+        Poison: 8
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+    - DoorBumpOpener
+    - FootstepSound
+  - type: StealTarget
+    stealGroup: AnimalShiva
+
+## Med
 - type: entity
   name: Runtime
   parent: MobCat
@@ -197,21 +282,6 @@
     stealGroup: AnimalNamedCat
 
 - type: entity
-  name: Bandito
-  parent: MobFerret
-  id: MobBandito
-  description: Just a silly little guy!
-  components:
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
-    - VimPilot
-
-- type: entity
   name: Bingus
   parent: [SimpleMobBase, StripableInventoryBase]
   id: MobBingus
@@ -267,102 +337,6 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalNamedCat
-
-- type: entity
-  name: McGriff
-  parent: [SimpleMobBase, StripableInventoryBase]
-  id: MobMcGriff
-  description: This dog can tell something smells around here, and that something is CRIME!
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/mcgriff.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: mcgriff
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 20
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: Inventory
-    speciesId: puppy
-    templateId: pet
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: mcgriff
-      Critical:
-        Base: mcgriff_dead
-      Dead:
-        Base: mcgriff_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 2
-  - type: ReplacementAccent
-    accent: dog
-  - type: InteractionPopup
-    successChance: 0.5
-    interactSuccessString: petting-success-dog
-    interactFailureString: petting-failure-generic
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/small_dog_bark_happy.ogg
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
-  - type: Speech
-    speechVerb: Canine
-    speechSounds: Dog
-  - type: Tag
-    tags:
-    - CannotSuicide
-    - VimPilot
-  - type: StealTarget
-    stealGroup: AnimalMcGriff
-
-- type: entity
-  name: Paperwork
-  parent: MobSloth
-  id: MobPaperwork
-  description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/paperwork.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: paperwork
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: paperwork
-      Critical:
-        Base: paperwork_dead
-      Dead:
-        Base: paperwork_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 3
-  - type: InteractionPopup
-    successChance: 1
-    interactSuccessString: petting-success-sloth
-    interactFailureString: petting-failure-sloth
-    interactSuccessSpawn: EffectHearts
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
 
 - type: entity
   name: Walter
@@ -514,6 +488,143 @@
     - CannotSuicide
     - VimPilot
 
+## Service
+- type: entity
+  name: Ian
+  parent: MobCorgi
+  id: MobCorgiIan
+  description: Favorite pet corgi.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: ian
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: ian
+      Critical:
+        Base: ian_dead
+      Dead:
+        Base: ian_dead
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
+    - id: MaterialHideCorgi
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalIan
+
+- type: entity
+  name: Old Ian
+  parent: MobCorgiIan
+  id: MobCorgiIanOld
+  description: Still the favorite pet corgi. Love his wheels.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: old_ian
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: old_ian
+      Critical:
+        Base: old_ian_dead
+      Dead:
+        Base: old_ian_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
+    - id: SheetSteel1
+    - id: MaterialHideCorgi
+
+- type: entity
+  name: Lisa
+  parent: MobCorgiIan
+  id: MobCorgiLisa
+  description: Ian's favorite corgi.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: lisa
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: lisa
+      Critical:
+        Base: lisa_dead
+      Dead:
+        Base: lisa_dead
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+
+- type: entity
+  name: Puppy Ian
+  parent: MobCorgiPuppy
+  id: MobCorgiIanPup
+  description: Favourite puppy corgi. Awww.
+  components:
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Butcherable # A puppy? You monster...
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
+    - id: MaterialHideCorgi
+  - type: StealTarget
+    stealGroup: AnimalIan
+
+- type: entity
+  name: Paperwork
+  parent: MobSloth
+  id: MobPaperwork
+  description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/paperwork.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: paperwork
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: paperwork
+      Critical:
+        Base: paperwork_dead
+      Dead:
+        Base: paperwork_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-sloth
+    interactFailureString: petting-failure-sloth
+    interactSuccessSpawn: EffectHearts
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+
 - type: entity
   name: Alexander
   parent: MobPig
@@ -535,154 +646,6 @@
     tags:
     - CannotSuicide
     - VimPilot
-
-- type: entity
-  name: Renault
-  parent: MobFox
-  id: MobFoxRenault
-  description: The captain's trustworthy fox.
-  components:
-  - type: InteractionPopup
-    successChance: 1
-    interactSuccessString: petting-success-soft-floofy
-    interactFailureString: petting-failure-generic
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      collection: Fox
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 3
-    - id: Telecrystal5
-      amount: 1
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: female
-  - type: Tag
-    tags:
-    - CannotSuicide
-    - VimPilot
-  - type: StealTarget
-    stealGroup: AnimalRenault
-
-- type: entity
-  name: Hamlet
-  parent: MobHamster
-  id: MobHamsterHamlet
-  description: A grumpy, cute and fluffy hamster.
-  components:
-  - type: Sprite
-    drawdepth: SmallMobs
-    sprite: Mobs/Pets/hamlet.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: hamster-0
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: hamster-moving-0
-    noMovementLayers:
-      movement:
-        state: hamster-0
-  - type: GhostRole
-    makeSentient: true
-    allowSpeech: true
-    allowMovement: true
-    name: ghost-role-information-hamlet-name
-    description: ghost-role-information-hamlet-description
-    rules: ghost-role-information-nonantagonist-rules
-  - type: GhostTakeoverAvailable
-  - type: InteractionPopup
-    successChance: 1
-    interactSuccessString: petting-success-hamster
-    interactFailureString: petting-failure-hamster
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/fox_squeak.ogg
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 1
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
-    - Hamster
-    - VimPilot
-    - ChefPilot
-  - type: FlavorProfile
-    flavors:
-    - meaty
-    - sadness
-
-- type: entity
-  name: Shiva
-  parent: MobGiantSpider
-  id: MobSpiderShiva
-  description: The first defender of the station.
-  components:
-  - type: InteractionPopup
-    successChance: 0.5 # spider is mean
-    interactSuccessString: petting-success-tarantula
-    interactFailureString: petting-failure-hamster
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/snake_hiss.ogg
-  - type: NpcFactionMember
-    factions:
-      - PetsNT
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: shiva
-      sprite: Mobs/Pets/shiva.rsi
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: shiva-moving
-    noMovementLayers:
-      movement:
-        state: shiva
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
-  - type: Physics
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: shiva
-      Dead:
-        Base: shiva_dead
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      150: Dead
-  - type: MeleeWeapon
-    angle: 0
-    animation: WeaponArcBite
-    soundHit:
-      path: /Audio/Effects/bite.ogg
-    damage:
-      types:
-        Piercing: 8
-        Poison: 8
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: female
-  - type: Tag
-    tags:
-    - CannotSuicide
-    - VimPilot
-    - DoorBumpOpener
-    - FootstepSound
-  - type: StealTarget
-    stealGroup: AnimalShiva
 
 - type: entity
   name: Willow
@@ -715,6 +678,76 @@
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
 
+- type: entity
+  name: Pun Pun
+  parent: MobMonkey
+  id: MobMonkeyPunpun
+  description: A prominent representative of monkeys with unlimited access to alcohol.
+  components:
+  - type: GhostRole
+    prob: 1
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-punpun-name
+    description: ghost-role-information-punpun-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 3
+    - id: DrinkTequilaBottleFull
+      amount: 1
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - VimPilot
+    - AnomalyHost
+  - type: Loadout
+    prototypes: [ MobMonkeyGear ]
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+
+## Cargo
+- type: entity
+  name: Bandito
+  parent: MobFerret
+  id: MobBandito
+  description: Just a silly little guy!
+  components:
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+
+## Engineering
+- type: entity
+  name: Tropico
+  parent: MobCrab
+  id: MobCrabAtmos
+  description: The noble and stalwart defender of Atmosia. Viva!
+  components:
+  - type: Tag
+    tags:
+    - VimPilot
+    - CannotSuicide
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: StealTarget
+    stealGroup: AnimalTropico
+
+## Science
 - type: entity
   name: Smile
   id: MobSlimesPet
@@ -799,64 +832,26 @@
       proper: true
       gender: female
 
+## Other
 - type: entity
-  name: Pun Pun
-  parent: MobMonkey
-  id: MobMonkeyPunpun
-  description: A prominent representative of monkeys with unlimited access to alcohol.
+  name: real mouse
+  parent: MobCorgiIan
+  id: MobCorgiMouse
+  description: It's 100% a real hungry mouse.
   components:
-  - type: GhostRole
-    prob: 1
-    makeSentient: true
-    allowSpeech: true
-    allowMovement: true
-    name: ghost-role-information-punpun-name
-    description: ghost-role-information-punpun-description
-    rules: ghost-role-information-nonantagonist-rules
-  - type: GhostTakeoverAvailable
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
-    - id: FoodMeat
-      amount: 3
-    - id: DrinkTequilaBottleFull
-      amount: 1
-  - type: Tag
-    tags:
-    - CannotSuicide
-    - DoorBumpOpener
-    - VimPilot
-    - AnomalyHost
-  - type: Loadout
-    prototypes: [ MobMonkeyGear ]
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: real_mouse
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: real_mouse
+      Critical:
+        Base: real_mouse_dead
+      Dead:
+        Base: real_mouse_dead
   - type: Grammar
     attributes:
       proper: true
-      gender: male
-
-- type: entity
-  name: Tropico
-  parent: MobCrab
-  id: MobCrabAtmos
-  description: The noble and stalwart defender of Atmosia. Viva!
-  components:
-#  - type: GhostRole
-#    prob: 1
-#    makeSentient: true
-#    allowSpeech: true
-#    allowMovement: true
-#    name: ghost-role-information-tropico-name
-#    description: ghost-role-information-tropico-description
-#    rules: ghost-role-information-nonantagonist-rules
-#  - type: GhostTakeoverAvailable
-  - type: Tag
-    tags:
-    - VimPilot
-    - CannotSuicide
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
-#  - type: AlwaysRevolutionaryConvertible
-  - type: StealTarget
-    stealGroup: AnimalTropico
+      gender: female
