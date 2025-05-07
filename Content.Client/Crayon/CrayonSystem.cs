@@ -99,7 +99,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         return decalId is { } id ? _protoMan.Index(id) : null;
     }
 
-    private void UpdateOverlayInternal(string state, float rotation, Color color, bool previewMode)
+    private void UpdateOverlayInternal(ProtoId<DecalPrototype>? state, float rotation, Color color, bool previewMode)
     {
         _overlay.RemoveOverlay<CrayonDecalPlacementOverlay>();
 
