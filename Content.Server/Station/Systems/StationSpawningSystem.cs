@@ -72,6 +72,37 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (station != null && !Resolve(station.Value, ref stationSpawning))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
+        string speciesId;
+        if (_randomizeCharacters)
+        {
+            var weightId = _configurationManager.GetCVar(CCVars.ICRandomSpeciesWeights);
+
+            // If blank, choose a round start species.
+            if (string.IsNullOrEmpty(weightId))
+            {
+                var roundStart = new List<ProtoId<SpeciesPrototype>>();
+
+                var speciesPrototypes = _prototypeManager.EnumeratePrototypes<SpeciesPrototype>();
+                foreach (var proto in speciesPrototypes)
+                {
+                    if (proto.RoundStart)
+                        roundStart.Add(proto.ID);
+                }
+
+                if (roundStart.Count == 0)
+                    speciesId = SharedHumanoidAppearanceSystem.DefaultSpecies;
+                else
+                    speciesId = _random.Pick(roundStart);
+            }
+            else
+            {
+                var weights = _prototypeManager.Index<WeightedRandomSpeciesPrototype>(weightId);
+                speciesId = weights.Pick(_random);
+            }
+
+            profile = HumanoidCharacterProfile.RandomWithSpecies(speciesId);
+        }
+
         var ev = new PlayerSpawningEvent(job, profile, station);
 
         RaiseLocalEvent(ev);
@@ -136,52 +167,12 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             return jobEntity;
         }
 
-        string speciesId;
-        if (_randomizeCharacters)
-        {
-            var weightId = _configurationManager.GetCVar(CCVars.ICRandomSpeciesWeights);
-
-            // If blank, choose a round start species.
-            if (string.IsNullOrEmpty(weightId))
-            {
-                var roundStart = new List<ProtoId<SpeciesPrototype>>();
-
-                var speciesPrototypes = _prototypeManager.EnumeratePrototypes<SpeciesPrototype>();
-                foreach (var proto in speciesPrototypes)
-                {
-                    if (proto.RoundStart)
-                        roundStart.Add(proto.ID);
-                }
-
-                if (roundStart.Count == 0)
-                    speciesId = SharedHumanoidAppearanceSystem.DefaultSpecies;
-                else
-                    speciesId = _random.Pick(roundStart);
-            }
-            else
-            {
-                var weights = _prototypeManager.Index<WeightedRandomSpeciesPrototype>(weightId);
-                speciesId = weights.Pick(_random);
-            }
-        }
-        else if (profile != null)
-        {
-            speciesId = profile.Species;
-        }
-        else
-        {
-            speciesId = SharedHumanoidAppearanceSystem.DefaultSpecies;
-        }
+        string speciesId = profile != null ? profile.Species : SharedHumanoidAppearanceSystem.DefaultSpecies;
 
         if (!_prototypeManager.TryIndex<SpeciesPrototype>(speciesId, out var species))
             throw new ArgumentException($"Invalid species prototype was used: {speciesId}");
 
         entity ??= Spawn(species.Prototype, coordinates);
-
-        if (_randomizeCharacters)
-        {
-            profile = HumanoidCharacterProfile.RandomWithSpecies(speciesId);
-        }
 
         if (profile != null)
         {
