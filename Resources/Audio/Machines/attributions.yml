@@ -172,11 +172,20 @@
   license: "CC0-1.0"
   copyright: "by Ko4erga"
   source: "https://github.com/space-wizards/space-station-14/pull/30431"
-  
-- files: ["robot_scream.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "by Fox-McCloud"
-  source: "https://github.com/ParadiseSS13/Paradise/blob/04e65c74969fb2c7f96db0a903747c18b990bfea/sound/goonstation/voice/robot_scream.ogg"
+
+- files:
+  - robotscream_1.ogg
+  - robotscream_2.ogg
+  - robotscream_3.ogg
+  - robotscream_4.ogg
+  - robotscream_5.ogg
+  - robotscream_6.ogg
+  - robotscream_7.ogg
+  - robotscream_8.ogg
+  - robotscream_9.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "/tg/station and modified by AsnDen"
+  source: "https://github.com/tgstation/tgstation/commit/3d049e69fe71a0be2133005e65ea469135d648c8"
 
 - files: ["double_ring.ogg"]
   license: "CC0-1.0"

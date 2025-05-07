@@ -400,7 +400,7 @@
     variation: 0.05
   sounds:
     Scream:
-      path: /Audio/Machines/robot_scream.ogg
+      collection: SiliconScreams
     Beep:
       path: /Audio/Machines/twobeep.ogg
     Chime:
@@ -420,7 +420,7 @@
     variation: 0.05
   sounds:
     Scream:
-      path: /Audio/Machines/robot_scream.ogg
+      collection: SiliconScreams
     Laugh:
       path: /Audio/Voice/Silicon/syndieborg_laugh.ogg
     Beep:
