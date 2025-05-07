@@ -404,7 +404,7 @@
     damage:
       types:
         Blunt: 3.25
-        Asphyxiation: 1.75
+        Asphyxiation: 1.75 # Change this to something better when newmed is finished.
     soundHit:
       collection: Punch
     animation: WeaponArcFist
