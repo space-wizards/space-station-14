@@ -49,7 +49,7 @@ public sealed partial class CargoBountyConsoleComponent : Component
     /// The time at which the console will be able to make the denial sound again.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
-    public TimeSpan NextDenialSoundTime = TimeSpan.Zero;
+    public TimeSpan NextDenySoundTime = TimeSpan.Zero;
 
     /// <summary>
     /// The time between playing a denial sound.
