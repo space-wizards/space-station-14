@@ -157,9 +157,6 @@ public abstract partial class SharedStationAiSystem
 
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!ent.Comp.ShowContextMenu)
-            return;
-
         if (!args.CanComplexInteract
             || !HasComp<StationAiHeldComponent>(args.User)
             || !args.CanInteract)
