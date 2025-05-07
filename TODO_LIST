@@ -13,46 +13,15 @@ Move oxy miner to where the other gasses are?
 
 
 
-- Make the station move forward!
 Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
 Make easier to navigate in general, + add standard colors around more
 	Maybe crappy scribble decals on top of the MIRI flooring?
-Set ejection chamber button access (cap and HoS)
-Salvage space arm is getting sensed as part of the room by air sensors?
-Weapons north maints door stuck open
 Grime everything up a bit again.
-- Lotta errors about entity cable terminals
--Remove lightbulb behind cryopod
--Lowercase cryo room beakers
--Oppo beaker has graphic showing there's liquid in it, but it still claims to be empty + I can't drink it.
+- Lotta errors about entity cable terminals?
 -I am wrong about sec monitors being restricted to general.
--Nav cam not working.
-	It works, just the power runs out super fast.
--Not that it matters, given genpop, but holobarrier projectors on Warden's front desk are too cluttery.
-	Oh, probably they're from a spawner. But even still.
--Tider shop shutters are see-through...?
 -Need moar SMES. Station starts to lose power way too quickly.
--Prosc. bottle and flask on dresser start weirdly positioned.
--Sec monitor shutters don't work. Shutters on computers overall don't work. :C
--Det/Prosc door shutter closes correctly, but doesn't open when it should.
+	Or more substations? Would that help?
 -Wired/wireless network component apparently has nothing to do with entertainment/security
--Execution room holopad name overflows the window
--Last set of disposal ejection conveyors don't seem to be hooked up.
-	That, or they're unpowered.
--Disposal ejection should maybe have an actual gas vent, too, so it won't just never reoxygenize
--Since shutter doesn't work, lockable windoor over public cargo request computer
--Get rid of light in secret robot room, or it's too obvious
--Evac escape pod airlock doors need to be linked
-	-Probably ditto the secondary evac
--Evac maints space chamber firelocks seem not to both engage?
--AI approach: Grille on top of wall
--Some random colored lights in nuke hallway
--Atmospheric network monitor to TEG area
--Heater and cooler near TEG should start off, not on
--Grille protecting Sci window
--Tider shop light starts on (but still behaves correctly with door status)
-	Multicolor room lights do start off, though.
--Present in mime room doesn't work?
 Genpop (bah)
 
 Evac Shuttle:
@@ -65,6 +34,14 @@ Check this stuff:
 Execution telescreens see mounted cam networks, not wireless.
 	Having trouble figuring out where this is specified, so maybe I should
 		dig into the components while testing live.
+-Oppo beaker has graphic showing there's liquid in it, but it still claims to be empty + I can't drink it.
+	I changed "drink" to "food" because I guess maybe that's why the rubbing alcohol was that way? No
+		idea if that fixes it or not.
+-Check roundstart tider shop light again. I turned the attached switch on. Did that break the door being bolted?
+Weapons north maints door stuck open?
+Salvage space arm is getting sensed as part of the room by air sensors?
+Use engie power monitor to see what's running out of power first/fastest
+Check the det/prosc door *again*.
 
 
 THINGS I COULD MAKE:
@@ -380,3 +357,34 @@ DONE:
 /* Does tider shop light *start* off, or on? Should be off. */
 /* 	I still need to check this *first thing* at round start. */
 /* - Job numbers in the prototype file */
+/* - Make the station move forward! */
+/* Set ejection chamber button access (cap and HoS) */
+/* 	Nah. Why? The door's already Cap-only. */
+/* -Remove lightbulb behind cryopod */
+/* -Lowercase cryo room beakers */
+/* -Nav cam not working. */
+/* 	It works, just the power runs out super fast. */
+/* -Tider shop shutters are see-through...? */
+/* -Prosc. bottle and flask on dresser start weirdly positioned. */
+/* -Sec monitor shutters don't work. Shutters on computers overall don't work. :C */
+/* -Execution room holopad name overflows the window */
+/* -Last set of disposal ejection conveyors don't seem to be hooked up. */
+/* 	That, or they're unpowered. */
+/* -Disposal ejection should maybe have an actual gas vent, too, so it won't just never reoxygenize */
+/* -Since shutter doesn't work, lockable windoor over public cargo request computer */
+/* -Get rid of light in secret robot room, or it's too obvious */
+/* -Evac escape pod airlock doors need to be linked */
+/* 	-Probably ditto the secondary evac */
+/* -Evac maints space chamber firelocks seem not to both engage? */
+/* -AI approach: Grille on top of wall */
+/* -Some random colored lights in nuke hallway */
+/* -Atmospheric network monitor to TEG area */
+/* -Heater and cooler near TEG should start off, not on */
+/* -Grille protecting Sci window */
+/* -Present in mime room doesn't work? */
+/* -Tider shop light starts on (but still behaves correctly with door status) */
+/* 	Multicolor room lights do start off, though. */
+/* -Not that it matters, given genpop, but holobarrier projectors on Warden's front desk are too cluttery. */
+/* 	Oh, probably they're from a spawner. But even still. */
+/* -Det/Prosc door shutter closes correctly, but doesn't open when it should. */
+/* 	Or gate was connected to shutter instead of Nand gate, I guess */
