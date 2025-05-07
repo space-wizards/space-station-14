@@ -119,6 +119,9 @@
   effects:
   - !type:CreateGas
     gas: Frezon
+  - !type:AdjustSolutionTemperatureEffect
+    delta: -5
+    scaled: true
   products:
     Ice: 5
 
@@ -147,7 +150,7 @@
 
 - type: reaction
   id: EndothermicFresiumCooling # This is for EXPERIENCED chemists. This CAN be jugmixed, yet not to full volume of the jug.
-  priority: 10 # Flash freeze ice conflict. Add water last or get iced.
+  priority: 10 # Flash freeze ice & Ammonia conflict. Add water last or get ammoniated.
   conserveEnergy: false # For reaction to actually work.
   reactants:
     Nitrogen:
@@ -160,6 +163,7 @@
       amount: 3
   products:
     Ice: 2
+    Frezium: 4 # It's shitcode but as they say in Russia - IT'S OUR SHITCODE
   effects:
   - !type:AdjustSolutionTemperatureEffect
       delta: -25 # 100 units of this reaction makes 250 Kelvin temperature drop.

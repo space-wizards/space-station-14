@@ -408,6 +408,10 @@
       amount: 4
     TableSalt:
       amount: 1
+  effects:
+  - !type:AdjustSolutionTemperatureEffect # You can make saline and then make cryo chems. Convenient.
+    delta: -5
+    scaled: true
   products:
     Saline: 5
 
@@ -563,7 +567,7 @@
 - type: reaction
   id: Opporozidone
   maxTemp: 30 # Maybe if a method of reducing reagent temp exists one day, this could be -50
-  reactants:      # EDIT from LordZirconium: The day has come... Though I set it to liquid helium temperature.
+  reactants:      # EDIT from LordZirconium: The day has come... Though I set it to cooler temperature.
     Cognizine:
       amount: 1
     Plasma:
