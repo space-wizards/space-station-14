@@ -3196,7 +3196,7 @@
     baseSprintSpeed : 1
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Pets/sloth.rsi
+    sprite: Mobs/Animals/sloth.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: sloth
