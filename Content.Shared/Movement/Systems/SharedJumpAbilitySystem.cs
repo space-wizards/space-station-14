@@ -1,7 +1,7 @@
-using Content.Shared.Throwing;
-using Content.Shared.Movement.Components;
-using Robust.Shared.Audio.Systems;
 using Content.Shared.Gravity;
+using Content.Shared.Movement.Components;
+using Content.Shared.Throwing;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Movement.Systems;
 
