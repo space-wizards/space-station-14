@@ -203,6 +203,15 @@
     - Syndicate
   - type: Loadout
     prototypes: [SyndicateOperativeGearMonkey]
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-monkey-name
+    description: ghost-role-information-monkey-description
+    rules: ghost-role-information-syndicate-reinforcement-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist # In cases of regaining sentience.
+    raffle:
+      settings: default
 
 - type: entity
   id: MobMonkeySyndicateAgent
@@ -313,12 +322,6 @@
           horns_floppy_kobold_ears: Inherit
           horns_double: Inherit
           horns_kobold_ears: Inherit
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
-    - id: FoodMeat
-      amount: 2
-  - type: GhostTakeoverAvailable
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-kobold
   - type: GhostRole
@@ -327,6 +330,8 @@
     name: ghost-role-information-kobold-name
     description: ghost-role-information-kobold-description
     rules: ghost-role-information-nonantagonist-rules
+  - type: Damageable
+    damageModifierSet: Scale
 
 - type: entity
   name: kobold
@@ -353,6 +358,15 @@
     - Syndicate
   - type: Loadout
     prototypes: [SyndicateOperativeGearMonkey]
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-kobold-name
+    description: ghost-role-information-kobold-description
+    rules: ghost-role-information-syndicate-reinforcement-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist # In cases of regaining sentience.
+    raffle:
+      settings: default
 
 - type: entity
   id: MobKoboldSyndicateAgent
