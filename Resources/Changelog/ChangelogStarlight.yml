@@ -5598,4 +5598,11 @@ Entries:
   id: 776
   time: '2025-05-07T19:55:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/582
+- author: Happyrobot33
+  changes:
+  - message: Added wildcard mode to disposal routers.
+    type: Add
+  id: 777
+  time: '2025-05-07T19:55:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/581
 
