@@ -260,7 +260,7 @@
 - type: entity
   id: CardDoor
   parent: BaseStructure
-  name: cardDoor # was card door
+  name: cardDoor # was card door     Also sort out name bc I think that's referred to ic
 #  abstract: true       #maybe?
   description: A door, where will it lead?
   components:
@@ -295,7 +295,7 @@
     openingAnimationTime: 1.2
     closingAnimationTime: 1.2
     openSound:
-      path: /Audio/Effects/paperdoor_openclose.ogg
+      path: /Audio/Effects/paperdoor_openclose.ogg    #please please please find a better sound effect 
     closeSound:
       path: /Audio/Effects/paperdoor_openclose.ogg
   - type: MeleeSound
