@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Security cadets spawn with sunglasses.
-    type: Add
-  id: 1120
-  time: '2025-02-13T17:20:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1653
 - author: MintyTheBinty
   changes:
   - message: Changed a few of the suitskirts to now include sheer leggings, plus changed
@@ -4158,3 +4151,19 @@
   id: 1619
   time: '2025-05-08T23:42:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2412
+- author: widgetbeck
+  changes:
+  - message: Anomalites now have unique talk and scream sounds, and access to the
+      emote wheel.
+    type: Tweak
+  - message: Anomalites can now ventcrawl.
+    type: Tweak
+  - message: Anomalites now have unique death sprites.
+    type: Tweak
+  - message: Anomalites now have resistances to relevant damage types.
+    type: Tweak
+  - message: Anomalites can now have their modifiers changed via APEs.
+    type: Fix
+  id: 1620
+  time: '2025-05-08T23:45:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2408
