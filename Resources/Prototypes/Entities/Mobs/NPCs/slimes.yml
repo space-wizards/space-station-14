@@ -108,6 +108,14 @@
     speechSounds: Slime
   - type: TypingIndicator
     proto: slime
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: HTN
+    rootTask:
+      task: RuminantHostileCompound
 
 - type: entity
   name: green slime
