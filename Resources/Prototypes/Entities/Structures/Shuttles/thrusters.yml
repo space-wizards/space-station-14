@@ -145,6 +145,11 @@
   components:
   - type: Thruster
     thrusterType: Angular
+    useSetting: true
+    settingSound:
+      path: /Audio/Weapons/click.ogg
+      params:
+        volume: -6
     requireSpace: false
     thrust: 2000
     machinePartThrust: Manipulator
@@ -218,8 +223,13 @@
   components:
   - type: Thruster
     thrusterType: Angular
+    useSetting: true
+    settingSound:
+      path: /Audio/Weapons/click.ogg
+      params:
+        volume: -6
     requireSpace: false
-    thrust: 100
+    thrust: 2000
   - type: ApcPowerReceiver
     needsPower: false
     powerLoad: 0

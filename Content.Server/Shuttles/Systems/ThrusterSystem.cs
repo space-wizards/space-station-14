@@ -8,8 +8,11 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Temperature;
+using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -33,6 +36,10 @@ public sealed class ThrusterSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+
+    private readonly int _settingCount = Enum.GetValues<ThrusterSetting>().Length;
 
     // Essentially whenever thruster enables we update the shuttle's available impulses which are used for movement.
     // This is done for each direction available.
@@ -43,6 +50,7 @@ public sealed class ThrusterSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ThrusterComponent, ActivateInWorldEvent>(OnActivateThruster);
+        SubscribeLocalEvent<ThrusterComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbsAlternate);
         SubscribeLocalEvent<ThrusterComponent, ComponentInit>(OnThrusterInit);
         SubscribeLocalEvent<ThrusterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ThrusterComponent, ComponentShutdown>(OnThrusterShutdown);
@@ -83,6 +91,14 @@ public sealed class ThrusterSystem : EntitySystem
                     Loc.GetString(exposed ? "thruster-comp-nozzle-exposed" : "thruster-comp-nozzle-not-exposed");
 
                 args.PushMarkup(nozzleText);
+            }
+
+            if (component.UseSetting) {
+
+                if (!args.IsInDetailsRange)
+                    return;
+
+                args.PushMarkup(Loc.GetString("thruster-examined", ("setting", component.SettingLevel)));
             }
         }
     }
@@ -150,6 +166,62 @@ public sealed class ThrusterSystem : EntitySystem
         }
     }
 
+    private void OnGetVerbsAlternate(Entity<ThrusterComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!ent.Comp.UseSetting)
+            return;
+
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
+            return;
+
+        var nextSettingIndex = ((int)ent.Comp.SettingLevel + 1) % _settingCount;
+        var nextSetting = (ThrusterSetting)nextSettingIndex;
+
+        args.Verbs.Add(new AlternativeVerb()
+        {
+            Text = Loc.GetString("thruster-switch-setting", ("setting", nextSetting)),
+            Act = () =>
+            {
+                ChangeSetting(ent, nextSetting);
+            }
+        });
+    }
+
+    public void ChangeSetting(Entity<ThrusterComponent> ent, ThrusterSetting setting)
+    {
+        if (!ent.Comp.Enabled ||
+            !EntityManager.TryGetComponent(ent.Owner, out TransformComponent? xform) ||
+            !EntityManager.TryGetComponent(xform.GridUid, out ShuttleComponent? shuttleComponent))
+        {
+            return;
+        }
+
+        SubtractThrust(ent.Owner, ent.Comp, shuttleComponent, xform);
+        ent.Comp.SettingLevel = setting;
+        AddThrust(ent.Owner, ent.Comp, shuttleComponent, xform);
+
+        _audio.PlayPvs(ent.Comp.SettingSound, ent.Owner);
+        _popup.PopupEntity(Loc.GetString("thruster-switched-setting", ("setting", setting)), ent);
+
+        // TODO: Colored LED indicator
+        //_appearance.SetData(...);
+    }
+
+    public float GetThrustScaled(ThrusterComponent component)
+    {
+        if (!component.UseSetting)
+            return component.Thrust;
+
+        return component.Thrust * component.SettingLevel switch
+        {
+            ThrusterSetting.Maximum     => 1f,
+            ThrusterSetting.High        => 1f / 5f,
+            ThrusterSetting.Medium      => 1f / 10f,
+            ThrusterSetting.Low         => 1f / 20f,
+            _ => throw new ArgumentException(nameof(component.SettingLevel))
+        };
+    }
+
     /// <summary>
     /// If the thruster rotates change the direction where the linear thrust is applied
     /// </summary>
@@ -189,6 +261,8 @@ public sealed class ThrusterSystem : EntitySystem
         var direction = (int)args.NewRotation.GetCardinalDir() / 2;
         var oldShuttleComponent = shuttleComponent;
 
+        var thrustScaled = GetThrustScaled(component);
+
         if (args.ParentChanged)
         {
             oldShuttleComponent = Comp<ShuttleComponent>(args.OldPosition.EntityId);
@@ -196,11 +270,11 @@ public sealed class ThrusterSystem : EntitySystem
             // If no parent change doesn't matter for angular.
             if (component.Type == ThrusterType.Angular)
             {
-                oldShuttleComponent.AngularThrust -= component.Thrust;
+                oldShuttleComponent.AngularThrust -= thrustScaled;
                 DebugTools.Assert(oldShuttleComponent.AngularThrusters.Contains(uid));
                 oldShuttleComponent.AngularThrusters.Remove(uid);
 
-                shuttleComponent.AngularThrust += component.Thrust;
+                shuttleComponent.AngularThrust += thrustScaled;
                 DebugTools.Assert(!shuttleComponent.AngularThrusters.Contains(uid));
                 shuttleComponent.AngularThrusters.Add(uid);
                 return;
@@ -209,11 +283,11 @@ public sealed class ThrusterSystem : EntitySystem
 
         if (component.Type == ThrusterType.Linear)
         {
-            oldShuttleComponent.LinearThrust[oldDirection] -= component.Thrust;
+            oldShuttleComponent.LinearThrust[oldDirection] -= thrustScaled;
             DebugTools.Assert(oldShuttleComponent.LinearThrusters[oldDirection].Contains(uid));
             oldShuttleComponent.LinearThrusters[oldDirection].Remove(uid);
 
-            shuttleComponent.LinearThrust[direction] += component.Thrust;
+            shuttleComponent.LinearThrust[direction] += thrustScaled;
             DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(uid));
             shuttleComponent.LinearThrusters[direction].Add(uid);
         }
@@ -279,19 +353,39 @@ public sealed class ThrusterSystem : EntitySystem
             return;
         }
 
-        component.IsOn = true;
-
         if (!EntityManager.TryGetComponent(xform.GridUid, out ShuttleComponent? shuttleComponent))
             return;
 
         // Logger.DebugS("thruster", $"Enabled thruster {uid}");
+
+        AddThrust(uid, component, shuttleComponent, xform);
+
+        component.IsOn = true;
+
+        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        {
+            _appearance.SetData(uid, ThrusterVisualState.State, true, appearance);
+        }
+
+        if (_light.TryGetLight(uid, out var pointLightComponent))
+        {
+            _light.SetEnabled(uid, true, pointLightComponent);
+        }
+
+        _ambient.SetAmbience(uid, true);
+        RefreshCenter(uid, shuttleComponent);
+    }
+
+    private void AddThrust(EntityUid uid, ThrusterComponent component, ShuttleComponent shuttleComponent, TransformComponent xform)
+    {
+        var thrustScaled = GetThrustScaled(component);
 
         switch (component.Type)
         {
             case ThrusterType.Linear:
                 var direction = (int)xform.LocalRotation.GetCardinalDir() / 2;
 
-                shuttleComponent.LinearThrust[direction] += component.Thrust;
+                shuttleComponent.LinearThrust[direction] += thrustScaled;
                 DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(uid));
                 shuttleComponent.LinearThrusters[direction].Add(uid);
 
@@ -306,26 +400,13 @@ public sealed class ThrusterSystem : EntitySystem
 
                 break;
             case ThrusterType.Angular:
-                shuttleComponent.AngularThrust += component.Thrust;
+                shuttleComponent.AngularThrust += thrustScaled;
                 DebugTools.Assert(!shuttleComponent.AngularThrusters.Contains(uid));
                 shuttleComponent.AngularThrusters.Add(uid);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
-
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-        {
-            _appearance.SetData(uid, ThrusterVisualState.State, true, appearance);
-        }
-
-        if (_light.TryGetLight(uid, out var pointLightComponent))
-        {
-            _light.SetEnabled(uid, true, pointLightComponent);
-        }
-
-        _ambient.SetAmbience(uid, true);
-        RefreshCenter(uid, shuttleComponent);
     }
 
     /// <summary>
@@ -350,8 +431,10 @@ public sealed class ThrusterSystem : EntitySystem
                 if (!thrustQuery.TryGetComponent(ent, out var thruster) || !xformQuery.TryGetComponent(ent, out var xform))
                     continue;
 
-                center += xform.LocalPosition * thruster.Thrust;
-                totalThrust += thruster.Thrust;
+                var thrustScaled = GetThrustScaled(thruster);
+
+                center += xform.LocalPosition * thrustScaled;
+                totalThrust += thrustScaled;
             }
 
             center /= pop.Count * totalThrust;
@@ -376,31 +459,14 @@ public sealed class ThrusterSystem : EntitySystem
             return;
         }
 
-        component.IsOn = false;
-
         if (!EntityManager.TryGetComponent(gridId, out ShuttleComponent? shuttleComponent))
             return;
 
         // Logger.DebugS("thruster", $"Disabled thruster {uid}");
 
-        switch (component.Type)
-        {
-            case ThrusterType.Linear:
-                angle ??= xform.LocalRotation;
-                var direction = (int)angle.Value.GetCardinalDir() / 2;
+        SubtractThrust(uid, component, shuttleComponent, xform, angle);
 
-                shuttleComponent.LinearThrust[direction] -= component.Thrust;
-                DebugTools.Assert(shuttleComponent.LinearThrusters[direction].Contains(uid));
-                shuttleComponent.LinearThrusters[direction].Remove(uid);
-                break;
-            case ThrusterType.Angular:
-                shuttleComponent.AngularThrust -= component.Thrust;
-                DebugTools.Assert(shuttleComponent.AngularThrusters.Contains(uid));
-                shuttleComponent.AngularThrusters.Remove(uid);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+        component.IsOn = false;
 
         if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
         {
@@ -421,6 +487,30 @@ public sealed class ThrusterSystem : EntitySystem
 
         component.Colliding.Clear();
         RefreshCenter(uid, shuttleComponent);
+    }
+
+    private void SubtractThrust(EntityUid uid, ThrusterComponent component, ShuttleComponent shuttleComponent, TransformComponent xform, Angle? angle = null)
+    {
+        var thrustScaled = GetThrustScaled(component);
+
+        switch (component.Type)
+        {
+            case ThrusterType.Linear:
+                angle ??= xform.LocalRotation;
+                var direction = (int)angle.Value.GetCardinalDir() / 2;
+
+                shuttleComponent.LinearThrust[direction] -= thrustScaled;
+                DebugTools.Assert(shuttleComponent.LinearThrusters[direction].Contains(uid));
+                shuttleComponent.LinearThrusters[direction].Remove(uid);
+                break;
+            case ThrusterType.Angular:
+                shuttleComponent.AngularThrust -= thrustScaled;
+                DebugTools.Assert(shuttleComponent.AngularThrusters.Contains(uid));
+                shuttleComponent.AngularThrusters.Remove(uid);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 
     public bool CanEnable(EntityUid uid, ThrusterComponent component)

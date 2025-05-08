@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Damage;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -24,6 +25,24 @@ namespace Content.Server.Shuttles.Components
         // Need to serialize this because RefreshParts isn't called on Init and this will break post-mapinit maps!
         [ViewVariables(VVAccess.ReadWrite), DataField("thrust")]
         public float Thrust = 100f;
+
+        /// <summary>
+        /// Whether the thrust setting can be configured.
+        /// </summary>
+        [DataField]
+        public bool UseSetting = false;
+
+        /// <summary>
+        /// Scales down the maximum thrust. Useful for gyroscopes on small vessels.
+        /// </summary>
+        [DataField]
+        public ThrusterSetting SettingLevel = ThrusterSetting.Maximum;
+
+        /// <summary>
+        /// An optional sound that plays when the setting is changed.
+        /// </summary>
+        [DataField]
+        public SoundPathSpecifier? SettingSound;
 
         [DataField("thrusterType")]
         public ThrusterType Type = ThrusterType.Linear;
@@ -68,5 +87,13 @@ namespace Content.Server.Shuttles.Components
         Linear,
         // Angular meaning rotational.
         Angular,
+    }
+
+    public enum ThrusterSetting
+    {
+        Maximum,
+        High,
+        Medium,
+        Low
     }
 }
