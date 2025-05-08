@@ -162,8 +162,6 @@ def send_discord_webhook(lines: list[str]):
             print(f"Rate limited, retrying after {retry_after} seconds")
             time.sleep(retry_after)
             response = requests.post(DISCORD_WEBHOOK_URL, json=body, timeout=10)
-            if response.status_code == 204:
-                retry_attempt = 0
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         print(f"Failed to send message: {e}")
