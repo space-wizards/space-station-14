@@ -3921,3 +3921,10 @@
   id: 8441
   time: '2025-05-08T16:49:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37281
+- author: MureixloL
+  changes:
+  - message: Changed sprite of mime satchel!
+    type: Tweak
+  id: 8442
+  time: '2025-05-08T17:38:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37280
