@@ -120,7 +120,6 @@
   - type: HumanoidAppearance
     species: Diona
   - type: Inventory
-    templateId: diona
     femaleDisplacements:
       jumpsuit:
         sizeMaps:
