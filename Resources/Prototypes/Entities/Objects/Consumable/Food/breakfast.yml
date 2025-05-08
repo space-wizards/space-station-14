@@ -16,12 +16,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 25
+          Quantity: 40
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 10
   - type: Tag
     tags:
     - VoxFood
