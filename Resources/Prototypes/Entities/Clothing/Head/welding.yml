@@ -28,7 +28,7 @@
   parent: WeldingMaskBase
   id: ClothingHeadHatWelding
   name: welding mask
-  description: A head-mounted face cover designed to protect the wearer completely from space-arc eye.
+  description: A head-mounted face cover designed to protect the wearer completely from space-arc eye, also provides protection from bright flashes.
   components:
   - type: Sprite
     sprite: Clothing/Head/Welding/welding.rsi
@@ -44,7 +44,7 @@
   parent: WeldingMaskBase
   id: ClothingHeadHatWeldingMaskFlame
   name: flame welding mask
-  description: A painted welding helmet, this one has flames on it.
+  description: A painted welding helmet, this one has flames on it, also provides protection from bright flashes.
   components:
   - type: Sprite
     sprite: Clothing/Head/Welding/flame_welding_mask.rsi
@@ -55,7 +55,7 @@
   parent: WeldingMaskBase
   id: ClothingHeadHatWeldingMaskFlameBlue
   name: blue-flame welding mask
-  description: A painted welding helmet, this one has blue flames on it.
+  description: A painted welding helmet, this one has blue flames on it, also provides protection from bright flashes.
   components:
   - type: Sprite
     sprite: Clothing/Head/Welding/blue_flame_welding_mask.rsi
@@ -66,7 +66,7 @@
   parent: WeldingMaskBase
   id: ClothingHeadHatWeldingMaskPainted
   name: painted welding mask
-  description: A welding helmet, painted in crimson.
+  description: A welding helmet, painted in crimson, also provides protection from bright flashes.
   components:
   - type: Sprite
     sprite: Clothing/Head/Welding/paintedwelding.rsi
