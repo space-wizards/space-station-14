@@ -48,10 +48,7 @@ public sealed partial class ClientsidePlaytimeTrackingManager
 
     private void OnPlayerAttached(EntityUid entity)
     {
-        if (_entityManager.HasComponent<GhostComponent>(entity))
-            _livingMobAttachmentTime = DateTime.MinValue;
-        else
-            _livingMobAttachmentTime = DateTime.UtcNow; // Don't want daylight savings to cause jank, so we use UtcNow instead of Now
+        _livingMobAttachmentTime = DateTime.UtcNow; // Don't want daylight savings to cause jank, so we use UtcNow instead of Now
     }
     private void OnPlayerDetached(EntityUid entity)
     {
