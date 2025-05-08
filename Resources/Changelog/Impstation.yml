@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: MintyTheBinty
-  changes:
-  - message: Changed a few of the suitskirts to now include sheer leggings, plus changed
-      the hue of the nightclub suit's tie to not blend in so much with grey tiles.
-    type: Tweak
-  id: 1121
-  time: '2025-02-13T22:06:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1680
 - author: bigsantino1
   changes:
   - message: Added a maints bar kit to the cargo request computer.
@@ -4167,3 +4159,11 @@
   id: 1620
   time: '2025-05-08T23:45:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2408
+- author: DinnerCalzone
+  changes:
+  - message: Airlocks to escape pods now require maints access instead of external
+      access until roundstart docking is fixed.
+    type: Fix
+  id: 1621
+  time: '2025-05-08T23:47:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2424
