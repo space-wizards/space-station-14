@@ -93,6 +93,6 @@ namespace Content.Shared.Cargo.Prototypes
         ///     The prototype group of the product. (e.g. Contraband)
         /// </summary>
         [DataField]
-        public string Group { get; private set; } = "market";
+        public ProtoId<CargoMarketPrototype> Group { get; private set; } = "market";
     }
 }
