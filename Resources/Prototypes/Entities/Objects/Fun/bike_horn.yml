@@ -222,7 +222,7 @@
     delay: 10
   - type: TriggerOnUse
   - type: RepulseAttractOnTrigger
-    speed: 40
+    speed: 50
     range: 3.5
     whitelist:
       components:
