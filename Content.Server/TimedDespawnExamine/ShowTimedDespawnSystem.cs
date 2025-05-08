@@ -1,7 +1,8 @@
-using Robust.Shared.Utility;
+using Content.Shared.Examine;
+
 using Robust.Shared.Spawners;
 
-namespace Content.Shared.Examine.TimedDespawnExamine;
+namespace Content.Server.TimedDespawnExamine;
 
 /// <summary>
 ///     This handles logic relating to <see cref="ShowTimedDespawnComponent"/>.
@@ -23,16 +24,16 @@ public sealed class ShowTimedDespawnSystem : EntitySystem
 
         var message = GetMessage(ent.Owner);
 
-        args.PushMessage(message);
+        args.PushMarkup(message);
     }
 
-    private FormattedMessage GetMessage(Entity<TimedDespawnComponent?> target)
+    private string GetMessage(Entity<TimedDespawnComponent?> target)
     {
-        var msg = new FormattedMessage();
+        var msg = string.Empty;
 
         // lazy ass convection but anyway better than "23.3123444445555523444444441222222 seconds remain before entity nukes".
         if (Resolve(target, ref target.Comp))
-            msg.AddMarkupOrThrow(Loc.GetString("examinable-show-despawn", ("seconds", (int)target.Comp.Lifetime)));
+            msg = Loc.GetString("examinable-show-despawn", ("seconds", (int)target.Comp.Lifetime));
 
         return msg;
     }

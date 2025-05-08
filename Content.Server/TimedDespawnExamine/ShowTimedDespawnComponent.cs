@@ -1,6 +1,6 @@
 using Robust.Shared.Spawners;
 
-namespace Content.Shared.Examine.TimedDespawnExamine;
+namespace Content.Server.TimedDespawnExamine;
 
 /// <summary>
 ///     Component that show examiner message if entity has <see cref="TimedDespawnComponent"/>.
