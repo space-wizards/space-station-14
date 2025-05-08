@@ -147,7 +147,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeMagnum # changed from Anti-material rifle rounds because it's a flintlock pistol not a Hristov
+        - CartridgeMagnum # changed from Anti-material rifle rounds because it's a flintlock pistol not a Hristov 
     capacity: 1
     proto: CartridgeMagnum
   - type: StaticPrice
