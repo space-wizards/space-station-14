@@ -1,5 +1,15 @@
 # Senior Time
 - type: loadoutEffectGroup
+  id: Roboticist
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Science
+      time: 27000 #7.5 hrs
+
+# Senior Time
+- type: loadoutEffectGroup
   id: SeniorResearcher
   effects:
   - !type:JobRequirementLoadoutEffect
@@ -23,11 +33,17 @@
 
 - type: loadout
   id: RoboticistCap
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Roboticist
   equipment:
     head: ClothingHeadHatCorpsoft
 
 - type: loadout
   id: SkullBandana
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Roboticist
   equipment:
     head: ClothingHeadBandSkull
 
@@ -51,11 +67,17 @@
 
 - type: loadout
   id: RoboticistJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Roboticist
   equipment:
     jumpsuit: ClothingUniformJumpsuitRoboticist
 
 - type: loadout
   id: RoboticistJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Roboticist
   equipment:
     jumpsuit: ClothingUniformJumpskirtRoboticist
 
@@ -109,11 +131,17 @@
 
 - type: loadout
   id: RoboticistLabCoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Roboticist
   equipment:
     outerClothing: ClothingOuterCoatRobo
 
 - type: loadout
   id: RoboticistWintercoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Roboticist
   equipment:
     outerClothing: ClothingOuterWinterRobo
 
@@ -133,6 +161,9 @@
 
 - type: loadout
   id: RobohandsGloves
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Roboticist
   equipment:
     gloves: ClothingHandsGlovesRobohands
 
@@ -147,6 +178,14 @@
   id: ScientistPDA
   equipment:
     id: SciencePDA
+
+- type: loadout
+  id: RoboticistPDA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Roboticist
+  equipment:
+    id: RoboticistPDA
 
 - type: loadout
   id: SeniorResearcherPDA
