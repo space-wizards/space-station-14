@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Tayrtahn
   changes:
-  - message: Ghosts are no longer sent to the void if the player they are following
-      is polymorphed.
-    type: Fix
-  id: 7939
-  time: '2025-02-11T21:34:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33878
-- author: Tayrtahn
-  changes:
   - message: Clusterbangs now properly limit their maximum capacity.
     type: Fix
   id: 7940
@@ -3929,3 +3921,11 @@
   id: 8440
   time: '2025-05-08T14:28:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37276
+- author: Thinbug0
+  changes:
+  - message: The push horn lost its ability to push items, in exchange of a bigger
+      range
+    type: Tweak
+  id: 8441
+  time: '2025-05-08T16:49:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37281
