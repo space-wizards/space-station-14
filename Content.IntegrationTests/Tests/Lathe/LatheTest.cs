@@ -26,6 +26,7 @@ public sealed class LatheTest
         var compFactory = server.ResolveDependency<IComponentFactory>();
         var materialStorageSystem = server.System<SharedMaterialStorageSystem>();
         var whitelistSystem = server.System<EntityWhitelistSystem>();
+        var latheSystem = server.System<SharedLatheSystem>();
 
         await server.WaitAssertion(() =>
         {
@@ -74,14 +75,14 @@ public sealed class LatheTest
                         }
                     }
 
-                    // Collect all the recipes assigned to this lathe
-                    var recipes = new List<ProtoId<LatheRecipePrototype>>();
-                    recipes.AddRange(latheComp.StaticRecipes);
-                    recipes.AddRange(latheComp.DynamicRecipes);
+                    // Collect all possible recipes assigned to this lathe
+                    var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
+                    latheSystem.AddRecipesFromPacks(recipes, latheComp.StaticPacks);
+                    latheSystem.AddRecipesFromPacks(recipes, latheComp.DynamicPacks);
                     if (latheProto.TryGetComponent<EmagLatheRecipesComponent>(out var emagRecipesComp, compFactory))
                     {
-                        recipes.AddRange(emagRecipesComp.EmagStaticRecipes);
-                        recipes.AddRange(emagRecipesComp.EmagDynamicRecipes);
+                        latheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagStaticPacks);
+                        latheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagDynamicPacks);
                     }
 
                     // Check each recipe assigned to this lathe

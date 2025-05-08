@@ -109,7 +109,17 @@ public sealed partial class DocumentParsingManager
             .Cast<Control>()))
         .Labelled("subheader");
 
-    private static readonly Parser<char, Control> TryHeaderControl = OneOf(SubHeaderControlParser, HeaderControlParser);
+    private static readonly Parser<char, Control> TertiaryHeaderControlParser = Try(String("###"))
+        .Then(SkipWhitespaces.Then(Map(text => new Label
+                {
+                    Text = text,
+                    StyleClasses = { "LabelKeyText" }
+                },
+                AnyCharExcept('\n').AtLeastOnceString())
+            .Cast<Control>()))
+        .Labelled("tertiaryheader");
+
+    private static readonly Parser<char, Control> TryHeaderControl = OneOf(TertiaryHeaderControlParser, SubHeaderControlParser, HeaderControlParser);
 
     private static readonly Parser<char, Control> ListControlParser = Try(Char('-'))
         .Then(SkipWhitespaces)

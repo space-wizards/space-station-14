@@ -33,11 +33,13 @@
     - id: DragonSpawn
     - id: KingRatMigration
     - id: NinjaSpawn
+    - id: ParadoxCloneSpawn
     - id: RevenantSpawn
     - id: SleeperAgents
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
+    - id: WizardSpawn
 
 - type: entity
   id: BaseStationEvent
@@ -226,10 +228,47 @@
         - DeathAcidifierImplant
       - type: RandomMetadata
         nameSegments:
-        - names_ninja_title
-        - names_ninja
+        - NamesNinjaTitle
+        - NamesNinja
+        nameFormat: name-format-ninja
       mindRoles:
       - MindRoleNinja
+
+- type: entity
+  parent: BaseGameRule
+  id: ParadoxCloneSpawn
+  components:
+  - type: StationEvent
+    weight: 5
+    duration: null
+    earliestStart: 20
+    reoccurrenceDelay: 20
+    minimumPlayers: 15
+  - type: ParadoxCloneRule
+    objectiveBlacklist:
+      tags:
+      - ParadoxCloneObjectiveBlacklist
+  - type: AntagObjectives
+    objectives:
+    - ParadoxCloneKillObjective
+    - ParadoxCloneLivingObjective
+  - type: AntagRandomSpawn # TODO: improve spawning so they only start in maints
+  - type: AntagSelection
+    agentName: paradox-clone-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostParadoxClone
+      min: 1
+      max: 1
+      pickPlayer: false
+      startingGear: ParadoxCloneGear
+      roleLoadout:
+      - RoleSurvivalVoxTank # give vox something to breath in case they don't get a copy
+      briefing:
+        text: paradox-clone-role-greeting
+        color: lightblue
+        sound: /Audio/Misc/paradox_clone_greeting.ogg
+      mindRoles:
+      - MindRoleParadoxClone
 
 - type: entity
   parent: BaseGameRule
@@ -242,6 +281,45 @@
     minimumPlayers: 20
   - type: RandomSpawnRule
     prototype: MobRevenant
+
+- type: entity
+  parent: BaseWizardRule
+  id: WizardSpawn
+  components:
+  - type: StationEvent
+    weight: 1 # rare
+    duration: 1
+    earliestStart: 30
+    reoccurrenceDelay: 60
+    minimumPlayers: 10
+  - type: AntagSelection
+    agentName: wizard-round-end-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostWizard
+      min: 1
+      max: 1
+      playerRatio: 1
+      pickPlayer: false
+      startingGear: WizardBlueGear
+      roleLoadout:
+      - RoleSurvivalExtended
+      briefing:
+        text: wizard-role-greeting
+        color: Turquoise
+        # TODO: Need Wizard Start sound
+        #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
+      # TODO: WizardComp as needed
+      components:
+      - type: NpcFactionMember
+        factions:
+        - Wizard
+      - type: RandomMetadata
+        nameSegments:
+        - NamesWizardFirst
+        - NamesWizardLast
+        nameFormat: name-format-wizard
+      mindRoles:
+      - MindRoleWizard
 
 # disabled until event is rewritten to be more interesting
 #- type: entity
@@ -454,7 +532,7 @@
     duration: 1
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/Shuttles/ShuttleEvent/striker.yml
+    gridPath: /Maps/Shuttles/ShuttleEvent/striker.yml
   - type: NukeopsRule
     roundEndBehavior: Nothing
   - type: AntagSelection
@@ -470,8 +548,9 @@
       - type: NukeOperative
       - type: RandomMetadata
         nameSegments:
-        - SyndicateNamesPrefix
-        - SyndicateNamesNormal
+        - NamesSyndicatePrefix
+        - NamesSyndicateNormal
+        nameFormat: name-format-nukie-generic
       - type: NpcFactionMember
         factions:
         - Syndicate
@@ -563,6 +642,19 @@
     - Service
     blacklist:
     - External # don't space everything
+
+- type: entity
+  parent: BaseGameRule
+  id: SmugglerStashVariationPass
+  components:
+  - type: StationEvent
+    earliestStart: 0
+    duration: 1
+    minimumPlayers: 1
+    maxOccurrences: 2
+    weight: 10
+  - type: RandomSpawnRule
+    prototype: RandomSatchelSpawner
 
 - type: entity
   parent: BaseGameRule
