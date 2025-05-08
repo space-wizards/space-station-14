@@ -77,6 +77,7 @@ public sealed partial class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, MechToggleThrustersEvent>(OnMechToggleThrusters);
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertBattery);
+        SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertGasTank);
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
         SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
@@ -331,7 +332,15 @@ public sealed partial class MechSystem : SharedMechSystem
 
         args.Handled = true;
     }
-    
+    private void OnInsertGasTank(EntityUid uid, MechComponent component, EntInsertedIntoContainerMessage args)
+    {
+        if (args.Container != component.GasTankSlot || !TryComp<GasTankComponent>(args.Entity, out var gasTank))
+            return;
+
+        Dirty(uid, component);
+        _actionBlocker.UpdateCanMove(uid);
+    }
+
     private void OnRemoveGasTank(EntityUid uid, MechComponent component, RemoveGasTankEvent args)
     {
         if (args.Cancelled || args.Handled)
