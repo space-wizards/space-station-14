@@ -40,14 +40,22 @@ public sealed class ImplanterSystem : SharedImplanterSystem
     {
         SubdermalImplantComponent? subdermal = null;
         base.OnImplanterInit(uid, component, args);
-        if (component.Implant != null)
-            if (_proto.TryIndex<EntityPrototype>(component.Implant.Value.Id, out var proto))
+
+        var implant = component.ImplanterSlot.ContainerSlot?.ContainedEntity;
+        Log.Info($"Implanter {ToPrettyString(uid)} has implant {implant}");
+        if (TryComp(implant, out SubdermalImplantComponent? implantComp))
+        {
+            subdermal = implantComp;
+        }
+        else if (component.Implant != null)
+        {
+            if (_proto.TryIndex<EntityPrototype>(component.Implant.Value.Id, out var proto) &&
+                proto.TryGetComponent<SubdermalImplantComponent>(out var comp))
             {
-                if (proto.TryGetComponent<SubdermalImplantComponent>(out var comp))
-                {
-                    subdermal = comp;
-                }
+                subdermal = comp;
             }
+        }
+
         if (subdermal != null)
         {
             if (TryComp<SpriteComponent>(uid, out var sprite))

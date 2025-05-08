@@ -316,7 +316,7 @@ public abstract class SharedImplanterSystem : EntitySystem
         ChangeOnImplantVisualizer(uid, component);
     }
 
-    protected virtual void ChangeOnImplantVisualizer(EntityUid uid, ImplanterComponent component)
+    private void ChangeOnImplantVisualizer(EntityUid uid, ImplanterComponent component)
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
