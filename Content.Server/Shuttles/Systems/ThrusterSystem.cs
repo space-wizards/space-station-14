@@ -53,7 +53,6 @@ public sealed class ThrusterSystem : EntitySystem
         SubscribeLocalEvent<ThrusterComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbsAlternate);
         SubscribeLocalEvent<ThrusterComponent, ComponentInit>(OnThrusterInit);
         SubscribeLocalEvent<ThrusterComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<ThrusterComponent, ComponentStartup>(OnThrusterStartup);
         SubscribeLocalEvent<ThrusterComponent, ComponentShutdown>(OnThrusterShutdown);
         SubscribeLocalEvent<ThrusterComponent, PowerChangedEvent>(OnPowerChange);
         SubscribeLocalEvent<ThrusterComponent, AnchorStateChangedEvent>(OnAnchorChange);
@@ -336,11 +335,6 @@ public sealed class ThrusterSystem : EntitySystem
     private void OnMapInit(Entity<ThrusterComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextFire = _timing.CurTime + ent.Comp.FireCooldown;
-    }
-
-    private void OnThrusterStartup(EntityUid uid, ThrusterComponent component, ref ComponentStartup args)
-    {
-        UpdatePowerLoad((uid, component));
     }
 
     private void OnThrusterShutdown(EntityUid uid, ThrusterComponent component, ref ComponentShutdown args)
