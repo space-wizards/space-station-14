@@ -35,6 +35,9 @@
     thresholds:
       0: Alive
       20: Dead
+    stateAlertDict:
+      Alive: BorgHealth
+    showOverlays: false
   - type: SlowOnDamage
     speedModifierThresholds:
       10: 0.7
@@ -50,6 +53,7 @@
   - type: Tag
     tags:
       - DoorBumpOpener
+      - Unimplantable
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.5
     baseSprintSpeed: 2.5
@@ -58,9 +62,12 @@
 #    radius: 1.0
 #    energy: 1
 #    castShadows: false
-    color: "#bc5858"
+#    color: "#bc5858"
   - type: RotationVisuals
     horizontalRotation: 90
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
 
 - type: entity
   parent: MobHivebot
