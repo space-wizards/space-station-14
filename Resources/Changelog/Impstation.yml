@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Body bags now have high-vis tape on them
-    type: Tweak
-  id: 1115
-  time: '2025-02-13T14:48:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1666
-- author: Sha-Seng
-  changes:
-  - message: The WinterDrobe has coat and boot colors now!
-    type: Add
-  id: 1116
-  time: '2025-02-13T14:47:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1667
 - author: crocodilecarousel
   changes:
   - message: Explorer gas mask got a minor visual refresh.
@@ -4156,3 +4142,17 @@
   id: 1614
   time: '2025-05-06T22:43:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2411
+- author: FlippenPage
+  changes:
+  - message: Added the BoogieBot. Craft one today!
+    type: Add
+  id: 1615
+  time: '2025-05-08T20:03:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2415
+- author: AvianMaiden
+  changes:
+  - message: Shotgun and axe cabinets finally got cleaned
+    type: Tweak
+  id: 1616
+  time: '2025-05-08T20:04:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2416
