@@ -1,0 +1,76 @@
+# Pyroclastic
+- type: damageModifierSet
+  id: AnomalitePyroclastic
+  coefficients:
+    Heat: 0.0
+  flatReductions:
+    Heat: 100
+
+# Gravity
+- type: damageModifierSet
+  id: AnomaliteGravity
+  coefficients:
+    Blunt: 0.3
+    Piercing: 0.3
+    Slash: 0.3
+
+# Ice
+- type: damageModifierSet
+  id: AnomaliteIce
+  coefficients:
+    Cold: 0.0
+  flatReductions:
+    Cold: 100
+
+# Flesh
+- type: damageModifierSet
+  id: AnomaliteFlesh
+  coefficients:
+    Slash: 0.0
+
+# Rock
+- type: damageModifierSet
+  id: AnomaliteRock
+  coefficients:
+    Blunt: 0.0
+    Structural: 2.0
+
+# Reagent
+- type: damageModifierSet
+  id: AnomaliteLiquid
+  coefficients:
+    Poison: 0.0
+
+# Bluespace
+- type: damageModifierSet
+  id: AnomaliteBluespace
+  coefficients:
+    Cellular: 0.0
+    Radiation: 0.0
+
+# Electricity
+- type: damageModifierSet
+  id: AnomaliteElectricity
+  coefficients:
+    Shock: 0.0
+
+# Flora
+- type: damageModifierSet
+  id: AnomaliteFlora
+  coefficients:
+    Piercing: 0.0
+
+# Shadow
+- type: damageModifierSet
+  id: AnomaliteShadow
+  coefficients:
+    Asphyxiation: 0.0
+    Bloodloss: 0.0
+    Holy: 2.0 # let there be light
+
+# Tech
+- type: damageModifierSet
+  id: AnomaliteTech
+  coefficients:
+    Radiation: 0.5
+    Shock: 0.5
