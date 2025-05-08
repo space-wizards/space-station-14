@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Shared.EntityTable;
 using Robust.Shared.Containers;
@@ -39,7 +40,8 @@ public sealed class ContainerFillSystem : EntitySystem
                 var ent = Spawn(proto, coords);
                 if (!_containerSystem.Insert(ent, container, containerXform: xform))
                 {
-                    Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} failed to insert an entity: {ToPrettyString(ent)}.");
+                    var alreadyContained = container.ContainedEntities.Count > 0 ? string.Join("\n", container.ContainedEntities.Select(e => $"\t - {EntityManager.ToPrettyString(e)}")) : "< empty >";
+                    Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} failed to insert an entity: {ToPrettyString(ent)}.\nCurrent contents:\n{alreadyContained}");
                     _transform.AttachToGridOrMap(ent);
                     break;
                 }
@@ -72,7 +74,8 @@ public sealed class ContainerFillSystem : EntitySystem
                 var spawn = Spawn(proto, coords);
                 if (!_containerSystem.Insert(spawn, container, containerXform: xform))
                 {
-                    Log.Error($"Entity {ToPrettyString(ent)} with a {nameof(EntityTableContainerFillComponent)} failed to insert an entity: {ToPrettyString(spawn)}.");
+                    var alreadyContained = container.ContainedEntities.Count > 0 ? string.Join("\n", container.ContainedEntities.Select(e => $"\t - {EntityManager.ToPrettyString(e)}")) : "< empty >";
+                    Log.Error($"Entity {ToPrettyString(ent)} with a {nameof(EntityTableContainerFillComponent)} failed to insert an entity: {ToPrettyString(spawn)}.\nCurrent contents:\n{alreadyContained}");
                     _transform.AttachToGridOrMap(spawn);
                     break;
                 }

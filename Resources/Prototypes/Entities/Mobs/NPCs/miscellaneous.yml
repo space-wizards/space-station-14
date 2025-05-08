@@ -126,9 +126,18 @@
           groups:
             Brute: -2
             Burn: -2
+    - reagents: [ WeedKiller, PlantBGone ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          types:
+            Heat: 2
   - type: ReplacementAccent
     accent: tomatoKiller
   - type: Item
+  - type: MultiHandedItem
   - type: NpcFactionMember
     factions:
       - SimpleHostile
