@@ -825,6 +825,25 @@
 
 - type: entity
   parent: BasePDA
+  id: RoboticistPDA
+  name: roboticist PDA
+  description: It's covered in dents and burns.
+  components:
+  - type: Pda
+    id: RoboticistIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-roboticist
+  - type: PdaBorderColor
+    borderColor: "#484848"
+    accentVColor: "#d33725"
+  - type: Icon
+    state: pda-roboticist
+
+- type: entity
+  parent: BasePDA
   id: SciencePDA
   name: science PDA
   description: It's covered with an unknown gooey substance.
