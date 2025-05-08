@@ -17,7 +17,7 @@ public sealed class ActionGrantSystem : EntitySystem
 
     private void OnItemGet(Entity<ItemActionGrantComponent> ent, ref GetItemActionsEvent args)
     {
-        if (itemActionGrant.ActiveIfWorn && getitemActions.InHand)
+        if (ent.ActiveIfWorn && args.InHand)
             return;
 
         if (!TryComp(ent.Owner, out ActionGrantComponent? grant))
