@@ -12,15 +12,17 @@ public sealed class ActionGrantSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ActionGrantComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ActionGrantComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<ItemActionGrantComponent, ItemActionGrantComponent, GetItemActionsEvent>(OnItemGet);
+        SubscribeLocalEvent<ItemActionGrantComponent, GetItemActionsEvent>(OnItemGet);
     }
 
-    private void OnItemGet(Entity<ItemActionGrantComponent> ent, ItemActionGrantComponent itemActionGrant, ref GetItemActionsEvent args)
+    private void OnItemGet( ItemActionGrantComponent itemActionGrant, ref GetItemActionsEvent args)
     {
-        if (itemActionGrant.ActiveIfWorn != args.InHands)
-            return;
+        Entity<ItemActionGrantComponent> ent = itemActionGrant;
 
         if (!TryComp(ent.Owner, out ActionGrantComponent? grant))
+            return;
+
+        if (itemActionGrant.ActiveIfWorn != args.InHands)
             return;
 
         foreach (var action in grant.ActionEntities)
