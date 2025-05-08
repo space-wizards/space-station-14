@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: crocodilecarousel
-  changes:
-  - message: Explorer gas mask got a minor visual refresh.
-    type: Tweak
-  id: 1117
-  time: '2025-02-13T14:46:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1664
 - author: AvianMaiden
   changes:
   - message: Reverted the Drozd sprite to what it was before
@@ -4156,3 +4149,10 @@
   id: 1616
   time: '2025-05-08T20:04:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2416
+- author: hivehum
+  changes:
+  - message: All moths can sigh.
+    type: Fix
+  id: 1617
+  time: '2025-05-08T23:39:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2420
