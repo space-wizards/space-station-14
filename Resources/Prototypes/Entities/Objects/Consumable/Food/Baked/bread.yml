@@ -961,7 +961,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-    sprite: Mobs/Pets/breaddog.rsi
+    sprite: Mobs/Animals/breaddog.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: base
