@@ -222,11 +222,10 @@
     delay: 6
   - type: TriggerOnUse
   - type: RepulseAttractOnTrigger
-    speed: 50
-    range: 2
+    speed: 40
+    range: 3.5
     whitelist:
       components:
       - MobMover
-      - Item
   - type: SpawnOnTrigger
     proto: EffectGravityPulse
