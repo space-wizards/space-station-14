@@ -20,6 +20,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+  - type: Tag
+    tags:
+    - VoxFood
 
 - type: entity
   id: FoodBagel
