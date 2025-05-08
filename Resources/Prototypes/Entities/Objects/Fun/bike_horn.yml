@@ -219,7 +219,7 @@
   - type: EmitSoundOnLand
     sound: "/Audio/Items/Toys/pushHornFloor.ogg"
   - type: UseDelay
-    delay: 6
+    delay: 10
   - type: TriggerOnUse
   - type: RepulseAttractOnTrigger
     speed: 40
