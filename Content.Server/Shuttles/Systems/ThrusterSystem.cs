@@ -53,6 +53,7 @@ public sealed class ThrusterSystem : EntitySystem
         SubscribeLocalEvent<ThrusterComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbsAlternate);
         SubscribeLocalEvent<ThrusterComponent, ComponentInit>(OnThrusterInit);
         SubscribeLocalEvent<ThrusterComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ThrusterComponent, ComponentStartup>(OnThrusterStartup);
         SubscribeLocalEvent<ThrusterComponent, ComponentShutdown>(OnThrusterShutdown);
         SubscribeLocalEvent<ThrusterComponent, PowerChangedEvent>(OnPowerChange);
         SubscribeLocalEvent<ThrusterComponent, AnchorStateChangedEvent>(OnAnchorChange);
@@ -330,32 +331,35 @@ public sealed class ThrusterSystem : EntitySystem
         {
             EnableThruster(uid, component);
         }
-
-        UpdatePowerLoad((uid, component));
     }
 
     private void OnMapInit(Entity<ThrusterComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextFire = _timing.CurTime + ent.Comp.FireCooldown;
-
-        UpdatePowerLoad(ent);
     }
 
-    private void OnThrusterShutdown(EntityUid uid, ThrusterComponent component, ComponentShutdown args)
+    private void OnThrusterStartup(EntityUid uid, ThrusterComponent component, ref ComponentStartup args)
+    {
+        UpdatePowerLoad((uid, component));
+    }
+
+    private void OnThrusterShutdown(EntityUid uid, ThrusterComponent component, ref ComponentShutdown args)
     {
         DisableThruster(uid, component);
     }
 
-    private void OnPowerChange(EntityUid uid, ThrusterComponent component, ref PowerChangedEvent args)
+    private void OnPowerChange(Entity<ThrusterComponent> ent, ref PowerChangedEvent args)
     {
-        if (args.Powered && CanEnable(uid, component))
+        if (args.Powered && CanEnable(ent.Owner, ent.Comp))
         {
-            EnableThruster(uid, component);
+            EnableThruster(ent.Owner, ent.Comp);
         }
         else
         {
-            DisableThruster(uid, component);
+            DisableThruster(ent.Owner, ent.Comp);
         }
+
+        UpdatePowerLoad(ent);
     }
 
     /// <summary>
