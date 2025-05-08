@@ -946,6 +946,8 @@
   loadouts:
   - AtmosphericTechnicianWintercoat
   - BomberEngineering #imp
+  - BomberAtmos #imp
+  - BomberAtmosHolo #imp
 
 - type: loadoutGroup
   id: AtmosphericTechnicianBackpack

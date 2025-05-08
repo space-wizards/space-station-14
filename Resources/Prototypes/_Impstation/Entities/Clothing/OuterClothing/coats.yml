@@ -207,6 +207,38 @@
 
 - type: entity
   parent: ClothingOuterCoatBomberBlack
+  id: ClothingOuterCoatBomberAtmos
+  name: atmos bomber jacket
+  description: A blue bomber jacket, worn with the sleeves pushed up. Embroidered with a gush of air on the back. If you're feeling bold, you can loosen how it fits with a knife.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_atmos.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_atmos.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingOuterCoatBomberAtmosLoose
+      amount: 1
+
+- type: entity
+  parent: ClothingOuterCoatBomberBlack
+  id: ClothingOuterCoatBomberAtmosHolo
+  name: holofan bomber jacket
+  description: A holographic bomber jacket, worn with the sleeves pushed up. Unlike its full counterpart, this does not protect against pressure differences. If you're feeling bold, you can loosen how it fits with a knife.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_atmos_holo.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_atmos_holo.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingOuterCoatBomberAtmosHoloLoose
+      amount: 1
+
+- type: entity
+  parent: ClothingOuterCoatBomberBlack
   id: ClothingOuterCoatBomberMedical
   name: medical bomber jacket
   description: A blue bomber jacket, worn with the sleeves pushed up. Embroidered on the back is a caduceus, to remind you to do no harm. If you're feeling bold, you can loosen how it fits with a knife.
@@ -324,6 +356,38 @@
     butcheringType: Knife
     spawned:
     - id: ClothingOuterCoatBomberEngineer
+      amount: 1
+
+- type: entity
+  parent: ClothingOuterCoatBomberAtmos
+  id: ClothingOuterCoatBomberAtmosLoose
+  name: atmos bomber jacket (loose)
+  description: A blue bomber jacket, worn low and loose. Embroidered with a gush of air on the back. If you're feeling modest, you can tighten how it fits with a knife.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_atmos_loose.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_atmos_loose.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingOuterCoatBomberAtmos
+      amount: 1
+
+- type: entity
+  parent: ClothingOuterCoatBomberAtmosHolo
+  id: ClothingOuterCoatBomberAtmosHoloLoose
+  name: holofan bomber jacket (loose)
+  description: A holographic bomber jacket, worn low and loose. Unlike its full counterpart, this does not protect against pressure differences. If you're feeling modest, you can tighten how it fits with a knife.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_atmos_holo_loose.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_atmos_holo_loose.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingOuterCoatBomberAtmosHolo
       amount: 1
 
 - type: entity
