@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: bigsantino1
-  changes:
-  - message: Added a maints bar kit to the cargo request computer.
-    type: Add
-  id: 1122
-  time: '2025-02-13T22:38:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1607
 - author: formlessnameless
   changes:
   - message: Bonfires can cook things now. Start the cookout.
@@ -4167,3 +4160,11 @@
   id: 1621
   time: '2025-05-08T23:47:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2424
+- author: CombustibleToast
+  changes:
+  - message: Two new bomber jackets for atmos techs! Find em in your loadout screen
+      or the atmos drobe.
+    type: Add
+  id: 1622
+  time: '2025-05-08T23:58:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2388
