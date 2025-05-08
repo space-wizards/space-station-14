@@ -1205,7 +1205,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 12
-
+          
 - type: reagent
   id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
   name: reagent-name-opporozidone
@@ -1257,7 +1257,7 @@
               Poison: -2
 
 - type: reagent
-  id: Aloxadone
+  id : Aloxadone
   name: reagent-name-aloxadone
   group: Medicine
   desc: reagent-desc-aloxadone
@@ -1277,26 +1277,6 @@
             Heat: -3.0
             Shock: -3.0
             Caustic: -1.0
-
-- type: reagent
-  id: Traumoxadone
-  name: reagent-name-traumoxadone
-  group: Medicine
-  desc: reagent-desc-traumoxadone
-  physicalDesc: reagent-physical-desc-cloudy
-  flavor: medicine
-  color: "#69304D"
-  worksOnTheDead: true
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        conditions:
-        - !type:Temperature
-          max: 213.0
-        damage:
-          groups:
-            Brute: -6
 
 - type: reagent
   id : Mannitol # currently this is just a way to create psicodine
