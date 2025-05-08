@@ -1389,5 +1389,5 @@
   bodyPart: Hair
   markingCategory: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: longwithbangs
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: longwithbangs
