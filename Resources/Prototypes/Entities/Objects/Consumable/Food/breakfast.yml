@@ -32,7 +32,7 @@
   name: full american breakfast
   parent: FoodBreakfastBase
   id: FoodBreakfastAmerican
-  description: Dear, don’t think of getting out of bed yet.
+  description: A huge plate of protein and carbs, more likely to put you back in bed than get you out of it. Oh, what fresh hell is this?
   components:
   - type: FlavorProfile
     flavors:
@@ -45,7 +45,7 @@
   name: full english breakfast
   parent: FoodBreakfastBase
   id: FoodBreakfastEnglish
-  description: The closest thing you'll get to room service out here.
+  description: A huge plate of protein and carbs, more likely to put you back in bed than get you out of it. Don't mention the war!
   components:
   - type: FlavorProfile
     flavors:

@@ -8,9 +8,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Consumable/Food/meals.rsi
-        state: cornedbeef
+      - state: fullamerican
+      - sprite: Objects/Consumable/Food/breakfast.rsi
+        state: fullamerican
   - type: RandomSpawner
     prototypes:
       - FoodBreakfastAmerican
