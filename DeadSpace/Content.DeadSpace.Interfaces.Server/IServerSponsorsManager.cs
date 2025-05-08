@@ -6,6 +6,6 @@ namespace Content.DeadSpace.Interfaces.Server;
 
 public interface IServerSponsorsManager : ISharedSponsorsManager
 {
-    public bool TryGetInfo(NetUserId userId, [NotNullWhen(true)] out ISponsorInfo? sponsor);
-    public bool TryCalcAntagPriority(NetUserId userId);
+    bool TryGetInfo(NetUserId userId, [NotNullWhen(true)] out ISponsorInfo? sponsor);
+    bool TryCalcAntagPriority(NetUserId userId);
 }

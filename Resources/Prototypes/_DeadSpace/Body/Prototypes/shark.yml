@@ -1,12 +1,12 @@
 - type: body
-  id: ADTSharkBody
   name: "Shark"
+  id: SharkBody
   root: torso
   slots:
     head:
       part: HeadShark
       connections:
-        - torso
+      - torso
       organs:
         brain: OrganHumanBrain
         eyes: OrganHumanEyes
@@ -19,11 +19,11 @@
         liver: OrganAnimalLiver
         kidneys: OrganHumanKidneys
       connections:
-        - right arm
-        - left arm
-        - right leg
-        - left leg
-        - tail
+      - right arm
+      - left arm
+      - right leg
+      - left leg
+      - tail
     right arm:
       part: RightArmShark
       connections:
@@ -50,4 +50,3 @@
       part: LeftFootShark
     tail:
       part: TailShark
-

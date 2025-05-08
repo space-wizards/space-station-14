@@ -65,6 +65,8 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
 
+    private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -484,7 +486,7 @@ public abstract class SharedMagicSystem : EntitySystem
 
             var ent = human.Comp.OwnedEntity.Value;
 
-            if (_tag.HasTag(ent, "InvalidForGlobalSpawnSpell"))
+            if (_tag.HasTag(ent, InvalidForGlobalSpawnSpellTag))
                 continue;
 
             var mapCoords = _transform.GetMapCoordinates(ent);

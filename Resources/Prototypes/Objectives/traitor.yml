@@ -7,8 +7,7 @@
     issuer: objective-issuer-syndicate
   - type: RoleRequirement
     roles:
-      mindRoles:
-      - TraitorRole
+    - TraitorRole
 
 - type: entity
   abstract: true
@@ -129,8 +128,7 @@
   - type: Objective
     # technically its still possible for KillRandomPersonObjective to roll an agent but this is guaranteed, so higher difficulty
     difficulty: 3.0
-    # killing 1 agent is enough
-    unique: true
+    unique: false
   - type: TargetObjective
     title: objective-condition-kill-traitor-title
   - type: PickRandomTraitor

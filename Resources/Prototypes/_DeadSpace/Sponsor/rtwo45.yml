@@ -1,0 +1,155 @@
+- type: sponsorLoadout
+  id: rtwo45
+  entity: ClothingBackpackrtwo45
+  sponsorOnly: true
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackrtwo45
+  name: сумка улья Белодис
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/holding.rsi
+    state: holding
+    layers:
+    - state: holding
+    - state: holding-unlit
+      shader: unshaded
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitrtwo45
+      - id: JetpackVoidFilledrtwo45
+      - id: ClothingNeckCloakrtwo45
+      - id: ClothingShoesBootsMagrtwo45
+      - id: ClothingBeltrtwo45Filled
+      - id: PaperLawrtwo45
+
+- type: entity
+  parent: JetpackVoidFilled
+  id: JetpackVoidFilledrtwo45
+  name: джетпак улья Белодис
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakrtwo45
+  name: плащ улья Белодис
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/rtwo45/cloak.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitrtwo45
+  name: скафандр улья Белодис
+  description: Скафандр защитника улья Белодис. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/rtwo45/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/rtwo45/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitrtwo45
+  - type: Item
+    size: Huge
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.5
+        Stun: 0.65
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBeltrtwo45Filled
+  name: пояс улья Белодис
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/assault.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/assault.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitrtwo45
+  categories: [ HideSpawnMenu ]
+  name: шлем скафандра улья Белодис
+  description: Шлем защитника улья Белодис. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/rtwo45/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/rtwo45/helmet.rsi
+  - type: PointLight
+    color: red
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagrtwo45
+  name: магнитные сапоги улья Белодис
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/rtwo45/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/rtwo45/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawrtwo45
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-rtwo45

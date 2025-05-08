@@ -1,14 +1,17 @@
-- type: dataset
+- type: localizedDataset
   id: NamesFirstFSCPRecruit
   values:
-  - Рядовой
+    prefix: names-first-fscp-recruit-dataset-
+    count: 1
 
-- type: dataset
+- type: localizedDataset
   id: NamesFirstFSCPCorporal
   values:
-  - Ефрейтор
+    prefix: names-first-fscp-corporal-dataset-
+    count: 1
 
-- type: dataset
+- type: localizedDataset
   id: NamesFirstFSCPSergeant
   values:
-  - Сержант
+    prefix: names-first-fscp-sergeant-dataset-
+    count: 1

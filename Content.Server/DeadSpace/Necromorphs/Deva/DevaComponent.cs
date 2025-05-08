@@ -40,7 +40,7 @@ public sealed partial class DevaComponent : Component
 
     [DataField]
     [ViewVariables(VVAccess.ReadOnly)]
-    public float MovementSpeedEnrage = 4f;
+    public float MovementSpeedEnrage = 2f;
 
     [DataField]
     [ViewVariables(VVAccess.ReadOnly)]

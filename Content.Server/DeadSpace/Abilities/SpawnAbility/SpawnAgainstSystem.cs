@@ -12,7 +12,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Content.Shared.DeadSpace.EntityPanel;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Tag;
 using Content.Server.Spreader;
 
 namespace Content.Server.DeadSpace.Abilities.SpawnAbility;
@@ -27,7 +26,6 @@ public sealed class SpawnAgainstSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SpreaderSystem _spreader = default!;
 
     public override void Initialize()

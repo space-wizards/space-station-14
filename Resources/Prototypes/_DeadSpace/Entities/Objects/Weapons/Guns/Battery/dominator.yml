@@ -72,3 +72,6 @@
     damage:
       types:
         Heat: 16
+  - type: Reflective
+    reflective:
+    - Energy

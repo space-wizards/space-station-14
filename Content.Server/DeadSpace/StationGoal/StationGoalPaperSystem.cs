@@ -8,8 +8,9 @@ using Content.Shared.Paper;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
+using Content.Shared.Cargo.Components;
+using System.Security.Principal;
 
 namespace Content.Server.DeadSpace.StationGoal;
 
@@ -82,10 +83,9 @@ public sealed class StationGoalPaperSystem : EntitySystem
     /// <returns>True if station balance was modified</returns>
     private bool ModifyStationBalance(EntityUid station, int amount)
     {
-        if (!TryComp(station, out StationBankAccountComponent? bank))
+        if (!TryComp(station, out StationBankAccountComponent? account))
             return false;
-
-        _cargo.UpdateBankAccount((station, bank), (int)amount);
+        _cargo.UpdateBankAccount((station, account), (int)amount, _cargo.CreateAccountDistribution(account.PrimaryAccount, account, account.PrimaryCut));
 
         return true;
     }

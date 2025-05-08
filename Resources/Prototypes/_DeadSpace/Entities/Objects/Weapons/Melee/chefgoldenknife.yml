@@ -22,3 +22,6 @@
     damage:
       types:
         Slash: 10
+  - type: Tag
+    tags:
+    - ChefGoldenKnife

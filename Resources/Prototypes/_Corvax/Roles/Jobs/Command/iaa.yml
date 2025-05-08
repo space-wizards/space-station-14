@@ -6,10 +6,13 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 21600 # 6 hours
+      time: 28800 # 8 hours
+    - !type:DepartmentTimeRequirement
+      department: Law
+      time: 28800 # 8 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 36000 # 10 hours
     - !type:OverallPlaytimeRequirement
       time: 144000 # 40 hours
     - !type:AgeRequirement

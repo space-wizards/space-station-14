@@ -16,6 +16,7 @@ namespace Content.Client.Communications.UI
         private readonly CancellationTokenSource _timerCancelTokenSource = new();
 
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly ILocalizationManager _loc = default!;
 
         public CommunicationsConsoleMenu(CommunicationsConsoleBoundUserInterface owner)
         {
@@ -24,8 +25,7 @@ namespace Content.Client.Communications.UI
 
             Owner = owner;
 
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-            MessageInput.Placeholder = new Rope.Leaf(loc.GetString("comms-console-menu-announcement-placeholder"));
+            MessageInput.Placeholder = new Rope.Leaf(_loc.GetString("comms-console-menu-announcement-placeholder"));
 
             var maxAnnounceLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
             MessageInput.OnTextChanged += (args) =>
@@ -33,7 +33,7 @@ namespace Content.Client.Communications.UI
                 if (args.Control.TextLength > maxAnnounceLength)
                 {
                     AnnounceButton.Disabled = true;
-                    AnnounceButton.ToolTip = Loc.GetString("comms-console-message-too-long");
+                    AnnounceButton.ToolTip = _loc.GetString("comms-console-message-too-long");
                 }
                 else
                 {
@@ -46,7 +46,7 @@ namespace Content.Client.Communications.UI
             AnnounceButton.OnPressed += (_) => Owner.AnnounceButtonPressed(Rope.Collapse(MessageInput.TextRope));
             AnnounceButton.Disabled = !owner.CanAnnounce;
 
-            ERTMessageInput.Placeholder = new Rope.Leaf(loc.GetString("comms-console-menu-ert-message-placeholder"));
+            ERTMessageInput.Placeholder = new Rope.Leaf(_loc.GetString("comms-console-menu-ert-message-placeholder"));
 
             BroadcastButton.OnPressed += (_) => Owner.BroadcastButtonPressed(Rope.Collapse(MessageInput.TextRope));
             BroadcastButton.Disabled = !owner.CanBroadcast;
@@ -105,7 +105,7 @@ namespace Content.Client.Communications.UI
             if (alerts == null)
             {
                 var name = currentAlert;
-                if (Loc.TryGetString($"alert-level-{currentAlert}", out var locName))
+                if (_loc.TryGetString($"alert-level-{currentAlert}", out var locName))
                 {
                     name = locName;
                 }
@@ -117,7 +117,7 @@ namespace Content.Client.Communications.UI
                 foreach (var alert in alerts)
                 {
                     var name = alert;
-                    if (Loc.TryGetString($"alert-level-{alert}", out var locName))
+                    if (_loc.TryGetString($"alert-level-{alert}", out var locName))
                     {
                         name = locName;
                     }
@@ -141,7 +141,7 @@ namespace Content.Client.Communications.UI
             foreach (var team in ertTeams)
             {
                 var name = team;
-                if (Loc.TryGetString($"ert-team-name-{team}", out var locName))
+                if (_loc.TryGetString($"ert-team-name-{team}", out var locName))
                 {
                     name = locName;
                 }
@@ -159,12 +159,12 @@ namespace Content.Client.Communications.UI
             if (!Owner.CountdownStarted)
             {
                 CountdownLabel.SetMessage("");
-                EmergencyShuttleButton.Text = Loc.GetString("comms-console-menu-call-shuttle");
+                EmergencyShuttleButton.Text = _loc.GetString("comms-console-menu-call-shuttle");
             }
             else
             {
-                EmergencyShuttleButton.Text = Loc.GetString("comms-console-menu-recall-shuttle");
-                var infoText = Loc.GetString($"comms-console-menu-time-remaining",
+                EmergencyShuttleButton.Text = _loc.GetString("comms-console-menu-recall-shuttle");
+                var infoText = _loc.GetString($"comms-console-menu-time-remaining",
                 ("time", Owner.Countdown.ToString()));
                 CountdownLabel.SetMessage(infoText);
             }
@@ -172,22 +172,22 @@ namespace Content.Client.Communications.UI
             if (!Owner.ERTCountdownStarted)
             {
                 ERTCountdownLabel.SetMessage("");
-                ERTCall.Text = Loc.GetString("comms-console-menu-call-ert");
+                ERTCall.Text = _loc.GetString("comms-console-menu-call-ert");
                 ERTCallStatusLabel.Text = "";
             }
             else
             {
-                ERTCall.Text = Loc.GetString("comms-console-menu-recall-ert");
-                var ERTinfoText = Loc.GetString($"comms-console-menu-time-remaining",
+                ERTCall.Text = _loc.GetString("comms-console-menu-recall-ert");
+                var ERTinfoText = _loc.GetString($"comms-console-menu-time-remaining",
                 ("time", Owner.Countdown.ToString()));
                 ERTCountdownLabel.SetMessage(ERTinfoText);
-                ERTCallStatusLabel.Text = Loc.GetString("comms-console-menu-call-ert-status-called");
+                ERTCallStatusLabel.Text = _loc.GetString("comms-console-menu-call-ert-status-called");
             }
         }
 
         public void UpdateFirstId(bool isFirstPrivilegedIdPresent, bool isFirstPrivilegedIdValid)
         {
-            FirstPrivilegedIdButton.Text = isFirstPrivilegedIdPresent ? Loc.GetString("comms-console-menu-eject-button") : Loc.GetString("comms-console-menu-insert-button");
+            FirstPrivilegedIdButton.Text = isFirstPrivilegedIdPresent ? _loc.GetString("comms-console-menu-eject-button") : _loc.GetString("comms-console-menu-insert-button");
 
             if (isFirstPrivilegedIdValid)
                 FirstPrivilegedIdLabel.FontColorOverride = Color.DarkGreen;
@@ -199,7 +199,7 @@ namespace Content.Client.Communications.UI
 
         public void UpdateSecondId(bool isSecondPrivilegedIdPresent, bool isSecondPrivilegedIdValid)
         {
-            SecondPrivilegedIdButton.Text = isSecondPrivilegedIdPresent ? Loc.GetString("comms-console-menu-eject-button") : Loc.GetString("comms-console-menu-insert-button");
+            SecondPrivilegedIdButton.Text = isSecondPrivilegedIdPresent ? _loc.GetString("comms-console-menu-eject-button") : _loc.GetString("comms-console-menu-insert-button");
 
             if (isSecondPrivilegedIdValid)
                 SecondPrivilegedIdLabel.FontColorOverride = Color.DarkGreen;

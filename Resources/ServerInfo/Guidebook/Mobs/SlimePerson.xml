@@ -1,25 +1,27 @@
 <Document>
-  # Slime People
-
+  # Слаймолюды
   <Box>
     <GuideEntityEmbed Entity="MobSlimePerson" Caption=""/>
   </Box>
+  Слаймолюды - слаймоподобные существа с планеты Ксарксис 5, ростом от 100 до 150 сантиметров. Эти существа дышат азотом вместо кислорода который присутствует в воздухе станции, но его сложнее найти в сжатом виде в газовых баллонах. Они получают значительный урон, если их обрызгать водой, но могут (и, как и другие виды, должны) пить её.
 
-  They breathe nitrogen instead of oxygen, which is abundant in the station air, but harder to find compressed into gas tanks. They take significant damage if they are sprayed or splashed with water, but can
-  (and like other species, need to) drink it safely to stay hydrated.
-  They exhale nitrous oxide and are unaffected by it.
-  Their body can process 6 reagents at the same time instead of just 2.
+  Слаймолюды обладают чуть более ускоренной регенерацией по сравнению с другими гуманоидами. Так же, они способны делать свои кулаки более твердыми нанося более сильные удары за счет уменьшения их скорости.
 
-  Slimepeople have an [bold]internal 2x3 storage inventory[/bold] inside of their slime membrane. Anyone can see what's inside and take it out of you without asking,
-  so be careful.
+  ## Внутреннее хранилище
+  Внутри оболочки слаймолюда есть внутреннее хранилище, объемом 2x3. Любой может видеть что находится внутри и забрать это без разрешения, так что будьте осторожнее. При превращении в гераса внутреннее хранилище остается.
 
-  Slimepeople have slight accelerated regeneration compared to other humanoids. They're also capable of hardening their fists, and as such have stronger punches,
-  although they punch a little slower.
-
-  Their slime "blood" can not be regenerated from Iron. Slime Blood is technically a source of
-  moderately filling food for other species, although drinking the blood of your coworkers is usually frowned upon.
-  They suffocate 80% slower, but take pressure damage 9% faster. This makes them by far the species most capable to survive in hard vacuum. For a while.
-
-  They take [color=#1e90ff]40% less Blunt damage and 20% less Poison damage[/color], but [color=#ffa500]50% more Cold damage, 20% more Slash damage and 20% more Piercing damage[/color].
+  ## Расовые особенности
+  - Слаймолюды получают [color=#1e90ff]на 40% меньше урона от ушибов и на 20% меньше от ядов[/color], но [color=#ffa500]на 50% больше урона холодом, на 20% больше от порезов и уколов[/color].
+  - Быстрее пьянеют.
+  - Слаймолюды дышат реже человека в 5 раз, следовательно получают по [color=red]0.2[/color] урона удушьем без азота, но могут долго обходиться без азота.
+  - Имеют всего два внутренних органа: легкие и ядро слайма. Ядро слайма переваривает еду, напитки, лекарства, яды, наркотики и алкоголь. Максимальная вместимость 50 единиц, а максимальное количество одновременно усваиваемых веществ - 6.
+  - Скорость метаболизма - 0.13 единиц за тик. Это означает, что у них всё усваивается медленней, чем у других.
+  - Вместо крови - слизь зеленого цвета. Она замедляет персонажей на ней на 25%.
+  - При контакте с водой (огнетушители, спреи) наносится 12 термического урона. Инъекции, питьё воды, хождение по лужам, вдыхание водяного пара - не наносят урон.
+  - Повышенный урон от давления.
+  - Слаймолюды дышат азотом (N2) и выдыхают его оксид (N2O).
+  - Могут твердо сжимать кулаки, что даёт им более сильные удары, хотя они и немного медленнее в их выполнении.
+  - Слизистая "кровь" не восстанавливается железом. Тем не менее, слизь является умеренно питательным источником пищи для других существ, но пить кровь своих товарищей по команде обычно считается неприемлемым.
+  - Слаймолюды способны выживать в условиях вакуума дольше других рас, хотя при этом получают повышенный урон от давления.
 
 </Document>

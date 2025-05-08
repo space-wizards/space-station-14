@@ -20,3 +20,5 @@ ent-CrateMaterialPaper = ящик бумаги
     .desc = 90 листов бумаги.
 ent-CrateMaterialRandom = излишки материалов
     .desc = Откуда-то взятые излишки материалов.
+ent-CrateMaterialArmory = защищённый ящик с материалами
+    .desc = { ent-CrateBaseSecure.desc }

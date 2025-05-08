@@ -133,8 +133,9 @@
   - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments:
-    - SyndicateNamesNormal
+    - NamesSyndicateNormal
     - NamesLastDeathSquad
+    nameFormat: name-format-ert
   - type: Loadout
     prototypes: [ DeathSquadGear ]
   - type: TTS
@@ -154,11 +155,12 @@
       nameSegments:
       - NamesFirstERTLeader
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
-      settings: ERTLeaderAmberPreset
+      settings: ERTLeaderAmber
 
 - type: randomHumanoidSettings
-  id: ERTLeaderAmberPreset
+  id: ERTLeaderAmber
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -184,6 +186,7 @@
       nameSegments:
       - NamesFirstERTLeader
       - NamesLastERT
+      nameFormat: name-format-ert
 
 ### Red
 - type: entity
@@ -195,10 +198,10 @@
       sprite: Markers/jobs.rsi
       state: ertleadereva
     - type: RandomHumanoidSpawner
-      settings: ERTLeaderRedPreset
+      settings: ERTLeaderRed
 
 - type: randomHumanoidSettings
-  id: ERTLeaderRedPreset
+  id: ERTLeaderRed
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -224,6 +227,7 @@
       nameSegments:
       - NamesFirstERTLeader
       - NamesLastERT
+      nameFormat: name-format-ert
 
 ### Gamma
 - type: entity
@@ -235,10 +239,10 @@
       sprite: Markers/jobs.rsi
       state: ertleadereva
     - type: RandomHumanoidSpawner
-      settings: ERTLeaderGammaPreset
+      settings: ERTLeaderGamma
 
 - type: randomHumanoidSettings
-  id: ERTLeaderGammaPreset
+  id: ERTLeaderGamma
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -264,6 +268,7 @@
       nameSegments:
       - NamesFirstERTLeader
       - NamesLastERT
+      nameFormat: name-format-ert
 
 ### CBURN
 - type: entity
@@ -275,10 +280,10 @@
       sprite: Markers/jobs.rsi
       state: cburn
     - type: RandomHumanoidSpawner
-      settings: CBURNLeaderPreset
+      settings: CBURNLeader
 
 - type: randomHumanoidSettings
-  id: CBURNLeaderPreset
+  id: CBURNLeader
   parent: EventHumanoidERTZombieImmune
   components:
     - type: GhostRole
@@ -302,6 +307,7 @@
       nameSegments:
       - NamesFirstERTLeader
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ CBURNLeaderGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -320,11 +326,12 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
-      settings: ERTSecurityAmberPreset
+      settings: ERTSecurityAmber
 
 - type: randomHumanoidSettings
-  id: ERTSecurityAmberPreset
+  id: ERTSecurityAmber
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -345,6 +352,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ ERTSecurityGearAmber ]
 
@@ -355,10 +363,10 @@
   name: ERT security red
   components:
     - type: RandomHumanoidSpawner
-      settings: ERTSecurityRedPreset
+      settings: ERTSecurityRed
 
 - type: randomHumanoidSettings
-  id: ERTSecurityRedPreset
+  id: ERTSecurityRed
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -385,10 +393,10 @@
   name: ERT security gamma
   components:
     - type: RandomHumanoidSpawner
-      settings: ERTSecurityGammaPreset
+      settings: ERTSecurityGamma
 
 - type: randomHumanoidSettings
-  id: ERTSecurityGammaPreset
+  id: ERTSecurityGamma
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -422,11 +430,12 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
-      settings: ERTMedicalAmberPreset
+      settings: ERTMedicalAmber
 
 - type: randomHumanoidSettings
-  id: ERTMedicalAmberPreset
+  id: ERTMedicalAmber
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -447,6 +456,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ ERTMedicalGearAmber ]
 
@@ -457,10 +467,10 @@
   name: ERT medic red
   components:
     - type: RandomHumanoidSpawner
-      settings: ERTMedicalRedPreset
+      settings: ERTMedicalRed
 
 - type: randomHumanoidSettings
-  id: ERTMedicalRedPreset
+  id: ERTMedicalRed
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -487,10 +497,10 @@
   name: ERT medic gamma
   components:
     - type: RandomHumanoidSpawner
-      settings: ERTMedicalGammaPreset
+      settings: ERTMedicalGamma
 
 - type: randomHumanoidSettings
-  id: ERTMedicalGammaPreset
+  id: ERTMedicalGamma
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -524,11 +534,12 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
-      settings: ERTJanitorAmberPreset
+      settings: ERTJanitorAmber
 
 - type: randomHumanoidSettings
-  id: ERTJanitorAmberPreset
+  id: ERTJanitorAmber
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -546,6 +557,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ ERTJanitorGearAmber ]
 
@@ -556,10 +568,10 @@
   name: ERT janitor red
   components:
     - type: RandomHumanoidSpawner
-      settings: ERTJanitorRedPreset
+      settings: ERTJanitorRed
 
 - type: randomHumanoidSettings
-  id: ERTJanitorRedPreset
+  id: ERTJanitorRed
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -583,10 +595,10 @@
   name: ERT janitor gamma
   components:
     - type: RandomHumanoidSpawner
-      settings: ERTJanitorGammaPreset
+      settings: ERTJanitorGamma
 
 - type: randomHumanoidSettings
-  id: ERTJanitorGammaPreset
+  id: ERTJanitorGamma
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -617,11 +629,12 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
-      settings: ERTEngineerAmberPreset
+      settings: ERTEngineerAmber
 
 - type: randomHumanoidSettings
-  id: ERTEngineerAmberPreset
+  id: ERTEngineerAmber
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -642,6 +655,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ ERTEngineerGearAmber ]
 
@@ -652,10 +666,10 @@
   name: ERT engineer red
   components:
     - type: RandomHumanoidSpawner
-      settings: ERTEngineerRedPreset
+      settings: ERTEngineerRed
 
 - type: randomHumanoidSettings
-  id: ERTEngineerRedPreset
+  id: ERTEngineerRed
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -682,10 +696,10 @@
   name: ERT engineer gamma
   components:
     - type: RandomHumanoidSpawner
-      settings: ERTEngineerGammaPreset
+      settings: ERTEngineerGamma
 
 - type: randomHumanoidSettings
-  id: ERTEngineerGammaPreset
+  id: ERTEngineerGamma
   parent: EventHumanoidERT
   components:
     - type: GhostRole
@@ -718,11 +732,12 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: RandomHumanoidSpawner
-      settings: CBURNAgentPreset
+      settings: CBURNAgent
 
 - type: randomHumanoidSettings
-  id: CBURNAgentPreset
+  id: CBURNAgent
   parent: EventHumanoidERTZombieImmune
   components:
     - type: GhostRole
@@ -743,6 +758,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ CBURNAgentGear ]
 
@@ -781,6 +797,7 @@
       nameSegments:
       - NamesFirstERT
       - NamesLastERT
+      nameFormat: name-format-ert
     - type: Loadout
       prototypes: [ CentcomBlueShieldGear ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -906,7 +923,7 @@
       sprite: Mobs/Species/Human/parts.rsi
       state: full
     - type: RandomMetadata
-      nameSegments: [ adt_nukeagent_names ]
+      nameSegments: [ NamesDeathCommando ]
     - type: RandomHumanoidSpawner
       settings: SyndicateAgent
 

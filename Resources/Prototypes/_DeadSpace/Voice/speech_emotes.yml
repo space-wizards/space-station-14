@@ -55,12 +55,8 @@
   chatMessages: ["chat-emote-msg-hiss"]
   chatTriggers:
     - шипит
-    - шипит.
-    - шипит!
     - hiss
     - hisses
-    - hisses.
-    - hisses!
     - hissing
     - hissed
 
@@ -79,6 +75,8 @@
     - ComputerEmotes
   chatMessages: ["chat-emote-msg-meow"]
   chatTriggers:
+    - мяукает
+    - мяучет
     - meow
     - meows
     - meowing
@@ -87,7 +85,6 @@
     - miaus
     - nya
     - nyas
-    - мяучет
 
 - type: emote
   id: Mew
@@ -104,6 +101,7 @@
     - ComputerEmotes
   chatMessages: ["chat-emote-msg-mew"]
   chatTriggers:
+    - мявкает
     - mew
     - mews
     - mewing
@@ -124,11 +122,12 @@
     - ComputerEmotes
   chatMessages: ["chat-emote-msg-purr"]
   chatTriggers:
+    - мурлычет
+    - мурлыкает
     - purr
     - purrs
     - purring
     - purred
-    - мурлыкает
 
 # Vulpkanin emotes
 
@@ -148,6 +147,7 @@
     - ComputerEmotes
   chatMessages: ["chat-emote-msg-growl"]
   chatTriggers:
+    - рычит
     - growl
     - growls
     - growling
@@ -169,6 +169,7 @@
     - ComputerEmotes
   chatMessages: ["chat-emote-msg-howl"]
   chatTriggers:
+    - воет
     - воет на луну
 
 # Remnants of ADT

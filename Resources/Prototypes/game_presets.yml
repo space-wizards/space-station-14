@@ -50,6 +50,7 @@
   - Zombie
   - BlobGameMode
   - SpiderTerror
+  - Wizard
   - KesslerSyndromeScheduler
   - RampingStationEventScheduler
   - SpaceTrafficControlEventScheduler

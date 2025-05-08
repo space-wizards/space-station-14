@@ -53,3 +53,13 @@
   - ClothingEyesHudMedical # DS14
   - ClothingEyesHudSecurity # DS14
   - ClothingEyesHudAdvanced # DS14
+
+- type: latheRecipePack
+  id: SalvageSecurityBoards
+  recipes:
+  - ShuttleGunKineticCircuitboard
+
+- type: latheRecipePack
+  id: SalvageSecurityWeapons
+  recipes:
+  - WeaponProtoKineticAccelerator

@@ -13,6 +13,12 @@ namespace Content.Shared.Movement.Pulling.Components;
 [Access(typeof(PullingSystem))]
 public sealed partial class PullerComponent : Component
 {
+    /// DeadSpace
+    public PullerComponent(bool needsHands)
+    {
+        NeedsHands = needsHands;
+    }
+
     // My raiding guild
     /// <summary>
     /// Next time the puller can throw what is being pulled.

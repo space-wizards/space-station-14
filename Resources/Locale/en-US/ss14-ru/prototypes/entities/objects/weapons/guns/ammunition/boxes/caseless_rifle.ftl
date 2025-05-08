@@ -1,6 +1,6 @@
 ent-BaseMagazineBoxCaselessRifle = ammunition box (.25 caseless)
     .desc = { ent-BaseItem.desc }
 ent-MagazineBoxCaselessRifle = ammunition box (.25 caseless)
-    .desc = { ent-BaseMagazineBoxCaselessRifle.desc }
+    .desc = A cardboard box of .25 caseless rounds. Intended to hold general-purpose kinetic ammunition.
 ent-MagazineBoxCaselessRiflePractice = ammunition box (.25 caseless practice)
-    .desc = { ent-BaseMagazineBoxCaselessRifle.desc }
+    .desc = A cardboard box of .25 caseless rounds. Intended to hold non-harmful chalk ammunition.

@@ -3,8 +3,8 @@
 - type: entity
   parent: EncryptionKey
   id: EncryptionKeyTraumaTeam
-  name: ключ шифрования Мед-Теха
-  description: Ключ шифрования Мед-Теха.
+  name: ключ шифрования TTI
+  description: Ключ шифрования TTI.
   components:
   - type: EncryptionKey
     channels:
@@ -27,8 +27,8 @@
 
 - type: entity
   id: DeathRattleImplanterTraumaTeam
-  name: имплантер трекер Мед-Теха
-  suffix: Трекер Мед-Тех
+  name: имплантер трекер TTI
+  suffix: Трекер TTI
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
@@ -37,8 +37,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: TrackingImplantTraumaTeam
-  name: трекер имплант Мед-Теха
-  description: Имплант, который следит за состоянием здоровья носителя и в случае падения в критическое состояние, сообщает об этом в радио-канал Мед-Теха
+  name: трекер имплант TTI
+  description: Имплант, который следит за состоянием здоровья носителя и в случае падения в критическое состояние, сообщает об этом в радио-канал TTI
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant

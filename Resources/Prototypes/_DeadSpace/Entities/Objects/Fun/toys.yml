@@ -118,7 +118,7 @@
     - Payload
     - ClothMade
   - type: UseDelay
-    delay: 10
+    delay: 160
   - type: TriggerOnActivate
   - type: TriggerOnSignal
   - type: DeviceNetwork

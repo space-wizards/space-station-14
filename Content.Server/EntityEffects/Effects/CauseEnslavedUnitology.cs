@@ -30,8 +30,7 @@ public sealed partial class CauseEnslavedUnitology : EntityEffect
             return;
         }
 
-        if (entityManager.HasComponent<ImmunitetInfectionDeadComponent>(args.TargetEntity)
-            || entityManager.HasComponent<MindShieldComponent>(args.TargetEntity))
+        if (entityManager.HasComponent<ImmunitetInfectionDeadComponent>(args.TargetEntity))
         {
             DamageSpecifier dspec = new();
             dspec.DamageDict.Add("Cellular", 5f);

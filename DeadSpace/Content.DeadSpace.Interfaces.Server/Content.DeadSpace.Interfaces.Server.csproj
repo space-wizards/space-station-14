@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Content.Server.Database\Content.Server.Database.csproj" />
     <ProjectReference Include="..\..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
     <ProjectReference Include="..\Content.DeadSpace.Interfaces.Shared\Content.DeadSpace.Interfaces.Shared.csproj" />
   </ItemGroup>

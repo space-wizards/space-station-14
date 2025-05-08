@@ -3,6 +3,7 @@
 cargo-console-menu-title = Консоль заказа грузов
 cargo-console-menu-account-name-label = Имя аккаунта:{ " " }
 cargo-console-menu-account-name-none-text = Нет
+cargo-console-menu-account-name-format = [bold][color={ $color }]{ $name }[/color][/bold] [font="Monospace"]\[{ $code }\][/font]
 cargo-console-menu-shuttle-name-label = Название шаттла:{ " " }
 cargo-console-menu-shuttle-name-none-text = Нет
 cargo-console-menu-points-label = Кредиты:{ " " }
@@ -21,6 +22,16 @@ cargo-console-menu-populate-categories-all-text = Все
 cargo-console-menu-populate-orders-cargo-order-row-product-name-text = { $productName } (x{ $orderAmount }) от { $orderRequester }
 cargo-console-menu-cargo-order-row-approve-button = Одобрить
 cargo-console-menu-cargo-order-row-cancel-button = Отменить
+cargo-console-menu-tab-title-orders = Orders
+cargo-console-menu-tab-title-funds = Transfers
+cargo-console-menu-account-action-transfer-limit = [bold]Transfer Limit:[/bold] ${ $limit }
+cargo-console-menu-account-action-transfer-limit-unlimited-notifier = [color=gold](Unlimited)[/color]
+cargo-console-menu-account-action-select = [bold]Account Action:[/bold]
+cargo-console-menu-account-action-amount = [bold]Amount:[/bold] $
+cargo-console-menu-account-action-button = Transfer
+cargo-console-menu-toggle-account-lock-button = Toggle Transfer Limit
+cargo-console-menu-account-action-option-withdraw = Withdraw Cash
+cargo-console-menu-account-action-option-transfer = Transfer Funds to { $code }
 # Orders
 cargo-console-order-not-allowed = Доступ запрещён
 cargo-console-station-not-found = Нет доступной станции
@@ -31,6 +42,11 @@ cargo-console-insufficient-funds = Недостаточно средств (тр
 cargo-console-unfulfilled = Нет места для выполнения заказа
 cargo-console-trade-station = Отправить на { $destination }
 cargo-console-unlock-approved-order-broadcast = [bold]Заказ на { $productName } x{ $orderAmount }[/bold], стоимостью [bold]{ $cost }[/bold], был одобрен [bold]{ $approver }[/bold]
+cargo-console-fund-withdraw-broadcast = [bold]{ $name } withdrew { $amount } spesos from { $name1 } \[{ $code1 }\]
+cargo-console-fund-transfer-broadcast = [bold]{ $name } transferred { $amount } spesos from { $name1 } \[{ $code1 }\] to { $name2 } \[{ $code2 }\][/bold]
+cargo-console-fund-transfer-user-unknown = Unknown
+cargo-console-paper-reason-default = None
+cargo-console-paper-approver-default = Self
 cargo-console-paper-print-name = Заказ #{ $orderNumber }
 cargo-console-paper-print-text =
     Заказ #{ $orderNumber }
@@ -45,3 +61,15 @@ cargo-shuttle-console-station-unknown = Неизвестно
 cargo-shuttle-console-shuttle-not-found = Не найден
 cargo-no-shuttle = Грузовой шаттл не найден!
 cargo-shuttle-console-organics = На шаттле обнаружены органические формы жизни
+# Funding allocation console
+cargo-funding-alloc-console-menu-title = Funding Allocation Console
+cargo-funding-alloc-console-label-account = [bold]Account[/bold]
+cargo-funding-alloc-console-label-code = [bold] Code [/bold]
+cargo-funding-alloc-console-label-balance = [bold] Balance [/bold]
+cargo-funding-alloc-console-label-cut = [bold] Revenue Division (%) [/bold]
+cargo-funding-alloc-console-label-help = Cargo receives { $percent }% of all profits. The rest is split as specified below:
+cargo-funding-alloc-console-button-save = Save Changes
+cargo-funding-alloc-console-label-save-fail = [bold]Revenue Divisions Invalid![/bold] [color=red]({ $pos ->
+        [1] +
+       *[-1] -
+    }{ $val }%)[/color]

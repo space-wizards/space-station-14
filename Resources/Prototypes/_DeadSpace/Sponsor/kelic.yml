@@ -2,6 +2,12 @@
   id: Kelic
   entity: ClothingBackpackKelic
   sponsorOnly: true
+
+- type: sponsorLoadout
+  id: KelicHypospray
+  entity: HypoKelic
+  sponsorOnly: true
+  whitelistJobs: [ChiefMedicalOfficer, MedicalDoctor, Chemist]
   
 # Backpack
 - type: entity
@@ -120,6 +126,8 @@
     sprite: _DeadSpace/Sponsor/Kelic/helmet.rsi
   - type: PointLight
     color: "#d46f11"
+    radius: 7
+    energy: 8
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -231,3 +239,28 @@
     - stampedColor: '#00BE00FF'
       stampedName: Одобрено
     content: paper-law-kelic
+
+# Hypospray
+- type: entity
+  name: гипоспрей исследователя
+  parent: BaseItem
+  description: Гипоспрей для полевого пользования из не самых дорогих компонентов.
+  id: HypoKelic
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/hypo.rsi
+    state: hypo
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Kelic/hypo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 5
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyAffectsMobs: false
+  - type: UseDelay
+    delay: 0.5

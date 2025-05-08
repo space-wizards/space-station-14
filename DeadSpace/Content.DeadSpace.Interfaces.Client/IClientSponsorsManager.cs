@@ -5,6 +5,6 @@ namespace Content.DeadSpace.Interfaces.Client;
 
 public interface IClientSponsorsManager : ISharedSponsorsManager
 {
-    public bool TryGetInfo([NotNullWhen(true)] out ISponsorInfo? sponsor);
-    public bool TryGetSponsorList([NotNullWhen(false)] out ISponsorInfo[]? sponsors);
+    bool TryGetInfo([NotNullWhen(true)] out ISponsorInfo? sponsor);
+    bool TryGetSponsorList([NotNullWhen(false)] out ISponsorInfo[]? sponsors);
 }

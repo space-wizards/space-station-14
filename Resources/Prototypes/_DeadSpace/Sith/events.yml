@@ -58,8 +58,8 @@
         - DeathAcidifierImplant
       - type: RandomMetadata
         nameSegments:
-        - names_sith_title
-        - names_sith
+        - NamesSithTitle
+        - NamesSith
       - type: SithSubmissionAbility
       - type: SithForceShieldAbility
         proto: SithForceShield

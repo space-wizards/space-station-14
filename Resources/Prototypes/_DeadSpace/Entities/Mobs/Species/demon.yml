@@ -14,22 +14,11 @@
     - HeadTop
     - HeadSide
     - Tail
-  - type: Hunger
-  - type: Thirst
-  - type: Sprite
-    netsync: false
-    noRot: true
-    drawdepth: Mobs
   - type: Body
     prototype: Demon
     requiredLegs: 2
-  - type: Speech
-    speechSounds: Lizard
-  - type: Vocal
-    sounds:
-      Male: MaleHuman
-      Female: FemaleHuman
-      Unsexed: FemaleHuman
+  - type: Hunger
+  - type: Thirst
   - type: Damageable
     damageContainer: Biological
   - type: MeleeWeapon
@@ -54,6 +43,13 @@
         Heat : 0.3 #per second, scales with temperature & other constants
   - type: Perishable
   - type: Sanity # DS14
+  - type: Vocal
+    sounds:
+      Male: MaleHuman
+      Female: FemaleHuman
+      Unsexed: FemaleHuman
+  - type: Speech
+    speechSounds: Lizard
   - type: FootPrints
 
 - type: entity

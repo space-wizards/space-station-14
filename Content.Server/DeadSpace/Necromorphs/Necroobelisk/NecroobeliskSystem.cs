@@ -257,4 +257,13 @@ public sealed class NecroobeliskSystem : SharedNecroobeliskSystem
         component.IsActive = !component.IsActive;
         UpdateState(target, component);
     }
+
+    public void SetActive(EntityUid target, bool isActive, NecroobeliskComponent? component = null)
+    {
+        if (!Resolve(target, ref component))
+            return;
+
+        component.IsActive = isActive;
+        UpdateState(target, component);
+    }
 }

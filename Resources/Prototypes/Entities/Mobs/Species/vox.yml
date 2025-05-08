@@ -13,8 +13,8 @@
     requiredLegs: 2
   - type: HumanoidAppearance
     species: Vox
-    undergarmentTop: UndergarmentTopTanktopVox
-    undergarmentBottom: UndergarmentBottomBoxersVox
+    # undergarmentTop: UndergarmentTopTanktopVox # DS14
+    # undergarmentBottom: UndergarmentBottomBoxersVox # DS14
     #- type: VoxAccent # Not yet coded
   - type: Speech
     speechVerb: Vox
