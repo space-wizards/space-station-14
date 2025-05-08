@@ -105,7 +105,6 @@
     allowedStates:
     - Dead
   - type: Inventory
-    templateId: diona
     femaleDisplacements:
       jumpsuit:
         sizeMaps:
