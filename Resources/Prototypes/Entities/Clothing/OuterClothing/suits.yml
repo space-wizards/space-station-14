@@ -105,6 +105,7 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing, AllowSuitStorageClothing]
@@ -271,6 +272,7 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterBase

@@ -68,6 +68,7 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingEyesBase
@@ -263,6 +264,7 @@
     - type: Tag
       tags:
       - CorgiWearable
+      - WhitelistChameleon
 
 - type: entity
   parent: [ClothingEyesBase, BaseMajorContraband]
