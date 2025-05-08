@@ -675,3 +675,18 @@
       amount: 1
   products:
     Traumoxadone: 2
+
+- type: reaction
+  id: Stelloxadone
+  impact: Medium
+  reactants:
+    Stellibinin:
+      amount: 5
+    Cryoxadone:
+      amount: 3
+    Arithrazine:
+      amount: 2
+  products:
+    Stelloxadone: 5
+    Water: 3
+    Fiber: 2
