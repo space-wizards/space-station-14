@@ -1,0 +1,53 @@
+- type: seed
+  id: coconut
+  name: seeds-coconut-name
+  noun: seeds-noun-seeds
+  displayName: seeds-coconut-display-name
+  plantRsi: _Impstation/Objects/Specific/Hydroponics/coconut.rsi
+  packetPrototype: CoconutSeeds
+  productPrototypes:
+    - FoodCoconut
+  mutationPrototypes:
+    - coconest
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 2
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    CoconutWater:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 25
+
+- type: seed
+  id: coconest
+  name: seeds-coconest-name
+  noun: seeds-noun-seeds
+  displayName: seeds-coconest-display-name
+  plantRsi: _Impstation/Objects/Specific/Hydroponics/coconest.rsi
+  packetPrototype: CoconutBeesSeeds
+  productPrototypes:
+    - FoodCoconutBees
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 2
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    BuzzochloricBees:
+      Min: 1
+      Max: 15
+      PotencyDivisor: 25

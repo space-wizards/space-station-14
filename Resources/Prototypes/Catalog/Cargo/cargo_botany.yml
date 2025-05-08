@@ -4,7 +4,7 @@
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: seed
   product: CrateHydroponicsSeedsExotic
-  cost: 1000
+  cost: 1100 #imp
   category: cargoproduct-category-name-hydroponics
   group: market
 

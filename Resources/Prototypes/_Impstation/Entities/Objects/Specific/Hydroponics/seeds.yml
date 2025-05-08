@@ -1,0 +1,21 @@
+- type: entity
+  parent: SeedBase
+  name: packet of coconut seeds
+  description: A packet of dried microconuts. Just add water!
+  id: CoconutSeeds
+  components:
+    - type: Seed
+      seedId: coconut
+    - type: Sprite
+      sprite: _Impstation/Objects/Specific/Hydroponics/coconut.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of coconest seeds
+  description: A packet of dried microconests, including nanobees!
+  id: CoconutBeesSeeds
+  components:
+    - type: Seed
+      seedId: coconest
+    - type: Sprite
+      sprite: _Impstation/Objects/Specific/Hydroponics/coconest.rsi

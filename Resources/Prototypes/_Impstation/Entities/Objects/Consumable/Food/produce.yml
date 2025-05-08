@@ -56,3 +56,229 @@
         - ReagentId: Vitamin
           Quantity: 0.8
 
+
+- type: entity
+  parent: FoodProduceBase
+  id: FoodCoconut
+  name: coconut
+  description: Nature's bowling ball.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/coconut.rsi
+    state: coconut
+  - type: Item
+    size: Normal
+    sprite: _Impstation/Objects/Specific/Hydroponics/coconut.rsi
+    heldPrefix: coconut
+  - type: Produce
+    seedId: coconut
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/_Impstation/Items/Coconut/bonk.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: StaminaDamageOnHit
+    damage: 10
+    sound: /Audio/_Impstation/Items/Coconut/bonk.ogg
+  - type: LandAtCursor
+  - type: Tag
+    tags:
+    - Fruit
+    - Vegetable #don't ask me
+    - ShellCoconut
+  - type: FlavorProfile
+    flavors:
+      - nutty
+  - type: SliceableFood
+    count: 2
+    slice: FoodCoconutSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: CoconutWater
+          Quantity: 10
+
+- type: entity
+  name: coconut slice
+  parent: ProduceSliceBase
+  id: FoodCoconutSlice
+  description: Wow, there's stuff inside of this weird rock!!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nutty
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/coconut.rsi
+  - type: Tag
+    tags:
+    - Fruit
+    - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: CoconutWater
+          Quantity: 5
+
+
+- type: entity
+  parent: FoodProduceBase
+  id: FoodCoconutBees
+  name: coconest
+  description: Cute, there's even little bees in there!!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/coconest.rsi
+    state: coconest
+  - type: Item
+    size: Normal
+    sprite: _Impstation/Objects/Specific/Hydroponics/coconest.rsi
+    heldPrefix: coconest
+  - type: Produce
+    seedId: coconest
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/_Impstation/Items/Coconut/bonk.ogg
+  - type: Damageable
+    damageContainer: Biological
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/_Impstation/Items/Coconut/bonk.ogg
+      - !type:SpillBehavior
+        solution: food
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: LandAtCursor
+  - type: Tag
+    tags:
+    - Fruit
+    - Vegetable
+    - ShellCoconut
+  - type: FlavorProfile
+    flavors:
+      - nutty
+      - honey
+  - type: SliceableFood
+    count: 2
+    slice: FoodCoconutBeeSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: BuzzochloricBees
+          Quantity: 10
+  - type: Spillable
+    solution: food
+
+- type: entity
+  name: coconest slice
+  parent: ProduceSliceBase
+  id: FoodCoconutBeeSlice
+  description: They're not gonna be happy about this.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nutty
+      - honey
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/coconest.rsi
+  - type: Tag
+    tags:
+    - Fruit
+    - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: BuzzochloricBees
+          Quantity: 5
+
+
+- type: entity
+  parent: FoodProduceBase
+  id: FoodCoconutJoke
+  name: hard coconut
+  description: Where'd this come from?
+  categories: [ DoNotMap ]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/coconut.rsi
+    state: coconut
+  - type: Item
+    size: Normal
+    sprite: _Impstation/Objects/Specific/Hydroponics/coconut.rsi
+    heldPrefix: coconut
+  - type: Produce
+    seedId: coconut
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/_Impstation/Items/Coconut/bonk.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 15
+  - type: StaminaDamageOnHit
+    damage: 100 #hehe
+    sound: /Audio/_Impstation/Items/Coconut/bonk.ogg
+  - type: LandAtCursor
+  - type: Tag
+    tags:
+    - Fruit
+    - Vegetable
+    - ShellCoconut
+  - type: FlavorProfile
+    flavors:
+      - nutty
+  - type: SliceableFood
+    count: 2
+    slice: FoodCoconutSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: CoconutWater
+          Quantity: 10

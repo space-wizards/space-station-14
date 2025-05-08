@@ -1,0 +1,60 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Produce, seed, slice, and harvest drawn by Doop for Impstation. Growth stages and dead created by Chaoticaa (GitHub)",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "coconest"
+      },
+      {
+        "name": "coconest-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "coconest-inhand-right",
+        "directions": 4
+      },
+      {
+          "name": "stage-1"
+      },
+      {
+          "name": "stage-2"
+      },
+      {
+          "name": "stage-3"
+      },
+      {
+          "name": "stage-4"
+      },
+      {
+          "name": "stage-5"
+      },
+      {
+          "name": "stage-6"
+      },
+      {
+          "name": "dead"
+      },
+      {
+          "name": "harvest",
+          "delays": [
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ]
+         ]
+      },
+      {
+          "name": "slice"
+      },
+      {
+          "name": "seed"
+      }
+    ]
+  }

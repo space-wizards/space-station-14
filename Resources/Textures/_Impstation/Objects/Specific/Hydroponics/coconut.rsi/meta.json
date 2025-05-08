@@ -1,0 +1,52 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Produce and harvest drawn by Doop for Impstation. Growth stages and dead created by Chaoticaa (GitHub)",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "coconut"
+      },
+      {
+        "name": "coconut-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "coconut-inhand-right",
+        "directions": 4
+      },
+      {
+          "name": "stage-1"
+      },
+      {
+          "name": "stage-2"
+      },
+      {
+          "name": "stage-3"
+      },
+      {
+          "name": "stage-4"
+      },
+      {
+          "name": "stage-5"
+      },
+      {
+          "name": "stage-6"
+      },
+      {
+          "name": "dead"
+      },
+      {
+          "name": "harvest"
+      },
+      {
+          "name": "slice"
+      },
+      {
+          "name": "seed"
+      }
+    ]
+  }

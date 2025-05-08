@@ -136,6 +136,9 @@
   id: ShellShotgunBeanbag
 
 - type: Tag
+  id: ShellCoconut
+
+- type: Tag
   id: SpiderFood
 
 - type: Tag
