@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: Reverted the empty gun click sound
-    type: Remove
-  id: 1119
-  time: '2025-02-13T17:19:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1672
 - author: Darkmajia
   changes:
   - message: Security cadets spawn with sunglasses.
@@ -4156,3 +4149,12 @@
   id: 1618
   time: '2025-05-08T23:40:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2418
+- author: hivehum, crocodilecarousel, faelingdraws
+  changes:
+  - message: 65 new markings have been added for further customization.
+    type: Add
+  - message: Gray antennae and ears are visible again.
+    type: Fix
+  id: 1619
+  time: '2025-05-08T23:42:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2412
