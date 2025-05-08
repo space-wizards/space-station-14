@@ -15,7 +15,7 @@ public sealed class ActionGrantSystem : EntitySystem
         SubscribeLocalEvent<ItemActionGrantComponent, GetItemActionsEvent, ItemActionGrantComponent, GetItemActionsEvent>(OnItemGet);
     }
 
-    private void OnItemGet(Entity<ItemActionGrantComponent> ent, ItemActionGrantComponent itemActionGrant ref GetItemActionsEvent args, GetItemActionsEvent getItemActions)
+    private void OnItemGet(Entity<ItemActionGrantComponent> ent, ItemActionGrantComponent itemActionGrant, ref GetItemActionsEvent args, GetItemActionsEvent getItemActions)
     {
         if (itemActionGrant.ActiveIfWorn && getItemActions.InHand)
             return;
