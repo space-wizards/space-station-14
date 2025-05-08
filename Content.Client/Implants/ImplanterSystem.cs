@@ -18,17 +18,19 @@ public sealed class ImplanterSystem : SharedImplanterSystem
     {
         base.Initialize();
         SubscribeLocalEvent<ImplanterComponent, AfterAutoHandleStateEvent>(OnHandleImplanterState);
-        SubscribeLocalEvent<ImplanterComponent, DrawImplantAttemptEvent>(ChangeSprite);
+        SubscribeNetworkEvent<DrawImplantAttemptEvent>(ChangeSprite);
         Subs.ItemStatus<ImplanterComponent>(ent => new ImplanterStatusControl(ent));
     }
 
-    private void ChangeSprite(EntityUid uid, ImplanterComponent comp, DrawImplantAttemptEvent args)
+    private void ChangeSprite(DrawImplantAttemptEvent args)
     {
-        Log.Info($"Implanter {args.Implanter} is trying to implant {args.Implant}.");
-        if (!TryComp(args.Implant, out SubdermalImplantComponent? implantComp))
+        var implant = GetEntity(args.Implant);
+        var implanter = GetEntity(args.Implanter);
+
+        if (!TryComp(implant, out SubdermalImplantComponent? implantComp))
             return;
 
-        if (TryComp<SpriteComponent>(args.Implanter, out var sprite))
+        if (TryComp<SpriteComponent>(implanter, out var sprite))
         {
             sprite.LayerSetColor("implantFull", implantComp.Color);
         }

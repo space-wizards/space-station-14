@@ -288,13 +288,12 @@ public abstract class SharedImplanterSystem : EntitySystem
         var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
         RaiseLocalEvent(target, ref ev);
 
-        var drawEv = new DrawImplantAttemptEvent
+        var drawEv = new DrawImplantAttemptEvent()
         {
-            Implant = implant,
-            Implanter = implanter
+            Implant = new NetEntity(implant.Id),
+            Implanter = new NetEntity(implanter.Id)
         };
-        Log.Info($"Implanter {target} is trying to draw {implant}.");
-        RaiseLocalEvent(implanter, drawEv);
+        RaiseNetworkEvent(drawEv);
     }
 
     private void DrawCatastrophicFailure(EntityUid implanter, ImplanterComponent component, EntityUid user)
@@ -385,6 +384,8 @@ public sealed class AddImplantAttemptEvent : CancellableEntityEventArgs
 [Serializable, NetSerializable]
 public sealed class DrawImplantAttemptEvent : EntityEventArgs
 {
+    public NetEntity Implant;
+    public NetEntity Implanter;
 }
 
 /// <summary>
