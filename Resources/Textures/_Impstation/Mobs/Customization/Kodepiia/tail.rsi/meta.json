@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "amalgam, crablegs, lizard, multiarms, pauld, seafoam, shellcone, spider, stubby and vox by crocodilecarousel (github). fluffy, shell by UndertaleSex",
+    "copyright": "amalgam, crablegs, flowers, lizard, multiarms, pauld, seafoam, shellcone, spider, stubby and vox by crocodilecarousel (github). fluffy, shell by UndertaleSex",
     "size": {
         "x": 32,
         "y": 32
@@ -25,6 +25,14 @@
         },
         {
             "name": "crablegs",
+            "directions": 4
+        },
+        {
+            "name": "flowers1",
+            "directions": 4
+        },
+        {
+            "name": "flowers2",
             "directions": 4
         },
         {

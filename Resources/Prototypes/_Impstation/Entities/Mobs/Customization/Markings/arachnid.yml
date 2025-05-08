@@ -45,6 +45,15 @@
 
 # Snout
 
+- type: marking
+  id: WhipSpiderMouth
+  bodyPart: Snout
+  markingCategory: HeadSide
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/snout.rsi
+    state: whipspidermouth
+
 # Eyes
 
 - type: marking
@@ -350,6 +359,33 @@
 # FacialHair
 
 # Hair
+
+- type: marking
+  id: SpiderHair1
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/hair.rsi
+    state: fluffy
+
+- type: marking
+  id: SpiderHair2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/hair.rsi
+    state: longhorned
+
+- type: marking
+  id: SpiderHair3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/hair.rsi
+    state: wisps
 
 # HeadSide
 

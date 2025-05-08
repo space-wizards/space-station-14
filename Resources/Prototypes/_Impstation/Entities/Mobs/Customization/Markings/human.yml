@@ -1,0 +1,47 @@
+﻿# Chest
+
+# Head
+
+# Snout
+
+# Eyes
+
+# RArm
+
+# LArm
+
+# RLeg
+
+# LLeg
+
+# UndergarmentBottom
+
+# UndergarmentTop
+
+# LFoot
+
+# RFoot
+
+# LHand
+
+# RHand
+
+# FacialHair
+
+# Hair
+
+# HeadSide
+
+# HeadTop
+
+- type: marking
+  id: PrettyFly
+  bodyPart: HeadTop
+  markingCategory: Head
+  speciesRestriction: [ Human ]
+  forcedColoring: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Human/headtop.rsi
+    state: fly
+
+# RArmExtension

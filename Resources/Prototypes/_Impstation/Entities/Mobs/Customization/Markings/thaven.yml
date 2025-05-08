@@ -548,6 +548,28 @@
     state: burqa
 
 - type: marking
+  id: HairFloralLongThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: florallong1
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: florallong2
+
+- type: marking
+  id: HairFloralMidThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: floralmid1
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: floralmid2
+
+- type: marking
   id: HijabFashionableThaven
   bodyPart: Hair
   markingCategory: Hair

@@ -1,14 +1,26 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "doll and heavy by Sha-Seng (Github). prosthetic, twisting, and vitiligo by crocodilecarousel (github)",
+    "copyright": "doll and heavy by Sha-Seng (Github). code, heart, prosthetic, twisting, and vitiligo by crocodilecarousel (github)",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
         {
+            "name": "code4",
+            "directions": 4
+        },
+        {
+            "name": "code5",
+            "directions": 4
+        },
+        {
             "name": "doll",
+            "directions": 4
+        },
+        {
+            "name": "heart",
             "directions": 4
         },
         {

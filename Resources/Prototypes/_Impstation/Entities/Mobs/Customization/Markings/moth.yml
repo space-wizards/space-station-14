@@ -89,6 +89,16 @@
     state: claw
 
 - type: marking
+  id: MothChestGlow
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Moth ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/chest.rsi
+    state: glow
+  shader: unshaded
+
+- type: marking
   id: TorsoIncisionMoth
   bodyPart: Chest
   markingCategory: Chest
@@ -166,6 +176,16 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/Moth/head.rsi
     state: claw
+
+- type: marking
+  id: MothHeadGlow
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Moth ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/head.rsi
+    state: glow
+  shader: unshaded
 
 - type: marking
   id: MothSlashLeft

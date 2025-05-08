@@ -440,4 +440,69 @@
 
 # Tail
 
+- type: marking
+  id: GrasperCurly
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/tail.rsi
+    state: curly
+
+- type: marking
+  id: GrasperFreaky
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/tail.rsi
+    state: freaky
+
+- type: marking
+  id: GrasperHigh
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/tail.rsi
+    state: highup
+
+- type: marking
+  id: GrasperLong
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/tail.rsi
+    state: long
+
+- type: marking
+  id: GrasperMoon
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/tail.rsi
+    state: moon1
+  - sprite: _Impstation/Mobs/Customization/Decapoid/tail.rsi
+    state: moon2
+
+- type: marking
+  id: GrasperShort
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/tail.rsi
+    state: short
+
+- type: marking
+  id: GrasperUneven
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/tail.rsi
+    state: uneven
+
 # RArmExtension

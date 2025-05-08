@@ -300,6 +300,19 @@ marking-VoxTailBell-bell2 = Back Tail
 marking-VoxTailLantern = Lantern
 marking-VoxTailLantern-lantern = Lantern
 
+marking-VoxTailNub = Nub
+marking-VoxTailNub-nub1 = Tail
+marking-VoxTailNub-nub2 = Scar
+
+marking-VoxTailRaptor = Raptor
+marking-VoxTailRaptor-raptor = Tail
+
+marking-VoxTailShort = Short Down
+marking-VoxTailShort-short = Tail
+
+marking-VoxTailShort2 = Short Up
+marking-VoxTailShort2-short2 = Tail
+
 marking-VoxTailSmallPlume = Small Plume
 marking-VoxTailSmallPlume-smallplume = Small Plume
 

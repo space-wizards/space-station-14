@@ -1,0 +1,43 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Drawn by crocodilecarousel (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "curly",
+            "directions": 4
+        },
+        {
+            "name": "freaky",
+            "directions": 4
+        },
+        {
+            "name": "highup",
+            "directions": 4
+        },
+        {
+            "name": "long",
+            "directions": 4
+        },
+        {
+            "name": "moon1",
+            "directions": 4
+        },
+        {
+            "name": "moon2",
+            "directions": 4
+        },
+        {
+            "name": "short",
+            "directions": 4
+        },
+        {
+            "name": "uneven",
+            "directions": 4
+        }
+    ]
+}

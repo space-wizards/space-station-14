@@ -4,7 +4,7 @@
         "x": 32,
         "y": 32
     },
-    "copyright": "horns_nubby by pinkbat5, all other markings by starlighthowls, flat by rainyatrium",
+    "copyright": "horns_nubby by pinkbat5, koboldearspiercings by starlighthowls, flat by rainyatrium, little by FaelingDraws for Impstation",
     "license": "CC-BY-SA-3.0",
     "states": [
         {
@@ -17,6 +17,10 @@
         },
         {
             "name": "koboldearspiercings",
+            "directions": 4
+        },
+        {
+            "name": "little",
             "directions": 4
         },
         {

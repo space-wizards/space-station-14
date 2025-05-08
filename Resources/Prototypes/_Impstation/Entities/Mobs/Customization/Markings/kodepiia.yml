@@ -348,6 +348,15 @@
     state: moth2
 
 - type: marking
+  id: KodeSharkminnowEyes
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [ Kodepiia ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/eyes.rsi
+    state: sharkminnow
+
+- type: marking
   id: SquareEyes
   bodyPart: Eyes
   markingCategory: Head
@@ -852,6 +861,17 @@
     state: crablegs
 
 - type: marking
+  id: KodeFlowers
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Kodepiia ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/tail.rsi
+    state: flowers1
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/tail.rsi
+    state: flowers2
+
+- type: marking
   id: KodeFluffyTail
   bodyPart: Tail
   markingCategory: Tail
@@ -995,6 +1015,17 @@
 # RArmExtension
 
 - type: marking
+  id: JellyCapeStripes
+  bodyPart: RArmExtension
+  markingCategory: Arms
+  speciesRestriction: [ Kodepiia ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: jellycapestripes1
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: jellycapestripes2
+
+- type: marking
   id: KodeArmsCrab
   bodyPart: RArmExtension
   markingCategory: Arms
@@ -1063,6 +1094,39 @@
     state: cloakarms4
 
 - type: marking
+  id: KodeDionaArms
+  bodyPart: RArmExtension
+  markingCategory: Arms
+  speciesRestriction: [ Kodepiia ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: dionaarms1
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: dionaarms2
+
+- type: marking
+  id: KodeMothChecks
+  bodyPart: RArmExtension
+  markingCategory: Arms
+  speciesRestriction: [ Kodepiia ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: mothwingschecks1
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: mothwingschecks2
+
+- type: marking
+  id: KodeMothInk
+  bodyPart: RArmExtension
+  markingCategory: Arms
+  speciesRestriction: [ Kodepiia ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: mothwingsoutline1
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: mothwingsoutline2
+
+- type: marking
   id: KodeMyFirstWings
   bodyPart: RArmExtension
   markingCategory: Arms
@@ -1099,6 +1163,21 @@
     state: swanwings2
   - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
     state: swanwings3
+
+- type: marking
+  id: KodeTattooArms
+  bodyPart: RArmExtension
+  markingCategory: Arms
+  speciesRestriction: [ Kodepiia ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: humanarmstattoo1
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: humanarmstattoo2
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: humanarmstattoo3
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: humanarmstattoo4
 
 - type: marking
   id: KodeTentaWings
@@ -1171,3 +1250,36 @@
     state: thingwings1
   - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
     state: thingwings2
+
+- type: marking
+  id: KodeUrchinArms
+  bodyPart: RArmExtension
+  markingCategory: Arms
+  speciesRestriction: [ Kodepiia ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: urchinarms
+
+- type: marking
+  id: PuffCapeCrackle
+  bodyPart: RArmExtension
+  markingCategory: Arms
+  speciesRestriction: [ Kodepiia ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: puffcapecrackle1
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: puffcapecrackle2
+
+- type: marking
+  id: PuffCapeFloral
+  bodyPart: RArmExtension
+  markingCategory: Arms
+  speciesRestriction: [ Kodepiia ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: puffcapefloral1
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: puffcapefloral2
+  - sprite: _Impstation/Mobs/Customization/Kodepiia/rarmextension.rsi
+    state: puffcapefloral3

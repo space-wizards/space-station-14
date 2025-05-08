@@ -72,6 +72,26 @@
             "directions": 4
         },
         {
+            "name": "nub1",
+            "directions": 4
+        },
+        {
+            "name": "nub2",
+            "directions": 4
+        },
+        {
+            "name": "raptor",
+            "directions": 4
+        },
+        {
+            "name": "short",
+            "directions": 4
+        },
+        {
+            "name": "short2",
+            "directions": 4
+        },
+        {
             "name": "smallplume",
             "directions": 4
         },

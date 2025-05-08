@@ -32,6 +32,28 @@ marking-ChestTwistingRight-twistingright = Twisted Scar (Right)
 marking-HumanoidAbs = Muscles
 marking-HumanoidAbs-muscular = Muscles
 
+marking-ProstheticShoulderL = Prosthetic (Left Shoulder)
+marking-ProstheticShoulderL-prostheticshoulderleft = Prosthetic
+
+marking-ProstheticShoulderR = Prosthetic (Right Shoulder)
+marking-ProstheticShoulderR-prostheticshoulderright = Prosthetic (Right Shoulder)
+
+marking-TattooAnchor = Tattoo (Anchor)
+marking-TattooAnchor-anchor = Tattoo
+
+marking-TattooCode1 = Tattoo (Code QR Back Small)
+marking-TattooCode1-code1 = Tattoo
+
+marking-TattooCode2 = Tattoo (Code Bar Back)
+marking-TattooCode2-code2 = Tattoo
+
+marking-TattooCode3 = Tattoo (Code QR Back Big)
+marking-TattooCode3-code3 = Tattoo
+
+marking-TattooDragon = Tattoo (Dragon)
+marking-TattooDragon-dragontattoo1 = Body
+marking-TattooDragon-dragontattoo2 = Highlights
+
 marking-TattooNanotrasenChest-nanotrasen = Chest Tattoo (Nanotrasen)
 marking-TattooNanotrasenChest = Chest Tattoo (Nanotrasen)
 
@@ -40,6 +62,9 @@ marking-ChestStar-star = Star Scar
 
 marking-TorsoIncision = Torso Incision
 marking-TorsoIncision-torso_incision = Torso Incision
+
+marking-TattooVinesHumanoid = Tattoo (Vines)
+marking-TattooVinesHumanoid-vines = Tattoo (Vines)
 
 marking-VitiligoChestF = Vitiligo Spread
 
@@ -100,6 +125,15 @@ marking-ArmProstheticRight-prosthetic = Prosthetic (Right Arm)
 marking-ArmTwistingRight = Twisted Scar (Right Arm)
 marking-ArmTwistingRight-twisting = Twisted Scar (Right Arm)
 
+marking-TattooCode4 = Tattoo (Code QR Right Arm)
+marking-TattooCode4-code4 = Tattoo
+
+marking-TattooCode5 = Tattoo (Code Bar Right Arm)
+marking-TattooCode5-code5 = Tattoo
+
+marking-TattooHeartR = Tattoo (Heart Right Arm)
+marking-TattooHeartR-heart = Tattoo
+
 marking-VitiligoArmR = Vitiligo (Right Arm)
 
 # LArm
@@ -116,6 +150,9 @@ marking-ArmProstheticLeft-prosthetic = Prosthetic (Left Arm)
 
 marking-ArmTwistingLeft = Twisted Scar (Left Arm)
 marking-ArmTwistingLeft-twisting = Twisted Scar (Left Arm)
+
+marking-TattooHeartL = Tattoo (Heart Left Arm)
+marking-TattooHeartL-heart = Tattoo
 
 marking-VitiligoArmL = Vitiligo (Left Arm)
 
@@ -317,9 +354,15 @@ marking-VitiligoHandR = Vitiligo (Right Hand)
 
 # FacialHair
 
+marking-FloralBeard = Beard (Floral)
+
 # Hair
 
 marking-BurqaSolid = Burqa
+
+marking-HairFloralLong = Floral hair (Long)
+
+marking-HairFloralMid = Floral hair (Medium)
 
 marking-HijabFashionable = Hijab (Fashionable)
 

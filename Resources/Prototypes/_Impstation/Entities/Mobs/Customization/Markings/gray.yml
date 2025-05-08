@@ -56,6 +56,71 @@
 # Head
 
 - type: marking
+  id: GrayEyebags
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Gray ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/head.rsi
+    state: eyebags
+
+- type: marking
+  id: GrayHeadgem
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Gray ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/head.rsi
+    state: gem
+
+- type: marking
+  id: GrayLittleEyebrows
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Gray ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/head.rsi
+    state: littleeyebrows
+
+- type: marking
+  id: GraySpots
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Gray ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/head.rsi
+    state: spots
+
+- type: marking
+  id: GraySunkenCheeks
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Gray ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/head.rsi
+    state: sunkencheeks
+
+- type: marking
+  id: GrayTallEars
+  bodyPart: Head
+  markingCategory: HeadSide
+  speciesRestriction: [ Gray ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/head.rsi
+    state: tallears
+
+- type: marking
+  id: GrayWrinkles
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Gray ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Gray/head.rsi
+    state: wrinkles
+
+- type: marking
   id: RadiumGlowBrain
   bodyPart: Head
   markingCategory: HeadTop
@@ -194,10 +259,10 @@
 # Hair
 
 # HeadSide
-
+# okay for whatever reason headside and headtop dont work for grays
 - type: marking
   id: GrayCuteEars
-  bodyPart: HeadSide
+  bodyPart: Head # temp
   markingCategory: HeadSide
   speciesRestriction: [ Gray ]
   forcedColoring: true
@@ -210,7 +275,7 @@
 
 - type: marking
   id: GrayClassicAntenna
-  bodyPart: HeadTop
+  bodyPart: Head # temp
   markingCategory: HeadTop
   speciesRestriction: [ Gray ]
   followSkinColor: true

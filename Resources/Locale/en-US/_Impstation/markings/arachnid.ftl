@@ -18,6 +18,9 @@ marking-ArachnidHeadSegments-segments2 = Stripe
 
 # Snout
 
+marking-WhipSpiderMouth = Chelicerae (Whip)
+marking-WhipSpiderMouth-whipspidermouth = Chelicerae
+
 # Eyes
 
 marking-ArachnidEyesDefault = Eyes
@@ -119,6 +122,10 @@ marking-UndershirtRolledA-rolledundershirt = Undershirt
 # FacialHair
 
 # Hair
+
+marking-SpiderHair1 = Fluffy
+marking-SpiderHair2 = Long Horned
+marking-SpiderHair3 = Wisps
 
 # HeadSide
 

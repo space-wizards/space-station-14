@@ -24,6 +24,9 @@ marking-ChestStarMoth-star = Star Scar
 marking-MothBodyClaw = Claw Scars
 marking-MothBodyClaw-claw = Claw Scars
 
+marking-MothChestGlow = Moth Bioluminescence (Chest)
+marking-MothChestGlow-glow = Glow
+
 marking-TorsoIncisionMoth = Torso Incision
 marking-TorsoIncisionMoth-incision = Torso Incision
 
@@ -49,6 +52,9 @@ marking-MothBurnRight-burnright = Burn Scar (Right)
 
 marking-MothFaceClaw = Claw Scars (Face)
 marking-MothFaceClaw-claw = Claw Scars (Face)
+
+marking-MothHeadGlow = Moth Bioluminescence (Head)
+marking-MothHeadGlow-glow = Glow
 
 marking-MothSlashLeft = Claw Scars (Left)
 marking-MothSlashLeft-slashleft = Claw Scars (Left)
