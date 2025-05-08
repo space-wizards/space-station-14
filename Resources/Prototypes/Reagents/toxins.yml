@@ -731,3 +731,18 @@
         conditions:
         - !type:OrganType
           type: Vox
+
+- type: reagent
+  id: CellularAcid
+  name: reagent-name-cellularacid
+  group: Toxins
+  desc: reagent-desc-cellularacid
+  physicalDesc: reagent-physical-desc-deadly
+  color: "#85afbf"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 3

@@ -98,3 +98,4 @@ reagent-physical-desc-neural = neural
 reagent-physical-desc-unidentifiable = unidentifiable
 reagent-physical-desc-radioactive = radioactive
 reagent-physical-desc-bloody = bloody
+reagent-physical-desc-deadly = deadly

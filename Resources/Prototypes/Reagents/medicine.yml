@@ -1460,7 +1460,7 @@
           max: 213.0
         damage:
           types:
-            Radiation: -2
+            Radiation: -3.75
 
 - type: reagent
   id: Celliminol

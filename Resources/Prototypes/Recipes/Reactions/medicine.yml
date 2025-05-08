@@ -701,6 +701,15 @@
     Omnizine:
       amount: 1
     Blood:
-      amount: 10
+      amount: 14
   products:
-    Celliminol: 5
+    Celliminol: 3
+
+- type: reaction
+  id: CelliminolTemp
+  minTemp: 3500
+  reactants:
+    Celliminol:
+      amount: 1
+  products:
+    CellularAcid: 1
