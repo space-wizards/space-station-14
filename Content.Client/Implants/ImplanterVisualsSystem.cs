@@ -1,4 +1,4 @@
-﻿using Content.Shared.Implants.Components;
+using Content.Shared.Implants.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -27,19 +27,34 @@ public sealed class ImplanterVisualsSystem : VisualizerSystem<ImplanterVisualsCo
                 proto.TryGetComponent<SubdermalImplantComponent>(out var subcomp))
             {
                 AppearanceSystem.SetData(uid, ImplanterVisuals.Color, subcomp.Color, appearance);
+                Log.Info($"Implanter {ToPrettyString(uid)} has implant {subcomp.Color}");
             }
         }
     }
 
     protected override void OnAppearanceChange(EntityUid uid, ImplanterVisualsComponent component, ref AppearanceChangeEvent args)
     {
+        if (!TryComp<AppearanceComponent>(uid, out var appearance))
+            return;
+
         if (args.Sprite != null)
-            UpdateAppearance(uid, component, args.Sprite, args.Component);
+            UpdateAppearance(uid, component, args.Sprite, appearance);
     }
 
     private void UpdateAppearance(EntityUid uid, ImplanterVisualsComponent component, SpriteComponent sprite, AppearanceComponent appearance)
     {
-        AppearanceSystem.TryGetData<Color>(uid, ImplanterVisuals.Color, out var color, appearance);
-        sprite.LayerSetColor("implantFull", color);
+        AppearanceSystem.TryGetData(uid, ImplanterVisuals.Color, out var color, appearance);
+        if (color == null)
+        {
+            Log.Warning($"ImplanterVisualsSystem: No color data found for {uid}");
+            return;
+        }
+        UpdateSprite(sprite, (Color)color);
+        Log.Info($"ImplanterVisualsSystem: Updated color to {color} for {uid}");
+    }
+
+    private void UpdateSprite(SpriteComponent spriteComponent, Color color)
+    {
+        spriteComponent.LayerSetColor("implantFull", color);
     }
 }
