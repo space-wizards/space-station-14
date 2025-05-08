@@ -288,13 +288,6 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
         RaiseLocalEvent(target, ref ev);
-
-        var drawEv = new DrawImplantAttemptEvent()
-        {
-            Implant = new NetEntity(implant.Id),
-            Implanter = new NetEntity(implanter.Id)
-        };
-        RaiseNetworkEvent(drawEv);
     }
 
     private void DrawCatastrophicFailure(EntityUid implanter, ImplanterComponent component, EntityUid user)
@@ -328,7 +321,6 @@ public abstract class SharedImplanterSystem : EntitySystem
         {
             implantFound = true;
             var implant = component.ImplanterSlot.ContainerSlot?.ContainedEntity;
-            Log.Info($"Implanter {ToPrettyString(uid)} has implant {implant}");
             if (TryComp(implant, out SubdermalImplantComponent? implantComp))
             {
                 _appearance.SetData(uid, ImplanterVisuals.Color, implantComp.Color, appearance);
@@ -388,13 +380,6 @@ public sealed class AddImplantAttemptEvent : CancellableEntityEventArgs
         Implant = implant;
         Implanter = implanter;
     }
-}
-
-[Serializable, NetSerializable]
-public sealed class DrawImplantAttemptEvent : EntityEventArgs
-{
-    public NetEntity Implant;
-    public NetEntity Implanter;
 }
 
 /// <summary>
