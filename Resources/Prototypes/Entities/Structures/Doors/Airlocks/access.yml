@@ -401,7 +401,7 @@
       board: [ DoorElectronicsBrig ]
 
 - type: entity
-  parent: AirlockBrig #imp edit 
+  parent: AirlockBrig #imp edit
   id: AirlockSecurityLawyerLocked
   suffix: Security/Lawyer, Locked
   components:
@@ -1261,7 +1261,7 @@
       - HideLabel
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsExternal ]
+      board: [ DoorElectronicsMaintenance ] #imp edit until roundstart docking is fixed
 
 #HighSecDoors
 - type: entity
