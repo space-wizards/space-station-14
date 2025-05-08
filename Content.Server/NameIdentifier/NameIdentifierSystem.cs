@@ -1,5 +1,6 @@
 ﻿using Content.Shared.GameTicking;
 using Content.Shared.NameIdentifier;
+using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -13,7 +14,7 @@ public sealed class NameIdentifierSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly NameModifierSystem _nameModifier = default!;
 
     /// <summary>
     /// Free IDs available per <see cref="NameIdentifierGroupPrototype"/>.
@@ -27,6 +28,7 @@ public sealed class NameIdentifierSystem : EntitySystem
 
         SubscribeLocalEvent<NameIdentifierComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NameIdentifierComponent, ComponentShutdown>(OnComponentShutdown);
+        SubscribeLocalEvent<NameIdentifierComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(CleanupIds);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnReloadPrototypes);
 
@@ -44,6 +46,7 @@ public sealed class NameIdentifierSystem : EntitySystem
             ids[randomIndex] = component.Identifier;
             ids.Add(random);
         }
+        _nameModifier.RefreshNameModifiers(uid);
     }
 
     /// <summary>
@@ -108,12 +111,22 @@ public sealed class NameIdentifierSystem : EntitySystem
             ? uniqueName
             : $"({uniqueName})";
 
-        var meta = MetaData(uid);
-        // "DR-1234" as opposed to "drone (DR-1234)"
-        _metaData.SetEntityName(uid, group.FullName
-            ? uniqueName
-            : $"{meta.EntityName} ({uniqueName})", meta);
         Dirty(uid, component);
+        _nameModifier.RefreshNameModifiers(uid);
+    }
+
+    private void OnRefreshNameModifiers(Entity<NameIdentifierComponent> ent, ref RefreshNameModifiersEvent args)
+    {
+        // Don't apply the modifier if the component is being removed
+        if (ent.Comp.LifeStage > ComponentLifeStage.Running)
+            return;
+
+        if (!_prototypeManager.TryIndex<NameIdentifierGroupPrototype>(ent.Comp.Group, out var group))
+            return;
+        var format = group.FullName ? "name-identifier-format-full" : "name-identifier-format-append";
+        // We apply the modifier with a low priority to keep it near the base name
+        // "Beep (Si-4562) the zombie" instead of "Beep the zombie (Si-4562)"
+        args.AddModifier(format, -10, ("identifier", ent.Comp.FullIdentifier));
     }
 
     private void InitialSetupPrototypes()
