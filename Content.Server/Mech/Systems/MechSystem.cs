@@ -335,17 +335,6 @@ public sealed partial class MechSystem : SharedMechSystem
             return;
         }
     }
-    // private void OnInsertBattery(EntityUid uid, MechComponent component, EntInsertedIntoContainerMessage args)
-    // {
-    //     if (args.Container != component.BatterySlot || !TryComp<BatteryComponent>(args.Entity, out var battery))
-    //         return;
-
-    //     component.Energy = battery.CurrentCharge;
-    //     component.MaxEnergy = battery.MaxCharge;
-
-    //     Dirty(uid, component);
-    //     _actionBlocker.UpdateCanMove(uid);
-    // }
 
     private void OnRemoveBattery(EntityUid uid, MechComponent component, RemoveBatteryEvent args)
     {
@@ -357,14 +346,6 @@ public sealed partial class MechSystem : SharedMechSystem
 
         args.Handled = true;
     }
-    // private void OnInsertGasTank(EntityUid uid, MechComponent component, EntInsertedIntoContainerMessage args)
-    // {
-    //     if (args.Container != component.GasTankSlot || !TryComp<GasTankComponent>(args.Entity, out var gasTank))
-    //         return;
-
-    //     Dirty(uid, component);
-    //     _actionBlocker.UpdateCanMove(uid);
-    // }
 
     private void OnRemoveGasTank(EntityUid uid, MechComponent component, RemoveGasTankEvent args)
     {
