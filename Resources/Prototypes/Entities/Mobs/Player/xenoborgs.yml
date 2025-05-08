@@ -736,7 +736,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 200
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -757,6 +757,9 @@
             - 0 # nitrogen
             - 340.5701689 # carbon dioxide
           temperature: 373.15
+  - type: Repairable
+    doAfterDelay: 30 # you can heal the mothership core, but it takes a while
+  - type: DamagedSiliconAccent
   - type: Explosive
     explosionType: Default
     maxIntensity: 100
