@@ -260,7 +260,7 @@
 - type: entity
   id: CardDoor
   parent: BaseStructure
-  name: cardDoor # was card door     Also sort out name bc I think that's referred to ic
+  name: card door # was card door     Also sort out name bc I think that's referred to ic
 #  abstract: true       #maybe?
   description: A door, where will it lead?
   components:
