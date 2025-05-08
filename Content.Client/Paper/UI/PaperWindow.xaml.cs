@@ -282,9 +282,21 @@ namespace Content.Client.Paper.UI
 
             StampDisplay.RemoveAllChildren();
             StampDisplay.RemoveStamps();
-            foreach(var stamper in state.StampedBy)
+            SignatureDisplay.RemoveAllChildren();
+            SignatureDisplay.RemoveStamps();
+
+            // 🌟Starlight🌟 Separate stamps and signature 
+            foreach (var stamper in state.StampedBy)
             {
-                StampDisplay.AddStamp(new StampWidget{ StampInfo = stamper });
+                var stampWidget = new StampWidget { StampInfo = stamper };
+                if (stamper.Type == StampType.Signature)
+                {
+                    SignatureDisplay.AddStamp(stampWidget); 
+                }
+                else
+                {
+                    StampDisplay.AddStamp(stampWidget); 
+                }
             }
         }
 

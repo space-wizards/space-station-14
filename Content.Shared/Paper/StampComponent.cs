@@ -12,11 +12,10 @@ namespace Content.Shared.Paper;
 [DataDefinition, Serializable, NetSerializable]
 public partial struct StampDisplayInfo
 {
-    StampDisplayInfo(string s)
-    {
-        StampedName = s;
-    }
-
+    // StampDisplayInfo(string s)
+    // {
+    //     StampedName = s;
+    // } 0 references
     [DataField("stampedName")]
     public string StampedName;
 
@@ -26,6 +25,10 @@ public partial struct StampDisplayInfo
     // Umbra: Stamp type.
     [DataField("type")]
     public StampType Type = StampType.RubberStamp;
+    
+    // 🌟Starlight edit🌟
+    [DataField("font")]
+    public string? Font { get; set; } = "/Fonts/NotoSans/NotoSans-Regular.ttf"; // Default font :3
 };
 
 /// UMBRA

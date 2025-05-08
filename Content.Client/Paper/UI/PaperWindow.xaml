@@ -24,7 +24,7 @@
                         </BoxContainer>
                     </BoxContainer>
                     <paper:StampCollection Name="StampDisplay" VerticalAlignment="Bottom" Margin="6"/>
-
+                    <paper:StampCollection Name="SignatureDisplay" VerticalAlignment="Bottom" Margin="6"/>
                 </PanelContainer>
             </ScrollContainer>
         </PanelContainer>
