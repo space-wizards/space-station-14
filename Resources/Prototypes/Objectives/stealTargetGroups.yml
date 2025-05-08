@@ -355,28 +355,28 @@
   id: AnimalIan
   name: steal-target-groups-animal-ian
   sprite:
-    sprite: Mobs/Pets/corgi.rsi
+    sprite: Mobs/Animals/corgi.rsi
     state: ian
 
 - type: stealTargetGroup
   id: AnimalNamedCat
   name: steal-target-groups-animal-named-cat
   sprite:
-    sprite: Mobs/Pets/bingus.rsi
+    sprite: Mobs/Animals/sphynx.rsi
     state: bingus
 
 - type: stealTargetGroup
   id: AnimalMcGriff
   name: steal-target-groups-animal-mc-griff
   sprite:
-    sprite: Mobs/Pets/mcgriff.rsi
+    sprite: Mobs/Animals/pug.rsi
     state: mcgriff
 
 - type: stealTargetGroup
   id: AnimalWalter
   name: steal-target-groups-animal-walter
   sprite:
-    sprite: Mobs/Pets/walter.rsi
+    sprite: Mobs/Animals/bullterrier.rsi
     state: walter
 
 - type: stealTargetGroup
