@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -9,12 +7,15 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Shared.Implants;
 
@@ -324,7 +325,15 @@ public abstract class SharedImplanterSystem : EntitySystem
         bool implantFound;
 
         if (component.ImplanterSlot.HasItem)
+        {
             implantFound = true;
+            var implant = component.ImplanterSlot.ContainerSlot?.ContainedEntity;
+            Log.Info($"Implanter {ToPrettyString(uid)} has implant {implant}");
+            if (TryComp(implant, out SubdermalImplantComponent? implantComp))
+            {
+                _appearance.SetData(uid, ImplanterVisuals.Color, implantComp.Color, appearance);
+            }
+        }
 
         else
             implantFound = false;
