@@ -209,14 +209,22 @@ public sealed class ThrusterSystem : EntitySystem
 
         // TODO: Colored LED indicator
         //_appearance.SetData(...);
+
+        UpdatePowerLoad(ent);
     }
 
-    public float GetThrustScaled(ThrusterComponent component)
+    private void UpdatePowerLoad(Entity<ThrusterComponent> ent)
+    {
+        if (TryComp<ApcPowerReceiverComponent>(ent, out var power))
+            power.Load = ent.Comp.BasePowerLoad * GetSettingScale(ent.Comp);
+    }
+
+    public float GetSettingScale(ThrusterComponent component)
     {
         if (!component.UseSetting)
-            return component.Thrust;
+            return 1f;
 
-        return component.Thrust * component.SettingLevel switch
+        return component.SettingLevel switch
         {
             ThrusterSetting.Maximum     => 1f,
             ThrusterSetting.High        => 1f / 2f,
@@ -265,7 +273,7 @@ public sealed class ThrusterSystem : EntitySystem
         var direction = (int)args.NewRotation.GetCardinalDir() / 2;
         var oldShuttleComponent = shuttleComponent;
 
-        var thrustScaled = GetThrustScaled(component);
+        var thrustScaled = component.Thrust * GetSettingScale(component);
 
         if (args.ParentChanged)
         {
@@ -322,11 +330,15 @@ public sealed class ThrusterSystem : EntitySystem
         {
             EnableThruster(uid, component);
         }
+
+        UpdatePowerLoad((uid, component));
     }
 
     private void OnMapInit(Entity<ThrusterComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextFire = _timing.CurTime + ent.Comp.FireCooldown;
+
+        UpdatePowerLoad(ent);
     }
 
     private void OnThrusterShutdown(EntityUid uid, ThrusterComponent component, ComponentShutdown args)
@@ -382,7 +394,7 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void AddThrust(EntityUid uid, ThrusterComponent component, ShuttleComponent shuttleComponent, TransformComponent xform)
     {
-        var thrustScaled = GetThrustScaled(component);
+        var thrustScaled = component.Thrust * GetSettingScale(component);
 
         switch (component.Type)
         {
@@ -435,7 +447,7 @@ public sealed class ThrusterSystem : EntitySystem
                 if (!thrustQuery.TryGetComponent(ent, out var thruster) || !xformQuery.TryGetComponent(ent, out var xform))
                     continue;
 
-                var thrustScaled = GetThrustScaled(thruster);
+                var thrustScaled = thruster.Thrust * GetSettingScale(thruster);
 
                 center += xform.LocalPosition * thrustScaled;
                 totalThrust += thrustScaled;
@@ -495,7 +507,7 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void SubtractThrust(EntityUid uid, ThrusterComponent component, ShuttleComponent shuttleComponent, TransformComponent xform, Angle? angle = null)
     {
-        var thrustScaled = GetThrustScaled(component);
+        var thrustScaled = component.Thrust * GetSettingScale(component);
 
         switch (component.Type)
         {
