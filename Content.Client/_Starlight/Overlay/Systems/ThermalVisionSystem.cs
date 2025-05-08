@@ -10,6 +10,8 @@ using Robust.Shared.Timing;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Flash.Components;
 using Content.Shared.Starlight.Overlay;
+using Content.Shared.Mech.Components;
+using Content.Shared.Mech;
 
 namespace Content.Client._Starlight.Overlay;
 
@@ -26,12 +28,17 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
     private ThermalVisionEntityHighlightOverlay _throughWallsOverlay = default!;
     private ThermalVisionOverlay _overlay = default!;
 
+    [ViewVariables]
     private EntityUid? _effect = null;
     private readonly EntProtoId _effectPrototype = "EffectThermalVision";
     protected override bool IsPredict() => !_timing.IsFirstTimePredicted;
     public override void Initialize()
     {
         base.Initialize();
+
+        //handled in base class
+        //SubscribeLocalEvent<ThermalVisionComponent, ComponentInit>(OnVisionInit);
+        //SubscribeLocalEvent<ThermalVisionComponent, ComponentShutdown>(OnVisionShutdown);
 
         SubscribeLocalEvent<ThermalVisionComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ThermalVisionComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);

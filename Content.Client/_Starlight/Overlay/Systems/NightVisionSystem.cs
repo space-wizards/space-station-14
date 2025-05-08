@@ -21,6 +21,7 @@ public sealed class NightVisionSystem : EntitySystem
     [Dependency] private readonly FlashImmunitySystem _flashImmunity = default!;
 
     private NightVisionOverlay _overlay = default!;
+    [ViewVariables]
     private EntityUid? _effect = null;
     private readonly EntProtoId _effectPrototype = "EffectNightVision";
 

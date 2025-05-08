@@ -24,10 +24,16 @@ public abstract class SharedThermalVisionSystem : EntitySystem
     }
     
     private void OnVisionInit(Entity<ThermalVisionComponent> ent, ref ComponentInit args) 
-        => _actionsSystem.AddAction(ent.Owner, ref ent.Comp.ActionEntity, Action);
+    {
+        _actionsSystem.AddAction(ent.Owner, ref ent.Comp.ActionEntity, Action);
+    }
 
     private void OnVisionShutdown(Entity<ThermalVisionComponent> ent, ref ComponentShutdown args) 
-        => _actionsSystem.RemoveAction(ent.Comp.ActionEntity);
+    {
+        _actionsSystem.RemoveAction(ent.Comp.ActionEntity);
+        //force turn off
+        ToggleOff(ent); 
+    }
 
     private void OnToggleThermalVision(Entity<ThermalVisionComponent> ent, ref ToggleThermalVisionEvent args)
     {
