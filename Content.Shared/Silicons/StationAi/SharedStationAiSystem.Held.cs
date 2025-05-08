@@ -157,19 +157,19 @@ public abstract partial class SharedStationAiSystem
 
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!_uiSystem.HasUi(args.Target, AiUi.Key))
-            return;
-
-        // No cross-grid
-        if (Transform(args.Target).GridUid != Transform(args.User).GridUid)
-            return;
-
         if (!args.CanComplexInteract
             || !HasComp<StationAiHeldComponent>(args.User)
             || !args.CanInteract)
         {
             return;
         }
+
+        if (!_uiSystem.HasUi(args.Target, AiUi.Key))
+            return;
+
+        // No cross-grid
+        if (Transform(args.Target).GridUid != Transform(args.User).GridUid)
+            return;
 
         var user = args.User;
 
