@@ -26,9 +26,13 @@
   source: https://freesound.org/people/richwise/sounds/414374/
 
 - files: ["pyro_crit.ogg"]
-  license: "CC-BY-NC-4.0"
-  copyright: "Robinhood76 (Freesound), edited by Quantum-cross@github"
+  license: "Custom"
+  copyright: "Multiple sounds, edited and layered by GonTar"
   source: https://freesound.org/people/Robinhood76/sounds/612277/
+  # additional sources:
+  # source: https://freesound.org/people/Fission9/sounds/474850/
+  # source: https://pixabay.com/sound-effects/rubber-stretch-sound-effect-201310/ (Pixabay license)
+  # source: https://pixabay.com/sound-effects/fx-collection-of-flame-sword-swoosh-sound-design-elements-275902/ (Pixabay license)
 
 - files: ["grav_crit.ogg"]
   license: "CC0-1.0"
