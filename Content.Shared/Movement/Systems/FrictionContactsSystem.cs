@@ -1,3 +1,4 @@
+using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -7,6 +8,7 @@ namespace Content.Shared.Movement.Systems;
 
 public sealed class FrictionContactsSystem : EntitySystem
 {
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
 
@@ -82,12 +84,19 @@ public sealed class FrictionContactsSystem : EntitySystem
         var frictionNoInput = 0.0f;
         var acceleration = 0.0f;
 
+        var isAirborne = physicsComponent.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(entity, physicsComponent);
+
         var remove = true;
         var entries = 0;
         foreach (var ent in _physics.GetContactingEntities(entity, physicsComponent))
         {
             if (!TryComp<FrictionContactsComponent>(ent, out var contacts))
                 continue;
+
+            // Entities that are airborne should not be affected by contact slowdowns that are specified to not affect airborne entities.
+            if (isAirborne && !contacts.AffectAirborne)
+                continue;
+
             friction += contacts.MobFriction;
             frictionNoInput += contacts.MobFrictionNoInput ?? contacts.MobFriction;
             acceleration += contacts.MobAcceleration;
