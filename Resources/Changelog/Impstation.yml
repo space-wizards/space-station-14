@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: AvianMaiden
   changes:
-  - message: Reverted the Drozd sprite to what it was before
-    type: Remove
-  id: 1118
-  time: '2025-02-13T17:14:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1671
-- author: AvianMaiden
-  changes:
   - message: Reverted the empty gun click sound
     type: Remove
   id: 1119
@@ -4156,3 +4149,10 @@
   id: 1617
   time: '2025-05-08T23:39:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2420
+- author: Ecramox
+  changes:
+  - message: The RD has a shiny new cloak in place of the old shitty one.
+    type: Tweak
+  id: 1618
+  time: '2025-05-08T23:40:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2418
