@@ -1,8 +1,11 @@
-﻿using Content.Client.Implants.UI;
+using Content.Client.Implants.UI;
 using Content.Client.Items;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
+using Robust.Client.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Implants;
 
@@ -14,9 +17,42 @@ public sealed class ImplanterSystem : SharedImplanterSystem
     public override void Initialize()
     {
         base.Initialize();
-
         SubscribeLocalEvent<ImplanterComponent, AfterAutoHandleStateEvent>(OnHandleImplanterState);
+        SubscribeLocalEvent<ImplanterComponent, DrawImplantAttemptEvent>(ChangeSprite);
         Subs.ItemStatus<ImplanterComponent>(ent => new ImplanterStatusControl(ent));
+    }
+
+    private void ChangeSprite(EntityUid uid, ImplanterComponent comp, DrawImplantAttemptEvent args)
+    {
+        Log.Info($"Implanter {args.Implanter} is trying to implant {args.Implant}.");
+        if (!TryComp(args.Implant, out SubdermalImplantComponent? implantComp))
+            return;
+
+        if (TryComp<SpriteComponent>(args.Implanter, out var sprite))
+        {
+            sprite.LayerSetColor("implantFull", implantComp.Color);
+        }
+    }
+
+    protected override void OnImplanterInit(EntityUid uid, ImplanterComponent component, ComponentInit args)
+    {
+        SubdermalImplantComponent? subdermal = null;
+        base.OnImplanterInit(uid, component, args);
+        if (component.Implant != null)
+            if (_proto.TryIndex<EntityPrototype>(component.Implant.Value.Id, out var proto))
+            {
+                if (proto.TryGetComponent<SubdermalImplantComponent>(out var comp))
+                {
+                    subdermal = comp;
+                }
+            }
+        if (subdermal != null)
+        {
+            if (TryComp<SpriteComponent>(uid, out var sprite))
+            {
+                sprite.LayerSetColor("implantFull", subdermal.Color);
+            }
+        }
     }
 
     private void OnHandleImplanterState(EntityUid uid, ImplanterComponent component, ref AfterAutoHandleStateEvent args)

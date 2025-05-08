@@ -42,10 +42,12 @@ public abstract class SharedImplanterSystem : EntitySystem
         SubscribeLocalEvent<ImplanterComponent, DeimplantChangeVerbMessage>(OnSelected);
     }
 
-    private void OnImplanterInit(EntityUid uid, ImplanterComponent component, ComponentInit args)
+    protected virtual void OnImplanterInit(EntityUid uid, ImplanterComponent component, ComponentInit args)
     {
         if (component.Implant != null)
+        {
             component.ImplanterSlot.StartingItem = component.Implant;
+        }
 
         _itemSlots.AddItemSlot(uid, ImplanterComponent.ImplanterSlotId, component.ImplanterSlot);
 
@@ -285,6 +287,14 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
         RaiseLocalEvent(target, ref ev);
+
+        var drawEv = new DrawImplantAttemptEvent
+        {
+            Implant = implant,
+            Implanter = implanter
+        };
+        Log.Info($"Implanter {target} is trying to draw {implant}.");
+        RaiseLocalEvent(implanter, drawEv);
     }
 
     private void DrawCatastrophicFailure(EntityUid implanter, ImplanterComponent component, EntityUid user)
@@ -307,7 +317,7 @@ public abstract class SharedImplanterSystem : EntitySystem
         ChangeOnImplantVisualizer(uid, component);
     }
 
-    private void ChangeOnImplantVisualizer(EntityUid uid, ImplanterComponent component)
+    protected virtual void ChangeOnImplantVisualizer(EntityUid uid, ImplanterComponent component)
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
@@ -370,6 +380,11 @@ public sealed class AddImplantAttemptEvent : CancellableEntityEventArgs
         Implant = implant;
         Implanter = implanter;
     }
+}
+
+[Serializable, NetSerializable]
+public sealed class DrawImplantAttemptEvent : EntityEventArgs
+{
 }
 
 /// <summary>

@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Whitelist;
+using Robust.Shared.Animations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -56,6 +57,17 @@ public sealed partial class SubdermalImplantComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId? DrawableProtoIdOverride;
+
+    [DataField("color")]
+    private Color color = Color.Green;
+
+    [Animatable]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public Color Color
+    {
+        get => color;
+        set => color = value;
+    }
 }
 
 /// <summary>

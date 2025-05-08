@@ -20,6 +20,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      color: "#6e008c"
       whitelist:
         components:
         - MobState # admeme implanting a chair with trombone implant needs to give the chair mobstate so it can die first
@@ -41,6 +42,7 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionToggleLight
+      color: "#fcf803"
     - type: PointLight
       enabled: false
       radius: 2.5
@@ -63,6 +65,7 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateHonkImplant
+      color: "#fc03c6"
     - type: TriggerImplantAction
     - type: EmitSoundOnTrigger
       sound:
@@ -83,6 +86,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      color: "#00ff22"
       whitelist:
         components:
         - MobState # admeme implanting a chair with tracking implant needs to give the chair mobstate so it can die first
@@ -109,6 +113,7 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionOpenStorageImplant
+      color: "#781e00"
       whitelist:
         components:
         - Hands # no use giving a mouse a storage implant, but a monkey is another story...
@@ -136,6 +141,7 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateFreedomImplant
+      color: "#636363"
       whitelist:
         components:
         - Cuffable # useless if you cant be cuffed
@@ -148,6 +154,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
+    color: "#520000"
   - type: RadioImplant
     radioChannels:
     - Syndicate
@@ -160,6 +167,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
+    color: "#ff0000"
     implantAction: ActionOpenUplinkImplant
     whitelist:
       components:
@@ -180,6 +188,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      color: "#00ffdd"
       implantAction: ActionActivateEmpImplant
     - type: TriggerImplantAction
     - type: EmpOnTrigger
@@ -196,6 +205,7 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateScramImplant
+      color: "#b7ff00"
     - type: TriggerImplantAction
     - type: ScramImplant
 
@@ -208,6 +218,7 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateDnaScramblerImplant
+      color: "#85381e"
       whitelist:
         components:
         - HumanoidAppearance # syndies cant turn hamlet into a human
@@ -224,6 +235,7 @@
     - type: SubdermalImplant
       permanent: true
       implantAction: ActionActivateMicroBomb
+      color: "#2e0000"
     - type: TriggerOnMobstateChange
       mobState:
       - Dead
@@ -253,6 +265,7 @@
   components:
     - type: SubdermalImplant
       permanent: true
+      color: "#1c0000"
     - type: TriggerOnMobstateChange #Chains with OnUseTimerTrigger
       mobState:
       - Dead
@@ -289,6 +302,7 @@
   - type: SubdermalImplant
     permanent: true
     implantAction: ActionActivateDeathAcidifier
+    color: "#87ff30"
   - type: TriggerOnMobstateChange
     mobState:
     - Dead
@@ -312,6 +326,7 @@
   components:
     - type: SubdermalImplant
       permanent: true
+      color: "#ffd230"
       whitelist:
         components:
         - MobState # admeme implanting a chair with rattle implant needs to give the chair mobstate so it can die first
@@ -330,6 +345,7 @@
   components:
       - type: SubdermalImplant
         implantAction: FakeMindShieldToggleAction
+        color: "#3661ff"
       - type: FakeMindShieldImplant
 
 # Sec and Command implants
@@ -341,8 +357,9 @@
   description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
   categories: [ HideSpawnMenu ]
   components:
-   - type: SubdermalImplant
-   - type: MindShieldImplant
+  - type: SubdermalImplant
+    color: "#5cb6ff"
+  - type: MindShieldImplant
 
 # Centcomm implants
 
@@ -354,6 +371,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
+    color: "#0ac700"
   - type: RadioImplant
     radioChannels:
     - CentCom
@@ -365,5 +383,7 @@
   description: This implant will inform the Centcomm radio channel should the user fall into critical condition or die.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SubdermalImplant
+    color: "#41ff30"
   - type: Rattle
     radioChannel: CentCom
