@@ -167,7 +167,6 @@
       Unsexed: UnisexSiliconXenoborg
     screamAction: null
   - type: DamagedSiliconAccent 
-    damageAtMaxCorruption: 375
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:
@@ -442,8 +441,6 @@
         acts: [ "Destruction" ]
   - type: Repairable
     doAfterDelay: 25 # more HP, more time to heal
-  - type: DamagedSiliconAccent 
-    damageAtMaxCorruption: 750
   - type: ContainerFill
     containers:
       borg_brain:
