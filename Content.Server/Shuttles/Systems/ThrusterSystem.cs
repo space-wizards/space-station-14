@@ -196,9 +196,13 @@ public sealed class ThrusterSystem : EntitySystem
             return;
         }
 
-        SubtractThrust(ent.Owner, ent.Comp, shuttleComponent, xform);
+        if (ent.Comp.IsOn)
+            SubtractThrust(ent.Owner, ent.Comp, shuttleComponent, xform);
+
         ent.Comp.SettingLevel = setting;
-        AddThrust(ent.Owner, ent.Comp, shuttleComponent, xform);
+
+        if (ent.Comp.IsOn)
+            AddThrust(ent.Owner, ent.Comp, shuttleComponent, xform);
 
         _audio.PlayPvs(ent.Comp.SettingSound, ent.Owner);
         _popup.PopupEntity(Loc.GetString("thruster-switched-setting", ("setting", setting)), ent);
@@ -215,8 +219,8 @@ public sealed class ThrusterSystem : EntitySystem
         return component.Thrust * component.SettingLevel switch
         {
             ThrusterSetting.Maximum     => 1f,
-            ThrusterSetting.High        => 1f / 5f,
-            ThrusterSetting.Medium      => 1f / 10f,
+            ThrusterSetting.High        => 1f / 2f,
+            ThrusterSetting.Medium      => 1f / 5f,
             ThrusterSetting.Low         => 1f / 20f,
             _ => throw new ArgumentException(nameof(component.SettingLevel))
         };
