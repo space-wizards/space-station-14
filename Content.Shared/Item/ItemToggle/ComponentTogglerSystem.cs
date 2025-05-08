@@ -17,6 +17,8 @@ public sealed class ComponentTogglerSystem : EntitySystem
     private void OnToggled(Entity<ComponentTogglerComponent> ent, ref ItemToggledEvent args)
     {
         var target = ent.Comp.Parent ? Transform(ent).ParentUid : ent.Owner;
+        if (TerminatingOrDeleted(target))
+            return;
 
         if (args.Activated)
             EntityManager.AddComponents(target, ent.Comp.Components);

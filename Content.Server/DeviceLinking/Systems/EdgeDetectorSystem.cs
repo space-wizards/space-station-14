@@ -1,6 +1,6 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork;
-using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEvent;
+using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.DeviceLinking.Systems;
 

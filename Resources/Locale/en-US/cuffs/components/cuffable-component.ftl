@@ -8,6 +8,7 @@ cuffable-component-start-uncuffing-target-message = You start unrestraining {$ta
 cuffable-component-start-uncuffing-by-other-message = {$otherName} starts unrestraining you!
 
 cuffable-component-remove-cuffs-success-message = You successfully remove the restraints.
+cuffable-component-remove-cuffs-push-success-message = You successfully remove the restraints and push {$otherName} down.
 cuffable-component-remove-cuffs-by-other-success-message = {$otherName} unrestrains your hands.
 cuffable-component-remove-cuffs-to-other-partial-success-message = You successfully remove the restraints. {$cuffedHandCount} of {$otherName}'s hands remain restrained.
 cuffable-component-remove-cuffs-by-other-partial-success-message = {$otherName} removes your restraints. {$cuffedHandCount} of your hands remain restrained.

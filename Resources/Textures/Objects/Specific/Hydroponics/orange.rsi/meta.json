@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/commit/1dbcf389b0ec6b2c51b002df5fef8dd1519f8068, inhands by mubururu_ (github)",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/commit/1dbcf389b0ec6b2c51b002df5fef8dd1519f8068, inhands by mubururu_ (github), seed.png modified from https://github.com/space-wizards/space-station-14/pull/23210/files#diff-1ee24e9bb4023f490a3f87c861b65e459bd3fda10e688471cdf72b8a8aab381b by Chaoticaa (github), Growth stages, harvest, dead, and produce created by Chaoticaa (GitHub)",
     "size": {
         "x": 32,
         "y": 32
