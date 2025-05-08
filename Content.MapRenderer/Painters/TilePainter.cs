@@ -53,7 +53,27 @@ namespace Content.MapRenderer.Painters
 
                 var x = (int) (tile.X + xOffset);
                 var y = (int) (tile.Y + yOffset);
-                var image = images[path][tile.Tile.Variant];
+                var image = images[path][tile.Tile.Variant].CloneAs<Rgba32>();
+
+                switch (tile.Tile.RotationMirroring % 4)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        image.Mutate(o => o.Rotate(270f));
+                        break;
+                    case 2:
+                        image.Mutate(o => o.Rotate(180f));
+                        break;
+                    case 3:
+                        image.Mutate(o => o.Rotate(90f));
+                        break;
+                }
+
+                if (tile.Tile.RotationMirroring < 4)
+                {
+                    image.Mutate(o => o.Flip(FlipMode.Vertical));
+                }
 
                 gridCanvas.Mutate(o => o.DrawImage(image, new Point(x * tileSize, y * tileSize), 1));
 
