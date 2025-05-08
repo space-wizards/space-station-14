@@ -36,7 +36,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Wallmounts/fireaxe_cabinet.rsi
+    sprite: _Impstation/Structures/Wallmounts/fireaxe_cabinet.rsi #imp
     layers:
     - state: cabinet
     - state: fireaxe

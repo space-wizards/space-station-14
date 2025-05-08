@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by AvianMaiden for Impstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "glass"
+    },
+    {
+      "name": "glass-1"
+    },
+    {
+      "name": "glass-2"
+    },
+    {
+      "name": "glass-3"
+    },
+    {
+      "name": "glass-4"
+    },
+    {
+      "name": "glass-up"
+    },
+    {
+      "name": "locked"
+    },
+    {
+      "name": "shotgun"
+    },
+    {
+      "name": "unlocked"
+    },
+    {
+      "name": "cabinet"
+    },
+    {
+      "name": "cabinet-empty-closed"
+    },
+    {
+      "name": "cabinet-empty-open"
+    },
+    {
+      "name": "cabinet-filled-closed"
+    },
+    {
+      "name": "cabinet-filled-open"
+    }
+  ]
+}
