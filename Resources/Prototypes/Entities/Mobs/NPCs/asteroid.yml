@@ -325,7 +325,7 @@
     price: 5000
   - type: Tag
     tags:
-      - Remains
+    - HivelordRemains
 
 - type: entity
   id: FoodHivelordRemainsInert
@@ -344,4 +344,4 @@
     price: 500
   - type: Tag
     tags:
-      - Remains
+    - HivelordRemains

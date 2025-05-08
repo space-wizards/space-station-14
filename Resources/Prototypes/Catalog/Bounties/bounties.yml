@@ -780,8 +780,8 @@
     amount: 4
     whitelist:
       tags:
-      - Plates
-      
+      - GoliathPlate
+
 - type: cargoBounty
   id: BountyRemains
   reward: 15000
@@ -791,8 +791,8 @@
     amount: 2
     whitelist:
       tags:
-      - Remains
-      
+      - HivelordRemains
+
 - type: cargoBounty
   id: BountyRing
   reward: 12500

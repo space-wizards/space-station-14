@@ -802,7 +802,7 @@
     - 0,0,2,2
   - type: Tag
     tags:
-      - Plates
+    - GoliathPlate
 
 - type: entity
   parent: MaterialGoliathHide

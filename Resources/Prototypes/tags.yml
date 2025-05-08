@@ -610,6 +610,9 @@
   id: Goliath
 
 - type: Tag
+  id: GoliathPlate
+
+- type: Tag
   id: GPS
 
 - type: Tag
@@ -701,6 +704,9 @@
 
 - type: Tag
   id: HighSecDoor
+
+- type: Tag
+  id: HivelordRemains
 
 - type: Tag
   id: HiViz
@@ -1007,9 +1013,6 @@
   id: PKAUpgrade
 
 - type: Tag
-  id: Plates
-
-- type: Tag
   id: PlantAnalyzer
 
 - type: Tag
@@ -1087,9 +1090,6 @@
 
 - type: Tag
   id: ReinforcedGlassShard
-
-- type: Tag
-  id: Remains
 
 - type: Tag
   id: ReptilianFood
