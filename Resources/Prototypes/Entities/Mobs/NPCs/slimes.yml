@@ -39,7 +39,6 @@
     - FootstepSound
     - DoorBumpOpener
   - type: Butcherable
-    butcheringType: Knife
     spawned:
     - id: FoodMeatSlime
       amount: 2
@@ -56,6 +55,7 @@
     damageModifierSet: Slime
   - type: Bloodstream
     bloodReagent: Slime
+    bloodMaxVolume: 150
     bloodlossDamage:
       types:
         Bloodloss:
@@ -73,10 +73,6 @@
       Flammable: [ Touch ]
       Extinguish: [ Touch ]
     reactions:
-    - reagents: [ Water, SpaceCleaner ]
-      methods: [ Touch ]
-      effects:
-      - !type:WashCreamPieReaction
     - reagents: [ Water ]
       methods: [ Touch ]
       effects:
@@ -101,7 +97,7 @@
     damage:
       types:
         Blunt: 6
-        Structural: 4
+        Structural: 8 # Values below 5 do nothing to help destroy airlocks, this wont help destroy walls
         Caustic: 4
   - type: InteractionPopup
     successChance: 0.5
@@ -112,6 +108,23 @@
     speechSounds: Slime
   - type: TypingIndicator
     proto: slime
+
+- type: entity
+  name: green slime
+  id: MobAdultSlimesAngry
+  suffix: Angry
+  abstract: true
+  components:
+    - type: NpcFactionMember
+      factions:
+        - SimpleHostile
+    - type: GhostRole
+      description: ghost-role-information-angry-slimes-description
+      rules: ghost-role-information-angry-slimes-rules
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
+      raffle:
+        settings: short
 
 - type: entity
   name: basic slime
@@ -157,20 +170,8 @@
 
 - type: entity
   name: blue slime
-  parent: MobAdultSlimesBlue
+  parent: [ MobAdultSlimesAngry, MobAdultSlimesBlue ]
   id: MobAdultSlimesBlueAngry
-  suffix: Angry
-  components:
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      rules: ghost-role-information-angry-slimes-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
-      raffle:
-        settings: short
 
 - type: entity
   name: green slime
@@ -197,20 +198,8 @@
 
 - type: entity
   name: green slime
-  parent: MobAdultSlimesGreen
+  parent: [ MobAdultSlimesAngry, MobAdultSlimesBlue ]
   id: MobAdultSlimesGreenAngry
-  suffix: Angry
-  components:
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      rules: ghost-role-information-angry-slimes-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
-      raffle:
-        settings: short
 
 - type: entity
   name: yellow slime
@@ -236,17 +225,6 @@
 
 - type: entity
   name: yellow slime
-  parent: MobAdultSlimesYellow
+  parent: [ MobAdultSlimesAngry, MobAdultSlimesBlue ]
   id: MobAdultSlimesYellowAngry
   suffix: Angry
-  components:
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      rules: ghost-role-information-angry-slimes-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
-      raffle:
-        settings: short
