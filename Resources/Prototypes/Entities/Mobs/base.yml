@@ -238,3 +238,32 @@
     bloodlossHealDamage:
       types:
         Bloodloss: -1
+
+# Used for robotic mobs, like hivebots and cyborgs
+- type: entity
+  save: false
+  id: MobRobotic
+  abstract: true
+  components:
+  - type: Body
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Flashed
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+    screamAction: null
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Tag
+    tags:
+    - Unimplantable

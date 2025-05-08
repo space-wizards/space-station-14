@@ -1,14 +1,11 @@
 - type: entity
-  parent: [BaseMob, StripableInventoryBase]
+  parent: [ BaseMob, StripableInventoryBase, MobRobotic ]
   id: BaseBorgChassis
   name: cyborg
   description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
   save: false
   abstract: true
   components:
-  - type: Reactive
-    groups:
-      Acidic: [Touch]
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -141,22 +138,6 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-  - type: Body
-  - type: StatusEffects
-    allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
-    - Flashed
-  - type: TypingIndicator
-    proto: robot
-  - type: Speech
-    speechVerb: Robotic
-    speechSounds: Borg
-  - type: Vocal
-    sounds:
-      Unsexed: UnisexSilicon
-    screamAction: null
   - type: DamagedSiliconAccent
   - type: UnblockableSpeech
   - type: FootstepModifier
