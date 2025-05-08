@@ -375,6 +375,18 @@
     node: chairSteelBench
 
 - type: entity
+  name: card stool
+  id: CardStool
+  parent: UnanchoredChairBase
+  description: Make sure you sit *really* gently.
+  components:
+  - type: Sprite
+    state: card-stool
+  - type: Construction
+    graph: Seat
+    node: stoolCard
+
+- type: entity
   name: wooden bench
   id: WoodenBench
   parent: ChairBase

@@ -1181,7 +1181,7 @@
 
 - type: construction
   id: CardDoor
-  graph: cardDoor #was DoorGraph              also was CardDoor
+  graph: DoorGraph #was cardDoor              also was CardDoor
   startNode: start
   targetNode: cardDoor
   category: construction-category-structures
