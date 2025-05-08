@@ -1,12 +1,4 @@
 - type: entity
-  parent: [ BaseMob, StripableInventoryBase, MobRobotic ]
-  id: BaseBorgChassis
-  name: cyborg
-  description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
-  save: false
-  abstract: true
-  components:
-- type: entity
   parent: [BaseMob, StripableInventoryBase]
   id: BaseBorgChassis
   name: cyborg
