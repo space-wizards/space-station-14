@@ -1348,6 +1348,9 @@
       Steel: 2
       Glass: 5
       Cable: 2
+  - type: Tag # imp
+    tags: 
+    - JukeboxBoard
 
 - type: entity
   parent: BaseMachineCircuitboard

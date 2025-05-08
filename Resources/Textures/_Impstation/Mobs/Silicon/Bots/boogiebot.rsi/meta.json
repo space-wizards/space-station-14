@@ -1,0 +1,53 @@
+{
+    "copyright" : "Taken from https://github.com/goonstation/goonstation",
+    "license" : "CC-BY-SA-3.0",
+    "version" : 1,
+    "size" : {
+       "x" : 32,
+       "y" : 32
+    },
+    "states" : [
+    {
+        "name" : "boogiebot"
+    },
+    {
+        "name" : "boogiebot-dead"
+    },
+    {
+        "name" : "boogiebot-d1",
+        "delays": [
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                1
+            ]
+        ]
+    },
+    {
+        "name" : "boogiebot-d2",
+        "delays": [
+            [
+                0.1,
+                0.1,
+                0.1,
+                1
+            ]
+        ]
+    },
+    {
+        "name" : "boogiebot-d3",
+        "delays": [
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                1
+            ]
+        ]
+    }
+    ]
+ }

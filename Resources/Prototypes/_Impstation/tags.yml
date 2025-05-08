@@ -76,6 +76,9 @@
   id: JanitorialWelder
 
 - type: Tag
+  id: JukeboxBoard
+
+- type: Tag
   id: KodeEdible
 
 - type: Tag
