@@ -53,9 +53,11 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.5
     baseSprintSpeed: 2.5
-  - type: PointLight
-    radius: 1.0
-    energy: 1
+# Doesn't seem to work for some reason?
+#  - type: PointLight
+#    radius: 1.0
+#    energy: 1
+#    castShadows: false
     color: "#bc5858"
   - type: RotationVisuals
     horizontalRotation: 90
@@ -68,8 +70,6 @@
   description: Agitating, mechanized pests. This one has a gun.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/hivebot.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: ranged_attack
@@ -100,8 +100,6 @@
   description: Agitating, mechanized pests. This one looks much stronger then normal.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/hivebot.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: strong_attack
