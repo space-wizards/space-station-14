@@ -5,8 +5,9 @@ namespace Content.Shared.Eye.Blinding.Components;
 
 [RegisterComponent]
 [NetworkedComponent]
-public sealed partial class CycloritesVisionComponent : Component
+[AutoGenerateComponentState]
+public sealed partial class CycloriteVisionComponent : Component
 {
-    [DataField]
-    public bool blockedByFlashImmunity = false;
+    [DataField, AutoNetworkedField]
+    public bool Active = true;
 }

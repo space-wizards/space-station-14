@@ -6,14 +6,9 @@ namespace Content.Shared.Eye.Blinding.Components;
 
 [RegisterComponent]
 [NetworkedComponent]
+[AutoGenerateComponentState]
 public sealed partial class NightVisionComponent : Component
 {
-    [DataField]
-    public EntityUid? Effect = null;
-    
-    [DataField]
-    public EntProtoId EffectPrototype = "EffectNightVision";
-
-    [DataField]
-    public bool blockedByFlashImmunity = false;
+    [DataField, AutoNetworkedField]
+    public bool Active = true;
 }
