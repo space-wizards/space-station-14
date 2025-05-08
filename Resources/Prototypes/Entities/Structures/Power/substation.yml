@@ -25,6 +25,7 @@
     supplyRampTolerance: 5000
     supplyRampRate: 1000
   - type: StationInfiniteBatteryTarget
+  - type: StationAiWhitelist
 
   # Interface
   - type: BatteryInterface

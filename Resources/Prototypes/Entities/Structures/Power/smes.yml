@@ -97,6 +97,7 @@
       - PowerStorage
       - VoltageNetworks
       - Power
+    - type: StationAiWhitelist
 
     # Interface
     - type: BatteryInterface
