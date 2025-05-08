@@ -160,6 +160,10 @@ public abstract partial class SharedStationAiSystem
         if (!_uiSystem.HasUi(args.Target, AiUi.Key))
             return;
 
+        // No cross-grid
+        if (Transform(args.Target).GridUid != Transform(args.User).GridUid)
+            return;
+
         if (!args.CanComplexInteract
             || !HasComp<StationAiHeldComponent>(args.User)
             || !args.CanInteract)
