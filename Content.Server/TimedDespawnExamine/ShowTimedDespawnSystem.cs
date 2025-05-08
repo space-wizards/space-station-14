@@ -1,3 +1,4 @@
+using Content.Shared.TimedDespawnExamine;
 using Content.Shared.Examine;
 
 using Robust.Shared.Spawners;
