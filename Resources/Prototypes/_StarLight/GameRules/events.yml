@@ -163,5 +163,5 @@
   components:
     - type: RuleGrids
     - type: LoadMapRule
-    - gridPath: /Maps/Shuttles/NTExperimentalBotanyshuttle.yml
+      gridPath: /Maps/Shuttles/NT-Experimental-Botany-shuttle.yml
     
