@@ -51,45 +51,48 @@ public sealed partial class BuildMech : IGraphAction
             return;
         }
 
-        if (batteryContainer.ContainedEntities.Count != 1)
+        if (batteryContainer.ContainedEntities.Count == 1)
         {
             Logger.Warning($"Mech construct entity {uid} did not have exactly one item in the specified '{BatteryContainer}' container! Aborting build mech action.");
         }
-        if (gasTankContainer.ContainedEntities.Count != 1)
-        {
-            Logger.Warning($"Mech construct entity {uid} did not have exactly one item in the specified '{GasTankContainer}' container! Aborting build mech action.");
-        }
-
-        var cell = batteryContainer.ContainedEntities[0];
-        var tank = gasTankContainer.ContainedEntities[0];
-
-        if (!entityManager.TryGetComponent<BatteryComponent>(cell, out var batteryComponent))
-        {
-            Logger.Warning($"Mech construct entity {uid} had an invalid entity in container \"{BatteryContainer}\"! Aborting build mech action.");
-            return;
-        }
-        if (!entityManager.TryGetComponent<GasTankComponent>(tank, out var gasTankComponent))
-        {
-            Logger.Warning($"Mech construct entity {uid} had an invalid entity in container \"{gasTankContainer}\"! Aborting build mech action.");
-            return;
-        }
-
-        containerSystem.Remove(cell, batteryContainer);
 
         var transform = entityManager.GetComponent<TransformComponent>(uid);
         var mech = entityManager.SpawnEntity(MechPrototype, transform.Coordinates);
 
-        if (entityManager.TryGetComponent<MechComponent>(mech, out var mechComp) && mechComp.BatterySlot.ContainedEntity == null)
+        if (entityManager.TryGetComponent<MechComponent>(mech, out var mechComp))
         {
-            mechSys.InsertBattery(mech, cell, mechComp, batteryComponent);
-            containerSystem.Insert(cell, mechComp.BatterySlot);
-            if (mechComp.GasTankSlot.ContainedEntity == null && gasTankContainer.ContainedEntities.Count > 0)
+            if (batteryContainer.ContainedEntities.Count == 1)
             {
-                mechSys.InsertGasTank(mech, tank, mechComp, gasTankComponent);
-                containerSystem.Insert(tank, mechComp.GasTankSlot);
+                var cell = batteryContainer.ContainedEntities[0];
+                if (!entityManager.TryGetComponent<BatteryComponent>(cell, out var batteryComponent))
+                {
+                    Logger.Warning($"Mech construct entity {uid} had an invalid entity in container \"{BatteryContainer}\"! Aborting build mech action.");
+                    return;
+                }
+                ;
+                containerSystem.Remove(cell, batteryContainer);
+                if (mechComp.BatterySlot.ContainedEntity == null)
+                {
+                    mechSys.InsertBattery(mech, cell, mechComp, batteryComponent);
+                    containerSystem.Insert(cell, mechComp.BatterySlot);
+                }
+            }
+            if(gasTankContainer.ContainedEntities.Count==1)
+            {
+                var tank = gasTankContainer.ContainedEntities[0];
+
+                if (!entityManager.TryGetComponent<GasTankComponent>(tank, out var gasTankComponent))
+                {
+                    Logger.Warning($"Mech construct entity {uid} had an invalid entity in container \"{gasTankContainer}\"! Aborting build mech action.");
+                    return;
+                }
+                if (mechComp.GasTankSlot.ContainedEntity == null && gasTankContainer.ContainedEntities.Count > 0)
+                {
+                    var gasTank = gasTankContainer.ContainedEntities[0];
+                    containerSystem.Insert(gasTank, mechComp.GasTankSlot);
+                }
             }
         }
-
         var entChangeEv = new ConstructionChangeEntityEvent(mech, uid);
         entityManager.EventBus.RaiseLocalEvent(uid, entChangeEv);
         entityManager.EventBus.RaiseLocalEvent(mech, entChangeEv, broadcast: true);
