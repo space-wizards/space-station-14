@@ -236,29 +236,27 @@ public sealed partial class ExplosionSystem
         foreach (var change in ev.Changes)
         {
             // only need to update the grid-edge map if a tile was added or removed from the grid.
-            if (!change.NewTile.Tile.IsEmpty && !change.OldTile.IsEmpty)
+            if (!change.NewTile.IsEmpty && !change.OldTile.IsEmpty)
                 return;
 
             if (!TryComp(ev.Entity, out MapGridComponent? grid))
                 return;
 
-            var tileRef = change.NewTile;
-
-            if (!_gridEdges.TryGetValue(tileRef.GridUid, out var edges))
+            if (!_gridEdges.TryGetValue(ev.Entity, out var edges))
             {
                 edges = new();
-                _gridEdges[tileRef.GridUid] = edges;
+                _gridEdges[ev.Entity] = edges;
             }
 
-            if (tileRef.Tile.IsEmpty)
+            if (change.NewTile.IsEmpty)
             {
                 // if the tile is empty, it cannot itself be an edge tile.
-                edges.Remove(tileRef.GridIndices);
+                edges.Remove(change.GridIndices);
 
                 // add any valid neighbours to the list of edge-tiles
                 for (var i = 0; i < NeighbourVectors.Length; i++)
                 {
-                    var neighbourIndex = tileRef.GridIndices + NeighbourVectors[i];
+                    var neighbourIndex = change.GridIndices + NeighbourVectors[i];
 
                     if (_mapSystem.TryGetTileRef(ev.Entity, grid, neighbourIndex, out var neighbourTile) && !neighbourTile.Tile.IsEmpty)
                     {
@@ -274,7 +272,7 @@ public sealed partial class ExplosionSystem
             // be edge tiles.
             for (var i = 0; i < NeighbourVectors.Length; i++)
             {
-                var neighbourIndex = tileRef.GridIndices + NeighbourVectors[i];
+                var neighbourIndex = change.GridIndices + NeighbourVectors[i];
 
                 if (edges.TryGetValue(neighbourIndex, out var neighborSpaceDir))
                 {
@@ -292,8 +290,8 @@ public sealed partial class ExplosionSystem
             }
 
             // finally check if the new tile is itself an edge tile
-            if (IsEdge(grid, tileRef.GridIndices, out var spaceDir))
-                edges.Add(tileRef.GridIndices, spaceDir);
+            if (IsEdge(grid, change.GridIndices, out var spaceDir))
+                edges.Add(change.GridIndices, spaceDir);
         }
     }
 

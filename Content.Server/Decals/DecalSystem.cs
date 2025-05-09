@@ -168,7 +168,7 @@ namespace Content.Server.Decals
                 if (!TryComp(args.Entity, out DecalGridComponent? grid))
                     return;
 
-                var indices = GetChunkIndices(change.NewTile.GridIndices);
+                var indices = GetChunkIndices(change.GridIndices);
                 var toDelete = new HashSet<uint>();
                 if (!grid.ChunkCollection.ChunkCollection.TryGetValue(indices, out var chunk))
                     return;
@@ -176,7 +176,7 @@ namespace Content.Server.Decals
                 foreach (var (uid, decal) in chunk.Decals)
                 {
                     if (new Vector2((int)Math.Floor(decal.Coordinates.X), (int)Math.Floor(decal.Coordinates.Y)) ==
-                        change.NewTile.GridIndices)
+                        change.GridIndices)
                     {
                         toDelete.Add(uid);
                     }

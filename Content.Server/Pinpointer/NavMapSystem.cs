@@ -103,10 +103,10 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
     {
         foreach (var change in ev.Changes)
         {
-            if (!change.EmptyChanged || !_navQuery.TryComp(change.NewTile.GridUid, out var navMap))
+            if (!change.EmptyChanged || !_navQuery.TryComp(ev.Entity, out var navMap))
                 return;
 
-            var tile = change.NewTile.GridIndices;
+            var tile = change.GridIndices;
             var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
 
             var chunk = EnsureChunk(navMap, chunkOrigin);
@@ -118,7 +118,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             if (change.NewTile.IsSpace(_tileDefManager))
             {
                 tileData = 0;
-                if (PruneEmpty((change.NewTile.GridUid, navMap), chunk))
+                if (PruneEmpty((ev.Entity, navMap), chunk))
                     return;
             }
             else
@@ -126,7 +126,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
                 tileData = FloorMask;
             }
 
-            DirtyChunk((change.NewTile.GridUid, navMap), chunk);
+            DirtyChunk((ev.Entity, navMap), chunk);
         }
     }
 

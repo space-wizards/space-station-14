@@ -127,10 +127,10 @@ namespace Content.Shared.SubFloor
                 if (change.OldTile.IsEmpty)
                     return; // Nothing is anchored here anyways.
 
-                if (change.NewTile.Tile.IsEmpty)
+                if (change.NewTile.IsEmpty)
                     return; // Anything that was here will be unanchored anyways.
 
-                UpdateTile(change.NewTile.GridUid, args.Entity.Comp, change.NewTile.GridIndices);
+                UpdateTile(args.Entity, args.Entity.Comp, change.GridIndices);
             }
         }
 

@@ -100,7 +100,7 @@ public sealed class ThrusterSystem : EntitySystem
             if (change.NewTile.IsSpace(_tileDefManager) || !change.OldTile.IsSpace(_tileDefManager))
                 return;
 
-            var tilePos = change.NewTile.GridIndices;
+            var tilePos = change.GridIndices;
             var grid = Comp<MapGridComponent>(uid);
             var xformQuery = GetEntityQuery<TransformComponent>();
             var thrusterQuery = GetEntityQuery<ThrusterComponent>();

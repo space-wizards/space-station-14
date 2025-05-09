@@ -52,10 +52,10 @@ public sealed partial class PathfindingSystem
     {
         foreach (var change in ev.Changes)
         {
-            if (change.OldTile.IsEmpty == change.NewTile.Tile.IsEmpty)
+            if (change.OldTile.IsEmpty == change.NewTile.IsEmpty)
                 return;
 
-            DirtyChunk(ev.Entity, _maps.GridTileToLocal(ev.Entity, ev.Entity.Comp, change.NewTile.GridIndices));
+            DirtyChunk(ev.Entity, _maps.GridTileToLocal(ev.Entity, ev.Entity.Comp, change.GridIndices));
         }
     }
 
