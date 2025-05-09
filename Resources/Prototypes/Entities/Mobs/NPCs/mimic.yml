@@ -1,17 +1,9 @@
 - type: entity
   name: mimic
   id: MobMimic
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: SimpleSpaceMobBase
   description: Surprise. # When this gets a proper write this should use the object's actual description >:)
   components:
-  - type: Tag
-    tags:
-    - FootstepSound
-  - type: InputMover
-  - type: MobMover
-  - type: NpcFactionMember
-    factions:
-    - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
     sprite: Structures/Machines/VendingMachines/cola.rsi
@@ -19,6 +11,7 @@
   - type: Icon
     sprite: Structures/Machines/VendingMachines/cola.rsi
     state: normal
+  - type: AnimationPlayer
   - type: Fixtures
     fixtures:
       fix1:
@@ -30,13 +23,9 @@
         - MobMask
         layer:
         - MachineLayer
-  - type: AnimationPlayer
-  - type: MeleeWeapon
-    angle: 0
-    animation: WeaponArcFist
-    damage:
-      types:
-        Blunt: 20
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile # Prevents things like snakes attacking it
   - type: MovementSpeedModifier
     baseWalkSpeed : 1
     baseSprintSpeed : 1
@@ -44,3 +33,11 @@
     spawned:
     - id: DrinkChangelingStingCan
       amount: 1
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcFist
+    damage:
+      types:
+        Blunt: 20
+  - type: Tag
+    tags: []
