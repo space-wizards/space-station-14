@@ -234,3 +234,47 @@
         Blunt: 0.11
   - type: StaticPrice
     price: 400
+
+- type: entity
+  name: mimic
+  id: MobMimic
+  parent: SimpleSpaceMobBase
+  description: Surprise. # When this gets a proper write this should use the object's actual description >:)
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Structures/Machines/VendingMachines/cola.rsi
+    state: normal
+  - type: Icon
+    sprite: Structures/Machines/VendingMachines/cola.rsi
+    state: normal
+  - type: AnimationPlayer
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
+        density: 1000
+        mask:
+        - MobMask
+        layer:
+        - MachineLayer
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile # Prevents things like snakes attacking it
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1
+    baseSprintSpeed : 1
+  - type: Butcherable
+    spawned:
+    - id: DrinkChangelingStingCan
+      amount: 1
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcFist
+    damage:
+      types:
+        Blunt: 20
+  - type: Tag
+    tags: []
