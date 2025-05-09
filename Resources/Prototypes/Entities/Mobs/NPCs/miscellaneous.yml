@@ -4,18 +4,18 @@
   parent: SimpleMobBase
   description: From the Viking age.
   components:
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: HTN
-      rootTask:
-        task: SimpleRangedHostileCompound
     - type: Sprite
       drawdepth: Mobs
       sprite: Mobs/Aliens/laser_raptor.rsi
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
           state: laser_raptor
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: laser_raptor
+        Dead:
+          Base: laser_raptor_dead
     - type: Fixtures
       fixtures:
         fix1:
@@ -27,12 +27,21 @@
             - MobMask
           layer:
             - MobLayer
-    - type: DamageStateVisuals
-      states:
-        Alive:
-          Base: laser_raptor
-        Dead:
-          Base: laser_raptor_dead
+    - type: NpcFactionMember
+      factions:
+        - SimpleHostile
+    - type: HTN
+      rootTask:
+        task: SimpleRangedHostileCompound
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2
+      baseSprintSpeed: 5
+    - type: BatterySelfRecharger
+      autoRecharge: true
+      autoRechargeRate: 1
+    - type: Battery
+      maxCharge: 16
+      startingCharge: 16
     - type: MobThresholds
       thresholds:
         0: Alive
@@ -40,22 +49,10 @@
     - type: Butcherable
       spawned:
       - id: FoodMeatChicken
-        amount: 2
-    - type: MovementSpeedModifier
-      baseWalkSpeed: 2
-      baseSprintSpeed: 5
-    - type: Tag
-      tags:
-        - FootstepSound
+        amount: 6
     - type: HitscanBatteryAmmoProvider
       proto: RedLightLaser
-      fireCost: 50
-    - type: BatterySelfRecharger
-      autoRecharge: true
-      autoRechargeRate: 50
-    - type: Battery
-      maxCharge: 1000
-      startingCharge: 1000
+      fireCost: 1
     - type: Gun
       fireRate: 1
       useKey: false
@@ -63,38 +60,63 @@
       availableModes:
         - SemiAuto
       soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-    - type: CombatMode
     - type: InteractionPopup
       successChance: 0.3
       interactSuccessString: petting-success-reptile
       interactFailureString: petting-failure-generic
       interactSuccessSound:
         path: /Audio/Animals/lizard_happy.ogg
+    - type: Tag
+      tags:
+        - FootstepSound
 
 - type: entity
-  id: MobTomatoKiller
   parent:
   - BaseSimpleMob
-  - MobDamageable
-  - MobPolymorphable
+  - MobCombat
   - MobBloodstream
   - MobFlammable
-  - MobCombat
+  id: MobTomatoKiller
   name: tomato killer
+  suffix: AI
   description: Looks like it's not you eating tomatoes today, it's the tomatoes eating you.
   components:
-  - type: GhostRole
-    prob: 0.05
-    makeSentient: true
-    allowSpeech: true
-    name: ghost-role-information-tomatokiller-name
-    description: ghost-role-information-tomatokiller-description
-    rules: ghost-role-information-familiar-rules
-    raffle:
-      settings: short
-  - type: GhostTakeoverAvailable
-  - type: CanEscapeInventory
-    baseResistTime: 3
+  - type: Sprite
+    sprite: Mobs/Demons/tomatokiller.rsi
+    noRot: true
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: PotencyVisuals
+  - type: Appearance
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 80
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+  - type: NpcFactionMember
+    factions:
+      - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: KillerTomatoCompound
+  - type: NPCImprintingOnSpawnBehaviour
+    whitelist:
+      components:
+      - HumanoidAppearance
+  - type: Climbing
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -134,40 +156,24 @@
         damage:
           types:
             Heat: 2
-  - type: ReplacementAccent
-    accent: tomatoKiller
-  - type: Item
-  - type: MultiHandedItem
-  - type: NpcFactionMember
-    factions:
-      - SimpleHostile
-  - type: HTN
-    rootTask:
-      task: KillerTomatoCompound
-  - type: NPCImprintingOnSpawnBehaviour
-    whitelist:
-      components:
-      - HumanoidAppearance
-  - type: Sprite
-    sprite: Mobs/Demons/tomatokiller.rsi
-    noRot: true
-    layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
   - type: Bloodstream
     bloodReagent: JuiceTomato
     bloodMaxVolume: 50
     chemicalMaxVolume: 30
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: alive
-      Dead:
-        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatTomato
       amount: 2
+  - type: StaticPrice
+    price: 400
+  - type: PassiveDamage # Slight passive damage. 35 hp \ 5 min \ 60 sec = 0.08
+    allowedStates:
+    - Alive
+    - Dead
+    damageCap: 50
+    damage:
+      types:
+        Blunt: 0.11
   - type: Destructible
     thresholds:
     - trigger:
@@ -189,51 +195,43 @@
     thresholds:
       0: Alive
       35: Dead
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.30
-        density: 80
-        mask:
-          - MobMask
-        layer:
-          - MobLayer
   - type: MeleeWeapon
     hidden: true
     damage:
       groups:
         Brute: 9
     animation: WeaponArcBite
-  - type: Climbing
-  - type: NameIdentifier
-    group: GenericNumber
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Effects/Footsteps/slime1.ogg
       params:
         volume: 3
+  - type: Extractable
+    grindableSolutionName: bloodstream
+  - type: Item
+  - type: MultiHandedItem
+  - type: CanEscapeInventory
+    baseResistTime: 3
+  - type: Produce
+    seedId: killerTomato
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    allowSpeech: true
+    name: ghost-role-information-tomatokiller-name
+    description: ghost-role-information-tomatokiller-description
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: short
+  - type: GhostTakeoverAvailable
+  - type: ReplacementAccent
+    accent: tomatoKiller
+  - type: NameIdentifier
+    group: GenericNumber
   - type: Tag
     tags:
       - FootstepSound
       - Fruit
-  - type: Extractable
-    grindableSolutionName: bloodstream
-  - type: PotencyVisuals
-  - type: Appearance
-  - type: Produce
-    seedId: killerTomato
-  - type: PassiveDamage # Slight passive damage. 35 hp \ 5 min \ 60 sec = 0.08
-    allowedStates:
-    - Alive
-    - Dead
-    damageCap: 50
-    damage:
-      types:
-        Blunt: 0.11
-  - type: StaticPrice
-    price: 400
 
 - type: entity
   name: mimic
