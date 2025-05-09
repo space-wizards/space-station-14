@@ -392,7 +392,9 @@ public sealed partial class CargoSystem
             return false;
 
         // todo: consider making the cargo bounties weighted.
-        var allBounties = _protoMan.EnumeratePrototypes<CargoBountyPrototype>().ToList();
+        var allBounties = _protoMan.EnumeratePrototypes<CargoBountyPrototype>()
+            .Where(p => p.Group == component.Group)
+            .ToList();
         var filteredBounties = new List<CargoBountyPrototype>();
         foreach (var proto in allBounties)
         {

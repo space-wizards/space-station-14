@@ -1,0 +1,52 @@
+# NOTE: if you add any bounties to this, you need to go to Resources/Prototypes/Entities/Stations/base.yml and adjust the thresholds on BaseStationSalvageJobs.
+# If you don't do this, you won't raise the limit for completing a given rank and may throw off some balance.
+
+# TODO: REDO DESCRIPTIONS
+
+- type: cargoBounty
+  id: BountyTeethSpaceCarp
+  reward: 7500
+  description: bounty-description-tooth-space-carp
+  group: SalvageJobTier1
+  entries:
+  - name: bounty-item-tooth-space-carp
+    amount: 8
+    whitelist:
+      tags:
+      - ToothSpaceCarp
+
+- type: cargoBounty
+  id: BountyTeethSharkminnow
+  reward: 15000
+  description: bounty-description-tooth-sharkminnow
+  group: SalvageJobTier2
+  entries:
+  - name: bounty-item-tooth-sharkminnow
+    amount: 5
+    whitelist:
+      tags:
+      - ToothSharkminnow
+
+- type: cargoBounty
+  id: BountyPlates
+  reward: 20000
+  description: bounty-description-plates
+  group: SalvageJobTier3
+  entries:
+  - name: bounty-item-plates
+    amount: 4
+    whitelist:
+      tags:
+      - GoliathPlate
+
+- type: cargoBounty
+  id: BountyRemains
+  reward: 15000
+  description: bounty-description-remains
+  group: SalvageJobTier3
+  entries:
+  - name: bounty-item-remains
+    amount: 2
+    whitelist:
+      tags:
+      - HivelordRemains
