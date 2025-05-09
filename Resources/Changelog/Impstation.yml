@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ruddygreat
-  changes:
-  - message: Some cargo items can no longer be bought for less than their sell price.
-    type: Tweak
-  id: 1124
-  time: '2025-02-14T02:22:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1681
 - author: TheGrimbeeper
   changes:
   - message: reduced radioactivity of uranium and uranium-based materials
@@ -4168,3 +4161,10 @@
   id: 1623
   time: '2025-05-08T23:59:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2373
+- author: jtfg-dev
+  changes:
+  - message: Cassette tapes are now five minutes per side.
+    type: Tweak
+  id: 1624
+  time: '2025-05-09T00:06:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2421
