@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nox38
-  changes:
-  - message: Deathsquad agents Matebas now come loaded with AP rounds.
-    type: Fix
-  id: 7942
-  time: '2025-02-12T00:43:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34910
 - author: MilonPL
   changes:
   - message: The announce command now takes optional color and sound parameters.
@@ -3928,3 +3921,11 @@
   id: 8444
   time: '2025-05-09T03:35:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37296
+- author: robinthedragon
+  changes:
+  - message: Basic operative bundle, which allows newkies to easily spend all 40 of
+      their TC on straightforwardly useful items.
+    type: Add
+  id: 8445
+  time: '2025-05-09T11:32:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37290
