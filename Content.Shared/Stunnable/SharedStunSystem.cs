@@ -368,10 +368,15 @@ public abstract class SharedStunSystem : EntitySystem
 
     #endregion
 
-    public void PlayStunAnimation(EntityUid uid, TimeSpan time)
+    public void TryStunAnimation(EntityUid uid, TimeSpan time)
     {
-        var ev = new StunAnimationEvent(time);
-        RaiseLocalEvent(uid, ref ev);
+        if (TryComp<StunnedComponent>(uid, out var comp))
+            TryStunAnimation((uid, comp), time);
+    }
+
+    public virtual void TryStunAnimation(Entity<StunnedComponent> entity, TimeSpan time)
+    {
+        // Here so server can tell the client to do things
     }
 }
 
@@ -386,9 +391,3 @@ public record struct StunnedEvent;
 /// </summary>
 [ByRefEvent]
 public record struct KnockedDownEvent;
-
-/// <summary>
-///     Raised when you want a stunned entity to play its stun animation for a certain amount of time.
-/// </summary>
-[ByRefEvent]
-public record struct StunAnimationEvent(TimeSpan Time);

@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Stunnable;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -22,24 +21,31 @@ namespace Content.Client.Stunnable
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StunnedComponent, StunAnimationEvent>(OnStunAnimation);
             SubscribeLocalEvent<StunnedComponent, AnimationCompletedEvent>(OnAnimationCompleted);
         }
 
-        private void OnStunAnimation(Entity<StunnedComponent> ent, ref StunAnimationEvent args)
+        /// <summary>
+        ///     Trys to play a default stun animation
+        /// </summary>
+        public override void TryStunAnimation(Entity<StunnedComponent> ent, TimeSpan time)
         {
+            base.TryStunAnimation(ent, time);
+
             if (!TryComp<SpriteComponent>(ent, out var sprite) || !_timing.IsFirstTimePredicted)
                 return;
 
             if (_animation.HasRunningAnimation(ent, StunnedAnimationKeyVector) || _animation.HasRunningAnimation(ent, StunnedAnimationKeyRotation))
                 return;
 
-            var newTime = _timing.CurTime + args.Time;
+            var newTime = _timing.CurTime + time;
             ent.Comp.StartOffset = sprite.Offset;
             ent.Comp.StartAngle = sprite.Rotation;
 
             if (TimeSpan.Compare(newTime, ent.Comp.AnimationEnd) == 1)
                     ent.Comp.AnimationEnd = newTime;
+
+            var ev = new StunAnimationEvent(time);
+            RaiseLocalEvent(ent, ref ev);
 
             PlayStunnedAnimation(ent, sprite);
         }
@@ -155,7 +161,7 @@ namespace Content.Client.Stunnable
                         {
                             new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0f),
                             new AnimationTrackProperty.KeyFrame(startAngle + rotation, length/2),
-                            new AnimationTrackProperty.KeyFrame(startAngle + rotation, length), // hold the angle
+                            // hold the rotation for 50% of the time
                         }
                     }
                 }
@@ -175,18 +181,21 @@ namespace Content.Client.Stunnable
             if (frequency <= 0)
                 return new Animation();
 
-            var offsets = new List<Vector2>();
+            var breaths = new Vector2(0, breathing) / jitters;
 
-            for (var i = 0; i < jitters; i++)
+            var length =  1 / frequency;
+            var frames = length / jitters;
+
+            var keyFrames = new List<AnimationTrackProperty.KeyFrame> { new(sprite.Offset, 0f) };
+
+            for (var i = 1; i <= jitters; i++)
             {
-                offsets.Add(new Vector2(_random.NextFloat(jitterX.Item1, jitterX.Item2),
-                    _random.NextFloat(jitterY.Item1, jitterY.Item2)));
-
-                var offset = offsets[i];
+                var offset = new Vector2(_random.NextFloat(jitterX.Item1, jitterX.Item2),
+                    _random.NextFloat(jitterY.Item1, jitterY.Item2));
                 offset.X *= _random.Pick(_sign);
                 offset.Y *= _random.Pick(_sign);
 
-                if (i < 1 && Math.Sign(offset.X) == Math.Sign(lastJitter.X)
+                if (i == 1 && Math.Sign(offset.X) == Math.Sign(lastJitter.X)
                            && Math.Sign(offset.Y) == Math.Sign(lastJitter.Y))
                 {
                     // If the sign is the same as last time on both axis we flip one randomly
@@ -198,32 +207,20 @@ namespace Content.Client.Stunnable
                 }
 
                 lastJitter = offset;
-                offsets[i] = offset;
-            }
 
-            var breaths = new Vector2(0, breathing) / jitters;
-
-            var length =  1 / frequency;
-            var frames = length / jitters;
-
-            var keyFrames = new List<AnimationTrackProperty.KeyFrame>();
-            keyFrames.Add(new AnimationTrackProperty.KeyFrame(sprite.Offset, 0f));
-
-            for (var i = 1; i <= jitters; i++)
-            {
                 if (i <= jitters / 2)
                 {
-                    keyFrames.Add(new AnimationTrackProperty.KeyFrame(startOffset + breaths * i + offsets[i - 1], frames * i));
+                    keyFrames.Add(new AnimationTrackProperty.KeyFrame(startOffset + breaths * i + offset, frames));
                 }
                 else if (i < jitters * 3 / 4)
                 {
                     keyFrames.Add(
-                        new AnimationTrackProperty.KeyFrame(startOffset + breaths * ( jitters - i * 1.5f ) + offsets[i - 1], frames * i));
+                        new AnimationTrackProperty.KeyFrame(startOffset + breaths * ( jitters - i * 1.5f ) + offset, frames));
                 }
                 else
                 {
                     keyFrames.Add(
-                        new AnimationTrackProperty.KeyFrame(startOffset + breaths * ( i - jitters ) + offsets[i - 1], frames * i));
+                        new AnimationTrackProperty.KeyFrame(startOffset + breaths * ( i - jitters ) + offset, frames));
                 }
             }
 
@@ -250,5 +247,11 @@ namespace Content.Client.Stunnable
         /// </summary>
         [ByRefEvent]
         public record struct StunAnimationEndEvent;
+
+        /// <summary>
+        ///     Raised when you want a stunned entity to play its stun animation for a certain amount of time.
+        /// </summary>
+        [ByRefEvent]
+        public record struct StunAnimationEvent(TimeSpan Time);
     }
 }

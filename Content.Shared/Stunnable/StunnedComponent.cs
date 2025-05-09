@@ -34,7 +34,7 @@ public sealed partial class StunnedComponent : Component
     /// Total Animations per second
     /// </summary>
     [AutoNetworkedField, DataField]
-    public float Frequency = 3f;
+    public float Frequency = 2f;
 
     /// <summary>
     /// Total Rotation Animations per second

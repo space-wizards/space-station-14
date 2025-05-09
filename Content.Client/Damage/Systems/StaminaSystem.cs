@@ -19,7 +19,7 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
 
         SubscribeLocalEvent<StaminaComponent, AnimationCompletedEvent>(OnAnimationCompleted);
         SubscribeLocalEvent<ActiveStaminaComponent, ComponentShutdown>(OnActiveStaminaShutdown);
-        SubscribeLocalEvent<StaminaComponent, StunAnimationEvent>(OnStunAnimation);
+        SubscribeLocalEvent<StaminaComponent, StunSystem.StunAnimationEvent>(OnStunAnimation);
         SubscribeLocalEvent<StaminaComponent, StunSystem.StunAnimationEndEvent>(OnStunAnimationEnd);
     }
 
@@ -39,7 +39,7 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
         StopAnimation((entity, stamina));
     }
 
-    private void OnStunAnimation(Entity<StaminaComponent> entity, ref StunAnimationEvent args)
+    private void OnStunAnimation(Entity<StaminaComponent> entity, ref StunSystem.StunAnimationEvent args)
     {
         StopAnimation(entity);
     }
@@ -114,8 +114,8 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
             _stun.GetFatigueAnimation(sprite,
                 frequency,
                 entity.Comp.Jitters,
-                (jitter/2, jitter),
-                (jitter/8, jitter/2),
+                (jitter * entity.Comp.JitterMinMaxX.Item1, jitter * entity.Comp.JitterMinMaxX.Item2),
+                (jitter * entity.Comp.JitterMinMaxY.Item1, jitter * entity.Comp.JitterMinMaxY.Item2),
                 breathing,
                 entity.Comp.StartOffset,
                 ref entity.Comp.LastJitter),
