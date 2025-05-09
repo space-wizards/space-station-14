@@ -643,11 +643,57 @@
   components:
   - type: Sprite
     layers:
-    - state: syndie
+    - state: black
+    - state: syndi
   - type: Access
     tags:
     - NuclearOperative
     - SyndicateAgent
+
+- type: entity
+  parent: [ IDCardStandard, BaseSyndicateContraband ]
+  id: SyndiOperativeIDCard
+  name: syndicate operative ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: black
+    - state: syndi_operative
+  - type: Access
+    tags:
+    - NuclearOperative
+    - SyndicateAgent
+  - type: AgentIDCard
+
+- type: entity
+  parent: [ IDCardStandard, BaseSyndicateContraband ]
+  id: SyndiCorpsmanIDCard
+  name: syndicate corpsman ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: black
+    - state: syndi_corpsman
+  - type: Access
+    tags:
+    - NuclearOperative
+    - SyndicateAgent
+  - type: AgentIDCard
+
+- type: entity
+  parent: [ IDCardStandard, BaseSyndicateContraband ]
+  id: SyndiCommanderIDCard
+  name: syndicate commander ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: black
+    - state: syndi_commander
+  - type: Access
+    tags:
+    - NuclearOperative
+    - SyndicateAgent
+  - type: AgentIDCard
 
 - type: entity
   parent: [ IDCardStandard, BaseMajorContraband ]
