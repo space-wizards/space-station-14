@@ -93,7 +93,7 @@ namespace Content.MapRenderer.Painters
                 for (var i = 0; i < definition.Variants; i++)
                 {
                     var index = i;
-                    var tileImage = tileSheet.Clone(o => o.Crop(new Rectangle(tileSize * index, 0, 32, 32)));
+                    var tileImage = tileSheet.Clone(o => o.Crop(new Rectangle(tileSize * index, 0, 32, 32)).Flip(FlipMode.Vertical));
                     images[path].Add(tileImage);
                 }
             }
