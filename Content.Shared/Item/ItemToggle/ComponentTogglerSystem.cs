@@ -26,7 +26,10 @@ public sealed class ComponentTogglerSystem : EntitySystem
 
             EntityManager.AddComponents(target, ent.Comp.Components);
         } else {
-            var target = ent.Comp.Target;
+            if (ent.Comp.Target == null)
+            return;
+
+            var target = ent.Comp.Target.Value;
 
             if (TerminatingOrDeleted(target))
             return;
