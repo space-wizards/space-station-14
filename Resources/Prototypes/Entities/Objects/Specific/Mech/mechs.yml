@@ -217,7 +217,11 @@
     radius: 3
     energy: 5
     enabled: false
-
+  - type: Construction
+    graph: RipleyMKIIUpgrade
+    node: start
+    defaultTarget: ripleymkii
+    
 - type: entity
   id: MechRipleyBattery
   parent: MechRipley
