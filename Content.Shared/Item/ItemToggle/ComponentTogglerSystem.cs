@@ -16,7 +16,7 @@ public sealed class ComponentTogglerSystem : EntitySystem
 
     private void OnToggled(Entity<ComponentTogglerComponent> ent, ref ItemToggledEvent args)
     {
-        if (args.Activated) 
+        if (args.Activated)
         {
             var target = ent.Comp.Parent ? Transform(ent).ParentUid : ent.Owner;
 
@@ -26,8 +26,10 @@ public sealed class ComponentTogglerSystem : EntitySystem
             ent.Comp.Target = target;
 
             EntityManager.AddComponents(target, ent.Comp.Components);
-        } 
-        else 
+        }
+
+        else
+
         {
             if (ent.Comp.Target == null)
                 return;
