@@ -5656,4 +5656,12 @@ Entries:
   id: 784
   time: '2025-05-09T16:10:22.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/607
+- author: RoadTrain
+  changes:
+  - message: Fixed Exosuit Upgrade Kit not working. Also allows for new mech upgrade
+      kits to be introduced.
+    type: Fix
+  id: 785
+  time: '2025-05-09T17:52:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/606
 
