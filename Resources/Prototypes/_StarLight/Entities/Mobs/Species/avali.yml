@@ -125,6 +125,17 @@
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 296.15
     thermalRegulationTemperatureThreshold: 10
+  - type: AvaliStasis
+    enterStasisAction: ActionAvaliStasisEnter
+    exitStasisAction: ActionAvaliStasisExit
+    stasisCooldown: 1
+    stasisDuration: 120
+    stasisBluntHeal: 10
+    stasisSlashingHeal: 10
+    stasisPiercingHeal: 10
+    stasisHeatHeal: 10
+    stasisColdHeal: 10
+    stasisDamageResistance: 0.5
 
 - type: entity
   parent: BaseSpeciesDummy
