@@ -36,14 +36,14 @@
     tags:
     - DoorBumpOpener
 
-- type: entity
+- type: entity # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
   abstract: true
   parent:
   - BaseSimpleMob
   - MobCombat
   - MobBloodstream
   - MobFlammable
-  id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
+  id: SimpleSpaceMobBase
   suffix: AI
   components:
   - type: NpcFactionMember
@@ -68,12 +68,12 @@
     price: 1000 # Living critters are valuable in space.
   - type: Perishable
 
-- type: entity
+- type: entity # Extension of SimpleSpaceMobBase, for air breathers
   parent:
   - MobRespirator
   - MobAtmosStandard
   - SimpleSpaceMobBase
-  id: SimpleMobBase # for air breathers
+  id: SimpleMobBase
   suffix: AI
   abstract: true
   components:
@@ -93,6 +93,8 @@
       Parched: 50
       Dead: 0
     baseDecayRate: 0.04
+  - type: Bloodstream
+    bloodMaxVolume: 150
   - type: StatusEffects
     allowed:
     - Stun
@@ -108,8 +110,6 @@
     - RadiationProtection
     - Drowsiness
     - Adrenaline
-  - type: Bloodstream
-    bloodMaxVolume: 150
   - type: MobPrice
     price: 150
   - type: FloatingVisuals
