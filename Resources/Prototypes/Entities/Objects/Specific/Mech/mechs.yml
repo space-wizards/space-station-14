@@ -195,6 +195,9 @@
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
+    equipmentWhitelist:
+      tags:
+      - RipleyMKIIUpgradeKit
     baseState: base
     openState: base-open
     brokenState: base-broken
@@ -221,7 +224,7 @@
     graph: RipleyMKIIUpgrade
     node: start
     defaultTarget: ripleymkii
-    
+
 - type: entity
   id: MechRipleyBattery
   parent: MechRipley

@@ -6,7 +6,7 @@
     edges:
     - to: ripleymkii
       steps:
-      - tag: RipleyUpgradeKit
+      - tag: RipleyMKIIUpgradeKit
         name: Exosuit Upgrade Kit
         doAfter: 5
   - node: ripleymkii
