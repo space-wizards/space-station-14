@@ -77,17 +77,9 @@
 - type: entity
   name: space tick
   id: MobTick
-  parent: SimpleSpaceMobBase
+  parent: MobSpaceBasic
   description: It's a space tick, watch out for its nasty bite. CentComm reports that 90 percent of cargo leg amputations are due to space tick bites.
   components:
-  - type: InputMover
-  - type: MobMover
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
-  - type: NpcFactionMember
-    factions:
-    - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -95,10 +87,12 @@
       state: alive
       sprite: Mobs/Aliens/Xenos/spacetick.rsi
       scale: 0.8, 0.8
-  - type: Physics
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 4
-    baseSprintSpeed : 6
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
   - type: Fixtures
     fixtures:
       fix1:
@@ -110,30 +104,29 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
-  - type: MobState
-    allowedStates:
-      - Alive
-      - Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 6
+  - type: PointLight
+    radius: 0.6
+    energy: 1
+    color: "#d9f500"
   - type: MobThresholds
     thresholds:
       0: Alive
       15: Dead
   - type: Stamina
     critThreshold: 15
-  - type: MovementAlwaysTouching
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: alive
-      Dead:
-        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatXeno
       amount: 1
   - type: Bloodstream
+    bloodReagent: FluorosulfuricAcid
     bloodMaxVolume: 50
-  - type: CombatMode
+  - type: Temperature
+    heatDamageThreshold: 500
+    coldDamageThreshold: 0
   - type: MeleeWeapon
     soundHit:
         path: /Audio/Effects/bite.ogg
@@ -141,7 +134,7 @@
     animation: WeaponArcBite
     damage:
       groups:
-        Brute: 2
+        Pierce: 2
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -150,11 +143,11 @@
           Quantity: 5
   - type: MeleeChemicalInjector
     solution: melee
+  - type: NonSpreaderZombie
   - type: ReplacementAccent
     accent: genericAggressive
   - type: Speech
     speechVerb: SmallMob
-  - type: NonSpreaderZombie
 
 - type: entity
   id: MobTickSalvage
