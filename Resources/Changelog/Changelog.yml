@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MilonPL
-  changes:
-  - message: The announce command now takes optional color and sound parameters.
-    type: Tweak
-  id: 7943
-  time: '2025-02-12T08:58:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34889
 - author: Xillan
   changes:
   - message: Changed light brown gloves to have their own unique fiber for detectives,
@@ -3929,3 +3922,11 @@
   id: 8445
   time: '2025-05-09T11:32:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37290
+- author: Errant
+  changes:
+  - message: Borgs can no longer craft items using up their tools as an ingredient,
+      losing them forever.
+    type: Fix
+  id: 8446
+  time: '2025-05-09T12:43:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37292
