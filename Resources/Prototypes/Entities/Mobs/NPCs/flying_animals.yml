@@ -1,6 +1,6 @@
 ﻿# Used for entities that are considered flying,
 # i.e. shouldnt slip, have free movement in weightlesness, and should go over chasms/lava
-- type: entity
+- type: entity #NOTE: Move this to base.yml and rename appropiately
   id: FlyingMobBase
   abstract: true
   components:
