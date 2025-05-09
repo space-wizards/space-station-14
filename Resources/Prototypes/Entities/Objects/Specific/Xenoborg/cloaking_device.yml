@@ -29,3 +29,18 @@
         startingItem: PowerCellSmallNuclear
         disableEject: true
         swap: false
+
+- type: entity
+  parent: CloakingDevice
+  id: SuperCloakingDevice
+  name: super cloaking device
+  description: A device that allows xenoborgs to go truly invisible.
+  components:
+  - type: ComponentToggler
+    parent: true
+    components:
+    - type: Stealth
+      minVisibility: -1
+      lastVisibility: -1
+  - type: PowerCellDraw
+    drawRate: 12 # 30 seconds

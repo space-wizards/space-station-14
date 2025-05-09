@@ -60,3 +60,8 @@
   parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleEnergySwordRecipe
   result: XenoborgModuleEnergySword
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleSuperCloakDeviceRecipe
+  result: XenoborgModuleSuperCloakDevice

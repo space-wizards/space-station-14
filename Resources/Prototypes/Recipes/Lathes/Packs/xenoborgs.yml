@@ -13,3 +13,4 @@
   recipes:
   - XenoborgModuleHeavyLaserRecipe
   - XenoborgModuleEnergySwordRecipe
+  - XenoborgModuleSuperCloakDeviceRecipe
