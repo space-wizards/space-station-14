@@ -198,7 +198,7 @@
   description: A wall-mounted interface that allows a local artifical intelligence to adjust the operational parameters of linked sentry turrets.
   components:
   - type: AccessReader
-    access: [["StationAi"]]
+    access: [["StationAi"], ["ResearchDirector"]]
   #- type: ContainerFill - Will be added in a later PR
   #  containers:
   #    board: 

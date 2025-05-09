@@ -170,7 +170,7 @@
   description: A high-tech autonomous weapons system under the direct control of a local artifical intelligence.
   components:
   - type: AccessReader
-    access: [["StationAi"]]
+    access: [["StationAi"], ["ResearchDirector"]]
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Borg
