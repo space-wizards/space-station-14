@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
 using Content.Server.GameTicking;
@@ -8,12 +9,14 @@ using Content.Server.Maps;
 using Robust.Client.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -22,7 +25,10 @@ namespace Content.MapRenderer.Painters
 {
     public sealed class MapPainter
     {
-        public static async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint(string map)
+        public static async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint(string map,
+            bool mapIsFilename = false,
+            bool mapIsGrid = true,
+            bool showMarkers = false)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -33,7 +39,7 @@ namespace Content.MapRenderer.Painters
                 Connected = true,
                 Fresh = true,
                 // Seriously whoever made MapPainter use GameMapPrototype I wish you step on a lego one time.
-                Map = map,
+                Map = mapIsFilename ? "Empty" : map,
             });
 
             var server = pair.Server;
@@ -54,8 +60,39 @@ namespace Content.MapRenderer.Painters
                 }
             });
 
+            if (showMarkers)
+                await pair.WaitClientCommand("showmarkers");
+
             var sEntityManager = server.ResolveDependency<IServerEntityManager>();
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
+
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var mapLoader = entityManager.System<MapLoaderSystem>();
+            var mapSys = entityManager.System<SharedMapSystem>();
+
+            Entity<MapGridComponent>[] grids = [];
+
+            if (mapIsFilename)
+            {
+                var resPath = new ResPath(map);
+                await server.WaitPost(() =>
+                {
+                    if (mapIsGrid)
+                    {
+                        if (mapLoader.TryLoadGrid(resPath, out var loadedMaps, out var loadedGrids))
+                        {
+                            grids = [(Entity<MapGridComponent>)loadedGrids];
+                        }
+                    }
+                    else
+                    {
+                        if (mapLoader.TryLoadMap(resPath, out var loadedMaps, out var loadedGrids))
+                        {
+                            grids = loadedGrids.ToArray();
+                        }
+                    }
+                });
+            }
 
             await pair.RunTicksSync(10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
@@ -64,7 +101,6 @@ namespace Content.MapRenderer.Painters
 
             var tilePainter = new TilePainter(client, server);
             var entityPainter = new GridPainter(client, server);
-            Entity<MapGridComponent>[] grids = null!;
             var xformQuery = sEntityManager.GetEntityQuery<TransformComponent>();
             var xformSystem = sEntityManager.System<SharedTransformSystem>();
 
@@ -77,8 +113,11 @@ namespace Content.MapRenderer.Painters
                     sEntityManager.DeleteEntity(playerEntity.Value);
                 }
 
-                var mapId = sEntityManager.System<GameTicker>().DefaultMap;
-                grids = sMapManager.GetAllGrids(mapId).ToArray();
+                if (!mapIsFilename)
+                {
+                    var mapId = sEntityManager.System<GameTicker>().DefaultMap;
+                    grids = sMapManager.GetAllGrids(mapId).ToArray();
+                }
 
                 foreach (var (uid, _) in grids)
                 {
@@ -92,32 +131,33 @@ namespace Content.MapRenderer.Painters
 
             foreach (var (uid, grid) in grids)
             {
-                // Skip empty grids
-                if (grid.LocalAABB.IsEmpty())
+                var tiles = mapSys.GetAllTiles(uid, grid).ToList();
+                if (tiles.Count == 0)
                 {
                     Console.WriteLine($"Warning: Grid {uid} was empty. Skipping image rendering.");
                     continue;
                 }
-
                 var tileXSize = grid.TileSize * TilePainter.TileImageSize;
                 var tileYSize = grid.TileSize * TilePainter.TileImageSize;
 
-                var bounds = grid.LocalAABB;
+                var minX = tiles.Min(t => t.X);
+                var minY = tiles.Min(t => t.Y);
+                var maxX = tiles.Max(t => t.X);
+                var maxY = tiles.Max(t => t.Y);
+                var w = (maxX - minX + 1) * tileXSize;
+                var h = (maxY - minY + 1) * tileYSize;
+                var customOffset = new Vector2();
 
-                var left = bounds.Left;
-                var right = bounds.Right;
-                var top = bounds.Top;
-                var bottom = bounds.Bottom;
-
-                var w = (int) Math.Ceiling(right - left) * tileXSize;
-                var h = (int) Math.Ceiling(top - bottom) * tileYSize;
+                //MapGrids don't have LocalAABB, so we offset them to align the bottom left corner with 0,0 coordinates
+                if (grid.LocalAABB.IsEmpty())
+                    customOffset = new Vector2(-minX, -minY);
 
                 var gridCanvas = new Image<Rgba32>(w, h);
 
                 await server.WaitPost(() =>
                 {
-                    tilePainter.Run(gridCanvas, uid, grid);
-                    entityPainter.Run(gridCanvas, uid, grid);
+                    tilePainter.Run(gridCanvas, uid, grid, customOffset);
+                    entityPainter.Run(gridCanvas, uid, grid, customOffset);
 
                     gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
                 });
