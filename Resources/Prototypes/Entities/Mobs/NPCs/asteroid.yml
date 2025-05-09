@@ -7,6 +7,18 @@
   - MobCombat
   abstract: true
   components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -14,9 +26,10 @@
       Acidic: [Touch, Ingestion]
   - type: Body
     prototype: Animal
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4
   - type: Climbing
-  - type: NameIdentifier
-    group: GenericNumber
   - type: StatusEffects
     allowed:
     - SlowedDown
@@ -28,6 +41,8 @@
     - Drowsiness
     - Adrenaline
   - type: StandingState
+  - type: NameIdentifier
+    group: GenericNumber
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -49,10 +64,25 @@
         Base: goliath
       Dead:
         Base: goliath_dead
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    constantlyReplan: false
+    rootTask:
+      task: GoliathCompound
+    blackboard:
+      VisionRadius: !type:Single
+        6
+      AggroVisionRadius: !type:Single
+        10
+  - type: NPCUseActionOnTarget
+    actionId: ActionGoliathTentacle
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.00
     baseSprintSpeed : 2.00
-  - type: Bloodstream
+  - type: NoSlip
+  - type: Bloodstream #TODO: consider if these should have Blood blood or not.
     bloodMaxVolume: 350
     chemicalMaxVolume: 0
   - type: MobThresholds
@@ -69,37 +99,22 @@
       types:
         Slash: 10
         Piercing: 10
-  - type: NpcFactionMember
-    factions:
-    - SimpleHostile
-  - type: HTN
-    constantlyReplan: false
-    rootTask:
-      task: GoliathCompound
-    blackboard:
-      VisionRadius: !type:Single
-        6
-      AggroVisionRadius: !type:Single
-        10
-  - type: NPCUseActionOnTarget
-    actionId: ActionGoliathTentacle
-  - type: Tag
-    tags:
-    - CannotSuicide
-    - Goliath
-    - FootstepSound
-  - type: NoSlip
   - type: Butcherable
     spawned:
     - id: FoodMeatGoliath
       amount: 3
     - id: MaterialGoliathHide1
       amount: 3
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - Goliath
+    - FootstepSound
 
 - type: entity
   id: ActionGoliathTentacle
   name: "[color=red]Tentacle Slam[/color]"
-  description: Use your tentacles to grab and stun a target player!
+  description: Use your tentacles to grab and stun a target!
   components:
   - type: EntityWorldTargetAction
     raiseOnUser: true
@@ -119,20 +134,15 @@
   id: GoliathTentacle
   name: tentacle
   components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Asteroid/goliath.rsi
+    layers:
+    - state: goliath_tentacle_wiggle
   - type: Transform
     anchored: True
   - type: Physics
     bodyType: Static
     canCollide: true
-  - type: InteractionOutline
-  - type: Sprite
-    sprite: Mobs/Aliens/Asteroid/goliath.rsi
-    layers:
-    - state: goliath_tentacle_wiggle
-  - type: StunOnContact
-    blacklist:
-      tags:
-      - Goliath
   - type: Fixtures
     fixtures:
       fix:
@@ -144,6 +154,11 @@
         layer:
         - Impassable
         hard: false
+  - type: InteractionOutline
+  - type: StunOnContact
+    blacklist:
+      tags:
+      - Goliath
   - type: TimedDespawn #do this shit by hand because of fucking course.
     lifetime: 0.4
   - type: SpawnOnDespawn
@@ -155,13 +170,13 @@
   name: tentacle
   abstract: true
   components:
-  - type: Transform
-    anchored: True
+  - type: Sprite
+    sprite: Mobs/Aliens/Asteroid/goliath.rsi
   - type: Physics
     bodyType: Static
     canCollide: false
-  - type: Sprite
-    sprite: Mobs/Aliens/Asteroid/goliath.rsi
+  - type: Transform
+    anchored: True
   - type: InteractionOutline
   - type: TimedDespawn
     lifetime: 0.7
@@ -204,9 +219,23 @@
         Base: hivelord
       Dead:
         Base: hivelord_dead
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: SimpleRangedHostileCompound
+    blackboard:
+      VisionRadius: !type:Single
+        4
+      AggroVisionRadius: !type:Single
+        9
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.5
+    baseWalkSpeed : 2.5
     baseSprintSpeed : 4.0
+  - type: Butcherable
+    spawned:
+    - id: FoodHivelordRemains
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -230,20 +259,6 @@
     proto: MobHivelordBrood
     capacity: 1
     count: 1
-  - type: NpcFactionMember
-    factions:
-    - SimpleHostile
-  - type: HTN
-    rootTask:
-      task: SimpleRangedHostileCompound
-    blackboard:
-      VisionRadius: !type:Single
-        4
-      AggroVisionRadius: !type:Single
-        9
-  - type: Butcherable
-    spawned:
-    - id: FoodHivelordRemains
 
 - type: entity
   id: MobHivelordBrood
@@ -255,33 +270,6 @@
     sprite: Mobs/Aliens/Asteroid/hivelord.rsi
     layers:
     - state: hivelordbrood
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 3.5
-    baseSprintSpeed : 4.0
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      5: Dead
-  - type: MeleeWeapon
-    soundHit:
-      path: /Audio/Weapons/bladeslice.ogg
-    angle: 0
-    attackRate: 1.0
-    range: 0.75
-    animation: WeaponArcPunch
-    damage:
-      types:
-        Slash: 7
-  - type: Ammo
-    muzzleFlash: null
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -293,6 +281,33 @@
         15
       AggroVisionRadius: !type:Single
         15
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4.0
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      5: Dead
+  - type: Ammo
+    muzzleFlash: null
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+    angle: 0
+    attackRate: 1.0
+    range: 0.75
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Slash: 7
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: TimedDespawn
     lifetime: 100
 
@@ -302,6 +317,11 @@
   name: hivelord remains
   description: All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly. Try not to think about what you're eating.
   components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/rorocore.rsi
+    state: boiled
+  - type: Item
+    size: Normal
   - type: SolutionContainerManager
     solutions:
       food:
@@ -309,11 +329,6 @@
         reagents:
         - ReagentId: Rororium
           Quantity: 5
-  - type: Sprite
-    sprite: Objects/Consumable/Food/rorocore.rsi
-    state: boiled
-  - type: Item
-    size: Normal
   - type: Perishable
     rotAfter: 120 # rot after 2 minutes
     molsPerSecondPerUnitMass: 0
@@ -334,8 +349,8 @@
     sprite: Objects/Consumable/Food/rorocore.rsi
     state: boiled
     color: "#664444"
-  - type: SpaceGarbage
   - type: Item
     size: Normal
+  - type: SpaceGarbage
   - type: StaticPrice
     price: 500
