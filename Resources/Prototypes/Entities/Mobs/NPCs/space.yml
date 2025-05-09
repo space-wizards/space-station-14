@@ -439,41 +439,30 @@
   components:
     - type: SalvageMobRestrictions
 
+##  -Snails
 - type: entity
   parent: SimpleSpaceMobBase
   id: MobSnail
   name: snail
   description: Revolting unless you're french.
   components:
-  - type: Body
-    prototype: Mouse
-  - type: GhostRole
-    makeSentient: true
-    allowSpeech: false
-    allowMovement: true
-    name: ghost-role-information-snail-name
-    description: ghost-role-information-snail-description
-    rules: ghost-role-information-freeagent-rules
-    mindRoles:
-    - MindRoleGhostRoleFreeAgentHarmless
-  - type: GhostTakeoverAvailable
-  - type: Emoting
   - type: Sprite
     drawdepth: SmallMobs
     sprite: Mobs/Animals/snail.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: snail
-  - type: Item
-    size: Tiny
-  - type: NpcFactionMember
-    factions:
-      - Mouse
-  - type: HTN
-    constantlyReplan: false
-    rootTask:
-      task: MouseCompound
-  - type: Physics
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: snail
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Mouse_burning
   - type: Fixtures
     fixtures:
       fix1:
@@ -485,14 +474,16 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
-  - type: MobState
-  - type: Deathgasp
-  - type: MobStateActions
-    actions:
-      Critical:
-      - ActionCritSuccumb
-      - ActionCritFakeDeath
-      - ActionCritLastWords
+  - type: Body
+    prototype: Mouse
+  - type: Emoting # Surely this is parented somewhere right?
+  - type: NpcFactionMember
+    factions:
+      - Mouse
+  - type: HTN
+    constantlyReplan: false
+    rootTask:
+      task: MouseCompound
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -501,63 +492,34 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: snail
-      Critical:
-        Base: dead
-      Dead:
-        Base: dead
-  - type: Food
-  - type: Thirst
-    startingThirst: 25  # spawn with Okay thirst state
-    thresholds:
-      OverHydrated: 35
-      Okay: 25
-      Thirsty: 15
-      Parched: 10
-      Dead: 0
-    baseDecayRate: 0.04
-  - type: Hunger
+  - type: MovementAlwaysTouching
+  - type: Hunger # Parity with MobMouse
+    startingHunger: 35
+    baseDecayRate: 0.5
     thresholds:
       Overfed: 35
       Okay: 25
       Peckish: 15
       Starving: 10
       Dead: 0
-    baseDecayRate: 0.1
-  - type: Extractable
-    grindableSolutionName: food
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 3
+  - type: Thirst
+    startingThirst: 25
+    baseDecayRate: 0.05
+    thresholds:
+      OverHydrated: 35
+      Okay: 25
+      Thirsty: 15
+      Parched: 10
+      Dead: 0
   - type: Butcherable
     spawned:
     - id: FoodMeatSnail
       amount: 1
-  - type: Tag
-    tags:
-    - Trash
-    - VimPilot
-    - ChefPilot
-    - Meat
-  - type: CombatMode
-    combatToggleAction: ActionCombatModeToggleOff
-  - type: Bloodstream
-    bloodMaxVolume: 30
-    bloodReagent: Cryoxadone
-  - type: CanEscapeInventory
   - type: MobPrice
     price: 50
-  - type: BadFood
-  - type: NonSpreaderZombie
-  - type: FireVisuals
-    sprite: Mobs/Effects/onfire.rsi
-    normalState: Mouse_burning
+  - type: Bloodstream
+    bloodMaxVolume: 20
+    bloodReagent: Cryoxadone
   - type: Temperature
     heatDamageThreshold: 500
     coldDamageThreshold: 0
@@ -576,6 +538,36 @@
         visualType: Large
         messages: [ "snail-hurt-by-salt-popup" ]
         probability: 0.66
+  - type: CanEscapeInventory
+  - type: Item
+    size: Tiny
+  - type: Food
+  - type: BadFood
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+  - type: NonSpreaderZombie
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: false
+    allowMovement: true
+    name: ghost-role-information-snail-name
+    description: ghost-role-information-snail-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless
+  - type: GhostTakeoverAvailable
+  - type: Tag
+    tags:
+    - Trash
+    - VimPilot
+    - ChefPilot
+    - Meat
 
 - type: entity
   parent: MobSnail
@@ -594,7 +586,6 @@
       - ActionCritFakeDeath
       - ActionCritLastWords
   - type: Godmode
-  - type: MovementAlwaysTouching
 
 - type: entity
   parent: MobSnail
@@ -620,20 +611,12 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 5 #he go fast, also they cant slip so its probably fine.
     baseSprintSpeed : 7
-#  - type: ActiveJetpack # I think this will need a custom component to not make tests angry.
-  - type: MovementAlwaysTouching
 
 - type: entity
   parent: MobSnail
   id: MobSnailMoth
   name: Snoth
   components:
-  - type: Body
-    prototype: Mothroach
-  - type: GhostRole
-    name: ghost-role-information-snoth-name
-    description: ghost-role-information-snoth-description
-    rules: ghost-role-information-freeagent-rules
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -646,3 +629,9 @@
         Base: snothdead
       Dead:
         Base: snothdead
+  - type: Body
+    prototype: Mothroach
+  - type: GhostRole
+    name: ghost-role-information-snoth-name
+    description: ghost-role-information-snoth-description
+    rules: ghost-role-information-freeagent-rules
