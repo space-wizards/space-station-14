@@ -289,7 +289,7 @@
   id: MechPaddy
   parent: [ BaseMech, CombatMech, BaseSecurityContraband ]
   name: Paddy
-  description: Autonomous Power Loader Unit Subtype Paddy. A Modified MK-I Ripley design intended for light security use.
+  description: Autonomous Power Loader Unit Subtype Paddy. A Modified MK-II Ripley design intended for light security use.
   components:
   - type: Sprite
     drawdepth: Mobs
