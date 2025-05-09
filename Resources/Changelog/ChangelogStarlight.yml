@@ -5648,4 +5648,12 @@ Entries:
   id: 783
   time: '2025-05-09T16:09:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/599
+- author: RoadTrain
+  changes:
+  - message: Changed Paddy's description to say it's derived from the Ripley MK-II
+      given it's airtight.
+    type: Tweak
+  id: 784
+  time: '2025-05-09T16:10:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/607
 
