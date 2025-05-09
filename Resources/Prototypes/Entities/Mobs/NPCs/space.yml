@@ -221,18 +221,6 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: glow
       shader: unshaded
-  - type: MeleeWeapon
-    soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
-    angle: 0
-    animation: WeaponArcClaw
-    damage:
-      types:
-        Blunt: 9
-        Slash: 2
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 3.5
-    baseSprintSpeed: 4.5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -247,6 +235,15 @@
   - type: Inventory
     speciesId: kangaroo
     templateId: spacekangaroo
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Blunt: 9
+        Slash: 2
   - type: Vocal
     sounds:
       Unsexed: Kangaroo
@@ -255,10 +252,6 @@
       collection: FootstepBounce
   - type: ReplacementAccent
     accent: kangaroo
-  - type: Butcherable
-    spawned:
-    - id: FoodMeat
-      amount: 1
 
 - type: entity
   id: MobKangarooSpaceSalvage
