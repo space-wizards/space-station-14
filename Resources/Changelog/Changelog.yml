@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Xillan
-  changes:
-  - message: Changed light brown gloves to have their own unique fiber for detectives,
-      where previously they were indistinguishable from normal / dark brown gloves.
-    type: Tweak
-  id: 7944
-  time: '2025-02-12T18:41:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35111
 - author: SaphireLattice, themias
   changes:
   - message: Chair buckle draw depth is slightly less broken
@@ -3930,3 +3922,10 @@
   id: 8446
   time: '2025-05-09T12:43:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37292
+- author: murolem
+  changes:
+  - message: Silo can now accept diamonds. Shiny!
+    type: Tweak
+  id: 8447
+  time: '2025-05-09T15:41:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37305
