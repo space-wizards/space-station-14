@@ -1,0 +1,559 @@
+- type: entity
+  id: MailingUnitCommand
+  parent: MailingUnit   
+  suffix: Command       
+  components:
+  - type: MailingUnit
+    tag: Command
+
+- type: entity
+  id: MailingUnitBridge
+  parent: MailingUnit
+  suffix: Bridge
+  components:
+  - type: MailingUnit
+    tag: Bridge
+
+- type: entity
+  id: MailingUnitVault
+  parent: MailingUnit
+  suffix: Vault
+  components:
+  - type: MailingUnit
+    tag: Vault
+
+- type: entity
+  id: MailingUnitGateway
+  parent: MailingUnit
+  suffix: Gateway
+  components:
+  - type: MailingUnit
+    tag: Gateway
+
+- type: entity
+  id: MailingUnitCaptain
+  parent: MailingUnit
+  suffix: Captain
+  components:
+  - type: MailingUnit
+    tag: Captain
+
+- type: entity
+  id: MailingUnitHoP
+  parent: MailingUnit
+  suffix: HoP
+  components:
+  - type: MailingUnit
+    tag: HoP
+
+- type: entity
+  id: MailingUnitSecurity
+  parent: MailingUnit
+  suffix: Security
+  components:
+  - type: MailingUnit
+    tag: Security
+
+- type: entity
+  id: MailingUnitBrig
+  parent: MailingUnit
+  suffix: Brig
+  components:
+  - type: MailingUnit
+    tag: Brig
+
+- type: entity
+  id: MailingUnitBrigMed
+  parent: MailingUnit
+  suffix: BrigMed
+  components:
+  - type: MailingUnit
+    tag: BrigMed
+
+- type: entity
+  id: MailingUnitWarden
+  parent: MailingUnit
+  suffix: Warden
+  components:
+  - type: MailingUnit
+    tag: Warden
+
+- type: entity
+  id: MailingUnitHoS
+  parent: MailingUnit
+  suffix: HoS
+  components:
+  - type: MailingUnit
+    tag: HoS
+
+- type: entity
+  id: MailingUnitArmory
+  parent: MailingUnit
+  suffix: Armory
+  components:
+  - type: MailingUnit
+    tag: Armory
+
+- type: entity
+  id: MailingUnitPerma
+  parent: MailingUnit
+  suffix: Perma
+  components:
+  - type: MailingUnit
+    tag: Perma
+
+- type: entity
+  id: MailingUnitDetective
+  parent: MailingUnit
+  suffix: Detective
+  components:
+  - type: MailingUnit
+    tag: Detective
+
+- type: entity
+  id: MailingUnitCourtroom
+  parent: MailingUnit
+  suffix: Courtroom
+  components:
+  - type: MailingUnit
+    tag: Courtroom
+
+- type: entity
+  id: MailingUnitLaw
+  parent: MailingUnit
+  suffix: Law
+  components:
+  - type: MailingUnit
+    tag: Law
+
+- type: entity
+  id: MailingUnitSecurityCheckpoint
+  parent: MailingUnit
+  suffix: SecurityCheckpoint
+  components:
+  - type: MailingUnit
+    tag: SecurityCheckpoint
+
+- type: entity
+  id: MailingUnitMedical
+  parent: MailingUnit
+  suffix: Medical
+  components:
+  - type: MailingUnit
+    tag: Medical
+
+- type: entity
+  id: MailingUnitMedbay
+  parent: MailingUnit
+  suffix: Medbay
+  components:
+  - type: MailingUnit
+    tag: Medbay
+
+- type: entity
+  id: MailingUnitChemistry
+  parent: MailingUnit
+  suffix: Chemistry
+  components:
+  - type: MailingUnit
+    tag: Chemistry
+
+- type: entity
+  id: MailingUnitCryogenics
+  parent: MailingUnit
+  suffix: Cryogenics
+  components:
+  - type: MailingUnit
+    tag: Cryogenics
+
+- type: entity
+  id: MailingUnitCMO
+  parent: MailingUnit
+  suffix: CMO
+  components:
+  - type: MailingUnit
+    tag: CMO
+
+- type: entity
+  id: MailingUnitMorgue
+  parent: MailingUnit
+  suffix: Morgue
+  components:
+  - type: MailingUnit
+    tag: Morgue
+
+- type: entity
+  id: MailingUnitSurgery
+  parent: MailingUnit
+  suffix: Surgery
+  components:
+  - type: MailingUnit
+    tag: Surgery
+
+- type: entity
+  id: MailingUnitPsychology
+  parent: MailingUnit
+  suffix: Psychology
+  components:
+  - type: MailingUnit
+    tag: Psychology
+
+- type: entity
+  id: MailingUnitClinic
+  parent: MailingUnit
+  suffix: Clinic
+  components:
+  - type: MailingUnit
+    tag: Clinic
+
+- type: entity
+  id: MailingUnitScience
+  parent: MailingUnit
+  suffix: Science
+  components:
+  - type: MailingUnit
+    tag: Science
+
+- type: entity
+  id: MailingUnitR&D
+  parent: MailingUnit
+  suffix: R&D
+  components:
+  - type: MailingUnit
+    tag: R&D
+
+- type: entity
+  id: MailingUnitRD
+  parent: MailingUnit
+  suffix: RD
+  components:
+  - type: MailingUnit
+    tag: RD
+
+- type: entity
+  id: MailingUnitRobotics
+  parent: MailingUnit
+  suffix: Robotics
+  components:
+  - type: MailingUnit
+    tag: Robotics
+
+- type: entity
+  id: MailingUnitArtifact
+  parent: MailingUnit
+  suffix: Artifact
+  components:
+  - type: MailingUnit
+    tag: Artifact
+
+- type: entity
+  id: MailingUnitAnomaly
+  parent: MailingUnit
+  suffix: Anomaly
+  components:
+  - type: MailingUnit
+    tag: Anomaly
+
+- type: entity
+  id: MailingUnitSupply
+  parent: MailingUnit
+  suffix: Supply
+  components:
+  - type: MailingUnit
+    tag: Supply
+
+- type: entity
+  id: MailingUnitCargo
+  parent: MailingUnit
+  suffix: Cargo
+  components:
+  - type: MailingUnit
+    tag: Cargo
+
+- type: entity
+  id: MailingUnitCargoBay
+  parent: MailingUnit
+  suffix: CargoBay
+  components:
+  - type: MailingUnit
+    tag: CargoBay
+
+- type: entity
+  id: MailingUnitQM
+  parent: MailingUnit
+  suffix: QM
+  components:
+  - type: MailingUnit
+    tag: QM
+
+- type: entity
+  id: MailingUnitSalvage
+  parent: MailingUnit
+  suffix: Salvage
+  components:
+  - type: MailingUnit
+    tag: Salvage
+
+- type: entity
+  id: MailingUnitEngineering
+  parent: MailingUnit
+  suffix: Engineering
+  components:
+  - type: MailingUnit
+    tag: Engineering
+
+- type: entity
+  id: MailingUnitCE
+  parent: MailingUnit
+  suffix: CE
+  components:
+  - type: MailingUnit
+    tag: CE
+
+- type: entity
+  id: MailingUnitAME
+  parent: MailingUnit
+  suffix: AME
+  components:
+  - type: MailingUnit
+    tag: AME
+
+- type: entity
+  id: MailingUnitGravityGenerator
+  parent: MailingUnit
+  suffix: GravityGenerator
+  components:
+  - type: MailingUnit
+    tag: GravityGenerator
+
+- type: entity
+  id: MailingUnitAnchor
+  parent: MailingUnit
+  suffix: Anchor
+  components:
+  - type: MailingUnit
+    tag: Anchor
+
+- type: entity
+  id: MailingUnitParticleAccelerator
+  parent: MailingUnit
+  suffix: ParticleAccelerator
+  components:
+  - type: MailingUnit
+    tag: ParticleAccelerator
+
+- type: entity
+  id: MailingUnitTelecomms
+  parent: MailingUnit
+  suffix: Telecomms
+  components:
+  - type: MailingUnit
+    tag: Telecomms
+
+- type: entity
+  id: MailingUnitAtmos
+  parent: MailingUnit
+  suffix: Atmos
+  components:
+  - type: MailingUnit
+    tag: Atmos
+
+- type: entity
+  id: MailingUnitTEG
+  parent: MailingUnit
+  suffix: TEG
+  components:
+  - type: MailingUnit
+    tag: TEG
+
+- type: entity
+  id: MailingUnitTechVault
+  parent: MailingUnit
+  suffix: TechVault
+  components:
+  - type: MailingUnit
+    tag: TechVault
+
+- type: entity
+  id: MailingUnitService
+  parent: MailingUnit
+  suffix: Service
+  components:
+  - type: MailingUnit
+    tag: Service
+
+- type: entity
+  id: MailingUnitKitchen
+  parent: MailingUnit
+  suffix: Kitchen
+  components:
+  - type: MailingUnit
+    tag: Kitchen
+
+- type: entity
+  id: MailingUnitBar
+  parent: MailingUnit
+  suffix: Bar
+  components:
+  - type: MailingUnit
+    tag: Bar
+
+- type: entity
+  id: MailingUnitBotany
+  parent: MailingUnit
+  suffix: Botany
+  components:
+  - type: MailingUnit
+    tag: Botany
+
+- type: entity
+  id: MailingUnitJanitor
+  parent: MailingUnit
+  suffix: Janitor
+  components:
+  - type: MailingUnit
+    tag: Janitor
+
+- type: entity
+  id: MailingUnitAI
+  parent: MailingUnit
+  suffix: AI
+  components:
+  - type: MailingUnit
+    tag: AI
+
+- type: entity
+  id: MailingUnitAISatellite
+  parent: MailingUnit
+  suffix: AISatellite
+  components:
+  - type: MailingUnit
+    tag: AISatellite
+
+- type: entity
+  id: MailingUnitAICore
+  parent: MailingUnit
+  suffix: AICore
+  components:
+  - type: MailingUnit
+    tag: AICore
+
+- type: entity
+  id: MailingUnitAIUpload
+  parent: MailingUnit
+  suffix: AIUpload
+  components:
+  - type: MailingUnit
+    tag: AIUpload
+
+- type: entity
+  id: MailingUnitAIPower
+  parent: MailingUnit
+  suffix: AIPower
+  components:
+  - type: MailingUnit
+    tag: AIPower
+
+- type: entity
+  id: MailingUnitArrivals
+  parent: MailingUnit
+  suffix: Arrivals
+  components:
+  - type: MailingUnit
+    tag: Arrivals
+
+- type: entity
+  id: MailingUnitEvac
+  parent: MailingUnit
+  suffix: Evac
+  components:
+  - type: MailingUnit
+    tag: Evac
+
+- type: entity
+  id: MailingUnitDockingArm
+  parent: MailingUnit
+  suffix: DockingArm
+  components:
+  - type: MailingUnit
+    tag: DockingArm
+
+- type: entity
+  id: MailingUnitEVAStorage
+  parent: MailingUnit
+  suffix: EVAStorage
+  components:
+  - type: MailingUnit
+    tag: EVAStorage
+
+- type: entity
+  id: MailingUnitChapel
+  parent: MailingUnit
+  suffix: Chapel
+  components:
+  - type: MailingUnit
+    tag: Chapel
+
+- type: entity
+  id: MailingUnitLibrary
+  parent: MailingUnit
+  suffix: Library
+  components:
+  - type: MailingUnit
+    tag: Library
+
+- type: entity
+  id: MailingUnitReporter
+  parent: MailingUnit
+  suffix: Reporter
+  components:
+  - type: MailingUnit
+    tag: Reporter
+
+- type: entity
+  id: MailingUnitTheater
+  parent: MailingUnit
+  suffix: Theater
+  components:
+  - type: MailingUnit
+    tag: Theater
+
+- type: entity
+  id: MailingUnitDorms
+  parent: MailingUnit
+  suffix: Dorms
+  components:
+  - type: MailingUnit
+    tag: Dorms
+
+- type: entity
+  id: MailingUnitTools
+  parent: MailingUnit
+  suffix: Tools
+  components:
+  - type: MailingUnit
+    tag: Tools
+
+- type: entity
+  id: MailingUnitDisposals
+  parent: MailingUnit
+  suffix: Disposals
+  components:
+  - type: MailingUnit
+    tag: Disposals
+
+- type: entity
+  id: MailingUnitCryosleep
+  parent: MailingUnit
+  suffix: Cryosleep
+  components:
+  - type: MailingUnit
+    tag: Cryosleep
+
+- type: entity
+  id: MailingUnitVox
+  parent: MailingUnit
+  suffix: Vox
+  components:
+  - type: MailingUnit
+    tag: Vox

@@ -15,7 +15,7 @@ public sealed partial class ThermalVisionComponent : Component
 
     [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool blockedByFlashImmunity = false;
 }
 

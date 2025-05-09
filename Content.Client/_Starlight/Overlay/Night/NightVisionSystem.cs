@@ -9,6 +9,7 @@ using Robust.Shared.Player;
 using Content.Shared.Flash.Components;
 using Robust.Shared.Prototypes;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Starlight.Overlay;
 
 namespace Content.Client._Starlight.Overlay.Night;
 
@@ -103,6 +104,10 @@ public sealed class NightVisionSystem : EntitySystem
 
     private void AddNightVision(EntityUid uid, NightVisionComponent component)
     {
+        if (component.Effect != null) return;
+
+        if (!TryComp<NightVisionComponent>(uid, out var nightVision) || nightVision.blockedByFlashImmunity) return;
+
         _overlayMan.AddOverlay(_overlay);
         component.Effect = SpawnAttachedTo(component.EffectPrototype, Transform(uid).Coordinates);
         if (TryComp<MechPilotComponent>(uid, out var mechPilot))

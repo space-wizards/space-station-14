@@ -5535,4 +5535,103 @@ Entries:
   id: 767
   time: '2025-05-06T04:35:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/583
+- author: Happyrobot33
+  changes:
+  - message: Lings start at 40 biomass
+    type: Tweak
+  id: 768
+  time: '2025-05-06T14:42:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/594
+- author: CringeCursed
+  changes:
+  - message: Changed Resomi Weight
+    type: Tweak
+  id: 769
+  time: '2025-05-06T15:24:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/593
+- author: CringeCursed
+  changes:
+  - message: Changed Resomi/Felinoids health thresholds for slowdown
+    type: Tweak
+  id: 770
+  time: '2025-05-06T15:24:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/593
+- author: Happyrobot33
+  changes:
+  - message: Tweaked minimum chat window size in separated to remove letterboxing.
+    type: Tweak
+  id: 771
+  time: '2025-05-07T04:18:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/584
+- author: PubliclyExecutedPig
+  changes:
+  - message: Updated the Gamma Armoury!
+    type: Tweak
+  id: 772
+  time: '2025-05-07T04:23:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/587
+- author: Happyrobot33
+  changes:
+  - message: Fixed Thermal vision and flash immunity system. Again.
+    type: Fix
+  id: 773
+  time: '2025-05-07T04:29:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/588
+- author: Happyrobot33
+  changes:
+  - message: All puddles will now be transparent regardless of if its blood or not.
+    type: Tweak
+  id: 774
+  time: '2025-05-07T04:45:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/589
+- author: CringeCursed
+  changes:
+  - message: pop up message on surgeon actions
+    type: Add
+  id: 775
+  time: '2025-05-07T17:56:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/597
+- author: Happyrobot33
+  changes:
+  - message: Added mail routing default prototypes for mappers.
+    type: Add
+  id: 776
+  time: '2025-05-07T19:55:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/582
+- author: Happyrobot33
+  changes:
+  - message: Added wildcard mode to disposal routers.
+    type: Add
+  id: 777
+  time: '2025-05-07T19:55:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/581
+- author: RoadTrain
+  changes:
+  - message: Added construction step for exosuit air tank to HAMTR.
+    type: Add
+  id: 778
+  time: '2025-05-08T21:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/592
+- author: RoadTrain
+  changes:
+  - message: Fixed typo 'calrke chassis'.
+    type: Fix
+  id: 779
+  time: '2025-05-08T21:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/592
+- author: RoadTrain
+  changes:
+  - message: 'Fixed Clarke''s left arm and right arm being swapped internally.:'
+    type: Fix
+  id: 780
+  time: '2025-05-08T21:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/592
+- author: RoadTrain
+  changes:
+  - message: Fixed pressurization not working for Durand, Hamtr, Gygax & Ripley mk
+      II.
+    type: Fix
+  id: 781
+  time: '2025-05-08T21:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/592
 
