@@ -42,7 +42,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
         // List of new added turrets
         var turretsToAdd = args.Devices.Except(args.OldDevices);
 
-        // Request data from newly added devices
+        // Request data from newly linked devices
         var payload = new NetworkPayload
         {
             [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdUpdatedState,
@@ -58,6 +58,22 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
 
             _deviceNetwork.QueuePacket(ent, turretDeviceNetwork.Address, payload, device: deviceNetwork);
         }
+
+        // Remove newly unlinked devices
+        var turretsToRemove = args.OldDevices.Except(args.Devices);
+        var refreshUi = false;
+
+        foreach (var turretUid in turretsToRemove)
+        {
+            if (!TryComp<DeviceNetworkComponent>(turretUid, out var turretDeviceNetwork))
+                continue;
+
+            if (ent.Comp.LinkedTurrets.Remove(turretDeviceNetwork.Address))
+                refreshUi = true;
+        }
+
+        if (refreshUi)
+            UpdateUIState(ent);
     }
 
     private void OnPacketReceived(Entity<DeployableTurretControllerComponent> ent, ref DeviceNetworkPacketEvent args)
@@ -65,7 +81,10 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
         if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
             return;
 
-        // If an update is received from a conencted turrt, update the UI
+        if (!TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork) || deviceNetwork.ReceiveFrequency != args.Frequency)
+            return;
+
+        // If an update was received from a turret, connect to it and update the UI
         if (command == DeviceNetworkConstants.CmdUpdatedState &&
             args.Data.TryGetValue(command, out DeployableTurretState updatedState))
         {
