@@ -495,7 +495,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtColorRainbow
   name: rainbow jumpskirt
-  description: A multi-colored jumpkirt!
+  description: A multi-colored jumpskirt!
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/rainbow.rsi
