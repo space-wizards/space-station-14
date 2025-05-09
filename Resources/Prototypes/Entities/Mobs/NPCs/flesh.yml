@@ -1,10 +1,16 @@
-- type: entity
-  parent: [ SimpleMobBase, MobCombat ]
+- type: entity #TODO: add custom Body component prototype
+  parent: SimpleSpaceMobBase
   id: BaseMobFlesh
   name: aberrant flesh
   description: A shambling mass of flesh, animated through anomalous energy.
   abstract: true
   components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/flesh.rsi
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
@@ -18,20 +24,12 @@
     whitelist:
       components:
       - Anomaly # Friendly to inner anomaly host
-  - type: NpcFactionMember
-    factions:
-    - SimpleHostile
-  - type: Tag
-    tags:
-    - DoorBumpOpener
-    - Flesh
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/flesh.rsi
-  - type: MovementAlwaysTouching
   - type: MovementSpeedModifier
     baseWalkSpeed: 1
     baseSprintSpeed: 1.5
+  - type: MovementAlwaysTouching
+  - type: Stamina
+    critThreshold: 50
   - type: MobState
     allowedStates:
     - Alive
@@ -40,15 +38,17 @@
     thresholds:
       0: Alive
       75: Dead
-  - type: Stamina
-    critThreshold: 50
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.7
   - type: Butcherable
     spawned:
     - id: FoodMeat
       amount: 1
+  - type: MobPrice
+    price: 250 # Living critters are valuable in space.
   - type: Bloodstream
     bloodMaxVolume: 100
-  - type: CombatMode
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
@@ -59,6 +59,10 @@
         Slash: 6
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Flesh
 
 - type: entity
   parent: BaseMobFlesh
@@ -130,13 +134,13 @@
         Base: dead
       Dead:
         Base: dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2.5
   - type: MobThresholds
     thresholds:
       0: Alive
       30: Dead
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 2
-    baseSprintSpeed: 2.5
 
 - type: entity
   parent: BaseMobFlesh
@@ -154,13 +158,13 @@
         Base: dead
       Dead:
         Base: dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2.5
   - type: MobThresholds
     thresholds:
       0: Alive
       30: Dead
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 2
-    baseSprintSpeed: 2.5
 
 - type: entity
   parent: BaseMobFlesh
@@ -180,17 +184,13 @@
         Base: abomination
       Dead:
         Base: dead
-  - type: MobState
-    allowedStates:
-    - Alive
-    - Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.5
+    baseSprintSpeed: 2.5
   - type: MobThresholds
     thresholds:
       0: Alive
       100: Dead
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 1.5
-    baseSprintSpeed: 2.5
   - type: MeleeWeapon
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
@@ -329,13 +329,13 @@
         Base: dead
       Dead:
         Base: dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2.5
   - type: MobThresholds
     thresholds:
       0: Alive
       30: Dead
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 2
-    baseSprintSpeed: 2.5
 
 - type: entity
   parent: BaseMobFleshSalvage
@@ -353,10 +353,10 @@
         Base: dead
       Dead:
         Base: dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2.5
   - type: MobThresholds
     thresholds:
       0: Alive
       30: Dead
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 2
-    baseSprintSpeed: 2.5
