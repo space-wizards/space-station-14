@@ -1,40 +1,4 @@
 ﻿Entries:
-- author: beck-thompson
-  changes:
-  - message: Fultons are now part of the Advanced Tools T2 research!
-    type: Add
-  id: 7941
-  time: '2025-02-12T00:29:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34567
-- author: Nox38
-  changes:
-  - message: Deathsquad agents Matebas now come loaded with AP rounds.
-    type: Fix
-  id: 7942
-  time: '2025-02-12T00:43:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34910
-- author: MilonPL
-  changes:
-  - message: The announce command now takes optional color and sound parameters.
-    type: Tweak
-  id: 7943
-  time: '2025-02-12T08:58:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34889
-- author: Xillan
-  changes:
-  - message: Changed light brown gloves to have their own unique fiber for detectives,
-      where previously they were indistinguishable from normal / dark brown gloves.
-    type: Tweak
-  id: 7944
-  time: '2025-02-12T18:41:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35111
-- author: SaphireLattice, themias
-  changes:
-  - message: Chair buckle draw depth is slightly less broken
-    type: Fix
-  id: 7945
-  time: '2025-02-13T05:51:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33447
 - author: Minemoder
   changes:
   - message: Slime plushie now squishes.
@@ -3928,3 +3892,42 @@
   id: 8443
   time: '2025-05-09T00:06:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36700
+- author: Nyxilath
+  changes:
+  - message: Trash bags can be printed by Autolathes again.
+    type: Fix
+  id: 8444
+  time: '2025-05-09T03:35:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37296
+- author: robinthedragon
+  changes:
+  - message: Basic operative bundle, which allows newkies to easily spend all 40 of
+      their TC on straightforwardly useful items.
+    type: Add
+  id: 8445
+  time: '2025-05-09T11:32:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37290
+- author: Errant
+  changes:
+  - message: Borgs can no longer craft items using up their tools as an ingredient,
+      losing them forever.
+    type: Fix
+  id: 8446
+  time: '2025-05-09T12:43:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37292
+- author: murolem
+  changes:
+  - message: Silo can now accept diamonds. Shiny!
+    type: Tweak
+  id: 8447
+  time: '2025-05-09T15:41:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37305
+- author: GaMEWAR360
+  changes:
+  - message: 'Added new bounties for: Rings, Goliath Plates, Hivelord Remains'
+    type: Add
+  - message: 'Increased bounty prices for: Sharkminnow Teeth and Spacecarp Teeth'
+    type: Tweak
+  id: 8448
+  time: '2025-05-09T15:52:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34926
