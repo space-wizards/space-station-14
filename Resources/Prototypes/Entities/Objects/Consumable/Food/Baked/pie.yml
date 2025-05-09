@@ -520,7 +520,7 @@
   name: golden apple streusel tart
   parent: FoodPieBase
   id: FoodTartGapple
-  description: A tasty dessert that won't make it through a metal detector.
+  description: A tasty dessert that won't make it through a metal detector. May contain real golden apples.
   components:
   - type: FlavorProfile
     flavors:
