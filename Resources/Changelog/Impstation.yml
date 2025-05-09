@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: reduced radioactivity of uranium and uranium-based materials
-    type: Tweak
-  id: 1125
-  time: '2025-02-14T07:49:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1644
 - author: Sha-Seng
   changes:
   - message: Portable Criminal Records now fits in the tank slot!
@@ -4168,3 +4161,13 @@
   id: 1624
   time: '2025-05-09T00:06:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2421
+- author: CombustibleToast
+  changes:
+  - message: The lead custodial jumpskirt is no longer called a jumpsuit
+    type: Fix
+  - message: The lead custodial jumpskirt and lead bartending uniform no longer have
+      the option to be folded (wasn't implemented).
+    type: Remove
+  id: 1625
+  time: '2025-05-09T21:14:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2428
