@@ -5,12 +5,6 @@
   abstract: true
   description: It looks friendly. Why don't you give it a hug?
   components:
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
-  - type: NpcFactionMember
-    factions:
-    - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/bear.rsi
@@ -25,23 +19,39 @@
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 0.40
-        density: 100
+          radius: 0.35
+        density: 130
         mask:
         - MobMask
         layer:
         - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4.5
+  - type: MovementAlwaysTouching
+  - type: PointLight
+    radius: 1.2
+    energy: 2
+    color: "#4faffb"
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
   - type: MobThresholds
     thresholds:
       0: Alive
       100: Dead
   - type: Stamina
     critThreshold: 150
-  - type: MovementAlwaysTouching
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 3
   - type: Bloodstream
-    bloodMaxVolume: 300
+    bloodMaxVolume: 200
     bloodReagent: Cryoxadone
-  - type: CombatMode
   - type: Temperature
     heatDamageThreshold: 500
     coldDamageThreshold: 0
@@ -54,19 +64,15 @@
       types:
         Blunt: 5
         Slash: 10
+  - type: Puller
+    needsHands: false
+  - type: GhostTakeoverAvailable
+  - type: Speech
+    speechVerb: LargeMob
   - type: Tag
     tags:
     - DoorBumpOpener
     - FootstepSound
-  - type: Puller
-    needsHands: false
-  - type: PointLight
-    radius: 1.2
-    energy: 2
-    color: "#4faffb"
-  - type: GhostTakeoverAvailable
-  - type: Speech
-    speechVerb: LargeMob
 
 - type: entity
   name: space tick
