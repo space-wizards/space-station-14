@@ -1,29 +1,16 @@
 - type: entity
   name: space carp
   id: BaseMobCarp
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
   description: It's a space carp.
   abstract: true
   components:
-    - type: InputMover
-    - type: MobMover
-    - type: HTN
-      rootTask:
-        task: SimpleHostileCompound
-      blackboard:
-        NavSmash: !type:Bool
-          true
-    - type: NpcFactionMember
-      factions:
-      - Dragon
     - type: Sprite
       drawdepth: Mobs
       sprite: Mobs/Aliens/Carps/space.rsi
       layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
-    - type: CombatMode
-    - type: Physics
     - type: Fixtures
       fixtures:
         fix1:
@@ -35,16 +22,28 @@
             - FlyingMobMask
           layer:
             - FlyingMobLayer
-    - type: MobState
+    - type: TypingIndicator
+      proto: alien
+    - type: ReplacementAccent
+      accent: genericAggressive
+    - type: Speech
+      speechVerb: LargeMob
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2.5
+      baseSprintSpeed: 3.5
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+      blackboard:
+        NavSmash: !type:Bool
+          true
+    - type: NpcFactionMember
+      factions:
+      - Dragon
     - type: MobThresholds
       thresholds:
         0: Alive
         40: Dead
-    - type: MovementSpeedModifier
-      baseWalkSpeed: 2.5
-      baseSprintSpeed: 3.5
-    - type: Stamina
-      critThreshold: 100
     - type: DamageStateVisuals
       states:
         Alive:
@@ -53,6 +52,11 @@
         Dead:
           Base: dead
           BaseUnshaded: dead_mouth
+    - type: Bloodstream
+      bloodReagent: Blood
+      bloodMaxVolume: 200
+    - type: Stamina
+      critThreshold: 100
     - type: Butcherable
       spawned:
         - id: FoodMeatFish
@@ -70,21 +74,16 @@
         types:
           Blunt: 5
           Slash: 7
-    - type: TypingIndicator
-      proto: alien
-    - type: Tag
-      tags:
-        - Carp
-        - DoorBumpOpener
-    - type: ReplacementAccent
-      accent: genericAggressive
-    - type: Speech
-      speechVerb: LargeMob
     - type: InteractionPopup
+      successChance: 0.2
       interactSuccessString: petting-success-carp
       interactFailureString: petting-failure-carp
       interactFailureSound:
         path: /Audio/Effects/bite.ogg
+    - type: Tag
+      tags:
+        - Carp
+        - DoorBumpOpener
 
 - type: entity
   parent: BaseMobCarp
@@ -123,7 +122,6 @@
   components:
     - type: Sprite
       sprite: Mobs/Aliens/Carps/holo.rsi
-    - type: Physics
     - type: Fixtures
       fixtures:
         fix1:
