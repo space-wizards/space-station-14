@@ -21,7 +21,7 @@ public sealed class ActionGrantSystem : EntitySystem
         if (!TryComp(ent.Owner, out ActionGrantComponent? grant))
             return;
 
-        if (ent.ActiveIfWorn != args.InHands)
+        if (ent.Comp.ActiveIfWorn != args.InHands)
             return;
 
         foreach (var action in grant.ActionEntities)
