@@ -17,6 +17,7 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
     [Dependency] private readonly DecalSystem _decal = default!;
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefs = default!;
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     public override void Initialize()
     {
@@ -40,10 +41,22 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
         if (comp.Decals.Count == 0)
             return false;
 
-        var tileBlacklist = new List<ITileDefinition>();
-        if (comp.TileBlacklist.Count > 0)
+        var tileWhitelist = new List<ITileDefinition>();
+        if (comp.TileWhitelist.Count > 0)
         {
-            tileBlacklist = GetTileDefs(comp.TileBlacklist);
+            foreach (var tileProto in comp.TileWhitelist)
+            {
+                if (_tileDefs.TryGetDefinition(tileProto, out var tileDef))
+                    tileWhitelist.Add(tileDef);
+            }
+        }
+        else if (comp.TileBlacklist.Count > 0)
+        {
+            foreach (var tileDef in _tileDefs)
+            {
+                if (!comp.TileBlacklist.Contains(tileDef.ID))
+                    tileWhitelist.Add(tileDef);
+            }
         }
 
         var xform = Transform(ent);
@@ -62,25 +75,31 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
             var position = new EntityCoordinates(xform.GridUid.Value, localPos);
 
             var tileRef = _map.GetTileRef(xform.GridUid.Value, grid, position);
+
+            if (tileWhitelist.Count > 0)
+            {
+                _tileDefs.TryGetDefinition(tileRef.Tile.TypeId, out var currTileDef);
+                if (currTileDef is null || !tileWhitelist.Contains(currTileDef))
+                    continue;
+            }
+
             var tileRefStr = tileRef.ToString();
-            if (comp.MaxDecalsPerTile > 0)
+            if (comp.MaxDecalsPerTile != null && comp.MaxDecalsPerTile > 0)
             {
                 addedDecals.TryAdd(tileRefStr, 0);
                 if (addedDecals[tileRefStr] >= comp.MaxDecalsPerTile)
                     continue;
             }
 
-            if (comp.SnapPosition)
+            var decalProtoId = _random.Pick(comp.Decals);
+            var decalProto = _prototypes.Index(decalProtoId);
+            var snapPosition = comp.SnapPosition == null ? decalProto.DefaultSnap : comp.SnapPosition.Value;
+            if (snapPosition)
             {
                 position = position.WithPosition(tileRef.GridIndices * grid.TileSize);
             }
 
-            if (tileBlacklist.Count > 0)
-            {
-                _tileDefs.TryGetDefinition(tileRef.Tile.TypeId, out var currTileDef);
-                if (currTileDef is null || tileBlacklist.Contains(currTileDef))
-                    continue;
-            }
+            var cleanable = comp.Cleanable == null ? decalProto.DefaultCleanable : comp.Cleanable.Value;
 
             var rotation = Angle.Zero;
             if (comp.RandomRotation)
@@ -92,37 +111,23 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
             }
 
             var color = comp.Color;
-            if (comp.RandomColorList.Count != 0)
+            if (comp.RandomColorList != null && comp.RandomColorList.Count != 0)
                 color = _random.Pick(comp.RandomColorList);
 
             _decal.TryAddDecal(
-                _random.Pick(comp.Decals),
+                decalProtoId,
                 position,
                 out var decalId,
                 color,
                 rotation,
                 comp.ZIndex,
-                comp.Cleanable
+                cleanable
             );
 
-            if (comp.MaxDecalsPerTile > 0)
+            if (comp.MaxDecalsPerTile != null && comp.MaxDecalsPerTile > 0)
                 addedDecals[tileRefStr]++;
         }
 
         return true;
-    }
-
-    // Gets a list of all the tile definitions in the current map that are also part of the blacklist
-    // This is so we can minimize the list size we have to work with.
-    private List<ITileDefinition> GetTileDefs(List<ProtoId<ContentTileDefinition>> tileProtos)
-    {
-        var existingTileDefs = new List<ITileDefinition>();
-        foreach (var tileProto in tileProtos)
-        {
-            if (_tileDefs.TryGetDefinition(tileProto, out var tileDef))
-                existingTileDefs.Add(tileDef);
-        }
-
-        return existingTileDefs;
     }
 }

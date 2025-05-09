@@ -7,6 +7,25 @@
     radius: 0.3
     zIndex: 1
     deleteSpawnerAfterSpawn: true
+    tileWhitelist:
+    - FloorAstroGrass
+    - FloorMowedAstroGrass
+    - FloorJungleAstroGrass
+    - FloorAstroIce
+    - FloorAstroSnow
+    - FloorAstroAsteroidSand
+    - FloorAsteroidSandUnvariantized
+    - FloorAsteroidIronsandUnvariantized
+    - FloorCave
+    - FloorAsteroidIronsand
+    - FloorAsteroidTile
+    - FloorAsteroidSandDug
+    - FloorAsteroidSand
+    - FloorDirt
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorGrass
 
 - type: entity
   parent: DecalSpawnerFloraBase

@@ -39,10 +39,10 @@ public sealed partial class RandomDecalSpawnerComponent : Component
     /// The maximum amount of decals to spawn within a tile.
     /// </summary>
     /// <remarks>
-    /// A value <= 0 is considered unlimited.
+    /// A value <= 0 or null is considered unlimited.
     /// </remarks>
     [DataField]
-    public int MaxDecalsPerTile = 0;
+    public int? MaxDecalsPerTile = null;
 
     /// <summary>
     /// Whether decals should have a random rotation applied to them.
@@ -59,8 +59,11 @@ public sealed partial class RandomDecalSpawnerComponent : Component
     /// <summary>
     /// Whether decals should snap to the center omf a grid space or be placed randoly.
     /// </summary>
+    /// <remarks>
+    /// A null value will cause this to attempt to use the default value (DefaultSnap) for the decal.
+    /// </remarks>
     [DataField]
-    public bool SnapPosition = false;
+    public bool? SnapPosition = false;
 
     /// <summary>
     /// zIndex for the generated decals
@@ -78,18 +81,33 @@ public sealed partial class RandomDecalSpawnerComponent : Component
     /// A random color to select from. Overrides Color if set.
     /// </summary>
     [DataField]
-    public List<Color> RandomColorList = new();
+    public List<Color>? RandomColorList = new();
 
     /// <summary>
     /// Whether the new decals are cleanable or not
     /// </summary>
+    /// <remarks>
+    /// A null value will cause this to attempt to use the default value (DefaultCleanable) for the decal.
+    /// </remarks>
     [DataField]
-    public bool Cleanable = false;
+    public bool? Cleanable = null;
+
+    /// <summary>
+    /// A list of tile prototype IDs to only place decals on.
+    /// </summary>
+    /// <remarks>
+    /// Causes the TileBlacklist to be ignored if this is set.
+    /// Note that due to the nature of tile-based placement, it's possible for decals to "spill over" onto nearby tiles.
+    /// This is mostly so dirt decals don't go on diagonal tiles that won't work for them.
+    /// </remarks>
+    [DataField]
+    public List<ProtoId<ContentTileDefinition>> TileWhitelist = new();
 
     /// <summary>
     /// A list of tile prototype IDs to avoid placing decals on.
     /// </summary>
     /// <remarks>
+    /// Ignored if TileWhitelist is set.
     /// Note that due to the nature of tile-based placement, it's possible for decals to "spill over" onto nearby tiles.
     /// This is mostly so dirt decals don't go on diagonal tiles that won't work for them.
     /// </remarks>
