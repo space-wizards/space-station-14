@@ -11,5 +11,5 @@
         doAfter: 5
   - node: ripleymkii
     actions:
-    - !type:BuildMech
+    - !type:TransformMech
       mechPrototype: MechRipley2
