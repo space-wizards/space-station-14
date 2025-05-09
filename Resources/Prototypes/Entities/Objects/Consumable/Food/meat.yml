@@ -357,6 +357,67 @@
     defaultTarget: goliath steak
 
 - type: entity
+  parent: FoodMeatRawBase
+  id: FoodHivelordRemains
+  name: hivelord remains
+  description: The freakish remains of a hivelord, still leaking a potent medicinal goo. Eat fast before it decays, or your appetite abandons ship.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/rorocore.rsi
+    state: boiled
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Rororium
+          Quantity: 5
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
+  - type: Item
+    size: Normal
+  - type: Perishable
+    rotAfter: 120 # rot after 2 minutes
+    molsPerSecondPerUnitMass: 0
+    forceRotProgression: true
+  - type: RotInto
+    entity: FoodHivelordRemainsInert
+    stage: 1
+  - type: StaticPrice
+    price: 5000
+
+- type: entity
+  parent: FoodMeatBase
+  id: FoodHivelordRemainsInert
+  name: inert hivelord remains
+  description: The inert remains of a hivelord. Once medicinal, now mostly just meat-flavored regret.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/rorocore.rsi
+    state: boiled
+    color: "#664444"
+  - type: Tag
+    tags:
+    - Raw
+    - Meat
+  - type: SpaceGarbage
+  - type: Item
+    size: Normal
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: GastroToxin
+          Quantity: 4
+        - ReagentId: Fat
+          Quantity: 4
+  - type: StaticPrice
+    price: 500
+
+- type: entity
   name: dragon flesh
   parent: FoodMeatBase
   id: FoodMeatDragon
