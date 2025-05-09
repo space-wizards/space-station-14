@@ -1,9 +1,14 @@
+using Content.Shared.Alert;
 using Content.Shared.Mobs.Components;
 
 namespace Content.IntegrationTests.Tests.Damageable;
 
 public sealed class MobThresholdsTest
 {
+    /// <summary>
+    /// Inspects every entity prototype with a <see cref="MobThresholdsComponent"/> and makes
+    /// sure that every possible mob state is mapped to an <see cref="AlertPrototype"/>.
+    /// </summary>
     [Test]
     public async Task ValidateMobThresholds()
     {
