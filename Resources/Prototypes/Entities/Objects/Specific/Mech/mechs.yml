@@ -197,6 +197,7 @@
   - type: Mech
     equipmentWhitelist:
       tags:
+      - IndustrialMech
       - RipleyMKIIUpgradeKit
     baseState: base
     openState: base-open

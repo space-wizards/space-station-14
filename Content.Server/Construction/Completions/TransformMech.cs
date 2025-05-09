@@ -49,39 +49,33 @@ public sealed partial class TransformMech : IGraphAction
             Logger.Warning($"Mech construct entity {uid} did not have the specified '{GasTankContainer}' container! Aborting build mech action.");
             return;
         }
-
-        if (container.ContainedEntities.Count != 1)
-        {
-            Logger.Warning($"Mech construct entity {uid} did not have exactly one item in the specified '{BatteryContainer}' container! Aborting build mech action.");
-        }
-
-        var cell = container.ContainedEntities[0];
-
-        if (!entityManager.TryGetComponent<BatteryComponent>(cell, out var batteryComponent))
-        {
-            Logger.Warning($"Mech construct entity {uid} had an invalid entity in container \"{BatteryContainer}\"! Aborting build mech action.");
-            return;
-        }
-
-        containerSystem.Remove(cell, container);
-
         var transform = entityManager.GetComponent<TransformComponent>(uid);
         var mech = entityManager.SpawnEntity(MechPrototype, transform.Coordinates);
-
-        if (entityManager.TryGetComponent<MechComponent>(mech, out var mechComp) && mechComp.BatterySlot.ContainedEntity == null)
+        if (container.ContainedEntities.Count == 1)
         {
-            mechSys.InsertBattery(mech, cell, mechComp, batteryComponent);
-            containerSystem.Insert(cell, mechComp.BatterySlot);
-            if (mechComp.GasTankSlot.ContainedEntity == null && gasTankContainer.ContainedEntities.Count > 0)
+            var cell = container.ContainedEntities[0];
+            if (!entityManager.TryGetComponent<BatteryComponent>(cell, out var batteryComponent))
             {
-                var gasTank = gasTankContainer.ContainedEntities[0];
-                containerSystem.Insert(gasTank, mechComp.GasTankSlot);
+                Logger.Warning($"Mech construct entity {uid} had an invalid entity in container \"{BatteryContainer}\"! Aborting build mech action.");
+                return;
+            }
+
+            containerSystem.Remove(cell, container);
+            if (entityManager.TryGetComponent<MechComponent>(mech, out var mechComp) && mechComp.BatterySlot.ContainedEntity == null)
+            {
+                mechSys.InsertBattery(mech, cell, mechComp, batteryComponent);
+                containerSystem.Insert(cell, mechComp.BatterySlot);
+                if (mechComp.GasTankSlot.ContainedEntity == null && gasTankContainer.ContainedEntities.Count > 0)
+                {
+                    var gasTank = gasTankContainer.ContainedEntities[0];
+                    containerSystem.Insert(gasTank, mechComp.GasTankSlot);
+                }
             }
         }
-
         var entChangeEv = new ConstructionChangeEntityEvent(mech, uid);
         entityManager.EventBus.RaiseLocalEvent(uid, entChangeEv);
         entityManager.EventBus.RaiseLocalEvent(mech, entChangeEv, broadcast: true);
         entityManager.QueueDeleteEntity(uid);
+
     }
 }
