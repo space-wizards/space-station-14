@@ -22,7 +22,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: grid
+      name: Experimental Botany Shuttle
     - type: Transform
       pos: 3.5456705,-3.2870686
       parent: invalid
