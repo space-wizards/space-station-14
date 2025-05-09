@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Clusterbangs now properly limit their maximum capacity.
-    type: Fix
-  id: 7940
-  time: '2025-02-11T23:13:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34281
 - author: beck-thompson
   changes:
   - message: Fultons are now part of the Advanced Tools T2 research!
@@ -3928,3 +3921,10 @@
   id: 8442
   time: '2025-05-08T17:38:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37280
+- author: ciaran
+  changes:
+  - message: Guidebook recipe inputs can now link to recipes on the same page
+    type: Add
+  id: 8443
+  time: '2025-05-09T00:06:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36700
