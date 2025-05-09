@@ -160,7 +160,7 @@
         impact: High
       steps:
       - tag: MopBasic
-        name: a mop
+        name: construction-graph-tag-mop-basic
         icon:
           sprite: Objects/Specific/Janitorial/mop.rsi
           state: mop
