@@ -24,6 +24,7 @@
     accent: zombieMoth
   - type: Speech
     speechVerb: Moth
+    speechSounds: Moth
     allowedEmotes: ['Chitter', 'Squeak']
   - type: TypingIndicator
     proto: moth

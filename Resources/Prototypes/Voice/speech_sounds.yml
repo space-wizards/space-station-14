@@ -134,6 +134,15 @@
     path: /Audio/Voice/Talk/arachnid_exclaim.ogg
 
 - type: speechSounds
+  id: Moth
+  saySound:
+    path: /Audio/Voice/Talk/moth.ogg
+  askSound:
+    path: /Audio/Voice/Talk/moth_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/moth_exclaim.ogg
+
+- type: speechSounds
   id: Cat
   saySound:
     path: /Audio/Animals/cat_meow2.ogg

@@ -36,3 +36,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Derived from shriek1.ogg by Errant"
   source: "https://github.com/goonstation/goonstation/tree/eb3e7df6292d23f6af2f18b4372d3a8ba4b0fda7/sound/misc/talk"
+
+- files: ["moth.ogg, moth_ask.ogg, moth_exclaim.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "saturn_hawkchat1.ogg (Renamed to moth.ogg), saturn_hawkchat3b.ogg (Renamed to moth_ask.ogg), saturn_hawkchat3.ogg (Renamed to moth_exclaim.ogg) all taken from https://github.com/CyanSkyKnight/Saturnians/tree/master/sfx/humanoid"
+  source: "https://github.com/CyanSkyKnight/Saturnians/tree/master/sfx/humanoid"
