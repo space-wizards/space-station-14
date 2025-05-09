@@ -194,10 +194,11 @@
       Unsexed: Bear
   - type: InteractionPopup
     successChance: 0.25
+    interactDelay: 2
     interactSuccessString: petting-success-bear
     interactFailureString: petting-failure-bear
     interactSuccessSound:
-      path: /Audio/Animals/sloth_squeak.ogg
+      path: /Audio/Animals/bear.ogg
 
 - type: entity
   id: MobBearSpaceSalvage
