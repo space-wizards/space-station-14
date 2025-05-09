@@ -29,4 +29,7 @@ public sealed partial class ComponentTogglerComponent : Component
     /// </summary>
     [DataField]
     public bool Parent;
+
+    [DataField]
+    public EntityUid? Target = null;
 }
