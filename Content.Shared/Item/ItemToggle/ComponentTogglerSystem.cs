@@ -27,9 +27,7 @@ public sealed class ComponentTogglerSystem : EntitySystem
 
             EntityManager.AddComponents(target, ent.Comp.Components);
         }
-
         else
-
         {
             if (ent.Comp.Target == null)
                 return;
