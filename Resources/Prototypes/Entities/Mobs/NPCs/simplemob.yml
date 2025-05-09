@@ -9,6 +9,12 @@
   suffix: AI
   abstract: true
   components:
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
   - type: Reactive
     groups:
       Flammable: [Touch]
