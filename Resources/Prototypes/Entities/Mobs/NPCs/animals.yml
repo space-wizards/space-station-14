@@ -151,10 +151,6 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Cockroach
-  - type: Tag
-    tags:
-    - Trash
-    - VimPilot
   - type: Destructible
     thresholds:
     - trigger:
@@ -174,6 +170,10 @@
     damage:
       types:
         Piercing: 0
+  - type: Tag
+    tags:
+    - Trash
+    - VimPilot
 
 - type: entity
   name: glockroach
@@ -457,7 +457,7 @@
 - type: entity
   name: bee
   suffix: Angry
-  parent: [ MobBee, MobCombat ]
+  parent: MobBee
   id: MobAngryBee
   description: How nice a bee. Oh no, it looks angry and wants my pizza.
   components:
@@ -483,7 +483,7 @@
 
 ##  -Spiders
 - type: entity
-  parent: [ MobAnimalBase, MobCombat ]
+  parent: MobAnimalBase
   id: MobSpiderBase
   abstract: true
   components:
@@ -551,10 +551,6 @@
       Unsexed: UnisexArachnid
   - type: TypingIndicator
     proto: spider
-  - type: Tag
-    tags:
-    - DoorBumpOpener
-    - FootstepSound
   - type: Prying
     pryPowered: true
     force: true
@@ -570,6 +566,10 @@
       groups:
         Brute: -0.06
         Burn: -0.06
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
 
 - type: entity
   parent: MobSpiderBase
@@ -1340,7 +1340,7 @@
   description: A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed: 3
+    baseWalkSpeed: 2.5
     baseSprintSpeed: 4.5
   - type: Sprite
     drawdepth: Mobs
@@ -1376,10 +1376,6 @@
         Base: kangaroo-crit
       Dead:
         Base: kangaroo-dead
-  - type: Tag
-    tags:
-    - DoorBumpOpener
-    - FootstepSound
   - type: GhostRole
     prob: 0.25
     name: ghost-role-information-kangaroo-name
@@ -1416,6 +1412,10 @@
   - type: Bloodstream
     bloodReagent: Blood
     bloodMaxVolume: 210 # Base blood volume (300 is a human)
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
 
 - type: entity
   name: boxing kangaroo
@@ -1559,10 +1559,10 @@
       Burger: RatBurger
       Skewer: RatSkewer
   - type: Food
+  - type: BadFood
   - type: FlavorProfile
     flavors:
     - meaty
-  - type: BadFood
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -2305,7 +2305,7 @@
 ##  -Deer
 - type: entity
   name: reindeer buck
-  parent: [ MobAnimalBase, MobCombat ]
+  parent: MobAnimalBase
   id: MobReindeerBuck
   description: You think it can pull a sleigh?
   components:
