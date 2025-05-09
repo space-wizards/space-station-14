@@ -5641,4 +5641,11 @@ Entries:
   id: 782
   time: '2025-05-09T15:38:10.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/605
+- author: CringeCursed
+  changes:
+  - message: Signing system for paperwork
+    type: Add
+  id: 783
+  time: '2025-05-09T16:09:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/599
 
