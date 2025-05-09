@@ -53,8 +53,8 @@
 - type: entity
   parent: WeaponEnergyTurretControlPanelFrame
   id: WeaponEnergyTurretStationControlPanel
-  name: sentry turret control panel
-  description: A wall-mounted interface for remotely configuring the operational parameters of linked sentry turrets.
+  name: security turret control panel
+  description: A wall-mounted interface for remotely configuring the operational parameters of linked security turrets.
   components:
   
   # Sprites and appearance
