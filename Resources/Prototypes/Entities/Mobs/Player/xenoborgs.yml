@@ -109,7 +109,7 @@
     doAfterDelay: 13 # 25% more HP, so 30% more time to heal
     allowSelfRepair: false
   - type: BorgChassis
-    maxModules: 7
+    maxModules: 0
     hasMindState: robot_e
     noMindState: robot_e_r
     moduleWhitelist:
@@ -341,6 +341,7 @@
       map: ["light"]
       visible: false
   - type: BorgChassis
+    maxModules: 7
     hasMindState: xenoborg_engi_e
     noMindState: xenoborg_engi_e_r
     moduleWhitelist:
@@ -394,6 +395,7 @@
       map: ["light"]
       visible: false
   - type: BorgChassis
+    maxModules: 4
     hasMindState: xenoborg_heavy_e
     noMindState: xenoborg_heavy_e_r
     moduleWhitelist:
@@ -484,6 +486,7 @@
       collection: FootstepHoverXenoborg
   - type: FlashImmunity
   - type: BorgChassis
+    maxModules: 4
     hasMindState: xenoborg_scout_e
     noMindState: xenoborg_scout_e_r
     moduleWhitelist:
@@ -535,6 +538,7 @@
     footstepSoundCollection:
       collection: FootstepHoverXenoborg
   - type: BorgChassis
+    maxModules: 5
     hasMindState: xenoborg_stealth_e
     noMindState: xenoborg_stealth_e_r
     moduleWhitelist:

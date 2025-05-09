@@ -32,7 +32,7 @@
         - TabletopMachineLayer
   - type: Sprite
     sprite: Structures/Machines/grinder.rsi
-    drawdepth: SmallObjects
+    drawdepth: LargeObjects
     snapCardinals: true
     offset: "0.0,0.4"
     layers:
