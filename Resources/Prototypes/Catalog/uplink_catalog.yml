@@ -1110,11 +1110,11 @@
     - !type:StoreWhitelistCondition
       whitelist:
         tags:
-          - NukeOpsUplink
+        - NukeOpsUplink
     - !type:BuyerWhitelistCondition
       blacklist:
         components:
-          - SurplusBundle
+        - SurplusBundle
 
 
 - type: listing
