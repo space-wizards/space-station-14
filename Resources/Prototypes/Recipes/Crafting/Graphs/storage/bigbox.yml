@@ -1,15 +1,15 @@
 - type: constructionGraph
-  id: BaseBigBox
+  id: BigBox
   start: start
   graph:
     - node: start
       edges:
-        - to: basebigbox
+        - to: bigbox
           steps:
             - material: Cardboard
               amount: 5
               doAfter: 5
 
 
-    - node: basebigbox
+    - node: bigbox
       entity: BigBox
