@@ -11,6 +11,14 @@
       layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: alive
+          BaseUnshaded: mouth
+        Dead:
+          Base: dead
+          BaseUnshaded: dead_mouth
     - type: Fixtures
       fixtures:
         fix1:
@@ -24,13 +32,6 @@
             - FlyingMobLayer
     - type: TypingIndicator
       proto: alien
-    - type: ReplacementAccent
-      accent: genericAggressive
-    - type: Speech
-      speechVerb: LargeMob
-    - type: MovementSpeedModifier
-      baseWalkSpeed: 2.5
-      baseSprintSpeed: 3.5
     - type: HTN
       rootTask:
         task: SimpleHostileCompound
@@ -40,23 +41,18 @@
     - type: NpcFactionMember
       factions:
       - Dragon
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2.5
+      baseSprintSpeed: 3.5
+    - type: Stamina
+      critThreshold: 100
     - type: MobThresholds
       thresholds:
         0: Alive
         40: Dead
-    - type: DamageStateVisuals
-      states:
-        Alive:
-          Base: alive
-          BaseUnshaded: mouth
-        Dead:
-          Base: dead
-          BaseUnshaded: dead_mouth
     - type: Bloodstream
       bloodReagent: Blood
       bloodMaxVolume: 200
-    - type: Stamina
-      critThreshold: 100
     - type: Butcherable
       spawned:
         - id: FoodMeatFish
@@ -74,6 +70,10 @@
         types:
           Blunt: 5
           Slash: 7
+    - type: ReplacementAccent
+      accent: genericAggressive
+    - type: Speech
+      speechVerb: LargeMob
     - type: InteractionPopup
       successChance: 0.2
       interactSuccessString: petting-success-carp
