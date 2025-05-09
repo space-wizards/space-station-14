@@ -293,7 +293,7 @@ public sealed class PaperSystem : EntitySystem
             StampedName = Name(signer),
             StampedColor = Color.FromHex("#333333"),
             Type = StampType.Signature,
-            Font = "/Fonts/Signature.ttf"
+            Font = "/Fonts/_Starlight/Signature.ttf" // 🌟Starlight🌟
         };
 
         // Try stamp with the info, return false if failed.

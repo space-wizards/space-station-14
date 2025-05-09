@@ -46,6 +46,7 @@
   id: Emoji
   path: /Fonts/NotoEmoji.ttf
 
+# 🌟Starlight🌟
 - type: font
   id: SignatureFont
-  path: /Fonts/Signature.ttf
+  path: /Fonts/_Starlight/Signature.ttf

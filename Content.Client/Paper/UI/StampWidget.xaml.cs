@@ -21,37 +21,29 @@ public sealed partial class StampWidget : PanelContainer
         set => StampedByLabel.Orientation = value;
     }
 
-    public StampDisplayInfo StampInfo
-    {
-        get => _stampInfo; 
-        set
-        {
-            _stampInfo = value;
-
+      public StampDisplayInfo StampInfo {
+        set {
             // Umbra: If it's a signature, don't bother doing a string lookup.
             StampedByLabel.Text = value.Type is StampType.Signature ? value.StampedName : Loc.GetString(value.StampedName);
             StampedByLabel.FontColorOverride = value.StampedColor;
             ModulateSelfOverride = value.StampedColor;
 
-            // 🌟Starlight edit start🌟
             if (value.Type == StampType.Signature && value.Font != null)
             {
                 var resCache = IoCManager.Resolve<IResourceCache>();
                 var fontResource = resCache.GetResource<FontResource>(value.Font);
-                StampedByLabel.FontOverride = new VectorFont(fontResource, 55);
+                StampedByLabel.FontOverride = new VectorFont(fontResource, 45); // Укажите размер шрифта
             }
             else
             {
-                StampedByLabel.FontOverride = null;
+                StampedByLabel.FontOverride = null; // Сброс шрифта для обычных штампов
             }
-            // 🌟Starlight edit end🌟
 
             // Umbra: PanelOverride is the border texture, as inferred from ctor. Set null if the stamp is a signature to hide the border.
             PanelOverride = value.Type is StampType.Signature ? null : _borderTexture;
         }
     }
 
-    private StampDisplayInfo _stampInfo; 
     public StampWidget()
     {
         RobustXamlLoader.Load(this);
