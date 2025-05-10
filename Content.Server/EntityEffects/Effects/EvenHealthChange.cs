@@ -16,19 +16,22 @@ namespace Content.Server.EntityEffects.Effects;
 public sealed partial class EvenHealthChange : EntityEffect
 {
     /// <summary>
-    /// damage to heal, collected into entire damage groups
+    /// Damage to heal, collected into entire damage groups.
     /// </summary>
-    [DataField]
-    public Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> Damage;
+    [DataField(required: true)]
+    public Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> Damage = new();
 
     /// <summary>
-    ///     Should this effect scale the damage by the amount of chemical in the solution?
-    ///     Useful for touch reactions, like styptic powder or acid.
-    ///     Only usable if the EntityEffectBaseArgs is an EntityEffectReagentArgs.
+    /// Should this effect scale the damage by the amount of chemical in the solution?
+    /// Useful for touch reactions, like styptic powder or acid.
+    /// Only usable if the EntityEffectBaseArgs is an EntityEffectReagentArgs.
     /// </summary>
     [DataField]
     public bool ScaleByQuantity;
 
+    /// <summary>
+    /// Should this effect ignore damage modifiers?
+    /// </summary>
     [DataField]
     public bool IgnoreResistances = true;
 
@@ -38,8 +41,9 @@ public sealed partial class EvenHealthChange : EntityEffect
         var heals = false;
         var deals = false;
 
-        var universalReagentDamageModifier = entSys.GetEntitySystem<DamageableSystem>().UniversalReagentDamageModifier;
-        var universalReagentHealModifier = entSys.GetEntitySystem<DamageableSystem>().UniversalReagentHealModifier;
+        var damagableSystem = entSys.GetEntitySystem<DamageableSystem>();
+        var universalReagentDamageModifier = damagableSystem.UniversalReagentDamageModifier;
+        var universalReagentHealModifier = damagableSystem.UniversalReagentHealModifier;
 
         foreach (var (group, amount) in Damage)
         {
@@ -67,7 +71,7 @@ public sealed partial class EvenHealthChange : EntityEffect
                 ));
         }
 
-        var healsordeals = heals ? deals ? "both" : "heals" : deals ? "deals" : "none";
+        var healsordeals = heals ? (deals ? "both" : "heals") : (deals ? "deals" : "none");
         return Loc.GetString("reagent-effect-guidebook-even-health-change",
             ("chance", Probability),
             ("changes", ContentLocalizationManager.FormatList(damages)),
@@ -78,6 +82,7 @@ public sealed partial class EvenHealthChange : EntityEffect
     {
         if (!args.EntityManager.TryGetComponent<DamageableComponent>(args.TargetEntity, out var damageable))
             return;
+
         var protoMan = IoCManager.Resolve<IPrototypeManager>();
 
         var scale = FixedPoint2.New(1);
@@ -87,8 +92,9 @@ public sealed partial class EvenHealthChange : EntityEffect
             scale = ScaleByQuantity ? reagentArgs.Quantity * reagentArgs.Scale : reagentArgs.Scale;
         }
 
-        var universalReagentDamageModifier = args.EntityManager.System<DamageableSystem>().UniversalReagentDamageModifier;
-        var universalReagentHealModifier = args.EntityManager.System<DamageableSystem>().UniversalReagentHealModifier;
+        var damagableSystem = args.EntityManager.System<DamageableSystem>();
+        var universalReagentDamageModifier = damagableSystem.UniversalReagentDamageModifier;
+        var universalReagentHealModifier = damagableSystem.UniversalReagentHealModifier;
 
         var dspec = new DamageSpecifier();
 
@@ -126,11 +132,10 @@ public sealed partial class EvenHealthChange : EntityEffect
             }
         }
 
-        args.EntityManager.System<DamageableSystem>()
-            .TryChangeDamage(
-                args.TargetEntity,
-                dspec * scale,
-                IgnoreResistances,
-                interruptsDoAfters: false);
+        damagableSystem.TryChangeDamage(
+            args.TargetEntity,
+            dspec * scale,
+            IgnoreResistances,
+            interruptsDoAfters: false);
     }
 }
