@@ -14,7 +14,7 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="BiomeDunGen"/>
     /// </summary>
-    private async Task PostGen(BiomeDunGen dunGen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(BiomeDunGen dunGen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (!_prototype.TryIndex(dunGen.BiomeTemplate, out var indexedBiome))
             return;
@@ -31,7 +31,7 @@ public sealed partial class DungeonJob
 
             if (reservedTiles.Contains(node))
                 continue;
-            
+
             if (dunGen.TileMask is not null)
             {
                 if (!dunGen.TileMask.Contains(((ContentTileDefinition) _tileDefManager[tileRef.Value.Tile.TypeId]).ID))

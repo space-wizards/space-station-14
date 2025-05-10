@@ -12,22 +12,13 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="InternalWindowDunGen"/>
     /// </summary>
-    private async Task PostGen(InternalWindowDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(InternalWindowDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
-            !data.SpawnGroups.TryGetValue(DungeonDataKey.Window, out var windowGroup))
-        {
-            _sawmill.Error($"Unable to find dungeon data keys for {nameof(gen)}");
-            return;
-        }
-
         // Iterate every room and check if there's a gap beyond it that leads to another room within N tiles
         // If so then consider windows
         var minDistance = 4;
         var maxDistance = 6;
-        var tileDef = _tileDefManager[tileProto];
-        var window = _prototype.Index(windowGroup);
-
+        var tileDef = _tileDefManager[gen.Tile];
         foreach (var room in dungeon.Rooms)
         {
             var validTiles = new List<Vector2i>();
@@ -90,7 +81,7 @@ public sealed partial class DungeonJob
                     var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile);
                     _maps.SetTile(_gridUid, _grid, tile, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
 
-                    _entManager.SpawnEntities(gridPos, EntitySpawnCollection.GetSpawns(window.Entries, random));
+                    _entManager.SpawnEntities(gridPos, EntitySpawnCollection.GetSpawns(gen.Contents, random));
                 }
 
                 if (validTiles.Count > 0)

@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Collections;
@@ -14,19 +15,14 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="WormCorridorDunGen"/>
     /// </summary>
-    private async Task PostGen(WormCorridorDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(WormCorridorDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) || !_prototype.TryIndex(tileProto, out var tileDef))
-        {
-            _sawmill.Error($"Tried to run {nameof(WormCorridorDunGen)} without any dungeon data set which is unsupported");
-            return;
-        }
-
         var networks = new List<(Vector2i Start, HashSet<Vector2i> Network)>();
 
         // List of places to start from.
         var worm = new ValueList<Vector2i>();
         var startAngles = new Dictionary<Vector2i, Angle>();
+        var tileDef = (ContentTileDefinition) _tileDefManager[gen.Tile];
 
         foreach (var room in dungeon.Rooms)
         {
