@@ -58,6 +58,10 @@ public sealed class CollectiveMindUpdateSystem : EntitySystem
     {
         foreach (var prototype in _prototypeManager.EnumeratePrototypes<CollectiveMindPrototype>())
         {
+            //check if they dont already have it
+            if (collective.Minds.ContainsKey(prototype))
+                continue;
+
             var components = StringsToRegs(prototype.RequiredComponents);
 
             bool meetsRequirements = false;
