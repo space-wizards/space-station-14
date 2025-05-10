@@ -932,6 +932,9 @@
   id: Multitool
 
 - type: Tag
+  id: Mushroom
+
+- type: Tag
   id: NoBlockAnchoring
 
 - type: Tag
