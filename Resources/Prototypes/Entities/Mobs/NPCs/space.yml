@@ -126,10 +126,10 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Animals/kangaroo.rsi
+    sprite: Mobs/Space/kangaroo.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: kangaroo-space
+      state: kangaroo
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: glow
       shader: unshaded
@@ -148,12 +148,12 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: kangaroo-space
+        Base: kangaroo
         BaseUnshaded: glow
       Critical:
-        Base: kangaroo-space-crit
+        Base: kangaroo-crit
       Dead:
-        Base: kangaroo-space-dead
+        Base: kangaroo-dead
   - type: Stamina
     critThreshold: 180
   - type: Inventory
