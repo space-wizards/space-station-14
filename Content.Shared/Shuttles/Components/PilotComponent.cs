@@ -12,7 +12,7 @@ namespace Content.Shared.Shuttles.Components
     /// Stores what shuttle this entity is currently piloting.
     /// </summary>
     [RegisterComponent]
-    [NetworkedComponent]
+    [NetworkedComponent(StateRestriction.OwnerOnly)]
     public sealed partial class PilotComponent : Component
     {
         [ViewVariables]
@@ -36,8 +36,6 @@ namespace Content.Shared.Shuttles.Components
 
         [DataField]
         public ProtoId<AlertPrototype> PilotingAlert = "PilotingShuttle";
-
-        public override bool SendOnlyToOwner => true;
     }
 
     public sealed partial class StopPilotingAlertEvent : BaseAlertEvent;
