@@ -4,7 +4,6 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
 using Robust.Shared.Graphics.RSI;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Explosion;
@@ -19,7 +18,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
     [Dependency] private readonly IResourceCache _resCache = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
-    [Dependency] private readonly IMapManager _mapMan = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -69,7 +68,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
         }
 
         // Map may have been deleted.
-        if (_mapMan.MapExists(component.Epicenter.MapId))
+        if (_mapSystem.MapExists(component.Epicenter.MapId))
         {
             // spawn in a client-side light source at the epicenter
             var lightEntity = Spawn("ExplosionLight", component.Epicenter);
