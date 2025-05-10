@@ -220,6 +220,19 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalNamedCat
+  - type: Sprite
+    sprite: Mobs/Animals/caracal.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: floppa
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: floppa
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
 
 - type: entity
   name: Bingus
@@ -298,7 +311,7 @@
       gender: female
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Animals/possum.rsi
+    sprite: Mobs/Pets/poppy.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: poppy
@@ -306,8 +319,10 @@
     states:
       Alive:
         Base: poppy
+      Critical:
+        Base: dead
       Dead:
-        Base: poppy_dead
+        Base: dead
 
 - type: entity
   name: Morticia
@@ -349,9 +364,9 @@
       Alive:
         Base: ian
       Critical:
-        Base: ian_dead
+        Base: ian-dead
       Dead:
-        Base: ian_dead
+        Base: ian-dead
   - type: Grammar
     attributes:
       proper: true
@@ -383,9 +398,9 @@
       Alive:
         Base: old_ian
       Critical:
-        Base: old_ian_dead
+        Base: old_ian-dead
       Dead:
-        Base: old_ian_dead
+        Base: old_ian-dead
   - type: Butcherable
     spawned:
     - id: FoodMeatCorgi
@@ -408,9 +423,9 @@
       Alive:
         Base: lisa
       Critical:
-        Base: lisa_dead
+        Base: lisa-dead
       Dead:
-        Base: lisa_dead
+        Base: lisa-dead
   - type: Grammar
     attributes:
       proper: true
