@@ -5707,4 +5707,11 @@ Entries:
   id: 791
   time: '2025-05-10T04:54:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/602
+- author: Happyrobot33
+  changes:
+  - message: Fixed Escape Pod docking logic.
+    type: Fix
+  id: 792
+  time: '2025-05-10T04:58:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/609
 
