@@ -32,3 +32,13 @@
   id: EliteBlueShieldJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitEliteBlueShield
+
+- type: loadout
+  id: BlueShieldGlasses
+  equipment:
+    eyes: ClothingEyesGlassesBlueShield
+
+- type: loadout
+  id: BlueShieldHud
+  equipment:
+    eyes: ClothingEyesHudBlueShield

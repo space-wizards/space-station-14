@@ -1,0 +1,25 @@
+## Static
+
+- type: latheRecipePack
+  id: FriendlyCubesStatic
+  recipes:
+  - MonkeyCube
+  - KoboldCube
+  - CowCube
+  - GoatCube
+  - MothroachCube
+  - MouseCube
+  - CockroachCube
+  - BorgiCube
+
+- type: latheRecipePack
+  id: HostileCubesStatic
+  recipes:
+  - AbominationCube
+  - SpaceCarpCube
+  - SpaceTickCube
+
+- type: latheRecipePack
+  id: ShadowBorgiCubeRecipePack
+  recipes:
+  - ShadowBorgiCube

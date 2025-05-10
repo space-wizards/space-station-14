@@ -99,11 +99,19 @@ public sealed partial class ChangelingComponent : Component
     /// <summary>
     ///     Cooldown between chem regen events.
     /// </summary>
-    public TimeSpan UpdateTimer = TimeSpan.Zero;
-    public float UpdateCooldown = 1f;
+    [AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public TimeSpan ChemicalNextUpdateTime = TimeSpan.Zero;
+    [AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan ChemicalUpdateCooldown = TimeSpan.FromSeconds(1f);
 
-    public float BiomassUpdateTimer = 0f;
-    public float BiomassUpdateCooldown = 60f;
+    [AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public TimeSpan BiomassNextUpdateTime = TimeSpan.Zero;
+    [AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan BiomassUpdateCooldown = TimeSpan.FromSeconds(60f);
 
     [ViewVariables(VVAccess.ReadOnly)]
     public List<TransformData> AbsorbedDNA = new();

@@ -120,3 +120,17 @@
     ui: !type:MechSoundboardUi
   - type: UseDelay
     delay: 0.5
+    
+- type: entity
+  id: MechEquipmentCamera
+  parent: [ BaseMechEquipment, CombatMechEquipment ]
+  name: mech night vision camera
+  description: night vision camera, allows you to switch the visor to night vision for increased visibility in poorly lit areas.
+  components:
+  - type: MechEquipment
+    equipmentType: Passive
+  - type: Sprite
+    state: mecha_camera
+  - type: MechEquipmentAction
+    actionId: ActionMechToggleNightVision
+  - type: MechNightVision

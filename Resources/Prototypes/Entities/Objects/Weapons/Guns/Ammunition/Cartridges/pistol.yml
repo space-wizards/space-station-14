@@ -1,7 +1,7 @@
 - type: entity
   id: BaseCartridgePistol
   name: cartridge (.35 auto)
-  parent: [ BaseCartridge, BaseRestrictedContraband ]
+  parent: [ BaseCartridge, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag

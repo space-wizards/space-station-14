@@ -3,6 +3,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 
@@ -16,6 +17,7 @@ public abstract partial class SharedRestrictSystem : EntitySystem
     {
         SubscribeLocalEvent<RestrictByUserTagComponent, AttemptMeleeEvent>(OnAttemptMelee);
         SubscribeLocalEvent<RestrictByUserTagComponent, InteractionAttemptEvent>(OnAttemptInteract);
+        SubscribeLocalEvent<RestrictByUserTagComponent, AttemptShootEvent>(OnShotAttempt);
     }
 
     private void OnAttemptInteract(Entity<RestrictByUserTagComponent> ent, ref InteractionAttemptEvent args)
@@ -25,6 +27,16 @@ public abstract partial class SharedRestrictSystem : EntitySystem
             args.Cancelled = true;
             if (ent.Comp.Messages.Count != 0)
                 _popup.PopupClient(Loc.GetString(_random.Pick(ent.Comp.Messages)), args.Uid);
+        }
+    }
+    
+    private void OnShotAttempt(Entity<RestrictByUserTagComponent> ent, ref AttemptShootEvent args)
+    {
+        if (!_tagSystem.HasAllTags(args.User, ent.Comp.Contains) || _tagSystem.HasAnyTag(args.User, ent.Comp.DoestContain))
+        {
+            args.Cancelled = true;
+            if (ent.Comp.Messages.Count != 0)
+                args.Message = Loc.GetString(_random.Pick(ent.Comp.Messages));
         }
     }
 

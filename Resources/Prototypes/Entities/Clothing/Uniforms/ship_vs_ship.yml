@@ -18,7 +18,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitRecruitSyndie
   name: syndicate recruit jumpsuit
-  description: A dubious, dark-grey jumpsuit. As if passengers weren't dubious enough already.
+  description: A dubious, dark-grey jumpsuit. As if assistants weren't dubious enough already.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/recruit_syndie.rsi

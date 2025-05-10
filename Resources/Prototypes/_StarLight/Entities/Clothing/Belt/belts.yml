@@ -151,7 +151,7 @@
     price: 1000
 
 - type: entity
-  parent: [ClothingBeltMedical,ClothingBeltSecurity]
+  parent: [ClothingBeltMedical, ClothingBeltSecurity, BaseSecurityContraband]
   id: ClothingBeltBrigmedic
   name: tactical trauma belt
   description: Because why choose between being a medic or a security guard when you can be both?
@@ -179,6 +179,7 @@
         - DiscreteHealthAnalyzer
         - SurgeryTool
         - Dropper
+        - Truncheon
       components:
         - Stunbaton
         - FlashOnTrigger
@@ -216,4 +217,16 @@
     sprite: _Starlight/Clothing/Belt/brigmedicwebbing.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Belt/brigmedicwebbing.rsi
+  - type: Appearance
+
+- type: entity
+  parent: [ClothingBeltBrigmedic]
+  id: ClothingBeltCorpsman
+  name: Corpsman Duty Belt
+  description: A tactical belt with as many pockets and bags to hold all the medical items you need!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Belt/corpsmanbelt.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Belt/corpsmanbelt.rsi
   - type: Appearance

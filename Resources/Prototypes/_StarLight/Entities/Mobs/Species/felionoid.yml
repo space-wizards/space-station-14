@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: BaseMobSpeciesOrganic
+  parent: [BaseMobSpeciesOrganic, BaseSpeciesPickupable]
   id: BaseMobFelionoid
   abstract: true
   components:
@@ -67,6 +67,13 @@
         showInChat: true
   - type: Sprite 
     scale: 0.8, 0.8
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - Felionoid
   - type: Fixtures
     fixtures: 
       fix1:

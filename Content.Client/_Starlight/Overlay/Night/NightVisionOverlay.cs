@@ -5,6 +5,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Content.Shared.Eye.Blinding.Components;
 using Robust.Shared.Configuration;
+using Content.Client.Flash;
 
 namespace Content.Client._Starlight.Overlay.Night;
 

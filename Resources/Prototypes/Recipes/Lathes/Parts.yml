@@ -2,7 +2,8 @@
 - type: latheRecipe
   abstract: true
   id: BasePartRecipe
-  category: Parts
+  categories:
+  - Parts
   completetime: 2
   materials:
     Steel: 300

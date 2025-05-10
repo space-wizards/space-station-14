@@ -19,16 +19,19 @@ public sealed class LocalizedDatasetPrototypeTest
 
         var protos = protoMan.EnumeratePrototypes<LocalizedDatasetPrototype>().OrderBy(p => p.ID);
 
-        // Check each prototype
-        foreach (var proto in protos)
+        Assert.Multiple(() =>
         {
-            // Check each value in the prototype
-            foreach (var locId in proto.Values)
+            // Check each prototype
+            foreach (var proto in protos)
             {
-                // Make sure the localization manager has a string for the LocId
-                Assert.That(localizationMan.HasString(locId), $"LocalizedDataset {proto.ID} with prefix \"{proto.Values.Prefix}\" specifies {proto.Values.Count} entries, but no localized string was found matching {locId}!");
+                // Check each value in the prototype
+                foreach (var locId in proto.Values)
+                {
+                    // Make sure the localization manager has a string for the LocId
+                    Assert.That(localizationMan.HasString(locId), $"LocalizedDataset {proto.ID} with prefix \"{proto.Values.Prefix}\" specifies {proto.Values.Count} entries, but no localized string was found matching {locId}!");
+                }
             }
-        }
+        });
 
         await pair.CleanReturnAsync();
     }

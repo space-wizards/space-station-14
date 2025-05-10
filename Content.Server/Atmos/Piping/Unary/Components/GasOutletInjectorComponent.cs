@@ -1,6 +1,7 @@
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Guidebook;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
@@ -29,6 +30,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public float MaxTransferRate = Atmospherics.MaxTransferRate;
 
         [DataField("maxPressure")]
+        [GuidebookData]
         public float MaxPressure { get; set; } = GasVolumePumpComponent.DefaultHigherThreshold;
 
         [DataField("inlet")]

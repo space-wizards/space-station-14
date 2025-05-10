@@ -1,0 +1,138 @@
+﻿- type: entity
+  id: BaseMobClown
+  parent: BaseMobFlesh
+  name: aberrant clown
+  description: A slippery mass of hilarious matter, animated through honktacular energy.
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - DoorBumpOpener
+      - ClownKudzu
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Starlight/Mobs/Aliens/clown_kudzu.rsi
+  - type: Butcherable
+    spawned:
+      - id: MaterialBananium1
+      - id: SnapPopBox
+        orGroup: ToyGroup
+      - id: CrazyGlue
+        orGroup: ToyGroup
+      - id: PlasticBanana
+        orGroup: ToyGroup
+      - id: WhoopieCushion
+        orGroup: ToyGroup
+      - id: ToyHammer
+        orGroup: ToyGroup
+      - id: MrChips
+        orGroup: ToyGroup
+      - id: MrDips
+        orGroup: ToyGroup
+      - id: RevolverCapGun
+        orGroup: ToyGroup
+      - id: BalloonNT
+        orGroup: ToyGroup
+      - id: ClothingShoesClownLarge
+        orGroup: ToyGroup
+      - id: ClothingHeadHatMagician
+        orGroup: ToyGroup
+      - id: BeachBall
+        orGroup: ToyGroup
+      - id: ClothingShoesSkates
+        orGroup: ToyGroup
+      - id: RubberChicken
+        orGroup: ToyGroup
+      - id: DrinkSpaceLube
+        orGroup: ToyGroup
+      - id: BikeHorn
+        orGroup: ToyGroup
+      - id: CluwneHorn
+        orGroup: ToyGroup
+      - id: ToySword
+        orGroup: ToyGroup
+      - id: ToyRubberDuck
+        orGroup: ToyGroup
+      - id: GoldenBikeHorn
+        orGroup: ToyGroup
+        prob: 0.02
+      - id: BananiumHorn
+        orGroup: ToyGroup
+        prob: 0.01
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Items/bikehorn.ogg
+      params:
+        variation: 0.246
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 6
+  - type: Speech
+    speechVerb: Cluwne
+  - type: Bloodstream
+    bloodMaxVolume: 100
+    bloodReagent: Laughter
+  - type: InjectOnHit
+    limit: 20
+    reagents:
+      - ReagentId: Laughter
+        Quantity: 5
+  
+- type: entity
+  parent: [ BaseMobClown, MobFleshJared ]
+  id: MobClownJared
+  components:
+    - type: MeleeWeapon
+      soundHit:
+        path: /Audio/Items/bikehorn.ogg
+        params:
+          variation: 0.246
+      angle: 0
+      animation: WeaponArcClaw
+      damage:
+        types:
+          Slash: 8
+
+- type: entity
+  parent: [ BaseMobClown, MobFleshGolem ]
+  id: MobClownGolem
+  components:
+    - type: MeleeWeapon
+      soundHit:
+        path: /Audio/Items/bikehorn.ogg
+        params:
+          variation: 0.246
+      angle: 0
+      animation: WeaponArcClaw
+      damage:
+        types:
+          Slash: 8
+
+- type: entity
+  parent: [ BaseMobClown, MobFleshClamp ]
+  id: MobClownClamp
+
+- type: entity
+  parent: [ BaseMobClown, MobFleshLover ]
+  id: MobClownLover
+
+#- type: entity
+#  id: ClownBlocker
+#  parent: FleshBlocker
+#  name: honk clump
+#  description: An annoying clump of H O N K.
+#  components:
+#    - type: Sprite
+#      noRot: true
+#      sprite: Structures/Decoration/flesh_decoration.rsi # change sprite here
+#      layers:
+#        - state: closed
+#          map: [ "enum.DamageStateVisualLayers.Base" ]
+#    - type: RandomSprite
+#      available:
+#        - enum.DamageStateVisualLayers.Base:
+#            closed: ""
+#            ajar: ""
+#            open: ""

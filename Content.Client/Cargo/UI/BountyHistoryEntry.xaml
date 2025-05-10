@@ -1,0 +1,22 @@
+<BoxContainer xmlns="https://spacestation14.io"
+                xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                Margin="10 10 10 0"
+                HorizontalExpand="True">
+    <PanelContainer StyleClasses="AngleRect" HorizontalExpand="True">
+        <BoxContainer Orientation="Vertical"
+                      HorizontalExpand="True">
+            <BoxContainer Orientation="Horizontal">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                    <RichTextLabel Name="RewardLabel"/>
+                    <RichTextLabel Name="ManifestLabel"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Vertical" MinWidth="120" Margin="0 0 10 0">
+                    <RichTextLabel Name="TimestampLabel" HorizontalAlignment="Right" />
+                    <RichTextLabel Name="IdLabel" HorizontalAlignment="Right" />
+                </BoxContainer>
+            </BoxContainer>
+            <customControls:HSeparator Margin="5 10 5 10"/>
+            <RichTextLabel Name="NoticeLabel" />
+        </BoxContainer>
+    </PanelContainer>
+</BoxContainer>

@@ -37,3 +37,14 @@
   - type: Blueprint
     providedRecipes:
     - SeismicCharge
+
+- type: entity
+  parent: BaseBlueprint
+  id: BlueprintDoubleEmergencyTank
+  name: double emergency tank blueprint
+  description: A blueprint with a schematic of a double emergency tank. It can be inserted into an autolathe.
+  components:
+  - type: Blueprint
+    providedRecipes:
+    - DoubleEmergencyOxygenTank
+    - DoubleEmergencyNitrogenTank

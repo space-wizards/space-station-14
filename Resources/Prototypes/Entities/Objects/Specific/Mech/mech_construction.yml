@@ -36,7 +36,7 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
-    sprite: Objects/Specific/Mech/clarke_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/clarke.rsi
 
 - type: entity
   id: BaseClarkePartItem
@@ -71,7 +71,7 @@
         whitelist:
           tags:
           - ClarkeTreads
-    sprite: Objects/Specific/Mech/clarke_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/clarke.rsi
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
@@ -144,6 +144,7 @@
   - type: ContainerContainer
     containers:
       battery-container: !type:Container
+      gas-tank-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: clarke
   - type: Sprite
@@ -164,7 +165,7 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
-    sprite: Objects/Specific/Mech/durand_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/durand.rsi
 
 - type: entity
   id: BaseDurandPartItem
@@ -203,7 +204,7 @@
         whitelist:
           tags:
           - DurandRLeg
-    sprite: Objects/Specific/Mech/durand_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/durand.rsi
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
@@ -289,6 +290,7 @@
   - type: ContainerContainer
     containers:
       battery-container: !type:Container
+      gas-tank-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: durand
   - type: Sprite
@@ -309,7 +311,7 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
-    sprite: Objects/Specific/Mech/gygax_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/gygax.rsi
 
 - type: entity
   id: BaseGygaxPartItem
@@ -348,7 +350,7 @@
         whitelist:
           tags:
           - GygaxRLeg
-    sprite: Objects/Specific/Mech/gygax_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/gygax.rsi
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
@@ -434,6 +436,7 @@
   - type: ContainerContainer
     containers:
       battery-container: !type:Container
+      gas-tank-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: gygax
   - type: Sprite
@@ -454,7 +457,7 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
-    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/ripley.rsi
 
 - type: entity
   id: BaseRipleyPartItem
@@ -489,7 +492,7 @@
         whitelist:
           tags:
           - RipleyRLeg
-    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/ripley.rsi
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
@@ -562,6 +565,7 @@
   - type: ContainerContainer
     containers:
       battery-container: !type:Container
+      gas-tank-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: ripley
   - type: Sprite
@@ -582,7 +586,7 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
-    sprite: Objects/Specific/Mech/ripleymkii_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/ripleymkii.rsi
 
 - type: entity
   parent: BaseRipleyMKIIPart
@@ -613,7 +617,7 @@
         whitelist:
           tags:
           - RipleyRLeg
-    sprite: Objects/Specific/Mech/ripleymkii_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/ripleymkii.rsi
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
@@ -639,6 +643,7 @@
   - type: ContainerContainer
     containers:
       battery-container: !type:Container
+      gas-tank-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: ripleymkii
   - type: Sprite
@@ -659,7 +664,7 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
-    sprite: Objects/Specific/Mech/honker_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/honker.rsi
 
 - type: entity
   id: BaseHonkerPartItem
@@ -694,7 +699,7 @@
         whitelist:
           tags:
           - HonkerRLeg
-    sprite: Objects/Specific/Mech/honker_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/honker.rsi
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
@@ -767,6 +772,7 @@
   - type: ContainerContainer
     containers:
       battery-container: !type:Container
+      gas-tank-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: honker
   - type: Sprite
@@ -787,7 +793,7 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
-    sprite: Objects/Specific/Mech/hamtr_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/hamtr.rsi
 
 - type: entity
   id: BaseHamtrPartItem
@@ -822,7 +828,7 @@
         whitelist:
           tags:
           - HamtrRLeg
-    sprite: Objects/Specific/Mech/hamtr_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/hamtr.rsi
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
@@ -895,6 +901,7 @@
   - type: ContainerContainer
     containers:
       battery-container: !type:Container
+      gas-tank-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: hamtr
   - type: Sprite
@@ -915,7 +922,7 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
-    sprite: Objects/Specific/Mech/vim_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/vim.rsi
 
 - type: entity
   parent: BaseVimPart
@@ -946,7 +953,7 @@
         whitelist:
           tags:
           - BorgLeg
-    sprite: Objects/Specific/Mech/vim_construction.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/vim.rsi
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
@@ -969,6 +976,7 @@
   - type: ContainerContainer
     containers:
       battery-container: !type:Container
+      gas-tank-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: vim
   - type: Sprite

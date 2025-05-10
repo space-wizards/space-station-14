@@ -16,12 +16,13 @@ public sealed class ThermalVisionOverlay : Robust.Client.Graphics.Overlay
     private readonly TransformSystem _transform;
     public override bool RequestScreenTexture => true;
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
-    private readonly ShaderInstance _shader;
+    private readonly ShaderInstance _screenShader;
     public ThermalVisionOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _shader = _prototypeManager.Index<ShaderPrototype>("ThermalVisionShader").InstanceUnique();
+        _screenShader = _prototypeManager.Index<ShaderPrototype>("ThermalVisionScreenShader").InstanceUnique();
         _transform = _entityManager.System<TransformSystem>();
+        ZIndex = 10000;
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -49,20 +50,14 @@ public sealed class ThermalVisionOverlay : Robust.Client.Graphics.Overlay
             return;
 
         var worldHandle = args.WorldHandle;
-        var viewport = args.WorldBounds;
+        var viewport = args.WorldBounds; 
         var eyeRotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
 
-        _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _screenShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
-        foreach (var (_, sprite, xform) in _entityManager.EntityQuery<BodyComponent, SpriteComponent, TransformComponent>())
-        {
-            if(xform.MapID != args.MapId) continue;
-            var (position, rotation) = _transform.GetWorldPositionRotation(xform);
-            sprite.Render(worldHandle, eyeRotation, rotation, null, position);
-        }
-
-        worldHandle.UseShader(_shader);
+        worldHandle.UseShader(_screenShader);
         worldHandle.DrawRect(viewport, Color.White);
         worldHandle.UseShader(null);
     }
 }
+                                     

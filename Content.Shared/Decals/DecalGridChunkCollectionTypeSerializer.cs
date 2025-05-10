@@ -32,6 +32,8 @@ namespace Content.Shared.Decals
             node.TryGetValue(new ValueDataNode("version"), out var versionNode);
             var version = ((ValueDataNode?) versionNode)?.AsInt() ?? 1;
             Dictionary<Vector2i, DecalChunk> dictionary;
+            uint nextIndex = 0;
+            var ids = new HashSet<uint>();
 
             // TODO: Dump this when we don't need support anymore.
             if (version > 1)
@@ -53,22 +55,31 @@ namespace Content.Shared.Decals
                         var chunkOrigin = SharedMapSystem.GetChunkIndices(coords, SharedDecalSystem.ChunkSize);
                         var chunk = dictionary.GetOrNew(chunkOrigin);
                         var decal = new Decal(coords, data.Id, data.Color, data.Angle, data.ZIndex, data.Cleanable);
-                        chunk.Decals.Add(dUid, decal);
+
+                        nextIndex = Math.Max(nextIndex, dUid);
+
+                        // Re-used ID somehow
+                        // This will bump all IDs by up to 1 but will ensure the map is still readable.
+                        if (!ids.Add(dUid))
+                        {
+                            dUid = nextIndex++;
+                            ids.Add(dUid);
+                        }
+
+                        chunk.Decals[dUid] = decal;
                     }
                 }
             }
             else
             {
                 dictionary = serializationManager.Read<Dictionary<Vector2i, DecalChunk>>(node, hookCtx, context, notNullableOverride: true);
-            }
 
-            uint nextIndex = 0;
-
-            foreach (var decals in dictionary.Values)
-            {
-                foreach (var uid in decals.Decals.Keys)
+                foreach (var decals in dictionary.Values)
                 {
-                    nextIndex = Math.Max(uid, nextIndex);
+                    foreach (var uid in decals.Decals.Keys)
+                    {
+                        nextIndex = Math.Max(uid, nextIndex);
+                    }
                 }
             }
 

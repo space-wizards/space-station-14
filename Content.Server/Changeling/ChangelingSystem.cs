@@ -15,6 +15,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Store.Components;
+using Content.Shared.Forensics.Components;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
@@ -138,26 +139,22 @@ public sealed partial class ChangelingSystem : EntitySystem
         {
             var uid = comp.Owner;
 
-            if (_timing.CurTime < comp.UpdateTimer)
-                continue;
+            if (_timing.CurTime >= comp.ChemicalNextUpdateTime)
+            {
+                comp.ChemicalNextUpdateTime = _timing.CurTime + comp.ChemicalUpdateCooldown;
+                UpdateChemicals(uid, comp);
+                UpdateAbilities(uid, comp); //probably overkill since I dont think chemicals affect abilities but whatever, im cleaning up shitcode
+            }
 
-            comp.UpdateTimer = _timing.CurTime + TimeSpan.FromSeconds(comp.UpdateCooldown);
-
-            Cycle(uid, comp);
+            if (_timing.CurTime >= comp.BiomassNextUpdateTime)
+            {
+                comp.BiomassNextUpdateTime = _timing.CurTime + comp.BiomassUpdateCooldown;
+                //subtract biomass
+                comp.Biomass -= comp.BiomassDrain;
+                UpdateBiomass(uid, comp);
+                UpdateAbilities(uid, comp);
+            }
         }
-    }
-    public void Cycle(EntityUid uid, ChangelingComponent comp)
-    {
-        UpdateChemicals(uid, comp);
-
-        comp.BiomassUpdateTimer += 1;
-        if (comp.BiomassUpdateTimer >= comp.BiomassUpdateCooldown)
-        {
-            comp.BiomassUpdateTimer = 0;
-            UpdateBiomass(uid, comp);
-        }
-
-        UpdateAbilities(uid, comp);
     }
 
     private void UpdateChemicals(EntityUid uid, ChangelingComponent comp, float? amount = null)
@@ -187,7 +184,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             // THE FUNNY ITCH IS REAL!!
             comp.BonusChemicalRegen = 3f;
             _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-high"), uid, uid, PopupType.LargeCaution);
-            _jitter.DoJitter(uid, TimeSpan.FromSeconds(comp.BiomassUpdateCooldown), true, amplitude: 5, frequency: 10);
+            _jitter.DoJitter(uid, comp.BiomassUpdateCooldown, true, amplitude: 5, frequency: 10);
         }
         else if (comp.Biomass <= comp.MaxBiomass / 3)
         {
@@ -425,7 +422,8 @@ public sealed partial class ChangelingSystem : EntitySystem
     {
         if (!TryComp<HumanoidAppearanceComponent>(target, out var appearance)
         || !TryComp<MetaDataComponent>(target, out var metadata)
-        || !TryComp<DnaComponent>(target, out var dna)
+        || !TryComp<DnaComponent>(target, out var dna) 
+        || dna.DNA == null
         || !TryComp<FingerprintComponent>(target, out var fingerprint))
             return false;
 
@@ -517,7 +515,6 @@ public sealed partial class ChangelingSystem : EntitySystem
             Comp<DnaComponent>(newEnt).DNA = data.DNA;
             _humanoid.CloneAppearance(data.Appearance.Owner, newEnt);
             _metaData.SetEntityName(newEnt, data.Name);
-            _factionSystem.Up(uid, newEnt);
             var message = Loc.GetString("changeling-transform-finish", ("target", data.Name));
             _popup.PopupEntity(message, newEnt, newEnt);
         }
@@ -546,6 +543,8 @@ public sealed partial class ChangelingSystem : EntitySystem
             EnsureComp<HeadRevolutionaryComponent>(newEnt);
         if (HasComp<RevolutionaryComponent>(uid))
             EnsureComp<RevolutionaryComponent>(newEnt);
+        
+        _factionSystem.Up(uid, newEnt);
 
         QueueDel(uid);
 
@@ -618,6 +617,8 @@ public sealed partial class ChangelingSystem : EntitySystem
         // making sure things are right in this world
         comp.Chemicals = comp.MaxChemicals;
         comp.Biomass = comp.MaxBiomass;
+        comp.ChemicalNextUpdateTime = _timing.CurTime + comp.ChemicalUpdateCooldown;
+        comp.BiomassNextUpdateTime = _timing.CurTime + comp.BiomassUpdateCooldown;
 
         // show alerts
         UpdateChemicals(uid, comp, 0);

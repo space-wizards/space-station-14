@@ -8,7 +8,7 @@ namespace Content.Shared.Random;
 [Prototype("RandomPlantMutationList")]
 public sealed partial class RandomPlantMutationListPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = default!;
+    [IdDataField] public string ID { get; private set; } = default!;
 
     /// <summary>
     ///     List of RandomFills that can be picked from.

@@ -4,6 +4,7 @@
 evolutionmenu-combat-armblade-name = Arm Blade
 evolutionmenu-combat-armblade-desc =
     Reform one of your arms into a grotesque blade, composed of bone and flesh, able to pry open airlocks and cut through your foes like butter.
+    WARNING: Requires you to absorb at least 2 organics to use the ability.
     Costs 15 chemicals.
 
 evolutionmenu-combat-boneshard-name = Bone Shard
@@ -132,3 +133,9 @@ evolutionmenu-utility-hivemindaccess-name = Hivemind Access
 evolutionmenu-utility-hivemindaccess-desc =
     Tunes our chemical receptors for hivemind communication, allowing us to recognize and communicate with other changelings who have also evolved this ability.
     Default radio key is +h
+
+evolutionmenu-utility-fakemindshield-name = Fake MindShield
+evolutionmenu-utility-fakemindshield-desc = 
+    Modifies a small portion of greymatter to be able to mimic MindShield signals, allowing you to trick specific devices.
+    May need a few toggle attempts to get the right frequency.
+    Cost 0 chemicals.

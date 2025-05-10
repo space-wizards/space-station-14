@@ -29,7 +29,6 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
     private void OnMapInit(EntityUid uid, SolutionContainerVisualsComponent component, MapInitEvent args)
     {
         var meta = MetaData(uid);
-        component.InitialName = meta.EntityName;
         component.InitialDescription = meta.EntityDescription;
     }
 

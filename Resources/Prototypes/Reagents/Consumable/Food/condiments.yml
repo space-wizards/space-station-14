@@ -19,6 +19,15 @@
   recognizable: true
 
 - type: reagent
+  id: Coldsauce
+  name: reagent-name-coldsauce
+  group: Foods
+  desc: reagent-desc-coldsauce
+  physicalDesc: reagent-physical-desc-cold
+  flavor: cold
+  color: skyblue
+
+- type: reagent
   id: Cornoil
   name: reagent-name-cornoil
   group: Foods
@@ -27,15 +36,6 @@
   flavor: oily
   color: yellow
   recognizable: true
-
-- type: reagent
-  id: Frostoil
-  name: reagent-name-frostoil
-  group: Foods
-  desc: reagent-desc-frostoil
-  physicalDesc: reagent-physical-desc-cold
-  flavor: cold
-  color: skyblue
 
 - type: reagent
   id: HorseradishSauce

@@ -30,13 +30,11 @@
 - type: startingGear
   id: BrigmedicGear
   equipment:
-    eyes: ClothingEyesGlassesBrigmedic
     ears: ClothingHeadsetBrigmedic
     neck: ClothingNeckTieRed
     pocket2: HandheldBrigmedicCrewMonitor
     mask: ClothingMaskBreathMedicalSecurity
     id: BrigmedicPDA
-    gloves: ClothingHandsGlovesNitrile
   storage:
     back:
     - Flash

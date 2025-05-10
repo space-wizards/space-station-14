@@ -323,7 +323,7 @@
   - type: SurgeryStepEmoteEffect
   - type: SurgeryStepOrganExtract
     organ:
-    - type: FunctionalOrgan
+    - type: EyeImplant
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     state: scalpel
@@ -832,7 +832,7 @@
   - type: SurgeryStep
     duration: 2
     tools:
-    - type: FunctionalOrgan
+    - type: EyeImplant
   - type: SurgeryStepOrganInsert
     slot: eye_implant
   - type: Sprite

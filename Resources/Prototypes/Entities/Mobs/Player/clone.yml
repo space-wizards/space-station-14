@@ -1,0 +1,96 @@
+# Settings for cloning bodies
+# If you add a new trait, job specific component or a component doing visual/examination changes for humanoids
+# then add it here to the correct prototype.
+# The datafields of the components are only shallow copied using CopyComp.
+# Subscribe to CloningEvent instead if that is not enough.
+
+# for basic traits etc.
+# used by the random clone spawner
+- type: cloningSettings
+  id: BaseClone
+  components:
+  # general
+  - DetailExaminable
+  - Dna
+  - Fingerprint
+  - NpcFactionMember
+  # traits
+  # - LegsParalyzed (you get healed)
+  - LightweightDrunk
+  - Narcolepsy
+  - Pacified
+  - PainNumbness
+  - Paracusia
+  - PermanentBlindness
+  - Unrevivable
+  # job specific
+  - BibleUser
+  - CommandStaff
+  - Clumsy
+  - MindShield
+  - MimePowers
+  - SpaceNinja
+  # accents
+  - Accentless
+  - BackwardsAccent
+  - BarkAccent
+  - BleatingAccent
+  - DamagedSiliconAccent
+  - FrenchAccent
+  - GermanAccent
+  - LizardAccent
+  - MobsterAccent
+  - MonkeyAccent
+  - MothAccent
+  - MumbleAccent
+  - OwOAccent
+  - ParrotAccent
+  - PirateAccent
+  # - ReplacementAccent
+  # Not supported at the moment because AddAccentClothingComponent will make it permanent when cloned.
+  # TODO: AddAccentClothingComponent should use an inventory relay event.
+  # Also ZombieComponent overwrites the old replacement accent, because you can only have one at a time.
+  - RussianAccent
+  - ScrambledAccent
+  - SkeletonAccent
+  - SlurredAccent
+  - SouthernAccent
+  - SpanishAccent
+  - StutteringAccent
+  blacklist:
+    components:
+    - AttachedClothing # helmets, which are part of the suit
+    - HumanoidAppearance # will cause problems for downstream felinids getting cloned as Urists
+    - Implanter # they will spawn full again, but you already get the implant. And we can't do item slot copying yet
+    - VirtualItem
+
+# all antagonist roles
+- type: cloningSettings
+  id: Antag
+  parent: BaseClone
+  components:
+  - HeadRevolutionary
+  - Revolutionary
+  - NukeOperative
+
+# for cloning pods
+- type: cloningSettings
+  id: CloningPod
+  parent: Antag
+  forceCloning: false
+  copyEquipment: null
+  copyInternalStorage: false
+  copyImplants: false
+
+# spawner
+
+- type: entity
+  id: RandomCloneSpawner
+  name: Random Clone
+  suffix: Non-Antag
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/paradox_clone.rsi
+    state: preview
+  - type: RandomCloneSpawner
+    settings: BaseClone

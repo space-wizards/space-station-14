@@ -20,7 +20,7 @@
   - type: StealTarget
     stealGroup: Figurines
   - type: UseDelay
-    delay: 10
+    delay: 5
   - type: TriggerOnActivate
   - type: TriggerOnSignal
   - type: Speech
@@ -47,25 +47,14 @@
 
 - type: entity
   parent: BaseFigurine
-  id: ToyFigurinePassenger
-  name: passenger figure
-  description: A figurine depicting an every day, run-of-the-mill passenger. No funny business here.
+  id: ToyFigurineAssistant
+  name: assistant figure
+  description: A figurine depicting an every day, run-of-the-mill assistant. No funny business here.
   components:
   - type: Sprite
-    state: passenger
+    state: assistant
   - type: SpeakOnTrigger
-    pack: FigurinesPassenger
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyFigurineGreytider
-  name: greytider figure
-  description: A figurine depicting a dubious-looking passenger. Greytide worldwide!
-  components:
-  - type: Sprite
-    state: passenger_greytide
-  - type: SpeakOnTrigger
-    pack: FigurinesGreytider
+    pack: FigurinesAssistant
 
 - type: entity
   parent: BaseFigurine

@@ -14,7 +14,7 @@
     - AnomalyPyroclastic
     - AnomalyGravity
     - AnomalyElectricity
-    - AnomalyFlesh
+    - RandomFleshAnomalySpawner # Starlight edit, don't dilute the pool with a flesh anomaly variant
     - AnomalyBluespace
     - AnomalyIce
     - RandomRockAnomalySpawner
@@ -41,7 +41,9 @@
   - type: RandomSpawner
     prototypes:
     - AnomalyRockIron
+    - AnomalyRockCoal
     - AnomalyRockSilver
+    - AnomalyRockGold
     - AnomalyRockQuartz
     - AnomalyRockUranium
     chance: 1
@@ -70,4 +72,4 @@
     - AnomalyTrapRock
     #- AnomalyTrapSanta
     chance: 1
-  
+

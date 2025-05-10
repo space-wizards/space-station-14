@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039. Vox state made by Flareguy for Space Station 14",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039. Vox state made by Flareguy for Space Station 14. Modified and splited into shaded-unshaded states by kosticia.",
   "size": {
     "x": 32,
     "y": 32
@@ -11,11 +11,22 @@
       "name": "icon"
     },
     {
+      "name": "icon-unshaded"
+    },
+    {
       "name": "equipped-OUTERCLOTHING",
       "directions": 4
     },
     {
+      "name": "equipped-OUTERCLOTHING-unshaded",
+      "directions": 4
+    },
+    {
       "name": "equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-unshaded-vox",
       "directions": 4
     },
     {

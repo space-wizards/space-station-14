@@ -152,7 +152,7 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite
-      drawdepth: FloorObjects
+      drawdepth: HighFloorObjects
       sprite: Structures/conveyor.rsi
       layers:
         - state: switch-off
@@ -493,6 +493,14 @@
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
+
+- type: entity
+  id: LockableButtonCentcomm
+  suffix: CentComm
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["CentralCommand"]]
 
 # button frames
 

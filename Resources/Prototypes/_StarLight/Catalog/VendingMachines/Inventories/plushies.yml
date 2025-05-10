@@ -229,6 +229,17 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: VendorPlushieMozan
+  productEntity: MozanPlush
+  cost:
+    NTCredit: 16
+  categories:
+  - SLPlushies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # SLSpecies
 
 - type: listing

@@ -78,16 +78,16 @@
 # Civilian
 
 - type: entity
-  id: SpawnPointPassenger
+  id: SpawnPointAssistant
   parent: SpawnPointJobBase
-  name: passenger
+  name: assistant
   components:
   - type: SpawnPoint
-    job_id: Passenger
+    job_id: Assistant
   - type: Sprite
     layers:
       - state: green
-      - state: passenger
+      - state: assistant
 
 - type: entity
   id: SpawnPointTechnicalAssistant

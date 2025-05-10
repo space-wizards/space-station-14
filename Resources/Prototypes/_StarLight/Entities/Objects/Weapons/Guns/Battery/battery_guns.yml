@@ -16,9 +16,10 @@
     - state: disable
       map: ["enum.FireModesLayers.FireMode"]
       shader: unshaded
-    - state: disable-unshaded-0
+    - state: disable-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Appearance
   - type: Item
     heldPrefix: disable4
   - type: Clothing
@@ -34,16 +35,16 @@
     zeroVisible: true
   - type: HitscanBatteryAmmoProvider
     proto: DisablerBolt
-    fireCost: 100
+    fireCost: 50
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: DisablerBolt
-      fireCost: 100
+      fireCost: 50
       visualState: disable
       magState: disable
       heldPrefix: disable4
     - proto: TaserBolt
-      fireCost: 250
+      fireCost: 166
       visualState: stun
       magState: stun
       heldPrefix: stun4
@@ -73,6 +74,7 @@
   - type: HitscanBatteryAmmoProvider
     proto: DisablerBolt
     fireCost: 100
+  - type: Appearance
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: DisablerBolt
@@ -159,6 +161,7 @@
   id: WeaponDominator
   description: A high-tech weapon created by the law enforcement organization Sibyl System, designed specifically to fight crime.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/dominator.rsi
     layers:
@@ -176,14 +179,14 @@
     access: [["Security"]]
   - type: HitscanBatteryAmmoProvider
     proto: DisablerBolt
-    fireCost: 100
+    fireCost: 50
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: DisablerBolt
-      fireCost: 100
+      fireCost: 50
       magState: disable
     - proto: TaserBolt
-      fireCost: 250
+      fireCost: 166
       magState: stun
       conditions:
       - !type:AlertLevelCondition
@@ -194,7 +197,7 @@
         - red
         - gamma
     - proto: LaserBolt
-      fireCost: 100
+      fireCost: 66.6
       magState: lethal
       conditions:
       - !type:AlertLevelCondition
@@ -208,8 +211,9 @@
   name: X-01 multiphase energy gun
   parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
   id: WeaponMultiphaseGun
-  description: This is an expensive, modern version of the antique laser pistol. This weapon has several unique fire modes, with the ability to slowly reload over time.
+  description: This is an expensive, modern version of the antique laser pistol. This weapon has several unique fire modes. But it don't have ability to slowly reload over time.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/multiphase_gun.rsi
     layers:
@@ -257,9 +261,12 @@
   - type: Battery
     maxCharge: 1500
     startingCharge: 1500
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 20
       
 - type: entity
-  parent: BaseWeaponBattery
+  parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]
   id: WeaponIonRifle
   name: ion rifle
   components:
@@ -293,6 +300,11 @@
     zeroVisible: true
   - type: Appearance
   - type: EmpImmune
+  - type: GunRequiresWield
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 8
+    pvsIncrease: 0.3
   
 - type: entity
   parent: BaseWeaponBattery
@@ -382,6 +394,7 @@
   id: WeaponM1911
   description: A compact pulse core in a classic Nanotrasen officer pistol design. It's not the size of the gun, it's the size of the hole it puts in people.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/m1911.rsi
     layers:
@@ -422,6 +435,7 @@
   id: WeaponPulsePistol
   description: An extremely compact version of the pulse carabine.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse_pistol.rsi
     layers:
@@ -467,6 +481,7 @@
   id: WeaponPDW9
   description: A compact pulse core in a classic Nanotrasen officer pistol design. It's not the size of the gun, it's the size of the hole it puts in people.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/pdw9.rsi
     layers:
@@ -507,6 +522,8 @@
   id: WeaponAlien
   name: alien pistol
   components:
+  - type: RestrictByUserTag
+    doestContain: []
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/alien.rsi
     layers:
@@ -537,7 +554,7 @@
   - type: Appearance
   
 - type: entity
-  parent: BaseWeaponBattery
+  parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]
   id: WeaponEnergySniper
   name: LWAP
   components:
@@ -565,6 +582,11 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  - type: GunRequiresWield
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 5
+    pvsIncrease: 0.3
 
 - type: entity
   name: pulse carbine
@@ -572,6 +594,7 @@
   id: WeaponPulseCarbine
   description: A high tech energy carbine favoured by the NT-ERT operatives.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse_carbine.rsi
     layers:
@@ -627,6 +650,7 @@
   id: WeaponPulseRifle
   description: A weapon that is almost as infamous as its users.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse.rsi
     layers:
@@ -680,6 +704,7 @@
   id: WeaponANNIHILATOR
   description: A weapon that is almost as infamous as its users.
   components:
+  - type: Appearance
   - type: Gun
     selectedMode: Burst
     fireRate: 3

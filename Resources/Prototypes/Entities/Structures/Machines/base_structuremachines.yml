@@ -5,6 +5,7 @@
   components:
   - type: Ricochetable
     chance: 0.5
+  - type: Animateable
   - type: InteractionOutline
   - type: Anchorable
     delay: 2
@@ -59,6 +60,7 @@
   abstract: true
   id: ConstructibleMachine
   components:
+  - type: Animateable
   - type: Machine
   - type: ContainerContainer
     containers:

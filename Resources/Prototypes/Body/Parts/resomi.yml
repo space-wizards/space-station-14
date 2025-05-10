@@ -1,0 +1,118 @@
+- type: entity
+  id: PartResomi
+  parent: [BaseItem, BasePart]
+  name: "resomi body part"
+  abstract: true
+  components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: TorsoResomi
+  name: "resomi torso"
+  parent: [PartHuman, BaseTorso]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Resomi/parts.rsi
+    state: "torso_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: Blood
+        Quantity: 20
+
+
+- type: entity
+  id: HeadResomi
+  name: "resomi head"
+  parent: [PartHuman, BaseHead]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Resomi/parts.rsi
+    state: "head_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: LeftArmResomi
+  name: "left resomi arm"
+  parent: [PartHuman, BaseLeftArm]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Resomi/parts.rsi
+    state: "l_arm"
+
+- type: entity
+  id: RightArmResomi
+  name: "right resomi arm"
+  parent: [PartHuman, BaseRightArm]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Resomi/parts.rsi
+    state: "r_arm"
+
+- type: entity
+  id: LeftHandResomi
+  name: "left resomi hand"
+  parent: [PartHuman, BaseLeftHand]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Resomi/parts.rsi
+    state: "l_hand"
+
+- type: entity
+  id: RightHandResomi
+  name: "right resomi hand"
+  parent: [PartHuman, BaseRightHand]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Resomi/parts.rsi
+    state: "r_hand"
+
+- type: entity
+  id: LeftLegResomi
+  name: "left resomi leg"
+  parent: [PartHuman, BaseLeftLeg]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Resomi/parts.rsi
+    state: "l_leg"
+
+- type: entity
+  id: RightLegResomi
+  name: "right resomi leg"
+  parent: [PartHuman, BaseRightLeg]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Resomi/parts.rsi
+    state: "r_leg"
+
+- type: entity
+  id: LeftFootResomi
+  name: "left resomi foot"
+  parent: [PartHuman, BaseLeftFoot]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Resomi/parts.rsi
+    state: "l_foot"
+
+- type: entity
+  id: RightFootResomi
+  name: "right resomi foot"
+  parent: [PartHuman, BaseRightFoot]
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Resomi/parts.rsi
+    state: "r_foot"

@@ -7,6 +7,7 @@
   - CaptainJumpsuit
   - CaptainBackpack
   - CaptainOuterClothing
+  - CaptainEyewear
   - SurvivalExtended
   - Trinkets
   - GroupSpeciesBreathTool
@@ -26,22 +27,28 @@
   - GroupSpeciesBreathTool
 
 # Silicons
+#- type: roleLoadout
+#  id: JobBorg
+#  nameDataset: roleloadout doesn't support both so need to update that first.
+#  canCustomizeName: true
+
 - type: roleLoadout
   id: JobStationAi
   nameDataset: NamesAI
+  canCustomizeName: true
 
 # Civilian
 - type: roleLoadout
-  id: JobPassenger
+  id: JobAssistant
   groups:
   - GroupTankHarness
-  - PassengerJumpsuit
+  - AssistantJumpsuit
   - CommonBackpack
-  - PassengerNeck
-  - PassengerFace
-  - PassengerGloves
-  - PassengerOuterClothing
-  - PassengerShoes
+  - AssistantNeck
+  - AssistantFace
+  - AssistantGloves
+  - AssistantOuterClothing
+  - AssistantShoes
   - Glasses
   - Survival
   - Trinkets
@@ -340,6 +347,7 @@
   - SecurityBelt
   - SecurityWeapon
   - HeadofSecurityOuterClothing
+  - SecurityEyewear
   - SecurityShoes
   - SurvivalSecurity
   - Trinkets
@@ -354,6 +362,7 @@
   - SecurityBackpack
   - SecurityBelt
   - WardenOuterClothing
+  - SecurityEyewear
   - SecurityShoes
   - SurvivalSecurity
   - Trinkets
@@ -366,6 +375,7 @@
   - SecurityHead
   - SecurityJumpsuit
   - SecurityBackpack
+  - SecurityEyewear
   - SecurityOuterClothing
   - SecurityShoes
   - SecurityPDA
@@ -384,6 +394,8 @@
   - BrigmedicBackpack
   - BrigmedicOuterClothing
   - BrigmedicBelt
+  - BrigmedicGloves
+  - BrigmedicEyewear
   - SecurityShoes
   - SecurityWeapon
   - SurvivalSecurity
@@ -398,6 +410,7 @@
   - DetectiveNeck
   - DetectiveJumpsuit
   - SecurityBackpack
+  - SecurityEyewear
   - DetectiveOuterClothing
   - SecurityShoes
   - SurvivalSecurity
@@ -411,6 +424,7 @@
   - SecurityCadetJumpsuit
   - SecurityBackpack
   - SecurityWeapon
+  - SecurityEyewear
   - SurvivalSecurity
   - Trinkets
   - GroupSpeciesBreathToolSecurity
@@ -539,11 +553,20 @@
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs
 # They will be used without player configuration, thus they will only ever apply what is forced by MinLimit
 
+# gives vox a harness and breathing mask
+# nitrogen tank not included
 - type: roleLoadout
   id: RoleSurvivalVoxSupport
   groups:
   - GroupSpeciesBreathTool
   - GroupTankHarness
+
+# gives vox a nitrogen breathing tank
+# other species get nothing
+- type: roleLoadout
+  id: RoleSurvivalVoxTank
+  groups:
+  - GroupEVATankVox
 
 - type: roleLoadout
   id: RoleSurvivalStandard

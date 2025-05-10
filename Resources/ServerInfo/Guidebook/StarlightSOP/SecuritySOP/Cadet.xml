@@ -1,0 +1,32 @@
+<Document>
+    # Cadet
+
+     <GuideEntityEmbed Entity="ToyFigurineSecurity" Caption="Cadet"/>
+
+    1 . Standard Code Green equipment is:
+
+    <Box>
+        <GuideEntityEmbed Entity="WeaponDisabler"/>
+
+        <GuideEntityEmbed Entity="Stunbaton"/>
+        <GuideEntityEmbed Entity="CombatKnife"/>
+
+        <GuideEntityEmbed Entity="HoloprojectorSecurity"/>
+        <GuideEntityEmbed Entity="FlashlightSeclite"/>
+    </Box>
+    <Box>
+        <GuideEntityEmbed Entity="GrenadeFlashBang"/>
+        or
+        <GuideEntityEmbed Entity="TearGasGrenade"/>
+    </Box>
+    <Box>
+        <GuideEntityEmbed Entity="Handcuffs"/>
+        or
+        <GuideEntityEmbed Entity="Zipties"/>
+    </Box>
+
+    2. Cadets are to assign themselves to a Security Officer if one is not assigned to them.
+
+    3. Cadets may only use lethal equipment on Code Red.
+
+</Document>

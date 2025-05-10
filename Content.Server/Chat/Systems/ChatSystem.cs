@@ -7,7 +7,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Players.RateLimiting;
-using Content.Server.Speech.Components;
+using Content.Server.Speech.Prototypes;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Starlight.TTS;
 using Content.Server.Station.Components;
@@ -344,7 +344,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         _chatManager.ChatMessageToAll(ChatChannel.Radio, message, wrappedMessage, default, false, true, colorOverride);
         if (playSound)
         {
-            _audio.PlayGlobal(announcementSound == null ? DefaultAnnouncementSound : _audio.GetSound(announcementSound), Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
+            _audio.PlayGlobal(announcementSound == null ? DefaultAnnouncementSound : _audio.ResolveSound(announcementSound), Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
         }
         RaiseLocalEvent(new AnnouncementSpokeEvent
         {
@@ -439,6 +439,62 @@ public sealed partial class ChatSystem : SharedChatSystem
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
     }
 
+    /// Starlight Start:
+    /// <summary>
+    /// Dispatches an announcement from the Communications Console, replacing the default announcement.
+    /// </summary>
+    /// <param name="source">The entity making the announcement (Communications Console entity)</param>
+    /// <param name="message">The contents of the message</param>
+    /// <param name="sender">The sender name</param>
+    /// <param name="playSound">Play the announcement sound</param>
+    /// <param name="announcementSound">Sound to play</param>
+    /// <param name="colorOverride">Optional color for the announcement message</param>
+    public void DispatchCommunicationsConsoleAnnouncement(
+        EntityUid source,
+        string message,
+        string? sender = null,
+        bool playSound = true,
+        SoundSpecifier? announcementSound = null,
+        Color? colorOverride = null)
+    {
+        sender ??= Loc.GetString("chat-manager-sender-announcement");
+
+        var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
+
+        var station = _stationSystem.GetOwningStation(source);
+
+        if (station == null)
+        {
+            // you can't make a communications console announcement without a station
+            return;
+        }
+
+        if (!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
+
+        var filter = _stationSystem.GetInStation(stationDataComp);
+
+        // Custom behavior: For example, change the chat channel or message formatting here if needed
+        _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source, false, true, colorOverride);
+
+        if (playSound)
+        {
+            var commsConsoleSound = announcementSound ?? new SoundPathSpecifier("/Audio/_Starlight/Announcements/announce2.ogg");
+            var resolvedSound = _audio.ResolveSound(commsConsoleSound);
+            _audio.PlayGlobal(resolvedSound, filter, true, AudioParams.Default.WithVolume(-2f));
+        }
+
+        RaiseLocalEvent(new AnnouncementSpokeEvent
+        {
+            AnnouncementSound = announcementSound,
+            Message = message,
+            Source = filter
+        });
+
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Communications Console Announcement on {station} from {sender}: {message}");
+    }
+
+    // Starlight End
+
     #endregion
 
     #region Private API
@@ -469,21 +525,21 @@ public sealed partial class ChatSystem : SharedChatSystem
         string adminMessageWrap;
 
         messageWrap = Loc.GetString("collective-mind-chat-wrap-message",
-            ("message", message),
+            ("message", FormattedMessage.EscapeText(message)),
             ("channel", collectiveMind.LocalizedName),
             ("number", Number));
 
         adminMessageWrap = Loc.GetString("collective-mind-chat-wrap-message-admin",
             ("source", source),
-            ("message", message),
+            ("message", FormattedMessage.EscapeText(message)),
             ("channel", collectiveMind.LocalizedName),
             ("number", Number));
 
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"CollectiveMind chat from {ToPrettyString(source):Player}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"CollectiveMind chat from {ToPrettyString(source):Player}: {FormattedMessage.EscapeText(message)}");
 
         _chatManager.ChatMessageToManyFiltered(clients,
             ChatChannel.CollectiveMind,
-            message,
+            FormattedMessage.EscapeText(message),
             messageWrap,
             source,
             false,
@@ -492,7 +548,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             
         // FOR ADMINS
         _chatManager.ChatMessageToMany(ChatChannel.CollectiveMind,
-            message,
+            FormattedMessage.EscapeText(message),
             adminMessageWrap,
             source,
             false,

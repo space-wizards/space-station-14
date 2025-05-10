@@ -1915,6 +1915,17 @@
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemAstroSnow
 
+# Asteroid Sand
+- type: tile
+  id: FloorAstroAsteroidSand
+  name: tiles-astro-asteroid-sand
+  parent: FloorAsteroidSand
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroAsteroidSand
+  weather: false
+
 - type: tile
   id: FloorWoodLarge
   name: tiles-wood-large

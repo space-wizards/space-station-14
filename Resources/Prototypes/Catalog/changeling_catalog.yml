@@ -339,3 +339,16 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: EvolutionMenuUtilityFakeMindshield
+  name: evolutionmenu-utility-fakemindshield-name
+  description: evolutionmenu-utility-fakemindshield-desc
+  productAction: FakeMindShieldToggleAction
+  cost:
+    EvolutionPoint: 4
+  categories:
+    - ChangelingAbilityUtility
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1

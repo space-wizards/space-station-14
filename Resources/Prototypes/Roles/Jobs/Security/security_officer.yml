@@ -25,7 +25,6 @@
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
-    eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetSecurity
   storage:
     back:

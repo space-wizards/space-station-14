@@ -31,11 +31,12 @@
                                VerticalAlignment="Center"></Label>
                     </ProgressBar>
                 </BoxContainer>
-                <Label Name="SlotDisplay"
-                       HorizontalAlignment="Left"
-                       Access="Public"
-                       HorizontalExpand="True" />
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Name="ActiveSlotDisplay" HorizontalAlignment="Left" Access="Public" HorizontalExpand="True" Margin="0 0 5 0"/>
+                    <Label Name="PassiveSlotDisplay" HorizontalAlignment="Right" Access="Public" HorizontalExpand="True" Margin="5 0 0 0"/>
+                </BoxContainer>
             </BoxContainer>
+
             <SpriteView Name="MechView"
                         Margin="10 0 0 0"
                         VerticalAlignment="Center"
@@ -46,25 +47,36 @@
                         Scale="2 2">
             </SpriteView>
         </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="10 0 10 10">
+            <Label Text="Maintenance:" VerticalAlignment="Center" Margin="5 0 5 0"/>
+            <Button Name="MaintenanceOffButton" Text="OFF" HorizontalExpand="True" Margin="5 0 5 0"/>
+            <Button Name="MaintenanceOnButton" Text="ON" HorizontalExpand="True" Margin="5 0 5 0"/>
+        </BoxContainer>
         <BoxContainer VerticalExpand="True" Margin="10 0 10 10" Orientation="Vertical">
             <PanelContainer VerticalExpand="True" MinSize="0 200">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                </PanelContainer.PanelOverride>
-                <ScrollContainer
-                    HScrollEnabled="False"
-                    HorizontalExpand="True"
-                    MinSize="100 256"
-                    SizeFlagsStretchRatio="2"
-                    VerticalExpand="True">
-                    <BoxContainer
-                        Name="EquipmentControlContainer"
-                        MinSize="100 256"
-                        Orientation="Vertical"
-                        SizeFlagsStretchRatio="2"
-                        VerticalExpand="True">
-                    </BoxContainer>
-                </ScrollContainer>
+                <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                    <!-- Active Equipment -->
+                    <Label Text="Active Equipment" Margin="5" />
+                    <PanelContainer>
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                        </PanelContainer.PanelOverride>
+                        <ScrollContainer HScrollEnabled="False" MinSize="100 100" HorizontalExpand="True" SizeFlagsStretchRatio="2" VerticalExpand="True">
+                            <BoxContainer Name="ActiveEquipmentContainer" MinSize="100 100" Orientation="Vertical" SizeFlagsStretchRatio="2" VerticalExpand="True" />
+                        </ScrollContainer>
+                    </PanelContainer>
+
+                    <!-- Passive Equipment -->
+                    <Label Text="Passive Equipment" Margin="5" />
+                    <PanelContainer>
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                        </PanelContainer.PanelOverride>
+                        <ScrollContainer HScrollEnabled="False" MinSize="100 100" HorizontalExpand="True" SizeFlagsStretchRatio="2" VerticalExpand="True">
+                            <BoxContainer Name="PassiveEquipmentContainer" MinSize="100 100" Orientation="Vertical" SizeFlagsStretchRatio="2" VerticalExpand="True" />
+                        </ScrollContainer>
+                    </PanelContainer>
+                </BoxContainer>
             </PanelContainer>
         </BoxContainer>
     </BoxContainer>

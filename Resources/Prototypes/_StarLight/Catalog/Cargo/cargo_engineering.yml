@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: SupermatterFlatpackPurchase
+  icon:
+    sprite: _Starlight/Objects/Specific/supermatter.rsi
+    state: supermatter
+  product: SupermatterFlatpack
+  cost: 8000
+  category: cargoproduct-category-name-engineering
+  group: market

@@ -22,16 +22,19 @@ public sealed partial class GunSystem
         }
 
         var spent = (bool) varSpent;
-        string state;
+        string? state = null;
 
-        if (spent)
+        if (spent && component.State != null)
             state = component.Suffix ? $"{component.State}-spent" : "spent";
         else
             state = component.State;
-
-        sprite.LayerSetState(AmmoVisualLayers.Base, state);
-        if (sprite.LayerExists(AmmoVisualLayers.Tip)){
+        
+        if (state != null)
+            sprite.LayerSetState(AmmoVisualLayers.Base, state);
+        if (!component.Tip && sprite.LayerExists(AmmoVisualLayers.Tip))
             sprite.RemoveLayer(AmmoVisualLayers.Tip);
-        }
+        
+        if (sprite.LayerExists(AmmoVisualLayers.Spent))
+            sprite.LayerSetVisible(AmmoVisualLayers.Spent, spent);
     }
 }

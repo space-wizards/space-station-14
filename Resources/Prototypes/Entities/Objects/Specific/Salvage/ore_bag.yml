@@ -6,10 +6,10 @@
   components:
   - type: MagnetPickup
   - type: Sprite
-    sprite: Objects/Specific/Mining/ore_bag.rsi
+    sprite: _Starlight/Objects/Specific/Mining/ore_bag.rsi
     state: icon
   - type: Clothing
-    sprite: Objects/Specific/Mining/ore_bag.rsi
+    sprite: _Starlight/Objects/Specific/Mining/ore_bag.rsi
     quickEquip: false
     slots:
     - belt

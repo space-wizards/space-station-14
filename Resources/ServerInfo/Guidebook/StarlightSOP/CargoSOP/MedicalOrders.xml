@@ -1,0 +1,23 @@
+<Document>
+
+    # Medical Orders
+
+    Basic Materials only for printer/lathes
+    <Box>
+        <GuideEntityEmbed Entity="SheetSteel"/>
+        <GuideEntityEmbed Entity="SheetGlass"/>
+        <GuideEntityEmbed Entity="SheetPlastic"/>
+        <GuideEntityEmbed Entity="MaterialCloth1"/> 
+    </Box>
+
+    Chemicals
+    <Box>
+        <GuideEntityEmbed Entity="CrateVendingMachineRestockMedicalFilled"/> 
+        <GuideEntityEmbed Entity="CrateChemistryD"/> 
+        <GuideEntityEmbed Entity="CrateChemistryP"/> 
+        <GuideEntityEmbed Entity="CrateChemistryS"/> 
+    </Box>
+
+</Document>
+
+

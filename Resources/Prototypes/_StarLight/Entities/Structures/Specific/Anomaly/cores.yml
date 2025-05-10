@@ -23,3 +23,107 @@
     energy: 2.0
     color: "#ded949"
     castShadows: false
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreClown
+  description: The core of a destroyed clown anomaly. It emanates the purest essence of the Honkmother.
+  suffix: Clown
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Specific/Anomalies/Cores/clown.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#cb5b7e"
+    castShadows: false
+  - type: RgbLightController
+    cycleRate: 0.25
+    layers: [ ]
+  - type: EmitSoundOnUse
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: EmitSoundOnLand
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: EmitSoundOnActivate
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: EmitSoundOnCollide
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    soundHit:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreClownInert
+  description: The inert core of a destroyed clown anomaly. It emanates the purest essence of the Honkmother.
+  suffix: Clown, Inert
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Specific/Anomalies/Cores/clown.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#cb5b7e"
+    castShadows: false
+  - type: RgbLightController
+    cycleRate: 0.25
+    layers: [ ]
+  - type: EmitSoundOnUse
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: EmitSoundOnLand
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: EmitSoundOnActivate
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: EmitSoundOnCollide
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    soundHit:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+    damage:
+      types:
+        Blunt: 0
+    hidden: true

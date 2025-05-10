@@ -1,0 +1,104 @@
+- type: entity
+  name: automender
+  description: A device used to heal patients brute, burn or both damage types.
+  parent: BaseStarlightHealingItem
+  id: BaseAutoMender
+  abstract: true
+  components:
+  - type: Sprite
+    layers: 
+    - state: mender
+      map: ["enum.SolutionContainerLayers.Base"]
+    - state: mender1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Item
+    heldPrefix: mender
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 35
+  - type: RefillableSolution
+    solution: injector
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: mender
+    solutionName: injector
+    
+- type: entity
+  id: AutoMenderBrute
+  name: brute automender
+  description: A device used to heal patients brute, burn or both damage types. Uses bicaridine to work.
+  parent: BaseAutoMender
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 30
+  - type: Healing
+    solutionDrain: true
+    reagentsToDrain:
+    - ReagentId: Bicaridine
+      Quantity: 0.5
+    delay: 0.5
+    damageContainers:
+      - Biological
+    damage:
+      groups:
+        Brute: -2
+    healingBeginSound:
+      path: "/Audio/_Starlight/Items/Medical/mender.ogg"
+    healingEndSound:
+      path: "/Audio/_Starlight/Items/Medical/mender2.ogg"
+      
+- type: entity
+  suffix: Filled
+  parent: AutoMenderBrute
+  id: AutoMenderBruteFilled
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 30
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 30
+      
+- type: entity
+  id: AutoMenderBurn
+  name: burn automender
+  description: A device used to heal patients brute, burn or both damage types. Uses dermalin to work.
+  parent: BaseAutoMender
+  components:
+  - type: Healing
+    solutionDrain: true
+    reagentsToDrain:
+    - ReagentId: Dermaline
+      Quantity: 0.5
+    damageContainers:
+      - Biological
+    delay: 0.5
+    damage:
+      types:
+        Heat: -1.5
+        Cold: -1.5
+        Shock: -1.5
+        Caustic: -1
+    healingBeginSound:
+      path: "/Audio/_Starlight/Items/Medical/mender.ogg"
+    healingEndSound:
+      path: "/Audio/_Starlight/Items/Medical/mender2.ogg"
+      
+- type: entity
+  suffix: Filled
+  parent: AutoMenderBurn
+  id: AutoMenderBurnFilled
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 35
+        reagents:
+        - ReagentId: Dermaline
+          Quantity: 35

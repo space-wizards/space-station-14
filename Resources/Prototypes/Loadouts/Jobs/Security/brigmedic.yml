@@ -4,6 +4,11 @@
   equipment:
     head: ClothingHeadHatBeretBrigmedic
 
+- type: loadout
+  id: CorpsmanBeret
+  equipment:
+    head: ClothingHeadHatBeretCorpsman #Starlight
+
 # Jumpsuit
 - type: loadout
   id: JumpsuitBrigmedic
@@ -14,6 +19,18 @@
   id: JumpskirtBrigmedic
   equipment:
     jumpsuit: ClothingUniformJumpskirtBrigmedic
+
+#Starlight Start
+- type: loadout
+  id: JumpsuitCorpsman
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCorpsman
+
+- type: loadout
+  id: JumpskirtCorpsman
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCorpsman
+#Starlight End
 
 # Back
 - type: loadout
@@ -31,6 +48,34 @@
   equipment:
     back: ClothingBackpackDuffelBrigmedic
 
+# Belt
+- type: loadout
+  id: BrigmedicBelt
+  equipment:
+    belt: ClothingBeltBrigmedicFilled
+#Starlight Start
+- type: loadout
+  id: BrigmedicRig
+  equipment:
+    belt: ClothingBeltBrigmedicWebFilled
+
+- type: loadout
+  id: CorpsmanBelt
+  equipment:
+    belt: ClothingBeltCorpsmanFilled
+
+# Gloves
+- type: loadout
+  id: Nitrile
+  equipment:
+    gloves: ClothingHandsGlovesNitrile
+
+- type: loadout
+  id: BlackNitrile
+  equipment:
+    gloves: ClothingHandsGlovesBlackNitrile
+#Starlight End
+
 # Outerclothing
 - type: loadout
   id: BrigmedicCoat
@@ -38,11 +83,16 @@
     outerClothing: ClothingOuterCoatAMG
 
 - type: loadout
-  id: BrigmedicRig
+  id: CorpsmanCoat
   equipment:
-    back: ClothingBeltBrigmedicWebFilled
+    outerClothing: ClothingOuterCoatCorpsman #Starlight
 
 - type: loadout
-  id: BrigmedicBelt
+  id: BrigmedicGlasses
   equipment:
-    back: ClothingBeltBrigmedicFilled
+    eyes: ClothingEyesGlassesBrigmedic
+
+- type: loadout
+  id: BrigmedicHud
+  equipment:
+    eyes: ClothingEyesHudBrigmedic

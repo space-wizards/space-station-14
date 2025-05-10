@@ -7,4 +7,6 @@ namespace Content.Shared.Eye.Blinding.Components;
 [NetworkedComponent]
 public sealed partial class CycloritesVisionComponent : Component
 {
+    [DataField]
+    public bool blockedByFlashImmunity = false;
 }

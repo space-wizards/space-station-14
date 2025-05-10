@@ -6,6 +6,7 @@
   - type: Sprite
     sprite: _Starlight/Objects/Specific/Medical/implants.rsi
   - type: Organ
+  - type: EyeImplant
   - type: Gibbable
   - type: FlavorProfile
     flavors:

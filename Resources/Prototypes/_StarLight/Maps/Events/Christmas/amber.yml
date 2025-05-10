@@ -57,7 +57,7 @@
             SalvageSpecialist: [ 2, 3 ]
             CargoTechnician: [ 2, 3 ]
             #civilian
-            Passenger: [ -1, -1 ]
+            Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]

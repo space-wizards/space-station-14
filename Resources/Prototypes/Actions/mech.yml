@@ -35,3 +35,83 @@
       sprite: Interface/Actions/actions_mecha.rsi
       state: mech_eject
     event: !type:MechEjectPilotEvent
+
+- type: entity
+  id: ActionMechToggleLights
+  name: Toggle Lights
+  description: Turn on mech-mounted spotlights for visibility in poorly lit areas.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_lights_off
+    iconOn:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_lights_on
+    event: !type:ToggleActionEvent
+    useDelay: 1
+    
+- type: entity
+  id: ActionMechToggleInternals
+  name: Toggle Internals
+  description: Start ventilating the interior from the gas tank.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_internals_off
+    iconOn:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_internals_on
+    event: !type:MechToggleInternalsEvent
+    useDelay: 1
+
+- type: entity
+  id: ActionMechToggleSirens
+  name: Toggle Sirens
+  description: Turn on mech-mounted siren for everyone knows who's coming.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_siren_off
+    iconOn:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_siren_on
+    event: !type:MechToggleSirensEvent
+    useDelay: 1
+    
+- type: entity
+  id: ActionMechToggleThrusters
+  name: Toggle Thrusters
+  description: Turn on mech-mounted thrusters for flying in space.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_thrusters_off
+    iconOn:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_thrusters_on
+    event: !type:MechToggleThrustersEvent
+    useDelay: 1
+    
+- type: entity
+  id: ActionMechToggleNightVision
+  name: Toggle Camera
+  description: Turn on the night vision camera mounted on the Mech.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_night_vision_off
+    iconOn:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_night_vision_on
+    event: !type:MechToggleNightVisionEvent
+    useDelay: 1

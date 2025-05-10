@@ -49,6 +49,13 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
         id = Reagent;
         quantity = Quantity;
     }
+    
+    //Starlight-start
+    public void SetQuantity(FixedPoint2 quantity)
+    {
+        Quantity = quantity;
+    }
+    //Starlight-end
 
     public bool Equals(ReagentQuantity other)
     {

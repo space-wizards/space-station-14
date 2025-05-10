@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+    "copyright": "source: https://github.com/tgstation/tgstation/blob/HEAD/icons/mob/silicon/robot_items.dmi, modified by darkrell",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "bonesetter"
+		},
+		{
+			"name": "cautery"
+		},
+		{
+			"name": "drill"
+		},
+		{
+			"name": "hemostat"
+		},
+		{
+			"name": "retractor"
+		},
+		{
+			"name": "scalpel"
+		},
+		{
+			"name": "saw"
+		}
+    ]
+}

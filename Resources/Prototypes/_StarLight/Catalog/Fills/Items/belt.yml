@@ -39,6 +39,19 @@
       - id: Gauze
 
 - type: entity
+  id: ClothingBeltCorpsmanFilled
+  parent: ClothingBeltCorpsman
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Stunbaton
+      - id: Handcuffs    
+      - id: Brutepack
+      - id: Ointment
+      - id: Gauze
+
+- type: entity
   id: ClothingBeltBlueShieldWebbingFilled
   parent: ClothingBeltBlueShield
   suffix: Filled

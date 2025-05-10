@@ -20,7 +20,7 @@
   id: MedkitCombat
   name: abductors-ui-shop-MedkitCombat
   cost: 1
-  productEntity: MedkitCombat
+  productEntity: MedkitCombatFilled
   
 - type: abductorListing
   id: WeaponAlien

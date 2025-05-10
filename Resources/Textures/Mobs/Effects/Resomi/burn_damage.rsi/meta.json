@@ -1,0 +1,171 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Drawn by Ubaser.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+        "name": "RLeg_Burn_70",
+        "directions": 4
+    },
+    {
+        "name": "Chest_Burn_10",
+        "directions": 4
+    },
+    {
+        "name": "Chest_Burn_30",
+        "directions": 4
+    },
+    {
+        "name": "Chest_Burn_50",
+        "directions": 4
+    },
+    {
+        "name": "Chest_Burn_70",
+        "directions": 4
+    },
+    {
+        "name": "Head_Burn_10",
+        "directions": 4
+    },
+    {
+        "name": "Head_Burn_30",
+        "directions": 4
+    },
+    {
+        "name": "Head_Burn_50",
+        "directions": 4
+    },
+    {
+        "name": "Head_Burn_70",
+        "directions": 4
+    },
+    {
+        "name": "LArm_Burn_10",
+        "directions": 4
+    },
+    {
+        "name": "LArm_Burn_30",
+        "directions": 4
+    },
+    {
+        "name": "LArm_Burn_50",
+        "directions": 4
+    },
+    {
+        "name": "LArm_Burn_70",
+        "directions": 4
+    },
+    {
+        "name": "LFoot_Burn_10",
+        "directions": 4
+    },
+    {
+        "name": "LFoot_Burn_30",
+        "directions": 4
+    },
+    {
+        "name": "LFoot_Burn_50",
+        "directions": 4
+    },
+    {
+      "name": "LFoot_Burn_70",
+      "directions": 4
+    },
+    {
+        "name": "LHand_Burn_10",
+        "directions": 4
+    },
+    {
+        "name": "LHand_Burn_30",
+        "directions": 4
+    },
+    {
+        "name": "LHand_Burn_50",
+        "directions": 4
+    },
+    {
+        "name": "LHand_Burn_70",
+        "directions": 4
+    },
+    {
+        "name": "LLeg_Burn_10",
+        "directions": 4
+    },
+    {
+        "name": "LLeg_Burn_30",
+        "directions": 4
+    },
+    {
+        "name": "LLeg_Burn_50",
+        "directions": 4
+    },
+    {
+        "name": "LLeg_Burn_70",
+        "directions": 4
+    },
+    {
+        "name": "RArm_Burn_10",
+        "directions": 4
+    },
+    {
+        "name": "RArm_Burn_30",
+        "directions": 4
+    },
+    {
+        "name": "RArm_Burn_50",
+        "directions": 4
+    },
+    {
+        "name": "RArm_Burn_70",
+        "directions": 4
+    },
+    {
+        "name": "RFoot_Burn_10",
+        "directions": 4
+    },
+    {
+        "name": "RFoot_Burn_30",
+        "directions": 4
+    },
+    {
+        "name": "RFoot_Burn_50",
+        "directions": 4
+    },
+    {
+        "name": "RFoot_Burn_70",
+        "directions": 4
+    },
+    {
+        "name": "RHand_Burn_10",
+        "directions": 4
+    },
+    {
+        "name": "RHand_Burn_30",
+        "directions": 4
+    },
+    {
+        "name": "RHand_Burn_50",
+        "directions": 4
+    },
+    {
+        "name": "RHand_Burn_70",
+        "directions": 4
+    },
+    {
+        "name": "RLeg_Burn_10",
+        "directions": 4
+    },
+    {
+        "name": "RLeg_Burn_30",
+        "directions": 4
+    },
+    {
+        "name": "RLeg_Burn_50",
+        "directions": 4
+    }
+  ]
+}
