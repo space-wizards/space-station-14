@@ -21,9 +21,13 @@ public sealed partial class DeployableTurretControllerComponent : Component
     public Dictionary<string, DeployableTurretState> LinkedTurrets = new();
 
     /// <summary>
-    /// The current armament state of the linked turrets.
-    /// [-1: Inactive, 0: weapon mode A, 1: weapon mode B, etc]
+    /// The last armament state index applied to any linked turrets.
+    /// Values greater than zero have no additional effect if the linked turrets
+    /// do not have the <see cref="BatteryWeaponFireModesComponent"/>
     /// </summary>
+    /// <remarks>
+    /// -1: Inactive, 0: weapon mode A, 1: weapon mode B, etc.
+    /// </remarks>
     [DataField, AutoNetworkedField]
     public int ArmamentState = -1;
 
@@ -34,13 +38,13 @@ public sealed partial class DeployableTurretControllerComponent : Component
     public HashSet<ProtoId<AccessLevelPrototype>> AccessLevels = new();
 
     /// <summary>
-    ///Access groups that are known to the entity.
+    /// Access groups that are known to the entity.
     /// </summary>
     [DataField]
     public HashSet<ProtoId<AccessGroupPrototype>> AccessGroups = new();
 
     /// <summary>
-    /// Sound to play when denied access.
+    /// Sound to play when denying access to the device.
     /// </summary>
     [DataField]
     public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
