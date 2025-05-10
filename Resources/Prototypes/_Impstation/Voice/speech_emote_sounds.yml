@@ -125,6 +125,8 @@
       collection: UnisexSlimeGasp
     DefaultDeathgasp:
       collection: UnisexSlimeDeathGasp
+    Blink:
+      collection: WetBlinks
   params:
     variation: 0.125
 
@@ -864,3 +866,22 @@
       path: /Audio/_EE/Supermatter/charge.ogg
     DefaultDeathgasp:
       path: /Audio/_EE/Supermatter/status/ohfuck.ogg
+
+#body emotes
+- type: emoteSounds
+  id: SlimeBodyEmotes
+  sounds:
+    Blink:
+      collection: WetBlinks
+      params:
+        volume: -3
+        variation: 0.1
+
+- type: emoteSounds
+  id: GastropoidBodyEmotes
+  sounds:
+    Blink:
+      collection: WetBlinks
+      params:
+        volume: -3
+        variation: 0.1

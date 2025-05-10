@@ -63,6 +63,8 @@
       Male: UnisexSnail
       Female: UnisexSnail
       Unsexed: UnisexSnail
+  - type: BodyEmotes 
+    soundsId: GastropoidBodyEmotes
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Gastropoid
