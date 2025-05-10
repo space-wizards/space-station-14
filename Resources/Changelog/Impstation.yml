@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FlippenPage
-  changes:
-  - message: Added Drone rooms!
-    type: Add
-  id: 1130
-  time: '2025-02-15T08:09:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1694
 - author: irismessage
   changes:
   - message: Our knowledge has widened.
@@ -4176,3 +4169,11 @@
   id: 1629
   time: '2025-05-10T07:28:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2432
+- author: Sha-Seng
+  changes:
+  - message: Droopy and Cyclops eyes for slimes, and a glowing version of the slime
+      core
+    type: Add
+  id: 1630
+  time: '2025-05-10T07:32:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2413
