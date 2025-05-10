@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Holiday;
+namespace Content.Shared.Holiday;
 
 /// <summary>
 /// This is used for an entity that enables unique visuals on specified holidays.
