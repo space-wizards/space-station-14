@@ -198,13 +198,12 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             };
             var mindDescriptionMessage = new FormattedMessage();
             mindDescriptionMessage.AddText("Available collective minds:");
-            foreach (var mindId in minds)
+            foreach (var mindPrototype in minds)
             {
-                var mindPrototype = _prototypeManager.Index<CollectiveMindPrototype>(mindId.Key);
-
                 mindDescriptionMessage.AddText("\n");
-                mindDescriptionMessage.PushColor(mindPrototype.Color);
-                mindDescriptionMessage.AddText($"{mindId.Key}: +{mindPrototype.KeyCode}");
+                mindDescriptionMessage.PushColor(mindPrototype.Key.Color);
+                mindDescriptionMessage.AddText($"{mindPrototype.Key.LocalizedName}: +{mindPrototype.Key.KeyCode}");
+                mindDescriptionMessage.AddText($" (Number {mindPrototype.Value.MindId})");
                 mindDescriptionMessage.Pop();
             }
             mindsControl.Description.SetMessage(mindDescriptionMessage);
