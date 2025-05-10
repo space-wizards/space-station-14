@@ -45,9 +45,7 @@ public abstract class SharedImplanterSystem : EntitySystem
     private void OnImplanterInit(EntityUid uid, ImplanterComponent component, ComponentInit args)
     {
         if (component.Implant != null)
-        {
             component.ImplanterSlot.StartingItem = component.Implant;
-        }
 
         _itemSlots.AddItemSlot(uid, ImplanterComponent.ImplanterSlotId, component.ImplanterSlot);
 

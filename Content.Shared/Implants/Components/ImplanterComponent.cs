@@ -120,8 +120,7 @@ public enum ImplanterToggleMode : byte
 [Serializable, NetSerializable]
 public enum ImplanterVisuals : byte
 {
-    Full,
-    Color
+    Full
 }
 
 [Serializable, NetSerializable]
