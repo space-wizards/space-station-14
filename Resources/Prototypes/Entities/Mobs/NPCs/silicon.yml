@@ -39,6 +39,7 @@
       120: Dead
     stateAlertDict:
       Alive: BorgHealth
+      Dead: BorgDead
     showOverlays: false
   - type: Speech
     speechVerb: Robotic

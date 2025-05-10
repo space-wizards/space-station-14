@@ -98,4 +98,20 @@
   id: 13
   time: '2025-05-06T06:56:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37216
+- author: Southbridge, Flipsie27
+  changes:
+  - message: On Amber, gave the captain a tertiary ID card.
+    type: Add
+  - message: On Amber, gave Atmos their own front desk across from sec.
+    type: Add
+  - message: On Amber, gave botany a large water container.
+    type: Tweak
+  - message: On Amber, overhauled the security department to introduce GenPop.
+    type: Tweak
+  - message: On Amber, overhauled and moved the AI satellite to the east side of the
+      map, enlarging it to accommodate AI turrets in the future.
+    type: Tweak
+  id: 14
+  time: '2025-05-08T01:39:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37262
 Order: 1
