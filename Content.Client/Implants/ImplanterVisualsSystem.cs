@@ -35,7 +35,6 @@ public sealed class ImplanterVisualsSystem : SharedImplanterVisualSystem
 
         foreach (var nc in wrapper.QueuedEntities)
         {
-            Log.Info($"INIT LAYERS: Layer {nc.LayerName} ADD color changed to {nc.Color}");
             component.SpriteLayers.Add(nc.LayerName);
             spriteComponent.LayerSetColor(nc.LayerName, nc.Color);
         }
@@ -51,7 +50,6 @@ public sealed class ImplanterVisualsSystem : SharedImplanterVisualSystem
         {
             foreach (var nc in wrapper.QueuedEntities)
             {
-                Log.Info($"Layer {layerName} == {nc.LayerName} color changed to {nc.Color}");
                 if (nc.LayerName == layerName)
                 {
                     spriteComponent.LayerSetColor(layerName, nc.Color);
