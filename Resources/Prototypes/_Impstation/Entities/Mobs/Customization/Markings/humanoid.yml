@@ -1557,6 +1557,15 @@
     state: sideshavecurly
 
 - type: marking
+  id: HumanHairSpikyPonytailLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Human, Dwarf, SlimePerson ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: spikyponytaillong
+
+- type: marking
   id: HumanHairUndercutCurly
   bodyPart: Hair
   markingCategory: Hair

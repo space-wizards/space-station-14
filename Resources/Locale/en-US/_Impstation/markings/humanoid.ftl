@@ -388,6 +388,8 @@ marking-HumanHairMullet = Mullet
 
 marking-HumanHairMulletSideshave = Mullet (Sideshave)
 
+marking-HumanHairSpikyPonytailLong = Ponytail (Spiky Long)
+
 marking-HumanHairUndercutCurly = Undercut (Curly)
 
 marking-HumanHairSideshaveCurly = Sideshave (Curly)

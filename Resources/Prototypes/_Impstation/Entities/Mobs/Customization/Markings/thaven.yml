@@ -2127,6 +2127,15 @@
     state: spiky
 
 - type: marking
+  id: ThavenHairSpikyponytailLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: spikyponytaillong
+
+- type: marking
   id: ThavenHairSpikyponytail
   bodyPart: Hair
   markingCategory: Hair
