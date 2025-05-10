@@ -721,7 +721,7 @@
     - id: SpaceCash500
       weight: 8
     - id: HandheldGPSBasic
-    - id: HandheldMassScanner
+    - id: HandHeldMassScanner
     - id: ClothingHeadsetAltFreelancer
       amount: !type:ConstantNumberSelector
         value: 2
