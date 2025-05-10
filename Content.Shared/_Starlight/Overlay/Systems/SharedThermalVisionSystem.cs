@@ -21,32 +21,19 @@ public abstract class SharedThermalVisionSystem : EntitySystem
         SubscribeLocalEvent<ThermalVisionComponent, ComponentInit>(OnVisionInit);
         SubscribeLocalEvent<ThermalVisionComponent, ComponentShutdown>(OnVisionShutdown);
         SubscribeLocalEvent<ThermalVisionComponent, ToggleThermalVisionEvent>(OnToggleThermalVision);
-
-        SubscribeLocalEvent<ThermalVisionComponent, FlashImmunityChangedEvent>(OnFlashImmunityChanged);
-    }
-
-    private void OnFlashImmunityChanged(Entity<ThermalVisionComponent> ent, ref FlashImmunityChangedEvent args)
-    {
-        if (args.IsImmune)
-        {
-            ent.Comp.blockedByFlashImmunity = true;
-            ToggleOff(ent);
-        }
-        else
-        {
-            ent.Comp.blockedByFlashImmunity = false;
-            if (ent.Comp.Active)
-            {
-                ToggleOn(ent);
-            }
-        }
     }
     
     private void OnVisionInit(Entity<ThermalVisionComponent> ent, ref ComponentInit args) 
-        => _actionsSystem.AddAction(ent.Owner, ref ent.Comp.ActionEntity, Action);
+    {
+        _actionsSystem.AddAction(ent.Owner, ref ent.Comp.ActionEntity, Action);
+    }
 
     private void OnVisionShutdown(Entity<ThermalVisionComponent> ent, ref ComponentShutdown args) 
-        => _actionsSystem.RemoveAction(ent.Comp.ActionEntity);
+    {
+        _actionsSystem.RemoveAction(ent.Comp.ActionEntity);
+        //force turn off
+        ToggleOff(ent); 
+    }
 
     private void OnToggleThermalVision(Entity<ThermalVisionComponent> ent, ref ToggleThermalVisionEvent args)
     {
