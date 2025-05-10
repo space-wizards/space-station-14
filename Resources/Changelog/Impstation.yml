@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: FlippenPage
-  changes:
-  - message: made heretic transmutation runes less visible
-    type: Tweak
-  id: 1127
-  time: '2025-02-15T00:37:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1687
-- author: TheGrimbeeper
-  changes:
-  - message: Heretics should no longer be able to get themselves (or other heretics)
-      or changelings as targets
-    type: Fix
-  id: 1128
-  time: '2025-02-15T00:41:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1688
 - author: hivehum, crocodilecarousel
   changes:
   - message: Six lovely pairs of glasses available now in your loadout menu!
@@ -4174,3 +4159,18 @@
   id: 1626
   time: '2025-05-10T07:21:40.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2437
+- author: Mousetrinity
+  changes:
+  - message: captain is no longer wearing that hideous green!
+    type: Tweak
+  id: 1627
+  time: '2025-05-10T07:22:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2436
+- author: widgetbeck
+  changes:
+  - message: Anomalites are now only accessible through crit cores. Sorry, you gotta
+      work a little harder for your little guys.
+    type: Tweak
+  id: 1628
+  time: '2025-05-10T07:23:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2435
