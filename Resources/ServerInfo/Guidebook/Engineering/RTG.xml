@@ -9,7 +9,7 @@
 
   They require no maintenance and are a reliable source of power, making them ideal for powering essential systems that need to be online at all times, like Telecoms, the AI, or the Crew Monitoring Server.
 
-  RTGs always generate [color=orange][protodata="GeneratorRTG" comp="PowerSupplier" member="MaxSupply" format="N0"/] W[/color] of power, and must be connected to an [color=orange]HV power[/color] [textlink="network" link="VoltageNetworks"] to function.
+  RTGs always generate [color=orange][protodata="GeneratorRTG" comp="PowerSupplier" member="MaxSupply" format="N0"/] W[/color] of power and must be connected to an [color=orange]HV power[/color] [textlink="network" link="VoltageNetworks"] to function.
 
   However, they're only accessible through salvage finding one on an expedition. Should they bring some in, make sure to thank them!
 

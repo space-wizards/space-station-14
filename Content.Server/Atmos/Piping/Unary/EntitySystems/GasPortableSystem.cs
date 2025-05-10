@@ -1,10 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
-using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Construction.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -16,7 +14,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     public sealed class GasPortableSystem : EntitySystem
     {
         [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()

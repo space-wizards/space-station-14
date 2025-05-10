@@ -1,39 +1,39 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "From user named CAROU in Discord",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "purple_snake",
-      "directions": 4,
-      "delays": [
-        [0.3,0.2,0.2,0.4,0.2,0.2,0.3],
-        [0.3,0.2,0.2,0.4,0.2,0.2,0.3],
-        [0.3,0.2,0.2,0.4,0.2,0.2,0.3],
-        [0.3,0.2,0.2,0.4,0.2,0.2,0.3]
-      ]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "From user named CAROU in Discord, purple_snake & dead_purple_snake edited by mubururu_ (github)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-        "name": "dead_purple_snake"
-      },
-    {
-        "name": "small_purple_snake",
-        "directions": 4,
-        "delays": [
-          [0.3,0.2,0.2,0.4,0.2,0.2,0.3],
-          [0.3,0.2,0.2,0.4,0.2,0.2,0.3],
-          [0.3,0.2,0.2,0.4,0.2,0.2,0.3],
-          [0.3,0.2,0.2,0.4,0.2,0.2,0.3]
-      ]
-    },
-    {
-          "name": "dead_small_purple_snake"
-      }
+    "states": [
+        {
+            "name": "purple_snake",
+            "directions": 4,
+            "delays": [
+                [ 0.3, 0.2, 0.2, 0.4, 0.2, 0.2, 0.3 ],
+                [ 0.3, 0.2, 0.2, 0.4, 0.2, 0.2, 0.3 ],
+                [ 0.3, 0.2, 0.2, 0.4, 0.2, 0.2, 0.3 ],
+                [ 0.3, 0.2, 0.2, 0.4, 0.2, 0.2, 0.3 ]
+            ]
+        },
+        {
+            "name": "dead_purple_snake"
+        },
+        {
+            "name": "small_purple_snake",
+            "directions": 4,
+            "delays": [
+                [ 0.3, 0.2, 0.2, 0.4, 0.2, 0.2, 0.3 ],
+                [ 0.3, 0.2, 0.2, 0.4, 0.2, 0.2, 0.3 ],
+                [ 0.3, 0.2, 0.2, 0.4, 0.2, 0.2, 0.3 ],
+                [ 0.3, 0.2, 0.2, 0.4, 0.2, 0.2, 0.3 ]
+            ]
+        },
+        {
+            "name": "dead_small_purple_snake"
+        }
 
 
-  ]
+    ]
 }

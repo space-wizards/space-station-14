@@ -180,8 +180,9 @@
 
 - type: entity
   abstract: true
-  parent: ClothingHeadHardsuitBase
-  id: ClothingHeadHardsuitWithLightBase
+  # No parent since it isn't an item
+  # must parent both this and the desired helmet base when using 
+  id: ClothingHeadSuitWithLightBase
   name: base hardsuit helmet with light
   categories: [ HideSpawnMenu ]
   components:
@@ -248,6 +249,11 @@
   - type: TemperatureProtection
     heatingCoefficient: 1.05
     coolingCoefficient: 0.7
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.90
+  - type: Armor # so zombification resistance shows up
+    modifiers:
+      coefficients: { }
   - type: GroupExamine
   - type: HideLayerClothing
     slots:

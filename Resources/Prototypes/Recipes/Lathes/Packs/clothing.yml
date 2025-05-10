@@ -5,6 +5,7 @@
   recipes:
   - ClothingUniformJumpsuitColorGrey
   - ClothingUniformJumpskirtColorGrey
+  - ClothingUniformJumpsuitLoungewear
 
 - type: latheRecipePack
   id: ClothingCargo
@@ -34,6 +35,11 @@
   - ClothingHeadHatHopcap
   - ClothingUniformJumpsuitHoP
   - ClothingUniformJumpskirtHoP
+  # Generic
+  - ClothingHeadHatBeretCommand
+  - ClothingHeadHatCommandSoft
+  - ClothingUniformJumpskirtCommandGeneric
+  - ClothingUniformJumpsuitCommandGeneric
 
 - type: latheRecipePack
   id: ClothingEngineering

@@ -9,7 +9,7 @@ using Robust.Shared.Toolshed.Errors;
 
 namespace Content.Server.Toolshed.Commands;
 
-[ToolshedCommand, AdminCommand(AdminFlags.Admin)]
+[ToolshedCommand, AdminCommand(AdminFlags.VarEdit)]
 public sealed class VisualizeCommand : ToolshedCommand
 {
     [Dependency] private readonly EuiManager _euiManager = default!;
