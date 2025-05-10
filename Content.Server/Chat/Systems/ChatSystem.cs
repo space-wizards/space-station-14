@@ -185,6 +185,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
         }
         
+        //I despise this being here but there doesnt seem to be a cleaner way to watch for tags or complete component removals
         if (TryComp<CollectiveMindComponent>(source, out var collective))
             _collectiveMind.UpdateCollectiveMind(source, collective);
 
@@ -501,23 +502,25 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private void SendCollectiveMindChat(EntityUid source, string message, CollectiveMindPrototype? collectiveMind)
     {
-        if (_mobStateSystem.IsDead(source) || collectiveMind == null || message == "" || !TryComp<CollectiveMindComponent>(source, out var sourseCollectiveMindComp) || !sourseCollectiveMindComp.Minds.ContainsKey(collectiveMind.ID))
+        if (_mobStateSystem.IsDead(source) || collectiveMind == null || message == "" || !TryComp<CollectiveMindComponent>(source, out var sourceCollectiveMindComp) || !sourceCollectiveMindComp.Minds.ContainsKey(collectiveMind))
             return;
 
         var clients = Filter.Empty();
+        var receivers = new List<EntityUid>();
         var mindQuery = EntityQueryEnumerator<CollectiveMindComponent, ActorComponent>();
         while (mindQuery.MoveNext(out var uid, out var collectMindComp, out var actorComp))
         {
             if (_mobStateSystem.IsDead(uid))
                 continue;
 
-            if (collectMindComp.Minds.ContainsKey(collectiveMind.ID))
+            if (collectMindComp.Minds.ContainsKey(collectiveMind))
             {
                 clients.AddPlayer(actorComp.PlayerSession);
+                receivers.Add(uid);
             }
         }
         
-        var Number = $"{sourseCollectiveMindComp.Minds[collectiveMind.ID]}";
+        var Number = $"{sourceCollectiveMindComp.Minds[collectiveMind].MindId}";
 
         var admins = _adminManager.ActiveAdmins
             .Select(p => p.Channel);
@@ -555,6 +558,14 @@ public sealed partial class ChatSystem : SharedChatSystem
             true,
             admins,
             collectiveMind.Color);
+
+        //raise event so TTS and other related things work
+        var ev = new CollectiveMindSpokeEvent{
+            Source = source,
+            Message = message,
+            Receivers = receivers.ToArray()
+        };
+        RaiseLocalEvent(source, ev, true);
     }
 
     private void SendEntitySpeak(

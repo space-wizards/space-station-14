@@ -1,4 +1,5 @@
-﻿using Content.Shared.Objectives;
+﻿using Content.Shared.CollectiveMind;
+using Content.Shared.Objectives;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CharacterInfo;
@@ -21,9 +22,9 @@ public sealed class CharacterInfoEvent : EntityEventArgs
     public readonly string JobTitle;
     public readonly Dictionary<string, List<ObjectiveInfo>> Objectives;
     public readonly string? Briefing;
-    public readonly Dictionary<string, int>? CollectiveMinds;
+    public readonly Dictionary<CollectiveMindPrototype, CollectiveMindMemberData>? CollectiveMinds;
 
-    public CharacterInfoEvent(NetEntity netEntity, string jobTitle, Dictionary<string, List<ObjectiveInfo>> objectives, string? briefing, Dictionary<string, int>? collectiveMinds)
+    public CharacterInfoEvent(NetEntity netEntity, string jobTitle, Dictionary<string, List<ObjectiveInfo>> objectives, string? briefing, Dictionary<CollectiveMindPrototype, CollectiveMindMemberData>? collectiveMinds)
     {
         NetEntity = netEntity;
         JobTitle = jobTitle;

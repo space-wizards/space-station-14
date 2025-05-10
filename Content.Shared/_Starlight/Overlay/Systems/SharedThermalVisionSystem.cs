@@ -2,6 +2,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Starlight.Overlay;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
@@ -21,11 +22,18 @@ public abstract class SharedThermalVisionSystem : EntitySystem
         SubscribeLocalEvent<ThermalVisionComponent, ComponentShutdown>(OnVisionShutdown);
         SubscribeLocalEvent<ThermalVisionComponent, ToggleThermalVisionEvent>(OnToggleThermalVision);
     }
+    
     private void OnVisionInit(Entity<ThermalVisionComponent> ent, ref ComponentInit args) 
-        => _actionsSystem.AddAction(ent.Owner, ref ent.Comp.ActionEntity, Action);
+    {
+        _actionsSystem.AddAction(ent.Owner, ref ent.Comp.ActionEntity, Action);
+    }
 
     private void OnVisionShutdown(Entity<ThermalVisionComponent> ent, ref ComponentShutdown args) 
-        => _actionsSystem.RemoveAction(ent.Comp.ActionEntity);
+    {
+        _actionsSystem.RemoveAction(ent.Comp.ActionEntity);
+        //force turn off
+        ToggleOff(ent); 
+    }
 
     private void OnToggleThermalVision(Entity<ThermalVisionComponent> ent, ref ToggleThermalVisionEvent args)
     {

@@ -40,3 +40,11 @@
   components:
   - type: PriorityDock
     tag: DockGamma
+
+- type: entity
+  parent: AirlockExternalGlassShuttleEmergencyLocked
+  id: AirlockExternalGlassShuttleEscapeLocked
+  suffix: External, Escape 3x4 Destination, Glass, Docking, Locked
+  components:
+  - type: PriorityDock
+    tag: DockEscape
