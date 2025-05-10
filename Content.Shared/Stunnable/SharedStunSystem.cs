@@ -50,7 +50,7 @@ public abstract class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
 
         SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
-        SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(UpdateCanMove);
+        SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(OnStunShutdown);
 
         SubscribeLocalEvent<StunOnContactComponent, ComponentStartup>(OnStunOnContactStartup);
         SubscribeLocalEvent<StunOnContactComponent, StartCollideEvent>(OnStunOnContactCollide);
@@ -109,6 +109,12 @@ public abstract class SharedStunSystem : EntitySystem
 
     }
 
+    protected virtual void OnStunShutdown(Entity<StunnedComponent> ent, ref ComponentShutdown args)
+    {
+        // This exists so the client can end their funny animation if they're playing one.
+        UpdateCanMove(ent, ent.Comp, args);
+    }
+
     private void UpdateCanMove(EntityUid uid, StunnedComponent component, EntityEventArgs args)
     {
         _blocker.UpdateCanMove(uid);
@@ -132,6 +138,7 @@ public abstract class SharedStunSystem : EntitySystem
             return;
 
         TryStun(args.OtherEntity, ent.Comp.Duration, true, status);
+
         TryKnockdown(args.OtherEntity, ent.Comp.Duration, true, status);
     }
 
@@ -360,6 +367,17 @@ public abstract class SharedStunSystem : EntitySystem
     }
 
     #endregion
+
+    public void TryStunAnimation(EntityUid uid, TimeSpan time)
+    {
+        if (TryComp<StunnedComponent>(uid, out var comp))
+            TryStunAnimation((uid, comp), time);
+    }
+
+    public virtual void TryStunAnimation(Entity<StunnedComponent> entity, TimeSpan time)
+    {
+        // Here so server can tell the client to do things
+    }
 }
 
 /// <summary>
