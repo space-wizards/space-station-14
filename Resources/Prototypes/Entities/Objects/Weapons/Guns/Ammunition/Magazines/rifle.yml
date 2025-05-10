@@ -37,6 +37,7 @@
   id: MagazineRifle
   name: "magazine (.20 rifle)"
   parent: BaseMagazineRifle
+  description: 25-round double stack magazine for combat rifles. Intended to hold general-purpose kinetic ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifle
@@ -62,6 +63,7 @@
   name: "magazine (.20 rifle any)"
   suffix: empty
   parent: MagazineRifle
+  description: 25-round double stack magazine for combat rifles.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -82,6 +84,7 @@
   id: MagazineRifleIncendiary
   name: "magazine (.20 rifle incendiary)"
   parent: MagazineRifle
+  description: 25-round double stack magazine for combat rifles. Intended to hold self-igniting incendiary ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleIncendiary
@@ -90,6 +93,7 @@
   id: MagazineRiflePractice
   name: "magazine (.20 rifle practice)"
   parent: BaseMagazineRifle
+  description: 25-round double stack magazine for combat rifles. Intended to hold non-harmful chalk ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRiflePractice
@@ -114,6 +118,7 @@
   id: MagazineRifleUranium
   name: "magazine (.20 rifle uranium)"
   parent: BaseMagazineRifle
+  description: 25-round double stack magazine for combat rifles. Intended to hold exotic uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleUranium
