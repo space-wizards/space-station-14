@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum, crocodilecarousel
-  changes:
-  - message: Six lovely pairs of glasses available now in your loadout menu!
-    type: Add
-  id: 1129
-  time: '2025-02-15T00:50:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1679
 - author: FlippenPage
   changes:
   - message: Added Drone rooms!
@@ -4174,3 +4167,12 @@
   id: 1628
   time: '2025-05-10T07:23:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2435
+- author: Darkmajia
+  changes:
+  - message: You gonna learn. This is the real world.
+    type: Add
+  - message: Adjusted the volume of several round end sounds to make them more audible.
+    type: Tweak
+  id: 1629
+  time: '2025-05-10T07:28:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2432
