@@ -65,6 +65,8 @@
   - type: ContainerContainer
     containers:
       Paper: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
   - type: DeviceNetworkRequiresPower
   - type: DeviceNetwork
     deviceNetId: Wireless
