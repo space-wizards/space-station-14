@@ -12,10 +12,10 @@
       "directions": 4
     },
     {
-      "name": "caracal_dead"
+      "name": "dead"
     },
     {
-      "name": "caracal_flop",
+      "name": "floppa",
       "directions": 4,
       "delays": [
         [
@@ -41,7 +41,7 @@
       "directions": 4
     },
     {
-      "name": "stanislav_dead"
+      "name": "stanislav-dead"
     }
   ]
 }

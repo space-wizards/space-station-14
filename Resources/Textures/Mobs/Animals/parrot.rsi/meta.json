@@ -86,7 +86,7 @@
       ]
     },
     {
-      "name": "sit",
+      "name": "parrot-sit",
       "directions": 4,
       "delays": [
         [

@@ -50,10 +50,10 @@
       ]
     },
     {
-      "name": "nymph_dead"
+      "name": "dead"
     },
     {
-      "name": "nymph_sleep",
+      "name": "crit",
       "directions": 4
     },
     {
