@@ -1,0 +1,12 @@
+<controls:HighlightPopup
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Chat.Controls">
+    <PanelContainer StyleClasses="BorderedWindowPanel">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+            <TextEdit Name="TextEditWords" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True"/>
+            <Label Text="{Loc 'hud-chatbox-highlight-separate-words'}" Access="Public" HorizontalAlignment="Right" StyleClasses="LabelSubText" Margin="0 0 2 2"/>
+            <ColorSelectorSliders HorizontalExpand="True" Name="ColorForWords"/>
+            <Button Name="ButtonApply" Access="Public" Text="{Loc 'hud-chatbox-highlight-apply'}"/>
+        </BoxContainer>
+    </PanelContainer>
+</controls:HighlightPopup>
