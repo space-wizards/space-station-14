@@ -11,38 +11,31 @@ Swap nuke/PA? Move nuke to vault?
 Move oxy miner to where the other gasses are?
 
 
-
-
+TECHNICAL:
 Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
+-I am wrong about sec monitors being restricted to general.
+-Wired/wireless network component apparently has nothing to do with entertainment/security
+
+DECALING:
 Make easier to navigate in general, + add standard colors around more
 	Maybe crappy scribble decals on top of the MIRI flooring?
 Grime everything up a bit again.
-- Lotta errors about entity cable terminals?
--I am wrong about sec monitors being restricted to general.
--Need moar SMES. Station starts to lose power way too quickly.
-	Or more substations? Would that help?
--Wired/wireless network component apparently has nothing to do with entertainment/security
-Genpop (bah)
+Fix decals under west electrical maints
 
-Evac Shuttle:
-- Vent at bottom unpowered - whole APC unpowered?
-	Power just flat-out isn't working, it seems.
-- Distro pipeline needs pump, maybe? And mixer is off at start.
-
+OTHER:
+Remove evac shuttle grid
 
 Check this stuff:
 Execution telescreens see mounted cam networks, not wireless.
 	Having trouble figuring out where this is specified, so maybe I should
 		dig into the components while testing live.
--Oppo beaker has graphic showing there's liquid in it, but it still claims to be empty + I can't drink it.
-	I changed "drink" to "food" because I guess maybe that's why the rubbing alcohol was that way? No
-		idea if that fixes it or not.
+Salvage space area still being weird in atmo?
+Evac shuttle good now?
+Cryo beaker good now?
 -Check roundstart tider shop light again. I turned the attached switch on. Did that break the door being bolted?
-Weapons north maints door stuck open?
-Salvage space arm is getting sensed as part of the room by air sensors?
-Use engie power monitor to see what's running out of power first/fastest
-Check the det/prosc door *again*.
-
+	Light is still on anyway. :/ IG, it's set to on in the PoweredLight component?
+	I *might* have been testing the wrong version.
+-"scrap circuitry" item in shuttle guns instead of PA boards.
 
 THINGS I COULD MAKE:
 - Plastic table
@@ -388,3 +381,34 @@ DONE:
 /* 	Oh, probably they're from a spawner. But even still. */
 /* -Det/Prosc door shutter closes correctly, but doesn't open when it should. */
 /* 	Or gate was connected to shutter instead of Nand gate, I guess */
+/* Genpop (bah) */
+Weapons north maints door stuck open?
+	It opens, but I wouldn't call it *stuck* open
+Check the det/prosc door *again*.
+	Okay, it finally works!
+/* Use engie power monitor to see what's running out of power first/fastest */
+/* -Need moar SMES. Station starts to lose power way too quickly. */
+/* 	Or more substations? Would that help? */
+/* -Catwalk over carpet by lawyer office */
+/* Tider shop shutters lost their occluder components again!? */
+/* 	Not actually. */
+/* I think the procgen maints room is cutting wiring. :C */
+/* 	Moved it. */
+/* Salvage space arm is getting sensed as part of the room by air sensors? */
+/* 	Seems the plastic flaps don't block the limits of what it considers to be the room. */
+/* 	Did I add firelocks? */
+/* 		Now I have. */
+/* - Vent at bottom unpowered - whole APC unpowered? */
+/* 	Power just flat-out isn't working, it seems. */
+/* 	It just needs one more generator. */
+/* - Distro pipeline needs pump, maybe? And mixer is off at start. */
+/* 	Needs atmos network monitor, not just alerts. Or something. */
+/* -Oppo beaker has graphic showing there's liquid in it, but it still claims to be empty + I can't drink it. */
+/* 	I changed "drink" to "food" because I guess maybe that's why the rubbing alcohol was that way? No */
+/* 		idea if that fixes it or not. */
+/* 		Nope. */
+/* 		I think it should be "beaker" since that's what a different Solution component had. */
+/* - Lotta errors about entity cable terminals? */
+/* 	Haven't seen these since, so maybe not an ish. */
+/* -Label impostor vent disposal chutes */
+/* -Two fax machines need names again. Not sure which. */
