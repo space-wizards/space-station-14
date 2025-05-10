@@ -320,11 +320,6 @@ public abstract class SharedImplanterSystem : EntitySystem
         if (component.ImplanterSlot.HasItem)
         {
             implantFound = true;
-            var implant = component.ImplanterSlot.ContainerSlot?.ContainedEntity;
-            if (TryComp(implant, out SubdermalImplantComponent? implantComp))
-            {
-                _appearance.SetData(uid, ImplanterVisuals.Color, implantComp.Color, appearance);
-            }
         }
 
         else
