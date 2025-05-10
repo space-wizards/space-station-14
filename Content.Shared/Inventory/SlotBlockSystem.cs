@@ -1,5 +1,7 @@
 using Content.Shared.Inventory.Events;
+
 namespace Content.Shared.Inventory;
+
 /// <summary>
 /// Handles prevention of items being unequipped and equipped from slots that are blocked by <see cref="SlotBlockComponent"/>.
 /// </summary>
@@ -12,6 +14,7 @@ public sealed partial class SlotBlockSystem : EntitySystem
         SubscribeLocalEvent<InventoryComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
         SubscribeLocalEvent<InventoryComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
     }
+
     private void OnEquipAttempt(Entity<InventoryComponent> ent, ref IsEquippingAttemptEvent args)
     {
         if (args.Cancelled)
@@ -22,9 +25,11 @@ public sealed partial class SlotBlockSystem : EntitySystem
         // Don't do anything if nothing is blocking the entity from equipping.
         if (blocker == null)
             return;
+
         args.Reason = Loc.GetString("slot-block-component-blocked", ("item", blocker));
         args.Cancel();
     }
+
     private void OnUnequipAttempt(Entity<InventoryComponent> ent, ref IsUnequippingAttemptEvent args)
     {
         if (args.Cancelled)
@@ -35,6 +40,7 @@ public sealed partial class SlotBlockSystem : EntitySystem
         // Don't do anything if nothing is blocking the entity from unequipping.
         if (blocker == null)
             return;
+
         args.Reason = Loc.GetString("slot-block-component-blocked", ("item", blocker));
         args.Cancel();
     }
@@ -54,6 +60,7 @@ public sealed partial class SlotBlockSystem : EntitySystem
 
             return entity;
         }
+
         return null;
     }
 }
