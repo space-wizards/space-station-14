@@ -58,7 +58,7 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<string> DiscordRoundEndRoleWebhook =
         CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
-
+  
     /// <summary>
     ///     URL of the Discord webhook which will relay watchlist connection notifications. If left empty, disables the webhook.
     /// </summary>
@@ -72,4 +72,44 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> DiscordWatchlistConnectionBufferTime =
         CVarDef.Create("discord.watchlist_connection_buffer_time", 5f, CVar.SERVERONLY);
+  
+    /// <summary>
+    /// URL of the Discord webhook which will relay last messages before death.
+    /// </summary>
+    public static readonly CVarDef<string> DiscordLastMessageBeforeDeathWebhook =
+        CVarDef.Create("discord.last_message_before_death_webhook", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
+
+    /// <summary>
+    /// A maximum length before an IC message is cut off in LastMessageBeforeDeathSystem during formatting.
+    /// Can't be less than 1.
+    /// </summary>
+    public static readonly CVarDef<int> DiscordLastMessageSystemMaxICLength =
+        CVarDef.Create("discord.last_message_system_max_ic_length", 100, CVar.SERVERONLY);
+
+    /// <summary>
+    /// A maximum length of a discord message that a webhook sends.
+    /// Can't be more than 2000 and can't be less than 1.
+    /// </summary>
+    public static readonly CVarDef<int> DiscordLastMessageSystemMaxMessageLength =
+        CVarDef.Create("discord.last_message_system_max_message_length", 2000, CVar.SERVERONLY);
+
+    /// <summary>
+    /// A maximum amount of a discord messages that a webhook sends in one batch.
+    /// </summary>
+    public static readonly CVarDef<int> DiscordLastMessageSystemMaxMessageBatch =
+        CVarDef.Create("discord.last_message_system_max_message_batch", 15, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Delay in milliseconds between each message the discord webhook sends.
+    /// </summary>
+    public static readonly CVarDef<int> DiscordLastMessageSystemMessageDelay =
+        CVarDef.Create("discord.last_message_system_message_delay", 2000, CVar.SERVERONLY);
+
+    /// <summary>
+    /// If a maximum amount of messages per batch has been reached, we wait this amount of time (in milliseconds) to send what's left.
+    /// </summary>
+    public static readonly CVarDef<int> DiscordLastMessageSystemMaxMessageBatchOverflowDelay =
+        CVarDef.Create("discord.last_message_system_max_message_batch_overflow_delay", 60000, CVar.SERVERONLY);
 }
+
+
