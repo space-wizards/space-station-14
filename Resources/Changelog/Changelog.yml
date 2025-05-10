@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Thrusters now deal heat damage.
-    type: Fix
-  id: 7949
-  time: '2025-02-13T19:27:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35088
 - author: Booblesnoot42
   changes:
   - message: Removing the security plate from an intercom will no longer delete its
@@ -3931,3 +3924,13 @@
   id: 8451
   time: '2025-05-10T05:06:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37020
+- author: PotentiallyTom
+  changes:
+  - message: Changed the gold requirement for the recipies of the Laser Cannon, X-Ray
+      Cannon, and Advanced Laser Pistol.
+    type: Tweak
+  - message: The Advanced Laser Pistol now requires uranium to make.
+    type: Tweak
+  id: 8452
+  time: '2025-05-10T09:58:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37308
