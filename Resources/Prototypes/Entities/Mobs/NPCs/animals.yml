@@ -43,9 +43,9 @@
       Alive:
         Base: cockroach
       Critical:
-        Base: cockroach_dead
+        Base: cockroach-dead
       Dead:
-        Base: cockroach_dead
+        Base: cockroach-dead
   - type: Bloodstream
     bloodReagent: InsectBlood
     bloodMaxVolume: 20
@@ -187,9 +187,9 @@
       Alive:
         Base: mothroach
       Critical:
-        Base: mothroach_dead
+        Base: mothroach-dead
       Dead:
-        Base: mothroach_dead
+        Base: mothroach-dead
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -531,9 +531,9 @@
       Alive:
         Base: tarantula
       Critical:
-        Base: tarantula_dead
+        Base: tarantula-dead
       Dead:
-        Base: tarantula_dead
+        Base: tarantula-dead
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
@@ -560,7 +560,7 @@
       drawdepth: Mobs
       layers:
       - map: ["enum.DamageStateVisualLayers.Base"]
-        state: clown
+        state: clownspider
         sprite: Mobs/Animals/clownspider.rsi
     - type: Butcherable
       spawned:
@@ -569,7 +569,7 @@
     - type: DamageStateVisuals
       states:
         Alive:
-          Base: clown
+          Base: clownspider
         Critical:
           Base: dead
         Dead:
@@ -678,9 +678,9 @@
       Alive:
         Base: snail
       Critical:
-        Base: dead
+        Base: snail-dead
       Dead:
-        Base: dead
+        Base: snail-dead
   - type: Food
   - type: Thirst
     startingThirst: 25  # spawn with Okay thirst state
@@ -780,15 +780,15 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: spacesnail
+      state: speed
   - type: DamageStateVisuals
     states:
       Alive:
         Base: spacesnail
       Critical:
-        Base: spacedead
+        Base: speed-dead
       Dead:
-        Base: spacedead
+        Base: speed-dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 5 #he go fast, also they cant slip so its probably fine.
     baseSprintSpeed : 7
@@ -815,9 +815,9 @@
       Alive:
         Base: snoth
       Critical:
-        Base: snothdead
+        Base: snoth-dead
       Dead:
-        Base: snothdead
+        Base: snoth-dead
 
 ## -Misc
 - type: entity
@@ -1243,9 +1243,9 @@
       Alive:
         Base: penguin
       Critical:
-        Base: penguin_dead
+        Base: penguin-crit
       Dead:
-        Base: penguin_dead
+        Base: penguin-dead
   - type: Butcherable
     spawned:
     - id: FoodMeatPenguin
@@ -1296,7 +1296,7 @@
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: penguin
+      state: grenadepenguin
       sprite: Mobs/Animals/grenadepenguin.rsi
   - type: Fixtures
     fixtures:
@@ -1312,7 +1312,7 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: penguin
+        Base: grenadepenguin
       Critical:
         Base: dead
       Dead:
@@ -1496,9 +1496,9 @@
         Base: kangaroo
       # SKIPPY NO!
       Critical:
-        Base: kangaroo-crit
+        Base: crit
       Dead:
-        Base: kangaroo-dead
+        Base: dead
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -1637,9 +1637,9 @@
       Alive:
         Base: mouse-0
       Critical:
-        Base: dead-0
+        Base: crit-0
       Dead:
-        Base: splat-0
+        Base: dead-0
   - type: Food
   - type: FlavorProfile
     flavors:
@@ -1779,9 +1779,9 @@
       Alive:
         Base: mouse-1
       Critical:
-        Base: dead-1
+        Base: crit-1
       Dead:
-        Base: splat-1
+        Base: dead-1
   - type: Item
     size: Tiny
     heldPrefix: 1
@@ -1808,9 +1808,9 @@
       Alive:
         Base: mouse-2
       Critical:
-        Base: dead-2
+        Base: crit-2
       Dead:
-        Base: splat-2
+        Base: dead-2
   - type: Item
     size: Tiny
     heldPrefix: 2
@@ -1883,9 +1883,9 @@
       Alive:
         Base: possum
       Critical:
-        Base: possum_dead
+        Base: dead
       Dead:
-        Base: possum_dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1938,9 +1938,9 @@
       Alive:
         Base: corgi
       Critical:
-        Base: corgi_dead
+        Base: corgi-dead
       Dead:
-        Base: corgi_dead
+        Base: corgi-dead
   - type: MeleeWeapon
     soundHit:
         path: /Audio/Effects/bite.ogg
@@ -2008,9 +2008,9 @@
       Alive:
         Base: narsian
       Critical:
-        Base: narsian_dead
+        Base: narsian-dead
       Dead:
-        Base: narsian_dead
+        Base: narsian-dead
   - type: MeleeWeapon
     soundHit:
         path: /Audio/Effects/bite.ogg
@@ -2078,9 +2078,9 @@
       Alive:
         Base: puppy
       Critical:
-        Base: puppy_dead
+        Base: puppy-dead
       Dead:
-        Base: puppy_dead
+        Base: puppy-dead
 
 - type: entity
   name: bull terrier
@@ -2099,9 +2099,9 @@
       Alive:
         Base: bullterrier
       Critical:
-        Base: bullterrier_dead
+        Base: bullterrier-dead
       Dead:
-        Base: bullterrier_dead
+        Base: bullterrier-dead
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-dog
@@ -2138,9 +2138,9 @@
       Alive:
         Base: pug
       Critical:
-        Base: pug_dead
+        Base: pug-dead
       Dead:
-        Base: pug_dead
+        Base: pug-dead
   - type: Inventory
     speciesId: puppy
     templateId: pet
@@ -2189,9 +2189,9 @@
       Alive:
         Base: cat
       Critical:
-        Base: cat_dead
+        Base: cat-dead
       Dead:
-        Base: cat_dead
+        Base: cat-dead
   - type: Speech
     speechSounds: Cat
     speechVerb: SmallMob
@@ -2244,9 +2244,9 @@
       Alive:
         Base: cat2
       Critical:
-        Base: cat2_dead
+        Base: cat2-dead
       Dead:
-        Base: cat2_dead
+        Base: cat2-dead
 
 - type: entity
   name: syndicat
@@ -2263,9 +2263,9 @@
       Alive:
         Base: syndicat
       Critical:
-        Base: syndicat_dead
+        Base: syndicat-dead
       Dead:
-        Base: syndicat_dead
+        Base: syndicat-dead
   - type: GhostRole
     prob: 1
     name: ghost-role-information-SyndiCat-name
@@ -2312,9 +2312,9 @@
       Alive:
         Base: spacecat
       Critical:
-        Base: spacecat_dead
+        Base: spacecat-dead
       Dead:
-        Base: spacecat_dead
+        Base: spacecat-dead
   - type: Temperature
     heatDamageThreshold: 423
     coldDamageThreshold: 0
@@ -2345,7 +2345,7 @@
     sprite: Mobs/Animals/caracal.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: caracal_flop
+      state: caracal-flop
   - type: Fixtures
     fixtures:
       fix1:
@@ -2360,11 +2360,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: caracal_flop
+        Base: caracal
       Critical:
-        Base: caracal_dead
+        Base: caracal-dead
       Dead:
-        Base: caracal_dead
+        Base: caracal-dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -2397,9 +2397,9 @@
       Alive:
         Base: sphynx
       Critical:
-        Base: sphynx_dead
+        Base: sphynx-dead
       Dead:
-        Base: sphynx_dead
+        Base: sphynx-dead
 
 - type: entity
   name: kitten
@@ -2427,9 +2427,9 @@
       Alive:
         Base: kitten
       Critical:
-        Base: kitten_dead
+        Base: kitten-dead
       Dead:
-        Base: kitten_dead
+        Base: kitten-dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -2457,7 +2457,7 @@
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: reindeer_buck
+      state: buck
       sprite: Mobs/Animals/reindeer_buck.rsi
   - type: Physics
   - type: Fixtures
@@ -2474,11 +2474,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: reindeer_buck
+        Base: buck
       Critical:
-        Base: reindeer_buck_dead
+        Base: buck-dead
       Dead:
-        Base: reindeer_buck_dead
+        Base: buck-dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -2521,11 +2521,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: reindeer_doe
+        Base: doe
       Critical:
-        Base: reindeer_doe_dead
+        Base: doe-dead
       Dead:
-        Base: reindeer_doe_dead
+        Base: doe-dead
 
 ## -Misc
 - type: entity
@@ -2793,7 +2793,7 @@
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: crawling
+      state: gorilla
       sprite: Mobs/Animals/gorilla.rsi
   - type: Physics
   - type: Fixtures
@@ -2810,7 +2810,7 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: crawling
+        Base: gorilla
       Critical:
         Base: dead
       Dead:
@@ -2870,9 +2870,9 @@
       Alive:
         Base: raccoon
       Critical:
-        Base: raccoon_dead
+        Base: dead
       Dead:
-        Base: raccoon_dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -2930,9 +2930,9 @@
       Alive:
         Base: fox
       Critical:
-        Base: fox_dead
+        Base: dead
       Dead:
-        Base: fox_dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -3004,9 +3004,9 @@
       Alive:
         Base: sloth
       Critical:
-        Base: sloth_dead
+        Base: dead
       Dead:
-        Base: sloth_dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -3057,9 +3057,9 @@
       Alive:
         Base: ferret
       Critical:
-        Base: ferret_dead
+        Base: dead
       Dead:
-        Base: ferret_dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -3102,14 +3102,14 @@
     sprite: Mobs/Animals/hamster.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: hamster-0
+      state: hamster
   - type: SpriteMovement
     movementLayers:
       movement:
-        state: hamster-moving-0
+        state: hamster-moving
     noMovementLayers:
       movement:
-        state: hamster-0
+        state: hamster
   - type: Item
     size: Tiny
   - type: Physics
@@ -3148,11 +3148,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: hamster-0
+        Base: hamster
       Critical:
-        Base: dead-0
+        Base: crit
       Dead:
-        Base: splat-0
+        Base: dead
   - type: Food
   - type: FlavorProfile
     flavors:
