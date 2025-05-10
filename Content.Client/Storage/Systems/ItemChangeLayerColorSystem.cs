@@ -1,10 +1,11 @@
-using Content.Shared.Implants;
+using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Storage.Systems;
 
+/// <inheritdoc/>
 public sealed class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -15,16 +16,16 @@ public sealed class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSyste
         SubscribeLocalEvent<ChangeLayersColorComponent, AppearanceChangeEvent>(OnAppearance);
     }
 
-    private void OnAppearance(EntityUid uid, ChangeLayersColorComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearance(Entity<ChangeLayersColorComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (TryComp<SpriteComponent>(uid, out var spriteComponent))
+        if (TryComp<SpriteComponent>(ent, out var spriteComponent))
         {
-            if (component.SpriteLayers.Count == 0)
+            if (ent.Comp.SpriteLayers.Count == 0)
             {
-                InitLayers((uid, component, spriteComponent, args.Component));
+                InitLayers((ent, ent.Comp, spriteComponent, args.Component));
             }
 
-            UpdateLayers((uid, component, spriteComponent, args.Component));
+            UpdateLayers((ent, ent.Comp, spriteComponent, args.Component));
         }
     }
 
@@ -34,7 +35,7 @@ public sealed class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSyste
         if (!_appearance.TryGetData<ColorLayerData>(owner, StorageMapVisuals.InitLayers, out var wrapper, appearance))
             return;
 
-        foreach (var nc in wrapper.QueuedEntities)
+        foreach (var nc in wrapper.LayersColors)
         {
             component.SpriteLayers.Add(nc.LayerName);
             spriteComponent.LayerSetColor(nc.LayerName, nc.Color);
@@ -49,7 +50,7 @@ public sealed class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSyste
 
         foreach (var layerName in component.SpriteLayers)
         {
-            foreach (var nc in wrapper.QueuedEntities)
+            foreach (var nc in wrapper.LayersColors)
             {
                 if (nc.LayerName == layerName)
                 {

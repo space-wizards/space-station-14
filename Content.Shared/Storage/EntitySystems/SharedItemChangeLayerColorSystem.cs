@@ -1,19 +1,25 @@
-using Content.Shared.Implants;
-using Content.Shared.Implants.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
-using System.Linq;
 
 namespace Content.Shared.Storage.EntitySystems;
 
+/// <summary>
+/// System responsible for dynamically changing the color of specific sprite layers
+/// on a container entity, based on the items inserted into or removed from its storage.
+/// </summary>
+/// <remarks>
+/// The system listens for changes in storage containers and updates the appearance
+/// of the parent entity using the <see cref="SharedAppearanceSystem"/>.
+/// Target layers and conditions are defined using <see cref="ChangeLayersColorComponent"/> and
+/// <see cref="ItemLayersColorComponent"/>, where the appropriate layer is selected
+/// based on whitelist checks.
+/// </remarks>
 public abstract class SharedItemChangeLayerColorSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -23,36 +29,29 @@ public abstract class SharedItemChangeLayerColorSystem : EntitySystem
         SubscribeLocalEvent<ChangeLayersColorComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
     }
 
-    private void OnEntInsert(EntityUid uid, ChangeLayersColorComponent comp, ref EntInsertedIntoContainerMessage args)
+    private void OnEntInsert(Entity<ChangeLayersColorComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
+        if (!TryComp<AppearanceComponent>(ent, out var appearance))
             return;
 
-        var ent = args.Entity;
-
-        if (!TryComp<ItemLayersColorComponent>(ent, out var itemLayerColor))
-            return;
-
-        UpdateAppearance(uid, ent, itemLayerColor, comp, appearance);
+        UpdateAppearance(ent, args.Entity, appearance);
     }
 
-    private void OnEntRemoved(EntityUid uid, ChangeLayersColorComponent comp, ref EntRemovedFromContainerMessage args)
+    private void OnEntRemoved(Entity<ChangeLayersColorComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
+        if (!TryComp<AppearanceComponent>(ent, out var appearance))
             return;
 
-        var ent = args.Entity;
-
-        if (!TryComp<ItemLayersColorComponent>(ent, out var itemLayerColor))
-            return;
-
-        UpdateAppearance(uid, ent, itemLayerColor, comp, appearance);
+        UpdateAppearance(ent, args.Entity, appearance);
     }
 
-    private void UpdateAppearance(EntityUid parent, EntityUid item, ItemLayersColorComponent itemLayerColor, ChangeLayersColorComponent comp, AppearanceComponent appearance)
+    private void UpdateAppearance(Entity<ChangeLayersColorComponent> parent, EntityUid item, AppearanceComponent appearance)
     {
+        if (!TryComp<ItemLayersColorComponent>(parent, out var itemLayerColor))
+            return;
+
         var dict = new Dictionary<string, Color>();
-        if(!TryGetLayer(item, comp, out var layer))
+        if (!TryGetLayer(item, parent.Comp, out var layer))
             return;
 
         dict.Add(layer, itemLayerColor.Color);
@@ -66,10 +65,10 @@ public abstract class SharedItemChangeLayerColorSystem : EntitySystem
             val.Layer = layerName;
         }
 
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
+        if (TryComp(uid, out AppearanceComponent? appearanceComponent))
         {
             var dictionary = new Dictionary<string, Color>();
-            foreach(var key in component.MapLayers.Keys)
+            foreach (var key in component.MapLayers.Keys)
             {
                 dictionary.Add(key, Color.White);
             }
@@ -81,8 +80,7 @@ public abstract class SharedItemChangeLayerColorSystem : EntitySystem
     {
         foreach (var mapLayerData in itemLayerColor.MapLayers.Values)
         {
-            var count = _whitelistSystem.IsWhitelistPassOrNull(mapLayerData.Whitelist, ent);
-            if (count)
+            if (_whitelistSystem.IsWhitelistPassOrNull(mapLayerData.Whitelist, ent))
             {
                 showLayer = mapLayerData.Layer;
                 return true;

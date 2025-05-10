@@ -1,6 +1,5 @@
 using Content.Client.Implants.UI;
 using Content.Client.Items;
-using Content.Shared.Cabinet;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Robust.Shared.Prototypes;
@@ -16,6 +15,7 @@ public sealed class ImplanterSystem : SharedImplanterSystem
     {
         base.Initialize();
         SubscribeLocalEvent<ImplanterComponent, AfterAutoHandleStateEvent>(OnHandleImplanterState);
+
         Subs.ItemStatus<ImplanterComponent>(ent => new ImplanterStatusControl(ent));
     }
 

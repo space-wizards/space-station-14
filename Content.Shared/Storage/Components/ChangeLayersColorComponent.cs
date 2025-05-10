@@ -2,45 +2,52 @@ using Content.Shared.Storage.Components;
 using Robust.Shared.Serialization;
 using System.Linq;
 
-namespace Content.Shared.Implants;
+namespace Content.Shared.Storage;
 
+/// <summary>
+/// Component used to define which sprite layers should change color based on inserted entities.
+/// </summary>
+/// <remarks>
+/// The actual color to be applied is determined by the <see cref="ItemLayersColorComponent"/>
+/// on the inserted item, and changes are applied via the <see cref="SharedItemChangeLayerColorSystem"/>.
+/// </remarks>
 [RegisterComponent]
 public sealed partial class ChangeLayersColorComponent : Component
 {
-    [DataField("mapLayers")] public Dictionary<string, SharedMapLayerData> MapLayers = new();
+    [DataField]
+    public Dictionary<string, SharedMapLayerData> MapLayers = new();
 
     /// <summary>
     ///     If this exists, shown layers will only consider entities in the given containers.
     /// </summary>
-    [DataField("containerWhitelist")]
+    [DataField]
     public HashSet<string>? ContainerWhitelist;
 
     /// <summary>
     ///     The list of map layer keys that are valid targets for changing in <see cref="MapLayers"/>
     ///     Can be initialized if already existing on the sprite, or inferred automatically
     /// </summary>
-    [DataField("spriteLayers")]
+    [DataField]
     public List<string> SpriteLayers = new();
 }
 
 [Serializable, NetSerializable]
 public sealed class ColorLayerData : ICloneable
 {
-    public readonly LayerColor[] QueuedEntities;
+    public readonly LayerColor[] LayersColors;
 
     public ColorLayerData()
     {
-        QueuedEntities = Array.Empty<LayerColor>();
+        LayersColors = Array.Empty<LayerColor>();
     }
 
     public ColorLayerData(IReadOnlyDictionary<string, Color> other)
     {
-        QueuedEntities = other.Select(kvp => new LayerColor { LayerName = kvp.Key, Color = kvp.Value }).ToArray(); ;
+        LayersColors = other.Select(kvp => new LayerColor { LayerName = kvp.Key, Color = kvp.Value }).ToArray(); ;
     }
 
     public object Clone()
     {
-        // QueuedEntities should never be getting modified after this object is created.
         return this;
     }
 }

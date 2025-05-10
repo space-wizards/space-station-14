@@ -1,6 +1,5 @@
 using Content.Shared.Actions;
 using Content.Shared.Whitelist;
-using Robust.Shared.Animations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
