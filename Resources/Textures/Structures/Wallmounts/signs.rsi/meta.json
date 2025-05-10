@@ -1,11 +1,11 @@
 {
-  "version": 1,
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c, Job signs by EmoGarbage404 (github) with inspiration from yogstation and tgstation, 'direction_exam' and 'direction_icu' made by rosieposieeee (github), 'direction_atmos' made by SlamBamActionman, 'vox' based on sprites taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/e7f005f8b8d3f7d89cbee3b87f76c23f9e951c27/icons/obj/decals.dmi, 'direction_pods' derived by WarPigeon from existing directional signs.",
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c, Job signs by EmoGarbage404 (github) with inspiration from yogstation and tgstation, 'direction_exam' and 'direction_icu' made by rosieposieeee (github), 'direction_atmos' made by SlamBamActionman, 'vox' based on sprites taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/e7f005f8b8d3f7d89cbee3b87f76c23f9e951c27/icons/obj/decals.dmi, 'direction_pods' derived by WarPigeon from existing directional signs.",
     "states": [
         {
             "name": "ai"
@@ -257,6 +257,9 @@
         },
         {
             "name": "cloning"
+        },
+        {
+            "name": "genpop"
         },
         {
             "name": "gravi"
