@@ -18,37 +18,45 @@ public sealed class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSyste
 
     private void OnAppearance(Entity<ChangeLayersColorComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (TryComp<SpriteComponent>(ent, out var spriteComponent))
+        if (TryComp<SpriteComponent>(ent.Owner, out var spriteComponent))
         {
             if (ent.Comp.SpriteLayers.Count == 0)
             {
-                InitLayers((ent, ent.Comp, spriteComponent, args.Component));
+                InitLayers((ent.Owner, ent.Comp, spriteComponent, args.Component));
             }
 
-            UpdateLayers((ent, ent.Comp, spriteComponent, args.Component));
+            UpdateLayers((ent.Owner, ent.Comp, spriteComponent, args.Component));
         }
     }
 
-    private void InitLayers((EntityUid uid, ChangeLayersColorComponent component, SpriteComponent spriteComponent, AppearanceComponent Component) ent)
+    private void InitLayers(Entity<ChangeLayersColorComponent, SpriteComponent, AppearanceComponent> ent)
     {
-        var (owner, component, spriteComponent, appearance) = ent;
+        var layerColorComponent = ent.Comp1;
+        var spriteComponent = ent.Comp2;
+        var appearance = ent.Comp3;
+        var owner = ent.Owner;
+
         if (!_appearance.TryGetData<ColorLayerData>(owner, StorageMapVisuals.InitLayers, out var wrapper, appearance))
             return;
 
         foreach (var nc in wrapper.LayersColors)
         {
-            component.SpriteLayers.Add(nc.LayerName);
+            layerColorComponent.SpriteLayers.Add(nc.LayerName);
             spriteComponent.LayerSetColor(nc.LayerName, nc.Color);
         }
     }
 
-    private void UpdateLayers((EntityUid uid, ChangeLayersColorComponent component, SpriteComponent spriteComponent, AppearanceComponent Component) ent)
+    private void UpdateLayers(Entity<ChangeLayersColorComponent, SpriteComponent, AppearanceComponent> ent)
     {
-        var (owner, component, spriteComponent, appearance) = ent;
+        var layerColorComponent = ent.Comp1;
+        var spriteComponent = ent.Comp2;
+        var appearance = ent.Comp3;
+        var owner = ent.Owner;
+
         if (!_appearance.TryGetData<ColorLayerData>(owner, StorageMapVisuals.LayerChanged, out var wrapper, appearance))
             return;
 
-        foreach (var layerName in component.SpriteLayers)
+        foreach (var layerName in layerColorComponent.SpriteLayers)
         {
             foreach (var nc in wrapper.LayersColors)
             {

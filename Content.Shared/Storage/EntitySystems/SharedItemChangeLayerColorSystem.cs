@@ -31,7 +31,7 @@ public abstract class SharedItemChangeLayerColorSystem : EntitySystem
 
     private void OnEntInsert(Entity<ChangeLayersColorComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (!TryComp<AppearanceComponent>(ent, out var appearance))
+        if (!TryComp<AppearanceComponent>(ent.Owner, out var appearance))
             return;
 
         UpdateAppearance(ent, args.Entity, appearance);
@@ -39,23 +39,23 @@ public abstract class SharedItemChangeLayerColorSystem : EntitySystem
 
     private void OnEntRemoved(Entity<ChangeLayersColorComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (!TryComp<AppearanceComponent>(ent, out var appearance))
+        if (!TryComp<AppearanceComponent>(ent.Owner, out var appearance))
             return;
 
         UpdateAppearance(ent, args.Entity, appearance);
     }
 
-    private void UpdateAppearance(Entity<ChangeLayersColorComponent> parent, EntityUid item, AppearanceComponent appearance)
+    private void UpdateAppearance(Entity<ChangeLayersColorComponent> mainComp, EntityUid item, AppearanceComponent appearance)
     {
-        if (!TryComp<ItemLayersColorComponent>(parent, out var itemLayerColor))
+        if (!TryComp<ItemLayersColorComponent>(item, out var itemLayerColor))
             return;
 
         var dict = new Dictionary<string, Color>();
-        if (!TryGetLayer(item, parent.Comp, out var layer))
+        if (!TryGetLayer(item, mainComp.Comp, out var layer))
             return;
 
         dict.Add(layer, itemLayerColor.Color);
-        _appearance.SetData(parent, StorageMapVisuals.LayerChanged, new ColorLayerData(dict), appearance);
+        _appearance.SetData(mainComp.Owner, StorageMapVisuals.LayerChanged, new ColorLayerData(dict), appearance);
     }
 
     private void OnComponentInit(EntityUid uid, ChangeLayersColorComponent component, ref ComponentInit args)
