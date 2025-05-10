@@ -90,6 +90,7 @@
       reagents:
       - Lexorin
       - Lead
+      - Nollazine
 
 - type: entity
   name: strange pill
