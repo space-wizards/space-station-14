@@ -1470,6 +1470,12 @@
   description: flavor-complex-bacchus-blessing
 
 - type: flavor
+  id: trashy
+  flavorType: Base
+  description: flavor-base-trashy
+
+
+- type: flavor
   id: koboldjuice
   flavorType: Complex
   description: flavor-complex-kobold-juice
