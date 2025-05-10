@@ -177,7 +177,7 @@
               prototype: MaterialCardboard1
               amount: 3
           steps:
-            - tool: Anchoring #Slicing
+            - tool: Slicing
               doAfter: 2
 
     - node: TableReinforcedGlass

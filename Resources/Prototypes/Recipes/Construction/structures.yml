@@ -217,6 +217,7 @@
       failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false
 
 - type: construction
   id: Grille

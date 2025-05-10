@@ -330,10 +330,10 @@
     sprite: Structures/Doors/MineralDoors/card_door.rsi
     state: closed
   - type: Construction
-    graph: DoorGraph #was cardDoor          also was CardDoor?
+    graph: DoorGraph
     node: cardDoor
-#  - type: IconSmooth        above icon probably better @shrugs
-#    key: walls
+#  - type: IconSmooth        #if sprite change on doorway
+#    key: cards
 #    mode: NoSprite
   - type: NavMapDoor #can proooobably add this like that... test navmap someway
   - type: Occluder

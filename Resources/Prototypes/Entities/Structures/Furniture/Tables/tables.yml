@@ -310,7 +310,7 @@
     sprite: Structures/Furniture/Tables/card.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/card.rsi
-  - type: GlassTable #is that ok like that?
+  - type: GlassTable #they named it that cause 'it would never be used elsewhere' or something, smh
     climberDamage:
       types:
         Blunt: 6

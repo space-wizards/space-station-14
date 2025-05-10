@@ -1481,29 +1481,28 @@
   parent: BaseStructure
   name: card wall
   description: Budget cuts are hitting hard.
-#  placement:
-#    mode: SnapgridCenter
-#    snap:
-#    - Wall
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
   components:
   - type: MeleeSound
     soundGroups:
       Brute:
         path:
           "/Audio/Weapons/pierce.ogg"
-#  - type: Tag
-#    tags:
-#    - wall #set back to wall if fails
+  - type: Tag
+    tags:
+    - Wall
   - type: Sprite
-    drawdepth: Walls
-    sprite: Structures/Walls/cardwall.rsi
-    state: cardwall # was blank
+    drawdepth: SmallObjects #so bullets pass underneath
+    sprite: Structures/Walls/card.rsi
   - type: Icon
-    sprite: Structures/Walls/cardwall.rsi
-    state: cardwall #was full
+    sprite: Structures/Walls/card.rsi
+    state: full
   - type: Construction
-    graph: Cardwall #was structures
-    node: cardwall #set back to lowercase if fails
+    graph: Cardwall
+    node: cardwall
     deconstructionTarget: start
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -1516,8 +1515,8 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-#        mask:
-#        - FullTileMask
+        mask:
+        - FullTileMask
         layer:
         - FlimsyLayer
   - type: Destructible
@@ -1539,7 +1538,9 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Occluder
-#  - type: Appearance probably dont need because no 'changing' sprites. test without once works
+  - type: IconSmooth
+    key: cards
+    base: card
+  - type: Occluder 
   - type: BlockWeather
   - type: SunShadowCast
