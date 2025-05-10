@@ -127,7 +127,7 @@
     thermalRegulationTemperatureThreshold: 10
   - type: AvaliStasis
     enterStasisAction: ActionAvaliStasisEnter
-    stasisCooldown: 60 #currently not working, needs to be fixed.
+    stasisCooldown: 60 #currently not working, needs to be fixed. 
     exitStasisAction: ActionAvaliStasisExit
     stasisBluntHeal: 1.5 #Full heal in ~ 1 minute, an age in combat. Editing in YAML doesn't work, do so in the C# code.
     stasisSlashHeal: 1.5 
@@ -144,5 +144,31 @@
   components:
   - type: HumanoidAppearance
     species: Avali
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+            state: jumpsuit
+      shoes: # DM only for colored shoes!
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+            state: shoes
+      head:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+            state: head
+      hand:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+            state: hand
+      back:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+            state: back
 
 # Chirp!
