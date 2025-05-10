@@ -16,7 +16,7 @@
     },
 
     {
-      "name": "ferret_dead",
+      "name": "ferret-dead",
       "directions": 1,
       "delays": [[1]]
     }
