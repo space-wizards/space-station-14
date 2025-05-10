@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Drones now have a station pinpointer in their pocket, so they don't get
-      lost in space.
-    type: Add
-  - message: Drones now have a 10-hour Engineering time requirement. Learn the G menu.
-    type: Add
-  - message: Drones can now pilot shuttles.
-    type: Add
-  id: 1133
-  time: '2025-02-16T02:43:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1695
-- author: widgetbeck
-  changes:
-  - message: The mail telepad will now notify Supply when a shipment arrives, complete
-      with the time until the next shipment.
-    type: Add
-  - message: The time between mail shipments is now slightly randomized.
-    type: Add
-  id: 1134
-  time: '2025-02-16T02:44:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1696
 - author: mqole
   changes:
   - message: Syndicats can now send and receive messages on the Syndicate radio channel.
@@ -4176,3 +4154,17 @@
   id: 1632
   time: '2025-05-10T07:35:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2419
+- author: mhachimagus
+  changes:
+  - message: New long-tailed variant of the Ponytail (Spiky) hairstyle.
+    type: Add
+  id: 1633
+  time: '2025-05-10T07:42:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2434
+- author: Stonylogray
+  changes:
+  - message: Adjusted home run bat to prevent double damage and reduce wall clipping.
+    type: Tweak
+  id: 1634
+  time: '2025-05-10T07:43:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2433
