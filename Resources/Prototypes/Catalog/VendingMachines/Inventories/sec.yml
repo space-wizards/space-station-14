@@ -1,28 +1,48 @@
 - type: vendingMachineInventory
   id: SecTechInventory
   startingInventory:
-    SecurityWhistle: 5
-    Handcuffs: 8
-    GrenadeFlashBang: 4
-    TearGasGrenade: 4
-    ClusterBangFull: 2
-    GrenadeStinger: 4
-    Flash: 5
-    Tourniquet: 5
-    FlashlightSeclite: 5
-    ClothingEyesGlassesSunglasses: 2
-    ClothingEyesHudSecurity: 2
-    ClothingEyesEyepatchHudSecurity: 2
-    ClothingBeltSecurityWebbing: 5
-    CombatKnife: 3
-    Zipties: 12
-    RiotShield: 2
-    RiotLaserShield: 2
-    RiotBulletShield: 2
-    RadioHandheldSecurity: 5
-  # security officers need to follow a diet regimen!
+    - id: SecurityWhistle
+      amount: 5
+    - id: Handcuffs
+      amount: 8
+    - id: GrenadeFlashBang
+      amount: 4
+    - id: TearGasGrenade
+      amount: 4
+    - id: ClusterBangFull
+      amount: 2
+    - id: GrenadeStinger
+      amount: 4
+    - id: Flash
+      amount: 5
+    - id: Tourniquet
+      amount: 5
+    - id: FlashlightSeclite
+      amount: 5
+    - id: ClothingEyesGlassesSunglasses
+      amount: 2
+    - id: ClothingEyesHudSecurity
+      amount: 2
+    - id: ClothingEyesEyepatchHudSecurity
+      amount: 2
+    - id: ClothingBeltSecurityWebbing
+      amount: 5
+    - id: CombatKnife
+      amount: 3
+    - id: Zipties
+      amount: 12
+    - id: RiotShield
+      amount: 2
+    - id: RiotLaserShield
+      amount: 2
+    - id: RiotBulletShield
+      amount: 2
+    - id: RadioHandheldSecurity
+      amount: 5
   contrabandInventory:
-    WeaponMeleeNeedle: 2
-    FoodDonutHomer: 12
-    FoodBoxDonut: 2
-    #box evidence
+    - id: WeaponMeleeNeedle
+      amount: 2
+    - id: FoodDonutHomer
+      amount: 12
+    - id: FoodBoxDonut
+      amount: 2

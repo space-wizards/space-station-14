@@ -1,12 +1,21 @@
 - type: vendingMachineInventory
   id: ViroDrobeInventory
   startingInventory:
-    ClothingUniformJumpsuitVirology: 2
-    ClothingUniformJumpskirtVirology: 2
-    ClothingShoesColorWhite: 2
-    ClothingOuterCoatLabViro: 2
-    ClothingOuterWinterViro: 2
-    ClothingMaskSterile: 2
-    ClothingBackpackVirology: 2
-    ClothingBackpackSatchelVirology: 2
-    ClothingBackpackDuffelVirology: 2
+    - id: ClothingUniformJumpsuitVirology
+      amount: 2
+    - id: ClothingUniformJumpskirtVirology
+      amount: 2
+    - id: ClothingShoesColorWhite
+      amount: 2
+    - id: ClothingOuterCoatLabViro
+      amount: 2
+    - id: ClothingOuterWinterViro
+      amount: 2
+    - id: ClothingMaskSterile
+      amount: 2
+    - id: ClothingBackpackVirology
+      amount: 2
+    - id: ClothingBackpackSatchelVirology
+      amount: 2
+    - id: ClothingBackpackDuffelVirology
+      amount: 2

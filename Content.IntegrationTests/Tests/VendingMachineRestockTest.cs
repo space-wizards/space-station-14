@@ -39,17 +39,20 @@ namespace Content.IntegrationTests.Tests
 - type: vendingMachineInventory
   id: TestInventory
   startingInventory:
-    TestRamen: 1
+    - id: TestRamen
+      amount: 1
 
 - type: vendingMachineInventory
   id: OtherTestInventory
   startingInventory:
-    TestRamen: 3
+    - id: TestRamen
+      amount: 3
 
 - type: vendingMachineInventory
   id: BigTestInventory
   startingInventory:
-    TestRamen: 4
+    - id: TestRamen
+      amount: 4
 
 - type: entity
   parent: BaseVendingMachineRestock

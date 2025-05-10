@@ -13,4 +13,11 @@
             SizeFlagsStretchRatio="3"
             HorizontalExpand="True"
             ClipText="True"/>
+            <PanelContainer Name="PricePanel" StyleClasses="BackgroundDark">
+                <Label Name="Price"
+                   Access="Public"
+                   MinSize="32 32"
+                   Margin="5 0 5 -6"
+                   Align="Right"/>
+            </PanelContainer>
 </BoxContainer>

@@ -9,8 +9,8 @@ using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 using Robust.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.IdentityManagement;
-using Robust.Client.Graphics;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.VendingMachines.UI
 {
@@ -30,6 +30,7 @@ namespace Content.Client.VendingMachines.UI
         private bool _enabled;
 
         public event Action<GUIBoundKeyEventArgs, ListData>? OnItemSelected;
+        public event Action<ButtonEventArgs>? OnWithdrawPressed;
 
         public VendingMachineMenu()
         {
@@ -41,6 +42,8 @@ namespace Content.Client.VendingMachines.UI
             VendingContents.DataFilterCondition += DataFilterCondition;
             VendingContents.GenerateItem += GenerateButton;
             VendingContents.ItemKeyBindDown += (args, data) => OnItemSelected?.Invoke(args, data);
+            if (WithdrawButton != null)
+                WithdrawButton.OnPressed += (args) => OnWithdrawPressed?.Invoke(args);
         }
 
         protected override void Dispose(bool disposing)
@@ -72,14 +75,25 @@ namespace Content.Client.VendingMachines.UI
 
         private void GenerateButton(ListData data, ListContainerButton button)
         {
-            if (data is not VendorItemsListData { ItemProtoID: var protoID, ItemText: var text })
+            if (data is not VendorItemsListData { ItemProtoID: var protoID, ItemText: var text, Price: var price })
                 return;
 
-            var item = new VendingMachineItem(protoID, text);
+            var item = new VendingMachineItem(protoID, text, price);
             _listItems[protoID] = (button, item);
             button.AddChild(item);
             button.AddStyleClass("ButtonSquare");
             button.Disabled = !_enabled || _amounts[protoID] == 0;
+        }
+
+        public void SetBalance(int newBalance)
+        {
+            Balance.Text = newBalance.ToString() + "$";
+            WithdrawButton.Disabled = (newBalance == 0);
+        }
+
+        public void SetBalanceVisible(bool isVisible)
+        {
+            BalanceBar.Visible = isVisible;
         }
 
         /// <summary>
@@ -91,6 +105,7 @@ namespace Content.Client.VendingMachines.UI
             _enabled = enabled;
             _listItems.Clear();
             _amounts.Clear();
+            var balanceBarVisible = false;
 
             if (inventory.Count == 0 && VendingContents.Visible)
             {
@@ -139,13 +154,16 @@ namespace Content.Client.VendingMachines.UI
                 if (itemText.Length > longestEntry.Length)
                     longestEntry = itemText;
 
-                listData.Add(new VendorItemsListData(prototype.ID, i)
+                listData.Add(new VendorItemsListData(prototype.ID, i, entry.ItemPrice)
                 {
                     ItemText = itemText,
                 });
+
+                if (entry.ItemPrice != 0) balanceBarVisible = true;
             }
 
             VendingContents.PopulateList(listData);
+            SetBalanceVisible(balanceBarVisible);
 
             SetSizeAfterUpdate(longestEntry.Length, inventory.Count);
         }
@@ -187,7 +205,7 @@ namespace Content.Client.VendingMachines.UI
         }
     }
 
-    public record VendorItemsListData(EntProtoId ItemProtoID, int ItemIndex) : ListData
+    public record VendorItemsListData(EntProtoId ItemProtoID, int ItemIndex, int Price) : ListData
     {
         public string ItemText = string.Empty;
     }

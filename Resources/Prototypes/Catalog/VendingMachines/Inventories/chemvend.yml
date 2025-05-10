@@ -1,65 +1,117 @@
 - type: vendingMachineInventory
   id: ChemVendInventory
   startingInventory:
-    Jug: 4
-    JugAluminium: 2
-    JugCarbon: 4
-    JugChlorine: 1
-    JugCopper: 2
-    JugEthanol: 2
-    JugFluorine: 1
-    JugHydrogen: 3
-    JugIodine: 1
-    JugIron: 2
-    JugLithium: 2
-    JugMercury: 1
-    JugNitrogen: 3
-    JugOxygen: 3
-    JugPhosphorus: 1
-    JugPotassium: 2
-    JugRadium: 1
-    JugSilicon: 2
-    JugSodium: 2
-    JugSugar: 3
-    JugSulfur: 1
+    - id: Jug
+      amount: 4
+    - id: JugAluminium
+      amount: 2
+    - id: JugCarbon
+      amount: 4
+    - id: JugChlorine
+      amount: 1
+    - id: JugCopper
+      amount: 2
+    - id: JugEthanol
+      amount: 2
+    - id: JugFluorine
+      amount: 1
+    - id: JugHydrogen
+      amount: 3
+    - id: JugIodine
+      amount: 1
+    - id: JugIron
+      amount: 2
+    - id: JugLithium
+      amount: 2
+    - id: JugMercury
+      amount: 1
+    - id: JugNitrogen
+      amount: 3
+    - id: JugOxygen
+      amount: 3
+    - id: JugPhosphorus
+      amount: 1
+    - id: JugPotassium
+      amount: 2
+    - id: JugRadium
+      amount: 1
+    - id: JugSilicon
+      amount: 2
+    - id: JugSodium
+      amount: 2
+    - id: JugSugar
+      amount: 3
+    - id: JugSulfur
+      amount: 1
   contrabandInventory:
-    DrinkLithiumFlask: 1
-    StrangePill: 3
+    - id: DrinkLithiumFlask
+      amount: 1
+    - id: StrangePill
+      amount: 3
   emaggedInventory:
-    ChemistryBottleToxin: 1
+    - id: ChemistryBottleToxin
+      amount: 1
 
 - type: vendingMachineInventory
   id: ChemVendInventorySyndicate
   startingInventory:
-    Jug: 4
-    JugAluminium: 2
-    JugCarbon: 4
-    JugChlorine: 1
-    JugCopper: 2
-    JugEthanol: 2
-    JugFluorine: 1
-    JugHydrogen: 3
-    JugIodine: 1
-    JugIron: 2
-    JugLithium: 2
-    JugMercury: 1
-    JugNitrogen: 3
-    JugOxygen: 3
-    JugPhosphorus: 1
-    JugPotassium: 2
-    JugRadium: 1
-    JugSilicon: 2
-    JugSodium: 2
-    JugSugar: 3
-    JugSulfur: 1
-    JugWeldingFuel: 1
-    PlasmaChemistryVial: 1
+    - id: Jug
+      amount: 4
+    - id: JugAluminium
+      amount: 2
+    - id: JugCarbon
+      amount: 4
+    - id: JugChlorine
+      amount: 1
+    - id: JugCopper
+      amount: 2
+    - id: JugEthanol
+      amount: 2
+    - id: JugFluorine
+      amount: 1
+    - id: JugHydrogen
+      amount: 3
+    - id: JugIodine
+      amount: 1
+    - id: JugIron
+      amount: 2
+    - id: JugLithium
+      amount: 2
+    - id: JugMercury
+      amount: 1
+    - id: JugNitrogen
+      amount: 3
+    - id: JugOxygen
+      amount: 3
+    - id: JugPhosphorus
+      amount: 1
+    - id: JugPotassium
+      amount: 2
+    - id: JugRadium
+      amount: 1
+    - id: JugSilicon
+      amount: 2
+    - id: JugSodium
+      amount: 2
+    - id: JugSugar
+      amount: 3
+    - id: JugSulfur
+      amount: 1
+    - id: JugWeldingFuel
+      amount: 1
+    - id: PlasmaChemistryVial
+      amount: 1
   contrabandInventory:
-    DrinkLithiumFlask: 1
-    StrangePill: 3
+    - id: DrinkLithiumFlask
+      amount: 1
+    - id: StrangePill
+      amount: 3
   emaggedInventory:
-    ChemistryBottlePax: 3
-    ChemistryBottleMuteToxin: 3
-    ChemistryBottleLead: 2
-    ChemistryBottleToxin: 1
-
+    - id: ChemistryBottlePax
+      amount: 3
+    - id: ChemistryBottleMuteToxin
+      amount: 3
+    - id: ChemistryBottleLead
+      amount: 2
+    - id: ChemistryBottleToxin
+      amount: 1
