@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 250.0.0
+  engineVersion: 251.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/23/2025 08:10:35
-  entityCount: 17734
+  time: 05/09/2025 04:07:47
+  entityCount: 17731
 maps:
 - 5005
 grids:
@@ -20934,6 +20934,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-14.5
+      parent: 1
+- proto: BorgChargerDroneSpawner
+  entities:
+  - uid: 13745
+    components:
+    - type: Transform
+      pos: -54.5,28.5
       parent: 1
 - proto: BoxBodyBag
   entities:
@@ -101083,7 +101090,7 @@ entities:
       pos: 16.5,48.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -44602.73
+      secondsUntilStateChange: -44722.383
       state: Opening
 - proto: SpaceCash10000
   entities:
@@ -101233,28 +101240,6 @@ entities:
     components:
     - type: Transform
       pos: -80.5,33.5
-      parent: 1
-- proto: SpawnMobDrone
-  entities:
-  - uid: 17636
-    components:
-    - type: Transform
-      pos: -8.5,-15.5
-      parent: 1
-  - uid: 17744
-    components:
-    - type: Transform
-      pos: -52.5,28.5
-      parent: 1
-  - uid: 17745
-    components:
-    - type: Transform
-      pos: -53.5,28.5
-      parent: 1
-  - uid: 17746
-    components:
-    - type: Transform
-      pos: -54.5,28.5
       parent: 1
 - proto: SpawnMobFoxRenault
   entities:

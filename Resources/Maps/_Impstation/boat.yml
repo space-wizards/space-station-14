@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 247.2.0
+  engineVersion: 251.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/21/2025 02:39:43
-  entityCount: 25159
+  time: 05/09/2025 04:11:38
+  entityCount: 25156
 maps:
 - 1
 grids:
@@ -9967,7 +9967,7 @@ entities:
       pos: 10.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2672.4285
+      secondsUntilStateChange: -2801.1536
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10219,7 +10219,7 @@ entities:
       pos: 30.5,-49.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -8977.724
+      secondsUntilStateChange: -9106.448
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10366,7 +10366,7 @@ entities:
       pos: 10.5,88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -156170.55
+      secondsUntilStateChange: -156299.27
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10377,7 +10377,7 @@ entities:
       pos: 10.5,87.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -156172.42
+      secondsUntilStateChange: -156301.14
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11132,7 +11132,7 @@ entities:
       pos: 38.5,-21.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -351741.53
+      secondsUntilStateChange: -351870.25
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11668,7 +11668,7 @@ entities:
       pos: 44.5,15.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -26938.143
+      secondsUntilStateChange: -27066.867
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13817,6 +13817,9 @@ entities:
     - type: Transform
       pos: 64.512146,89.350044
       parent: 2
+    - type: CollisionWake
+      enabled: False
+    - type: Conveyed
 - proto: BananaPhoneInstrument
   entities:
   - uid: 10247
@@ -17102,6 +17105,13 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 18.5,61.5
+      parent: 2
+- proto: BorgChargerDroneSpawner
+  entities:
+  - uid: 3344
+    components:
+    - type: Transform
+      pos: 63.5,-15.5
       parent: 2
 - proto: BorgModuleAnomaly
   entities:
@@ -46400,6 +46410,9 @@ entities:
     - type: Transform
       pos: 19.229002,75.89003
       parent: 2
+    - type: CollisionWake
+      enabled: False
+    - type: Conveyed
   - uid: 13775
     components:
     - type: Transform
@@ -46548,6 +46561,13 @@ entities:
     components:
     - type: Transform
       pos: 28.503239,8.904896
+      parent: 2
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 3935
+    components:
+    - type: Transform
+      pos: 16.5,-43.5
       parent: 2
 - proto: CargoPallet
   entities:
@@ -59961,6 +59981,25 @@ entities:
     - type: Transform
       pos: 51.5,-53.5
       parent: 2
+- proto: ChemistryBottlePotassium
+  entities:
+  - uid: 5680
+    components:
+    - type: Transform
+      pos: 49.598484,-55.08549
+      parent: 2
+- proto: ChemistryBottleRobustHarvest
+  entities:
+  - uid: 13170
+    components:
+    - type: Transform
+      pos: -2.6835227,60.176945
+      parent: 2
+  - uid: 13171
+    components:
+    - type: Transform
+      pos: -2.6835227,59.871178
+      parent: 2
 - proto: ChemistryEmptyBottle04
   entities:
   - uid: 771
@@ -60819,6 +60858,13 @@ entities:
     - type: Transform
       pos: 55.5,56.5
       parent: 2
+- proto: ClosetWallEmergencyN2
+  entities:
+  - uid: 16905
+    components:
+    - type: Transform
+      pos: 32.5,101.5
+      parent: 2
 - proto: ClosetWallEmergencyN2FilledRandom
   entities:
   - uid: 610
@@ -60858,13 +60904,6 @@ entities:
     components:
     - type: Transform
       pos: 56.5,56.5
-      parent: 2
-- proto: ClosetWallEmergencyN2
-  entities:
-  - uid: 16905
-    components:
-    - type: Transform
-      pos: 32.5,101.5
       parent: 2
 - proto: ClosetWallFireFilledRandom
   entities:
@@ -61448,6 +61487,9 @@ entities:
     - type: Transform
       pos: 15.310713,-50.23491
       parent: 2
+    - type: CollisionWake
+      enabled: False
+    - type: Conveyed
 - proto: ClothingHeadHatBlacksoft
   entities:
   - uid: 10214
@@ -65583,7 +65625,7 @@ entities:
       pos: 60.5,76.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -80490.234
+      secondsUntilStateChange: -80618.96
       state: Opening
   - uid: 18653
     components:
@@ -66737,6 +66779,9 @@ entities:
     - type: Transform
       pos: 19.251242,73.33807
       parent: 2
+    - type: CollisionWake
+      enabled: False
+    - type: Conveyed
   - uid: 16598
     components:
     - type: Transform
@@ -76635,7 +76680,7 @@ entities:
       pos: 34.5,-25.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -383079.8
+      secondsUntilStateChange: -383208.53
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -113389,13 +113434,6 @@ entities:
     - type: Transform
       pos: 29.5,57.5
       parent: 2
-- proto: MailTeleporter
-  entities:
-  - uid: 3935
-    components:
-    - type: Transform
-      pos: 16.5,-43.5
-      parent: 2
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 1879
@@ -118236,13 +118274,6 @@ entities:
     - type: Transform
       pos: 13.5,-5.5
       parent: 2
-- proto: PotassiumChemistryBottle
-  entities:
-  - uid: 5680
-    components:
-    - type: Transform
-      pos: 49.598484,-55.08549
-      parent: 2
 - proto: PottedPlant0
   entities:
   - uid: 13152
@@ -122720,11 +122751,6 @@ entities:
     - type: Transform
       pos: 20.5,-29.5
       parent: 2
-  - uid: 6581
-    components:
-    - type: Transform
-      pos: 63.5,-15.5
-      parent: 2
 - proto: PsychBed
   entities:
   - uid: 11114
@@ -124790,18 +124816,6 @@ entities:
     components:
     - type: Transform
       pos: 40.48715,81.52913
-      parent: 2
-- proto: RobustHarvestChemistryBottle
-  entities:
-  - uid: 13170
-    components:
-    - type: Transform
-      pos: -2.6835227,60.176945
-      parent: 2
-  - uid: 13171
-    components:
-    - type: Transform
-      pos: -2.6835227,59.871178
       parent: 2
 - proto: RollerBed
   entities:
@@ -131819,6 +131833,9 @@ entities:
     - type: Transform
       pos: 15.62253,-50.09342
       parent: 2
+    - type: CollisionWake
+      enabled: False
+    - type: Conveyed
 - proto: SoapDeluxe
   entities:
   - uid: 9253
@@ -133066,23 +133083,6 @@ entities:
     components:
     - type: Transform
       pos: 62.5,-5.5
-      parent: 2
-- proto: SpawnMobDrone
-  entities:
-  - uid: 5218
-    components:
-    - type: Transform
-      pos: 56.5,-15.5
-      parent: 2
-  - uid: 18083
-    components:
-    - type: Transform
-      pos: 56.5,-16.5
-      parent: 2
-  - uid: 18084
-    components:
-    - type: Transform
-      pos: 56.5,-14.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
@@ -138127,6 +138127,9 @@ entities:
     - type: Transform
       pos: 64.548836,87.58884
       parent: 2
+    - type: CollisionWake
+      enabled: False
+    - type: Conveyed
 - proto: SyringeCryostasis
   entities:
   - uid: 15939
@@ -140943,6 +140946,7 @@ entities:
     - type: Transform
       pos: 65.5,89.5
       parent: 2
+    - type: Conveyed
 - proto: TegCenter
   entities:
   - uid: 5060

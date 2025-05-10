@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 250.0.0
+  engineVersion: 251.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/23/2025 08:13:25
-  entityCount: 22644
+  time: 05/09/2025 04:18:09
+  entityCount: 22642
 maps:
 - 17546
 grids:
@@ -13151,9 +13151,9 @@ entities:
     - type: DeviceList
       devices:
       - 8759
-      - 18516
       - 18233
       - 18515
+      - 17505
   - uid: 8444
     components:
     - type: Transform
@@ -17522,6 +17522,15 @@ entities:
       deviceLists:
       - 15597
       - 15596
+  - uid: 17505
+    components:
+    - type: Transform
+      pos: 32.5,0.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 8443
+      - 17614
   - uid: 17875
     components:
     - type: Transform
@@ -17720,12 +17729,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 60.5,2.5
-      parent: 2
-  - uid: 18516
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 34.5,-0.5
       parent: 2
   - uid: 18532
     components:
@@ -21867,6 +21870,13 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 23.5,-52.5
+      parent: 2
+- proto: BorgChargerDroneSpawner
+  entities:
+  - uid: 17503
+    components:
+    - type: Transform
+      pos: 34.5,-0.5
       parent: 2
 - proto: BoxBodyBag
   entities:
@@ -72438,7 +72448,7 @@ entities:
     - type: DeviceList
       devices:
       - 8759
-      - 18516
+      - 17505
   - uid: 17615
     components:
     - type: Transform
@@ -122048,23 +122058,6 @@ entities:
     components:
     - type: Transform
       pos: 19.5,-11.5
-      parent: 2
-- proto: SpawnMobDrone
-  entities:
-  - uid: 17503
-    components:
-    - type: Transform
-      pos: 34.5,-0.5
-      parent: 2
-  - uid: 17505
-    components:
-    - type: Transform
-      pos: 33.5,-0.5
-      parent: 2
-  - uid: 17512
-    components:
-    - type: Transform
-      pos: 32.5,-0.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:
