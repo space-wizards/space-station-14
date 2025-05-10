@@ -71,10 +71,10 @@
             ]
         },
         {
-            "name": "dead"
+            "name": "crit"
         },
         {
-            "name": "splat"
+            "name": "dead"
         }
     ]
 }
