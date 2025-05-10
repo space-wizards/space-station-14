@@ -41,15 +41,15 @@
       ]
     },
     {
-      "name": "mothroach_lazy",
+      "name": "mothroach-lazy",
       "directions": 4
     },
     {
-      "name": "mothroach_sleep",
+      "name": "mothroach-sleep",
       "directions": 4
     },
     {
-      "name": "mothroach_dead",
+      "name": "mothroach-dead",
       "directions": 4
     },
     {
@@ -61,7 +61,7 @@
       "directions": 4
     },
     {
-      "name": "0-equipped-HELMET",
+      "name": "mothroach-equipped-HELMET",
       "directions": 4
     }
   ]
