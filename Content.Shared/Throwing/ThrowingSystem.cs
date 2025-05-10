@@ -114,8 +114,6 @@ public sealed class ThrowingSystem : EntitySystem
             evEntity.ItemUid = evPlayer.ItemUid;
         }
 
-        Log.Debug($"speed value yeah ==== {evEntity.ThrowSpeed}");
-
         TryThrow(
             evEntity.ItemUid,
             direction,
