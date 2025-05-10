@@ -226,7 +226,7 @@ namespace Content.Server.Hands.Systems
 
             var throwSpeed = hands.BaseThrowspeed;
 
-            // This can grief the above event so we raise it afterwards
+            // This can grief the above event so we raise it afterwards (thinbug: not sure what to do about this, now that the event is on TryThrow)
             if (IsHolding(player, throwEnt, out _, hands) && !TryDrop(player, throwEnt, handsComp: hands))
                 return false;
 
