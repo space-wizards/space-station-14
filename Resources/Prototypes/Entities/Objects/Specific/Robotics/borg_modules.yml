@@ -468,6 +468,24 @@
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
+- type: entity
+  id: BorgModuleBasicConstruction
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: basic construction cyborg module
+  description: A generic construction module with a limited array of materials.
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-construction
+  - type: ItemBorgModule
+    items:
+    - SheetSteelLingering0
+    - SheetGlassLingering0
+    - PartRodMetalLingering0
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: basic-construction-module }
+
 # cargo modules
 - type: entity
   id: BorgModuleAppraisal
@@ -573,7 +591,7 @@
   - type: Sprite
     layers:
     - state: engineering
-    - state: icon-construction
+    - state: icon-construction-adv
   - type: ItemBorgModule
     items:
     - SheetSteelLingering0
