@@ -12,7 +12,7 @@
       "directions": 4
     },
     {
-      "name": "kangaroo-crit"
+      "name": "crit"
     },
     {
       "name": "glow",
@@ -45,7 +45,7 @@
       ]
     },
     {
-      "name": "kangaroo-dead"
+      "name": "dead"
     }
   ]
 }
