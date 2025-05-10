@@ -1,16 +1,20 @@
 using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Pow3r;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
+using Content.Shared.Silicons.StationAi;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -22,6 +26,7 @@ public sealed class ApcSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedStationAiSystem _stationAiSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
@@ -33,8 +38,12 @@ public sealed class ApcSystem : EntitySystem
         SubscribeLocalEvent<ApcComponent, BoundUIOpenedEvent>(OnBoundUiOpen);
         SubscribeLocalEvent<ApcComponent, ComponentStartup>(OnApcStartup);
         SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
-        SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
+        SubscribeLocalEvent<ApcComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleBreakerVerb);
+        SubscribeLocalEvent<ApcComponent, GetStationAiRadialEvent>(OnApcGetRadial);
+        SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreakerMessage);
+        SubscribeLocalEvent<ApcComponent, StationAiApcToggleMainBreakerEvent>(OnStationAiApcToggleMainBreaker);
         SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
+
 
         SubscribeLocalEvent<ApcComponent, EmpPulseEvent>(OnEmpPulse);
     }
@@ -75,25 +84,60 @@ public sealed class ApcSystem : EntitySystem
         UpdateApcState(uid, component);
     }
 
-    private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
+    private void AddToggleBreakerVerb(Entity<ApcComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanComplexInteract || !args.CanInteract)
+            return;
+
+        var user = args.User;
+
+        AlternativeVerb verb = new()
+        {
+            Act = () =>
+            {
+                OnToggleMainBreaker(ent.Owner, ent.Comp, user);
+            },
+            Text = Loc.GetString("apc-component-verb-text-alternative"),
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
+        };
+
+        args.Verbs.Add(verb);
+    }
+
+    private void OnApcGetRadial(Entity<ApcComponent> _, ref GetStationAiRadialEvent args)
+    {
+        _stationAiSystem.AddApcToggleMainBreakerAction(ref args);
+    }
+
+    private void OnToggleMainBreakerMessage(Entity<ApcComponent> ent, ref ApcToggleMainBreakerMessage args)
+    {
+        OnToggleMainBreaker(ent.Owner, ent.Comp, args.Actor);
+    }
+
+    private void OnStationAiApcToggleMainBreaker(Entity<ApcComponent> ent, ref StationAiApcToggleMainBreakerEvent args)
+    {
+        OnToggleMainBreaker(ent.Owner, ent.Comp, args.User);
+    }
+
+    private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, EntityUid user)
     {
         var attemptEv = new ApcToggleMainBreakerAttemptEvent();
         RaiseLocalEvent(uid, ref attemptEv);
         if (attemptEv.Cancelled)
         {
             _popup.PopupCursor(Loc.GetString("apc-component-on-toggle-cancel"),
-                args.Actor, PopupType.Medium);
+                user, PopupType.Medium);
             return;
         }
 
-        if (_accessReader.IsAllowed(args.Actor, uid))
+        if (_accessReader.IsAllowed(user, uid))
         {
             ApcToggleBreaker(uid, component);
         }
         else
         {
             _popup.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
-                args.Actor, PopupType.Medium);
+                user, PopupType.Medium);
         }
     }
 

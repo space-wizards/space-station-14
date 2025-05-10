@@ -1,4 +1,5 @@
 using Content.Shared.APC;
+using Content.Shared.Silicons.StationAi;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -7,6 +8,19 @@ namespace Content.Client.Power.APC;
 public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
 {
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly SharedStationAiSystem _stationAiSystem = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<ApcVisualsComponent, GetStationAiRadialEvent>(OnApcGetRadial);
+    }
+
+    private void OnApcGetRadial(Entity<ApcVisualsComponent> _, ref GetStationAiRadialEvent args)
+    {
+        _stationAiSystem.AddApcToggleMainBreakerAction(ref args);
+    }
 
     protected override void OnAppearanceChange(EntityUid uid, ApcVisualsComponent comp, ref AppearanceChangeEvent args)
     {
