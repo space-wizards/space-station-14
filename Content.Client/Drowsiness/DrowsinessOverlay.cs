@@ -1,5 +1,6 @@
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Drowsiness;
-using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
@@ -39,16 +40,15 @@ public sealed class DrowsinessOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        if (!_entityManager.HasComponent<DrowsinessComponent>(playerEntity)
-            || !_entityManager.TryGetComponent<StatusEffectsComponent>(playerEntity, out var status))
+        if (!_entityManager.HasComponent<DrowsinessStatusEffectComponent>(playerEntity))
             return;
 
-        var statusSys = _sysMan.GetEntitySystem<StatusEffectsSystem>();
-        if (!statusSys.TryGetTime(playerEntity.Value, SharedDrowsinessSystem.DrowsinessKey, out var time, status))
+        var statusSys = _sysMan.GetEntitySystem<SharedStatusEffectNewSystem>();
+        if (!statusSys.TryGetTime(playerEntity.Value, SleepingSystem.StatusEffectForcedSleeping, out var time))
             return;
 
         var curTime = _timing.CurTime;
-        var timeLeft = (float)(time.Value.Item2 - curTime).TotalSeconds;
+        var timeLeft = (float)(time.Item2 - curTime).TotalSeconds;
 
         CurrentPower += 8f * (0.5f * timeLeft - CurrentPower) * args.DeltaSeconds / (timeLeft + 1);
     }

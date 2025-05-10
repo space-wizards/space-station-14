@@ -39,6 +39,7 @@ public sealed partial class SleepingSystem : EntitySystem
 
     public static readonly EntProtoId SleepActionId = "ActionSleep";
     public static readonly EntProtoId WakeActionId = "ActionWake";
+    public static readonly EntProtoId StatusEffectForcedSleeping = "StatusEffectForcedSleeping";
 
     public override void Initialize()
     {
@@ -62,7 +63,7 @@ public sealed partial class SleepingSystem : EntitySystem
         SubscribeLocalEvent<SleepingComponent, GetVerbsEvent<AlternativeVerb>>(AddWakeVerb);
         SubscribeLocalEvent<SleepingComponent, InteractHandEvent>(OnInteractHand);
 
-        SubscribeLocalEvent<ForcedSleepingComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ForcedSleepingStatusEffectComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SleepingComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
         SubscribeLocalEvent<SleepingComponent, EmoteAttemptEvent>(OnEmoteAttempt);
 
@@ -235,7 +236,7 @@ public sealed partial class SleepingSystem : EntitySystem
             _emitSound.SetEnabled((ent, spam), args.NewMobState == MobState.Alive);
     }
 
-    private void OnInit(Entity<ForcedSleepingComponent> ent, ref ComponentInit args)
+    private void OnInit(Entity<ForcedSleepingStatusEffectComponent> ent, ref ComponentInit args)
     {
         TrySleeping(ent.Owner);
     }
@@ -294,7 +295,7 @@ public sealed partial class SleepingSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        if (!force && HasComp<ForcedSleepingComponent>(ent))
+        if (!force && HasComp<ForcedSleepingStatusEffectComponent>(ent))
         {
             if (user != null)
             {

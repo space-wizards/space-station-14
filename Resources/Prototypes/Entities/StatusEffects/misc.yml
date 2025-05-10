@@ -1,0 +1,38 @@
+- type: entity
+  id: StatusEffectBase
+  abstract: true
+  components:
+  - type: StatusEffectNew
+  - type: Sprite
+    drawdepth: Effects
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+# The creature sleeps so heavily that nothing can wake him up. Not even its own death.
+- type: entity
+  parent: StatusEffectBase
+  id: StatusEffectForcedSleeping
+  name: forced sleep
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StatusEffectNew
+    components:
+    - type: ForcedSleepingStatusEffect
+    whitelist:
+      components:
+      - MobState
+
+# Blurs your vision and makes you randomly fall asleep
+- type: entity
+  parent: StatusEffectBase
+  id: StatusEffectDrowsiness
+  name: drowsiness
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StatusEffectNew
+    components:
+    - type: DrowsinessStatusEffect
+    whitelist:
+      components:
+      - MobState
