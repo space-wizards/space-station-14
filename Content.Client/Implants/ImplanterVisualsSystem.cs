@@ -23,11 +23,9 @@ public sealed class ImplanterVisualsSystem : VisualizerSystem<ImplanterVisualsCo
         AppearanceSystem.TryGetData(uid, ImplanterVisuals.Color, out var color, appearance);
         if (color == null)
         {
-            Log.Warning($"ImplanterVisualsSystem: No color data found for {uid}");
             return;
         }
         UpdateSprite(sprite, (Color)color);
-        Log.Info($"ImplanterVisualsSystem: Updated color to {color} for {uid}");
     }
 
     private void UpdateSprite(SpriteComponent spriteComponent, Color color)
