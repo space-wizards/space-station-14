@@ -79,6 +79,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [ValidatePrototypeId<TagPrototype>]
     private const string DockTag = "DockEmergency";
 
+    //starlight
+    [ValidatePrototypeId<TagPrototype>]
+    private const string DockEscapeTag = "DockEscape";
+    //starlight end
+
     public override void Initialize()
     {
         _emergencyShuttleEnabled = _configManager.GetCVar(CCVars.EmergencyShuttleEnabled);
@@ -92,6 +97,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         SubscribeLocalEvent<StationCentcommComponent, MapInitEvent>(OnStationInit);
 
         SubscribeLocalEvent<EmergencyShuttleComponent, FTLStartedEvent>(OnEmergencyFTL);
+        SubscribeLocalEvent<EscapePodComponent, FTLStartedEvent>(OnEmergencyPodFTL); //starlight
         SubscribeLocalEvent<EmergencyShuttleComponent, FTLCompletedEvent>(OnEmergencyFTLComplete);
         SubscribeNetworkEvent<EmergencyShuttleRequestPositionMessage>(OnShuttleRequestPosition);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnded);
@@ -205,11 +211,30 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         });
     }
 
+    //starlight
+    private void OnEmergencyPodFTL(EntityUid uid, EscapePodComponent component, ref FTLStartedEvent args)
+    {
+        //set the priority tag
+        if (TryComp<ShuttleComponent>(uid, out var shuttleComp))
+        {
+            shuttleComp.PriorityTag = DockEscapeTag;
+        }
+    }
+    //starlight end
+
     /// <summary>
     ///     Escape shuttle FTL event handler. The only escape shuttle FTL transit should be from station to centcomm at round end
     /// </summary>
     private void OnEmergencyFTL(EntityUid uid, EmergencyShuttleComponent component, ref FTLStartedEvent args)
     {
+        //starlight
+        //set the priority tag
+        if (TryComp<ShuttleComponent>(uid, out var shuttleComp))
+        {
+            shuttleComp.PriorityTag = DockTag;
+        }
+        //starlight end
+
         var ftlTime = TimeSpan.FromSeconds
         (
             TryComp<FTLComponent>(uid, out var ftlComp) ? ftlComp.TravelTime : _shuttle.DefaultTravelTime
