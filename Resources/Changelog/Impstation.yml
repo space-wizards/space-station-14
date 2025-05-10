@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Thaven now have all underwear options (yay)
-    type: Add
-  id: 1140
-  time: '2025-02-16T12:25:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1710
 - author: hivehum
   changes:
   - message: You can engrave messages on bullets and bombs.
@@ -4174,3 +4167,10 @@
   id: 1639
   time: '2025-05-10T13:48:45.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2405
+- author: Darkmajia
+  changes:
+  - message: Gastropoid and slimeperson body emotes have had their sound restored.
+    type: Fix
+  id: 1640
+  time: '2025-05-10T17:08:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2446
