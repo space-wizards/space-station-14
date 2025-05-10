@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b , cerberus by Alekshhh, real mouse by TheShuEd",
+  "copyright": "https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b , cerberus by Alekshhh, real mouse by TheShuEd.  belt_displacement by Sparlight.",
   "states": [
     {
       "name": "corgi",
@@ -152,6 +152,9 @@
     },
     {
       "name": "real_mouse_dead"
+    },
+    {
+      "name": "belt_displacement"
     }
   ]
 }
