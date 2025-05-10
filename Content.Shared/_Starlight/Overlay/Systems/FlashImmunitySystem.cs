@@ -5,7 +5,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.Player;
 
-namespace Content.Client._Starlight.Overlay;
+namespace Content.Shared.Starlight.Overlay;
 
 public sealed class FlashImmunitySystem : EntitySystem
 {
@@ -28,39 +28,39 @@ public sealed class FlashImmunitySystem : EntitySystem
         SubscribeLocalEvent<ThermalVisionComponent, ComponentStartup>(OnVisionChanged);
         SubscribeLocalEvent<ThermalVisionComponent, ComponentRemove>(OnVisionChanged); //this should use shutdown, but something else is already using it.....
 
-        SubscribeLocalEvent<CycloritesVisionComponent, ComponentStartup>(OnVisionChanged);
-        SubscribeLocalEvent<CycloritesVisionComponent, ComponentRemove>(OnVisionChanged); //this should use shutdown, but something else is already using it.....
+        SubscribeLocalEvent<CycloriteVisionComponent, ComponentStartup>(OnVisionChanged);
+        SubscribeLocalEvent<CycloriteVisionComponent, ComponentRemove>(OnVisionChanged); //this should use shutdown, but something else is already using it.....
     }
 
     private void OnPlayerAttached(LocalPlayerAttachedEvent args)
     {
-        FlashImmunityChangedEvent flashImmunityChangedEvent = new(args.Entity, CheckForFlashImmunity(args.Entity));
+        FlashImmunityCheckEvent flashImmunityChangedEvent = new(args.Entity, HasFlashImmunityVisionBlockers(args.Entity));
         RaiseLocalEvent(args.Entity, flashImmunityChangedEvent);
     }
 
     private void OnFlashImmunityChanged(EntityUid uid, FlashImmunityComponent component, EntityEventArgs args)
     {
         uid = GetPossibleWearer(uid);
-        FlashImmunityChangedEvent flashImmunityChangedEvent = new(uid, CheckForFlashImmunity(uid));
+        FlashImmunityCheckEvent flashImmunityChangedEvent = new(uid, HasFlashImmunityVisionBlockers(uid));
         RaiseLocalEvent(uid, flashImmunityChangedEvent);
     }
 
     private void OnVisionChanged(EntityUid uid, Component component, EntityEventArgs args)
     {
         uid = GetPossibleWearer(uid);
-        FlashImmunityChangedEvent flashImmunityChangedEvent = new(uid, CheckForFlashImmunity(uid));
+        FlashImmunityCheckEvent flashImmunityChangedEvent = new(uid, HasFlashImmunityVisionBlockers(uid));
         RaiseLocalEvent(uid, flashImmunityChangedEvent);
     }
 
     private void OnFlashImmunityEquipped(EntityUid uid, FlashImmunityComponent component, GotEquippedEvent args)
     {
-        FlashImmunityChangedEvent flashImmunityChangedEvent = new(uid, CheckForFlashImmunity(args.Equipee));
+        FlashImmunityCheckEvent flashImmunityChangedEvent = new(uid, HasFlashImmunityVisionBlockers(args.Equipee));
         RaiseLocalEvent(args.Equipee, flashImmunityChangedEvent);
     }
 
     private void OnFlashImmunityUnEquipped(EntityUid uid, FlashImmunityComponent component, GotUnequippedEvent args)
     {
-        FlashImmunityChangedEvent flashImmunityChangedEvent = new(uid, CheckForFlashImmunity(args.Equipee));
+        FlashImmunityCheckEvent flashImmunityChangedEvent = new(uid, HasFlashImmunityVisionBlockers(args.Equipee));
         RaiseLocalEvent(args.Equipee, flashImmunityChangedEvent);
     }
 
@@ -75,7 +75,7 @@ public sealed class FlashImmunitySystem : EntitySystem
         return uid;
     }
 
-    private bool CheckForFlashImmunity(EntityUid uid)
+    public bool HasFlashImmunityVisionBlockers(EntityUid uid)
     {
         if (EntityManager.TryGetComponent(uid, out FlashImmunityComponent? flashImmunityComponent))
         {
