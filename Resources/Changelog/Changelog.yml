@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Velken
-  changes:
-  - message: Paramedic Void Suit now has flashlight and an ambulance siren.
-    type: Add
-  - message: Paramedic Void Suit is now restricted to Medical.
-    type: Tweak
-  id: 7951
-  time: '2025-02-13T19:52:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34657
 - author: themias
   changes:
   - message: Fixed being able to fax multiple times in quick succession
@@ -3934,3 +3925,11 @@
   id: 8453
   time: '2025-05-10T12:51:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37129
+- author: Nukesthestation
+  changes:
+  - message: The maximum character limit for paper has been increased to 10,000, hop
+      mains rejoice!
+    type: Tweak
+  id: 8454
+  time: '2025-05-10T15:12:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37270
