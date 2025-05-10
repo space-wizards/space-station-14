@@ -82,3 +82,5 @@
   contrabandInventory:
     - id: ClothingNeckScarfStripedLesbianLong
       amount: 2
+    - id: ClothingUniformJumpskirtColorRainbow
+      amount: 2
