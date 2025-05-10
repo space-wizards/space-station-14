@@ -52,11 +52,8 @@ namespace Content.Server.Forensics
         private void UpdateUserInterface(EntityUid uid, ForensicScannerComponent component)
         {
             var state = new ForensicScannerBoundUserInterfaceState(
-                component.Fingerprints,
-                component.Fibers,
-                component.TouchDNAs,
-                component.SolutionDNAs,
-                component.Residues,
+                component.Evidence,
+                component.CleaningAgents,
                 component.LastScannedName,
                 component.PrintCooldown,
                 component.PrintReadyAt);
@@ -76,25 +73,29 @@ namespace Content.Server.Forensics
             {
                 if (!TryComp<ForensicsComponent>(args.Args.Target, out var forensics))
                 {
-                    scanner.Fingerprints = new();
-                    scanner.Fibers = new();
-                    scanner.TouchDNAs = new();
-                    scanner.Residues = new();
+                    scanner.Evidence.Clear();
                 }
                 else
                 {
-                    scanner.Fingerprints = forensics.Fingerprints.ToList();
-                    scanner.Fibers = forensics.Fibers.ToList();
-                    scanner.TouchDNAs = forensics.DNAs.ToList();
-                    scanner.Residues = forensics.Residues.ToList();
+                    foreach (var type in Enum.GetValues<ForensicEvidence>())
+                    {
+                        if (forensics.Evidence.TryGetValue(type, out var value))
+                        {
+                            scanner.Evidence[type] = [.. value];
+                        }
+                    }
+
+                    scanner.CleaningAgents = forensics.CleaningAgents;
                 }
 
                 if (_tag.HasTag(args.Args.Target.Value, DNASolutionScannableTag))
                 {
-                    scanner.SolutionDNAs = _forensicsSystem.GetSolutionsDNA(args.Args.Target.Value);
-                } else
-                {
-                    scanner.SolutionDNAs = new();
+                    var solutionDna = _forensicsSystem.GetSolutionsDNA(args.Args.Target.Value);
+                    foreach (var dna in solutionDna)
+                    {
+                        if (!scanner.Evidence[ForensicEvidence.DNAs].Contains(dna))
+                            scanner.Evidence[ForensicEvidence.DNAs].Add(dna);
+                    }
                 }
 
                 scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
@@ -147,7 +148,7 @@ namespace Content.Server.Forensics
             if (!TryComp<ForensicPadComponent>(args.Used, out var pad))
                 return;
 
-            foreach (var fiber in component.Fibers)
+            foreach (var fiber in component.Evidence[ForensicEvidence.Fibers])
             {
                 if (fiber == pad.Sample)
                 {
@@ -157,7 +158,7 @@ namespace Content.Server.Forensics
                 }
             }
 
-            foreach (var fingerprint in component.Fingerprints)
+            foreach (var fingerprint in component.Evidence[ForensicEvidence.Fingerprints])
             {
                 if (fingerprint == pad.Sample)
                 {
@@ -208,36 +209,27 @@ namespace Content.Server.Forensics
             _metaData.SetEntityName(printed, Loc.GetString("forensic-scanner-report-title", ("entity", component.LastScannedName)));
 
             var text = new StringBuilder();
+            foreach (var type in Enum.GetValues<ForensicEvidence>())
+            {
+                if (!component.Evidence.TryGetValue(type, out var evidence) || evidence.Count == 0)
+                    continue; // Don't put a title when there's no evidence for it
 
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
-            foreach (var fingerprint in component.Fingerprints)
-            {
-                text.AppendLine(fingerprint);
+                text.AppendLine(Loc.GetString($"forensic-scanner-interface-{type.ToString().ToLower()}"));
+                foreach (var item in evidence)
+                {
+                    text.AppendLine(item);
+                }
+                text.AppendLine();
             }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-fibers"));
-            foreach (var fiber in component.Fibers)
+
+            if (component.CleaningAgents.Count > 0)
             {
-                text.AppendLine(fiber);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
-            foreach (var dna in component.TouchDNAs)
-            {
-                text.AppendLine(dna);
-            }
-            foreach (var dna in component.SolutionDNAs)
-            {
-                Log.Debug(dna);
-                if (component.TouchDNAs.Contains(dna))
-                    continue;
-                text.AppendLine(dna);
-            }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
-            foreach (var residue in component.Residues)
-            {
-                text.AppendLine(residue);
+                text.AppendLine(Loc.GetString("forensic-scanner-interface-cleaning-agents"));
+                foreach (var item in component.CleaningAgents)
+                {
+                    text.AppendLine(item);
+                }
+                text.AppendLine();
             }
 
             _paperSystem.SetContent((printed, paperComp), text.ToString());
@@ -253,10 +245,7 @@ namespace Content.Server.Forensics
 
         private void OnClear(EntityUid uid, ForensicScannerComponent component, ForensicScannerClearMessage args)
         {
-            component.Fingerprints = new();
-            component.Fibers = new();
-            component.TouchDNAs = new();
-            component.SolutionDNAs = new();
+            component.Evidence.Clear();
             component.LastScannedName = string.Empty;
 
             UpdateUserInterface(uid, component);

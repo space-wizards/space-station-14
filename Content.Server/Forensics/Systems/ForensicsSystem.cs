@@ -38,6 +38,7 @@ namespace Content.Server.Forensics
             // The solution entities are spawned on MapInit as well, so we have to wait for that to be able to set the DNA in the bloodstream correctly without ResolveSolution failing
             SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit, after: new[] { typeof(BloodstreamSystem) });
 
+            SubscribeLocalEvent<ForensicsComponent, ComponentStartup>(OnComponentStartup);
             SubscribeLocalEvent<ForensicsComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
@@ -48,6 +49,20 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
         }
 
+        /// <summary>
+        /// Initializes the forensics component for the entity to ensure all possible evidence types
+        /// are present in the dictionary for ease of use.
+        /// </summary>
+        /// <param name="ent">Entity with a forensic component that has just started</param>
+        /// <param name="args">Arguments for the event</param>
+        private void OnComponentStartup(Entity<ForensicsComponent> ent, ref ComponentStartup args)
+        {
+            foreach (var type in Enum.GetValues<ForensicEvidence>())
+            {
+                ent.Comp.Evidence[type] = [];
+            }
+        }
+
         private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionContainerChangedEvent ev)
         {
             var soln = GetSolutionsDNA(ev.Solution);
@@ -56,7 +71,7 @@ namespace Content.Server.Forensics
                 var comp = EnsureComp<ForensicsComponent>(ent.Owner);
                 foreach (string dna in soln)
                 {
-                    comp.DNAs.Add(dna);
+                    comp.Evidence[ForensicEvidence.DNAs].Add(dna);
                 }
             }
         }
@@ -94,7 +109,7 @@ namespace Content.Server.Forensics
             foreach (EntityUid part in args.GibbedParts)
             {
                 var partComp = EnsureComp<ForensicsComponent>(part);
-                partComp.DNAs.Add(dna);
+                partComp.Evidence[ForensicEvidence.DNAs].Add(dna);
                 partComp.CanDnaBeCleaned = false;
             }
         }
@@ -108,7 +123,7 @@ namespace Content.Server.Forensics
                 foreach (EntityUid hitEntity in args.HitEntities)
                 {
                     if (TryComp<DnaComponent>(hitEntity, out var hitEntityComp) && hitEntityComp.DNA != null)
-                        component.DNAs.Add(hitEntityComp.DNA);
+                        component.Evidence[ForensicEvidence.DNAs].Add(hitEntityComp.DNA);
                 }
             }
         }
@@ -125,25 +140,7 @@ namespace Content.Server.Forensics
         public void CopyForensicsFrom(ForensicsComponent src, EntityUid target)
         {
             var dest = EnsureComp<ForensicsComponent>(target);
-            foreach (var dna in src.DNAs)
-            {
-                dest.DNAs.Add(dna);
-            }
-
-            foreach (var fiber in src.Fibers)
-            {
-                dest.Fibers.Add(fiber);
-            }
-
-            foreach (var print in src.Fingerprints)
-            {
-                dest.Fingerprints.Add(print);
-            }
-
-            foreach (var residue in src.Residues)
-            {
-                dest.Residues.Add(residue);
-            }
+            dest.Evidence = src.Evidence;
         }
 
         public List<string> GetSolutionsDNA(EntityUid uid)
@@ -219,8 +216,8 @@ namespace Content.Server.Forensics
                 return false;
             }
 
-            var totalPrintsAndFibers = forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count;
-            var hasRemovableDNA = forensicsComp.DNAs.Count > 0 && forensicsComp.CanDnaBeCleaned;
+            var totalPrintsAndFibers = forensicsComp.Evidence[ForensicEvidence.Fingerprints].Count + forensicsComp.Evidence[ForensicEvidence.Fibers].Count;
+            var hasRemovableDNA = forensicsComp.Evidence[ForensicEvidence.DNAs].Count > 0 && forensicsComp.CanDnaBeCleaned;
 
             if (hasRemovableDNA || totalPrintsAndFibers > 0)
             {
@@ -256,18 +253,18 @@ namespace Content.Server.Forensics
             if (!TryComp<ForensicsComponent>(args.Target, out var targetComp))
                 return;
 
-            targetComp.Fibers = new();
-            targetComp.Fingerprints = new();
+            targetComp.Evidence[ForensicEvidence.Fibers].Clear();
+            targetComp.Evidence[ForensicEvidence.Fingerprints].Clear();
 
             if (targetComp.CanDnaBeCleaned)
-                targetComp.DNAs = new();
+                targetComp.Evidence[ForensicEvidence.DNAs].Clear();
 
             // leave behind evidence it was cleaned
             if (TryComp<FiberComponent>(args.Used, out var fiber))
-                targetComp.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
+                targetComp.Evidence[ForensicEvidence.Fibers].Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
 
             if (TryComp<ResidueComponent>(args.Used, out var residue))
-                targetComp.Residues.Add(string.IsNullOrEmpty(residue.ResidueColor) ? Loc.GetString("forensic-residue", ("adjective", residue.ResidueAdjective)) : Loc.GetString("forensic-residue-colored", ("color", residue.ResidueColor), ("adjective", residue.ResidueAdjective)));
+                targetComp.CleaningAgents.Add(string.IsNullOrEmpty(residue.ResidueColor) ? Loc.GetString("forensic-residue", ("adjective", residue.ResidueAdjective)) : Loc.GetString("forensic-residue-colored", ("color", residue.ResidueColor), ("adjective", residue.ResidueAdjective)));
         }
 
         public string GenerateFingerprint()
@@ -299,11 +296,11 @@ namespace Content.Server.Forensics
             if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves))
             {
                 if (TryComp<FiberComponent>(gloves, out var fiber) && !string.IsNullOrEmpty(fiber.FiberMaterial))
-                    component.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
+                    component.Evidence[ForensicEvidence.Fibers].Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
             }
 
             if (TryComp<FingerprintComponent>(user, out var fingerprint) && CanAccessFingerprint(user, out _))
-                component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
+                component.Evidence[ForensicEvidence.Fingerprints].Add(fingerprint.Fingerprint ?? "");
         }
 
         private void OnTransferDnaEvent(EntityUid uid, DnaComponent component, ref TransferDnaEvent args)
@@ -312,7 +309,7 @@ namespace Content.Server.Forensics
                 return;
 
             var recipientComp = EnsureComp<ForensicsComponent>(args.Recipient);
-            recipientComp.DNAs.Add(component.DNA);
+            recipientComp.Evidence[ForensicEvidence.DNAs].Add(component.DNA);
             recipientComp.CanDnaBeCleaned = args.CanDnaBeCleaned;
         }
 
@@ -358,7 +355,7 @@ namespace Content.Server.Forensics
             if (TryComp<DnaComponent>(donor, out var donorComp) && donorComp.DNA != null)
             {
                 EnsureComp<ForensicsComponent>(recipient, out var recipientComp);
-                recipientComp.DNAs.Add(donorComp.DNA);
+                recipientComp.Evidence[ForensicEvidence.DNAs].Add(donorComp.DNA);
                 recipientComp.CanDnaBeCleaned = canDnaBeCleaned;
             }
         }

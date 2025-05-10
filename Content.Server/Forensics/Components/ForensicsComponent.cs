@@ -1,19 +1,18 @@
+using Content.Shared.Forensics;
+
 namespace Content.Server.Forensics
 {
     [RegisterComponent]
     public sealed partial class ForensicsComponent : Component
     {
-        [DataField("fingerprints")]
-        public HashSet<string> Fingerprints = new();
+        [DataField]
+        public Dictionary<ForensicEvidence, HashSet<string>> Evidence = [];
 
-        [DataField("fibers")]
-        public HashSet<string> Fibers = new();
-
-        [DataField("dnas")]
-        public HashSet<string> DNAs = new();
-
-        [DataField("residues")]
-        public HashSet<string> Residues = new();
+        /// <summary>
+        /// List of cleaning agents found on the entity, separate from actual evidence
+        /// </summary>
+        [DataField]
+        public List<string> CleaningAgents = [];
 
         /// <summary>
         /// How close you must be to wipe the prints/blood/etc. off of this entity
