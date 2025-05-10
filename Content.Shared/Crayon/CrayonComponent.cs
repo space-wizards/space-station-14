@@ -1,3 +1,4 @@
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -7,19 +8,65 @@ namespace Content.Shared.Crayon
     /// <summary>
     /// Component holding the state of a crayon-like component
     /// </summary>
-    [NetworkedComponent, ComponentProtoName("Crayon"), Access(typeof(SharedCrayonSystem))]
-    public abstract partial class SharedCrayonComponent : Component
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+    public sealed partial class CrayonComponent : Component
     {
-        /// <summary>
-        /// The ID of currently selected decal prototype that will be placed when the crayon is used
-        /// </summary>
-        public string SelectedState { get; set; } = string.Empty;
-
         /// <summary>
         /// Color with which the crayon will draw
         /// </summary>
-        [DataField("color")]
+        [DataField, AutoNetworkedField]
         public Color Color;
+
+        /// <summary>
+        /// The ID of currently selected decal prototype that will be placed when the crayon is used
+        /// </summary>
+        [ViewVariables, AutoNetworkedField]
+        public string State;
+
+        /// <summary>
+        /// The amount of times the crayon can used to draw.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public int Charges;
+
+        /// <summary>
+        /// The total starting charges for the crayon.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public int Capacity = 30;
+
+        /// <summary>
+        /// The stored rotation for this crayon's decal, in degrees.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public float Rotation;
+
+        /// <summary>
+        /// The active/unactive status of the preview mode overlay for this crayon.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool PreviewMode;
+
+        /// <summary>
+        /// The sound to play when drawing with the crayon.
+        /// </summary>
+        [DataField]
+        public SoundSpecifier? UseSound;
+
+        /// <summary>
+        /// Can this crayon select its color? e.g. rainbow crayon
+        /// </summary>
+        [DataField]
+        public bool SelectableColor { get; set; }
+
+        /// <summary>
+        /// Does this crayon get deleted when the charges are used up?
+        /// </summary>
+        [DataField]
+        public bool DeleteEmpty = true;
+
+        [ViewVariables]
+        public bool UIUpdateNeeded;
 
         [Serializable, NetSerializable]
         public enum CrayonUiKey : byte
@@ -70,24 +117,25 @@ namespace Content.Shared.Crayon
         }
     }
 
+    /// <summary>
+    /// Client to server message. The user has updated the rotation in the UI,
+    /// and the component needs to be updated.
+    /// </summary>
     [Serializable, NetSerializable]
-    public sealed class CrayonRotationMessage : BoundUserInterfaceMessage
+    public sealed class CrayonRotationMessage(float rotation) : BoundUserInterfaceMessage
     {
-        public readonly float Rotation;
-        public CrayonRotationMessage(float rotation)
-        {
-            Rotation = rotation;
-        }
+        public float Rotation { get; } = rotation;
     }
 
+
+    /// <summary>
+    /// Client to server message. The user has toggled the preview mode
+    /// in the UI, and the component needs to be updated.
+    /// </summary>
     [Serializable, NetSerializable]
-    public sealed class CrayonPreviewModeMessage : BoundUserInterfaceMessage
+    public sealed class CrayonPreviewModeMessage(bool previewMode) : BoundUserInterfaceMessage
     {
-        public readonly bool PreviewMode;
-        public CrayonPreviewModeMessage(bool previewMode)
-        {
-            PreviewMode = previewMode;
-        }
+        public bool PreviewMode { get; } = previewMode;
     }
 
     [Serializable, NetSerializable]
@@ -95,30 +143,6 @@ namespace Content.Shared.Crayon
     {
         State,
         Color
-    }
-
-    /// <summary>
-    /// Component state, describes how many charges are left in the crayon in the near-hand UI
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class CrayonComponentState : ComponentState
-    {
-        public readonly Color Color;
-        public readonly string State;
-        public readonly int Charges;
-        public readonly int Capacity;
-        public readonly float Rotation;
-        public readonly bool PreviewMode;
-
-        public CrayonComponentState(Color color, string state, int charges, int capacity, float rotation, bool previewMode)
-        {
-            Color = color;
-            State = state;
-            Charges = charges;
-            Capacity = capacity;
-            Rotation = rotation;
-            PreviewMode = previewMode;
-        }
     }
 
     /// <summary>
