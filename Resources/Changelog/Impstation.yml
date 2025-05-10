@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pivotbash
-  changes:
-  - message: Sec Spaceblade now costs 1 Utility Token. Whoops!
-    type: Fix
-  id: 1138
-  time: '2025-02-16T12:20:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1703
 - author: mqole
   changes:
   - message: Dolby can now spawn as a station pet.
@@ -4172,3 +4165,12 @@
   id: 1637
   time: '2025-05-10T11:38:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2442
+- author: jtfg-dev
+  changes:
+  - message: The cryptographic sequencer has been updated with the latest jukebox-cracker
+      from notorious Syndicate pirate radio DJ D2NT BEATZ, which you may recognize
+      from all the times its sick nasty tunes have heralded your demise.
+    type: Add
+  id: 1638
+  time: '2025-05-10T13:45:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2397
