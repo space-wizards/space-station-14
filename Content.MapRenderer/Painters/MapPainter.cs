@@ -2,19 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.IO;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
 using Content.Server.GameTicking;
-using Content.Server.Maps;
 using Robust.Client.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Map.Events;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
@@ -27,7 +28,6 @@ namespace Content.MapRenderer.Painters
     {
         public static async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint(string map,
             bool mapIsFilename = false,
-            bool mapIsGrid = true,
             bool showMarkers = false)
         {
             var stopwatch = new Stopwatch();
@@ -69,29 +69,78 @@ namespace Content.MapRenderer.Painters
             var entityManager = server.ResolveDependency<IEntityManager>();
             var mapLoader = entityManager.System<MapLoaderSystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
+            var deps = server.ResolveDependency<IEntitySystemManager>().DependencyCollection;
 
             Entity<MapGridComponent>[] grids = [];
 
             if (mapIsFilename)
             {
                 var resPath = new ResPath(map);
-                await server.WaitPost(() =>
+
+                if (!mapLoader.TryReadFile(resPath, out var data))
+                    throw new IOException($"File {map} could not be read");
+
+                var ev = new BeforeEntityReadEvent();
+                server.EntMan.EventBus.RaiseEvent(EventSource.Local, ev);
+
+                var deserializer = new EntityDeserializer(deps,
+                    data,
+                    DeserializationOptions.Default,
+                    ev.RenamedPrototypes,
+                    ev.DeletedPrototypes);
+
+                if (!deserializer.TryProcessData())
                 {
-                    if (mapIsGrid)
+                    throw new IOException($"Failed to process entity data in {map}");
+                }
+
+                if (deserializer.Result.Category == FileCategory.Unknown && deserializer.Result.Version < 7)
+                {
+                    var mapCount = 0;
+                    var gridCount = 0;
+                    foreach (var (entId, ent) in deserializer.YamlEntities)
                     {
-                        if (mapLoader.TryLoadGrid(resPath, out var loadedMaps, out var loadedGrids))
+                        if (ent.Components != null && ent.Components.ContainsKey("MapGrid"))
                         {
-                            grids = [(Entity<MapGridComponent>)loadedGrids];
+                            gridCount++;
+                        }
+                        if (ent.Components != null && ent.Components.ContainsKey("Map"))
+                        {
+                            mapCount++;
                         }
                     }
-                    else
-                    {
-                        if (mapLoader.TryLoadMap(resPath, out var loadedMaps, out var loadedGrids))
+                    if (mapCount == 1)
+                        deserializer.Result.Category = FileCategory.Map;
+                    else if (mapCount == 0 && gridCount == 1)
+                        deserializer.Result.Category = FileCategory.Grid;
+                }
+
+                switch (deserializer.Result.Category)
+                {
+                    case FileCategory.Map:
+                        await server.WaitPost(() =>
                         {
-                            grids = loadedGrids.ToArray();
-                        }
-                    }
-                });
+                            if (mapLoader.TryLoadMap(resPath, out _, out var loadedGrids))
+                            {
+                                grids = loadedGrids.ToArray();
+                            }
+                        });
+                        break;
+
+                    case FileCategory.Grid:
+                        await server.WaitPost(() =>
+                        {
+                            if (mapLoader.TryLoadGrid(resPath, out _, out var loadedGrids))
+                            {
+                                grids = [(Entity<MapGridComponent>)loadedGrids];
+                            }
+                        });
+                        break;
+
+                    default:
+                        throw new IOException($"Unknown category {deserializer.Result.Category}");
+
+                }
             }
 
             await pair.RunTicksSync(10);

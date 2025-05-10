@@ -136,7 +136,6 @@ namespace Content.MapRenderer
                 {
                     await foreach (var renderedGrid in MapPainter.Paint(map,
                                        arguments.ArgumentsAreFileNames,
-                                       arguments.FilesAreGrids,
                                        arguments.ShowMarkers))
                     {
                         var grid = renderedGrid.Image;
