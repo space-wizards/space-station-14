@@ -5,6 +5,7 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Toggleable;
 
 namespace Content.Shared.Atmos.Piping.Binary.Systems;
 
@@ -13,6 +14,7 @@ public abstract class SharedGasVolumePumpSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private readonly ToggleableSystem _toggleableSystem = default!;
 
     public override void Initialize()
     {
@@ -23,6 +25,9 @@ public abstract class SharedGasVolumePumpSystem : EntitySystem
         SubscribeLocalEvent<GasVolumePumpComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpToggleStatusMessage>(OnToggleStatusMessage);
         SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpChangeTransferRateMessage>(OnTransferRateChangeMessage);
+
+        SubscribeLocalEvent<GasVolumePumpComponent, ToggleableDisabledEvent>(OnDeviceToggledOff);
+        SubscribeLocalEvent<GasVolumePumpComponent, ToggleableEnabledEvent>(OnDeviceToggledOn);
     }
 
     private void OnInit(Entity<GasVolumePumpComponent> ent, ref ComponentInit args)
@@ -42,7 +47,7 @@ public abstract class SharedGasVolumePumpSystem : EntitySystem
 
     private void OnToggleStatusMessage(EntityUid uid, GasVolumePumpComponent pump, GasVolumePumpToggleStatusMessage args)
     {
-        pump.Enabled = args.Enabled;
+        _toggleableSystem.SetEnabled(uid, args.Enabled);
         _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
             $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
 
@@ -80,12 +85,24 @@ public abstract class SharedGasVolumePumpSystem : EntitySystem
         if (!Resolve(uid, ref pump, ref appearance, false))
             return;
 
-        bool pumpOn = pump.Enabled && _receiver.IsPowered(uid);
+        bool pumpOn = _toggleableSystem.IsEnabled(uid) && _receiver.IsPowered(uid);
         if (!pumpOn)
             _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.Off, appearance);
         else if (pump.Blocked)
             _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.Blocked, appearance);
         else
             _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.On, appearance);
+    }
+
+    private void OnDeviceToggledOff(Entity<GasVolumePumpComponent> entity, ref ToggleableDisabledEvent args)
+    {
+        Dirty(entity.Owner, entity.Comp);
+        UpdateAppearance(entity.Owner, entity.Comp);
+    }
+
+    private void OnDeviceToggledOn(Entity<GasVolumePumpComponent> entity, ref ToggleableEnabledEvent args)
+    {
+        Dirty(entity.Owner, entity.Comp);
+        UpdateAppearance(entity.Owner, entity.Comp);
     }
 }

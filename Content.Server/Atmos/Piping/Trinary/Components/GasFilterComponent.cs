@@ -1,13 +1,12 @@
+using Content.Server.Atmos.Piping.Trinary.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Toggleable;
 
 namespace Content.Server.Atmos.Piping.Trinary.Components
 {
     [RegisterComponent]
     public sealed partial class GasFilterComponent : Component
     {
-        [DataField]
-        public bool Enabled = true;
-
         [DataField("inlet")]
         public string InletName = "inlet";
 

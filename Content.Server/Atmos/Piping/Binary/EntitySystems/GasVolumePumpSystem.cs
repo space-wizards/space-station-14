@@ -14,6 +14,7 @@ using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Toggleable;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -25,6 +26,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
+        [Dependency] private readonly ToggleableSystem _toggleableSystem = default!;
 
         public override void Initialize()
         {
@@ -38,7 +40,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnVolumePumpUpdated(EntityUid uid, GasVolumePumpComponent pump, ref AtmosDeviceUpdateEvent args)
         {
-            if (!pump.Enabled ||
+            if (!_toggleableSystem.IsEnabled(uid) ||
                 (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered) ||
                 !_nodeContainer.TryGetNodes(uid, pump.InletName, pump.OutletName, out PipeNode? inlet, out PipeNode? outlet))
             {
@@ -92,9 +94,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnVolumePumpLeaveAtmosphere(EntityUid uid, GasVolumePumpComponent pump, ref AtmosDeviceDisabledEvent args)
         {
-            pump.Enabled = false;
-            Dirty(uid, pump);
-            UpdateAppearance(uid, pump);
+            _toggleableSystem.SetEnabled(uid, false, out _);
             _userInterfaceSystem.CloseUi(uid, GasVolumePumpUiKey.Key);
         }
 

@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Localizations;
+using Content.Shared.Toggleable;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
@@ -60,8 +61,10 @@ namespace Content.Client.Atmos.UI
             if (_window is null || !EntMan.TryGetComponent(Owner, out GasVolumePumpComponent? pump))
                 return;
 
+            EntMan.TryGetComponent(Owner, out ToggleableComponent? toggleableComponent);
+
             _window.Title = Identity.Name(Owner, EntMan);
-            _window.SetPumpStatus(pump.Enabled);
+            _window.SetPumpStatus(toggleableComponent != null ? toggleableComponent.Enabled : true);
             _window.SetTransferRate(pump.TransferRate);
         }
     }

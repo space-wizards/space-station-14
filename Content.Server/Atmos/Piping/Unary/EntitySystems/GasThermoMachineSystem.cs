@@ -18,6 +18,8 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Toggleable;
+using Content.Shared.Atmos.Visuals;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -30,6 +32,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly ToggleableSystem _toggleableSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -45,6 +49,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             // Device network
             SubscribeLocalEvent<GasThermoMachineComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
+
+            //
+            SubscribeLocalEvent<GasThermoMachineComponent, ToggleableDisabledEvent>(OnDeviceToggledOff);
+            SubscribeLocalEvent<GasThermoMachineComponent, ToggleableEnabledEvent>(OnDeviceToggledOn);
         }
 
         private void OnBeforeOpened(Entity<GasThermoMachineComponent> ent, ref BeforeActivatableUIOpenEvent args)
@@ -55,7 +63,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, ref AtmosDeviceUpdateEvent args)
         {
             thermoMachine.LastEnergyDelta = 0f;
-            if (!(_power.IsPowered(uid) && TryComp<ApcPowerReceiverComponent>(uid, out var receiver)))
+            if (!_toggleableSystem.IsEnabled(uid) || !(_power.IsPowered(uid) && TryComp<ApcPowerReceiverComponent>(uid, out var receiver)))
                 return;
 
             GetHeatExchangeGasMixture(uid, thermoMachine, out var heatExchangeGasMixture);
@@ -142,8 +150,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnToggleMessage(EntityUid uid, GasThermoMachineComponent thermoMachine, GasThermomachineToggleMessage args)
         {
-            var powerState = _power.TogglePower(uid);
-            _adminLogger.Add(LogType.AtmosPowerChanged, $"{ToPrettyString(args.Actor)} turned {(powerState ? "On" : "Off")} {ToPrettyString(uid)}");
+            if (!_toggleableSystem.Toggle(uid, out var toggleableComponent))
+                return;
+
+            _adminLogger.Add(LogType.AtmosPowerChanged, $"{ToPrettyString(args.Actor)} turned {(toggleableComponent.Enabled ? "On" : "Off")} {ToPrettyString(uid)}");
             DirtyUI(uid, thermoMachine);
         }
 
@@ -158,17 +168,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             DirtyUI(uid, thermoMachine);
         }
 
-        private void DirtyUI(EntityUid uid, GasThermoMachineComponent? thermoMachine, UserInterfaceComponent? ui=null)
+        private void DirtyUI(EntityUid uid, GasThermoMachineComponent? thermoMachine, UserInterfaceComponent? ui = null)
         {
             if (!Resolve(uid, ref thermoMachine, ref ui, false))
                 return;
 
-            ApcPowerReceiverComponent? powerReceiver = null;
-            if (!Resolve(uid, ref powerReceiver))
-                return;
-
             _userInterfaceSystem.SetUiState(uid, ThermomachineUiKey.Key,
-                new GasThermomachineBoundUserInterfaceState(thermoMachine.MinTemperature, thermoMachine.MaxTemperature, thermoMachine.TargetTemperature, !powerReceiver.PowerDisabled, IsHeater(thermoMachine)));
+                new GasThermomachineBoundUserInterfaceState(thermoMachine.MinTemperature, thermoMachine.MaxTemperature, thermoMachine.TargetTemperature, _toggleableSystem.IsEnabled(uid), IsHeater(thermoMachine)));
         }
 
         private void OnExamined(EntityUid uid, GasThermoMachineComponent thermoMachine, ExaminedEvent args)
@@ -179,7 +185,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (Loc.TryGetString("gas-thermomachine-system-examined", out var str,
                         ("machineName", !IsHeater(thermoMachine) ? "freezer" : "heater"),
                         ("tempColor", !IsHeater(thermoMachine) ? "deepskyblue" : "red"),
-                        ("temp", Math.Round(thermoMachine.TargetTemperature,2))
+                        ("temp", Math.Round(thermoMachine.TargetTemperature, 2))
                ))
 
                 args.PushMarkup(str);
@@ -203,6 +209,27 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
                     return;
             }
+        }
+
+        private void UpdateAppearance(Entity<GasThermoMachineComponent, AppearanceComponent?> ent)
+        {
+            if (!Resolve(ent, ref ent.Comp2, false))
+                return;
+
+            var thermoOn = _toggleableSystem.IsEnabled(ent.Owner) && _power.IsPowered(ent.Owner);
+            _appearance.SetData(ent, ThermomachineVisuals.Enabled, thermoOn, ent.Comp2);
+        }
+
+        private void OnDeviceToggledOff(Entity<GasThermoMachineComponent> entity, ref ToggleableDisabledEvent args)
+        {
+            DirtyUI(entity.Owner, entity.Comp);
+            UpdateAppearance(entity);
+        }
+
+        private void OnDeviceToggledOn(Entity<GasThermoMachineComponent> entity, ref ToggleableEnabledEvent args)
+        {
+            DirtyUI(entity.Owner, entity.Comp);
+            UpdateAppearance(entity);
         }
     }
 }
