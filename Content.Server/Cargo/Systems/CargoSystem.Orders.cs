@@ -99,10 +99,10 @@ namespace Content.Server.Cargo.Systems
             {
                 OnInteractUsingCash(uid, component, ref args);
             }
-            else if (TryComp<CargoSlipComponent>(args.Used, out var slip) && !component.SlipPrinter)
-            {
-                OnInteractUsingSlip((uid, component), ref args, slip);
-            }
+            // else if (TryComp<CargoSlipComponent>(args.Used, out var slip) && !component.SlipPrinter)
+            // {
+            //     OnInteractUsingSlip((uid, component), ref args, slip);
+            // }
         }
 
         private void OnInit(EntityUid uid, CargoOrderConsoleComponent orderConsole, ComponentInit args)
@@ -143,8 +143,8 @@ namespace Content.Server.Cargo.Systems
             if (args.Actor is not { Valid: true } player)
                 return;
 
-            if (component.SlipPrinter)
-                return;
+            // if (component.SlipPrinter)
+            //     return;
 
             if (!_accessReaderSystem.IsAllowed(player, uid))
             {
@@ -311,8 +311,8 @@ namespace Content.Server.Cargo.Systems
         {
             var station = _station.GetOwningStation(uid);
 
-            if (component.SlipPrinter)
-                return;
+            // if (component.SlipPrinter)
+            //     return;
 
             if (!TryGetOrderDatabase(station, out var orderDatabase))
                 return;
@@ -375,11 +375,11 @@ namespace Content.Server.Cargo.Systems
             if (!component.AllowedGroups.Contains(product.Group))
                 return;
 
-            if (component.SlipPrinter)
-            {
-                OnAddOrderMessageSlipPrinter(uid, component, args, product);
-                return;
-            }
+            // if (component.SlipPrinter)
+            // {
+            //     OnAddOrderMessageSlipPrinter(uid, component, args, product);
+            //     return;
+            // }
 
             var data = GetOrderData(args, product, GenerateOrderId(orderDatabase), component.Account);
 
