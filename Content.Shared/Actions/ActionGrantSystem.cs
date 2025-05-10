@@ -1,3 +1,5 @@
+using  Content.Shared.Inventory;
+
 namespace Content.Shared.Actions;
 
 /// <summary>
