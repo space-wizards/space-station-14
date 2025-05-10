@@ -51,10 +51,8 @@ public sealed class BeingUnequippedAttemptEvent : UnequipAttemptEventBase
     }
 }
 
-public sealed class IsUnequippingAttemptEvent : UnequipAttemptEventBase, IInventoryRelayEvent
+public sealed class IsUnequippingAttemptEvent : UnequipAttemptEventBase
 {
-    public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
-
     public IsUnequippingAttemptEvent(EntityUid unequipee, EntityUid unEquipTarget, EntityUid equipment,
         SlotDefinition slotDefinition) : base(unequipee, unEquipTarget, equipment, slotDefinition)
     {
