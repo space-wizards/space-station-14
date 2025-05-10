@@ -24,7 +24,7 @@ marking-WhipSpiderMouth-whipspidermouth = Chelicerae
 # Eyes
 
 marking-ArachnidEyesDefault = Eyes
-marking-ArachnidEyesDefault-eyes = Eyes
+marking-ArachnidEyesDefault-eyes = Eyes (Default)
 
 marking-ArachnidEyesJumper = Jumper Eyes
 marking-ArachnidEyesJumper-jumper1 = Outer Right

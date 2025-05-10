@@ -11,6 +11,10 @@
       "name": "full"
     },
     {
+      "name": "eyes",
+      "directions": 4
+    },
+    {
       "name": "head_f",
       "directions": 4
     },
