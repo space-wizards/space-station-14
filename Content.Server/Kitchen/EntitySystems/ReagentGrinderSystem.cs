@@ -125,8 +125,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         if (solution.Volume > containerSolution.AvailableVolume)
                             continue;
 
-                        if(!_destructible.DestroyEntity(item))
-                            continue;
+                        _destructible.DestroyEntity(item);
                     }
 
                     _solutionContainersSystem.TryAddSolution(containerSoln.Value, solution);
