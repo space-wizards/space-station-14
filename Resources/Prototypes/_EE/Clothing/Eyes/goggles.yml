@@ -4,7 +4,7 @@
   parent: ClothingEyesBase
   id: ClothingEyesNightVisionGoggles
   name: night vision goggles
-  description: An advanced heads-up display which provides id data and vision in complete darkness.
+  description: An advanced heads-up display which provides id data and vision in complete darkness. There's no room for lenses inside.
   components:
   - type: Sprite
     sprite: _EE/Clothing/Eyes/Goggles/nightvision.rsi
@@ -72,7 +72,7 @@
   parent: ClothingEyesBase
   id: ClothingEyesThermalVisionGoggles
   name: thermal vision goggles
-  description: Thermals in the shape of glasses.
+  description: Thermals in the shape of glasses. There's no room for lenses inside.
   components:
   - type: Sprite
     sprite: _EE/Clothing/Eyes/Goggles/thermal.rsi

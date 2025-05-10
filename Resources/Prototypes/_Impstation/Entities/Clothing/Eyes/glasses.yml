@@ -114,7 +114,7 @@
     sprite: _Impstation/Clothing/Eyes/Glasses/colorfulglasses/yellow.rsi
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
   id: ClothingEyesGlassesGarMecha
   name: mecha gar glasses
   description: Believe in me! Believe in the me who believes in you!
