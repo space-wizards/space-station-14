@@ -27,6 +27,8 @@
       tableId: RandomSatchelTable5
     - !type:NestedSelector
       tableId: RandomSatchelTable6
+    - !type:NestedSelector
+      tableId: RandomSatchelTable7
 
   #number after each group indicates potential max inventory fill. If all combined fills are too high, it could result in an over-filled bag/error.
 - type: entityTable
@@ -46,7 +48,7 @@
     - !type:NestedSelector
       tableId: RandomSatchelChemsTable #5x tiny
 
-- type: entityTable
+- type: entityTable #5x tiny
   id: RandomSatchelFunnyTable
   table: !type:GroupSelector
     children:
@@ -674,3 +676,99 @@
     - id: AbominationCube
       amount: !type:RangeNumberSelector
         range: 1, 10
+
+- type: entityTable #Pirates & Freelancers
+  id: RandomSatchelTable7
+  table: !type:AllSelector #Shit is packed. GearTable first because it causes potential fill issues otherwise.
+    children:
+    - !type:NestedSelector
+      tableId: RandomSatchelPirateGearTable #1x Huge
+    - !type:NestedSelector
+      tableId: RandomSatchelPirateWeaponsTable #1x Small (1x1x1 OR 1x3)
+    - !type:NestedSelector
+      tableId: RandomSatchelFreelancerTable #2x Small
+    - !type:NestedSelector
+      tableId: RandomSatchelPirateClothingTable #1x Medium
+    - !type:NestedSelector
+      tableId: RandomSatchelBootyTable #1x Medium
+
+- type: entityTable #1x Huge
+  id: RandomSatchelPirateGearTable
+  table: !type:GroupSelector
+    children:
+    - id: JetpackBlackFilled
+    - id: ClothingOuterCoatPirate
+    - id: ClothingOuterHardsuitPirateEVA
+    - id: ClothingOuterHardsuitPirateCap
+      weight: 0.5
+
+- type: entityTable #1x Small (1x1x1 OR 1x3)
+  id: RandomSatchelPirateWeaponsTable
+  table: !type:GroupSelector
+    children:
+    - id: Cutlass
+    - id: WeaponRevolverPirateEmpty
+    - id: WeaponPistolFlintlock
+    - id: WeaponRevolverPirate
+      weight: 0.5
+    - id: EnergyCutlass
+      weight: 0.1
+
+- type: entityTable #2x Small
+  id: RandomSatchelFreelancerTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash500
+      weight: 8
+    - id: HandheldGPSBasic
+    - id: HandheldMassScanner
+    - id: ClothingHeadsetAltFreelancer
+      amount: !type:ConstantNumberSelector
+        value: 2
+
+- type: entityTable #1x Medium
+  id: RandomSatchelPirateClothingTable
+  table: !type:GroupSelector
+    children:
+    - id: PirateHandyFlag
+    - id: ClothingHeadHatPirate
+    - id: ClothingHeadHatPirateTricord
+    - id: ClothingUniformJumpsuitPirate
+    - id: ClothingNeckCloakPirateCap
+      weight: 0.5
+
+- type: entityTable #1x Medium
+  id: RandomSatchelBootyTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash1000
+      weight: 20
+    - !type:GroupSelector
+    - id: TreasureCoinSilver
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: TreasureCoinGold
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: TreasureCoinDiamond
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - !type:GroupSelector
+      children:
+      - id: MaterialDiamond1
+      - id: IngotGold1
+        weight: 2
+      - id: IngotGold
+      - id: IngotSilver1
+        weight: 2
+      - id: IngotSilver
+    - !type:GroupSelector
+      children:
+      - id: SilverRing
+      - id: SilverRingDiamond
+      - id: SilverRingGem
+    - !type:GroupSelector
+      children:
+      - id: GoldRing
+      - id: GoldRingDiamond
+      - id: GoldRingGem
