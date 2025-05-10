@@ -1,0 +1,48 @@
+﻿uniform highp float percentComplete;
+
+void fragment() {
+    // Ghost textures separate over time in reduced motion
+    highp float separation = percentComplete*0.01;
+    // Reduce spin speed by ten in reduced motion
+    highp float spinSpeed = 0.1;
+	// The return fade must be much sharper on reduced motion as
+	//   it is much easier to see black fading back in rather than
+	//   ghost textures fading back in
+	highp float fadeFalloffExp = 40.0;
+
+    // Higher exponent -> stronger blinding effect
+    highp float remaining = -pow(percentComplete, fadeFalloffExp) + 1.0;
+
+    // Two ghost textures that spin around the character
+    highp vec4 tex1 = zTexture(vec2(
+        UV.x + (2.0*separation) * sin(TIME * 3.0 * spinSpeed),
+        UV.y + (2.0*separation) * cos(TIME * 3.0 * spinSpeed)
+    ));
+    highp vec4 tex2 = zTexture(vec2(
+        UV.x + (separation) * sin(TIME * 2.0 * spinSpeed),
+        UV.y + (separation) * cos(TIME * 2.0 * spinSpeed)
+    ));
+
+    highp vec4 textureMix = mix(tex1, tex2, 0.5);
+
+    // Generate a circle mask
+    highp vec2 aspect = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
+    highp float circle = zCircleGradient(
+        aspect,
+        FRAGCOORD.xy,
+        8.0, // maxi
+        (-remaining+1.0)*98.0 + 2.0, // radius
+        10.0, // dist
+        0.5 // power
+        ) * 0.5;
+
+    // Clamp the mask
+    highp float circle_clamp = clamp(circle, 0.0, 1.0);
+
+    // This represents the outer "side" of the mask, it should display the ghost images
+    highp vec3 outer = textureMix.rgb*circle_clamp;
+
+    // Put it all together
+    COLOR.rgb = outer;
+    COLOR.a = circle_clamp + (remaining * (1 - circle_clamp));
+}

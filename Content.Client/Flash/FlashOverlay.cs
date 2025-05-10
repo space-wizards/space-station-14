@@ -23,16 +23,34 @@ namespace Content.Client.Flash
         private readonly StatusEffectsSystem _statusSys;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
-        private readonly ShaderInstance _shader;
+        private ShaderInstance _shader;
         public float PercentComplete = 0.0f;
         public Texture? ScreenshotTexture;
+
+        [ValidatePrototypeId<ShaderPrototype>]
+        private const string FlashedEffect = "FlashedEffect";
+        [ValidatePrototypeId<ShaderPrototype>]
+        private const string FlashedEffectReducedMotion = "FlashedEffectReducedMotion";
+
 
         public FlashOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").InstanceUnique();
+            // Default to the normal flashed effect so that _shader can be initialized in the constructor
+            // and does not need to be nullable
+            _shader = _prototypeManager.Index<ShaderPrototype>(FlashedEffect).InstanceUnique();
+
+            // Set the shader according to the CVar when it is changed and also now.
+            _configManager.OnValueChanged(CCVars.ReducedMotion, OnReducedMotionChanged, invokeImmediately: true);
+
             _flash = _entityManager.System<SharedFlashSystem>();
             _statusSys = _entityManager.System<StatusEffectsSystem>();
+        }
+
+        private void OnReducedMotionChanged(bool reducedMotion)
+        {
+            var effectName = reducedMotion ? FlashedEffectReducedMotion : FlashedEffect;
+            _shader = _prototypeManager.Index<ShaderPrototype>(effectName).InstanceUnique();
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -77,7 +95,6 @@ namespace Content.Client.Flash
                 return;
 
             var worldHandle = args.WorldHandle;
-            _shader.SetParameter("reduceMotion", _configManager.GetCVar(CCVars.ReducedMotion));
             _shader.SetParameter("percentComplete", PercentComplete);
             worldHandle.UseShader(_shader);
             worldHandle.DrawTextureRectRegion(ScreenshotTexture, args.WorldBounds);
