@@ -2740,10 +2740,9 @@
     growthDelay: 20
   - type: ExaminableHunger
   - type: Wooly
-  - type: Food
+  - type: Food # Wooly prevents eating wool deleting the goat so its fine
     solution: wool
     requiresSpecialDigestion: true
-    # Wooly prevents eating wool deleting the goat so its fine
     requireDead: false
   - type: FlavorProfile
     flavors:
