@@ -393,7 +393,7 @@ public abstract class SharedMagicSystem : EntitySystem
         if (!TryComp<BodyComponent>(ev.Target, out var body))
             return;
 
-        _body.GibBody(ev.Target, true, body);
+        _body.GibBody(ev.Target, true, body: body);
     }
 
     // End Touch Spells
