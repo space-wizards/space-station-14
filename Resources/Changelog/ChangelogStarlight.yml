@@ -5722,4 +5722,11 @@ Entries:
   id: 793
   time: '2025-05-10T05:02:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/600
+- author: Happyrobot33
+  changes:
+  - message: Fixed issue with collective mind ID selection.
+    type: Fix
+  id: 794
+  time: '2025-05-10T07:04:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/610
 
