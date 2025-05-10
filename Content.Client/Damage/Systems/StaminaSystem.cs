@@ -1,6 +1,8 @@
 ﻿using Content.Client.Stunnable;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Stunnable;
 using Robust.Client.GameObjects;
 
@@ -21,6 +23,7 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
         SubscribeLocalEvent<ActiveStaminaComponent, ComponentShutdown>(OnActiveStaminaShutdown);
         SubscribeLocalEvent<StaminaComponent, StunSystem.StunAnimationEvent>(OnStunAnimation);
         SubscribeLocalEvent<StaminaComponent, StunSystem.StunAnimationEndEvent>(OnStunAnimationEnd);
+        SubscribeLocalEvent<StaminaComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
     protected override void UpdateStaminaVisuals(Entity<StaminaComponent> entity)
@@ -51,6 +54,12 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
         StopAnimation(entity);
     }
 
+    private void OnMobStateChanged(Entity<StaminaComponent> ent, ref MobStateChangedEvent args)
+    {
+        if (args.NewMobState == MobState.Dead)
+            StopAnimation(ent);
+    }
+
     private void TryStartAnimation(Entity<StaminaComponent> entity)
     {
         if (!TryComp<SpriteComponent>(entity, out var sprite))
@@ -60,6 +69,10 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
         // If we're below the threshold to animate, don't try to animate
         // If we're in stamcrit don't override it
         if (entity.Comp.AnimationThreshold > entity.Comp.StaminaDamage || _animation.HasRunningAnimation(entity, StaminaAnimationKey))
+            return;
+
+        // Don't animate if we're dead
+        if (TryComp<MobStateComponent>(entity, out var state) && state.CurrentState == MobState.Dead)
             return;
 
         entity.Comp.StartOffset = sprite.Offset;

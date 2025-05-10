@@ -1,4 +1,6 @@
 ﻿using System.Numerics;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Stunnable;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -22,6 +24,7 @@ namespace Content.Client.Stunnable
             base.Initialize();
 
             SubscribeLocalEvent<StunnedComponent, AnimationCompletedEvent>(OnAnimationCompleted);
+            SubscribeLocalEvent<StunnedComponent, MobStateChangedEvent>(OnMobStateChanged);
         }
 
         /// <summary>
@@ -35,6 +38,10 @@ namespace Content.Client.Stunnable
                 return;
 
             if (_animation.HasRunningAnimation(ent, StunnedAnimationKeyVector) || _animation.HasRunningAnimation(ent, StunnedAnimationKeyRotation))
+                return;
+
+            // Don't animate if we're dead
+            if (TryComp<MobStateComponent>(ent, out var state) && state.CurrentState == MobState.Dead)
                 return;
 
             var newTime = _timing.CurTime + time;
@@ -57,18 +64,20 @@ namespace Content.Client.Stunnable
             if (!_timing.IsFirstTimePredicted)
                 return;
 
-            var ev = new StunAnimationEndEvent();
-            RaiseLocalEvent(ent, ref ev);
-
-            if (!TryComp<AnimationPlayerComponent>(ent, out var animation))
+            if (!HasComp<AnimationPlayerComponent>(ent))
                 return;
 
             // Standing system should handle the angle offset so we don't need to update that
             if (TryComp(ent, out SpriteComponent? sprite))
                 sprite.Offset = ent.Comp.StartOffset;
 
-            _animation.Stop(ent.Owner, animation, StunnedAnimationKeyVector);
-            _animation.Stop(ent.Owner, animation, StunnedAnimationKeyRotation);
+            StopStunnedAnimation(ent);
+        }
+
+        private void OnMobStateChanged(Entity<StunnedComponent> ent, ref MobStateChangedEvent args)
+        {
+            if (args.NewMobState == MobState.Dead)
+                StopStunnedAnimation(ent);
         }
 
         private void OnAnimationCompleted(Entity<StunnedComponent> ent, ref AnimationCompletedEvent args)
@@ -127,10 +136,19 @@ namespace Content.Client.Stunnable
 
             _animation.Play(ent.Owner,
                 GetTwitchAnimation(sprite,
-                ent.Comp.RotationFrequency,
-                (ent.Comp.Torque/4, ent.Comp.Torque),
-                ent.Comp.StartAngle),
+                    ent.Comp.RotationFrequency,
+                    (ent.Comp.Torque/4, ent.Comp.Torque),
+                    ent.Comp.StartAngle),
                 StunnedAnimationKeyRotation);
+        }
+
+        private void StopStunnedAnimation(Entity<StunnedComponent> ent)
+        {
+            var ev = new StunAnimationEndEvent();
+            RaiseLocalEvent(ent, ref ev);
+
+            _animation.Stop(ent.Owner, StunnedAnimationKeyVector);
+            _animation.Stop(ent.Owner, StunnedAnimationKeyRotation);
         }
 
         public Animation GetTwitchAnimation(SpriteComponent sprite,
