@@ -13,7 +13,7 @@
     - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Animals/bear.rsi
+    sprite: Mobs/Space/bear.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: bear
@@ -76,7 +76,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Animals/bear.rsi
+    sprite: Mobs/Space/bear.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: bear
@@ -89,9 +89,9 @@
         Base: bear
         BaseUnshaded: glow
       Critical:
-        Base: bear_dead
+        Base: bear-dead
       Dead:
-        Base: bear_dead
+        Base: bear-dead
   - type: Butcherable
     spawned:
     - id: FoodMeatBear
