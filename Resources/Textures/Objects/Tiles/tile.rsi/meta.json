@@ -244,6 +244,9 @@
       "name": "techfloor"
     },
     {
+      "name": "techfloordark"
+    },
+    {
       "name": "white"
     },
     {
@@ -563,6 +566,12 @@
     {
       "name": "asteroid-inhand-left",
       "directions": 4
+    },
+    {
+      "name": "xenofloor"
+    },
+    {
+      "name": "dark-squiggly"
     }
   ]
 }

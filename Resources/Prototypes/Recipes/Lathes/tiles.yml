@@ -186,6 +186,11 @@
   id: FloorTileItemSteelMaint
   result: FloorTileItemSteelMaint
 
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemTechmaintDark
+  result: FloorTileItemTechmaintDark
+
 # Wood
 - type: latheRecipe
   parent: BaseWoodTileRecipe
