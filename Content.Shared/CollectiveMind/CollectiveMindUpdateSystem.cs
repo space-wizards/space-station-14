@@ -58,10 +58,6 @@ public sealed class CollectiveMindUpdateSystem : EntitySystem
     {
         foreach (var prototype in _prototypeManager.EnumeratePrototypes<CollectiveMindPrototype>())
         {
-            //check if they dont already have it
-            if (collective.Minds.ContainsKey(prototype))
-                continue;
-
             var components = StringsToRegs(prototype.RequiredComponents);
 
             bool meetsRequirements = false;
@@ -88,6 +84,10 @@ public sealed class CollectiveMindUpdateSystem : EntitySystem
 
             if (meetsRequirements)
             {
+                //check if they dont already have it
+                if (collective.Minds.ContainsKey(prototype))
+                    continue;
+                
                 collective.Minds.TryAdd(prototype, CreateNewCollectiveMindMemberData(prototype));
             }
             else
