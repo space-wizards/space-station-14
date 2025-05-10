@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Centronias
-  changes:
-  - message: High-heeled Boots now click and clack when walking
-    type: Tweak
-  id: 7953
-  time: '2025-02-13T22:35:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35083
 - author: keronshb
   changes:
   - message: The Supermatter Grenade has been renamed to Singularity Grenade.
@@ -3933,3 +3926,10 @@
   id: 8455
   time: '2025-05-10T18:21:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36807
+- author: EmoGarbage404
+  changes:
+  - message: Fixed being able to toggle lighting as a ghost.
+    type: Fix
+  id: 8456
+  time: '2025-05-10T21:41:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37335
