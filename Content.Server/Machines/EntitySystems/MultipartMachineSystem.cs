@@ -26,7 +26,9 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 
         SubscribeLocalEvent<MultipartMachineComponent, ComponentStartup>(OnComponentStartup);
 
-        SubscribeLocalEvent<MultipartMachinePartComponent, AfterConstructionChangeEntityEvent>(OnConstructionNodeChanged);
+        SubscribeLocalEvent<MultipartMachineComponent, AnchorStateChangedEvent>(OnMachineAnchorChanged);
+
+        SubscribeLocalEvent<MultipartMachinePartComponent, AfterConstructionChangeEntityEvent>(OnPartConstructionNodeChanged);
         SubscribeLocalEvent<MultipartMachinePartComponent, AnchorStateChangedEvent>(OnPartAnchorChanged);
     }
 
@@ -175,6 +177,29 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             if (part.Offset.Length > ent.Comp.MaxRange)
                 ent.Comp.MaxRange = part.Offset.Length;
         }
+
+        // If anchored, perform a rescan of this machine when the component starts so we can immediately
+        // jump to an assembled state if needed.
+        if (!XformQuery.TryGetComponent(ent.Owner, out var xform) || !xform.Anchored)
+            return;
+
+        Rescan(ent);
+    }
+
+    /// <summary>
+    /// Handles when a main machine entity has been anchored or unanchored by a user.
+    /// Rescanning is then required in order to check whether parts are still in the right places,
+    /// and raise a AfterConstructionChangeEntityEvent.
+    /// </summary>
+    /// <param name="ent">Machine entity that has been anchored or unanchored.</param>
+    /// <param name="args">Args for this event.</param>
+    private void OnMachineAnchorChanged(Entity<MultipartMachineComponent> ent,
+        ref AnchorStateChangedEvent args)
+    {
+        if (args.Anchored)
+            Rescan(ent);
+        else
+            ClearAllParts(ent);
     }
 
     /// <summary>
@@ -184,7 +209,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     /// </summary>
     /// <param name="ent">Machine part entity that has moved in a graph.</param>
     /// <param name="args">Args for this event.</param>
-    private void OnConstructionNodeChanged(Entity<MultipartMachinePartComponent> ent,
+    private void OnPartConstructionNodeChanged(Entity<MultipartMachinePartComponent> ent,
         ref AfterConstructionChangeEntityEvent args)
     {
         if (!XformQuery.TryGetComponent(ent.Owner, out var constructXform))
