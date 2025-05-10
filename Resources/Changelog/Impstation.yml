@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: Syndicats can now send and receive messages on the Syndicate radio channel.
-    type: Add
-  id: 1135
-  time: '2025-02-16T08:29:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1708
-- author: TheGrimbeeper
-  changes:
-  - message: Gray stomachs are now able to be used as ingredients in rituals
-    type: Fix
-  id: 1136
-  time: '2025-02-16T08:29:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1705
 - author: kipdotnet
   changes:
   - message: Quartermasters can now pick an extra extra extra large winter coat in
@@ -4168,3 +4154,20 @@
   id: 1634
   time: '2025-05-10T07:43:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2433
+- author: Oberonics
+  changes:
+  - message: You can now be cloned no matter your body composition.
+    type: Tweak
+  - message: Being unrevivable now actually means you can't be revived.
+    type: Fix
+  id: 1635
+  time: '2025-05-10T11:36:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2438
+- author: Oberonics
+  changes:
+  - message: Handheld Mass Scanners are no longer comically large (and can fit in
+      your pocket again).
+    type: Fix
+  id: 1636
+  time: '2025-05-10T11:36:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2439
