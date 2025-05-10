@@ -961,7 +961,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-    sprite: Mobs/Pets/breaddog.rsi
+    sprite: Mobs/Animals/breaddog.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: base
@@ -995,8 +995,8 @@
     speechSounds: Dog
     speechVerb: SmallMob
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5
-    baseSprintSpeed : 3
+    baseWalkSpeed : 3
+    baseSprintSpeed : 5
   - type: Tag
     tags:
     - VimPilot

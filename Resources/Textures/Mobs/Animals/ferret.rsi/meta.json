@@ -10,7 +10,7 @@
   "states":
   [
     {
-      "name": "raccoon",
+      "name": "ferret",
       "directions": 4,
       "delays": [[1],[1],[1],[1]]
     },
