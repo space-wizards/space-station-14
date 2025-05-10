@@ -1,5 +1,5 @@
-##  Inesects/Bugs
-##  -Roaches
+## Inesects/Bugs
+## -Roaches
 - type: entity # TODO: figure out how to make these guys gib when stepped on
   name: cockroach
   parent: SimpleMobBase
@@ -292,7 +292,7 @@
             sprite: Mobs/Animals/mothroach/displacement.rsi
             state: neck
 
-##  -Bees
+## -Bees
 - type: entity
   name: bee
   parent: [ SimpleMobBase, FlyingMobBase ]
@@ -394,7 +394,7 @@
     bloodMaxVolume: 0.1
   - type: ZombieImmune
 
-##  -Spiders
+## -Spiders
 - type: entity
   parent: [ SimpleMobBase, MobCombat ]
   id: MobSpiderBase
@@ -610,7 +610,7 @@
     - type: ReplacementAccent
       accent: xeno  #let this wizard speak
 
-##  -Misc
+## -Misc
 - type: entity
   name: butterfly
   parent: [ SimpleMobBase, FlyingMobBase ]
@@ -723,8 +723,8 @@
   - type: Bloodstream
     bloodMaxVolume: 50
 
-##  Avian
-##  -Chickens
+## Avian
+## -Chickens
 - type: entity
   name: chicken
   parent: SimpleMobBase
@@ -872,10 +872,10 @@
     intervalSeconds: 20
     minimumEntitiesSpawned: 1
     maximumEntitiesSpawned: 1
-  - type: TimedDespawn #delete the egg after the chicken spawns
+  - type: TimedDespawn #delete the egg after 'hatching'
     lifetime: 21
 
-##  -Ducks
+## -Ducks
 - type: entity
   name: mallard duck
   parent: SimpleMobBase
@@ -1001,10 +1001,10 @@
       intervalSeconds: 20
       minimumEntitiesSpawned: 1
       maximumEntitiesSpawned: 1
-    - type: TimedDespawn #delete the egg after the chicken spawns
+    - type: TimedDespawn #delete the egg after 'hatching'
       lifetime: 21
 
-##  -Penguins
+## -Penguins
 - type: entity
   name: penguin
   parent: SimpleMobBase
@@ -1137,9 +1137,7 @@
       behaviors:
       - !type:ExplodeBehavior
 
-  # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
-
-##  -Other
+## -Other
 - type: entity # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
   name: goose
   parent: SimpleMobBase
@@ -1243,8 +1241,8 @@
   - type: Bloodstream
     bloodMaxVolume: 50
 
-##  Ancestors
-##  -Monkeys
+## Ancestors
+## -Monkeys
 - type: entity
   name: genetic ancestor
   id: MobBaseAncestor
@@ -1613,7 +1611,7 @@
   components:
   - type: NukeOperative
 
-##  -Diona Nymphs
+## -Diona Nymphs
 - type: entity
   name: diona nymph
   parent: [SimpleMobBase, StripableInventoryBase]
@@ -1703,8 +1701,8 @@
   - type: ReplacementAccent
     accent: nymph
 
-##  Mammals
-##  -Kangaroos
+## Mammals
+## -Kangaroos
 - type: entity
   name: kangaroo
   parent:
@@ -1803,7 +1801,7 @@
     factions:
     - SimpleHostile
 
-##  -Mice
+## -Mice
 - type: entity
   name: mouse
   parent: SimpleMobBase
@@ -2103,7 +2101,7 @@
     damageContainer: Biological
     damageModifierSet: Zombie
 
-##  -Possum
+## -Possum
 - type: entity
   name: possum
   parent: [SimpleMobBase, StripableInventoryBase]
@@ -2177,7 +2175,7 @@
       Dead:
         Base: possum_dead_old
 
-##  -Dogs
+## -Dogs
 - type: entity
   parent: [SimpleMobBase, StripableInventoryBase]
   id: MobDogBase
@@ -2430,7 +2428,7 @@
     interactSuccessSound:
       path: /Audio/Animals/small_dog_bark_happy.ogg
 
-##  -Cats
+## -Cats
 - type: entity
   name: cat
   parent: [SimpleMobBase, StripableInventoryBase]
@@ -2720,7 +2718,7 @@
       25: Dead
   - type: OwOAccent #Kitty
 
-##  -Deer
+## -Deer
 - type: entity
   name: reindeer buck
   parent: [ SimpleMobBase, MobCombat ]
@@ -2801,7 +2799,7 @@
       Dead:
         Base: reindeer_doe_dead
 
-##  -Misc
+## -Misc
 - type: entity
   name: bat
   parent: [ SimpleMobBase, FlyingMobBase, MobCombat ]
@@ -3567,7 +3565,7 @@
     rootTask:
       task: RuminantCompound
 
-##  Reptiles/Amphibians/Crustaceans
+## Reptiles/Amphibians/Crustaceans
 - type: entity
   name: lizard #Weh
   parent: SimpleMobBase
