@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed being able to fax multiple times in quick succession
-    type: Fix
-  id: 7952
-  time: '2025-02-13T20:12:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35135
 - author: Centronias
   changes:
   - message: High-heeled Boots now click and clack when walking
@@ -3933,3 +3926,10 @@
   id: 8454
   time: '2025-05-10T15:12:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37270
+- author: Morb0, ssdaniel24
+  changes:
+  - message: Added a Discord webhook that will receive station news
+    type: Add
+  id: 8455
+  time: '2025-05-10T18:21:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36807
