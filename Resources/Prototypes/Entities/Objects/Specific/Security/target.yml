@@ -11,7 +11,7 @@
   - type: DamagePopup
     allowTypeChange: true
     damagePopupType: Combined
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -23,7 +23,6 @@
         layer:
         - WallLayer
   - type: InteractionOutline
-  - type: Physics
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

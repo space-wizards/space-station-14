@@ -17,7 +17,7 @@
       state: glow
       shader: unshaded
     state: base
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

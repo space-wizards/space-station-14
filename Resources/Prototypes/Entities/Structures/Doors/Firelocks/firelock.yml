@@ -71,7 +71,8 @@
             True: { visible: true }
             False: { visible: false }
     - type: AnimationPlayer
-    - type: Fixtures
+    - type: Physics
+      canCollide: false
       fixtures:
         fix1:
           shape:
@@ -113,8 +114,6 @@
       interfaces:
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
-    - type: Physics
-      canCollide: false
     - type: Airtight
       airBlocked: false
       noAirWhenFullyAirBlocked: true
@@ -171,7 +170,7 @@
       sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
     - type: Occluder
       enabled: false
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:
@@ -201,7 +200,8 @@
       noAirWhenFullyAirBlocked: false
       airBlockedDirection:
         - South
-    - type: Fixtures
+    - type: Physics
+      canCollide: false
       fixtures:
         fix1:
           shape:
@@ -219,8 +219,6 @@
       - ForceNoFixRotations # Prevent fixrotations from targeting these, since the base Firelock is targeted
     - type: Door
       occludes: false
-    - type: Physics
-      canCollide: false
     - type: StaticPrice
       price: 100
     - type: Construction

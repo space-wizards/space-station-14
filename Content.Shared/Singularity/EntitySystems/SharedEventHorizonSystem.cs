@@ -15,8 +15,6 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// </summary>
 public abstract class SharedEventHorizonSystem : EntitySystem
 {
-
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly IViewVariablesManager Vvm = default!;
 
@@ -144,35 +142,38 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// Updates the state of the fixture associated with the event horizon.
     /// </summary>
     /// <param name="uid">The uid of the event horizon associated with the fixture to update.</param>
-    /// <param name="fixtures">The fixture manager component containing the fixture to update.</param>
+    /// <param name="body">The fixture manager component containing the fixture to update.</param>
     /// <param name="eventHorizon">The state of the event horizon associated with the fixture to update.</param>
-    public void UpdateEventHorizonFixture(EntityUid uid, FixturesComponent? fixtures = null, EventHorizonComponent? eventHorizon = null)
+    public void UpdateEventHorizonFixture(EntityUid uid, PhysicsComponent? body = null, EventHorizonComponent? eventHorizon = null)
     {
         if (!Resolve(uid, ref eventHorizon))
             return;
 
         var consumerId = eventHorizon.ConsumerFixtureId;
         var colliderId = eventHorizon.ColliderFixtureId;
-        if (consumerId == null || colliderId == null
-        || !Resolve(uid, ref fixtures, logMissing: false))
+        if (consumerId == null ||
+            colliderId == null ||
+            !Resolve(uid, ref body, logMissing: false))
+        {
             return;
+        }
 
         // Update both fixtures the event horizon is associated with:
-        var consumer = _fixtures.GetFixtureOrNull(uid, consumerId, fixtures);
+        var consumer = _physics.GetFixtureOrNull(uid, consumerId, body);
         if (consumer != null)
         {
-            _physics.SetRadius(uid, consumerId, consumer, consumer.Shape, eventHorizon.Radius, fixtures);
-            _physics.SetHard(uid, consumer, false, fixtures);
+            _physics.SetRadius(uid, consumerId, consumer, consumer.Shape, eventHorizon.Radius, body);
+            _physics.SetHard(uid, consumer, false, body);
         }
 
-        var collider = _fixtures.GetFixtureOrNull(uid, colliderId, fixtures);
+        var collider = _physics.GetFixtureOrNull(uid, colliderId, body);
         if (collider != null)
         {
-            _physics.SetRadius(uid, colliderId, collider, collider.Shape, eventHorizon.Radius, fixtures);
-            _physics.SetHard(uid, collider, true, fixtures);
+            _physics.SetRadius(uid, colliderId, collider, collider.Shape, eventHorizon.Radius, body);
+            _physics.SetHard(uid, collider, true, body);
         }
 
-        EntityManager.Dirty(uid, fixtures);
+        Dirty(uid, body);
     }
 
     #endregion Getters/Setters

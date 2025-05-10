@@ -58,7 +58,7 @@
         type: StorageBoundUserInterface
   - type: Transform
     noRot: true
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -137,7 +137,7 @@
     - state: chestdrawer
     - state: chestdrawer-open
       map: ["openLayer"]
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

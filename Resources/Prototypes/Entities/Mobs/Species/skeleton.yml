@@ -53,7 +53,7 @@
       Female: Skeleton
       Unsexed: Skeleton
   - type: SkeletonAccent
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

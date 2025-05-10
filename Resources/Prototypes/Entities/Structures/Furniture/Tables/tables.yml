@@ -10,7 +10,7 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/frame.rsi
     state: full
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -67,7 +67,7 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/frame.rsi
     state: full
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

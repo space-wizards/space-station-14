@@ -10,7 +10,7 @@
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: PlaceableSurface
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -47,7 +47,7 @@
   name: counter
   abstract: true
   components:
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

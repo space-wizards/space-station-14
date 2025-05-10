@@ -19,12 +19,11 @@
       sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
       map: [ "enum.ArtifactsVisualLayers.ActivationEffect" ]
       visible: false
-  - type: Physics
-    bodyType: Dynamic
   - type: CollisionWake
     enabled: false
   - type: InteractionOutline
-  - type: Fixtures
+  - type: Physics
+  	bodyType: Dynamic
     fixtures:
       fix1:
         shape:

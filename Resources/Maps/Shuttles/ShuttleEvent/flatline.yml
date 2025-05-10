@@ -44,8 +44,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -960,7 +958,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,-4.5
       parent: 1
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: GasPassiveVent
   entities:

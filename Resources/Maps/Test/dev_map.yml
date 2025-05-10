@@ -84,8 +84,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
@@ -5200,7 +5198,7 @@ entities:
     - type: Transform
       pos: -8.5,7.5
       parent: 179
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
     - type: Airtight
       noAirWhenFullyAirBlocked: True
@@ -5211,7 +5209,7 @@ entities:
     - type: Transform
       pos: -10.5,7.5
       parent: 179
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
     - type: Airtight
       noAirWhenFullyAirBlocked: True
@@ -5222,7 +5220,7 @@ entities:
     - type: Transform
       pos: -9.5,7.5
       parent: 179
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
     - type: Airtight
       noAirWhenFullyAirBlocked: True
@@ -5242,7 +5240,7 @@ entities:
     - type: Transform
       pos: -13.5,2.5
       parent: 179
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
     missingComponents:
     - TimedDespawn
@@ -5251,7 +5249,7 @@ entities:
     - type: Transform
       pos: -13.5,1.5
       parent: 179
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
     missingComponents:
     - TimedDespawn

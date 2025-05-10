@@ -43,12 +43,11 @@
     delay: 1
   - type: AntiRottingContainer
   - type: ResistLocker
-  - type: Physics
-    bodyType: Static
   - type: Transform
     noRot: true
     anchored: True
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       fix1:
         shape:

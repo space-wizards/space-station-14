@@ -20,7 +20,6 @@
           True: {state: "grinder_beaker_attached"}
           False: {state: "grinder_empty"}
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

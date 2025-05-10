@@ -66,7 +66,7 @@
     containers:
       storagebase: !type:Container
         ents: [ ]
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

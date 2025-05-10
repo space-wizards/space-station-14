@@ -25,7 +25,7 @@
           Quantity: 5
   - type: Item
     size: Tiny
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

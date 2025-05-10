@@ -18,7 +18,7 @@
   name: "collision rune"
   abstract: true
   components:
-    - type: Fixtures
+    - type: Physics
       fixtures:
         rune:
           shape:
@@ -29,7 +29,6 @@
             - ItemMask
           layer:
             - SlipLayer
-    - type: Physics
 
 - type: entity
   parent: CollideRune
@@ -91,7 +90,7 @@
   components:
     - type: TriggerOnCollide
       fixtureID: ignition
-    - type: Fixtures
+    - type: Physics
       fixtures:
         ignition:
           shape:

@@ -10,7 +10,7 @@
     - state: icon
   - type: Item
     size: Huge
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

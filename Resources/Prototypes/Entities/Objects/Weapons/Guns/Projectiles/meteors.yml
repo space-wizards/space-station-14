@@ -22,7 +22,6 @@
     bodyStatus: InAir
     angularDamping: 0
     linearDamping: 0
-  - type: Fixtures
     fixtures:
       projectile:
         shape:
@@ -53,7 +52,7 @@
   components:
   - type: Sprite
     state: space_dust
-  - type: Fixtures
+  - type: Physics
     fixtures:
       projectile:
         shape:
@@ -88,7 +87,7 @@
   components:
   - type: Sprite
     state: small
-  - type: Fixtures
+  - type: Physics
     fixtures:
       projectile:
         shape:
@@ -128,7 +127,7 @@
   components:
   - type: Sprite
     state: medium
-  - type: Fixtures
+  - type: Physics
     fixtures:
       projectile:
         shape:

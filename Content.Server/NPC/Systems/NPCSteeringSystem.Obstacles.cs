@@ -46,9 +46,9 @@ public sealed partial class NPCSteeringSystem
         var layer = 0;
         var mask = 0;
 
-        if (TryComp<FixturesComponent>(uid, out var manager))
+        if (TryComp<PhysicsComponent>(uid, out var body))
         {
-            (layer, mask) = _physics.GetHardCollision(uid, manager);
+            (layer, mask) = _physics.GetHardCollision(uid, body);
         }
         else
         {

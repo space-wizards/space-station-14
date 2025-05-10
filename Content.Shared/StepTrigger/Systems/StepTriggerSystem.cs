@@ -30,7 +30,7 @@ public sealed class StepTriggerSystem : EntitySystem
         if (!component.Active)
             return;
 
-        if (!TryComp(uid, out FixturesComponent? fixtures) || fixtures.FixtureCount == 0)
+        if (!TryComp(uid, out PhysicsComponent? fixtures) || fixtures.Fixtures.Count == 0)
             Log.Warning($"{ToPrettyString(uid)} has an active step trigger without any fixtures.");
 #endif
     }

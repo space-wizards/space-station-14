@@ -10,7 +10,6 @@
     noRot: true
   - type: InteractionOutline
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -74,7 +73,7 @@
   parent: StorageTank
   abstract: true
   components:
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

@@ -20,7 +20,7 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: glow
       shader: unshaded
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -217,7 +217,7 @@
   - type: Bloodstream
     bloodMaxVolume: 250
     bloodReagent: Cryoxadone
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -320,7 +320,7 @@
     - type: Bloodstream
       bloodMaxVolume: 200
       bloodReagent: Cryoxadone
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:
@@ -409,7 +409,6 @@
     rootTask:
       task: MouseCompound
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

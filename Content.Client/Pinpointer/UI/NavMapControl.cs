@@ -83,7 +83,6 @@ public partial class NavMapControl : MapGridControl
     private MapGridComponent? _grid;
     private TransformComponent? _xform;
     private PhysicsComponent? _physics;
-    private FixturesComponent? _fixtures;
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
     private readonly Label _zoom = new()
@@ -184,7 +183,6 @@ public partial class NavMapControl : MapGridControl
         EntManager.TryGetComponent(MapUid, out _grid);
         EntManager.TryGetComponent(MapUid, out _xform);
         EntManager.TryGetComponent(MapUid, out _physics);
-        EntManager.TryGetComponent(MapUid, out _fixtures);
 
         UpdateNavMap();
     }
@@ -277,7 +275,6 @@ public partial class NavMapControl : MapGridControl
         EntManager.TryGetComponent(MapUid, out _grid);
         EntManager.TryGetComponent(MapUid, out _xform);
         EntManager.TryGetComponent(MapUid, out _physics);
-        EntManager.TryGetComponent(MapUid, out _fixtures);
 
         if (_navMap == null || _grid == null || _xform == null)
             return;
@@ -477,12 +474,12 @@ public partial class NavMapControl : MapGridControl
 
     private void UpdateNavMapFloorTiles()
     {
-        if (_fixtures == null)
+        if (_physics == null)
             return;
 
         var verts = new Vector2[8];
 
-        foreach (var fixture in _fixtures.Fixtures.Values)
+        foreach (var fixture in _physics.Fixtures.Values)
         {
             if (fixture.Shape is not PolygonShape poly)
                 continue;

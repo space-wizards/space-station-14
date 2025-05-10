@@ -28,7 +28,7 @@
     size: Tiny
   - type: CollisionWake
     enabled: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       slips:
         shape:

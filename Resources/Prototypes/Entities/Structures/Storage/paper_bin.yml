@@ -19,7 +19,7 @@
           tags:
           - Document
           - Write
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

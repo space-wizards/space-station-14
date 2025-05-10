@@ -21,7 +21,7 @@
     - map: [ "mask" ]
     - map: [ "head" ]
   - type: Rotatable
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

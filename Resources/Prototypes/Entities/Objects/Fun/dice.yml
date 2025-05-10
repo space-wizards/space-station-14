@@ -102,7 +102,7 @@
     state: d4_4
   - type: CollisionWake
     enabled: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       slips:
         shape:

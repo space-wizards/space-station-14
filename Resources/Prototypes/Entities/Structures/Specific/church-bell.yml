@@ -24,7 +24,6 @@
   - type: Physics
     canCollide: false
     bodyType: Static
-  - type: Fixtures
   - type: InteractionOutline
   - type: Damageable
     damageContainer: Inorganic

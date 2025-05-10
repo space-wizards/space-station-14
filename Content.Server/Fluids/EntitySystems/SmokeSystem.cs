@@ -223,7 +223,7 @@ public sealed class SmokeSystem : EntitySystem
         Dirty(uid, component);
         EnsureComp<ActiveEdgeSpreaderComponent>(uid);
 
-        if (TryComp<PhysicsComponent>(uid, out var body) && TryComp<FixturesComponent>(uid, out var fixtures))
+        if (TryComp<PhysicsComponent>(uid, out var body))
         {
             var xform = Transform(uid);
             _physics.SetBodyType(uid, BodyType.Dynamic, fixtures, body, xform);

@@ -200,7 +200,6 @@
         map: [ "light" ]
   - type: Physics
     canCollide: true
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -282,7 +281,6 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

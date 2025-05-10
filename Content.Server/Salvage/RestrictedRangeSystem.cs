@@ -11,7 +11,6 @@ namespace Content.Server.Salvage;
 
 public sealed class RestrictedRangeSystem : SharedRestrictedRangeSystem
 {
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
@@ -32,7 +31,7 @@ public sealed class RestrictedRangeSystem : SharedRestrictedRangeSystem
         var cShape = new ChainShape();
         // Don't need it to be a perfect circle, just need it to be loosely accurate.
         cShape.CreateLoop(Vector2.Zero, range + 0.25f, false, count: 4);
-        _fixtures.TryCreateFixture(
+        _physics.TryCreateFixture(
             boundaryUid,
             cShape,
             "boundary",

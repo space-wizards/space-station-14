@@ -19,7 +19,6 @@
   - type: Physics
     bodyType: Dynamic
     canCollide: false
-  - type: Fixtures
     fixtures:
       base:
         shape:

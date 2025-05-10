@@ -8,7 +8,6 @@ namespace Content.Shared.Security.Systems;
 
 public sealed class DeployableBarrierSystem : EntitySystem
 {
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
@@ -39,7 +38,7 @@ public sealed class DeployableBarrierSystem : EntitySystem
             return;
 
         var transform = Transform(uid);
-        var fixture = _fixtures.GetFixtureOrNull(uid, component.FixtureId);
+        var fixture = _physics.GetFixtureOrNull(uid, component.FixtureId);
 
         if (isDeployed && transform.GridUid != null)
         {

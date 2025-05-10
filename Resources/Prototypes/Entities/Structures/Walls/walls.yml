@@ -33,7 +33,6 @@
     damageModifierSet: StructuralMetallic
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -557,14 +556,13 @@
   - type: Icon
     sprite: Structures/Walls/plastitanium_diagonal.rsi
     state: state0
-  - type: Physics
-    bodyType: Static
   - type: Airtight
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
     - South
     - East
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       fix1:
         shape:
@@ -847,8 +845,6 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
-  - type: Physics
-    bodyType: Static
   - type: Reflect
     reflectProb: 1
   - type: Pullable
@@ -857,7 +853,8 @@
     airBlockedDirection:
     - South
     - East
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       fix1:
         shape:
@@ -1325,7 +1322,6 @@
       - Wall
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -1348,7 +1344,6 @@
         - Wall
     - type: Physics
       bodyType: Static
-    - type: Fixtures
       fixtures:
         fix1:
           shape:

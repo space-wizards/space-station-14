@@ -52,7 +52,6 @@
       disposals: !type:Container
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

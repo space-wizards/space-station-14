@@ -21,7 +21,7 @@
   - type: Rehydratable
   - type: CollisionWake
     enabled: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

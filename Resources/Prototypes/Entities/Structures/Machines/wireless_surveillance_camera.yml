@@ -14,7 +14,7 @@
       damageModifierSet: Metallic
     - type: Rotatable
       rotateWhileAnchored: true
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:

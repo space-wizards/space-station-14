@@ -72,7 +72,7 @@
         visualType: Large
         messages: [ "diona-hurt-by-herbicide-popup" ]
         probability: 0.66
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

@@ -19,7 +19,7 @@
       enum.HolidayVisuals.Holiday:
         base:
           festive: { state: festive }
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape: !type:PhysShapeCircle

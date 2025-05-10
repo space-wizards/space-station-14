@@ -6,12 +6,11 @@
   - type: Transform
     anchored: True
   - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
   - type: Sprite
     sprite: /Textures/Effects/mobspawn.rsi
     state: crab_quartz
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       portalFixture:
         shape:

@@ -41,7 +41,6 @@
     base: lava
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

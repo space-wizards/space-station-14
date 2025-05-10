@@ -17,7 +17,6 @@
     drawdepth: BlastDoors
     noRot: true
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -93,7 +92,6 @@
     graph: BarricadeDirectional
     node: barricadefull
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

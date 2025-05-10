@@ -20,9 +20,8 @@
     sprite: Objects/Storage/petcarrier.rsi
     state: icon
   - type: InteractionOutline
-  - type: Physics
   - type: MultiHandedItem
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

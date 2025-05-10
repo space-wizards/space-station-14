@@ -77,12 +77,9 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void AddMobMovedByPressure(EntityUid uid, MovedByPressureComponent component, PhysicsComponent body)
         {
-            if (!TryComp<FixturesComponent>(uid, out var fixtures))
-                return;
-
             _physics.SetBodyStatus(uid, body, BodyStatus.InAir);
 
-            foreach (var (id, fixture) in fixtures.Fixtures)
+            foreach (var (id, fixture) in body.Fixtures)
             {
                 // Mark fixtures that have TableLayer removed
                 if ((fixture.CollisionMask & (int)CollisionGroup.TableLayer) != 0)

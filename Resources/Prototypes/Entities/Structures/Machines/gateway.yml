@@ -27,11 +27,9 @@
           True: { visible: true }
           False: { visible: false }
   - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
   - type: Transform
     noRot: true
-  - type: Fixtures
+  - type: Physics
     fixtures:
       portalFixture:
         shape:

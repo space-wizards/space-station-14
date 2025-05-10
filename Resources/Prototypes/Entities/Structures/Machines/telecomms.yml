@@ -30,7 +30,6 @@
   - type: WiresVisuals
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
