@@ -332,6 +332,7 @@
     - id: ClothingHeadsetAltSecurity
     - id: ClothingMaskNeckGaiter
     - id: ClothingOuterCoatHoSTrench
+    - id: ClothingOuterArmorCarapaceHoS
     - id: ClothingShoesBootsJack
     - id: DoorRemoteSecurity
     - id: HoloprojectorSecurity
