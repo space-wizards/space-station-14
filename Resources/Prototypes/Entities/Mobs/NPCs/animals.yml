@@ -1986,12 +1986,55 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
       path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: corgi
+      Critical:
+        Base: corgi-dead
+      Dead:
+        Base: corgi-dead
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-corgi
   - type: MobPrice
     price: 200
 
-- type: entity ## Chaplains hellhound
+- type: entity
+  name: corgi puppy
+  parent: MobCorgi
+  id: MobCorgiPuppy
+  description: A little corgi! Aww...
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: puppy
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.275
+        density: 25
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Inventory
+    speciesId: puppy
+    templateId: pet
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: puppy
+      Critical:
+        Base: puppy-dead
+      Dead:
+        Base: puppy-dead
+
+- type: entity ## Not chaplains hellhound
   name: corrupted corgi
   parent: MobCorgi
   id: MobCorgiNarsi
@@ -2048,41 +2091,6 @@
         Heat : 1
 
 - type: entity
-  name: corgi puppy
-  parent: MobCorgi
-  id: MobCorgiPuppy
-  description: A little corgi! Aww...
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Animals/corgi.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: puppy
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.275
-        density: 25
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: Inventory
-    speciesId: puppy
-    templateId: pet
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: puppy
-      Critical:
-        Base: puppy-dead
-      Dead:
-        Base: puppy-dead
-
-- type: entity
   name: bull terrier
   parent: MobDogBase
   id: MobBullTerrier
@@ -2114,7 +2122,7 @@
   name: Pug
   parent: MobDogBase
   id: MobPug
-  description: A bull terrier! Adorable?..
+  description: A pug! Adorable?..
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -2138,9 +2146,9 @@
       Alive:
         Base: pug
       Critical:
-        Base: pug-dead
+        Base: dead
       Dead:
-        Base: pug-dead
+        Base: dead
   - type: Inventory
     speciesId: puppy
     templateId: pet
@@ -2249,6 +2257,44 @@
         Base: cat2-dead
 
 - type: entity
+  name: space cat
+  id: MobCatSpace
+  parent: MobCat
+  description: Feline pet, prepared for the worst.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: spacecat
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: spacecat
+      Critical:
+        Base: spacecat-dead
+      Dead:
+        Base: spacecat-dead
+  - type: Temperature
+    heatDamageThreshold: 423
+    coldDamageThreshold: 0
+  - type: Tag
+    tags:
+      - DoorBumpOpener
+  - type: MovementAlwaysTouching
+  - type: PressureImmunity
+  - type: ProtectedFromStepTriggers
+  - type: Insulated
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-space-cat
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Respirator #It just works?
+    minSaturation: 5.0
+
+- type: entity
   name: syndicat
   id: MobCatSyndy
   parent: MobCatSpace
@@ -2298,44 +2344,6 @@
         Structural: 15
 
 - type: entity
-  name: space cat
-  id: MobCatSpace
-  parent: MobCat
-  description: Feline pet, prepared for the worst.
-  components:
-  - type: Sprite
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: spacecat
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: spacecat
-      Critical:
-        Base: spacecat-dead
-      Dead:
-        Base: spacecat-dead
-  - type: Temperature
-    heatDamageThreshold: 423
-    coldDamageThreshold: 0
-  - type: Tag
-    tags:
-      - DoorBumpOpener
-  - type: MovementAlwaysTouching
-  - type: PressureImmunity
-  - type: ProtectedFromStepTriggers
-  - type: Insulated
-  - type: InteractionPopup
-    successChance: 0.7
-    interactSuccessString: petting-success-space-cat
-    interactFailureString: petting-failure-generic
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/cat_meow.ogg
-  - type: Respirator #It just works?
-    minSaturation: 5.0
-
-- type: entity
   name: caracal cat
   id: MobCatCaracal
   parent: MobCat
@@ -2345,7 +2353,7 @@
     sprite: Mobs/Animals/caracal.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: caracal-flop
+      state: caracal
   - type: Fixtures
     fixtures:
       fix1:
@@ -2362,9 +2370,9 @@
       Alive:
         Base: caracal
       Critical:
-        Base: caracal-dead
+        Base: dead
       Dead:
-        Base: caracal-dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -2458,7 +2466,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: buck
-      sprite: Mobs/Animals/reindeer_buck.rsi
+      sprite: Mobs/Animals/reindeer.rsi
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -2516,8 +2524,8 @@
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: reindeer_doe
-      sprite: Mobs/Animals/reindeer_doe.rsi
+      state: doe
+      sprite: Mobs/Animals/reindeer.rsi
   - type: DamageStateVisuals
     states:
       Alive:

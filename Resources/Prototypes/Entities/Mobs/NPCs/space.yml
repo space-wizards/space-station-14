@@ -89,9 +89,9 @@
         Base: bear
         BaseUnshaded: glow
       Critical:
-        Base: bear-dead
+        Base: dead
       Dead:
-        Base: bear-dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatBear
@@ -151,9 +151,9 @@
         Base: kangaroo
         BaseUnshaded: glow
       Critical:
-        Base: kangaroo-crit
+        Base: crit
       Dead:
-        Base: kangaroo-dead
+        Base: dead
   - type: Stamina
     critThreshold: 180
   - type: Inventory
@@ -206,7 +206,7 @@
         Base: spider
         BaseUnshaded: glow
       Dead:
-        Base: spider-dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatSpider
@@ -307,7 +307,7 @@
           Base: cobra
           BaseUnshaded: glow
         Dead:
-          Base: cobra-dead
+          Base: dead
     - type: Butcherable
       spawned:
         - id: FoodMeatSnake

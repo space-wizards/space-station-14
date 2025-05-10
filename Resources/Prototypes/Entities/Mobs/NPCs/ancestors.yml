@@ -32,7 +32,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: monkey
-      sprite: Mobs/Animals/monkey.rsi
+      sprite: Mobs/Ancestors/monkey.rsi
     - map: [ "jumpsuit" ]
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
@@ -266,10 +266,10 @@
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/kobold.rsi
+      sprite: Mobs/Ancestors/kobold.rsi
       state: kobold
     - map: [ "outline" ]
-      sprite: Mobs/Animals/kobold.rsi
+      sprite: Mobs/Ancestors/kobold.rsi
       state: outline
     - map: [ "horns" ]
       sprite: Mobs/Customization/reptilian_parts.rsi
@@ -379,7 +379,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: nymph
-      sprite: Mobs/Animals/nymph.rsi
+      sprite: Mobs/Ancestors/nymph.rsi
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -403,9 +403,9 @@
       Alive:
         Base: nymph
       Critical:
-        Base: nymph_sleep
+        Base: crit
       Dead:
-        Base: nymph_dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: MaterialWoodPlank1
