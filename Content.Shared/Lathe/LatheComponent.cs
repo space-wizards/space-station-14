@@ -4,6 +4,7 @@ using Content.Shared.Research.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Lathe
 {
@@ -45,6 +46,26 @@ namespace Content.Shared.Lathe
         /// </summary>
         [DataField, AutoNetworkedField]
         public int DefaultProductionAmount = 1;
+
+        #region Temperature
+        /// <summary>
+        ///     If air reaches this temperature, lathe stops work. Prevents abusing via flaps.
+        /// </summary>
+        [DataField]
+        public float? MaxTemp;
+
+        /// <summary>
+        ///     If air reaches this temperature, lathe stops work. Prevents abusing via flaps and space.
+        /// </summary>
+        [DataField]
+        public float? MinTemp;
+
+        /// <summary>
+        ///     Current temperature status of the lathe. Changed only if <see cref="MaxTemp"/> or <see cref="MinTemp"/> not null.
+        /// </summary>
+        [ViewVariables]
+        public LatheTemperatureStatus TempStatus = LatheTemperatureStatus.Normal;
+        #endregion
 
         #region Visualizer info
         [DataField]
@@ -102,4 +123,12 @@ namespace Content.Shared.Lathe
     /// </summary>
     [ByRefEvent]
     public readonly record struct LatheStartPrintingEvent(LatheRecipePrototype Recipe);
+
+    [Serializable, NetSerializable]
+    public enum LatheTemperatureStatus
+    {
+        Low,
+        High,
+        Normal
+    }
 }

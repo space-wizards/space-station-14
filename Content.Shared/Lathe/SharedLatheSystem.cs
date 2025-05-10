@@ -70,8 +70,22 @@ public abstract class SharedLatheSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
+        var msg = new FormattedMessage();
+
         if (ent.Comp.ReagentOutputSlotId != null)
-            args.PushMarkup(Loc.GetString("lathe-menu-reagent-slot-examine"));
+            msg.AddMarkupOrThrow(Loc.GetString("lathe-menu-reagent-slot-examine"));
+
+        switch (ent.Comp.TempStatus)
+        {
+            case LatheTemperatureStatus.Low:
+                msg.AddMarkupOrThrow(Loc.GetString("lathe-examine-low-temp"));
+                break;
+            case LatheTemperatureStatus.High:
+                msg.AddMarkupOrThrow(Loc.GetString("lathe-examine-high-temp"));
+                break;
+        }
+
+        args.PushMessage(msg, 5);
     }
 
     [PublicAPI]

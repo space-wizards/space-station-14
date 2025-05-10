@@ -79,6 +79,8 @@
   - type: Lathe
     materialUseMultiplier: 0.5
     timeMultiplier: 1.5
+    maxTemp: 400
+    minTemp: 73.15
   - type: LatheHeatProducing
   - type: ReagentSpeed
     modifiers:
@@ -157,6 +159,13 @@
     sprite: Structures/Machines/autolathe_hypercon.rsi
   - type: Machine
     board: AutolatheHyperConvectionMachineCircuitboard
+  - type: GenericVisualizer
+    visuals:
+      enum.LatheVisuals.Temperature:
+        tempLayer:
+          Normal: { visible: False }
+          Low: { state: overcooled, visible: True, shader: unshaded }
+          High: { state: overheated, visible: True, shader: unshaded }
 
 - type: entity
   id: Protolathe
@@ -226,6 +235,13 @@
     sprite: Structures/Machines/protolathe_hypercon.rsi
   - type: Machine
     board: ProtolatheHyperConvectionMachineCircuitboard
+  - type: GenericVisualizer
+    visuals:
+      enum.LatheVisuals.Temperature:
+        tempLayer:
+          Normal: { visible: False }
+          Low: { state: overcooled, visible: True, shader: unshaded }
+          High: { state: overheated, visible: True, shader: unshaded }
 
 - type: entity
   id: CircuitImprinter
@@ -288,6 +304,13 @@
     sprite: Structures/Machines/circuit_imprinter_hypercon.rsi
   - type: Machine
     board: CircuitImprinterHyperConvectionMachineCircuitboard
+  - type: GenericVisualizer
+    visuals:
+      enum.LatheVisuals.Temperature:
+        tempLayer:
+          Normal: { visible: False }
+          Low: { state: overcooled, visible: True, shader: unshaded }
+          High: { state: overheated, visible: True, shader: unshaded }
 
 - type: entity
   id: ExosuitFabricator
