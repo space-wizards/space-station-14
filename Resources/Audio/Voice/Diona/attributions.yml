@@ -18,3 +18,11 @@
   license: "CC-BY-3.0"
   copyright: "Taken from tgstation"
   source: "https://github.com/tgstation/tgstation/tree/943f38bf7c5f9c048cc785deb0c537d57ee6ba77/sound/creatures/venus_trap_hurt.ogg"
+- files: ["diona_cough.ogg", "diona_cleanthroat.ogg", "diona_gasp.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Made by InspectorJ and nicoproson on freesound.org. Modified by QWERTY."
+  source: "https://freesound.org/people/InspectorJ/sounds/352201/"
+- files: ["diona_deathgasp.ogg"]
+  license: "CC0-1.0"
+  copyright: "Made by Nox_Sound on freesound.org."
+  source: "https://freesound.org/people/Nox_Sound/sounds/558380/"
