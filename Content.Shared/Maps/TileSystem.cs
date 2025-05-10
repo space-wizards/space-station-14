@@ -21,6 +21,22 @@ public sealed class TileSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
 
+    [ValidatePrototypeId<ContentTileDefinition>]
+    private const string BaseLatticeId = "Lattice";
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<BlockLatticeRemovalComponent, ReplaceTileAttemptEvent>(OnReplaceTileAttempt);
+    }
+
+    public void OnReplaceTileAttempt(Entity<BlockLatticeRemovalComponent> entity, ref ReplaceTileAttemptEvent args)
+    {
+        if (args.OldTile.ID == BaseLatticeId && args.NewTile.ID == args.OldTile.BaseTurf)
+            args.Cancelled = true;
+    }
+
     /// <summary>
     ///     Returns a weighted pick of a tile variant.
     /// </summary>
@@ -119,6 +135,10 @@ public sealed class TileSystem : EntitySystem
         if (!Resolve(grid, ref component))
             return false;
 
+        var ev = new ReplaceTileAttemptEvent(tileref.Tile.GetContentTileDefinition(), replacementTile);
+        RaiseLocalEvent(grid, ref ev);
+        if (ev.Cancelled)
+            return false;
 
         var variant = PickVariant(replacementTile);
         var decals = _decal.GetDecalsInRange(tileref.GridUid, _turf.GetTileCenter(tileref).Position, 0.5f);
@@ -139,6 +159,13 @@ public sealed class TileSystem : EntitySystem
         var tileDef = (ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId];
 
         if (string.IsNullOrEmpty(tileDef.BaseTurf))
+            return false;
+
+        var plating = (ContentTileDefinition) _tileDefinitionManager[tileDef.BaseTurf];
+
+        var ev = new ReplaceTileAttemptEvent(tileDef, plating);
+        RaiseLocalEvent(tileRef.GridUid, ref ev);
+        if (ev.Cancelled)
             return false;
 
         var gridUid = tileRef.GridUid;
@@ -163,9 +190,14 @@ public sealed class TileSystem : EntitySystem
             _decal.RemoveDecal(tileRef.GridUid, id);
         }
 
-        var plating = _tileDefinitionManager[tileDef.BaseTurf];
         _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, new Tile(plating.TileId));
 
         return true;
     }
 }
+
+/// <summary>
+/// Raised on the grid whenever a tile is to be replaced by another.
+/// </summary>
+[ByRefEvent]
+public record struct ReplaceTileAttemptEvent(ContentTileDefinition OldTile, ContentTileDefinition NewTile, bool Cancelled = false);
