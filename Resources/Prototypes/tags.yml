@@ -805,6 +805,9 @@
   id: Lime
 
 - type: Tag
+  id: LoadedDiceActivator
+
+- type: Tag
   id: Machete
 
 - type: Tag
