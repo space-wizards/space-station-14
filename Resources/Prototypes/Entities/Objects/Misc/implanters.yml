@@ -65,6 +65,12 @@
       heldPrefix: implanter
       size: Small
     - type: Appearance
+    - type: ChangeLayersColor
+      mapLayers:
+        implantFull:
+          whitelist:
+            components:
+            - SubdermalImplant
     - type: GenericVisualizer
       visuals:
         enum.ImplanterVisuals.Full:
@@ -134,10 +140,10 @@
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
       state: implanter1
       layers:
-        - state: implanter0
+        - state: implanter1
           map: [ "implantFull" ]
           visible: true
-        - state: implanter1
+        - state: implanter0
           map: [ "implantOnly" ]
     - type: GenericVisualizer
       visuals:
@@ -148,7 +154,7 @@
         enum.ImplanterImplantOnlyVisuals.ImplantOnly:
           implantOnly:
             True: {state: broken}
-            False: {state: implanter1}
+            False: {state: implanter0}
     - type: Tag
       tags: []
 
