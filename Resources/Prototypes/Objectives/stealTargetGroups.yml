@@ -363,21 +363,21 @@
   name: steal-target-groups-animal-named-cat
   sprite:
     sprite: Mobs/Animals/sphynx.rsi
-    state: bingus
+    state: sphynx
 
 - type: stealTargetGroup
   id: AnimalMcGriff
   name: steal-target-groups-animal-mc-griff
   sprite:
     sprite: Mobs/Animals/pug.rsi
-    state: mcgriff
+    state: pug
 
 - type: stealTargetGroup
   id: AnimalWalter
   name: steal-target-groups-animal-walter
   sprite:
     sprite: Mobs/Animals/bullterrier.rsi
-    state: walter
+    state: bullterrier
 
 - type: stealTargetGroup
   id: AnimalMorty
