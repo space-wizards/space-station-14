@@ -43,18 +43,26 @@ public abstract class EquipAttemptBase : CancellableEntityEventArgs
     }
 }
 
-public sealed class BeingEquippedAttemptEvent : EquipAttemptBase
+/// <summary>
+/// Raised on the item that is being equipped.
+/// </summary>
+public sealed class BeingEquippedAttemptEvent(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
+    SlotDefinition slotDefinition) : EquipAttemptBase(equipee, equipTarget, equipment, slotDefinition)
 {
-    public BeingEquippedAttemptEvent(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
-        SlotDefinition slotDefinition) : base(equipee, equipTarget, equipment, slotDefinition)
-    {
-    }
 }
 
-public sealed class IsEquippingAttemptEvent : EquipAttemptBase
+/// <summary>
+/// Raised on the entity that is equipping an item.
+/// </summary>
+public sealed class IsEquippingAttemptEvent(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
+    SlotDefinition slotDefinition) : EquipAttemptBase(equipee, equipTarget, equipment, slotDefinition)
 {
-    public IsEquippingAttemptEvent(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
-        SlotDefinition slotDefinition) : base(equipee, equipTarget, equipment, slotDefinition)
-    {
-    }
+}
+
+/// <summary>
+/// Raised on the entity on who item is being equipped.
+/// </summary>
+public sealed class IsEquippingTargetAttemptEvent(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
+    SlotDefinition slotDefinition) : EquipAttemptBase(equipee, equipTarget, equipment, slotDefinition)
+{
 }
