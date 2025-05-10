@@ -30,7 +30,13 @@ public sealed class DisplacementMapSystem : EntitySystem
             return false;
 
         if (data.ShaderOverride != null)
-            sprite.LayerSetShader(index, data.ShaderOverride);
+        {
+            sprite.LayerSetShader(index,
+                sprite[index] is SpriteComponent.Layer { ShaderPrototype: "unshaded" } //feels like a hack? want to know if there's a better way of doing this.
+                    ? data.ShaderOverrideUnshaded
+                    : data.ShaderOverride);
+        }
+
 
         if (sprite.LayerMapTryGet(displacementKey, out var oldIndex))
             sprite.RemoveLayer(oldIndex);
