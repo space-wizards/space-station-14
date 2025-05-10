@@ -66,6 +66,11 @@
       size: Small
     - type: Appearance
     - type: ImplanterVisuals
+      mapLayers:
+        implantFull:
+          whitelist:
+            components:
+            - SubdermalImplant
     - type: GenericVisualizer
       visuals:
         enum.ImplanterVisuals.Full:

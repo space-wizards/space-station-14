@@ -33,11 +33,11 @@ public sealed class ImplanterVisualsSystem : SharedImplanterVisualSystem
         if (!_appearance.TryGetData<ColorLayerData>(owner, StorageMapVisuals.InitLayers, out var wrapper, appearance))
             return;
 
-        component.SpriteLayers.AddRange(wrapper.QueuedEntities.Keys);
-
-        foreach (var layerName in component.SpriteLayers)
+        foreach (var nc in wrapper.QueuedEntities)
         {
-            spriteComponent.LayerSetColor(layerName, wrapper.QueuedEntities[layerName]);
+            Log.Info($"INIT LAYERS: Layer {nc.LayerName} ADD color changed to {nc.Color}");
+            component.SpriteLayers.Add(nc.LayerName);
+            spriteComponent.LayerSetColor(nc.LayerName, nc.Color);
         }
     }
 
@@ -49,8 +49,15 @@ public sealed class ImplanterVisualsSystem : SharedImplanterVisualSystem
 
         foreach (var layerName in component.SpriteLayers)
         {
-            if(wrapper.QueuedEntities.ContainsKey(layerName))
-                spriteComponent.LayerSetColor(layerName, wrapper.QueuedEntities[layerName]);
+            foreach (var nc in wrapper.QueuedEntities)
+            {
+                Log.Info($"Layer {layerName} == {nc.LayerName} color changed to {nc.Color}");
+                if (nc.LayerName == layerName)
+                {
+                    spriteComponent.LayerSetColor(layerName, nc.Color);
+                    break;
+                }
+            }
         }
     }
 }

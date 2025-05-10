@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Content.Shared.Implants;
 
-public class SharedImplanterVisualSystem : EntitySystem
+public abstract class SharedImplanterVisualSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -32,7 +32,7 @@ public class SharedImplanterVisualSystem : EntitySystem
         if (!TryComp<SubdermalImplantComponent>(ent, out var subcomp))
             return;
 
-        UpdateAppearance(ent, subcomp, comp, appearance);
+        UpdateAppearance(uid, subcomp, comp, appearance);
     }
 
     private void OnEntRemoved(EntityUid uid, ImplanterVisualsComponent comp, ref EntRemovedFromContainerMessage args)
@@ -45,17 +45,17 @@ public class SharedImplanterVisualSystem : EntitySystem
         if (!TryComp<SubdermalImplantComponent>(ent, out var subcomp))
             return;
 
-        UpdateAppearance(ent, subcomp, comp, appearance);
+        UpdateAppearance(uid, subcomp, comp, appearance);
     }
 
     private void UpdateAppearance(EntityUid parent, SubdermalImplantComponent entMovedComp, ImplanterVisualsComponent comp, AppearanceComponent appearance)
     {
         var dict = new Dictionary<string, Color>();
-        if(!TryGetLayer(comp.Owner, comp, out var layer))
+        if(!TryGetLayer(entMovedComp.Owner, comp, out var layer))
             return;
 
         dict.Add(layer, entMovedComp.Color);
-        _appearance.SetData(parent, StorageMapVisuals.LayerChanged, new ColorLayerData(), appearance);
+        _appearance.SetData(parent, StorageMapVisuals.LayerChanged, new ColorLayerData(dict), appearance);
     }
 
     private void OnComponentInit(EntityUid uid, ImplanterVisualsComponent component, ref ComponentInit args)

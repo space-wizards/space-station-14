@@ -1,5 +1,6 @@
 using Content.Shared.Storage.Components;
 using Robust.Shared.Serialization;
+using System.Linq;
 
 namespace Content.Shared.Implants;
 
@@ -25,16 +26,16 @@ public sealed partial class ImplanterVisualsComponent : Component
 [Serializable, NetSerializable]
 public sealed class ColorLayerData : ICloneable
 {
-    public readonly IReadOnlyDictionary<string, Color> QueuedEntities;
+    public readonly LayereColor[] QueuedEntities;
 
     public ColorLayerData()
     {
-        QueuedEntities = new Dictionary<string, Color>();
+        QueuedEntities = Array.Empty<LayereColor>();
     }
 
     public ColorLayerData(IReadOnlyDictionary<string, Color> other)
     {
-        QueuedEntities = other;
+        QueuedEntities = other.Select(kvp => new LayereColor { LayerName = kvp.Key, Color = kvp.Value }).ToArray(); ;
     }
 
     public object Clone()
@@ -42,4 +43,11 @@ public sealed class ColorLayerData : ICloneable
         // QueuedEntities should never be getting modified after this object is created.
         return this;
     }
+}
+
+[Serializable]
+public struct LayereColor
+{
+    public string LayerName;
+    public Color Color;
 }
