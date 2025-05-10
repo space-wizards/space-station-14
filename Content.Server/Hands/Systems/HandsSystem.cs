@@ -226,20 +226,11 @@ namespace Content.Server.Hands.Systems
 
             var throwSpeed = hands.BaseThrowspeed;
 
-            // Let other systems change the thrown entity (useful for virtual items)
-            // or the throw strength.
-            var ev = new BeforeThrowEvent(throwEnt, direction, throwSpeed, player);
-            RaiseLocalEvent(player, ref ev);
-            RaiseLocalEvent(throwEnt, ref ev);
-
-            if (ev.Cancelled)
-                return true;
-
-            // This can grief the above event so we raise it afterwards
+            // This can grief the above event so we raise it afterwards (event was moved to TryThrow itself)
             if (IsHolding(player, throwEnt, out _, hands) && !TryDrop(player, throwEnt, handsComp: hands))
                 return false;
 
-            _throwingSystem.TryThrow(ev.ItemUid, ev.Direction, ev.ThrowSpeed, ev.PlayerUid, compensateFriction: !HasComp<LandAtCursorComponent>(ev.ItemUid));
+            _throwingSystem.TryThrow(throwEnt, direction, throwSpeed, player, compensateFriction: !HasComp<LandAtCursorComponent>(throwEnt));
 
             return true;
         }

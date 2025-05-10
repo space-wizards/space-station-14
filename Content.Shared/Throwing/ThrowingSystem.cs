@@ -100,13 +100,29 @@ public sealed class ThrowingSystem : EntitySystem
 
         var projectileQuery = GetEntityQuery<ProjectileComponent>();
 
+        // Send an event to the entity being thrown, allowing other systems to modify the throw properties
+        var evEntity = new BeforeBeingThrownEvent(uid, direction, baseThrowSpeed);
+        RaiseLocalEvent(uid, ref evEntity);
+
+        // Send an event to the player, allowing other systems to modify the throw properties
+        if (user != null)
+        {
+            var evPlayer = new BeforeThrowEvent(evEntity.ItemUid, direction, evEntity.ThrowSpeed, user.Value);
+            RaiseLocalEvent(user.Value, ref evPlayer);
+
+            evEntity.ThrowSpeed = evPlayer.ThrowSpeed;
+            evEntity.ItemUid = evPlayer.ItemUid;
+        }
+
+        Log.Debug($"speed value yeah ==== {evEntity.ThrowSpeed}");
+
         TryThrow(
-            uid,
+            evEntity.ItemUid,
             direction,
             physics,
             Transform(uid),
             projectileQuery,
-            baseThrowSpeed,
+            evEntity.ThrowSpeed,
             user,
             pushbackRatio,
             friction, compensateFriction: compensateFriction, recoil: recoil, animated: animated, playSound: playSound, doSpin: doSpin, unanchor: unanchor);

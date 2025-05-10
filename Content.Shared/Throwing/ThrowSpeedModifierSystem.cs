@@ -6,10 +6,10 @@ public sealed class ThrowSpeedModifierSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ThrowSpeedModifierComponent, BeforeThrowEvent>(ApplyModifier);
+        SubscribeLocalEvent<ThrowSpeedModifierComponent, BeforeBeingThrownEvent>(ApplyModifier);
     }
 
-    private void ApplyModifier(Entity<ThrowSpeedModifierComponent> ent, ref BeforeThrowEvent args)
+    private void ApplyModifier(Entity<ThrowSpeedModifierComponent> ent, ref BeforeBeingThrownEvent args)
     {
         args.ThrowSpeed += ent.Comp.FlatModifier;
         args.ThrowSpeed *= ent.Comp.Multiplier;
