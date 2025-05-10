@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseMachinePowered
+  parent: [BaseMachinePowered, ConstructibleMachine]
   id: FaxMachineBase
   name: long range fax machine
   description: Bluespace technologies on the application of bureaucracy.
