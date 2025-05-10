@@ -284,6 +284,10 @@ public abstract class SharedRoleSystem : EntitySystem
             return false;
 
         var delete = new List<EntityUid>();
+        // If there were no matches and thus no mind role entity names, we'll need the component's name, to report what role failed to be removed
+        var original = "'" + typeof(T).Name + "'";
+        var deleteName = original;
+
         foreach (var role in mind.Comp.MindRoles)
         {
             if (!HasComp<MindRoleComponent>(role))
@@ -296,9 +300,25 @@ public abstract class SharedRoleSystem : EntitySystem
                 continue;
 
             delete.Add(role);
+            deleteName = RemoveRoleLogNameGeneration(deleteName, MetaData(role).EntityName, original);
         }
 
-        return MindRemoveRoleDo(mind, delete, "type " + typeof(T).Name);
+        return MindRemoveRoleDo(mind, delete, deleteName);
+    }
+
+    private string RemoveRoleLogNameGeneration(string name, string newName, string original)
+    {
+        // If there were matches for deletion, this will run, and we get a new name to replace the original input
+        if (name == original)
+            name = "'" + newName + "'";
+        // It is theoretically possible to get multiple matches
+        // If they have different names, then we want all of them listed
+        else if (!name.Contains(newName))
+            // and we can't just drop the multiple names within a single ' ' section later, because that would
+            // make it look like it's one name that is just formatted to look like a list
+            name = name + ", " + "'" + newName + "'";
+
+        return name;
     }
 
     /// <summary>
@@ -329,6 +349,9 @@ public abstract class SharedRoleSystem : EntitySystem
         if ( !Resolve(mind.Owner, ref mind.Comp))
             return false;
 
+        // If there were no matches and thus no mind role entity names, we'll need the protoId, to report what role failed to be removed
+        var original = "'" + protoId + "'";
+        var deleteName = original;
         var delete = new List<EntityUid>();
         foreach (var role in mind.Comp.MindRoles)
         {
@@ -343,9 +366,10 @@ public abstract class SharedRoleSystem : EntitySystem
                 continue;
 
             delete.Add(role);
+            deleteName = RemoveRoleLogNameGeneration(deleteName, MetaData(role).EntityName, original);
         }
 
-        return MindRemoveRoleDo(mind, delete, "prototype " + protoId);
+        return MindRemoveRoleDo(mind, delete, deleteName);
     }
 
     /// <summary>
@@ -377,7 +401,7 @@ public abstract class SharedRoleSystem : EntitySystem
 
         _adminLogger.Add(LogType.Mind,
             LogImpact.Low,
-            $"All roles of '{logName}' removed from mind of {ToPrettyString(mind.Comp.OwnedEntity)}");
+            $"All roles of type {logName} removed from mind of {ToPrettyString(mind.Comp.OwnedEntity)}");
 
         return true;
     }
