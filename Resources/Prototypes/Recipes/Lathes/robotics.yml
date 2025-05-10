@@ -9,6 +9,13 @@
 
 - type: latheRecipe
   abstract: true
+  id: BaseModulesRecipe
+  categories:
+  - Modules
+  completetime: 2
+
+- type: latheRecipe
+  abstract: true
   parent: BaseRoboticsRecipe
   id: BaseBorgLimbRecipe
   materials:
@@ -17,7 +24,7 @@
 
 - type: latheRecipe
   abstract: true
-  parent: BaseRoboticsRecipe
+  parent: BaseModulesRecipe
   id: BaseBorgModuleRecipe
   completetime: 3
   materials:
