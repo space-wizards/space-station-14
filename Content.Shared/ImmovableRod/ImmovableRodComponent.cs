@@ -1,7 +1,8 @@
 using Content.Shared.Damage;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 
-namespace Content.Server.ImmovableRod;
+namespace Content.Shared.ImmovableRod;
 
 [RegisterComponent]
 public sealed partial class ImmovableRodComponent : Component
@@ -39,14 +40,32 @@ public sealed partial class ImmovableRodComponent : Component
     public bool DestroyTiles = true;
 
     /// <summary>
-    ///     If true, this will gib & delete bodies
+    /// Should this rod gib bodies?
     /// </summary>
     [DataField]
     public bool ShouldGib = true;
+
+    /// <summary>
+    /// Should this rod just delete things it hits?
+    /// </summary>
+    [DataField]
+    public bool ShouldDelete = true;
 
     /// <summary>
     ///     Damage done, if not gibbing
     /// </summary>
     [DataField]
     public DamageSpecifier? Damage;
+
+    /// <summary>
+    ///     What is spared the wrath of Rod?
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? DeletionBlacklist;
+
+    /// <summary>
+    /// If you are somehow alive after being hit by an immovable rod, you should not be walking about.
+    /// </summary>
+    [DataField]
+    public float StaminaDamage = 200.0f;
 }
