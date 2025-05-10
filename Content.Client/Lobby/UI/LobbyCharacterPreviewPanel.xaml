@@ -1,15 +1,54 @@
 <Control
     xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:style="clr-namespace:Content.Client.Stylesheets">
     <BoxContainer Name="VBox" Orientation="Vertical">
-        <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}">
+        <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}" />
+        <BoxContainer Name="Loaded" Orientation="Vertical" Visible="False">
+            <BoxContainer Name="JobGrid"
+                          VerticalExpand="True"
+                          HorizontalExpand="True"
+                          SeparationOverride="6">
 
-        </controls:NanoHeading>
-        <BoxContainer Name="Loaded" Orientation="Vertical"
-                      Visible="False">
-            <Label Name="Summary" HorizontalAlignment="Center" Margin="3 3"/>
-            <BoxContainer Name="ViewBox" Orientation="Horizontal" HorizontalAlignment="Center">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                    <Label Text="{Loc 'humanoid-profile-editor-job-priority-never-button'}" HorizontalAlignment="Center" StyleClasses="LabelBig" Margin="0 6"/>
+                    <GridContainer Name="NeverBox" MaxGridWidth="140" HorizontalAlignment="Center"/>
+                </BoxContainer>
+
+                <PanelContainer MinSize="2 0">
+                    <PanelContainer.PanelOverride>
+                        <graphics:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
+                    </PanelContainer.PanelOverride>
+                </PanelContainer>
+
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                    <Label Text="{Loc 'humanoid-profile-editor-job-priority-low-button'}" HorizontalAlignment="Center" StyleClasses="LabelBig" Margin="6"/>
+                    <GridContainer Name="LowBox" MaxGridWidth="140" HorizontalAlignment="Center"/>
+                </BoxContainer>
+
+                <PanelContainer MinSize="2 0">
+                    <PanelContainer.PanelOverride>
+                        <graphics:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
+                    </PanelContainer.PanelOverride>
+                </PanelContainer>
+
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                    <Label Text="{Loc 'humanoid-profile-editor-job-priority-medium-button'}" HorizontalAlignment="Center" StyleClasses="LabelBig" Margin="0 6"/>
+                    <GridContainer Name="MediumBox" MaxGridWidth="140" HorizontalAlignment="Center"/>
+                </BoxContainer>
+
+                <PanelContainer MinSize="2 0">
+                    <PanelContainer.PanelOverride>
+                        <graphics:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
+                    </PanelContainer.PanelOverride>
+                </PanelContainer>
+
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                    <Label Text="{Loc 'humanoid-profile-editor-job-priority-high-button'}" HorizontalAlignment="Center" StyleClasses="LabelBig" Margin="0 6"/>
+                    <BoxContainer Name="HighBox" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </BoxContainer>
 
             </BoxContainer>
             <controls:VSpacer/>

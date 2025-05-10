@@ -9,6 +9,7 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects.Components.Localization;
@@ -72,6 +73,23 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         var root = yamlStream.Documents[0].RootNode;
         var export = _serManager.Read<HumanoidProfileExport>(root.ToDataNode(), notNullableOverride: true);
+
+        switch (export.Version)
+        {
+            case 1:
+                var jobPriorities = root["profile"]["_jobPriorities"] as YamlMappingNode ?? new YamlMappingNode();
+                var jobPreferences = new HashSet<ProtoId<JobPrototype>>();
+                foreach (var (job, prio) in jobPriorities)
+                {
+                    if (!_proto.TryIndex<JobPrototype>(job.AsString(), out var jobProto))
+                        continue;
+                    if (prio.AsEnum<JobPriority>() != JobPriority.Never)
+                        jobPreferences.Add(jobProto);
+                }
+
+                export.Profile = export.Profile.WithJobPreferences(jobPreferences);
+                break;
+        }
 
         /*
          * Add custom handling here for forks / version numbers if you care.
@@ -379,6 +397,8 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             return;
         }
 
+        SaveBaseProfile((uid, humanoid), profile);
+
         SetSpecies(uid, profile.Species, false, humanoid);
         SetSex(uid, profile.Sex, false, humanoid);
         humanoid.EyeColor = profile.Appearance.EyeColor;
@@ -448,6 +468,32 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.Age = profile.Age;
 
         Dirty(uid, humanoid);
+    }
+
+    /// <summary>
+    /// Save the humanoid profile used to create this entity
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="profile"></param>
+    private void SaveBaseProfile(Entity<HumanoidAppearanceComponent?> ent, HumanoidCharacterProfile profile)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.BaseProfile = profile.Clone();
+    }
+
+    /// <summary>
+    /// Retrieve the humanoid profile used to create this entity
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <returns></returns>
+    public HumanoidCharacterProfile? GetBaseProfile(Entity<HumanoidAppearanceComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return null;
+
+        return ent.Comp.BaseProfile;
     }
 
     /// <summary>
