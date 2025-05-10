@@ -274,9 +274,9 @@
   description: "An armored chestpiece that provides protection whilst still offering maximum mobility and flexibility. Issued only to the station's finest."
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Armor/captain_carapace.rsi #imp
   - type: Clothing
-    sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Armor/captain_carapace.rsi #imp
   - type: Armor
     modifiers:
       coefficients:

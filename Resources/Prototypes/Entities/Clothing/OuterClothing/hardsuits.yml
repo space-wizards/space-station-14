@@ -329,9 +329,9 @@
   description: A formal armored spacesuit, made for the station's captain.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/capspace.rsi #imp
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/capspace.rsi #imp
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000

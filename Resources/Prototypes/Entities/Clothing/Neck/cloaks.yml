@@ -111,7 +111,7 @@
   description: A lavish and decorated cloak for special occasions.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/capcloakformal.rsi
+    sprite: _Impstation/Clothing/Neck/Cloaks/capcloakformal.rsi #imp
   - type: StealTarget
     stealGroup: HeadCloak
 

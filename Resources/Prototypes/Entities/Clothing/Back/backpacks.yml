@@ -107,7 +107,7 @@
   description: It's a special backpack made exclusively for Nanotrasen officers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/captain.rsi
+    sprite: _Impstation/Clothing/Back/Backpacks/captain.rsi #imp
 
 - type: entity
   parent: ClothingBackpack
