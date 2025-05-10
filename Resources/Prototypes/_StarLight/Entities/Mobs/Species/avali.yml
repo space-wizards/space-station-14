@@ -127,15 +127,14 @@
     thermalRegulationTemperatureThreshold: 10
   - type: AvaliStasis
     enterStasisAction: ActionAvaliStasisEnter
+    stasisCooldown: 60 #currently not working, needs to be fixed.
     exitStasisAction: ActionAvaliStasisExit
-    stasisCooldown: 1
-    stasisDuration: 120
-    stasisBluntHeal: 10
-    stasisSlashingHeal: 10
-    stasisPiercingHeal: 10
-    stasisHeatHeal: 10
-    stasisColdHeal: 10
-    stasisDamageResistance: 0.5
+    stasisBluntHeal: 1.5 #Full heal in ~ 1 minute, an age in combat. Editing in YAML doesn't work, do so in the C# code.
+    stasisSlashHeal: 1.5 
+    stasisPiercingHeal: 1.5 
+    stasisHeatHeal: 1.5
+    stasisColdHeal: 1.5
+    stasisDamageResistance: 1.5 #Covered in nanite shell and immobile.
 
 - type: entity
   parent: BaseSpeciesDummy

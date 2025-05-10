@@ -37,7 +37,7 @@ public sealed partial class AvaliStasisComponent : Component
     /// <summary>
     /// The cooldown time for the stasis ability, in seconds.
     /// </summary>
-    [DataField] public float StasisCooldown = 1f;
+    [DataField] public float StasisCooldown = 60f;
 
     /// <summary>
     /// The amount of time the stasis ability will last. In seconds.
@@ -47,27 +47,27 @@ public sealed partial class AvaliStasisComponent : Component
     /// <summary>
     /// The amount of brute damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] public float StasisBluntHeal = 10f;
+    [DataField] public float StasisBluntHeal = 1.5f;
 
     /// <summary>
     /// The amount of sharp damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] public float StasisSlashingHeal = 10f;
+    [DataField] public float StasisSlashingHeal = 1.5f;
 
     /// <summary>
     /// The amount of piercing damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] public float StasisPiercingHeal = 10f;
+    [DataField] public float StasisPiercingHeal = 1.5f;
 
     /// <summary>
     /// The amount of heat damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] public float StasisHeatHeal = 10f;
+    [DataField] public float StasisHeatHeal = 1.5f;
 
     /// <summary>
     /// The amount of cold damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] public float StasisColdHeal = 10f;
+    [DataField] public float StasisColdHeal = 1.5f;
 
     /// <summary>
     /// The amount of damage resistance while in stasis (0-1, where 1 is 100% resistance).
