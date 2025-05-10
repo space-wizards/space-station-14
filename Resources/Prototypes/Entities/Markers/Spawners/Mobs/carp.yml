@@ -1,0 +1,55 @@
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobCarp
+  name: Space Carp Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/space.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCarp
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobCarpHolo
+  name: Holocarp Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/holo.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCarpHolo
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobCarpMagic
+  name: Magicarp Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/magic.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCarpMagic
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobShark
+  name: Space Sharkminnow Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/sharkminnow.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobShark
