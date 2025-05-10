@@ -78,7 +78,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var state = new ChemMasterBoundUserInterfaceState(
                 chemMaster.Mode, chemMaster.SortingType, BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
-                bufferReagents, bufferCurrentVolume, chemMaster.PillType, chemMaster.PillDosageLimit, updateLabel);
+                bufferReagents, bufferCurrentVolume, chemMaster.PillType, chemMaster.PillNumber, chemMaster.PillDosage, chemMaster.PillDosageLimit, updateLabel);
 
             _userInterfaceSystem.SetUiState(owner, ChemMasterUiKey.Key, state);
         }
@@ -212,6 +212,8 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!WithdrawFromBuffer(chemMaster, needed, user, out var withdrawal))
                 return;
 
+            chemMaster.Comp.PillNumber = message.Number;
+            chemMaster.Comp.PillDosage = message.Dosage;
             _labelSystem.Label(container, message.Label);
 
             for (var i = 0; i < message.Number; i++)
@@ -220,7 +222,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 _storageSystem.Insert(container, item, out _, user: user, storage);
                 _labelSystem.Label(item, message.Label);
 
-                _solutionContainerSystem.EnsureSolutionEntity(item, SharedChemMaster.PillSolutionName,out var itemSolution ,message.Dosage);
+                _solutionContainerSystem.EnsureSolutionEntity(item, SharedChemMaster.PillSolutionName, out var itemSolution, message.Dosage);
                 if (!itemSolution.HasValue)
                     return;
 
@@ -338,7 +340,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!TryComp(container, out StorageComponent? storage))
                 return null;
 
-            var pills = storage.Container.ContainedEntities.Select((Func<EntityUid, (string, FixedPoint2 quantity)>) (pill =>
+            var pills = storage.Container.ContainedEntities.Select((Func<EntityUid, (string, FixedPoint2 quantity)>)(pill =>
             {
                 _solutionContainerSystem.TryGetSolution(pill, SharedChemMaster.PillSolutionName, out _, out var solution);
                 var quantity = solution?.Volume ?? FixedPoint2.Zero;

@@ -42,10 +42,10 @@ namespace Content.Client.Chemistry.UI
                 new ChemMasterSetModeMessage(ChemMasterMode.Discard));
             _window.CreatePillButton.OnPressed += _ => SendMessage(
                 new ChemMasterCreatePillsMessage(
-                    (uint) _window.PillDosage.Value, (uint) _window.PillNumber.Value, _window.LabelLine));
+                    (uint)_window.PillDosage.Value, (uint)_window.PillNumber.Value, _window.LabelLine));
             _window.CreateBottleButton.OnPressed += _ => SendMessage(
                 new ChemMasterOutputToBottleMessage(
-                    (uint) _window.BottleDosage.Value, _window.LabelLine));
+                    (uint)_window.BottleDosage.Value, _window.LabelLine));
             _window.BufferSortButton.OnPressed += _ => SendMessage(
                     new ChemMasterSortingTypeCycleMessage());
 
@@ -69,7 +69,7 @@ namespace Content.Client.Chemistry.UI
         {
             base.UpdateState(state);
 
-            var castState = (ChemMasterBoundUserInterfaceState) state;
+            var castState = (ChemMasterBoundUserInterfaceState)state;
 
             _window?.UpdateState(castState); // Update window state
         }

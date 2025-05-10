@@ -15,6 +15,12 @@ namespace Content.Server.Chemistry.Components
         [DataField("pillType"), ViewVariables(VVAccess.ReadWrite)]
         public uint PillType = 0;
 
+        [DataField]
+        public uint PillNumber = 0;
+
+        [DataField]
+        public uint PillDosage = 20;
+
         [DataField("mode"), ViewVariables(VVAccess.ReadWrite)]
         public ChemMasterMode Mode = ChemMasterMode.Transfer;
 
