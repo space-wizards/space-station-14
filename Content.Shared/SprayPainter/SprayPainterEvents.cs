@@ -1,4 +1,7 @@
+using Content.Shared.Decals;
 using Content.Shared.DoAfter;
+using Content.Shared.SprayPainter.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SprayPainter;
@@ -10,12 +13,39 @@ public enum SprayPainterUiKey
 }
 
 [Serializable, NetSerializable]
+public sealed class SprayPainterDecalPickedMessage(ProtoId<DecalPrototype> protoId) : BoundUserInterfaceMessage
+{
+    public ProtoId<DecalPrototype> DecalPrototype = protoId;
+}
+
+[Serializable, NetSerializable]
+public sealed class SprayPainterDecalColorPickedMessage(Color? color) : BoundUserInterfaceMessage
+{
+    public Color? Color = color;
+}
+
+[Serializable, NetSerializable]
+public sealed class SprayPainterDecalAnglePickedMessage(int angle) : BoundUserInterfaceMessage
+{
+    public int Angle = angle;
+}
+
+[Serializable, NetSerializable]
+public sealed class SprayPainterTabChangedMessage(int index, bool isSelectedTabWithDecals) : BoundUserInterfaceMessage
+{
+    public readonly int Index = index;
+    public readonly bool IsSelectedTabWithDecals = isSelectedTabWithDecals;
+}
+
+[Serializable, NetSerializable]
 public sealed class SprayPainterSpritePickedMessage : BoundUserInterfaceMessage
 {
+    public readonly string Category;
     public readonly int Index;
 
-    public SprayPainterSpritePickedMessage(int index)
+    public SprayPainterSpritePickedMessage(string category, int index)
     {
+        Category = category;
         Index = index;
     }
 }
@@ -32,24 +62,26 @@ public sealed class SprayPainterColorPickedMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterDoorDoAfterEvent : DoAfterEvent
+public sealed partial class SprayPainterDoAfterEvent : DoAfterEvent
 {
-    /// <summary>
-    /// Base RSI path to set for the door sprite.
-    /// </summary>
     [DataField]
-    public string Sprite;
+    public string Prototype;
 
-    /// <summary>
-    /// Department id to set for the door, if the style has one.
-    /// </summary>
     [DataField]
-    public string? Department;
+    public string Category;
 
-    public SprayPainterDoorDoAfterEvent(string sprite, string? department)
+    [DataField]
+    public PaintableVisuals Visuals;
+
+    [DataField]
+    public int Cost;
+
+    public SprayPainterDoAfterEvent(string prototype, string category, PaintableVisuals visuals, int cost)
     {
-        Sprite = sprite;
-        Department = department;
+        Prototype = prototype;
+        Category = category;
+        Visuals = visuals;
+        Cost = cost;
     }
 
     public override DoAfterEvent Clone() => this;
@@ -58,9 +90,6 @@ public sealed partial class SprayPainterDoorDoAfterEvent : DoAfterEvent
 [Serializable, NetSerializable]
 public sealed partial class SprayPainterPipeDoAfterEvent : DoAfterEvent
 {
-    /// <summary>
-    /// Color of the pipe to set.
-    /// </summary>
     [DataField]
     public Color Color;
 
@@ -68,6 +97,19 @@ public sealed partial class SprayPainterPipeDoAfterEvent : DoAfterEvent
     {
         Color = color;
     }
+
+    public override DoAfterEvent Clone() => this;
+}
+
+[Serializable, NetSerializable]
+public sealed partial class SprayPainterCanisterDoAfterEvent : DoAfterEvent
+{
+
+    [DataField]
+    public string Prototype = default!;
+
+    [DataField]
+    public string Category = default!;
 
     public override DoAfterEvent Clone() => this;
 }

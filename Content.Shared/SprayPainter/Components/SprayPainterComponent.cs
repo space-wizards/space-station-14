@@ -1,37 +1,45 @@
-using Content.Shared.DoAfter;
+using Content.Shared.Decals;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SprayPainter.Components;
 
+/// <summary>
+/// Responsible for storing the state of the spray painter.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SprayPainterComponent : Component
 {
+    /// <summary>
+    /// The sound to be played after painting the entities.
+    /// </summary>
     [DataField]
     public SoundSpecifier SpraySound = new SoundPathSpecifier("/Audio/Effects/spray2.ogg");
 
     [DataField]
-    public TimeSpan AirlockSprayTime = TimeSpan.FromSeconds(3);
-
-    [DataField]
     public TimeSpan PipeSprayTime = TimeSpan.FromSeconds(1);
 
-    /// <summary>
-    /// Pipe color chosen to spray with.
-    /// </summary>
     [DataField, AutoNetworkedField]
     public string? PickedColor;
 
-    /// <summary>
-    /// Pipe colors that can be selected.
-    /// </summary>
     [DataField]
     public Dictionary<string, Color> ColorPalette = new();
 
-    /// <summary>
-    /// Airlock style index selected.
-    /// After prototype reload this might not be the same style but it will never be out of bounds.
-    /// </summary>
     [DataField, AutoNetworkedField]
-    public int Index;
+    public Dictionary<string, int> Indexes = new();
+
+    [DataField, AutoNetworkedField]
+    public int SelectedTab;
+
+    public bool IsSelectedTabWithDecals = false;
+
+    [DataField, AutoNetworkedField]
+    public ProtoId<DecalPrototype>? SelectedDecal;
+
+    [DataField, AutoNetworkedField]
+    public Color? SelectedDecalColor;
+
+    [DataField, AutoNetworkedField]
+    public int SelectedDecalAngle;
 }
