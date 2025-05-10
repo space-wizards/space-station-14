@@ -108,7 +108,7 @@ namespace Content.Server.Hands.Systems
                 _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
 
             var offsetRandomCoordinates = _transformSystem.GetMoverCoordinates(args.Target).Offset(_random.NextVector2(1f, 1.5f));
-            if (!ThrowHeldItem(args.Target, offsetRandomCoordinates))
+            if (!ThrowHeldItem(args.Target, offsetRandomCoordinates, args.Item))
                 return;
 
             args.PopupPrefix = "disarm-action-";
@@ -194,15 +194,18 @@ namespace Content.Server.Hands.Systems
         /// <summary>
         /// Throw the player's currently held item.
         /// </summary>
-        public bool ThrowHeldItem(EntityUid player, EntityCoordinates coordinates, float minDistance = 0.1f)
+        public bool ThrowHeldItem(EntityUid player, EntityCoordinates coordinates, EntityUid? throwOverride = null, float minDistance = 0.1f)
         {
             if (ContainerSystem.IsEntityInContainer(player) ||
                 !TryComp(player, out HandsComponent? hands) ||
-                hands.ActiveHandEntity is not { } throwEnt ||
-                !_actionBlockerSystem.CanThrow(player, throwEnt))
+                hands.ActiveHandEntity == null &&
+                throwOverride == null)
                 return false;
 
-            if (_timing.CurTime < hands.NextThrowTime)
+            var throwEnt = throwOverride ?? hands.ActiveHandEntity!.Value;
+
+            if (!_actionBlockerSystem.CanThrow(player, throwEnt) ||
+                _timing.CurTime < hands.NextThrowTime)
                 return false;
             hands.NextThrowTime = _timing.CurTime + hands.ThrowCooldown;
 
