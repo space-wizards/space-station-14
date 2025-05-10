@@ -40,9 +40,9 @@
 
 - type: construction
   id: BigBox
-  graph: BaseBigBox
+  graph: BigBox
   startNode: start
-  targetNode: basebigbox
+  targetNode: bigbox
   category: construction-category-storage
   objectType: Structure
 
