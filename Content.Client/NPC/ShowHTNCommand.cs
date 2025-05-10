@@ -3,14 +3,15 @@ using Robust.Shared.Console;
 
 namespace Content.Client.NPC;
 
-public sealed class ShowHTNCommand : IConsoleCommand
+public sealed class ShowHTNCommand : LocalizedEntityCommands
 {
-    public string Command => "showhtn";
-    public string Description => "Shows the current status for HTN NPCs";
-    public string Help => $"{Command}";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    [Dependency] private readonly HTNSystem _htn = default!;
+
+    public override string Command => "showhtn";
+    public override string Description => "Shows the current status for HTN NPCs";
+    public override string Help => $"{Command}";
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var npcs = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<HTNSystem>();
-        npcs.EnableOverlay ^= true;
+        _htn.EnableOverlay ^= true;
     }
 }

@@ -8,6 +8,7 @@ namespace Content.Client.NodeContainer
 {
     public sealed class NodeVisCommand : IConsoleCommand
     {
+        [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IEntityManager _e = default!;
 
         public string Command => "nodevis";
@@ -16,8 +17,7 @@ namespace Content.Client.NodeContainer
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var adminMan = IoCManager.Resolve<IClientAdminManager>();
-            if (!adminMan.HasFlag(AdminFlags.Debug))
+            if (!_adminManager.HasFlag(AdminFlags.Debug))
             {
                 shell.WriteError("You need +DEBUG for this command");
                 return;
