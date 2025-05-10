@@ -12,38 +12,38 @@
       "directions": 4
     },
     {
-      "name": "corgi_rest",
+      "name": "corgi-rest",
       "directions": 4
     },
     {
-      "name": "corgi_dead"
+      "name": "corgi-dead"
     },
     {
       "name": "ian",
       "directions": 4
     },
     {
-      "name": "ian_dead"
+      "name": "ian-dead"
     },
     {
-      "name": "corgi_deadcollar"
+      "name": "corgi-collar-dead"
     },
     {
-      "name": "corgi_deadtag"
+      "name": "corgi-tag-dead"
     },
     {
-      "name": "ian_shaved",
+      "name": "ian-shaved",
       "directions": 4
     },
     {
-      "name": "ian_shaved_dead"
+      "name": "ian-shaved-dead"
     },
     {
-      "name": "corgicollar",
+      "name": "corgi-collar",
       "directions": 4
     },
     {
-      "name": "corgitag",
+      "name": "corgi-tag",
       "directions": 4
     },
     {
@@ -51,21 +51,21 @@
       "directions": 4
     },
     {
-      "name": "lisa_dead"
+      "name": "lisa-dead"
     },
     {
-      "name": "lisa_shaved",
+      "name": "lisa-shaved",
       "directions": 4
     },
     {
-      "name": "lisa_shaved_dead"
+      "name": "lisa-shaved-dead"
     },
     {
       "name": "narsian",
       "directions": 4
     },
     {
-      "name": "narsian_dead",
+      "name": "narsian-dead",
       "directions": 1
     },
     {
@@ -91,10 +91,10 @@
       ]
     },
     {
-      "name": "old_ian_dead"
+      "name": "old_ian-dead"
     },
     {
-      "name": "old_ian_shaved",
+      "name": "old_ian-shaved",
       "directions": 4,
       "delays": [
         [
@@ -116,34 +116,34 @@
       ]
     },
     {
-      "name": "old_ian_shaved_dead"
+      "name": "old_ian-shaved-dead"
     },
     {
       "name": "puppy",
       "directions": 4
     },
     {
-      "name": "puppy_dead"
+      "name": "puppy-dead"
     },
     {
-      "name": "puppy_deadcollar"
+      "name": "puppy-collar-dead"
     },
     {
-      "name": "puppy_deadtag"
+      "name": "puppy-tag-dead"
     },
     {
-      "name": "puppy_shaved",
+      "name": "puppy-shaved",
       "directions": 4
     },
     {
-      "name": "puppy_shaved_dead"
+      "name": "puppy-shaved-dead"
     },
     {
-      "name": "puppycollar",
+      "name": "puppy-collar",
       "directions": 4
     },
     {
-      "name": "puppytag",
+      "name": "puppy-tag",
       "directions": 4
     },
     {
@@ -151,7 +151,7 @@
       "directions": 4
     },
     {
-      "name": "real_mouse_dead"
+      "name": "real_mouse-dead"
     }
   ]
 }
