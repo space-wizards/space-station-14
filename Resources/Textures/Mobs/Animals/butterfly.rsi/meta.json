@@ -8,14 +8,6 @@
   "copyright": "Taken from https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b",
   "states": [
     {
-      "name": "dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
       "name": "butterfly",
       "directions": 4,
       "delays": [
@@ -42,6 +34,14 @@
           0.1,
           0.1,
           0.1
+        ]
+      ]
+    },
+    {
+      "name": "dead",
+      "delays": [
+        [
+          1
         ]
       ]
     }
