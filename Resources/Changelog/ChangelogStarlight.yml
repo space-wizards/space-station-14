@@ -5700,4 +5700,11 @@ Entries:
   id: 790
   time: '2025-05-10T04:51:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Changed chatbox minimum width to be configurable via settings.
+    type: Tweak
+  id: 791
+  time: '2025-05-10T04:54:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/602
 
