@@ -168,7 +168,7 @@
 - type: entity
   parent: [ BaseKnife, BaseWeaponCrusher, BaseSecurityCargoContraband]
   id: WeaponCrusherDagger
-  name:  crusher dagger
+  name: crusher dagger
   description: A scaled down version of a proto-kinetic crusher. Uses kinetic energy to vibrate the blade at high speeds.
   components:
   - type: Sprite
