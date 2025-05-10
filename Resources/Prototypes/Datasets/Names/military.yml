@@ -1,60 +1,17 @@
-﻿- type: dataset
-  id: NamesFirstMilitaryLeader
+﻿- type: localizedDataset
+  id: NamesMilitaryFirstLeader
   values:
-  - Colonel
-  - Commander
-  - Lieutenant
-  - Major
-  
-- type: dataset
-  id: NamesFirstMilitary
-  values:
-  - Corporal
-  - Sergeant
-  - Specialist
+    prefix: names-military-leader-first-dataset-
+    count: 4
 
-- type: dataset
-  id: NamesLastMilitary
+- type: localizedDataset
+  id: NamesMilitaryFirst
   values:
-  - Agena
-  - Andromeda
-  - Antares
-  - Aquarius
-  - Beid
-  - Betelgeuse
-  - Canopus
-  - Capricorn
-  - Celaeno
-  - Centaur
-  - Chameleon
-  - Chau
-  - Cygnus
-  - Deneb
-  - Dragon
-  - Electra
-  - Fomalhaut
-  - Ginan
-  - Hercules
-  - Labr
-  - Leonis
-  - Matar
-  - Microscopium
-  - Nihal
-  - Ophiuchus
-  - Oculus
-  - Orion
-  - Perseus
-  - Phoenix
-  - Procyon
-  - Regulus
-  - Rigel
-  - Sargas
-  - Schedar
-  - Shaula
-  - Sirius
-  - Tabit
-  - Taurus
-  - Ukdah
-  - Vega
-  - Yildun
-  - Zosma
+    prefix: names-military-first-dataset-
+    count: 3
+
+- type: localizedDataset
+  id: NamesMilitaryLast
+  values:
+    prefix: names-military-last-dataset-
+    count: 42

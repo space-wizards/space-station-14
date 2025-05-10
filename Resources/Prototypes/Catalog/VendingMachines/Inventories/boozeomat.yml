@@ -26,6 +26,7 @@
     DrinkGrenadineBottleFull: 2
     DrinkJuiceLimeCarton: 3
     DrinkJuiceLemonCarton: 3
+    DrinkJuicePineappleCarton: 3
     DrinkJuiceOrangeCarton: 3
     DrinkJuiceTomatoCarton: 3
     DrinkCoffeeLiqueurBottleFull: 3
@@ -47,7 +48,7 @@
     DrinkBeerCan: 5
     DrinkWineCan: 5
   contrabandInventory:
-    EthanolChemistryBottle: 3
+    ChemistryBottleEthanol: 3
     DrinkBottleOfNothingFull: 1
   emaggedInventory:
     DrinkPoisonWinebottleFull: 2

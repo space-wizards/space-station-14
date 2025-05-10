@@ -324,3 +324,17 @@
     sprite: Clothing/Head/Misc/hairflower.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/hairflower.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPerformerWig
+  name: performer's wig
+  description: On a closer inspection, it appears that it is made from optic fiber.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/performer-wig.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/performer-wig.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair

@@ -31,8 +31,9 @@
     size: Normal
   - type: RandomMetadata # No metagaming these, jimbo.
     nameSegments:
-    - SyndicateNamesPrefix
-    - SyndicateNamesNormal
+    - NamesSyndicatePrefix
+    - NamesSyndicateNormal
+    nameFormat: name-format-nukie-generic
   - type: Damageable
     damageContainer: Inorganic
   - type: ToggleableLightVisuals
@@ -80,8 +81,8 @@
 - type: entity
   parent: BaseDecoy
   id: BalloonAgent
-  name: agent balloon
-  description: Upon closer inspection, this Syndicate agent is actually a balloon.
+  name: corpsman balloon
+  description: Upon closer inspection, this Syndicate corpsman is actually a balloon.
   components:
   - type: Sprite
     sprite: Objects/Tools/Decoys/agent_decoy.rsi
