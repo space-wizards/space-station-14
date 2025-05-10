@@ -19,8 +19,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
         density: 25
         mask:
@@ -71,6 +70,23 @@
     receiveFrequencyId: Fax
     transmitFrequencyId: Fax
   - type: RequireProjectileTarget
+
+# board
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: FaxMachineCircuitboard
+  name: fax circuit board
+  suffix: Fax Circuit Board
+  description: A circuit board for a fax machine.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: FaxMachineBase
+      stackRequirements:
+        Manipulator: 1
+        Steel: 3
+        Cable: 1
 
 # Special
 - type: entity
