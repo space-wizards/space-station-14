@@ -101,3 +101,42 @@
   - type: ConditionalSpawner
     prototypes:
       - MobRandomCommandCorpse
+
+- type: entity
+  name: Random Syndicate Corpse Spawner
+  id: RandomSyndicateCorpseSpawner
+  parent: SalvageHumanCorpseSpawner
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: green
+  - type: ConditionalSpawner
+    prototypes:
+    - MobRandomSyndicateCorpse
+
+- type: entity
+  name: Random Pirate Corpse Spawner
+  id: RandomPirateCorpseSpawner
+  parent: SalvageHumanCorpseSpawner
+  components:
+  - type: Sprite
+    layers:
+    - state: pirate
+    - state: green
+  - type: ConditionalSpawner
+    prototypes:
+    - MobRandomPirateCorpse
+
+- type: entity
+  name: Random Mercenary Corpse Spawner
+  id: RandomMercenaryCorpseSpawner
+  parent: SalvageHumanCorpseSpawner
+  components:
+  - type: Sprite
+    layers:
+    - state: mercenary
+    - state: green
+  - type: ConditionalSpawner
+    prototypes:
+    - MobRandomMercenaryCorpse
