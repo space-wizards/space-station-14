@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Security jetpacks are now in security hardsuit lockers (they're coming
-      for you)
-    type: Tweak
-  id: 1132
-  time: '2025-02-16T01:25:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1668
 - author: widgetbeck
   changes:
   - message: Drones now have a station pinpointer in their pocket, so they don't get
@@ -4177,3 +4169,10 @@
   id: 1631
   time: '2025-05-10T07:34:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2414
+- author: LazyRiverfolk
+  changes:
+  - message: Kodepiiae have a unique warden's hardsuit.
+    type: Tweak
+  id: 1632
+  time: '2025-05-10T07:35:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2419
