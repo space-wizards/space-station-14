@@ -30,25 +30,31 @@ steal-target-groups-forensic-scanner = forensic scanner
 steal-target-groups-flippo-engraved-lighter = detective's Flippo engraved lighter
 steal-target-groups-ammo-tech-fab-circuitboard = ammo techfab circuit board
 steal-target-groups-clothing-head-hat-warden = warden's cap
+steal-target-groups-wanted-list-cartridge = wanted list cartridge
+steal-target-groups-interrogator-lamp = interrogator lamp
+steal-target-groups-clothing-neck-lawyer-badge = lawyer badge
 steal-target-groups-clothing-outer-hardsuit-void-paramed = paramedic void suit
 steal-target-groups-medical-tech-fab-circuitboard = medical techfab machine board
 steal-target-groups-clothing-headset-alt-medical = chief medical officer's over-ear headset
-steal-target-groups-research-and-development-server-machine-circuitboard = R&D server machine board
+steal-target-groups-crew-monitor-server-board = crew monitoring server board
 steal-target-groups-fire-axe = fireaxe
 steal-target-groups-ame-part-flatpack =  AME flatpack
 steal-target-groups-salvage-expeditions-computer-circuitboard = salvage expeditions computer board
 steal-target-groups-cargo-shuttle-console-circuitboard = cargo shuttle console board
+steal-target-groups-astro-nav-cartridge = astronav cartridge
 steal-target-groups-clothing-eyes-hud-beer = beer goggles
 steal-target-groups-bible = bible
+steal-target-groups-butchers-cleaver = butcher's cleaver
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal
-steal-target-groups-wanted-list-cartridge = wanted list cartridge
+steal-target-groups-command-id = command ID card
+steal-target-groups-access-configurator = access configurator
+steal-target-groups-toolbox-golden = golden toolbox
 
 # Thief structures
 steal-target-groups-teg = teg generator part
 steal-target-groups-freezer-heater = freezer or heater
 steal-target-groups-altar-nanotrasen = nanotrasen altar (any)
-
 steal-target-groups-nuclear-bomb = nuclear fission explosive
 steal-target-groups-fax-machine-captain = captain long range fax machine
 steal-target-groups-chem-dispenser = chemical dispenser
@@ -56,10 +62,10 @@ steal-target-groups-xeno-artifact = alien artifact
 steal-target-groups-booze-dispenser = booze dispenser
 steal-target-groups-plant-rd = "RD's potted plant"
 steal-target-groups-toilet-golden-dirty-water = golden toilet
+steal-target-groups-telecomm = telecomms server
 
 # Thief Animal
 steal-target-groups-animal-named-cat = CMO's Cat
-
 steal-target-groups-animal-ian = Ian
 steal-target-groups-animal-mc-griff = McGriff
 steal-target-groups-animal-walter = Walter

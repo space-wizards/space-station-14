@@ -91,8 +91,8 @@
   id: BaseStealObjective
   components:
   - type: StealCondition
-    objectiveNoOwnerText: objective-condition-steal-title-no-owner
     objectiveText: objective-condition-steal-title
+    objectiveNoOwnerText: objective-condition-steal-title-alive-no-owner
     descriptionText: objective-condition-steal-description
     descriptionMultiplyText: objective-condition-thief-multiply-description
 
