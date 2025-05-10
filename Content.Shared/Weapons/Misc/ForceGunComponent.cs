@@ -13,7 +13,7 @@ public sealed partial class ForceGunComponent : BaseForceGunComponent
     public float ThrowDistance = 15f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("throwForce"), AutoNetworkedField]
-    public float ThrowForce = 30f;
+    public float ThrowForce = 15f;
 
     /// <summary>
     /// The entity currently tethered.
