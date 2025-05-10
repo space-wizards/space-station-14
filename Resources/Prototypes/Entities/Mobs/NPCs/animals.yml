@@ -1903,27 +1903,6 @@
     tags:
     - VimPilot
 
-- type: entity
-  name: possum
-  parent: MobPossum
-  suffix: Old sprite
-  id: MobPossumOld
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Animals/possum_old.rsi
-    layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: possum_old
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: possum_old
-      Critical:
-        Base: possum_dead_old
-      Dead:
-        Base: possum_dead_old
-
 ## -Dogs
 - type: entity
   parent: [SimpleMobBase, StripableInventoryBase]
