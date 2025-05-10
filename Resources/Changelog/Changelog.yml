@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Booblesnoot42
-  changes:
-  - message: Removing the security plate from an intercom will no longer delete its
-      encryption keys.
-    type: Fix
-  id: 7950
-  time: '2025-02-13T19:31:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34911
 - author: Velken
   changes:
   - message: Paramedic Void Suit now has flashlight and an ambulance siren.
@@ -3934,3 +3926,11 @@
   id: 8452
   time: '2025-05-10T09:58:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37308
+- author: EmoGarbage404
+  changes:
+  - message: Omnizine no longer "wastes" healing when administered to patients without
+      even amounts of all damage types.
+    type: Tweak
+  id: 8453
+  time: '2025-05-10T12:51:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37129
