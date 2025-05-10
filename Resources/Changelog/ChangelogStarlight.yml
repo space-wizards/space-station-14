@@ -5664,4 +5664,40 @@ Entries:
   id: 785
   time: '2025-05-09T17:52:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/606
+- author: Happyrobot33
+  changes:
+  - message: You can see your hivemind ID in the C menu now.
+    type: Add
+  id: 786
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Hiveminds now have TTS.
+    type: Tweak
+  id: 787
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Paradox clones now have the proper ID number for collective minds.
+    type: Fix
+  id: 788
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Collective minds are validated without needing to send a message first
+      now.
+    type: Fix
+  id: 789
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Shared hivemind for space dragon and space carps works properly now.
+    type: Fix
+  id: 790
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
 
