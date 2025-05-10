@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: irismessage
-  changes:
-  - message: Our knowledge has widened.
-    type: Add
-  id: 1131
-  time: '2025-02-15T21:44:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1697
 - author: Sha-Seng
   changes:
   - message: Security jetpacks are now in security hardsuit lockers (they're coming
@@ -4177,3 +4170,10 @@
   id: 1630
   time: '2025-05-10T07:32:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2413
+- author: Sha-Seng
+  changes:
+  - message: A spare Military-Style Medical Mask is now in the brigmed locker
+    type: Add
+  id: 1631
+  time: '2025-05-10T07:34:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2414
