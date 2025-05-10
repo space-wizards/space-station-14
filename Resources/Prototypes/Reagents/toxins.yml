@@ -58,7 +58,6 @@
       effects:
       - !type:Emote
         emote: Yawn
-        showInChat: true
         probability: 0.1
       - !type:MovespeedModifier
         walkSpeedModifier: 0.65
@@ -145,6 +144,7 @@
             Caustic: 0.5
       - !type:Emote
         emote: Scream
+        showInChat: true
         probability: 0.3
   metabolisms:
     Poison:
@@ -162,6 +162,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.3
+        showInChat: true
 
 - type: reagent
   id: FerrochromicAcid
@@ -206,6 +207,7 @@
             Caustic: 0.3
       - !type:Emote
         emote: Scream
+        showInChat: true
         probability: 0.2
   metabolisms:
     Poison:
@@ -223,6 +225,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.25
+        showInChat: true
 
 - type: reagent
   id: SulfuricAcid
@@ -255,6 +258,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.1
+        showInChat: true
   metabolisms:
     Poison:
       metabolismRate: 3.00 # Okay damage, high metabolism rate. You need a lot of units to crit. Simulates acid burning through you fast.
@@ -271,6 +275,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.2
+        showInChat: true
 
 - type: reagent
   id: UnstableMutagen
@@ -569,7 +574,6 @@
       effects:
       - !type:Emote
         emote: Honk
-        showInChat: true
         force: true
         probability: 0.2
       - !type:HealthChange
