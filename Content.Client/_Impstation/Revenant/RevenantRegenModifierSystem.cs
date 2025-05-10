@@ -1,17 +1,15 @@
-using System.Numerics;
 using Content.Client.Alerts;
 using Content.Shared.Revenant;
 using Content.Shared.Revenant.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
+using System.Numerics;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Revenant;
 
 public sealed class RevenantRegenModifierSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-
     private readonly SpriteSpecifier _witnessIndicator = new SpriteSpecifier.Texture(new ResPath("Interface/Actions/scream.png"));
 
     public override void Initialize()

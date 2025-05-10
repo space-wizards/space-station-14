@@ -1,19 +1,16 @@
 using Content.Server._Impstation.Chaplain.Components;
+using Content.Server.Bible.Components;
+using Content.Server.Popups;
+using Content.Server.Stunnable;
+using Content.Shared._Impstation.Chaplain;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
 using Robust.Server.GameObjects;
-using Robust.Server.Audio;
-using Robust.Shared.Prototypes;
-using Content.Shared.Hands.EntitySystems;
-using Robust.Shared.Containers;
-using System.Linq;
-using Content.Shared._Impstation.Chaplain;
-using Content.Server.Bible.Components;
-using Robust.Shared.Audio.Systems;
-using Content.Server.Popups;
-using Content.Shared.Damage;
 using Robust.Shared.Audio;
-using Content.Shared.Damage.Prototypes;
-using Content.Server.Stunnable;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._Impstation.Chaplain.Systems;
 
@@ -23,15 +20,14 @@ namespace Content.Server._Impstation.Chaplain.Systems;
 /// </summary>
 public sealed class ChaplainGearMenuSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioshared = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StunSystem _stun = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
 
     public override void Initialize()

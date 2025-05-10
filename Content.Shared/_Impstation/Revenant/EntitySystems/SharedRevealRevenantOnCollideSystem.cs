@@ -1,18 +1,16 @@
-using Content.Shared.Revenant.Components;
 using Content.Shared.Popups;
+using Content.Shared.Revenant.Components;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Revenant.EntitySystems;
 
 public abstract class SharedRevealRevenantOnCollideSystem : EntitySystem
 {
-    [Dependency] private readonly StatusEffectsSystem _status = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly StatusEffectsSystem _status = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string CorporealStatusId = "Corporeal";

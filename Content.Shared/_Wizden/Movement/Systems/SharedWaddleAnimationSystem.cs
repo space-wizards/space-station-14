@@ -2,17 +2,13 @@
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Systems;
 
 public abstract class SharedWaddleAnimationSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-
     public override void Initialize()
     {
         // Startup

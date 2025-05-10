@@ -50,7 +50,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
             _phys.SetBodyStatus(rod, phys, BodyStatus.InAir);
 
             var xform = Transform(rod);
-            var vel = Transform(ent).WorldRotation.ToWorldVec() * 15f;
+            var vel = _transform.GetWorldRotation(ent).ToWorldVec() * 15f;
 
             _phys.SetLinearVelocity(rod, vel, body: phys);
             xform.LocalRotation = Transform(ent).LocalRotation;

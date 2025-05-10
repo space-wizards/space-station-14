@@ -1,19 +1,15 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using System.Linq;
-using Robust.Shared.Random;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Robust.Server.GameObjects;
-using Content.Shared.Chemistry.Components.SolutionManager;
-
-
+using System.Linq;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
 public sealed class InjectionArtifactSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
 
@@ -60,7 +56,8 @@ public sealed class InjectionArtifactSystem : EntitySystem
                 _solutionContainer.AddSolution(injectable.Value, component.ChemicalSolution);
 
                 //Spawn Effect
-                if (component.ShowEffect){
+                if (component.ShowEffect)
+                {
                     var uidXform = Transform(ent);
                     Spawn(component.VisualEffectPrototype, uidXform.Coordinates);
                 }

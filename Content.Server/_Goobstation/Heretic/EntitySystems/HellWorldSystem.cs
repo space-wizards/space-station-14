@@ -1,29 +1,26 @@
-using Content.Server.GameTicking.Events;
-using Content.Shared.Mind.Components;
-using Content.Shared.Mind;
-using Robust.Shared.Timing;
-using System.Linq;
-using Content.Server.Heretic.Components;
-using Content.Shared.Heretic.Prototypes;
-using Content.Shared.Examine;
-using Content.Server.Body.Systems;
 using Content.Server._Goobstation.Heretic.Components;
 using Content.Server._Goobstation.Heretic.UI;
-using System.Collections.Immutable;
-using Content.Server.EUI;
-using Robust.Shared.Random;
-using Content.Server.Humanoid;
-using Content.Shared.Humanoid.Prototypes;
 using Content.Server.Administration.Systems;
-using Content.Shared.Humanoid;
-using Robust.Shared.Utility;
-using Robust.Shared.EntitySerialization;
-using Robust.Shared.EntitySerialization.Systems;
-using Robust.Server.GameObjects;
-using Content.Shared.Eye.Blinding.Systems;
-using Content.Shared.Eye.Blinding.Components;
+using Content.Server.EUI;
+using Content.Server.Heretic.Components;
+using Content.Server.Humanoid;
 using Content.Server.StationEvents;
 using Content.Shared.Bed.Cryostorage;
+using Content.Shared.Examine;
+using Content.Shared.Eye.Blinding.Components;
+using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Heretic.Prototypes;
+using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.EntitySerialization;
+using Robust.Shared.EntitySerialization.Systems;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
+using System.Collections.Immutable;
 
 //this is kind of badly named since we're doing infinite archives stuff now but i dont feel like changing it :)
 
@@ -32,21 +29,19 @@ namespace Content.Server._Goobstation.Heretic.EntitySystems
 
     public sealed partial class HellWorldSystem : EntitySystem
     {
-        [Dependency] private readonly SharedMindSystem _mind = default!;
-        [Dependency] private readonly SharedMapSystem _map = default!;
-        [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _xform = default!;
-        [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
+        [Dependency] private readonly BlindableSystem _blind = default!;
         [Dependency] private readonly EuiManager _euiMan = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
-        [Dependency] private readonly BlindableSystem _blind = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IEntityManager _ent = default!;
+        [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
+        [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+        [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
+        [Dependency] private readonly SharedMapSystem _map = default!;
+        [Dependency] private readonly SharedMindSystem _mind = default!;
+        [Dependency] private readonly SharedTransformSystem _xform = default!;
 
-        private readonly ResPath _mapPath = new("Maps/_Impstation/Nonstations/InfiniteArchives.yml"); 
+        private readonly ResPath _mapPath = new("Maps/_Impstation/Nonstations/InfiniteArchives.yml");
 
         public override void Initialize()
         {
@@ -60,8 +55,8 @@ namespace Content.Server._Goobstation.Heretic.EntitySystems
         /// </summary>
         public void MakeHell()
         {
-            if(_mapLoader.TryLoadMap(_mapPath, out var map, out _, new DeserializationOptions { InitializeMaps = true }))
-            _map.SetPaused(map.Value.Comp.MapId, false);
+            if (_mapLoader.TryLoadMap(_mapPath, out var map, out _, new DeserializationOptions { InitializeMaps = true }))
+                _map.SetPaused(map.Value.Comp.MapId, false);
         }
 
         public override void Update(float frameTime)
@@ -118,7 +113,7 @@ namespace Content.Server._Goobstation.Heretic.EntitySystems
             if (!args.EntityManager.TryGetComponent<HellVictimComponent>(target, out var victimComp))
                 return;
             //if already sent, don't send again
-            if(victimComp.AlreadyHelled)
+            if (victimComp.AlreadyHelled)
                 return;
 
             //get all possible spawn points, choose one, then get the place
@@ -127,7 +122,7 @@ namespace Content.Server._Goobstation.Heretic.EntitySystems
             var spawnTgt = Transform(newSpawn.Uid).Coordinates;
 
             //spawn your hellsona
-            if (!victimComp.HasMind || victimComp.Mind == null) //just in case the 
+            if (!victimComp.HasMind || victimComp.Mind == null) //just in case the
             {
                 victimComp.AlreadyHelled = true;
                 return;
@@ -151,7 +146,7 @@ namespace Content.Server._Goobstation.Heretic.EntitySystems
             //returning the mind to the original body happens in Update()
         }
 
-        public void TeleportRandomly(RitualData args, EntityUid uid) 
+        public void TeleportRandomly(RitualData args, EntityUid uid)
         {
             //get all possible spawn points, choose one, then get the place
             var spawnPoints = EntityManager.GetAllComponents(typeof(MidRoundAntagSpawnLocationComponent)).ToImmutableList();

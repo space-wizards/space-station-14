@@ -1,20 +1,15 @@
 using Content.Shared.Actions;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Fluids;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
-using Robust.Shared.Serialization;
-using Robust.Shared.Network;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Fluids;
-using Content.Shared.Movement.Components;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Map;
-using Content.Shared.Coordinates;
-using Linguini.Syntax.Ast;
-using Microsoft.Extensions.ObjectPool;
-using Content.Shared.GameTicking;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Impstation.SnailSprint;
 
@@ -24,15 +19,13 @@ namespace Content.Shared._Impstation.SnailSprint;
 public sealed partial class SharedSnailSprintSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly IMapManager _map = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-    [Dependency] private readonly ThirstSystem _thirstSystem = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPuddleSystem _puddleSystem = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly ThirstSystem _thirstSystem = default!;
 
     public override void Initialize()
     {
@@ -69,7 +62,7 @@ public sealed partial class SharedSnailSprintSystem : EntitySystem
     /// <param name="args"></param>
     private void OnSnailSprintAction(Entity<SnailSprintComponent> ent, ref SnailSprintActionEvent args)
     {
-        // prevent the action and let the player know if their thirst value is too low to use it. 
+        // prevent the action and let the player know if their thirst value is too low to use it.
         if (TryComp<ThirstComponent>(ent.Owner, out var thirstComp) && _thirstSystem.IsThirstBelowState(ent, ent.Comp.MinThirstThreshold, thirstComp.CurrentThirst - ent.Comp.ThirstCost, thirstComp))
         {
             _popupSystem.PopupClient(Loc.GetString(ent.Comp.FailedPopup), ent.Owner, ent.Owner);

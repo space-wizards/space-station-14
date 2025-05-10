@@ -1,44 +1,29 @@
+using Content.Server.Atmos.Components;
+using Content.Server.Body.Components;
+using Content.Server.Chat.Systems;
+using Content.Server.Heretic.Components;
 using Content.Server.Objectives.Components;
 using Content.Server.Store.Systems;
-using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
-using Content.Shared.Roles;
-using Content.Shared.Heretic;
-using Content.Shared.Mind;
-using Content.Shared.Store.Components;
-using Content.Shared.Heretic.Prototypes;
-using Content.Server.Chat.Systems;
-using Robust.Shared.Audio;
 using Content.Server.Temperature.Components;
-using Content.Server.Body.Components;
-using Content.Server.Atmos.Components;
 using Content.Shared.Damage;
-using Content.Server.Heretic.Components;
-using Content.Server.Antag;
-using Robust.Shared.Random;
-using System.Linq;
-using Content.Shared.Humanoid;
-using Robust.Server.Player;
-using Content.Server.Revolutionary.Components;
-using Content.Shared.Random.Helpers;
-using Content.Shared.Roles.Jobs;
+using Content.Shared.FixedPoint;
+using Content.Shared.Heretic;
+using Content.Shared.Heretic.Prototypes;
+using Content.Shared.Mind;
+using Content.Shared.Roles;
+using Content.Shared.Store.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Content.Shared.Changeling;
 
 namespace Content.Server.Heretic.EntitySystems;
 
 public sealed partial class HereticSystem : EntitySystem
 {
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly HereticKnowledgeSystem _knowledge = default!;
+    [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly StoreSystem _store = default!;
-    [Dependency] private readonly HereticKnowledgeSystem _knowledge = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly SharedJobSystem _jobs = default!;
-    [Dependency] private readonly SharedEyeSystem _eye = default!;
-    [Dependency] private readonly AntagSelectionSystem _antag = default!;
-    [Dependency] private readonly IRobustRandom _rand = default!;
-    [Dependency] private readonly IPlayerManager _playerMan = default!;
-    [Dependency] private readonly IPrototypeManager _prot = default!;
 
     private float _timer = 0f;
     private float _passivePointCooldown = 20f * 60f;
@@ -66,10 +51,11 @@ public sealed partial class HereticSystem : EntitySystem
 
         _timer = 0f;
 
-        foreach (var heretic in EntityQuery<HereticComponent>())
+        var query = EntityQueryEnumerator<HereticComponent>();
+        while (query.MoveNext(out var uid, out var heretic))
         {
             // passive point gain every 20 minutes
-            UpdateKnowledge(heretic.Owner, heretic, 1f);
+            UpdateKnowledge(uid, heretic, 1f);
         }
     }
 

@@ -20,7 +20,8 @@ public sealed partial class HereticFlamesSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var hfc in EntityQuery<HereticFlamesComponent>())
+        var query = EntityQueryEnumerator<HereticFlamesComponent>();
+        while (query.MoveNext(out var uid, out var hfc))
         {
             hfc.Timer += frameTime;
             if (hfc.Timer < hfc.UpdateDuration)
@@ -30,9 +31,9 @@ public sealed partial class HereticFlamesSystem : EntitySystem
             hfc.TimerSeconds += 1f;
 
             if (hfc.TimerSeconds >= hfc.Duration)
-                RemComp(hfc.Owner, hfc);
+                RemComp(uid, hfc);
 
-            var gasmix = _atmos.GetTileMixture((hfc.Owner, Transform(hfc.Owner)));
+            var gasmix = _atmos.GetTileMixture((uid, Transform(uid)));
 
             if (gasmix == null)
                 continue;

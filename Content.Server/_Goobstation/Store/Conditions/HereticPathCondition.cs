@@ -9,8 +9,6 @@ namespace Content.Server.Store.Conditions;
 
 public sealed partial class HereticPathCondition : ListingCondition
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-
     public int AlternatePathPenalty = 1; //you can only buy alternate paths' abilities if they are this amount under your initial path's top ability level.
     [DataField] public HashSet<string>? Whitelist;
     [DataField] public HashSet<string>? Blacklist;

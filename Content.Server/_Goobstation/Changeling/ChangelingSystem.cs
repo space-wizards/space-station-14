@@ -1,121 +1,116 @@
+using Content.Server.Actions;
+using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
+using Content.Server.Emp;
+using Content.Server.Explosion.EntitySystems;
+using Content.Server.Flash;
+using Content.Server.Flash.Components;
+using Content.Server.Gravity;
+using Content.Server.Humanoid;
+using Content.Server.Light.EntitySystems;
+using Content.Server.Objectives.Components;
+using Content.Server.Polymorph.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
 using Content.Server.Store.Systems;
+using Content.Server.Stunnable;
 using Content.Server.Zombies;
+using Content.Shared.Actions;
 using Content.Shared.Alert;
+using Content.Shared.Camera;
 using Content.Shared.Changeling;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids;
 using Content.Shared.Forensics.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Inventory;
+using Content.Shared.Jittering;
+using Content.Shared.Mind;
 using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Pulling.Systems;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Polymorph;
+using Content.Shared.Popups;
+using Content.Shared.Revolutionary.Components;
+using Content.Shared.StatusEffect;
+using Content.Shared.Stealth.Components;
 using Content.Shared.Store.Components;
 using Robust.Server.Audio;
-using Robust.Shared.Audio;
-using Robust.Shared.Random;
-using Content.Shared.Popups;
-using Content.Shared.Damage;
-using Robust.Shared.Prototypes;
-using Content.Server.Body.Systems;
-using Content.Shared.Actions;
-using Content.Shared.Polymorph;
-using Robust.Shared.Serialization.Manager;
-using Content.Server.Actions;
-using Content.Server.Humanoid;
-using Content.Server.Polymorph.Components;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Server.Flash;
-using Content.Server.Emp;
 using Robust.Server.GameObjects;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Inventory;
-using Content.Shared.Movement.Systems;
-using Content.Shared.Damage.Systems;
-using Content.Shared.Mind;
-using Content.Server.Objectives.Components;
-using Content.Server.Light.EntitySystems;
-using Content.Shared.Eye.Blinding.Systems;
-using Content.Shared.StatusEffect;
-using Content.Shared.Movement.Pulling.Systems;
-using Content.Shared.Cuffs;
-using Content.Shared.Fluids;
-using Content.Shared.Revolutionary.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using System.Numerics;
-using Content.Shared.Camera;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
-using Content.Shared.Damage.Components;
-using Content.Server.Gravity;
-using Content.Shared.Mobs.Components;
-using Content.Server.Stunnable;
-using Content.Shared.Jittering;
-using Content.Server.Explosion.EntitySystems;
 using System.Linq;
-using Content.Server.Flash.Components;
-using Content.Shared.Stealth.Components;
+using System.Numerics;
 
 namespace Content.Server.Changeling;
 
 public sealed partial class ChangelingSystem : EntitySystem
 {
     // this is one hell of a star wars intro text
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly IRobustRandom _rand = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly StoreSystem _store = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly PolymorphSystem _polymorph = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly BloodstreamSystem _blood = default!;
-    [Dependency] private readonly ISerializationManager _serialization = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly FlashSystem _flash = default!;
+    [Dependency] private readonly BodySystem _bodySystem = default!;
+    [Dependency] private readonly DamageableSystem _damage = default!;
+    [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly PoweredLightSystem _light = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
-    [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _speed = default!;
-    [Dependency] private readonly StaminaSystem _stamina = default!;
-    [Dependency] private readonly GravitySystem _gravity = default!;
-    [Dependency] private readonly BlindableSystem _blindable = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
-    [Dependency] private readonly PullingSystem _pull = default!;
-    [Dependency] private readonly SharedCuffableSystem _cuffs = default!;
-    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
-    [Dependency] private readonly StunSystem _stun = default!;
-    [Dependency] private readonly SharedJitteringSystem _jitter = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly BodySystem _bodySystem = default!;
+    [Dependency] private readonly FlashSystem _flash = default!;
+    [Dependency] private readonly GravitySystem _gravity = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IRobustRandom _rand = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _speed = default!;
+    [Dependency] private readonly PolymorphSystem _polymorph = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly PoweredLightSystem _light = default!;
+    [Dependency] private readonly PullingSystem _pull = default!;
+    [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
+    [Dependency] private readonly SharedCuffableSystem _cuffs = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedJitteringSystem _jitter = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private readonly StaminaSystem _stamina = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
+    [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly StunSystem _stun = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
 
     public EntProtoId ArmbladePrototype = "ArmBladeChangeling";
-    public EntProtoId TentaclePrototype = "FishingRodLing"; // imp
-    public EntProtoId FakeArmbladePrototype = "FakeArmBladeChangeling";
-
-    public EntProtoId ShieldPrototype = "ChangelingShield";
-    public EntProtoId BoneShardPrototype = "ThrowingStarChangeling";
-
-    public EntProtoId ArmorPrototype = "ChangelingClothingOuterArmor";
     public EntProtoId ArmorHelmetPrototype = "ChangelingClothingHeadHelmet";
-
-    public EntProtoId SpacesuitPrototype = "ChangelingClothingOuterHardsuit";
+    public EntProtoId ArmorPrototype = "ChangelingClothingOuterArmor";
+    public EntProtoId BoneShardPrototype = "ThrowingStarChangeling";
+    public EntProtoId FakeArmbladePrototype = "FakeArmBladeChangeling";
+    public EntProtoId ShieldPrototype = "ChangelingShield";
     public EntProtoId SpacesuitHelmetPrototype = "ChangelingClothingHeadHelmetHardsuit";
+    public EntProtoId SpacesuitPrototype = "ChangelingClothingOuterHardsuit";
+    public EntProtoId TentaclePrototype = "FishingRodLing"; // imp
 
     public override void Initialize()
     {
@@ -147,10 +142,9 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        foreach (var comp in EntityManager.EntityQuery<ChangelingComponent>())
+        var query = EntityQueryEnumerator<ChangelingComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
-            var uid = comp.Owner;
-
             if (_timing.CurTime < comp.UpdateTimer)
                 continue;
 
@@ -190,7 +184,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         Dirty(uid, comp);
         _alerts.ShowAlert(uid, "ChangelingBiomass");
 
-        var random = (int) _rand.Next(1, 3);
+        var random = (int)_rand.Next(1, 3);
 
         if (comp.Biomass <= 0)
             // game over, man
@@ -261,7 +255,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     {
         _audio.PlayPvs(comp.ShriekSound, uid);
 
-        var center = Transform(uid).MapPosition;
+        var center = _transform.GetMapCoordinates(uid);
         var gamers = Filter.Empty();
         gamers.AddInRange(center, comp.ShriekPower, _player, EntityManager);
 
@@ -270,7 +264,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             if (gamer.AttachedEntity == null)
                 continue;
 
-            var pos = Transform(gamer.AttachedEntity!.Value).WorldPosition;
+            var pos = _transform.GetWorldPosition(gamer.AttachedEntity!.Value);
             var delta = center.Position - pos;
 
             if (delta.EqualsApprox(Vector2.Zero))
@@ -384,7 +378,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (!comp.Equipment.TryGetValue(proto.Id, out var item))
         {
             item = Spawn(proto, Transform(uid).Coordinates);
-            if (!_hands.TryForcePickupAnyHand(uid, (EntityUid) item))
+            if (!_hands.TryForcePickupAnyHand(uid, (EntityUid)item))
             {
                 _popup.PopupEntity(Loc.GetString("changeling-fail-hands"), uid, uid);
                 QueueDel(item);
@@ -439,7 +433,6 @@ public sealed partial class ChangelingSystem : EntitySystem
     public bool TryStealDNA(EntityUid uid, EntityUid target, ChangelingComponent comp, bool countObjective = false)
     {
         if (!TryComp<HumanoidAppearanceComponent>(target, out var appearance)
-        || !TryComp<MetaDataComponent>(target, out var metadata)
         || !TryComp<DnaComponent>(target, out var dna)
         || !TryComp<FingerprintComponent>(target, out var fingerprint))
         {
@@ -456,6 +449,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             }
         }
 
+        var metadata = MetaData(uid);
         var data = new TransformData
         {
             Name = metadata.EntityName,

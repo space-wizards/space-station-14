@@ -1,7 +1,7 @@
-using System.Linq;
 using Content.Shared._EstacaoPirata.Cards.Card;
 using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Client._EstacaoPirata.Cards.Card;
 
@@ -10,7 +10,6 @@ namespace Content.Client._EstacaoPirata.Cards.Card;
 /// </summary>
 public sealed class CardSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
     /// <inheritdoc/>
     public override void Initialize()
     {

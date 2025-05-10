@@ -1,6 +1,6 @@
+using Content.Shared.Cloning;
 using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
-using Content.Shared.Cloning;
 
 namespace Content.Server._Impstation.MindlessClone;
 /// <summary>
@@ -9,8 +9,6 @@ namespace Content.Server._Impstation.MindlessClone;
 [RegisterComponent]
 public sealed partial class MindlessCloneComponent : Component
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
     /// <summary>
     /// whether or not the entity will pick a randomized phrase to say after spawning. default false
     /// </summary>

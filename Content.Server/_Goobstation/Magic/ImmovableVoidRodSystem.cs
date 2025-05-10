@@ -1,42 +1,38 @@
-using Content.Server.Heretic.Components;
 using Content.Shared.Heretic;
 using Content.Shared.Maps;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Map.Components;
 
 namespace Content.Server.Magic;
 
 public sealed partial class ImmovableVoidRodSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prot = default!;
-    [Dependency] private readonly IMapManager _map = default!;
-    [Dependency] private readonly TileSystem _tile = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly IEntityManager _ent = default!;
+    [Dependency] private readonly IPrototypeManager _prot = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
         // we are deliberately including paused entities. rod hungers for all
-        foreach (var (rod, trans) in EntityManager.EntityQuery<ImmovableVoidRodComponent, TransformComponent>(true))
+        var query = EntityQueryEnumerator<ImmovableVoidRodComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var rod, out var trans))
         {
             rod.Accumulator += frameTime;
 
             if (rod.Accumulator > rod.Lifetime.TotalSeconds)
             {
-                QueueDel(rod.Owner);
+                QueueDel(uid);
                 return;
             }
 
             if (!_ent.TryGetComponent<MapGridComponent>(trans.GridUid, out var grid))
                 continue;
-
-
 
             var tileref = grid.GetTileRef(trans.Coordinates);
             var tile = _prot.Index<ContentTileDefinition>("FloorAstroSnow");

@@ -1,12 +1,8 @@
 using Content.Client.Construction;
-using Content.Client.UserInterface.Controls;
-using Content.Shared.Construction.Prototypes;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Client.Placement;
-using Robust.Shared.Enums;
 
 //This was originally a PR for Einstein's Engines, submitted by Github user VMSolidus.
 //https://github.com/Simple-Station/Einstein-Engines/pull/861
@@ -38,7 +34,7 @@ public sealed class ShortConstructionMenuBUI : BoundUserInterface
     {
         base.Open();
 
-        _menu = new ShortConstructionMenu(Owner, this,_construction);
+        _menu = new ShortConstructionMenu(Owner, this, _construction);
         _menu.OnClose += Close;
 
         // Open the menu, centered on the mouse
@@ -51,6 +47,6 @@ public sealed class ShortConstructionMenuBUI : BoundUserInterface
         base.Dispose(disposing);
         if (!disposing) return;
 
-        _menu?.Dispose();
+        _menu?.Parent?.RemoveChild(_menu);
     }
 }

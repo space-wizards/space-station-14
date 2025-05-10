@@ -2,9 +2,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -12,10 +10,8 @@ namespace Content.Shared._Impstation.ImpEvaporation;
 
 public abstract partial class SharedImpEvaporationSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedPuddleSystem _puddleSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
 
     public override void Initialize()
@@ -31,7 +27,7 @@ public abstract partial class SharedImpEvaporationSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns a list of reagents that evaporate. This was ripped directly off of space-wizards #34304, but it's basically just what I was doing but cleaner. 
+    /// Returns a list of reagents that evaporate. This was ripped directly off of space-wizards #34304, but it's basically just what I was doing but cleaner.
     /// </summary>
     /// <param name="solution"></param>
     /// <returns></returns>
