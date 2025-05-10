@@ -285,10 +285,10 @@
   components:
     - type: Sprite
       drawdepth: Mobs
-      sprite: Mobs/Animals/spacecobra.rsi
+      sprite: Mobs/Space/cobra.rsi
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
-          state: spacecobra
+          state: cobra
         - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           state: glow
           shader: unshaded
@@ -304,10 +304,10 @@
     - type: DamageStateVisuals
       states:
         Alive:
-          Base: spacecobra
+          Base: cobra
           BaseUnshaded: glow
         Dead:
-          Base: dead_spacecobra
+          Base: cobra-dead
     - type: Butcherable
       spawned:
         - id: FoodMeatSnake
