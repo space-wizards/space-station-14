@@ -286,8 +286,8 @@ namespace Content.Client.Cargo.UI
                                            TransferSpinBox.Value > bankAccount.Accounts[orderConsole.Account] * orderConsole.TransferLimit ||
                                            _timing.CurTime < orderConsole.NextAccountActionTime;
 
-            // OrdersSpacer.Visible = !orderConsole.SlipPrinter;
-            // Orders.Visible = !orderConsole.SlipPrinter;
+            OrdersSpacer.Visible = !orderConsole.SlipPrinter;
+            Orders.Visible = !orderConsole.SlipPrinter;
         }
     }
 }

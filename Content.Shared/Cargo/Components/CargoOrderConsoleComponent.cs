@@ -100,8 +100,8 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// <summary>
     /// If set to true, restricts this console from ordering and has it print slips instead
     /// </summary>
-    // [DataField]
-    // public bool SlipPrinter;
+    [DataField]
+    public bool SlipPrinter;
 
     /// <summary>
     /// The time at which the console will be able to print a slip again.

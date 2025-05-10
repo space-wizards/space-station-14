@@ -99,10 +99,10 @@ namespace Content.Server.Cargo.Systems
             {
                 OnInteractUsingCash(uid, component, ref args);
             }
-            // else if (TryComp<CargoSlipComponent>(args.Used, out var slip) && !component.SlipPrinter)
-            // {
-            //     OnInteractUsingSlip((uid, component), ref args, slip);
-            // }
+            else if (TryComp<CargoSlipComponent>(args.Used, out var slip) && !component.SlipPrinter)
+            {
+                OnInteractUsingSlip((uid, component), ref args, slip);
+            }
         }
 
         private void OnInit(EntityUid uid, CargoOrderConsoleComponent orderConsole, ComponentInit args)
