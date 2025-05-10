@@ -339,14 +339,27 @@ public sealed partial class ParticleAcceleratorSystem
             UpdatePowerDraw(ent, ent.Comp);
             UpdateUI(ent, ent.Comp);
         }
-        else if (ent.Comp.Powered)
-        {
-            SwitchOff(ent, args.User, ent.Comp);
-        }
         else
         {
-            UpdateAppearance(ent, ent.Comp);
-            UpdateUI(ent, ent.Comp);
+            if (ent.Comp.Powered)
+            {
+                SwitchOff(ent, args.User, ent.Comp);
+            }
+            else
+            {
+                UpdateAppearance(ent, ent.Comp);
+                UpdateUI(ent, ent.Comp);
+            }
+
+            // Because the parts are already removed from the multipart machine, updating the visual appearance won't find any valid entities.
+            // We know which parts have been removed so we can update the visual state to unpowered in a more manual way here.
+            foreach (var (key, part) in args.PartsRemoved)
+            {
+                if (key is AcceleratorParts.EndCap)
+                    continue; // No endcap powerlevel-sprites
+
+                _appearanceSystem.SetData(part, ParticleAcceleratorVisuals.VisualState, ParticleAcceleratorVisualState.Unpowered);
+            }
         }
     }
 
