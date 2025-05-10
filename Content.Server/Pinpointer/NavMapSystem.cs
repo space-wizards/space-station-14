@@ -13,6 +13,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Warps;
 
 namespace Content.Server.Pinpointer;
 
@@ -199,6 +200,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         beacon.Text = args.Text;
         beacon.Color = args.Color;
         beacon.Enabled = args.Enabled;
+        Dirty(ent, beacon);
 
         UpdateBeaconEnabledVisuals((ent, beacon));
         UpdateNavMapBeaconData(ent, beacon);

@@ -1923,6 +1923,7 @@
   - type: Slippery
     slipData:
       paralyzeTime: 0
+      launchForwardsMultiplier: 0
     slipSound:
       collection: Parp
       params:
@@ -1937,13 +1938,8 @@
         Blunt: 0
   - type: StepTrigger
     intersectRatio: 0.2
-    requiredTriggeredSpeed: 1
+    requiredTriggeredSpeed: 2
   - type: TriggerOnStepTrigger
-  - type: EmitSoundOnTrigger
-    sound:
-      collection: Parp
-      params:
-        variation: 0.125
   - type: Appearance
   - type: CollisionWake
     enabled: false
