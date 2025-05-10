@@ -1,0 +1,22 @@
+# Actions for Avali species
+
+- type: entity
+  id: ActionAvaliStasisEnter
+  name: avali-stasis-action-enter-name
+  description: avali-stasis-action-enter-description
+  components:
+  - type: InstantAction
+    icon: /Textures/Interface/Actions/eyeclose.png
+    event: !type:AvaliEnterStasisActionEvent
+    useDelay: 1
+
+- type: entity
+  id: ActionAvaliStasisExit
+  name: avali-stasis-action-exit-name
+  description: avali-stasis-action-exit-description
+  components:
+  - type: InstantAction
+    icon: /Textures/Interface/Actions/eyeopen.png
+    event: !type:AvaliExitStasisActionEvent
+    useDelay: 1
+
