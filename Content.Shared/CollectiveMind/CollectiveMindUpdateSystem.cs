@@ -84,6 +84,10 @@ public sealed class CollectiveMindUpdateSystem : EntitySystem
 
             if (meetsRequirements)
             {
+                //check if they dont already have it
+                if (collective.Minds.ContainsKey(prototype))
+                    continue;
+                
                 collective.Minds.TryAdd(prototype, CreateNewCollectiveMindMemberData(prototype));
             }
             else
