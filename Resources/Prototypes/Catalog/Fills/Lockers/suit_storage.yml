@@ -64,7 +64,7 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitSyndicate
+        - id: ClothingOuterEVASuitSyndicate
         - id: ClothingHeadHelmetSyndicate
         - id: ClothingMaskGasSyndicate
 

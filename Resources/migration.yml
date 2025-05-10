@@ -611,6 +611,11 @@ SimpleXenoArtifactItem: ComplexXenoArtifactItem
 MediumXenoArtifactItem: ComplexXenoArtifactItem
 VariedXenoArtifactItem: ComplexXenoArtifactItem
 
+# 2025-04-19
+ClothingOuterHardsuitSyndicate: ClothingOuterEVASuitSyndicate
+AirlockMaintCommonLocked: AirlockMaintLocked
+AirlockMaintIntLocked: AirlockMaintLocked
+
 # 2025-04-26
 ComputerCargoShuttle: ComputerShuttleCargo
 CargoShuttleComputerCircuitboard: CargoShuttleConsoleCircuitboard

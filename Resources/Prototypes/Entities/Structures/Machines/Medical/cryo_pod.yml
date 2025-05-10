@@ -30,7 +30,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.90"
+          bounds: "-0.5,-0.5,0.5,0.5"
         density: 200
         mask:
           - MachineMask
