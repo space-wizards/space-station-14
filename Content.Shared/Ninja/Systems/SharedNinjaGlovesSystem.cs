@@ -8,6 +8,7 @@ using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Popups;
+using Content.Shared.StatusEffect;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Ninja.Systems;
@@ -21,6 +22,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
+    [Dependency] protected readonly RefCountSystem RefCount = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
 
@@ -50,7 +52,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
         foreach (var ability in comp.Abilities)
         {
-            EntityManager.RemoveComponents(user, ability.Components);
+            RefCount.RemoveComponents(user, ability.Components);
         }
     }
 
@@ -114,7 +116,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         {
             // can't predict the objective related abilities
             if (ability.Objective == null)
-                EntityManager.AddComponents(user, ability.Components);
+                RefCount.AddComponents(user.Owner, ability.Components);
         }
     }
 
