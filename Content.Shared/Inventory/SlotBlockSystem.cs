@@ -7,62 +7,29 @@ namespace Content.Shared.Inventory;
 /// </summary>
 public sealed class SlotBlockSystem : EntitySystem
 {
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<InventoryComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
-        SubscribeLocalEvent<InventoryComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
+        SubscribeLocalEvent<SlotBlockComponent, InventoryRelayedEvent<IsEquippingAttemptEvent>>(OnEquipAttempt);
+        SubscribeLocalEvent<SlotBlockComponent, InventoryRelayedEvent<IsUnequippingAttemptEvent>>(OnUnequipAttempt);
     }
 
-    private void OnEquipAttempt(Entity<InventoryComponent> ent, ref IsEquippingAttemptEvent args)
+    private void OnEquipAttempt(Entity<SlotBlockComponent> ent, ref InventoryRelayedEvent<IsEquippingAttemptEvent> args)
     {
-        if (args.Cancelled)
+        if (args.Args.Cancelled || (args.Args.SlotFlags & ent.Comp.Slots) == 0)
             return;
 
-        var blocker = GetBlocker(ent, args.SlotFlags);
-
-        // Don't do anything if nothing is blocking the entity from equipping.
-        if (blocker == null)
-            return;
-
-        args.Reason = Loc.GetString("slot-block-component-blocked", ("item", blocker));
-        args.Cancel();
+        args.Args.Reason = Loc.GetString("slot-block-component-blocked", ("item", ent));
+        args.Args.Cancel();
     }
 
-    private void OnUnequipAttempt(Entity<InventoryComponent> ent, ref IsUnequippingAttemptEvent args)
+    private void OnUnequipAttempt(Entity<SlotBlockComponent> ent, ref InventoryRelayedEvent<IsUnequippingAttemptEvent> args)
     {
-        if (args.Cancelled)
+        if (args.Args.Cancelled || (args.Args.SlotFlags & ent.Comp.Slots) == 0)
             return;
 
-        var blocker = GetBlocker(ent, args.SlotFlags);
-
-        // Don't do anything if nothing is blocking the entity from unequipping.
-        if (blocker == null)
-            return;
-
-        args.Reason = Loc.GetString("slot-block-component-blocked", ("item", blocker));
-        args.Cancel();
-    }
-
-    /// <summary>
-    /// Used to get an entity that is blocking item from being equipped or unequipped.
-    /// </summary>
-    private EntityUid? GetBlocker(Entity<InventoryComponent> ent, SlotFlags slot)
-    {
-        foreach (var slotDef in ent.Comp.Slots)
-        {
-            if (!_inventorySystem.TryGetSlotEntity(ent, slotDef.Name, out var entity))
-                continue;
-
-            if (!TryComp<SlotBlockComponent>(entity, out var blockComponent) || (slot & blockComponent.Slots) == 0)
-                continue;
-
-            return entity;
-        }
-
-        return null;
+        args.Args.Reason = Loc.GetString("slot-block-component-blocked", ("item", ent));
+        args.Args.Cancel();
     }
 }
