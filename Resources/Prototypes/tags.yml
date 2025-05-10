@@ -610,6 +610,9 @@
   id: Goliath
 
 - type: Tag
+  id: GoliathPlate
+
+- type: Tag
   id: GPS
 
 - type: Tag
@@ -701,6 +704,9 @@
 
 - type: Tag
   id: HighSecDoor
+
+- type: Tag
+  id: HivelordRemains
 
 - type: Tag
   id: HiViz
