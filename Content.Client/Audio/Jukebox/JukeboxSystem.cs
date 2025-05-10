@@ -2,6 +2,7 @@ using Content.Shared.Audio.Jukebox;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
+using Content.Shared.Emag.Systems; // imp
 
 namespace Content.Client.Audio.Jukebox;
 
