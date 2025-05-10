@@ -187,10 +187,10 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Animals/spacespider.rsi
+    sprite: Mobs/Space/spider.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: spacespider
+      state: spider
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: glow
       shader: unshaded
@@ -203,10 +203,10 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: spacespider
+        Base: spider
         BaseUnshaded: glow
       Dead:
-        Base: spacespider_dead
+        Base: spider-dead
   - type: Butcherable
     spawned:
     - id: FoodMeatSpider
