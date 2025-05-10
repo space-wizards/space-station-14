@@ -200,8 +200,11 @@
         {
             "name": "france"
         },
-		{
+        {
             "name": "agrichemkit"
+        },
+        {
+            "name": "chemical"
         }
     ]
 }
