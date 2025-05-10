@@ -230,7 +230,7 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case TargetAccessibleCon:
             {
-                if (_container.TryGetContainingContainer(targetUid, out var container))
+                if (_container.TryGetContainingContainer((targetUid, null), out var container))
                 {
                     if (container.Owner == owner)
                         return 0f;
