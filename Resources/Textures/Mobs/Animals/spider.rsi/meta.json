@@ -188,7 +188,7 @@
       ]
     },
     {
-      "name": "hunter_dead",
+      "name": "hunter-dead",
       "delays": [
         [
           1
@@ -196,7 +196,7 @@
       ]
     },
     {
-      "name": "midwife_dead",
+      "name": "midwife-dead",
       "delays": [
         [
           1
@@ -204,7 +204,7 @@
       ]
     },
     {
-      "name": "viper_dead",
+      "name": "viper-dead",
       "delays": [
         [
           1
@@ -212,7 +212,7 @@
       ]
     },
     {
-      "name": "tarantula_dead",
+      "name": "tarantula-dead",
       "delays": [
         [
           1
@@ -220,7 +220,7 @@
       ]
     },
     {
-      "name": "nurse_dead",
+      "name": "nurse-dead",
       "delays": [
         [
           1
@@ -228,7 +228,7 @@
       ]
     },
     {
-      "name": "guard_dead",
+      "name": "guard-dead",
       "delays": [
         [
           1
