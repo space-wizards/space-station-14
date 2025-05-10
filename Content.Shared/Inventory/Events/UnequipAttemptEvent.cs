@@ -43,18 +43,26 @@ public abstract class UnequipAttemptEventBase : CancellableEntityEventArgs
     }
 }
 
-public sealed class BeingUnequippedAttemptEvent : UnequipAttemptEventBase
+/// <summary>
+/// Raised on the item that is being unequipped.
+/// </summary>
+public sealed class BeingUnequippedAttemptEvent(EntityUid unequipee, EntityUid unEquipTarget, EntityUid equipment,
+    SlotDefinition slotDefinition) : UnequipAttemptEventBase(unequipee, unEquipTarget, equipment, slotDefinition)
 {
-    public BeingUnequippedAttemptEvent(EntityUid unequipee, EntityUid unEquipTarget, EntityUid equipment,
-        SlotDefinition slotDefinition) : base(unequipee, unEquipTarget, equipment, slotDefinition)
-    {
-    }
 }
 
-public sealed class IsUnequippingAttemptEvent : UnequipAttemptEventBase
+/// <summary>
+/// Raised on the entity that is unequipping an item.
+/// </summary>
+public sealed class IsUnequippingAttemptEvent(EntityUid unequipee, EntityUid unEquipTarget, EntityUid equipment,
+    SlotDefinition slotDefinition) : UnequipAttemptEventBase(unequipee, unEquipTarget, equipment, slotDefinition)
 {
-    public IsUnequippingAttemptEvent(EntityUid unequipee, EntityUid unEquipTarget, EntityUid equipment,
-        SlotDefinition slotDefinition) : base(unequipee, unEquipTarget, equipment, slotDefinition)
-    {
-    }
+}
+
+/// <summary>
+/// Raised on the entity from who item is being unequipped.
+/// </summary>
+public sealed class IsUnequippingTargetAttemptEvent(EntityUid unequipee, EntityUid unEquipTarget, EntityUid equipment,
+    SlotDefinition slotDefinition) : UnequipAttemptEventBase(unequipee, unEquipTarget, equipment, slotDefinition)
+{
 }
