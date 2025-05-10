@@ -54,6 +54,7 @@
     state: icon
   - type: Item
     size: Normal
+    sprite: Objects/Weapons/Melee/incomplete_bat.rsi
   - type: Construction
     graph: WoodenBat
     node: incompleteBat

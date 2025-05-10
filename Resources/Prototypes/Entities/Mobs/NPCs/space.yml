@@ -390,7 +390,7 @@
     description: ghost-role-information-snail-description
     rules: ghost-role-information-freeagent-rules
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleGhostRoleFreeAgentHarmless
   - type: GhostTakeoverAvailable
   - type: Emoting
   - type: Sprite
@@ -405,6 +405,7 @@
     factions:
       - Mouse
   - type: HTN
+    constantlyReplan: false
     rootTask:
       task: MouseCompound
   - type: Physics
@@ -516,6 +517,9 @@
   id: MobSnailInstantDeath
   suffix: Smite
   components:
+  - type: GhostRole
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
   - type: MobStateActions
     actions:
       Alive:
