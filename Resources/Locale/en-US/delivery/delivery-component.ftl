@@ -9,6 +9,10 @@ delivery-opened-self = You open the {$delivery}.
 delivery-unlocked-others = {CAPITALIZE($recipient)} unlocked the {$delivery} with {POSS-ADJ($possadj)} fingerprint.
 delivery-opened-others = {CAPITALIZE($recipient)} opened the {$delivery}.
 
+delivery-force-popup-target = {$identity} is trying to scan your fingerprint!
+delivery-force-popup-self = You try to force {$identity} to open the {$type}.
+delivery-force-popup-self-fail = {$identity} cannot unlock this {$type}.
+
 delivery-unlock-verb = Unlock
 delivery-open-verb = Open
 delivery-slice-verb = Slice open
