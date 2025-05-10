@@ -41,7 +41,7 @@ public sealed class ShowHealthBarsCommand : LocalizedCommands
                 NetSyncEnabled = false
             };
 
-            _entityManager.AddComponent(playerEntity.Value, showHealthBarsComponent, true);
+            _entityManager.AddComponent(playerEntity.Value, showHealthBarsComponent);
 
             shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-notify-enabled", ("args", string.Join(", ", args))));
             return;

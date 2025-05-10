@@ -4,16 +4,21 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Engines;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
+using Content.Server.Power.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Item;
+using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -27,16 +32,22 @@ namespace Content.Benchmarks;
 [Virtual]
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
 [CategoriesColumn]
+[ShortRunJob]
 public class ComponentQueryBenchmark
 {
-    public const string Map = "Maps/atlas.yml";
+    public const string Map = "Maps/bagel.yml";
+
+    private static readonly Consumer _consumer = new();
 
     private TestPair _pair = default!;
-    private IEntityManager _entMan = default!;
+    private EntityManager _entMan = default!;
     private EntityQuery<ItemComponent> _itemQuery;
     private EntityQuery<ClothingComponent> _clothingQuery;
     private EntityQuery<MapComponent> _mapQuery;
     private EntityUid[] _items = default!;
+
+    private AllEntityQueryEnumerator<AirlockComponent> _airlockEntityQuery;
+    private AllEntityQueryEnumerator<ItemComponent> _itemEntityQuery;
 
     [GlobalSetup]
     public void Setup()
@@ -45,8 +56,10 @@ public class ComponentQueryBenchmark
         PoolManager.Startup(typeof(QueryBenchSystem).Assembly);
 
         _pair = PoolManager.GetServerClient().GetAwaiter().GetResult();
-        _entMan = _pair.Server.ResolveDependency<IEntityManager>();
+        _entMan = _pair.Server.ResolveDependency<EntityManager>();
 
+        _airlockEntityQuery = _entMan.AllEntityQueryEnumerator<AirlockComponent>();
+        _itemEntityQuery = _entMan.AllEntityQueryEnumerator<ItemComponent>();
         _itemQuery = _entMan.GetEntityQuery<ItemComponent>();
         _clothingQuery = _entMan.GetEntityQuery<ClothingComponent>();
         _mapQuery = _entMan.GetEntityQuery<MapComponent>();
@@ -61,6 +74,7 @@ public class ComponentQueryBenchmark
         }).GetAwaiter().GetResult();
 
         _items = new EntityUid[_entMan.Count<ItemComponent>()];
+
         var i = 0;
         var enumerator = _entMan.AllEntityQueryEnumerator<ItemComponent>();
         while (enumerator.MoveNext(out var uid, out _))
@@ -89,6 +103,22 @@ public class ComponentQueryBenchmark
         foreach (var uid in _items)
         {
             if (_clothingQuery.TryGetComponent(uid, out var clothing))
+                hashCode = HashCode.Combine(hashCode, clothing.GetHashCode());
+        }
+        return hashCode;
+    }
+
+    /// <summary>
+    /// Baseline TryComp benchmark. When the benchmark was created, around 40% of the items were clothing.
+    /// </summary>
+    [Benchmark]
+    [BenchmarkCategory("TryComp")]
+    public int TryCompSlow()
+    {
+        var hashCode = 0;
+        foreach (var uid in _items)
+        {
+            if (_entMan.TryGetComponent(uid, out ClothingComponent? clothing))
                 hashCode = HashCode.Combine(hashCode, clothing.GetHashCode());
         }
         return hashCode;
@@ -154,30 +184,34 @@ public class ComponentQueryBenchmark
 
     [Benchmark]
     [BenchmarkCategory("Item Enumerator")]
-    public int SingleItemEnumerator()
+    public void SingleItemCachedEnumerator()
     {
-        var hashCode = 0;
-        var enumerator = _entMan.AllEntityQueryEnumerator<ItemComponent>();
-        while (enumerator.MoveNext(out var item))
+        while (_itemEntityQuery.MoveNext(out var item))
         {
-            hashCode = HashCode.Combine(hashCode, item.GetHashCode());
+            _consumer.Consume(item);
         }
-
-        return hashCode;
     }
 
     [Benchmark]
     [BenchmarkCategory("Item Enumerator")]
-    public int DoubleItemEnumerator()
+    public void SingleItemEnumerator()
     {
-        var hashCode = 0;
+        var enumerator = _entMan.AllEntityQueryEnumerator<ItemComponent>();
+        while (enumerator.MoveNext(out var item))
+        {
+            _consumer.Consume(item);
+        }
+    }
+
+    [Benchmark]
+    [BenchmarkCategory("Item Enumerator")]
+    public void DoubleItemEnumerator()
+    {
         var enumerator = _entMan.AllEntityQueryEnumerator<ClothingComponent, ItemComponent>();
         while (enumerator.MoveNext(out _, out var item))
         {
-            hashCode = HashCode.Combine(hashCode, item.GetHashCode());
+            _consumer.Consume(item);
         }
-
-        return hashCode;
     }
 
     [Benchmark]
@@ -195,31 +229,35 @@ public class ComponentQueryBenchmark
     }
 
     [Benchmark]
-    [BenchmarkCategory("Airlock Enumerator")]
-    public int SingleAirlockEnumerator()
+    [BenchmarkCategory("Item Enumerator")]
+    public void SingleAirlockCachedEnumerator()
     {
-        var hashCode = 0;
-        var enumerator = _entMan.AllEntityQueryEnumerator<AirlockComponent>();
-        while (enumerator.MoveNext(out var airlock))
+        while (_airlockEntityQuery.MoveNext(out var item))
         {
-            hashCode = HashCode.Combine(hashCode, airlock.GetHashCode());
+            _consumer.Consume(item);
         }
-
-        return hashCode;
     }
 
     [Benchmark]
     [BenchmarkCategory("Airlock Enumerator")]
-    public int DoubleAirlockEnumerator()
+    public void SingleAirlockEnumerator()
     {
-        var hashCode = 0;
+        var enumerator = _entMan.AllEntityQueryEnumerator<AirlockComponent>();
+        while (enumerator.MoveNext(out var airlock))
+        {
+            _consumer.Consume(airlock);
+        }
+    }
+
+    [Benchmark]
+    [BenchmarkCategory("Airlock Enumerator")]
+    public void DoubleAirlockEnumerator()
+    {
         var enumerator = _entMan.AllEntityQueryEnumerator<AirlockComponent, DoorComponent>();
         while (enumerator.MoveNext(out _, out var door))
         {
-            hashCode = HashCode.Combine(hashCode, door.GetHashCode());
+            _consumer.Consume(door);
         }
-
-        return hashCode;
     }
 
     [Benchmark]
@@ -238,8 +276,8 @@ public class ComponentQueryBenchmark
 
     #endregion
 
-    [Benchmark(Baseline = true)]
-    [BenchmarkCategory("Events")]
+    // [Benchmark(Baseline = true)]
+    // [BenchmarkCategory("Events")]
     public int StructEvents()
     {
         var ev = new QueryBenchEvent();
