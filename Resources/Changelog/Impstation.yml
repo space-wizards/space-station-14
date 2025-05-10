@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Quartermasters can now pick an extra extra extra large winter coat in
-      the loadout screen.
-    type: Add
-  id: 1137
-  time: '2025-02-16T08:31:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1691
 - author: Pivotbash
   changes:
   - message: Sec Spaceblade now costs 1 Utility Token. Whoops!
@@ -4171,3 +4163,12 @@
   id: 1636
   time: '2025-05-10T11:36:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2439
+- author: CrystalClover
+  changes:
+  - message: Added new blinking noise to Slimes and Gastropoids
+    type: Add
+  - message: Blinking now has pitch variation
+    type: Tweak
+  id: 1637
+  time: '2025-05-10T11:38:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2442
