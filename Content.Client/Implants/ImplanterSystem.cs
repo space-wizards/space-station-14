@@ -14,8 +14,8 @@ public sealed class ImplanterSystem : SharedImplanterSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ImplanterComponent, AfterAutoHandleStateEvent>(OnHandleImplanterState);
 
+        SubscribeLocalEvent<ImplanterComponent, AfterAutoHandleStateEvent>(OnHandleImplanterState);
         Subs.ItemStatus<ImplanterComponent>(ent => new ImplanterStatusControl(ent));
     }
 
