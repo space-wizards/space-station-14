@@ -71,6 +71,7 @@ research-technology-advanced-cleaning = Advanced Cleaning
 research-technology-meat-manipulation = Meat Manipulation
 research-technology-honk-mech = H.O.N.K. Mech
 research-technology-advanced-spray = Advanced Spray
+research-technology-launcher-syringe = Syringe Gun
 research-technology-bluespace-cargo-transport = Bluespace Cargo Transport
 research-technology-clowning-utilities = Clowning Utilities
 research-technology-quantum-fiber-weaving = Quantum Fiber Weaving
