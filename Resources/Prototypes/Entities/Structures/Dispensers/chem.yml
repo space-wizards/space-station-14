@@ -10,6 +10,7 @@
     state: industrial-working
     snapCardinals: true
   - type: Storage
+    openOnActivate: false
     whitelist:
       tags:
       - ChemDispensable
