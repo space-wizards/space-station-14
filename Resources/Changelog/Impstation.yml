@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: You can engrave messages on bullets and bombs.
-    type: Add
-  id: 1141
-  time: '2025-02-16T12:31:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1690
 - author: DinnerCalzone
   changes:
   - message: Brigmedic support has been added to Plasma Station.
@@ -4174,3 +4167,10 @@
   id: 1640
   time: '2025-05-10T17:08:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2446
+- author: TheLuggage05
+  changes:
+  - message: Adds lens slots to all most crew eyewear that didn't already have it.
+    type: Add
+  id: 1641
+  time: '2025-05-10T23:42:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2441
