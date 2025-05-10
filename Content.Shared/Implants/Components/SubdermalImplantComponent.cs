@@ -57,17 +57,6 @@ public sealed partial class SubdermalImplantComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId? DrawableProtoIdOverride;
-
-    [DataField("color")]
-    private Color color = Color.Green;
-
-    [Animatable]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public Color Color
-    {
-        get => color;
-        set => color = value;
-    }
 }
 
 /// <summary>

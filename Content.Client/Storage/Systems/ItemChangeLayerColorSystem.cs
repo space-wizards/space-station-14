@@ -1,20 +1,21 @@
 using Content.Shared.Implants;
 using Content.Shared.Storage.Components;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Implants;
+namespace Content.Client.Storage.Systems;
 
-public sealed class ImplanterVisualsSystem : SharedImplanterVisualSystem
+public sealed class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ImplanterVisualsComponent, AppearanceChangeEvent>(OnAppearance);
+        SubscribeLocalEvent<ChangeLayersColorComponent, AppearanceChangeEvent>(OnAppearance);
     }
 
-    private void OnAppearance(EntityUid uid, ImplanterVisualsComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearance(EntityUid uid, ChangeLayersColorComponent component, ref AppearanceChangeEvent args)
     {
         if (TryComp<SpriteComponent>(uid, out var spriteComponent))
         {
@@ -27,7 +28,7 @@ public sealed class ImplanterVisualsSystem : SharedImplanterVisualSystem
         }
     }
 
-    private void InitLayers((EntityUid uid, ImplanterVisualsComponent component, SpriteComponent spriteComponent, AppearanceComponent Component) ent)
+    private void InitLayers((EntityUid uid, ChangeLayersColorComponent component, SpriteComponent spriteComponent, AppearanceComponent Component) ent)
     {
         var (owner, component, spriteComponent, appearance) = ent;
         if (!_appearance.TryGetData<ColorLayerData>(owner, StorageMapVisuals.InitLayers, out var wrapper, appearance))
@@ -40,7 +41,7 @@ public sealed class ImplanterVisualsSystem : SharedImplanterVisualSystem
         }
     }
 
-    private void UpdateLayers((EntityUid uid, ImplanterVisualsComponent component, SpriteComponent spriteComponent, AppearanceComponent Component) ent)
+    private void UpdateLayers((EntityUid uid, ChangeLayersColorComponent component, SpriteComponent spriteComponent, AppearanceComponent Component) ent)
     {
         var (owner, component, spriteComponent, appearance) = ent;
         if (!_appearance.TryGetData<ColorLayerData>(owner, StorageMapVisuals.LayerChanged, out var wrapper, appearance))

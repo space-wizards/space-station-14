@@ -5,7 +5,7 @@ using System.Linq;
 namespace Content.Shared.Implants;
 
 [RegisterComponent]
-public sealed partial class ImplanterVisualsComponent : Component
+public sealed partial class ChangeLayersColorComponent : Component
 {
     [DataField("mapLayers")] public Dictionary<string, SharedMapLayerData> MapLayers = new();
 
@@ -26,16 +26,16 @@ public sealed partial class ImplanterVisualsComponent : Component
 [Serializable, NetSerializable]
 public sealed class ColorLayerData : ICloneable
 {
-    public readonly LayereColor[] QueuedEntities;
+    public readonly LayerColor[] QueuedEntities;
 
     public ColorLayerData()
     {
-        QueuedEntities = Array.Empty<LayereColor>();
+        QueuedEntities = Array.Empty<LayerColor>();
     }
 
     public ColorLayerData(IReadOnlyDictionary<string, Color> other)
     {
-        QueuedEntities = other.Select(kvp => new LayereColor { LayerName = kvp.Key, Color = kvp.Value }).ToArray(); ;
+        QueuedEntities = other.Select(kvp => new LayerColor { LayerName = kvp.Key, Color = kvp.Value }).ToArray(); ;
     }
 
     public object Clone()
@@ -46,7 +46,7 @@ public sealed class ColorLayerData : ICloneable
 }
 
 [Serializable]
-public struct LayereColor
+public struct LayerColor
 {
     public string LayerName;
     public Color Color;

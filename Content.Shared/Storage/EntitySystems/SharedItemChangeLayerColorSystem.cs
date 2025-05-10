@@ -1,3 +1,4 @@
+using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Whitelist;
@@ -5,9 +6,9 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using System.Linq;
 
-namespace Content.Shared.Implants;
+namespace Content.Shared.Storage.EntitySystems;
 
-public abstract class SharedImplanterVisualSystem : EntitySystem
+public abstract class SharedItemChangeLayerColorSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -17,48 +18,48 @@ public abstract class SharedImplanterVisualSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ImplanterVisualsComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<ImplanterVisualsComponent, EntInsertedIntoContainerMessage>(OnEntInsert);
-        SubscribeLocalEvent<ImplanterVisualsComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        SubscribeLocalEvent<ChangeLayersColorComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<ChangeLayersColorComponent, EntInsertedIntoContainerMessage>(OnEntInsert);
+        SubscribeLocalEvent<ChangeLayersColorComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
     }
 
-    private void OnEntInsert(EntityUid uid, ImplanterVisualsComponent comp, ref EntInsertedIntoContainerMessage args)
+    private void OnEntInsert(EntityUid uid, ChangeLayersColorComponent comp, ref EntInsertedIntoContainerMessage args)
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
         var ent = args.Entity;
 
-        if (!TryComp<SubdermalImplantComponent>(ent, out var subcomp))
+        if (!TryComp<ItemLayersColorComponent>(ent, out var itemLayerColor))
             return;
 
-        UpdateAppearance(uid, subcomp, comp, appearance);
+        UpdateAppearance(uid, ent, itemLayerColor, comp, appearance);
     }
 
-    private void OnEntRemoved(EntityUid uid, ImplanterVisualsComponent comp, ref EntRemovedFromContainerMessage args)
+    private void OnEntRemoved(EntityUid uid, ChangeLayersColorComponent comp, ref EntRemovedFromContainerMessage args)
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
         var ent = args.Entity;
 
-        if (!TryComp<SubdermalImplantComponent>(ent, out var subcomp))
+        if (!TryComp<ItemLayersColorComponent>(ent, out var itemLayerColor))
             return;
 
-        UpdateAppearance(uid, subcomp, comp, appearance);
+        UpdateAppearance(uid, ent, itemLayerColor, comp, appearance);
     }
 
-    private void UpdateAppearance(EntityUid parent, SubdermalImplantComponent entMovedComp, ImplanterVisualsComponent comp, AppearanceComponent appearance)
+    private void UpdateAppearance(EntityUid parent, EntityUid item, ItemLayersColorComponent itemLayerColor, ChangeLayersColorComponent comp, AppearanceComponent appearance)
     {
         var dict = new Dictionary<string, Color>();
-        if(!TryGetLayer(entMovedComp.Owner, comp, out var layer))
+        if(!TryGetLayer(item, comp, out var layer))
             return;
 
-        dict.Add(layer, entMovedComp.Color);
+        dict.Add(layer, itemLayerColor.Color);
         _appearance.SetData(parent, StorageMapVisuals.LayerChanged, new ColorLayerData(dict), appearance);
     }
 
-    private void OnComponentInit(EntityUid uid, ImplanterVisualsComponent component, ref ComponentInit args)
+    private void OnComponentInit(EntityUid uid, ChangeLayersColorComponent component, ref ComponentInit args)
     {
         foreach (var (layerName, val) in component.MapLayers)
         {
@@ -76,20 +77,18 @@ public abstract class SharedImplanterVisualSystem : EntitySystem
         }
     }
 
-    private bool TryGetLayer(EntityUid ent, ImplanterVisualsComponent itemMapper, out string showLayer)
+    private bool TryGetLayer(EntityUid ent, ChangeLayersColorComponent itemLayerColor, out string showLayer)
     {
-        string result = "";
-        foreach (var mapLayerData in itemMapper.MapLayers.Values)
+        foreach (var mapLayerData in itemLayerColor.MapLayers.Values)
         {
             var count = _whitelistSystem.IsWhitelistPassOrNull(mapLayerData.Whitelist, ent);
             if (count)
             {
-                result = mapLayerData.Layer;
-                break;
+                showLayer = mapLayerData.Layer;
+                return true;
             }
         }
-
-        showLayer = result;
-        return true;
+        showLayer = string.Empty;
+        return false;
     }
 }

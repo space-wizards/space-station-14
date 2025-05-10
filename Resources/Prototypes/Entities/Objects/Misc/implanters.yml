@@ -65,7 +65,7 @@
       heldPrefix: implanter
       size: Small
     - type: Appearance
-    - type: ImplanterVisuals
+    - type: ChangeLayersColor
       mapLayers:
         implantFull:
           whitelist:
