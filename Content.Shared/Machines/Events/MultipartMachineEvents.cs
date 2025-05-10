@@ -8,14 +8,14 @@ namespace Content.Shared.Machines.Events;
 /// <param name="Entity">Entity that is bound to the multipart machine.</param>
 /// <param name="IsAssembled">Assembled state of the machine.</param>
 /// <param name="User">Optional user that may have caused the assembly state to change.</param>
-/// <param name="PartsAdded">List of any parts that have been added to this machine.</param>
-/// <param name="PartsRemoved">List of any parts that have been removed from this machine.</param>
+/// <param name="PartsAdded">Dictionary of keys to entities of parts that have been added to this machine.</param>
+/// <param name="PartsRemoved">Dictionary of keys to entities of parts that have been removed from this machine.</param>
 [ByRefEvent]
 public record struct MultipartMachineAssemblyStateChanged(
     EntityUid Entity,
     bool IsAssembled,
     EntityUid? User,
-    List<Enum> PartsAdded,
-    List<Enum> PartsRemoved)
+    Dictionary<Enum, EntityUid> PartsAdded,
+    Dictionary<Enum, EntityUid> PartsRemoved)
 {
 }

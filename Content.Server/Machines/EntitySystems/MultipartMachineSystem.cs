@@ -67,9 +67,9 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         // Set to true if any of the parts' state changes
         var stateHasChanged = false;
 
-        // Keep a track of what parts were added so we can inform listeners
-        List<Enum> partsAdded = [];
-        List<Enum> partsRemoved = [];
+        // Keep a track of what parts were added or removed so we can inform listeners
+        Dictionary<Enum, EntityUid> partsAdded = [];
+        Dictionary<Enum, EntityUid> partsRemoved = [];
 
         var missingParts = false;
         var machineRotation = xform.LocalRotation.GetCardinalDir().ToAngle();
@@ -97,17 +97,19 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             {
                 // This part gained an entity, add the Part component so it can find out which machine
                 // it's a part of
-                var comp = EnsureComp<MultipartMachinePartComponent>(GetEntity(part.Entity.Value));
+                var partEnt = GetEntity(part.Entity.Value);
+                var comp = EnsureComp<MultipartMachinePartComponent>(partEnt);
                 comp.Master = ent;
-                partsAdded.Add(key);
+                partsAdded.Add(key, partEnt);
             }
             else
             {
                 // This part lost its entity, ensure we clean up the old entity so it's no longer marked
                 // as something we care about.
-                var comp = EnsureComp<MultipartMachinePartComponent>(GetEntity(originalPart!.Value));
+                var partEnt = GetEntity(originalPart!.Value);
+                var comp = EnsureComp<MultipartMachinePartComponent>(partEnt);
                 comp.Master = null;
-                partsRemoved.Add(key);
+                partsRemoved.Add(key, partEnt);
             }
         }
 
@@ -125,6 +127,40 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         }
 
         return stateHasChanged;
+    }
+
+    /// <summary>
+    /// Clears all entities bound to parts for a specified machine.
+    /// Will also raise the assembly state change and dirty event for it.
+    /// </summary>
+    /// <param name="ent">Machine to completely clear the parts of.</param>
+    private void ClearAllParts(Entity<MultipartMachineComponent> ent)
+    {
+        var stateHasChanged = false;
+
+        Dictionary<Enum, EntityUid> clearedParts = [];
+        foreach (var (key, part) in ent.Comp.Parts)
+        {
+            if (part.Entity.HasValue)
+            {
+                stateHasChanged = true;
+                clearedParts.Add(key, GetEntity(part.Entity.Value));
+                part.Entity = null;
+            }
+        }
+        ent.Comp.IsAssembled = false;
+
+        if (stateHasChanged)
+        {
+            var ev = new MultipartMachineAssemblyStateChanged(ent,
+                ent.Comp.IsAssembled,
+                null,
+                [],
+                clearedParts);
+            RaiseLocalEvent(ent, ref ev);
+
+            Dirty(ent);
+        }
     }
 
     /// <summary>
