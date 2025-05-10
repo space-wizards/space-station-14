@@ -23,7 +23,7 @@
     back: ClothingBackpackDeathSquad
     mask: ClothingMaskGasDeathSquad
     eyes: ClothingEyesHudCentComm
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComDS
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitDeathsquad
     shoes: ClothingShoesBootsMagAdv
