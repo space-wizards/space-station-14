@@ -291,10 +291,10 @@
   - type: Sprite
     layers:
     - state: green
-    - sprite: Mobs/Silicon/chassis.rsi
-      state: robot
-    - sprite: Mobs/Silicon/chassis.rsi
-      state: robot_e
+    - sprite: Mobs/Silicon/Chassis/generic.rsi
+      state: borg
+    - sprite: Mobs/Silicon/Chassis/generic.rsi
+      state: borg_e
 
 # Command
 
