@@ -73,7 +73,7 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobPossumMortyOld
+      - MobPossumMorty
 
 - type: entity
   name: Raccoon Morticia Spawner
