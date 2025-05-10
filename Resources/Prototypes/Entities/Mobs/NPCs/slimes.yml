@@ -1,7 +1,8 @@
-﻿- type: entity
+﻿## Slimes
+- type: entity
   name: basic slime
   id: BaseMobAdultSlimes
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: SimpleMobBase
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
@@ -39,7 +40,6 @@
     - FootstepSound
     - DoorBumpOpener
   - type: Butcherable
-    butcheringType: Knife
     spawned:
     - id: FoodMeatSlime
       amount: 2
@@ -56,6 +56,7 @@
     damageModifierSet: Slime
   - type: Bloodstream
     bloodReagent: Slime
+    bloodMaxVolume: 150
     bloodlossDamage:
       types:
         Bloodloss:
@@ -73,10 +74,6 @@
       Flammable: [ Touch ]
       Extinguish: [ Touch ]
     reactions:
-    - reagents: [ Water, SpaceCleaner ]
-      methods: [ Touch ]
-      effects:
-      - !type:WashCreamPieReaction
     - reagents: [ Water ]
       methods: [ Touch ]
       effects:
@@ -101,7 +98,7 @@
     damage:
       types:
         Blunt: 6
-        Structural: 4
+        Structural: 8 # Values below 5 do nothing to help destroy airlocks, this wont help destroy walls
         Caustic: 4
   - type: InteractionPopup
     successChance: 0.5
@@ -112,6 +109,31 @@
     speechSounds: Slime
   - type: TypingIndicator
     proto: slime
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: HTN
+    rootTask:
+      task: RuminantHostileCompound
+
+- type: entity
+  name: green slime
+  id: MobAdultSlimesAngry
+  suffix: Angry
+  abstract: true
+  components:
+    - type: NpcFactionMember
+      factions:
+        - SimpleHostile
+    - type: GhostRole
+      description: ghost-role-information-angry-slimes-description
+      rules: ghost-role-information-angry-slimes-rules
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
+      raffle:
+        settings: short
 
 - type: entity
   name: basic slime
@@ -157,20 +179,8 @@
 
 - type: entity
   name: blue slime
-  parent: MobAdultSlimesBlue
+  parent: [ MobAdultSlimesAngry, MobAdultSlimesBlue ]
   id: MobAdultSlimesBlueAngry
-  suffix: Angry
-  components:
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      rules: ghost-role-information-angry-slimes-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
-      raffle:
-        settings: short
 
 - type: entity
   name: green slime
@@ -197,20 +207,8 @@
 
 - type: entity
   name: green slime
-  parent: MobAdultSlimesGreen
+  parent: [ MobAdultSlimesAngry, MobAdultSlimesBlue ]
   id: MobAdultSlimesGreenAngry
-  suffix: Angry
-  components:
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      rules: ghost-role-information-angry-slimes-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
-      raffle:
-        settings: short
 
 - type: entity
   name: yellow slime
@@ -236,17 +234,322 @@
 
 - type: entity
   name: yellow slime
-  parent: MobAdultSlimesYellow
+  parent: [ MobAdultSlimesAngry, MobAdultSlimesBlue ]
   id: MobAdultSlimesYellowAngry
   suffix: Angry
+
+## Reagent Slimes
+- type: entity
+  name: reagent slime
+  id: ReagentSlime
+  suffix: Water
+  parent: MobAdultSlimes
+  description: It consists of a liquid, and it wants to dissolve you in itself.
   components:
-    - type: NpcFactionMember
-      factions:
-        - SimpleHostile
-    - type: GhostRole
-      description: ghost-role-information-angry-slimes-description
-      rules: ghost-role-information-angry-slimes-rules
-      mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
-      raffle:
-        settings: short
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#75b1f0"
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      50: 0.4
+  - type: Bloodstream
+    bloodReagent: Water
+    chemicalMaxVolume: 100
+  - type: PointLight
+    radius: 2.0
+    energy: 3.5
+    color: "#75b1f0" # Edited through the LiquidAnomalySystem
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Dead
+  - type: StatusEffects
+    allowed:
+    - SlowedDown
+    - Electrocution
+  - type: ExaminableSolution
+    solution: bloodstream
+  - type: InjectableSolution
+    solution: bloodstream
+  - type: DrainableSolution
+    solution: bloodstream
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    animation: WeaponArcBite
+    damage:
+      types:
+        Slash: 8
+  - type: MeleeChemicalInjector
+    solution: bloodstream
+    transferAmount: 5
+  - type: NoSlip
+  - type: ZombieImmune
+  - type: GhostRole
+    prob: 0
+    description: ghost-role-information-angry-slimes-description
+    rules: ghost-role-information-angry-slimes-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: short
+  - type: Tag
+    tags:
+      - FootstepSound
+      - CannotSuicide
+      - DoorBumpOpener
+
+- type: entity
+  name: Reagent Slime Spawner
+  id: ReagentSlimeSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Mobs/Aliens/elemental.rsi
+          state: alive
+    - type: RandomSpawner
+      prototypes:
+        - ReagentSlime
+        - ReagentSlimeBeer
+        - ReagentSlimePax
+        - ReagentSlimeNocturine
+        - ReagentSlimeTHC
+        - ReagentSlimeBicaridine
+        - ReagentSlimeToxin
+        - ReagentSlimeNapalm
+        - ReagentSlimeOmnizine
+        - ReagentSlimeMuteToxin
+        - ReagentSlimeNorepinephricAcid
+        - ReagentSlimeEphedrine
+        - ReagentSlimeRobustHarvest
+      chance: 1
+
+- type: entity
+  id: ReagentSlimeBeer
+  parent: ReagentSlime
+  suffix: Beer
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#cfa85f"
+  - type: Bloodstream
+    bloodReagent: Beer
+  - type: PointLight
+    color: "#cfa85f"
+
+- type: entity
+  id: ReagentSlimePax
+  parent: ReagentSlime
+  suffix: Pax
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#AAAAAA"
+  - type: Bloodstream
+    bloodReagent: Pax
+  - type: PointLight
+    color: "#AAAAAA"
+  - type: MeleeChemicalInjector
+    solution: bloodstream
+    transferAmount: 1
+
+- type: entity
+  id: ReagentSlimeNocturine
+  parent: ReagentSlime
+  suffix: Nocturine
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#128e80"
+  - type: Bloodstream
+    bloodReagent: Nocturine
+  - type: PointLight
+    color: "#128e80"
+  - type: MeleeChemicalInjector
+    solution: bloodstream
+    transferAmount: 3
+
+- type: entity
+  id: ReagentSlimeTHC
+  parent: ReagentSlime
+  suffix: THC
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#808080"
+  - type: Bloodstream
+    bloodReagent: THC
+  - type: PointLight
+    color: "#808080"
+
+- type: entity
+  id: ReagentSlimeBicaridine
+  parent: ReagentSlime
+  suffix: Bicaridine
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#ffaa00"
+  - type: Bloodstream
+    bloodReagent: Bicaridine
+  - type: PointLight
+    color: "#ffaa00"
+
+- type: entity
+  id: ReagentSlimeToxin
+  parent: ReagentSlime
+  suffix: Toxin
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#cf3600"
+  - type: Bloodstream
+    bloodReagent: Toxin
+  - type: PointLight
+    color: "#cf3600"
+
+- type: entity
+  id: ReagentSlimeNapalm
+  parent: ReagentSlime
+  suffix: Napalm
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#FA00AF"
+  - type: Bloodstream
+    bloodReagent: Napalm
+  - type: PointLight
+    color: "#FA00AF"
+
+- type: entity
+  id: ReagentSlimeOmnizine
+  parent: ReagentSlime
+  suffix: Omnizine
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#fcf7f9"
+  - type: Bloodstream
+    bloodReagent: Omnizine
+  - type: PointLight
+    color: "#fcf7f9"
+
+- type: entity
+  id: ReagentSlimeMuteToxin
+  parent: ReagentSlime
+  suffix: Mute Toxin
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#0f0f0f"
+  - type: Bloodstream
+    bloodReagent: MuteToxin
+  - type: PointLight
+    color: "#0f0f0f"
+
+- type: entity
+  id: ReagentSlimeNorepinephricAcid
+  parent: ReagentSlime
+  suffix: Norepinephric Acid
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#96a8b5"
+  - type: Bloodstream
+    bloodReagent: NorepinephricAcid
+  - type: PointLight
+    color: "#96a8b5"
+
+- type: entity
+  id: ReagentSlimeEphedrine
+  parent: ReagentSlime
+  suffix: Ephedrine
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#D2FFFA"
+  - type: Bloodstream
+    bloodReagent: Ephedrine
+  - type: PointLight
+    color: "#D2FFFA"
+
+- type: entity
+  id: ReagentSlimeRobustHarvest
+  parent: ReagentSlime
+  suffix: Robust Harvest
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#3e901c"
+  - type: Bloodstream
+    bloodReagent: RobustHarvest
+  - type: PointLight
+    color: "#3e901c"

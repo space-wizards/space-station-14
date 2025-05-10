@@ -10,12 +10,12 @@
   "states":
   [
     {
-      "name": "bingus",
+      "name": "sphynx",
       "directions": 4
     },
 
     {
-      "name": "bingus_dead",
+      "name": "sphynx_dead",
       "directions": 1
     }
   ]

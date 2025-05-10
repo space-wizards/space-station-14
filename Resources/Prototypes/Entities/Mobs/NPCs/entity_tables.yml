@@ -1,4 +1,4 @@
-- type: entityTable
+- type: entityTable # TODO: move this somewhere else
   id: SmallCritterEntityTable
   table: !type:GroupSelector
     children:

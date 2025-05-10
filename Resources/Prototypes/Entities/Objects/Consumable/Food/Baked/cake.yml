@@ -732,7 +732,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
+    sprite: Mobs/Animals/cat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cak
@@ -755,7 +755,7 @@
     heldPrefix: cak
   - type: Clothing
     quickEquip: false
-    sprite: Mobs/Pets/cat.rsi
+    sprite: Mobs/Animals/cat.rsi
     equippedPrefix: cak
     slots:
     - HEAD

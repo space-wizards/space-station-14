@@ -1,25 +1,10 @@
+## Rat kings
 - type: entity
   name: rat king
   id: MobRatKing
   parent: [ SimpleMobBase, MobCombat ]
   description: He's da rat. He make da roolz.
   components:
-  - type: CombatMode
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 3.00
-    baseSprintSpeed : 5.00
-  - type: InputMover
-  - type: MobMover
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
-  - type: Reactive
-    groups:
-      Flammable: [Touch]
-      Extinguish: [Touch]
-  - type: NpcFactionMember
-    factions:
-    - SimpleHostile
   - type: Sprite
     drawdepth: SmallMobs
     sprite: Mobs/Animals/regalrat.rsi
@@ -29,8 +14,6 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: eyes
       shader: unshaded
-  - type: Physics
-    bodyType: KinematicController
   - type: Fixtures
     fixtures:
       fix1:
@@ -42,40 +25,26 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
-  - type: MobState
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.50
+    baseSprintSpeed : 4.50
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: Reactive # To not parent acidic
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Physics
+    bodyType: KinematicController
   - type: MobThresholds
     thresholds:
       0: Alive
-      200: Dead
-  - type: MeleeWeapon
-    altDisarm: false
-    soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
-    angle: 0
-    animation: WeaponArcClaw
-    damage:
-      types:
-        Slash: 12
-        Piercing: 8
-  - type: Body
-    prototype: Rat
-    requiredLegs: 1 # TODO: More than 1 leg
-  - type: Hunger # probably should be prototyped
-    thresholds:
-      Overfed: 200
-      Okay: 150
-      Peckish: 100
-      Starving: 50
-      Dead: 0
-    baseDecayRate: 0.01666666666
-  - type: Thirst
-    thresholds:
-      OverHydrated: 600
-      Okay: 450
-      Thirsty: 300
-      Parched: 150
-      Dead: 0
-    baseDecayRate: 0.1
+      200: Critical
+      250: Dead
   - type: DamageStateVisuals
     rotate: true
     states:
@@ -86,6 +55,8 @@
         Base: critical
       Dead:
         Base: dead
+  - type: Hunger # Uses default values
+  - type: Thirst
   - type: GhostRole
     makeSentient: true
     name: ghost-role-information-rat-king-name
@@ -96,35 +67,48 @@
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
-  - type: Tag
-    tags:
-      - CannotSuicide
-      - FootstepSound
-  - type: NoSlip
   - type: RatKing
     hungerPerArmyUse: 25
     hungerPerDomainUse: 50
+  - type: MeleeWeapon
+    altDisarm: false
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 13
+        Piercing: 7
+  - type: NoSlip
   - type: MobsterAccent
   - type: Speech
     speechVerb: SmallMob
+  - type: MobPrice
+    price: 2500 # rat wealth
+    deathPenalty: 0.5
+  - type: Body
+    prototype: Rat
+    requiredLegs: 1 # TODO: More than 1 leg
   - type: Butcherable
     spawned:
     - id: ClothingHeadHatFancyCrown #how did that get there?
       amount: 1
-  - type: MobPrice
-    price: 2500 # rat wealth
   - type: RandomMetadata
     nameSegments:
     - NamesRegalratKingdom
     - NamesRegalratTitle
     nameFormat: name-format-regal-rat
-  - type: GuideHelp
-    guides:
-    - MinorAntagonists
   - type: Grammar
     attributes:
       gender: male
-  - type: Sharp
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - FootstepSound
 
 - type: entity
   id: MobRatKingBuff
@@ -140,11 +124,11 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
       state: eyes
       shader: unshaded
-  - type: MobState
   - type: MobThresholds
     thresholds:
       0: Alive
-      350: Dead
+      350: Critical
+      400: Dead
   - type: MeleeWeapon
     altDisarm: false
     soundHit:
@@ -159,23 +143,27 @@
     speedModifierThresholds:
       200: 0.7
       250: 0.5
-  - type: GuideHelp
-    guides:
-    - MinorAntagonists
 
+## Rat Servants
 - type: entity
   name: rat servant
   id: MobRatServant
   parent: [ SimpleMobBase, MobCombat ]
   description: He's da mini rat. He don't make da roolz.
-  categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
+  categories: [ HideSpawnMenu ] # Must be configured to a King or the AI breaks.
   components:
-  - type: CombatMode
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/rat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: rat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
+      state: eyes
+      shader: unshaded
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
     baseSprintSpeed : 3.5
-  - type: InputMover
-  - type: MobMover
   - type: HTN
     rootTask:
       task: RatServantCompound
@@ -193,15 +181,6 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
-  - type: Sprite
-    drawdepth: SmallMobs
-    sprite: Mobs/Animals/rat.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: rat
-    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
-      state: eyes
-      shader: unshaded
 
   - type: SpriteMovement
     movementLayers:
@@ -296,13 +275,15 @@
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
 
+## Loot table
 - type: weightedRandomEntity
   id: RatKingLoot
   weights:
-    RandomSpawner100: 66 #garbage
-    FoodCheese: 28 #food
-    IngotGold1: 5 #loot
+    RandomSpawner100: 66 # Random Trash
+    FoodCheese: 28
+    IngotGold1: 5
 
+## Actions
 - type: entity
   id: ActionRatKingRaiseArmy
   name: Raise Army

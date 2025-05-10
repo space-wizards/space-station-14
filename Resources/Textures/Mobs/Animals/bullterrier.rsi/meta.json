@@ -10,12 +10,12 @@
   "states":
   [
     {
-      "name": "walter",
+      "name": "bullterrier",
       "directions": 4
     },
 
     {
-      "name": "walter_dead",
+      "name": "bullterrier_dead",
       "directions": 1
     }
   ]

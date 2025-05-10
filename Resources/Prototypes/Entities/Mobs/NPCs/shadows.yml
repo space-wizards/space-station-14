@@ -9,7 +9,7 @@
     color: "#793a80dd"
     radius: 1.1
   - type: MovementSpeedModifier
-    baseWalkSpeed: 2
+    baseWalkSpeed: 1
     baseSprintSpeed: 2
   - type: Fixtures
     fixtures:
@@ -23,9 +23,6 @@
         layer:
         - None
   - type: StandingState
-  - type: Tag
-    tags:
-    - DoorBumpOpener
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
@@ -36,12 +33,15 @@
     speedModifierThresholds:
       60: 0.7
       80: 0.5
-      
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+
 - type: entity
   name: shadow cat
   parent: BaseShadowMob
   id: MobCatShadow
-  description: A lovely piece of darkness. Hope he doesn't bring you a curse.
+  description: A lovely piece of darkness. Hope it doesn't bring you a curse.
   components:
   - type: Sprite
     drawdepth: Mobs
