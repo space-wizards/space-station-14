@@ -4,7 +4,7 @@
   mapPath: /Maps/train.yml
   maxRandomOffset: 0
   randomRotation: false
-  minPlayers: 35
+  minPlayers: 30
   maxPlayers: 70
   stations:
     Train:
@@ -19,65 +19,63 @@
           emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml # TODO - add railway station
         - type: StationJobs
           availableJobs:
-            #service
+            # cmd
             Captain: [ 1, 1 ]
-            HeadOfPersonnel: [ 1, 1 ]
-            Bartender: [ 1, 1 ]
-            Botanist: [ 2, 2 ]
-            Chef: [ 1, 1 ]
-            Janitor: [ 2, 2 ]
-            Chaplain: [ 1, 1 ]
-            Librarian: [ 1, 1 ]
-            ServiceWorker: [ 2, 3 ]
-            Detective: [ 1, 1 ]
-            #engineering
-            ChiefEngineer: [ 1, 1 ]
-            AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 5, 5 ]
-            TechnicalAssistant: [ 3, 3 ]
-            #medical
-            ChiefMedicalOfficer: [ 1, 1 ]
-            Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 2, 2 ]
-            MedicalIntern: [ 2, 2 ]
-            Paramedic: [ 1, 1 ]
-            # MedicalSurgeon: [ 1, 1 ]
-            #science
-            ResearchDirector: [ 1, 1 ]
-            Scientist: [ 4, 4 ]
-            ResearchAssistant: [ 2, 2 ]
-            #security
-            HeadOfSecurity: [ 1, 1 ]
-            Warden: [ 1, 1 ]
-            SecurityOfficer: [ 4, 4 ]
-            SecurityCadet: [ 3, 3 ]
-            #supply
-            Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 3, 3 ]
-            CargoTechnician: [ 3, 3 ]
-            #civilian
-            Passenger: [ -1, -1 ]
-            Clown: [ 1, 1 ]
-            Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
-            # seniors
-            SeniorEngineer: [1, 1 ]
-            SeniorPhysician: [ 1, 1 ]
-            SeniorResearcher: [ 1, 1 ]
-            SeniorOfficer: [ 1, 1 ]
-            SeniorSalvageSpecialist: [ 1, 1 ]
-            SeniorAdministrator: [ 1, 1 ]
+            BlueShieldOfficer: [ 1, 1 ]
             # law
             # Magistrat: [ 1, 1 ]
             IAA: [ 1, 1 ]
             Lawyer: [ 2, 2 ]
-            # silicon
+            # sec
+            HeadOfSecurity: [ 1, 1 ]
+            Warden: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
+            Detective: [ 1, 1 ]
+            SecurityPilot: [ 1, 1 ]
+            SecurityOfficer: [ 4, 4 ]
+            Brigmedic: [ 1, 1 ]
+            SecurityCadet: [ 2, 2 ]
+            # med
+            ChiefMedicalOfficer: [ 1, 1 ]
+            SeniorPhysician: [ 1, 1 ]
+            Chemist: [ 2, 2 ]
+            MedicalDoctor: [ 2, 2 ]
+            Paramedic: [ 1, 1 ]
+            Coroner: [ 1, 1 ]
+            MedicalIntern: [ 2, 2 ]
+            # rnd
+            ResearchDirector: [ 1, 1 ]
+            SeniorResearcher: [ 1, 1 ]
+            Scientist: [ 4, 4 ]
+            ResearchAssistant: [ 2, 2 ]
+            # eng
+            ChiefEngineer: [ 1, 1 ]
+            SeniorEngineer: [ 1, 1 ]
+            AtmosphericTechnician: [ 3, 3 ]
+            StationEngineer: [ 5, 5 ]
+            TechnicalAssistant: [ 3, 3 ]
+            # sup
+            Quartermaster: [ 1, 1 ]
+            SeniorSalvageSpecialist: [ 1, 1 ]
+            SalvageSpecialist: [ 3, 3 ]
+            CargoTechnician: [ 3, 3 ]
+            # civ
+            HeadOfPersonnel: [ 1, 1 ]
+            SeniorAdministrator: [ 1, 1 ]
+            Chef: [ 1, 1 ]
+            Botanist: [ 2, 2 ]
+            Bartender: [ 1, 1 ]
+            ServiceWorker: [ 2, 4 ]
+            Janitor: [ 2, 2 ]
+            Librarian: [ 1, 1 ]
+            Chaplain: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            Passenger: [ -1, -1 ]
+            Mime: [ 1, 1 ]
+            Clown: [ 1, 1 ]
+            # sil
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
             BorgSecurity: [ 1, 1 ]
-            # DS14
-            BlueShieldOfficer: [ 1, 1 ]
-            Brigmedic: [ 1, 1 ]
+            # etc
             ClownSponsor: [ 0, 2 ]
-            Coroner: [ 1, 1 ]
-            SecurityPilot: [ 1, 1 ]

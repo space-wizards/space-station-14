@@ -2,8 +2,8 @@
   id: Packed
   mapName: 'Packed Station'
   mapPath: /Maps/packed.yml
-  minPlayers: 7
-  maxPlayers: 37
+  minPlayers: 0
+  maxPlayers: 40
   stations:
     Packed:
       stationProto: StandardNanotrasenStation
@@ -15,63 +15,63 @@
             prefixCreator: 'VG'
         - type: StationJobs
           availableJobs:
-            #service
+            # cmd
             Captain: [ 1, 1 ]
-            HeadOfPersonnel: [ 1, 1 ]
-            Bartender: [ 1, 1 ]
-            Botanist: [ 1, 2 ]
-            Chef: [ 1, 1 ]
-            Janitor: [ 2, 2 ]
-            Chaplain: [ 1, 1 ]
-            Librarian: [ 1, 1 ]
-            ServiceWorker: [ 2, 2 ]
-            #engineering
+            BlueShieldOfficer: [ 1, 1 ]
+            # law
+            # Magistrat: [ 1, 1 ]
+            IAA: [ 1, 1 ]
+            Lawyer: [ 2, 2 ]
+            # sec
+            HeadOfSecurity: [ 1, 1 ]
+            Warden: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
+            Detective: [ 1, 1 ]
+            SecurityPilot: [ 1, 1 ]
+            SecurityOfficer: [ 3, 3 ]
+            Brigmedic: [ 1, 1 ]
+            SecurityCadet: [ 2, 2 ]
+            # med
+            ChiefMedicalOfficer: [ 1, 1 ]
+            SeniorPhysician: [ 1, 1 ]
+            Chemist: [ 2, 2 ]
+            MedicalDoctor: [ 3, 3 ]
+            Paramedic: [ 1, 1 ]
+            Coroner: [ 1, 1 ]
+            MedicalIntern: [ 2, 2 ]
+            # rnd
+            ResearchDirector: [ 1, 1 ]
+            SeniorResearcher: [ 1, 1 ]
+            Scientist: [ 3, 3 ]
+            ResearchAssistant: [ 2, 2 ]
+            # eng
             ChiefEngineer: [ 1, 1 ]
             SeniorEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 3, 3 ]
-            #medical
-            ChiefMedicalOfficer: [ 1, 1 ]
-            SeniorPhysician: [ 1, 1 ]
-            Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 3, 3 ]
-            MedicalIntern: [ 2, 2 ]
-            Paramedic: [ 1, 1 ]
-            # MedicalSurgeon: [ 1, 1 ]
-            #science
-            ResearchDirector: [ 1, 1 ]
-            SeniorResearcher: [ 1, 1 ]
-            Scientist: [ 3, 3 ]
-            ResearchAssistant: [ 2, 2 ]
-            #security
-            HeadOfSecurity: [ 1, 1 ]
-            Warden: [ 1, 1 ]
-            SeniorOfficer: [ 1, 1 ]
-            SecurityOfficer: [ 4, 4 ]
-            Detective: [ 1, 1 ]
-            SecurityCadet: [ 2, 2 ]
-            Lawyer: [ 1, 1 ]
-            #supply
+            # sup
             Quartermaster: [ 1, 1 ]
+            SeniorSalvageSpecialist: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 2, 2 ]
-            #civilian
-            Passenger: [ -1, -1 ]
-            Clown: [ 1, 1 ]
-            Mime: [ 1, 1 ]
+            # civ
+            HeadOfPersonnel: [ 1, 1 ]
+            SeniorAdministrator: [ 1, 1 ]
+            Chef: [ 1, 1 ]
+            Botanist: [ 1, 2 ]
+            Bartender: [ 1, 1 ]
+            ServiceWorker: [ 2, 2 ]
+            Janitor: [ 2, 2 ]
+            Librarian: [ 1, 1 ]
+            Chaplain: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            #silicon
+            Passenger: [ -1, -1 ]
+            Mime: [ 1, 1 ]
+            Clown: [ 1, 1 ]
+            # sil
             StationAi: [ 1, 1 ]
             Borg: [ 1, 1 ]
-            # DS14
-            BlueShieldOfficer: [ 1, 1 ]
             BorgSecurity: [ 1, 1 ]
-            # Magistrat: [ 1, 1 ]
-            Brigmedic: [ 1, 1 ]
+            # etc
             ClownSponsor: [ 0, 2 ]
-            Coroner: [ 1, 1 ]
-            SeniorSalvageSpecialist: [ 1, 1 ]
-            SeniorAdministrator: [ 1, 1 ]
-            SecurityPilot: [ 1, 1 ]
-            IAA: [ 1, 1 ]
