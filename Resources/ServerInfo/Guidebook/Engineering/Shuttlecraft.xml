@@ -46,7 +46,7 @@
     <GuideEntityEmbed Entity="FloorTileItemWhite" Caption=""/>
   </Box>
 
-  Head out into space with steel sheets and metal rods in hand, and click on the edge of the station to place lattice.
+  Head out into space with steel sheets and metal rods in hand and click on the edge of the station to place lattice.
 
   Place a line of lattice about 3-4 tiles away from the station, then start building a platform with lattice.
 
@@ -54,7 +54,7 @@
 
   Once you're finished constructing the base of your shuttle, you can use wirecutters to snip the connecting lattice that joins your new ship and the station.
 
-  This platform is considered a different grid from the station, and thus will not have any gravity or be held in place by a station anchor — it can move around freely.
+  This platform is considered a different grid from the station and thus will not have any gravity or be held in place by a station anchor — it can move around freely.
 
   You can expand your lattice platform further by clicking just off the edge with some rods in hand.
 

@@ -36,6 +36,7 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
+  - type: TrayScanReveal
 
 - type: entity
   id: Carpet
@@ -364,3 +365,4 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+  - type: TrayScanReveal

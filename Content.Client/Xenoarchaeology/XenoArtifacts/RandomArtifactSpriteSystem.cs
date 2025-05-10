@@ -1,4 +1,4 @@
-﻿using Content.Shared.Xenoarchaeology.XenoArtifacts;
+using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Xenoarchaeology.XenoArtifacts;
@@ -13,19 +13,28 @@ public sealed class RandomArtifactSpriteSystem : VisualizerSystem<RandomArtifact
         if (!AppearanceSystem.TryGetData<int>(uid, SharedArtifactsVisuals.SpriteIndex, out var spriteIndex, args.Component))
             return;
 
+        if (!AppearanceSystem.TryGetData<bool>(uid, SharedArtifactsVisuals.IsUnlocking, out var isUnlocking, args.Component))
+            isUnlocking = false;
+
         if (!AppearanceSystem.TryGetData<bool>(uid, SharedArtifactsVisuals.IsActivated, out var isActivated, args.Component))
             isActivated = false;
 
         var spriteIndexStr = spriteIndex.ToString("D2");
-        var spritePrefix = isActivated ? "_on" : "";
+        var spritePrefix = isUnlocking ? "_on" : "";
 
         // layered artifact sprite
-        if (args.Sprite.LayerMapTryGet(ArtifactsVisualLayers.Effect, out var layer))
+        if (args.Sprite.LayerMapTryGet(ArtifactsVisualLayers.UnlockingEffect, out var layer))
         {
             var spriteState = "ano" + spriteIndexStr;
             args.Sprite.LayerSetState(ArtifactsVisualLayers.Base, spriteState);
             args.Sprite.LayerSetState(layer, spriteState + "_on");
-            args.Sprite.LayerSetVisible(layer, isActivated);
+            args.Sprite.LayerSetVisible(layer, isUnlocking);
+
+            if (args.Sprite.LayerMapTryGet(ArtifactsVisualLayers.ActivationEffect, out var activationEffectLayer))
+            {
+                args.Sprite.LayerSetState(activationEffectLayer, "artifact-activation");
+                args.Sprite.LayerSetVisible(activationEffectLayer, isActivated);
+            }
         }
         // non-layered
         else
@@ -33,12 +42,12 @@ public sealed class RandomArtifactSpriteSystem : VisualizerSystem<RandomArtifact
             var spriteState = "ano" + spriteIndexStr + spritePrefix;
             args.Sprite.LayerSetState(ArtifactsVisualLayers.Base, spriteState);
         }
-
     }
 }
 
 public enum ArtifactsVisualLayers : byte
 {
     Base,
-    Effect // doesn't have to use this
+    UnlockingEffect, // doesn't have to use this
+    ActivationEffect
 }

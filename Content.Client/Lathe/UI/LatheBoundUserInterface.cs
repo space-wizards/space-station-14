@@ -18,9 +18,8 @@ namespace Content.Client.Lathe.UI
         {
             base.Open();
 
-            _menu = this.CreateWindow<LatheMenu>();
+            _menu = this.CreateWindowCenteredRight<LatheMenu>();
             _menu.SetEntity(Owner);
-            _menu.OpenCenteredRight();
 
             _menu.OnServerListButtonPressed += _ =>
             {
