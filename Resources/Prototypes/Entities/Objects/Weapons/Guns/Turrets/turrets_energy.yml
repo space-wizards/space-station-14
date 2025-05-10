@@ -1,7 +1,7 @@
 - type: entity
   parent: [BaseWeaponEnergyTurret, ConstructibleMachine]
   id: WeaponEnergyTurretStation
-  name: sentry turret
+  name: security turret
   description: A high-tech autonomous weapons system designed to keep unauthorized personnel out of sensitive areas.
   components:
   
@@ -170,7 +170,7 @@
   description: A high-tech autonomous weapons system under the direct control of a local artifical intelligence.
   components:
   - type: AccessReader
-    access: [["StationAi"]]
+    access: [["StationAi"], ["ResearchDirector"]]
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Borg

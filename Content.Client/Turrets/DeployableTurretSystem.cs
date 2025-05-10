@@ -83,9 +83,6 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         if (_animation.HasRunningAnimation(ent, animPlayer, DeployableTurretComponent.AnimationKey))
             return;
 
-        if (state == ent.Comp.VisualState)
-            return;
-
         var targetState = state & DeployableTurretState.Deployed;
         var destinationState = ent.Comp.VisualState & DeployableTurretState.Deployed;
 
