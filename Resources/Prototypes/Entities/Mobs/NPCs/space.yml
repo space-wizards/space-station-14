@@ -162,9 +162,6 @@
   - type: Vocal
     sounds:
       Unsexed: Kangaroo
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepBounce
   - type: ReplacementAccent
     accent: kangaroo
   - type: Butcherable
