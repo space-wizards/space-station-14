@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Portable Criminal Records now fits in the tank slot!
-    type: Tweak
-  id: 1126
-  time: '2025-02-14T08:12:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1618
 - author: FlippenPage
   changes:
   - message: made heretic transmutation runes less visible
@@ -4171,3 +4164,13 @@
   id: 1625
   time: '2025-05-09T21:14:02.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2428
+- author: meridiadottxt
+  changes:
+  - message: properly labeled every substation, as well as many of the cameras on
+      Gate Station
+    type: Add
+  - message: a few excessive crew monitors have been removed or replaced
+    type: Remove
+  id: 1626
+  time: '2025-05-10T07:21:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2437
