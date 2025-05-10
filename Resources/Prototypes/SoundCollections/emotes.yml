@@ -102,3 +102,11 @@
   id: Hew
   files:
   - /Audio/Items/Toys/hew.ogg
+
+- type: soundCollection
+  id: XenoborgLaugh
+  files:
+  - /Audio/Voice/Xenoborg/xenoborg_laugh_1.ogg
+  - /Audio/Voice/Xenoborg/xenoborg_laugh_2.ogg
+  - /Audio/Voice/Xenoborg/xenoborg_laugh_3.ogg
+  - /Audio/Voice/Xenoborg/xenoborg_laugh_4.ogg
