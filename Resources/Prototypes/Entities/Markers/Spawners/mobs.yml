@@ -26,7 +26,7 @@
     layers:
       - state: green
       - sprite: Mobs/Animals/cockroach.rsi
-        state: cockroach_icon
+        state: cockroach-icon
       - state: ai
   - type: ConditionalSpawner
     prototypes:
@@ -357,7 +357,7 @@
   - type: Sprite
     layers:
       - state: green
-      - state: icon-0
+      - state: icon
         sprite: Mobs/Animals/hamster.rsi
       - state: ai
   - type: ConditionalSpawner
@@ -413,7 +413,7 @@
   - type: Sprite
     layers:
     - state: green
-    - state: kangaroo-space
+    - state: kangaroo
       sprite: Mobs/Animals/kangaroo.rsi
   - type: ConditionalSpawner
     prototypes:
@@ -561,7 +561,7 @@
     layers:
     - state: green
     - state: monkey
-      sprite: Mobs/Animals/monkey.rsi
+      sprite: Mobs/Ancestors/monkey.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobMonkeyPunpun
@@ -592,7 +592,7 @@
     layers:
     - state: green
     - state: monkey
-      sprite: Mobs/Animals/monkey.rsi
+      sprite: Mobs/Ancestors/monkey.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobMonkey
@@ -759,7 +759,7 @@
   - type: Sprite
     layers:
     - state: green
-    - state: crawling
+    - state: gorilla
       sprite: Mobs/Animals/gorilla.rsi
   - type: ConditionalSpawner
     prototypes:
@@ -861,7 +861,7 @@
   - type: Sprite
     layers:
     - state: green
-    - state: clown
+    - state: clownspider
       sprite: Mobs/Animals/clownspider.rsi
   - type: ConditionalSpawner
     prototypes:
@@ -904,8 +904,8 @@
   - type: Sprite
     layers:
     - state: green
-    - state: reindeer_buck_still
-      sprite: Mobs/Animals/reindeer_buck.rsi
+    - state: buck
+      sprite: Mobs/Animals/reindeer.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobReindeerBuck
@@ -918,8 +918,8 @@
   - type: Sprite
     layers:
     - state: green
-    - state: reindeer_doe_still
-      sprite: Mobs/Animals/reindeer_doe.rsi
+    - state: doe
+      sprite: Mobs/Animals/reindeer.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobReindeerDoe

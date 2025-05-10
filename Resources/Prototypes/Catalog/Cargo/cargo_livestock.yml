@@ -192,7 +192,7 @@
   id: LivestockHamster
   icon:
     sprite: Mobs/Animals/hamster.rsi
-    state: icon-0
+    state: icon
   product: CrateNPCHamster
   cost: 2800
   category: cargoproduct-category-name-livestock
