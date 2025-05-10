@@ -36,10 +36,4 @@ public sealed partial class CargoAccountPrototype : IPrototype
     /// </summary>
     [DataField]
     public ProtoId<RadioChannelPrototype> RadioChannel;
-
-    /// <summary>
-    /// Paper prototype used for acquisition slips.
-    /// </summary>
-    [DataField]
-    public EntProtoId AcquisitionSlip;
 }

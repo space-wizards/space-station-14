@@ -38,10 +38,9 @@
                         <!-- Products get added here by code -->
                     </BoxContainer>
                 </ScrollContainer>
-                <Control MinHeight="5" Name="OrdersSpacer"/>
+                <Control MinHeight="5"/>
                 <PanelContainer VerticalExpand="True"
-                                SizeFlagsStretchRatio="1"
-                                Name="Orders">
+                                SizeFlagsStretchRatio="1">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="#000000" />
                     </PanelContainer.PanelOverride>

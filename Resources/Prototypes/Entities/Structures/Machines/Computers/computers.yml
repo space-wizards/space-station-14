@@ -929,7 +929,6 @@
     account: Engineering
     announcementChannel: Engineering
     removeLimitAccess: [ "ChiefEngineer" ]
-    slipPrinter: true
   - type: ActiveRadio
     channels:
     - Engineering
@@ -938,7 +937,7 @@
   - type: PointLight
     color: "#c9c042"
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [["ChiefEngineer"]]
 
 - type: entity
   id: ComputerCargoOrdersMedical
@@ -962,7 +961,6 @@
     account: Medical
     announcementChannel: Medical
     removeLimitAccess: [ "ChiefMedicalOfficer" ]
-    slipPrinter: true
   - type: ActiveRadio
     channels:
     - Medical
@@ -971,7 +969,7 @@
   - type: PointLight
     color: "#41e0fc"
   - type: AccessReader
-    access: [["Medical"]]
+    access: [["ChiefMedicalOfficer"]]
 
 - type: entity
   id: ComputerCargoOrdersScience
@@ -995,7 +993,6 @@
     account: Science
     announcementChannel: Science
     removeLimitAccess: [ "ResearchDirector" ]
-    slipPrinter: true
   - type: ActiveRadio
     channels:
     - Science
@@ -1004,7 +1001,7 @@
   - type: PointLight
     color: "#b53ca1"
   - type: AccessReader
-    access: [["Research"]]
+    access: [["ResearchDirector"]]
 
 - type: entity
   id: ComputerCargoOrdersSecurity
@@ -1028,7 +1025,6 @@
     account: Security
     announcementChannel: Security
     removeLimitAccess: [ "HeadOfSecurity" ]
-    slipPrinter: true
   - type: ActiveRadio
     channels:
     - Security
@@ -1037,7 +1033,7 @@
   - type: PointLight
     color: "#d11d00"
   - type: AccessReader
-    access: [["Security"]]
+    access: [["HeadOfSecurity"]]
 
 - type: entity
   id: ComputerCargoOrdersService
@@ -1061,7 +1057,6 @@
     account: Service
     announcementChannel: Service
     removeLimitAccess: [ "HeadOfPersonnel" ]
-    slipPrinter: true
   - type: ActiveRadio
     channels:
     - Service
@@ -1070,7 +1065,7 @@
   - type: PointLight
     color: "#afe837"
   - type: AccessReader
-    access: [["Service"], ["Theatre"]]
+    access: [["HeadOfPersonnel"]]
 
 - type: entity
   id: ComputerCargoBounty
