@@ -1371,9 +1371,9 @@
 - type: entity
   parent: BaseMachineCircuitboard
   id: FaxMachineCircuitboard
-  name: fax circuit board
-  suffix: Fax Circuit Board
-  description: A circuit board for a fax machine.
+  name: fax machine board
+  suffix: Machine Board
+  description: A machine circuit board for a fax machine.
   components:
     - type: Sprite
       state: service
