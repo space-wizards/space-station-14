@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: keronshb
-  changes:
-  - message: The Supermatter Grenade has been renamed to Singularity Grenade.
-    type: Tweak
-  - message: The Singularity Grenade no longer has an explosion.
-    type: Remove
-  id: 7954
-  time: '2025-02-14T15:01:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35122
 - author: ArtisticRoomba
   changes:
   - message: The Solar Panels section of the Engineering Guidebook has been updated
@@ -3933,3 +3924,10 @@
   id: 8456
   time: '2025-05-10T21:41:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37335
+- author: gorillagaming
+  changes:
+  - message: The space dragon briefing now shows the correct direction to the station
+    type: Fix
+  id: 8457
+  time: '2025-05-10T23:35:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37181
