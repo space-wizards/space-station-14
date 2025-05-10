@@ -12,10 +12,10 @@
       "directions": 4
     },
     {
-      "name": "kangaroo-dead"
+      "name": "dead"
     },
     {
-      "name": "kangaroo-crit"
+      "name": "crit"
 	}
   ]
 }
