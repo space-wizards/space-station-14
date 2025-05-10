@@ -24,7 +24,7 @@ public abstract class SharedItemChangeLayerColorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChangeLayersColorComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<ChangeLayersColorComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<ChangeLayersColorComponent, EntInsertedIntoContainerMessage>(OnEntInsert);
         SubscribeLocalEvent<ChangeLayersColorComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
     }
@@ -58,7 +58,7 @@ public abstract class SharedItemChangeLayerColorSystem : EntitySystem
         _appearance.SetData(mainComp.Owner, StorageMapVisuals.LayerChanged, new ColorLayerData(dict), appearance);
     }
 
-    private void OnComponentInit(EntityUid uid, ChangeLayersColorComponent component, ref ComponentInit args)
+    private void OnComponentStartup(EntityUid uid, ChangeLayersColorComponent component, ref ComponentStartup args)
     {
         foreach (var (layerName, val) in component.MapLayers)
         {
