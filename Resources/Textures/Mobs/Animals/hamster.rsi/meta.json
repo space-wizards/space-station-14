@@ -8,14 +8,14 @@
   },
   "states": [
     {
-      "name": "icon-0"
+      "name": "icon"
     },
     {
-      "name": "hamster-0",
+      "name": "hamster",
       "directions": 4
     },
     {
-      "name": "hamster-moving-0",
+      "name": "hamster-moving",
       "directions": 4,
       "delays": [
         [
@@ -53,10 +53,10 @@
       ]
     },
     {
-      "name": "dead-0"
+      "name": "crit"
     },
     {
-      "name": "splat-0"
+      "name": "dead"
     },
     {
       "name": "inhand-left",
