@@ -12,21 +12,21 @@
       "directions": 4
     },
     {
-      "name": "dead"
+      "name": "snail-dead"
     },
 	{
-      "name": "spacesnail",
+      "name": "speed",
       "directions": 4
     },
     {
-      "name": "spacedead"
+      "name": "speed-dead"
     },
     {
       "name": "snoth",
       "directions": 4
     },
     {
-      "name": "snothdead"
+      "name": "snoth-dead"
     }
   ]
 }
