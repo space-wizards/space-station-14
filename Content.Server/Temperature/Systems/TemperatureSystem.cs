@@ -8,12 +8,11 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
+using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Physics.Events;
-using Content.Shared.Projectiles;
 
 namespace Content.Server.Temperature.Systems;
 
@@ -211,18 +210,28 @@ public sealed class TemperatureSystem : EntitySystem
 
         if (args.CurrentTemperature <= idealTemp)
         {
+            if (temperature.ColdDamageThreshold <= 0)
+            {
+                _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
+                return;
+            }
             type = temperature.ColdAlert;
             threshold = temperature.ColdDamageThreshold;
+            AlertChange(type, threshold, args.CurrentTemperature, idealTemp, uid);
         }
         else
         {
             type = temperature.HotAlert;
             threshold = temperature.HeatDamageThreshold;
+            AlertChange(type, threshold, args.CurrentTemperature, idealTemp, uid);
         }
+    }
 
+    private void AlertChange(ProtoId<AlertPrototype> type, float threshold, float temp, float idealTemp, EntityUid uid)
+    {
         // Calculates a scale where 1.0 is the ideal temperature and 0.0 is where temperature damage begins
         // The cold and hot scales will differ in their range if the ideal temperature is not exactly halfway between the thresholds
-        var tempScale = (args.CurrentTemperature - threshold) / (idealTemp - threshold);
+        var tempScale = (temp - threshold) / (idealTemp - threshold);
         switch (tempScale)
         {
             case <= 0f:
