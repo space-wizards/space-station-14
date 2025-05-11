@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: Replacement lines for a few vendors pertaining to Security, removing
-      too on-the-nose references to real life while keeping tone.
-    type: Add
-  id: 1144
-  time: '2025-02-17T01:22:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1689
 - author: FlippenPage
   changes:
   - message: Fixed wooden tables not counting for the Heretic Armorer Ritual
@@ -4176,3 +4168,10 @@
   id: 1643
   time: '2025-05-11T04:41:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2390
+- author: TheLuggage05
+  changes:
+  - message: Heavy nitrile gloves are now thick enough to actually obscure fingerprints!
+    type: Fix
+  id: 1644
+  time: '2025-05-11T12:39:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2451
