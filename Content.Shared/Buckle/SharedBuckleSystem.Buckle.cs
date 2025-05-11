@@ -8,17 +8,17 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Events;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
-using Content.Shared.Rotation;
 using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -32,6 +32,7 @@ public abstract partial class SharedBuckleSystem
     public static ProtoId<AlertCategoryPrototype> BuckledAlertCategory = "Buckled";
 
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly PullingSystem _pullingSystem = default!;
 
     private void InitializeBuckle()
     {
@@ -256,6 +257,9 @@ public abstract partial class SharedBuckleSystem
 
         if (!_container.IsInSameOrNoContainer((buckleUid, null, null), (strapUid, null, null)))
             return false;
+
+        if (TryComp<PullableComponent>(strapUid, out var pullable) && pullable.Puller == buckleUid)
+            _pullingSystem.TryStopPull(strapUid, pullable);
 
         if (user != null && !HasComp<HandsComponent>(user))
         {
