@@ -597,16 +597,15 @@ doc-text-printer-request-for-promotion =
     Compiler of the document:
     Position of Document Compiler:
     
- 
     I assert that the following employee has obtained the necessary qualifications and experience to be promoted.
 
     Employee to be promoted:
     
-    Requested Position:
+    Requested position:
     
     Persons responsible for the employee's chapter or officer:
     
-    Reason for Promotion:
+    Reason for promotion:
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
