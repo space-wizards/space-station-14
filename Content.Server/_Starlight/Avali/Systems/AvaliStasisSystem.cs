@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Starlight.Avali.Systems;
 using Content.Shared.Starlight.Avali.Components;
 using Content.Shared.Damage;
@@ -38,6 +39,10 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         if (!component.IsInStasis)
             return;
 
+        // Skip if this damage was already modified by stasis
+        if (args.Origin == uid && args.DamageDelta.DamageDict.All(x => x.Value < 0))
+            return;
+
         // Create new DamageSpecifier with reduced damage
         var damageToApply = new DamageSpecifier();
         foreach (var (type, amount) in args.DamageDelta.DamageDict)
@@ -46,7 +51,7 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         }
 
         // Apply the reduced damage
-        _damageableSystem.TryChangeDamage(uid, damageToApply, true, origin: args.Origin);
+        _damageableSystem.TryChangeDamage(uid, damageToApply, true, origin: uid);
     }
     
     private void OnStasisUpdate(EntityUid uid, AvaliStasisComponent comp, FrameEventArgs args)
