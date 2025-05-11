@@ -68,13 +68,18 @@ doc-text-printer-report-department =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
- 
+    Position of Document Compiler:
     
     Number of employees in the department:
+
     Number of trainees:
+
     Inactive employees in the department:
-    Name, position, reason
+	[bullet] (Name, position, reason)
+    [bullet] ...
+
     Degree of Target Readiness:
+	
     General condition of the department:
     
     ─────────────────────────────────────────
