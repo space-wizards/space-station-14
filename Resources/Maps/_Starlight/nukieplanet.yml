@@ -1,17 +1,6 @@
 meta:
-  format: 7
-  category: Map
-  engineVersion: 251.0.0
-  forkId: Starlight
-  forkVersion: 1732131340
-  time: 05/11/2025 16:44:58
-  entityCount: 4152
-maps:
-- 1295
-grids:
-- 1
-orphans: []
-nullspace: []
+  format: 6
+  postmapinit: false
 tilemap:
   10: Space
   7: FloorArcadeRed
