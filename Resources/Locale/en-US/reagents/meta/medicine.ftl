@@ -148,8 +148,5 @@ reagent-desc-potassium-iodide = Will reduce the damaging effects of radiation by
 reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
 
-reagent-name-traumoxadone = traumoxadone
-reagent-desc-traumoxadone = A cryogenics chemical. Used to treat severe trauma to tissues via patching them with tiny particles within the liquid. Works regardless of the patient being alive or dead.
-
 reagent-name-stelloxadone = stelloxadone
 reagent-desc-stelloxadone = A cryogenics chemical. Used to aggressively dissolve toxins from the body. Works regardless of the patient being alive or dead.
