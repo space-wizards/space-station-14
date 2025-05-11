@@ -16,9 +16,6 @@
       path: /Audio/Machines/airlock_deny.ogg
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/external.rsi
-  - type: PaintableAirlock
-    group: External
-    department: null
   - type: Wires
     layoutId: AirlockExternal
 
@@ -44,3 +41,5 @@
         - FullTileMask
         layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
         - GlassAirlockLayer
+  - type: Paintable
+    group: AirlockGlass

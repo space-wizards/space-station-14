@@ -48,3 +48,6 @@
     biohazard-virology: ClosetL3Virology
     biohazard-security: ClosetL3Security
     biohazard-janitor: ClosetL3Janitor
+    chef: ClosetChef
+    janitor: ClosetJanitor
+    legal: ClosetLegal

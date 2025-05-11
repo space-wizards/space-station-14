@@ -104,7 +104,6 @@ public sealed partial class SprayPainterPipeDoAfterEvent : DoAfterEvent
 /// <summary>
 /// An action raised on an item when it's spray painted.
 /// </summary>
-[Serializable, NetSerializable]
 public sealed partial class EntityPaintedEvent : EntityEventArgs
 {
     /// <summary>

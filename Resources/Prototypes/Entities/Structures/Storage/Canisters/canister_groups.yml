@@ -5,7 +5,8 @@
 - type: paintableGroup
   category: Canisters
   iconPriority: 100
-  visuals: Canister
+  visuals:
+  - Prototype
   id: Canisters
   styles:
     storage: StorageCanister
@@ -26,7 +27,8 @@
 - type: paintableGroup
   category: Canisters
   iconPriority: 90
-  visuals: Canister
+  visuals:
+  - Prototype
   id: CanistersBroken
   styles:
     storage: StorageCanisterBroken

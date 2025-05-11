@@ -40,28 +40,26 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
             || !AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component))
             return;
 
+        bool forceRedrawBase = false;
         if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.BaseRSI, out var prototype1, args.Component))
         {
-            if (!_prototypeManager.TryIndex(prototype1, out var proto))
-                return;
-
-            if (!proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
-                return;
-
-            args.Sprite.BaseRSI = sprite.BaseRSI;
+            if (_prototypeManager.TryIndex(prototype1, out var proto) &&
+                proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
+            {
+                args.Sprite.BaseRSI = sprite.BaseRSI;
+            }
         }
         if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var prototype2, args.Component))
         {
-            if (!_prototypeManager.TryIndex(prototype2, out var proto))
-                return;
-
-            if (!proto.TryGetComponent(out EntityStorageVisualsComponent? visuals, _componentFactory))
-                return;
-
-            comp.StateBaseOpen = visuals.StateBaseOpen;
-            comp.StateBaseClosed = visuals.StateBaseClosed;
-            comp.StateDoorOpen = visuals.StateDoorOpen;
-            comp.StateDoorClosed = visuals.StateDoorClosed;
+            if (_prototypeManager.TryIndex(prototype2, out var proto) &&
+                proto.TryGetComponent(out EntityStorageVisualsComponent? visuals, _componentFactory))
+            {
+                comp.StateBaseOpen = visuals.StateBaseOpen;
+                comp.StateBaseClosed = visuals.StateBaseClosed;
+                comp.StateDoorOpen = visuals.StateDoorOpen;
+                comp.StateDoorClosed = visuals.StateDoorClosed;
+                forceRedrawBase = true;
+            }
         }
 
         // Open/Closed state for the storage entity.
@@ -84,6 +82,8 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
 
                 if (comp.StateBaseOpen != null)
                     args.Sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseOpen);
+                else if (forceRedrawBase && comp.StateBaseClosed != null)
+                    args.Sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseClosed);
             }
             else
             {
@@ -100,6 +100,8 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
 
                 if (comp.StateBaseClosed != null)
                     args.Sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseClosed);
+                else if (forceRedrawBase && comp.StateBaseOpen != null)
+                    args.Sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseOpen);
             }
         }
     }

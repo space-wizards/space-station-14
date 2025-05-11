@@ -48,7 +48,7 @@ public sealed class SprayPainterAmmoSystem : EntitySystem
         Dirty(ent, ent.Comp);
 
         if (ent.Comp.Charges <= 0)
-            QueueDel(ent);
+            PredictedQueueDel(ent.Owner);
     }
 
     private void OnExamine(Entity<SprayPainterAmmoComponent> ent, ref ExaminedEvent args)

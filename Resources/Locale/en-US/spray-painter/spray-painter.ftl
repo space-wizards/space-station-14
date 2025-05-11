@@ -84,12 +84,15 @@ spray-painter-style-lockers-emergency = Emergency (oxygen)
 spray-painter-style-lockers-emergency-nitrogen = Emergency (nitrogen)
 spray-painter-style-lockers-fire = Fire-safety
 spray-painter-style-lockers-bomb = Bomb suit
-spray-painter-style-lockers-bomb-janitorial = Janitorial bomb suit
+spray-painter-style-lockers-bomb-janitor = Janitorial bomb suit
 spray-painter-style-lockers-biohazard = Biohazard
 spray-painter-style-lockers-biohazard-science = Biohazard (science)
 spray-painter-style-lockers-biohazard-virology = Biohazard (virology)
 spray-painter-style-lockers-biohazard-security = Biohazard (security)
 spray-painter-style-lockers-biohazard-janitor = Biohazard (janitor)
+spray-painter-style-lockers-chef = Chef
+spray-painter-style-lockers-janitor = Janitor
+spray-painter-style-lockers-legal = Lawyer
 
 # Crates
 spray-painter-style-crates-basic = Basic
