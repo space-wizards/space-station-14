@@ -750,7 +750,7 @@ doc-text-printer-offense-complaint =
 
     Name of violator:
 
-    Corporate law breached:
+    Corporate law(s) breached:
     
     What happened from my point of view:
     
