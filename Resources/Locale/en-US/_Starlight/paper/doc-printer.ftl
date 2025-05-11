@@ -1062,7 +1062,7 @@ doc-text-printer-medical-intervention-order =
     
     I, in my professional opinion, order a medical intervention effective immediately.
     
-    Person to recieve intervention:
+    Person to receive intervention:
 
     Grounds for the intervention:
     
