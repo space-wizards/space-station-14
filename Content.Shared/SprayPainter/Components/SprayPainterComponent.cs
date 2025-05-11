@@ -24,6 +24,12 @@ public sealed partial class SprayPainterComponent : Component
     public TimeSpan PipeSprayTime = TimeSpan.FromSeconds(1);
 
     /// <summary>
+    /// The cost of spray painting a pipe, in charges.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int PipeChargeCost = 1;
+
+    /// <summary>
     /// The currently selected colour by its key, null if none selected.
     /// </summary>
     [DataField, AutoNetworkedField]
