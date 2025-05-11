@@ -46,7 +46,7 @@ public abstract class SharedAvaliStasisSystem : EntitySystem
         _actionsSystem.RemoveAction(uid, comp.ExitStasisActionEntity);
     }
 
-    private void OnEnterStasisStart(EntityUid uid, AvaliStasisComponent comp,
+    protected virtual void OnEnterStasisStart(EntityUid uid, AvaliStasisComponent comp,
         AvaliEnterStasisActionEvent args)
     {
         if (comp.IsInStasis)
@@ -58,13 +58,9 @@ public abstract class SharedAvaliStasisSystem : EntitySystem
         EnsureComp<AvaliStasisFrozenComponent>(uid);
 
         // Add stasis effect
-        EnsureComp<TransformComponent>(uid, out var xform);
-        var effectEnt = SpawnAttachedTo(comp.StasisEnterEffect, xform.Coordinates);
-        _xformSystem.SetParent(effectEnt, uid);
-        EnsureComp<TimedDespawnComponent>(effectEnt, out var despawnEffectEntComp);
-        despawnEffectEntComp.Lifetime = comp.StasisEnterEffectLifetime;
-        _audioSystem.PlayPvs(comp.StasisEnterSound, effectEnt);
-
+        StasisEnterAnimation(uid, comp);
+        StartStasisContinuousAnimation(uid, comp);
+        
         _popupSystem.PopupEntity(Loc.GetString("avali-stasis-entering"), uid, PopupType.Medium);
 
         _actionsSystem.RemoveAction(uid, comp.EnterStasisActionEntity);
@@ -78,6 +74,10 @@ public abstract class SharedAvaliStasisSystem : EntitySystem
             return;
         }
 
+        // Add stasis effect
+        StasisExitAnimation(uid, comp);
+        EndStasisContinuousAnimation(uid, comp);
+        
         _popupSystem.PopupEntity(Loc.GetString("avali-stasis-exiting"), uid, PopupType.Medium);
 
         _actionsSystem.RemoveAction(uid, comp.ExitStasisActionEntity);
@@ -86,6 +86,49 @@ public abstract class SharedAvaliStasisSystem : EntitySystem
 
         comp.IsInStasis = false;
         RemComp<AvaliStasisFrozenComponent>(uid);
+    }
+
+    private void StasisEnterAnimation(EntityUid uid, AvaliStasisComponent comp)
+    {
+        EnsureComp<TransformComponent>(uid, out var xform);
+        var effectEnt = SpawnAttachedTo(comp.StasisEnterEffect, xform.Coordinates);
+        _xformSystem.SetParent(effectEnt, uid);
+        EnsureComp<TimedDespawnComponent>(effectEnt, out var despawnEffectEntComp);
+        despawnEffectEntComp.Lifetime = comp.StasisEnterEffectLifetime;
+        _audioSystem.PlayPvs(comp.StasisEnterSound, effectEnt);
+    }
+
+    private void StasisExitAnimation(EntityUid uid, AvaliStasisComponent comp)
+    {
+        EnsureComp<TransformComponent>(uid, out var xform);
+        var effectEnt = SpawnAttachedTo(comp.StasisExitEffect, xform.Coordinates);
+        _xformSystem.SetParent(effectEnt, uid);
+        EnsureComp<TimedDespawnComponent>(effectEnt, out var despawnEffectEntComp);
+        despawnEffectEntComp.Lifetime = comp.StasisExitEffectLifetime;
+        _audioSystem.PlayPvs(comp.StasisExitSound, effectEnt);
+    }
+
+    private void StartStasisContinuousAnimation(EntityUid uid, AvaliStasisComponent comp)
+    {
+        EnsureComp<TransformComponent>(uid, out var xform);
+        var effectEnt = SpawnAttachedTo(comp.StasisContinuousEffect, xform.Coordinates);
+        _xformSystem.SetParent(effectEnt, uid);
+        
+        // Remove any auto-despawn components that might be on the effect
+        RemComp<TimedDespawnComponent>(effectEnt);
+        
+        comp.ContinuousEffectEntity = effectEnt;
+        Dirty(uid, comp);
+    }
+    
+    private void EndStasisContinuousAnimation(EntityUid uid, AvaliStasisComponent comp)
+    {
+        if (comp.ContinuousEffectEntity != null)
+        {
+            QueueDel(comp.ContinuousEffectEntity.Value);
+            comp.ContinuousEffectEntity = null;
+            Dirty(uid, comp);
+        }
     }
 }
 

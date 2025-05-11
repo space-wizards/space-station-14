@@ -75,7 +75,7 @@ public sealed partial class AvaliStasisComponent : Component
     [DataField] [AutoNetworkedField] public EntProtoId StasisEnterEffect;
 
     /// <summary>
-    /// The lifetime of the stasis effect in seconds.
+    /// The lifetime of the entering stasis effect in seconds.
     /// </summary>
     [DataField] [AutoNetworkedField] public float StasisEnterEffectLifetime;
 
@@ -83,4 +83,34 @@ public sealed partial class AvaliStasisComponent : Component
     /// The sound to play when entering stasis.
     /// </summary>
     [DataField] [AutoNetworkedField] public string StasisEnterSound;
+    
+    /// <summary>
+    /// The prototype ID of the stasis effect to spawn when exiting stasis.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public EntProtoId StasisExitEffect;
+
+    /// <summary>
+    /// The lifetime of the exit stasis effect in seconds.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public float StasisExitEffectLifetime;
+
+    /// <summary>
+    /// The sound to play when exiting stasis.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public string StasisExitSound;
+    
+    /// <summary>
+    /// The prototype ID of the stasis effect to spawn when stasis is currently in use.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public EntProtoId StasisContinuousEffect;
+
+    /// <summary>
+    /// The entity reference for the continuous stasis effect.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public EntityUid? ContinuousEffectEntity;
+
+    /// <summary>
+    /// The amount of bleed the stasis ability will heal, per second.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public float BleedHealPerSecond;
 }
