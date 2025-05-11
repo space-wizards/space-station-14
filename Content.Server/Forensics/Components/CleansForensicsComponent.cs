@@ -1,3 +1,6 @@
+using Content.Shared.Forensics;
+using Robust.Shared.Prototypes;
+
 namespace Content.Server.Forensics;
 
 /// <summary>
@@ -23,4 +26,10 @@ public sealed partial class CleansForensicsComponent : Component
     /// </summary>
     [DataField]
     public string? AgentColor;
+
+    /// <summary>
+    /// A blacklist of evidence that this CANNOT clean
+    /// </summary>
+    [DataField]
+    public List<ProtoId<ForensicEvidencePrototype>> Blacklist = [];
 }
