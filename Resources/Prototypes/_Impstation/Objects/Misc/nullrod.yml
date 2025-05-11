@@ -62,14 +62,12 @@
         visible: false
   - type: Item
     size: Small
-    shape:
-    - 0,0,1,1
   - type: FitsInDispenser
     solution: grail
   - type: SolutionContainerManager
     solutions:
       grail:
-        maxVol: 200
+        maxVol: 60
   - type: MixableSolution
     solution: grail
   - type: RefillableSolution
@@ -101,7 +99,7 @@
     inHandsMaxFillLevels: 1
     inHandsFillBaseName: -fill-
   - type: Shakeable
-    shakeDuration: 1.6
+    shakeDuration: 3
     requireInHand: true
     shakeVerbText: null-grail-verb
     shakePopupMessageOthers: null-grail-popup-others
@@ -111,7 +109,7 @@
   - type: ReactionMixer
     mixOnInteract: false
     reactionTypes:
-    - Holy
+    - Gildgrail #mix changed to make half holy water and half aquam divinos
     - Shake
     mixMessage: "null-grail-mix-success"
 
@@ -131,12 +129,12 @@
   - type: Clothing
     sprite: _Impstation/Objects/Misc/nullrod_glove.rsi
   - type: StaminaDamageOnHit
-    damage: 23
+    damage: 5 # Down from 24
   - type: MeleeWeapon
     attackRate: 0.68
     damage:
       types:
-        Blunt: 14
+        Blunt: 10 # Down from 14
         Holy: 20
     soundHit:
       path: /Audio/_Impstation/Weapons/nullglove.ogg
@@ -144,7 +142,8 @@
         variation: 0.35
     mustBeEquippedToUse: true
   - type: MeleeThrowOnHit
-    speed: 7
+    distance: 1 # Down from 20 if this variable even does anything
+    speed: 1 # Down from 7
   - type: Reflect
     reflectProb: .22
     spread: 120
