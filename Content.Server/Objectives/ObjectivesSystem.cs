@@ -173,7 +173,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                     {
                         agentSummary.AppendLine(objectiveTitle);
                     }
-                    else if (progress > 0.99)
+                    else if (progress > 0.99f)
                     {
                         agentSummary.AppendLine(Loc.GetString(
                             "objectives-objective-success",
@@ -183,7 +183,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                         ));
                         completedObjectives++;
                     }
-                    else if (progress <= 0.99 && progress >= 0.5)
+                    else if (progress <= 0.99f && progress >= 0.5f)
                     {
                         agentSummary.AppendLine(Loc.GetString(
                             "objectives-objective-partial-success",
@@ -192,7 +192,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                             ("markupColor", "orange")
                         ));
                     }
-                    else if (progress < 0.5 && progress > 0)
+                    else if (progress < 0.5f && progress > 0f)
                     {
                         agentSummary.AppendLine(Loc.GetString(
                             "objectives-objective-partial-failure",
