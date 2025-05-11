@@ -1,5 +1,5 @@
 ﻿#nullable enable
-using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
@@ -14,7 +14,6 @@ namespace Content.Benchmarks;
 public class RaiseEventBenchmark
 {
     private TestPair _pair = default!;
-    private IEntityManager _entMan = default!;
     private BenchSystem _sys = default!;
 
     [GlobalSetup]
@@ -23,12 +22,13 @@ public class RaiseEventBenchmark
         ProgramShared.PathOffset = "../../../../";
         PoolManager.Startup(typeof(BenchSystem).Assembly);
         _pair = PoolManager.GetServerClient().GetAwaiter().GetResult();
-        _entMan = _pair.Server.ResolveDependency<IEntityManager>();
-        _sys = _entMan.System<BenchSystem>();
+        var entMan = _pair.Server.EntMan;
+        _sys = entMan.System<BenchSystem>();
+
         _pair.Server.WaitPost(() =>
         {
-            var uid = _entMan.Spawn();
-            _sys.Ent = new(uid, _entMan.GetComponent<TransformComponent>(uid));
+            var uid = entMan.Spawn();
+            _sys.Ent = new(uid, entMan.GetComponent<TransformComponent>(uid));
             _sys.Ent2 = new(_sys.Ent.Owner, _sys.Ent.Comp);
         })
             .GetAwaiter()
@@ -111,6 +111,7 @@ public class RaiseEventBenchmark
             return ev.N;
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private void OnEvent(EntityUid uid, TransformComponent component, ref BenchEv args)
         {
             args.N += uid.Id;
