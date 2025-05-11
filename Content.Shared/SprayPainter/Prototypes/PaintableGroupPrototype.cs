@@ -45,9 +45,9 @@ public sealed partial class PaintableGroupPrototype : IPrototype
 }
 
 [Serializable, NetSerializable]
+[Flags]
 public enum PaintableVisuals
 {
     BaseRSI,
-    LockerRSI,
-    Canister,
+    Prototype,
 }

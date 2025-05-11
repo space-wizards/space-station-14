@@ -9,8 +9,8 @@ using Content.Shared.SprayPainter.Components;
 using Content.Shared.SprayPainter.Prototypes;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
-using System.Linq;
 using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Shared.SprayPainter;
 
@@ -20,14 +20,14 @@ namespace Content.Shared.SprayPainter;
 /// </summary>
 public abstract class SharedSprayPainterSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] protected readonly IPrototypeManager Proto = default!;
-    [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] protected readonly SharedChargesSystem Charges = default!;
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] protected readonly SharedChargesSystem Charges = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     public Dictionary<ProtoId<PaintableGroupCategoryPrototype>, PaintableTargets> Targets { get; } = new();
 
@@ -57,15 +57,11 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
     private void OnMapInit(Entity<SprayPainterComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.ColorPalette.Count == 0)
-            return;
-
         foreach (var target in Targets.Keys.ToList())
-        {
             ent.Comp.Indexes[target] = 0;
-        }
 
-        SetColor(ent, ent.Comp.ColorPalette.First().Key);
+        if (ent.Comp.ColorPalette.Count > 0)
+            SetColor(ent, ent.Comp.ColorPalette.First().Key);
     }
 
     private void OnPaintableDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterDoAfterEvent args)
@@ -76,40 +72,27 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (args.Args.Target is not { } target)
             return;
 
-        if (!TryComp<PaintableComponent>(target, out var paintableComponent))
+        if (!HasComp<PaintableComponent>(target))
             return;
 
         Appearance.SetData(target, args.Visuals, args.Prototype);
         Audio.PlayPredicted(ent.Comp.SpraySound, ent, args.Args.User);
         Charges.TryUseCharges(new Entity<LimitedChargesComponent?>(ent, EnsureComp<LimitedChargesComponent>(ent)), args.Cost);
 
-        if (TryComp<PaintedComponent>(target, out var paintedComponent))
-        {
-            paintedComponent.RemoveTime = _timing.CurTime + paintedComponent.RemovalInterval;
-            Dirty(target, paintedComponent);
-        }
-        else
-        {
-            var comp = AddComp<PaintedComponent>(target);
-            comp.RemoveTime = _timing.CurTime + comp.RemovalInterval;
-            Dirty(target, comp);
-        }
+        var paintedComponent = EnsureComp<PaintedComponent>(target);
+        paintedComponent.RemoveTime = _timing.CurTime + ent.Comp.FreshPaintDuration;
+        Dirty(target, paintedComponent);
 
+        RaiseLocalEvent(target,
+            new EntityPaintedEvent
+            {
+                User = args.User,
+                Tool = ent,
+                Prototype = args.Prototype,
+                Category = args.Category
+            });
 
-        if (args.Visuals is PaintableVisuals.Canister)
-        {
-            RaiseLocalEvent(ent,
-                new SprayPainterCanisterDoAfterEvent
-                {
-                    Category = args.Category,
-                    Prototype = args.Prototype,
-                    DoAfter = args.DoAfter,
-                });
-        }
-
-        Dirty(target, paintableComponent);
-
-        _adminLogger.Add(LogType.Action,
+        AdminLogger.Add(LogType.Action,
             LogImpact.Low,
             $"{ToPrettyString(args.Args.User):user} painted {ToPrettyString(args.Args.Target.Value):target}");
 
@@ -177,12 +160,14 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!TryComp<SprayPainterComponent>(args.Used, out var painter) ||
-            !TryComp<LimitedChargesComponent>(args.Used, out var charges))
+        if (!TryComp<SprayPainterComponent>(args.Used, out var painter)
+            || !TryComp<LimitedChargesComponent>(args.Used, out var charges))
             return;
 
-        var group = Proto.Index(ent.Comp.Group);
-        var category = Proto.Index(group.Category);
+        if (ent.Comp.Group == null
+            || !Proto.TryIndex(ent.Comp.Group, out var group)
+            || !Proto.TryIndex(group.Category, out var category))
+            return;
 
         if (charges.LastCharges <= 0 || charges.LastCharges < category.Cost)
         {
@@ -217,13 +202,14 @@ public abstract class SharedSprayPainterSystem : EntitySystem
             BreakOnDamage = true,
             NeedHand = true,
         };
-        if (!DoAfter.TryStartDoAfter(doAfterEventArgs, out var id))
+
+        if (!DoAfter.TryStartDoAfter(doAfterEventArgs, out _))
             return;
 
         args.Handled = true;
 
         // Log the attempt
-        _adminLogger.Add(LogType.Action,
+        AdminLogger.Add(LogType.Action,
             LogImpact.Low,
             $"{ToPrettyString(args.User):user} is painting {ToPrettyString(ent):target} to '{style}' at {Transform(ent).Coordinates:targetlocation}");
     }

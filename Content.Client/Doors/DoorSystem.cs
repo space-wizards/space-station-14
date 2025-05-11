@@ -139,17 +139,14 @@ public sealed class DoorSystem : SharedDoorSystem
         }
     }
 
-    private void UpdateSpriteLayers(SpriteComponent old, string prototype)
+    private void UpdateSpriteLayers(SpriteComponent sprite, string targetProto)
     {
-        if (!_prototypeManager.TryIndex(prototype, out var proto))
+        if (!_prototypeManager.TryIndex(targetProto, out var target))
             return;
 
-        if (!proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
+        if (!target.TryGetComponent(out SpriteComponent? targetSprite, _componentFactory))
             return;
 
-        foreach (var layer in old.AllLayers)
-        {
-            layer.Rsi = sprite.BaseRSI;
-        }
+        sprite.BaseRSI = targetSprite.BaseRSI;
     }
 }

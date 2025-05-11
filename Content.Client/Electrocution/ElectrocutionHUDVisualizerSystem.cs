@@ -70,12 +70,12 @@ public sealed class ElectrocutionHUDVisualizerSystem : VisualizerSystem<Electroc
     private void RemoveHUD()
     {
         var electrifiedQuery = AllEntityQuery<ElectrocutionHUDVisualsComponent, AppearanceComponent, SpriteComponent>();
-        while (electrifiedQuery.MoveNext(out var uid, out var _, out var appearanceComp, out var spriteComp))
+        while (electrifiedQuery.MoveNext(out var _, out var _, out _, out var spriteComp))
         {
-            if (!HasComp<ElectrocutionHUDVisualsComponent>(uid) || !spriteComp.LayerExists(ElectrifiedLayers.HUD))
+            if (!spriteComp.LayerMapTryGet(ElectrifiedLayers.HUD, out var layer))
                 continue;
 
-            spriteComp.LayerSetVisible(ElectrifiedLayers.HUD, false);
+            spriteComp.LayerSetVisible(layer, false);
         }
     }
 

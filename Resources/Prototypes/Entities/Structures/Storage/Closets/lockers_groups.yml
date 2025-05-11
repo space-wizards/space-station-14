@@ -4,39 +4,47 @@
 
 - type: paintableGroup
   category: Lockers
-  id: LockerLockless
-  iconPriority: 100
-  visuals: LockerRSI
-  styles:
-    basic:          ClosetCursed
-
-- type: paintableGroup
-  category: Lockers
-  id: LockerSecure
+  id: Locker
   iconPriority: 90
-  visuals: LockerRSI
+  visuals:
+  - BaseRSI
+  - Prototype
   styles:
-    basic:          LockerSteel
-    quartermaster:  LockerQuarterMaster
-    captain:        LockerCaptain
-    hop:            LockerHeadOfPersonnel
-    ce:             LockerChiefEngineer
-    cmo:            LockerChiefMedicalOfficer
-    hos:            LockerHeadOfSecurity
-    brigmedic:      LockerBrigmedic
-    security:       LockerSecurity
-    clown:          LockerClown
-    mime:           LockerMime
+    basic: ClosetSteelBase
+    # Lockers
+    quartermaster: LockerQuarterMaster
+    captain: LockerCaptain
+    hop: LockerHeadOfPersonnel
+    ce: LockerChiefEngineer
+    cmo: LockerChiefMedicalOfficer
+    hos: LockerHeadOfSecurity
+    brigmedic: LockerBrigmedic
+    security: LockerSecurity
+    clown: LockerClown
+    mime: LockerMime
     representative: LockerRepresentative
-    salvage:        LockerSalvageSpecialist
-    electrical:     LockerElectricalSupplies
-    welding:        LockerWeldingSupplies
-    atmospheric:    LockerAtmospherics
-    engineer:       LockerEngineer
-    botanist:       LockerBotanist
-    medicine:       LockerMedicine
-    doctor:         LockerMedical
-    paramedic:      LockerParamedic
-    chemical:       LockerChemistry
-    rd:             LockerResearchDirector
-    scientist:      LockerScientist
+    salvage: LockerSalvageSpecialist
+    electrical: LockerElectricalSupplies
+    welding: LockerWeldingSupplies
+    atmospheric: LockerAtmospherics
+    engineer: LockerEngineer
+    botanist: LockerBotanist
+    medicine: LockerMedicine
+    doctor: LockerMedical
+    paramedic: LockerParamedic
+    chemical: LockerChemistry
+    rd: LockerResearchDirector
+    scientist: LockerScientist
+    # Closets
+    tool: ClosetTool
+    radiation: ClosetRadiationSuit
+    emergency: ClosetEmergency
+    emergency-nitrogen: ClosetEmergencyN2
+    fire: ClosetFire
+    bomb: ClosetBomb
+    bomb-janitor: ClosetJanitorBomb
+    biohazard: ClosetL3
+    biohazard-science: ClosetL3Science
+    biohazard-virology: ClosetL3Virology
+    biohazard-security: ClosetL3Security
+    biohazard-janitor: ClosetL3Janitor

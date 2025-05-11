@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.SprayPainter;
 
 /// <summary>
-/// Responsible for preparing the data for presentable appearance in the spray painter menu.
+/// Responsible for caching info for the spray painter menu.
 /// </summary>
 public sealed class SprayPainterSystem : SharedSprayPainterSystem
 {
@@ -68,11 +68,11 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 }
 
 /// <summary>
-/// Used for convenient data storage.
+/// A spray paintable object, mapped by arbitary key.
 /// </summary>
 public sealed record SprayPainterEntry(string Name, EntProtoId? Proto);
 
 /// <summary>
-/// Used for convenient data storage.
+/// A spray paintable decal, mapped by ID.
 /// </summary>
 public sealed record SprayPainterDecalEntry(string Name, SpriteSpecifier Sprite);

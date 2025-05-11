@@ -9,19 +9,19 @@
   time: 3.0
   styles:
     atmospherics: AirlockAtmospherics
-    basic:        Airlock
-    cargo:        AirlockCargo
-    salvage:      AirlockSalvage
-    command:      AirlockCommand
-    engineering:  AirlockEngineering
-    freezer:      AirlockFreezer
-    hydroponics:  AirlockHydroponics
-    maintenance:  AirlockMaint
-    medical:      AirlockMedical
-    chemistry:    AirlockChemistry
-    science:      AirlockScience
-    security:     AirlockSecurity
-    virology:     AirlockVirology
+    basic: Airlock
+    cargo: AirlockCargo
+    salvage: AirlockSalvage
+    command: AirlockCommand
+    engineering: AirlockEngineering
+    freezer: AirlockFreezer
+    hydroponics: AirlockHydroponics
+    maintenance: AirlockMaint
+    medical: AirlockMedical
+    chemistry: AirlockChemistry
+    science: AirlockScience
+    security: AirlockSecurity
+    virology: AirlockVirology
 
 - type: paintableGroup
   category: Airlocks
@@ -30,15 +30,15 @@
   time: 3.0
   styles:
     atmospherics: AirlockAtmosphericsGlass
-    basic:        AirlockGlass
-    command:      AirlockCommandGlass
-    science:      AirlockScienceGlass
-    cargo:        AirlockCargoGlass
-    salvage:      AirlockSalvage
-    engineering:  AirlockEngineeringGlass
-    hydroponics:  AirlockHydroponicsGlass
-    maintenance:  AirlockMaintGlass
-    medical:      AirlockMedicalGlass
-    chemistry:    AirlockChemistryGlass
-    security:     AirlockSecurityGlass
-    virology:     AirlockVirologyGlass
+    basic: AirlockGlass
+    command: AirlockCommandGlass
+    science: AirlockScienceGlass
+    cargo: AirlockCargoGlass
+    salvage: AirlockSalvage
+    engineering: AirlockEngineeringGlass
+    hydroponics: AirlockHydroponicsGlass
+    maintenance: AirlockMaintGlass
+    medical: AirlockMedicalGlass
+    chemistry: AirlockChemistryGlass
+    security: AirlockSecurityGlass
+    virology: AirlockVirologyGlass

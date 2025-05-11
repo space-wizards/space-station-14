@@ -1,4 +1,4 @@
-using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.SprayPainter.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Atmos.EntitySystems;
 
 /// <summary>
-/// Used to change the appearance of canisters.
+/// Used to change the appearance of gas canisters.
 /// </summary>
 public sealed class GasCanisterAppearanceSystem : VisualizerSystem<GasCanisterComponent>
 {
@@ -15,7 +15,7 @@ public sealed class GasCanisterAppearanceSystem : VisualizerSystem<GasCanisterCo
 
     protected override void OnAppearanceChange(EntityUid uid, GasCanisterComponent component, ref AppearanceChangeEvent args)
     {
-        if (!AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Canister, out var protoName, args.Component) || args.Sprite is not { } old)
+        if (!AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var protoName, args.Component) || args.Sprite is not { } old)
             return;
 
         if (!_prototypeManager.TryIndex(protoName, out var proto))

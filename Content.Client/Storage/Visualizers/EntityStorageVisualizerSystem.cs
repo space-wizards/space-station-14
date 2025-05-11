@@ -48,16 +48,9 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
             if (!proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
                 return;
 
-            foreach (var layer in args.Sprite.AllLayers)
-            {
-                // Without it, after painting, the texture comes out with a paper.
-                if (layer.RsiState.Name == "paper")
-                    continue;
-
-                layer.Rsi = sprite.BaseRSI;
-            }
+            args.Sprite.BaseRSI = sprite.BaseRSI;
         }
-        else if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.LockerRSI, out var prototype2, args.Component))
+        if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var prototype2, args.Component))
         {
             if (!_prototypeManager.TryIndex(prototype2, out var proto))
                 return;
@@ -65,10 +58,10 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
             if (!proto.TryGetComponent(out EntityStorageVisualsComponent? visuals, _componentFactory))
                 return;
 
-            args.Sprite.LayerSetState(StorageVisualLayers.Base, visuals.StateBaseClosed);
-            args.Sprite.LayerSetState(StorageVisualLayers.Door, visuals.StateDoorClosed);
-
-            return;
+            comp.StateBaseOpen = visuals.StateBaseOpen;
+            comp.StateBaseClosed = visuals.StateBaseClosed;
+            comp.StateDoorOpen = visuals.StateDoorOpen;
+            comp.StateDoorClosed = visuals.StateDoorClosed;
         }
 
         // Open/Closed state for the storage entity.

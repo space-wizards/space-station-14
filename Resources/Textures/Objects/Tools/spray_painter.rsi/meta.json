@@ -1,6 +1,7 @@
 {
-    "copyright": "Taken from https://github.com/tgstation/tgstation at commit a21274e56ae84b2c96e8b6beeca805df3d5402e8. Thanks to Paradoxmi (discord) for the texture of spray painter ammo.",
+    "version": 1,
     "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation at commit a21274e56ae84b2c96e8b6beeca805df3d5402e8; ammo by Paradoxmi (Discord).",
     "size": {
         "x": 32,
         "y": 32
@@ -10,7 +11,7 @@
             "name": "spray_painter"
         },
         {
-            "name": "ammo4"
+            "name": "ammo"
         },
         {
             "name": "inhand-left",
@@ -20,6 +21,5 @@
             "name": "inhand-right",
             "directions": 4
         }
-    ],
-    "version": 1
+    ]
 }

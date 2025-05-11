@@ -55,7 +55,7 @@
     containers:
     - entity_storage
   - type: Paintable
-    group: LockerSecure
+    group: Locker
 
 - type: entity
   id: LockerBaseSecure

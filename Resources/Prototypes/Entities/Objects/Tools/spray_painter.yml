@@ -49,10 +49,7 @@
     charges: 15
   - type: Sprite
     sprite: Objects/Tools/spray_painter.rsi
-    state: ammo4
-  - type: Item
-    sprite: Objects/Tools/spray_painter.rsi
-    heldPrefix: ammo4
+    state: ammo
   - type: PhysicalComposition
     materialComposition:
       Steel: 10

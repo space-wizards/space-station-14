@@ -101,15 +101,33 @@ public sealed partial class SprayPainterPipeDoAfterEvent : DoAfterEvent
     public override DoAfterEvent Clone() => this;
 }
 
+/// <summary>
+/// An action raised on an item when it's spray painted.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterCanisterDoAfterEvent : DoAfterEvent
+public sealed partial class EntityPaintedEvent : EntityEventArgs
 {
+    /// <summary>
+    /// The entity painting this item.
+    /// </summary>
+    [DataField]
+    public EntityUid? User = default!;
 
+    /// <summary>
+    /// The entity used to paint this item.
+    /// </summary>
+    [DataField]
+    public EntityUid Tool = default!;
+
+    /// <summary>
+    /// The prototype being used to generate the new painted appearance.
+    /// </summary>
     [DataField]
     public string Prototype = default!;
 
+    /// <summary>
+    /// The category of item being painted (e.g. lockers, airlocks, canisters).
+    /// </summary>
     [DataField]
     public string Category = default!;
-
-    public override DoAfterEvent Clone() => this;
 }

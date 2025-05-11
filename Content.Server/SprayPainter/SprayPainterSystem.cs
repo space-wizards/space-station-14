@@ -1,10 +1,10 @@
-using System.Numerics;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Charges;
 using Content.Server.Decals;
 using Content.Server.Destructible;
 using Content.Server.Popups;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Charges.Components;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
@@ -33,17 +33,17 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         base.Initialize();
 
         SubscribeLocalEvent<SprayPainterComponent, SprayPainterPipeDoAfterEvent>(OnPipeDoAfter);
-
         SubscribeLocalEvent<AtmosPipeColorComponent, InteractUsingEvent>(OnPipeInteract);
-
-        SubscribeLocalEvent<SprayPainterComponent, SprayPainterCanisterDoAfterEvent>(OnPaintableDoAfter);
-
         SubscribeLocalEvent<SprayPainterComponent, AfterInteractEvent>(OnFloorAfterInteract);
+        SubscribeLocalEvent<GasCanisterComponent, EntityPaintedEvent>(OnCanisterPainted);
     }
 
     private void OnFloorAfterInteract(Entity<SprayPainterComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach)
+            return;
+
+        if (!ent.Comp.IsSelectedTabWithDecals || !ent.Comp.SelectedDecal.HasValue)
             return;
 
         if (!args.ClickLocation.IsValid(EntityManager))
@@ -53,47 +53,36 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             return;
         }
 
-        var limitedCharges = Comp<LimitedChargesComponent>(ent);
-        if (limitedCharges.LastCharges <= 0)
+        if (TryComp(ent, out LimitedChargesComponent? charges) && charges.LastCharges < ent.Comp.DecalChargeCost)
         {
             _popup.PopupClient(Loc.GetString("spray-painter-interact-no-charges"), args.User, args.User);
             args.Handled = true;
             return;
         }
 
-        if (!ent.Comp.IsSelectedTabWithDecals || !ent.Comp.SelectedDecal.HasValue)
-            return;
-
         if (!_decals.TryAddDecal(ent.Comp.SelectedDecal!.Value, args.ClickLocation.SnapToGrid(EntityManager).Offset(new(-0.5f)), out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, true))
             return;
 
         _audio.PlayPvs(ent.Comp.SpraySound, ent);
 
-        _charges.TryUseCharge(new Entity<LimitedChargesComponent?>(ent, limitedCharges));
-        Dirty(ent, limitedCharges);
+        _charges.TryUseCharges((ent, charges), ent.Comp.DecalChargeCost);
 
-        _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{EntityManager.ToPrettyString(args.User):user} drew a {ent.Comp.SelectedDecal.Value}");
+        AdminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{EntityManager.ToPrettyString(args.User):user} drew a {ent.Comp.SelectedDecal.Value}");
         args.Handled = true;
     }
 
-    private void OnPaintableDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterCanisterDoAfterEvent args)
+    /// <summary>
+    /// Event handler when gas canisters are painted.
+    /// The canister's color should not change when it's destroyed.
+    /// </summary>
+    private void OnCanisterPainted(Entity<GasCanisterComponent> ent, ref EntityPaintedEvent args)
     {
-        if (args.Handled ||
-            args.Cancelled)
-            return;
-
-        if (args.Args.Target is not { } target ||
-            !TryComp<PaintableComponent>(target, out _))
-            return;
-
         var dummy = Spawn(args.Prototype);
 
         var destructibleComp = EnsureComp<DestructibleComponent>(dummy);
-        CopyComp(dummy, target, destructibleComp);
+        CopyComp(dummy, ent, destructibleComp);
 
         Del(dummy);
-
-        args.Handled = true;
     }
 
     private void OnPipeDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterPipeDoAfterEvent args)

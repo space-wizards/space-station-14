@@ -5,7 +5,7 @@
         <Label Text="{Loc 'spray-painter-selected-decals'}" />
         <ScrollContainer VerticalExpand="True">
             <GridContainer Columns="7" Name="DecalsGrid">
-                <!-- by code -->
+                <!-- populated by code -->
             </GridContainer>
         </ScrollContainer>
 
