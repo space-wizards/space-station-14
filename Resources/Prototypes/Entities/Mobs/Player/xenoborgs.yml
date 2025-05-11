@@ -156,7 +156,7 @@
     - SlowedDown
     - Flashed
   - type: TypingIndicator
-    proto: robot
+    proto: xenoborg
   - type: Speech
     speechVerb: Robotic
     speechSounds: Xenoborg
