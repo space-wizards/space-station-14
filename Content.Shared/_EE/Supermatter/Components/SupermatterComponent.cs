@@ -31,7 +31,7 @@ public sealed partial class SupermatterComponent : Component
     public Color LightColorNormal = Color.FromHex("#ffe000");
 
     [DataField]
-    public Color LightColorDelam = Color.FromHex("#ffe000");
+    public Color LightColorDelam = Color.FromHex("#ff5555");
 
     #endregion
 
@@ -69,6 +69,12 @@ public sealed partial class SupermatterComponent : Component
 
     [DataField]
     public EntProtoId CollisionResultPrototype = "Ash";
+
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public EntProtoId DelamEffectsPrototype = "SupermatterDelamEffects";
+
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public EntProtoId DelamGamerulePrototype = "SupermatterDelamEventScheduler";
 
     #endregion
 

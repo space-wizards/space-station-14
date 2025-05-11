@@ -1,0 +1,10 @@
+- type: entity
+  id: SupermatterDelamEffects
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paracusia # TODO: chance to hallucinations
+    minTimeBetweenIncidents: 0.1
+    maxTimeBetweenIncidents: 300
+    maxSoundDistance: 7
+    sounds:
+      collection: Paracusia
