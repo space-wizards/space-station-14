@@ -807,7 +807,7 @@ doc-text-printer-search-permission =
     Compiler of the document:
     Position of Document Compiler:
     
-    I authorize the search of the following persons due to the suspiscions they are carrying contraband.
+    I authorize the search of the following person due to the suspiscion(s) they are carrying contraband.
 
     Name of searched person:
 
