@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Brigmedic support has been added to Plasma Station.
-    type: Add
-  id: 1142
-  time: '2025-02-16T23:18:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1709
 - author: LandsharkRAWR
   changes:
   - message: Changed Witch Robe and Witch Hat to a new design and sprite.
@@ -4174,3 +4167,10 @@
   id: 1641
   time: '2025-05-10T23:42:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2441
+- author: CrystalClover
+  changes:
+  - message: Added Head Frill marking for Reptilians
+    type: Add
+  id: 1642
+  time: '2025-05-11T03:58:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2431
