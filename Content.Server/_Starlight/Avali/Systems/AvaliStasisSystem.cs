@@ -1,4 +1,6 @@
 using System.Linq;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.Starlight.Avali.Systems;
 using Content.Shared.Starlight.Avali.Components;
 using Content.Shared.Damage;
@@ -10,12 +12,24 @@ namespace Content.Server.Starlight.Avali.Systems;
 public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
 {
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<AvaliStasisComponent, DamageChangedEvent>(OnDamageChanged);
+    }
+
+    protected override void OnEnterStasisStart(EntityUid uid, AvaliStasisComponent comp, AvaliEnterStasisActionEvent args)
+    {
+        base.OnEnterStasisStart(uid, comp, args);
+
+        // Remove bleeding when entering stasis
+        if (TryComp<BloodstreamComponent>(uid, out var bloodstream))
+        {
+            _bloodstreamSystem.TryModifyBleedAmount(uid, -bloodstream.BleedAmount, bloodstream);
+        }
     }
 
     public override void Update(float frameTime)
@@ -70,6 +84,12 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         if (TryComp<DamageableComponent>(uid, out _))
         {
             _damageableSystem.TryChangeDamage(uid, healAmount, true, origin: uid);
+        }
+
+        // Heal bleeding
+        if (TryComp<BloodstreamComponent>(uid, out var bloodstream) && bloodstream.BleedAmount > 0)
+        {
+            _bloodstreamSystem.TryModifyBleedAmount(uid, -comp.BleedHealPerSecond * (float)args.DeltaSeconds, bloodstream);
         }
     }
 }

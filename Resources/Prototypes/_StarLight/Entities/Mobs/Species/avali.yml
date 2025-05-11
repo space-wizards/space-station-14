@@ -142,10 +142,12 @@
     stasisHeatHealPerSecond: 2
     stasisColdHealPerSecond: 2
     stasisAdditionalDamageResistance: 1.5
-    stasisEnterEffect: EffectTeleportationEntity
-    stasisEnterEffectLifetime: 3.0
-    stasisEnterSound: /Audio/_Starlight/Misc/alien_teleport.ogg
-
+    stasisExitEffect: EffectTeleportationEntity
+    stasisExitEffectLifetime: 3.0
+    stasisExitSound: /Audio/_Starlight/Misc/alien_teleport.ogg
+    stasisContinuousEffect: EffectTeleportation
+    bleedHealPerSecond: 1.0
+    
 - type: entity
   parent: BaseSpeciesDummy
   id: MobAvaliDummy
