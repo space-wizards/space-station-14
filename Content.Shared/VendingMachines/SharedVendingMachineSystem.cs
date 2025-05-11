@@ -272,7 +272,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             return;
         }
 
-        AddCash(entry.ItemPrice, uid, vendComponent);
+        AddCreditToBankAccount(entry.ItemPrice, uid, vendComponent);
 
         vendComponent.Credit -= (int)entry.ItemPrice;
 
@@ -290,7 +290,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         TryUpdateVisualState((uid, vendComponent));
         Audio.PlayPredicted(vendComponent.SoundVend, uid, user);
     }
-    protected virtual void AddCash(int value, EntityUid ent, VendingMachineComponent vendingMachineComponent) { }
+    protected virtual void AddCreditToBankAccount(int value, EntityUid ent, VendingMachineComponent vendingMachineComponent) { }
 
     public void Deny(Entity<VendingMachineComponent?> entity, EntityUid? user = null)
     {
@@ -447,29 +447,29 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                 return;
         }
 
-        foreach (var entry in entries)
+        foreach (var prototypeEntry in entries)
         {
             if (PrototypeManager.HasIndex<EntityPrototype>(entry.ID))
             {
-                var restock = entry.Amount;
+                var restock = prototypeEntry.Amount;
                 var chanceOfMissingStock = 1 - restockQuality;
 
                 var result = Randomizer.NextFloat(0, 1);
                 if (result < chanceOfMissingStock)
                 {
-                    restock = (uint) Math.Floor(entry.Amount * result / chanceOfMissingStock);
+                    restock = (uint) Math.Floor(prototypeEntry.Amount * result / chanceOfMissingStock);
                 }
 
-                if (inventory.TryGetValue(entry.ID, out var entryValue))
+                if (inventory.TryGetValue(prototypeEntry.ID, out var entry))
                     // Prevent a machine's stock from going over three times
                     // the prototype's normal amount. This is an arbitrary
                     // number and meant to be a convenience for someone
                     // restocking a machine who doesn't want to force vend out
                     // all the items just to restock one empty slot without
                     // losing the rest of the restock.
-                    entryValue.Amount = Math.Min(entryValue.Amount + entry.Amount, 3 * restock);
+                    entry.Amount = Math.Min(entry.Amount + prototypeEntry.Amount, 3 * restock);
                 else
-                    inventory.Add(entry.ID, new VendingMachineInventoryEntry(type, entry.ID, restock, entry.Price));
+                    inventory.Add(prototypeEntry.ID, new VendingMachineInventoryEntry(type, prototypeEntry.ID, restock, prototypeEntry.Price));
             }
         }
     }

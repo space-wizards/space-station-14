@@ -71,7 +71,6 @@ namespace Content.Shared.VendingMachines
         /// <summary>
         /// The stack representing cash dispensed on withdrawals.
         /// </summary>
-        [DataField]
         public ProtoId<StackPrototype> CashType = "SpaceCash";
 
         public string? NextItemToEject;

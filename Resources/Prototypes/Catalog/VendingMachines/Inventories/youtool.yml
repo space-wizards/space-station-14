@@ -3,44 +3,40 @@
   startingInventory:
     - id: CableApcStack
       amount: 5
-      price: 100
     - id: Crowbar
       amount: 5
-      price: 50
     - id: Welder
       amount: 2
-      price: 300
     - id: Wirecutter
       amount: 3
-      price: 100
     - id: Wrench
       amount: 3
-      price: 100
     - id: Screwdriver
       amount: 3
-      price: 100
     - id: trayScanner
       amount: 3
-      price: 200
     - id: NetworkConfigurator
       amount: 3
-      price: 200
     - id: GasAnalyzer
       amount: 3
-      price: 200
     - id: FlashlightLantern
       amount: 5
-      price: 50
     - id: ClothingHandsGlovesColorYellowBudget
       amount: 3
-      price: 100
     - id: SprayPainter
       amount: 3
+    - id: Multitool
+      amount: 3
+      price: 200
+    - id: ClothingBeltUtility
+      amount: 3
       price: 100
+    - id: ClothingHandsGlovesColorYellow
+      amount: 2
+      price: 400
   contrabandInventory:
     - id: Multitool
       amount: 1
-      price: 300
   emaggedInventory:
     - id: ClothingHandsGlovesColorYellow
       amount: 1

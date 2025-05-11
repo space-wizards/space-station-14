@@ -46,6 +46,9 @@ namespace Content.Client.VendingMachines
             _menu?.Populate(_cachedInventory, enabled);
             if (bendy == null) return;
 
+            if (bendy.Credit != 0)
+                _menu?.SetBalanceVisible(true);
+
             _menu?.SetBalance(bendy.Credit);
         }
 

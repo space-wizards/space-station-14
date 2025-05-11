@@ -277,7 +277,7 @@ namespace Content.Server.VendingMachines
             }
         }
 
-        protected override void AddCash(int value, EntityUid ent, VendingMachineComponent vendingMachineComponent)
+        protected override void AddCreditToBankAccount(int value, EntityUid ent, VendingMachineComponent vendingMachineComponent)
         {
             if (_station.GetOwningStation(ent) is not { } station ||
                 !TryComp<StationBankAccountComponent>(station, out var bank))

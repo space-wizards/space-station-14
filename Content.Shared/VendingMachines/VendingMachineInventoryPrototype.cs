@@ -9,11 +9,11 @@ namespace Content.Shared.VendingMachines
         [DataField("id", required: true)]
         public string ID = default!;
 
-        [DataField("amount")]
+        [DataField]
         public uint Amount = 1;
 
-        [DataField("price")]
-        public int Price = 0; // Optional; use default price if null
+        [DataField]
+        public int Price = 0; // Optional; free if left default
     }
 
     [Serializable, NetSerializable, Prototype]
@@ -23,13 +23,13 @@ namespace Content.Shared.VendingMachines
         [IdDataField]
         public string ID { get; private set; } = default!;
 
-        [DataField("startingInventory")]
+        [DataField]
         public List<VendingMachineInventoryEntryForPrototype> StartingInventory { get; private set; } = new();
 
-        [DataField("emaggedInventory")]
+        [DataField]
         public List<VendingMachineInventoryEntryForPrototype>? EmaggedInventory { get; private set; }
 
-        [DataField("contrabandInventory")]
+        [DataField]
         public List<VendingMachineInventoryEntryForPrototype>? ContrabandInventory { get; private set; }
     }
 
