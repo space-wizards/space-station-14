@@ -495,7 +495,7 @@ doc-text-printer-request-call-centcomm-members =
     Compiler of the document:   
     Position of Document Compiler:
     
-    I request to be considered for a call with centcomm administrative officers.
+    I request to be considered for a call with CentComm administrative officers.
     
     Reason for the call:
     
