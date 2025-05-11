@@ -5,6 +5,7 @@ using System.Numerics;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
 using Content.Shared.IdentityManagement;
+using Content.Server.Bible.Components; // #IMP
 
 namespace Content.Server.Pinpointer;
 
@@ -51,7 +52,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         TogglePinpointer(uid, component);
 
         if (!component.CanRetarget)
-            LocateTarget(uid, component);
+            LocateTarget(uid, component, args); //#IMP args
 
         args.Handled = true;
     }
@@ -73,7 +74,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         }
     }
 
-    private void LocateTarget(EntityUid uid, PinpointerComponent component)
+    //#IMP ActivateInWorldEvent args: added this
+    private void LocateTarget(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent? args = null)
     {
         // try to find target from whitelist
         if (component.IsActive && component.Component != null)
@@ -88,6 +90,11 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             var target = FindTargetFromComponent(uid, reg.Type);
             SetTarget(uid, target, component);
         }
+        // #IMP For anomalites to find their cores, use familiar component to get core EntityUid
+        else if (args is not null && TryComp<FamiliarComponent>(args.User, out var familiarComp))
+        {
+            SetTarget(uid, familiarComp.Source, component);
+        }
     }
 
     public override void Update(float frameTime)
@@ -99,6 +106,20 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         var query = EntityQueryEnumerator<PinpointerComponent>();
         while (query.MoveNext(out var uid, out var pinpointer))
         {
+            //#IMP automatically turn on the pinpointer ONCE if ActivateImmediately is true.
+            if (pinpointer.ActivateImmediately)
+            {
+                pinpointer.ActivateImmediately = false;
+                // Anomalite check
+                if (TryComp<FamiliarComponent>(_transform.GetParentUid(uid), out var familiar))
+                {
+                    SetTarget(uid, familiar.Source, pinpointer);
+                }
+
+                TogglePinpointer(uid, pinpointer);
+                LocateTarget(uid, pinpointer);
+            }
+
             UpdateDirectionToTarget(uid, pinpointer);
         }
     }

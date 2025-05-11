@@ -60,6 +60,7 @@
   - type: Pinpointer
     component: ResearchServer
     targetName: the station
+    activateImmediately: true
 
 - type: entity
   parent: GasAnalyzer

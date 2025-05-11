@@ -21,7 +21,7 @@
     noRot: true
     drawdepth: Mobs
     scale: 1, 1
-  - type: MeleeWeapon 
+  - type: MeleeWeapon
     damage:
       types:
         Blunt: 0 # this should be a custom type and value for each anomaly type.
@@ -131,7 +131,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MeatLaserImpact
-  # Anomaly component. Some settings changed to make them not be fucked-up powerful. now they're only a little bit fucked-up powerful. 
+  - type: StandingState
+  # Anomaly component. Some settings changed to make them not be fucked-up powerful. now they're only a little bit fucked-up powerful.
   - type: Anomaly
     cannotSupercrit: true
     cannotRandomPulse: true
@@ -156,6 +157,19 @@
     weightlessFrictionNoInput: 2 # so they can actually stop moving
     weightlessAcceleration: 1.5
   - type: NoSlip
+  - type: Familiar # Provides information on core to the pinpointer
+  - type: Inventory
+    templateId: anomalite
+  - type: InventorySlots
+  - type: Loadout
+    prototypes:
+      - StartingGearAnomalitePinpointer
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: Hands
 
 # Anomalites:
 # Pyroclastic
