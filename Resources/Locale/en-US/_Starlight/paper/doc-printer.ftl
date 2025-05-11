@@ -915,11 +915,7 @@ doc-text-printer-surgery-consent-permit =
     Compiler of the document:
     Position of Document Compiler:
     
-    In sound mind I authorise the following person to perform surgery upon me:
-
-    Name of surgeon:
-    
-    Name of Patient:
+    In sound mind I authorise (name of Surgeon/CMO) to perform surgery upon me.
     
     Reason for Surgery:
 
