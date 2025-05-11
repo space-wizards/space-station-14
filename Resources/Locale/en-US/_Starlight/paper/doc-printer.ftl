@@ -625,8 +625,8 @@ doc-text-printer-request-documents =
     Time and Date:
     Compiler of the document:
  
-    
-    I, (full name), in the capacity of Internal Affairs Agent, request a copy/original of the documents for verification of compliance with the Corporate Act:
+    I, (full name), in the capacity of Internal Affairs Agent, request a copy/original of the following document(s) for verification of compliance with the Corporate Act:
+	[bullet] ...
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
