@@ -30,6 +30,30 @@
     {
       "name": "long_ears_thin",
       "directions": 4
+    },
+    {
+      "name": "long_slime_ears_standard",
+      "directions": 4
+    },
+    {
+      "name": "long_slime_ears_wide",
+      "directions": 4
+    },
+    {
+      "name": "long_slime_ears_small",
+      "directions": 4
+    },
+    {
+      "name": "long_slime_ears_upwards",
+      "directions": 4
+    },
+    {
+      "name": "long_slime_ears_tall",
+      "directions": 4
+    },
+    {
+      "name": "long_slime_ears_thin",
+      "directions": 4
     }
   ]
 }

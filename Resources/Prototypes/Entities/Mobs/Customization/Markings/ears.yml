@@ -1,3 +1,5 @@
+#Human
+
 - type: marking
   id: HumanLongEars
   bodyPart: HeadTop
@@ -63,3 +65,50 @@
   sprites:
   - sprite: Mobs/Customization/ears.rsi
     state: long_ears_thin
+
+#Slime
+
+- type: marking
+  id: LongSlimeEarsWide
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Mobs/Customization/ears.rsi
+    state: long_slime_ears_wide
+
+- type: marking
+  id: LongSlimeEarsSmall
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Mobs/Customization/ears.rsi
+    state: long_slime_ears_small
+
+- type: marking
+  id: LongSlimeEarsUpwards
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Mobs/Customization/ears.rsi
+    state: long_slime_ears_upwards
+
+- type: marking
+  id: LongSlimeEarsTall
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Mobs/Customization/ears.rsi
+    state: long_slime_ears_tall
+
+- type: marking
+  id: LongSlimeEarsThin
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Mobs/Customization/ears.rsi
+    state: long_slime_ears_thin

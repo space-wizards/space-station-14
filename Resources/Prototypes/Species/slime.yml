@@ -19,6 +19,7 @@
     UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobSlimeTorso
     Eyes: MobHumanoidEyes
+    HeadTop: MobSlimeMarkingFollowSkin
     LArm: MobSlimeLArm
     RArm: MobSlimeRArm
     LHand: MobSlimeLHand
@@ -35,6 +36,9 @@
       points: 1
       required: false
     FacialHair:
+      points: 1
+      required: false
+    HeadTop:
       points: 1
       required: false
     Chest:
