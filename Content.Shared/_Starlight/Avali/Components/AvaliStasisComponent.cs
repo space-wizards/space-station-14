@@ -37,40 +37,50 @@ public sealed partial class AvaliStasisComponent : Component
     /// <summary>
     /// The cooldown time for the stasis ability, in seconds.
     /// </summary>
-    [DataField] public float StasisCooldown = 1f;
-
-    /// <summary>
-    /// The amount of time the stasis ability will last. In seconds.
-    /// </summary>
-    [DataField] public float StasisDuration = 120f;
+    [DataField] public float StasisCooldown;
 
     /// <summary>
     /// The amount of brute damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] public float StasisBluntHeal = 10f;
+    [DataField] [AutoNetworkedField] public float StasisBluntHealPerSecond;
 
     /// <summary>
     /// The amount of sharp damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] public float StasisSlashingHeal = 10f;
+    [DataField] [AutoNetworkedField] public float StasisSlashingHealPerSecond;
 
     /// <summary>
     /// The amount of piercing damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] public float StasisPiercingHeal = 10f;
+    [DataField] [AutoNetworkedField] public float StasisPiercingHealPerSecond;
 
     /// <summary>
     /// The amount of heat damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] public float StasisHeatHeal = 10f;
+    [DataField] [AutoNetworkedField] public float StasisHeatHealPerSecond;
 
     /// <summary>
     /// The amount of cold damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] public float StasisColdHeal = 10f;
+    [DataField] [AutoNetworkedField] public float StasisColdHealPerSecond;
 
     /// <summary>
-    /// The amount of damage resistance while in stasis (0-1, where 1 is 100% resistance).
+    /// The amount of additional damage resistance while in stasis (0-1, where 1 is 100% resistance), so 0.1 resistance lowers damage by 10%.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisDamageResistance = 0.5f;
+    [DataField] [AutoNetworkedField] public float StasisAdditionalDamageResistance;
+
+    /// <summary>
+    /// The prototype ID of the stasis effect to spawn when entering stasis.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public EntProtoId StasisEnterEffect;
+
+    /// <summary>
+    /// The lifetime of the stasis effect in seconds.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public float StasisEnterEffectLifetime;
+
+    /// <summary>
+    /// The sound to play when entering stasis.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public string StasisEnterSound;
 }

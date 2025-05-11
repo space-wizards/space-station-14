@@ -128,15 +128,17 @@
   - type: AvaliStasis
     enterStasisAction: ActionAvaliStasisEnter
     exitStasisAction: ActionAvaliStasisExit
-    stasisCooldown: 1
-    stasisDuration: 120
-    stasisBluntHeal: 10
-    stasisSlashingHeal: 10
-    stasisPiercingHeal: 10
-    stasisHeatHeal: 10
-    stasisColdHeal: 10
-    stasisDamageResistance: 0.5
-
+    stasisCooldown: 30
+    stasisBluntHealPerSecond: 5
+    stasisSlashingHealPerSecond: 5
+    stasisPiercingHealPerSecond: 5
+    stasisHeatHealPerSecond: 5
+    stasisColdHealPerSecond: 5
+    stasisAdditionalDamageResistance: 0.1
+    stasisEnterEffect: EffectTeleportationEntity
+    stasisEnterEffectLifetime: 3.0
+    stasisEnterSound: /Audio/_Starlight/Misc/alien_teleport.ogg
+    
 - type: entity
   parent: BaseSpeciesDummy
   id: MobAvaliDummy

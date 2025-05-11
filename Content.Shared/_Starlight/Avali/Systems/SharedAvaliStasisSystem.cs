@@ -3,6 +3,9 @@ using Content.Shared.Administration;
 using Content.Shared.Starlight.Avali.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Localization;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Spawners;
 
 namespace Content.Shared.Starlight.Avali.Systems;
 
@@ -13,6 +16,8 @@ public abstract class SharedAvaliStasisSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     public override void Initialize()
     {
@@ -52,6 +57,14 @@ public abstract class SharedAvaliStasisSystem : EntitySystem
         comp.IsInStasis = true;
         EnsureComp<AvaliStasisFrozenComponent>(uid);
 
+        // Add stasis effect
+        EnsureComp<TransformComponent>(uid, out var xform);
+        var effectEnt = SpawnAttachedTo(comp.StasisEnterEffect, xform.Coordinates);
+        _xformSystem.SetParent(effectEnt, uid);
+        EnsureComp<TimedDespawnComponent>(effectEnt, out var despawnEffectEntComp);
+        despawnEffectEntComp.Lifetime = comp.StasisEnterEffectLifetime;
+        _audioSystem.PlayPvs(comp.StasisEnterSound, effectEnt);
+
         _popupSystem.PopupEntity(Loc.GetString("avali-stasis-entering"), uid, PopupType.Medium);
 
         _actionsSystem.RemoveAction(uid, comp.EnterStasisActionEntity);
@@ -69,6 +82,7 @@ public abstract class SharedAvaliStasisSystem : EntitySystem
 
         _actionsSystem.RemoveAction(uid, comp.ExitStasisActionEntity);
         _actionsSystem.AddAction(uid, ref comp.EnterStasisActionEntity, comp.EnterStasisAction);
+        _actionsSystem.SetCooldown(comp.EnterStasisActionEntity, TimeSpan.FromSeconds(comp.StasisCooldown));
 
         comp.IsInStasis = false;
         RemComp<AvaliStasisFrozenComponent>(uid);
