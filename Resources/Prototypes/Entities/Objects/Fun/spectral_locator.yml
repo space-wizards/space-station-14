@@ -24,9 +24,8 @@
   - type: ProximityBeeper
   - type: ProximityDetector
     range: 12
-    criteria:
-      components:
-      - Spectral # reacts to AI eye, intentional
+    components:
+    - type: Spectral # reacts to AI eye, intentional
   - type: Beeper
     isMuted: true
     minBeepInterval: 0.25
