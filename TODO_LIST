@@ -5,21 +5,12 @@ Would it be too radical to totally left/right swap the Atmos
 	It might be nice to have the spaced area between the tanks
 		and the burn chamber, just for a bit of a buffer zone.
 		Ditto the public hallway, too, though...
-Take out empty trit can?
 Deal with very long TEG pipeline somehow.
 Swap nuke/PA? Move nuke to vault?
 Move oxy miner to where the other gasses are?
 
-
 TECHNICAL:
-Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
 -I am wrong about sec monitors being restricted to general.
-
-DECALING:
-Make easier to navigate in general, + add standard colors around more
-	Maybe crappy scribble decals on top of the MIRI flooring?
-Grime everything up a bit again.
-Fix decals under west electrical maints
 
 OTHER:
 Stars moving the wrong way??
@@ -27,18 +18,14 @@ Stars moving the wrong way??
 Could maybe still get the circuit scrap into the shuttle guns, just not as a machine board? Would it fit in a different containter category?
 
 Check this stuff:
-Execution telescreens see mounted cam networks, not wireless.
-	Having trouble figuring out where this is specified, so maybe I should
-		dig into the components while testing live.
 -Check roundstart tider shop light again. I turned the attached switch on. Did that break the door being bolted?
 	Light is still on anyway. :/ IG, it's set to on in the PoweredLight component?
 	I *might* have been testing the wrong version.
 	Nope, still on.
 	I changed the switch hookup to toggle by status instead of on to off. Maybe this fixes? I have no idea.
--Also check tider shop shutter occlusion.
-Shuttle guns: Getting power to their lights?
-Make sure maints room spawners work correctly now.
-Test venting into security.
+	Still on.
+	Once more, sigh
+-Execution telescreen facing.
 
 THINGS I COULD MAKE:
 - Plastic table
@@ -478,3 +465,31 @@ Check the det/prosc door *again*.
 /* Disaster pizza delivery box has, um, a *lot* of pizza. */
 /* Label keys/plot course "tasks"? */
 /* Remove evac shuttle grid */
+/* Make easier to navigate in general, + add standard colors around more */
+/* 	Maybe crappy scribble decals on top of the MIRI flooring? */
+/* Fix decals under west electrical maints */
+/* Take out empty trit can? */
+/* Execution telescreens see mounted cam networks, not wireless. */
+/* 	Having trouble figuring out where this is specified, so maybe I should */
+/* 		dig into the components while testing live. */
+/* -Also check tider shop shutter occlusion. */
+/* Shuttle guns: Getting power to their lights? */
+/* Make sure maints room spawners work correctly now. */
+/* Test venting into security. */
+/* Figure out wrong-facing wall TVs, telescreens, nanomeds (others?) */
+/* 	It's been fixed! Horrah! */
+/* Tider shop: Add light sockets, bulbs maybe. */
+/* Last tider shop shutter's still not occluding, even though the others are !? */
+/* Dang light is still dang on */
+/* Maints room spawners should be centered, not in corner. */
+/* Shutters are just buggy when it comes to being welded? */
+/* 	The one I welded manually worked, though. */
+/* Tile at sec/junction glass door is weird */
+/* 	Actually, all the doors around there have this issue. */
+/* Observer spawn point */
+/* Just take the dang catwalk "under" the lawyer carpet out entirely. */
+/* Execution telescreen is facing even more weirdly */
+/*     - type: DeviceNetwork */
+/*       deviceNetId: Wireless */
+/* Tile variation command thingy */
+/* Grime everything up a bit again. */
