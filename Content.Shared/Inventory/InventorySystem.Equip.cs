@@ -530,7 +530,7 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        var targetAttemptEvent = new IsEquippingTargetAttemptEvent(actor, target, itemUid, slotDefinition);
+        var targetAttemptEvent = new IsUnequippingTargetAttemptEvent(actor, target, itemUid, slotDefinition);
         RaiseLocalEvent(target, targetAttemptEvent, true);
 
         if (targetAttemptEvent.Cancelled)
