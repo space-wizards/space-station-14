@@ -2,6 +2,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Doors.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
@@ -21,6 +22,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -28,6 +30,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         SubscribeLocalEvent<TurnstileComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<TurnstileComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<TurnstileComponent, EndCollideEvent>(OnEndCollide);
+        SubscribeLocalEvent<TurnstileComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
     private void OnPreventCollide(Entity<TurnstileComponent> ent, ref PreventCollideEvent args)
@@ -57,7 +60,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
             return;
         }
 
-        if (CanPassDirection(ent, args.OtherEntity))
+        if (ent.Comp.Powered && !_doorSystem.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
         {
             if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 return;
@@ -84,19 +87,20 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
     {
         if (!ent.Comp.CollideExceptions.Contains(args.OtherEntity))
         {
-            if (CanPassDirection(ent, args.OtherEntity))
+            if (ent.Comp.Powered && !_doorSystem.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
             {
                 if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 {
                     _audio.PlayPredicted(ent.Comp.DenySound, ent, args.OtherEntity);
-                    PlayAnimation(ent, ent.Comp.DenyState);
+                    PlayAnimation(ent, TurnstileVisualLayers.Indicators, ent.Comp.DenyState);
                 }
             }
 
             return;
         }
         // if they passed through:
-        PlayAnimation(ent, ent.Comp.SpinState);
+        PlayAnimation(ent, TurnstileVisualLayers.Spinner, ent.Comp.SpinState);
+        PlayAnimation(ent, TurnstileVisualLayers.Indicators, ent.Comp.GrantedState);
         _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity);
     }
 
@@ -128,8 +132,14 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         return diff < Math.PI / 4;
     }
 
-    protected virtual void PlayAnimation(EntityUid uid, string stateId)
+    protected virtual void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
     {
 
+    }
+
+    private void OnPowerChanged(EntityUid uid, TurnstileComponent component, ref PowerChangedEvent args)
+    {
+        component.Powered = args.Powered;
+        Dirty(uid, component);
     }
 }

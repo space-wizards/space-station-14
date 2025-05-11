@@ -29,6 +29,12 @@
             "name": "turnstile"
         },
         {
+            "name": "bolted"
+        },
+        {
+            "name": "turnstile_idle"
+        },
+        {
             "name": "turnstile_map",
             "directions": 4
         },
@@ -49,6 +55,14 @@
             ]
         },
         {
+            "name": "granted",
+            "delays": [
+                [
+                    0.9
+                ]
+            ]
+        },
+        {
             "name": "deny",
             "delays": [
                 [
@@ -60,6 +74,15 @@
                     0.1
                 ]
             ]
+        },
+        {
+            "name": "panel_open"
+        },
+        {
+            "name": "assembly"
+        },
+        {
+            "name": "wired"
         }
     ]
 }
