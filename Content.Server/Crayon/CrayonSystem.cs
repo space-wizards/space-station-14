@@ -173,8 +173,6 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     private void OnCrayonInit(EntityUid uid, CrayonComponent component, ComponentInit args)
     {
-        component.Charges = component.Capacity;
-
         // Get the first one from the catalog and set it as default
         var decal = _prototypeManager.EnumeratePrototypes<DecalPrototype>().FirstOrDefault(x => x.Tags.Contains("crayon"));
         component.State = decal?.ID ?? string.Empty;

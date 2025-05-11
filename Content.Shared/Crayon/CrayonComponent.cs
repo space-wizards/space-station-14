@@ -27,7 +27,7 @@ namespace Content.Shared.Crayon
         /// The amount of times the crayon can used to draw.
         /// </summary>
         [DataField, AutoNetworkedField]
-        public int Charges;
+        public int Charges = 30;
 
         /// <summary>
         /// The total starting charges for the crayon.
