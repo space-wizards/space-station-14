@@ -118,18 +118,18 @@ doc-text-printer-report-on-the-chapters-meeting =
     ─────────────────────────────────────────
     Time and Date:
     Compiler of the document:
- 
+	Position of Document Compiler:
     
     Reason for calling the Chapters' Meeting:
     The wording of the question put to the Chapters:
-    Number of votes in favor:
-    Those voting in favor:
+    Number of votes [italic]in favor[/italic]:
+    Those voting [italic]in favor[/italic]:
     
-    Number of votes "Against":
-    Those who voted "Against":
+    Number of votes [italic]against[/italic]:
+    Those voting [italic]against[/italic]:
     
-    Number of abstentions from voting:
-    Abstentions from voting:
+    Number of [italic]abstentions[/italic] from voting:
+    Those voting [italic]abstain[italic]:
     
     Resolution of the Meeting of Heads:
     
