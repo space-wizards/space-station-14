@@ -94,12 +94,11 @@ doc-text-printer-report-employee-performance =
     Compiler of the document:
     Position of Document Compiler:   
    
-    
     In the course of my duties, I have performed the required amount of work. 
     
     I request that the result of the work be accepted by the Head of the following Department:
 
-    Works performed:
+    Work performed:
     
     ─────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
