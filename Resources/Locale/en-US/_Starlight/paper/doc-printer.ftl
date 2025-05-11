@@ -565,7 +565,7 @@ doc-text-printer-request-for-non-listed-employment =
     Compiler of the document:
     Position of Document Compiler:
     
-    I request consideration for acceptance into the current shift workforce of the following person/s in a non-listed position.
+    I request consideration for acceptance into the current shift workforce of the following person in a non-listed position.
 
     Name of applicant:
 
@@ -577,7 +577,7 @@ doc-text-printer-request-for-non-listed-employment =
     
     Access provided to the employee:
     
-    Reason for Employment:
+    Reason for employment:
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
