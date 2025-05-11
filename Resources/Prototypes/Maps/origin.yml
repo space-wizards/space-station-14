@@ -26,7 +26,7 @@
             HeadOfSecurity: [ 1, 1 ]
             HospitalityDirector: [ 1, 1 ] # imp
             Quartermaster: [ 1, 1 ]
-            # service 28
+            # service 28  incl. service worker
             Bartender: [ 2, 2 ]
             Botanist: [ 3, 3 ]
             Boxer: [ 2, 2 ]
@@ -38,7 +38,7 @@
             Mime: [ 2, 2 ]
             Musician: [ 2, 2 ]
             Reporter: [ 2, 2 ]
-            ServiceWorker: [ 3, 3 ]
+            #ServiceWorker: [ 3, 3 ] #imp
             # engineering 9-12
             AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 6, 6 ]

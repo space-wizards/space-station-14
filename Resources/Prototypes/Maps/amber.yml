@@ -28,17 +28,17 @@
             HospitalityDirector: [ 1, 1 ] # imp
             Quartermaster: [ 1, 1 ]
             # service - 14
-            Bartender: [ 1, 1 ]
+            Bartender: [ 2, 2 ] #imp 1 > 2
             Botanist: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
-            Chef: [ 1, 1 ]
+            Chef: [ 2, 2 ] #imp 1 > 2
             Clown: [ 1, 1 ]
             Janitor: [ 2, 2 ]
             Librarian: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
             Reporter: [ 1, 1 ]
-            ServiceWorker: [ 2, 2 ]
+            #ServiceWorker: [ 2, 2 ] #imp
             # engineering - 5-7
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 3, 3 ]

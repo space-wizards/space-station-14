@@ -29,7 +29,7 @@
             HeadOfSecurity: [ 1, 1 ]
             HospitalityDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            # service - 18
+            # service - 18 incl. service worker
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 2 ]
             Boxer: [ 2, 2 ]
@@ -41,7 +41,7 @@
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
             Reporter: [ 2, 2 ]
-            ServiceWorker: [ 2, 2 ]
+            #ServiceWorker: [ 2, 2 ]
             # engineering - 6
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 3, 3 ]

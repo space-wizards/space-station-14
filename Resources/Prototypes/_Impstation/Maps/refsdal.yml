@@ -30,9 +30,9 @@
             HospitalityDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
             # service
-            Bartender: [ 1, 1 ]
+            Bartender: [ 2, 2 ]
             Botanist: [ 1, 1 ]
-            Chef: [ 1, 1 ]
+            Chef: [ 2, 2 ]
             Clown: [ 1, 1 ]
             Janitor: [ 1, 1 ]
             Mime: [ 1, 1 ]
@@ -40,7 +40,7 @@
             Chaplain: [1, 1]
             Librarian: [1, 1]
             Reporter: [1, 1]
-            ServiceWorker: [2, 2]
+            #ServiceWorker: [2, 2]
             # engineering
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 1, 1 ]

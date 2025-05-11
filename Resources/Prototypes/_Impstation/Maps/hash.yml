@@ -30,16 +30,16 @@
             HospitalityDirector: [ 1, 1 ] # imp
             Quartermaster: [ 1, 1 ]
             # service - 12
-            Bartender: [ 1, 1 ]
+            Bartender: [ 2, 2 ]
             Botanist: [ 1, 1 ]
             Chaplain: [ 1, 1 ]
             Chef: [ 1, 1 ]
-            Clown: [ 1, 1 ]
+            Clown: [ 2, 2 ]
             Janitor: [ 2, 2 ]
             Librarian: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            ServiceWorker: [ 2, 2 ]
+            #ServiceWorker: [ 2, 2 ]
             # engineering - 6
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 3, 3 ]

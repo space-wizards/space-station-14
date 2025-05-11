@@ -1,3 +1,4 @@
+# imp: removed service worker. playtime tracker & visitor service worker roles will remain.
 - type: job
   id: ServiceWorker
   name: job-name-serviceworker
@@ -6,6 +7,8 @@
   startingGear: ServiceWorkerGear
   icon: "JobIconServiceWorker"
   supervisors: job-supervisors-service
+  setPreference: false #imp
+  overrideConsoleVisibility: true #imp
   access:
   - Service
   - Maintenance

@@ -29,19 +29,19 @@
             HeadOfSecurity: [ 1, 1 ]
             HospitalityDirector: [ 1, 1 ] # imp
             Quartermaster: [ 1, 1 ]
-            # service - 19
+            # service - 20 incl. service worker
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 2 ]
             Boxer: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
-            Chef: [ 1, 1 ]
+            Chef: [ 2, 2 ] #imp 1 > 2
             Clown: [ 1, 1 ]
             Janitor: [ 2, 2 ]
             Librarian: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
             Reporter: [ 2, 2 ]
-            ServiceWorker: [ 3, 3 ]
+            #ServiceWorker: [ 3, 3 ] #imp
             # engineering - 6-8
             StationEngineer: [ 4, 4 ]
             AtmosphericTechnician: [ 2, 2 ]
