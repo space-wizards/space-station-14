@@ -5,6 +5,7 @@ marking-LongEarsUpwards = Long Ears Upwards
 marking-LongEarsTall = Long Ears Tall
 marking-LongEarsThin = Long Ears Thin
 
+marking-LongSlimeEars = Long Slime Ears Standard
 marking-LongSlimeEarsWide = Long Slime Ears Wide
 marking-LongSlimeEarsSmall = Long Slime Ears Small
 marking-LongSlimeEarsUpwards = Long Slime Ears Upwards

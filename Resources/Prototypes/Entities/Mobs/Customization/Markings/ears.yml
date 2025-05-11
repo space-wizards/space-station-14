@@ -69,6 +69,15 @@
 #Slime
 
 - type: marking
+  id: SlimeLongEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Mobs/Customization/ears.rsi
+    state: long_slime_ears_standard
+
+- type: marking
   id: LongSlimeEarsWide
   bodyPart: HeadTop
   markingCategory: HeadTop
