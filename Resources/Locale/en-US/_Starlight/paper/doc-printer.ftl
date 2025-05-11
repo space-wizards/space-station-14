@@ -41,9 +41,7 @@ doc-text-printer-report-on-elimination-of-violations =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
- 
-    
-    I in the position of:
+    Position of Document Compiler:
     
     Report on work violations identified by:
     
