@@ -866,7 +866,7 @@ doc-text-printer-permission-dispose-body =
     
     I authorize the disposal of the body of the following person: 
 
-    In the position of :
+    In the position of:
     
     Reason for disposal:
 
