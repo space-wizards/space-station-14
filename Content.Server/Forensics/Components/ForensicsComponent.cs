@@ -25,10 +25,9 @@ namespace Content.Server.Forensics
         public float CleanDistance = 1.5f;
 
         /// <summary>
-        /// Can the DNA be cleaned off of this entity?
-        /// e.g. you can wipe the DNA off of a knife, but not a cigarette
+        /// List of evidence that CANNOT be cleaned from this entity.
         /// </summary>
-        [DataField("canDnaBeCleaned")]
-        public bool CanDnaBeCleaned = true;
+        [DataField]
+        public List<ProtoId<ForensicEvidencePrototype>> CleanBlacklist = [];
     }
 }
