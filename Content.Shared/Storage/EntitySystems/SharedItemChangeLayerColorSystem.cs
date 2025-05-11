@@ -55,7 +55,7 @@ public abstract class SharedItemChangeLayerColorSystem : EntitySystem
             return;
 
         dict.Add(layer, itemLayerColor.Color);
-        _appearance.SetData(mainComp.Owner, StorageMapVisuals.LayerChanged, new ColorLayerData(dict), appearance);
+        _appearance.SetData(mainComp.Owner, LayerColorVisuals.LayerChanged, new ColorLayerData(dict), appearance);
     }
 
     private void OnComponentStartup(EntityUid uid, ChangeLayersColorComponent component, ref ComponentStartup args)
@@ -72,7 +72,7 @@ public abstract class SharedItemChangeLayerColorSystem : EntitySystem
             {
                 dictionary.Add(key, Color.White);
             }
-            _appearance.SetData(uid, StorageMapVisuals.InitLayers, new ColorLayerData(dictionary), appearanceComponent);
+            _appearance.SetData(uid, LayerColorVisuals.InitLayers, new ColorLayerData(dictionary), appearanceComponent);
         }
     }
 

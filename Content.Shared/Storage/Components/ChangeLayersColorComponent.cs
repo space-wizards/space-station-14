@@ -58,3 +58,10 @@ public struct LayerColor
     public string LayerName;
     public Color Color;
 }
+
+[Serializable, NetSerializable]
+public enum LayerColorVisuals : sbyte
+{
+    InitLayers,
+    LayerChanged,
+}

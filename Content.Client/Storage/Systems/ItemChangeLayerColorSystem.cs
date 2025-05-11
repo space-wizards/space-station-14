@@ -36,7 +36,7 @@ public sealed class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSyste
         var appearance = ent.Comp3;
         var owner = ent.Owner;
 
-        if (!_appearance.TryGetData<ColorLayerData>(owner, StorageMapVisuals.InitLayers, out var wrapper, appearance))
+        if (!_appearance.TryGetData<ColorLayerData>(owner, LayerColorVisuals.InitLayers, out var wrapper, appearance))
             return;
 
         foreach (var nc in wrapper.LayersColors)
@@ -53,7 +53,7 @@ public sealed class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSyste
         var appearance = ent.Comp3;
         var owner = ent.Owner;
 
-        if (!_appearance.TryGetData<ColorLayerData>(owner, StorageMapVisuals.LayerChanged, out var wrapper, appearance))
+        if (!_appearance.TryGetData<ColorLayerData>(owner, LayerColorVisuals.LayerChanged, out var wrapper, appearance))
             return;
 
         foreach (var layerName in layerColorComponent.SpriteLayers)
