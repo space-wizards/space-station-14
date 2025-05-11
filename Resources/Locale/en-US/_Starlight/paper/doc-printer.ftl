@@ -331,7 +331,7 @@ doc-text-printer-employment-statement =
 
     Name of position:
 
-    I agree to follow the department's Standard Operating Procedures. I agree to surrender my department work gear and equipment upon transfer.
+    I agree to follow the department's Standard Operating Procedures. I agree to surrender my current department work gear and equipment upon transfer.
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
