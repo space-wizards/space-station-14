@@ -1495,7 +1495,7 @@
     tags:
     - Wall
   - type: Sprite
-    drawdepth: SmallObjects #so bullets pass underneath
+    drawdepth: SmallObjects #so bullets pass 'through'
     sprite: Structures/Walls/card.rsi
   - type: Icon
     sprite: Structures/Walls/card.rsi

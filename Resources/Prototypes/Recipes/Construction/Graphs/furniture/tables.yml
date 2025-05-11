@@ -64,7 +64,7 @@
               amount: 1
               doAfter: 1
 
-        - to: TableCard #was upper
+        - to: TableCard
           steps:
             - material: Cardboard
               amount: 3
@@ -168,7 +168,7 @@
             - tool: Anchoring
               doAfter: 1
 
-    - node: TableCard #was upper
+    - node: TableCard
       entity: TableCard
       edges:
         - to: TableFrame

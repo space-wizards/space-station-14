@@ -6,7 +6,7 @@
       edges:
         - to: cardwall
           steps:
-            - material: Cardboard 
+            - material: Cardboard
               amount: 3
               doAfter: 3
     - node: cardwall

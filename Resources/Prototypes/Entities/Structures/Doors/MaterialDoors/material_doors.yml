@@ -260,8 +260,7 @@
 - type: entity
   id: CardDoor
   parent: BaseStructure
-  name: card door # was card door     Also sort out name bc I think that's referred to ic
-#  abstract: true       #maybe?
+  name: card door
   description: A door, where will it lead?
   components:
   - type: InteractionOutline
@@ -272,7 +271,7 @@
       map: ["enum.DoorVisualLayers.Base"]
   - type: AnimationPlayer
   - type: Physics
-#    bodyType: Static        probably will fuck something, but maybe needed
+    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
@@ -280,10 +279,10 @@
           !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49"
         density: 100
-#        mask:
-#        - FullTileMask
+        mask:
+        - FullTileMask
         layer:
-        - FlimsyLayer #AirlockLayer this *WILL* make things fucky, fix later
+        - FlimsyLayer
   - type: Door
     bumpOpen: false
     clickOpen: true
@@ -295,9 +294,11 @@
     openingAnimationTime: 1.2
     closingAnimationTime: 1.2
     openSound:
-      path: /Audio/Effects/paperdoor_openclose.ogg    #please please please find a better sound effect 
+      path: /Audio/Effects/paperdoor_openclose.ogg
+#      path: /Audio/Effects/card_drag.ogg #please please please find a better sound effect 
     closeSound:
       path: /Audio/Effects/paperdoor_openclose.ogg
+#      path: /Audio/Effects/card_drag.ogg
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -332,16 +333,6 @@
   - type: Construction
     graph: DoorGraph
     node: cardDoor
-#  - type: IconSmooth        #if sprite change on doorway
-#    key: cards
-#    mode: NoSprite
-  - type: NavMapDoor #can proooobably add this like that... test navmap someway
+  - type: NavMapDoor
   - type: Occluder
   - type: BlockWeather
-
-#- type: entity           just incase ^ that doesnt pay off
-#  parent: CardDoor
-#  id: CardDoorNavMap
-#  abstract: true
-#  components:
-#  - type: NavMapDoor

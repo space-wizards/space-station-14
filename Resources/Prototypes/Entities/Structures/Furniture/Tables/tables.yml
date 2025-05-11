@@ -301,7 +301,7 @@
       collection: FootstepTile
 
 - type: entity
-  id: TableCard # was upper
+  id: TableCard
   parent: TableBase
   name: card table
   description: Cardboard sheets wrapped around a metal table frame.
@@ -318,34 +318,25 @@
       types:
         Blunt: 15
     tableMassLimit: 40
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Card
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 45 #excess damage (nuke?). avoid computational cost of spawning entities.
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
         - !type:PlaySoundBehavior
           sound: /Audio//Weapons/pierce.ogg
-#          soundGroups:
-#            Brute:
-#              path:
-#                "/Audio/Weapons/pierce.ogg"
-#          sound:
-#            collection: GlassBreak
     - trigger:
         !type:DamageTrigger
-        damage: 5
+        damage: 15
       behaviors:
       - !type:PlaySoundBehavior
         sound: /Audio//Weapons/pierce.ogg
-#        soundGroups:
-#          Brute:
-#            path:
-#              "/Audio/Weapons/pierce.ogg"
-#        sound:
-#          collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialCardboard:
@@ -355,14 +346,11 @@
         node: TableFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-#  - type: Icon
-#    sprite: Structures/Furniture/Tables/card.rsi
-#    state: closed
-  - type: IconSmooth     #maybe above does fix? who knows
+  - type: IconSmooth
     key: cardtable
   - type: Construction
     graph: Table
-    node: TableCard #maybe need upper?
+    node: TableCard
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepTile
