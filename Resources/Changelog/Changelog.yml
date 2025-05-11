@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Chickens and ducks now report hunger levels when examined.
-    type: Add
-  id: 7956
-  time: '2025-02-15T04:29:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35164
 - author: VerinSenpai
   changes:
   - message: Air alarm devices now return to their previous settings after a power
@@ -3921,3 +3914,13 @@
   id: 8458
   time: '2025-05-11T00:09:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36613
+- author: CyberTropic
+  changes:
+  - message: MapRenderer can now render map files from a file directly without needing
+      a prototype.
+    type: Tweak
+  - message: Fixed maprenderer drawing tiles upside down.
+    type: Fix
+  id: 8459
+  time: '2025-05-11T14:06:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37306
