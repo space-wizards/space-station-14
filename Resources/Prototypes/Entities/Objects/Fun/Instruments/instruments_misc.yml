@@ -194,8 +194,8 @@
   description: A lizard had too much time on their hands when they made this.
   components:
   - type: Instrument
-    program: 1
-    bank: 5
+    program: 5
+    bank: 1
   - type: Sprite
     sprite: Objects/Fun/Instruments/wehpet.rsi
     state: icon
