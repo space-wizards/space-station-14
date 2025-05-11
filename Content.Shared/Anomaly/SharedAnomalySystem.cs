@@ -187,7 +187,8 @@ public abstract class SharedAnomalySystem : EntitySystem
             // Logging before resolve, in case the anomaly has deleted itself.
             if (_net.IsServer)
                 Log.Info($"Ending anomaly. Entity: {ToPrettyString(uid)}");
-            AdminLog.Add(LogType.Anomaly, supercritical ? LogImpact.High : LogImpact.Low,
+            AdminLog.Add(LogType.Anomaly,
+                supercritical ? LogImpact.High : LogImpact.Low,
                 $"Anomaly {ToPrettyString(uid)} {(supercritical ? "went supercritical" : "decayed")}.");
         }
 
@@ -370,13 +371,19 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return null;
 
+        // How many spawn points we will be aiming to return
         var amount = (int) (MathHelper.Lerp(settings.MinAmount, settings.MaxAmount, severity * stability * powerModifier) + 0.5f);
 
-        var localpos = xform.Coordinates.Position;
-        var tilerefs = _map.GetLocalTilesIntersecting(
-            xform.GridUid.Value,
-            grid,
-            new Box2(localpos + new Vector2(-settings.MaxRange, -settings.MaxRange), localpos + new Vector2(settings.MaxRange, settings.MaxRange)))
+        // When the entity is in a container or buckled (such as a hosted anomaly), local coordinates will not be comparable
+        // to tile coordinates.
+        // Get the world coordinates for the anomalous entity
+        var worldPos = _transform.GetWorldPosition(uid);
+
+        // Get a list of the tiles within the maximum range of the effect
+        var tilerefs = _map.GetTilesIntersecting(
+                xform.GridUid.Value,
+                grid,
+                new Box2(worldPos + new Vector2(-settings.MaxRange), worldPos + new Vector2(settings.MaxRange)))
             .ToList();
 
         if (tilerefs.Count == 0)
@@ -390,7 +397,10 @@ public abstract class SharedAnomalySystem : EntitySystem
                 break;
 
             var tileref = Random.Pick(tilerefs);
-            var distance = MathF.Sqrt(MathF.Pow(tileref.X - xform.LocalPosition.X, 2) + MathF.Pow(tileref.Y - xform.LocalPosition.Y, 2));
+
+            // Get the world position of the tile to calculate the distance to the anomalous object
+            var tileWorldPos = _map.GridTileToWorldPos(xform.GridUid.Value, grid, tileref.GridIndices);
+            var distance = Vector2.Distance(tileWorldPos, worldPos);
 
             //cut outer & inner circle
             if (distance > settings.MaxRange || distance < settings.MinRange)
@@ -402,7 +412,7 @@ public abstract class SharedAnomalySystem : EntitySystem
             if (!settings.CanSpawnOnEntities)
             {
                 var valid = true;
-                foreach (var ent in grid.GetAnchoredEntities(tileref.GridIndices))
+                foreach (var ent in _map.GetAnchoredEntities(xform.GridUid.Value, grid, tileref.GridIndices))
                 {
                     if (!physQuery.TryGetComponent(ent, out var body))
                         continue;
@@ -429,7 +439,7 @@ public abstract class SharedAnomalySystem : EntitySystem
 }
 
 [DataRecord]
-public partial record struct AnomalySpawnSettings()
+public record struct AnomalySpawnSettings()
 {
     /// <summary>
     /// should entities block spawning?
@@ -483,4 +493,4 @@ public partial record struct AnomalySpawnSettings()
     public bool SpawnOnSeverityChanged { get; set; } = false;
 }
 
-public sealed partial class ActionAnomalyPulseEvent : InstantActionEvent { }
+public sealed partial class ActionAnomalyPulseEvent : InstantActionEvent;

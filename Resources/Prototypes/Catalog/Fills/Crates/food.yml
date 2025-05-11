@@ -166,3 +166,84 @@
       - id: DrinkFourteenLokoCan
         amount: 4
 
+- type: entity
+  id: CrateFoodGetMore
+  parent: CratePlastic
+  name: Getmore Bakemore crate
+  description: Getmore branded snacks and baking supplies for the creative chef, all without the need of emptying your station's Getmore machines!
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodSnackRaisins
+      amount: 4
+    - id: FoodSnackChocolate
+      amount: 6
+    - id: FoodSnackPistachios
+      amount: 4
+    - id: ReagentContainerFlour
+      amount: 3
+    - id: ReagentContainerSugar
+      amount: 2
+    - id: FoodCondimentPacketSalt
+      amount: 3
+    - id: DrinkMilkCarton
+      amount: 2
+    - id: FoodContainerEgg
+      amount: 2
+    - id: FoodBoxCloth
+      amount: 1
+
+- type: entity
+  id: CrateFoodIceCream
+  parent: CrateFreezer
+  name: ice cream delivery
+  description: An assortment of ice cream delights for any occasion! Includes 16 frozen treats.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodFrozenSandwich
+      amount: 3
+    - id: FoodFrozenSandwichStrawberry
+      amount: 2
+    - id: FoodFrozenPopsicleOrange
+      amount: 2
+    - id: FoodFrozenPopsicleBerry
+      amount: 2
+    - id: FoodFrozenPopsicleJumbo
+      amount: 3
+    - id: FoodFrozenCornuto
+      amount: 2
+    - id: FoodFrozenSundae
+      amount: 2
+
+- type: entity
+  id: CrateFoodSnowcone
+  parent: CrateFreezer
+  name: snowcone delivery
+  description: A freezer packed with refreshing snowcones for a hard working crew, or even a lazy one! Includes 16 snowcones.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodFrozenSnowconeBase
+      amount: 3
+    - id: FoodFrozenSnowconeBerry
+      amount: 3
+    - id: FoodFrozenSnowconeFruit
+      amount: 3
+    - id: FoodFrozenSnowconeRainbow
+      amount: 3
+    - id: FoodFrozenSnowconeClown
+      amount: 2
+    - id: FoodFrozenSnowconeMime
+      amount: 2
+
+- type: entity
+  id: CrateFoodHappyHonkBigBite
+  parent: CratePlastic
+  name: Happy Honk meal delivery
+  description: Two fully loaded Happy Honk Big Bite burger meals, complete with cheesy fries, a bottle of Space Cola, a slice of apple pie and a toy!
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodMealHappyHonkBigBite
+      amount: 2
