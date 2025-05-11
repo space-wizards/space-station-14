@@ -21,6 +21,7 @@
     actions:
     - !type:SnapToGrid {}
     - !type:SetAnchor {}
+    - !type:AppearanceChange
     edges:
     - to: wired
       conditions:
@@ -47,6 +48,8 @@
 
   - node: wired
     entity: TurnstileAssembly
+    actions:
+    - !type:AppearanceChange
     edges:
     - to: electronics
       conditions:
@@ -69,6 +72,9 @@
         doAfter: 2.5
 
   - node: electronics
+    entity: TurnstileAssembly
+    actions:
+    - !type:AppearanceChange
     edges:
     - to: turnstile
       conditions:
@@ -86,12 +92,17 @@
       steps:
       - tool: Prying
         doAfter: 5
+
   - node: turnstile
     entity: Turnstile
     edges:
     - to: wired
       conditions:
       - !type:EntityAnchored {}
+      - !type:DoorBolted
+        value: false
+      - !type:WirePanel {}
+      - !type:AllWiresCut
       completed:
       - !type:EmptyAllContainers
         pickup: true
@@ -99,4 +110,3 @@
       steps:
       - tool: Prying
         doAfter: 5
-

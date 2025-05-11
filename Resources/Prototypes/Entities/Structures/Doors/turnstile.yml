@@ -6,8 +6,19 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
-    state: "assembly"
+    sprite: Structures/Doors/turnstile.rsi
+    layers:
+      - state: "turnstile"
+      - state: "assembly"
+        map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          assembly: { state: assembly }
+          wired: { state: wired }
+          electronics: { state: panel_open }
+  - type: Appearance
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -47,6 +58,7 @@
   name: turnstile
   description: A mechanical door that permits one-way access and prevents tailgating.
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Doors/turnstile.rsi
     snapCardinals: true
@@ -54,6 +66,22 @@
     layers:
     - state: turnstile
       map: [ "enum.TurnstileVisualLayers.Base" ]
+    - state: turnstile_idle
+      map: [ "enum.TurnstileVisualLayers.Spinner" ]
+    - map: [ "enum.TurnstileVisualLayers.Indicators" ]
+      shader: unshaded
+    - state: panel_open
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+    - state: electrified_ai
+      sprite: Interface/Misc/ai_hud.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.HUD" ]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
   - type: AnimationPlayer
   - type: Fixtures
     fixtures:
@@ -86,6 +114,28 @@
       components:
       - MobState # no mobs
       - Pullable # no dragging things in
+  - type: DoorBolt
+  - type: GenericVisualizer
+    visuals:
+      enum.ElectrifiedVisuals.ShowSparks:
+        enum.ElectrifiedLayers.Sparks:
+          True: { visible: True }
+          False: { visible: False }
+      enum.DoorVisuals.BoltLights:
+        enum.TurnstileVisualLayers.Indicators:
+          True:
+            visible: True
+            state: bolted
+          False:
+            visible: False
+  - type: WiresVisuals
+  - type: ElectrocutionHUDVisuals
+  - type: ApcPowerReceiver
+    powerLoad: 20
+  - type: ExtensionCableReceiver
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
   - type: Appearance
   - type: Damageable
     damageContainer: Inorganic
@@ -109,6 +159,16 @@
   - type: Construction
     graph: Turnstile
     node: turnstile
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-turnstile
+    layoutId: Turnstile
+  - type: UserInterface
+    interfaces:
+      enum.AiUi.Key:
+        type: StationAiBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
 
 - # Spawned by the client-side turnstile examine code to indicate the direction to pass through.
   type: entity
