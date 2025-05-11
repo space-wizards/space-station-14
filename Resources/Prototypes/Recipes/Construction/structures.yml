@@ -1182,7 +1182,7 @@
 
 - type: construction
   id: CardDoor
-  graph: DoorGraph #was cardDoor              also was CardDoor
+  graph: DoorGraph
   startNode: start
   targetNode: cardDoor
   category: construction-category-structures
