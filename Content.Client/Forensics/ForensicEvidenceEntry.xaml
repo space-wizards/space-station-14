@@ -1,0 +1,9 @@
+<Collapsible xmlns="https://spacestation14.io"
+             Name="EntryContainer">
+    <CollapsibleHeading Name="EntryHeading" />
+    <CollapsibleBody>
+        <BoxContainer Name="Entries"
+                    Orientation="Vertical"
+                    VerticalExpand="True"/>
+    </CollapsibleBody>
+</Collapsible>
