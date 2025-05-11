@@ -148,7 +148,6 @@ doc-text-printer-internal-affairs-agents-report =
     ─────────────────────────────────────────
     Time and Date:
     Compiler of the document:
- 
     
     I, (full name), in the position of Internal Affairs Agent, in the course of an internal audit requested by (full name), in the position of (full job title) for the reason of (reason for audit), found the following irregularities:
     
