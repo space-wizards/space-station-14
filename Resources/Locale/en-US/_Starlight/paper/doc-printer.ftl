@@ -372,7 +372,6 @@ doc-text-printer-access-request-statement =
     Reason for gaining elevated access:
     
     ────────────────────────────────────────
-
    ⠀                                    [italic]Place for stamps[/italic]
 
 
