@@ -79,7 +79,7 @@ doc-text-printer-report-department =
     [bullet] ...
 
     Degree of Target Readiness:
-	
+
     General condition of the department:
     
     ─────────────────────────────────────────
@@ -646,7 +646,7 @@ doc-text-printer-request-euthanasia =
     Compiler of the document:
     Position of Document Compiler:
     
-    I formally equest the assistance of the medical department in performing euthanasia as a medical treatment for the reason of: (specify reason for request). 
+    I formally request the assistance of the medical department in performing euthanasia as a medical treatment for the reason of: (specify reason for request). 
 
     I am familiar with the implications of this decision, and the rationality and humanity of this decision has been established by the medical staff. 
 
