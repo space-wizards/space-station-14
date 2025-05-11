@@ -352,6 +352,8 @@ doc-text-printer-resignation-statement =
     
     I, (full name), in the current position of (full job title), wish to resign from (name of department) for (reason).
     I undertake to pay the penalty established by the terms of termination of fixed-term/permanent contract at the Central Command station.
+
+	I agree to surrender my department work gear and equipment upon resignation.
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
