@@ -69,7 +69,7 @@
 #Slime
 
 - type: marking
-  id: SlimeLongEars
+  id: LongSlimeEars
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [SlimePerson]
