@@ -1,97 +1,4 @@
 ﻿Entries:
-- author: Minemoder
-  changes:
-  - message: Slime plushie now squishes.
-    type: Tweak
-  id: 7946
-  time: '2025-02-13T07:55:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33554
-- author: AgentSmithRadio
-  changes:
-  - message: Added grilled cheese sandwich and recipe.
-    type: Add
-  id: 7947
-  time: '2025-02-13T08:00:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33807
-- author: themias
-  changes:
-  - message: The experimental welding tool now requires only minimal eye protection
-      (e.g. sunglasses)
-    type: Tweak
-  id: 7948
-  time: '2025-02-13T19:26:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34792
-- author: Winkarst-cpu
-  changes:
-  - message: Thrusters now deal heat damage.
-    type: Fix
-  id: 7949
-  time: '2025-02-13T19:27:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35088
-- author: Booblesnoot42
-  changes:
-  - message: Removing the security plate from an intercom will no longer delete its
-      encryption keys.
-    type: Fix
-  id: 7950
-  time: '2025-02-13T19:31:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34911
-- author: Velken
-  changes:
-  - message: Paramedic Void Suit now has flashlight and an ambulance siren.
-    type: Add
-  - message: Paramedic Void Suit is now restricted to Medical.
-    type: Tweak
-  id: 7951
-  time: '2025-02-13T19:52:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34657
-- author: themias
-  changes:
-  - message: Fixed being able to fax multiple times in quick succession
-    type: Fix
-  id: 7952
-  time: '2025-02-13T20:12:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35135
-- author: Centronias
-  changes:
-  - message: High-heeled Boots now click and clack when walking
-    type: Tweak
-  id: 7953
-  time: '2025-02-13T22:35:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35083
-- author: keronshb
-  changes:
-  - message: The Supermatter Grenade has been renamed to Singularity Grenade.
-    type: Tweak
-  - message: The Singularity Grenade no longer has an explosion.
-    type: Remove
-  id: 7954
-  time: '2025-02-14T15:01:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35122
-- author: ArtisticRoomba
-  changes:
-  - message: The Solar Panels section of the Engineering Guidebook has been updated
-      to include information on upgrading solar panels, as well as how much each variant
-      produces.
-    type: Add
-  - message: The Tesla Engine section of the Engineering Guidebook has been slightly
-      reorganized to better outline the differences between Grounding Rods and Tesla
-      Coils, as well as tips on how to use them.
-    type: Tweak
-  - message: The Access Configurator section of the Engineering Guidebook has been
-      updated to reflect the recent addition of the Authentication Disruptor, as well
-      as how to fix access-broken doors and equipment the easy way.
-    type: Add
-  id: 7955
-  time: '2025-02-15T03:59:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34695
-- author: Tayrtahn
-  changes:
-  - message: Chickens and ducks now report hunger levels when examined.
-    type: Add
-  id: 7956
-  time: '2025-02-15T04:29:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35164
 - author: VerinSenpai
   changes:
   - message: Air alarm devices now return to their previous settings after a power
@@ -3931,3 +3838,89 @@
   id: 8448
   time: '2025-05-09T15:52:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34926
+- author: sowelipililimute
+  changes:
+  - message: Reagent dispensers (Chem Dispenser, Booze Dispenser, Soda Dispenser)
+      now use a grid inventory for their internal storage
+    type: Tweak
+  id: 8449
+  time: '2025-05-10T03:49:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34205
+- author: B-Kirill
+  changes:
+  - message: Meteors no longer slow down during flight.
+    type: Fix
+  id: 8450
+  time: '2025-05-10T03:55:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37320
+- author: Pronana
+  changes:
+  - message: You can no longer grind the smite snail
+    type: Fix
+  id: 8451
+  time: '2025-05-10T05:06:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37020
+- author: PotentiallyTom
+  changes:
+  - message: Changed the gold requirement for the recipies of the Laser Cannon, X-Ray
+      Cannon, and Advanced Laser Pistol.
+    type: Tweak
+  - message: The Advanced Laser Pistol now requires uranium to make.
+    type: Tweak
+  id: 8452
+  time: '2025-05-10T09:58:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37308
+- author: EmoGarbage404
+  changes:
+  - message: Omnizine no longer "wastes" healing when administered to patients without
+      even amounts of all damage types.
+    type: Tweak
+  id: 8453
+  time: '2025-05-10T12:51:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37129
+- author: Nukesthestation
+  changes:
+  - message: The maximum character limit for paper has been increased to 10,000, hop
+      mains rejoice!
+    type: Tweak
+  id: 8454
+  time: '2025-05-10T15:12:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37270
+- author: Morb0, ssdaniel24
+  changes:
+  - message: Added a Discord webhook that will receive station news
+    type: Add
+  id: 8455
+  time: '2025-05-10T18:21:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36807
+- author: EmoGarbage404
+  changes:
+  - message: Fixed being able to toggle lighting as a ghost.
+    type: Fix
+  id: 8456
+  time: '2025-05-10T21:41:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37335
+- author: gorillagaming
+  changes:
+  - message: The space dragon briefing now shows the correct direction to the station
+    type: Fix
+  id: 8457
+  time: '2025-05-10T23:35:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37181
+- author: pyvik
+  changes:
+  - message: New hair named "Long With Bangs"
+    type: Add
+  id: 8458
+  time: '2025-05-11T00:09:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36613
+- author: CyberTropic
+  changes:
+  - message: MapRenderer can now render map files from a file directly without needing
+      a prototype.
+    type: Tweak
+  - message: Fixed maprenderer drawing tiles upside down.
+    type: Fix
+  id: 8459
+  time: '2025-05-11T14:06:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37306
