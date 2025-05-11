@@ -162,13 +162,14 @@ doc-text-printer-condition-report =
                   [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
     ────────────────────────────────────────
    ⠀⠀                               [bold]CONDITION REPORT[/bold]
-
+    ─────────────────────────────────────────
     Time and Date:
     Compiler of the document:
     Position of Document Compiler:   
     
     The (name of the system or object) was inspected, the results of the inspection were analyzed, and the causes of unstable operation of the object were analyzed.
-    Cause of object failure:
+    
+	Cause of object failure:
     
     Identified damage to the facility:
     
