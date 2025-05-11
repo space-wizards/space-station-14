@@ -825,7 +825,7 @@ doc-text-printer-permission-to-carry-weapons =
 
                   [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
     ────────────────────────────────────────
-   ⠀⠀                                [bold]GUN PERMISSION[/bold]
+   ⠀⠀                             [bold]WEAPON PERMISSION[/bold]
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
@@ -838,9 +838,9 @@ doc-text-printer-permission-to-carry-weapons =
 
     Position of authorised person:
     
-    The weapon and the type of ammunition for it:
+    The weapon and, if applicable, the type of ammunition for it:
     
-    The method of obtaining the weapon and the ammunition for it:
+    The method of obtaining the weapon and, if applicable, the ammunition for it:
     
     Reason for authorization:
     
