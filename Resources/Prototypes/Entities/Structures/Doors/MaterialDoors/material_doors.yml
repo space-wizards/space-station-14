@@ -2,7 +2,7 @@
   id: BaseMaterialDoor
   parent: BaseStructure
   name: door
-  abstract: true
+#  abstract: true
   description: A door, where will it lead?
   components:
   - type: InteractionOutline
@@ -294,11 +294,9 @@
     openingAnimationTime: 1.2
     closingAnimationTime: 1.2
     openSound:
-      path: /Audio/Effects/paperdoor_openclose.ogg
-#      path: /Audio/Effects/card_drag.ogg #please please please find a better sound effect 
+      path: /Audio/Effects/card_drag.ogg 
     closeSound:
-      path: /Audio/Effects/paperdoor_openclose.ogg
-#      path: /Audio/Effects/card_drag.ogg
+      path: /Audio/Effects/card_drag.ogg
   - type: MeleeSound
     soundGroups:
       Brute:

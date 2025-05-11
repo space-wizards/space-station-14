@@ -190,6 +190,9 @@
       state: cardshield-icon
     - type: Item
       heldPrefix: cardshield
+    - type: StaminaResistance
+      damageCoefficient: 0.95
+      worn: true
     - type: Blocking
       passiveBlockModifier:
         coefficients:

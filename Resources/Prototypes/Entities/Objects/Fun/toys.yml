@@ -1843,7 +1843,7 @@
       types:
         Blunt: 0.3
     soundHit:
-      path: /Audio/Items/Toys/ToyFall2.ogg
+      path: /Audio/Items/Toys/card_tube_bonk.ogg
   - type: Construction
     graph: CardSword
     node: cardSword
