@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: LandsharkRAWR
-  changes:
-  - message: Changed Witch Robe and Witch Hat to a new design and sprite.
-    type: Tweak
-  id: 1143
-  time: '2025-02-17T01:19:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1660
 - author: AvianMaiden
   changes:
   - message: Replacement lines for a few vendors pertaining to Security, removing
@@ -4174,3 +4167,12 @@
   id: 1642
   time: '2025-05-11T03:58:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2431
+- author: TheGrimbeeper
+  changes:
+  - message: Anomalites can now always locate their core, so they know who to obey.
+    type: Add
+  - message: drones, dragons, and anomalite pinpointers now automatically activate.
+    type: Tweak
+  id: 1643
+  time: '2025-05-11T04:41:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2390
