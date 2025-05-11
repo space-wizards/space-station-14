@@ -1,5 +1,6 @@
 using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Forensics;
@@ -27,8 +28,14 @@ public sealed partial class ForensicPadDoAfterEvent : DoAfterEvent
 }
 
 [Serializable, NetSerializable]
-public sealed partial class CleanForensicsDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class CleanForensicsDoAfterEvent : DoAfterEvent
 {
+    public List<ProtoId<ForensicEvidencePrototype>> ToClean = [];
+
+    public override DoAfterEvent Clone()
+    {
+        return this;
+    }
 }
 
 /// <summary>

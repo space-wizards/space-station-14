@@ -237,21 +237,32 @@ namespace Content.Server.Forensics
                 return false;
             }
 
-            var hasCleanableEvidence = false;
+            List<ProtoId<ForensicEvidencePrototype>> toClean = [];
             foreach (var protoId in forensicsComp.Evidence.Keys)
             {
                 var proto = _prototypeManager.Index(protoId);
-                if (!proto.Cleanable || forensicsComp.CleanBlacklist.Contains(proto))
+                if (!proto.Cleanable ||
+                    forensicsComp.CleanBlacklist.Contains(proto) ||
+                    cleanForensicsEntity.Comp.Blacklist.Contains(proto))
                     continue; // This evidence is not cleanable
 
-                hasCleanableEvidence = true;
-                break;
+                toClean.Add(protoId);
             }
 
-            if (hasCleanableEvidence)
+            if (toClean.Count > 0)
             {
                 var cleanDelay = cleanForensicsEntity.Comp.CleanDelay;
-                var doAfterArgs = new DoAfterArgs(EntityManager, user, cleanDelay, new CleanForensicsDoAfterEvent(), cleanForensicsEntity, target: target, used: cleanForensicsEntity)
+                var doAfterArgs = new DoAfterArgs(
+                    EntityManager,
+                    user,
+                    cleanDelay,
+                    new CleanForensicsDoAfterEvent
+                    {
+                        ToClean = toClean
+                    },
+                    cleanForensicsEntity,
+                    target: target,
+                    used: cleanForensicsEntity)
                 {
                     NeedHand = true,
                     BreakOnDamage = true,
@@ -282,11 +293,10 @@ namespace Content.Server.Forensics
             if (!TryComp<ForensicsComponent>(args.Target, out var targetComp))
                 return;
 
-            foreach (var key in targetComp.Evidence.Keys)
+            foreach (var key in args.ToClean)
             {
-                var proto = _prototypeManager.Index(key);
-                if (proto.Cleanable && !targetComp.CleanBlacklist.Contains(key))
-                    targetComp.Evidence.Remove(key);
+                // Evidence to clean has already been validated at the DoAfter call site
+                targetComp.Evidence.Remove(key);
             }
 
             // leave behind evidence it was cleaned
