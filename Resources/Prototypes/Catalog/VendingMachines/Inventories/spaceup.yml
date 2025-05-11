@@ -1,16 +1,27 @@
 - type: vendingMachineInventory
   id: SpaceUpInventory
   startingInventory:
-    DrinkSpaceUpCan: 5
-    DrinkSpaceMountainWindCan: 5
-    DrinkGrapeCan: 2
-    DrinkRootBeerCan: 2
-    DrinkIcedTeaCan: 2
-    DrinkSolDryCan: 2
-    DrinkFourteenLokoCan: 2
+    - id: DrinkSpaceUpCan
+      amount: 5
+    - id: DrinkSpaceMountainWindCan
+      amount: 5
+    - id: DrinkGrapeCan
+      amount: 2
+    - id: DrinkRootBeerCan
+      amount: 2
+    - id: DrinkIcedTeaCan
+      amount: 2
+    - id: DrinkSolDryCan
+      amount: 2
+    - id: DrinkFourteenLokoCan
+      amount: 2
   contrabandInventory:
-    DrinkSpaceMountainWindBottleFull: 2
-    DrinkSpaceUpBottleFull: 2
+    - id: DrinkSpaceMountainWindBottleFull
+      amount: 2
+    - id: DrinkSpaceUpBottleFull
+      amount: 2
   emaggedInventory:
-    DrinkNukieCan: 2
-    DrinkChangelingStingCan: 2
+    - id: DrinkNukieCan
+      amount: 2
+    - id: DrinkChangelingStingCan
+      amount: 2

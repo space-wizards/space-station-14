@@ -1,22 +1,40 @@
 - type: vendingMachineInventory
   id: GoodCleanFunInventory
   startingInventory:
-    DiceBag: 6
-    Paper: 8
-    d6Dice: 8
-    ChessBoard: 1
-    BackgammonBoard: 1
-    ParchisBoard: 1
-    CheckerBoard: 1
-    ShipBattlemap: 1
-    SnowBattlemap: 1
-    SandBattlemap: 1
-    MoonBattlemap: 1
-    GrassBattlemap: 1
-    PaperCNCSheet: 6
-    MysteryFigureBox: 2
-    BooksBag: 3
+    - id: DiceBag
+      amount: 6
+    - id: Paper
+      amount: 8
+    - id: d6Dice
+      amount: 8
+    - id: ChessBoard
+      amount: 1
+    - id: BackgammonBoard
+      amount: 1
+    - id: ParchisBoard
+      amount: 1
+    - id: CheckerBoard
+      amount: 1
+    - id: ShipBattlemap
+      amount: 1
+    - id: SnowBattlemap
+      amount: 1
+    - id: SandBattlemap
+      amount: 1
+    - id: MoonBattlemap
+      amount: 1
+    - id: GrassBattlemap
+      amount: 1
+    - id: PaperCNCSheet
+      amount: 6
+    - id: MysteryFigureBox
+      amount: 2
+    - id: BooksBag
+      amount: 3
   contrabandInventory:
-    Basketball: 1
-    FoodSnackBoritos: 3
-    DrinkSpaceMountainWindCan: 3
+    - id: Basketball
+      amount: 1
+    - id: FoodSnackBoritos
+      amount: 3
+    - id: DrinkSpaceMountainWindCan
+      amount: 3

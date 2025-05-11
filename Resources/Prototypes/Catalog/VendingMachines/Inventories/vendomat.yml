@@ -1,16 +1,28 @@
 - type: vendingMachineInventory
   id: VendomatInventory
   startingInventory:
-    RemoteSignaller: 1
-    Igniter: 2
-    Wirecutter: 2
-    Screwdriver: 2
-    CableApcStack: 2
-    FlashlightLantern: 2
-    PowerCellSmallPrinted: 3
-    MatterBinStockPart: 4
-    CapacitorStockPart: 4
-    MicroManipulatorStockPart: 4
+    - id: RemoteSignaller
+      amount: 1
+    - id: Igniter
+      amount: 2
+    - id: Wirecutter
+      amount: 2
+    - id: Screwdriver
+      amount: 2
+    - id: CableApcStack
+      amount: 2
+    - id: FlashlightLantern
+      amount: 2
+    - id: PowerCellSmallPrinted
+      amount: 3
+    - id: MatterBinStockPart
+      amount: 4
+    - id: CapacitorStockPart
+      amount: 4
+    - id: MicroManipulatorStockPart
+      amount: 4
   contrabandInventory:
-    ProximitySensor: 1
-    LeftArmBorg: 1
+    - id: ProximitySensor
+      amount: 1
+    - id: LeftArmBorg
+      amount: 1

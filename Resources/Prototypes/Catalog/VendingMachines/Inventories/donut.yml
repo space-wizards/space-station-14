@@ -1,12 +1,19 @@
 - type: vendingMachineInventory
   id: DonutInventory
   startingInventory:
-    FoodDonutChocolate: 5
-    FoodDonutApple: 3
-    FoodDonutPink: 3
-    FoodDonutBungo: 3
+    - id: FoodDonutChocolate
+      amount: 5
+    - id: FoodDonutApple
+      amount: 3
+    - id: FoodDonutPink
+      amount: 3
+    - id: FoodDonutBungo
+      amount: 3
   contrabandInventory:
-    FoodBagel: 2
-    FoodBagelPoppy: 2
+    - id: FoodBagel
+      amount: 2
+    - id: FoodBagelPoppy
+      amount: 2
   emaggedInventory:
-    FoodDonutPoison: 1
+    - id: FoodDonutPoison
+      amount: 1
