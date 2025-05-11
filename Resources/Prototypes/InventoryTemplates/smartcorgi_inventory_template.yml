@@ -1,6 +1,6 @@
 # Borgi Inventory Template
 - type: inventoryTemplate
-  id: smartcorgi
+  id: SmartCorgi
   slots:
   - name: ears
     slotTexture: ears

@@ -2757,6 +2757,12 @@
   name: corgi
   description: Finally, a space corgi!
   components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: corgi
   - type: Physics
   - type: Speech
     speechVerb: Canine
@@ -2791,12 +2797,6 @@
   parent: MobCorgiBase
   id: MobCorgi
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: corgi
   - type: DamageStateVisuals
     states:
       Alive:
@@ -3648,8 +3648,6 @@
   components:
   # Use corgi sprite, need to add handcuff layer
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
@@ -3667,9 +3665,14 @@
   # Custom inventory template
   - type: Inventory
     speciesId: dog
-    templateId: smartcorgi
+    templateId: SmartCorgi
     displacements:
       belt:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/corgi.rsi
+            state: belt_displacement
+      ears:
         sizeMaps:
           32:
             sprite: Mobs/Pets/corgi.rsi
@@ -3682,7 +3685,7 @@
   - type: ComplexInteraction
   # Implement custom borgi body type
   - type: Body
-    prototype: Smartcorgi
+    prototype: SmartCorgi
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 180
