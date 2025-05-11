@@ -114,4 +114,19 @@
   id: 14
   time: '2025-05-08T01:39:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37262
+- author: Deerstop
+  changes:
+  - message: On Elkridge, the botany area has been improved with additional trays,
+      vents, and scrubbers.
+    type: Tweak
+  - message: On Elkridge, firelocks and emergency lights have been added to security.
+    type: Fix
+  - message: On Elkridge, the backstage area is now accessible to service and theatre
+      access.
+    type: Tweak
+  - message: On Elkridge, the service request console is now backstage
+    type: Tweak
+  id: 15
+  time: '2025-05-11T00:49:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37206
 Order: 1
