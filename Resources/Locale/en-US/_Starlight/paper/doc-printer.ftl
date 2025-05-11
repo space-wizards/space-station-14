@@ -714,13 +714,13 @@ doc-text-printer-complaint-violation-labor-rules =
 
                   [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
     ────────────────────────────────────────
-   ⠀⠀  [bold]COMPLAINT FOR VIOLATION OF LABOUR REGULATIONS[/bold]
+    [bold]COMPLAINT FOR VIOLATION OF LABOUR REGULATIONS[/bold]
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
     Position of Document Compiler:
     
-    I believe that the violations were committed by the follow.
+    I believe that the violations were committed by the follow:
     
     Department committing violations:
     
