@@ -2,7 +2,7 @@
   parent: BaseItem
   id: SprayPainter
   name: spray painter
-  description: A spray painter for painting airlocks and pipes.
+  description: A spray painter for painting airlocks, pipes, and other items.
   components:
   - type: Sprite
     sprite: Objects/Tools/spray_painter.rsi
@@ -43,7 +43,7 @@
   name: compressed dye
   parent: BaseItem
   id: SprayPainterAmmo
-  description: A cartridge of dye compacted by bluespace technology. Used in spray painter.
+  description: A cartridge of highly compressed dye, commonly used in spray painters.
   components:
   - type: SprayPainterAmmo
     charges: 15

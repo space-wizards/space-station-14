@@ -46,21 +46,14 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (!ent.Comp.IsSelectedTabWithDecals || !ent.Comp.SelectedDecal.HasValue)
             return;
 
-        if (!args.ClickLocation.IsValid(EntityManager))
-        {
-            _popup.PopupEntity(Loc.GetString("spray-painter-invalid-location"), ent, args.User);
-            args.Handled = true;
-            return;
-        }
-
         if (TryComp(ent, out LimitedChargesComponent? charges) && charges.LastCharges < ent.Comp.DecalChargeCost)
         {
-            _popup.PopupClient(Loc.GetString("spray-painter-interact-no-charges"), args.User, args.User);
+            _popup.PopupEntity(Loc.GetString("spray-painter-interact-no-charges"), args.User, args.User);
             args.Handled = true;
             return;
         }
 
-        if (!_decals.TryAddDecal(ent.Comp.SelectedDecal!.Value, args.ClickLocation.SnapToGrid(EntityManager).Offset(new(-0.5f)), out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, true))
+        if (!_decals.TryAddDecal(ent.Comp.SelectedDecal.Value, args.ClickLocation.SnapToGrid(EntityManager).Offset(new(-0.5f)), out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, true))
             return;
 
         _audio.PlayPvs(ent.Comp.SpraySound, ent);
@@ -96,8 +89,11 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (!TryComp<AtmosPipeColorComponent>(target, out var color))
             return;
 
+        if (TryComp<LimitedChargesComponent>(ent, out var charges) &&
+            !_charges.TryUseCharges((ent, charges), ent.Comp.PipeChargeCost))
+            return;
+
         Audio.PlayPvs(ent.Comp.SpraySound, ent);
-        _charges.TryUseCharge(new Entity<LimitedChargesComponent?>(ent, EnsureComp<LimitedChargesComponent>(ent)));
         _pipeColor.SetColor(target, color, args.Color);
 
         args.Handled = true;
@@ -109,19 +105,19 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             return;
 
         if (!TryComp<SprayPainterComponent>(args.Used, out var painter) ||
-            !TryComp<LimitedChargesComponent>(args.Used, out var charges) ||
             painter.PickedColor is not { } colorName)
             return;
 
-        if (charges.LastCharges <= 0)
-        {
-            var msg = Loc.GetString("spray-painter-interact-no-charges");
-            _popup.PopupClient(msg, args.User, args.User);
-            return;
-        }
-
         if (!painter.ColorPalette.TryGetValue(colorName, out var color))
             return;
+
+        if (TryComp<LimitedChargesComponent>(args.Used, out var charges)
+            && charges.LastCharges < painter.PipeChargeCost)
+        {
+            var msg = Loc.GetString("spray-painter-interact-no-charges");
+            _popup.PopupEntity(msg, args.User, args.User);
+            return;
+        }
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager,
             args.User,

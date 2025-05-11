@@ -23,7 +23,6 @@
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: paper
-      visible: false
       sprite: Structures/Storage/Crates/labels.rsi
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: InteractionOutline
@@ -128,7 +127,6 @@
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
     - state: paper
-      visible: false
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.5,0"
       map: ["enum.PaperLabelVisuals.Layer"]
