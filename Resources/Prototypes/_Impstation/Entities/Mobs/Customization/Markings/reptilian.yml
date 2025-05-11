@@ -292,6 +292,15 @@
   - sprite: _Impstation/Mobs/Customization/Reptilian/headtop.rsi
     state: little
 
+- type: marking
+  id: LizardFrill
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headtop.rsi
+    state: frill
+
 # Tail
 
 - type: marking
