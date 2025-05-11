@@ -14,7 +14,6 @@ Move oxy miner to where the other gasses are?
 TECHNICAL:
 Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
 -I am wrong about sec monitors being restricted to general.
--Wired/wireless network component apparently has nothing to do with entertainment/security
 
 DECALING:
 Make easier to navigate in general, + add standard colors around more
@@ -23,19 +22,23 @@ Grime everything up a bit again.
 Fix decals under west electrical maints
 
 OTHER:
-Remove evac shuttle grid
+Stars moving the wrong way??
+	Is it just spinning? Do I need a... something... to stop that?
+Could maybe still get the circuit scrap into the shuttle guns, just not as a machine board? Would it fit in a different containter category?
 
 Check this stuff:
 Execution telescreens see mounted cam networks, not wireless.
 	Having trouble figuring out where this is specified, so maybe I should
 		dig into the components while testing live.
-Salvage space area still being weird in atmo?
-Evac shuttle good now?
-Cryo beaker good now?
 -Check roundstart tider shop light again. I turned the attached switch on. Did that break the door being bolted?
 	Light is still on anyway. :/ IG, it's set to on in the PoweredLight component?
 	I *might* have been testing the wrong version.
--"scrap circuitry" item in shuttle guns instead of PA boards.
+	Nope, still on.
+	I changed the switch hookup to toggle by status instead of on to off. Maybe this fixes? I have no idea.
+-Also check tider shop shutter occlusion.
+Shuttle guns: Getting power to their lights?
+Make sure maints room spawners work correctly now.
+Test venting into security.
 
 THINGS I COULD MAKE:
 - Plastic table
@@ -412,3 +415,66 @@ Check the det/prosc door *again*.
 /* 	Haven't seen these since, so maybe not an ish. */
 /* -Label impostor vent disposal chutes */
 /* -Two fax machines need names again. Not sure which. */
+/* -"scrap circuitry" item in shuttle guns instead of PA boards. */
+/* -Scrap Circuit can't be used as a machine board because: doesn't have a MachineBoardComponent. */
+/* 	Removed Machine and ContainerContainer components. Having the scrap circuit would be better, though. */
+/* Salvage space area still being weird in atmo? */
+/* Cryo beaker good now? */
+/* Evac shuttle good now? */
+/* Tider shop hekin light still on */
+/* Shutters still not occluding - Component's there, but set to false for some reason? */
+/* Unpowered lights on shuttle guns */
+/* Air sensor in south part of brigmed */
+/* Air sensor in cargo mid maints? */
+/* Air sensor in maints outside salv */
+/* Air sensor in cafe area, both inside and outside kitchen */
+/* Air sensors in maints rooms at sw sci */
+/* Air sensor in coms inner room */
+/* Air sensor in robotics hallway little room thing */
+/* Air sensors in arti chambers */
+/* Air sensor in atmos cans room, nextdoor maints */
+/* Air sensor in east service hallway little chamber area thingy */
+/* Air sensor in maints chapel */
+/* Air sensor in engie antechamber */
+/* Air sensor in inner AI approach upload... place. */
+/* 	Maybe some of these just aren't hooked up to an air alarm, because at least some for sure exist. */
+/* 		I hooked up the robotics hallway one to the Shields air alarm... still black on the monitor? */
+/* 	There's something I just don't understand here. Now I'm seeing rooms like cafeteria's south half that were on the display go dark. */
+/* Maint room spawner under medbrig broke the walls to its east and west! */
+/* Sec breakroom needs lighting */
+/* 	It had lighting after all, but I added a second bulb. */
+/* Maybe break disposal vent to Sec so it's a one-way trip? Mwahaha. */
+/* 	This also prevents super-easy armory access, I think. */
+/* 		Nope, I just get stuck in a wall. */
+/* Sec grenade crate: Go ahead and rename it too. */
+/* Where'd the chem little bottles go? */
+/* There's a second heater in botany maints. */
+/* 	Maybe turn the heat up, too? I dunno what's hot. */
+/* Unlink escape pod docks from airlocks */
+/* Camera outside coms in maints is weirdly floating? It's on the wrong tile. */
+/* 	Since I gave in and made the walls less thick, I should just remove this. And probs */
+/* 		also the wall poster. */
+/* One of the coms camera monitors (next to entertainment, I guess) should be wireless or w/e. */
+/* Coms freezer should be a "heater" turned to cold, since there are no pipes connected. That, or add pipes? */
+/* Door with no tile underneath: Evac med station */
+/* East atmos cans door unpowered? */
+/* 	It has wiring, so maybe just a brownout or whatever. */
+/* AI vent gas pump starts off */
+/* 	Turned it on. I don't know if it'll stick, but I also don't know if I care. */
+/* Interrogation room door unpowered? Oh, it's the wiring task... */
+/* Looking at DeviceNetwork component for camera monitors. I might want to turn AutoConnect off, for starters? */
+/* 	NetIdEnum is "Wireless" or "Wired," but not immediately editable. */
+/* 		Something about DeviceNetIdDefaults is the enum type. I might be able to dig into the code and find that? */
+/* 	ReceiveAll is set to false by default, so probably not helpful. */
+/* 		When I turn it on, it stops receiving anything. Which is a tad counterintuitive. */
+/* 	I think tinkering with this live won't tell me much. Even if I delete DeviceNetwork components entirely, the monitors still work. */
+/* 		I figure they connect at round start or whatever, then don't need that component anymore...? */
+/* 		UNLESS I re-anchor them. */
+/* -Wired/wireless network component apparently has nothing to do with entertainment/security */
+	/* Discord message from Slam was correct: It's the DeviceNetworkComponent's deviceNetId being 'wired' or 'wireless'. */
+/* Label APCs */
+/* Setup cameras */
+/* Command area bar shutters unlinked to button */
+/* Disaster pizza delivery box has, um, a *lot* of pizza. */
+/* Label keys/plot course "tasks"? */
+/* Remove evac shuttle grid */

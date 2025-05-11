@@ -4,8 +4,8 @@ meta:
   engineVersion: 255.1.0
   forkId: ""
   forkVersion: ""
-  time: 05/09/2025 20:21:11
-  entityCount: 961
+  time: 05/11/2025 14:50:20
+  entityCount: 968
 maps: []
 grids:
 - 31321
@@ -168,6 +168,24 @@ entities:
             id: BrickTileDarkBox
           decals:
             0: 0,-13
+        - node:
+            color: '#FFFFFFFF'
+            id: BrickTileSteelLineE
+          decals:
+            22: -1,0
+            23: -1,-1
+            24: -1,-2
+            25: -1,-3
+            26: -1,-4
+        - node:
+            color: '#FFFFFFFF'
+            id: BrickTileSteelLineW
+          decals:
+            17: 1,0
+            18: 1,-1
+            19: 1,-2
+            20: 1,-3
+            21: 1,-4
         - node:
             angle: 3.141592653589793 rad
             color: '#FFFFFFFF'
@@ -643,38 +661,52 @@ entities:
   entities:
   - uid: 31356
     components:
+    - type: MetaData
+      name: APC - PORT ENGINE POD
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -11.5,-7.5
       parent: 31321
   - uid: 31357
     components:
+    - type: MetaData
+      name: APC (Medbay)
     - type: Transform
       pos: -10.5,-4.5
       parent: 31321
   - uid: 31358
     components:
+    - type: MetaData
+      name: APC - STARBOARD THRUSTER POD
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-7.5
       parent: 31321
   - uid: 31359
     components:
+    - type: MetaData
+      name: APC (Security Station)
     - type: Transform
       pos: 11.5,-4.5
       parent: 31321
   - uid: 31360
     components:
+    - type: MetaData
+      name: APC - CENTRAL DROPSHIP
     - type: Transform
       pos: -5.5,-0.5
       parent: 31321
   - uid: 31361
     components:
+    - type: MetaData
+      name: APC - BRIDGE
     - type: Transform
       pos: -1.5,1.5
       parent: 31321
   - uid: 31362
     components:
+    - type: MetaData
+      name: APC - LOADING RAMP
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -6.5,-12.5
@@ -2284,11 +2316,6 @@ entities:
       parent: 31321
 - proto: Catwalk
   entities:
-  - uid: 3
-    components:
-    - type: Transform
-      pos: 15.5,-10.5
-      parent: 31321
   - uid: 28065
     components:
     - type: Transform
@@ -2306,6 +2333,11 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -15.5,-10.5
+      parent: 31321
+  - uid: 28691
+    components:
+    - type: Transform
+      pos: 15.5,-10.5
       parent: 31321
   - uid: 31675
     components:
@@ -2390,7 +2422,7 @@ entities:
       parent: 31321
 - proto: Chair
   entities:
-  - uid: 2
+  - uid: 28215
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
@@ -2747,7 +2779,7 @@ entities:
       parent: 31321
 - proto: ComputerAtmosMonitoring
   entities:
-  - uid: 1
+  - uid: 28047
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
@@ -2799,6 +2831,16 @@ entities:
       parent: 31321
 - proto: CrateEmptySpawner
   entities:
+  - uid: 1
+    components:
+    - type: Transform
+      pos: 3.5,-5.5
+      parent: 31321
+  - uid: 8
+    components:
+    - type: Transform
+      pos: -0.5,-7.5
+      parent: 31321
   - uid: 31762
     components:
     - type: Transform
@@ -2821,12 +2863,12 @@ entities:
     - type: Transform
       pos: 1.5,-12.5
       parent: 31321
-- proto: CrateFoodPizzaLarge
+- proto: CrateFunDartsSet
   entities:
-  - uid: 31766
+  - uid: 9
     components:
     - type: Transform
-      pos: 3.5,-5.5
+      pos: 4.5,-5.5
       parent: 31321
 - proto: CrateFunParty
   entities:
@@ -3587,7 +3629,7 @@ entities:
       - 31324
 - proto: GeneratorBasic15kW
   entities:
-  - uid: 7
+  - uid: 29568
     components:
     - type: Transform
       pos: 15.5,-10.5
@@ -3785,15 +3827,21 @@ entities:
       parent: 31321
 - proto: LockableButtonCaptain
   entities:
-  - uid: 31920
+  - uid: 2
     components:
+    - type: MetaData
+      desc: It's an empty keyhole.
+      name: keyhole
     - type: Transform
-      pos: 1.3,2
+      pos: 1.2759247,2.0053864
       parent: 31321
 - proto: LockableButtonChiefEngineer
   entities:
   - uid: 31921
     components:
+    - type: MetaData
+      desc: It's an empty keyhole.
+      name: keyhole
     - type: Transform
       pos: 1.3,1.5
       parent: 31321
@@ -3801,6 +3849,9 @@ entities:
   entities:
   - uid: 31922
     components:
+    - type: MetaData
+      desc: It's an empty keyhole.
+      name: keyhole
     - type: Transform
       pos: 1.3,1.75
       parent: 31321
@@ -3808,6 +3859,9 @@ entities:
   entities:
   - uid: 31923
     components:
+    - type: MetaData
+      desc: It's an empty keyhole.
+      name: keyhole
     - type: Transform
       pos: 1.6,2
       parent: 31321
@@ -3815,6 +3869,9 @@ entities:
   entities:
   - uid: 31924
     components:
+    - type: MetaData
+      desc: It's an empty keyhole.
+      name: keyhole
     - type: Transform
       pos: 1.6,1.75
       parent: 31321
@@ -3822,6 +3879,9 @@ entities:
   entities:
   - uid: 31925
     components:
+    - type: MetaData
+      desc: It's an empty keyhole.
+      name: keyhole
     - type: Transform
       pos: 1.6097302,1.4960122
       parent: 31321
@@ -3874,7 +3934,7 @@ entities:
       parent: 31321
 - proto: Multitool
   entities:
-  - uid: 4
+  - uid: 28698
     components:
     - type: Transform
       rot: 3.141592653589793 rad
@@ -4403,6 +4463,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: -5.5,1.5
       parent: 31321
+    - type: DeviceLinkSource
+      linkedPorts:
+        31992:
+        - - Pressed
+          - Toggle
+        31993:
+        - - Pressed
+          - Toggle
 - proto: SignEngineering
   entities:
   - uid: 32019
@@ -4632,20 +4700,77 @@ entities:
     - type: Transform
       pos: -12.5,-6.5
       parent: 31321
+- proto: SurveillanceCameraCommand
+  entities:
+  - uid: 4
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -6.5,-9.5
+      parent: 31321
+  - uid: 5
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 7.5,-9.5
+      parent: 31321
 - proto: SurveillanceCameraGeneral
   entities:
+  - uid: 3
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,0.5
+      parent: 31321
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: main shuttle area
+  - uid: 6
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 14.5,-5.5
+      parent: 31321
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: right thruster pod
+  - uid: 7
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -14.5,-5.5
+      parent: 31321
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: left thruster pod
   - uid: 32058
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -9.5,0.5
       parent: 31321
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: medbay
   - uid: 32059
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,0.5
       parent: 31321
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: security
 - proto: SurveillanceCameraRouterGeneral
   entities:
   - uid: 32060
@@ -5021,6 +5146,8 @@ entities:
   entities:
   - uid: 32103
     components:
+    - type: MetaData
+      desc: It doesn't appear to be displaying anything.
     - type: Transform
       pos: -0.5,1.5
       parent: 31321
@@ -5931,25 +6058,25 @@ entities:
       parent: 31321
 - proto: WindoorSecureEngineeringLocked
   entities:
-  - uid: 5
+  - uid: 29241
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 15.5,-10.5
       parent: 31321
-  - uid: 6
+  - uid: 29567
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 16.5,-10.5
       parent: 31321
-  - uid: 8
+  - uid: 29575
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 14.5,-10.5
       parent: 31321
-  - uid: 10
+  - uid: 29577
     components:
     - type: Transform
       rot: 3.141592653589793 rad
@@ -6033,7 +6160,7 @@ entities:
       parent: 31321
 - proto: Wrench
   entities:
-  - uid: 9
+  - uid: 29576
     components:
     - type: Transform
       pos: -14.163536,-5.4437866
