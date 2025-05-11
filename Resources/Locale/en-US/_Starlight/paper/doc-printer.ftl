@@ -1041,7 +1041,7 @@ doc-text-printer-order-recognizing-reasonableness-creature =
     
     The established full name of the creature:
     
-    The creature is accepted as a assistant of the station until the end of the shift.
+    The creature is accepted as an assistant of the station until the end of the shift.
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
