@@ -5,6 +5,13 @@
   id: BaseMobAvali
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - Avali
   - type: Absorbable
   - type: HumanoidAppearance
     species: Avali
@@ -127,29 +134,18 @@
     thermalRegulationTemperatureThreshold: 10
   - type: AvaliStasis
     enterStasisAction: ActionAvaliStasisEnter
-    stasisCooldown: 60 #currently not working, needs to be fixed. 
     exitStasisAction: ActionAvaliStasisExit
-<<<<<<< HEAD
-    stasisBluntHeal: 1.5 #Full heal in ~ 1 minute, an age in combat. Editing in YAML doesn't work, do so in the C# code.
-    stasisSlashHeal: 1.5 
-    stasisPiercingHeal: 1.5 
-    stasisHeatHeal: 1.5
-    stasisColdHeal: 1.5
-    stasisDamageResistance: 1.5 #Covered in nanite shell and immobile.
-
-=======
     stasisCooldown: 30
-    stasisBluntHealPerSecond: 5
-    stasisSlashingHealPerSecond: 5
-    stasisPiercingHealPerSecond: 5
-    stasisHeatHealPerSecond: 5
-    stasisColdHealPerSecond: 5
-    stasisAdditionalDamageResistance: 0.1
+    stasisBluntHealPerSecond: 2
+    stasisSlashingHealPerSecond: 2
+    stasisPiercingHealPerSecond: 2
+    stasisHeatHealPerSecond: 2
+    stasisColdHealPerSecond: 2
+    stasisAdditionalDamageResistance: 0.5
     stasisEnterEffect: EffectTeleportationEntity
     stasisEnterEffectLifetime: 3.0
     stasisEnterSound: /Audio/_Starlight/Misc/alien_teleport.ogg
-    
->>>>>>> pr/2
+
 - type: entity
   parent: BaseSpeciesDummy
   id: MobAvaliDummy
