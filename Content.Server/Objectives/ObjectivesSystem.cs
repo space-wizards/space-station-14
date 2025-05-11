@@ -173,44 +173,42 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                     {
                         agentSummary.AppendLine(objectiveTitle);
                     }
+                    else if (progress > 0.99)
+                    {
+                        agentSummary.AppendLine(Loc.GetString(
+                            "objectives-objective-success",
+                            ("objective", objectiveTitle),
+                            ("progress", (int)(progress * 100)),
+                            ("markupColor", "green")
+                        ));
+                        completedObjectives++;
+                    }
+                    else if (progress <= 0.99 && progress >= 0.5)
+                    {
+                        agentSummary.AppendLine(Loc.GetString(
+                            "objectives-objective-partial-success",
+                            ("objective", objectiveTitle),
+                            ("progress", (int)(progress * 100)),
+                            ("markupColor", "orange")
+                        ));
+                    }
+                    else if (progress < 0.5 && progress > 0)
+                    {
+                        agentSummary.AppendLine(Loc.GetString(
+                            "objectives-objective-partial-failure",
+                            ("objective", objectiveTitle),
+                            ("progress", (int)(progress * 100)),
+                            ("markupColor", "#FF5349")
+                        ));
+                    }
                     else
                     {
-                        switch (progress)
-                        {
-                            case var percentage when percentage > 0.99:
-                                agentSummary.AppendLine(Loc.GetString(
-                                    "objectives-objective-success",
-                                    ("objective", objectiveTitle),
-                                    ("progress", (int)(progress * 100)),
-                                    ("markupColor", "green")
-                                ));
-                                completedObjectives++;
-                                break;
-                            case var percentage when percentage <= 0.99 && percentage >= 0.5:
-                                agentSummary.AppendLine(Loc.GetString(
-                                    "objectives-objective-partial-success",
-                                    ("objective", objectiveTitle),
-                                    ("progress", (int)(progress * 100)),
-                                    ("markupColor", "orange")
-                                ));
-                                break;
-                            case var percentage when percentage < 0.5 && percentage > 0:
-                                agentSummary.AppendLine(Loc.GetString(
-                                    "objectives-objective-partial-failure",
-                                    ("objective", objectiveTitle),
-                                    ("progress", (int)(progress * 100)),
-                                    ("markupColor", "#FF5349")
-                                ));
-                                break;
-                            case var percentage when percentage <= 0:
-                                agentSummary.AppendLine(Loc.GetString(
-                                    "objectives-objective-fail",
-                                    ("objective", objectiveTitle),
-                                    ("progress", (int)(progress * 100)),
-                                    ("markupColor", "red")
-                                ));
-                                break;
-                        }
+                        agentSummary.AppendLine(Loc.GetString(
+                            "objectives-objective-fail",
+                            ("objective", objectiveTitle),
+                            ("progress", (int)(progress * 100)),
+                            ("markupColor", "red")
+                        ));
                     }
                 }
             }
