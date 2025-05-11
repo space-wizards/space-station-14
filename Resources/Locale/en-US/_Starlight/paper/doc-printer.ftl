@@ -276,7 +276,8 @@ doc-text-printer-arrest-report =
     Duration of Detention: 
 
     Additional Punishments:
-    ────────────────────────────────────────
+    
+    ─────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
 
 
