@@ -468,13 +468,13 @@ doc-text-printer-shuttle-registration-request =
     
     I request that the following shuttle be registered in the NanoTrasen system for identification.
     
-    Shuttle Size:
+    Shuttle size:
     
-    Shuttle Class:
+    Shuttle class:
     
-    Construction Responsible:
+    Construction responsible:
     
-    Requested Title:
+    Requested title:
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
