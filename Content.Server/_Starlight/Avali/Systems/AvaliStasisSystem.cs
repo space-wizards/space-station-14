@@ -42,7 +42,7 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         var damageToApply = new DamageSpecifier();
         foreach (var (type, amount) in args.DamageDelta.DamageDict)
         {
-            damageToApply.DamageDict.Add(type, amount * (1 - component.StasisDamageResistance));
+            damageToApply.DamageDict.Add(type, amount - amount * component.StasisAdditionalDamageResistance);
         }
 
         // Apply the reduced damage
@@ -56,11 +56,11 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
 
         // Apply healing effect
         var healAmount = new DamageSpecifier();
-        healAmount.DamageDict.Add("Blunt", FixedPoint2.New(comp.StasisBluntHeal * args.DeltaSeconds * -1));
-        healAmount.DamageDict.Add("Slash", FixedPoint2.New(comp.StasisSlashingHeal * args.DeltaSeconds * -1));
-        healAmount.DamageDict.Add("Piercing", FixedPoint2.New(comp.StasisPiercingHeal * args.DeltaSeconds * -1));
-        healAmount.DamageDict.Add("Heat", FixedPoint2.New(comp.StasisHeatHeal * args.DeltaSeconds * -1));
-        healAmount.DamageDict.Add("Cold", FixedPoint2.New(comp.StasisColdHeal * args.DeltaSeconds * -1));
+        healAmount.DamageDict.Add("Blunt", FixedPoint2.New(comp.StasisBluntHealPerSecond * args.DeltaSeconds * -1));
+        healAmount.DamageDict.Add("Slash", FixedPoint2.New(comp.StasisSlashingHealPerSecond * args.DeltaSeconds * -1));
+        healAmount.DamageDict.Add("Piercing", FixedPoint2.New(comp.StasisPiercingHealPerSecond * args.DeltaSeconds * -1));
+        healAmount.DamageDict.Add("Heat", FixedPoint2.New(comp.StasisHeatHealPerSecond * args.DeltaSeconds * -1));
+        healAmount.DamageDict.Add("Cold", FixedPoint2.New(comp.StasisColdHealPerSecond * args.DeltaSeconds * -1));
 
         if (TryComp<DamageableComponent>(uid, out _))
         {

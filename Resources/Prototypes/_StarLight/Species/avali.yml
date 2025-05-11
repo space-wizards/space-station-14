@@ -153,3 +153,22 @@
   baseSprite:
     sprite: _Starlight/Mobs/Species/Avali/parts.rsi
     state: r_foot
+
+- type: entity
+  id: AvaliStasis
+  name: Avali Stasis
+  description: Allows Avali to enter nanite induced stasis.
+  components:
+    - type: AvaliStasis
+      enterStasisAction: AvaliEnterStasisAction
+      exitStasisAction: AvaliExitStasisAction
+      stasisCooldown: 30
+      stasisBluntHealPerSecond: 5
+      stasisSlashingHealPerSecond: 5
+      stasisPiercingHealPerSecond: 5
+      stasisHeatHealPerSecond: 5
+      stasisColdHealPerSecond: 5
+      stasisAdditionalDamageResistance: 0.1
+      stasisEnterEffect: EffectTeleportationEntity
+      stasisEnterEffectLifetime: 3.0
+      stasisEnterSound: /Audio/_Starlight/Misc/alien_teleport.ogg
