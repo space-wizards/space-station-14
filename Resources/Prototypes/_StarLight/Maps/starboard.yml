@@ -33,7 +33,7 @@
             TechnicalAssistant: [ 2, 4 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
-            Chemist: [ 2, 3 ]
+            Chemist: [ 2, 2 ]
             MedicalDoctor: [ 4, 6 ]
             MedicalIntern: [ 2, 4 ]
             Paramedic: [ 2, 2 ]
