@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chat.TypingIndicator;
+using Content.Shared.Cloning;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Speech.Components;
@@ -14,6 +15,7 @@ using Content.Shared.Wagging;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
+using Robust.Shared.Prototypes;
 
 
 namespace Content.Shared.Changeling.Transform;
@@ -132,60 +134,23 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (!TryComp<VocalComponent>(ent, out var currentVocals)
-           || !TryComp<DnaComponent>(ent, out var currentDna)
-           || !HasComp<GrammarComponent>(ent))
-            return;
-
         var targetIdentity = GetEntity(args.TargetIdentity);
 
-        if (!TryComp<DnaComponent>(ent, out var targetConsumedDna)
-           || !TryComp<HumanoidAppearanceComponent>(targetIdentity, out var targetConsumedHumanoid)
-           || !TryComp<VocalComponent>(targetIdentity, out var targetConsumedVocals)
-           || !TryComp<SpeechComponent>(targetIdentity, out var targetConsumedSpeech))
-            return;
-
-        // Handle species with the ability to wag their tail
-        // Why is wagging like this, i can't query the prototype because what if there's things we don't want
-        // wagging isn't special, it's just a component, i can't check for special things like this... it's not an emote
-        //
-        // pukeko: DAMNATION!!!
-        if (TryComp<WaggingComponent>(ent, out var waggingComp))
-        {
-            _actionsSystem.RemoveAction(ent, waggingComp.ActionEntity);
-            RemComp<WaggingComponent>(ent);
-        }
-
-        if (HasComp<WaggingComponent>(targetIdentity)
-            && !HasComp<WaggingComponent>(ent))
-        {
-            EnsureComp<WaggingComponent>(ent, out _);
-        }
-
         _humanoidAppearanceSystem.CloneAppearance(targetIdentity, args.User);
-        TransformBodyEmotes(ent, targetIdentity);
+        ApplyComponentChanges(targetIdentity, ent, ent.Comp.TransformCloningSettings);
 
-        currentDna.DNA = targetConsumedDna.DNA;
-
-        // Make sure the target Identity has a Typing indicator, if the identity is human or dwarf and never had a mind it'll never have a typingIndicatorComponent
-        if (!EnsureComp<TypingIndicatorComponent>(targetIdentity, out _))
-            EnsureComp<TypingIndicatorComponent>(targetIdentity);
-
-        TryCopyComponents(targetIdentity, ent, MetaData(ent), typeof(VocalComponent), typeof(SpeechComponent), typeof(TypingIndicatorComponent));
 
         //TODO: While it would be splendid to be able to provide the original owning player who was playing the targetIdentity, it's not exactly feasible to do
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player}  successfully transformed into \"{Name(targetIdentity)}\"");
         _metaSystem.SetEntityName(ent, Name(targetIdentity), raiseEvents: false);
         _metaSystem.SetEntityDescription(ent, MetaData(targetIdentity).EntityDescription);
-        TransformGrammarSet(ent, targetConsumedHumanoid.Gender);
 
         Dirty(ent);
     }
-
-    protected virtual void TransformBodyEmotes(EntityUid uid, EntityUid target) { }
     public virtual void TransformGrammarSet(EntityUid uid, Gender gender) { }
     protected virtual void StartSound(Entity<ChangelingTransformComponent> ent, SoundSpecifier? sound) { }
     protected virtual void StopSound(Entity<ChangelingTransformComponent> ent) { }
+    protected virtual void ApplyComponentChanges(EntityUid ent, EntityUid target, ProtoId<CloningSettingsPrototype> settingsId) { }
 }
 
 public sealed partial class ChangelingTransformActionEvent : InstantActionEvent;

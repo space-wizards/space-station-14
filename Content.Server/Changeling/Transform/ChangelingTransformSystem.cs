@@ -1,11 +1,15 @@
+using Content.Server.Cloning;
+using Content.Server.Configurable;
 using Content.Server.Emoting.Components;
 using Content.Server.IdentityManagement;
 using Content.Shared.Changeling.Transform;
+using Content.Shared.Cloning;
 using Content.Shared.IdentityManagement.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Changeling.Transform;
 
@@ -14,6 +18,8 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly IdentitySystem _identitySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly CloningSystem _cloningSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void TransformGrammarSet(EntityUid uid, Gender gender)
     {
@@ -36,14 +42,6 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
         _identitySystem.QueueIdentityUpdate(uid);
     }
 
-    protected override void TransformBodyEmotes(EntityUid uid, EntityUid target)
-    {
-        if (!TryComp<BodyEmotesComponent>(target, out var targetBodyEmotes))
-            return;
-
-        TryCopyComponent(target, uid, ref targetBodyEmotes, out _);
-    }
-
     protected override void StartSound(Entity<ChangelingTransformComponent> ent, SoundSpecifier? sound)
     {
         if(sound is not null)
@@ -56,6 +54,13 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
             _audioSystem.Stop(ent.Comp.CurrentTransformSound);
 
         ent.Comp.CurrentTransformSound = null;
+    }
+
+    protected override void ApplyComponentChanges(EntityUid ent, EntityUid target, ProtoId<CloningSettingsPrototype> settingsId)
+    {
+        if (!_prototype.TryIndex(settingsId, out var settings))
+            return;
+        _cloningSystem.CloneComponents(ent, target, settings);
     }
 }
 

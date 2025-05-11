@@ -1,3 +1,4 @@
+using Content.Shared.Cloning;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -32,5 +33,7 @@ public sealed partial class ChangelingTransformComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? CurrentTransformSound;
+
+    public ProtoId<CloningSettingsPrototype> TransformCloningSettings = "ChangelingCloningSettings";
 }
 
