@@ -141,7 +141,7 @@
     stasisPiercingHealPerSecond: 2
     stasisHeatHealPerSecond: 2
     stasisColdHealPerSecond: 2
-    stasisAdditionalDamageResistance: 0.5
+    stasisAdditionalDamageResistance: 1.5
     stasisEnterEffect: EffectTeleportationEntity
     stasisEnterEffectLifetime: 3.0
     stasisEnterSound: /Audio/_Starlight/Misc/alien_teleport.ogg
