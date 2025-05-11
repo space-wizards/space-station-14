@@ -403,3 +403,11 @@
             max: 4
   - type: StaticPrice
     price: 50
+
+- type: entity
+  name: xeno chair
+  id: ChairXeno
+  parent: StoolBase
+  components:
+  - type: Sprite
+    state: xeno-chair

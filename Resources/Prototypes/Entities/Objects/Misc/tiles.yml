@@ -1642,7 +1642,7 @@
   name: xeno steel floor
   components:
   - type: Sprite
-    state: xenofloor
+    state: xeno-steel
   - type: Item
     heldPrefix: steel
   - type: FloorTile
@@ -1658,7 +1658,7 @@
   name: xeno steel corner floor
   components:
   - type: Sprite
-    state: xenofloor
+    state: xeno-steel-corner
   - type: Item
     heldPrefix: steel
   - type: FloorTile
@@ -1667,6 +1667,22 @@
     - FloorXenoSteelCorner
   - type: Stack
     stackType: FloorTileXenoSteelCorner
+
+- type: entity
+  name: xeno techmaint
+  parent: FloorTileItemBase
+  id: FloorTileItemXenoMaint
+  components:
+  - type: Sprite
+    state: xeno-techmaint
+  - type: Item
+    heldPrefix: dark
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorXenoMaint
+  - type: Stack
+    stackType: FloorTileXenoMaint
 
 - type: entity
   parent: FloorTileItemDark

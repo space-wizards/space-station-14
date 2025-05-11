@@ -377,6 +377,9 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Gun

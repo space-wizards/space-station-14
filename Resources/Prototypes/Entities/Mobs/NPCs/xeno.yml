@@ -458,7 +458,7 @@
 # Mob mapped to Xeno Station that can not be ghostrole / pry
 
 - type: entity
-  name: Lone Praetorian
+  name: lone praetorian
   description: The last of its kind.
   parent: SimpleSpaceMobBase
   id: MobXenoLonePraetorianNoGhost
@@ -539,6 +539,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
+      -1: Critical
       250: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
