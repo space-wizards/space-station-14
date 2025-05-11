@@ -1,14 +1,11 @@
 ﻿- type: entity
   id: ActionSmite
   name: Smite
-  description: Instantly gibs a target.
+  description: Instantly puts a target into critical condition.
   components:
   - type: EntityTargetAction
     useDelay: 90
     itemIconStyle: BigAction
-    whitelist:
-      components:
-      - Body
     canTargetSelf: false
     interactOnMiss: false
     sound: !type:SoundPathSpecifier
@@ -17,6 +14,9 @@
       sprite: Objects/Magic/magicactions.rsi
       state: gib
     event: !type:SmiteSpellEvent
+      smiteDamage:
+        types:
+          Cellular: 100
   - type: SpeakOnAction
     sentence: action-speech-spell-smite
   - type: Magic
