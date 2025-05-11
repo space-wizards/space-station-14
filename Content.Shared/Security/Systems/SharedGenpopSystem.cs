@@ -78,9 +78,14 @@ public abstract class SharedGenpopSystem : EntitySystem
             return;
         }
 
-        // my heart yearns for this to be predicted but for some reason opening an entitystorage via
-        // verb does not predict it properly.
-        _userInterface.TryOpenUi(ent.Owner, GenpopLockerUiKey.Key, user);
+        // Only open the UI if there's no existing ID tied to this closet.
+        // Otherwise, we're just a secoff closing an active closet.
+        if (ent.Comp.LinkedId == null)
+        {
+            // my heart yearns for this to be predicted but for some reason opening an entitystorage via
+            // verb does not predict it properly.
+            _userInterface.TryOpenUi(ent.Owner, GenpopLockerUiKey.Key, user);
+        }
     }
 
     private void OnLockToggleAttempt(Entity<GenpopLockerComponent> ent, ref LockToggleAttemptEvent args)
@@ -120,11 +125,16 @@ public abstract class SharedGenpopSystem : EntitySystem
 
     private void OnLockToggled(Entity<GenpopLockerComponent> ent, ref LockToggledEvent args)
     {
-        if (args.Locked)
+        if (args.Locked || !args.User.HasValue || ent.Comp.LinkedId == null)
             return;
 
-        // If we unlock the door, then we're gonna reset the ID.
-        CancelIdCard(ent);
+        // We reset the ID if the prisoner ID is the one doing the unlocking
+        if (_accessReader.FindPotentialAccessItems(args.User.Value).Contains(ent.Comp.LinkedId.Value) &&
+            TryComp<ExpireIdCardComponent>(ent.Comp.LinkedId.Value, out var expireIdCard) &&
+            expireIdCard.Expired)
+        {
+            CancelIdCard(ent);
+        }
     }
 
     private void OnGetVerbs(Entity<GenpopLockerComponent> ent, ref GetVerbsEvent<Verb> args)
