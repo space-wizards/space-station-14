@@ -135,7 +135,7 @@
   - type: AvaliStasis
     enterStasisAction: ActionAvaliStasisEnter
     exitStasisAction: ActionAvaliStasisExit
-    stasisCooldown: 30
+    stasisCooldown: 300
     stasisBluntHealPerSecond: 2
     stasisSlashingHealPerSecond: 2
     stasisPiercingHealPerSecond: 2
