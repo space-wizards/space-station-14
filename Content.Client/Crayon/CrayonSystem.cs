@@ -1,4 +1,5 @@
 using Content.Client.Crayon.Overlays;
+using Content.Client.Decals;
 using Content.Client.Items;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
@@ -23,6 +24,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly DecalPlacementSystem _placement = default!;
 
     // Didn't do in shared because I don't think most of the server stuff can be predicted.
     public override void Initialize()
@@ -86,7 +88,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
         if (previewMode)
         {
-            _overlay.AddOverlay(new CrayonDecalPlacementOverlay(_transform, _sprite, _interaction, GetDecal(state), Angle.FromDegrees(rotation), color));
+            _overlay.AddOverlay(new CrayonDecalPlacementOverlay(_placement, _transform, _sprite, _interaction, GetDecal(state), Angle.FromDegrees(rotation), color));
         }
     }
 
