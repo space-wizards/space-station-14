@@ -191,8 +191,9 @@ doc-text-printer-object-investigation-report =
     Compiler of the document:
     Position of Document Compiler: 
     
-    A device with unexplored properties was submitted for expert examination (who or what department handed over the object). In the course of the expertise the object was studied, the properties of the object and its species affiliation were established.
-    External description of the object:
+    A device with unexplored properties was submitted for expert examination by (who or what department handed over the object). In the course of the expertise the object was studied, the properties of the object and its species affiliation were established.
+    
+	External description of the object:
     
     Identified properties of the object:
     
