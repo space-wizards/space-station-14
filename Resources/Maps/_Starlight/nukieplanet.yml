@@ -15518,7 +15518,7 @@ entities:
     - type: Transform
       pos: -21.5,-0.5
       parent: 1
-- proto: PowerCellAntiqueProto
+- proto: PowerCellMicroreactor
   entities:
   - uid: 4146
     components:
