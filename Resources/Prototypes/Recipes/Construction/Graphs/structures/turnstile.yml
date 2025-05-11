@@ -3,12 +3,11 @@
   start: start
   graph:
   - node: start
-    actions:
-    - !type:DeleteEntity { }
     edges:
-    - to: turnstile
+    - to: assembly
       completed:
-      - !type:SnapToGrid
+      - !type:SetAnchor
+        value: false
       steps:
       - material: MetalRod
         amount: 4
@@ -17,17 +16,87 @@
         amount: 1
         doAfter: 2
 
-  - node: turnstile
-    entity: Turnstile
+  - node: assembly
+    entity: TurnstileAssembly
+    actions:
+    - !type:SnapToGrid {}
+    - !type:SetAnchor {}
     edges:
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: Cable
+        amount: 5
+        doAfter: 2.5
     - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
       completed:
       - !type:SpawnPrototype
         prototype: PartRodMetal1
         amount: 4
-      - !type:DeleteEntity
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity {}
       steps:
       - tool: Welding
-        doAfter: 4.0
+        doAfter: 3
+
+  - node: wired
+    entity: TurnstileAssembly
+    edges:
+    - to: electronics
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: DoorElectronics
+        store: board
+        name: construction-graph-component-door-electronics-circuit-board
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "door_electronics"
+        doAfter: 3
+    - to: assembly
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
+      steps:
       - tool: Cutting
-        doAfter: 2.0
+        doAfter: 2.5
+
+  - node: electronics
+    edges:
+    - to: turnstile
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tool: Screwing
+        doAfter: 2.5
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 5
+  - node: turnstile
+    entity: Turnstile
+    edges:
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 5
+
