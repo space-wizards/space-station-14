@@ -173,23 +173,44 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                     {
                         agentSummary.AppendLine(objectiveTitle);
                     }
-                    else if (progress > 0.99f)
-                    {
-                        agentSummary.AppendLine(Loc.GetString(
-                            "objectives-objective-success",
-                            ("objective", objectiveTitle),
-                            ("markupColor", "green")
-                        ));
-                        completedObjectives++;
-                    }
                     else
                     {
-                        agentSummary.AppendLine(Loc.GetString(
-                            "objectives-objective-fail",
-                            ("objective", objectiveTitle),
-                            ("progress", (int) (progress * 100)),
-                            ("markupColor", "red")
-                        ));
+                        switch (progress)
+                        {
+                            case var percentage when percentage > 0.99:
+                                agentSummary.AppendLine(Loc.GetString(
+                                    "objectives-objective-success",
+                                    ("objective", objectiveTitle),
+                                    ("progress", (int)(progress * 100)),
+                                    ("markupColor", "green")
+                                ));
+                                completedObjectives++;
+                                break;
+                            case var percentage when percentage <= 0.99 && percentage >= 0.5:
+                                agentSummary.AppendLine(Loc.GetString(
+                                    "objectives-objective-partial-success",
+                                    ("objective", objectiveTitle),
+                                    ("progress", (int)(progress * 100)),
+                                    ("markupColor", "orange")
+                                ));
+                                break;
+                            case var percentage when percentage < 0.5 && percentage > 0:
+                                agentSummary.AppendLine(Loc.GetString(
+                                    "objectives-objective-partial-failure",
+                                    ("objective", objectiveTitle),
+                                    ("progress", (int)(progress * 100)),
+                                    ("markupColor", "#FF5349")
+                                ));
+                                break;
+                            case var percentage when percentage <= 0:
+                                agentSummary.AppendLine(Loc.GetString(
+                                    "objectives-objective-fail",
+                                    ("objective", objectiveTitle),
+                                    ("progress", (int)(progress * 100)),
+                                    ("markupColor", "red")
+                                ));
+                                break;
+                        }
                     }
                 }
             }
