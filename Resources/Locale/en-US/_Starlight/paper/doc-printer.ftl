@@ -1012,7 +1012,7 @@ doc-text-printer-prisoner-parole-order =
     
     Upon issuance of parole, the detainee will be issued a civilian occupation with mandatory work until the end of the shift.
 
-    Issued Occupation:
+    Issued occupation:
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
