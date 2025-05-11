@@ -774,10 +774,9 @@ doc-text-printer-permission-equipment =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    
-    I, as department head of:
+	Position of Document Compiler:
 
-    Authorize the use of departmental work equipment.
+    Authorize the use of departmental work equipment of the following department:
 
     Equipment subject to authorisation:
     
