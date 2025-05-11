@@ -21,6 +21,7 @@ using Robust.Shared.Random;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 using Content.Shared.Hands.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Forensics
 {
@@ -31,6 +32,10 @@ namespace Content.Server.Forensics
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        private static readonly ProtoId<ForensicEvidencePrototype> DNAEvidence = "dna";
+        private static readonly ProtoId<ForensicEvidencePrototype> FingerprintsEvidence = "fingerprints";
+        private static readonly ProtoId<ForensicEvidencePrototype> FibersEvidence = "fibers";
 
         public override void Initialize()
         {
@@ -55,9 +60,10 @@ namespace Content.Server.Forensics
             if (soln.Count > 0)
             {
                 var comp = EnsureComp<ForensicsComponent>(ent.Owner);
-                foreach (string dna in soln)
+                var evidence = comp.Evidence.GetOrNew(DNAEvidence);
+                foreach (var dna in soln)
                 {
-                    comp.DNAs.Add(dna);
+                    evidence.Add(dna);
                 }
             }
         }
@@ -95,8 +101,8 @@ namespace Content.Server.Forensics
             foreach (EntityUid part in args.GibbedParts)
             {
                 var partComp = EnsureComp<ForensicsComponent>(part);
-                partComp.DNAs.Add(dna);
-                partComp.CanDnaBeCleaned = false;
+                partComp.Evidence.GetOrNew(DNAEvidence).Add(dna);
+                partComp.CleanBlacklist.Add(DNAEvidence);
             }
         }
 
@@ -109,7 +115,7 @@ namespace Content.Server.Forensics
                 foreach (EntityUid hitEntity in args.HitEntities)
                 {
                     if (TryComp<DnaComponent>(hitEntity, out var hitEntityComp) && hitEntityComp.DNA != null)
-                        component.DNAs.Add(hitEntityComp.DNA);
+                        component.Evidence.GetOrNew(DNAEvidence).Add(hitEntityComp.DNA);
                 }
             }
         }
@@ -126,25 +132,7 @@ namespace Content.Server.Forensics
         public void CopyForensicsFrom(ForensicsComponent src, EntityUid target)
         {
             var dest = EnsureComp<ForensicsComponent>(target);
-            foreach (var dna in src.DNAs)
-            {
-                dest.DNAs.Add(dna);
-            }
-
-            foreach (var fiber in src.Fibers)
-            {
-                dest.Fibers.Add(fiber);
-            }
-
-            foreach (var print in src.Fingerprints)
-            {
-                dest.Fingerprints.Add(print);
-            }
-
-            foreach (var residue in src.CleaningAgents)
-            {
-                dest.CleaningAgents.Add(residue);
-            }
+            dest.Evidence = src.Evidence;
         }
 
         public List<string> GetSolutionsDNA(EntityUid uid)
@@ -220,10 +208,18 @@ namespace Content.Server.Forensics
                 return false;
             }
 
-            var totalPrintsAndFibers = forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count;
-            var hasRemovableDNA = forensicsComp.DNAs.Count > 0 && forensicsComp.CanDnaBeCleaned;
+            var hasCleanableEvidence = false;
+            foreach (var protoId in forensicsComp.Evidence.Keys)
+            {
+                var proto = _prototypeManager.Index(protoId);
+                if (!proto.Cleanable || forensicsComp.CleanBlacklist.Contains(proto))
+                    continue; // This evidence is not cleanable
 
-            if (hasRemovableDNA || totalPrintsAndFibers > 0)
+                hasCleanableEvidence = true;
+                break;
+            }
+
+            if (hasCleanableEvidence)
             {
                 var cleanDelay = cleanForensicsEntity.Comp.CleanDelay;
                 var doAfterArgs = new DoAfterArgs(EntityManager, user, cleanDelay, new CleanForensicsDoAfterEvent(), cleanForensicsEntity, target: target, used: cleanForensicsEntity)
@@ -257,15 +253,16 @@ namespace Content.Server.Forensics
             if (!TryComp<ForensicsComponent>(args.Target, out var targetComp))
                 return;
 
-            targetComp.Fibers = new();
-            targetComp.Fingerprints = new();
-
-            if (targetComp.CanDnaBeCleaned)
-                targetComp.DNAs = new();
+            foreach (var key in targetComp.Evidence.Keys)
+            {
+                var proto = _prototypeManager.Index(key);
+                if (proto.Cleanable && !targetComp.CleanBlacklist.Contains(key))
+                    targetComp.Evidence.Remove(key);
+            }
 
             // leave behind evidence it was cleaned
             if (TryComp<FiberComponent>(args.Used, out var fiber))
-                targetComp.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
+                targetComp.Evidence.GetOrNew(FibersEvidence).Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
 
             if (TryComp<CleansForensicsComponent>(args.Used, out var agent))
                 targetComp.CleaningAgents.Add(string.IsNullOrEmpty(agent.AgentColor) ? Loc.GetString("forensic-cleaning-agent", ("adjective", agent.AgentAdjective)) : Loc.GetString("forensic-cleaning-agent-colored", ("color", agent.AgentColor), ("adjective", agent.AgentAdjective)));
@@ -300,11 +297,11 @@ namespace Content.Server.Forensics
             if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves))
             {
                 if (TryComp<FiberComponent>(gloves, out var fiber) && !string.IsNullOrEmpty(fiber.FiberMaterial))
-                    component.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
+                    component.Evidence.GetOrNew(FibersEvidence).Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
             }
 
             if (TryComp<FingerprintComponent>(user, out var fingerprint) && CanAccessFingerprint(user, out _))
-                component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
+                component.Evidence.GetOrNew(FingerprintsEvidence).Add(fingerprint.Fingerprint ?? "");
         }
 
         // TODO: Delete this. A lot of systems are manually raising this method event instead of calling the identical <see cref="TransferDna"/> method.
@@ -315,8 +312,12 @@ namespace Content.Server.Forensics
                 return;
 
             var recipientComp = EnsureComp<ForensicsComponent>(args.Recipient);
-            recipientComp.DNAs.Add(component.DNA);
-            recipientComp.CanDnaBeCleaned = args.CanDnaBeCleaned;
+            recipientComp.Evidence.GetOrNew(DNAEvidence).Add(component.DNA);
+            if (args.CanDnaBeCleaned)
+                recipientComp.CleanBlacklist.Remove(DNAEvidence);
+            else
+                recipientComp.CleanBlacklist.Add(DNAEvidence);
+
         }
 
         #region Public API
@@ -346,8 +347,9 @@ namespace Content.Server.Forensics
             if (TryComp<DnaComponent>(donor, out var donorComp) && donorComp.DNA != null)
             {
                 EnsureComp<ForensicsComponent>(recipient, out var recipientComp);
-                recipientComp.DNAs.Add(donorComp.DNA);
-                recipientComp.CanDnaBeCleaned = canDnaBeCleaned;
+                recipientComp.Evidence.GetOrNew(DNAEvidence).Add(donorComp.DNA);
+                if (!canDnaBeCleaned)
+                    recipientComp.CleanBlacklist.Add(DNAEvidence);
             }
         }
 

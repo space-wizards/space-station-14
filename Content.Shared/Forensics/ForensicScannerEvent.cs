@@ -1,3 +1,4 @@
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Forensics
@@ -5,29 +6,20 @@ namespace Content.Shared.Forensics
     [Serializable, NetSerializable]
     public sealed class ForensicScannerBoundUserInterfaceState : BoundUserInterfaceState
     {
-        public readonly List<string> Fingerprints = new();
-        public readonly List<string> Fibers = new();
-        public readonly List<string> TouchDNAs = new();
-        public readonly List<string> SolutionDNAs = new();
-        public readonly List<string> CleaningAgents = new();
+        public readonly Dictionary<ProtoId<ForensicEvidencePrototype>, List<string>> Evidence = [];
+        public readonly List<string> CleaningAgents = [];
         public readonly string LastScannedName = string.Empty;
         public readonly TimeSpan PrintCooldown = TimeSpan.Zero;
         public readonly TimeSpan PrintReadyAt = TimeSpan.Zero;
 
         public ForensicScannerBoundUserInterfaceState(
-            List<string> fingerprints,
-            List<string> fibers,
-            List<string> touchDnas,
-            List<string> solutionDnas,
+            Dictionary<ProtoId<ForensicEvidencePrototype>, List<string>> evidence,
             List<string> cleaningAgents,
             string lastScannedName,
             TimeSpan printCooldown,
             TimeSpan printReadyAt)
         {
-            Fingerprints = fingerprints;
-            Fibers = fibers;
-            TouchDNAs = touchDnas;
-            SolutionDNAs = solutionDnas;
+            Evidence = evidence;
             CleaningAgents = cleaningAgents;
             LastScannedName = lastScannedName;
             PrintCooldown = printCooldown;
