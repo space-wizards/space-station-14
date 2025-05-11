@@ -19,11 +19,11 @@ doc-text-printer-report-station =
 
     Reason for establishing the code:
 
-    Active Threats:
+    Active threats:
 
-    Crew Casualties:
+    Crew casualties:
 
-    Current Situation:
+    Current situation:
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -78,7 +78,7 @@ doc-text-printer-report-department =
 	[bullet] (Name, position, reason)
     [bullet] ...
 
-    Degree of Target Readiness:
+    Degree of target readiness:
 
     General condition of the department:
     
@@ -97,9 +97,9 @@ doc-text-printer-report-employee-performance =
     ─────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler:   
+    Position of Document Compiler:
    
-    In the course of my duties, I have performed the required amount of work. 
+    In the course of my duties, I have performed the required amount of work.
     
     I request that the result of the work be accepted by the Head of the following Department:
 
@@ -123,7 +123,10 @@ doc-text-printer-report-on-the-chapters-meeting =
 	Position of Document Compiler:
     
     Reason for calling the Chapters' Meeting:
+
     The wording of the question put to the Chapters:
+
+
     Number of votes [italic]in favor[/italic]:
     Those voting [italic]in favor[/italic]:
     
@@ -170,7 +173,7 @@ doc-text-printer-condition-report =
     ─────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler:   
+    Position of Document Compiler:
     
     The (name of the system or object) was inspected, the results of the inspection were analyzed, and the causes of unstable operation of the object were analyzed.
     
@@ -195,7 +198,7 @@ doc-text-printer-object-investigation-report =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler: 
+    Position of Document Compiler:
     
     A device with unexplored properties was submitted for expert examination by (who or what department handed over the object). In the course of the expertise the object was studied, the properties of the object and its species affiliation were established.
     
@@ -248,7 +251,7 @@ doc-text-printer-disposal-report =
     ─────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler: 
+    Position of Document Compiler:
     
     The Supplies Department disposed of the objects at (method of disposal). During the disposal valuable items and things were found, valuable items were handed over to the appropriate departments for their use.
     List of items found:
@@ -268,17 +271,17 @@ doc-text-printer-arrest-report =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler:   
+    Position of Document Compiler:
 
-    Arrested persons:
+    Arrested person:
 
-    Arrest Reason: 
+    Arrest reason:
 
-    Time of Arrest (estimated): 
+    Time of arrest (estimated):
 
-    Duration of Detention: 
+    Duration of detention:
 
-    Additional Punishments:
+    Additional punishments:
     
     ─────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -297,7 +300,7 @@ doc-text-printer-statement-appointment-interim-chapter =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler: 
+    Position of Document Compiler:
      
     I request approval of my appointment to the position of Acting (HoS/Captain/HoP/...).
     Upon assuming the position, I agree to follow Standard Operating Procedures and, 
@@ -323,7 +326,7 @@ doc-text-printer-employment-statement =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler: 
+    Position of Document Compiler:
     
     I formally request to be appointed as an employee of the following department and position.
     
@@ -348,7 +351,7 @@ doc-text-printer-resignation-statement =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler: 
+    Position of Document Compiler:
     
     I, (full name), in the current position of (full job title), wish to resign from (name of department) for (reason).
     I undertake to pay the penalty established by the terms of termination of fixed-term/permanent contract at the Central Command station.
@@ -493,7 +496,7 @@ doc-text-printer-request-call-centcomm-members =
    ⠀⠀              [bold]REQUEST TO CALL CENTCOMM MEMBERS[/bold]
     ────────────────────────────────────────
     Time and Date:
-    Compiler of the document:   
+    Compiler of the document:
     Position of Document Compiler:
     
     I request to be considered for a call with CentComm administrative officers.
@@ -542,7 +545,7 @@ doc-text-printer-request-change-salary =
     
     I hereby request consideration for a salary increase/decrease of (amount or number of percent)
     
-    Employee recieving salary change: 
+    Employee recieving salary change:
 
     Employees job title:
     
@@ -574,7 +577,7 @@ doc-text-printer-request-for-non-listed-employment =
     
     Responsible for the employee's head or coworker:
     
-    Position Work Performed (SOP):
+    Position work performed (SOP):
     
     Access provided to the employee:
     
@@ -648,7 +651,7 @@ doc-text-printer-request-euthanasia =
     
     I formally request the assistance of the medical department in performing euthanasia as a medical treatment for the reason of: (specify reason for request). 
 
-    I am familiar with the implications of this decision, and the rationality and humanity of this decision has been established by the medical staff. 
+    I am familiar with the implications of this decision, and the rationality and humanity of this decision has been established by the medical staff.
 
     I have no claims against the medical department in their adherence to euthanasia protocols.
 
@@ -757,7 +760,6 @@ doc-text-printer-offense-complaint =
     
     What happened from my point of view:
     
-
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
 
@@ -1008,7 +1010,7 @@ doc-text-printer-prisoner-parole-order =
     Compiler of the document:
     Position of Document Compiler:
     
-    I authorize the release of following detainee: 
+    I authorize the release of following detainee:
     
     Upon issuance of parole, the detainee will be issued a civilian occupation with mandatory work until the end of the shift.
 
@@ -1058,7 +1060,7 @@ doc-text-printer-medical-intervention-order =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler: 
+    Position of Document Compiler:
     
     I, in my professional opinion, order a medical intervention effective immediately.
     
@@ -1084,7 +1086,7 @@ doc-text-printer-product-order =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler:    
+    Position of Document Compiler:
     
     Request to produce products by the following department:
 
