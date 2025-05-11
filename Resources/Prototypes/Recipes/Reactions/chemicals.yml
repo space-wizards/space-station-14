@@ -516,16 +516,3 @@
   products:
     Tazinide: 1
 
-- type: reaction
-  id: SalicylicAcid
-  reactants:
-    Carbon:
-      amount: 1
-    Phenol:
-      amount: 1
-    Bicaridine:
-      amount: 1
-    SulfuricAcid:
-      amount: 1
-  products:
-    SalicylicAcid: 4

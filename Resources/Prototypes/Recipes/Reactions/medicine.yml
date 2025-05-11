@@ -561,7 +561,7 @@
   id: Opporozidone
   minTemp: 400 #Maybe if a method of reducing reagent temp exists one day, this could be -50
   reactants:
-    Cognizine:
+    Cognizine: 
       amount: 1
     Plasma:
       amount: 2
@@ -662,16 +662,3 @@
       amount: 1
   products:
     Haloperidol: 5
-
-- type: reaction
-  id: Traumoxadone
-  impact: Medium
-  reactants:
-    Cryoxadone:
-      amount: 1
-    SalicylicAcid:
-      amount: 1
-    Lipozine:
-      amount: 1
-  products:
-    Traumoxadone: 2
