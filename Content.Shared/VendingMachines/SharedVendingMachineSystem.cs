@@ -449,7 +449,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
         foreach (var prototypeEntry in entries)
         {
-            if (PrototypeManager.HasIndex<EntityPrototype>(entry.ID))
+            if (PrototypeManager.HasIndex<EntityPrototype>(prototypeEntry.ID))
             {
                 var restock = prototypeEntry.Amount;
                 var chanceOfMissingStock = 1 - restockQuality;
