@@ -298,15 +298,14 @@ doc-text-printer-statement-appointment-interim-chapter =
     Time and Date:
     Compiler of the document:
     Position of Document Compiler: 
-    
-    Position of compiler:, 
-    request approval of my appointment to the position of Acting (full department name)/Captain.
+     
+    I request approval of my appointment to the position of Acting (HoS/Captain/HoP/...).
     Upon assuming the position, I agree to follow Standard Operating Procedures and, 
-    until the arrival of the (full name of department)/Captain from Central Command, 
+    until the arrival of the (HoS/Captain/HoP/...) from Central Command, 
     to ensure the order and management of the division, 
     and to ensure the safety of particularly valuable items and equipment entrusted to me.
     
-    Upon arrival of the Head of Department/Captain from the Central Command, 
+    Upon arrival of the (HoS/Captain/HoP/...) from Central Command, 
     I undertake to surrender the increased access, especially valuable items and equipment.
     
     ────────────────────────────────────────
