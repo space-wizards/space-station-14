@@ -67,6 +67,11 @@
 
 - type: latheRecipe
   parent: BaseTileRecipe
+  id: FloorTileItemDarkSquiggly
+  result: FloorTileItemDarkSquiggly
+
+- type: latheRecipe
+  parent: BaseTileRecipe
   id: FloorTileItemDarkOffset
   result: FloorTileItemDarkOffset
 
