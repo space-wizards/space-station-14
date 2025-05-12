@@ -39,7 +39,7 @@ spellbook-animate-name = Animate
 spellbook-animate-description = Bring an inanimate object to life!
 
 spellbook-smite-name = Smite
-spellbook-smite-desc = Don't like them? Gib em! Requires Wizard Robe & Hat.
+spellbook-smite-desc = Don't like them? EXPLODE them into giblets! Requires Wizard Robe & Hat.
 
 spellbook-cellular-smite-name = Smite
 spellbook-cellular-smite-desc = Don't like them? Smite em! Requires Wizard Robe & Hat.

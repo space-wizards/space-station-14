@@ -392,12 +392,13 @@ public abstract class SharedMagicSystem : EntitySystem
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
-        
         ev.Handled = true;
+
         var direction = _transform.GetMapCoordinates(ev.Target, Transform(ev.Target)).Position - _transform.GetMapCoordinates(ev.Performer, Transform(ev.Performer)).Position;
         var impulseVector = direction * 10000;
 
          _physics.ApplyLinearImpulse(ev.Target, impulseVector);
+
         if (!TryComp<BodyComponent>(ev.Target, out var body))
             return;
 
@@ -416,7 +417,6 @@ public abstract class SharedMagicSystem : EntitySystem
         }
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
-
         ev.Handled = true;
 
         // Given that this was intended to blow gibs everywhere, not suitable for this version of the spell (gets people stuck in walls)
@@ -424,6 +424,7 @@ public abstract class SharedMagicSystem : EntitySystem
         // var impulseVector = direction * 5000;
 
         //_physics.ApplyLinearImpulse(ev.Target, impulseVector);
+        
         _jittering.DoJitter(ev.Target, TimeSpan.FromSeconds(1f), false, 80f, 8f, true);
         _damageableSystem.TryChangeDamage(ev.Target, ev.smiteDamage, true);
     }

@@ -1,5 +1,4 @@
 using Content.Shared.Actions;
-using Content.Shared.Damage;
 
 namespace Content.Shared.Magic.Events;
 
