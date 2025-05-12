@@ -87,6 +87,12 @@ public sealed partial class ChangelingDevourComponent : Component
         },
     };
 
+    /// <summary>
+    /// Should a successful devour Husk a target (Remove their visible identity, their Gender becomes They and they are made unrevivable)
+    /// </summary>
+    [DataField]
+    public bool Husking = false;
+
 
     /// <summary>
     /// The next Tick to deal damage on (utilized during the consumption "do-during" (a do after with an attempt event))

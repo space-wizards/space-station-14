@@ -8,7 +8,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Changeling.Devour;
 
-public sealed class ChangelingDevourSystem : SharedChangelingDevourSystem
+public sealed partial class ChangelingDevourSystem : SharedChangelingDevourSystem
 {
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
@@ -28,10 +28,10 @@ public sealed class ChangelingDevourSystem : SharedChangelingDevourSystem
         ent.Comp.CurrentDevourSound = null;
     }
 
-    protected override void RipClothing(EntityUid uid, EntityUid item,  ButcherableComponent butcher)
+    protected override void RipClothing(EntityUid victim, Entity<ButcherableComponent> item)
     {
-        var spawnEntities = EntitySpawnCollection.GetSpawns(butcher.SpawnedEntities, _robustRandom);
-        var coords = _transform.GetMapCoordinates(uid);
+        var spawnEntities = EntitySpawnCollection.GetSpawns(item.Comp.SpawnedEntities, _robustRandom);
+        var coords = _transform.GetMapCoordinates(victim);
 
         foreach (var proto in spawnEntities)
         {

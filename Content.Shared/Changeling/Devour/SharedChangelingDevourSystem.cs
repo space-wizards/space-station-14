@@ -204,11 +204,12 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         {
             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player}  successfully devoured {ToPrettyString(args.Target):player}'s identity");
             _changelingIdentitySystem.CloneToNullspace((ent, identityStorage), target.Value);
-            EnsureComp<ChangelingHuskedCorpseComponent>(target.Value);
 
-            var unrevivable = EnsureComp<UnrevivableComponent>(target.Value);
-            unrevivable.Analyzable = false;
-            unrevivable.ReasonMessage = "changeling-defibrillator-failure";
+            if (ent.Comp.Husking)
+            {
+                EnsureComp<ChangelingHuskedCorpseComponent>(target.Value);
+            }
+
 
             foreach (var organ in _bodySystem.GetBodyOrgans(target, body))
             {
@@ -217,7 +218,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 
             if (_inventorySystem.TryGetSlotEntity(target.Value, "jumpsuit", out var item)
                 && TryComp<ButcherableComponent>(item, out var butcherable))
-                RipClothing(target.Value, item.Value, butcherable);
+                RipClothing(target.Value, (item.Value, butcherable));
         }
         Dirty(ent);
     }
@@ -226,7 +227,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 
     protected virtual void StopSound(Entity<ChangelingDevourComponent> ent) { }
 
-    protected virtual void RipClothing(EntityUid uid, EntityUid item, ButcherableComponent butcherable) { }
+    protected virtual void RipClothing(EntityUid uid, Entity<ButcherableComponent> item) { }
 
 }
 

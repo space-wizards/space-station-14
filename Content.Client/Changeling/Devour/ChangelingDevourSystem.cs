@@ -2,4 +2,4 @@
 
 namespace Content.Client.Changeling.Devour;
 
-public sealed class ChangelingDevourSystem : SharedChangelingDevourSystem;
+public sealed partial class ChangelingDevourSystem : SharedChangelingDevourSystem;

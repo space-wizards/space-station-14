@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Changeling.Transform;
 
 [UsedImplicitly]
-public sealed class ChangelingTransformBoundUserInterface : BoundUserInterface
+public sealed partial class ChangelingTransformBoundUserInterface : BoundUserInterface
 {
     private ChangelingTransformMenu? _window;
 
@@ -30,8 +30,6 @@ public sealed class ChangelingTransformBoundUserInterface : BoundUserInterface
 
     public void SendIdentitySelect(NetEntity identityId)
     {
-        SendMessage(new ChangelingTransformIdentitySelectMessage(identityId));
+        SendPredictedMessage(new ChangelingTransformIdentitySelectMessage(identityId));
     }
-
-
 }

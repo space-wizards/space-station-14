@@ -1,6 +1,7 @@
 using Content.Server.Administration.Commands;
 using Content.Server.Antag;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
@@ -36,8 +37,8 @@ public sealed partial class AdminVerbSystem
     [ValidatePrototypeId<EntityPrototype>]
     private const string DefaultThiefRule = "Thief";
 
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string DefaultChangelingRule = "Changeling";
+
+    private EntProtoId<ChangelingRuleComponent> DefaultChangelingRule = "Changeling";
 
     [ValidatePrototypeId<StartingGearPrototype>]
     private const string PirateGearId = "PirateGear";

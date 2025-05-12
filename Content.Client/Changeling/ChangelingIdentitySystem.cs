@@ -2,4 +2,4 @@
 
 namespace Content.Client.Changeling;
 
-public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem;
+public sealed partial class ChangelingIdentitySystem : SharedChangelingIdentitySystem;

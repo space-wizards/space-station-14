@@ -50,6 +50,4 @@ public sealed partial class ChangelingTransformMenu : RadialMenu
     }
 }
 
-public sealed class ChangelingTransformMenuButton : RadialMenuTextureButtonWithSector
-{
-}
+public sealed class ChangelingTransformMenuButton : RadialMenuTextureButtonWithSector;
