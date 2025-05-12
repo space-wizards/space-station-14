@@ -37,6 +37,7 @@
       20: Dead
     stateAlertDict:
       Alive: BorgHealth
+      Dead: BorgDead
     showOverlays: false
   - type: SlowOnDamage
     speedModifierThresholds:
