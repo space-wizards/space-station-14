@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Added courier slots to Plasma, and a security cadet slot to Banana.
-    type: Add
-  - message: Removed Aspid, which you may not have been aware was even a map.
-    type: Remove
-  id: 1157
-  time: '2025-02-17T21:56:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1716
 - author: honeyed-lemons
   changes:
   - message: fixed the Nanochat notification button
@@ -4178,3 +4169,14 @@
   id: 1656
   time: '2025-05-12T13:57:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2458
+- author: Darkmajia
+  changes:
+  - message: Supermatter delaminations have had their explosion strength reduced,
+      but have an ongoing effect over the course of the shift.
+    type: Tweak
+  - message: The supermatter's light turns red as it grows damaged, as was originally
+      intended.
+    type: Fix
+  id: 1657
+  time: '2025-05-12T20:13:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2455
