@@ -1,4 +1,27 @@
-﻿    - name: Check for trailing whitespace and EOF newline
+﻿name: Whitespace Check
+
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
+
+jobs:
+  build:
+    name: Trailing Whitespace Check
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4.2.2
+    - name: Get changed text files
+      id: changed-files
+      uses: tj-actions/changed-files@v46.0.5
+      with:
+        files: |
+          **.cs
+          **.yml
+          **.swsl
+          **.json
+          **.py
+    - name: Check for trailing whitespace and EOF newline
       env:
         ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
       run: |
