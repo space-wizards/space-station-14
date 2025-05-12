@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Re-enable blur for rooves and increase amount of blur.
-    type: Tweak
-  id: 7960
-  time: '2025-02-16T15:35:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35213
-- author: metalgearsloth
-  changes:
   - message: Rooves now block weather.
     type: Tweak
   id: 7961
@@ -3922,3 +3915,10 @@
   id: 8462
   time: '2025-05-12T12:37:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36953
+- author: ScarKy0
+  changes:
+  - message: Added "Yellowtexting" for when you don't quite complete your objectives.
+    type: Add
+  id: 8463
+  time: '2025-05-12T16:22:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37360
