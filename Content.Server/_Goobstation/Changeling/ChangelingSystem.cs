@@ -449,7 +449,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             }
         }
 
-        var metadata = MetaData(uid);
+        var metadata = MetaData(target);
         var data = new TransformData
         {
             Name = metadata.EntityName,

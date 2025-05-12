@@ -43,24 +43,36 @@ public partial class RitualSacrificeBehavior : RitualCustomBehavior
     // this is awful but it works so i'm not complaining
     // i'm complaining -kandiyaki
     // IM ALSO COMPLAINING -mq
-    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly HellWorldSystem _hellworld = default!;
-    [Dependency] private readonly HereticSystem _heretic = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
-
+    private BloodstreamSystem _bloodstream = default!;
+    private DamageableSystem _damage = default!;
+    private EntityLookupSystem _lookup = default!;
+    private HellWorldSystem _hellworld = default!;
+    private HereticSystem _heretic = default!;
+    private HumanoidAppearanceSystem _humanoid = default!;
     private IEntityManager _entmanager = default!;
     private IPrototypeManager _proto = default!;
+    private SharedMindSystem _mind = default!;
+    private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    private SharedTransformSystem _xform;
+    private TransformSystem _transformSystem = default!;
     protected List<EntityUid> Uids = new();
 
     public override bool Execute(RitualData args, out string? outstr)
     {
-        _proto = IoCManager.Resolve<IPrototypeManager>();
+        // this fucking sucks -mq
+        _bloodstream = args.EntityManager.System<BloodstreamSystem>();
+        _damage = args.EntityManager.System<DamageableSystem>();
         _entmanager = IoCManager.Resolve<IEntityManager>();
+        _hellworld = args.EntityManager.System<HellWorldSystem>();
+        _heretic = args.EntityManager.System<HereticSystem>();
+        _humanoid = args.EntityManager.System<HumanoidAppearanceSystem>();
+        _lookup = args.EntityManager.System<EntityLookupSystem>();
+        _mind = args.EntityManager.System<SharedMindSystem>();
+        _proto = IoCManager.Resolve<IPrototypeManager>();
+        _solutionContainerSystem = args.EntityManager.System<SharedSolutionContainerSystem>();
+        _transformSystem = args.EntityManager.System<TransformSystem>();
+        _xform = args.EntityManager.System<SharedTransformSystem>();
+        _xform = args.EntityManager.System<SharedTransformSystem>();
 
         //if the performer isn't a heretic, stop
         if (!args.EntityManager.TryGetComponent<HereticComponent>(args.Performer, out var hereticComp))
