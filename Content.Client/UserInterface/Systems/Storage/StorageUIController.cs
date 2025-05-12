@@ -126,6 +126,12 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                 child.SetPositionInParent(invisibleIndex);
             };
 
+            if (hotbar != null)
+            {
+                hotbar.DoubleStorageContainer.Visible = _openStorageLimit == 2;
+                hotbar.SingleStorageContainer.Visible = _openStorageLimit != 2;
+            }
+
             if (_openStorageLimit == 2)
             {
                 if (hotbar?.LeftStorageContainer.Children.Any(c => c.Visible) == false) // we're comparing booleans because it's bool? and not bool from the optional chaining
