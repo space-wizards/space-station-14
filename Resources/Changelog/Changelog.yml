@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Centcomm has been rebuilt from the ground up.
-    type: Tweak
-  id: 7967
-  time: '2025-02-17T08:51:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35240
 - author: Sparlight
   changes:
   - message: Space debris has returned to Wizden servers.
@@ -3923,3 +3916,11 @@
   id: 8469
   time: '2025-05-12T23:27:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36979
+- author: EmoGarbage404
+  changes:
+  - message: Added the basilisk! This mob can be found on the vgroid and can freeze
+      you with his eye beam. His diamond exterior can sell for a pretty penny, however...
+    type: Add
+  id: 8470
+  time: '2025-05-12T23:42:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37135
