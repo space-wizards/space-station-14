@@ -1,21 +1,32 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Changeling.Devour;
 
-
+/// <summary>
+/// Component responsible for Changelings Devour attack. including the amount of damage, if a successful devour husks
+/// and how long it takes to devour someone
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedChangelingDevourSystem))]
 public sealed partial class ChangelingDevourComponent : Component
 {
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? ChangelingDevourAction = "ActionChangelingDevour";
+    /// <summary>
+    /// The Action for devouring
+    /// </summary>
+    [DataField]
+    public EntProtoId? ChangelingDevourAction = "ActionChangelingDevour";
 
+    /// <summary>
+    /// The action entity associated with devouring
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? ChangelingDevourActionEntity;
 
@@ -88,11 +99,21 @@ public sealed partial class ChangelingDevourComponent : Component
     };
 
     /// <summary>
+    /// The list of protective damage types capable of preventing a devour if over the threshold
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<DamageTypePrototype>> ProtectiveDamageTypes = new()
+    {
+        "Slash",
+        "Piercing",
+        "Blunt",
+    };
+
+    /// <summary>
     /// Should a successful devour Husk a target (Remove their visible identity, their Gender becomes They and they are made unrevivable)
     /// </summary>
     [DataField]
     public bool Husking = false;
-
 
     /// <summary>
     /// The next Tick to deal damage on (utilized during the consumption "do-during" (a do after with an attempt event))

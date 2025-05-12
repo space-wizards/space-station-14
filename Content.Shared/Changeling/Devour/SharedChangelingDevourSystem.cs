@@ -86,11 +86,15 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 
         RaiseLocalEvent(target, ev, true);
 
-        var slash = ev.DamageModifiers.Coefficients.ContainsKey("Slash") && ev.DamageModifiers.Coefficients["Slash"] < 1f - ent.Comp.DevourPreventionPercentageThreshold;
-        var blunt =  ev.DamageModifiers.Coefficients.ContainsKey("Blunt") && ev.DamageModifiers.Coefficients["Blunt"] < 1f - ent.Comp.DevourPreventionPercentageThreshold;
-        var pierce = ev.DamageModifiers.Coefficients.ContainsKey("Piercing") && ev.DamageModifiers.Coefficients["Piercing"] < 1f - ent.Comp.DevourPreventionPercentageThreshold;
+        foreach (var compProtectiveDamageType in ent.Comp.ProtectiveDamageTypes)
+        {
+            if (!ev.DamageModifiers.Coefficients.TryGetValue(compProtectiveDamageType, out var coefficient))
+                continue;
+            if (coefficient < 1f - ent.Comp.DevourPreventionPercentageThreshold)
+                return true;
+        }
 
-        return  slash || blunt || pierce;
+        return false;
     }
 
     private void OnDevourAction(Entity<ChangelingDevourComponent> ent, ref ChangelingDevourActionEvent args)
@@ -231,13 +235,6 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 
 }
 
-public sealed partial class ChangelingDevourActionEvent : EntityTargetActionEvent;
-
-[Serializable, NetSerializable]
-public sealed partial class ChangelingDevourWindupDoAfterEvent : SimpleDoAfterEvent;
-
-[Serializable, NetSerializable]
-public sealed partial class ChangelingDevourConsumeDoAfterEvent : SimpleDoAfterEvent;
 
 
 
