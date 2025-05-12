@@ -70,7 +70,7 @@ namespace Content.Server._Impstation.Drone
         // Imp. this replaces OnInteractionAttempt from the upstream version of DroneSystem.
         private void OnUseAttempt(EntityUid uid, DroneComponent component, UseAttemptEvent args)
         {
-            if (_whitelist.IsWhitelistPass(component.Whitelist, args.Used)) /// tag whitelist. sends proximity warning popup if the item isn't whitelisted. Doesn't prevent actions. Takes precedent over blacklist.
+            if (_whitelist.IsWhitelistPass(component.Whitelist, args.Used) && NonDronesInRange(uid, component)) /// tag whitelist. sends proximity warning popup if the item isn't whitelisted. Doesn't prevent actions. Takes precedent over blacklist.
             {
                 if (_gameTiming.CurTime >= component.NextProximityAlert)
                 {
