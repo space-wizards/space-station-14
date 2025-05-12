@@ -11,9 +11,9 @@ objectives-player-named = [color=White]{$name}[/color]
 objectives-no-objectives = {$custody}{$title} was a {$agent}.
 objectives-with-objectives = {$custody}{$title} was a {$agent} who had the following objectives:
 
-objectives-objective-success = {$objective} | [color={$markupColor}]Success![/color] ({$progress}%)
-objectives-objective-partial-success = {$objective} | [color={$markupColor}]Partial Success![/color] ({$progress}%)
-objectives-objective-partial-failure = {$objective} | [color={$markupColor}]Partial Failure![/color] ({$progress}%)
-objectives-objective-fail = {$objective} | [color={$markupColor}]Failure![/color] ({$progress}%)
+objectives-objective-success = {$objective} | [color=green]Success![/color] ({$progress}%)
+objectives-objective-partial-success = {$objective} | [color=yellow]Partial Success![/color] ({$progress}%)
+objectives-objective-partial-failure = {$objective} | [color=orange]Partial Failure![/color] ({$progress}%)
+objectives-objective-fail = {$objective} | [color=red]Failure![/color] ({$progress}%)
 
 objectives-in-custody = [bold][color=red]| IN CUSTODY | [/color][/bold]

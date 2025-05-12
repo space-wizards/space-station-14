@@ -178,8 +178,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                         agentSummary.AppendLine(Loc.GetString(
                             "objectives-objective-success",
                             ("objective", objectiveTitle),
-                            ("progress", (int)(progress * 100)),
-                            ("markupColor", "green")
+                            ("progress", (int)(progress * 100))
                         ));
                         completedObjectives++;
                     }
@@ -188,8 +187,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                         agentSummary.AppendLine(Loc.GetString(
                             "objectives-objective-partial-success",
                             ("objective", objectiveTitle),
-                            ("progress", (int)(progress * 100)),
-                            ("markupColor", "orange")
+                            ("progress", (int)(progress * 100))
                         ));
                     }
                     else if (progress < 0.5f && progress > 0f)
@@ -197,8 +195,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                         agentSummary.AppendLine(Loc.GetString(
                             "objectives-objective-partial-failure",
                             ("objective", objectiveTitle),
-                            ("progress", (int)(progress * 100)),
-                            ("markupColor", "#FF5349")
+                            ("progress", (int)(progress * 100))
                         ));
                     }
                     else
@@ -206,8 +203,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                         agentSummary.AppendLine(Loc.GetString(
                             "objectives-objective-fail",
                             ("objective", objectiveTitle),
-                            ("progress", (int)(progress * 100)),
-                            ("markupColor", "red")
+                            ("progress", (int)(progress * 100))
                         ));
                     }
                 }
