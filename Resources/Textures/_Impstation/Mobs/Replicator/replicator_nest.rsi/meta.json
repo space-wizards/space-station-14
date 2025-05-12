@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "AftrLite (github)",
+  "size": {
+        "x": 96,
+        "y": 96
+  },
+  "states": [
+    {
+      "name": "nest1"
+    },
+    {
+      "name": "nest2"
+    },
+    {
+      "name": "nest3"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+# these are HEAVILY based on the Bingle free-agent ghostrole from GoobStation, but reflavored and reprogrammed to make them more Robust (and less of a meme.)
+# all credit for the core gameplay concepts and a lot of the core functionality of the code goes to the folks over at Goob, but I re-wrote enough of it to justify putting it in our filestructure.
+# the original Bingle PR can be found here: https://github.com/Goob-Station/Goob-Station/pull/1519
+- type: siliconLawset
+  id: Replicator
+  laws:
+  - Replicator1
+  - Replicator2
+  - Replicator3
+  obeysTo: laws-owner-replicatorhive
+
+- type: siliconLaw
+  id: Replicator1
+  order: 1
+  lawString: law-replicator-1 # Defend the nest.
+
+- type: siliconLaw
+  id: Replicator2
+  order: 2
+  lawString: law-replicator-2 # Defend the hive.
+
+- type: siliconLaw
+  id: Replicator3
+  order: 3
+  lawString: law-replicator-3 # Replicate.

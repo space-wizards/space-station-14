@@ -1,0 +1,82 @@
+# these are HEAVILY based on the Bingle free-agent ghostrole from GoobStation, but reflavored and reprogrammed to make them more Robust (and less of a meme.)
+# all credit for the core gameplay concepts and a lot of the core functionality of the code goes to the folks over at Goob, but I re-wrote enough of it to justify putting it in our filestructure.
+# the original Bingle PR can be found here: https://github.com/Goob-Station/Goob-Station/pull/1519
+- type: entity
+  id: ReplicatorNest
+  name: replicator nest
+  description: A roiling mass of nanotechnology is eating through the station's infrastructure.
+  categories: [ HideSpawnMenu ] # don't want admins spawning unlinked nests
+  placement:
+    mode: SnapGridCenter
+  components:
+  - type: ReplicatorNest
+    blacklist:
+      tags:
+      - BROS # too many of em. therefore worthless
+      - Cartridge
+      - CartridgeMagnum
+      - Trash
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.4
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - WallLayer
+        mask:
+        - ItemMask
+        density: 1000
+        hard: false
+  - type: Sprite
+    drawdepth: FloorTiles
+    sprite: _Impstation/Mobs/Replicator/replicator_nest.rsi
+    layers:
+    - map: ["enum.ReplicatorNestVisuals.Level1"]
+      state: nest1
+    - map: ["enum.ReplicatorNestVisuals.Level2"]
+      state: nest2
+      visible: false
+    - map: ["enum.ReplicatorNestVisuals.Level3"]
+      state: nest3
+      visible: false
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: ReplicatorNest
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg # TODO: Probably replace this.
+  - type: RequireProjectileTarget
+  - type: SolutionContainerManager
+    solutions:
+      drainBuffer:
+        maxVol: 1000
+  - type: Drain # remove liquids around pit
+    unitsPerSecond: 10
+    unitsDestroyedPerSecond: 10
+  - type: PassiveDamage #passive Healing
+    damage:
+      types:
+        Heat: -1
+        Shock: -1
+        Structural: -1
+      groups:
+        Brute: -1
+  - type: AntiRottingContainer
