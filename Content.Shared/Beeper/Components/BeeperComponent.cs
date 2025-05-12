@@ -19,6 +19,7 @@ public sealed partial class BeeperComponent : Component
 {
     /// <summary>
     /// How much to scale the interval by. Min - 0, max - 1.
+    /// Setting this will lerp Interval between MinBeepInterval and MaxBeepInterval.
     /// </summary>
     [DataField, AutoNetworkedField]
     public FixedPoint2 IntervalScaling = 0;
