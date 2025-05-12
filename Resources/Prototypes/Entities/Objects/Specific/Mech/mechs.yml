@@ -615,6 +615,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 2.6
+  - type: MechThrusters
   - type: PointLight
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
