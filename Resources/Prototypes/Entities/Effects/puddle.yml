@@ -114,7 +114,7 @@
   - type: Clickable
   - type: Slippery
     staminaDamage: 0
-    slipperyTime: 0 # Don't apply friction twice
+    frictionStatusTime: 0 # Don't apply friction twice
   - type: Transform
     noRot: true
     anchored: true
