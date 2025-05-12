@@ -343,3 +343,16 @@
     useDelay: 1
     itemIconStyle: BigAction
     event: !type:ToggleActionEvent
+
+- type: entity
+  id: ActionSecHailer
+  name: Shout for compliance
+  description: Verbally order the criminal to stop.
+  components:
+  - type: InstantAction 
+    icon:
+      sprite: Clothing/Mask/gassecurity.rsi
+      state: icon
+    useDelay: 10
+    itemIconStyle: BigAction
+    event: !type:HailerActionEvent
