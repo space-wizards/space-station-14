@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: NT's mail telepads no longer exponentially increase the time between
-      deliveries.
-    type: Fix
-  id: 1147
-  time: '2025-02-17T04:22:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1715
 - author: nowaitstop
   changes:
   - message: BATTERY GRUMBA VAPES! pib cartridges..!
@@ -4170,3 +4162,11 @@
   id: 1646
   time: '2025-05-11T14:03:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2423
+- author: TheGrimbeeper
+  changes:
+  - message: Rat king ghost role rules are once again properly antagonist after upstream
+      merge convinced the king to be nice.
+    type: Fix
+  id: 1647
+  time: '2025-05-12T06:02:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2461
