@@ -89,6 +89,7 @@
         - id: ClothingMaskBreath
 
 #HARDSUITS
+#instance here
 #Basic hardsuit
 - type: entity
   id: SuitStorageBasic

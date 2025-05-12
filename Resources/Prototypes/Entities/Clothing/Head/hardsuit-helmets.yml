@@ -5,6 +5,7 @@
 #Generally, unless you're adding something like caustic damage, you should probably avoid messing with armor here outside of the above scenario.
 
 #CREW HARDSUITS
+#instance here
 #Standard Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitBase

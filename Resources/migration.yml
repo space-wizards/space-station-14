@@ -619,3 +619,8 @@ AirlockMaintIntLocked: AirlockMaintLocked
 # 2025-04-26
 ComputerCargoShuttle: ComputerShuttleCargo
 CargoShuttleComputerCircuitboard: CargoShuttleConsoleCircuitboard
+
+#instance here
+#ClothingOuterHardsuitBasic:                              #ClothingOuterHardsuitEVA
+#ClothingHeadHelmetHardsuitBasic:                         #null
+#SuitStorageBasic:                                        #SuitStorageEVA
