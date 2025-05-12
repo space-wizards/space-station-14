@@ -67,7 +67,7 @@ public sealed class BeeperSystem : EntitySystem
         beeper.IntervalScaling = FixedPoint2.Clamp(newScaling, 0, 1);
         DirtyField(uid, beeper, nameof(beeper.IntervalScaling));
 
-        beeper.Interval = (beeper.MaxBeepInterval + beeper.MinBeepInterval) * beeper.IntervalScaling.Float() + beeper.MinBeepInterval;
+        beeper.Interval = (beeper.MaxBeepInterval - beeper.MinBeepInterval) * beeper.IntervalScaling.Float() + beeper.MinBeepInterval;
         DirtyField(uid, beeper, nameof(beeper.Interval));
     }
 
