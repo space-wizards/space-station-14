@@ -14,6 +14,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Systems;
+using Content.Shared.Shuttles.Components;
 
 namespace Content.Shared.Friction
 {
@@ -30,6 +31,7 @@ namespace Content.Shared.Friction
         private EntityQuery<PullerComponent> _pullerQuery;
         private EntityQuery<PullableComponent> _pullableQuery;
         private EntityQuery<MapGridComponent> _gridQuery;
+        private EntityQuery<FTLComponent> _ftlQuery;
 
         private float _frictionModifier;
         private float _minDamping;
@@ -49,6 +51,7 @@ namespace Content.Shared.Friction
             _pullerQuery = GetEntityQuery<PullerComponent>();
             _pullableQuery = GetEntityQuery<PullableComponent>();
             _gridQuery = GetEntityQuery<MapGridComponent>();
+            _ftlQuery = GetEntityQuery<FTLComponent>();
         }
 
         public override void UpdateBeforeMapSolve(bool prediction, PhysicsMapComponent mapComponent, float frameTime)
@@ -106,6 +109,12 @@ namespace Content.Shared.Friction
                 friction *= bodyModifier;
 
                 friction = Math.Max(_minDamping, friction);
+
+                // when we are FTLing, we want our linear and angular damping to be 0f.
+                // without this query, they are both set to 0.2f, which results in the
+                // evac/arrivals shuttles and pods slowing down in hyperspace
+                if (_ftlQuery.TryGetComponent(uid, out var ftl) && ftl.State == Shuttles.Systems.FTLState.Travelling)
+                    continue;
 
                 PhysicsSystem.SetLinearDamping(uid, body, friction);
                 PhysicsSystem.SetAngularDamping(uid, body, friction);
