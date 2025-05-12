@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: psykana
-  changes:
-  - message: DNA Scrambler implant now requires confirmation to activate
-    type: Add
-  id: 7966
-  time: '2025-02-17T06:16:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35232
 - author: Emisse
   changes:
   - message: Centcomm has been rebuilt from the ground up.
@@ -3922,3 +3915,11 @@
   id: 8468
   time: '2025-05-12T21:24:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37364
+- author: Hanzdegloker
+  changes:
+  - message: Previously unused flavors alongside some reworked ones now appear in
+      Dan's soaked smokes packs.
+    type: Tweak
+  id: 8469
+  time: '2025-05-12T23:27:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36979
