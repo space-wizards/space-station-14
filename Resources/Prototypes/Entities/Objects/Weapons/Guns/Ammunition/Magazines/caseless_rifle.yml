@@ -106,6 +106,7 @@
   name: "pistol magazine (.25 caseless)"
   description: A 10-round .25 caseless pistol magazine, marked as live-fire ammo. #imp
   parent: BaseMagazinePistolCaselessRifle
+  description: 10-round magazine for the Cobra pistol. Intended to hold general-purpose kinetic ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
@@ -127,6 +128,7 @@
   name: "pistol magazine (.25 caseless practice)"
   description: A 10-round .25 caseless pistol magazine, marked as practice ammo. #imp
   parent: BaseMagazinePistolCaselessRifle
+  description: 10-round magazine for the Cobra pistol. Intended to hold non-harmful chalk ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRiflePractice

@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCartridgeCaselessRifle
-  name: cartridge (.25 rifle)
+  name: cartridge (.25 caseless)
   parent: [ BaseCartridge, BaseSecurityContraband ]
   abstract: true
   components:
@@ -26,6 +26,7 @@
   name: cartridge (.25 caseless)
   description: A sub-caliber cartridge of odd design, but with effective application. .25 caseless ammo has propellent encasing the bullet, making the cartridge appear rectangular. #imp
   parent: BaseCartridgeCaselessRifle
+  description: A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. Standard kinetic ammunition is common and useful in most situations.
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRifle
@@ -35,6 +36,7 @@
   name: cartridge (.25 caseless practice)
   description: An oddly-shaped cartridge with a wax projectile to simulate the real deal. Can be used for force-on-force training, but still stings like a bitch. Eye protection recommended. #imp
   parent: BaseCartridgeCaselessRifle
+  description: A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. Chalk ammunition is generally non-harmful, used for practice.
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRiflePractice

@@ -999,5 +999,113 @@ Entries:
   id: 121
   time: '2025-04-08T14:54:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36396
+- author: Errant
+  changes:
+  - message: The Copy button on the PlayerPanel now copies only the target username,
+      not the entire line.
+    type: Fix
+  id: 122
+  time: '2025-04-11T21:04:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36468
+- author: slarticodefast
+  changes:
+  - message: Added debug verb for quickly inspecting someone's mind entity in VV.
+    type: Add
+  id: 123
+  time: '2025-04-12T13:37:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36474
+- author: Errant
+  changes:
+  - message: Player Panel now has a Follow button.
+    type: Add
+  id: 124
+  time: '2025-04-12T20:00:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36466
+- author: slarticodefast
+  changes:
+  - message: Fixed the inspect mind command not working for other players.
+    type: Fix
+  id: 125
+  time: '2025-04-14T14:45:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36558
+- author: eoineoineoin
+  changes:
+  - message: '"chatwindow" command has been added to open an additional chat window'
+    type: Add
+  - message: '"achatwindow" command has been added to open an additional chat window,
+      preconfigured for monitoring admin channels'
+    type: Add
+  id: 126
+  time: '2025-04-14T15:37:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33548
+- author: Samuka
+  changes:
+  - message: Added a Bluespace Instant Effect to the spawn menu
+    type: Add
+  id: 127
+  time: '2025-04-16T02:26:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36607
+- author: Errant
+  changes:
+  - message: Mind Roles now have subtypes, which can more specifically indicate what
+      role they are. For example, depending on clientside settings a Traitor can either
+      show as "SOLO ANTAGONIST" or "TRAITOR" on both the admin overlay and playerlist.
+      See Admin Options for the available settings. (Note, many minor roles don't
+      ((currently)) have a subtype configured, and will default to showing their role
+      type instead)
+    type: Tweak
+  id: 128
+  time: '2025-04-16T17:04:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35359
+- author: Errant
+  changes:
+  - message: Antag tags on admin notices now show exactly what kind of antag that
+      mob is.
+    type: Tweak
+  id: 129
+  time: '2025-04-16T22:59:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36640
+- author: IProduceWidgets
+  changes:
+  - message: stationevent toolshed commands should now work again to provide event
+      statistics.
+    type: Fix
+  id: 130
+  time: '2025-04-18T07:44:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32200
+- author: Errant
+  changes:
+  - message: The setgamepreset command no longer changes the preset permanently. When
+      used with only one parameter (for the preset to be used), it will make that
+      change for the next round that starts. The optional second parameter can specify
+      the number of upcoming rounds that will use the specified preset. If you want
+      to change the game preset permanently, set an arbitrarily high number as the
+      second parameter, or preferably just modify the game.defaultpreset cvar
+    type: Tweak
+  id: 131
+  time: '2025-04-18T12:24:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30812
+- author: Tayrtahn
+  changes:
+  - message: Added MarkerOne, MarkerTwo, and MarkerThree components for testing and
+      tracking purposes.
+    type: Add
+  id: 132
+  time: '2025-04-20T19:08:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36776
+- author: sowelipililimute
+  changes:
+  - message: The Funding Allocation Computer now has a CVar to enable configuring
+      the primary cut (off by default)
+    type: Add
+  - message: The Funding Allocation Computer now has a CVar to enable configuring
+      the lockbox cut (on by default)
+    type: Add
+  - message: The Funding Allocation Computer now has a CVar to enable hiding the primary
+      account from the funding splits (on by default)
+    type: Add
+  id: 133
+  time: '2025-04-22T12:34:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36790
 Name: Admin
 Order: 1

@@ -44,6 +44,8 @@
     - Revolutionary
     - Zombie
     - Changeling
+    - Heretic
+    - Wizard
     - KesslerSyndromeScheduler
     - RampingStationEventScheduler
     - SpaceTrafficControlEventScheduler
@@ -65,6 +67,8 @@
     - Revolutionary
     - Zombie
     - Changeling
+    - Heretic
+    - Wizard
     - BasicStationEventScheduler
     - KesslerSyndromeScheduler
     - MeteorSwarmMildScheduler

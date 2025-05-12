@@ -340,6 +340,9 @@ public sealed class FoodSystem : EntitySystem
 
         _projectile.RemoveEmbeddedChildren(food); // imp edit
 
+        var afterEvent = new AfterFullyEatenEvent(user);
+        RaiseLocalEvent(food, ref afterEvent);
+
         var dev = new DestructionEventArgs();
         RaiseLocalEvent(food, dev);
 

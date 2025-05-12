@@ -60,9 +60,6 @@
   - type: Item
     heldPrefix: steel
   - type: Appearance
-  - type: FloorTile
-    outputs:
-    - Plating
   - type: Extractable
     grindableSolutionName: steel
   - type: SolutionContainerManager

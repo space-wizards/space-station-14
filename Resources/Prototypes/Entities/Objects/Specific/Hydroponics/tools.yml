@@ -19,6 +19,9 @@
         Slash: 6
   - type: Item
     sprite: Objects/Tools/Hydroponics/hoe.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   # imp edits #
   - type: DamageOtherOnHit
     staminaCost: 5
@@ -46,6 +49,9 @@
   - type: Item
     sprite: Objects/Tools/Hydroponics/clippers.rsi
     storedRotation: -90
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: DamageOtherOnHit # imp
     staminaCost: 5
 
@@ -72,6 +78,10 @@
     - back
   - type: StaticPrice
     price: 40
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Plastic: 100
   # imp edits #
   - type: DamageOtherOnHit
     staminaCost: 7
@@ -104,6 +114,9 @@
         Piercing: 2
   - type: Item
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   # imp edits #
   - type: DamageOtherOnHit
     meleeDamageMultiplier: 1.5
@@ -137,6 +150,9 @@
     sprite: Objects/Tools/Hydroponics/spade.rsi
   - type: Shovel
     speedModifier: 0.75 # slower at digging than a full-sized shovel
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   # imp edits #
   - type: DamageOtherOnHit
     staminaCost: 5

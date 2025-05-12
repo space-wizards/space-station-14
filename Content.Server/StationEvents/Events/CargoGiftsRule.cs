@@ -64,7 +64,7 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
         }
 
         // Add some presents
-        var outstanding = CargoSystem.GetOutstandingOrderCount(cargoDb);
+        var outstanding = CargoSystem.GetOutstandingOrderCount(cargoDb, component.Account);
         while (outstanding < cargoDb.Capacity - component.OrderSpaceToLeave && component.Gifts.Count > 0)
         {
             // I wish there was a nice way to pop this
@@ -83,6 +83,7 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
                     Loc.GetString(component.Description),
                     Loc.GetString(component.Dest),
                     cargoDb,
+                    component.Account,
                     (station.Value, stationData)
             ))
             {

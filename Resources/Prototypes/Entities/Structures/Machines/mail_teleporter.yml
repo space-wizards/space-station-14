@@ -32,6 +32,10 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
+      enum.DeliverySpawnerVisuals.Contents:
+        enum.DeliverySpawnerVisualLayers.Contents:
+          True: { visible: true }
+          False: { visible: false }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }

@@ -1,13 +1,14 @@
+using System.Linq;
 using Content.Server.Cargo.Components;
-using Content.Shared.Stacks;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
-using Content.Shared.GameTicking;
-using Robust.Shared.Map;
-using Robust.Shared.Random;
+using Content.Shared.Cargo.Prototypes;
+using Content.Shared.CCVar;
+using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -18,6 +19,7 @@ public sealed partial class CargoSystem
      */
 
     private static readonly SoundPathSpecifier ApproveSound = new("/Audio/Effects/Cargo/ping.ogg");
+    private bool _lockboxCutEnabled;
 
     private void InitializeShuttle()
     {
@@ -29,11 +31,12 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletAppraiseMessage>(OnPalletAppraise);
         SubscribeLocalEvent<CargoPalletConsoleComponent, BoundUIOpenedEvent>(OnPalletUIOpen);
 
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+        _cfg.OnValueChanged(CCVars.LockboxCutEnabled, (enabled) => { _lockboxCutEnabled = enabled; }, true);
     }
 
     #region Console
 
+    [PublicAPI]
     private void UpdateCargoShuttleConsoles(EntityUid shuttleUid, CargoShuttleComponent _)
     {
         // Update pilot consoles that are already open.
@@ -54,15 +57,18 @@ public sealed partial class CargoSystem
 
     private void UpdatePalletConsoleInterface(EntityUid uid)
     {
-        if (Transform(uid).GridUid is not EntityUid gridUid)
+        if (Transform(uid).GridUid is not { } gridUid)
         {
-            _uiSystem.SetUiState(uid, CargoPalletConsoleUiKey.Sale,
-            new CargoPalletConsoleInterfaceState(0, 0, false));
+            _uiSystem.SetUiState(uid,
+                CargoPalletConsoleUiKey.Sale,
+                new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }
-        GetPalletGoods(gridUid, out var toSell, out var amount);
-        _uiSystem.SetUiState(uid, CargoPalletConsoleUiKey.Sale,
-            new CargoPalletConsoleInterfaceState((int) amount, toSell.Count, true));
+        GetPalletGoods(gridUid, out var toSell, out var goods);
+        var totalAmount = goods.Sum(t => t.Item3);
+        _uiSystem.SetUiState(uid,
+            CargoPalletConsoleUiKey.Sale,
+            new CargoPalletConsoleInterfaceState((int) totalAmount, toSell.Count, true));
     }
 
     private void OnPalletUIOpen(EntityUid uid, CargoPalletConsoleComponent component, BoundUIOpenedEvent args)
@@ -98,11 +104,15 @@ public sealed partial class CargoSystem
         var shuttleName = orderDatabase?.Shuttle != null ? MetaData(orderDatabase.Shuttle.Value).EntityName : string.Empty;
 
         if (_uiSystem.HasUi(uid, CargoConsoleUiKey.Shuttle))
-            _uiSystem.SetUiState(uid, CargoConsoleUiKey.Shuttle, new CargoShuttleConsoleBoundUserInterfaceState(
+        {
+            _uiSystem.SetUiState(uid,
+                CargoConsoleUiKey.Shuttle,
+                new CargoShuttleConsoleBoundUserInterfaceState(
                 station != null ? MetaData(station.Value).EntityName : Loc.GetString("cargo-shuttle-console-station-unknown"),
                 string.IsNullOrEmpty(shuttleName) ? Loc.GetString("cargo-shuttle-console-shuttle-not-found") : shuttleName,
                 orders
             ));
+        }
     }
 
     #endregion
@@ -132,9 +142,10 @@ public sealed partial class CargoSystem
             return orders;
 
         var spaceRemaining = GetCargoSpace(shuttleUid);
-        for (var i = 0; i < component.Orders.Count && spaceRemaining > 0; i++)
+        var allOrders = component.AllOrders.ToList();
+        for (var i = 0; i < allOrders.Count && spaceRemaining > 0; i++)
         {
-            var order = component.Orders[i];
+            var order = allOrders[i];
             if (order.Approved)
             {
                 var numToShip = order.OrderQuantity - order.NumDispatched;
@@ -142,8 +153,14 @@ public sealed partial class CargoSystem
                 {
                     // We won't be able to fit the whole order on, so make one
                     // which represents the space we do have left:
-                    var reducedOrder = new CargoOrderData(order.OrderId,
-                            order.ProductId, order.ProductName, order.Price, spaceRemaining, order.Requester, order.Reason);
+                    var reducedOrder = new CargoOrderData(
+                        order.OrderId,
+                        order.ProductId,
+                        order.ProductName,
+                        order.Price,
+                        spaceRemaining,
+                        order.Requester,
+                        order.Reason);
                     orders.Add(reducedOrder);
                 }
                 else
@@ -219,15 +236,12 @@ public sealed partial class CargoSystem
 
     #region Station
 
-    private bool SellPallets(EntityUid gridUid, out double amount)
+    private bool SellPallets(EntityUid gridUid, out HashSet<(EntityUid, OverrideSellComponent?, double)> goods)
     {
-        GetPalletGoods(gridUid, out var toSell, out amount);
-
-        Log.Debug($"Cargo sold {toSell.Count} entities for {amount}");
+        GetPalletGoods(gridUid, out var toSell, out goods);
 
         if (toSell.Count == 0)
             return false;
-
 
         var ev = new EntitySoldEvent(toSell);
         RaiseLocalEvent(ref ev);
@@ -240,9 +254,9 @@ public sealed partial class CargoSystem
         return true;
     }
 
-    private void GetPalletGoods(EntityUid gridUid, out HashSet<EntityUid> toSell, out double amount)
+    private void GetPalletGoods(EntityUid gridUid, out HashSet<EntityUid> toSell,  out HashSet<(EntityUid, OverrideSellComponent?, double)> goods)
     {
-        amount = 0;
+        goods = new HashSet<(EntityUid, OverrideSellComponent?, double)>();
         toSell = new HashSet<EntityUid>();
 
         foreach (var (palletUid, _, _) in GetCargoPallets(gridUid, BuySellType.Sell))
@@ -250,7 +264,9 @@ public sealed partial class CargoSystem
             // Containers should already get the sell price of their children so can skip those.
             _setEnts.Clear();
 
-            _lookup.GetEntitiesIntersecting(palletUid, _setEnts,
+            _lookup.GetEntitiesIntersecting(
+                palletUid,
+                _setEnts,
                 LookupFlags.Dynamic | LookupFlags.Sundries);
 
             foreach (var ent in _setEnts)
@@ -273,7 +289,7 @@ public sealed partial class CargoSystem
                 if (price == 0)
                     continue;
                 toSell.Add(ent);
-                amount += price;
+                goods.Add((ent, CompOrNull<OverrideSellComponent>(ent), price));
             }
         }
     }
@@ -305,28 +321,50 @@ public sealed partial class CargoSystem
     {
         var xform = Transform(uid);
 
-        if (xform.GridUid is not EntityUid gridUid)
+        if (_station.GetOwningStation(uid) is not { } station ||
+            !TryComp<StationBankAccountComponent>(station, out var bankAccount))
         {
-            _uiSystem.SetUiState(uid, CargoPalletConsoleUiKey.Sale,
-            new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }
 
-        if (!SellPallets(gridUid, out var price))
+        if (xform.GridUid is not { } gridUid)
+        {
+            _uiSystem.SetUiState(uid,
+                CargoPalletConsoleUiKey.Sale,
+                new CargoPalletConsoleInterfaceState(0, 0, false));
+            return;
+        }
+
+        if (!SellPallets(gridUid, out var goods))
             return;
 
-        var stackPrototype = _protoMan.Index<StackPrototype>(component.CashType);
-        _stack.Spawn((int) price, stackPrototype, xform.Coordinates);
+        var baseDistribution = CreateAccountDistribution((station, bankAccount));
+        foreach (var (_, sellComponent, value) in goods)
+        {
+            Dictionary<ProtoId<CargoAccountPrototype>, double> distribution;
+            if (sellComponent != null)
+            {
+                var cut = _lockboxCutEnabled ? bankAccount.LockboxCut : bankAccount.PrimaryCut;
+                distribution = new Dictionary<ProtoId<CargoAccountPrototype>, double>
+                {
+                    { sellComponent.OverrideAccount, cut },
+                    { bankAccount.PrimaryAccount, 1.0 - cut },
+                };
+            }
+            else
+            {
+                distribution = baseDistribution;
+            }
+
+            UpdateBankAccount((station, bankAccount), (int) Math.Round(value), distribution, false);
+        }
+
+        Dirty(station, bankAccount);
         _audio.PlayPvs(ApproveSound, uid);
         UpdatePalletConsoleInterface(uid);
     }
 
     #endregion
-
-    private void OnRoundRestart(RoundRestartCleanupEvent ev)
-    {
-        Reset();
-    }
 }
 
 /// <summary>

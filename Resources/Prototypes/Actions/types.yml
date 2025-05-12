@@ -93,8 +93,9 @@
   name: Break Free
   description: Activating your freedom implant will free you from any hand restraints
   components:
+  - type: LimitedCharges
+    maxCharges: 3
   - type: InstantAction
-    charges: 3
     checkCanInteract: false
     itemIconStyle: BigAction
     priority: -20
@@ -121,9 +122,10 @@
   name: Activate EMP
   description: Triggers a small EMP pulse around you
   components:
+  - type: LimitedCharges
+    maxCharges: 3
   - type: InstantAction
     checkCanInteract: false
-    charges: 3
     useDelay: 5
     itemIconStyle: BigAction
     priority: -20
@@ -137,9 +139,10 @@
   name: SCRAM!
   description: Randomly teleports you within a large distance.
   components:
+  - type: LimitedCharges
+    maxCharges: 2
   - type: InstantAction
     checkCanInteract: false
-    charges: 2
     useDelay: 5
     itemIconStyle: BigAction
     priority: -20
@@ -155,8 +158,9 @@
   components:
   - type: ConfirmableAction
     popup: dna-scrambler-action-popup
+  - type: LimitedCharges
+    maxCharges: 1
   - type: InstantAction
-    charges: 1
     itemIconStyle: BigAction
     priority: -20
     icon:
@@ -215,18 +219,6 @@
   - type: InstantAction
     useDelay: 30
     event: !type:VendingMachineSelfDispenseEvent
-
-- type: entity
-  id: ActionArtifactActivate
-  name: Activate Artifact
-  description: Immediately activates your current artifact node.
-  components:
-  - type: InstantAction
-    icon:
-      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
-      state: ano01
-    useDelay: 60
-    event: !type:ArtifactSelfActivateEvent
 
 - type: entity
   id: ActionToggleBlock

@@ -21,6 +21,14 @@
     energyConsumption: 50000
 
 - type: entity
+  id: AdminInstantEffectBluespace
+  suffix: BluespaceFlash
+  parent: AdminInstantEffectBase
+  components:
+  - type: SpawnOnTrigger 
+    proto: EffectFlashBluespace
+
+- type: entity
   id: AdminInstantEffectFlash
   suffix: Flash
   parent: AdminInstantEffectBase

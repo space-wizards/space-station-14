@@ -244,7 +244,7 @@
       - state: base-part-inhand-right
       - state: base-stripes-inhand-right
         color: "#7B0F12"
-      
+
 
 - type: entity
   id: BaseBorgModuleSyndicateAssault
@@ -391,7 +391,6 @@
     - Shovel
     - MineralScannerUnpowered
     - OreBag
-    - Crowbar
     - RadioHandheld
   - type: BorgModuleIcon
     icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: mining-module } #imp edit
@@ -606,8 +605,11 @@
   - type: ItemBorgModule
     items:
     - NodeScanner
-    - BorgDropper
+    - Multitool
+    - Wrench
+    - SprayBottle
     - Beaker
+    - Syringe
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: node-scanner-module }
 

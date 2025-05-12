@@ -55,6 +55,7 @@
   description: A 7-round .45 magnum pistol magazine with no apparent markings. #imp
   suffix: empty
   parent: BaseMagazineMagnum
+  description: 7-round single stack pistol magazine.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -70,6 +71,7 @@
   name: pistol magazine (.45 magnum)
   description: A 7-round .45 magnum pistol magazine, marked as live-fire ammo. #imp
   parent: BaseMagazineMagnum
+  description: 7-round single stack pistol magazine. Intended to hold general-purpose kinetic ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
@@ -85,6 +87,7 @@
   name: pistol magazine (.45 magnum practice)
   description: A 7-round .45 magnum pistol magazine, marked as practice ammo. #imp
   parent: BaseMagazineMagnum
+  description: 7-round single stack pistol magazine. Intended to hold non-harmful chalk ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
@@ -100,6 +103,7 @@
   name: pistol magazine (.45 magnum uranium)
   description: A 7-round .45 magnum pistol magazine, marked as uranium ammo. #imp
   parent: BaseMagazineMagnum
+  description: 7-round single stack pistol magazine. Intended to hold exotic uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumUranium
@@ -115,6 +119,7 @@
   name: pistol magazine (.45 magnum armor-piercing)
   description: A 7-round .45 magnum pistol magazine, marked as armor-piercing ammo. #imp
   parent: BaseMagazineMagnum
+  description: 7-round single stack pistol magazine. Intended to hold rare armor-piercing ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP

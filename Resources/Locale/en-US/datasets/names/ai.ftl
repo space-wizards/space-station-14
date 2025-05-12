@@ -98,9 +98,8 @@ names-ai-dataset-69 = Marvin
 names-ai-dataset-70 = Max 404
 names-ai-dataset-71 = Metalhead
 names-ai-dataset-72 = M.I.M.I
-names-ai-dataset-73 = MK ULTRA
-# Imp - There was a gap here with the duplicate and I will fill it
-names-ai-dataset-74 = Universal Will
+names-ai-dataset-73 = Large Language Model
+names-ai-dataset-74 = Monarch
 names-ai-dataset-75 = Mugsy3000
 names-ai-dataset-76 = Multivac
 names-ai-dataset-77 = NCH
@@ -184,3 +183,5 @@ names-ai-dataset-149 = Leela
 names-ai-dataset-150 = Basilisk
 names-ai-dataset-151 = Orion
 names-ai-dataset-152 = Blue Heron
+names-ai-dataset-153 = MK ULTRA
+names-ai-dataset-154 = Universal Will

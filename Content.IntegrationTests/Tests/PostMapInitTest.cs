@@ -126,6 +126,7 @@ namespace Content.IntegrationTests.Tests
             "Saltern",
             "Train",
             "Xeno",
+            "dm01-entryway",S
 
             // _Harmony/Maps
             "Barratry",

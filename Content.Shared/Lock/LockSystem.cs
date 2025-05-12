@@ -120,7 +120,7 @@ public sealed class LockSystem : EntitySystem
         if (canToggleLock == "false")
             return false;
 
-        if (!HasUserAccess(uid, user, quiet: false))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false))
             return false;
 
         // IMP ADDITION - lockTime can now either be the component's lock time, OR the FromInside time.
@@ -160,6 +160,9 @@ public sealed class LockSystem : EntitySystem
         if (!Resolve(uid, ref lockComp))
             return;
 
+        if (lockComp.Locked)
+            return;
+
         if (user is { Valid: true })
         {
             _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-do-lock-success",
@@ -188,6 +191,9 @@ public sealed class LockSystem : EntitySystem
     public void Unlock(EntityUid uid, EntityUid? user, LockComponent? lockComp = null)
     {
         if (!Resolve(uid, ref lockComp))
+            return;
+
+        if (!lockComp.Locked)
             return;
 
         if (user is { Valid: true })
@@ -228,7 +234,7 @@ public sealed class LockSystem : EntitySystem
         if (canToggleLock == "false")
             return false;
 
-        if (!HasUserAccess(uid, user, quiet: false))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false))
             return false;
 
         // IMP ADDITION - lockTime can now either be the component's lock time, OR the FromInside time.
