@@ -11,11 +11,11 @@ public sealed partial class SlotBlockSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SlotBlockComponent, InventoryRelayedEvent<IsEquippingAttemptEvent>>(OnEquipAttempt);
-        SubscribeLocalEvent<SlotBlockComponent, InventoryRelayedEvent<IsUnequippingAttemptEvent>>(OnUnequipAttempt);
+        SubscribeLocalEvent<SlotBlockComponent, InventoryRelayedEvent<IsEquippingTargetAttemptEvent>>(OnEquipAttempt);
+        SubscribeLocalEvent<SlotBlockComponent, InventoryRelayedEvent<IsUnequippingTargetAttemptEvent>>(OnUnequipAttempt);
     }
 
-    private void OnEquipAttempt(Entity<SlotBlockComponent> ent, ref InventoryRelayedEvent<IsEquippingAttemptEvent> args)
+    private void OnEquipAttempt(Entity<SlotBlockComponent> ent, ref InventoryRelayedEvent<IsEquippingTargetAttemptEvent> args)
     {
         if (args.Args.Cancelled || (args.Args.SlotFlags & ent.Comp.Slots) == 0)
             return;
@@ -24,7 +24,7 @@ public sealed partial class SlotBlockSystem : EntitySystem
         args.Args.Cancel();
     }
 
-    private void OnUnequipAttempt(Entity<SlotBlockComponent> ent, ref InventoryRelayedEvent<IsUnequippingAttemptEvent> args)
+    private void OnUnequipAttempt(Entity<SlotBlockComponent> ent, ref InventoryRelayedEvent<IsUnequippingTargetAttemptEvent> args)
     {
         if (args.Args.Cancelled || (args.Args.SlotFlags & ent.Comp.Slots) == 0)
             return;
