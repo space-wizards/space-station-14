@@ -84,10 +84,10 @@ public sealed partial class StaminaComponent : Component
     public float AfterCritDecayMultiplier = 5f;
 
     /// <summary>
-    /// This is how much stamina damage a mob takes when it forces itself to stand up
+    /// This is how much stamina damage a mob takes when it forces itself to stand up before modifiers
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ForceStandStamina = 10f;
+    public float ForceStandStamina = 20f;
 
     /// <summary>
     /// What sound should play when we successfully stand up
