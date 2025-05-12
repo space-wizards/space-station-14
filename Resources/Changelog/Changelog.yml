@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: n00kii
-  changes:
-  - message: Fixed laser weapon visuals being broken when shooting across grids or
-      into space.
-    type: Fix
-  id: 7962
-  time: '2025-02-16T16:14:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34515
 - author: Velken
   changes:
   - message: ': Paramedic Siren''s light is now visible to all and not just the wearer.'
@@ -3923,3 +3915,11 @@
   id: 8464
   time: '2025-05-12T16:28:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37361
+- author: Winkarst-cpu
+  changes:
+  - message: Now certain clothes (like hardsuits and their helmets) can prevent from
+      changing clothes, goggles, etc.
+    type: Add
+  id: 8465
+  time: '2025-05-12T17:35:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35172
