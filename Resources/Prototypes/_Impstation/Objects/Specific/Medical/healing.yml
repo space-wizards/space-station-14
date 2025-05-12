@@ -21,11 +21,11 @@
         Slash: -10
         Piercing: -5
     bloodlossModifier: -10
-    healingBeginSound: 
+    healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
-    healingEndSound: 
+    healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
-  - type: Stack 
+  - type: Stack
     stackType: SimpleSuture
     count: 10
   - type: StackPrice
@@ -61,11 +61,11 @@
       types:
         Shock: -10
         Heat: -5
-    healingBeginSound: 
+    healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
-    healingEndSound: 
+    healingEndSound:
       path: "/Audio/Items/Medical/ointment_end.ogg"
-  - type: Stack 
+  - type: Stack
     stackType: ShockGel
     count: 10
   - type: StackPrice
@@ -101,16 +101,16 @@
       types:
         Blunt: -10
         Asphyxiation: -5
-    applyWrithe: true # I am channeling all my growing pains that I have ever experienced in my life through this one variable.
     healingBeginSound:
       path: "/Audio/Items/appraiser.ogg"
-    healingEndSound: 
+    healingEndSound:
       path: "/Audio/Effects/sparks4.ogg"
-  - type: Stack 
+  - type: Stack
     stackType: ElectrodePad
     count: 10
   - type: StackPrice
     price: 5
+  - type: StunOnHeal # imp
 
 - type: entity
   id: ElectrodePad1
@@ -145,9 +145,9 @@
         Burn: -8 #2 of each
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
-    healingEndSound: 
+    healingEndSound:
       path: "/Audio/Items/Medical/ointment_end.ogg"
-  - type: Stack 
+  - type: Stack
     stackType: Tincture
     count: 10
   - type: StackPrice
@@ -204,9 +204,9 @@
         Slash: 3
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
-    healingEndSound: 
+    healingEndSound:
       path: "/Audio/Items/Medical/ointment_end.ogg"
-  - type: Stack 
+  - type: Stack
     stackType: EZGraft
     count: 10
   - type: StackPrice
@@ -243,12 +243,12 @@
         Cold: -10
     healingBeginSound:
       path: "/Audio/Items/Toys/ToyFall2.ogg" #the logic is flawless.
-    healingEndSound: 
+    healingEndSound:
       path: "/Audio/Items/Medical/ointment_end.ogg"
   - type: EmitSoundOnLand
     sound:
       path: "/Audio/Voice/Slime/slime_squish.ogg" # Added Immersion.
-  - type: Stack 
+  - type: Stack
     stackType: ColdPack
     count: 10
   - type: StackPrice

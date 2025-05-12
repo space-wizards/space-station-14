@@ -21,7 +21,7 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
-using Content.Server.Electrocution; //Imp
+using Content.Shared._Impstation.Medical; // imp
 
 namespace Content.Server.Medical;
 
@@ -38,7 +38,6 @@ public sealed class HealingSystem : EntitySystem
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly ElectrocutionSystem _electrocution = default!; //#imp
 
     public override void Initialize()
     {
@@ -90,13 +89,6 @@ public sealed class HealingSystem : EntitySystem
         if (healed == null && healing.BloodlossModifier != 0)
             return;
 
-        // Applies stun (if applicable) #imp
-
-        if (healing.ApplyWrithe == true)
-        {
-            _electrocution.TryDoElectrocution(entity.Owner, null, healing.WritheDamage, TimeSpan.FromSeconds(healing.WritheDuration), true, ignoreInsulation: true);
-        }
-
         var total = healed?.GetTotal() ?? FixedPoint2.Zero;
 
         // Re-verify that we can heal the damage.
@@ -125,6 +117,10 @@ public sealed class HealingSystem : EntitySystem
         }
 
         _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
+
+        // imp edit, raise healing success event to handle after-effects
+        var ev = new HealingSuccessEvent(args.User, args.Target, args.Used);
+        RaiseLocalEvent(entity, ev);
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = (HasDamage(entity, healing) && !dontRepeat);

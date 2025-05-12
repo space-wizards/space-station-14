@@ -39,26 +39,6 @@ namespace Content.Server.Medical.Components
         public List<string>? DamageContainers;
 
         /// <summary>
-        ///     Does the topical stun? #imp
-        /// >/summary
-        [ViewVariables(VVAccess.ReadWrite), DataField("applyWrithe")]
-        public bool ApplyWrithe = false;
-
-        /// <summary>
-        /// how long should the topical stun? #imp
-        /// </summary>
-        
-        [ViewVariables(VVAccess.ReadWrite), DataField("writheDuration")]
-        public float WritheDuration = 2f;
-
-        /// <summary>
-        ///     How much shock damage should the stun do? #imp
-        ///     Could theoretically be handled by the damage variable, but doing so doesn't stop treatment after all other damage types are handled.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("writheDamage")]
-        public int WritheDamage = 1;
-
-        /// <summary>
         /// How long it takes to apply the damage.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
@@ -82,7 +62,5 @@ namespace Content.Server.Medical.Components
         /// </summary>
         [DataField("healingEndSound")]
         public SoundSpecifier? HealingEndSound = null;
-
-
     }
 }
