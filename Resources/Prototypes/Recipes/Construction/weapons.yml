@@ -157,3 +157,11 @@
   targetNode: spear
   category: construction-category-weapons
   objectType: Item
+
+- type: construction
+  id: ClothingHandsKnuckleDustersBrass
+  graph: ClothingHandsKnuckleDustersBrass
+  startNode: start
+  targetNode: icon
+  category: construction-category-weapons
+  objectType: Item

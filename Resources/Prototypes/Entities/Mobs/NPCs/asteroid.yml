@@ -329,6 +329,9 @@
     stage: 1
   - type: StaticPrice
     price: 5000
+  - type: Tag
+    tags:
+    - HivelordRemains
 
 - type: entity
   id: FoodHivelordRemainsInert
@@ -345,6 +348,10 @@
     size: Normal
   - type: StaticPrice
     price: 500
+  - type: Tag
+    tags:
+    - HivelordRemains
+
 
 - type: entity
   id: MobBasilisk
