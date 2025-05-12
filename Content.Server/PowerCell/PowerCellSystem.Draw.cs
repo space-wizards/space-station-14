@@ -20,10 +20,11 @@ public sealed partial class PowerCellSystem
             if (!comp.Enabled)
                 continue;
 
-            if (Timing.CurTime < comp.NextUpdateTime)
+            var now = Timing.CurTime;
+            if (now < comp.NextUpdateTime)
                 continue;
 
-            comp.NextUpdateTime += comp.Delay;
+            comp.NextUpdateTime = now + comp.Delay;
 
             if (!TryGetBatteryFromSlot(uid, out var batteryEnt, out var battery, slot))
                 continue;
