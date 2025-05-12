@@ -1,4 +1,4 @@
-﻿name: Whitespace Check
+﻿name: Trailing Whitespace Check
 
 on:
   pull_request:
