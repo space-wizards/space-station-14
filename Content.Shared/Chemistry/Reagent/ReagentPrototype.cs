@@ -100,7 +100,6 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public bool MetamorphicChangeColor { get; private set; } = true;
 
-
         /// <summary>
         /// If not null, makes something slippery. Also defines slippery interactions like stun time and launch mult.
         /// </summary>
