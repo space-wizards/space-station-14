@@ -44,7 +44,7 @@ public sealed class SmesVisualizerSystem : VisualizerSystem<SmesComponent>
     }
 }
 
-enum SmesVisualLayers : byte
+public enum SmesVisualLayers : byte
 {
     Input,
     Charge,
