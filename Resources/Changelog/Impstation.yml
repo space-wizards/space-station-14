@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FlippenPage
-  changes:
-  - message: secret reinforced walls
-    type: Add
-  id: 1154
-  time: '2025-02-17T16:24:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1167
 - author: Toby222, Honeyed_Lemons_
   changes:
   - message: Adds Nanochat Lookup! Look up your friends in your Nanochat app today!
@@ -4175,3 +4168,14 @@
   id: 1653
   time: '2025-05-12T10:34:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2450
+- author: Deltanadas, AirFryerBuyOneGetOneFree, Kip
+  changes:
+  - message: Added Automation! Robotic Arms, filters, automation kits, and storage
+      bins have been added. Make the factory of your dreams today.
+    type: Add
+  - message: Hyper-convection boards have been replaced with hyper-convection upgrade
+      kits, apply directly to machines to upgrade them!
+    type: Tweak
+  id: 1654
+  time: '2025-05-12T11:59:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2440
