@@ -18,6 +18,11 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: Appearance
   - type: SpentAmmoVisuals
+  - type: EmitSoundOnLand #imp
+    sound:
+      path: /Audio/Weapons/Guns/Casings/shotgun_fall.ogg
+      params:
+        volume: -1
 
 - type: entity
   id: ShellShotgunBeanbag
