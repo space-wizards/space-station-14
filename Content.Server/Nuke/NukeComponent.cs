@@ -189,5 +189,11 @@ namespace Content.Server.Nuke
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("requiredFloorRadius")]
         public float RequiredFloorRadius = 5;
+
+        /// <summary>
+        /// imp edit - if more than this % of neaby tiles are space, block anchoring the nuke
+        /// </summary>
+        [DataField]
+        public float MaxAllowedSpaceFrac = 0.25f;
     }
 }
