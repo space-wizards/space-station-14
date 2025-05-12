@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sparlight
-  changes:
-  - message: Space debris has returned to Wizden servers.
-    type: Add
-  id: 7968
-  time: '2025-02-17T12:56:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34795
 - author: Kickguy223
   changes:
   - message: Cleaning up a puddle properly changes its slippery properties.
@@ -3924,3 +3917,10 @@
   id: 8470
   time: '2025-05-12T23:42:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37135
+- author: perryprog
+  changes:
+  - message: You can now link uniform printers to silos.
+    type: Tweak
+  id: 8471
+  time: '2025-05-12T23:56:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37393
