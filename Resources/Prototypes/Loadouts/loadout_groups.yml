@@ -70,7 +70,6 @@
   minLimit: 0
   loadouts:
   - Glasses
-  - GlassesCheapSunglasses
   - GlassesJamjar
   - GlassesJensen
 
@@ -553,7 +552,6 @@
   loadouts:
   - EmergencyNitrogenMime
   - EmergencyOxygenMime
-  - EmergencySpeciesMothMime
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
