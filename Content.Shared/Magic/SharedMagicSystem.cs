@@ -397,7 +397,7 @@ public abstract class SharedMagicSystem : EntitySystem
         var direction = _transform.GetMapCoordinates(ev.Target, Transform(ev.Target)).Position - _transform.GetMapCoordinates(ev.Performer, Transform(ev.Performer)).Position;
         var impulseVector = direction * 10000;
 
-         _physics.ApplyLinearImpulse(ev.Target, impulseVector);
+        _physics.ApplyLinearImpulse(ev.Target, impulseVector);
 
         if (!TryComp<BodyComponent>(ev.Target, out var body))
             return;
@@ -424,7 +424,7 @@ public abstract class SharedMagicSystem : EntitySystem
         // var impulseVector = direction * 5000;
 
         //_physics.ApplyLinearImpulse(ev.Target, impulseVector);
-        
+
         _jittering.DoJitter(ev.Target, TimeSpan.FromSeconds(1f), false, 80f, 8f, true);
         _damageableSystem.TryChangeDamage(ev.Target, ev.smiteDamage, true);
     }
