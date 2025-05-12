@@ -3,7 +3,7 @@ namespace Content.Shared.Inventory.Events;
 public abstract class UnequipAttemptEventBase(EntityUid unequipee, EntityUid unEquipTarget, EntityUid equipment,
     SlotDefinition slotDefinition) : CancellableEntityEventArgs, IInventoryRelayEvent
 {
-    public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
+    public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
 
     /// <summary>
     /// The entity performing the action. NOT necessarily the same as the entity whose equipment is being removed..
