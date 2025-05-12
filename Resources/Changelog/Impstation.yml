@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: 12rabbits
-  changes:
-  - message: Fixed cyborg modules losing certain items at low health.
-    type: Fix
-  id: 1159
-  time: '2025-02-18T02:30:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1724
 - author: hivehum
   changes:
   - message: headslug go on head
@@ -4180,3 +4173,12 @@
   id: 1658
   time: '2025-05-12T21:05:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2443
+- author: widgetbeck
+  changes:
+  - message: Fixed Drones being overly concerned about zzzz-the.
+    type: Fix
+  - message: Drone law rewrite.
+    type: Tweak
+  id: 1659
+  time: '2025-05-12T22:40:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2474
