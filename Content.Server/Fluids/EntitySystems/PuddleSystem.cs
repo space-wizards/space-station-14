@@ -630,7 +630,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return false;
         }
 
-        var gridUid = _transformSystem.GetGrid((coordinates.EntityId, transform));
+        var gridUid = _transformSystem.GetGrid(coordinates.EntityId);
 
         if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
         {
