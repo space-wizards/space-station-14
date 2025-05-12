@@ -99,6 +99,13 @@
       microwave_entity_container: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: AutomationSlots # Goobstation
+    slots:
+    - !type:AutomatedContainer
+      input: AutomationSlotInput
+      output: AutomationSlotInput
+      containerId: microwave_entity_container
+      maxItems: 10 # have to manually keep it in sync with capacity on Microwave at the top
   - type: EmptyOnMachineDeconstruct
     containers:
     - microwave_entity_container

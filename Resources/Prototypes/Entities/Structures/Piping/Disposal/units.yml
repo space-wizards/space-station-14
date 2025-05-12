@@ -84,6 +84,20 @@
     interfaces:
       enum.DisposalUnitUiKey.Key:
         type: DisposalUnitBoundUserInterface
+  - type: AutomationSlots # Goobstation
+    slots:
+    - !type:AutomatedContainer
+      input: AutomationSlotInput
+      output: AutomationSlotInput
+      containerId: disposals
+      maxItems: 30 # disposals doesn't have a limit this is just so you can't use it as an ME system
+    - !type:AutomatedPorts
+      sinks:
+      - Toggle
+      - DisposalFlush
+      - DisposalEject
+      sources:
+      - DisposalReady
   - type: Rummageable
   - type: RequireProjectileTarget
 

@@ -14,7 +14,14 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
 
     public abstract bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component);
 
-    public void SetNeedsPower(EntityUid uid, bool value, SharedApcPowerReceiverComponent? receiver = null)
+    /// <summary>
+    /// Goobstation - Lets shared code set power load.
+    /// </summary>
+    public virtual void SetLoad(SharedApcPowerReceiverComponent comp, float load)
+    {
+    }
+	
+	public void SetNeedsPower(EntityUid uid, bool value, SharedApcPowerReceiverComponent? receiver = null)
     {
         if (!ResolveApc(uid, ref receiver) || receiver.NeedsPower == value)
             return;

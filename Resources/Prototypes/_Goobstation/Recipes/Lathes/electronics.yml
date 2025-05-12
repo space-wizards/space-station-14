@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2024 NULL882 <gost6865@yandex.ru>
+# SPDX-FileCopyrightText: 2024 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: RoboticArmCircuitboard
+  icon:
+    sprite: Objects/Misc/module.rsi
+    state: engineering
+  result: RoboticArmCircuitboard
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: StorageBinCircuitboard
+  icon:
+    sprite: Objects/Misc/module.rsi
+    state: generic
+  result: StorageBinCircuitboard

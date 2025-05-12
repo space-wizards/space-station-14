@@ -1,0 +1,8 @@
+- type: latheRecipe
+  parent: BaseUpgradeKit
+  id: UpgradeKitAutomation
+  result: UpgradeKitAutomation
+  materials:
+    Glass: 500
+    Steel: 200
+    Silver: 300

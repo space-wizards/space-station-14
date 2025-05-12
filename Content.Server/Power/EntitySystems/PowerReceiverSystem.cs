@@ -162,9 +162,9 @@ namespace Content.Server.Power.EntitySystems
             return !_recQuery.Resolve(uid, ref receiver, false) || receiver.Powered;
         }
 
-        public void SetLoad(ApcPowerReceiverComponent comp, float load)
+        public override void SetLoad(SharedApcPowerReceiverComponent comp, float load) // Goobstation - override shared method
         {
-            comp.Load = load;
+            ((ApcPowerReceiverComponent) comp).Load = load; // Goobstation
         }
 
         public override bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component)

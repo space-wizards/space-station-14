@@ -1,0 +1,79 @@
+# SPDX-FileCopyrightText: 2024 Aviu00 <93730715+Aviu00@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2025 Fishbait <Fishbait@git.ml>
+# SPDX-FileCopyrightText: 2025 fishbait <gnesse@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: sourcePort
+  id: MaterialSilo
+  name: signal-port-name-material-silo
+  description: signal-port-description-material-silo
+  defaultLinks: [ MaterialSiloUtilizer ]
+
+- type: sourcePort
+  id: SignalContrabandDetected
+  name: signal-port-name-contraband-detected
+  description: signal-port-description-contraband-detected
+
+# Robotic Arm
+
+- type: sourcePort
+  id: RoboticArmOutput
+  name: signal-port-name-output-machine
+  description: signal-port-description-output-machine
+
+- type: sourcePort
+  id: RoboticArmMoved
+  name: signal-port-name-item-moved
+  description: signal-port-description-item-moved
+
+- type: sourcePort
+  id: AutomationSlotFilter
+  name: signal-port-name-automation-slot-filter
+  description: signal-port-description-automation-slot-filter
+
+# Reagent Grinder
+
+- type: sourcePort
+  id: AutomationSlotBeaker
+  name: signal-port-name-automation-slot-beaker
+  description: signal-port-description-automation-slot-beaker
+
+- type: sourcePort
+  id: AutomationSlotInput
+  name: signal-port-name-automation-slot-input
+  description: signal-port-description-automation-slot-input
+
+# Flatpacker
+
+- type: sourcePort
+  id: AutomationSlotBoard
+  name: signal-port-name-automation-slot-board
+  description: signal-port-description-automation-slot-board
+
+# Disposal Unit
+
+- type: sourcePort
+  id: DisposalReady
+  name: signal-port-name-ready
+  description: signal-port-description-ready
+
+# Storage Bin
+
+- type: sourcePort
+  id: AutomationSlotStorage
+  name: signal-port-name-automation-slot-storage
+  description: signal-port-description-automation-slot-storage
+
+- type: sourcePort
+  id: StorageInserted
+  name: signal-port-name-storage-inserted
+  description: signal-port-description-storage-inserted
+
+- type: sourcePort
+  id: StorageRemoved
+  name: signal-port-name-storage-removed
+  description: signal-port-description-storage-removed

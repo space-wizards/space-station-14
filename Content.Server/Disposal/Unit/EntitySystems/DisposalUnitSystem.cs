@@ -13,6 +13,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
+using Content.Shared.DeviceLinking; // Goobstation
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
@@ -36,6 +37,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes; // Goobstation
 using Robust.Shared.Utility;
 
 namespace Content.Server.Disposal.Unit.EntitySystems;
@@ -57,6 +59,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly SharedDeviceLinkSystem _device = default!; // Goobstation
+    public static readonly ProtoId<SourcePortPrototype> ReadyPort = "DisposalReady"; // Goobstation
 
     public override void Initialize()
     {
@@ -388,6 +392,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (state == DisposalsPressureState.Ready)
         {
             component.NextPressurized = TimeSpan.Zero;
+			_device.InvokePort(uid, ReadyPort); // Goobstation
 
             // Manually engaged
             if (component.Engaged)

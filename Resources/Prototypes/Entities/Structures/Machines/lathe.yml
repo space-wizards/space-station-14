@@ -49,6 +49,11 @@
     price: 800
   - type: ResearchClient
   - type: TechnologyDatabase
+  - type: AutomationSlots # Goobstation
+    slots:
+    - !type:AutomatedMaterialStorage
+      input: AutomationSlotMaterials
+      output: null
 
 # a lathe that can be sped up with space lube / slowed down with glue
 - type: entity
@@ -277,6 +282,7 @@
     - MechBoards
     - ShuttleBoards
     - ImpCircuitDynamic # imp
+    - UpgradeKits # Goobstation
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - SecurityBoards

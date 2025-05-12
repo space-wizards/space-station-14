@@ -46,6 +46,20 @@
         whitelist:
           components:
           - FitsInDispenser
+  - type: AutomationSlots # Goobstation
+    slots:
+    - !type:AutomatedItemSlot
+      input: AutomationSlotBeaker
+      output: AutomationSlotBeaker
+      slotId: beakerSlot
+    - !type:AutomatedContainer
+      input: AutomationSlotInput
+      output: AutomationSlotInput
+      whitelist:
+        components:
+        - Extractable # shitcode doesnt require this with container attempt events just in interaction
+      containerId: inputContainer
+      maxItems: 6 # manually have to sync it with ReagentGrinderComponent :)
   - type: Machine
     board: ReagentGrinderMachineCircuitboard
   - type: ContainerContainer

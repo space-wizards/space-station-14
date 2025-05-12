@@ -66,9 +66,20 @@
   tier: 1
   cost: 10000
   recipeUnlocks:
-  - AutolatheHyperConvectionMachineCircuitboard
-  - ProtolatheHyperConvectionMachineCircuitboard
-  - CircuitImprinterHyperConvectionMachineCircuitboard
+  # Begin DeltaV Removals - replaced by upgrade kits + departmental techfabs
+  #- AutolatheHyperConvectionMachineCircuitboard
+  #- ProtolatheHyperConvectionMachineCircuitboard
+  #- CircuitImprinterHyperConvectionMachineCircuitboard
+  # End DeltaV Removals
+  # Begin DeltaV Additions
+  - LatheUpgradeKitHyper
+  - LatheUpgradeKitCryo
+  # End DeltaV Additions
+  # Begin Goobstation Additions
+  - UpgradeKitAutomation
+  - RoboticArmCircuitboard
+  - StorageBinCircuitboard
+  # End Goobstation Additions
   - SheetifierMachineCircuitboard
 
 - type: technology

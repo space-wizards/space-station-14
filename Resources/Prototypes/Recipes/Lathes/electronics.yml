@@ -205,11 +205,13 @@
   result: ProtolatheMachineCircuitboard
 
 - type: latheRecipe
+  abstract: true # DeltaV
   parent: BaseGoldCircuitboardRecipe
   id: AutolatheHyperConvectionMachineCircuitboard
   result: AutolatheHyperConvectionMachineCircuitboard
 
 - type: latheRecipe
+  abstract: true # DeltaV
   parent: BaseGoldCircuitboardRecipe
   id: ProtolatheHyperConvectionMachineCircuitboard
   result: ProtolatheHyperConvectionMachineCircuitboard
@@ -220,6 +222,7 @@
   result: CircuitImprinterMachineCircuitboard
 
 - type: latheRecipe
+  abstract: true # DeltaV
   parent: BaseGoldCircuitboardRecipe
   id: CircuitImprinterHyperConvectionMachineCircuitboard
   result: CircuitImprinterHyperConvectionMachineCircuitboard
