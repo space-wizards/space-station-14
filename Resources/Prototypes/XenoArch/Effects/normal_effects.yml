@@ -562,7 +562,6 @@
     intensity: 2
     slope: 0.3
 
-
 - type: artifactEffect
   id: EffectMaterialSpawn
   targetDepth: 3
