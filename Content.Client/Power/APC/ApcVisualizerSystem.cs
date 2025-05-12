@@ -77,7 +77,7 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
     }
 }
 
-enum ApcVisualLayers : byte
+public enum ApcVisualLayers : byte
 {
     /// <summary>
     /// The sprite layer used for the interface lock indicator light overlay.
