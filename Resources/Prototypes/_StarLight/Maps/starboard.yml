@@ -2,7 +2,7 @@
   id: Starboard
   mapName: 'Starboard'
   mapPath: /Maps/_Starlight/Stations/starboard.yml
-  minPlayers: 60
+  minPlayers: 90
   stations:
     Starboard:
       stationProto: StandardNanotrasenStation
