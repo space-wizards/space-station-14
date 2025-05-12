@@ -5,9 +5,10 @@ namespace Content.Shared.Magic.Events;
 
 public sealed partial class SmiteSpellEvent : EntityTargetActionEvent
 {
-    //<summary>
-    // Damage that the smite spell will do.
-    //</summary>
+    // TODO: Make part of gib method
+    /// <summary>
+    /// Should this smite delete all parts/mechanisms gibbed except for the brain?
+    /// </summary>
     [DataField]
-    public DamageSpecifier smiteDamage = new();
+    public bool DeleteNonBrainParts = true;
 }

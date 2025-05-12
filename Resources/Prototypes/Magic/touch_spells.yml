@@ -1,7 +1,32 @@
 ﻿- type: entity
   id: ActionSmite
   name: Smite
-  description: Instantly puts a target into critical condition.
+  description: Instantly gibs a target.
+  components:
+  - type: EntityTargetAction
+    useDelay: 90
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/disintegrate.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: gib
+    event: !type:SmiteSpellEvent
+  - type: SpeakOnAction
+    sentence: action-speech-spell-smite
+  - type: Magic
+    requiresClothes: true
+
+# Non-Gibbing version of the Smite spell for wizards
+- type: entity
+  id: ActionCellularSmite
+  name: Smite
+  description: Puts a target into critical condition
   components:
   - type: EntityTargetAction
     useDelay: 90
@@ -13,7 +38,7 @@
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: gib
-    event: !type:SmiteSpellEvent
+    event: !type:CellularSmiteSpellEvent
       smiteDamage:
         types:
           Cellular: 100
