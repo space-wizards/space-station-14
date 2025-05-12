@@ -30,6 +30,54 @@
 
 # Toys
 - type: loadout
+  id: PlushieBee
+  storage:
+    back:
+    - PlushieBee
+
+- type: loadout
+  id: PlushiePenguin
+  storage:
+    back:
+    - PlushiePenguin
+
+- type: loadout
+  id: PlushieSharkBlue
+  storage:
+    back:
+    - PlushieSharkBlue
+
+- type: loadout
+  id: PlushieSharkGrey
+  storage:
+    back:
+    - PlushieSharkGrey
+
+- type: loadout
+  id: PlushieSharkPink
+  storage:
+    back:
+    - PlushieSharkPink
+
+- type: loadout
+  id: PlushieSnake
+  storage:
+    back:
+    - PlushieSnake
+
+- type: loadout
+  id: PlushieArachind
+  storage:
+    back:
+    - PlushieArachind
+
+- type: loadout
+  id: PlushieDiona
+  storage:
+    back:
+    - PlushieDiona
+
+- type: loadout
   id: PlushieLizard
   storage:
     back:
@@ -40,6 +88,24 @@
   storage:
     back:
     - PlushieSpaceLizard
+
+- type: loadout
+  id: PlushieMoth
+  storage:
+    back:
+    - PlushieMoth
+
+- type: loadout
+  id: PlushieSlime
+  storage:
+    back:
+    - PlushieSlime
+
+- type: loadout
+  id: PlushieVox
+  storage:
+    back:
+    - PlushieVox
 
 - type: loadout
   id: ThreeCandles
