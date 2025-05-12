@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Thieving gloves can now only initiate one stripping doafter at a time.
-    type: Tweak
-  id: 1151
-  time: '2025-02-17T15:22:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1711
 - author: 12rabbits
   changes:
   - message: Added the Hemophilia trait to character customization.
@@ -4164,3 +4157,10 @@
   id: 1650
   time: '2025-05-12T10:12:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2426
+- author: widgetbeck
+  changes:
+  - message: Thaven who are sleeping can now be emagged.
+    type: Fix
+  id: 1651
+  time: '2025-05-12T10:14:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2457
