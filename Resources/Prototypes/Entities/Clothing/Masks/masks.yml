@@ -39,6 +39,8 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+  - type: SecurityHailer
+    distance: 5
 
 - type: entity
   parent: [ClothingMaskGas, BaseSyndicateContraband]

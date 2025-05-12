@@ -1,0 +1,19 @@
+- type: soundCollection
+  id: SecHailLow
+  files:
+    - /Audio/Items/Whistle/whistle_1.ogg
+
+- type: soundCollection
+  id: SecHailMedium
+  files:
+    - /Audio/Items/Whistle/trench_whistle_1.ogg
+
+- type: soundCollection
+  id: SecHailHigh
+  files:
+    - /Audio/Items/Whistle/trench_whistle_1.ogg
+
+- type: soundCollection
+  id: SecHailEmag
+  files:
+    - /Audio/Items/Whistle/trench_whistle_1.ogg
