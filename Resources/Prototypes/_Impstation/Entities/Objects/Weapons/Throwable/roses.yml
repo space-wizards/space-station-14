@@ -1,0 +1,152 @@
+- type: entity
+  parent: BaseItem
+  id: Rose
+  name: Rose
+  description: Smells like love.
+  components:
+  - type: EmbeddableProjectile
+    minimumSpeed: 3
+    removalTime: 0.5
+    offset: 0.0,0.0
+  - type: ThrowingAngle
+    angle: 315
+  - type: LandAtCursor
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.20,0.10
+            - -0.10,0.20
+            - 0.20,-0.10
+            - 0.10,-0.20
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/rose.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -45
+    damage:
+      types:
+        Piercing: 2
+    angle: 0
+    animation: WeaponArcThrust
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 4
+  - type: Item
+    sprite: _Impstation/Objects/Specific/Hydroponics/rose.rsi
+    size: Small
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+  - type: MeleeChemicalInjector
+    solution: food
+  - type: InjectableSolution
+    solution: food
+  - type: SolutionInjectOnEmbed
+    transferAmount: 2
+    solution: food
+  - type: SolutionTransfer
+    maxTransferAmount: 2
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30 #excess damage avoids cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: BalloonPopper
+  - type: Clothing
+    sprite: _Impstation/Objects/Specific/Hydroponics/rose.rsi
+    slots:
+    - HEAD
+    - MASK
+  - type: Produce
+    seedId: rose
+  - type: Extractable
+    grindableSolutionName: food
+  - type: FlavorProfile
+    flavors:
+      - food
+  - type: Food
+  - type: Tag
+    tags:
+    - Flower
+
+- type: entity
+  parent: [Rose, BaseMajorContraband]
+  id: RoseBlack
+  name: Black Rose
+  description: Smells like darkness.
+  components:
+  - type: Clothing
+    sprite: _Impstation/Objects/Specific/Hydroponics/blackRose.rsi
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/blackRose.rsi
+  - type: Item
+    sprite: _Impstation/Objects/Specific/Hydroponics/blackRose.rsi
+  - type: Produce
+    seedId: blackRose
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: SulfuricAcid
+          Quantity: 1
+        - ReagentId: Razorium
+          Quantity: 1
+
+- type: entity
+  parent: [Rose, Tier3Contraband]
+  id: RoseSyndicate
+  name: Blood Red Rose
+  description: Smells like communism.
+  components:
+  - type: SolutionInjectOnEmbed
+    transferAmount: 5
+    solution: food
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 5
+        Slash: 3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Tazinide
+          Quantity: 2
+        - ReagentId: PolytrinicAcid
+          Quantity: 3

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Internals box taken from tgstation at commit https://github.com/tgstation/tgstation/commit/cc65477c04f7403ca8a457bd5bae69a01abadbf0, Chef boxes modified from tgstation, overlay sprites by Darkmajia, tiny security box edited from tgstation. box2, boxofyuckyhugs and label by crocodilecarousel (github).",
+  "copyright": "Internals box taken from tgstation at commit https://github.com/tgstation/tgstation/commit/cc65477c04f7403ca8a457bd5bae69a01abadbf0, Chef boxes modified from tgstation, overlay sprites by Darkmajia, tiny security box edited from tgstation. box2, boxofyuckyhugs and label by crocodilecarousel (Github). syndicateRoseBox by LandsharkRAWR",
   "size": {
     "x": 32,
     "y": 32
@@ -58,6 +58,9 @@
         },
         {
             "name": "vegetarian"
+        },
+        {
+            "name": "syndicaterosebox"
         }
     ]
 }

@@ -24,6 +24,8 @@
         amount: 2
       - id: CoconutSeeds #imp
         amount: 2
+      - id: RoseSeeds #imp
+        amount: 2 #imp
 
 - type: entity
   id: CrateHydroponicsSeedsMedicinal
