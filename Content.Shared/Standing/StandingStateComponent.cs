@@ -38,7 +38,7 @@ namespace Content.Shared.Standing
         /// Base modifier to the maximum movement speed of a knocked down mover.
         /// </summary>
         [DataField, AutoNetworkedField]
-        public float SpeedModifier = 0.4f;
+        public float SpeedModifier = 0.3f;
 
         /// <summary>
         ///     List of fixtures that had their collision mask changed when the entity was downed.
