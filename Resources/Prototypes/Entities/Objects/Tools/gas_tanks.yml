@@ -18,6 +18,10 @@
     slots:
     - Back
     - suitStorage
+  - type: UseDelay
+    delays:
+      gasTank:
+        length: 1.0
   - type: ActivatableUI
     key: enum.SharedGasTankUiKey.Key
   - type: UserInterface
