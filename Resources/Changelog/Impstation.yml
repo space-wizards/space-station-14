@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Added 14 New "Gimmick" Traitor Objectives.
-    type: Add
-  id: 1153
-  time: '2025-02-17T15:36:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1686
 - author: FlippenPage
   changes:
   - message: secret reinforced walls
@@ -4164,3 +4157,21 @@
   id: 1652
   time: '2025-05-12T10:33:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2453
+- author: LazyRiverfolk
+  changes:
+  - message: Added a variety of new topicals; visit your local Medifabs and Nanomeds
+      now!
+    type: Add
+  - message: Aloe Cream is now squishy when it lands.
+    type: Add
+  - message: Aloe Cream now heal 10 heat instead of being an Ointment reskin.
+    type: Tweak
+  - message: Medicated Sutures got a visual update; don't worry, it still works the
+      same as before.
+    type: Tweak
+  - message: Aloe Cream's sprite is now Centered. You no longer have to account for
+      the offset when placing it politely on tables.
+    type: Fix
+  id: 1653
+  time: '2025-05-12T10:34:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2450
