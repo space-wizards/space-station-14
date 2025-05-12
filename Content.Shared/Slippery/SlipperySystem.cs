@@ -125,11 +125,11 @@ public sealed class SlipperySystem : EntitySystem
         if (!HasComp<KnockedDownComponent>(other))
         {
             _stun.TryStun(other, component.SlipData.StunTime, true);
-            _stamina.TryTakeStamina(other, component.StaminaDamage); // Note that this should never stam-crit on its own
+            _stamina.TakeStaminaDamage(other, component.StaminaDamage); // Note that this can stamCrit
+            _stun.TryFriction(other, component.FrictionStatusTime, true, component.SlipData.SlipFriction, component.SlipData.SlipFriction);
             _audio.PlayPredicted(component.SlipSound, other, other);
         }
         _stun.TryKnockdown(other, component.SlipData.KnockdownTime, true, true);
-        _stun.TryFriction(other, component.FrictionStatusTime, true, component.SlipData.SlipFriction, component.SlipData.SlipFriction);
 
         _adminLogger.Add(LogType.Slip, LogImpact.Low,
             $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");
