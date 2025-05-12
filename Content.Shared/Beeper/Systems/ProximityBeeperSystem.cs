@@ -19,11 +19,11 @@ public sealed class ProximityBeeperSystem : EntitySystem
 
     private void OnProximityTargetUpdate(Entity<ProximityBeeperComponent> ent, ref ProximityTargetUpdatedEvent args)
     {
-        _beeper.SetIntervalScaling(ent, args.Distance / args.Detector.Comp.Range);
+        _beeper.SetIntervalScaling(ent.Owner, args.Distance / args.Detector.Comp.Range);
     }
 
     private void OnNewProximityTarget(Entity<ProximityBeeperComponent> ent, ref NewProximityTargetEvent args)
     {
-        _beeper.SetMute(ent, args.Target == null);
+        _beeper.SetMute(ent.Owner, args.Target == null);
     }
 }

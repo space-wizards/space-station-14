@@ -24,6 +24,8 @@ public sealed class BeeperSystem : EntitySystem
 
     private void OnMapInit(Entity<BeeperComponent> ent, ref MapInitEvent args)
     {
+        SetIntervalScaling((ent, ent.Comp), ent.Comp.IntervalScaling);
+
         ent.Comp.NextBeep = _timing.CurTime + ent.Comp.Interval;
         DirtyField(ent, ent.Comp, nameof(ent.Comp.NextBeep));
     }
@@ -54,32 +56,32 @@ public sealed class BeeperSystem : EntitySystem
     /// <summary>
     /// Sets beeper interval scaling. The higher the value, the more frequent beeper will beep.
     /// </summary>
-    public void SetIntervalScaling(EntityUid uid, FixedPoint2 newScaling, BeeperComponent? beeper = null)
+    public void SetIntervalScaling(Entity<BeeperComponent?> ent, FixedPoint2 newScaling)
     {
-        if (!Resolve(uid, ref beeper))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
         newScaling = FixedPoint2.Clamp(newScaling, 0, 1);
 
-        if (beeper.IntervalScaling == newScaling)
+        if (ent.Comp.IntervalScaling == newScaling)
             return;
 
-        beeper.IntervalScaling = FixedPoint2.Clamp(newScaling, 0, 1);
-        DirtyField(uid, beeper, nameof(beeper.IntervalScaling));
+        ent.Comp.IntervalScaling = FixedPoint2.Clamp(newScaling, 0, 1);
+        DirtyField(ent, ent.Comp, nameof(ent.Comp.IntervalScaling));
 
-        beeper.Interval = (beeper.MaxBeepInterval - beeper.MinBeepInterval) * beeper.IntervalScaling.Float() + beeper.MinBeepInterval;
-        DirtyField(uid, beeper, nameof(beeper.Interval));
+        ent.Comp.Interval = (ent.Comp.MaxBeepInterval - ent.Comp.MinBeepInterval) * ent.Comp.IntervalScaling.Float() + ent.Comp.MinBeepInterval;
+        DirtyField(ent, ent.Comp, nameof(ent.Comp.Interval));
     }
 
     /// <summary>
     /// Sets whether or not beeper should be muted.
     /// </summary>
-    public void SetMute(EntityUid uid, bool isMuted, BeeperComponent? beeper = null)
+    public void SetMute(Entity<BeeperComponent?> ent, bool isMuted)
     {
-        if (!Resolve(uid, ref beeper))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        beeper.IsMuted = isMuted;
-        DirtyField(uid, beeper, nameof(beeper.IsMuted));
+        ent.Comp.IsMuted = isMuted;
+        DirtyField(ent, ent.Comp, nameof(ent.Comp.IsMuted));
     }
 }
