@@ -2,15 +2,23 @@
   id: TurnstileAssembly
   name: turnstile assembly
   description: A mechanical door that permits one-way access and prevents tailgating.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Doors/turnstile.rsi
+    granularLayersRendering: true
+    noRot: true # The assembly itself has no rotation
     layers:
-      - state: "turnstile"
-      - state: "assembly"
+      - state: turnstile
+      - state: assembly
         map: [ "enum.ConstructionVisuals.Layer" ]
+      - state: arrow
+        renderingStrategy: Default # Arrow will rotate
+        color: "#FFFFFF60"
+        map: [ "arrow" ]
   - type: GenericVisualizer
     visuals:
       enum.ConstructionVisuals.Key:
@@ -18,14 +26,18 @@
           assembly: { state: assembly }
           wired: { state: wired }
           electronics: { state: panel_open }
+        "arrow": # Only show the arrow on the first step
+          assembly: { visible: true }
+          wired: { visible: false }
+          electronics: { visible: false }
   - type: Appearance
   - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
+        shape: # Use a circle so you can fit it between walls
+          !type:PhysShapeCircle
+          radius: 0.45
         density: 110
         mask:
         - FullTileMask
@@ -34,9 +46,7 @@
   - type: Anchorable
     delay: 2
   - type: Pullable
-  - type: Transform
-    anchored: true
-    noRot: true
+  - type: Rotatable
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
@@ -59,6 +69,9 @@
   description: A mechanical door that permits one-way access and prevents tailgating.
   components:
   - type: StationAiWhitelist
+  - type: Icon
+    sprite: Structures/Doors/turnstile.rsi
+    state: turnstile_map
   - type: Sprite
     sprite: Structures/Doors/turnstile.rsi
     snapCardinals: true
