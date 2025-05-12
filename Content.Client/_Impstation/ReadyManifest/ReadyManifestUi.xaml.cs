@@ -20,8 +20,7 @@ public sealed partial class ReadyManifestUi : DefaultWindow
     private readonly IPrototypeManager _prototypeManager;
     private readonly ISharedPlayerManager _playerManager;
     private readonly Dictionary<string, BoxContainer> _jobCategories;
-    private readonly IGameTiming _timing = default!;
-    private readonly SpriteSystem _sprite = default!;
+    private readonly SpriteSystem _sprite;
 
     public ReadyManifestUi()
     {
@@ -30,6 +29,7 @@ public sealed partial class ReadyManifestUi : DefaultWindow
         _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
         _playerManager = IoCManager.Resolve<ISharedPlayerManager>();
         _entitySystem = IoCManager.Resolve<IEntitySystemManager>();
+        _sprite = _entitySystem.GetEntitySystem<SpriteSystem>();
     }
 
     // Currently rebuilds the UI every time it's updated, should probably split department lookup and job counts into separate functions
