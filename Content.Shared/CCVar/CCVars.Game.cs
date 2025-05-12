@@ -107,7 +107,7 @@ public sealed partial class CCVars
     ///     If roles should be restricted based on time.
     /// </summary>
     public static readonly CVarDef<bool>
-        GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
+        GameRoleTimers = CVarDef.Create("game.role_timers", false, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Override default role requirements using a <see cref="JobRequirementOverridePrototype"/>
@@ -144,7 +144,7 @@ public sealed partial class CCVars
     ///     how long they are forced to wait before attempting to reconnect.
     /// </summary>
     public static readonly CVarDef<int> GameServerFullReconnectDelay =
-        CVarDef.Create("game.server_full_reconnect_delay", 30, CVar.SERVERONLY);
+        CVarDef.Create("game.server_full_reconnect_delay", 10, CVar.SERVERONLY);
 
     /// <summary>
     ///     Whether or not panic bunker is currently enabled.
