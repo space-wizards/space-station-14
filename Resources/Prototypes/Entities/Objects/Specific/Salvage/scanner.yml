@@ -36,6 +36,7 @@
 - type: entity
   id: MineralScanner
   parent: [ MineralScannerUnpowered, PowerCellSlotMediumItem ]
+  suffix: Full
   components:
   - type: ToggleCellDraw
   - type: PowerCellDraw
@@ -74,6 +75,7 @@
 - type: entity
   id: AdvancedMineralScanner
   parent: [ AdvancedMineralScannerUnpowered, PowerCellSlotMediumItem ]
+  suffix: Full
   components:
   - type: ToggleCellDraw
   - type: PowerCellDraw

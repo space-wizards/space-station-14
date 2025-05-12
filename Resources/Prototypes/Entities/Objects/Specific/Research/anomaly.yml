@@ -63,6 +63,7 @@
 - type: entity
   id: AnomalyLocator
   parent: [ AnomalyLocatorUnpowered, PowerCellSlotSmallItem ]
+  suffix: Full
   components:
   - type: PowerCellDraw
     drawRate: 1
@@ -97,6 +98,7 @@
 - type: entity
   id: AnomalyLocatorWide
   parent: [ AnomalyLocatorWideUnpowered, PowerCellSlotSmallItem ]
+  suffix: Full
   components:
   - type: PowerCellDraw
     drawRate: 1
