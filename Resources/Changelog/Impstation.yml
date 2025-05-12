@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added the spacepresso machine for mapping.
-    type: Add
-  - message: The service techfab can now print disposable coffee cups.
-    type: Add
-  id: 1149
-  time: '2025-02-17T15:17:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1719
 - author: Pinkbat5
   changes:
   - message: Added two zero-point accents that automatically correct your capitalization
@@ -4166,3 +4157,10 @@
   id: 1648
   time: '2025-05-12T10:07:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2464
+- author: Mousetrinity
+  changes:
+  - message: salvage has always been purple.
+    type: Tweak
+  id: 1649
+  time: '2025-05-12T10:09:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2449
