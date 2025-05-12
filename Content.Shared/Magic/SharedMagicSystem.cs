@@ -392,6 +392,7 @@ public abstract class SharedMagicSystem : EntitySystem
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
+
         ev.Handled = true;
 
         var direction = _transform.GetMapCoordinates(ev.Target, Transform(ev.Target)).Position - _transform.GetMapCoordinates(ev.Performer, Transform(ev.Performer)).Position;
@@ -417,6 +418,7 @@ public abstract class SharedMagicSystem : EntitySystem
         }
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
+            
         ev.Handled = true;
 
         // Given that this was intended to blow gibs everywhere, not suitable for this version of the spell (gets people stuck in walls)
