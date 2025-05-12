@@ -14,13 +14,13 @@ jobs:
     - name: Get changed text files
       id: changed-files
       uses: tj-actions/changed-files@v46.0.5
-        with:
-          files: |
-            **.cs
-            **.yml
-            **.swsl
-            **.json
-            **.py
+      with:
+        files: |
+          **.cs
+          **.yml
+          **.swsl
+          **.json
+          **.py
     - name: Check for trailing whitespace
       env:
         ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
