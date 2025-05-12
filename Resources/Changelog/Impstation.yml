@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: Added two zero-point accents that automatically correct your capitalization
-      and/or punctuation.
-    type: Add
-  - message: Added stilted speech, an accent that Makes You Talk Like This.
-    type: Add
-  id: 1150
-  time: '2025-02-17T15:19:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1717
 - author: widgetbeck
   changes:
   - message: Thieving gloves can now only initiate one stripping doafter at a time.
@@ -4164,3 +4154,13 @@
   id: 1649
   time: '2025-05-12T10:09:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2449
+- author: LandsharkRAWR
+  changes:
+  - message: Rose seeds to the exotic seed crate! they can mutate into dangerous black
+      roses and traitors can buy the dastardly Blood Red Rose! (you cant grow those
+      ones though) hold them in your mouth and hat slots to maximize your romantic
+      swagger.
+    type: Add
+  id: 1650
+  time: '2025-05-12T10:12:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2426
