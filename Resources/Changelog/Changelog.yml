@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Rooves now block weather.
-    type: Tweak
-  id: 7961
-  time: '2025-02-16T15:55:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35214
 - author: n00kii
   changes:
   - message: Fixed laser weapon visuals being broken when shooting across grids or
@@ -3922,3 +3915,11 @@
   id: 8463
   time: '2025-05-12T16:22:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37360
+- author: Radezolid
+  changes:
+  - message: The cyborg cable module can be printed at the exosuit fabricator once
+      again.
+    type: Fix
+  id: 8464
+  time: '2025-05-12T16:28:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37361
