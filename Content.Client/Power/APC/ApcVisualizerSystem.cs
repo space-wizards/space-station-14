@@ -1,5 +1,4 @@
 using Content.Shared.APC;
-using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Power.APC;
