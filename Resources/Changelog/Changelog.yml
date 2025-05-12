@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: DoutorWhite & metalgearsloth
-  changes:
-  - message: Added planet lighting for indoor / outdoor areas.
-    type: Add
-  - message: Added day-night cycle functionality.
-    type: Add
-  id: 7958
-  time: '2025-02-16T08:35:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32522
 - author: metalgearsloth
   changes:
   - message: Fix lighting quality affecting planet lighting.
@@ -3923,3 +3914,11 @@
   id: 8460
   time: '2025-05-12T00:14:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37251
+- author: EmoGarbage404
+  changes:
+  - message: Added chemical barrels. These can be found on salvage debris and contain
+      a large amount of various chemicals.
+    type: Add
+  id: 8461
+  time: '2025-05-12T10:55:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37204
