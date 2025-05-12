@@ -61,19 +61,19 @@ namespace Content.MapRenderer.Painters
                     case 0:
                         break;
                     case 1:
-                        image.Mutate(o => o.Rotate(270f));
+                        image.Mutate(o => o.Rotate(90f));
                         break;
                     case 2:
                         image.Mutate(o => o.Rotate(180f));
                         break;
                     case 3:
-                        image.Mutate(o => o.Rotate(90f));
+                        image.Mutate(o => o.Rotate(270f));
                         break;
                 }
 
-                if (tile.Tile.RotationMirroring < 4)
+                if (tile.Tile.RotationMirroring > 3)
                 {
-                    image.Mutate(o => o.Flip(FlipMode.Vertical));
+                    image.Mutate(o => o.Flip(FlipMode.Horizontal));
                 }
 
                 gridCanvas.Mutate(o => o.DrawImage(image, new Point(x * tileSize, y * tileSize), 1));
