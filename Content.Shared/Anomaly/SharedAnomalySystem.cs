@@ -20,7 +20,6 @@ using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Actions;
-using Content.Shared.Mobs.Components;
 
 namespace Content.Shared.Anomaly;
 
