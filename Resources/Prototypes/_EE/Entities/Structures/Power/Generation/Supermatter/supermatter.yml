@@ -62,6 +62,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+  - type: SupermatterImmune
 
 - type: entity
   parent: BaseSupermatter
@@ -88,7 +89,7 @@
       GlowDelam: { state: supermatter-glow-delam }
   - type: Explosive
     explosionType: Supermatter
-    totalIntensity: 120000
+    totalIntensity: 80000
     intensitySlope: 5
     maxIntensity: 100
   - type: GravityWell

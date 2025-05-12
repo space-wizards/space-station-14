@@ -1,0 +1,157 @@
+- type: entity
+  parent: BaseMob
+  id: MobSupermatterSpider
+  name: supermatter spider
+  description: A sliver of supermatter, fixed upon spindly legs pulled together from loose debris.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: smspider
+      sprite: _Impstation/Mobs/Aliens/smspider.rsi
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: smspider-moving
+    noMovementLayers:
+      movement:
+        state: smspider
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: smspider
+      Critical:
+        Base: smspider-dead
+      Dead:
+        Base: smspider-dead
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 200
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: AshOnMeleeHit
+    popup: ash-on-melee-smspider
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: InteractionPopup
+    successChance: .1
+    interactSuccessString: petting-success-smspider
+    interactFailureString: petting-failure-smspider
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      collection: SupermatterAccentNormal
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      20: Dead
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: MeleeWeapon
+    hidden: true
+    damage:
+      types:
+        Piercing: 3
+        Radiation: 3
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: PointLight
+    color: "#ffe000"
+    radius: 2
+    energy: 1.4
+  - type: RadiationSource
+    intensity: 1.5
+    slope: 0.3
+  - type: ReplacementAccent
+    accent: silicon
+  - type: Speech
+    speechSounds: Suppy
+    speechVerb: Suppy
+  - type: TypingIndicator
+    proto: robot
+  - type: VentCrawler
+    enterDelay: 3
+  - type: Vocal
+    sounds:
+      Male: Suppy
+      Female: Suppy
+      Unsexed: Suppy
+  - type: AnimatedEmotes
+  - type: Buckle
+  - type: Climbing
+  - type: CombatMode
+  - type: Emoting
+  - type: InputMover
+  - type: MobState
+  - type: Pullable
+  - type: SupermatterImmune
+
+- type: entity
+  parent: MobSupermatterSpider
+  id: MobSupermatterSpiderOvercharged
+  suffix: Admeme
+  name: overcharged supermatter spider
+  description: A sliver of supermatter, fixed upon spindly legs pulled together from loose debris. This one seems especially dangerous.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: smspideroc
+      sprite: _Impstation/Mobs/Aliens/smspider.rsi
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: smspideroc-moving
+    noMovementLayers:
+      movement:
+        state: smspideroc
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: smspideroc
+      Critical:
+        Base: smspider-dead
+      Dead:
+        Base: smspider-dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: AshOnMeleeHit
+    singleUse: false
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      40: Dead
+  - type: NpcFactionMember
+    factions:
+    - AllHostile
+  - type: PointLight
+    color: "#ff5555"
