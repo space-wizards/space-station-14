@@ -27,7 +27,7 @@ public sealed partial class BeeperComponent : Component
     /// The maximum interval between beeps.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan MaxBeepInterval = TimeSpan.FromSeconds(30f);
+    public TimeSpan MaxBeepInterval = TimeSpan.FromSeconds(1.5f);
 
     /// <summary>
     /// The minimum interval between beeps.
