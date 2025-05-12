@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: headslug go on head
-    type: Tweak
-  id: 1160
-  time: '2025-02-18T02:31:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1725
 - author: Sha-Seng
   changes:
   - message: Bomber jackets for all departments, plus a black and gray one for passenger
@@ -4182,3 +4175,10 @@
   id: 1659
   time: '2025-05-12T22:40:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2474
+- author: AvianMaiden
+  changes:
+  - message: Shotgun shells now sound right when tossed.
+    type: Fix
+  id: 1660
+  time: '2025-05-12T22:52:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2473
