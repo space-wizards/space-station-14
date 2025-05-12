@@ -1,9 +1,16 @@
 - type: vendingMachineInventory
   id: NanoMedPlusInventory
-  startingInventory:
+  startingInventory: # imp; see bottom line
     HandheldHealthAnalyzer: 3
-    Brutepack: 5
-    Ointment: 5
+    Brutepack: 3
+    SimpleSuture: 2
+    ElectrodePad: 2
+    Gauze: 2
+    Tincture: 5
+    Ointment: 3
+    ShockGel: 2
+    ColdPack: 2
+    EZGraft: 2
     Bloodpack: 5
     ChemistryBottleEpinephrine: 3
     Syringe: 5
@@ -13,3 +20,6 @@
     ClothingEyesGlassesHudMedical: 2
   contrabandInventory:
     FoodApple: 1
+## Brute Packs Reduced 5 -> 3; added 2x S. Sutures, Electrode Pads, Gauze to compensate.
+## Ointment Reduced 5 -> 3; added 2x Shock Gel, Cold Pack, EZ-Grafts to compensate.
+## Added 5 Tinctures.

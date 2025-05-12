@@ -21,6 +21,7 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
+using Content.Server.Electrocution; //Imp
 
 namespace Content.Server.Medical;
 
@@ -37,6 +38,7 @@ public sealed class HealingSystem : EntitySystem
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly ElectrocutionSystem _electrocution = default!; //#imp
 
     public override void Initialize()
     {
@@ -87,6 +89,13 @@ public sealed class HealingSystem : EntitySystem
 
         if (healed == null && healing.BloodlossModifier != 0)
             return;
+
+        // Applies stun (if applicable) #imp
+
+        if (healing.ApplyWrithe == true)
+        {
+            _electrocution.TryDoElectrocution(entity.Owner, null, healing.WritheDamage, TimeSpan.FromSeconds(healing.WritheDuration), true, ignoreInsulation: true);
+        }
 
         var total = healed?.GetTotal() ?? FixedPoint2.Zero;
 

@@ -45,6 +45,24 @@
     - id: Ointment1
       amount: !type:RangeNumberSelector
         range: 1, 4
+    - id: SimpleSuture1 #IMP
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: ElectrodePad1 #IMP
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: AloeCream #IMP
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: ShockGel #IMP
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: ColdPack #IMP
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: EZGraft #IMP
+      amount: !type:RangeNumberSelector
+        range: 1, 4
 
 # Beakers, vials, etc
 - type: entityTable

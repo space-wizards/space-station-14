@@ -71,6 +71,27 @@
 		{
 			"name": "ointment-inhand-right",
 			"directions": 4
-		}
+		},
+        {
+            "name": "simple-suture"
+        },
+        {
+            "name": "medicated-suture"
+        },
+        {
+            "name": "electrode-pad"
+        },
+        {
+            "name": "tincture"
+        },
+        {
+            "name": "ez-graft"
+        },
+        {
+            "name": "cold-pack"
+        },
+        {
+            "name": "shock-gel"
+        }
 	]
 }

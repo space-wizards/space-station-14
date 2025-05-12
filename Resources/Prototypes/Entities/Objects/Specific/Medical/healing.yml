@@ -167,7 +167,6 @@
     tags:
     - Brutepack
   - type: Sprite
-    sprite: Objects/Specific/Medical/medical.rsi # imp
     state: medicated-suture
   - type: Item
     heldPrefix: medicated-suture
@@ -339,15 +338,29 @@
     lingering: true
     count: 10
 
+# Making Aloe Cream it's own unique topical now. From Ointment (5 Heat/Shock/Cold & 1.5 Caut) -> 10 Heat, squishes when thrown. #imp
 - type: entity
   name: aloe cream
   description: A topical cream for burns.
-  parent: Ointment ##Yes it's a direct reskin
+  parent: BaseHealingItem 
   id: AloeCream
   components:
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Heat: -10
+    healingBeginSound:
+      path: "/Audio/Items/Toys/ToyFall2.ogg"
+    healingEndSound: 
+      path: "/Audio/Items/Medical/ointment_end.ogg"
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/aloe.rsi
     state: cream
+  - type: EmitSoundOnLand
+    sound:
+      path: "/Audio/Voice/Slime/slime_squish.ogg"
   - type: Stack
     stackType: AloeCream
     count: 10
