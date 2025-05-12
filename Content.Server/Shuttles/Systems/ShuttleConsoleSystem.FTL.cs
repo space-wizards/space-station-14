@@ -124,6 +124,9 @@ public sealed partial class ShuttleConsoleSystem
         if (!TryComp(shuttleUid, out ShuttleComponent? shuttleComp))
             return;
 
+        if (shuttleComp.Enabled == false)
+            return;
+
         // Check shuttle can even FTL
         if (!_shuttle.CanFTL(shuttleUid.Value, out var reason))
         {

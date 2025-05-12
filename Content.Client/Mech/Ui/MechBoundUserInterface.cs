@@ -21,9 +21,8 @@ public sealed class MechBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _menu = this.CreateWindow<MechMenu>();
+        _menu = this.CreateWindowCenteredLeft<MechMenu>();
         _menu.SetEntity(Owner);
-        _menu.OpenCenteredLeft();
 
         _menu.OnRemoveButtonPressed += uid =>
         {

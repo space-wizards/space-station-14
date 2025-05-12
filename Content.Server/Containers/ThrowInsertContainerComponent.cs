@@ -16,7 +16,7 @@ public sealed partial class ThrowInsertContainerComponent : Component
     /// Throw chance of hitting into the container
     /// </summary>
     [DataField]
-    public float Probability = 0.75f;
+    public float Probability = 0.25f;
 
     /// <summary>
     /// Sound played when an object is throw into the container.

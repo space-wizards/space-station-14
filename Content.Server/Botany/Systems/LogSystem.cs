@@ -45,5 +45,6 @@ public sealed class LogSystem : EntitySystem
         }
 
         QueueDel(uid);
+        args.Handled = true;
     }
 }

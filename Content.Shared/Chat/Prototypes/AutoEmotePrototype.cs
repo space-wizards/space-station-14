@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Chat.Prototypes;
 
-[Prototype("autoEmote")]
+[Prototype]
 public sealed partial class AutoEmotePrototype : IPrototype
 {
     /// <inheritdoc/>

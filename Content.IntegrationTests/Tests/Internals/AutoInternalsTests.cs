@@ -2,7 +2,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Preferences;
-using Content.Shared.Roles.Jobs;
 
 namespace Content.IntegrationTests.Tests.Internals;
 
@@ -25,10 +24,7 @@ public sealed class AutoInternalsTests
         await server.WaitAssertion(() =>
         {
             var profile = new HumanoidCharacterProfile();
-            var dummy = stationSpawning.SpawnPlayerMob(testMap.GridCoords, new JobComponent()
-            {
-                Prototype = "TestInternalsDummy"
-            }, profile, station: null);
+            var dummy = stationSpawning.SpawnPlayerMob(testMap.GridCoords, "TestInternalsDummy", profile, station: null);
 
             Assert.That(atmos.HasAtmosphere(testMap.Grid), Is.False, "Test map has atmosphere - test needs adjustment!");
             Assert.That(internals.AreInternalsWorking(dummy), "Internals did not automatically connect!");

@@ -10,3 +10,4 @@ id-card-console-window-job-selection-label = Job presets (sets department and jo
 access-id-card-console-component-no-hands-error = You have no hands.
 id-card-console-privileged-id = Privileged ID
 id-card-console-target-id = Target ID
+id-card-console-damaged = Structural integrity compromised, ejecting contents.
