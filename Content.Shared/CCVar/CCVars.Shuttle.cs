@@ -174,7 +174,7 @@ public sealed partial class CCVars
     /// </summary>
     [CVarControl(AdminFlags.Server | AdminFlags.Mapping, min: 0, max: int.MaxValue)]
     public static readonly CVarDef<int> EmergencyShuttleAutoCallTime =
-        CVarDef.Create("shuttle.auto_call_time", 90, CVar.SERVERONLY);
+        CVarDef.Create("shuttle.auto_call_time", 0, CVar.SERVERONLY);
 
     /// <summary>
     ///     Time in minutes after the round was extended (by recalling the shuttle) to call
