@@ -7,17 +7,15 @@
             Margin="4 0 0 0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            MinSize="32 32"
-            />
+            MinSize="32 32"/>
     <Label Name="NameLabel"
             SizeFlagsStretchRatio="3"
             HorizontalExpand="True"
             ClipText="True"/>
-            <PanelContainer Name="PricePanel" StyleClasses="BackgroundDark">
-                <Label Name="Price"
-                   Access="Public"
-                   MinSize="32 32"
-                   Margin="5 0 5 -6"
-                   Align="Right"/>
-            </PanelContainer>
+    <Label Name="Price"
+        Access="Public"
+        MinSize="32 32"
+        Margin="0 -1 0 -4.5"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Bottom"/>
 </BoxContainer>
