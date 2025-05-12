@@ -258,9 +258,6 @@ public abstract partial class SharedBuckleSystem
         if (!_container.IsInSameOrNoContainer((buckleUid, null, null), (strapUid, null, null)))
             return false;
 
-        if (TryComp<PullableComponent>(strapUid, out var pullable) && pullable.Puller == buckleUid)
-            _pullingSystem.TryStopPull(strapUid, pullable);
-
         if (user != null && !HasComp<HandsComponent>(user))
         {
             if (popup)
