@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Toby222, Honeyed_Lemons_
-  changes:
-  - message: Adds Nanochat Lookup! Look up your friends in your Nanochat app today!
-    type: Add
-  - message: The Nanochat ui has been spruced up a lot, look at keybinds too!
-    type: Tweak
-  id: 1155
-  time: '2025-02-17T18:30:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1692
 - author: hivehum, flippenpage
   changes:
   - message: You can now be colorblind.
@@ -4179,3 +4170,11 @@
   id: 1654
   time: '2025-05-12T11:59:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2440
+- author: mqole
+  changes:
+  - message: Advanced topicals removed from nanomed pending further discussion. craft
+      them in the medifab
+    type: Tweak
+  id: 1655
+  time: '2025-05-12T13:09:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2467
