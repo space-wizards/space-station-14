@@ -20,7 +20,7 @@ public sealed class MeleeSpreadCommand : LocalizedEntityCommands
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public override string Command => "showmeleespread";
-    public override string Description => "Shows the current weapon's range and arc for debugging";
+    public override string Description => Loc.GetString($"cmd-melee-spread-desc");
     public override string Help => $"{Command}";
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
