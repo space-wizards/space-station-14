@@ -4,7 +4,7 @@ meta:
   engineVersion: 255.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/12/2025 20:48:20
+  time: 05/12/2025 22:39:39
   entityCount: 29610
 maps:
 - 951
@@ -11845,7 +11845,7 @@ entities:
       pos: 33.5,27.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -32362.959
+      secondsUntilStateChange: -32376.195
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12670,7 +12670,7 @@ entities:
       pos: 11.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -103826.664
+      secondsUntilStateChange: -103839.9
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12739,7 +12739,7 @@ entities:
       pos: 38.5,-0.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -69464.95
+      secondsUntilStateChange: -69478.19
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -88500,7 +88500,6 @@ entities:
       parent: 5350
     - type: DeviceNetwork
       deviceLists:
-      - 
       - 18618
       - 16314
       - 11991
@@ -139486,7 +139485,7 @@ entities:
       parent: 15971
     - type: Paper
       content: >2-
-         
+
                                               [bold][head=1] MANIAC [/head]
                                             [head=2]ON THE LOOSE[/bold]
                                                  [bolditalic]Giggles the Clown[/bold][/italic]
@@ -139766,7 +139765,7 @@ entities:
       parent: 23508
     - type: Paper
       content: >2-
-         
+
                                               [bold][head=1] MANIAC [/head]
                                             [head=2]ON THE LOOSE[/bold]
                                                  [bolditalic]Giggles the Clown[/bold][/italic]
