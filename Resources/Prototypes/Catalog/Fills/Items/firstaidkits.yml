@@ -8,7 +8,7 @@
     contents:
       - id: Brutepack
       - id: Ointment
-      - id: Tincture #IMP; replacing Gauze -> Tincture
+      - id: Gauze
       - id: PillCanisterTricordrazine
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
 
