@@ -15,7 +15,7 @@
     ClothingOuterCoatBomberCargo: 3
     ClothingNeckMantle: 2
     ClothingOuterWinterMiner: 3
-    ClothingNeckScarfStripedBrown: 3
-    ClothingShoesBootsWinterColorBrown: 3
+    ClothingNeckScarfStripedPurple: 3 #purple propaganda
+    ClothingShoesBootsWinterColorPurple: 3 #purple propaganda
   contrabandInventory:
     ClothingMaskClownCargo: 1

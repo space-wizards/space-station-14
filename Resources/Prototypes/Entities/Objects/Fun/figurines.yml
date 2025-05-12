@@ -205,6 +205,7 @@
   components:
   - type: Sprite
     state: salvage
+    sprite: _Impstation/Objects/Fun/figurines.rsi #imp
   - type: SpeakOnTrigger
     pack: FigurinesSalvage
 
