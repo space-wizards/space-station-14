@@ -21,6 +21,8 @@
         amount: 2
       - id: RagItem
         amount: 2
+      - id: Paper
+        amount: 3
 
 #- type: entity
 #  id: LockerFormalFilled
@@ -39,6 +41,8 @@
       - id: BoxMousetrap
         amount: 2
       - id: SprayBottleWater
+      - id: Paper
+        amount: 3
       - id: ReagentContainerFlour
         amount: 2
       - id: FoodBoxCloth
