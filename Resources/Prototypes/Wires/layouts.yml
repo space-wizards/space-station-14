@@ -237,4 +237,3 @@
     pulseTimeout: 15
   - !type:AiInteractWireAction
   - !type:AccessWireAction 
-  
