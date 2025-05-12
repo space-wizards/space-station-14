@@ -35,5 +35,6 @@ jobs:
       id: changed-files
       with:
         write_output_files: true
+    # Does this include deleted files?
     - name: Validate RGA attribution
       run: python3 Tools/rga_check.py -i "" cat .github/outputs/all_changed_and_modified_files.txt

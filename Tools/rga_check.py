@@ -251,8 +251,16 @@ class LicensingScan:
     def filter(self, filter_list: set[str]):
         self.filtered = True
 
-        # This isn't great but it's hard to do a set intersect between entirely different types?
-        self.assets = [x for x in self.assets if str(x) in filter_list]
+        # Make sure we don't annoy people when they're adding files, but do annoy if they're working on attributions stuff
+        # Though, someone working on replacing files... well, they could run this manually? Hm.
+        if all(f.endswith("/attributions.yml") for f in filter_list):
+            attribution_files = [str(Path(x).parent) for x in filter_list if x.endswith("/attributions.yml")]
+
+            # This isn't great but it's hard to do a set intersect between entirely different types?
+            self.assets = [x for x in self.assets if str(x) in filter_list or str(x.parent) in attribution_files]
+        else:
+            self.assets = [x for x in self.assets if str(x) in filter_list]
+
         self.attributions = [x for x in self.attributions if str(x) in filter_list]
         return (len(self.assets), len(self.attributions))
 
