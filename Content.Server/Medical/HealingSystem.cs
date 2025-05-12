@@ -119,8 +119,8 @@ public sealed class HealingSystem : EntitySystem
         _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
 
         // imp edit, raise healing success event to handle after-effects
-        var ev = new HealingSuccessEvent(args.User, args.Target, args.Used);
-        RaiseLocalEvent(entity, ev);
+        var ev = new HealingSuccessEvent(args.User, entity.Owner, args.Used.Value);
+        RaiseLocalEvent(args.Used.Value, ev);
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = (HasDamage(entity, healing) && !dontRepeat);

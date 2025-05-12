@@ -13,17 +13,14 @@ public sealed class StunOnHealSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DamageableComponent, HealingSuccessEvent>(OnDoAfter);
+        SubscribeLocalEvent<StunOnHealComponent, HealingSuccessEvent>(OnDoAfter);
     }
 
-    private void OnDoAfter(Entity<DamageableComponent> ent, ref HealingSuccessEvent args)
+    private void OnDoAfter(Entity<StunOnHealComponent> ent, ref HealingSuccessEvent args)
     {
-        if (!TryComp<StunOnHealComponent>(args.Used, out var stun))
-            return;
+        var duration = ent.Comp.StunDuration;
+        var damage = ent.Comp.Damage;
 
-        var duration = stun.StunDuration;
-        var damage = stun.Damage;
-
-        _electrocution.TryDoElectrocution(ent, args.Used, damage, duration, true, ignoreInsulation: true);
+        _electrocution.TryDoElectrocution(args.Target, ent, damage, duration, true, ignoreInsulation: true);
     }
 }
