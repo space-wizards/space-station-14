@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: nowaitstop
-  changes:
-  - message: BATTERY GRUMBA VAPES! pib cartridges..!
-    type: Add
-  - message: disposable vape bars! pib deni vape pens!
-    type: Add
-  - message: thusd vendor beeg new vapes! old vapes zazz GLURM!
-    type: Tweak
-  id: 1148
-  time: '2025-02-17T14:54:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1676
 - author: kipdotnet
   changes:
   - message: Added the spacepresso machine for mapping.
@@ -4170,3 +4159,10 @@
   id: 1647
   time: '2025-05-12T06:02:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2461
+- author: crocodilecarousel
+  changes:
+  - message: slimes can actually have earrings now
+    type: Fix
+  id: 1648
+  time: '2025-05-12T10:07:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2464
