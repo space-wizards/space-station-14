@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: fixed the Nanochat notification button
-    type: Fix
-  id: 1158
-  time: '2025-02-18T01:13:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1726
 - author: 12rabbits
   changes:
   - message: Fixed cyborg modules losing certain items at low health.
@@ -4180,3 +4173,10 @@
   id: 1657
   time: '2025-05-12T20:13:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2455
+- author: widgetbeck
+  changes:
+  - message: The Pattern begins to coalesce.
+    type: Add
+  id: 1658
+  time: '2025-05-12T21:05:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2443
