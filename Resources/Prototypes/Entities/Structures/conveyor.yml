@@ -15,7 +15,6 @@
     sprite: Structures/conveyor.rsi
     state: conveyor_stopped_cw
     drawdepth: HighFloorObjects
-  - type: SyncSprite
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Physics
