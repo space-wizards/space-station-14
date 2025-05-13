@@ -153,7 +153,7 @@ public sealed partial class RoboticArmComponent : Component
     /// Power used when moving items.
     /// </summary>
     [DataField]
-    public float MovingPowerDraw = 3000f;
+    public float MovingPowerDraw = 1000f; // imp edit to avoid power flicker
 
     #endregion
 }
