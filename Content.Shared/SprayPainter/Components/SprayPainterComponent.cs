@@ -8,7 +8,7 @@ namespace Content.Shared.SprayPainter.Components;
 /// <summary>
 /// Denotes an object that can be used to alter the appearance of paintable objects (e.g. doors, gas canisters).
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class SprayPainterComponent : Component
 {
     /// <summary>

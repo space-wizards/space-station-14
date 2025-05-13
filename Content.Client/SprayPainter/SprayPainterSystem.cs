@@ -6,6 +6,7 @@ using Content.Shared.Decals;
 using Content.Shared.SprayPainter;
 using Content.Shared.SprayPainter.Components;
 using Content.Shared.SprayPainter.Prototypes;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Localization;
@@ -21,6 +22,7 @@ namespace Content.Client.SprayPainter;
 public sealed class SprayPainterSystem : SharedSprayPainterSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
     public Dictionary<string, List<SprayPainterEntry>> Entries { get; private set; } = new();
     public List<SprayPainterDecalEntry> Decals = [];
 
@@ -29,8 +31,20 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         base.Initialize();
 
         Subs.ItemStatus<SprayPainterComponent>(ent => new StatusControl(ent));
+        SubscribeLocalEvent<SprayPainterComponent, AfterAutoHandleStateEvent>(OnStateUpdate);
 
         CachePrototypes();
+    }
+
+    private void OnStateUpdate(Entity<SprayPainterComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateUi(ent);
+    }
+
+    protected override void UpdateUi(Entity<SprayPainterComponent> ent)
+    {
+        if (_ui.TryGetOpenUi(ent.Owner, SprayPainterUiKey.Key, out var bui))
+            bui.Update();
     }
 
     protected override void OnPrototypesReloaded(PrototypesReloadedEventArgs args)

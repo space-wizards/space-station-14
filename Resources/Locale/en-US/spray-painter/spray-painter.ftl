@@ -8,8 +8,8 @@ spray-painter-interact-no-charges = Not enough paint left.
 spray-painter-on-examined-painted-message = It seems to have been freshly painted.
 spray-painter-style-not-available = Cannot apply the selected style to this object.
 
-spray-painter-verb-toggle-enable-decals = Enable decal painting
-spray-painter-verb-toggle-disable-decals = Disable decal painting
+spray-painter-verb-enable-decals = Enable decal painting
+spray-painter-verb-disable-decals = Disable decal painting
 
 spray-painter-item-status-label = Decals: {$mode}
 spray-painter-item-status-enabled = [color=green]Enabled[/color]

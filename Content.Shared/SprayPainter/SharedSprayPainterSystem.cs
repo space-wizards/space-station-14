@@ -8,9 +8,7 @@ using Content.Shared.Popups;
 using Content.Shared.SprayPainter.Components;
 using Content.Shared.SprayPainter.Prototypes;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -111,8 +109,8 @@ public abstract class SharedSprayPainterSystem : EntitySystem
             return;
 
         var verbLocString = ent.Comp.IsPaintingDecals
-            ? "spray-painter-verb-enable-decals"
-            : "spray-painter-verb-disable-decals";
+            ? "spray-painter-verb-disable-decals"
+            : "spray-painter-verb-enable-decals";
         var user = args.User;
 
         AlternativeVerb verb = new()
@@ -138,7 +136,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Audio.PlayPredicted(ent.Comp.SoundSwitchMode, ent, user, ent.Comp.SoundSwitchMode.Params.WithPitchScale(pitch));
     }
 
-    #region UI messages
+    #region UI
 
     private void OnTabChanged(Entity<SprayPainterComponent> ent, ref SprayPainterTabChangedMessage args)
     {
@@ -172,36 +170,38 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Dirty(ent, ent.Comp);
     }
 
-    private void OnSetDecal(EntityUid uid, SprayPainterComponent component, SprayPainterSetDecalMessage args)
+    private void OnSetDecal(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalMessage args)
     {
-        component.SelectedDecal = args.DecalPrototype;
-        Dirty(uid, component);
+        ent.Comp.SelectedDecal = args.DecalPrototype;
+        Dirty(ent);
+        UpdateUi(ent);
     }
 
-    private void OnSetDecalAngle(EntityUid uid,
-        SprayPainterComponent component,
-        SprayPainterSetDecalAngleMessage args)
+    private void OnSetDecalAngle(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalAngleMessage args)
     {
-        component.SelectedDecalAngle = args.Angle;
-        Dirty(uid, component);
+        ent.Comp.SelectedDecalAngle = args.Angle;
+        Dirty(ent);
+        UpdateUi(ent);
     }
 
-    private void OnSetDecalSnap(EntityUid uid,
-        SprayPainterComponent component,
-        SprayPainterSetDecalSnapMessage args)
+    private void OnSetDecalSnap(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalSnapMessage args)
     {
-        component.SnapDecals = args.Snap;
-        Dirty(uid, component);
+        ent.Comp.SnapDecals = args.Snap;
+        Dirty(ent);
+        UpdateUi(ent);
     }
 
-    private void OnSetDecalColor(EntityUid uid,
-        SprayPainterComponent component,
-        SprayPainterSetDecalColorMessage args)
+    private void OnSetDecalColor(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalColorMessage args)
     {
-        component.SelectedDecalColor = args.Color;
-        Dirty(uid, component);
+        ent.Comp.SelectedDecalColor = args.Color;
+        Dirty(ent);
+        UpdateUi(ent);
     }
 
+
+    protected virtual void UpdateUi(Entity<SprayPainterComponent> ent)
+    {
+    }
     #endregion
 
     private void OnPaintableInteract(Entity<PaintableComponent> ent, ref InteractUsingEvent args)

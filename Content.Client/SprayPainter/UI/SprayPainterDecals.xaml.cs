@@ -23,7 +23,7 @@ public sealed partial class SprayPainterDecals : Control
     public Action<bool>? OnSnapChanged;
 
     private SpriteSystem? _sprite;
-    private string _selectedDecal = String.Empty;
+    private string _selectedDecal = string.Empty;
     private List<SprayPainterDecalEntry> _decals = [];
 
     public SprayPainterDecals()
@@ -141,5 +141,33 @@ public sealed partial class SprayPainterDecals : Control
             return;
 
         PopulateDecals(_decals, _sprite);
+    }
+
+    public void SetSelectedDecal(string name)
+    {
+        _selectedDecal = name;
+
+        if (_sprite is null)
+            return;
+
+        PopulateDecals(_decals, _sprite);
+    }
+
+    public void SetAngle(int degrees)
+    {
+        AngleSpinBox.OverrideValue(degrees);
+    }
+
+    public void SetColor(Color? color)
+    {
+        UseCustomColorCheckBox.Pressed = color != null;
+        if (color != null)
+            ColorSelector.Color = color.Value;
+        UpdateColorButtons();
+    }
+
+    public void SetSnap(bool snap)
+    {
+        SnapToTileCheckBox.Pressed = snap;
     }
 }

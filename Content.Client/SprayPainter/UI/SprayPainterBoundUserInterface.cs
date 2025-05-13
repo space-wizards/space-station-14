@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.SprayPainter.UI;
 
 /// <summary>
-/// A BUI for a spray painter. Allows selecting pipe colours, paintable object types by class, and decals.
+/// A BUI for a spray painter. Allows selecting pipe colours, decals, and paintable object types sorted by category.
 /// </summary>
 public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
@@ -32,11 +32,31 @@ public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) 
             _window.OnDecalSnapChanged += OnDecalSnapChanged;
         }
 
-        if (EntMan.TryGetComponent(Owner, out SprayPainterComponent? comp))
-        {
-            var sprayPainter = EntMan.System<SprayPainterSystem>();
-            _window.Populate(sprayPainter.Entries, comp.Indexes, sprayPainter.Decals, comp.PickedColor, comp.ColorPalette, comp.SelectedTab);
-        }
+        var sprayPainter = EntMan.System<SprayPainterSystem>();
+        _window.PopulateCategories(sprayPainter.Entries, sprayPainter.Decals);
+        Update();
+
+        if (EntMan.TryGetComponent(Owner, out SprayPainterComponent? sprayPainterComp))
+            _window.SetSelectedTab(sprayPainterComp.SelectedTab);
+    }
+
+    public override void Update()
+    {
+        if (_window == null)
+            return;
+
+        if (!EntMan.TryGetComponent(Owner, out SprayPainterComponent? sprayPainter))
+            return;
+
+        _window.PopulateColors(sprayPainter.ColorPalette);
+        if (sprayPainter.PickedColor != null)
+            _window.SelectColor(sprayPainter.PickedColor);
+        _window.SetSelectedStyles(sprayPainter.Indexes);
+        if (sprayPainter.SelectedDecal != null)
+            _window.SetSelectedDecal(sprayPainter.SelectedDecal);
+        _window.SetDecalAngle(sprayPainter.SelectedDecalAngle);
+        _window.SetDecalColor(sprayPainter.SelectedDecalColor);
+        _window.SetDecalSnap(sprayPainter.SnapDecals);
     }
 
     private void OnDecalSnapChanged(bool snap)
