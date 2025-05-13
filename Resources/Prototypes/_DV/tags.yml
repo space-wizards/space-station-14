@@ -1,2 +1,7 @@
+# PUT YOUR TAGS IN ALPHABETICAL ORDER
+
 - type: Tag
   id: DockShipyard
+
+- type: Tag
+  id: SmartFridgeRetainStorage

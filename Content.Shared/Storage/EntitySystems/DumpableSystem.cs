@@ -1,10 +1,12 @@
 using System.Linq;
+using Content.Shared._DV.SmartFridge; // DeltaV - ough why do you not use events for this
 using Content.Shared.Disposal;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Placeable;
 using Content.Shared.Storage.Components;
+using Content.Shared.Tag; // DeltaV - ough why do you not use events for this
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -22,6 +24,9 @@ public sealed class DumpableSystem : EntitySystem
     [Dependency] private readonly SharedDisposalUnitSystem _disposalUnitSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!; // DeltaV - ough why do you not use events for this
+    [Dependency] private readonly SmartFridgeSystem _smartFridge = default!; // DeltaV - ough why do you not use events for this
+    [Dependency] private readonly TagSystem _tag = default!; // DeltaV - ough why do you not use events for this
 
     private EntityQuery<ItemComponent> _itemQuery;
 
@@ -40,7 +45,9 @@ public sealed class DumpableSystem : EntitySystem
         if (!args.CanReach || args.Handled)
             return;
 
-        if (!_disposalUnitSystem.HasDisposals(args.Target) && !HasComp<PlaceableSurfaceComponent>(args.Target))
+        if (!_disposalUnitSystem.HasDisposals(args.Target) &&
+            !HasComp<PlaceableSurfaceComponent>(args.Target) &&
+            !HasComp<SmartFridgeComponent>(args.Target)) // DeltaV - ough why do you not use events for this
             return;
 
         if (!TryComp<StorageComponent>(uid, out var storage))
@@ -81,7 +88,7 @@ public sealed class DumpableSystem : EntitySystem
         if (!TryComp<StorageComponent>(uid, out var storage) || !storage.Container.ContainedEntities.Any())
             return;
 
-        if (_disposalUnitSystem.HasDisposals(args.Target))
+        if (_disposalUnitSystem.HasDisposals(args.Target) || HasComp<SmartFridgeComponent>(args.Target)) // DeltaV - ough why do you not use events for this
         {
             UtilityVerb verb = new()
             {
@@ -114,6 +121,11 @@ public sealed class DumpableSystem : EntitySystem
     {
         if (!TryComp<StorageComponent>(storageUid, out var storage))
             return;
+
+        // Begin DeltaV - ough why do you not use events for this
+        if (HasComp<SmartFridgeComponent>(targetUid) && _tag.HasTag(storageUid, "SmartFridgeRetainStorage"))
+            return;
+        // End DeltaV - ough why do you not use events for this
 
         var delay = 0f;
 
@@ -166,6 +178,22 @@ public sealed class DumpableSystem : EntitySystem
                 _transformSystem.SetWorldPositionRotation(entity, targetPos + _random.NextVector2Box() / 4, targetRot);
             }
         }
+        // Begin DeltaV - ough why do you not use events for this
+        else if (TryComp<SmartFridgeComponent>(args.Args.Target, out var fridge))
+        {
+            dumped = true;
+
+            if (_container.TryGetContainer(args.Args.Target.Value, fridge.Container, out var container))
+            {
+                foreach (var entity in dumpQueue)
+                {
+                    _container.Insert(entity, container);
+                    _smartFridge.AddListing((args.Args.Target.Value, fridge), entity, container);
+                    Dirty(args.Args.Target.Value, fridge);
+                }
+            }
+        }
+        // End DeltaV - ough why do you not use events for this
         else
         {
             var targetPos = _transformSystem.GetWorldPosition(uid);

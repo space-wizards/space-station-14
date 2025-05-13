@@ -610,3 +610,6 @@ LockerCourierFilledHardsuit: LockerCourierFilled
 # 2025-03-25
 # impstation: swap mail systems
 MailTeleporter: CargoMailTeleporter
+
+# 2025-03-12
+SmartFridge: DVSmartFridge
