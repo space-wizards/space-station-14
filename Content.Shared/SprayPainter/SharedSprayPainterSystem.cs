@@ -3,6 +3,7 @@ using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.SprayPainter.Components;
@@ -40,8 +41,12 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         CacheStyles();
 
         SubscribeLocalEvent<SprayPainterComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<SprayPainterComponent, SprayPainterDoAfterEvent>(OnPaintableDoAfter);
-        SubscribeLocalEvent<SprayPainterComponent, GetVerbsEvent<AlternativeVerb>>(OnAddSwitchModeVerb);
+
+        SubscribeLocalEvent<SprayPainterComponent, SprayPainterDoAfterEvent>(OnPainterDoAfter);
+        SubscribeLocalEvent<SprayPainterComponent, GetVerbsEvent<AlternativeVerb>>(OnPainterGetAltVerbs);
+        SubscribeLocalEvent<PaintableComponent, InteractUsingEvent>(OnPaintableInteract);
+        SubscribeLocalEvent<PaintedComponent, ExaminedEvent>(OnPainedExamined);
+
         Subs.BuiEvents<SprayPainterComponent>(SprayPainterUiKey.Key,
             subs =>
             {
@@ -53,8 +58,6 @@ public abstract class SharedSprayPainterSystem : EntitySystem
                 subs.Event<SprayPainterSetDecalAngleMessage>(OnSetDecalAngle);
                 subs.Event<SprayPainterSetDecalSnapMessage>(OnSetDecalSnap);
             });
-
-        SubscribeLocalEvent<PaintableComponent, InteractUsingEvent>(OnPaintableInteract);
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
     }
@@ -68,7 +71,22 @@ public abstract class SharedSprayPainterSystem : EntitySystem
             SetPipeColor(ent, ent.Comp.ColorPalette.First().Key);
     }
 
-    private void OnPaintableDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterDoAfterEvent args)
+    private void SetPipeColor(Entity<SprayPainterComponent> ent, string? paletteKey)
+    {
+        if (paletteKey == null || paletteKey == ent.Comp.PickedColor)
+            return;
+
+        if (!ent.Comp.ColorPalette.ContainsKey(paletteKey))
+            return;
+
+        ent.Comp.PickedColor = paletteKey;
+        Dirty(ent, ent.Comp);
+        UpdateUi(ent);
+    }
+
+    #region Interaction
+
+    private void OnPainterDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
             return;
@@ -103,7 +121,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnAddSwitchModeVerb(Entity<SprayPainterComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnPainterGetAltVerbs(Entity<SprayPainterComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue)
             return;
@@ -135,75 +153,6 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         var pitch = ent.Comp.IsPaintingDecals ? 1 : 0.8f;
         Audio.PlayPredicted(ent.Comp.SoundSwitchMode, ent, user, ent.Comp.SoundSwitchMode.Params.WithPitchScale(pitch));
     }
-
-    #region UI
-
-    private void OnTabChanged(Entity<SprayPainterComponent> ent, ref SprayPainterTabChangedMessage args)
-    {
-        ent.Comp.SelectedTab = args.Index;
-        Dirty(ent);
-    }
-
-    private void OnSetPipeColor(Entity<SprayPainterComponent> ent, ref SprayPainterSetPipeColorMessage args)
-    {
-        SetPipeColor(ent, args.Key);
-    }
-
-    private void OnSetPaintable(Entity<SprayPainterComponent> ent, ref SprayPainterSetPaintablePrototypeMessage args)
-    {
-        if (!ent.Comp.Indexes.ContainsKey(args.Category))
-            return;
-
-        ent.Comp.Indexes[args.Category] = args.Index;
-        Dirty(ent);
-    }
-
-    private void SetPipeColor(Entity<SprayPainterComponent> ent, string? paletteKey)
-    {
-        if (paletteKey == null || paletteKey == ent.Comp.PickedColor)
-            return;
-
-        if (!ent.Comp.ColorPalette.ContainsKey(paletteKey))
-            return;
-
-        ent.Comp.PickedColor = paletteKey;
-        Dirty(ent, ent.Comp);
-    }
-
-    private void OnSetDecal(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalMessage args)
-    {
-        ent.Comp.SelectedDecal = args.DecalPrototype;
-        Dirty(ent);
-        UpdateUi(ent);
-    }
-
-    private void OnSetDecalAngle(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalAngleMessage args)
-    {
-        ent.Comp.SelectedDecalAngle = args.Angle;
-        Dirty(ent);
-        UpdateUi(ent);
-    }
-
-    private void OnSetDecalSnap(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalSnapMessage args)
-    {
-        ent.Comp.SnapDecals = args.Snap;
-        Dirty(ent);
-        UpdateUi(ent);
-    }
-
-    private void OnSetDecalColor(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalColorMessage args)
-    {
-        ent.Comp.SelectedDecalColor = args.Color;
-        Dirty(ent);
-        UpdateUi(ent);
-    }
-
-
-    protected virtual void UpdateUi(Entity<SprayPainterComponent> ent)
-    {
-    }
-    #endregion
-
     private void OnPaintableInteract(Entity<PaintableComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -261,6 +210,74 @@ public abstract class SharedSprayPainterSystem : EntitySystem
             LogImpact.Low,
             $"{ToPrettyString(args.User):user} is painting {ToPrettyString(ent):target} to '{style}' at {Transform(ent).Coordinates:targetlocation}");
     }
+
+    private void OnPainedExamined(Entity<PaintedComponent> ent, ref ExaminedEvent args)
+    {
+        // If the paint's dried, it isn't detectable.
+        if (_timing.CurTime > ent.Comp.RemoveTime)
+            return;
+
+        args.PushText(Loc.GetString("spray-painter-on-examined-painted-message"));
+    }
+
+    #endregion Interaction
+
+    #region UI
+
+    private void OnSetPaintable(Entity<SprayPainterComponent> ent, ref SprayPainterSetPaintablePrototypeMessage args)
+    {
+        if (!ent.Comp.Indexes.ContainsKey(args.Category))
+            return;
+
+        ent.Comp.Indexes[args.Category] = args.Index;
+        Dirty(ent);
+        UpdateUi(ent);
+    }
+
+    private void OnSetPipeColor(Entity<SprayPainterComponent> ent, ref SprayPainterSetPipeColorMessage args)
+    {
+        SetPipeColor(ent, args.Key);
+    }
+
+    private void OnTabChanged(Entity<SprayPainterComponent> ent, ref SprayPainterTabChangedMessage args)
+    {
+        ent.Comp.SelectedTab = args.Index;
+        Dirty(ent);
+    }
+
+    private void OnSetDecal(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalMessage args)
+    {
+        ent.Comp.SelectedDecal = args.DecalPrototype;
+        Dirty(ent);
+        UpdateUi(ent);
+    }
+
+    private void OnSetDecalAngle(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalAngleMessage args)
+    {
+        ent.Comp.SelectedDecalAngle = args.Angle;
+        Dirty(ent);
+        UpdateUi(ent);
+    }
+
+    private void OnSetDecalSnap(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalSnapMessage args)
+    {
+        ent.Comp.SnapDecals = args.Snap;
+        Dirty(ent);
+        UpdateUi(ent);
+    }
+
+    private void OnSetDecalColor(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalColorMessage args)
+    {
+        ent.Comp.SelectedDecalColor = args.Color;
+        Dirty(ent);
+        UpdateUi(ent);
+    }
+
+    protected virtual void UpdateUi(Entity<SprayPainterComponent> ent)
+    {
+    }
+
+    #endregion
 
     #region Style caching
 

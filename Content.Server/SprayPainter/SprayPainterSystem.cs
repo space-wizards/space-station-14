@@ -39,7 +39,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
     }
 
     /// <summary>
-    /// Handles drawing decals when interacting with the floor.
+    /// Handles drawing decals when a spray painter is used to interact with the floor.
     /// </summary>
     private void OnFloorAfterInteract(Entity<SprayPainterComponent> ent, ref AfterInteractEvent args)
     {
