@@ -10,6 +10,27 @@ namespace Content.Server.Database.Migrations.Sqlite
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            // Default to disabled
+            migrationBuilder.AddColumn<bool>(
+                name: "enabled",
+                table: "profile",
+                type: "INTEGER",
+                nullable: false,
+                defaultValue: false);
+
+            // Enable the currently selected character slot
+            migrationBuilder.Sql(
+                """
+                UPDATE profile
+                SET enabled = true
+                WHERE EXISTS (
+                    SELECT *
+                    FROM preference
+                    WHERE profile.preference_id = preference.preference_id
+                      AND profile.slot = preference.selected_character_slot)
+                """
+            );
+
             migrationBuilder.DropIndex(
                 name: "IX_job_one_high_priority",
                 table: "job");
@@ -22,10 +43,9 @@ namespace Content.Server.Database.Migrations.Sqlite
                 name: "priority",
                 table: "job");
 
-            migrationBuilder.RenameColumn(
+            migrationBuilder.DropColumn(
                 name: "pref_unavailable",
-                table: "profile",
-                newName: "enabled");
+                table: "profile");
 
             migrationBuilder.CreateTable(
                 name: "job_priority_entry",
@@ -64,18 +84,35 @@ namespace Content.Server.Database.Migrations.Sqlite
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "job_priority_entry");
-
-            migrationBuilder.RenameColumn(
-                name: "enabled",
-                table: "profile",
-                newName: "pref_unavailable");
-
             migrationBuilder.AddColumn<int>(
                 name: "selected_character_slot",
                 table: "preference",
                 type: "INTEGER",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.Sql(
+                """
+                UPDATE preference
+                SET selected_character_slot =
+                    (SELECT slot
+                     FROM profile
+                     WHERE profile.preference_id = preference.preference_id)
+                WHERE TRUE
+                """
+            );
+
+            migrationBuilder.DropTable(
+                name: "job_priority_entry");
+
+            migrationBuilder.DropColumn(
+                name: "enabled",
+                table: "profile");
+
+            migrationBuilder.AddColumn<int>(
+                name: "pref_unavailable",
+                table: "profile",
+                type: "integer",
                 nullable: false,
                 defaultValue: 0);
 
