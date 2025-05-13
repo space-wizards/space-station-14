@@ -1,5 +1,5 @@
 # Headings
-turret-controls-window-title = Automonous Defense Control System
+turret-controls-window-title = Autonomous Defense Control System
 turret-controls-window-turret-status-label = Linked devices [{$count}]
 turret-controls-window-armament-controls-label = Armament setting
 turret-controls-window-targeting-controls-label = Authorized personnel

@@ -12,11 +12,13 @@ using System.Linq;
 
 namespace Content.Server.TurretController;
 
+/// <inheritdoc/>
 public sealed partial class DeployableTurretControllerSystem : SharedDeployableTurretControllerSystem
 {
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
 
+    /// Keys for the device network. See <see cref="DeviceNetworkConstants"/> for further examples.
     public const string CmdSetArmamemtState = "set_armament_state";
     public const string CmdSetAccessExemptions = "set_access_exemption";
 
@@ -111,7 +113,10 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
     }
 
     protected override void ChangeExemptAccessLevels
-        (Entity<DeployableTurretControllerComponent> ent, HashSet<ProtoId<AccessLevelPrototype>> exemptions, bool enabled, EntityUid? user = null)
+        (Entity<DeployableTurretControllerComponent> ent,
+        HashSet<ProtoId<AccessLevelPrototype>> exemptions,
+        bool enabled, EntityUid?
+        user = null)
     {
         base.ChangeExemptAccessLevels(ent, exemptions, enabled, user);
 
@@ -131,13 +136,13 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
 
     private void UpdateUIState(Entity<DeployableTurretControllerComponent> ent)
     {
-        var turretStates = new List<(string, string)>();
+        var turretStates = new Dictionary<string, string>();
 
         foreach (var (address, state) in ent.Comp.LinkedTurrets)
         {
             var stateName = state.ToString().ToLower();
             var stateDesc = Loc.GetString("turret-controls-window-turret-" + stateName);
-            turretStates.Add((address, stateDesc));
+            turretStates.Add(address, stateDesc);
         }
 
         var uiState = new DeployableTurretControllerBoundInterfaceState(turretStates);

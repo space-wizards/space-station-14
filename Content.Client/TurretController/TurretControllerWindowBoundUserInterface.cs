@@ -16,12 +16,6 @@ public sealed class TurretControllerWindowBoundUserInterface : BoundUserInterfac
     {
         base.Open();
 
-        if (UiKey is not DeployableTurretControllerUiKey)
-        {
-            Close();
-            return;
-        }
-
         _window = this.CreateWindow<TurretControllerWindow>();
         _window.SetOwner(Owner);
         _window.OpenCentered();
@@ -34,13 +28,10 @@ public sealed class TurretControllerWindowBoundUserInterface : BoundUserInterfac
     {
         base.UpdateState(state);
 
-        if (_window == null)
-            return;
-
         if (state is not DeployableTurretControllerBoundInterfaceState { } castState)
             return;
 
-        _window.UpdateState(castState);
+        _window?.UpdateState(castState);
     }
 
     private void OnAccessLevelChanged(HashSet<ProtoId<AccessLevelPrototype>> accessLevels, bool enabled)

@@ -21,15 +21,15 @@ namespace Content.Client.TurretController;
 [GenerateTypedNameReferences]
 public sealed partial class TurretControllerWindow : BaseWindow
 {
-    [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private IPrototypeManager _protoManager = default!;
-    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IResourceCache _cache = default!;
 
-    private readonly IResourceCache _cache;
     private readonly AccessReaderSystem _accessReaderSystem;
 
     private EntityUid? _owner;
-    private int _tabIndex = 0;
+    private int _accessGroupTabIndex = 0;
 
     // Button groups
     private readonly ButtonGroup _armamentButtons = new();
@@ -54,7 +54,6 @@ public sealed partial class TurretControllerWindow : BaseWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        _cache = IoCManager.Resolve<IResourceCache>();
         _accessReaderSystem = _entManager.System<AccessReaderSystem>();
 
         CloseButton.OnPressed += _ => Close();
@@ -142,10 +141,10 @@ public sealed partial class TurretControllerWindow : BaseWindow
         if (_entManager.TryGetComponent<TurretTargetSettingsComponent>(_owner, out var turretTargetSettings))
             RefreshAccessControls(turretTargetSettings.ExemptAccessLevels);
 
-        RefreshLinkedTurrets(state.TurretStates);
+        RefreshLinkedTurrets(state.TurretStateByAddress);
     }
 
-    public void RefreshLinkedTurrets(List<(string, string)> turretStates)
+    public void RefreshLinkedTurrets(Dictionary<string, string> turretStates)
     {
         var turretCount = turretStates.Count;
         var hasTurrets = turretCount > 0;
@@ -155,16 +154,17 @@ public sealed partial class TurretControllerWindow : BaseWindow
 
         LinkedTurretsContainer.RemoveAllChildren();
 
-        foreach (var turretState in turretStates)
+        foreach (var (address, state) in turretStates)
         {
-            var box = new BoxContainer()
-            {
-                HorizontalExpand = true,
-            };
+            var text = Loc.GetString(
+                "turret-controls-window-turret-status",
+                ("device", address),
+                ("status", Loc.GetString(state))
+            );
 
             var label = new Label()
             {
-                Text = Loc.GetString("turret-controls-window-turret-status", ("device", turretState.Item1), ("status", Loc.GetString(turretState.Item2))),
+                Text = text,
                 HorizontalAlignment = HAlignment.Left,
                 Margin = new Thickness(10f, 0f, 10f, 0f),
                 HorizontalExpand = true,
@@ -173,8 +173,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
 
             label.AddStyleClass("ConsoleText");
 
-            box.AddChild(label);
-            LinkedTurretsContainer.AddChild(box);
+            LinkedTurretsContainer.AddChild(label);
         }
 
         TurretStatusHeader.Text = Loc.GetString("turret-controls-window-turret-status-label", ("count", turretCount));
@@ -212,17 +211,19 @@ public sealed partial class TurretControllerWindow : BaseWindow
             if (!_protoManager.TryIndex(accessLevel, out var accessLevelProto))
                 continue;
 
-            IEnumerable<AccessGroupPrototype> associatedGroups =
-                groupedAccessLevels.Keys.Where(x => x.Tags.Contains(accessLevelProto.ID) == true);
+            var assigned = false;
 
-            if (!associatedGroups.Any() && generalAccessProto != null)
-                groupedAccessLevels[generalAccessProto].Add(accessLevelProto);
-
-            else
+            foreach (var (accessGroup, accessLevels) in groupedAccessLevels)
             {
-                foreach (var group in associatedGroups)
-                    groupedAccessLevels[group].Add(accessLevelProto);
+                if (!accessGroup.Tags.Contains(accessLevelProto.ID))
+                    continue;
+
+                assigned = true;
+                groupedAccessLevels[accessGroup].Add(accessLevelProto);
             }
+
+            if (!assigned && generalAccessProto != null)
+                groupedAccessLevels[generalAccessProto].Add(accessLevelProto);
         }
 
         // Remove access groups that have no assigned access levels
@@ -232,7 +233,8 @@ public sealed partial class TurretControllerWindow : BaseWindow
                 groupedAccessLevels.Remove(group);
         }
 
-        // Did something go wrong...?
+        // No access level prototypes were assigned to any of the access level groups.
+        // Either the the turret controller has no assigned access levels or their names were invalid.
         if (groupedAccessLevels.Count == 0)
         {
             AccessGroupList.DisposeAllChildren();
@@ -242,8 +244,8 @@ public sealed partial class TurretControllerWindow : BaseWindow
         }
 
         // Adjust the current tab index so it remains in range
-        if (_tabIndex >= groupedAccessLevels.Count)
-            _tabIndex = groupedAccessLevels.Count - 1;
+        if (_accessGroupTabIndex >= groupedAccessLevels.Count)
+            _accessGroupTabIndex = groupedAccessLevels.Count - 1;
 
         // Reorder the access groups alphabetically
         var orderedAccessGroups = groupedAccessLevels.Keys.OrderBy(x => x.GetAccessGroupName()).ToList();
@@ -258,26 +260,19 @@ public sealed partial class TurretControllerWindow : BaseWindow
             var monotoneButton = new MonotoneButton
             {
                 ToggleMode = true,
+                Group = _accessGroupsButtons,
             };
-
-            AccessGroupList.AddChild(monotoneButton);
 
             // Add button styling
             monotoneButton.Label.AddStyleClass("ConsoleText");
             monotoneButton.Label.HorizontalAlignment = HAlignment.Left;
 
-            monotoneButton.Group = _accessGroupsButtons;
-
-            var childIndex = AccessGroupList.ChildCount - 1;
-
             if (orderedAccessGroups.Count > 1)
             {
-                if (childIndex == 0)
+                if (AccessGroupList.ChildCount == 0)
                     monotoneButton.AddStyleClass(StyleBase.ButtonOpenLeft);
-
-                else if (orderedAccessGroups.Count > 1 && childIndex == (orderedAccessGroups.Count - 1))
+                else if (orderedAccessGroups.Count > 1 && AccessGroupList.ChildCount == (orderedAccessGroups.Count - 1))
                     monotoneButton.AddStyleClass(StyleBase.ButtonOpenRight);
-
                 else
                     monotoneButton.AddStyleClass(StyleBase.ButtonOpenBoth);
             }
@@ -287,6 +282,8 @@ public sealed partial class TurretControllerWindow : BaseWindow
             {
                 OnAccessGroupChangedEvent?.Invoke(monotoneButton.GetPositionInParent());
             };
+
+            AccessGroupList.AddChild(monotoneButton);
         }
 
         // Update the group access buttons
@@ -297,15 +294,18 @@ public sealed partial class TurretControllerWindow : BaseWindow
 
             var accessGroup = orderedAccessGroups[i];
             var prefix = groupedAccessLevels[accessGroup].Any(x => exemptAccessLevels.Contains(x)) ? "»" : " ";
+            var text = Loc.GetString(
+                "turret-controls-window-access-group-label",
+                ("prefix", prefix),
+                ("label", accessGroup.GetAccessGroupName())
+            );
 
-            accessGroupButton.Text = Loc.GetString("turret-controls-window-access-group-label",
-                ("prefix", prefix), ("label", accessGroup.GetAccessGroupName()));
-
-            accessGroupButton.Pressed = _tabIndex == orderedAccessGroups.IndexOf(accessGroup);
+            accessGroupButton.Text = text;
+            accessGroupButton.Pressed = _accessGroupTabIndex == orderedAccessGroups.IndexOf(accessGroup);
         }
 
         // Get the access levels associated with the current tab
-        _accessLevelsForTab = groupedAccessLevels[orderedAccessGroups[_tabIndex]];
+        _accessLevelsForTab = groupedAccessLevels[orderedAccessGroups[_accessGroupTabIndex]];
         _accessLevelsForTab = _accessLevelsForTab.OrderBy(x => x.GetAccessLevelName()).ToHashSet();
 
         // Remove excess access level buttons from the UI
@@ -433,10 +433,10 @@ public sealed partial class TurretControllerWindow : BaseWindow
 
     private void OnAccessGroupChanged(int newTabIndex)
     {
-        if (newTabIndex == _tabIndex)
+        if (newTabIndex == _accessGroupTabIndex)
             return;
 
-        _tabIndex = newTabIndex;
+        _accessGroupTabIndex = newTabIndex;
 
         if (_entManager.TryGetComponent<TurretTargetSettingsComponent>(_owner, out var turretTargetSettings))
             RefreshAccessControls(turretTargetSettings.ExemptAccessLevels);
@@ -460,13 +460,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
         {
             HorizontalExpand = true;
 
-            var lines = new List<(Vector2, Vector2)>()
-            {
-                (new Vector2(0,0), new Vector2(0,0)),
-                (new Vector2(0,0), new Vector2(0,0))
-            };
-
-            CheckBoxLink = new LineRenderer(lines)
+            CheckBoxLink = new LineRenderer(new())
             {
                 SetWidth = 22,
                 VerticalExpand = true,

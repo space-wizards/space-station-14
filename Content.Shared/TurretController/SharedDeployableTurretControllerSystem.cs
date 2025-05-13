@@ -7,6 +7,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.TurretController;
 
+/// <summary>
+/// Oversees entities that can change the component values of linked deployable turrets,
+/// specifically their armament and access level exemptions, via an associated UI
+/// </summary>
 public abstract partial class SharedDeployableTurretControllerSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _accessreader = default!;
@@ -55,7 +59,10 @@ public abstract partial class SharedDeployableTurretControllerSystem : EntitySys
     }
 
     protected virtual void ChangeExemptAccessLevels
-        (Entity<DeployableTurretControllerComponent> ent, HashSet<ProtoId<AccessLevelPrototype>> exemptions, bool enabled, EntityUid? user = null)
+        (Entity<DeployableTurretControllerComponent> ent,
+        HashSet<ProtoId<AccessLevelPrototype>> exemptions,
+        bool enabled,
+        EntityUid? user = null)
     {
         // Update the controller
         if (!TryComp<TurretTargetSettingsComponent>(ent, out var targetSettings))
@@ -78,14 +85,12 @@ public abstract partial class SharedDeployableTurretControllerSystem : EntitySys
 
     public bool IsUserAllowedAccess(Entity<DeployableTurretControllerComponent> ent, EntityUid user)
     {
-        if (!_accessreader.IsAllowed(user, ent))
-        {
-            _popup.PopupClient(Loc.GetString("turret-controls-access-denied"), ent, user);
-            _audio.PlayPredicted(ent.Comp.AccessDeniedSound, ent, user);
+        if (_accessreader.IsAllowed(user, ent))
+            return true;
 
-            return false;
-        }
+        _popup.PopupClient(Loc.GetString("turret-controls-access-denied"), ent, user);
+        _audio.PlayPredicted(ent.Comp.AccessDeniedSound, ent, user);
 
-        return true;
+        return false;
     }
 }

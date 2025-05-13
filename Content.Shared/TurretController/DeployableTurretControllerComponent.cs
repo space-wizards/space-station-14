@@ -16,6 +16,7 @@ public sealed partial class DeployableTurretControllerComponent : Component
 {
     /// <summary>
     /// The states of the turrets linked to this entity, indexed by their device address.
+    /// This is used to populate the controller UI with the address and state of linked turrets. 
     /// </summary>
     [ViewVariables]
     public Dictionary<string, DeployableTurretState> LinkedTurrets = new();
@@ -32,13 +33,16 @@ public sealed partial class DeployableTurretControllerComponent : Component
     public int ArmamentState = -1;
 
     /// <summary>
-    /// Access levels that are known to the entity.
+    /// Access level prototypes that are known to the entity.
+    /// Determines what access permissions can be adjusted.
+    /// It is also used to populate the controller UI.
     /// </summary>
     [DataField]
     public HashSet<ProtoId<AccessLevelPrototype>> AccessLevels = new();
 
     /// <summary>
-    /// Access groups that are known to the entity.
+    /// Access group prototypes that are known to the entity.
+    /// Determines how access permissions are organized on the controller UI.
     /// </summary>
     [DataField]
     public HashSet<ProtoId<AccessGroupPrototype>> AccessGroups = new();
@@ -53,11 +57,11 @@ public sealed partial class DeployableTurretControllerComponent : Component
 [Serializable, NetSerializable]
 public sealed class DeployableTurretControllerBoundInterfaceState : BoundUserInterfaceState
 {
-    public List<(string, string)> TurretStates;
+    public Dictionary<string, string> TurretStateByAddress;
 
-    public DeployableTurretControllerBoundInterfaceState(List<(string, string)> turretStates)
+    public DeployableTurretControllerBoundInterfaceState(Dictionary<string, string> turretStateByAddress)
     {
-        TurretStates = turretStates;
+        TurretStateByAddress = turretStateByAddress;
     }
 }
 
@@ -90,7 +94,6 @@ public enum TurretControllerVisuals : byte
 {
     ControlPanel,
 }
-
 
 [Serializable, NetSerializable]
 public enum DeployableTurretControllerUiKey : byte
