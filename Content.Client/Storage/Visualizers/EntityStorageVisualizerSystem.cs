@@ -7,12 +7,9 @@ namespace Content.Client.Storage.Visualizers;
 
 public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStorageVisualsComponent>
 {
-<<<<<<< HEAD
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
-=======
     [Dependency] private readonly SpriteSystem _sprite = default!;
->>>>>>> 0a1fd4f3988f1c91568941e89b9f8be8c45f6a7a
 
     public override void Initialize()
     {
