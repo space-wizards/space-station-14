@@ -1,10 +1,8 @@
-using Content.Shared.Audio;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.NodeContainer;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using GasValveComponent = Content.Shared.Atmos.Piping.Binary.Components.GasValveComponent;
 
 namespace Content.Shared.Atmos.Piping.Binary.Systems;
 
