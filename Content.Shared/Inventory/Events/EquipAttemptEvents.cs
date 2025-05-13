@@ -1,8 +1,10 @@
 namespace Content.Shared.Inventory.Events;
 
 public abstract class EquipAttemptBase(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
-    SlotDefinition slotDefinition) : CancellableEntityEventArgs
+    SlotDefinition slotDefinition) : CancellableEntityEventArgs, IInventoryRelayEvent
 {
+    public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
+
     /// <summary>
     /// The entity performing the action. NOT necessarily the one actually "receiving" the equipment.
     /// </summary>
