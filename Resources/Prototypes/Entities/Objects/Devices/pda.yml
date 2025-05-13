@@ -1101,7 +1101,7 @@
     state: pda-syndi-operative
 
 - type: entity
-  parent: [ SyndiPDA, BaseSyndicateContraband ]
+  parent: [ SyndiOperativePDA, BaseSyndicateContraband ]
   id: SyndiCorpsmanPDA
   name: syndicate corpsman PDA
   description: Commander... I need to cook!
@@ -1123,7 +1123,7 @@
       - MedTekCartridge
 
 - type: entity
-  parent: [ SyndiPDA, BaseSyndicateContraband ]
+  parent: [ SyndiOperativePDA, BaseSyndicateContraband ]
   id: SyndiCommanderPDA
   name: syndicate commander PDA
   description: So what are we, some kind of Nukie squad?
