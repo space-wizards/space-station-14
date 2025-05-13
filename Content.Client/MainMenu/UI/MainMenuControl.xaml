@@ -1,7 +1,12 @@
 ﻿<Control xmlns="https://spacestation14.io"
          xmlns:pllax="clr-namespace:Content.Client.Parallax"
          xmlns:clog="clr-namespace:Content.Client.Changelog">
-    <pllax:ParallaxControl />
+    <pllax:ParallaxControl
+        ParallaxPrototype="TrainStation"
+        SpeedX="5"
+        SpeedY="20"
+        ScaleX="3"
+        ScaleY="3"/>
     <BoxContainer Name="VBox"
                   Orientation="Vertical"
                   HorizontalAlignment="Center"

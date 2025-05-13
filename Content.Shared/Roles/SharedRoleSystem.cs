@@ -1,25 +1,31 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Roles;
 
 public abstract class SharedRoleSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private   readonly IConfigurationManager _cfg = default!;
+    [Dependency] private   readonly IEntityManager _entityManager = default!;
+    [Dependency] private   readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] protected readonly ISharedPlayerManager Player = default!;
+    [Dependency] private   readonly SharedAudioSystem _audio = default!;
+    [Dependency] private   readonly SharedMindSystem _minds = default!;
 
     private JobRequirementOverridePrototype? _requirementOverride;
 
@@ -28,6 +34,15 @@ public abstract class SharedRoleSystem : EntitySystem
         Subs.CVar(_cfg, CCVars.GameRoleTimerOverride, SetRequirementOverride, true);
 
         SubscribeLocalEvent<MindRoleComponent, ComponentShutdown>(OnComponentShutdown);
+        SubscribeLocalEvent<StartingMindRoleComponent, PlayerSpawnCompleteEvent>(OnSpawn);
+    }
+
+    private void OnSpawn(EntityUid uid, StartingMindRoleComponent component, PlayerSpawnCompleteEvent args)
+    {
+        if (!_minds.TryGetMind(uid, out var mindId, out var mindComp))
+            return;
+
+        MindAddRole(mindId, component.MindRole, mind: mindComp, silent: component.Silent);
     }
 
     private void SetRequirementOverride(string value)
@@ -50,7 +65,7 @@ public abstract class SharedRoleSystem : EntitySystem
     /// <param name="mind">If the mind component is provided, it will be checked if it belongs to the mind entity</param>
     /// <param name="silent">If true, no briefing will be generated upon receiving the mind role</param>
     public void MindAddRoles(EntityUid mindId,
-        List<ProtoId<EntityPrototype>>? roles,
+        List<EntProtoId>? roles,
         MindComponent? mind = null,
         bool silent = false)
     {
@@ -71,7 +86,7 @@ public abstract class SharedRoleSystem : EntitySystem
     /// <param name="mind">If the mind component is provided, it will be checked if it belongs to the mind entity</param>
     /// <param name="silent">If true, no briefing will be generated upon receiving the mind role</param>
     public void MindAddRole(EntityUid mindId,
-        ProtoId<EntityPrototype> protoId,
+        EntProtoId protoId,
         MindComponent? mind = null,
         bool silent = false)
     {
@@ -114,22 +129,20 @@ public abstract class SharedRoleSystem : EntitySystem
     ///     Creates a Mind Role
     /// </summary>
     private void MindAddRoleDo(EntityUid mindId,
-        ProtoId<EntityPrototype> protoId,
+        EntProtoId protoId,
         MindComponent? mind = null,
         bool silent = false,
         string? jobPrototype = null)
     {
         if (!Resolve(mindId, ref mind))
         {
-            Log.Error($"Failed to add role {protoId} to mind {mindId} : Mind does not match provided mind component");
+            Log.Error($"Failed to add role {protoId} to {ToPrettyString(mindId)} : Mind does not match provided mind component");
             return;
         }
 
-        var antagonist = false;
-
         if (!_prototypes.TryIndex(protoId, out var protoEnt))
         {
-            Log.Error($"Failed to add role {protoId} to mind {mindId} : Role prototype does not exist");
+            Log.Error($"Failed to add role {protoId} to {ToPrettyString(mindId)} : Role prototype does not exist");
             return;
         }
 
@@ -151,17 +164,14 @@ public abstract class SharedRoleSystem : EntitySystem
             DebugTools.Assert(!mindRoleComp.ExclusiveAntag);
         }
 
-        antagonist |= mindRoleComp.Antag;
         mind.MindRoles.Add(mindRoleId);
 
-        var mindEv = new MindRoleAddedEvent(silent);
-        RaiseLocalEvent(mindId, ref mindEv);
+        var update = MindRolesUpdate((mindId, mind));
 
-        var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
-        if (mind.OwnedEntity != null)
-        {
-            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
-        }
+        // RoleType refresh, Role time tracking, Update Admin playerlist
+
+        var message = new RoleAddedEvent(mindId, mind, update, silent);
+        RaiseLocalEvent(mindId, message, true);
 
         var name = Loc.GetString(protoEnt.Name);
         if (mind.OwnedEntity is not null)
@@ -174,10 +184,100 @@ public abstract class SharedRoleSystem : EntitySystem
         {
             //TODO: This is not tied to the player on the Admin Log filters.
             //Probably only happens when Job Role is added on initial spawn, before the mind entity is put in a mob
+            Log.Error($"{ToPrettyString(mindId)} does not have an OwnedEntity!");
             _adminLogger.Add(LogType.Mind,
                 LogImpact.Low,
                 $"{name} added to {ToPrettyString(mindId)}");
         }
+    }
+
+    /// <summary>
+    ///     Select the mind's currently "active" mind role entity, and update the mind's role type, if necessary
+    /// </summary>
+    /// <returns>
+    ///     True if this changed the mind's role type
+    /// </returns>>
+    private bool MindRolesUpdate(Entity<MindComponent?> ent)
+    {
+        if(!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        //get the most important/latest mind role
+        var (roleType, subtype) = GetRoleTypeByTime(ent.Comp);
+
+        if (ent.Comp.RoleType == roleType &&  ent.Comp.Subtype == subtype)
+            return false;
+
+        SetRoleType(ent.Owner, roleType, subtype);
+        return true;
+    }
+
+    /// <summary>
+    ///     Return the most recently specified role type and subtype, or Neutral
+    /// </summary>
+    private (ProtoId<RoleTypePrototype>, LocId?) GetRoleTypeByTime(MindComponent mind)
+    {
+        var role = GetRoleCompByTime(mind);
+        return (role?.Comp?.RoleType ?? "Neutral", role?.Comp?.Subtype);
+    }
+
+    /// <summary>
+    ///     Return the most recently specified role type's mind role entity, or null
+    /// </summary>
+    public Entity<MindRoleComponent>? GetRoleCompByTime(MindComponent mind)
+    {
+        var roles = new List<Entity<MindRoleComponent>>();
+
+        foreach (var role in mind.MindRoles)
+        {
+            var comp = Comp<MindRoleComponent>(role);
+            if (comp.RoleType is not null)
+                roles.Add((role, comp));
+        }
+
+        Entity<MindRoleComponent>? result = roles.Count > 0 ? roles.LastOrDefault() : null;
+        return (result);
+    }
+
+    private void SetRoleType(EntityUid mind, ProtoId<RoleTypePrototype> roleTypeId, LocId? subtype)
+    {
+        if (!TryComp<MindComponent>(mind, out var comp))
+        {
+            Log.Error($"Failed to update Role Type of mind entity {ToPrettyString(mind)} to {roleTypeId}, {subtype}. MindComponent not found.");
+            return;
+        }
+
+        if (!_prototypes.HasIndex(roleTypeId))
+        {
+            Log.Error($"Failed to change Role Type of {_minds.MindOwnerLoggingString(comp)} to {roleTypeId}, {subtype}. Invalid role");
+            return;
+        }
+
+        comp.RoleType = roleTypeId;
+        comp.Subtype = subtype;
+        Dirty(mind, comp);
+
+        // Update player character window
+        if (Player.TryGetSessionById(comp.UserId, out var session))
+            RaiseNetworkEvent(new MindRoleTypeChangedEvent(), session.Channel);
+        else
+        {
+            var error = $"The Character Window of {_minds.MindOwnerLoggingString(comp)} potentially did not update immediately : session error";
+            _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{error}");
+        }
+
+        if (comp.OwnedEntity is null)
+        {
+            Log.Error($"{ToPrettyString(mind)} does not have an OwnedEntity!");
+            _adminLogger.Add(LogType.Mind,
+                LogImpact.Medium,
+                $"Role Type of {ToPrettyString(mind)} changed to {roleTypeId}, {subtype}");
+            return;
+        }
+
+        _adminLogger.Add(LogType.Mind,
+            LogImpact.High,
+            $"Role Type of {ToPrettyString(comp.OwnedEntity)} changed to {roleTypeId}, {subtype}");
     }
 
     /// <summary>
@@ -195,20 +295,18 @@ public abstract class SharedRoleSystem : EntitySystem
             return false;
 
         var found = false;
-        var antagonist = false;
         var delete = new List<EntityUid>();
         foreach (var role in mind.Comp.MindRoles)
         {
             if (!HasComp<T>(role))
                 continue;
 
-            if (!TryComp(role, out MindRoleComponent? roleComp))
+            if (!HasComp<MindRoleComponent>(role))
             {
                 Log.Error($"Encountered mind role entity {ToPrettyString(role)} without a {nameof(MindRoleComponent)}");
                 continue;
             }
 
-            antagonist |= roleComp.Antag | roleComp.ExclusiveAntag;
             delete.Add(role);
             found = true;
         }
@@ -221,11 +319,10 @@ public abstract class SharedRoleSystem : EntitySystem
             _entityManager.DeleteEntity(role);
         }
 
-        if (mind.Comp.OwnedEntity != null)
-        {
-            var message = new RoleRemovedEvent(mind.Owner, mind.Comp, antagonist);
-            RaiseLocalEvent(mind.Comp.OwnedEntity.Value, message, true);
-        }
+        var update = MindRolesUpdate(mind);
+
+        var message = new RoleRemovedEvent(mind.Owner, mind.Comp, update);
+        RaiseLocalEvent(mind, message, true);
 
         _adminLogger.Add(LogType.Mind,
             LogImpact.Low,
@@ -267,10 +364,9 @@ public abstract class SharedRoleSystem : EntitySystem
     /// Finds the first mind role of a specific T type on a mind entity.
     /// Outputs entity components for the mind role's MindRoleComponent and for T
     /// </summary>
-    /// <param name="mindId">The mind entity</param>
+    /// <param name="mind">The mind entity</param>
     /// <typeparam name="T">The type of the role to find.</typeparam>
     /// <param name="role">The Mind Role entity component</param>
-    /// <param name="roleT">The Mind Role's entity component for T</param>
     /// <returns>True if the role is found</returns>
     public bool MindHasRole<T>(Entity<MindComponent?> mind,
         [NotNullWhen(true)] out Entity<MindRoleComponent, T>? role) where T : IComponent
@@ -467,7 +563,7 @@ public abstract class SharedRoleSystem : EntitySystem
         return CheckAntagonistStatus(mindId.Value).ExclusiveAntag;
     }
 
-   public (bool Antag, bool ExclusiveAntag) CheckAntagonistStatus(Entity<MindComponent?> mind)
+   private (bool Antag, bool ExclusiveAntag) CheckAntagonistStatus(Entity<MindComponent?> mind)
    {
        if (!Resolve(mind.Owner, ref mind.Comp))
            return (false, false);
@@ -495,8 +591,11 @@ public abstract class SharedRoleSystem : EntitySystem
     /// </summary>
     public void MindPlaySound(EntityUid mindId, SoundSpecifier? sound, MindComponent? mind = null)
     {
-        if (Resolve(mindId, ref mind) && mind.Session != null)
-            _audio.PlayGlobal(sound, mind.Session);
+        if (!Resolve(mindId, ref mind))
+            return;
+
+        if (Player.TryGetSessionById(mind.UserId, out var session))
+            _audio.PlayGlobal(sound, session);
     }
 
     // TODO ROLES Change to readonly.
@@ -536,4 +635,21 @@ public abstract class SharedRoleSystem : EntitySystem
 
         return antag.Requirements;
     }
+
+    /// <summary>
+    /// Returns the localized name of a role type's subtype. If the provided subtype parameter turns out to be empty, it returns the localized name of the role type instead.
+    /// </summary>
+    public string GetRoleSubtypeLabel(LocId roleType, LocId? subtype)
+    {
+        return string.IsNullOrEmpty(subtype) ? Loc.GetString(roleType) : Loc.GetString(subtype);
+    }
+}
+
+/// <summary>
+/// Raised on the client to update Role Type on the character window, in case it happened to be open.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class MindRoleTypeChangedEvent : EntityEventArgs
+{
+
 }

@@ -68,12 +68,11 @@
   id: CrateMaterialPlasteel
   parent: CrateGenericSteel
   name: plasteel crate
-  description: 90 sheets of plasteel.
+  description: 30 sheets of plasteel.
   components:
   - type: StorageFill
     contents:
       - id: SheetPlasteel
-        amount: 3
 
 - type: entity
   id: CrateMaterialPlasma
@@ -106,6 +105,78 @@
     contents:
       - id: SheetPaper
         amount: 3
+
+- type: entityTable
+  id: RandomMaterialCrateTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector # regular materials, 10
+      weight: 35
+      children:
+      - id: SheetGlass10
+      - id: SheetSteel10
+      - id: SheetPlastic10
+    - !type:GroupSelector # regular materials, stack
+      weight: 30
+      children:
+      - id: SheetGlass
+      - id: SheetSteel
+      - id: SheetPlastic
+    - !type:GroupSelector # secondary materials, stack
+      weight: 30
+      children:
+      - id: MaterialCloth
+      - id: SheetPlasteel
+      - id: MaterialWoodPlank
+      - id: PartRodMetal
+    - !type:GroupSelector # tertiary materials, singles
+      weight: 5
+      children:
+      - id: SheetPlasma1
+      - id: SheetUranium1
+      - id: IngotGold1
+      - id: IngotSilver1
+
+- type: entity
+  id: CrateMaterialRandom
+  parent: CrateGenericSteel
+  name: surplus materials
+  description: Surplus materials from somewhere.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: RandomMaterialCrateTable
+        rolls: !type:RangeNumberSelector
+          range: 2, 4
+
+- type: entity
+  id: CrateMaterialSilo
+  parent: CrateGenericSteel
+  name: material silo crate
+  description: A package including all the materials to create a material silo.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MaterialSiloMachineCircuitboard
+    - id: SheetSteel1
+      amount: 5
+    - id: MatterBinStockPart
+      amount: 4
+    - id: CableApcStack1
+      amount: 2
+
+- type: entity
+  id: CrateMaterialBasicResource
+  parent: CrateGenericSteel
+  name: basic sheet crate
+  description: 30 sheets of steel, glass, and plastic.
+  components:
+  - type: StorageFill
+    contents:
+    - id: SheetSteel
+    - id: SheetGlass
+    - id: SheetPlastic
 
 #- type: entity
 #  id: CrateMaterialHFuelTank

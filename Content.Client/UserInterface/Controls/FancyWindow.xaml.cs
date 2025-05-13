@@ -81,4 +81,54 @@ namespace Content.Client.UserInterface.Controls
             return mode;
         }
     }
+
+    /// <summary>
+    /// Helper functions for working with <see cref="FancyWindow"/>.
+    /// </summary>
+    public static class FancyWindowExt
+    {
+        /// <summary>
+        /// Sets information for a window (title and guidebooks) based on an entity.
+        /// </summary>
+        /// <param name="window">The window to modify.</param>
+        /// <param name="entityManager">Entity manager used to retrieve the information.</param>
+        /// <param name="entity">The entity that this window represents.</param>
+        /// <seealso cref="SetTitleFromEntity"/>
+        /// <seealso cref="SetGuidebookFromEntity"/>
+        public static void SetInfoFromEntity(this FancyWindow window, IEntityManager entityManager, EntityUid entity)
+        {
+            window.SetTitleFromEntity(entityManager, entity);
+            window.SetGuidebookFromEntity(entityManager, entity);
+        }
+
+        /// <summary>
+        /// Set a window's title to the name of an entity.
+        /// </summary>
+        /// <param name="window">The window to modify.</param>
+        /// <param name="entityManager">Entity manager used to retrieve the information.</param>
+        /// <param name="entity">The entity that this window represents.</param>
+        /// <seealso cref="SetInfoFromEntity"/>
+        public static void SetTitleFromEntity(
+            this FancyWindow window,
+            IEntityManager entityManager,
+            EntityUid entity)
+        {
+            window.Title = entityManager.GetComponent<MetaDataComponent>(entity).EntityName;
+        }
+
+        /// <summary>
+        /// Set a window's guidebook IDs to those of an entity.
+        /// </summary>
+        /// <param name="window">The window to modify.</param>
+        /// <param name="entityManager">Entity manager used to retrieve the information.</param>
+        /// <param name="entity">The entity that this window represents.</param>
+        /// <seealso cref="SetInfoFromEntity"/>
+        public static void SetGuidebookFromEntity(
+            this FancyWindow window,
+            IEntityManager entityManager,
+            EntityUid entity)
+        {
+            window.HelpGuidebookIds = entityManager.GetComponentOrNull<GuideHelpComponent>(entity)?.Guides;
+        }
+    }
 }

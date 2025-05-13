@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Piping.Binary.Components;
-using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
-using GasValveComponent = Content.Shared.Atmos.Piping.Binary.Components.GasValveComponent;
+using Content.Shared.DeviceLinking.Events;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 

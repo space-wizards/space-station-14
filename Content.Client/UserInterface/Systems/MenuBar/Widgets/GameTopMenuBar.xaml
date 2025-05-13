@@ -11,21 +11,17 @@
            Orientation="Horizontal"
            HorizontalAlignment="Stretch"
            VerticalAlignment="Top"
+           SeparationOverride="5"
 >
-    <GridContainer
-        Rows="2"
-        HSeparationOverride="5"
-        VSeparationOverride="5"
-        HorizontalExpand="True">
     <ui:MenuButton
         Name="EscapeButton"
         Access="Internal"
         Icon="{xe:Tex '/Textures/Interface/hamburger.svg.192dpi.png'}"
         BoundKey = "{x:Static ic:EngineKeyFunctions.EscapeMenu}"
         ToolTip="{Loc 'game-hud-open-escape-menu-button-tooltip'}"
-        MinSize="48 64"
+        MinSize="70 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenRight}"
         />
     <ui:MenuButton
         Name="GuidebookButton"
@@ -33,7 +29,7 @@
         Icon="{xe:Tex '/Textures/Interface/VerbIcons/information.svg.192dpi.png'}"
         ToolTip="{Loc 'game-hud-open-guide-menu-button-tooltip'}"
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenGuidebook}"
-        MinSize="48 64"
+        MinSize="42 64"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -43,7 +39,7 @@
         Icon="{xe:Tex '/Textures/Interface/character.svg.192dpi.png'}"
         ToolTip="{Loc 'game-hud-open-character-menu-button-tooltip'}"
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenCharacterMenu}"
-        MinSize="48 64"
+        MinSize="42 64"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -53,7 +49,7 @@
         Icon="{xe:Tex '/Textures/Interface/emotes.svg.192dpi.png'}"
         ToolTip="{Loc 'game-hud-open-emotes-menu-button-tooltip'}"
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenEmotesMenu}"
-        MinSize="48 64"
+        MinSize="42 64"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -63,7 +59,7 @@
         Icon="{xe:Tex '/Textures/Interface/hammer.svg.192dpi.png'}"
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenCraftingMenu}"
         ToolTip="{Loc 'game-hud-open-crafting-menu-button-tooltip'}"
-        MinSize="48 64"
+        MinSize="42 64"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -73,7 +69,7 @@
         Icon="{xe:Tex '/Textures/Interface/fist.svg.192dpi.png'}"
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenActionsMenu}"
         ToolTip="{Loc 'game-hud-open-actions-menu-button-tooltip'}"
-        MinSize="48 64"
+        MinSize="42 64"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -83,7 +79,7 @@
         Icon="{xe:Tex '/Textures/Interface/gavel.svg.192dpi.png'}"
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenAdminMenu}"
         ToolTip="{Loc 'game-hud-open-admin-menu-button-tooltip'}"
-        MinSize="48 64"
+        MinSize="42 64"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -93,7 +89,7 @@
         Icon="{xe:Tex '/Textures/Interface/sandbox.svg.192dpi.png'}"
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenSandboxWindow}"
         ToolTip="{Loc 'game-hud-open-sandbox-menu-button-tooltip'}"
-        MinSize="48 64"
+        MinSize="42 64"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -103,9 +99,8 @@
         Icon="{xe:Tex '/Textures/Interface/info.svg.192dpi.png'}"
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenAHelp}"
         ToolTip="{Loc 'ui-options-function-open-a-help'}"
-        MinSize="48 64"
+        MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenLeft}"
         />
-    </GridContainer>
 </widgets:GameTopMenuBar>
