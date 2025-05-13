@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Supply Assistant and Administrative Assistant now have automatic text
-      highlighting options.
-    type: Add
-  id: 1165
-  time: '2025-02-20T02:38:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1736
 - author: Sha-Seng
   changes:
   - message: Sec bomber is now the correct size and lacks pockets
@@ -4180,3 +4172,10 @@
   id: 1664
   time: '2025-05-13T12:17:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2482
+- author: salamanderskies
+  changes:
+  - message: Added a new trait, heavyweight drunk.
+    type: Add
+  id: 1665
+  time: '2025-05-13T12:30:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2164
