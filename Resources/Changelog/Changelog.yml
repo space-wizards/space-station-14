@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Kickguy223
-  changes:
-  - message: Cleaning up a puddle properly changes its slippery properties.
-    type: Fix
-  id: 7969
-  time: '2025-02-17T20:53:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34525
 - author: lzk228
   changes:
   - message: Syndicate cyborgs can laugh again.
@@ -3924,3 +3917,11 @@
   id: 8471
   time: '2025-05-12T23:56:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37393
+- author: K-Dynamic
+  changes:
+  - message: Recoloured job icons of chaplain, librarian, boxer, janitor, lawyer and
+      ID icon of lawyer, boxer from grey to green
+    type: Tweak
+  id: 8472
+  time: '2025-05-13T07:43:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36580
