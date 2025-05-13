@@ -11,14 +11,18 @@ public sealed partial class StationAiSystem
 
     private void InitializeAirlock()
     {
-        SubscribeLocalEvent<AirlockComponent, GetStationAiRadialEvent>(OnAirlockGetRadial);
+        SubscribeLocalEvent<DoorComponent, GetStationAiRadialEvent>(OnDoorGetRadial);
     }
 
-    private void OnAirlockGetRadial(Entity<AirlockComponent> ent, ref GetStationAiRadialEvent args)
+    private void OnDoorGetRadial(Entity<DoorComponent> ent, ref GetStationAiRadialEvent args)
     {
-        GetRadialAirlockDoorBolt(ent, ref args);
-        GetRadialAirlockEmergencyAccess(ent, ref args);
-        GetRadialAirlockElectrified(ent, ref args);
+        if (TryComp<AirlockComponent>(ent.Owner, out var airlockComp)) {
+            var airlockEnt = (ent.Owner, airlockComp);
+
+            GetRadialAirlockDoorBolt(airlockEnt, ref args);
+            GetRadialAirlockEmergencyAccess(airlockEnt, ref args);
+            GetRadialAirlockElectrified(airlockEnt, ref args);
+        }
     }
 
     private void GetRadialAirlockDoorBolt(Entity<AirlockComponent> ent, ref GetStationAiRadialEvent args)
