@@ -117,9 +117,9 @@
     - MobCorgiIanPup
 
 - type: entity
+  parent: MarkerBase
   id: SpawnMobCorgiMouse
   name: Dev Mouse Spawner
-  parent: MarkerBase
   suffix: Dev Map Pet, Admeme
   components:
   - type: Sprite
