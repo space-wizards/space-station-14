@@ -6,7 +6,7 @@ namespace Content.Shared.SprayPainter.Components;
 /// The component is used to charge the spray painter.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedSprayPainterSystem))]
+[Access(typeof(SprayPainterAmmoSystem))]
 public sealed partial class SprayPainterAmmoComponent : Component
 {
     /// <summary>
