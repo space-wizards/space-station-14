@@ -1,3 +1,6 @@
+trait-heavyweightdrunk-name = Heavyweight Drunk
+trait-heavyweightdrunk-desc = Alcohol has less of an effect on you.
+
 trait-hemophilia-name = Hemophilia
 trait-hemophilia-desc = Your blood does not clot properly, and it is harder to stop bleeding.
 
