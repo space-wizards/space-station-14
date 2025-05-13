@@ -493,21 +493,20 @@ namespace Content.Server.Administration.Systems
                         }
                     }
                 });
-            }
 
-            // Set clothing verb
-            if (_groupController.CanCommand(player, "setoutfit") &&
-                EntityManager.HasComponent<InventoryComponent>(args.Target))
-            {
-                Verb verb = new()
+                if (_groupController.CanCommand(player, "setoutfit"))
                 {
-                    Text = Loc.GetString("set-outfit-verb-get-data-text"),
-                    Category = VerbCategory.Debug,
-                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
-                    Act = () => _euiManager.OpenEui(new SetOutfitEui(GetNetEntity(args.Target)), player),
-                    Impact = LogImpact.Medium
-                };
-                args.Verbs.Add(verb);
+                    // Set clothing verb
+                    Verb verb = new()
+                    {
+                        Text = Loc.GetString("set-outfit-verb-get-data-text"),
+                        Category = VerbCategory.Debug,
+                        Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
+                        Act = () => _euiManager.OpenEui(new SetOutfitEui(GetNetEntity(args.Target)), player),
+                        Impact = LogImpact.Medium
+                    };
+                    args.Verbs.Add(verb);
+                }
             }
 
             // In range unoccluded verb
