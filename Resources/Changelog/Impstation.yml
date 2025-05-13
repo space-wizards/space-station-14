@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum, arimah
-  changes:
-  - message: The Chief Engineer has adopted a new macaw. Everyone say hello to Poly!
-    type: Add
-  id: 1163
-  time: '2025-02-18T06:28:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1700
 - author: kipdotnet
   changes:
   - message: The Tck'tck now has proper access for cargo and maintenance.
@@ -4178,3 +4171,11 @@
   id: 1662
   time: '2025-05-13T00:35:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2476
+- author: AirFryerBuyOneGetOneFree, LazyRiverfolk
+  changes:
+  - message: Changed the limit for the number of burger tower items from 30 to 100!
+      Have fun chefs!
+    type: Tweak
+  id: 1663
+  time: '2025-05-13T11:43:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2448
