@@ -1,7 +1,7 @@
 - type: entity
-  name: Xeno Spawner
-  id: SpawnMobXenoEasy
   parent: MarkerBase
+  id: SpawnMobXenoEasy
+  name: Xeno Spawner
   suffix: Easy, Random
   components:
   - type: Sprite
