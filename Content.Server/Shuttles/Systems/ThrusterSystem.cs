@@ -150,6 +150,14 @@ public sealed class ThrusterSystem : EntitySystem
         }
     }
 
+    private void UpdatePowerLoad(Entity<ThrusterComponent> ent, ApcPowerReceiverComponent? apcPowerReceiver = null)
+    {
+        if (!Resolve(ent, ref apcPowerReceiver))
+            return;
+
+        apcPowerReceiver.Load = ent.Comp.BasePowerLoad * GetInertiaThresholdScale(ent);
+    }
+
     /// <summary>
     /// If the thruster rotates change the direction where the linear thrust is applied
     /// </summary>
@@ -328,6 +336,7 @@ public sealed class ThrusterSystem : EntitySystem
 
         _ambient.SetAmbience(uid, true);
         RefreshCenter(uid, shuttleComponent);
+        UpdatePowerLoad((uid, component));
     }
 
     /// <summary>
@@ -423,6 +432,7 @@ public sealed class ThrusterSystem : EntitySystem
 
         component.Colliding.Clear();
         RefreshCenter(uid, shuttleComponent);
+        UpdatePowerLoad((uid, component));
     }
 
     public bool CanEnable(EntityUid uid, ThrusterComponent component)

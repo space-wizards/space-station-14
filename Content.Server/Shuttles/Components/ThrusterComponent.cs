@@ -17,6 +17,12 @@ namespace Content.Server.Shuttles.Components
         public bool Enabled { get; set; } = true;
 
         /// <summary>
+        /// Base power for the <see cref="ApcPowerReceiverComponent"/>, scaled by thruster setting.
+        /// </summary>
+        [DataField]
+        public float BasePowerLoad = 1500;
+
+        /// <summary>
         /// This determines whether the thruster is actually enabled for the purposes of thrust
         /// </summary>
         public bool IsOn;

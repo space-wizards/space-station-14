@@ -29,6 +29,7 @@
     - type: Rotatable
       rotateWhileAnchored: true
     - type: Thruster
+      basePowerLoad: 1500
       damage:
         types:
           Heat: 40
@@ -37,7 +38,6 @@
     - type: Appearance
     - type: ThrusterVisuals
     - type: ApcPowerReceiver
-      powerLoad: 1500
     - type: ExtensionCableReceiver
     - type: Damageable
       damageContainer: StructuralInorganic
@@ -118,10 +118,10 @@
   suffix: DEBUG
   components:
   - type: Thruster
+    basePowerLoad: 0
     requireSpace: false
   - type: ApcPowerReceiver
     needsPower: false
-    powerLoad: 0
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
     layers:
@@ -218,12 +218,12 @@
   suffix: DEBUG
   components:
   - type: Thruster
+    basePowerLoad: 0
     thrusterType: Angular
     requireSpace: false
     thrust: 2000
   - type: ApcPowerReceiver
     needsPower: false
-    powerLoad: 0
   - type: Sprite
     sprite: Structures/Shuttles/gyroscope.rsi
     snapCardinals: true
