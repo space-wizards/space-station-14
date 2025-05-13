@@ -52,6 +52,7 @@
   - SurveillanceWirelessCameraMonitorCircuitboard
   - TelecomServerCircuitboard
   - HolopadMachineCircuitboard
+  - SurveillanceWirelessCameraHandheld # MOFFSTATION CHANGE - Adds wireless handheld camera
 
 - type: technology
   id: AdvancedEntertainment

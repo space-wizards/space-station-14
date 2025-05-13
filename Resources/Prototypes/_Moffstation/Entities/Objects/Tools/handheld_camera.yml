@@ -1,0 +1,48 @@
+- type: entity
+  id: SurveillanceWirelessCameraHandheld
+  parent: BaseItem
+  name: wireless camera
+  description: A camera. It's watching you. Kinda.
+  suffix: Handheld
+  components:
+  - type: Eye
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: HeldSpeedModifier # Still a big, heavy camera
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Sprite
+    sprite: _Moffstation/Objects/Tools/handheld_camera.rsi
+    state: icon
+  - type: Item
+    size: Huge
+    sprite: _Moffstation/Objects/Tools/handheld_camera.rsi
+  - type: SurveillanceCameraMicrophone
+    blacklist:
+      components:
+      - SurveillanceCamera
+      - SurveillanceCameraMonitor
+      - RadioSpeaker
+  - type: ActiveListener
+    range: 10
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraSetupUiKey.Camera:
+        type: SurveillanceCameraSetupBoundUi
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCameraEntertainment
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    setupAvailableNetworks:
+    - SurveillanceCameraEntertainment
+
+- type: latheRecipe
+  parent: BaseBigToolRecipe
+  id: SurveillanceWirelessCameraHandheld
+  result: SurveillanceWirelessCameraHandheld
+
+- type: latheRecipePack
+  id: WirelessCameraHandheld
+  recipes:
+  - SurveillanceWirelessCameraHandheld
