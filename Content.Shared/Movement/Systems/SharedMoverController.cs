@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Numerics;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
@@ -38,6 +39,7 @@ public abstract partial class SharedMoverController : VirtualController
     [Dependency] private   readonly IConfigurationManager _configManager = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private   readonly ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private   readonly EntityLookupSystem _lookup = default!;
     [Dependency] private   readonly InventorySystem _inventory = default!;
     [Dependency] private   readonly MobStateSystem _mobState = default!;
@@ -110,14 +112,6 @@ public abstract partial class SharedMoverController : VirtualController
     public override void UpdateAfterSolve(bool prediction, float frameTime)
     {
         base.UpdateAfterSolve(prediction, frameTime);
-
-        var query = AllEntityQuery<InputMoverComponent, PhysicsComponent>();
-
-        while (query.MoveNext(out var uid, out var _, out var physics))
-        {
-            //PhysicsSystem.SetLinearVelocity(uid, Vector2.Zero, body: physics);
-        }
-
         UsedMobMovement.Clear();
     }
 
@@ -266,7 +260,8 @@ public abstract partial class SharedMoverController : VirtualController
         else
         {
             if (MapGridQuery.TryComp(xform.GridUid, out var gridComp)
-                && _mapSystem.TryGetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates, out var tile))
+                && _mapSystem.TryGetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates, out var tile)
+                && physicsComponent.BodyStatus == BodyStatus.OnGround)
                 tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
             var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
@@ -409,6 +404,17 @@ public abstract partial class SharedMoverController : VirtualController
         var speed = velocity.Length();
 
         if (speed < minimumFrictionSpeed)
+            return;
+
+        // This equation is lifted from the Physics Island solver.
+        // We re-use it here because Kinematic Controllers can't/shouldn't use the Physics Friction
+        velocity *= Math.Clamp(1.0f - frameTime * friction, 0.0f, 1.0f);
+
+    }
+
+    public void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref float velocity)
+    {
+        if (velocity < minimumFrictionSpeed)
             return;
 
         // This equation is lifted from the Physics Island solver.
