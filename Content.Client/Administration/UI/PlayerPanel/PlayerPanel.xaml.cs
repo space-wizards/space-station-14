@@ -18,6 +18,7 @@ public sealed partial class PlayerPanel : FancyWindow
     public event Action<NetUserId?>? OnOpenBans;
     public event Action<NetUserId?>? OnAhelp;
     public event Action<string?>? OnKick;
+    public event Action<string?>? OnCamera;
     public event Action<NetUserId?>? OnOpenBanPanel;
     public event Action<NetUserId?, bool>? OnWhitelistToggle;
     public event Action? OnFollow;
@@ -33,26 +34,27 @@ public sealed partial class PlayerPanel : FancyWindow
 
     public PlayerPanel(IClientAdminManager adminManager)
     {
-            RobustXamlLoader.Load(this);
-            _adminManager = adminManager;
+        RobustXamlLoader.Load(this);
+        _adminManager = adminManager;
 
-            UsernameCopyButton.OnPressed += _ => OnUsernameCopy?.Invoke(TargetUsername ?? "");
-            BanButton.OnPressed += _ => OnOpenBanPanel?.Invoke(TargetPlayer);
-            KickButton.OnPressed += _ => OnKick?.Invoke(TargetUsername);
-            NotesButton.OnPressed += _ => OnOpenNotes?.Invoke(TargetPlayer);
-            ShowBansButton.OnPressed += _ => OnOpenBans?.Invoke(TargetPlayer);
-            AhelpButton.OnPressed += _ => OnAhelp?.Invoke(TargetPlayer);
-            WhitelistToggle.OnPressed += _ =>
-            {
-                OnWhitelistToggle?.Invoke(TargetPlayer, _isWhitelisted);
-                SetWhitelisted(!_isWhitelisted);
-            };
-            FollowButton.OnPressed += _ => OnFollow?.Invoke();
-            FreezeButton.OnPressed += _ => OnFreeze?.Invoke();
-            FreezeAndMuteToggleButton.OnPressed += _ => OnFreezeAndMuteToggle?.Invoke();
-            LogsButton.OnPressed += _ => OnLogs?.Invoke();
-            DeleteButton.OnPressed += _ => OnDelete?.Invoke();
-            RejuvenateButton.OnPressed += _ => OnRejuvenate?.Invoke();
+        UsernameCopyButton.OnPressed += _ => OnUsernameCopy?.Invoke(TargetUsername ?? "");
+        BanButton.OnPressed += _ => OnOpenBanPanel?.Invoke(TargetPlayer);
+        KickButton.OnPressed += _ => OnKick?.Invoke(TargetUsername);
+        CameraButton.OnPressed += _ => OnCamera?.Invoke(TargetUsername);
+        NotesButton.OnPressed += _ => OnOpenNotes?.Invoke(TargetPlayer);
+        ShowBansButton.OnPressed += _ => OnOpenBans?.Invoke(TargetPlayer);
+        AhelpButton.OnPressed += _ => OnAhelp?.Invoke(TargetPlayer);
+        WhitelistToggle.OnPressed += _ =>
+        {
+            OnWhitelistToggle?.Invoke(TargetPlayer, _isWhitelisted);
+            SetWhitelisted(!_isWhitelisted);
+        };
+        FollowButton.OnPressed += _ => OnFollow?.Invoke();
+        FreezeButton.OnPressed += _ => OnFreeze?.Invoke();
+        FreezeAndMuteToggleButton.OnPressed += _ => OnFreezeAndMuteToggle?.Invoke();
+        LogsButton.OnPressed += _ => OnLogs?.Invoke();
+        DeleteButton.OnPressed += _ => OnDelete?.Invoke();
+        RejuvenateButton.OnPressed += _ => OnRejuvenate?.Invoke();
     }
 
     public void SetUsername(string player)
@@ -122,6 +124,7 @@ public sealed partial class PlayerPanel : FancyWindow
     {
         BanButton.Disabled = !_adminManager.CanCommand("banpanel");
         KickButton.Disabled = !_adminManager.CanCommand("kick");
+        CameraButton.Disabled = !_adminManager.CanCommand("camera");
         NotesButton.Disabled = !_adminManager.CanCommand("adminnotes");
         ShowBansButton.Disabled = !_adminManager.CanCommand("banlist");
         WhitelistToggle.Disabled =
