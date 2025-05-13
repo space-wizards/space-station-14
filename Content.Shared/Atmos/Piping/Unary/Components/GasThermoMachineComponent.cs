@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Atmos.Piping.Unary.Components
 {
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
     public sealed partial class GasThermoMachineComponent : Component
     {
         [DataField("inlet")]
