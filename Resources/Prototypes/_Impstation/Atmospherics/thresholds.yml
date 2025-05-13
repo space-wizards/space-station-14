@@ -6,3 +6,15 @@
     threshold: 0.10
   lowerWarnAround: !type:AlarmThresholdSetting
     threshold: 1.5
+
+
+- type: alarmThreshold
+  id: thermostatTemperature
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 310.93 # danger at ~37.8C/~100F
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 273.15 # danger at 0C/32F
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.964 # warn at 299.74K/~26.7C/~80F
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.036 # warn at 282.98K/~10C/~50F can you tell these were defined by an american yet?
