@@ -558,7 +558,7 @@ public sealed class ThrusterSystem : EntitySystem
         DebugTools.Assert(component.ThrustDirections == DirectionFlag.None);
     }
 
-    public void SetAngularThrust(ShuttleComponent component, bool on)
+    public void SetAngularThrustVisualState(ShuttleComponent component, bool on)
     {
         var appearanceQuery = GetEntityQuery<AppearanceComponent>();
         var thrusterQuery = GetEntityQuery<ThrusterComponent>();

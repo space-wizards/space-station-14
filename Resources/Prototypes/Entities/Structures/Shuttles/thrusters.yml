@@ -214,12 +214,13 @@
 - type: entity
   id: DebugGyroscope
   parent: BaseThruster
+  name: gyroscope
   suffix: DEBUG
   components:
   - type: Thruster
     thrusterType: Angular
     requireSpace: false
-    thrust: 100
+    thrust: 2000
   - type: ApcPowerReceiver
     needsPower: false
     powerLoad: 0
