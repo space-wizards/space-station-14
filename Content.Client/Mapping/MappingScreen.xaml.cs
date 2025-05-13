@@ -60,7 +60,7 @@ public sealed partial class MappingScreen : InGameScreen
         };
         DecalSpinBoxContainer.AddChild(rotationSpinBox);
 
-        DecalColorPicker.OnColorChanged += OnDecalColorPicked;
+        DecalColorPicker.OnColorChanged += OnSetDecalColor;
         DecalPickerOpen.OnPressed += OnDecalPickerOpenPressed;
         rotationSpinBox.OnValueChanged += args =>
         {
@@ -114,7 +114,7 @@ public sealed partial class MappingScreen : InGameScreen
         }
     }
 
-    private void OnDecalColorPicked(Color color)
+    private void OnSetDecalColor(Color color)
     {
         _decalColor = color;
         DecalColorPicker.Color = color;
@@ -130,7 +130,7 @@ public sealed partial class MappingScreen : InGameScreen
             _picker.PaletteList.OnItemSelected += args =>
             {
                 var color = ((Color?) args.ItemList.GetSelected().First().Metadata)!.Value;
-                OnDecalColorPicked(color);
+                OnSetDecalColor(color);
             };
 
             return;

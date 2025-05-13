@@ -44,12 +44,12 @@ public sealed class SprayPainterTabChangedMessage(int index, bool isSelectedTabW
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterSetCategoryPrototypeMessage : BoundUserInterfaceMessage
+public sealed class SprayPainterSetPaintablePrototypeMessage : BoundUserInterfaceMessage
 {
     public readonly string Category;
     public readonly int Index;
 
-    public SprayPainterSetCategoryPrototypeMessage(string category, int index)
+    public SprayPainterSetPaintablePrototypeMessage(string category, int index)
     {
         Category = category;
         Index = index;
@@ -77,16 +77,12 @@ public sealed partial class SprayPainterDoAfterEvent : DoAfterEvent
     public string Category;
 
     [DataField]
-    public PaintableVisuals Visuals;
-
-    [DataField]
     public int Cost;
 
-    public SprayPainterDoAfterEvent(string prototype, string category, PaintableVisuals visuals, int cost)
+    public SprayPainterDoAfterEvent(string prototype, string category, int cost)
     {
         Prototype = prototype;
         Category = category;
-        Visuals = visuals;
         Cost = cost;
     }
 

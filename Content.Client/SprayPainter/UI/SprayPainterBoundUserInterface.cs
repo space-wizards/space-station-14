@@ -24,7 +24,7 @@ public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) 
             _window = this.CreateWindow<SprayPainterWindow>();
 
             _window.OnSpritePicked += OnSpritePicked;
-            _window.OnColorPicked += OnColorPicked;
+            _window.OnSetPipeColor += OnSetPipeColor;
             _window.OnTabChanged += OnTabChanged;
             _window.OnDecalChanged += OnDecalChanged;
             _window.OnDecalColorChanged += OnDecalColorChanged;
@@ -66,10 +66,10 @@ public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) 
 
     private void OnSpritePicked(string category, int index)
     {
-        SendPredictedMessage(new SprayPainterSetCategoryPrototypeMessage(category, index));
+        SendPredictedMessage(new SprayPainterSetPaintablePrototypeMessage(category, index));
     }
 
-    private void OnColorPicked(ItemList.ItemListSelectedEventArgs args)
+    private void OnSetPipeColor(ItemList.ItemListSelectedEventArgs args)
     {
         var key = _window?.IndexToColorKey(args.ItemIndex);
         SendPredictedMessage(new SprayPainterSetPipeColorMessage(key));

@@ -6,9 +6,6 @@
   category: Lockers
   id: Locker
   iconPriority: 90
-  visuals:
-  - BaseRSI
-  - Prototype
   styles:
     basic: ClosetSteelBase
     # Lockers

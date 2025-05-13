@@ -5,18 +5,13 @@
 - type: paintableGroup
   category: Canisters
   iconPriority: 100
-  visuals:
-  - Prototype
   id: Canisters
   styles:
     storage: StorageCanister
     air: AirCanister
     oxygen: OxygenCanister
-    liquid-oxygen: LiquidOxygenCanister
     nitrogen: NitrogenCanister
-    liquid-nitrogen: LiquidNitrogenCanister
     carbon-dioxide: CarbonDioxideCanister
-    liquid-carbon-dioxide: LiquidCarbonDioxideCanister
     plasma: PlasmaCanister
     tritium: TritiumCanister
     water-vapor: WaterVaporCanister
@@ -27,8 +22,6 @@
 - type: paintableGroup
   category: Canisters
   iconPriority: 90
-  visuals:
-  - Prototype
   id: CanistersBroken
   styles:
     storage: StorageCanisterBroken
@@ -36,9 +29,6 @@
     oxygen: OxygenCanisterBroken
     nitrogen: NitrogenCanisterBroken
     carbon-dioxide: CarbonDioxideCanisterBroken
-    liquid-oxygen: OxygenCanisterBroken
-    liquid-nitrogen: NitrogenCanisterBroken
-    liquid-carbon-dioxide: CarbonDioxideCanisterBroken
     plasma: PlasmaCanisterBroken
     tritium: TritiumCanisterBroken
     water-vapor: WaterVaporCanisterBroken

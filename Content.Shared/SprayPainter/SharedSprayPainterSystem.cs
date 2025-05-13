@@ -47,12 +47,13 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Subs.BuiEvents<SprayPainterComponent>(SprayPainterUiKey.Key,
             subs =>
             {
-                subs.Event<SprayPainterSetCategoryPrototypeMessage>(OnSpritePicked);
-                subs.Event<SprayPainterSetPipeColorMessage>(OnColorPicked);
+                subs.Event<SprayPainterSetPaintablePrototypeMessage>(OnSetPaintable);
+                subs.Event<SprayPainterSetPipeColorMessage>(OnSetPipeColor);
                 subs.Event<SprayPainterTabChangedMessage>(OnTabChanged);
-                subs.Event<SprayPainterSetDecalMessage>(OnDecalPicked);
-                subs.Event<SprayPainterSetDecalColorMessage>(OnDecalColorPicked);
-                subs.Event<SprayPainterSetDecalAngleMessage>(OnDecalAnglePicked);
+                subs.Event<SprayPainterSetDecalMessage>(OnSetDecal);
+                subs.Event<SprayPainterSetDecalColorMessage>(OnSetDecalColor);
+                subs.Event<SprayPainterSetDecalAngleMessage>(OnSetDecalAngle);
+                subs.Event<SprayPainterSetDecalSnapMessage>(OnSetDecalSnap);
             });
 
         SubscribeLocalEvent<PaintableComponent, InteractUsingEvent>(OnPaintableInteract);
@@ -66,7 +67,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
             ent.Comp.Indexes[target] = 0;
 
         if (ent.Comp.ColorPalette.Count > 0)
-            SetColor(ent, ent.Comp.ColorPalette.First().Key);
+            SetPipeColor(ent, ent.Comp.ColorPalette.First().Key);
     }
 
     private void OnPaintableDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterDoAfterEvent args)
@@ -80,7 +81,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (!HasComp<PaintableComponent>(target))
             return;
 
-        Appearance.SetData(target, args.Visuals, args.Prototype);
+        Appearance.SetData(target, PaintableVisuals.Prototype, args.Prototype);
         Audio.PlayPredicted(ent.Comp.SpraySound, ent, args.Args.User);
         Charges.TryUseCharges(new Entity<LimitedChargesComponent?>(ent, EnsureComp<LimitedChargesComponent>(ent)), args.Cost);
 
@@ -145,12 +146,12 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void OnColorPicked(Entity<SprayPainterComponent> ent, ref SprayPainterSetPipeColorMessage args)
+    private void OnSetPipeColor(Entity<SprayPainterComponent> ent, ref SprayPainterSetPipeColorMessage args)
     {
-        SetColor(ent, args.Key);
+        SetPipeColor(ent, args.Key);
     }
 
-    private void OnSpritePicked(Entity<SprayPainterComponent> ent, ref SprayPainterSetCategoryPrototypeMessage args)
+    private void OnSetPaintable(Entity<SprayPainterComponent> ent, ref SprayPainterSetPaintablePrototypeMessage args)
     {
         if (!ent.Comp.Indexes.ContainsKey(args.Category))
             return;
@@ -159,7 +160,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void SetColor(Entity<SprayPainterComponent> ent, string? paletteKey)
+    private void SetPipeColor(Entity<SprayPainterComponent> ent, string? paletteKey)
     {
         if (paletteKey == null || paletteKey == ent.Comp.PickedColor)
             return;
@@ -171,13 +172,13 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Dirty(ent, ent.Comp);
     }
 
-    private void OnDecalPicked(EntityUid uid, SprayPainterComponent component, SprayPainterSetDecalMessage args)
+    private void OnSetDecal(EntityUid uid, SprayPainterComponent component, SprayPainterSetDecalMessage args)
     {
         component.SelectedDecal = args.DecalPrototype;
         Dirty(uid, component);
     }
 
-    private void OnDecalAnglePicked(EntityUid uid,
+    private void OnSetDecalAngle(EntityUid uid,
         SprayPainterComponent component,
         SprayPainterSetDecalAngleMessage args)
     {
@@ -185,7 +186,15 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private void OnDecalColorPicked(EntityUid uid,
+    private void OnSetDecalSnap(EntityUid uid,
+        SprayPainterComponent component,
+        SprayPainterSetDecalSnapMessage args)
+    {
+        component.SnapDecals = args.Snap;
+        Dirty(uid, component);
+    }
+
+    private void OnSetDecalColor(EntityUid uid,
         SprayPainterComponent component,
         SprayPainterSetDecalColorMessage args)
     {
@@ -200,24 +209,25 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!TryComp<SprayPainterComponent>(args.Used, out var painter)
-            || !TryComp<LimitedChargesComponent>(args.Used, out var charges))
+        if (!TryComp<SprayPainterComponent>(args.Used, out var painter))
             return;
 
         if (ent.Comp.Group == null
             || !Proto.TryIndex(ent.Comp.Group, out var group)
-            || !Proto.TryIndex(group.Category, out var category))
+            || !Proto.TryIndex(group.Category, out var category)
+            || !Targets.TryGetValue(group.Category, out var target))
             return;
 
-        if (charges.LastCharges <= 0 || charges.LastCharges < category.Cost)
+        // Valid paint target.
+        args.Handled = true;
+
+        if (TryComp<LimitedChargesComponent>(args.Used, out var charges)
+            && charges.LastCharges < category.Cost)
         {
             var msg = Loc.GetString("spray-painter-interact-no-charges");
             _popup.PopupClient(msg, args.User, args.User);
             return;
         }
-
-        if (!Targets.TryGetValue(group.Category, out var target))
-            return;
 
         var selected = painter.Indexes.GetValueOrDefault(group.Category, 0);
         var style = target.Styles[selected];
@@ -233,7 +243,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         var doAfterEventArgs = new DoAfterArgs(EntityManager,
             args.User,
             time,
-            new SprayPainterDoAfterEvent(proto, group.Category, target.Visuals, category.Cost),
+            new SprayPainterDoAfterEvent(proto, group.Category, category.Cost),
             args.Used,
             target: ent,
             used: args.Used)
@@ -245,8 +255,6 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         if (!DoAfter.TryStartDoAfter(doAfterEventArgs, out _))
             return;
-
-        args.Handled = true;
 
         // Log the attempt
         AdminLogger.Add(LogType.Action,
@@ -284,7 +292,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
                 styles.Add(style);
             }
 
-            Targets[proto.Category] = new(styles.ToList(), groups, proto.Visuals, proto.Time);
+            Targets[proto.Category] = new(styles.ToList(), groups, proto.Time);
         }
     }
 
@@ -297,5 +305,4 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 public record PaintableTargets(
     List<string> Styles,
     List<PaintableGroupPrototype> Groups,
-    PaintableVisuals Visuals,
     float Time);

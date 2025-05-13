@@ -54,7 +54,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         SpinBoxContainer.AddChild(RotationSpinBox);
 
         Search.OnTextChanged += _ => RefreshList();
-        ColorPicker.OnColorChanged += OnColorPicked;
+        ColorPicker.OnColorChanged += OnSetPipeColor;
 
         PickerOpen.OnPressed += _ =>
         {
@@ -66,7 +66,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
                 {
                     var color = (args.ItemList.GetSelected().First().Metadata as Color?)!.Value;
                     ColorPicker.Color = color;
-                    OnColorPicked(color);
+                    OnSetPipeColor(color);
                 };
             }
             else
@@ -116,7 +116,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         };
     }
 
-    private void OnColorPicked(Color color)
+    private void OnSetPipeColor(Color color)
     {
         _color = color;
         UpdateDecalPlacementInfo();

@@ -40,26 +40,23 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
             || !AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component))
             return;
 
-        if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.BaseRSI, out var prototype1, args.Component))
-        {
-            if (_prototypeManager.TryIndex(prototype1, out var proto) &&
-                proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
-            {
-                _sprite.SetBaseRsi((uid, args.Sprite), sprite.BaseRSI);
-            }
-        }
-
         bool forceRedrawBase = false;
-        if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var prototype2, args.Component))
+        if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var prototype, args.Component))
         {
-            if (_prototypeManager.TryIndex(prototype2, out var proto) &&
-                proto.TryGetComponent(out EntityStorageVisualsComponent? visuals, _componentFactory))
+            if (_prototypeManager.TryIndex(prototype, out var proto))
             {
-                comp.StateBaseOpen = visuals.StateBaseOpen;
-                comp.StateBaseClosed = visuals.StateBaseClosed;
-                comp.StateDoorOpen = visuals.StateDoorOpen;
-                comp.StateDoorClosed = visuals.StateDoorClosed;
-                forceRedrawBase = true;
+                if (proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
+                {
+                    _sprite.SetBaseRsi((uid, args.Sprite), sprite.BaseRSI);
+                }
+                if (proto.TryGetComponent(out EntityStorageVisualsComponent? visuals, _componentFactory))
+                {
+                    comp.StateBaseOpen = visuals.StateBaseOpen;
+                    comp.StateBaseClosed = visuals.StateBaseClosed;
+                    comp.StateDoorOpen = visuals.StateDoorOpen;
+                    comp.StateDoorClosed = visuals.StateDoorClosed;
+                    forceRedrawBase = true;
+                }
             }
         }
 

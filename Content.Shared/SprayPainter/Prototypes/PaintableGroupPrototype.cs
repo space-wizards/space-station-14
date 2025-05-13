@@ -19,12 +19,6 @@ public sealed partial class PaintableGroupPrototype : IPrototype
     public ProtoId<PaintableGroupCategoryPrototype> Category;
 
     /// <summary>
-    /// What appearance data must be sent when this is repainted.
-    /// </summary>
-    [DataField]
-    public PaintableVisuals Visuals = PaintableVisuals.BaseRSI;
-
-    /// <summary>
     /// The time required to paint an object from a given group.
     /// </summary>
     [DataField]
@@ -47,6 +41,8 @@ public sealed partial class PaintableGroupPrototype : IPrototype
 [Flags]
 public enum PaintableVisuals
 {
-    BaseRSI,
-    Prototype,
+    /// <summary>
+    /// The prototype to base the object's visuals off.
+    /// </summary>
+    Prototype
 }

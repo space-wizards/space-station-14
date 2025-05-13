@@ -43,7 +43,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
     /// </summary>
     private void OnFloorAfterInteract(Entity<SprayPainterComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach)
+        if (args.Handled || !args.CanReach || args.Target != null)
             return;
 
         if (!ent.Comp.IsPaintingDecals || !ent.Comp.SelectedDecal.HasValue)

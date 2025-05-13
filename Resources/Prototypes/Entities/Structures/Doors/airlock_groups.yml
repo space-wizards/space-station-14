@@ -11,14 +11,14 @@
     atmospherics: AirlockAtmospherics
     basic: Airlock
     cargo: AirlockCargo
-    salvage: AirlockSalvage
+    chemistry: AirlockChemistry
     command: AirlockCommand
     engineering: AirlockEngineering
     freezer: AirlockFreezer
     hydroponics: AirlockHydroponics
     maintenance: AirlockMaint
     medical: AirlockMedical
-    chemistry: AirlockChemistry
+    salvage: AirlockSalvage
     science: AirlockScience
     security: AirlockSecurity
     virology: AirlockVirology
@@ -31,14 +31,14 @@
   styles:
     atmospherics: AirlockAtmosphericsGlass
     basic: AirlockGlass
-    command: AirlockCommandGlass
-    science: AirlockScienceGlass
     cargo: AirlockCargoGlass
-    salvage: AirlockSalvage
+    chemistry: AirlockChemistryGlass
+    command: AirlockCommandGlass
     engineering: AirlockEngineeringGlass
     hydroponics: AirlockHydroponicsGlass
     maintenance: AirlockMaintGlass
     medical: AirlockMedicalGlass
-    chemistry: AirlockChemistryGlass
+    salvage: AirlockSalvageGlass
+    science: AirlockScienceGlass
     security: AirlockSecurityGlass
     virology: AirlockVirologyGlass

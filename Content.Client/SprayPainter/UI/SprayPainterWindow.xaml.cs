@@ -23,7 +23,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
     public Action<string, int>? OnSpritePicked;
     public Action<int, bool>? OnTabChanged;
     public Action<ProtoId<DecalPrototype>>? OnDecalChanged;
-    public Action<ItemList.ItemListSelectedEventArgs>? OnColorPicked;
+    public Action<ItemList.ItemListSelectedEventArgs>? OnSetPipeColor;
     public Action<Color?>? OnDecalColorChanged;
     public Action<int>? OnDecalAngleChanged;
     public Action<bool>? OnDecalSnapChanged;
@@ -177,7 +177,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
 
         var index = ItemColorIndex[selectedColorKey ?? _currentPalette.Keys.First()];
         _colorList[index].Selected = true;
-        _colorList.OnItemSelected += OnColorPicked;
+        _colorList.OnItemSelected += OnSetPipeColor;
     }
 
     private void GenerateItems(ListData data, ListContainerButton button)
