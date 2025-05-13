@@ -219,14 +219,13 @@
   - type: EmitSoundOnLand
     sound: "/Audio/Items/Toys/pushHornFloor.ogg"
   - type: UseDelay
-    delay: 6
+    delay: 10
   - type: TriggerOnUse
   - type: RepulseAttractOnTrigger
     speed: 50
-    range: 2
+    range: 3.5
     whitelist:
       components:
       - MobMover
-      - Item
   - type: SpawnOnTrigger
     proto: EffectGravityPulse
