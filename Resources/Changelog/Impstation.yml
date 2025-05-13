@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: The Tck'tck now has proper access for cargo and maintenance.
-    type: Fix
-  id: 1164
-  time: '2025-02-18T17:41:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1733
 - author: hivehum
   changes:
   - message: Supply Assistant and Administrative Assistant now have automatic text
@@ -4179,3 +4172,11 @@
   id: 1663
   time: '2025-05-13T11:43:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2448
+- author: sowelipililimute, Darkmajia
+  changes:
+  - message: SmartFridges are now implemented. You can store large amounts of chemicals
+      and plants within them for people to take.
+    type: Add
+  id: 1664
+  time: '2025-05-13T12:17:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2482
