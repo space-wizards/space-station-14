@@ -11,7 +11,7 @@
   - StationAiIconDorf
   - StationAiIconHeartline
   - StationAiIconSmiley
-  
+
 - type: stationAiCustomizationGroup
   id: StationAiHolograms
   name: station-ai-customization-hologram
@@ -35,84 +35,84 @@
 - type: stationAiCustomization
   parent: StationAiIconBase
   id: StationAiIconAi
-  name: station-ai-icon-ai 
+  name: station-ai-icon-ai
   layerData:
     Occupied:
       sprite: Mobs/Silicon/station_ai.rsi
       state: ai
-    Dead: 
+    Dead:
       sprite: Mobs/Silicon/station_ai.rsi
       state: ai_dead
-  
+
 - type: stationAiCustomization
   parent: StationAiIconBase
   id: StationAiIconAngel
   name: station-ai-icon-angel
   layerData:
-    Occupied: 
+    Occupied:
       sprite: Mobs/Silicon/station_ai.rsi
       state: ai_angel
-    Dead: 
+    Dead:
       sprite: Mobs/Silicon/station_ai.rsi
       state: ai_angel_dead
-  
+
 - type: stationAiCustomization
   parent: StationAiIconBase
   id: StationAiIconBliss
   name: station-ai-icon-bliss
   layerData:
-    Occupied: 
+    Occupied:
       sprite: Mobs/Silicon/station_ai.rsi
       state: ai_bliss
-    Dead: 
+    Dead:
       sprite: Mobs/Silicon/station_ai.rsi
       state: ai_dead
-      
+
 - type: stationAiCustomization
   parent: StationAiIconBase
   id: StationAiIconClown
   name: station-ai-icon-clown
   layerData:
-    Occupied: 
+    Occupied:
       sprite: Mobs/Silicon/station_ai.rsi
       state: ai_clown
-    Dead: 
+    Dead:
       sprite: Mobs/Silicon/station_ai.rsi
       state: ai_clown_dead
-  
+
 - type: stationAiCustomization
   parent: StationAiIconBase
   id: StationAiIconDorf
   name: station-ai-icon-dorf
   layerData:
-    Occupied: 
+    Occupied:
       sprite: Mobs/Silicon/station_ai.rsi
       state: ai_dorf
-    Dead: 
+    Dead:
       sprite: Mobs/Silicon/station_ai.rsi
       state: ai_dead
-  
+
 - type: stationAiCustomization
   parent: StationAiIconBase
   id: StationAiIconHeartline
   name: station-ai-icon-heartline
   layerData:
-    Occupied: 
+    Occupied:
       sprite: Mobs/Silicon/station_ai.rsi
       state: "ai_heartline"
-    Dead: 
+    Dead:
       sprite: Mobs/Silicon/station_ai.rsi
       state: "ai_heartline_dead"
-  
+
 - type: stationAiCustomization
   parent: StationAiIconBase
   id: StationAiIconSmiley
   name: station-ai-icon-smiley
   layerData:
-    Occupied: 
+    Occupied:
       sprite: Mobs/Silicon/station_ai.rsi
       state: "ai_smiley"
-    Dead: 
+    Dead:
       sprite: Mobs/Silicon/station_ai.rsi
       state: "ai_dead"
 
