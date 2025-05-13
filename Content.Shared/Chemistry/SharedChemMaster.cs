@@ -56,29 +56,47 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterCreatePillsMessage : BoundUserInterfaceMessage
+    public sealed class ChemMasterSetPillNumberAndDosageMessage : BoundUserInterfaceMessage
     {
         public readonly uint Dosage;
         public readonly uint Number;
-        public readonly string Label;
 
-        public ChemMasterCreatePillsMessage(uint dosage, uint number, string label)
+        public ChemMasterSetPillNumberAndDosageMessage(uint dosage, uint number)
         {
             Dosage = dosage;
             Number = number;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ChemMasterCreatePillsMessage : BoundUserInterfaceMessage
+    {
+        public readonly string Label;
+
+        public ChemMasterCreatePillsMessage(string label)
+        {
             Label = label;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ChemMasterSetBottleDosageMessage : BoundUserInterfaceMessage
+    {
+        public readonly uint Dosage;
+
+        public ChemMasterSetBottleDosageMessage(uint dosage)
+        {
+            Dosage = dosage;
         }
     }
 
     [Serializable, NetSerializable]
     public sealed class ChemMasterOutputToBottleMessage : BoundUserInterfaceMessage
     {
-        public readonly uint Dosage;
         public readonly string Label;
 
-        public ChemMasterOutputToBottleMessage(uint dosage, string label)
+        public ChemMasterOutputToBottleMessage(string label)
         {
-            Dosage = dosage;
             Label = label;
         }
     }
@@ -180,13 +198,14 @@ namespace Content.Shared.Chemistry
         public readonly uint SelectedPillDosage;
 
         public readonly uint PillDosageLimit;
+        public readonly uint SelectedBottleDosage;
 
         public readonly bool UpdateLabel;
 
         public ChemMasterBoundUserInterfaceState(
             ChemMasterMode mode, ChemMasterSortingType sortingType, ContainerInfo? inputContainerInfo, ContainerInfo? outputContainerInfo,
             IReadOnlyList<ReagentQuantity> bufferReagents, FixedPoint2 bufferCurrentVolume,
-            uint selectedPillType, uint selectedPillNumber, uint selectedPillDosage, uint pillDosageLimit, bool updateLabel)
+            uint selectedPillType, uint selectedPillNumber, uint selectedPillDosage, uint pillDosageLimit, uint selectedBottleDosage, bool updateLabel)
         {
             InputContainerInfo = inputContainerInfo;
             OutputContainerInfo = outputContainerInfo;
@@ -198,6 +217,7 @@ namespace Content.Shared.Chemistry
             SelectedPillNumber = selectedPillNumber;
             SelectedPillDosage = selectedPillDosage;
             PillDosageLimit = pillDosageLimit;
+            SelectedBottleDosage = selectedBottleDosage;
             UpdateLabel = updateLabel;
         }
     }

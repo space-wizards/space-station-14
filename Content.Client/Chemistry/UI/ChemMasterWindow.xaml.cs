@@ -167,29 +167,23 @@ namespace Content.Client.Chemistry.UI
             var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
             var bufferVolume = castState.BufferCurrentVolume?.Int() ?? 0;
 
-            PillDosage.Value = (int)Math.Min(bufferVolume, castState.PillDosageLimit);
-
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
 
-            PillNumber.Value = (int)castState.SelectedPillNumber;
-            PillDosage.Value = (int)castState.SelectedPillDosage;
+            PillNumber.Value = Math.Min((int)castState.SelectedPillNumber, pillNumberMax);
+            PillDosage.Value = Math.Min((int)castState.SelectedPillDosage, (int)Math.Min(bufferVolume, castState.PillDosageLimit));
+            BottleDosage.Value = Math.Min((int)castState.SelectedBottleDosage, (int)Math.Min(bottleAmountMax, bufferVolume));
+
             PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
             PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
             BottleDosage.IsValid = x => x >= 0 && x <= bottleAmountMax;
-
-            if (PillNumber.Value > pillNumberMax)
-                PillNumber.Value = pillNumberMax;
-            if (BottleDosage.Value > bottleAmountMax)
-                BottleDosage.Value = bottleAmountMax;
 
             // Avoid division by zero
             if (PillDosage.Value > 0 && PillNumber.Value == 0)
             {
                 PillNumber.Value = Math.Min(bufferVolume / PillDosage.Value, pillNumberMax);
             }
-
-            BottleDosage.Value = Math.Min(bottleAmountMax, bufferVolume);
         }
+
         /// <summary>
         /// Generate a product label based on reagents in the buffer.
         /// </summary>
