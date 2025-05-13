@@ -11,7 +11,7 @@
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: Large
-    shape:
+    shape: # Base rifle size - the same length as a shotgun.
     - 0,0,4,1
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
@@ -57,7 +57,7 @@
   components:
   - type: Item
     size: Huge
-    shape:
+    shape: # Taller due to its much higher weight. A marvel of Waffle Corp engineering that it even fits in a bag at all.
     - 0,0,4,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
@@ -147,7 +147,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeMagnum # changed from Anti-material rifle rounds because it's a flintlock pistol not a Hristov 
+        - CartridgeMagnum # changed from Anti-material rifle rounds because it's a flintlock pistol not a Hristov
     capacity: 1
     proto: CartridgeMagnum
   - type: StaticPrice

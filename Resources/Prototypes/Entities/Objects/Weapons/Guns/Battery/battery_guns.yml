@@ -112,7 +112,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    shape:
+    shape: # It's a laser pistol, its pistol shaped.
     - 0,0,1,0
     - 0,1,0,1
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
@@ -180,7 +180,7 @@
   components:
   - type: Item
     size: Large
-    shape:
+    shape: # SMG size.
     - 0,0,2,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/tesla_gun.rsi
@@ -213,7 +213,7 @@
   components:
   - type: Item
     size: Huge
-    shape:
+    shape: # Carbine size.
     - 0,0,3,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
@@ -294,7 +294,7 @@
   components:
   - type: Item
     size: Huge
-    shape:
+    shape: # Carbine Size.
     - 0,0,3,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
@@ -334,7 +334,7 @@
   components:
   - type: Item
     size: Huge
-    shape:
+    shape: # Heavy Rifle size.
     - 0,0,4,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
@@ -370,7 +370,7 @@
   components:
   - type: Item
     size: Huge
-    shape:
+    shape: # Heavy Rifle size.
     - 0,0,4,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
@@ -437,7 +437,7 @@
   components:
   - type: Item
     size: Huge
-    shape:
+    shape: # Heavy Rifle size.
     - 0,0,4,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
@@ -536,7 +536,7 @@
   components:
   - type: Item
     size: Large
-    shape:
+    shape: # SMG size.
     - 0,0,2,1
   - type: Tag
     tags:
@@ -612,7 +612,7 @@
   components:
   - type: Item
     size: Normal
-    shape:
+    shape: # Larger than most pistols to fit its sprite. Still fits in a pocket.
     - 0,0,1,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
@@ -659,8 +659,8 @@
   description: An experimental high-energy laser pistol with a self-charging nuclear battery.
   components:
   - type: Item
-    size: Normal  # Intentionally larger than other pistols
-    shape:
+    size: Normal
+    shape: # Larger than most pistols to fit its sprite, but doesn't fit in pockets due to its higher weight.
     - 0,0,1,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
@@ -816,7 +816,7 @@
       fireCost: 120
   - type: Item
     size: Large
-    shape:
+    shape: # Sorry HOS satchel mains. Automatic shotgun size.
     - 0,0,4,1
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
     heldPrefix: energy

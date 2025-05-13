@@ -39,7 +39,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,4,2
+    - 0,0,4,2 # 5 Long for shotgun length, 3 tall for its heavier weight.
   - type: AmmoCounter
   - type: Gun
     fireRate: 1
@@ -73,6 +73,10 @@
     slots:
     - Back
     - suitStorage
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3 # Ironically the only 4x4 gun. Shorter than china lake due to folding stock, but taller due to the heavier drum.
   - type: AmmoCounter
   - type: Gun
     fireRate: 1
@@ -294,7 +298,7 @@
   components:
     - type: Item
       size: Small
-      shape:
+      shape: # Pistol shaped.
       - 0,0,1,0
       - 0,1,0,1
     - type: AmmoCounter
