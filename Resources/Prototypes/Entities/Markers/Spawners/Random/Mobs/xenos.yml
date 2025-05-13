@@ -17,9 +17,9 @@
     - MobXenoRunner
 
 - type: entity
-  name: Xeno Spawner
-  id: SpawnMobXenoHard
   parent: MarkerBase
+  id: SpawnMobXenoHard
+  name: Xeno Spawner
   suffix: Hard, Random
   components:
   - type: Sprite
