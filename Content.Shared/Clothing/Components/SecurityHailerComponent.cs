@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 
 namespace Content.Shared.Clothing.Components
@@ -46,5 +42,17 @@ namespace Content.Shared.Clothing.Components
 
         [DataField]
         public SoundSpecifier EmagAggressionSounds = new SoundCollectionSpecifier("SecHailEmag");
+
+        /// <summary>
+        ///     The action that gets displayed when the gas mask is equipped.
+        /// </summary>
+        [DataField]
+        public EntProtoId Action = "ActionSecHailer";
+
+        /// <summary>
+        ///     Reference to the action.
+        /// </summary>
+        [DataField]
+        public EntityUid? ActionEntity;
     }
 }
