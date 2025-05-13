@@ -48,7 +48,7 @@ public sealed class IdentitySystem : SharedIdentitySystem
 
     private void OnPolymorphed(Entity<IdentityComponent> ent, ref PolymorphedEvent args)
     {
-        if (args.Configuration is { TransferIdentity: false } || !TryComp(ent, out MetaDataComponent? targetMeta))
+        if (args.Configuration is { TransferName: false } || !TryComp(ent, out MetaDataComponent? targetMeta))
             return;
         _metaData.SetEntityName(args.NewEntity, targetMeta.EntityName);
         if (TryComp<IdentityComponent>(ent, out var identity))

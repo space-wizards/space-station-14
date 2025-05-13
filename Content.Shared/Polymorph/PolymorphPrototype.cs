@@ -91,7 +91,7 @@ public sealed partial record PolymorphConfiguration
     /// Whether or not the entity transfers its identity between forms. Includes name and DNA.
     /// </summary>
     [DataField(serverOnly: true)]
-    public bool TransferIdentity;
+    public bool TransferName;
 
 
     /// <summary>

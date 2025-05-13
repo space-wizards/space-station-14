@@ -52,7 +52,7 @@ namespace Content.Server.Forensics
 
         private void OnPolymorphed(Entity<DnaComponent> ent, ref PolymorphedEvent args)
         {
-            if (args.Configuration == null || !args.Configuration.TransferIdentity)
+            if (args.Configuration == null || !args.Configuration.TransferName)
                 return;
             if (HasComp<DnaComponent>(args.NewEntity))
                 RemComp<DnaComponent>(args.NewEntity);
