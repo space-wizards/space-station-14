@@ -45,7 +45,7 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
             if (_prototypeManager.TryIndex(prototype1, out var proto) &&
                 proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
             {
-                args.Sprite.BaseRSI = sprite.BaseRSI;
+                _sprite.SetBaseRsi((uid, args.Sprite), sprite.BaseRSI);
             }
         }
 

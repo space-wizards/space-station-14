@@ -160,6 +160,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
                 _sprayPainterDecals.OnDecalSelected += id => OnDecalChanged?.Invoke(id);
                 _sprayPainterDecals.OnColorChanged += color => OnDecalColorChanged?.Invoke(color);
                 _sprayPainterDecals.OnAngleChanged += angle => OnDecalAngleChanged?.Invoke(angle);
+                _sprayPainterDecals.OnSnapChanged += snap => OnDecalSnapChanged?.Invoke(snap);
 
                 Tabs.AddChild(_sprayPainterDecals);
                 TabContainer.SetTabTitle(_sprayPainterDecals, Loc.GetString("spray-painter-tabs-decals"));

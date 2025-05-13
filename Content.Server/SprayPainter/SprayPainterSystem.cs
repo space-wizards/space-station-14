@@ -59,6 +59,8 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         var position = args.ClickLocation;
         if (ent.Comp.SnapDecals)
             position = position.SnapToGrid(EntityManager).Offset(new(-0.5f));
+        else
+            position = position.Offset(new(-0.5f, -0.5f));
 
         if (!_decals.TryAddDecal(ent.Comp.SelectedDecal.Value, position, out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, true))
             return;

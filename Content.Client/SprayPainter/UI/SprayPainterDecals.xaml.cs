@@ -49,7 +49,6 @@ public sealed partial class SprayPainterDecals : Control
     private void SnapToTileCheckBoxOnOnPressed(BaseButton.ButtonEventArgs _)
     {
         OnSnapChanged?.Invoke(SnapToTileCheckBox.Pressed);
-        UpdateColorButtons();
     }
 
     /// <summary>
