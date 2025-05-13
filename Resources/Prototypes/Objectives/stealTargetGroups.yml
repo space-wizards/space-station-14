@@ -355,7 +355,7 @@
   id: AnimalIan
   name: steal-target-groups-animal-ian
   sprite:
-    sprite: Mobs/Pets/corgi.rsi
+    sprite: Mobs/Pets/corgi/corgi.rsi
     state: ian
 
 - type: stealTargetGroup
