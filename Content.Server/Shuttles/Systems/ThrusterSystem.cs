@@ -94,6 +94,23 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void OnShuttleTileChange(EntityUid uid, ShuttleComponent component, ref TileChangedEvent args)
     {
+        // The shuttle's inertia has changed, so subtraction would be incorrect. We have to re-accumulate.
+        // BUG: TileChangedEvent is called prior to updating the PhysicsComponent, so we are always one-update behind.
+        component.AngularThrust = 0f;
+
+        var allThrusters = EntityQueryEnumerator<ThrusterComponent, ApcPowerReceiverComponent, TransformComponent>();
+
+        while (allThrusters.MoveNext(out var thrusterUid, out var thrusterComp, out var thrusterPowerReceiver, out var thrusterXform))
+        {
+            if (thrusterXform.GridUid != uid)
+                return;
+
+            if (component.AngularThrusters.Contains(thrusterUid))
+                component.AngularThrust += thrusterComp.Thrust * GetInertiaThresholdScale((thrusterUid, thrusterComp), thrusterXform);
+
+            UpdatePowerLoad((thrusterUid, thrusterComp), thrusterPowerReceiver);
+        }
+
         // If the old tile was space but the new one isn't then disable all adjacent thrusters
         if (args.NewTile.IsSpace(_tileDefManager) || !args.OldTile.IsSpace(_tileDefManager))
             return;
