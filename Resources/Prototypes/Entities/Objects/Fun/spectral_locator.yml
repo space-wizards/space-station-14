@@ -39,7 +39,7 @@
 - type: entity
   id: SpectralLocator
   parent: [ SpectralLocatorUnpowered, PowerCellSlotSmallItem ]
-  suffix: Full
+  suffix: ""
   components:
   - type: PowerCellDraw
     drawRate: 1

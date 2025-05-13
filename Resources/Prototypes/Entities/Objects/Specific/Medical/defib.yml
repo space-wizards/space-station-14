@@ -44,7 +44,6 @@
 - type: entity
   id: Defibrillator
   parent: [ BaseDefibrillator, PowerCellSlotMediumItem ]
-  suffix: Full
   components:
   - type: MultiHandedItem
   - type: ToggleCellDraw
