@@ -11226,7 +11226,7 @@ entities:
     - type: Transform
       pos: -21.437492,-3.2795863
       parent: 1
-- proto: Claymore
+- proto: Katana
   entities:
   - uid: 4151
     components:
