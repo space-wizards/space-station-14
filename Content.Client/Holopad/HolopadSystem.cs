@@ -77,7 +77,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
             // Otherwise copy the target's current physical appearance
             else
             {
-                _sprite.CopySprite((hologram, hologramSprite), (target.Value, targetSprite));
+                _sprite.CopySprite((target.Value, targetSprite), (hologram, hologramSprite));
             }
         }
 
