@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: WarPigeon
-  changes:
-  - message: Steel crates now have some radiation shielding for safe storage and transport
-      of radioactive materials.
-    type: Add
-  id: 7973
-  time: '2025-02-18T12:56:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35168
 - author: BramvanZijp
   changes:
   - message: Fixed Janitor-Restricted contraband unintentionally stating Security
@@ -3927,3 +3919,10 @@
   id: 8475
   time: '2025-05-13T11:49:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33837
+- author: AsnDen
+  changes:
+  - message: Supplybots can now pull things.
+    type: Add
+  id: 8476
+  time: '2025-05-13T17:15:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32468
