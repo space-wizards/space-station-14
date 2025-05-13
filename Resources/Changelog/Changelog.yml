@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Syndicate cyborgs can laugh again.
-    type: Fix
-  id: 7970
-  time: '2025-02-17T21:59:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31510
 - author: Killerqu00
   changes:
   - message: Contraband examines now correctly tell you if you can possess the object.
@@ -3925,3 +3918,12 @@
   id: 8472
   time: '2025-05-13T07:43:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36580
+- author: chromiumboy
+  changes:
+  - message: Station AIs can personalize the appearance of their cores and holograms
+      by right-clicking the AI core in which they are inserted and selecting 'AI customization'
+      from the list
+    type: Add
+  id: 8473
+  time: '2025-05-13T08:50:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34501
