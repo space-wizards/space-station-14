@@ -68,6 +68,9 @@ bounty-item-microwave-machine-board = Microwave machine board
 bounty-item-flash = Flash
 bounty-item-tooth-space-carp = Space Carp Tooth
 bounty-item-tooth-sharkminnow = Sharkminnow Tooth
+bounty-item-ring = Ring
+bounty-item-remains = Hivelord Remains
+bounty-item-plates = Goliath Hide Plates
 
 bounty-description-artifact = NanoTrasen is in some hot water for stealing artifacts from non-spacefaring planets. Return one and we'll compensate you for it.
 bounty-description-baseball-bat = Baseball fever is going on at CentComm! Be a dear and ship them some baseball bats, so that management can live out their childhood dream.
@@ -138,3 +141,6 @@ bounty-description-microwave-machine-board = Mr. Giggles thought it'd be funny t
 bounty-description-flashes = GREETINGS \[Station] WE REQUIRE 6 FLASHES DUE TO A NORMAL \[TrainingExercise] WITH SECURITY. EVERYTHING IS \[Normal].
 bounty-description-tooth-space-carp = Some lads from "down unda" need some teeth to make their traditional apparel. Send them a few from some space carp.
 bounty-description-tooth-sharkminnow = The chef is claiming that the teeth of sharkminnows are some kind of high-quality knife. I don't know what they're on about, but they want a set. Send it to them.
+bounty-description-ring = On this EXTRAORDINARY day there will be a wedding between the Gelts, but Mr. Gelt has lost the rings, send a pair of rings.
+bounty-description-remains = TWO. HIVELORD REMAINS, please.
+bounty-description-plates = Our club is interested in trophies of majestic creatures such as the Goliath: send a couple of plates. The reward will come quickly.
