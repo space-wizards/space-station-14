@@ -31,22 +31,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                 """
             );
 
-            migrationBuilder.DropIndex(
-                name: "IX_job_one_high_priority",
-                table: "job");
-
-            migrationBuilder.DropColumn(
-                name: "selected_character_slot",
-                table: "preference");
-
-            migrationBuilder.DropColumn(
-                name: "priority",
-                table: "job");
-
-            migrationBuilder.DropColumn(
-                name: "pref_unavailable",
-                table: "profile");
-
             migrationBuilder.CreateTable(
                 name: "job_priority_entry",
                 columns: table => new
@@ -67,6 +51,30 @@ namespace Content.Server.Database.Migrations.Sqlite
                         principalColumn: "preference_id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.Sql(
+                """
+                INSERT INTO job_priority_entry (preference_id, job_name, priority)
+                SELECT prof.preference_id, job_name, priority from job
+                INNER JOIN profile AS prof ON job.profile_id = prof.profile_id
+                INNER JOIN preference AS pref ON pref.preference_id = prof.preference_id WHERE pref.selected_character_slot = prof.slot
+                """);
+
+            migrationBuilder.DropIndex(
+                name: "IX_job_one_high_priority",
+                table: "job");
+
+            migrationBuilder.DropColumn(
+                name: "selected_character_slot",
+                table: "preference");
+
+            migrationBuilder.DropColumn(
+                name: "priority",
+                table: "job");
+
+            migrationBuilder.DropColumn(
+                name: "pref_unavailable",
+                table: "profile");
 
             migrationBuilder.CreateIndex(
                 name: "IX_job_one_high_priority",
