@@ -109,15 +109,12 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
             AtmosphereSystem.MolesToPressureThreshold(inletPipeNode.Air, valveEntity.Comp.Threshold);
 
         // Second, calculate the moles required to equalize the pressure.
+        // We round here to avoid the valve staying enabled for 0.00001 pressure differences.
         var deltaMolesToEqualizePressure =
-            _atmosphere.FractionToEqualizePressure(inletPipeNode.Air, outletPipeNode.Air) *
-            inletPipeNode.Air.TotalMoles;
-
-        // var deltaMolesToEqualizePressure =
-        //     float.Round(_atmosphere.FractionToEqualizePressure(inletPipeNode.Air, outletPipeNode.Air) *
-        //                 inletPipeNode.Air.TotalMoles,
-        //         digits: 3,
-        //         MidpointRounding.ToPositiveInfinity);
+            float.Round(_atmosphere.FractionToEqualizePressure(inletPipeNode.Air, outletPipeNode.Air) *
+                        inletPipeNode.Air.TotalMoles,
+                digits: 3,
+                MidpointRounding.ToPositiveInfinity);
 
         // Third, make sure we only transfer the minimum of the two.
         // We do this so that we don't accidentally transfer so much gas to the point
