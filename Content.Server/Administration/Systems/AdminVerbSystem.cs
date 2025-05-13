@@ -30,10 +30,12 @@ using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Server.Silicons.Laws;
+using Content.Shared.Hands.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Server.Player;
 using Content.Shared.Silicons.StationAi;
+using Content.Shared.Throwing;
 using Robust.Shared.Physics.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
@@ -461,6 +463,36 @@ namespace Content.Server.Administration.Systems
                     Impact = LogImpact.Medium
                 };
                 args.Verbs.Add(verb);
+            }
+
+            if (HasComp<InventoryComponent>(args.Target))
+            {
+                // Strip all verb
+                args.Verbs.Add(new Verb
+                {
+                    Text = Loc.GetString("strip-all-verb-get-data-text"),
+                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
+                    Category = VerbCategory.Debug,
+                    Act = () =>
+                    {
+                        if (_inventorySystem.TryGetContainerSlotEnumerator(args.Target, out var enumerator))
+                        {
+                            while (enumerator.NextItem(out var item, out var slot))
+                            {
+                                if (_inventorySystem.TryUnequip(args.Target, args.Target, slot.Name, true, true))
+                                    _physics.ApplyAngularImpulse(item, ThrowingSystem.ThrowAngularImpulse);
+                            }
+                        }
+
+                        if (TryComp(args.Target, out HandsComponent? hands))
+                        {
+                            foreach (var hand in _handsSystem.EnumerateHands(args.Target, hands))
+                            {
+                                _handsSystem.TryDrop(args.Target, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
+                            }
+                        }
+                    }
+                });
             }
 
             // Set clothing verb
