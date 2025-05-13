@@ -37,6 +37,7 @@
       - id: VariantCubeBox
       - id: BoxMousetrap
         amount: 2
+      - id: SprayBottleWater
       - id: ReagentContainerFlour
         amount: 2
       - id: FoodBoxCloth
