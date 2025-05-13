@@ -161,6 +161,14 @@
 
 - type: latheRecipe
   parent: BaseToolRecipe
+  id: SprayPainterAmmo
+  result: SprayPainterAmmo
+  materials:
+    Steel: 150
+    Plastic: 50
+
+- type: latheRecipe
+  parent: BaseToolRecipe
   id: UtilityBelt
   result: ClothingBeltUtility
   materials:

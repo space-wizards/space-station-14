@@ -40,13 +40,12 @@
       Steel: 100
 
 - type: entity
-  name: compressed dye
+  name: compressed paint
   parent: BaseItem
   id: SprayPainterAmmo
-  description: A cartridge of highly compressed dye, commonly used in spray painters.
+  description: A cartridge of highly compressed paint, commonly used in spray painters.
   components:
   - type: SprayPainterAmmo
-    charges: 15
   - type: Sprite
     sprite: Objects/Tools/spray_painter.rsi
     state: ammo
