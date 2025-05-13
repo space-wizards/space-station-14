@@ -70,10 +70,6 @@
     canShuttle: false
     title: comms-console-announcement-title-station-ai
     color: "#5ed7aa"
-  - type: HolographicAvatar
-    layerData:
-    - sprite: Mobs/Silicon/station_ai.rsi
-      state: default
   - type: ShowJobIcons
 
 - type: entity
@@ -124,31 +120,6 @@
         # The alternative is you add a bunch of events trying to override it; we don't even really need the container functionality
         # anyway it's just a quality of life thing.
         showEnts: True
-
-# Boards
-- type: entity
-  id: AsimovCircuitBoard
-  parent: BaseElectronics
-  name: law board (Crewsimov)
-  description: An electronics board containing the Crewsimov lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: Crewsimov
-
-- type: entity
-  id: CorporateCircuitBoard
-  parent: BaseElectronics
-  name: law board (Corporate)
-  description: An electronics board containing the Corporate lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: Corporate
 
 # Items
 - type: entity
@@ -227,8 +198,11 @@
     layers:
     - state: base
     - state: ai_empty
-      map: ["unshaded"]
       shader: unshaded
+    - state: ai
+      map: ["enum.StationAiVisualState.Key"]
+      shader: unshaded
+      visible: false
   - type: Appearance
   - type: InteractionPopup
     interactSuccessString: petting-success-station-ai
@@ -236,12 +210,6 @@
     messagePerceivedByOthers: petting-success-station-ai-others # Otherwise AI cannot tell its being pet as It's just a brain inside of the core, not the core itself.
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: GenericVisualizer
-    visuals:
-      enum.StationAiVisualState.Key:
-        unshaded:
-          Empty: { state: ai_empty }
-          Occupied: { state: ai }
   - type: Telephone
     compatibleRanges:
     - Grid
@@ -255,10 +223,12 @@
   - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
-        enum.HolopadUiKey.AiRequestWindow:
-          type: HolopadBoundUserInterface
-        enum.HolopadUiKey.AiActionWindow:
-          type: HolopadBoundUserInterface
+      enum.HolopadUiKey.AiRequestWindow:
+        type: HolopadBoundUserInterface
+      enum.HolopadUiKey.AiActionWindow:
+        type: HolopadBoundUserInterface
+      enum.StationAiCustomizationUiKey.Key:
+        type: StationAiCustomizationBoundUserInterface
 
 # The job-ready version of an AI spawn.
 - type: entity
@@ -269,12 +239,6 @@
   - type: ContainerSpawnPoint
     containerId: station_ai_mind_slot
     job: StationAi
-  - type: Sprite
-    sprite: Mobs/Silicon/station_ai.rsi
-    layers:
-    - state: base
-    - state: ai
-      shader: unshaded
 
 # The actual brain inside the core
 - type: entity
@@ -319,6 +283,14 @@
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true
+  - type: StationAiCustomization
+    protoIds:
+      StationAiCoreIconography: StationAiIconAi
+      StationAiHolograms: StationAiHologramFemale
+  - type: HolographicAvatar
+    layerData:
+    - sprite: Mobs/Silicon/holograms.rsi
+      state: ai_female
   - type: NameIdentifier
     group: StationAi
 
