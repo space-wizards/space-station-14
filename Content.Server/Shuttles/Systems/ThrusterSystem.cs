@@ -196,11 +196,13 @@ public sealed class ThrusterSystem : EntitySystem
             // If no parent change doesn't matter for angular.
             if (component.Type == ThrusterType.Angular)
             {
-                oldShuttleComponent.AngularThrust -= component.Thrust;
+                var angularThrust = component.Thrust * GetInertiaThresholdScale((uid, component), xform);
+
+                oldShuttleComponent.AngularThrust -= angularThrust;
                 DebugTools.Assert(oldShuttleComponent.AngularThrusters.Contains(uid));
                 oldShuttleComponent.AngularThrusters.Remove(uid);
 
-                shuttleComponent.AngularThrust += component.Thrust;
+                shuttleComponent.AngularThrust += angularThrust;
                 DebugTools.Assert(!shuttleComponent.AngularThrusters.Contains(uid));
                 shuttleComponent.AngularThrusters.Add(uid);
                 return;
@@ -306,7 +308,7 @@ public sealed class ThrusterSystem : EntitySystem
 
                 break;
             case ThrusterType.Angular:
-                shuttleComponent.AngularThrust += component.Thrust;
+                shuttleComponent.AngularThrust += component.Thrust * GetInertiaThresholdScale((uid, component), xform);
                 DebugTools.Assert(!shuttleComponent.AngularThrusters.Contains(uid));
                 shuttleComponent.AngularThrusters.Add(uid);
                 break;
@@ -394,7 +396,7 @@ public sealed class ThrusterSystem : EntitySystem
                 shuttleComponent.LinearThrusters[direction].Remove(uid);
                 break;
             case ThrusterType.Angular:
-                shuttleComponent.AngularThrust -= component.Thrust;
+                shuttleComponent.AngularThrust -= component.Thrust * GetInertiaThresholdScale((uid, component), xform);
                 DebugTools.Assert(shuttleComponent.AngularThrusters.Contains(uid));
                 shuttleComponent.AngularThrusters.Remove(uid);
                 break;
@@ -590,6 +592,17 @@ public sealed class ThrusterSystem : EntitySystem
     }
 
     #endregion
+
+    public float GetInertiaThresholdScale(Entity<ThrusterComponent> ent, TransformComponent? xform = null, PhysicsComponent? physComp = null)
+    {
+        if (!Resolve(ent.Owner, ref xform) ||
+            xform.GridUid == null ||
+            !Resolve(xform.GridUid.Value, ref physComp))
+            return 1f;
+
+        // Throttles linearly up to the threshold
+        return physComp.Inertia / MathF.Max(physComp.Inertia, ent.Comp.inertiaThreshold);
+    }
 
     private int GetFlagIndex(DirectionFlag flag)
     {

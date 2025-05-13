@@ -25,6 +25,12 @@ namespace Content.Server.Shuttles.Components
         [ViewVariables(VVAccess.ReadWrite), DataField("thrust")]
         public float Thrust = 100f;
 
+        /// <summary>
+        /// Throttles the influence of gyroscopes on small shuttles. The default value is half the inertia of the standard 4-door cargo shuttle.
+        /// </summary>
+        [DataField]
+        public float inertiaThreshold = 850f;
+
         [DataField("thrusterType")]
         public ThrusterType Type = ThrusterType.Linear;
 
