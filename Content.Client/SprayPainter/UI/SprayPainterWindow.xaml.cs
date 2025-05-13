@@ -86,7 +86,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
         {
             _currentEntries = entries;
 
-            foreach (var (category, indexCategory) in entries.Keys.OrderBy(x => x).Select((x, i) => (x, i)))
+            foreach (var (category, indexCategory) in entries.Keys.Order().Select((x, i) => (x, i)))
             {
                 var box = new BoxContainer() { Orientation = BoxContainer.LayoutOrientation.Vertical };
                 var label = new Label() { Text = Loc.GetString("spray-painter-selected-style") };
