@@ -97,8 +97,6 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
                     nameof(valveEntity.Comp.FlowRate),
                     nameof(valveEntity.Comp.Enabled));
             }
-
-            valveEntity.Comp.Enabled = false;
             return;
         }
 
@@ -137,7 +135,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         DirtyField(valveEntity, valveEntity.Comp, nameof(valveEntity.Comp.FlowRate));
 
         // Prevent spamming updates if the valve is already enabled.
-        if (valveEntity.Comp.Enabled == false)
+        if (!valveEntity.Comp.Enabled)
         {
             valveEntity.Comp.Enabled = true;
             // The valve state has changed since the last run, so update it.
@@ -145,8 +143,6 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
             UpdateAppearance(valveEntity);
             DirtyField(valveEntity, valveEntity.Comp, nameof(valveEntity.Comp.Enabled));
         }
-
-        valveEntity.Comp.Enabled = true;
     }
 
     /// <summary>
