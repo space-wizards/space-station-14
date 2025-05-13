@@ -56,6 +56,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<BloodstreamComponent, GenerateDnaEvent>(OnDnaGenerated);
+        SubscribeLocalEvent<BloodstreamComponent, LoadedHumanoidAppearanceEvent>(OnHumanoidAppearanceLoaded);
     }
 
     private void OnMapInit(Entity<BloodstreamComponent> ent, ref MapInitEvent args)
@@ -473,6 +474,17 @@ public sealed class BloodstreamSystem : EntitySystem
 
     private void OnDnaGenerated(Entity<BloodstreamComponent> entity, ref GenerateDnaEvent args)
     {
+        RefreshBloodData(entity);
+    }
+    private void OnHumanoidAppearanceLoaded(Entity<BloodstreamComponent> entity, ref LoadedHumanoidAppearanceEvent args)
+    {
+        // Blood color = skin color, for slimes.
+        // So we refresh when appearance is loaded.
+        RefreshBloodData(entity);
+    }
+
+    private void RefreshBloodData(Entity<BloodstreamComponent> entity)
+    {
         if (_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
         {
             foreach (var reagent in bloodSolution.Contents)
@@ -482,8 +494,6 @@ public sealed class BloodstreamSystem : EntitySystem
                 reagentData.AddRange(GetEntityBloodData(entity.Owner));
             }
         }
-        else
-            Log.Error("Unable to set bloodstream DNA, solution entity could not be resolved");
     }
 
     /// <summary>

@@ -100,7 +100,7 @@ namespace Content.Shared.Chemistry.Components
             _heatCapacity = 0;
             foreach (var (reagent, quantity) in Contents)
             {
-                _heatCapacity += (float) quantity *
+                _heatCapacity += (float)quantity *
                                     protoMan.Index<ReagentPrototype>(reagent.Prototype).SpecificHeat;
             }
 
@@ -840,12 +840,7 @@ namespace Content.Shared.Chemistry.Components
                     BloodColorData? bloodData = reagentData.OfType<BloodColorData>().FirstOrDefault();
                     if (null != bloodData)
                     {
-                        Logger.InfoS("SERVER", "GetColor blood data was not null...");
                         mixColor = bloodData.SubstanceColor;
-                    }
-                    else
-                    {
-                        Logger.InfoS("SERVER", "GetColor blood data was indeed null...");
                     }
 
                     continue;
@@ -854,14 +849,12 @@ namespace Content.Shared.Chemistry.Components
 
                 var interpolateValue = quantity.Float() / runningTotalQuantity.Float();
                 mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
-                // TODO: very cursed hacky, delete
             }
             return mixColor;
         }
 
         public Color GetColor(IPrototypeManager? protoMan)
         {
-            Logger.InfoS("SERVER", "GetColor called...");
             return GetColorWithout(protoMan);
         }
 

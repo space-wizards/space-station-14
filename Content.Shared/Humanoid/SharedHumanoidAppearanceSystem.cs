@@ -446,6 +446,8 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.Age = profile.Age;
 
         Dirty(uid, humanoid);
+        var ev = new LoadedHumanoidAppearanceEvent { Owner = uid, AppearanceComp = humanoid };
+        RaiseLocalEvent(ref ev);
     }
 
     /// <summary>
