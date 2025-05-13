@@ -156,7 +156,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
     /// representing the valve with respective components.</param>
     private void UpdateAppearance(Entity<GasPressureReliefValveComponent, AppearanceComponent?> valveEntity)
     {
-        if (!Resolve(valveEntity, ref valveEntity.Comp2))
+        if (!Resolve(valveEntity, ref valveEntity.Comp2, false))
             return;
 
         _appearance.SetData(valveEntity,
