@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
@@ -19,9 +19,9 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 [UsedImplicitly]
 public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -51,14 +51,12 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
                 out PipeNode? inletPipeNode,
                 out PipeNode? outletPipeNode))
         {
-            _ambientSoundSystem.SetAmbience(valveEntity, false);
-            valveEntity.Comp.Enabled = false;
-            UpdateAppearance(valveEntity);
-
-            // Avoid it network spamming dirtying constantly by only checking if the state has actually changed.
-            if (valveEntity.Comp.PreviousValveState != valveEntity.Comp.Enabled)
+            // Prevent spamming updates if the valve is already disabled.
+            if (valveEntity.Comp.Enabled)
             {
-                valveEntity.Comp.PreviousValveState = valveEntity.Comp.Enabled;
+                valveEntity.Comp.Enabled = false;
+                _ambientSound.SetAmbience(valveEntity, false);
+                UpdateAppearance(valveEntity);
                 DirtyField(valveEntity!, nameof(valveEntity.Comp.Enabled));
             }
 
@@ -84,14 +82,15 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         if (p1 <= valveEntity.Comp.Threshold || p2 >= p1)
         {
-            valveEntity.Comp.Enabled = false;
-            _ambientSoundSystem.SetAmbience(valveEntity, false);
-            UpdateAppearance(valveEntity);
-
-            if (valveEntity.Comp.PreviousValveState != valveEntity.Comp.Enabled)
+            // If the valve's state has actually changed, we need to update it.
+            if (valveEntity.Comp.Enabled)
             {
-                valveEntity.Comp.PreviousValveState = valveEntity.Comp.Enabled;
+                // We set this early, otherwise UpdateAppearance will see it as enabled
+                valveEntity.Comp.Enabled = false;
+                _ambientSound.SetAmbience(valveEntity, false);
+                UpdateAppearance(valveEntity);
                 valveEntity.Comp.FlowRate = 0;
+
                 DirtyFields(valveEntity,
                     valveEntity.Comp,
                     MetaData(valveEntity),
@@ -99,13 +98,9 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
                     nameof(valveEntity.Comp.Enabled));
             }
 
+            valveEntity.Comp.Enabled = false;
             return;
         }
-
-        // guess we're doing work now
-        valveEntity.Comp.Enabled = true;
-        _ambientSoundSystem.SetAmbience(valveEntity, true);
-        UpdateAppearance(valveEntity);
 
         var t1 = inletPipeNode.Air.Temperature;
 
@@ -114,12 +109,15 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
             AtmosphereSystem.MolesToPressureThreshold(inletPipeNode.Air, valveEntity.Comp.Threshold);
 
         // Second, calculate the moles required to equalize the pressure.
-        // Cursed rounding to avoid the floating point error-inator.
         var deltaMolesToEqualizePressure =
-            float.Round(_atmosphereSystem.FractionToEqualizePressure(inletPipeNode.Air, outletPipeNode.Air) *
-                        inletPipeNode.Air.TotalMoles,
-                digits: 3,
-                MidpointRounding.ToPositiveInfinity);
+            _atmosphere.FractionToEqualizePressure(inletPipeNode.Air, outletPipeNode.Air) *
+            inletPipeNode.Air.TotalMoles;
+
+        // var deltaMolesToEqualizePressure =
+        //     float.Round(_atmosphere.FractionToEqualizePressure(inletPipeNode.Air, outletPipeNode.Air) *
+        //                 inletPipeNode.Air.TotalMoles,
+        //         digits: 3,
+        //         MidpointRounding.ToPositiveInfinity);
 
         // Third, make sure we only transfer the minimum of the two.
         // We do this so that we don't accidentally transfer so much gas to the point
@@ -131,48 +129,41 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         // And finally, limit the transfer volume to the max flow rate of the valve.
         var actualVolumeToTransfer = Math.Min(desiredVolumeToTransfer,
-            valveEntity.Comp.MaxTransferRate * _atmosphereSystem.PumpSpeedup() * args.dt);
+            valveEntity.Comp.MaxTransferRate * _atmosphere.PumpSpeedup() * args.dt);
 
         // We remove the gas from the inlet and merge it into the outlet.
         var removed = inletPipeNode.Air.RemoveVolume(actualVolumeToTransfer);
-        _atmosphereSystem.Merge(outletPipeNode.Air, removed);
+        _atmosphere.Merge(outletPipeNode.Air, removed);
 
-        // Calculate the flow rate in L/S for the UI.
+        // Calculate the flow rate in L/s for the UI.
         valveEntity.Comp.FlowRate = MathF.Round(actualVolumeToTransfer * args.dt, 1);
         DirtyField(valveEntity, valveEntity.Comp, nameof(valveEntity.Comp.FlowRate));
 
-        if (valveEntity.Comp.PreviousValveState != valveEntity.Comp.Enabled)
+        // Prevent spamming updates if the valve is already enabled.
+        if (valveEntity.Comp.Enabled == false)
         {
-            // The valve state has changed since the last run, so we need to dirty it.
-            valveEntity.Comp.PreviousValveState = valveEntity.Comp.Enabled;
+            valveEntity.Comp.Enabled = true;
+            // The valve state has changed since the last run, so update it.
+            _ambientSound.SetAmbience(valveEntity, true);
+            UpdateAppearance(valveEntity);
             DirtyField(valveEntity, valveEntity.Comp, nameof(valveEntity.Comp.Enabled));
         }
+
+        valveEntity.Comp.Enabled = true;
     }
 
     /// <summary>
-    /// Updates the visual appearance of the gas pressure relief valve based on its current state.
+    /// Updates the visual appearance of the valve based on its current state.
     /// </summary>
-    /// <param name="valveEntityUid"> <see cref="EntityUid" /> of the valve.</param>
-    /// <param name="valveComponent">
-    /// The <see cref="GasPressureReliefValveComponent" /> of the entity. Will be resolved if not provided.
-    /// </param>
-    /// <param name="appearance">
-    /// The <see cref="AppearanceComponent" /> associated with the entity. Will be resolved if not provided.
-    /// <remarks>
-    /// This isn't in shared because it's pointless to predict something whose state change is
-    /// entirely handled by the server.
-    /// </remarks>
-    /// </param>
-    private void UpdateAppearance(EntityUid valveEntityUid,
-        GasPressureReliefValveComponent? valveComponent = null,
-        AppearanceComponent? appearance = null)
+    /// <param name="valveEntity">The <see cref="Entity{GasPressureReliefValveComponent, AppearanceComponent}"/>
+    /// representing the valve with respective components.</param>
+    private void UpdateAppearance(Entity<GasPressureReliefValveComponent, AppearanceComponent?> valveEntity)
     {
-        if (!Resolve(valveEntityUid, ref valveComponent, ref appearance, false))
+        if (!Resolve(valveEntity, ref valveEntity.Comp2))
             return;
 
-        _appearance.SetData(valveEntityUid,
+        _appearance.SetData(valveEntity,
             PressureReliefValveVisuals.State,
-            valveComponent.Enabled,
-            appearance);
+            valveEntity.Comp1.Enabled);
     }
 }

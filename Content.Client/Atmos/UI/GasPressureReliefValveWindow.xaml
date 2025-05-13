@@ -1,15 +1,15 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-               SetSize="350 255"
-               MinSize="350 255"
+               SetSize="345 255"
+               MinSize="345 255"
                Title="Pressure Relief Valve"
                Resizable="False">
 
     <BoxContainer Orientation="Vertical">
 
 
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Align="Center" Margin="0 0 0 10">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Align="Center" Margin="10 10 10 10">
             <BoxContainer Orientation="Vertical">
                 <Label Text="{Loc gas-pressure-relief-valve-ui-valve-status}" Margin="0 0 5 0" HorizontalAlignment="Right" />
                 <Label Text="{Loc gas-pressure-relief-valve-ui-current-flow-rate}" Margin="0 0 5 0" HorizontalAlignment="Right" />
@@ -28,7 +28,7 @@
         </BoxContainer>
 
         <!-- Controls to Set Pressure -->
-        <controls:StripeBack Name="SetPressureStripeBack" HorizontalExpand="True" Margin="0 0 0 0">
+        <controls:StripeBack Name="SetPressureStripeBack" HorizontalExpand="True" Margin="10 0 10 0">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 10 0 10">
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                     <LineEdit Name="ThresholdInput" HorizontalExpand="True" MinSize="70 0" />
@@ -59,4 +59,4 @@
 
     </BoxContainer>
 
-</DefaultWindow>
+</controls:FancyWindow>

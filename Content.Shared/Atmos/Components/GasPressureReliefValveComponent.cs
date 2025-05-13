@@ -1,27 +1,33 @@
-﻿using Content.Shared.Atmos.EntitySystems;
-using Content.Shared.Guidebook;
+﻿using Content.Shared.Guidebook;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Atmos.Components;
 
 /// <summary>
-/// Shared component side for the <see cref="SharedGasPressureReliefValveSystem"/>
+/// Defines a gas pressure relief valve,
+/// which releases gas depending on a set pressure threshold between two pipe nodes.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true, true)]
 public sealed partial class GasPressureReliefValveComponent : Component
 {
+    /// <summary>
+    /// Specifies the pipe node name to be treated as the inlet.
+    /// </summary>
     [DataField]
     public string InletName = "inlet";
 
+    /// <summary>
+    /// Specifies the pipe node name to be treated as the outlet.
+    /// </summary>
     [DataField]
     public string OutletName = "outlet";
 
     /// <summary>
     /// Sets the opening threshold of the valve.
-    /// <example>If set to 500 kPa, the valve will only
-    /// open if the pressure in the inlet side is above
-    /// 500 kPa.</example>
     /// </summary>
+    /// <example> If set to 500 kPa, the valve will only
+    /// open if the pressure in the inlet side is above
+    /// 500 kPa. </example>
     [DataField, AutoNetworkedField]
     public float Threshold;
 
@@ -32,14 +38,6 @@ public sealed partial class GasPressureReliefValveComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Enabled;
-
-    /// <summary>
-    /// Stores the previous state of the valve. If the current valve state
-    /// is different from the previous state, the valve will be dirtied.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    [DataField]
-    public bool PreviousValveState;
 
     /// <summary>
     /// The max transfer rate of the valve.

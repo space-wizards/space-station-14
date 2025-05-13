@@ -206,7 +206,6 @@
     guides:
     - PressureReliefValve
 
-
 - type: entity
   parent: GasBinaryBase
   id: GasPassiveGate

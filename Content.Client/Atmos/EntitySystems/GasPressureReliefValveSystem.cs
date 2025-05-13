@@ -8,11 +8,12 @@ namespace Content.Client.Atmos.EntitySystems;
 /// Represents the client system responsible for managing and updating the gas pressure relief valve interface.
 /// Inherits from the shared system <see cref="SharedGasPressureReliefValveSystem"/>.
 /// </summary>
-public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveSystem
+public sealed partial class GasPressureReliefValveSystem : SharedGasPressureReliefValveSystem
 {
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<GasPressureReliefValveComponent, AfterAutoHandleStateEvent>(OnValveUpdate);
     }
 

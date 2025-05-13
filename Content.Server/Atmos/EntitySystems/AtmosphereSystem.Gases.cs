@@ -253,7 +253,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
-        ///     Calculates the dimensionless fraction of gas required to equalize pressure between two gas mixtures.
+        /// Calculates the dimensionless fraction of gas required to equalize pressure between two gas mixtures.
         /// </summary>
         /// <param name="gasMixture1">The first gas mixture involved in the pressure equalization.
         /// This mixture should be the one you always expect to be the highest pressure.</param>
@@ -291,7 +291,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             // The quadratic equation is solved for the transfer fraction.
             var quadraticA = 1 + volumeRatio;
-            var quadraticB = molesRatio - volumeRatio + heatCapacityRatio * (temperatureRatio * volumeRatio);
+            var quadraticB = molesRatio - volumeRatio + heatCapacityRatio * (temperatureRatio + volumeRatio);
             var quadraticC = heatCapacityRatio * (molesRatio * temperatureRatio - volumeRatio);
 
             // Ahhh, Perry the Platypus, I see you've found my secret FLOATING POINT ERROR-INATOR!

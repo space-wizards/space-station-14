@@ -17,6 +17,7 @@ public abstract class SharedGasPressureReliefValveSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<GasPressureReliefValveComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<GasPressureReliefValveComponent, GasPressureReliefValveChangeThresholdMessage>(OnThresholdChangeMessage);
     }
