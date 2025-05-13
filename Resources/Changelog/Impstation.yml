@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Sha-Seng
   changes:
-  - message: Sec bomber is now the correct size and lacks pockets
-    type: Fix
-  id: 1166
-  time: '2025-02-20T02:41:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1738
-- author: Sha-Seng
-  changes:
   - message: Engineer bomber jacket has a new wrench from Landshark
     type: Tweak
   id: 1167
@@ -4179,3 +4172,17 @@
   id: 1665
   time: '2025-05-13T12:30:14.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2164
+- author: Darkmajia
+  changes:
+  - message: Supermatter lightning can no longer explode nearby airlocks, air alarms,
+      or other objects.
+    type: Remove
+  - message: Reduced the range at which direct eye contact with the supermatter induces
+      hallucinations.
+    type: Tweak
+  - message: Carbon dioxide affects the supermatter more strongly at lower values,
+      and tesla/singularity delaminations are easier to trigger.
+    type: Tweak
+  id: 1666
+  time: '2025-05-13T14:27:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2444
