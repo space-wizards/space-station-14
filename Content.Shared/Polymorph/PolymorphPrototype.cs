@@ -70,16 +70,29 @@ public sealed partial record PolymorphConfiguration
     public bool Forced;
 
     /// <summary>
+    /// Whether or not the entity transfers its bloodstream between forms.
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public bool TransferBloodstream = true;
+
+    /// <summary>
     /// Whether or not the entity transfers its damage between forms.
     /// </summary>
     [DataField(serverOnly: true)]
     public bool TransferDamage = true;
 
     /// <summary>
-    /// Whether or not the entity transfers its name between forms.
+    /// Whether or not the entity transfers status effects between forms.
     /// </summary>
     [DataField(serverOnly: true)]
-    public bool TransferName;
+    public bool TransferStatusEffects = true;
+
+    /// <summary>
+    /// Whether or not the entity transfers its identity between forms. Includes name and DNA.
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public bool TransferIdentity;
+
 
     /// <summary>
     /// Whether or not the entity transfers its hair, skin color, hair color, etc.

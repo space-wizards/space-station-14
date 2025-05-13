@@ -7,4 +7,8 @@ namespace Content.Shared.Polymorph;
 /// <param name="NewEntity">EntityUid of the entity after the polymorph</param>
 /// <param name="IsRevert">Whether this polymorph event was a revert back to the original entity</param>
 [ByRefEvent]
-public record struct PolymorphedEvent(EntityUid OldEntity, EntityUid NewEntity, bool IsRevert);
+public record struct PolymorphedEvent(
+    EntityUid OldEntity,
+    EntityUid NewEntity,
+    bool IsRevert,
+    PolymorphConfiguration? Configuration = null);

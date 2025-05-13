@@ -15,6 +15,7 @@ using Content.Shared.Forensics.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
+using Content.Shared.Polymorph;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Content.Shared.Verbs;
@@ -44,8 +45,18 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
             SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
+            SubscribeLocalEvent<DnaComponent, PolymorphedEvent>(OnPolymorphed);
             SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
             SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
+        }
+
+        private void OnPolymorphed(Entity<DnaComponent> ent, ref PolymorphedEvent args)
+        {
+            if (args.Configuration == null || !args.Configuration.TransferIdentity)
+                return;
+            if (HasComp<DnaComponent>(args.NewEntity))
+                RemComp<DnaComponent>(args.NewEntity);
+            CopyComp(ent, args.NewEntity, ent.Comp);
         }
 
         private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionContainerChangedEvent ev)

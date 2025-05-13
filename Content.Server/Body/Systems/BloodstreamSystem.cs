@@ -15,6 +15,7 @@ using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.HealthExaminable;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Polymorph;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Speech.EntitySystems;
@@ -55,6 +56,27 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<BloodstreamComponent, GenerateDnaEvent>(OnDnaGenerated);
+        SubscribeLocalEvent<BloodstreamComponent, PolymorphedEvent>(OnPolymorphed);
+    }
+
+    private void OnPolymorphed(Entity<BloodstreamComponent> ent, ref PolymorphedEvent args)
+    {
+        if (args.Configuration is { TransferBloodstream: false } || !TryComp<BloodstreamComponent>(args.NewEntity, out var newBloodstream))
+            return;
+        // First set the blood level percentage to be the same
+        float bloodLevel = GetBloodLevelPercentage(ent);
+        if (_solutionContainerSystem.TryGetSolution(args.NewEntity, newBloodstream.BloodSolutionName, out _, out var blood))
+        {
+            blood.RemoveAllSolution();
+            TryModifyBloodLevel(args.NewEntity, bloodLevel * newBloodstream.BloodMaxVolume);
+            TryModifyBleedAmount(args.NewEntity, -1000); //Arbitiary value since it can't be set
+            TryModifyBleedAmount(args.NewEntity, ent.Comp.BleedAmount);
+        }
+        // Then transfer chemicals over
+        if (_solutionContainerSystem.TryGetSolution(ent.Owner, ent.Comp.ChemicalSolutionName, out _, out var parentSolution))
+        {
+            TryAddToChemicals(args.NewEntity, parentSolution);
+        }
     }
 
     private void OnMapInit(Entity<BloodstreamComponent> ent, ref MapInitEvent args)

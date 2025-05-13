@@ -10,6 +10,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Polymorph;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
@@ -42,6 +43,20 @@ public sealed class IdentitySystem : SharedIdentitySystem
         SubscribeLocalEvent<IdentityComponent, WearerMaskToggledEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, EntityRenamedEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<IdentityComponent, PolymorphedEvent>(OnPolymorphed);
+    }
+
+    private void OnPolymorphed(Entity<IdentityComponent> ent, ref PolymorphedEvent args)
+    {
+        if (args.Configuration is { TransferIdentity: false } || !TryComp(ent, out MetaDataComponent? targetMeta))
+            return;
+        _metaData.SetEntityName(args.NewEntity, targetMeta.EntityName);
+        if (TryComp<IdentityComponent>(ent, out var identity))
+        {
+            var childIdentity = EnsureComp<IdentityComponent>(args.NewEntity);
+            childIdentity.IdentityEntitySlot = identity.IdentityEntitySlot;
+        }
+        _criminalRecordsConsole.CheckNewIdentity(args.NewEntity);
     }
 
     public override void Update(float frameTime)

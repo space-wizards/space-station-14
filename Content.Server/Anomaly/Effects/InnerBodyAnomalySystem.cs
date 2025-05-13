@@ -11,8 +11,10 @@ using Content.Shared.Body.Components;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Mobs;
+using Content.Shared.Polymorph;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
@@ -34,6 +36,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly StunSystem _stun = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
 
     private readonly Color _messageColor = Color.FromSrgb(new Color(201, 22, 94));
 
@@ -52,8 +55,20 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalySeverityChangedEvent>(OnSeverityChanged);
 
         SubscribeLocalEvent<InnerBodyAnomalyComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<InnerBodyAnomalyComponent, PolymorphedEvent>(OnPolymorphed);
 
         SubscribeLocalEvent<AnomalyComponent, ActionAnomalyPulseEvent>(OnActionPulse);
+    }
+
+    private void OnPolymorphed(Entity<InnerBodyAnomalyComponent> ent, ref PolymorphedEvent args)
+    {
+        if (!TryComp<AnomalyComponent>(ent, out var anomaly))
+            return;
+        _stun.TryParalyze(args.NewEntity, TimeSpan.FromSeconds(ent.Comp.StunDuration), true);
+        // This does spawn an extra entity. However, with how rare these conditions are, should not be too much issue.
+        var core = Spawn(anomaly.CoreInertPrototype, Transform(args.NewEntity).Coordinates);
+        _transform.PlaceNextTo(core, args.NewEntity);
+        _anomaly.ChangeAnomalyHealth(ent, -2);
     }
 
     private void OnActionPulse(Entity<AnomalyComponent> ent, ref ActionAnomalyPulseEvent args)

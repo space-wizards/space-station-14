@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
+using Content.Shared.Polymorph;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -25,6 +26,35 @@ namespace Content.Shared.StatusEffect
             SubscribeLocalEvent<StatusEffectsComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<StatusEffectsComponent, ComponentHandleState>(OnHandleState);
             SubscribeLocalEvent<StatusEffectsComponent, RejuvenateEvent>(OnRejuvenate);
+            SubscribeLocalEvent<StatusEffectsComponent, PolymorphedEvent>(OnPolymorphed);
+        }
+
+        private void OnPolymorphed(Entity<StatusEffectsComponent> ent, ref PolymorphedEvent args)
+        {
+            if (args.Configuration is { TransferStatusEffects: false })
+                return;
+
+            var newEntity = args.NewEntity;
+            foreach (var statusEffect in ent.Comp.ActiveEffects)
+            {
+                if (statusEffect.Value.RelevantComponent is {} relevantComponent)
+                {
+                    TryAddStatusEffect(newEntity,
+                        statusEffect.Key,
+                        statusEffect.Value.Cooldown.Item2 - statusEffect.Value.Cooldown.Item1,
+                        statusEffect.Value.CooldownRefresh,
+                        relevantComponent);
+                }
+                else
+                {
+                    TryAddStatusEffect(newEntity,
+                        statusEffect.Key,
+                        statusEffect.Value.Cooldown.Item2 - statusEffect.Value.Cooldown.Item1,
+                        statusEffect.Value.CooldownRefresh,
+                        startTime: statusEffect.Value.Cooldown.Item1);
+                }
+                TryRemoveAllStatusEffects(ent);
+            }
         }
 
         public override void Update(float frameTime)
