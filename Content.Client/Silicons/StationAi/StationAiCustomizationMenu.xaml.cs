@@ -16,8 +16,6 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
-    private readonly SharedStationAiSystem _stationAiSystem = default!;
-
     private Dictionary<ProtoId<StationAiCustomizationGroupPrototype>, StationAiCustomizationGroupContainer> _groupContainers = new();
     private Dictionary<ProtoId<StationAiCustomizationGroupPrototype>, ButtonGroup> _buttonGroups = new();
 
@@ -30,11 +28,11 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        _stationAiSystem = _entManager.System<SharedStationAiSystem>();
+        var stationAiSystem = _entManager.System<SharedStationAiSystem>();
 
         // Load customziation data
         _entManager.TryGetComponent<StationAiCoreComponent>(owner, out var stationAiCore);
-        _stationAiSystem.TryGetHeld((owner, stationAiCore), out var insertedAi);
+        stationAiSystem.TryGetHeld((owner, stationAiCore), out var insertedAi);
         _entManager.TryGetComponent<StationAiCustomizationComponent>(insertedAi, out var stationAiCustomization);
 
         // Create UI entires for each group of customizations
