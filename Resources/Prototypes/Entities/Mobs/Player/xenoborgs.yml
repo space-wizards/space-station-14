@@ -118,7 +118,7 @@
   - type: LockingWhitelist
     blacklist:
       components:
-      - RoboticsConsole 
+      - RoboticsConsole
     whitelist:
       components:
       - BorgChassis
@@ -166,7 +166,7 @@
     sounds:
       Unsexed: UnisexSiliconXenoborg
     screamAction: null
-  - type: DamagedSiliconAccent 
+  - type: DamagedSiliconAccent
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:
