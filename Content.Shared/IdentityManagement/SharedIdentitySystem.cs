@@ -37,8 +37,13 @@ public abstract class SharedIdentitySystem : EntitySystem
 
     private void OnMaskToggled(Entity<IdentityBlockerComponent> ent, ref ItemMaskToggledEvent args)
     {
-        ent.Comp.Enabled = !args.IsToggled;
+        ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
     }
+
+    /// <summary>
+    /// Queues an identity update to the start of the next tick.
+    /// </summary>
+    public virtual void QueueIdentityUpdate(EntityUid uid) { }
 }
 /// <summary>
 ///     Gets called whenever an entity changes their identity.

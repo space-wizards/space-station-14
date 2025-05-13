@@ -1,5 +1,4 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Labels;
 using Content.Server.Popups;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration.Logs;
@@ -10,6 +9,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Server.Audio;
@@ -53,6 +53,7 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<ChemMasterComponent, BoundUIOpenedEvent>(SubscribeUpdateUiState);
 
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterSetModeMessage>(OnSetModeMessage);
+            SubscribeLocalEvent<ChemMasterComponent, ChemMasterSortingTypeCycleMessage>(OnCycleSortingTypeMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterSetPillTypeMessage>(OnSetPillTypeMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterReagentAmountButtonMessage>(OnReagentButtonMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterCreatePillsMessage>(OnCreatePillsMessage);
@@ -76,7 +77,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var bufferCurrentVolume = bufferSolution.Volume;
 
             var state = new ChemMasterBoundUserInterfaceState(
-                chemMaster.Mode, BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
+                chemMaster.Mode, chemMaster.SortingType, BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
                 bufferReagents, bufferCurrentVolume, chemMaster.PillType, chemMaster.PillDosageLimit, updateLabel);
 
             _userInterfaceSystem.SetUiState(owner, ChemMasterUiKey.Key, state);
@@ -89,6 +90,15 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
 
             chemMaster.Comp.Mode = message.ChemMasterMode;
+            UpdateUiState(chemMaster);
+            ClickSound(chemMaster);
+        }
+
+        private void OnCycleSortingTypeMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSortingTypeCycleMessage message)
+        {
+            chemMaster.Comp.SortingType++;
+            if (chemMaster.Comp.SortingType > ChemMasterSortingType.Latest)
+                chemMaster.Comp.SortingType = ChemMasterSortingType.None;
             UpdateUiState(chemMaster);
             ClickSound(chemMaster);
         }

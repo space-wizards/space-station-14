@@ -8,7 +8,10 @@
     DrinkIcedTeaCan: 2
     DrinkSolDryCan: 2
     DrinkLemonLimeCan: 2
+    DrinkLemonLimeCranberryCan: 2
     DrinkFourteenLokoCan: 2
+  contrabandInventory:
+    DrinkDrGibbCan: 3
   emaggedInventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2

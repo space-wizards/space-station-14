@@ -15,8 +15,8 @@ namespace Content.Client.Changelog
     [GenerateTypedNameReferences]
     public sealed partial class ChangelogWindow : FancyWindow
     {
-        [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly ChangelogManager _changelog = default!;
+        [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
         public ChangelogWindow()
         {
@@ -67,8 +67,7 @@ namespace Content.Client.Changelog
                 Tabs.SetTabTitle(i++, Loc.GetString($"changelog-tab-title-{changelog.Name}"));
             }
 
-            var version = typeof(ChangelogWindow).Assembly.GetName().Version ?? new Version(1, 0);
-            VersionLabel.Text = Loc.GetString("changelog-version-tag", ("version", version.ToString()));
+            VersionLabel.Text = _changelog.GetClientVersion();
 
             TabsUpdated();
         }

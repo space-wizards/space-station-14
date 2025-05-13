@@ -1,4 +1,5 @@
-using Robust.Shared.GameStates;
+using Content.Shared.Atmos;
+using Content.Shared.Guidebook;
 
 namespace Content.Shared.Atmos.Piping.Unary.Components
 {
@@ -13,6 +14,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         ///     thermomachine to heat or cool air.
         /// </summary>
         [DataField]
+        [GuidebookData]
         public float HeatCapacity = 5000;
 
         [DataField, AutoNetworkedField]
@@ -21,6 +23,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         /// <summary>
         ///     Tolerance for temperature setpoint hysteresis.
         /// </summary>
+        [GuidebookData]
         [DataField, ViewVariables(VVAccess.ReadOnly)]
         public float TemperatureTolerance = 2f;
 
@@ -43,6 +46,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         ///     Ignored if heater.
         /// </summary>
         [DataField, AutoNetworkedField]
+		[GuidebookData]
         public float MinTemperature = 73.15f;
 
         /// <summary>
@@ -50,6 +54,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         ///     Ignored if freezer.
         /// </summary>
         [DataField, AutoNetworkedField]
+		[GuidebookData]
         public float MaxTemperature = 593.15f;
 
         /// <summary>
@@ -62,7 +67,8 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         /// An percentage of the energy change that is leaked into the surrounding environment rather than the inlet pipe.
         /// </summary>
         [DataField]
-        public float EnergyLeakPercentage;
+		[GuidebookData]
+       	public float EnergyLeakPercentage;
 
         /// <summary>
         /// If true, heat is exclusively exchanged with the local atmosphere instead of the inlet pipe air

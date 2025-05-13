@@ -14,6 +14,7 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 public abstract partial class SharedGunSystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
 
 
     protected virtual void InitializeBallistic()
@@ -57,7 +58,7 @@ public abstract partial class SharedGunSystem
         Audio.PlayPredicted(component.SoundInsert, uid, args.User);
         args.Handled = true;
         UpdateBallisticAppearance(uid, component);
-        Dirty(uid, component);
+        DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
     }
 
     private void OnBallisticAfterInteract(EntityUid uid, BallisticAmmoProviderComponent component, AfterInteractEvent args)
@@ -117,8 +118,8 @@ public abstract partial class SharedGunSystem
 
         void SimulateInsertAmmo(EntityUid ammo, EntityUid ammoProvider, EntityCoordinates coordinates)
         {
-            var evInsert = new InteractUsingEvent(args.User, ammo, ammoProvider, coordinates);
-            RaiseLocalEvent(ammoProvider, evInsert);
+            // We call SharedInteractionSystem to raise contact events. Checks are already done by this point.
+            _interaction.InteractUsing(args.User, ammo, ammoProvider, coordinates, checkCanInteract: false, checkCanUse: false);
         }
 
         List<(EntityUid? Entity, IShootable Shootable)> ammo = new();
@@ -194,10 +195,9 @@ public abstract partial class SharedGunSystem
             !Paused(uid))
         {
             gunComp.NextFire = Timing.CurTime + TimeSpan.FromSeconds(1 / gunComp.FireRateModified);
-            Dirty(uid, gunComp);
+            DirtyField(uid, gunComp, nameof(GunComponent.NextFire));
         }
 
-        Dirty(uid, component);
         Audio.PlayPredicted(component.SoundRack, uid, user);
 
         var shots = GetBallisticShots(component);
@@ -228,7 +228,7 @@ public abstract partial class SharedGunSystem
         {
             component.UnspawnedCount = Math.Max(0, component.Capacity - component.Container.ContainedEntities.Count);
             UpdateBallisticAppearance(uid, component);
-            Dirty(uid, component);
+            DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.UnspawnedCount));
         }
     }
 
@@ -249,18 +249,19 @@ public abstract partial class SharedGunSystem
 
                 args.Ammo.Add((entity, EnsureShootable(entity)));
                 component.Entities.RemoveAt(component.Entities.Count - 1);
+                DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
                 Containers.Remove(entity, component.Container);
             }
             else if (component.UnspawnedCount > 0)
             {
                 component.UnspawnedCount--;
+                DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.UnspawnedCount));
                 entity = Spawn(component.Proto, args.Coordinates);
                 args.Ammo.Add((entity, EnsureShootable(entity)));
             }
         }
 
         UpdateBallisticAppearance(uid, component);
-        Dirty(uid, component);
     }
 
     private void OnBallisticAmmoCount(EntityUid uid, BallisticAmmoProviderComponent component, ref GetAmmoCountEvent args)

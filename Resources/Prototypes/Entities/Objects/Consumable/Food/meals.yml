@@ -22,6 +22,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
+  - type: Tag
+    tags:
+    - VoxFood
 
 # Meals
 
@@ -482,7 +485,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
@@ -538,7 +541,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 18
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
@@ -563,7 +566,7 @@
     - type: SolutionContainerManager
       solutions:
         food:
-          maxVol: 10
+          maxVol: 15
           reagents:
           - ReagentId: Nutriment
             Quantity: 8

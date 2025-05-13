@@ -56,6 +56,11 @@
   copyright: "Created by Sarahon"
   source: "https://github.com/Sarahon"
 
+- files: ["hew.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from existing weh emote image (weh.png) by ArtisticRoomba"
+  source: "https://github.com/ArtisticRoomba"
+
 - files: ["honk.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from existing bikehorn texture (icon.png) by TyAshley (AllenTheGreat) & Sarahon"

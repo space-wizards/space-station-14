@@ -27,11 +27,16 @@
       shader: unshaded
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: electrified
+    - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
       shader: unshaded
       visible: false
       map: ["enum.ElectrifiedLayers.HUD"]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.Sparks"]
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
@@ -70,6 +75,12 @@
   - type: AccessReader
     containerAccessProvider: board
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ElectrifiedVisuals.ShowSparks:
+        enum.ElectrifiedLayers.Sparks:
+          True: { visible: True }
+          False: { visible: False }
   - type: WiresVisuals
   - type: ElectrocutionHUDVisuals
   - type: ApcPowerReceiver

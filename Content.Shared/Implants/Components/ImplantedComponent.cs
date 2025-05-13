@@ -10,5 +10,6 @@ namespace Content.Shared.Implants.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ImplantedComponent : Component
 {
+    [ViewVariables(VVAccess.ReadOnly)]
     public Container ImplantContainer = default!;
 }

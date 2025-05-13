@@ -33,7 +33,7 @@
             icon:
               sprite: Mobs/Species/Human/parts.rsi
               state: "head_m"
-            name: human head
+            name: construction-graph-tag-human-head
             doAfter: 1
 
     - node: chairCursed
