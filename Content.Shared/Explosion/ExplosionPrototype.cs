@@ -111,10 +111,10 @@ public sealed partial class ExplosionPrototype : IPrototype
     public int FireStates = 3;
 
     [DataField]
-    public HashSet<ProtoId<EntityPrototype>> DeleteComponents = new();
+    public HashSet<string> DeleteComponents = new();
 
     [DataField]
-    public HashSet<ProtoId<EntityPrototype>> BlacklistedComponents = new();
+    public HashSet<string> BlacklistedComponents = new();
 
     [NonSerialized]
     public HashSet<Type> CachedDeleteComponents = new();
