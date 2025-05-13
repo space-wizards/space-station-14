@@ -192,7 +192,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckAutismPin
   name: neurodivergent pin
-  description: Be neurodivergent do crime.
+  description: Be neurodivergent, do crime.
   components:
   - type: Sprite
     state: autism
@@ -203,7 +203,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckGoldAutismPin
   name: autism pin
-  description: Be autism do crime.
+  description: Be autistic, do crime.
   components:
   - type: Sprite
     state: goldautism
