@@ -26,6 +26,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
     public Action<ItemList.ItemListSelectedEventArgs>? OnColorPicked;
     public Action<Color?>? OnDecalColorChanged;
     public Action<int>? OnDecalAngleChanged;
+    public Action<bool>? OnDecalSnapChanged;
 
     private ItemList _colorList = default!;
     public Dictionary<string, int> ItemColorIndex = new();
@@ -187,7 +188,9 @@ public sealed partial class SprayPainterWindow : DefaultWindow
         var protoView = new EntityPrototypeView();
         protoView.SetPrototype(spriteListData.Prototype);
         var label = new Label()
-            { Text = Loc.GetString($"spray-painter-style-{spriteListData.Category.ToLower()}-{spriteListData.Style}") };
+        {
+            Text = Loc.GetString($"spray-painter-style-{spriteListData.Category.ToLower()}-{spriteListData.Style}")
+        };
 
         box.AddChild(protoView);
         box.AddChild(label);

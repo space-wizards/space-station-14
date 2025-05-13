@@ -19,8 +19,7 @@ public sealed partial class PaintableGroupPrototype : IPrototype
     public ProtoId<PaintableGroupCategoryPrototype> Category;
 
     /// <summary>
-    /// A value other than <c>BaseRsi</c> must be specified if the painting behavior is different.
-    /// For example, see painting of lockers and canisters.
+    /// What appearance data must be sent when this is repainted.
     /// </summary>
     [DataField]
     public PaintableVisuals Visuals = PaintableVisuals.BaseRSI;
@@ -37,9 +36,9 @@ public sealed partial class PaintableGroupPrototype : IPrototype
     [DataField(required: true)]
     public Dictionary<string, EntProtoId> Styles = new();
 
-    // The priority determines, which sprite is used when showing
-    // the icon for a style in the SprayPainter UI. The highest priority
-    // gets shown.
+    /// <summary>
+    /// If multiple groups have the same key, the group with the highest IconPriority has its icon displayed.
+    /// </summary>
     [DataField]
     public int IconPriority;
 }

@@ -26,23 +26,24 @@ public sealed partial class SprayPainterComponent : Component
     /// <summary>
     /// The cost of spray painting a pipe, in charges.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public int PipeChargeCost = 1;
 
     /// <summary>
-    /// The currently selected colour by its key, null if none selected.
+    /// The currently selected color by its key, null if none selected.
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? PickedColor;
 
     /// <summary>
-    /// A map of selectable colours by key.
+    /// Pipe colors that can be selected.
     /// </summary>
     [DataField]
     public Dictionary<string, Color> ColorPalette = new();
 
     /// <summary>
-    /// A map of indices by key.
+    /// Spray paintable object styles selected per object.
+    /// After prototype reload this might not be the same style but it will never be out of bounds.
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<string, int> Indexes = new();
@@ -55,10 +56,10 @@ public sealed partial class SprayPainterComponent : Component
     public int SelectedTab;
 
     /// <summary>
-    /// Whether or not the open tab has decals.
+    /// Whether or not the painter should be painting decals.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public bool IsSelectedTabWithDecals = false;
+    public bool IsPaintingDecals = false;
 
     /// <summary>
     /// The currently selected decal prototype.
@@ -79,14 +80,23 @@ public sealed partial class SprayPainterComponent : Component
     public int SelectedDecalAngle;
 
     /// <summary>
-    /// The cost of spray painting a decal, in charges.
+    /// The angle at which to paint the decal.
     /// </summary>
     [DataField, AutoNetworkedField]
+    public bool SnapDecals = true;
+
+    /// <summary>
+    /// The cost of spray painting a decal, in charges.
+    /// </summary>
+    [DataField]
     public int DecalChargeCost = 1;
 
     /// <summary>
     /// How long does the painter leave items as freshly painted?
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public TimeSpan FreshPaintDuration = TimeSpan.FromMinutes(15);
+
+    [DataField]
+    public SoundSpecifier SoundSwitchMode = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg", AudioParams.Default.WithVolume(1.5f));
 }

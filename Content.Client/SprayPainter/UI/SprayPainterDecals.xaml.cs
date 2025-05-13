@@ -20,8 +20,9 @@ public sealed partial class SprayPainterDecals : Control
     public Action<ProtoId<DecalPrototype>>? OnDecalSelected;
     public Action<Color?>? OnColorChanged;
     public Action<int>? OnAngleChanged;
+    public Action<bool>? OnSnapChanged;
 
-    private SpriteSystem? Sprite;
+    private SpriteSystem? _sprite;
     private string _selectedDecal = String.Empty;
     private List<SprayPainterDecalEntry> _decals = [];
 
@@ -35,6 +36,7 @@ public sealed partial class SprayPainterDecals : Control
         AngleSpinBox.ValueChanged += args => OnAngleChanged?.Invoke(args.Value);
 
         UseCustomColorCheckBox.OnPressed += UseCustomColorCheckBoxOnOnPressed;
+        SnapToTileCheckBox.OnPressed += SnapToTileCheckBoxOnOnPressed;
         ColorSelector.OnColorChanged += OnColorSelected;
     }
 
@@ -44,12 +46,18 @@ public sealed partial class SprayPainterDecals : Control
         UpdateColorButtons();
     }
 
+    private void SnapToTileCheckBoxOnOnPressed(BaseButton.ButtonEventArgs _)
+    {
+        OnSnapChanged?.Invoke(SnapToTileCheckBox.Pressed);
+        UpdateColorButtons();
+    }
+
     /// <summary>
     /// Updates the decal list.
     /// </summary>
     public void PopulateDecals(List<SprayPainterDecalEntry> decals, SpriteSystem sprite)
     {
-        Sprite ??= sprite;
+        _sprite ??= sprite;
 
         _decals = decals;
         DecalsGrid.Children.Clear();
@@ -112,14 +120,12 @@ public sealed partial class SprayPainterDecals : Control
                     button.Modulate = ColorSelector.Color;
                     break;
                 case PanelContainer panelContainer:
-                {
-                    foreach (TextureButton textureButton in panelContainer.Children)
                     {
-                        textureButton.Modulate = ColorSelector.Color;
-                    }
+                        foreach (TextureButton textureButton in panelContainer.Children)
+                            textureButton.Modulate = ColorSelector.Color;
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
     }
@@ -132,9 +138,9 @@ public sealed partial class SprayPainterDecals : Control
         _selectedDecal = name;
         OnDecalSelected?.Invoke(_selectedDecal);
 
-        if (Sprite is null)
+        if (_sprite is null)
             return;
 
-        PopulateDecals(_decals, Sprite);
+        PopulateDecals(_decals, _sprite);
     }
 }

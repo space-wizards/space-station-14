@@ -12,6 +12,7 @@
         <BoxContainer Orientation="Vertical">
             <ColorSelectorSliders Name="ColorSelector" />
             <CheckBox Name="UseCustomColorCheckBox" Text="{Loc 'spray-painter-use-custom-color'}" />
+            <CheckBox Name="SnapToTileCheckBox" Text="{Loc 'spray-painter-snap-to-tile'}" />
         </BoxContainer>
 
         <BoxContainer Orientation="Horizontal">

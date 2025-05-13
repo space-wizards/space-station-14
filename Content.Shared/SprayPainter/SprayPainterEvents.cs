@@ -13,19 +13,25 @@ public enum SprayPainterUiKey
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterDecalPickedMessage(ProtoId<DecalPrototype> protoId) : BoundUserInterfaceMessage
+public sealed class SprayPainterSetDecalMessage(ProtoId<DecalPrototype> protoId) : BoundUserInterfaceMessage
 {
     public ProtoId<DecalPrototype> DecalPrototype = protoId;
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterDecalColorPickedMessage(Color? color) : BoundUserInterfaceMessage
+public sealed class SprayPainterSetDecalColorMessage(Color? color) : BoundUserInterfaceMessage
 {
     public Color? Color = color;
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterDecalAnglePickedMessage(int angle) : BoundUserInterfaceMessage
+public sealed class SprayPainterSetDecalSnapMessage(bool snap) : BoundUserInterfaceMessage
+{
+    public bool Snap = snap;
+}
+
+[Serializable, NetSerializable]
+public sealed class SprayPainterSetDecalAngleMessage(int angle) : BoundUserInterfaceMessage
 {
     public int Angle = angle;
 }
@@ -38,12 +44,12 @@ public sealed class SprayPainterTabChangedMessage(int index, bool isSelectedTabW
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterSpritePickedMessage : BoundUserInterfaceMessage
+public sealed class SprayPainterSetCategoryPrototypeMessage : BoundUserInterfaceMessage
 {
     public readonly string Category;
     public readonly int Index;
 
-    public SprayPainterSpritePickedMessage(string category, int index)
+    public SprayPainterSetCategoryPrototypeMessage(string category, int index)
     {
         Category = category;
         Index = index;
@@ -51,11 +57,11 @@ public sealed class SprayPainterSpritePickedMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterColorPickedMessage : BoundUserInterfaceMessage
+public sealed class SprayPainterSetPipeColorMessage : BoundUserInterfaceMessage
 {
     public readonly string? Key;
 
-    public SprayPainterColorPickedMessage(string? key)
+    public SprayPainterSetPipeColorMessage(string? key)
     {
         Key = key;
     }
@@ -122,11 +128,11 @@ public sealed partial class EntityPaintedEvent : EntityEventArgs
     /// The prototype being used to generate the new painted appearance.
     /// </summary>
     [DataField]
-    public string Prototype = default!;
+    public EntProtoId Prototype = default!;
 
     /// <summary>
     /// The category of item being painted (e.g. lockers, airlocks, canisters).
     /// </summary>
     [DataField]
-    public string Category = default!;
+    public ProtoId<PaintableGroupCategoryPrototype> Category = default!;
 }

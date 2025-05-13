@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.SprayPainter.Prototypes;
 
 /// <summary>
-/// Used to display an individual tab in the spray painter.
+/// A category of spray paintable items (e.g. airlocks, crates)
 /// </summary>
 [Prototype]
 public sealed partial class PaintableGroupCategoryPrototype : IPrototype
@@ -12,8 +12,7 @@ public sealed partial class PaintableGroupCategoryPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
-    /// The value of this field is subtracted from the total value of the paint sprayer charges,
-    /// i.e. it is how much charge the paint sprayer will spend for painting an object from this category.
+    /// To number of charges needed to paint an object of this category.
     /// </summary>
     [DataField]
     public int Cost = 1;

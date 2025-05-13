@@ -7,6 +7,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.SprayPainter.UI;
 
+/// <summary>
+/// A BUI for a spray painter. Allows selecting pipe colours, paintable object types by class, and decals.
+/// </summary>
 public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
@@ -16,14 +19,18 @@ public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) 
     {
         base.Open();
 
-        _window = this.CreateWindow<SprayPainterWindow>();
+        if (_window == null)
+        {
+            _window = this.CreateWindow<SprayPainterWindow>();
 
-        _window.OnSpritePicked += OnSpritePicked;
-        _window.OnColorPicked += OnColorPicked;
-        _window.OnTabChanged += OnTabChanged;
-        _window.OnDecalChanged += OnDecalChanged;
-        _window.OnDecalColorChanged += OnDecalColorChanged;
-        _window.OnDecalAngleChanged += OnDecalAngleChanged;
+            _window.OnSpritePicked += OnSpritePicked;
+            _window.OnColorPicked += OnColorPicked;
+            _window.OnTabChanged += OnTabChanged;
+            _window.OnDecalChanged += OnDecalChanged;
+            _window.OnDecalColorChanged += OnDecalColorChanged;
+            _window.OnDecalAngleChanged += OnDecalAngleChanged;
+            _window.OnDecalSnapChanged += OnDecalSnapChanged;
+        }
 
         if (EntMan.TryGetComponent(Owner, out SprayPainterComponent? comp))
         {
@@ -32,34 +39,39 @@ public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) 
         }
     }
 
+    private void OnDecalSnapChanged(bool snap)
+    {
+        SendPredictedMessage(new SprayPainterSetDecalSnapMessage(snap));
+    }
+
     private void OnDecalAngleChanged(int angle)
     {
-        SendMessage(new SprayPainterDecalAnglePickedMessage(angle));
+        SendPredictedMessage(new SprayPainterSetDecalAngleMessage(angle));
     }
 
     private void OnDecalColorChanged(Color? color)
     {
-        SendMessage(new SprayPainterDecalColorPickedMessage(color));
+        SendPredictedMessage(new SprayPainterSetDecalColorMessage(color));
     }
 
     private void OnDecalChanged(ProtoId<DecalPrototype> protoId)
     {
-        SendMessage(new SprayPainterDecalPickedMessage(protoId));
+        SendPredictedMessage(new SprayPainterSetDecalMessage(protoId));
     }
 
     private void OnTabChanged(int index, bool isSelectedTabWithDecals)
     {
-        SendMessage(new SprayPainterTabChangedMessage(index, isSelectedTabWithDecals));
+        SendPredictedMessage(new SprayPainterTabChangedMessage(index, isSelectedTabWithDecals));
     }
 
     private void OnSpritePicked(string category, int index)
     {
-        SendMessage(new SprayPainterSpritePickedMessage(category, index));
+        SendPredictedMessage(new SprayPainterSetCategoryPrototypeMessage(category, index));
     }
 
     private void OnColorPicked(ItemList.ItemListSelectedEventArgs args)
     {
         var key = _window?.IndexToColorKey(args.ItemIndex);
-        SendMessage(new SprayPainterColorPickedMessage(key));
+        SendPredictedMessage(new SprayPainterSetPipeColorMessage(key));
     }
 }

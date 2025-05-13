@@ -7,9 +7,13 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.SprayPainter.Components;
 using Content.Shared.SprayPainter.Prototypes;
+using Content.Shared.Verbs;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using System.Linq;
 
 namespace Content.Shared.SprayPainter;
@@ -39,15 +43,16 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         SubscribeLocalEvent<SprayPainterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SprayPainterComponent, SprayPainterDoAfterEvent>(OnPaintableDoAfter);
+        SubscribeLocalEvent<SprayPainterComponent, GetVerbsEvent<AlternativeVerb>>(OnAddSwitchModeVerb);
         Subs.BuiEvents<SprayPainterComponent>(SprayPainterUiKey.Key,
             subs =>
             {
-                subs.Event<SprayPainterSpritePickedMessage>(OnSpritePicked);
-                subs.Event<SprayPainterColorPickedMessage>(OnColorPicked);
+                subs.Event<SprayPainterSetCategoryPrototypeMessage>(OnSpritePicked);
+                subs.Event<SprayPainterSetPipeColorMessage>(OnColorPicked);
                 subs.Event<SprayPainterTabChangedMessage>(OnTabChanged);
-                subs.Event<SprayPainterDecalPickedMessage>(OnDecalPicked);
-                subs.Event<SprayPainterDecalColorPickedMessage>(OnDecalColorPicked);
-                subs.Event<SprayPainterDecalAnglePickedMessage>(OnDecalAnglePicked);
+                subs.Event<SprayPainterSetDecalMessage>(OnDecalPicked);
+                subs.Event<SprayPainterSetDecalColorMessage>(OnDecalColorPicked);
+                subs.Event<SprayPainterSetDecalAngleMessage>(OnDecalAnglePicked);
             });
 
         SubscribeLocalEvent<PaintableComponent, InteractUsingEvent>(OnPaintableInteract);
@@ -99,24 +104,59 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         args.Handled = true;
     }
 
-    #region UI messages
-
-    private void OnTabChanged(EntityUid uid, SprayPainterComponent component, SprayPainterTabChangedMessage args)
+    private void OnAddSwitchModeVerb(Entity<SprayPainterComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        component.SelectedTab = args.Index;
-        component.IsSelectedTabWithDecals = args.IsSelectedTabWithDecals;
-        Dirty(uid, component);
+        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue)
+            return;
+
+        var verbLocString = ent.Comp.IsPaintingDecals
+            ? "spray-painter-verb-enable-decals"
+            : "spray-painter-verb-disable-decals";
+        var user = args.User;
+
+        AlternativeVerb verb = new()
+        {
+            Text = Loc.GetString(verbLocString),
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
+            Act = () => TogglePaintDecals(ent, user),
+            Impact = LogImpact.Low
+        };
+        args.Verbs.Add(verb);
     }
 
-    private void OnColorPicked(Entity<SprayPainterComponent> ent, ref SprayPainterColorPickedMessage args)
+    private void TogglePaintDecals(Entity<SprayPainterComponent> ent, EntityUid user)
+    {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
+        ent.Comp.IsPaintingDecals = !ent.Comp.IsPaintingDecals;
+        Dirty(ent);
+
+        // Make the machine beep.
+        var pitch = ent.Comp.IsPaintingDecals ? 1 : 0.8f;
+        Audio.PlayPredicted(ent.Comp.SoundSwitchMode, ent, user, ent.Comp.SoundSwitchMode.Params.WithPitchScale(pitch));
+    }
+
+    #region UI messages
+
+    private void OnTabChanged(Entity<SprayPainterComponent> ent, ref SprayPainterTabChangedMessage args)
+    {
+        ent.Comp.SelectedTab = args.Index;
+        Dirty(ent);
+    }
+
+    private void OnColorPicked(Entity<SprayPainterComponent> ent, ref SprayPainterSetPipeColorMessage args)
     {
         SetColor(ent, args.Key);
     }
 
-    private void OnSpritePicked(Entity<SprayPainterComponent> ent, ref SprayPainterSpritePickedMessage args)
+    private void OnSpritePicked(Entity<SprayPainterComponent> ent, ref SprayPainterSetCategoryPrototypeMessage args)
     {
+        if (!ent.Comp.Indexes.ContainsKey(args.Category))
+            return;
+
         ent.Comp.Indexes[args.Category] = args.Index;
-        Dirty(ent, ent.Comp);
+        Dirty(ent);
     }
 
     private void SetColor(Entity<SprayPainterComponent> ent, string? paletteKey)
@@ -131,7 +171,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Dirty(ent, ent.Comp);
     }
 
-    private void OnDecalPicked(EntityUid uid, SprayPainterComponent component, SprayPainterDecalPickedMessage args)
+    private void OnDecalPicked(EntityUid uid, SprayPainterComponent component, SprayPainterSetDecalMessage args)
     {
         component.SelectedDecal = args.DecalPrototype;
         Dirty(uid, component);
@@ -139,7 +179,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
     private void OnDecalAnglePicked(EntityUid uid,
         SprayPainterComponent component,
-        SprayPainterDecalAnglePickedMessage args)
+        SprayPainterSetDecalAngleMessage args)
     {
         component.SelectedDecalAngle = args.Angle;
         Dirty(uid, component);
@@ -147,7 +187,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
     private void OnDecalColorPicked(EntityUid uid,
         SprayPainterComponent component,
-        SprayPainterDecalColorPickedMessage args)
+        SprayPainterSetDecalColorMessage args)
     {
         component.SelectedDecalColor = args.Color;
         Dirty(uid, component);

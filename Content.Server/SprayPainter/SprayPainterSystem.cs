@@ -18,7 +18,7 @@ namespace Content.Server.SprayPainter;
 
 /// <summary>
 /// Handles spraying pipes and decals using a spray painter.
-/// Other are handled in shared.
+/// Other paintable objects are handled in shared.
 /// </summary>
 public sealed class SprayPainterSystem : SharedSprayPainterSystem
 {
@@ -33,17 +33,20 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         base.Initialize();
 
         SubscribeLocalEvent<SprayPainterComponent, SprayPainterPipeDoAfterEvent>(OnPipeDoAfter);
-        SubscribeLocalEvent<AtmosPipeColorComponent, InteractUsingEvent>(OnPipeInteract);
         SubscribeLocalEvent<SprayPainterComponent, AfterInteractEvent>(OnFloorAfterInteract);
+        SubscribeLocalEvent<AtmosPipeColorComponent, InteractUsingEvent>(OnPipeInteract);
         SubscribeLocalEvent<GasCanisterComponent, EntityPaintedEvent>(OnCanisterPainted);
     }
 
+    /// <summary>
+    /// Handles drawing decals when interacting with the floor.
+    /// </summary>
     private void OnFloorAfterInteract(Entity<SprayPainterComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach)
             return;
 
-        if (!ent.Comp.IsSelectedTabWithDecals || !ent.Comp.SelectedDecal.HasValue)
+        if (!ent.Comp.IsPaintingDecals || !ent.Comp.SelectedDecal.HasValue)
             return;
 
         if (TryComp(ent, out LimitedChargesComponent? charges) && charges.LastCharges < ent.Comp.DecalChargeCost)
@@ -53,7 +56,11 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             return;
         }
 
-        if (!_decals.TryAddDecal(ent.Comp.SelectedDecal.Value, args.ClickLocation.SnapToGrid(EntityManager).Offset(new(-0.5f)), out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, true))
+        var position = args.ClickLocation;
+        if (ent.Comp.SnapDecals)
+            position = position.SnapToGrid(EntityManager).Offset(new(-0.5f));
+
+        if (!_decals.TryAddDecal(ent.Comp.SelectedDecal.Value, position, out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, true))
             return;
 
         _audio.PlayPvs(ent.Comp.SpraySound, ent);

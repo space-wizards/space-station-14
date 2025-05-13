@@ -1,8 +1,16 @@
 using System.Linq;
+using Content.Client.Items;
+using Content.Client.Message;
+using Content.Client.Stylesheets;
 using Content.Shared.Decals;
 using Content.Shared.SprayPainter;
+using Content.Shared.SprayPainter.Components;
 using Content.Shared.SprayPainter.Prototypes;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.SprayPainter;
@@ -19,6 +27,8 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
     public override void Initialize()
     {
         base.Initialize();
+
+        Subs.ItemStatus<SprayPainterComponent>(ent => new StatusControl(ent));
 
         CachePrototypes();
     }
@@ -63,6 +73,37 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
                 continue;
 
             Decals.Add(new SprayPainterDecalEntry(decalPrototype.ID, decalPrototype.Sprite));
+        }
+    }
+
+    private sealed class StatusControl : Control
+    {
+        private readonly RichTextLabel _label;
+        private readonly Entity<SprayPainterComponent> _entity;
+        private bool? _lastPaintingDecals = null;
+
+        public StatusControl(Entity<SprayPainterComponent> ent)
+        {
+            _entity = ent;
+            _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+            AddChild(_label);
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+
+            if (_entity.Comp.IsPaintingDecals == _lastPaintingDecals)
+                return;
+
+            _lastPaintingDecals = _entity.Comp.IsPaintingDecals;
+
+            var modeLocString = _entity.Comp.IsPaintingDecals
+                ? "spray-painter-item-status-enabled"
+                : "spray-painter-item-status-disabled";
+
+            _label.SetMarkupPermissive(Robust.Shared.Localization.Loc.GetString("spray-painter-item-status-label",
+                ("mode", Robust.Shared.Localization.Loc.GetString(modeLocString))));
         }
     }
 }

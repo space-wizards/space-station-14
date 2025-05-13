@@ -1,16 +1,28 @@
-spray-painter-window-title = Spray painter
-
+# Components
 spray-painter-ammo-on-examine = It holds {$charges} charges.
 spray-painter-ammo-after-interact-full = The spray painter is full!
 spray-painter-ammo-after-interact-refilled = You refill the spray painter.
-spray-painter-interact-no-charges = There's not enough charge.
-spray-painter-on-examined-painted-message = It seems to have been freshly painted.
 
-spray-painter-style-not-available = Cannot apply the selected style to this type of airlock
+spray-painter-interact-no-charges = Not enough paint left.
+
+spray-painter-on-examined-painted-message = It seems to have been freshly painted.
+spray-painter-style-not-available = Cannot apply the selected style to this object.
+
+spray-painter-verb-toggle-enable-decals = Enable decal painting
+spray-painter-verb-toggle-disable-decals = Disable decal painting
+
+spray-painter-item-status-label = Decals: {$mode}
+spray-painter-item-status-enabled = [color=green]Enabled[/color]
+spray-painter-item-status-disabled = [color=red]Disabled[/color]
+
+# UI
+spray-painter-window-title = Spray Painter
+
 spray-painter-selected-style = Selected style:
 
 spray-painter-selected-decals = Selected decal:
 spray-painter-use-custom-color = Use custom color
+spray-painter-use-snap-to-tile = Snap to tile
 spray-painter-invalid-location = Can't reach there!
 
 spray-painter-angle-rotation = Rotation:
@@ -125,4 +137,4 @@ spray-painter-style-canisters-oxygen = Oxygen
 spray-painter-style-canisters-plasma = Plasma
 spray-painter-style-canisters-storage = Storage
 spray-painter-style-canisters-tritium = Tritium
-spray-painter-style-canisters-water-vapor = Water Vapor
+spray-painter-style-canisters-water-vapor = Water vapor

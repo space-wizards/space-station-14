@@ -24,12 +24,11 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
         if (comp.StateBaseClosed == null)
             return;
 
-        comp.StateBaseOpen ??= comp.StateBaseClosed ?? comp.StateDoorClosed;
+        comp.StateBaseOpen ??= comp.StateBaseClosed;
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
         sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseClosed);
-        sprite.LayerSetState(StorageVisualLayers.Door, comp.StateDoorClosed ?? comp.StateBaseClosed);
     }
 
     protected override void OnAppearanceChange(EntityUid uid,
@@ -40,7 +39,6 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
             || !AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component))
             return;
 
-        bool forceRedrawBase = false;
         if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.BaseRSI, out var prototype1, args.Component))
         {
             if (_prototypeManager.TryIndex(prototype1, out var proto) &&
@@ -49,6 +47,8 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
                 args.Sprite.BaseRSI = sprite.BaseRSI;
             }
         }
+
+        bool forceRedrawBase = false;
         if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var prototype2, args.Component))
         {
             if (_prototypeManager.TryIndex(prototype2, out var proto) &&
