@@ -11,7 +11,7 @@
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitBasic
   name: basic hardsuit helmet
-  description: A basic-looking hardsuit helmet that provides minor protection against most sources of damage.
+  description: This basic hardsuit isn't just an antique, but the stupidly rare durathread model. These were issued to esteemed HoPs back in the day.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/basic.rsi
