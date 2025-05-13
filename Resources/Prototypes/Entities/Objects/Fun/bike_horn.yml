@@ -139,6 +139,7 @@
   - type: PointLight
     radius: 1.2
     energy: 2.2
+    castShadows: false
     color: "#ffca1b"
 
 - type: entity
