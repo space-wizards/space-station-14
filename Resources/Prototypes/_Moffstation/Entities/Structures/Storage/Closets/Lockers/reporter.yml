@@ -1,0 +1,37 @@
+- type: entity
+  parent: LockerBase
+  id: LockerBaseMoff
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Moffstation/Structures/Storage/closet.rsi
+    noRot: true
+    layers: # Yes we have to copy the following sprites just to ensure that everything works properly
+    - state: secure
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: secure_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      offset: "-0.065,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+
+- type: entity
+  parent: LockerBaseMoff
+  id: LockerReporter
+  name: reporter's locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: reporter
+    stateDoorOpen: reporter_open
+    stateDoorClosed: reporter_door
+  - type: AccessReader
+    access: [ [ "Service" ] ]

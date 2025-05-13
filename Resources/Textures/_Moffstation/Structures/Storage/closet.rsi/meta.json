@@ -1,0 +1,49 @@
+{
+    "version": 1,
+    "copyright": "Default sprites taken from tgstation. Reporter locker by Davyei (Discord)",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "locked"
+        },
+        {
+            "name": "unlocked"
+        },
+        {
+            "name": "welded"
+        },
+        {
+            "name": "sparking",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "secure"
+        },
+        {
+            "name": "secure_door"
+        },
+        {
+            "name": "secure_open"
+        },
+        {
+            "name": "reporter"
+        },
+        {
+            "name": "reporter_door"
+        },
+        {
+            "name": "reporter_open"
+        }
+    ]
+}

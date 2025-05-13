@@ -1,0 +1,19 @@
+- type: loadout
+  id: ReporterJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtReporter
+
+- type: loadout
+  id: JournalistJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtJournalist
+
+- type: loadout
+  id: MeteorologistJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMeteorologist
+
+- type: loadout
+  id: MeteorologistJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtMeteorologist

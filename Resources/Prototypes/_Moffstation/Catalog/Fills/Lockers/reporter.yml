@@ -1,0 +1,53 @@
+- type: entityTable
+  id: LockerFillReporter
+  table: !type:AllSelector
+    children:
+    - id: SurveillanceWirelessCameraHandheld
+    - id: ShiftReportTablet
+    - id: MicrophoneInstrument
+    - id: FoodSnackSus # Scribbles <3
+      prob: 0.5
+    - id: Wrench # gotta move your cameras some how
+      prob: 0.5
+    - id: LuxuryPen
+    - !type:GroupSelector
+      rolls: !type:RangeNumberSelector
+        range: 1, 3
+      children:
+      - id: Paper
+      - id: PaperOffice
+    - !type:GroupSelector
+      rolls: !type:RangeNumberSelector
+        range: 0, 2
+      children:
+      - id: BoxFolderBlue
+      - id: BoxFolderRed
+      - id: BoxFolderYellow
+      - id: BoxFolderWhite
+      - id: BoxFolderGrey
+      - id: BoxFolderBlack
+    - id: ClothingShoesLeather
+    - !type:GroupSelector # Randomly choose one of these three sets of clothing for the reporter. It's the previous person's outfit.
+      children:
+      - !type:AllSelector
+        children:
+        - id: ClothingUniformJumpsuitReporter
+        - id: ClothingUniformJumpskirtReporter
+      - !type:AllSelector
+        children:
+        - id: ClothingUniformJumpsuitJournalist
+        - id: ClothingUniformJumpskirtJournalist
+      - !type:AllSelector
+        children:
+        - id: ClothingUniformJumpsuitMeteorologist
+        - id: ClothingUniformJumpskirtMeteorologist
+
+- type: entity
+  id: LockerReporterFilled
+  suffix: Filled
+  parent: LockerReporter
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: LockerFillReporter
