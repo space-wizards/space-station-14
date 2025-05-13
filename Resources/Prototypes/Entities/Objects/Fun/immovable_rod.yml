@@ -71,13 +71,13 @@
   suffix: Wizard
   components:
   - type: ImmovableRod
-    maxSpeed: 10
+    maxSpeed: 15
     destroyTiles: false
     randomizeVelocity: false
     shouldGib: false
     damage:
       types:
-        Blunt: 20
+        Blunt: 40
         Structural: 170
   - type: MovementIgnoreGravity
     gravityState: true
