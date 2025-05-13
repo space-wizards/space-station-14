@@ -467,29 +467,32 @@ namespace Content.Server.Administration.Systems
             if (TryComp<InventoryComponent>(args.Target, out var inventoryComponent))
             {
                 // Strip all verb
-                args.Verbs.Add(new Verb
+                if (_groupController.CanCommand(player, "aghost"))
                 {
-                    Text = Loc.GetString("strip-all-verb-get-data-text"),
-                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
-                    Category = VerbCategory.Debug,
-                    Impact = LogImpact.Medium,
-                    Act = () =>
+                    args.Verbs.Add(new Verb
                     {
-                        var slots = _inventorySystem.GetSlotEnumerator((args.Target, inventoryComponent));
-                        while (slots.NextItem(out _, out var slot))
+                        Text = Loc.GetString("strip-all-verb-get-data-text"),
+                        Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
+                        Category = VerbCategory.Debug,
+                        Impact = LogImpact.Medium,
+                        Act = () =>
                         {
-                            _inventorySystem.TryUnequip(args.Target, args.Target, slot.Name, true, true, inventory: inventoryComponent);
-                        }
-
-                        if (TryComp(args.Target, out HandsComponent? hands))
-                        {
-                            foreach (var hand in _handsSystem.EnumerateHands(args.Target, hands))
+                            var slots = _inventorySystem.GetSlotEnumerator((args.Target, inventoryComponent));
+                            while (slots.NextItem(out _, out var slot))
                             {
-                                _handsSystem.TryDrop(args.Target, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
+                                _inventorySystem.TryUnequip(args.Target, args.Target, slot.Name, true, true, inventory: inventoryComponent);
+                            }
+
+                            if (TryComp(args.Target, out HandsComponent? hands))
+                            {
+                                foreach (var hand in _handsSystem.EnumerateHands(args.Target, hands))
+                                {
+                                    _handsSystem.TryDrop(args.Target, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
 
                 if (_groupController.CanCommand(player, "setoutfit"))
                 {
