@@ -50,6 +50,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     private EntityQuery<FlammableComponent> _flammableQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -376,6 +377,8 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
 
         _audio.PlayGlobal(farSound, farFilter, true, farSound.Params);
 
+        CacheExplosionComponents(queued.Proto);
+
         return new Explosion(this,
             queued.Proto,
             spaceData,
@@ -416,5 +419,28 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             if (effect > 0.01f)
                 _recoilSystem.KickCamera(uid, -delta.Normalized() * effect);
         }
+    }
+
+    private void CacheExplosionComponents(ExplosionPrototype proto)
+    {
+        if (proto.ComponentsCached)
+            return;
+
+        proto.CachedDeleteComponents.Clear();
+        proto.CachedBlacklistedComponents.Clear();
+
+        foreach (var compId in proto.DeleteComponents)
+        {
+            if (_componentFactory.TryGetRegistration(compId, out var registration))
+                proto.CachedDeleteComponents.Add(registration.Type);
+        }
+
+        foreach (var compId in proto.BlacklistedComponents)
+        {
+            if (_componentFactory.TryGetRegistration(compId, out var registration))
+                proto.CachedBlacklistedComponents.Add(registration.Type);
+        }
+
+        proto.ComponentsCached = true;
     }
 }
