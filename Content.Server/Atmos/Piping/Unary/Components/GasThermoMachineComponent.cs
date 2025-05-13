@@ -1,11 +1,16 @@
+using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Toggleable;
 using Content.Shared.Guidebook;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
     public sealed partial class GasThermoMachineComponent : Component
     {
+        public SoundSpecifier? ToggleSoundSpecifier = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+
         [DataField("inlet")]
         public string InletName = "pipe";
 

@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Piping.Trinary.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Toggleable;
 
 namespace Content.Server.Atmos.Piping.Trinary.Components
 {
@@ -7,10 +8,6 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
     [Access(typeof(GasMixerSystem))]
     public sealed partial class GasMixerComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("enabled")]
-        public bool Enabled = true;
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inletOne")]
         public string InletOneName = "inletOne";

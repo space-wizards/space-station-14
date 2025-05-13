@@ -13,6 +13,7 @@ using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Toggleable;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -29,6 +30,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly ToggleableSystem _toggleableSystem = default!;
 
         public override void Initialize()
         {
@@ -44,6 +46,9 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasMixerComponent, GasMixerToggleStatusMessage>(OnToggleStatusMessage);
 
             SubscribeLocalEvent<GasMixerComponent, AtmosDeviceDisabledEvent>(OnMixerLeaveAtmosphere);
+
+            SubscribeLocalEvent<GasMixerComponent, ToggleableEnabledEvent>(OnToggledEnabled);
+            SubscribeLocalEvent<GasMixerComponent, ToggleableDisabledEvent>(OnToggledDisabled);
         }
 
         private void OnInit(EntityUid uid, GasMixerComponent mixer, ComponentInit args)
@@ -55,7 +60,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             // TODO ATMOS: Cache total moles since it's expensive.
 
-            if (!mixer.Enabled
+            if (!_toggleableSystem.IsEnabled(uid)
                 || !_nodeContainer.TryGetNodes(uid, mixer.InletOneName, mixer.InletTwoName, mixer.OutletName, out PipeNode? inletOne, out PipeNode? inletTwo, out PipeNode? outlet))
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
@@ -131,10 +136,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnMixerLeaveAtmosphere(EntityUid uid, GasMixerComponent mixer, ref AtmosDeviceDisabledEvent args)
         {
-            mixer.Enabled = false;
-
-            DirtyUI(uid, mixer);
-            UpdateAppearance(uid, mixer);
+            _toggleableSystem.SetEnabled(uid, false);
             _userInterfaceSystem.CloseUi(uid, GasFilterUiKey.Key);
         }
 
@@ -165,7 +167,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
 
             _userInterfaceSystem.SetUiState(uid, GasMixerUiKey.Key,
-                new GasMixerBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(uid).EntityName, mixer.TargetPressure, mixer.Enabled, mixer.InletOneConcentration));
+                new GasMixerBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(uid).EntityName, mixer.TargetPressure, _toggleableSystem.IsEnabled(uid), mixer.InletOneConcentration));
         }
 
         private void UpdateAppearance(EntityUid uid, GasMixerComponent? mixer = null, AppearanceComponent? appearance = null)
@@ -173,16 +175,14 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!Resolve(uid, ref mixer, ref appearance, false))
                 return;
 
-            _appearance.SetData(uid, FilterVisuals.Enabled, mixer.Enabled, appearance);
+            _appearance.SetData(uid, FilterVisuals.Enabled, _toggleableSystem.IsEnabled(uid), appearance);
         }
 
         private void OnToggleStatusMessage(EntityUid uid, GasMixerComponent mixer, GasMixerToggleStatusMessage args)
         {
-            mixer.Enabled = args.Enabled;
+            _toggleableSystem.SetEnabled(uid, args.Enabled);
             _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
-            DirtyUI(uid, mixer);
-            UpdateAppearance(uid, mixer);
         }
 
         private void OnOutputPressureChangeMessage(EntityUid uid, GasMixerComponent mixer, GasMixerChangeOutputPressureMessage args)
@@ -235,6 +235,18 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             }
 
             args.DeviceFlipped = inletOne != null && inletTwo != null && inletOne.CurrentPipeDirection.ToDirection() == inletTwo.CurrentPipeDirection.ToDirection().GetClockwise90Degrees();
+        }
+
+        private void OnToggledEnabled(EntityUid uid, GasMixerComponent mixer, ToggleableEnabledEvent args)
+        {
+            DirtyUI(uid, mixer);
+            UpdateAppearance(uid, mixer);
+        }
+
+        private void OnToggledDisabled(EntityUid uid, GasMixerComponent mixer, ToggleableDisabledEvent args)
+        {
+            DirtyUI(uid, mixer);
+            UpdateAppearance(uid, mixer);
         }
     }
 }

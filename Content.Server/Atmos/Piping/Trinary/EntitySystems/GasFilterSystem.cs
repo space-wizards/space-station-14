@@ -13,6 +13,7 @@ using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Toggleable;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -29,6 +30,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly ToggleableSystem _toggleableSystem = default!;
 
         public override void Initialize()
         {
@@ -44,6 +46,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
 
+            SubscribeLocalEvent<GasFilterComponent, ToggleableEnabledEvent>(OnToggledEnabled);
+            SubscribeLocalEvent<GasFilterComponent, ToggleableDisabledEvent>(OnToggledDisabled);
         }
 
         private void OnInit(EntityUid uid, GasFilterComponent filter, ComponentInit args)
@@ -53,7 +57,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnFilterUpdated(EntityUid uid, GasFilterComponent filter, ref AtmosDeviceUpdateEvent args)
         {
-            if (!filter.Enabled
+            if (!_toggleableSystem.IsEnabled(uid)
                 || !_nodeContainer.TryGetNodes(uid, filter.InletName, filter.FilterName, filter.OutletName, out PipeNode? inletNode, out PipeNode? filterNode, out PipeNode? outletNode)
                 || outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure) // No need to transfer if target is full.
             {
@@ -89,12 +93,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnFilterLeaveAtmosphere(EntityUid uid, GasFilterComponent filter, ref AtmosDeviceDisabledEvent args)
         {
-            filter.Enabled = false;
-
-            UpdateAppearance(uid, filter);
+            _toggleableSystem.SetEnabled(uid, false);
             _ambientSoundSystem.SetAmbience(uid, false);
-
-            DirtyUI(uid, filter);
             _userInterfaceSystem.CloseUi(uid, GasFilterUiKey.Key);
         }
 
@@ -125,7 +125,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
 
             _userInterfaceSystem.SetUiState(uid, GasFilterUiKey.Key,
-                new GasFilterBoundUserInterfaceState(MetaData(uid).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
+                new GasFilterBoundUserInterfaceState(MetaData(uid).EntityName, filter.TransferRate, _toggleableSystem.IsEnabled(uid), filter.FilteredGas));
         }
 
         private void UpdateAppearance(EntityUid uid, GasFilterComponent? filter = null)
@@ -133,16 +133,14 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!Resolve(uid, ref filter, false))
                 return;
 
-            _appearanceSystem.SetData(uid, FilterVisuals.Enabled, filter.Enabled);
+            _appearanceSystem.SetData(uid, FilterVisuals.Enabled, _toggleableSystem.IsEnabled(uid));
         }
 
         private void OnToggleStatusMessage(EntityUid uid, GasFilterComponent filter, GasFilterToggleStatusMessage args)
         {
-            filter.Enabled = args.Enabled;
+            _toggleableSystem.SetEnabled(uid, args.Enabled);
             _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
-            DirtyUI(uid, filter);
-            UpdateAppearance(uid, filter);
         }
 
         private void OnTransferRateChangeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeRateMessage args)
@@ -151,7 +149,6 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             _adminLogger.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Actor):player} set the transfer rate on {ToPrettyString(uid):device} to {args.Rate}");
             DirtyUI(uid, filter);
-
         }
 
         private void OnSelectGasMessage(EntityUid uid, GasFilterComponent filter, GasFilterSelectGasMessage args)
@@ -210,6 +207,18 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             }
 
             args.DeviceFlipped = inlet != null && filterNode != null && inlet.CurrentPipeDirection.ToDirection() == filterNode.CurrentPipeDirection.ToDirection().GetClockwise90Degrees();
+        }
+
+        private void OnToggledEnabled(EntityUid uid, GasFilterComponent filter, ToggleableEnabledEvent args)
+        {
+            DirtyUI(uid, filter);
+            UpdateAppearance(uid, filter);
+        }
+
+        private void OnToggledDisabled(EntityUid uid, GasFilterComponent filter, ToggleableDisabledEvent args)
+        {
+            DirtyUI(uid, filter);
+            UpdateAppearance(uid, filter);
         }
     }
 }
