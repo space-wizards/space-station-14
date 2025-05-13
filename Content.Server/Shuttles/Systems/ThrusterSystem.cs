@@ -311,10 +311,11 @@ public sealed class ThrusterSystem : EntitySystem
             return;
         }
 
-        component.IsOn = true;
 
         if (!EntityManager.TryGetComponent(xform.GridUid, out ShuttleComponent? shuttleComponent))
             return;
+
+        component.IsOn = true;
 
         // Logger.DebugS("thruster", $"Enabled thruster {uid}");
 
@@ -409,10 +410,10 @@ public sealed class ThrusterSystem : EntitySystem
             return;
         }
 
-        component.IsOn = false;
-
         if (!EntityManager.TryGetComponent(gridId, out ShuttleComponent? shuttleComponent))
             return;
+
+        component.IsOn = false;
 
         // Logger.DebugS("thruster", $"Disabled thruster {uid}");
 
