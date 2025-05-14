@@ -18,6 +18,7 @@
   - type: Tag
     tags:
     - Trash
+    - Document
   - type: Paper
     editingDisabled: true
   - type: PaperVisuals
