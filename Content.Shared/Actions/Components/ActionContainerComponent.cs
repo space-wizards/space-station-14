@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 

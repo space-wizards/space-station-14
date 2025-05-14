@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseAction
   id: ActionBlink
   name: Blink

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseMentalAction # allow reading laws when crit
   id: ActionViewLaws
   name: View Laws

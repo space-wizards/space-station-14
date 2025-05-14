@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseAction
   id: ActionChargeSpell
   name: Charge
