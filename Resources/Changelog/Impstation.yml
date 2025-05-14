@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Engineer bomber jacket has a new wrench from Landshark
-    type: Tweak
-  id: 1167
-  time: '2025-02-20T02:43:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1729
 - author: Toby222
   changes:
   - message: Envelopes go in mail bags
@@ -4186,3 +4179,13 @@
   id: 1666
   time: '2025-05-13T14:27:14.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2444
+- author: DinnerCalzone
+  changes:
+  - message: Winter boots have had their cooling protection reduced.
+    type: Tweak
+  - message: Scarves now help keep you warm and protect from the cold, similar to
+      winter boots.
+    type: Add
+  id: 1667
+  time: '2025-05-14T01:30:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2477
