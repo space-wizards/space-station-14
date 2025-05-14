@@ -59,10 +59,10 @@ public sealed partial class MappingSystem : EntitySystem
                 ev.TileId = tileDef.ID;
                 _metaData.SetEntityName(action, Loc.GetString(tileDef.Name));
             }
-            else
+            else if (permission.EntityType is {} id)
             {
-                _actions.SetIcon(action, new SpriteSpecifier.EntityPrototype(permission.EntityType));
-                _metaData.SetEntityName(action, permission.EntityType);
+                _actions.SetIcon(action, new SpriteSpecifier.EntityPrototype(id));
+                _metaData.SetEntityName(action, id);
             }
 
             _actions.SetEvent(action, ev);

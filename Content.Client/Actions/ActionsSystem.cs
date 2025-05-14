@@ -318,13 +318,14 @@ namespace Content.Client.Actions
 
             if (action.ClientExclusive)
             {
+                // TODO: abstract away from single event or maybe just RaiseLocalEvent?
                 if (comp.Event is {} ev)
                 {
                     ev.Target = coords;
                     ev.Entity = targetEnt;
                 }
 
-                PerformAction(user, (uid, action));
+                PerformAction((user, user.Comp), (uid, action));
             }
             else
                 RaisePredictiveEvent(new RequestPerformActionEvent(GetNetEntity(uid), GetNetEntity(targetEnt), GetNetCoordinates(coords)));
@@ -357,7 +358,7 @@ namespace Content.Client.Actions
             {
                 ev.Target = entity;
 
-                PerformAction(user, (uid, action));
+                PerformAction((user, user.Comp), (uid, action));
             }
             else
             {

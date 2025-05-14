@@ -267,9 +267,9 @@ public sealed class ActionContainerSystem : EntitySystem
     /// <summary>
     /// Removes an action from its container and any action-performer and moves the action to null-space
     /// </summary>
-    public void RemoveAction(Entity<ActionComponent?>? action)
+    public void RemoveAction(Entity<ActionComponent?>? action, bool logMissing = true)
     {
-        if (_actions.GetAction(action) is not {} ent)
+        if (_actions.GetAction(action, logMissing) is not {} ent)
             return;
 
         if (ent.Comp.Container == null)

@@ -402,7 +402,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (_actions.GetAction(actionId) is not {} action)
             return;
 
-        _actions.SetIcon(action, new SpriteSpecifier.EntityPrototype(polyProto.Configuration.Entity));
+        _actions.SetIcon((action, action.Comp), new SpriteSpecifier.EntityPrototype(polyProto.Configuration.Entity));
         _actions.SetEvent(action, new PolymorphActionEvent(id));
     }
 
