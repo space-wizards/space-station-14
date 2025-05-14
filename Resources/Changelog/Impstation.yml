@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Adjust nanochat textures to have more contrast
-    type: Tweak
-  id: 1174
-  time: '2025-02-21T02:15:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1754
 - author: TheGrimbeeper
   changes:
   - message: artifacts now listen for all types of @ emotes instead of only the special
@@ -4206,3 +4199,12 @@
   id: 1673
   time: '2025-05-14T17:59:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2378
+- author: Impstation
+  changes:
+  - message: Music suggestions from the Imp sector community from April have been
+      added. 11 new lobby songs, 3[?] new jukebox songs, 7 new nuke songs, and a single
+      new expedition song.
+    type: Add
+  id: 1674
+  time: '2025-05-14T18:01:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2454
