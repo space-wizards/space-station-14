@@ -260,7 +260,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
-        sound: 
+        sound:
           path: /Audio/Animals/cow_moo.ogg
       - !type:SpillBehavior
         solution: milk
@@ -302,7 +302,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
-        sound: 
+        sound:
           path: /Audio/Items/bikehorn.ogg
       - !type:SpillBehavior
         solution: laughter
