@@ -71,22 +71,23 @@
     state: t1weapon
   - type: Appearance
   - type: Gun
-    fireRate: 0.3
+    fireRate: 1
     soundGunshot:
       path: /Audio/_Impstation/Weapons/Guns/Gunshots/stunprojector.ogg
   - type: HitscanBatteryAmmoProvider
     proto: HitscanDisabler
     fireCost: 150
   - type: Battery
-    maxCharge: 1050
-    startingCharge: 1050
+    maxCharge: 150
+    startingCharge: 150
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 40
+    autoRechargeRate: 50
   - type: MeleeWeapon
     wideAnimationRotation: -80
   - type: StaminaDamageOnHit
     damage: 20
+    sound: /Audio/Weapons/egloves.ogg
   - type: Prying
     pryPowered: true
     force: true
