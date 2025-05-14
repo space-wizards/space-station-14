@@ -34,7 +34,7 @@
                 </PanelContainer.PanelOverride>
             </PanelContainer>
             <BoxContainer Orientation="Horizontal" VerticalExpand="True" SeparationOverride="0">
-                <BoxContainer MinSize="325 0" Margin="5 5 0 0" Orientation="Vertical">
+                <BoxContainer MinSize="400 0" Margin="5 5 0 0" Orientation="Vertical">
                     <Button Name="JobPrioritiesButton"
                             HorizontalExpand="True"
                             Text="{Loc 'character-setup-gui-edit-job-priorities-button'}"
