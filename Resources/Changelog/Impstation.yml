@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum, devin
-  changes:
-  - message: Added nine new CRAZY HAMBURGERS!!!
-    type: Add
-  id: 1176
-  time: '2025-02-21T03:25:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1737
 - author: ATDoop
   changes:
   - message: Added 8 new plushies! Find them in a plushie crate today!!
@@ -4207,3 +4200,10 @@
   id: 1675
   time: '2025-05-14T18:03:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2483
+- author: Darkmajia
+  changes:
+  - message: It's only game. Why you have to be mad?
+    type: Add
+  id: 1676
+  time: '2025-05-14T18:08:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2492
