@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   parent: BaseStructure
-  id: BaseWall
+  id: BaseStructureWall
   name: basewall
   description: Keeps the air in and the greytide out.
   placement:
@@ -54,14 +54,14 @@
 
 - type: entity
   abstract: true
-  parent: BaseWall
-  id: BaseFullWall
+  parent: BaseStructureWall
+  id: BaseWall
   components:
   - type: Occluder # Breaks on diagonal walls
 
 - type: entity
   abstract: true
-  parent: BaseWall
+  parent: BaseStructureWall
   id: WallDiagonalBase
   suffix: Diagonal
   components:
@@ -93,9 +93,7 @@
         - WallLayer
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallBrick
   name: brick wall
   components:
@@ -125,9 +123,7 @@
     base: brick
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallClock
   name: clock wall
   components:
@@ -156,9 +152,7 @@
     base: clock
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallClown
   name: bananium wall
   components:
@@ -191,9 +185,7 @@
     base: clown
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallMeat
   name: meat wall
   description: Sticky.
@@ -227,9 +219,7 @@
     base: meat
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallCult
   name: cult wall
   components:
@@ -255,9 +245,7 @@
     base: cult
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallDebug
   name: debug wall
   suffix: DEBUG
@@ -288,9 +276,7 @@
     base: debug
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallDiamond
   name: diamond wall
   components:
@@ -320,9 +306,7 @@
     base: diamond
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallGold
   name: gold wall
   components:
@@ -364,9 +348,7 @@
     base: gold
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallIce
   name: ice wall
   components:
@@ -392,9 +374,7 @@
     base: ice
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallPlasma
   name: plasma wall
   components:
@@ -438,9 +418,7 @@
     resistance: 5
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallPlastic
   name: plastic wall
   components:
@@ -482,9 +460,7 @@
     base: plastic
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallPlastitaniumIndestructible
   name: plastitanium wall
   suffix: indestructible
@@ -572,9 +548,7 @@
             collection: MetalSlam
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallReinforced
   name: reinforced wall
   components:
@@ -671,7 +645,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
 
-
 - type: entity
   parent: WallDiagonalBase
   id: WallReinforcedDiagonal
@@ -714,9 +687,7 @@
 
 # Riveting
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallRiveted
   name: riveted wall
   components:
@@ -747,9 +718,7 @@
     price: 150
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallSandstone
   name: sandstone wall
   components:
@@ -779,9 +748,7 @@
     base: sandstone
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallSilver
   name: silver wall
   components:
@@ -871,9 +838,7 @@
     price: 200
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallShuttle
   name: shuttle wall
   components:
@@ -933,9 +898,7 @@
     reflectProb: 1
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallSolid
   name: solid wall
   components:
@@ -1052,9 +1015,7 @@
         acts: ["Destruction"]
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallUranium
   name: uranium wall
   components:
@@ -1094,9 +1055,7 @@
     resistance: 6
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallWood
   name: wood wall
   description: The traditional greytide defense.
@@ -1135,9 +1094,7 @@
     base: wood
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallWeb
   name: web wall
   description: Keeps the spiders in and the greytide out.
@@ -1180,9 +1137,7 @@
 # Lavalend Walls
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallNecropolis
   name: stone wall
   components:
@@ -1203,9 +1158,7 @@
     base: necropolis
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallMining
   name: mining wall
   components:
@@ -1275,9 +1228,7 @@
 # Vault Walls
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallVaultAlien
   name: alien vault wall
   description: A mysterious ornate looking wall. There may be ancient dangers inside.
@@ -1376,9 +1327,7 @@
       state: forcewall
 
 - type: entity
-  parent:
-  - BaseWall
-  - BaseFullWall
+  parent: BaseWall
   id: WallCobblebrick
   name: cobblestone brick wall
   description: Stone by stone, perfectly fitted together to form a wall.
