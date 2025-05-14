@@ -8,7 +8,6 @@
   components:
   - type: Sprite
     layers:
-      - state: fullamerican
       - sprite: Objects/Consumable/Food/breakfast.rsi
         state: fullamerican
   - type: RandomSpawner
