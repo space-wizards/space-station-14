@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: CooperWallace
-  changes:
-  - message: A popup is now displayed at the item's previous location when it is recalled
-      by the recall wizard spell.
-    type: Add
-  id: 7977
-  time: '2025-02-19T01:47:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35272
 - author: SpaceLizard24
   changes:
   - message: Moved saxophones from the Brass Ensemble crate to the Woodwind Ensemble
@@ -3926,3 +3918,11 @@
   id: 8479
   time: '2025-05-14T05:56:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37442
+- author: ToastEnjoyer
+  changes:
+  - message: Removed the high value target status on certain computer boards, replacing
+      them with command restricted status.
+    type: Tweak
+  id: 8480
+  time: '2025-05-14T17:47:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37452
