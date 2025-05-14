@@ -51,6 +51,7 @@
     - id: PlushieDecapoid
     - id: PlushieSnail
     - id: PlushieThaven
+    - id: PlushieKodepiia
     - id: PlushieThavenWeird
       weight: 0.1
     - id: PlushieDwarf

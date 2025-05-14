@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: ClothingBeltSheath
+  parent: [ ClothingBeltBase, ClothingSlotBase ] # imp - contraband moment
   id: ClothingBeltFoamSheath
   name: foam sheath
   description: A foam sheath to cosplay as the captain! It seems to be able to fit a real sabre in it.
@@ -8,6 +8,27 @@
     sprite: _DV/Clothing/Belt/foamsheath.rsi
   - type: Clothing
     sprite: _DV/Clothing/Belt/foamsheath.rsi
+  # imp below - from unparenting
+  - type: Item
+    size: Ginormous
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sabre
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        whitelist:
+          tags:
+          - CaptainSabre
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - CaptainSabre
+  - type: Appearance
 
 - type: entity
   parent: ClothingBeltStorageBase

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Paradise (arcade.dmi) at https://github.com/ParadiseSS13/Paradise/tree/dab6fc55044e4a86d2107629cf148229001c7cd2",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "prizeball"
+    }
+  ]
+}

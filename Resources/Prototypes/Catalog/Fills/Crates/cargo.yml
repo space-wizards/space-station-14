@@ -322,6 +322,9 @@
     - id: PlushieThrongler #hehe
       prob: 0.0005
       orGroup: Plushies
+    - id: PrizeBall # imp. let's go gambling!
+      prob: 0.1
+      orGroup: Plushies
     #useful
     - id: AmeJar
       prob: 0.01
