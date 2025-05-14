@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: Fixed Janitor-Restricted contraband unintentionally stating Security
-      may use it too.
-    type: Fix
-  id: 7974
-  time: '2025-02-18T13:07:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35281
 - author: Pronana
   changes:
   - message: the crusher dagger now does everything a knife can and can be thrown.
@@ -3926,3 +3918,11 @@
   id: 8476
   time: '2025-05-13T17:15:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32468
+- author: BigfootBravo
+  changes:
+  - message: Cargo acquisition slips can now fit into folders, clipboards, and envelopes,
+      like other papers can.
+    type: Fix
+  id: 8477
+  time: '2025-05-14T04:42:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37439
