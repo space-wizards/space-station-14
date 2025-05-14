@@ -1,12 +1,20 @@
 using Content.Shared.Actions;
+using Content.Shared.Chasm;
 using Content.Shared.Clothing.ActionEvent;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Coordinates;
+using Content.Shared.Whistle;
+using Robust.Shared.Timing;
+using System;
+using Content.Shared.Chat;
 
 namespace Content.Shared.Clothing.EntitySystems
 {
-    public sealed class SecurityHailerSystem : EntitySystem
+    public abstract class SharedSecurityHailerSystem : EntitySystem
     {
         [Dependency] private readonly SharedActionsSystem _actions = default!;
+        [Dependency] private readonly SharedChatSystem _chat = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -17,7 +25,12 @@ namespace Content.Shared.Clothing.EntitySystems
 
         private void HailOrder(ActionSecHailerActionEvent ev)
         {
-            throw new NotImplementedException();
+            Log.Debug("HailOrder reached !");
+            //if (ev.Handled)
+            //    return;
+
+            //_chat.TrySendInGameICMessage(ev.Performer, comp.Battlecry, InGameICChatType.Speak, true, true, checkRadioPrefix: false);  //Speech that isn't sent to chat or adminlogs
+
         }
 
         private void OnEquip(EntityUid uid, SecurityHailerComponent comp, ClothingGotEquippedEvent args)
