@@ -58,6 +58,7 @@
   - WeaponGauntletGorilla
 
 - type: latheRecipePack
+  parent: FauxTilesImp # imp
   id: FauxTiles
   recipes:
   - FauxTileAstroGrass

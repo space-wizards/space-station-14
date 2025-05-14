@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original cave texture taken from https://github.com/Mojave-Sun/mojave-sun-13 at commit 0587dd16e28108bdf0b0a28e2caae4319845e861, modified by DinnerCalzone (github).",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cave"
+    }
+  ]
+}

@@ -3,3 +3,21 @@
   name: apid hex tile
   spawn: FloorTileItemApid
   maxCount: 30
+
+- type: stack
+  id: FloorTileCraftedAsphalt
+  name: asphalt floor floor
+  spawn: FloorTileItemCraftedAsphalt
+  maxCount: 30
+
+- type: stack
+  id: FloorTileShoveledAstroSnow
+  name: shoveled astro-snow floor
+  spawn: FloorTileItemShoveledAstroSnow
+  maxCount: 30
+
+- type: stack
+  id: FloorTileAstroCave
+  name: shoveled astro-snow floor
+  spawn: FloorTileItemAstroCave
+  maxCount: 30

@@ -12,3 +12,56 @@
       - FloorApid
   - type: Stack
     stackType: FloorTileApid
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemCraftedAsphalt
+  name: asphalt tile
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tiles/asphalt.rsi
+    state: asphalt
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorCraftedAsphalt
+  - type: Stack
+    stackType: FloorTileCraftedAsphalt
+
+# Faux sci tiles
+- type: entity
+  id: FloorTileItemShoveledAstroSnow
+  parent: FloorTileItemBase
+  name: shoveled astro-snow tile
+  description: Fake snow that's as fluffy as the real thing, while being easily removable!
+  components:
+  - type: Sprite
+    state: snow
+  - type: Item
+    heldPrefix: snow
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorShoveledAstroSnow
+  - type: Stack
+    stackType: FloorTileShoveledAstroSnow
+
+- type: entity
+  id: FloorTileItemAstroCave
+  parent: FloorTileItemBase
+  name: astro-cave tile
+  description: Fake rock that's as rough as the real thing, while being easily removable!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tiles/cave.rsi
+    state: cave
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroCave
+  - type: Stack
+    stackType: FloorTileAstroCave
