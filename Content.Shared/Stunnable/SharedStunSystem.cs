@@ -222,6 +222,11 @@ public abstract partial class SharedStunSystem : EntitySystem
         };
         RaiseLocalEvent(uid, ref knockedEv);
 
+        var knockedTime = GameTiming.CurTime + knockedEv.KnockdownTime;
+
+        if (TimeSpan.Compare(knockedTime, component.NextUpdate) == 1)
+            component.NextUpdate = knockedTime;
+
         component.NextUpdate = GameTiming.CurTime + knockedEv.KnockdownTime;
 
         Dirty(uid, component);
