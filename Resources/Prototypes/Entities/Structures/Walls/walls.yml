@@ -867,6 +867,8 @@
     node: diagonalshuttleWall
   - type: RadiationBlocker
     resistance: 5
+  - type: StaticPrice
+    price: 200
 
 - type: entity
   parent:
