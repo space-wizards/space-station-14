@@ -4,8 +4,8 @@ meta:
   engineVersion: 255.0.0
   forkId: Starlight
   forkVersion: 1732131340
-  time: 05/14/2025 08:00:53
-  entityCount: 14321
+  time: 05/14/2025 19:25:59
+  entityCount: 14320
 maps:
 - 14320
 grids:
@@ -94571,11 +94571,6 @@ entities:
     components:
     - type: Transform
       pos: -38.5,-25.5
-      parent: 4812
-  - uid: 14321
-    components:
-    - type: Transform
-      pos: -4.5,5.5
       parent: 4812
 - proto: WindoorBarLocked
   entities:
