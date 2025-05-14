@@ -54,4 +54,4 @@
 - type: guideEntry
   id: Cyborgs
   name: guide-entry-cyborgs
-  text: "/ServerInfo/Guidebook/Science/Cyborgs.xml"
+  text: "/ServerInfo/_Impstation/Guidebook/Science/Cyborgs.xml"

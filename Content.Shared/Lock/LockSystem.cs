@@ -96,7 +96,7 @@ public sealed class LockSystem : EntitySystem
         args.PushText(Loc.GetString(lockComp.Locked
                 ? "lock-comp-on-examined-is-locked"
                 : "lock-comp-on-examined-is-unlocked",
-            ("entityName", Identity.Name(uid, EntityManager))));
+            ("entityName", (lockComp.CustomLockText == null) ? Identity.Name(uid, EntityManager) : lockComp.CustomLockText))); // imp; added custom lock text
     }
 
     /// <summary>
@@ -275,7 +275,7 @@ public sealed class LockSystem : EntitySystem
     /// <summary>
     /// Raises an event for other components to check whether or not
     /// the entity can be locked in its current state.
-    /// 
+    ///
     /// IMP EDIT: CHANGED THIS TO RETURN A STRING
     /// in order to allow for triggering the 'FromInside' doAfter via component events
     /// </summary>

@@ -12,6 +12,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Popups;
 using ActivatableUISystem = Content.Shared.UserInterface.ActivatableUISystem;
+using Content.Shared.IdentityManagement; //imp
 
 namespace Content.Server.PowerCell;
 
@@ -237,7 +238,8 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         if (component != null)
         {
             var charge = component.CurrentCharge / component.MaxCharge * 100;
-            args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{charge:F0}")));
+            args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{charge:F0}"),
+                ("target", Identity.Entity(uid, EntityManager)))); //imp edit for gendered machines
         }
         else
         {

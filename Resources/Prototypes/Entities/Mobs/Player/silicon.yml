@@ -80,6 +80,7 @@
   - type: CharacterRecordConsole #imp edit - give the Ai the new cd records console. only employment because they're nominally a civilian role, but they can still use the sec & med consoles.
     consoleType: Employment
 
+
 - type: entity
   id: AiHeldIntellicard
   description: Components added / removed from an entity that gets inserted into an Intellicard.
@@ -581,6 +582,9 @@
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true
+  - type: Grammar # imp
+    attributes:
+      proper: true
   - type: SkipLoadingCharacterRecords #imp edit - make it so the AI doesn't show up in the character records list
 
 # Hologram projection that the AI's eye tracks.
@@ -646,6 +650,9 @@
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true
+  - type: Grammar # imp
+    attributes:
+      proper: true
 
 - type: entity
   id: PlayerBorgSyndicateAssaultBattery

@@ -170,6 +170,7 @@
   - type: Lock
     locked: true
     unlockOnClick: false
+    customLockText: "back panel" # imp
   - type: ActivatableUIRequiresLock
   - type: LockedWiresPanel
   - type: Damageable

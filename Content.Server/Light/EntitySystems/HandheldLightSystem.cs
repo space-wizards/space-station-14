@@ -16,6 +16,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
+using Content.Shared.IdentityManagement; //imp
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -142,9 +143,9 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnExamine(EntityUid uid, HandheldLightComponent component, ExaminedEvent args)
         {
-            args.PushMarkup(component.Activated
-                ? Loc.GetString("handheld-light-component-on-examine-is-on-message")
-                : Loc.GetString("handheld-light-component-on-examine-is-off-message"));
+            args.PushMarkup(Loc.GetString((component.Activated
+                ? "handheld-light-component-on-examine-is-on-message"
+                : "handheld-light-component-on-examine-is-off-message"), ("target", Identity.Entity(uid, EntityManager)))); //imp; gendered light sources
         }
 
         public override void Shutdown()

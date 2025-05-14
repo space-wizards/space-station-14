@@ -1,4 +1,5 @@
-handheld-light-component-on-examine-is-on-message = The light is currently [color=darkgreen]on[/color].
-handheld-light-component-on-examine-is-off-message = The light is currently [color=darkred]off[/color].
+# imp edit, gendered light sources are now gendered
+handheld-light-component-on-examine-is-on-message = {CAPITALIZE(POSS-ADJ($target))} light is currently [color=darkgreen]on[/color].
+handheld-light-component-on-examine-is-off-message = {CAPITALIZE(POSS-ADJ($target))} light is currently [color=darkred]off[/color].
 handheld-light-component-cell-missing-message = Cell missing...
 handheld-light-component-cell-dead-message = Dead cell...
