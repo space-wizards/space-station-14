@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: ATDoop
-  changes:
-  - message: Added 8 new plushies! Find them in a plushie crate today!!
-    type: Add
-  - message: Added 2 new trinkets, sentimental dolls!
-    type: Add
-  - message: You can now wear the bug plush on your head.
-    type: Tweak
-  id: 1177
-  time: '2025-02-21T03:39:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1747
 - author: MintyTheBinty
   changes:
   - message: Added two new business casual outfits with randomized colored clothes,
@@ -4207,3 +4196,13 @@
   id: 1676
   time: '2025-05-14T18:08:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2492
+- author: DinnerCalzone
+  changes:
+  - message: Shoveled astro-snow and astro-cave tiles can now be crafted after researching
+      Faux Astro-Tiles.
+    type: Add
+  - message: Asphalt tiles can now be crafted at cutter machines.
+    type: Add
+  id: 1677
+  time: '2025-05-14T18:23:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2487
