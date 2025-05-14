@@ -1,6 +1,7 @@
 using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
@@ -16,6 +17,32 @@ namespace Content.Server.StationEvents.Events
     public sealed class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleComponent>
     {
         [Dependency] private readonly ApcSystem _apcSystem = default!;
+        [Dependency] private readonly StationSystem _stationSystem = default!;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerAttemptEvent>(OnApcToggleMainBreaker);
+        }
+
+        private void OnApcToggleMainBreaker(Entity<ApcComponent> ent, ref ApcToggleMainBreakerAttemptEvent args)
+        {
+            var apcStation = _stationSystem.GetOwningStation(ent);
+
+            if (apcStation == null)
+                return;
+
+            foreach (var powerGridCheckRule in EntityQuery<PowerGridCheckRuleComponent>(true))
+            {
+                if (powerGridCheckRule.AffectedStation == apcStation &&
+                    powerGridCheckRule.Unpowered.Contains(ent.Owner))
+                {
+                    args.Cancelled = true;
+                    return;
+                }
+            }
+        }
 
         protected override void Started(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
         {
