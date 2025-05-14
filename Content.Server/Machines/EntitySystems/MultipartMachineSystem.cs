@@ -180,10 +180,8 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 
         // If anchored, perform a rescan of this machine when the component starts so we can immediately
         // jump to an assembled state if needed.
-        if (!XformQuery.TryGetComponent(ent.Owner, out var xform) || !xform.Anchored)
-            return;
-
-        Rescan(ent);
+        if (XformQuery.TryGetComponent(ent.Owner, out var xform) && xform.Anchored)
+            Rescan(ent);
     }
 
     /// <summary>
