@@ -34,6 +34,7 @@
   description: Worthless junk. You could probably get some materials out of it though.
   suffix: Scrap
   components:
+  - type: Anchorable
   - type: InteractionOutline
   - type: Damageable
     damageContainer: Inorganic
