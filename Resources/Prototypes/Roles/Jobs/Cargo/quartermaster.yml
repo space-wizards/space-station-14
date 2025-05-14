@@ -9,10 +9,10 @@
       time: 18000 #5 hrs
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 9000 #2.5 hrs
+      time: 18000 #5 hrs
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 36000 #10 hours
+      time: 54000 # 15 hours
   weight: 10
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"
