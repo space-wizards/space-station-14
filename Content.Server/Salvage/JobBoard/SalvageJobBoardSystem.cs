@@ -113,9 +113,7 @@ public sealed class SalvageJobBoardSystem : EntitySystem
 
         var jobProto = _prototypeManager.Index(job);
 
-        var curRank = GetRank(ent);
         ent.Comp.CompletedJobs.Add(job);
-        var newRank = GetRank(ent);
 
         // Add reward
         if (TryComp<StationBankAccountComponent>(ent, out var stationBankAccount))
@@ -126,10 +124,7 @@ public sealed class SalvageJobBoardSystem : EntitySystem
                 _cargo.CreateAccountDistribution((ent,  stationBankAccount)));
         }
 
-        if (curRank != newRank)
-        {
-
-        }
+        // TODO: implement
 
         return true;
     }
