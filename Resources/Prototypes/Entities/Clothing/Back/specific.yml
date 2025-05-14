@@ -93,9 +93,9 @@
     - 6,1,8,3
   - type: Tag
     tags:
-      - WhitelistChameleon
-      - CorgiWearable
-      - PetOnly
+    - WhitelistChameleon
+    - CorgiWearable
+    - PetOnly
   - type: Construction
     graph: ClothingBagPet
     node: bagPet
