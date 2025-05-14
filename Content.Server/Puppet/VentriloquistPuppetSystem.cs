@@ -40,7 +40,6 @@ namespace Content.Server.Puppet
             if (!RemComp<MutedComponent>(uid))
             {
                 _popupSystem.PopupEntity(Loc.GetString(_random.Pick(component.RemoveHand)), uid, args.User); // Frontier
-                //_popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-remove-hand"), uid, args.User);
                 MuteDummy(uid, component);
                 return;
             }
@@ -49,8 +48,6 @@ namespace Content.Server.Puppet
             EnsureComp<CombatModeComponent>(uid);
             _popupSystem.PopupEntity(Loc.GetString(_random.Pick(component.InsertHand)), uid, args.User); // Frontier
             _popupSystem.PopupEntity(Loc.GetString(_random.Pick(component.InsertedHand)), uid, uid); // Frontier
-            // _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-insert-hand"), uid, args.User);
-            // _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-inserted-hand"), uid, uid);
 
             if (!HasComp<GhostTakeoverAvailableComponent>(uid))
             {
@@ -58,8 +55,6 @@ namespace Content.Server.Puppet
                 var ghostRole = EnsureComp<GhostRoleComponent>(uid);
                 ghostRole.RoleName = Loc.GetString(_random.Pick(component.PuppetRoleName)); // Frontier
                 ghostRole.RoleDescription = Loc.GetString(_random.Pick(component.PuppetRoleDescription)); // Frontier
-                //ghostRole.RoleName = Loc.GetString("ventriloquist-puppet-role-name");
-                //ghostRole.RoleDescription = Loc.GetString("ventriloquist-puppet-role-description");
             }
 
             args.Handled = true;
@@ -74,7 +69,6 @@ namespace Content.Server.Puppet
                 return;
 
             _popupSystem.PopupEntity(Loc.GetString(_random.Pick(component.RemoveHand)), uid, args.User); // Frontier
-            //_popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-remove-hand"), uid, args.User);
             MuteDummy(uid, component);
         }
 
@@ -87,7 +81,6 @@ namespace Content.Server.Puppet
                 return;
 
             _popupSystem.PopupEntity(Loc.GetString(_random.Pick(component.RemoveHand)), uid, args.User); // Frontier
-            //_popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-remove-hand"), uid, args.User);
             MuteDummy(uid, component);
         }
 
@@ -97,7 +90,6 @@ namespace Content.Server.Puppet
         private void MuteDummy(EntityUid uid, VentriloquistPuppetComponent component)
         {
             _popupSystem.PopupEntity(Loc.GetString(_random.Pick(component.RemovedHand)), uid, uid); // Frontier
-            //_popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-removed-hand"), uid, uid);
             EnsureComp<MutedComponent>(uid);
             RemComp<CombatModeComponent>(uid);
             RemComp<GhostTakeoverAvailableComponent>(uid);
