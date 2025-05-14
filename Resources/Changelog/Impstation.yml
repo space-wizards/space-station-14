@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: Suspicious beacons are no longer contraband.
-    type: Tweak
-  id: 1171
-  time: '2025-02-20T03:06:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1731
 - author: hivehum
   changes:
   - message: Removed 64 songs from the jukebox, lobby music and nuke music selections.
@@ -4191,3 +4184,10 @@
   id: 1670
   time: '2025-05-14T13:05:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2488
+- author: animal-collective
+  changes:
+  - message: three new hairs for humanoids
+    type: Add
+  id: 1671
+  time: '2025-05-14T13:46:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2491
