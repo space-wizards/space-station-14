@@ -19,6 +19,7 @@
     tags:
     - Trash
     - Document
+    - Paper
   - type: Paper
     editingDisabled: true
   - type: PaperVisuals
