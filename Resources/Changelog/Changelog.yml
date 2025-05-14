@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: SpaceLizard24
-  changes:
-  - message: Moved saxophones from the Brass Ensemble crate to the Woodwind Ensemble
-      crate.
-    type: Tweak
-  - message: Adjusted the prices of Woodwind Ensemble and Brass Ensemble crates.
-    type: Tweak
-  id: 7978
-  time: '2025-02-19T06:05:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35257
 - author: K-Dynamic
   changes:
   - message: Returned Explosive Technology recipes (triggers, payloads, signaller)
@@ -3926,3 +3916,11 @@
   id: 8480
   time: '2025-05-14T17:47:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37452
+- author: LevitatingTree
+  changes:
+  - message: Changed the names of the neurodivergent pins to more accurately reflect
+      their meanings.
+    type: Tweak
+  id: 8481
+  time: '2025-05-14T18:03:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37416
