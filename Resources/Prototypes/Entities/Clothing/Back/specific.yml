@@ -98,4 +98,4 @@
       - PetOnly
   - type: Construction
     graph: ClothingBagPet
-    node: petbag
+    node: bagPet
