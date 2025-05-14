@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: _DV/Clothing/Belt/foamsheath.rsi
+    state: sheath
   - type: Clothing
     sprite: _DV/Clothing/Belt/foamsheath.rsi
   # imp below - from unparenting

@@ -2,7 +2,7 @@
   id: PetRockCarrier
   parent: HappyHonk
   name: pet rock carrier
-  description: Your new and only best friend home!
+  description: Your new (and only) best friend's home! # imp grammar
   components:
   - type: Sprite
     sprite: _NF/Objects/Storage/Happyhonk/rock_carrier.rsi
@@ -61,12 +61,12 @@
   parent: [BaseItem, MrChips]
   id: BasePetRock
   name: pet rock
-  description: Your new and only best friend!
+  description: Your new (and only) best friend! # imp grammar
   abstract: true
   components:
   - type: StaticPrice
     price: 5
-  - type: VentriloquistPuppet # Frontier
+  - type: VentriloquistPuppet
     removeHand:
     - ventriloquist-rock-release-hand
     removedHand:
