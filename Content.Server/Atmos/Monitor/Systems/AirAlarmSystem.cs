@@ -478,8 +478,6 @@ public sealed class AirAlarmSystem : EntitySystem
             mode = AirAlarmMode.Panic;
         }
 
-        if (controller.CurrentMode == mode)
-            return;
 
         controller.CurrentMode = mode;
 
