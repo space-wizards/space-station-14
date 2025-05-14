@@ -26,7 +26,7 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        foreach (PipeConnectionLayer layerKey in Enum.GetValues(typeof(PipeConnectionLayer)))
+        foreach (var layerKey in Enum.GetValues<PipeConnectionLayer>())
         {
             var layer = _sprite.LayerMapReserve((uid, sprite), layerKey);
             _sprite.LayerSetRsi((uid, sprite), layer, component.Sprite.RsiPath);
