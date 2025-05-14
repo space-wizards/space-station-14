@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: cerebralerror, robinthedragon
-  changes:
-  - message: 'New barsigns: Maltroach (based on sign by MoffNyan, from tgstation)
-      and Whiskey Echoes (by cerebralerror, from frontier station)'
-    type: Add
-  id: 7982
-  time: '2025-02-19T19:25:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35296
 - author: FungiFellow
   changes:
   - message: Flare Shells no longer restricted contraband
@@ -3923,3 +3915,11 @@
   id: 8484
   time: '2025-05-14T19:49:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36780
+- author: qwerltaz
+  changes:
+  - message: Snipping the panic wire in an air alarm now forces panic mode until the
+      wire is mended.
+    type: Tweak
+  id: 8485
+  time: '2025-05-14T20:39:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36439
