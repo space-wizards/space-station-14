@@ -144,7 +144,7 @@ public sealed class ThrusterSystem : EntitySystem
         while (allThrusters.MoveNext(out var thrusterUid, out var thrusterComp, out var thrusterPowerReceiver, out var thrusterXform))
         {
             if (thrusterXform.GridUid != ent.Owner)
-                return;
+                continue;
 
             if (ent.Comp.AngularThrusters.Contains(thrusterUid))
                 ent.Comp.AngularThrust += thrusterComp.Thrust * GetInertiaThresholdScale((thrusterUid, thrusterComp), thrusterXform);
