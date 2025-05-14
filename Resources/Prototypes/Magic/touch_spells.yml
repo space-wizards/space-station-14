@@ -36,7 +36,10 @@
       state: gib
   - type: EntityTargetAction
     event: !type:SmiteSpellEvent
-      speech: action-speech-spell-smite
+  - type: SpeakOnAction
+    sentence: action-speech-spell-smite
+  - type: Magic
+    requiresClothes: true
 
 # For the Snail
 - type: entity
@@ -61,9 +64,12 @@
       state: icon
   - type: EntityTargetAction
     event: !type:ChangeComponentsSpellEvent
-      speech: action-speech-spell-cluwne
       toAdd:
       - type: Cluwne
+  - type: SpeakOnAction
+    sentence: action-speech-spell-cluwne
+  - type: Magic
+    requiresClothes: true
 
 - type: entity
   parent: BaseSmiteAction
@@ -80,8 +86,11 @@
       state: omega-4
   - type: EntityTargetAction
     event: !type:ChangeComponentsSpellEvent
-      speech: action-speech-spell-slip
       toAdd:
       - type: Slippery
       - type: StepTrigger
         requiredTriggeredSpeed: -1
+  - type: SpeakOnAction
+    sentence: action-speech-spell-slip
+  - type: Magic
+    requiresClothes: true

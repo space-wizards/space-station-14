@@ -20,7 +20,8 @@
   - type: WorldTargetAction
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
-      speech: action-speech-spell-fireball
+  - type: SpeakOnAction
+    sentence: action-speech-spell-fireball
   - type: ActionUpgrade
     effectedLevels:
       2: ActionFireballII

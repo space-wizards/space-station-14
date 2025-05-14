@@ -110,7 +110,9 @@ public abstract class SharedActionsSystem : EntitySystem
         if (action is not {} ent || TerminatingOrDeleted(ent))
             return null;
 
-        _actionQuery.Resolve(ent, ref ent.Comp, logError);
+        if (!_actionQuery.Resolve(ent, ref ent.Comp, logError))
+            return null;
+
         return (ent, ent.Comp);
     }
 
@@ -676,7 +678,7 @@ public abstract class SharedActionsSystem : EntitySystem
         DirtyField(ent, ent.Comp, nameof(ActionComponent.AttachedEntity));
         performer.Comp.Actions.Add(ent);
         Dirty(performer, performer.Comp);
-        ActionAdded(performer, (ent, ent.Comp));
+        ActionAdded((performer, performer.Comp), (ent, ent.Comp));
         return true;
     }
 

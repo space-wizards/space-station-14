@@ -13,4 +13,5 @@
   - type: InstantAction
     event: !type:ChargeSpellEvent
       charge: 1
-      speech: DI'RI CEL!
+  - type: SpeakOnAction
+    sentence: action-speech-spell-charge

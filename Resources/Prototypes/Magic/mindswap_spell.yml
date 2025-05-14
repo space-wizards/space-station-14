@@ -18,4 +18,5 @@
       - Body
       - MindContainer
     event: !type:MindSwapSpellEvent
-      speech: action-speech-spell-mind-swap
+  - type: SpeakOnAction
+    sentence: action-speech-spell-mind-swap
