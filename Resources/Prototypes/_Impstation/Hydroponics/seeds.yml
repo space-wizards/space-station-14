@@ -102,3 +102,68 @@
       Max: 15
       PotencyDivisor: 25
 
+- type: seed
+  id: hops
+  name: seeds-hops-name
+  noun: seeds-noun-seeds
+  displayName: seeds-hops-display-name
+  plantRsi: _Impstation/Objects/Specific/Hydroponics/hops.rsi
+  packetPrototype: HopsSeeds
+  productPrototypes:
+  - FoodHops
+  mutationPrototypes:
+  - employedhops
+  harvestRepeat: Repeat
+  lifespan: 25 # idk botany like at all so this is copied from wheat
+  maturation: 6
+  production: 3
+  yield: 3
+  potency: 5
+  growthStages: 3
+  idealLight: 8
+  nutrientConsumption: 0.40
+  chemicals:
+    Beer:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 25
+
+- type: seed
+  id: employedhops
+  name: seeds-employedhops-name
+  noun: seeds-noun-seeds
+  displayName: seeds-employedhops-display-name
+  plantRsi: _Impstation/Objects/Specific/Hydroponics/employedhops.rsi
+  packetPrototype: HoPsSeeds
+  productPrototypes:
+  - PassengerIDCard
+  mutationPrototypes:
+  - agentgrain
+  harvestRepeat: Repeat
+  lifespan: 65
+  maturation: 25
+  production: 25
+  yield: 1
+  potency: 5
+  growthStages: 3
+  idealLight: 8
+  nutrientConsumption: 0.40
+
+- type: seed
+  id: agentgrain
+  name: seeds-agentgrain-name
+  noun: seeds-noun-seeds
+  displayName: seeds-agentgrain-display-name
+  plantRsi: _Impstation/Objects/Specific/Hydroponics/agentgrain.rsi
+  packetPrototype: AgentGrainSeeds
+  productPrototypes:
+  - AgentIDCard
+  harvestRepeat: Repeat
+  lifespan: 65 # copied from gatfruit mostly
+  maturation: 25
+  production: 25
+  growthStages: 3
+  yield: 1
+  potency: 5
+  idealLight: 8
+  nutrientConsumption: 0.40
