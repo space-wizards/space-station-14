@@ -1,7 +1,6 @@
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
-using Content.Client.CharacterInfo;
 using Content.Client.Administration.Managers;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
@@ -41,12 +40,11 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using static Content.Client.CharacterInfo.CharacterInfoSystem;
 
 
 namespace Content.Client.UserInterface.Systems.Chat;
 
-public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterInfoSystem>
+public sealed partial class ChatUIController : UIController
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IChatManager _manager = default!;
@@ -68,7 +66,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     [UISystemDependency] private readonly TransformSystem? _transform = default;
     [UISystemDependency] private readonly MindSystem? _mindSystem = default!;
     [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
-    [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
     [ValidatePrototypeId<ColorPalettePrototype>]
     private const string ChatNamePalette = "ChatNames";
@@ -153,23 +150,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     /// </summary>
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
-    /// <summary>
-    ///     The list of words to be highlighted in the chatbox.
-    /// </summary>
-    private List<string> _highlights = new();
-
-    /// <summary>
-    ///     The string holding the hex color used to highlight words.
-    /// </summary>
-    private string? _highlightsColor;
-
-    private bool _autoFillHighlightsEnabled;
-
-    /// <summary>
-    ///     The boolean that keeps track of the 'OnCharacterUpdated' event, whenever it's a player attaching or opening the character info panel.
-    /// </summary>
-    private bool _charInfoIsAttach = false;
-
     // TODO add a cap for this for non-replays
     public readonly List<(GameTick Tick, ChatMessage Msg)> History = new();
 
@@ -193,7 +173,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     public event Action<ChatSelectChannel>? SelectableChannelsChanged;
     public event Action<ChatChannel, int?>? UnreadMessageCountsUpdated;
     public event Action<ChatMessage>? MessageAdded;
-    public event Action<string>? HighlightsUpdated;
 
     public override void Initialize()
     {
@@ -262,17 +241,7 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
 
         _config.OnValueChanged(CCVars.ChatWindowOpacity, OnChatWindowOpacityChanged);
 
-        _config.OnValueChanged(CCVars.ChatAutoFillHighlights, (value) => { _autoFillHighlightsEnabled = value; }, true);
-
-        _config.OnValueChanged(CCVars.ChatHighlightsColor, (value) => { _highlightsColor = value; }, true);
-
-        // Load highlights if any were saved.
-        string highlights = _config.GetCVar(CCVars.ChatHighlights);
-
-        if (!string.IsNullOrEmpty(highlights))
-        {
-            UpdateHighlights(highlights, true);
-        }
+        InitializeHighlights();
     }
 
     public void OnScreenLoad()
@@ -290,51 +259,9 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
         SetMainChat(false);
     }
 
-    public void OnSystemLoaded(CharacterInfoSystem system)
-    {
-        system.OnCharacterUpdate += OnCharacterUpdated;
-    }
-
-    public void OnSystemUnloaded(CharacterInfoSystem system)
-    {
-        system.OnCharacterUpdate -= OnCharacterUpdated;
-    }
-
     private void OnChatWindowOpacityChanged(float opacity)
     {
         SetChatWindowOpacity(opacity);
-    }
-
-    private void OnCharacterUpdated(CharacterData data)
-    {
-        // If _charInfoIsAttach is false then the opening of the character panel was the one
-        // to generate the event, dismiss it.
-        if (!_charInfoIsAttach)
-            return;
-
-        var (_, job, _, _, entityName) = data;
-
-        // Mark this entity's name as our character name for the "UpdateHighlights" function.
-        string newHighlights = "@" + entityName;
-        
-        // Subdivide the character's name based on spaces or hyphens so that every word gets highlighted.
-        if (newHighlights.Count(c => (c == ' ' || c == '-')) == 1)
-            newHighlights = newHighlights.Replace("-", "\n@").Replace(" ", "\n@");
-
-        // If the character has a name with more than one hyphen assume it is a lizard name and extract the first and
-        // last name eg. "Eats-The-Food" -> "@Eats" "@Food"
-        if (newHighlights.Count(c => c == '-') > 1)
-            newHighlights = newHighlights.Split('-')[0] + "\n@" + newHighlights.Split('-')[^1];
-
-        // Convert the job title to kebab-case and use it as a key for the loc file.
-        string jobKey = job.Replace(' ', '-').ToLower();
-        
-        if (Loc.TryGetString($"highlights-{jobKey}", out var jobMatches))
-            newHighlights += '\n' + jobMatches.Replace(", ", "\n");
-
-        UpdateHighlights(newHighlights);
-        HighlightsUpdated?.Invoke(newHighlights);
-        _charInfoIsAttach = false;
     }
 
     private void SetChatWindowOpacity(float opacity)
@@ -502,13 +429,7 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     {
         UpdateChannelPermissions();
         
-        // If auto highlights are enabled generate a request for new character info
-        // that will be used to determine the highlights.
-        if (_autoFillHighlightsEnabled)
-        {
-            _charInfoIsAttach = true;
-            _characterInfo.RequestCharacterInfo();
-        }
+        UpdateAutoFillHighlights();
     }
 
     private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
@@ -666,36 +587,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
             _unreadMessages[channel] = 0;
             UnreadMessageCountsUpdated?.Invoke(channel, 0);
         }
-    }
-
-    public void UpdateHighlights(string highlights, bool firstload = false)
-    {
-        // Do nothing if the provided highlighs are the same as the old ones and it is not the first time.
-        if (!firstload && _config.GetCVar(CCVars.ChatHighlights).Equals(highlights, StringComparison.CurrentCultureIgnoreCase))
-            return;
-
-        _config.SetCVar(CCVars.ChatHighlights, highlights);
-        _config.SaveToFile();
-
-        // Make sure any name tagged as ours gets highlighted only when others say it.
-        highlights = highlights.Replace("@", "(?<=(?<=/name.*)|(?<=,.*\"\".*))");
-
-        // Replace any " character with a whole-word regex tag,
-        // this tag will make the words to match are separated by spaces or punctuation.
-        highlights = highlights.Replace("\"", "\\b");
-
-        _highlights.Clear();
-
-        // Fill the array with the highlights separated by newlines, disregarding empty entries.
-        string[] arrHighlights = highlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-        foreach (var keyword in arrHighlights)
-        {
-            _highlights.Add(keyword);
-        }
-
-        // Arrange the list of highlights in descending order so that when highlighting,
-        // the full word (eg. "Security") gets picked before the abbreviation (eg. "Sec").
-        _highlights.Sort((x, y) => y.Length.CompareTo(x.Length));
     }
 
     public override void FrameUpdate(FrameEventArgs delta)
