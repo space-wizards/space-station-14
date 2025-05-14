@@ -95,7 +95,7 @@
     tags:
       - WhitelistChameleon
       - CorgiWearable
-      - PetOnly 
+      - PetOnly
   - type: Construction
     graph: ClothingBagPet
     node: petbag

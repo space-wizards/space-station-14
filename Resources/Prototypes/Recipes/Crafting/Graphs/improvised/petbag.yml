@@ -6,7 +6,7 @@
       edges:
         - to: bagPet
           steps:
-            - tag: Backpack 
+            - tag: Backpack
               name: Backpack
               icon:
                 sprite: Clothing/Back/Backpacks/backpack.rsi
