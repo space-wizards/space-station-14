@@ -141,7 +141,7 @@
     </ColorBox>
     <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Terrorism (D)
+        Station-Wide Destruction (D)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -867,7 +867,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Terrorism
+        Station-Wide Destruction
       </Box>
     </ColorBox>
     <ColorBox>
