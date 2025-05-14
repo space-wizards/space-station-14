@@ -16,6 +16,9 @@ namespace Content.Client.Lobby.UI;
 [GenerateTypedNameReferences]
 public sealed partial class CharacterPickerButton : ContainerButton
 {
+    const string EnabledLoc = "character-setup-gui-character-picker-button-enabled-button";
+    const string DisabledLoc = "character-setup-gui-character-picker-button-disabled-button";
+
     /// <summary>
     /// Invoked if we should delete the attached character
     /// </summary>
@@ -56,6 +59,7 @@ public sealed partial class CharacterPickerButton : ContainerButton
         View.LoadPreview(profile);
 
         EnabledCheck.Pressed = profile.Enabled;
+        EnabledCheck.Text = Loc.GetString(profile.Enabled ? EnabledLoc : DisabledLoc);
 
         Pressed = isSelected;
 
@@ -77,11 +81,12 @@ public sealed partial class CharacterPickerButton : ContainerButton
 
         if (simple)
         {
-            DeleteButtonOutline.Visible = false;
-            EnabledCheckOutline.Visible = false;
+            ButtonDivider.Visible = false;
+            ButtonBox.Visible = false;
         }
         else
         {
+            AddStyleClass("OpenRight");
             DeleteButtonOutline.Visible = !isSelected;
             ConfirmDeleteButton.OnPressed += _ =>
             {
@@ -99,6 +104,7 @@ public sealed partial class CharacterPickerButton : ContainerButton
             EnabledCheck.OnToggled += args =>
             {
                 OnEnableToggled?.Invoke(args.Pressed);
+                EnabledCheck.Text = Loc.GetString(profile.Enabled ? EnabledLoc : DisabledLoc);
             };
         }
     }
