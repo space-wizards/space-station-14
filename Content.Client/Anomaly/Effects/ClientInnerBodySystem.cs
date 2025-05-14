@@ -23,8 +23,7 @@ public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         if (ent.Comp.FallbackSprite is null)
             return;
 
-        if (!_sprite.LayerMapTryGet((ent.Owner, sprite), ent.Comp.LayerMap, out var index, false))
-            index = _sprite.LayerMapReserve((ent.Owner, sprite), ent.Comp.LayerMap);
+        var index = _sprite.LayerMapReserve((ent.Owner, sprite), ent.Comp.LayerMap);
 
         if (TryComp<BodyComponent>(ent, out var body) &&
             body.Prototype is not null &&
