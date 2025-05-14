@@ -2122,12 +2122,12 @@
         sizeMaps:
           32:
             sprite: Mobs/Pets/corgi.rsi
-            state: belt_displacement
+            state: corgi-belt_displacement
       ears:
         sizeMaps:
           32:
             sprite: Mobs/Pets/corgi.rsi
-            state: belt_displacement
+            state: corgi-belt_displacement
   - type: Hands
   - type: Puller
   - type: Cuffable
