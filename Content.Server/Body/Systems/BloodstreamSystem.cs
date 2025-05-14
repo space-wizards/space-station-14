@@ -514,16 +514,12 @@ public sealed class BloodstreamSystem : EntitySystem
         {
             var bloodProto = _prototypeManager.Index<ReagentPrototype>(bloodstreamComp.BloodReagent);
             bloodColorData.SubstanceColor = bloodProto.SubstanceColor;
-        }
-        // Color.White is the default color that gets set if
-        // the blood color is unconfigured.
-        // So we use this as an indicator to set the blood color
-        // to the skin color.
-        if (Color.White == bloodColorData.SubstanceColor)
-        {
-            if (TryComp<HumanoidAppearanceComponent>(uid, out var appearanceComp))
+            if ("Slime" == bloodProto.ID)
             {
-                bloodColorData.SubstanceColor = appearanceComp.SkinColor;
+                if (TryComp<HumanoidAppearanceComponent>(uid, out var appearanceComp))
+                {
+                    bloodColorData.SubstanceColor = appearanceComp.SkinColor;
+                }
             }
         }
 
