@@ -10,7 +10,7 @@ namespace Content.Shared.Machines.Components;
 /// <summary>
 /// Marks an entity as being the owner of a multipart machine.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 [Access(typeof(SharedMultipartMachineSystem))]
 public sealed partial class MultipartMachineComponent : Component
 {
@@ -80,11 +80,19 @@ public sealed partial class MachinePart
     public Angle Rotation = Angle.Zero;
 
     /// <summary>
-    /// Network entity associated with this part.
-    /// Not null when an entity is successfully matched to the part and null otherwise.
+    /// Network entity, used to inform clients and update their side of the component
+    /// locally.
+    /// Use the Entity attribute if you wish to get which entity is actually bound to this part.
     /// </summary>
     [DataField]
-    public NetEntity? Entity = null;
+    public NetEntity? NetEntity = null;
+
+    /// <summary>
+    /// Entity associated with this part.
+    /// Not null when an entity is successfully matched to the part and null otherwise.
+    /// </summary>
+    [DataField, NonSerialized]
+    public EntityUid? Entity = null;
 
     /// <summary>
     /// Expected graph for this part to use as part of its construction.

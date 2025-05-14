@@ -44,18 +44,6 @@ public abstract class SharedMultipartMachineSystem : EntitySystem
     /// <returns>True if any part has the specified EntityUid, false otherwise.</returns>
     public bool HasPartEntity(Entity<MultipartMachineComponent?> machine, EntityUid entity)
     {
-        var netEnt = GetNetEntity(entity);
-        return HasPartEntity(machine, netEnt);
-    }
-
-    /// <summary>
-    /// Returns whether a machine has a specifed NetEntity bound to one of its parts.
-    /// </summary>
-    /// <param name="machine">Entity, which might have a multpart machine attached, to use for the query.</param>
-    /// <param name="entity">NetEntity to search for.</param>
-    /// <returns>True if any part has the specified NetEntity, false otherwise.</returns>
-    public bool HasPartEntity(Entity<MultipartMachineComponent?> machine, NetEntity entity)
-    {
         if (!Resolve(machine, ref machine.Comp))
             return false;
 
@@ -97,8 +85,11 @@ public abstract class SharedMultipartMachineSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        if (ent.Comp.Parts.TryGetValue(part, out var value))
-            return TryGetEntity(value.Entity, out entity);
+        if (ent.Comp.Parts.TryGetValue(part, out var value) && value.Entity.HasValue)
+        {
+            entity = value.Entity.Value;
+            return true;
+        }
 
         return false;
     }

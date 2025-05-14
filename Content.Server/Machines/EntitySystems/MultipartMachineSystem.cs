@@ -19,7 +19,6 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -99,7 +98,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             {
                 // This part gained an entity, add the Part component so it can find out which machine
                 // it's a part of
-                var partEnt = GetEntity(part.Entity.Value);
+                var partEnt = part.Entity.Value;
                 var comp = EnsureComp<MultipartMachinePartComponent>(partEnt);
                 comp.Master = ent;
                 partsAdded.Add(key, partEnt);
@@ -108,7 +107,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             {
                 // This part lost its entity, ensure we clean up the old entity so it's no longer marked
                 // as something we care about.
-                var partEnt = GetEntity(originalPart!.Value);
+                var partEnt = originalPart!.Value;
                 var comp = EnsureComp<MultipartMachinePartComponent>(partEnt);
                 comp.Master = null;
                 partsRemoved.Add(key, partEnt);
@@ -146,8 +145,9 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             if (part.Entity.HasValue)
             {
                 stateHasChanged = true;
-                clearedParts.Add(key, GetEntity(part.Entity.Value));
+                clearedParts.Add(key, part.Entity.Value);
                 part.Entity = null;
+                part.NetEntity = null;
             }
         }
         ent.Comp.IsAssembled = false;
@@ -335,7 +335,8 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
                 continue;
             }
 
-            part.Entity = GetNetEntity(entity);
+            part.Entity = entity;
+            part.NetEntity = GetNetEntity(entity);
             return true;
         }
 
