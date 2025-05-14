@@ -256,7 +256,7 @@
   - type: Replicator
     upgradeStage: 2
   - type: MovementSpeedModifier
-    baseWalkSpeed: 0.6 # these fellas are the tanks, they rely on the smaller guys stunning things for them.
+    baseWalkSpeed: 0.5 # these fellas are the tanks, they rely on the smaller guys stunning things for them.
     baseSprintSpeed: 4
   - type: Sprite
     drawDepth: Mobs
