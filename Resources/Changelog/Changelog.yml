@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Now all toys and bike horns make an appropriate sound.
-    type: Tweak
-  id: 7984
-  time: '2025-02-20T01:12:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33449
 - author: Zokkie
   changes:
   - message: Argocytes, Mimics, Butterflies, Bees, Space Kangaroos, Laser Raptors
@@ -3923,3 +3916,10 @@
   id: 8486
   time: '2025-05-14T21:06:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36437
+- author: archee1
+  changes:
+  - message: Bike horns of all varieties have had their textures updated slightly.
+    type: Tweak
+  id: 8487
+  time: '2025-05-14T22:05:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37413
