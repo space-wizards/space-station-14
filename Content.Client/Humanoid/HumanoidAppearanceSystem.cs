@@ -51,9 +51,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         var humanoidAppearance = entity.Comp1;
         var sprite = entity.Comp2;
 
-        if (!_sprite.LayerMapTryGet((entity.Owner, sprite), HumanoidVisualLayers.Eyes, out var index, false))
-            index = _sprite.LayerMapReserve((entity.Owner, sprite), HumanoidVisualLayers.Eyes);
-        sprite[index].Color = humanoidAppearance.EyeColor;
+        sprite[_sprite.LayerMapReserve((entity.Owner, sprite), HumanoidVisualLayers.Eyes)].Color = humanoidAppearance.EyeColor;
     }
 
     private static bool IsHidden(HumanoidAppearanceComponent humanoid, HumanoidVisualLayers layer)
@@ -103,9 +101,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         var component = entity.Comp1;
         var sprite = entity.Comp2;
 
-        var layerIndex = _sprite.LayerMapTryGet((entity.Owner, sprite), key, out var index, false)
-            ? index
-            : _sprite.LayerMapReserve((entity.Owner, sprite), key);
+        var layerIndex = _sprite.LayerMapReserve((entity.Owner, sprite), key);
         var layer = sprite[layerIndex];
         layer.Visible = !IsHidden(component, key);
 
