@@ -1,160 +1,160 @@
 {
-  "version": 1,
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b , cerberus by Alekshhh, real mouse by TheShuEd.  belt_displacement by Sparlight.",
-  "states": [
-    {
-      "name": "corgi",
-      "directions": 4
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b , cerberus by Alekshhh, real mouse by TheShuEd.  belt_displacement by Sparlight.",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "corgi-rest",
-      "directions": 4
-    },
-    {
-      "name": "corgi-dead"
-    },
-    {
-      "name": "ian",
-      "directions": 4
-    },
-    {
-      "name": "ian-dead"
-    },
-    {
-      "name": "corgi-collar-dead"
-    },
-    {
-      "name": "corgi-tag-dead"
-    },
-    {
-      "name": "ian-shaved",
-      "directions": 4
-    },
-    {
-      "name": "ian-shaved-dead"
-    },
-    {
-      "name": "corgi-collar",
-      "directions": 4
-    },
-    {
-      "name": "corgi-tag",
-      "directions": 4
-    },
-    {
-      "name": "lisa",
-      "directions": 4
-    },
-    {
-      "name": "lisa-dead"
-    },
-    {
-      "name": "lisa-shaved",
-      "directions": 4
-    },
-    {
-      "name": "lisa-shaved-dead"
-    },
-    {
-      "name": "narsian",
-      "directions": 4
-    },
-    {
-      "name": "narsian-dead",
-      "directions": 1
-    },
-    {
-      "name": "old_ian",
-      "directions": 4,
-      "delays": [
-        [
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "old_ian-dead"
-    },
-    {
-      "name": "old_ian-shaved",
-      "directions": 4,
-      "delays": [
-        [
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "old_ian-shaved-dead"
-    },
-    {
-      "name": "puppy",
-      "directions": 4
-    },
-    {
-      "name": "puppy-dead"
-    },
-    {
-      "name": "puppy-collar-dead"
-    },
-    {
-      "name": "puppy-tag-dead"
-    },
-    {
-      "name": "puppy-shaved",
-      "directions": 4
-    },
-    {
-      "name": "puppy-shaved-dead"
-    },
-    {
-      "name": "puppy-collar",
-      "directions": 4
-    },
-    {
-      "name": "puppy-tag",
-      "directions": 4
-    },
-    {
-      "name": "real_mouse",
-      "directions": 4
-    },
-    {
-      "name": "real_mouse-dead"
-    },
-    {
-      "name": "corgi-belt_displacement"
-    }
-  ]
+    "states": [
+        {
+            "name": "corgi",
+            "directions": 4
+        },
+        {
+            "name": "corgi-rest",
+            "directions": 4
+        },
+        {
+            "name": "corgi-dead"
+        },
+        {
+            "name": "ian",
+            "directions": 4
+        },
+        {
+            "name": "ian-dead"
+        },
+        {
+            "name": "corgi-collar-dead"
+        },
+        {
+            "name": "corgi-tag-dead"
+        },
+        {
+            "name": "ian-shaved",
+            "directions": 4
+        },
+        {
+            "name": "ian-shaved-dead"
+        },
+        {
+            "name": "corgi-collar",
+            "directions": 4
+        },
+        {
+            "name": "corgi-tag",
+            "directions": 4
+        },
+        {
+            "name": "lisa",
+            "directions": 4
+        },
+        {
+            "name": "lisa-dead"
+        },
+        {
+            "name": "lisa-shaved",
+            "directions": 4
+        },
+        {
+            "name": "lisa-shaved-dead"
+        },
+        {
+            "name": "narsian",
+            "directions": 4
+        },
+        {
+            "name": "narsian-dead",
+            "directions": 1
+        },
+        {
+            "name": "old_ian",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "old_ian-dead"
+        },
+        {
+            "name": "old_ian-shaved",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "old_ian-shaved-dead"
+        },
+        {
+            "name": "puppy",
+            "directions": 4
+        },
+        {
+            "name": "puppy-dead"
+        },
+        {
+            "name": "puppy-collar-dead"
+        },
+        {
+            "name": "puppy-tag-dead"
+        },
+        {
+            "name": "puppy-shaved",
+            "directions": 4
+        },
+        {
+            "name": "puppy-shaved-dead"
+        },
+        {
+            "name": "puppy-collar",
+            "directions": 4
+        },
+        {
+            "name": "puppy-tag",
+            "directions": 4
+        },
+        {
+            "name": "real_mouse",
+            "directions": 4
+        },
+        {
+            "name": "real_mouse-dead"
+        },
+        {
+            "name": "corgi-belt_displacement"
+        }
+    ]
 }

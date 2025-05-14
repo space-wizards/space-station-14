@@ -1,93 +1,93 @@
 {
-  "version": 1,
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Deer by Calciumtrice, usable under Creative Commons Attribution 3.0 license, from https://opengameart.org/content/deer, edited by IProduceWidgets (github)",
-  "states": [
-    {
-      "name": "buck-moving",
-      "directions": 4,
-      "delays": [
-        [
-          1,
-          0.2,
-          0.2,
-          0.2,
-		  0.2
-        ],
-        [
-          1,
-          0.2,
-          0.2,
-          0.2,
-		  0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-		  1
-        ],
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          1
-        ]
-      ]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Deer by Calciumtrice, usable under Creative Commons Attribution 3.0 license, from https://opengameart.org/content/deer, edited by IProduceWidgets (github)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-	{
-	  "name": "buck",
-	  "directions": 4
-	},
-    {
-      "name": "buck-dead"
-    },
-    {
-      "name": "doe-moving",
-      "directions": 4,
-      "delays": [
-        [
-          1,
-          0.2,
-          0.2,
-          0.2,
-		  0.2
-        ],
-        [
-          1,
-          0.2,
-          0.2,
-          0.2,
-		  0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-		  1
-        ],
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          1
-        ]
-      ]
-    },
-	{
-	  "name": "doe",
-	  "directions": 4
-	},
-    {
-      "name": "doe-dead"
-    }
-  ]
+    "states": [
+        {
+            "name": "buck-moving",
+            "directions": 4,
+            "delays": [
+                [
+                    1,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    1,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    1
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "buck",
+            "directions": 4
+        },
+        {
+            "name": "buck-dead"
+        },
+        {
+            "name": "doe-moving",
+            "directions": 4,
+            "delays": [
+                [
+                    1,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    1,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    1
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "doe",
+            "directions": 4
+        },
+        {
+            "name": "doe-dead"
+        }
+    ]
 }

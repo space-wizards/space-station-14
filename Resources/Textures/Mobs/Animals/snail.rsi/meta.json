@@ -1,32 +1,32 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Created by Kezu (discord) & IProduceWidgets (github)",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "snail",
-      "directions": 4
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by Kezu (discord) & IProduceWidgets (github)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "snail-dead"
-    },
-	{
-      "name": "speed",
-      "directions": 4
-    },
-    {
-      "name": "speed-dead"
-    },
-    {
-      "name": "snoth",
-      "directions": 4
-    },
-    {
-      "name": "snoth-dead"
-    }
-  ]
+    "states": [
+        {
+            "name": "snail",
+            "directions": 4
+        },
+        {
+            "name": "snail-dead"
+        },
+        {
+            "name": "speed",
+            "directions": 4
+        },
+        {
+            "name": "speed-dead"
+        },
+        {
+            "name": "snoth",
+            "directions": 4
+        },
+        {
+            "name": "snoth-dead"
+        }
+    ]
 }

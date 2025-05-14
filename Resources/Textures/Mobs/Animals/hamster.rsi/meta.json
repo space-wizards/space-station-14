@@ -1,70 +1,70 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Created by brainfood# 7460, hamster-0 resprite by RamZ (discord), inhands resprited by Vermidia.",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by brainfood# 7460, hamster-0 resprite by RamZ (discord), inhands resprited by Vermidia.",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "hamster",
-      "directions": 4
-    },
-    {
-      "name": "hamster-moving",
-      "directions": 4,
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2
-        ]
-      ]
-    },
-    {
-      "name": "crit"
-    },
-    {
-      "name": "dead"
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "hamster",
+            "directions": 4
+        },
+        {
+            "name": "hamster-moving",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "crit"
+        },
+        {
+            "name": "dead"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
 }

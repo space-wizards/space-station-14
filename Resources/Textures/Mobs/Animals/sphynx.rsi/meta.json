@@ -1,22 +1,19 @@
 {
-  "version": 1,
-  "size":
-  {
-    "x": 32,
-    "y": 32
-  },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Made by Emisse in aseprite for SS14",
-  "states":
-  [
-    {
-      "name": "sphynx",
-      "directions": 4
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by Emisse in aseprite for SS14",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-
-    {
-      "name": "sphynx-dead",
-      "directions": 1
-    }
-  ]
+    "states": [
+        {
+            "name": "sphynx",
+            "directions": 4
+        },
+        {
+            "name": "sphynx-dead",
+            "directions": 1
+        }
+    ]
 }

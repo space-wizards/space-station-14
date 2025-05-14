@@ -1,113 +1,113 @@
 {
-	"version": 1,
-	"size": {
-		"x": 32,
-		"y": 32
-	},
-	"license": "CC-BY-SA-3.0",
-	"copyright": "Taken from https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b",
-	"states": [
-		{
-			"name": "penguin",
-			"directions": 4,
-			"delays": [
-				[
-					1.0
-				],
-				[
-					1.0
-				],
-				[
-					1.0
-				],
-				[
-					1.0
-				]
-			]
-		},
-		{
-			"name": "babypenguin",
-			"directions": 4,
-			"delays": [
-				[
-					1.0
-				],
-				[
-					1.0
-				],
-				[
-					1.0
-				],
-				[
-					1.0
-				]
-			]
-		},
-		{
-			"name": "babypenguin-crit",
-			"delays": [
-				[
-					1.0
-				]
-			]
-		},
-		{
-			"name": "babypenguin-dead",
-			"delays": [
-				[
-					1.0
-				]
-			]
-		},
-		{
-			"name": "penguin-crit",
-			"delays": [
-				[
-					1.0
-				]
-			]
-		},
-		{
-			"name": "penguin-dead",
-			"delays": [
-				[
-					1.0
-				]
-			]
-		},
-		{
-			"name": "egg",
-			"delays": [
-				[
-					1.0
-				]
-			]
-		},
-		{
-			"name": "eggshell",
-			"delays": [
-				[
-					1.0
-				]
-			]
-		},
-		{
-			"name": "penguin-shamebrero",
-			"directions": 4,
-			"delays": [
-				[
-					1.0
-				],
-				[
-					1.0
-				],
-				[
-					1.0
-				],
-				[
-					1.0
-				]
-			]
-		}
-	]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "penguin",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "babypenguin",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "babypenguin-crit",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "babypenguin-dead",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "penguin-crit",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "penguin-dead",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "egg",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "eggshell",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "penguin-shamebrero",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        }
+    ]
 }
