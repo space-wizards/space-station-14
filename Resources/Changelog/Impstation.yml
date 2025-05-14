@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Mail support has been added to Plasma for real this time I promise.
-    type: Add
-  id: 1169
-  time: '2025-02-20T02:50:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1750
 - author: mqole
   changes:
   - message: Supply Assistants will now properly spawn in Cargo.
@@ -4189,3 +4182,10 @@
   id: 1668
   time: '2025-05-14T05:39:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2489
+- author: hivehum
+  changes:
+  - message: Botanists can now brew beer.
+    type: Add
+  id: 1669
+  time: '2025-05-14T05:42:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2430
