@@ -7,7 +7,7 @@
         - to: bagPet
           steps:
             - tag: Backpack
-              name: Backpack
+              name: construction-graph-tag-backpack
               icon:
                 sprite: Clothing/Back/Backpacks/backpack.rsi
                 state: icon
