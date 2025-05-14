@@ -4,7 +4,7 @@ meta:
   engineVersion: 255.0.0
   forkId: Starlight
   forkVersion: 1732131340
-  time: 05/14/2025 07:45:48
+  time: 05/14/2025 08:00:53
   entityCount: 14321
 maps:
 - 14320
@@ -8885,7 +8885,7 @@ entities:
   - uid: 13265
     components:
     - type: Transform
-      pos: 23.03569,17.459896
+      pos: 22.748133,17.355656
       parent: 4812
   - uid: 13656
     components:
@@ -12479,7 +12479,7 @@ entities:
   - uid: 9501
     components:
     - type: Transform
-      pos: 22.50444,17.647528
+      pos: 22.2273,17.709822
       parent: 4812
   - uid: 13721
     components:
@@ -67149,7 +67149,7 @@ entities:
   - uid: 13255
     components:
     - type: Transform
-      pos: 23.53569,17.595407
+      pos: 22.831465,17.813988
       parent: 4812
 - proto: HandheldHealthAnalyzer
   entities:
@@ -79656,6 +79656,13 @@ entities:
     - type: Transform
       pos: -21.5,-22.5
       parent: 4812
+- proto: SLVendingMachineSalvage
+  entities:
+  - uid: 9459
+    components:
+    - type: Transform
+      pos: 23.5,17.5
+      parent: 4812
 - proto: SLVendingMachineSecurity
   entities:
   - uid: 11081
@@ -82945,11 +82952,6 @@ entities:
     components:
     - type: Transform
       pos: -39.5,10.5
-      parent: 4812
-  - uid: 9459
-    components:
-    - type: Transform
-      pos: 23.5,17.5
       parent: 4812
   - uid: 9585
     components:
