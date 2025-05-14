@@ -216,9 +216,9 @@ public abstract partial class SharedStunSystem : EntitySystem
         else
         {
             RefreshKnockedMovement((uid, component), standing);
+
             // TODO: This cancellation does not predict on the client at all
             DoAfter.Cancel(component.DoAfter);
-            component.DoAfter = null;
         }
 
         var knockedEv = new KnockedDownEvent()
