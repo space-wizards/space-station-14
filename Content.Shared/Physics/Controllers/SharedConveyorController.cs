@@ -181,14 +181,14 @@ public abstract class SharedConveyorController : VirtualController
                     _mover.Friction(0f, frameTime: frameTime, friction: 10f, ref angularVelocity);
                 }
 
-                SharedMoverController.Accelerate(ref velocity, targetDir, 10f, frameTime);
+                SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
             }
             else if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
             {
                 // Need friction to outweigh the movement as it will bounce a bit against the wall.
                 // This facilitates being able to sleep entities colliding into walls.
-                _mover.Friction(0f, frameTime: frameTime, friction: 20f, ref velocity);
-                _mover.Friction(0f, frameTime: frameTime, friction: 20f, ref angularVelocity);
+                _mover.Friction(0f, frameTime: frameTime, friction: 40f, ref velocity);
+                _mover.Friction(0f, frameTime: frameTime, friction: 40f, ref angularVelocity);
             }
 
             PhysicsSystem.SetAngularVelocity(ent.Entity.Owner, angularVelocity);
