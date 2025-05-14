@@ -77,7 +77,8 @@ public abstract class SharedConveyorController : VirtualController
 
         var bodyCompensation = 1f;
 
-        if (TryComp<MovementSpeedModifierComponent>(ent, out var move))
+        if (TryComp<MovementSpeedModifierComponent>(ent, out var move)
+            && !MathHelper.CloseTo(move.BaseFriction, MovementSpeedModifierComponent.DefaultFriction))
             bodyCompensation *= move.BaseFriction / MovementSpeedModifierComponent.DefaultFriction;
 
         args.MobFriction = 0.5f * bodyCompensation;
