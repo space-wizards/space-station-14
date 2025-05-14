@@ -5556,4 +5556,177 @@ Entries:
   id: 770
   time: '2025-05-06T15:24:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/593
+- author: Happyrobot33
+  changes:
+  - message: Tweaked minimum chat window size in separated to remove letterboxing.
+    type: Tweak
+  id: 771
+  time: '2025-05-07T04:18:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/584
+- author: PubliclyExecutedPig
+  changes:
+  - message: Updated the Gamma Armoury!
+    type: Tweak
+  id: 772
+  time: '2025-05-07T04:23:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/587
+- author: Happyrobot33
+  changes:
+  - message: Fixed Thermal vision and flash immunity system. Again.
+    type: Fix
+  id: 773
+  time: '2025-05-07T04:29:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/588
+- author: Happyrobot33
+  changes:
+  - message: All puddles will now be transparent regardless of if its blood or not.
+    type: Tweak
+  id: 774
+  time: '2025-05-07T04:45:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/589
+- author: CringeCursed
+  changes:
+  - message: pop up message on surgeon actions
+    type: Add
+  id: 775
+  time: '2025-05-07T17:56:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/597
+- author: Happyrobot33
+  changes:
+  - message: Added mail routing default prototypes for mappers.
+    type: Add
+  id: 776
+  time: '2025-05-07T19:55:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/582
+- author: Happyrobot33
+  changes:
+  - message: Added wildcard mode to disposal routers.
+    type: Add
+  id: 777
+  time: '2025-05-07T19:55:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/581
+- author: RoadTrain
+  changes:
+  - message: Added construction step for exosuit air tank to HAMTR.
+    type: Add
+  id: 778
+  time: '2025-05-08T21:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/592
+- author: RoadTrain
+  changes:
+  - message: Fixed typo 'calrke chassis'.
+    type: Fix
+  id: 779
+  time: '2025-05-08T21:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/592
+- author: RoadTrain
+  changes:
+  - message: 'Fixed Clarke''s left arm and right arm being swapped internally.:'
+    type: Fix
+  id: 780
+  time: '2025-05-08T21:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/592
+- author: RoadTrain
+  changes:
+  - message: Fixed pressurization not working for Durand, Hamtr, Gygax & Ripley mk
+      II.
+    type: Fix
+  id: 781
+  time: '2025-05-08T21:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/592
+- author: vlorgan
+  changes:
+  - message: Admeme botany shuttle
+    type: Add
+  id: 782
+  time: '2025-05-09T15:38:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/605
+- author: CringeCursed
+  changes:
+  - message: Signing system for paperwork
+    type: Add
+  id: 783
+  time: '2025-05-09T16:09:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/599
+- author: RoadTrain
+  changes:
+  - message: Changed Paddy's description to say it's derived from the Ripley MK-II
+      given it's airtight.
+    type: Tweak
+  id: 784
+  time: '2025-05-09T16:10:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/607
+- author: RoadTrain
+  changes:
+  - message: Fixed Exosuit Upgrade Kit not working. Also allows for new mech upgrade
+      kits to be introduced.
+    type: Fix
+  id: 785
+  time: '2025-05-09T17:52:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/606
+- author: Happyrobot33
+  changes:
+  - message: You can see your hivemind ID in the C menu now.
+    type: Add
+  id: 786
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Hiveminds now have TTS.
+    type: Tweak
+  id: 787
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Paradox clones now have the proper ID number for collective minds.
+    type: Fix
+  id: 788
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Collective minds are validated without needing to send a message first
+      now.
+    type: Fix
+  id: 789
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Shared hivemind for space dragon and space carps works properly now.
+    type: Fix
+  id: 790
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Changed chatbox minimum width to be configurable via settings.
+    type: Tweak
+  id: 791
+  time: '2025-05-10T04:54:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/602
+- author: Happyrobot33
+  changes:
+  - message: Fixed Escape Pod docking logic.
+    type: Fix
+  id: 792
+  time: '2025-05-10T04:58:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/609
+- author: Happyrobot33
+  changes:
+  - message: Rewrote entire vision overlay system for stability and maintainability
+      reasons.
+    type: Fix
+  id: 793
+  time: '2025-05-10T05:02:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/600
+- author: Happyrobot33
+  changes:
+  - message: Fixed issue with collective mind ID selection.
+    type: Fix
+  id: 794
+  time: '2025-05-10T07:04:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/610
 

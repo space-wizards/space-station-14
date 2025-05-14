@@ -8,7 +8,8 @@
   - type: Icon
     sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
     state: cyclorite
-  - type: CycloritesVision
+  - type: CycloriteVision
+  - type: NightVision
   - type: Thirst
   - type: Butcherable
     butcheringType: Spike
