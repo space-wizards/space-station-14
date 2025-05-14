@@ -165,7 +165,7 @@ namespace Content.Client.Atmos.Overlays
                 xformQuery,
                 _xformSys);
 
-            var mapUid = _mapSystem.GetMap(args.MapId);
+            var mapUid = _mapSystem.GetMapOrInvalid(args.MapId);
 
             if (_entManager.TryGetComponent<MapAtmosphereComponent>(mapUid, out var atmos))
                 DrawMapOverlay(drawHandle, args, mapUid, atmos);
