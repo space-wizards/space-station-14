@@ -51,15 +51,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
                 out PipeNode? inletPipeNode,
                 out PipeNode? outletPipeNode))
         {
-            // Prevent spamming updates if the valve is already disabled.
-            if (valveEntity.Comp.Enabled)
-            {
-                valveEntity.Comp.Enabled = false;
-                _ambientSound.SetAmbience(valveEntity, false);
-                UpdateAppearance(valveEntity);
-                DirtyField(valveEntity!, nameof(valveEntity.Comp.Enabled));
-            }
-
+            ChangeStatus(false, valveEntity);
             return;
         }
 
@@ -82,21 +74,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         if (p1 <= valveEntity.Comp.Threshold || p2 >= p1)
         {
-            // If the valve's state has actually changed, we need to update it.
-            if (valveEntity.Comp.Enabled)
-            {
-                // We set this early, otherwise UpdateAppearance will see it as enabled
-                valveEntity.Comp.Enabled = false;
-                _ambientSound.SetAmbience(valveEntity, false);
-                UpdateAppearance(valveEntity);
-                valveEntity.Comp.FlowRate = 0;
-
-                DirtyFields(valveEntity,
-                    valveEntity.Comp,
-                    MetaData(valveEntity),
-                    nameof(valveEntity.Comp.FlowRate),
-                    nameof(valveEntity.Comp.Enabled));
-            }
+            ChangeStatus(false, valveEntity);
             return;
         }
 
@@ -134,15 +112,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         valveEntity.Comp.FlowRate = MathF.Round(actualVolumeToTransfer * args.dt, 1);
         DirtyField(valveEntity, valveEntity.Comp, nameof(valveEntity.Comp.FlowRate));
 
-        // Prevent spamming updates if the valve is already enabled.
-        if (!valveEntity.Comp.Enabled)
-        {
-            valveEntity.Comp.Enabled = true;
-            // The valve state has changed since the last run, so update it.
-            _ambientSound.SetAmbience(valveEntity, true);
-            UpdateAppearance(valveEntity);
-            DirtyField(valveEntity, valveEntity.Comp, nameof(valveEntity.Comp.Enabled));
-        }
+        ChangeStatus(true, valveEntity);
     }
 
     /// <summary>
@@ -158,5 +128,36 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         _appearance.SetData(valveEntity,
             PressureReliefValveVisuals.State,
             valveEntity.Comp1.Enabled);
+    }
+
+    /// <summary>
+    /// Updates the valve's appearance and sound based on its current state, while
+    /// also preventing network spamming.
+    /// </summary>
+    /// <param name="enabled">The new state to set on the valve</param>
+    /// <param name="valveEntity">The valve to update</param>
+    private void ChangeStatus(bool enabled, Entity<GasPressureReliefValveComponent> valveEntity)
+    {
+        // We need to prevent spamming the network with updates, so only check if we've
+        // switched states.
+        if (valveEntity.Comp.Enabled != enabled)
+        {
+            valveEntity.Comp.Enabled = enabled;
+            _ambientSound.SetAmbience(valveEntity, enabled);
+            UpdateAppearance(valveEntity);
+
+            if (!enabled)
+            {
+                valveEntity.Comp.FlowRate = 0;
+                DirtyFields(valveEntity,
+                    valveEntity.Comp,
+                    MetaData(valveEntity),
+                    nameof(valveEntity.Comp.FlowRate),
+                    nameof(valveEntity.Comp.Enabled));
+                return;
+            }
+
+            DirtyField(valveEntity!, nameof(valveEntity.Comp.Enabled));
+        }
     }
 }
