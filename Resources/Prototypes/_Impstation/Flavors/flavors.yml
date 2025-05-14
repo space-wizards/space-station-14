@@ -197,3 +197,8 @@
   id: supermixerpsych
   flavorType: Complex
   description: flavor-complex-supermixerpsych
+
+- type: flavor
+  id: moonrise
+  flavorType: Complex
+  description: flavor-complex-moonrise

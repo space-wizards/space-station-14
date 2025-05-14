@@ -49,3 +49,5 @@ flavor-complex-sleepytimejunction = like sweet dreams and cream
 flavor-complex-weldingcoils = electrifying
 flavor-complex-supermixer = boringly sweet
 flavor-complex-supermixerpsych = like a psychiatric appointment
+
+flavor-complex-moonrise = like sweet nostalgia

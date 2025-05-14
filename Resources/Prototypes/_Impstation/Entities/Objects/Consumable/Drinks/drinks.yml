@@ -607,3 +607,19 @@
   - type: Icon
     sprite: _Impstation/Objects/Consumable/Drinks/supermixerpsych.rsi
     state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkMoonrise
+  suffix: moonrise
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Moonrise
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/moonrise.rsi
+    state: icon

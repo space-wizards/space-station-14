@@ -108,3 +108,37 @@
         reagent: Psicodine
         amount: 0.10
   fizziness: 0.8
+
+- type: reagent
+  id: Moonrise
+  name: reagent-name-moonrise
+  parent: BaseSoda
+  desc: reagent-desc-moonrise
+  physicalDesc: reagent-physical-desc-frosty
+  flavor: moonrise
+  color: "#ff9e9e"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/moonrise.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:Emote
+        conditions:
+        - !type:OrganType
+          type: Slime
+          shouldHave: true
+        emote: Pop
+        showInChat: true
+        force: true
+        probability: 0.35
+    Poison:
+      effects:
+        - !type:AdjustTemperature
+          amount: -200 # thermal energy, not temp
+  fizziness: 0.3

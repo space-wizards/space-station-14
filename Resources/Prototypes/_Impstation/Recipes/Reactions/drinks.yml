@@ -92,7 +92,7 @@
 - type: reaction #if this recipe ever causes test fail again you should just kill her
   id: Rotgut
   requiredMixerCategories:
-    - Stir 
+    - Stir
   reactants:
     Water:
       amount: 1
@@ -534,3 +534,18 @@
       amount: 1
   products:
     Supermixerpsych: 3
+
+- type: reaction
+  id: Moonrise
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    HummingBird:
+      amount: 1
+    JuiceWatermelon:
+      amount: 1
+    Cream:
+      amount: 1
+  products:
+    Moonrise: 3
+
