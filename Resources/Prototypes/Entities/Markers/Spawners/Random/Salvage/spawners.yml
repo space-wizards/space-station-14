@@ -542,7 +542,8 @@
     table: !type:GroupSelector
       children:
       - id: MobGoliath
-        weight: 65
+        weight: 45
       - id: MobHivelord
         weight: 35
-
+      - id: MobBasilisk
+        weight: 20

@@ -111,15 +111,18 @@ namespace Content.Shared.Friction
                 PhysicsSystem.SetAngularDamping(uid, body, friction);
 
                 if (body.BodyType != BodyType.KinematicController)
-                    return;
+                    continue;
 
                 // Physics engine doesn't apply damping to Kinematic Controllers so we have to do it here.
                 // BEWARE YE TRAVELLER:
                 // You may think you can just pass the body.LinearVelocity to the Friction function and edit it there!
                 // But doing so is unpredicted! And you will doom yourself to 1000 years of rubber banding!
                 var velocity = body.LinearVelocity;
+                var angVelocity = body.AngularVelocity;
                 _mover.Friction(0f, frameTime, friction, ref velocity);
+                _mover.Friction(0f, frameTime, friction, ref angVelocity);
                 PhysicsSystem.SetLinearVelocity(uid, velocity, body: body);
+                PhysicsSystem.SetAngularVelocity(uid, angVelocity, body: body);
             }
         }
 
