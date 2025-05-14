@@ -8,7 +8,6 @@ namespace Content.Shared.Atmos.Piping.Binary.Systems;
 
 public abstract class SharedGasValveSystem : EntitySystem
 {
-
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -16,15 +15,15 @@ public abstract class SharedGasValveSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GasValveComponent, ComponentStartup>(OnInit);
+        SubscribeLocalEvent<GasValveComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<GasValveComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<GasValveComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnInit(EntityUid uid, GasValveComponent component, ComponentStartup args)
+    private void OnStartup(Entity<GasValveComponent> ent, ref ComponentStartup args)
     {
         // We call set in startup so it sets the appearance, node state, etc.
-        Set(uid, component, component.Open);
+        Set(ent.Owner, ent.Comp, ent.Comp.Open);
     }
 
     public virtual void Set(EntityUid uid, GasValveComponent component, bool value)
@@ -43,13 +42,13 @@ public abstract class SharedGasValveSystem : EntitySystem
         Set(uid, component, !component.Open);
     }
 
-    private void OnActivate(EntityUid uid, GasValveComponent component, ActivateInWorldEvent args)
+    private void OnActivate(Entity<GasValveComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
             return;
 
-        Toggle(uid, component);
-        _audio.PlayPredicted(component.ValveSound, uid, args.User, AudioParams.Default.WithVariation(0.25f));
+        Toggle(ent.Owner, ent.Comp);
+        _audio.PlayPredicted(ent.Comp.ValveSound, ent.Owner, args.User, AudioParams.Default.WithVariation(0.25f));
         args.Handled = true;
     }
 
