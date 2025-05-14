@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: Supply Assistants will now properly spawn in Cargo.
-    type: Fix
-  id: 1170
-  time: '2025-02-20T03:01:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1752
 - author: Pinkbat5
   changes:
   - message: Suspicious beacons are no longer contraband.
@@ -4189,3 +4182,12 @@
   id: 1669
   time: '2025-05-14T05:42:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2430
+- author: TheLuggage05
+  changes:
+  - message: New option to purchase SAW ammo, but you have to load it yourself.
+    type: Add
+  - message: Mosin ammo in the uplink now gives the correct kind of ammo.
+    type: Fix
+  id: 1670
+  time: '2025-05-14T13:05:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2488
