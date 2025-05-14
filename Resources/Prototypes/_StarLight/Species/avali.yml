@@ -8,9 +8,14 @@
   markingLimits: MobAvaliMarkingLimits
   dollPrototype: MobAvaliDummy
   skinColoration: Hues
-  maleFirstNames: names_avali_unisex
-  femaleFirstNames: names_avali_unisex
-  naming: First
+  maleFirstNames: names_avali_first
+  femaleFirstNames: names_avali_first
+  lastNames: names_avali_packs
+  naming: FirstLast
+  minAge: 23
+  youngAge: 103
+  oldAge: 257
+  maxAge: 430
 
 - type: speciesBaseSprites
   id: MobAvaliSprites

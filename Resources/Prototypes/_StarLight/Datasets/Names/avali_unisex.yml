@@ -1,23 +1,11 @@
-- type: dataset
-  id: names_avali_unisex
+- type: localizedDataset
+  id: names_avali_first
   values:
-  - Ko
-  - Nomi
-  - Jasyo
-  - Nesuli
-  - Eikii
-  - Runo
-  - Khauni
-  - Eilun
-  - Rhaun
-  - Halan
-  - Nahami
-  - Halyu
-  - Kala
-  - Renala
-  - Eitun
-  - Nesomi
-  - Ralomi
-  - Kazo
-  - Jasuni
-  - Ruko
+    prefix: names-avali-first-dataset-
+    count: 20
+
+- type: localizedDataset
+  id: names_avali_packs
+  values:
+    prefix: names-avali-packs-dataset-
+    count: 14
