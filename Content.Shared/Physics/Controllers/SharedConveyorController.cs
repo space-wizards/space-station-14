@@ -395,7 +395,7 @@ public abstract class SharedConveyorController : VirtualController
 
             var other = contact.OtherEnt(ent.Owner);
 
-            if (_conveyorQuery.HasComp(other))
+            if (_conveyorQuery.TryComp(other, out var comp) && CanRun(comp))
                 return true;
         }
 
