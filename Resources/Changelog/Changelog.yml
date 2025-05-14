@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Booblesnoot42
-  changes:
-  - message: When removing encryption keys from an intercom, excess keys will now
-      be dropped at the remover's feet instead of dropping inside the wall.
-    type: Fix
-  id: 7981
-  time: '2025-02-19T13:46:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34582
 - author: cerebralerror, robinthedragon
   changes:
   - message: 'New barsigns: Maltroach (based on sign by MoffNyan, from tgstation)
@@ -3923,3 +3915,11 @@
   id: 8483
   time: '2025-05-14T19:33:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37212
+- author: LaCumbiaDelCoronavirus
+  changes:
+  - message: Maximum radius (not diameter) of atmos tank explosions has been increased
+      to 10 tiles, however the scale of their increase in size has been decreased.
+    type: Tweak
+  id: 8484
+  time: '2025-05-14T19:49:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36780
