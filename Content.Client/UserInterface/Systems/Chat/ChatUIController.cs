@@ -428,7 +428,7 @@ public sealed partial class ChatUIController : UIController
     private void OnAttachedChanged(EntityUid uid)
     {
         UpdateChannelPermissions();
-        
+
         UpdateAutoFillHighlights();
     }
 

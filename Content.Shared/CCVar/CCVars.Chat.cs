@@ -65,7 +65,7 @@ public sealed partial class CCVars
             "",
             CVar.SERVER | CVar.SERVERONLY | CVar.ARCHIVE,
             "A message broadcast to each player that joins the lobby.");
-    
+
     /// <summary>
     /// A string containing a list of newline-separated words to be highlighted in the chat.
     /// </summary>

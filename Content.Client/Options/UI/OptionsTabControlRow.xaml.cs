@@ -120,7 +120,7 @@ public sealed partial class OptionsTabControlRow : Control
     {
         return AddOption(new OptionSliderFloatCVar(this, _cfg, cVar, slider, min, max, scale, FormatPercent));
     }
-    
+
     /// <summary>
     /// Add a color slider option, backed by a simple string CVar.
     /// </summary>

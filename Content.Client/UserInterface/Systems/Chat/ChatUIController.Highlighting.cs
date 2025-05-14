@@ -63,7 +63,7 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
     {
         if (!_autoFillHighlightsEnabled)
             return;
-        
+
         // If auto highlights are enabled generate a request for new character info
         // that will be used to determine the highlights.
         _charInfoIsAttach = true;
