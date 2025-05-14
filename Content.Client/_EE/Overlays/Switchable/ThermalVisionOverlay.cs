@@ -10,6 +10,7 @@ using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using Content.Shared._Impstation.Replicator;
 
 namespace Content.Client._EE.Overlays.Switchable;
 
@@ -94,6 +95,10 @@ public sealed class ThermalVisionOverlay : Overlay
             if (_container.TryGetOuterContainer(uid, xform, out var container))
             {
                 var owner = container.Owner;
+
+                if (_entity.HasComponent<ReplicatorNestComponent>(owner)) // imp - blacklist ReplicatorNests.
+                    continue;
+
                 if (_entity.TryGetComponent<SpriteComponent>(owner, out var ownerSprite)
                     && _entity.TryGetComponent<TransformComponent>(owner, out var ownerXform))
                 {

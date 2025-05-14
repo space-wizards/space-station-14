@@ -60,10 +60,10 @@ public sealed partial class ReplicatorNestComponent : Component
     public int BonusPointsHumanoid = 2;
     /// <summary>
     /// The number of points required to spawn a new replicator. 
-    /// Does not increase over time.
+    /// Increases linearly with the number of unclaimed ghostroles. 
     /// </summary>
     [DataField]
-    public int SpawnNewAt = 20;
+    public int SpawnNewAt = 30;
     /// <summary>
     /// The number of points required to upgrade existing replicators & the nest itself.
     /// Multiplied by current nest level.
@@ -98,6 +98,7 @@ public sealed partial class ReplicatorNestComponent : Component
     public int NextUpgradeAt;
     [DataField, AutoNetworkedField]
     public bool NeedsUpdate;
+    public ReplicatorNestPointsStorageComponent PointsStorage;
 }
 
 [Serializable, NetSerializable]

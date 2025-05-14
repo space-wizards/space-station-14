@@ -6,8 +6,10 @@ laws-owner-replicatorhive = the Replicator hive.
 replicator-on-replicator-attack-fail = You cannot harm your kin.
 replicator-on-nest-attack-fail = You cannot harm the nest.
 
-replicator-nest-end-of-round = The Replicator nest near {$location} grew to [color=teal]Level {$level}[/color] and collected a total of [color=teal]{$points} points[/color].
-                               It spawned a total of [color=teal]{$replicators}[/color] Replicators.
+replicator-nest-end-of-round = The Replicator Nest near [color=#d70aa0]{$location}[/color]:
+                               - Grew to [color=#d70aa0]Level {$level}[/color].
+                               - Produced a total of [color=#d70aa0]{$replicators} Replicators[/color].
+                               - Amassed a total of [color=#d70aa0]{$points} points[/color].
 
 replicator-upgrade-t1-self = Nanites buzz around you. You can evolve.
 replicator-upgrade-t1-others = {CAPITALIZE(THE($replicator))} clicks and whirrs softly.

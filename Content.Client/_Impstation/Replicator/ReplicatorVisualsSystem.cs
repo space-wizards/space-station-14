@@ -4,6 +4,8 @@
 
 using Content.Shared._Impstation.Replicator;
 using Content.Shared.CombatMode;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 using Robust.Client.GameObjects;
 
 namespace Content.Client._Impstation.Replicator;
@@ -11,6 +13,7 @@ namespace Content.Client._Impstation.Replicator;
 public sealed class ReplicatorVisualsSystem : EntitySystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -18,6 +21,7 @@ public sealed class ReplicatorVisualsSystem : EntitySystem
 
         SubscribeLocalEvent<ReplicatorComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<ReplicatorComponent, ToggleCombatActionEvent>(OnToggleCombat);
+        SubscribeLocalEvent<ReplicatorComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
     /// <summary>
@@ -42,6 +46,15 @@ public sealed class ReplicatorVisualsSystem : EntitySystem
             return;
         if (!args.Sprite.LayerMapTryGet(ReplicatorVisuals.Combat, out var layer))
             return;
-        args.Sprite.LayerSetVisible(layer, combat.IsInCombatMode);
+        // turn on combat visuals if the mob is alive and in combat mode. otherwise turn them off
+        args.Sprite.LayerSetVisible(layer, _mobState.IsAlive(ent) && combat.IsInCombatMode);
+    }
+
+    private void OnMobStateChanged(Entity<ReplicatorComponent> ent, ref MobStateChangedEvent args)
+    {
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
+            return;
+
+        _appearance.OnChangeData(ent, sprite);
     }
 }
