@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Alert;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -45,7 +46,7 @@ public abstract partial class SharedStunSystem
         SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandAttempt);
 
         // Helping people stand up
-        SubscribeLocalEvent<KnockedDownComponent, InteractHandEvent>(OnInteractHand);
+        //SubscribeLocalEvent<KnockedDownComponent, InteractHandEvent>(OnInteractHand);
 
         // Updating movement a friction
         SubscribeLocalEvent<KnockedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshKnockedSpeed);
@@ -56,7 +57,9 @@ public abstract partial class SharedStunSystem
 
         // DoAfter event subscriptions
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
-        SubscribeLocalEvent<KnockedDownComponent, KnockedDownEvent>(OnSubsequentKnockdown);
+
+        // Knockdown Extenders
+        SubscribeLocalEvent<KnockedDownComponent, DamageChangedEvent>(OnDamaged);
 
         // Handling Alternative Inputs
         SubscribeAllEvent<ForceStandUpEvent>(OnForceStandup);
@@ -124,6 +127,8 @@ public abstract partial class SharedStunSystem
         if (!Resolve(entity, ref entity.Comp, false) || !TryComp<StandingStateComponent>(entity, out var state))
             return true;
 
+        id = entity.Comp.DoAfter;
+
         if (!CanStand((entity.Owner, entity.Comp)))
             return false;
 
@@ -149,7 +154,7 @@ public abstract partial class SharedStunSystem
 
     private bool CanStand(Entity<KnockedDownComponent> entity)
     {
-        if (entity.Comp.NextUpdate >= GameTiming.CurTime)
+        if (entity.Comp.NextUpdate > GameTiming.CurTime)
             return false;
 
         return !StandingBlocked(entity);
@@ -307,6 +312,22 @@ public abstract partial class SharedStunSystem
 
     #endregion
 
+    #region Knockdown Extenders
+
+    private void OnDamaged(Entity<KnockedDownComponent> entity, ref DamageChangedEvent args)
+    {
+        // We only want to extend our knockdown timer if it would've prevented us from standing up
+        if (!args.InterruptsDoAfters || !args.DamageIncreased || args.DamageDelta == null || GameTiming.ApplyingState)
+            return;
+
+        var delta = args.DamageDelta.GetTotal();
+
+        if (delta >= 5) // TODO: Unhardcode this
+            entity.Comp.NextUpdate = GameTiming.CurTime + TimeSpan.FromSeconds(0.5f);
+    }
+
+    #endregion
+
     #region Action Blockers
 
     private void OnStandAttempt(Entity<KnockedDownComponent> entity, ref StandAttemptEvent args)
@@ -330,11 +351,7 @@ public abstract partial class SharedStunSystem
         entity.Comp.DoAfter = null;
 
         if (args.Cancelled)
-        {
-            if (entity.Comp.AutoStand)
-                entity.Comp.NextUpdate = GameTiming.CurTime + TimeSpan.FromSeconds(0.5f); // TODO: Unhardcode this
             return;
-        }
 
         if (StandingBlocked(entity))
             return;
@@ -348,16 +365,6 @@ public abstract partial class SharedStunSystem
         RemComp<KnockedDownComponent>(entity);
 
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(entity):user} has stood up from knockdown.");
-    }
-
-    // TODO: This shit does not predict on the client at all
-    private void OnSubsequentKnockdown(Entity<KnockedDownComponent> entity, ref KnockedDownEvent args)
-    {
-        if (!entity.Comp.DoAfter.HasValue)
-            return;
-
-        DoAfter.Cancel(entity.Comp.DoAfter.Value);
-        entity.Comp.DoAfter = null;
     }
 
     #endregion

@@ -185,7 +185,7 @@ public abstract partial class SharedStunSystem : EntitySystem
     /// <summary>
     ///     Knocks down the entity, making it fall to the ground.
     /// </summary>
-    public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh, bool autostand, StatusEffectsComponent? status = null)
+    public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh, bool autoStand, StatusEffectsComponent? status = null)
     {
         if (time <= TimeSpan.Zero)
             return false;
@@ -198,7 +198,7 @@ public abstract partial class SharedStunSystem : EntitySystem
 
         var evAttempt = new KnockDownAttemptEvent()
         {
-            AutoStand = autostand,
+            AutoStand = autoStand,
         };
         RaiseLocalEvent(uid, ref evAttempt);
 
@@ -214,7 +214,12 @@ public abstract partial class SharedStunSystem : EntitySystem
             component = knockedDown;
         }
         else
+        {
             RefreshKnockedMovement((uid, component), standing);
+            // TODO: This cancellation does not predict on the client at all
+            DoAfter.Cancel(component.DoAfter);
+            component.DoAfter = null;
+        }
 
         var knockedEv = new KnockedDownEvent()
         {
