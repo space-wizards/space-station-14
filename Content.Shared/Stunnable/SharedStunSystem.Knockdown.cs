@@ -167,6 +167,7 @@ public abstract partial class SharedStunSystem
             return true;
 
         // Check if we would intersect with any entities by standing up
+        // Commented out to test if letting you try and stand while still on a table is better
         /*if (GetStandingColliders(entity.Owner))
         {
             _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), entity, entity, PopupType.SmallCaution);
