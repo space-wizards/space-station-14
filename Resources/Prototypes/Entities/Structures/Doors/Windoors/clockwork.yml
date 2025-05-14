@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/clockwork_windoor.rsi
+  - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
