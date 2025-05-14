@@ -87,7 +87,7 @@ namespace Content.Client.VendingMachines.UI
 
         public void SetBalance(int newBalance)
         {
-            Balance.Text = newBalance.ToString() + "$";
+            Balance.Text = "$" + newBalance.ToString();
             WithdrawButton.Disabled = (newBalance == 0);
         }
 

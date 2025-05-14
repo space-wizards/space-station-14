@@ -18,7 +18,7 @@ public sealed partial class VendingMachineItem : BoxContainer
 
         Price.Visible = (price != 0);
 
-        Price.Text = price.ToString() + "$";
+        Price.Text = "$" + price.ToString();
     }
 
     public void SetText(string text)
