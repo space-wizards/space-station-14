@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: MintyTheBinty
-  changes:
-  - message: Added two new business casual outfits with randomized colored clothes,
-      available in ClothesMates near you!
-    type: Add
-  id: 1178
-  time: '2025-02-21T03:50:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1751
 - author: hivehum
   changes:
   - message: Added an echolalia trait. Stop repeating yourself. Stop repeating yourself.
@@ -4206,3 +4198,15 @@
   id: 1677
   time: '2025-05-14T18:23:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2487
+- author: meridiadottxt
+  changes:
+  - message: Gate Station now has main power connected to all departments
+    type: Add
+  - message: fixed power issue in security
+    type: Fix
+  - message: altered a bunch of other stuff i can't remember it was a few days ago
+      ok
+    type: Tweak
+  id: 1678
+  time: '2025-05-14T22:37:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2493
