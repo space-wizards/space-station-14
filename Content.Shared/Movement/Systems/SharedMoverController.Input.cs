@@ -214,8 +214,8 @@ namespace Content.Shared.Movement.Systems
             {
                 mover.TargetRelativeRotation -= diff;
             }
-            // Snap to nearest cardinal if map -> grid
-            else if (HasComp<MapGridComponent>(relative) && HasComp<MapComponent>(mover.RelativeEntity))
+            // Snap to nearest cardinal if map -> grid or grid -> grid
+            else if (HasComp<MapGridComponent>(relative) && (HasComp<MapComponent>(mover.RelativeEntity) || HasComp<MapGridComponent>(mover.RelativeEntity)))
             {
                 var targetDir = mover.TargetRelativeRotation - diff;
                 targetDir = targetDir.GetCardinalDir().ToAngle().Reduced();
