@@ -60,6 +60,12 @@
     path: /Audio/_Impstation/Music/dont_drink_it.ogg
 
 - type: jukebox
+  id: DriversLounge
+  name: "[Hitman 2] Drivers' Lounge (Unreleased) // Niels bye Nielsen & Dynamedion GbR"
+  path:
+    path: /Audio/_Impstation/Music/drivers_lounge.ogg
+
+- type: jukebox
   id: Epoch
   name: "[Cobalt Core] Epoch // Aaron Cherof"
   path:
@@ -115,7 +121,7 @@
 
 - type: jukebox
   id: HourglassMeadow
-  name: "[ENA - Temptation Stairway] Hourglass Meadow // Oliver Buckland"
+  name: "[ENA: Temptation Stairway] Hourglass Meadow // Oliver Buckland"
   path:
     path: /Audio/_Impstation/Music/hourglass_meadow.ogg
 
@@ -252,6 +258,12 @@
     path: /Audio/_Impstation/Music/pillars_of_creation.ogg
 
 - type: jukebox
+  id: Purge
+  name: "[ENA: Dream BBQ] PURGE // METAROOM"
+  path:
+    path: /Audio/_Impstation/Music/purge.ogg
+
+- type: jukebox
   id: FFXPrelude
   name: "[FINAL FANTASY X] Prelude // Junya Nakano, Masashi Hamauzu and Nobuo Uematsu"
   path:
@@ -336,6 +348,12 @@
     path: /Audio/_Impstation/Music/warsaw.ogg
 
 - type: jukebox
+  id: WizardDisco
+  name: "WIZARD DISCO // Louie Zong"
+  path:
+    path: /Audio/_Impstation/Music/wizard_disco.ogg
+
+- type: jukebox
   id: YouBlowMyMind
   name: "[Street Fighter III: 3rd Strike] You Blow My Mind // Hideki Okugawa" # i'm not including the subsubtitle. who give a shit
   path:
@@ -356,7 +374,28 @@
   path:
     path: /Audio/_Impstation/Music/stars_and_games.ogg
 
+- type: jukebox
+  id: ANewDawn
+  emagOnly: true # for its intensity and finality. and also once cult's back in it'll fit in in this pool with nukebox as "songs that plays when you motherfucker die"
+  name: "[Space Station 14] A New Dawn // Nahu Pyrope"
+  path:
+    path: /Audio/_Impstation/Music/a_new_dawn.ogg
+
+- type: jukebox
+  id: AntiAlienAlarm
+  emagOnly: true
+  name: "[Doo>FUCKYOUALIEN!!!¡ëÙnm] E1M1 - At Doom's Ga1Í3|PROTECTIVESHIELD!$$!Å3te // BobK»öùn(ÁÁ‰ANTI-ALIENALAARRÑ1Çœ+p¼¿by Prince"
+  path:
+    path: /Audio/_Impstation/Music/anti_alien_alarm.ogg
+
 ## NUKEBOX BELOW; ALSO EMAG ONLY
+
+- type: jukebox
+  id: Alicorn
+  emagOnly: true
+  name: "[ACE COMBAT 7: SKIES UNKNOWN] Alicorn // Keiki Kobayashi & PROJECT ACES"
+  path:
+    path: /Audio/_Impstation/Music/alicorn.ogg
 
 - type: jukebox
   id: BossPlok
@@ -380,11 +419,25 @@
     path: /Audio/_Impstation/Music/cyber_grind.ogg
 
 - type: jukebox
+  id: Cyberwildlife
+  emagOnly: true
+  name: "[Cyberpunk 2077] Cyberwildlife Park // Marcin Przybyłowicz"
+  path:
+    path: /Audio/_Impstation/Music/cyberwildlife_park.ogg
+
+- type: jukebox
   id: Departure
   emagOnly: true
   name: "[Mega Man Zero 2] Departure // Ippo Yamada; arranged by III (for REMASTERED TRACKS ROCKMAN ZERO Mythos)"
   path:
     path: /Audio/_Impstation/Music/departure.ogg
+
+- type: jukebox
+  id: EonSMTV
+  emagOnly: true
+  name: "[Shin Megami Tensei V] Battle -eon- (I) // Ryota Kozuka"
+  path:
+    path: /Audio/_Impstation/Music/eon.ogg
 
 - type: jukebox
   id: Fiend
@@ -394,6 +447,20 @@
     path: /Audio/_Impstation/Music/fiend.ogg
 
 - type: jukebox
+  id: FinalHours
+  emagOnly: true
+  name: "[The Legend Of Zelda: Majora's Mask] Final Hours // Koji Kondo"
+  path:
+    path: /Audio/_Impstation/Music/final_hours.ogg
+
+- type: jukebox
+  id: FlyOctoFly
+  emagOnly: true
+  name: "[Splatoon 2] Fly Octo Fly ~ Ebb & Flow // Toru Minegishi"
+  path:
+    path: /Audio/_Impstation/Music/fly_octo_fly.ogg
+
+- type: jukebox
   id: ForgetFreeman
   emagOnly: true
   name: "[Black Mesa] Forget About Freeman // Joel Nielsen"
@@ -401,11 +468,25 @@
     path: /Audio/_Impstation/Music/forget_about_freeman.ogg
 
 - type: jukebox
+  id: GreatHeat
+  emagOnly: true
+  name: "[BAROQUE] Great Heat 20320514 // Masaharu Iwata"
+  path:
+    path: /Audio/_Impstation/Music/great_heat.ogg
+
+- type: jukebox
   id: HurryUp
   emagOnly: true
   name: "[Wario Land 4] Hurry Up! // Ryoji Yoshitomi"
   path:
     path: /Audio/_Impstation/Music/hurry_up.ogg
+
+- type: jukebox
+  id: DeathStrandingNuke
+  emagOnly: true
+  name: "[Death Stranding] Nuke // Ludvig Forssell"
+  path:
+    path: /Audio/_Impstation/Music/ds_nuke.ogg
 
 - type: jukebox
   id: Roadkilla
@@ -424,7 +505,7 @@
 - type: jukebox
   id: RuinousIntnt
   emagOnly: true
-  name: "[corru.observer] RUINOUS INTNT // NoisyRejects, Deltanoyz, corru.works"
+  name: "[corru.observer] RUINOUS INTNT // NoisyRejects, Deltanoyz, & corru.works"
   path:
     path: /Audio/_Impstation/Music/ruinous_intnt.ogg
 

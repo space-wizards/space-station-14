@@ -47,6 +47,11 @@
   copyright: "Don't Drink It by Pilotredsky"
   source: "https://www.youtube.com/watch?v=EBFDLgqn8pw"
 
+- files: ["drivers_lounge.ogg"]
+  license: "Custom"
+  copyright: "Drivers' Lounge (Unreleased) by Niels Bye Nielsen & Dynamedion GbR for Hitman 2"
+  source: "https://www.youtube.com/watch?v=QOExoJ3SOgU"
+
 - files: ["epoch.ogg"]
   license: "Custom"
   copyright: "Epoch by Aaron Cherof for Cobalt Core. Suggested by makeyejr"
@@ -207,6 +212,11 @@
   copyright: "Pillars of Creation by flashygoodness for Tower of Heaven. Suggested by mira"
   source: "https://www.youtube.com/watch?v=cAMumZKiKRQ"
 
+- files: ["purge.ogg"]
+  license: "Custom"
+  copyright: "PURGE by METAROOM for ENA: Dream BBQ."
+  source: "https://www.youtube.com/watch?v=j02Pcx2yJdE"
+
 - files: ["prelude.ogg"]
   license: "Custom"
   copyright: "Prelude by Junya Nakano, Masashi Hamauzu and Nobuo Uematsu for FINAL FANTASY X. Suggested by mira"
@@ -278,6 +288,11 @@
   copyright: "Warsaw by PilotRedSun. Suggested by plantkat"
   source: "https://www.youtube.com/watch?v=_0PQicdTfO8"
 
+- files: ["wizard_disco.ogg"]
+  license: "Custom"
+  copyright: "WIZARD DISCO by Louie Zong"
+  source: "https://youtu.be/tThOlpk0NlI"
+
 - files: ["you_blow_my_mind.ogg"]
   license: "Custom"
   copyright: "You Blow My Mind by Hideki Okugawa for Street Fighter III: 3rd Strike: Fight for the Future. Suggested by mira"
@@ -290,6 +305,11 @@
 
 # lobby
 
+- files: ["a_line_in_the_sand.ogg"]
+  license: "Custom"
+  copyright: "A Line in the Sand (Beach) by Tim & Geoff Follin for Plok"
+  source: "https://www.youtube.com/watch?v=YYCVObh_a8o"
+
 - files: ["actors_anteroom.ogg"]
   license: "Custom"
   copyright: "Actor's Anteroom -Remastering- by RAITO for MELTY BLOOD Actress Again Current Code. Suggested by HunBunQueen"
@@ -300,6 +320,11 @@
   copyright: "Artificial Intelligence Bomb (Remix) by theta, OG by naruto2413. Suggested by Twibz"
   source: "https://www.youtube.com/watch?v=CBFLKcEo18s"
 
+- files: ["bath_time.ogg"]
+  license: "Custom"
+  copyright: "Bath Time by Hajime Wakai for Nintendogs"
+  source: "https://www.youtube.com/watch?v=Kz9D-zxnXa0"
+
 - files: ["beam_katana_chronicles.ogg"]
   license: "Custom"
   copyright: "Beam Katana Chronicles by Masafumi Takada and Jun Fukuda for No More Heroes. Suggested by plantkat"
@@ -309,6 +334,11 @@
   license: "Custom"
   copyright: "Bee like that by eebrozgi for Void Stranger. Suggested by flanburgr"
   source: "https://www.youtube.com/watch?v=XqTwCuYrlgo"
+
+- files: ["breaking_bad_remix.ogg"]
+  license: "Custom"
+  copyright: "Breaking Bad Remix (Seasons 3-5) by placeboing. and also everyone who worked on Breaking Bad i guess"
+  source: "https://youtu.be/WzhW20hLp6M"
 
 - files: ["burning_mens_soul.ogg"]
   license: "Custom"
@@ -324,6 +354,11 @@
   license: "Custom"
   copyright: "Character Select by Tony Grayson for Antonblast"
   source: "https://www.youtube.com/watch?v=g-8QRHw2Dyk"
+
+- files: ["clair_de_lune.ogg"]
+  license: "Custom"
+  copyright: "Clair de Lune by Claude Debussy, excerpted, as performed by Rousseau"
+  source: "https://www.youtube.com/watch?v=WNcsUNKlAKw"
 
 - files: ["clown.ogg"]
   license: "Custom"
@@ -390,15 +425,35 @@
   copyright: "Impossible by Darren Korb for Transistor. Suggested by hivehum"
   source: "https://www.youtube.com/watch?v=Vrc5lv0O8yo"
 
+- files: ["internet_settings.ogg"]
+  license: "Custom"
+  copyright: "Nintendo 3DS Internet Settings (Unreleased); Uncredited, probably by Kazumi Totaka, other possible contributors are Kenji Yamamoto, Toru Minegishi, and/or Shiho Fujii"
+  source: "https://www.youtube.com/watch?v=wlfxjNeViHk"
+
+- files: ["inspection.ogg"]
+  license: "Custom"
+  copyright: "On-the-Spot Inspection (Central Laboratory) by Millstones for Another Bound Neo"
+  source: "https://www.youtube.com/watch?v=8BqMpzenZBY"
+
 - files: ["iwatodai_dorm.ogg"]
   license: "Custom"
   copyright: "Iwatodai Dorm by Shoji Meguro and Yosuke Uda for Persona 3. Suggested by tox"
   source: "https://www.youtube.com/watch?v=e2Gyaqf7EoU"
 
+- files: ["java_havana_funkaloo.ogg"]
+  license: "Custom"
+  copyright: "Java Havana Funkaloo: Main Menu by Lennie Moore for Counter-Strike: Global Offensive"
+  source: "https://www.youtube.com/watch?v=m4mzt9oM0Cc"
+
 - files: ["let_me_out.ogg"]
   license: "Custom"
   copyright: "Let Me Out by Corru.Works for Corru.Observer"
   source: "https://www.youtube.com/watch?v=F-FfR2MY8tQ"
+
+- files: ["lucid_rhythms.ogg"]
+  license: "Custom"
+  copyright: "Lucid Rhythms by Kohta Takahashi, Hiroshi Okubo and Asuka Sakai for Ridge Racer Type 4."
+  source: "https://www.youtube.com/watch?v=V2f3eE0kaAY"
 
 - files: ["mantis_battle.ogg"]
   license: "Custom"
@@ -455,6 +510,11 @@
   copyright: "Phantom Racer by TWRP (feat. The Protomen)"
   source: "https://www.youtube.com/watch?v=tRd6OZxrEsU"
 
+- files: ["please_dont_touch_anything.ogg"]
+  license: "Custom"
+  copyright: "Title Screen by blinch / Alexander Goreslavets for Please, Don't Touch Anything"
+  source: "https://www.youtube.com/watch?v=lcOljZt73cQ"
+
 - files: ["pizzatron_3000.ogg"]
   license: "Custom"
   copyright: "Pizzatron 3000 by Chris Hendricks for Club Penguin. Suggested by Phoebe"
@@ -465,9 +525,14 @@
   copyright: "Ready Steady Gogo by she. Suggested by sha"
   source: "https://www.youtube.com/watch?v=HMbxWyw7kj4"
 
+- files: ["replay_and_wifi_waiting.ogg"]
+  license: "Custom"
+  copyright: "Replay & Wi-Fi Waiting (Unreleased) by Asuka Hayazaki and Ryō Nagamatsu for Mario Kart Wii"
+  source: "https://www.youtube.com/watch?v=RaBZlPI_ShI"
+
 - files: ["result_screen_e-rank.ogg"]
   license: "Custom"
-  copyright: "Results Screen (E-Rank) by Tomoya Ohtani & SEGA SOUND TEAM for Sonic Unleashed"
+  copyright: "Results Screen (E-Rank) by Tomoya Ohtani & SEGA SOUND TEAM, performed by Tokyo Philharmonic Orchestra, for Sonic Unleashed"
   source: "https://www.youtube.com/watch?v=HAChq41MUHU"
 
 - files: ["snort_worms.ogg"]
@@ -530,7 +595,17 @@
   copyright: "Whirling-In-Rags, 8 AM by British Sea Power for Disco Elysium"
   source: "https://www.youtube.com/watch?v=pUBhO_zhLUk"
 
+- files: ["xeno_arcadia.ogg"]
+  license: "Custom"
+  copyright: "Xeno Arcadia by Mason Lindroth for Hylics 2"
+  source: "https://www.youtube.com/watch?v=0_Q1ccD0ZAE"
+
 # nuke
+
+- files: ["alicorn.ogg"]
+  license: "Custom"
+  copyright: "Alicorn by Keiki Kobayashi & PROJECT ACES for ACE COMBAT 7: SKIES UNKNOWN."
+  source: "https://www.youtube.com/watch?v=ecyyVx4mRs4"
 
 - files: ["blatantly_nuclear.ogg"]
   license: "Custom"
@@ -547,25 +622,55 @@
   copyright: "The Cyber Grind by meganeko for ULTRAKILL"
   source: "https://www.youtube.com/watch?v=e9EqU9y69vU"
 
+- files: ["cyberwildlife_park.ogg"]
+  license: "Custom"
+  copyright: "Cyberwildlife Park by Marcin Przybyłowicz for Cyberpunk 2077"
+  source: "https://www.youtube.com/watch?v=zx68LSsEGYo"
+
 - files: ["departure.ogg"]
   license: "Custom"
   copyright: "Departure by Ippo Yamada and III for MEGA MAN ZERO Mythos"
   source: "https://www.youtube.com/watch?v=EsQI7Q4X8Nc"
+
+- files: ["eon.ogg"]
+  license: "Custom"
+  copyright: "Battle -eon-, excerpted, by Ryota Kozuka for Shin Megami Tensei V"
+  source: "https://www.youtube.com/watch?v=fypLVe_8EhM"
 
 - files: ["fiend.ogg"]
   license: "Custom"
   copyright: "Fiend by Masayoshi Soken for FINAL FANTASY XIV: Heavensward"
   source: "https://youtube.com/watch?v=MfNoBEb0ul8"
 
+- files: ["final_hours.ogg"]
+  license: "Custom"
+  copyright: "Final Hours by Koji Kondo for The Legend of Zelda: Majora's Mask"
+  source: "https://youtu.be/y5xQnN53VI8"
+
+- files: ["fly_octo_fly.ogg"]
+  license: "Custom"
+  copyright: "Fly Octo Fly ~ Ebb & Flow by Toru Minegishi for Splatoon 2"
+  source: "https://youtu.be/an7GOmJE7Ao"
+
 - files: ["forget_about_freeman.ogg"]
   license: "Custom"
   copyright: "Forget About Freeman by Joel Nielsen for Black Mesa"
   source: "https://www.youtube.com/watch?v=9OacXUzTNXo"
 
+- files: ["great_heat.ogg"]
+  license: "Custom"
+  copyright: "Great Heat 20320514 by Masaharu Iwata for BAROQUE"
+  source: "https://youtu.be/yRXUEH0ijdk"
+
 - files: ["hurry_up.ogg"]
   license: "Custom"
   copyright: "Hurry Up! by Ryoji Yoshitomi for Wario Land 4"
   source: "https://youtube.com/watch?v=fihc2ONQ5v0"
+
+- files: ["ds_nuke.ogg"]
+  license: "Custom"
+  copyright: "Nuke by Ludvig Forssell for Death Stranding"
+  source: "https://www.youtube.com/watch?v=xJAoPsxtcqY"
 
 - files: ["roadkilla.ogg"]
   license: "Custom"
@@ -635,3 +740,13 @@
   license: "Custom"
   copyright: "Stars and Games by Alf Saro / Konti Eckert"
   source: "https://www.youtube.com/watch?v=N2uR67imAnA"
+
+- files: ["a_new_dawn.ogg"]
+  license: "Custom"
+  copyright: "A New Dawn by Nahu Pyrope for Space Station 14 :)"
+  source: "https://www.youtube.com/watch?v=aah0sgS5VcE"
+
+- files: ["anti_alien_alarm.ogg"]
+  license: "Custom"
+  copyright: "E1M1 - At Doom's Gate by Bobby Prince for Doom. and also Vinesauce Joel"
+  source: "https://www.youtube.com/watch?v=aah0sgS5VcE"
