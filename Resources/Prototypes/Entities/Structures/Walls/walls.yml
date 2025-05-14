@@ -21,7 +21,7 @@
   - type: Tag
     tags:
     - Wall
-  - type: IsRoof #Good for diag?
+  - type: IsRoof
   - type: Sprite
     drawdepth: Walls
   - type: Icon
@@ -47,15 +47,15 @@
   - type: Airtight
   - type: StaticPrice
     price: 75
-  - type: RadiationBlocker #Good for diag?
+  - type: RadiationBlocker
     resistance: 2
-  - type: BlockWeather #Good for diag?
-  - type: SunShadowCast #Good for diag?
+  - type: BlockWeather
+  - type: SunShadowCast
 
 - type: entity
   abstract: true
   parent: BaseWall
-  id: BaseFullWall #don't forget to change down the line
+  id: BaseFullWall
   components:
   - type: Occluder # Breaks on diagonal walls
 
@@ -120,7 +120,6 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
   - type: IconSmooth
     key: walls
     base: brick
@@ -132,9 +131,6 @@
   id: WallClock
   name: clock wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/clock.rsi
   - type: Icon
@@ -166,9 +162,6 @@
   id: WallClown
   name: bananium wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/clown.rsi
   - type: Icon
@@ -240,9 +233,6 @@
   id: WallCult
   name: cult wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/cult.rsi
   - type: Icon
@@ -304,9 +294,6 @@
   id: WallDiamond
   name: diamond wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/diamond.rsi
   - type: Icon
@@ -339,9 +326,6 @@
   id: WallGold
   name: gold wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/gold.rsi
   - type: Icon
@@ -386,9 +370,6 @@
   id: WallIce
   name: ice wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/ice.rsi
   - type: Icon
@@ -417,9 +398,6 @@
   id: WallPlasma
   name: plasma wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/plasma.rsi
   - type: Icon
@@ -466,9 +444,6 @@
   id: WallPlastic
   name: plastic wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/plastic.rsi
   - type: Icon
@@ -524,6 +499,8 @@
     - type: Damageable
       damageContainer: StructuralInorganic
       damageModifierSet: StructuralMetallicStrong
+    - type: RadiationBlocker
+      resistance: 5
 
 - type: entity
   parent: WallPlastitaniumIndestructible
@@ -561,6 +538,8 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: RadiationBlocker
+    resistance: 5
 
 - type: entity
   parent: WallPlastitaniumDiagonalIndestructible
@@ -730,6 +709,8 @@
           collection: MetalSlam
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: RadiationBlocker
+    resistance: 5
 
 # Riveting
 - type: entity
@@ -739,9 +720,6 @@
   id: WallRiveted
   name: riveted wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/riveted.rsi
   - type: Icon
@@ -775,9 +753,6 @@
   id: WallSandstone
   name: sandstone wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/sandstone.rsi
   - type: Icon
@@ -810,9 +785,6 @@
   id: WallSilver
   name: silver wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/silver.rsi
   - type: Icon
@@ -893,6 +865,8 @@
   - type: Construction
     graph: Girder
     node: diagonalshuttleWall
+  - type: RadiationBlocker
+    resistance: 5
 
 - type: entity
   parent:
@@ -963,9 +937,6 @@
   id: WallSolid
   name: solid wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
   - type: WallReplacementMarker
@@ -1169,7 +1140,6 @@
   name: web wall
   description: Keeps the spiders in and the greytide out.
   components:
-  - type: Clickable
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -1177,9 +1147,6 @@
           "/Audio/Weapons/slash.ogg"
   - type: Damageable
     damageModifierSet: Web
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/web.rsi
   - type: Icon
@@ -1217,9 +1184,6 @@
   id: WallNecropolis
   name: stone wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/necropolis.rsi
   - type: Icon
@@ -1243,9 +1207,6 @@
   id: WallMining
   name: mining wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/mining.rsi
   - type: Icon
@@ -1271,20 +1232,11 @@
   parent: WallDiagonalBase
   id: WallMiningDiagonal
   name: mining wall
-  suffix: diagonal
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wall
   components:
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/mining_diagonal.rsi
     state: state0
-  - type: IconSmooth
-    mode: Diagonal
-    key: walls
-    base: state
   - type: Icon
     sprite: Structures/Walls/mining_diagonal.rsi
     state: state0
@@ -1429,9 +1381,6 @@
   name: cobblestone brick wall
   description: Stone by stone, perfectly fitted together to form a wall.
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/cobblebrick.rsi
   - type: Icon
