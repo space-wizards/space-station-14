@@ -75,8 +75,13 @@ public abstract class SharedConveyorController : VirtualController
         if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
             return;
 
-        args.MobFriction = 0.5f;
-        args.Friction = 0.5f;
+        var bodyCompensation = 1f;
+
+        if (TryComp<MovementSpeedModifierComponent>(ent, out var move))
+            bodyCompensation *= move.BaseFriction / MovementSpeedModifierComponent.DefaultFriction;
+
+        args.MobFriction = 0.5f * bodyCompensation;
+        args.Friction = 0.5f * bodyCompensation;
         args.MobAcceleration = 1f;
     }
 
