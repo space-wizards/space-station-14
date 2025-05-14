@@ -20,7 +20,7 @@ namespace Content.Client.Stunnable
             base.Initialize();
 
             CommandBinds.Builder
-                .BindAfter(EngineKeyFunctions.UseSecondary, new PointerInputCmdHandler(OnUseSecondary, true, true), new[] { typeof(SharedInteractionSystem) })
+                .BindAfter(EngineKeyFunctions.UseSecondary, new PointerInputCmdHandler(OnUseSecondary, true, true), typeof(SharedInteractionSystem))
                 .Register<StunSystem>();
         }
 
