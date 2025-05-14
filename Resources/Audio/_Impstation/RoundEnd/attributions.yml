@@ -53,6 +53,11 @@
   copyright: "[ATPLore] Weed is Trash and Dumb to Smoke"
   source: "https://www.youtube.com/watch?v=soIjL88SKRQ"
 
+- files: ["whymad.ogg"]
+  license: "Custom"
+  copyright: "Why you heff to be mad? (Original)"
+  source: "https://www.youtube.com/watch?v=xzpndHtdl9A"
+
 - files: ["winning.ogg"]
   license: "Custom"
   copyright: "The Role of Cardassian Trials (DS9: Tribunal)"
