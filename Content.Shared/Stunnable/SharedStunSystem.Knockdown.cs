@@ -228,7 +228,7 @@ public abstract partial class SharedStunSystem
         if (!TryComp<StaminaComponent>(entity, out var stamina))
             return;
 
-        if (!_hands.TryGetEmptyHand(entity, out var hand))
+        if (!_hands.TryGetEmptyHand(entity, out _))
             return;
 
         var staminaDamage = stamina.ForceStandStamina;
