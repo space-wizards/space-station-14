@@ -335,8 +335,8 @@
       ketchup:
         maxVol: 100
         reagents:
-          - ReagentId: Ketchup
-            Quantity: 100
+        - ReagentId: Ketchup
+          Quantity: 100
   - type: Destructible
     thresholds:
     - trigger:
