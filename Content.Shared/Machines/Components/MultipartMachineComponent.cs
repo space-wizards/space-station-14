@@ -33,7 +33,6 @@ public sealed partial class MultipartMachineComponent : Component
     /// ghosts of missing machine parts.
     /// Controlled/Used by the client side.
     /// </summary>
-    [DataField]
     public List<EntityUid> Ghosts = [];
 
     /// <summary>
