@@ -174,8 +174,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - spicy
+    - meaty
+    - spicy
   - type: Food
   - type: Sprite
     state: dragontaco
