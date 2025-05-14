@@ -2,6 +2,8 @@
   id: Skeld
   mapName: 'The Skeld'
   mapPath: /Maps/skeld.yml
+  maxRandomOffset: 0
+  randomRotation: false
   minPlayers: 25
   maxPlayers: 65
   stations:
