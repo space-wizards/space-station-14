@@ -40,3 +40,8 @@
     - Scarf
     - ClothMade
     - WhitelistChameleon
+  # imp edit start
+  - type: TemperatureProtection
+    heatingCoefficient: 1.025
+    coolingCoefficient: 0.75
+  # imp edit end
