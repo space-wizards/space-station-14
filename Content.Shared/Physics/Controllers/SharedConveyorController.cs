@@ -52,7 +52,6 @@ public abstract class SharedConveyorController : VirtualController
 
         SubscribeLocalEvent<ConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
         SubscribeLocalEvent<ConveyedComponent, MoverTileDefEvent>(OnMoverTileDefEvent);
-        //SubscribeLocalEvent<ConveyedComponent, MoverFrictionBulldozeEvent>(OnMoverFrictionBulldoze);
         SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
         SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
 
@@ -79,18 +78,6 @@ public abstract class SharedConveyorController : VirtualController
         args.MobFriction = 0.5f;
         args.Friction = 0.5f;
         args.MobAcceleration = 1f;
-    }
-
-    private void OnMoverFrictionBulldoze(Entity<ConveyedComponent> ent, ref MoverFrictionBulldozeEvent args)
-    {
-        if(!TryComp<FixturesComponent>(ent, out var fixture)
-           || !IsConveyed((ent, fixture))
-           || !TryComp<MovementSpeedModifierComponent>(ent, out var move))
-            return;
-
-        args.Friction = 20f; // We bulldoze this so it always matches items
-        args.Acceleration = move.BaseAcceleration; // Prevent anything from modifying our acceleration
-        args.MinFrictionSpeed = 0f;
     }
 
     private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)
@@ -192,8 +179,6 @@ public abstract class SharedConveyorController : VirtualController
                 {
                     _mover.Friction(0f, frameTime: frameTime, friction: 10f, ref velocity);
                     _mover.Friction(0f, frameTime: frameTime, friction: 10f, ref angularVelocity);
-
-                    PhysicsSystem.SetAngularVelocity(ent.Entity.Owner, angularVelocity);
                 }
 
                 SharedMoverController.Accelerate(ref velocity, targetDir, 10f, frameTime);
@@ -206,6 +191,7 @@ public abstract class SharedConveyorController : VirtualController
                 _mover.Friction(0f, frameTime: frameTime, friction: 20f, ref angularVelocity);
             }
 
+            PhysicsSystem.SetAngularVelocity(ent.Entity.Owner, angularVelocity);
             PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity, wakeBody: false);
 
             if (!IsConveyed((ent.Entity.Owner, ent.Entity.Comp2)))
