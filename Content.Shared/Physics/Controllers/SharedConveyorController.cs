@@ -124,7 +124,7 @@ public abstract class SharedConveyorController : VirtualController
 
         while (query.MoveNext(out var uid, out var comp, out var fixtures, out var physics, out var xform))
         {
-            _job.Conveyed.Add(((uid, comp, fixtures, physics, xform), Vector2.Zero, false));
+            _job.Conveyed.Add(((uid, comp, fixtures, physics, xform), Vector2.Zero, false, Vector2.Zero));
         }
 
         _parallel.ProcessNow(_job, _job.Conveyed.Count);
@@ -155,13 +155,20 @@ public abstract class SharedConveyorController : VirtualController
                 // they'll go too slow.
                 if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
                 {
-                    _mover.Friction(0f, frameTime: frameTime, friction: 5f, ref velocity);
+                    // Manually position the object in the middle, if it's ever so slightly off-center.
+                    if (ent.Rejection.Length() > 0f)
+                        TransformSystem.SetWorldPosition(ent.Entity.Owner, TransformSystem.GetWorldPosition(ent.Entity.Owner) + ent.Rejection);
+
+                    _mover.Friction(0.2f, frameTime: frameTime, friction: 5f, ref velocity);
                 }
 
                 SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
             }
             else if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
             {
+                if (ent.Rejection.Length() > 0f)
+                    TransformSystem.SetWorldPosition(ent.Entity.Owner, TransformSystem.GetWorldPosition(ent.Entity.Owner) + ent.Rejection);
+
                 // Need friction to outweigh the movement as it will bounce a bit against the wall.
                 // This facilitates being able to sleep entities colliding into walls.
                 _mover.Friction(0f, frameTime: frameTime, friction: 40f, ref velocity);
@@ -191,9 +198,11 @@ public abstract class SharedConveyorController : VirtualController
     /// <returns>False if we should no longer be considered actively conveyed.</returns>
     private bool TryConvey(Entity<ConveyedComponent, FixturesComponent, PhysicsComponent, TransformComponent> entity,
         bool prediction,
-        out Vector2 direction)
+        out Vector2 direction,
+        out Vector2 rejection)
     {
         direction = Vector2.Zero;
+        rejection = Vector2.Zero;
         var fixtures = entity.Comp2;
         var physics = entity.Comp3;
         var xform = entity.Comp4;
@@ -269,7 +278,7 @@ public abstract class SharedConveyorController : VirtualController
         direction = conveyorDirection;
 
         var itemRelative = conveyorPos - transform.Position;
-        direction = Convey(direction, bestSpeed, itemRelative);
+        direction = Convey(direction, bestSpeed, itemRelative, out rejection);
 
         // Do a final check for hard contacts so if we're conveying into a wall then NOOP.
         contacts = PhysicsSystem.GetContacts((entity.Owner, fixtures));
@@ -300,8 +309,10 @@ public abstract class SharedConveyorController : VirtualController
 
         return true;
     }
-    private static Vector2 Convey(Vector2 direction, float speed, Vector2 itemRelative)
+    private static Vector2 Convey(Vector2 direction, float speed, Vector2 itemRelative, out Vector2 rejection)
     {
+        rejection = Vector2.Zero;
+
         if (speed == 0 || direction.LengthSquared() == 0)
             return Vector2.Zero;
 
@@ -318,9 +329,11 @@ public abstract class SharedConveyorController : VirtualController
         var p = direction * (Vector2.Dot(itemRelative, direction) / Vector2.Dot(direction, direction));
         var r = itemRelative - p;
 
-        if (r.Length() < 0.1)
+        if (r.Length() < 0.01)
         {
             var velocity = direction * speed;
+            // We include the rejection in the out, just to ensure that objects later on gets set to the centerline.
+            rejection = r;
             return velocity;
         }
         else
@@ -328,7 +341,7 @@ public abstract class SharedConveyorController : VirtualController
             // Give a slight nudge in the direction of the conveyor to prevent
             // to collidable objects (e.g. crates) on the locker from getting stuck
             // pushing each other when rounding a corner.
-            var velocity = (r + direction).Normalized() * speed;
+            var velocity = (r + direction * 0.2f).Normalized() * speed;
             return velocity;
         }
     }
@@ -342,7 +355,7 @@ public abstract class SharedConveyorController : VirtualController
     {
         public int BatchSize => 16;
 
-        public List<(Entity<ConveyedComponent, FixturesComponent, PhysicsComponent, TransformComponent> Entity, Vector2 Direction, bool Result)> Conveyed = new();
+        public List<(Entity<ConveyedComponent, FixturesComponent, PhysicsComponent, TransformComponent> Entity, Vector2 Direction, bool Result, Vector2 Rejection)> Conveyed = new();
 
         public SharedConveyorController System;
 
@@ -359,9 +372,9 @@ public abstract class SharedConveyorController : VirtualController
 
             var result = System.TryConvey(
                 (convey.Entity.Owner, convey.Entity.Comp1, convey.Entity.Comp2, convey.Entity.Comp3, convey.Entity.Comp4),
-                Prediction, out var direction);
+                Prediction, out var direction, out var rejection);
 
-            Conveyed[index] = (convey.Entity, direction, result);
+            Conveyed[index] = (convey.Entity, direction, result, rejection);
         }
     }
 
