@@ -402,6 +402,12 @@ marking-TichelFashionable = Tichel (Fashionable)
 
 marking-TichelSimple = Tichel (Simple)
 
+marking-HumanHairShaggy = Shaggy
+
+marking-HumanHairShaggyLonger = Shaggy (Longer)
+
+marking-HumanHairShaggyMessy = Shaggy (Messy)
+
 # HeadSide
 
 # HeadTop
