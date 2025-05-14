@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Removed 64 songs from the jukebox, lobby music and nuke music selections.
-    type: Remove
-  id: 1172
-  time: '2025-02-20T03:08:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1744
-- author: bigsantino1
-  changes:
-  - message: .22 auto ammo boxes, SMG magazines, and WT magazines to the ammo techfab.
-    type: Add
-  id: 1173
-  time: '2025-02-20T03:14:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1746
 - author: honeyed-lemons
   changes:
   - message: Adjust nanochat textures to have more contrast
@@ -4191,3 +4177,32 @@
   id: 1671
   time: '2025-05-14T13:46:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2491
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Added the AAC Tablet, allowing mute crewmembers to play certain words
+      or phrases for swift communication.
+    type: Add
+  id: 1672
+  time: '2025-05-14T17:59:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2352
+- author: jtfg-dev
+  changes:
+  - message: Nanotrasen has issued an apology and summary hush-money to various borg
+      rights organizations. The guidebook has been slightly updated.
+    type: Remove
+  - message: Station AI pronouns and name now appear in the manifest!
+    type: Add
+  - message: Brains now remember what gender they went by in life, and rehousing one
+      in a metal shell is respected!
+    type: Add
+  - message: MMIs are now called OSIs (organic-synthetic interfaces) to remove unnecessarily
+      human-centric language.
+    type: Tweak
+  - message: A number of examinable objects now convey the gender of the object.
+    type: Tweak
+  - message: Minor change, but the cyborg itself is no longer 'locked'; the text now
+      clarifies what _part_ of its chassis is locked.
+    type: Tweak
+  id: 1673
+  time: '2025-05-14T17:59:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2378
