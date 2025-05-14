@@ -2088,6 +2088,67 @@
         Heat : 1
 
 - type: entity
+  parent: MobCorgiBase
+  id: MobCorgiSmart
+  name: smart corgi
+  description: An unusually smart dog.
+  components:
+  # Use corgi sprite, need to add handcuff layer
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: corgi
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi # Would do a custom dog handcuff sprite but unfortunately handcuffs have their overlay baked-in to the cuff itself so this is mostly filler
+      state: body-overlay-2
+      visible: false
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  # Custom inventory template
+  - type: Inventory
+    speciesId: dog
+    templateId: SmartCorgi
+    displacements:
+      belt:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/corgi.rsi
+            state: belt_displacement
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/corgi.rsi
+            state: belt_displacement
+  - type: Hands # HANDS!
+  - type: Puller
+  - type: Cuffable # bad dog!
+  - type: BlockWriting # dogs can't write, paws unwieldy; mouth-writing is a myth
+  - type: Stripping
+  - type: ComplexInteraction
+  # Implement custom borgi body type
+  - type: Body
+    prototype: SmartCorgi
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 180
+  - type: Grammar
+    attributes:
+      gender: epicene # Gender neutral
+      proper: true
+  - type: Tag
+    tags:
+    - VimPilot
+    - CanPilot
+    - DoorBumpOpener
+  - type: StatusIcon # marks them as crew
+    bounds: -0.5,-0.5,0.5,0.5
+
+- type: entity
   name: bull terrier
   parent: MobDogBase
   id: MobBullTerrier
