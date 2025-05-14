@@ -27,3 +27,6 @@ uplink-satchel-syndicate-desc = A lightweight explosion-proof satchel for when s
 
 uplink-fugitivecloak-name = Monochrome cloak
 uplink-fugitivecloak-desc = While this cloak hides your extra appendages, it also will reveal who you REALLY want to kiss under the moonlight.
+
+uplink-bloodredrosekit-name = Blood Red Rose Kit
+uplink-bloodredrosekit-desc = A set of roses for the romantic killer to get close to their dear victims.

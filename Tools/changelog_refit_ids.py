@@ -15,14 +15,16 @@ except IndexError:
 file_path = Path("Resources/Changelog/Impstation.yml")
 changelog = file_path.read_text()
 
+prefix = "id: "
+
 
 def get_id(_):
     global i
-    result = f"id: {i}"
+    result = f"{prefix}{i}"
     i += 1
     return result
 
 
-changelog = sub(r"id: \d+", get_id, changelog)
+changelog = sub(f"{prefix}\\d+", get_id, changelog)
 
 file_path.write_text(changelog)

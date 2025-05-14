@@ -30,18 +30,18 @@
             HeadOfSecurity: [ 1, 1 ]
             HospitalityDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            # service - 21
-            Bartender: [ 1, 1 ]
+            # service - 22
+            Bartender: [ 2, 2 ]
             Botanist: [ 3, 3 ]
             Chaplain: [ 1, 1 ]
-            Chef: [ 2, 2 ]
+            Chef: [ 3, 3 ]
             Clown: [ 2, 2 ]
             Janitor: [ 3, 3 ]
             Librarian: [ 1, 1 ]
             Mime: [ 2, 2 ]
             Musician: [ 2, 2 ]
             Reporter: [ 1, 1 ]
-            ServiceWorker: [ 3, 3 ]
+            #ServiceWorker: [ 3, 3 ]
             # engineering - 6-9
             AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 3, 3 ]

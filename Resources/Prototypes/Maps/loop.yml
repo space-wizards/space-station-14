@@ -25,14 +25,14 @@
             ChiefEngineer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            #service (14)
+            #service (14) incl. service worker
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 2 ]
             Chef: [ 2, 2 ]
             Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
-            ServiceWorker: [ 3, 3 ]
+            #ServiceWorker: [ 3, 3 ] #imp
             Reporter: [ 1, 1 ]
             #engineering (8)
             AtmosphericTechnician: [ 3, 3 ]

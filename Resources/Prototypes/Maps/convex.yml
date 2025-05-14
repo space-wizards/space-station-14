@@ -27,7 +27,7 @@
             Janitor: [ 3, 3 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
-            ServiceWorker: [ 3, 3 ]
+            #ServiceWorker: [ 3, 3 ] #imp
             Reporter: [ 1, 2 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]

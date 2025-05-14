@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "AftrLite (github)",
+  "size": {
+        "x": 32,
+        "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "alive",
+      "directions": 4
+    },
+    {
+      "name": "alive_level2",
+      "directions": 4
+    },
+    {
+      "name": "alive_level3",
+      "directions": 4
+    },
+    {
+      "name": "dead"
+    },
+    {
+      "name": "dead_level2"
+    },
+    {
+      "name": "dead_level3"
+    },
+    {
+      "name": "combat_level1",
+      "directions": 4
+    },
+    {
+      "name": "combat_level2",
+      "directions": 4
+    },
+    {
+      "name": "combat_level3",
+      "directions": 4
+    },
+    {
+      "name": "t3weapon"
+    }
+  ]
+}

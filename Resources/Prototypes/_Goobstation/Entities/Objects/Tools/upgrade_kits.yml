@@ -1,0 +1,37 @@
+- type: entity
+  parent: BaseItem
+  id: UpgradeKitAutomation
+  name: automation upgrade kit
+  description: An upgrade kit with all the parts needed to upgrade a machine. This one allows extra automation options by linking robotic arms.
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Tools/lathe_upgrade_kit.rsi
+    state: icon
+  - type: UpgradeKit
+    whitelist:
+      components:
+      - AutomationSlots # automation needs code to support it, can't work on literally any machine
+    blacklist:
+      components:
+      - Automated
+      - UpgradedMachine
+    components:
+    - type: UpgradedMachine
+      upgrade: upgrade-kit-automation
+    - type: Automated
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: BasicDevice
+
+# for entities that come pre-automated
+- type: entity
+  abstract: true
+  id: BaseAutomatedMachine
+  components:
+  - type: AutomationSlots
+  - type: Automated
+  - type: UpgradedMachine
+    upgrade: upgrade-kit-automation
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice

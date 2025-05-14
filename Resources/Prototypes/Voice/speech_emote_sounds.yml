@@ -509,10 +509,26 @@
       path: /Audio/Voice/Moth/moth_chitter.ogg
     Squeak:
       path: /Audio/Voice/Moth/moth_squeak.ogg
+    Sneeze: # imp
+      collection: UnisexSneezes #placeholder
+    Cough: # imp
+      collection: UnisexCoughs #placeholder
+    Yawn: # imp
+      collection: UnisexYawn #placeholder
+    Sigh: # imp
+      collection: UnisexSigh #placeholder
+    Crying: # imp
+      collection: UnisexCry #placeholder
+    Whistle: # imp
+      collection: Whistles
     Weh:
       collection: Weh
     Hew:
       collection: Hew
+    Wuhey: # imp
+      collection: Wuhey
+    Ungh: # imp
+      collection: Ungh
     Honk:
       collection: BikeHorn
     Gasp:
@@ -582,6 +598,7 @@
       collection: Blinks
       params:
         volume: -3
+        variation: 0.1
 
 - type: emoteSounds
   id: DionaBodyEmotes
@@ -603,6 +620,7 @@
       collection: Blinks
       params:
         volume: -3
+        variation: 0.1
 
 - type: emoteSounds
   id: ReptilianBodyEmotes
@@ -627,6 +645,7 @@
       collection: Blinks
       params:
         volume: -3
+        variation: 0.1
 
 # mobs
 - type: emoteSounds

@@ -94,7 +94,7 @@ public sealed class CharacterRecordConsoleSystem : EntitySystem
             // Admins get additional info to make it easier to run commands
             var nameJob = console.ConsoleType != RecordConsoleType.Admin
                 ? $"{r.Name} ({r.JobTitle})"
-                : $"{r.Name} ({netEnt}, {r.JobTitle}";
+                : $"{r.Name} ({netEnt}, {r.JobTitle})";
 
             // Apply any filter the user has set
             if (console.Filter != null)

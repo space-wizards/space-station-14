@@ -28,7 +28,46 @@
   - sprite: _Impstation/Mobs/Customization/Diona/chest.rsi
     state: moss
 
+- type: marking
+  id: MycenaChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/chest.rsi
+    state: mycena
+
+- type: marking
+  id: MycenaChestGlow
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/chest.rsi
+    state: mycena
+  shader: unshaded
+
+- type: marking
+  id: ShelfChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/chest.rsi
+    state: shelf
+
 # Head
+
+- type: marking
+  id: Amanita
+  bodyPart: Head
+  markingCategory: HeadTop
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi
+    state: amanita1
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi
+    state: amanita2
 
 - type: marking
   id: DionaBigFirefly
@@ -49,6 +88,44 @@
   - sprite: _Impstation/Mobs/Customization/Diona/head.rsi
     state: pollendust
 
+- type: marking
+  id: JackHead
+  bodyPart: Head
+  markingCategory: HeadSide
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi
+    state: jack
+  shader: unshaded
+
+- type: marking
+  id: MycenaHead
+  bodyPart: Head
+  markingCategory: HeadSide
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi
+    state: mycena
+
+- type: marking
+  id: MycenaHeadGlow
+  bodyPart: Head
+  markingCategory: HeadSide
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi
+    state: mycena
+  shader: unshaded
+
+- type: marking
+  id: ShelfHead
+  bodyPart: Head
+  markingCategory: HeadSide
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/head.rsi
+    state: shelf
+
 # Snout
 
 # Eyes
@@ -56,6 +133,25 @@
 # RArm
 
 # LArm
+
+- type: marking
+  id: MycenaArm
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/larm.rsi
+    state: mycena
+
+- type: marking
+  id: MycenaArmGlow
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Diona ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Diona/larm.rsi
+    state: mycena
+  shader: unshaded
 
 # RLeg
 

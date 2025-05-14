@@ -1,0 +1,67 @@
+# SPDX-FileCopyrightText: 2024 Aviu00 <93730715+Aviu00@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Robotic Arm
+
+- type: sinkPort
+  id: MaterialSiloUtilizer
+  name: signal-port-name-material-silo-utilizer
+  description: signal-port-description-material-silo-utilizer
+
+# Robotic Arm
+
+- type: sinkPort
+  id: RoboticArmInput
+  name: signal-port-name-input-machine
+  description: signal-port-description-input-machine
+
+- type: sinkPort
+  id: AutomationSlotFilter
+  name: signal-port-name-automation-slot-filter
+  description: signal-port-description-automation-slot-filter
+
+# Reagent Grinder
+
+- type: sinkPort
+  id: AutomationSlotBeaker
+  name: signal-port-name-automation-slot-beaker
+  description: signal-port-description-automation-slot-beaker
+
+- type: sinkPort
+  id: AutomationSlotInput
+  name: signal-port-name-automation-slot-input
+  description: signal-port-description-automation-slot-input
+
+# Flatpacker
+
+- type: sinkPort
+  id: AutomationSlotBoard
+  name: signal-port-name-automation-slot-board
+  description: signal-port-description-automation-slot-board
+
+- type: sinkPort
+  id: AutomationSlotMaterials
+  name: signal-port-name-automation-slot-materials
+  description: signal-port-description-automation-slot-materials
+
+# Disposal Unit
+
+- type: sinkPort
+  id: DisposalFlush
+  name: signal-port-name-flush
+  description: signal-port-description-flush
+
+- type: sinkPort
+  id: DisposalEject
+  name: signal-port-name-eject
+  description: signal-port-description-eject
+
+# Storage Bin
+
+- type: sinkPort
+  id: AutomationSlotStorage
+  name: signal-port-name-automation-slot-storage
+  description: signal-port-description-automation-slot-storage

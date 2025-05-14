@@ -1,0 +1,38 @@
+# these are HEAVILY based on the Bingle free-agent ghostrole from GoobStation, but reflavored and reprogrammed to make them more Robust (and less of a meme.)
+# all credit for the core gameplay concepts and a lot of the core functionality of the code goes to the folks over at Goob, but I re-wrote enough of it to justify putting it in our filestructure.
+# the original Bingle PR can be found here: https://github.com/Goob-Station/Goob-Station/pull/1519
+- type: entity
+  id: SpawnPointGhostReplicatorBase
+  name: replicator spawn point
+  abstract: true
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: ghost-role-information-replicator-name
+    description: ghost-role-information-replicator-desc
+    rules: ghost-role-information-replicator-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobReplicator
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Replicator/replicator.rsi
+        state: icon
+
+- type: entity
+  id: SpawnPointGhostReplicator
+  parent: SpawnPointGhostReplicatorBase
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: SpawnPointGhostReplicatorQueen
+  parent: SpawnPointGhostReplicatorBase
+  suffix: Queen
+  components:
+  - type: GhostRoleMobSpawner
+    prototype: MobReplicatorQueen

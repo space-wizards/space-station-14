@@ -22,11 +22,17 @@ marking-Fangs-Fangs = Fangs
 marking-LizardBeard = Lizard Beard
 marking-LizardBeard-beard = Beard
 
+marking-LizardDroopySnout = Lizard Snout (Droopy)
+marking-LizardDroopySnout-droopy = Snout
+
 marking-LizardSnoutpiercings = Piercings
 marking-LizardSnoutpiercings-piercings1 = Piercings
 
 marking-LizardSnoutTall = Lizard Snout (Tall)
 marking-LizardSnoutTall-tall = Snout
+
+marking-LizardUpperSnout = Lizard Snout (High Nostrils)
+marking-LizardUpperSnout-upper = Snout
 
 # Eyes
 
@@ -81,6 +87,12 @@ marking-HijabFashionableLizard-hijabchiclizard = Hijab (Fashionable)
 marking-HijabSimpleLizard = Hijab (Simple)
 marking-HijabSimpleLizard-hijabsimplelizard = Hijab (Simple)
 
+marking-LizardKoboldEarsMid = Lizard Ears (Kobold Soft)
+marking-LizardKoboldEarsMid-koboldearsmid = Ears
+
+marking-LizardKoboldEarsTall = Lizard Ears (Kobold Stiff)
+marking-LizardKoboldEarsTall-koboldearstall = Ears
+
 marking-NiqabLizard = Niqab
 marking-NiqabLizard-niqablizard = Niqab
 
@@ -95,12 +107,19 @@ marking-TichelFashionableLizard-tichelfashionablelizard = Tichel (Fashionable)
 marking-LizardHeadFlat = Flat Head
 marking-LizardHeadFlat-flat = Flat Head
 
+marking-LizardFrill = Head Frill
+marking-LizardFrill-frill = Head Frill
+
 marking-LizardHornsKoboldEarspiercings = Lizard Ears (Kobold, Pierced)
 marking-LizardHornsKoboldEarspiercings-koboldears = Ears
 marking-LizardHornsKoboldEarspiercings-kobold_earspiercings = Piercings
 
 marking-LizardHornsNubby-nubby = Lizard Horns (Nubby)
 marking-LizardHornsNubby = Lizard Horns (Nubby)
+
+marking-LizardLittleHorns = Lizard Horns (Small)
+marking-LizardLittleHorns-small = Horns
+
 
 # Tail
 

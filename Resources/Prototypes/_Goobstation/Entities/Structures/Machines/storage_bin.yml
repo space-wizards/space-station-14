@@ -1,0 +1,71 @@
+- type: entity
+  parent: [ ConstructibleMachine, BaseMachinePowered, BaseAutomatedMachine ]
+  id: StorageBin
+  name: storage bin
+  description: An electronically controlled storage bin intended for use with robotic arms.
+  components:
+  # Visuals
+  - type: Sprite
+    sprite: _Goobstation/Structures/Machines/storage_bin.rsi
+    layers:
+    - state: icon
+    - state: powered
+      shader: unshaded
+      visible: false
+      map: [ "enum.StorageBinLayers.Powered" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.StorageBinLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  # Construction
+  - type: Machine
+    board: StorageBinCircuitboard
+  - type: Construction
+    containers:
+    - machine_board
+    - machine_parts
+    - storagebase
+    - filter_slot
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - storagebase
+    - filter_slot
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      storagebase: !type:Container
+      filter_slot: !type:ContainerSlot
+  # Storage
+  - type: Storage
+    grid:
+    - 0,0,9,5
+    clickInsert: false # be nice to multitools
+    maxItemSize: Huge
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: StorageBin
+  - type: FilterSlot
+  - type: ItemSlots
+    slots:
+      filter_slot:
+        whitelist:
+          components:
+          - AutomationFilter
+  - type: AutomationSlots
+    slots:
+    - !type:AutomatedItemSlot
+      input: AutomationSlotFilter
+      output: AutomationSlotFilter
+      slotId: filter_slot
+    - !type:AutomatedStorage
+      input: AutomationSlotStorage
+      output: AutomationSlotStorage
+  # Power
+  - type: ApcPowerReceiver
+    powerLoad: 200

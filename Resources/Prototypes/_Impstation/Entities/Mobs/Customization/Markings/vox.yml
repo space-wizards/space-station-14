@@ -800,6 +800,44 @@
   shader: unshaded
 
 - type: marking
+  id: VoxTailNub
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vox ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Vox/tail.rsi
+    state: nub1
+  - sprite: _Impstation/Mobs/Customization/Vox/tail.rsi
+    state: nub2
+
+- type: marking
+  id: VoxTailRaptor
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vox ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Vox/tail.rsi
+    state: raptor
+
+- type: marking
+  id: VoxTailShort
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vox ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Vox/tail.rsi
+    state: short
+
+- type: marking
+  id: VoxTailShort2
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vox ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Vox/tail.rsi
+    state: short2
+
+- type: marking
   id: VoxTailSmallPlume
   bodyPart: Tail
   markingCategory: Overlay

@@ -4,6 +4,8 @@ import csv
 import textwrap
 from sys import argv
 
+# discord-chat-exporter-cli export --format 'Csv' --channel '1328125558139392000'
+
 fp = argv[1]
 i = int(argv[2])
 skip = int(argv[3])

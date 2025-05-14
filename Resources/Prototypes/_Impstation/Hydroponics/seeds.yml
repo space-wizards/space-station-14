@@ -1,0 +1,104 @@
+- type: seed
+  id: rose
+  name: seeds-rose-name
+  noun: seeds-noun-seeds
+  displayName: seeds-rose-display-name
+  plantRsi: _Impstation/Objects/Specific/Hydroponics/rose.rsi
+  packetPrototype: RoseSeeds
+  productPrototypes:
+    - Rose
+  mutationPrototypes:
+    - blackRose
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 8
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Razorium:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 12
+
+- type: seed
+  id: blackRose
+  name: seeds-blackrose-name
+  noun: seeds-noun-seeds
+  displayName: seeds-blackrose-display-name
+  plantRsi: _Impstation/Objects/Specific/Hydroponics/blackRose.rsi
+  packetPrototype: BlackRoseSeeds
+  productPrototypes:
+    - RoseBlack
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 8
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Razorium:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 8
+    SulfuricAcid:
+      Min: 1
+      Max: 8
+      PotencyDivisor: 10
+
+- type: seed
+  id: coconut
+  name: seeds-coconut-name
+  noun: seeds-noun-seeds
+  displayName: seeds-coconut-display-name
+  plantRsi: _Impstation/Objects/Specific/Hydroponics/coconut.rsi
+  packetPrototype: CoconutSeeds
+  productPrototypes:
+    - FoodCoconut
+  mutationPrototypes:
+    - coconest
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 2
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    CoconutWater:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 25
+
+- type: seed
+  id: coconest
+  name: seeds-coconest-name
+  noun: seeds-noun-seeds
+  displayName: seeds-coconest-display-name
+  plantRsi: _Impstation/Objects/Specific/Hydroponics/coconest.rsi
+  packetPrototype: CoconutBeesSeeds
+  productPrototypes:
+    - FoodCoconutBees
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 2
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    BuzzochloricBees:
+      Min: 1
+      Max: 15
+      PotencyDivisor: 25
+

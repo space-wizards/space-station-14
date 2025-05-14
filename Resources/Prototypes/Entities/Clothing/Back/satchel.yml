@@ -138,7 +138,7 @@
   description: An exclusive satchel for Nanotrasen officers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/captain.rsi
+    sprite: _Impstation/Clothing/Back/Satchels/captain.rsi #imp
 
 - type: entity
   parent: ClothingBackpackSatchel

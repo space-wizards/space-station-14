@@ -7,6 +7,7 @@ using Content.Shared.Popups;
 using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map; // Goobstation
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -182,6 +183,15 @@ namespace Content.Shared.Stacks
         }
 
         /// <summary>
+        /// Goobstation - virtual method to allow calling from shared.
+        /// Does nothing on the client.
+        /// </summary>
+        public virtual EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, StackComponent? stack = null)
+        {
+            return null;
+        }
+		
+		/// <summary>
         ///     Try to use an amount of items on this stack. Returns whether this succeeded.
         /// </summary>
         public bool Use(EntityUid uid, int amount, StackComponent? stack = null)

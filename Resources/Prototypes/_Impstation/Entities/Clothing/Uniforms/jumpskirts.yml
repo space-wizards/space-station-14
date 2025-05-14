@@ -174,7 +174,7 @@
       sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hd_turtle.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, ClothingUniformFoldableBase, BaseCommandContraband]
+  parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpskirtHospitalityDirectorBartender
   name: lead bartending uniform
   description: This uniform lets the people know you can make a really mean raktaccino.
@@ -185,9 +185,9 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hd_bartender.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, ClothingUniformFoldableBase, BaseCommandContraband]
+  parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpskirtHospitalityDirectorJanitor
-  name: lead custodial jumpsuit
+  name: lead custodial jumpskirt
   description: This uniform shows that if anyone should get the janitor trolley, it's you.
   components:
   - type: Sprite

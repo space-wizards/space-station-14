@@ -1,0 +1,40 @@
+- type: entity
+  parent: MobSiliconBase
+  id: MobBoogieBot
+  name: boogiebot
+  description: Work that sucker to death, come on now.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Silicon/Bots/boogiebot.rsi
+    layers:
+    - state: "boogiebot"
+      map: ["enum.JukeboxVisualLayers.Base"]
+  - type: Construction
+    graph: BoogieBot
+    node: bot
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: Jukebox
+  - type: ActivatableUI
+    key: enum.JukeboxUiKey.Key
+  - type: UserInterface
+    interfaces:
+        enum.JukeboxUiKey.Key:
+          type: JukeboxBoundUserInterface
+  - type: RandomSprite
+    available:
+      - enum.JukeboxVisualLayers.Base:
+          boogiebot-d1: ""
+          boogiebot-d2: ""
+          boogiebot-d3: ""
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: boogiebot
+      Dead:
+        Base: boogiebot-dead
+

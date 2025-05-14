@@ -164,4 +164,26 @@ marking-DecapoidFlatHead-flathead = Flat Head
 
 # Tail
 
+marking-GrasperCurly = Curly
+marking-GrasperCurly-curly = Grasper
+
+marking-GrasperFreaky = Freaky
+marking-GrasperFreaky-freaky = Grasper
+
+marking-GrasperHigh = High Up
+marking-GrasperHigh-highup = Grasper
+
+marking-GrasperLong = Long
+marking-GrasperLong-long = Grasper
+
+marking-GrasperMoon = Moon
+marking-GrasperMoon-moon1 = Grasper
+marking-GrasperMoon-moon2 = Tip
+
+marking-GrasperShort = Short
+marking-GrasperShort-short = Grasper
+
+marking-GrasperUneven = Uneven
+marking-GrasperUneven-uneven = Grasper
+
 # RArmExtension

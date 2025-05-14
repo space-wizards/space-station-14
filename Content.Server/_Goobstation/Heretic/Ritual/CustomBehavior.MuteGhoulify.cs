@@ -13,7 +13,7 @@ public sealed partial class RitualMuteGhoulifyBehavior : RitualSacrificeBehavior
 
     public override void Finalize(RitualData args)
     {
-        foreach (var uid in uids)
+        foreach (var uid in Uids)
         {
             var ghoul = new GhoulComponent()
             {

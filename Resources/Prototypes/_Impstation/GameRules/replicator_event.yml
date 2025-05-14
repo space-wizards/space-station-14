@@ -1,0 +1,14 @@
+# these are HEAVILY based on the Bingle free-agent ghostrole from GoobStation, but reflavored and reprogrammed to make them more Robust (and less of a meme.)
+# all credit for the core gameplay concepts and a lot of the core functionality of the code goes to the folks over at Goob, but I re-wrote enough of it to justify putting it in our filestructure.
+# the original Bingle PR can be found here: https://github.com/Goob-Station/Goob-Station/pull/1519
+- type: entity
+  id: ReplicatorSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    weight: 8 # currently not referenced in any scheduler, for testing purposes.
+    duration: 50
+    minimumPlayers: 15
+  - type: RandomSpawnRule
+    prototype: SpawnPointGhostReplicatorQueen

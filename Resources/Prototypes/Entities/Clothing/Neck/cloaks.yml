@@ -60,7 +60,7 @@
   description: A white cloak with violet stripes, showing your status as the arbiter of cutting-edge technology.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/rd.rsi
+    sprite: _Impstation/Clothing/Neck/Cloaks/rd.rsi # Imp sprite!!
   - type: StealTarget
     stealGroup: HeadCloak
 
@@ -111,7 +111,7 @@
   description: A lavish and decorated cloak for special occasions.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/capcloakformal.rsi
+    sprite: _Impstation/Clothing/Neck/Cloaks/capcloakformal.rsi #imp
   - type: StealTarget
     stealGroup: HeadCloak
 

@@ -1,28 +1,48 @@
-﻿- type: entity
-  parent: BaseBallBat
-  id: BaseBallBatHomeRun
+﻿- type: entity # imp this is a refactor of the original home run bat to remove the deflectthrownobjects component
   name: home run bat
+  parent: [BaseItem, BaseMinorContraband]
+  id: BaseBallBatHomeRun
   description: Heavy metal bat with an extra kick.
   components:
   - type: Sprite
     sprite: _DV/Objects/Weapons/Melee/home_run_bat.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Blunt: 15
+        Structural: 5
     soundHit:
       collection: ExplosionSmall
+  - type: Wieldable
   - type: MeleeRequiresWield # You can't hit a home run with one hand, jimbo.
   - type: MeleeThrowOnHit
-    speed: 30
+    speed: 20
     distance: 50
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 5
+        Structural: 10
   - type: Item
     size: Large
   - type: Tool
+    qualities:
+    - Rolling
     speedModifier: 0.5 # it's very heavy, it rolls slower than a wooden bat
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
   - type: UseDelay
     delay: 2
   - type: PhysicalComposition
     materialComposition:
       Steel: 350 # it's not made of wood
+  - type: Tag
+    tags:
+    - BaseballBat
+ # - type: DeflectThrownObjects Removed to stop it from striking twice on wideswing. It's too heavy and unwieldy for real baseball idk.
+  - type: DamageOtherOnHit # imp
+    staminaCost: 10

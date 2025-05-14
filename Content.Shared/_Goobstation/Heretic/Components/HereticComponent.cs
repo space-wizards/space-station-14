@@ -4,12 +4,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Heretic;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class HereticComponent : Component
 {
     #region Prototypes
 
-    [DataField] public List<ProtoId<HereticKnowledgePrototype>> BaseKnowledge = new()
+    [DataField]
+    public List<ProtoId<HereticKnowledgePrototype>> BaseKnowledge = new()
     {
         "BreakOfDawn",
         "HeartbeatOfMansus",

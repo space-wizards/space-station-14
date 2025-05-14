@@ -1,0 +1,38 @@
+- type: constructionGraph
+  id: BoogieBot
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bot
+      steps:
+      - tag: JukeboxBoard
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: generic
+        name: jukebox machine board
+      - tag: ComputerTelevisionCircuitboard
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: cpuboard
+        name: television board
+      - tag: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: proximity sensor
+        doAfter: 2
+      - tag: BorgLeg
+        icon:
+          sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+          state: borg_l_leg
+        name: borg leg
+        doAfter: 2
+      - tag: BorgLeg
+        icon:
+          sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+          state: borg_r_leg
+        name: borg leg
+        doAfter: 2
+  - node: bot
+    entity: MobBoogieBot

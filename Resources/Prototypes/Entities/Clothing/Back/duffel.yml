@@ -49,7 +49,7 @@
   description: A large duffel bag for holding extra captainly goods.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/captain.rsi
+    sprite: _Impstation/Clothing/Back/Duffels/captain.rsi #imp
 
 - type: entity
   parent: ClothingBackpackDuffel

@@ -38,6 +38,11 @@
   copyright: "Ventrilo Harassment - World Of Warcraft Nerd"
   source: "https://www.youtube.com/watch?v=bIVTT4fgPQI"
 
+- files: ["realworld.ogg"]
+  license: "Custom"
+  copyright: "Justin Wong vs 8 year old kid (asianlamb) — Mortal Kombat X"
+  source: "https://www.youtube.com/watch?v=0RkapfBYIfc"
+
 - files: ["slog.ogg", "slog2.ogg"]
   license: "Custom"
   copyright: "TIER TIME *2*: RTVS Community Curated Tier Lists (WAYNERADIOTV)"

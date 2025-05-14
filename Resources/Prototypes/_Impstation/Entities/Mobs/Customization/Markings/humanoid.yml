@@ -125,6 +125,101 @@
     state: muscular
 
 - type: marking
+  id: ProstheticShoulderL
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Human, Dwarf, Reptilian ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: prostheticshoulderleft
+
+- type: marking
+  id: ProstheticShoulderR
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Human, Dwarf, Reptilian ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: prostheticshoulderright
+
+- type: marking
+  id: TattooAnchor
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Human, Arachnid, Dwarf, Reptilian, SlimePerson, Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#3894C5"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: anchor
+
+- type: marking
+  id: TattooCode1
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Human, Arachnid, Dwarf, Reptilian, SlimePerson, Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffffff"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: code1
+
+- type: marking
+  id: TattooCode2
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Human, Arachnid, Dwarf, Reptilian, SlimePerson, Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffffff"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: code2
+
+- type: marking
+  id: TattooCode3
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Human, Arachnid, Dwarf, Reptilian, SlimePerson, Thaven ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffffff"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: code3
+
+- type: marking
+  id: TattooDragon
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Human, Arachnid, Dwarf, Reptilian, SlimePerson, Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: dragontattoo1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: dragontattoo2
+
+- type: marking
   id: TattooNanotrasenChest
   bodyPart: Chest
   markingCategory: Chest
@@ -146,6 +241,20 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
     state: incision
+
+- type: marking
+  id: TattooVinesHumanoid
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Human, Arachnid, Dwarf, Reptilian, SlimePerson ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#379d0e"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: vines
 
 - type: marking
   id: VitiligoChestF
@@ -377,6 +486,54 @@
     state: twisting
 
 - type: marking
+  id: TattooCode4
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Human, Arachnid, Dwarf, Reptilian, SlimePerson, Thaven ]
+  followSkinColor: false
+  forcedColoring: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffffff"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rarm.rsi
+    state: code4
+
+- type: marking
+  id: TattooCode5
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Human, Arachnid, Dwarf, Reptilian, SlimePerson, Thaven ]
+  followSkinColor: false
+  forcedColoring: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffffff"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rarm.rsi
+    state: code5
+
+- type: marking
+  id: TattooHeartR
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Human, Arachnid, Dwarf, Reptilian, SlimePerson, Thaven ]
+  followSkinColor: false
+  forcedColoring: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ff254c"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rarm.rsi
+    state: heart
+
+- type: marking
   id: VitiligoArmR
   bodyPart: RArm
   markingCategory: Arms
@@ -445,6 +602,22 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/Humanoid/larm.rsi
     state: twisting
+
+- type: marking
+  id: TattooHeartL
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Human, Arachnid, Dwarf, Reptilian, SlimePerson, Thaven ]
+  followSkinColor: false
+  forcedColoring: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ff254c"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/larm.rsi
+    state: heart
 
 - type: marking
   id: VitiligoArmL
@@ -1238,6 +1411,17 @@
 
 # FacialHair
 
+- type: marking
+  id: FloralBeard
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [ Human, Dwarf ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/facialhair.rsi
+    state: messyfloral1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/facialhair.rsi
+    state: messyfloral2
+
 # Hair
 
 - type: marking
@@ -1247,6 +1431,26 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
     state: burqasolid
+
+- type: marking
+  id: HairFloralLong
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: florallong1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: florallong2
+
+- type: marking
+  id: HairFloralMid
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: floralmid1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: floralmid2
 
 - type: marking
   id: HijabFashionable
@@ -1353,6 +1557,15 @@
     state: sideshavecurly
 
 - type: marking
+  id: HumanHairSpikyPonytailLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Human, Dwarf, SlimePerson ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: spikyponytaillong
+
+- type: marking
   id: HumanHairUndercutCurly
   bodyPart: Hair
   markingCategory: Hair
@@ -1400,8 +1613,8 @@
 
 - type: marking
   id: HeadEarrings
-  bodyPart: HeadTop
-  markingCategory: HeadTop
+  bodyPart: HeadSide
+  markingCategory: HeadSide
   speciesRestriction: [ Human, Dwarf, SlimePerson ]
   coloring:
     default:
@@ -1416,8 +1629,8 @@
 
 - type: marking
   id: HeadEarringsDrop
-  bodyPart: HeadTop
-  markingCategory: HeadTop
+  bodyPart: HeadSide
+  markingCategory: HeadSide
   speciesRestriction: [ Human, Dwarf, SlimePerson ]
   coloring:
     default:
@@ -1432,8 +1645,8 @@
 
 - type: marking
   id: HeadEarringsWeights
-  bodyPart: HeadTop
-  markingCategory: HeadTop
+  bodyPart: HeadSide
+  markingCategory: HeadSide
   speciesRestriction: [ Human, Dwarf, SlimePerson ]
   coloring:
     default:

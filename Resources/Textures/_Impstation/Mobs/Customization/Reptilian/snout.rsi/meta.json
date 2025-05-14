@@ -4,11 +4,15 @@
         "x": 32,
         "y": 32
     },
-    "copyright": "by starlighthowls, tall/beard by rainyatrium",
+    "copyright": "fangs and piercings1 by starlighthowls. tall and beard by rainyatrium. droopy and upper by FaelingDraws for impstation.",
     "license": "CC-BY-SA-3.0",
     "states": [
         {
             "name": "beard",
+            "directions": 4
+        },
+        {
+            "name": "droopy",
             "directions": 4
         },
         {
@@ -21,6 +25,10 @@
         },
         {
             "name": "tall",
+            "directions": 4
+        },
+        {
+            "name": "upper",
             "directions": 4
         }
     ]

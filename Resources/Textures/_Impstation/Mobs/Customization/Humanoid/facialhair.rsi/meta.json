@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "drawn by crocodilecarousel (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "messyfloral1",
+            "directions": 4
+        },
+        {
+            "name": "messyfloral2",
+            "directions": 4
+        }
+    ]
+}

@@ -104,9 +104,9 @@
   description: A lightweight hardsuit designed for industrial EVA in zero gravity.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/spatio.rsi #imp
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/spatio.rsi #imp
   - type: PressureProtection
     highPressureMultiplier: 0.7
     lowPressureMultiplier: 1000
@@ -138,9 +138,9 @@
   description: A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/salvage.rsi #imp
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/salvage.rsi #imp
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
@@ -329,9 +329,9 @@
   description: A formal armored spacesuit, made for the station's captain.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/capspace.rsi #imp
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/capspace.rsi #imp
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000

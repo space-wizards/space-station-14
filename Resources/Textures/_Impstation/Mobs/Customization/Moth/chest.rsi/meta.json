@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "drawn by Snavian and crocodilecarousel (github) for Impstation",
+    "copyright": "claw by Snavian. rest by crocodilecarousel (github) for Impstation",
     "size": {
         "x": 32,
         "y": 32
@@ -17,6 +17,10 @@
         },
         {
             "name": "claw",
+            "directions": 4
+        },
+        {
+            "name": "glow",
             "directions": 4
         },
         {

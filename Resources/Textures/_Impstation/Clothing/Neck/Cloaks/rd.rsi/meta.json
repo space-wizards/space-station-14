@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprite by Ecramox, based off of the original sprite from https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da#diff-065f7052549d7435c2f036303a0f32c85878ea7011b6eb883c4de8ec83f2b617",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

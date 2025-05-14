@@ -3,6 +3,7 @@
   id: SmartFridge
   name: SmartFridge
   description: A refrigerated storage unit for keeping items cold and fresh.
+  categories: [ HideSpawnMenu ] # DeltaV - apparently we can't migrate abstract/disabled prototypes
   components:
   - type: StationAiWhitelist
   - type: Advertise

@@ -22,7 +22,9 @@
     UndergarmentTop: MobHumanoidAnyMarking
     UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobSlimeTorso
-    Eyes: MobHumanoidEyes
+    Eyes: MobHumanoidAnyMarking #imp, so they can pick their eyes
+    HeadTop: MobHumanoidAnyMarking #imp
+    HeadSide: MobHumanoidAnyMarking #imp
     LArm: MobSlimeLArm
     RArm: MobSlimeRArm
     LHand: MobSlimeLHand
@@ -35,6 +37,16 @@
 - type: markingPoints
   id: MobSlimeMarkingLimits
   points:
+    Eyes: #imp, so they can pick their eyes
+      points: 1
+      required: true
+      defaultMarkings: [ SlimeEyesDefault ]
+    HeadTop: #imp
+      points: 1
+      required: false
+    HeadSide: #imp
+      points: 1
+      required: false
     Hair:
       points: 1
       required: false

@@ -1,0 +1,39 @@
+- type: entity
+  id: SupermatterDelamEventScheduler
+  parent: BaseGameRule
+  components:
+  - type: BasicStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: SupermatterDelamEventsTable
+
+- type: entityTable
+  id: SupermatterDelamEventsTable
+  table: !type:AllSelector # don't get too goofy with these. please? also try to be nice to engineers, they got enough going on
+    children:
+    # basic weirdness
+    - id: AnomalySpawn
+    - id: GasLeak
+    - id: IonStorm
+    - id: PowerGridCheck
+    - id: SolarFlare
+    # teehee
+    - id: ChangelingAwakening
+    - id: GameRuleUristSwarm
+    - id: GreytideVirus
+    - id: ParadoxCloneSpawn
+    # supermatter specials
+    - id: SupermatterSpiderSpawn
+
+- type: entity
+  id: SupermatterSpiderSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobSupermatterSpider
+      prob: 0.05

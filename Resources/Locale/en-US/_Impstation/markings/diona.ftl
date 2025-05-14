@@ -12,7 +12,20 @@ marking-DionaLivingNymph-livingnymph = Living Nymphs
 marking-DionaMossChest = Moss Drape
 marking-DionaMossChest-moss = Moss Drape
 
+marking-MycenaChest = Diona Fungal (Mycena)
+marking-MycenaChest-mycena = Mycena
+
+marking-MycenaChestGlow = Diona Fungal (Glowing Mycena)
+marking-MycenaChestGlow-mycena = Mycena
+
+marking-ShelfChest = Diona Fungal (Shelf)
+marking-ShelfChest-shelf = Shelf
+
 # Head
+
+marking-Amanita = Diona Fungal (Amanita)
+marking-Amanita-amanita1 = Cap
+marking-Amanita-amanita2 = Spots and Gills
 
 marking-DionaBigFirefly = Big Fireflies
 marking-DionaBigFirefly-bigfirefly = Big Fireflies
@@ -22,7 +35,6 @@ marking-DionaPollenDust-pollendust = Pollen Cloud
 
 marking-DionaFlowersHead-flowers1 = Stems
 marking-DionaFlowersHead-flowers2 = Flowers
-
 
 marking-DionaBloomHead-bloom1 = Stem
 marking-DionaBloomHead-bloom2 = Flower
@@ -72,6 +84,18 @@ marking-DionaWildflowerHead-wildflower4 = Flowers 2
 marking-DionaWildflowerHead-wildflower5 = Flowers 3
 marking-DionaWildflowerHead-wildflower6 = Flowers 4
 
+marking-JackHead = Diona Fungal (Jack o' Lantern)
+marking-JackHead-jack = Pumpkin
+
+marking-MycenaHead = Diona Fungal (Mycena)
+marking-MycenaHead-mycena = Mycena
+
+marking-MycenaHeadGlow = Diona Fungal (Glowing Mycena)
+marking-MycenaHeadGlow-mycena = Mycena
+
+marking-ShelfHead = Diona Fungal (Shelf)
+marking-ShelfHead-shelf = Shelf
+
 # Snout
 
 # Eyes
@@ -79,6 +103,12 @@ marking-DionaWildflowerHead-wildflower6 = Flowers 4
 # RArm
 
 # LArm
+
+marking-MycenaArm = Diona Fungal (Mycena)
+marking-MycenaArm-mycena = Mycena
+
+marking-MycenaArmGlow = Diona Fungal (Glowing Mycena)
+marking-MycenaArmGlow-mycena = Mycena
 
 # RLeg
 

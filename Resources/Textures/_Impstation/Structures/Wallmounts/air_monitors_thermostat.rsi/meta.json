@@ -1,0 +1,16 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "Based on air alarm sprite taken from tgstation, modified by DinnerCalzone (github)",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+
+            "name": "heat",
+            "directions": 4
+        }
+    ]
+}

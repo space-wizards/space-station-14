@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "bladewings by pinkbat5. cloakarms, crabclaws, jellycloak, mothwings, myfirstwings, puffycape, slimearms, spinecloak, squidcape, swanwings, tentawings, thingwings, unevenarms by crocodilecarousel (github). variablewings by mqole.",
+    "copyright": "bladewings by pinkbat5. cloakarms, crabclaws, dionaarms, humanarmstattoo, jellycapestripes, jellycloak, mothwings, myfirstwings, puffcape, puffycape, slimearms, spinecloak, squidcape, swanwings, tentawings, thingwings, unevenarms, and urchinarms by crocodilecarousel (github). variablewings by mqole.",
     "size": {
         "x": 32,
         "y": 32
@@ -36,6 +36,38 @@
             "directions": 4
         },
         {
+            "name": "dionaarms1",
+            "directions": 4
+        },
+        {
+            "name": "dionaarms2",
+            "directions": 4
+        },
+        {
+            "name": "humanarmstattoo1",
+            "directions": 4
+        },
+        {
+            "name": "humanarmstattoo2",
+            "directions": 4
+        },
+        {
+            "name": "humanarmstattoo3",
+            "directions": 4
+        },
+        {
+            "name": "humanarmstattoo4",
+            "directions": 4
+        },
+        {
+            "name": "jellycapestripes1",
+            "directions": 4
+        },
+        {
+            "name": "jellycapestripes2",
+            "directions": 4
+        },
+        {
             "name": "jellycloak1",
             "directions": 4
         },
@@ -52,11 +84,47 @@
             "directions": 4
         },
         {
+            "name": "mothwingschecks1",
+            "directions": 4
+        },
+        {
+            "name": "mothwingschecks2",
+            "directions": 4
+        },
+        {
+            "name": "mothwingsoutline1",
+            "directions": 4
+        },
+        {
+            "name": "mothwingsoutline2",
+            "directions": 4
+        },
+        {
             "name": "myfirstwings1",
             "directions": 4
         },
         {
             "name": "myfirstwings2",
+            "directions": 4
+        },
+        {
+            "name": "puffcapecrackle1",
+            "directions": 4
+        },
+        {
+            "name": "puffcapecrackle2",
+            "directions": 4
+        },
+        {
+            "name": "puffcapefloral1",
+            "directions": 4
+        },
+        {
+            "name": "puffcapefloral2",
+            "directions": 4
+        },
+        {
+            "name": "puffcapefloral3",
             "directions": 4
         },
         {
@@ -105,6 +173,10 @@
         },
         {
             "name": "unevenarmssimple",
+            "directions": 4
+        },
+        {
+            "name": "urchinarms",
             "directions": 4
         },
         {

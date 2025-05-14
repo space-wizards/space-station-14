@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original by Emisse, modified by EmoGarbage404. Vox states by Flareguy for SS14 and edited by Sha-Seng, made purple by mousesweater for impstation",
+
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon-flash"
+    },
+    {
+      "name": "off-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-vox",
+      "directions": 4
+    }
+  ]
+}

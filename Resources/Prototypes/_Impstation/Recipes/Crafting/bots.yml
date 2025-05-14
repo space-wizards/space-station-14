@@ -1,0 +1,12 @@
+- type: construction
+  name: boogiebot
+  id: boogiebot
+  graph: BoogieBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+  description: This bot dances and plays and has a good time.
+  icon:
+    sprite: _Impstation/Mobs/Silicon/Bots/boogiebot.rsi
+    state: boogiebot

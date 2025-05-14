@@ -9,11 +9,11 @@ namespace Content.Server.Heretic.Ritual;
 
 public sealed partial class RitualReagentPuddleBehavior : RitualCustomBehavior
 {
-    protected EntityLookupSystem _lookup = default!;
+    private EntityLookupSystem _lookup = default!;
 
     [DataField] public List<ProtoId<ReagentPrototype>>? Reagents;
 
-    private List<EntityUid> uids = new();
+    private List<EntityUid> _uids = new();
 
     public override bool Execute(RitualData args, out string? outstr)
     {
@@ -25,9 +25,9 @@ public sealed partial class RitualReagentPuddleBehavior : RitualCustomBehavior
         }
         string reagStrings = "";
 
-        foreach(var Reagent in Reagents)
+        foreach (var reagent in Reagents)
         {
-            reagStrings += (Reagent.Id + ", ");
+            reagStrings += reagent.Id + ", ";
 
             outstr = null;
             _lookup = args.EntityManager.System<EntityLookupSystem>();
@@ -44,13 +44,13 @@ public sealed partial class RitualReagentPuddleBehavior : RitualCustomBehavior
 
                 var soln = puddle.Solution.Value;
 
-                if (!soln.Comp.Solution.ContainsPrototype(Reagent))
+                if (!soln.Comp.Solution.ContainsPrototype(reagent))
                     continue;
 
-                uids.Add(ent);
+                _uids.Add(ent);
             }
 
-            if (uids.Count == 0)
+            if (_uids.Count == 0)
             {
                 continue;
             }
@@ -67,8 +67,8 @@ public sealed partial class RitualReagentPuddleBehavior : RitualCustomBehavior
 
     public override void Finalize(RitualData args)
     {
-        foreach (var uid in uids)
+        foreach (var uid in _uids)
             args.EntityManager.QueueDeleteEntity(uid);
-        uids = new();
+        _uids = new();
     }
 }

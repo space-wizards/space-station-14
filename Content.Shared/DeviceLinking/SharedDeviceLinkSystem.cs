@@ -186,6 +186,32 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
         return Loc.GetString(proto.Name);
     }
+	
+	/// <summary>
+    /// Goobstation - Removes a port from a source.
+    /// </summary>
+    public void RemoveSourcePort(EntityUid uid, ProtoId<SourcePortPrototype> port)
+    {
+        if (!TryComp<DeviceLinkSourceComponent>(uid, out var comp))
+            return;
+
+        comp.Ports.Remove(port);
+        if (comp.Ports.Count == 0)
+            RemCompDeferred<DeviceLinkSourceComponent>(uid);
+    }
+
+    /// <summary>
+    /// Goobstation - Removes a port from a sink.
+    /// </summary>
+    public void RemoveSinkPort(EntityUid uid, ProtoId<SinkPortPrototype> port)
+    {
+        if (!TryComp<DeviceLinkSinkComponent>(uid, out var comp))
+            return;
+
+        comp.Ports.Remove(port);
+        if (comp.Ports.Count == 0)
+            RemCompDeferred<DeviceLinkSinkComponent>(uid);
+    }
     #endregion
 
     #region Links

@@ -1,0 +1,114 @@
+# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+# SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: [ ConstructibleMachine, BaseMachinePowered ]
+  id: RoboticArm
+  name: robotic arm
+  description: A high-tech robotic arm capable of moving items to and from machines that have automation upgrades.
+  components:
+  # Visuals
+  - type: Sprite
+    sprite: _Goobstation/Structures/Machines/robotic_arm.rsi
+    layers:
+    - state: base
+    - state: arm-long
+      map: [ "enum.RoboticArmLayers.Arm" ]
+    - state: powered
+      shader: unshaded
+      visible: false
+      map: [ "enum.RoboticArmLayers.Powered" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.RoboticArmVisuals.HasItem:
+        enum.RoboticArmLayers.Arm:
+          # extended when waiting for items like factorio
+          True: { state: arm-short }
+          False: { state: arm-long }
+      enum.PowerDeviceVisuals.Powered:
+        enum.RoboticArmLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  # Physics
+  - type: Transform
+    noRot: false
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.25
+        density: 200
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+      robotic_arm_input:
+        shape: !type:PhysShapeAabb
+          bounds: "0.55,-0.45,1.45,0.45"
+        density: 100
+        hard: false
+        layer:
+        - Impassable
+  # Construction
+  - type: Machine
+    board: RoboticArmCircuitboard
+  - type: Construction
+    containers:
+    - machine_board
+    - machine_parts
+    - robotic_arm_item
+    - filter_slot
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - robotic_arm_item
+    - filter_slot
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      robotic_arm_item: !type:ContainerSlot
+      filter_slot: !type:ContainerSlot
+  # Arm
+  - type: ItemSlots
+    slots:
+      robotic_arm_item:
+        insertOnInteract: false
+        insertSound: null # it plays twice because theres no user to pass to PlayPredicted
+        whitelist:
+          components:
+          - Item
+      filter_slot:
+        whitelist:
+          components:
+          - AutomationFilter
+  - type: RoboticArm
+  - type: FilterSlot
+  - type: AutomationSlots
+    slots:
+    - !type:AutomatedItemSlot
+      input: AutomationSlotFilter
+      output: AutomationSlotFilter
+      slotId: filter_slot
+  # Linking
+  - type: DeviceLinkSink
+    ports:
+    - RoboticArmInput
+    # TODO: ports to disable it
+  - type: DeviceLinkSource
+    ports:
+    - RoboticArmOutput
+    - RoboticArmMoved
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 5
+  # Power
+  - type: ApcPowerReceiver
+    powerLoad: 50 # Idle power usage, increases when active
+  - type: PowerSwitch

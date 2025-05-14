@@ -127,10 +127,11 @@ public sealed partial class HereticCombatMarkSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        foreach (var comp in EntityQuery<HereticCombatMarkComponent>())
+        var query = EntityQueryEnumerator<HereticCombatMarkComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
             if (_timing.CurTime > comp.Timer)
-                RemComp(comp.Owner, comp);
+                RemComp(uid, comp);
         }
     }
 

@@ -33,7 +33,8 @@ public sealed partial class MadnessMaskSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var mask in EntityQuery<MadnessMaskComponent>())
+        var query = EntityQueryEnumerator<MadnessMaskComponent>();
+        while (query.MoveNext(out var uid, out var mask))
         {
             if (!mask.Equipped)
                 continue;
@@ -43,7 +44,7 @@ public sealed partial class MadnessMaskSystem : EntitySystem
 
             mask.UpdateAccumulator = 0;
 
-            var lookup = _lookup.GetEntitiesInRange(mask.Owner, 5f);
+            var lookup = _lookup.GetEntitiesInRange(uid, 5f);
             foreach (var look in lookup)
             {
                 // heathens exclusive

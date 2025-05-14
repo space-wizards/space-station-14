@@ -4,9 +4,13 @@
         "x": 32,
         "y": 32
     },
-    "copyright": "bodyhair by Honeyed_Lemons_, backstabbed, incision, muscular, twisting, star and vitiligo by crocodilecarousel (github). cuthere, heavy and necklace by Sha-Seng (GitHub).",
+    "copyright": "bodyhair by Honeyed_Lemons_, anchor, backstabbed, code, dragontattoo, incision, muscular, prosthetics, twisting, star, vines, and vitiligo by crocodilecarousel (github). cuthere, heavy and necklace by Sha-Seng (GitHub).",
     "license": "CC-BY-SA-3.0",
     "states": [
+        {
+            "name": "anchor",
+            "directions": 4
+        },
         {
             "name": "backstabbed",
             "directions": 4
@@ -20,7 +24,27 @@
             "directions": 4
         },
         {
+            "name": "code1",
+            "directions": 4
+        },
+        {
+            "name": "code2",
+            "directions": 4
+        },
+        {
+            "name": "code3",
+            "directions": 4
+        },
+        {
             "name": "cuthere",
+            "directions": 4
+        },
+        {
+            "name": "dragontattoo1",
+            "directions": 4
+        },
+        {
+            "name": "dragontattoo2",
             "directions": 4
         },
         {
@@ -52,6 +76,14 @@
             "directions": 4
         },
         {
+            "name": "prostheticshoulderleft",
+            "directions": 4
+        },
+        {
+            "name": "prostheticshoulderright",
+            "directions": 4
+        },
+        {
             "name": "star",
             "directions": 4
         },
@@ -61,6 +93,10 @@
         },
         {
             "name": "twistingright",
+            "directions": 4
+        },
+        {
+            "name": "vines",
             "directions": 4
         },
         {

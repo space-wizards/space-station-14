@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "crew, centcomm, nukie sprites by RosySaturniidae, silicon sprites by crocodilecarousel with tweaks from RosySaturniidae",
+  "copyright": "crew, centcomm, nukie sprites by RosySaturniidae, silicon sprites by crocodilecarousel with tweaks from RosySaturniidae, salvage figure purpled by mousesweater",
   "size": {
     "x": 32,
     "y": 32
@@ -123,6 +123,9 @@
         },
         {
             "name": "cosmiccultist_unshaded"
+        },
+        {
+            "name": "salvage"
         }
     ]
 }

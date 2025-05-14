@@ -8,6 +8,7 @@ using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Shared.Emag.Systems; //imp
 using JukeboxComponent = Content.Shared.Audio.Jukebox.JukeboxComponent;
 
 namespace Content.Server.Audio.Jukebox;
@@ -28,7 +29,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         SubscribeLocalEvent<JukeboxComponent, JukeboxSetTimeMessage>(OnJukeboxSetTime);
         SubscribeLocalEvent<JukeboxComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<JukeboxComponent, ComponentShutdown>(OnComponentShutdown);
-
         SubscribeLocalEvent<JukeboxComponent, PowerChangedEvent>(OnPowerChanged);
     }
 

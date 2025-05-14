@@ -28,3 +28,52 @@
   materials:
     Steel: 100
     Wood: 100
+
+- type: latheRecipe
+  id: SimpleSuture
+  result: SimpleSuture1
+  completetime: 1
+  materials:
+    Cloth: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: ElectrodePad
+  result: ElectrodePad1
+  completetime: 1
+  materials:
+    Steel: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: ShockGel
+  result: ShockGel1
+  completetime: 1
+  materials:
+    Glass: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: ColdPack
+  result: ColdPack1
+  completetime: 1
+  materials:
+    Glass: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: EZGraft
+  result: EZGraft1
+  completetime: 1
+  materials:
+    Steel: 25
+    Glass: 25
+    
+- type: latheRecipe
+  id: Tincture
+  result: Tincture1
+  completetime: 1
+  materials:
+    Steel: 10
+    Plastic: 10
+    Glass: 10

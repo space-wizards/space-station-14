@@ -3,6 +3,7 @@
   startingInventory:
     Brutepack: 3
     Ointment: 3
+    Tincture: 3 #imp
     Bloodpack: 3
     ChemistryBottleEpinephrine: 3
     Syringe: 3

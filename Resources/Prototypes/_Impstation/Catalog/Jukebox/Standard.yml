@@ -346,3 +346,119 @@
   name: "ZIP YKK ARRANGE // Rukunetsu"
   path:
     path: /Audio/_Impstation/Music/zip_ykk_arrange.ogg
+
+## EMAG ONLY
+
+- type: jukebox
+  id: UnfuckedGondal
+  emagOnly: true
+  name: "_error-code:537461727320616E642047616D6573 // 416C66205361726F" # scary
+  path:
+    path: /Audio/_Impstation/Music/stars_and_games.ogg
+
+## NUKEBOX BELOW; ALSO EMAG ONLY
+
+- type: jukebox
+  id: BossPlok
+  emagOnly: true
+  name: "[Plok!] Boss // Geoff Follin"
+  path:
+    path: /Audio/_Impstation/Music/boss.ogg
+
+- type: jukebox
+  id: BlatantlyNuclear
+  emagOnly: true
+  name: "Blatantly Nuclear // mrjajkes"
+  path:
+    path: /Audio/_Impstation/Music/blatantly_nuclear.ogg
+
+- type: jukebox
+  id: CyberGrind
+  emagOnly: true
+  name: "[Ultrakill] The Cyber Grind // meganeko"
+  path:
+    path: /Audio/_Impstation/Music/cyber_grind.ogg
+
+- type: jukebox
+  id: Departure
+  emagOnly: true
+  name: "[Mega Man Zero 2] Departure // Ippo Yamada; arranged by III (for REMASTERED TRACKS ROCKMAN ZERO Mythos)"
+  path:
+    path: /Audio/_Impstation/Music/departure.ogg
+
+- type: jukebox
+  id: Fiend
+  emagOnly: true
+  name: "[FINAL FANTASY XIV] Fiend // The Primals" # i'm crediting the unit Soken and Koji Fox formed together because it's simpler
+  path:
+    path: /Audio/_Impstation/Music/fiend.ogg
+
+- type: jukebox
+  id: ForgetFreeman
+  emagOnly: true
+  name: "[Black Mesa] Forget About Freeman // Joel Nielsen"
+  path:
+    path: /Audio/_Impstation/Music/forget_about_freeman.ogg
+
+- type: jukebox
+  id: HurryUp
+  emagOnly: true
+  name: "[Wario Land 4] Hurry Up! // Ryoji Yoshitomi"
+  path:
+    path: /Audio/_Impstation/Music/hurry_up.ogg
+
+- type: jukebox
+  id: Roadkilla
+  emagOnly: true
+  name: "[Slayers X: Terminal Aftermath] Roadkilla (Combat X-Mix) // Jay Tholen" # no sub-subtitles okay?
+  path:
+    path: /Audio/_Impstation/Music/roadkilla.ogg
+
+- type: jukebox
+  id: RulesOfNature
+  emagOnly: true
+  name: "[Metal Gear Rising: Revengeance] Rules of Nature // Jamie Christopherson & Jason Miller"
+  path:
+    path: /Audio/_Impstation/Music/rules_of_nature.ogg
+
+- type: jukebox
+  id: RuinousIntnt
+  emagOnly: true
+  name: "[corru.observer] RUINOUS INTNT // NoisyRejects, Deltanoyz, corru.works"
+  path:
+    path: /Audio/_Impstation/Music/ruinous_intnt.ogg
+
+- type: jukebox
+  id: SecondWarning
+  emagOnly: true
+  name: "[Lobotomy Corporation] Second Warning // Dr.ReB"
+  path:
+    path: /Audio/_Impstation/Music/secondwarning.ogg
+
+- type: jukebox
+  id: Shootem
+  emagOnly: true
+  name: "Shoot 'Em // Washboard Rhythm Kings"
+  path:
+    path: /Audio/_Impstation/Music/shootem.ogg
+
+- type: jukebox
+  id: Unbreakable
+  emagOnly: true
+  name: "[ARMORED CORE VI: FIRES OF RUBICON] Unbreakable // Kota Hoshino"
+  path:
+    path: /Audio/_Impstation/Music/unbreakable.ogg
+
+- type: jukebox
+  id: WarWithoutReason
+  emagOnly: true
+  name: "[Ultrakill] War Without Reason // Heaven Pierce Her"
+  path:
+    path: /Audio/_Impstation/Music/war_without_reason.ogg
+
+- type: jukebox
+  id: Werehog
+  emagOnly: true
+  name: "[Sonic Unleashed] Werehog Battle Theme // Kenichi Tokoi & SEGA SOUND TEAM"
+  path:
+    path: /Audio/_Impstation/Music/werehog_battle_theme.ogg

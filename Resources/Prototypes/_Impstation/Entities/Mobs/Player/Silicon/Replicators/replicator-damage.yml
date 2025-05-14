@@ -1,0 +1,42 @@
+- type: damageModifierSet
+  id: Replicator1
+  coefficients:
+    Blunt: 0.9
+    Slash: 0.5
+    Piercing: 0.9
+    Shock: 1.2
+  flatReductions:
+    Heat: 5
+
+- type: damageModifierSet
+  id: Replicator2
+  coefficients:
+    Blunt: 0.8
+    Slash: 0.5
+    Piercing: 0.8
+    Shock: 1.2
+  flatReductions:
+    Heat: 5
+
+- type: damageModifierSet
+  id: Replicator3
+  coefficients:
+    Blunt: 0.7
+    Slash: 0.5
+    Piercing: 0.7
+    Shock: 1.2
+  flatReductions:
+    Heat: 6
+
+- type: damageModifierSet # ideally the nest should be able to be destroyed relatively easily with a couple grenades or a brave soul with a pickaxe.
+  id: ReplicatorNest
+  coefficients:
+    Blunt: 0.5
+    Slash: 0.5
+    Piercing: 0.5
+    Shock: 1.2
+  flatReductions:
+    Blunt: 10
+    Slash: 10
+    Piercing: 10
+    Heat: 10

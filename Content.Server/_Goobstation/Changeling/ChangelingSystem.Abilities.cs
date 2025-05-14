@@ -538,7 +538,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         var eggComp = EnsureComp<ChangelingEggComponent>(target);
         eggComp.lingComp = comp;
-        eggComp.lingMind = (EntityUid) mind;
+        eggComp.lingMind = (EntityUid)mind;
         eggComp.lingStore = _serialization.CreateCopy(storeComp, notNullableOverride: true);
 
         EnsureComp<AbsorbedComponent>(target);
@@ -547,9 +547,9 @@ public sealed partial class ChangelingSystem : EntitySystem
         _blood.ChangeBloodReagent(target, "FerrochromicAcid");
         _blood.SpillAllSolutions(target);
 
-        PlayMeatySound((EntityUid) uid, comp);
+        PlayMeatySound(uid, comp);
 
-        _bodySystem.GibBody((EntityUid) uid);
+        _bodySystem.GibBody(uid);
     }
 
     #endregion
@@ -607,7 +607,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             var puller = Comp<PullableComponent>(uid).Puller;
             if (puller != null)
             {
-                _puddle.TrySplashSpillAt((EntityUid) puller, Transform((EntityUid) puller).Coordinates, soln, out _);
+                _puddle.TrySplashSpillAt((EntityUid)puller, Transform((EntityUid)puller).Coordinates, soln, out _);
                 return;
             }
         }

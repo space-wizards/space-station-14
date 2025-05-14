@@ -4,8 +4,8 @@ meta:
   engineVersion: 251.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/24/2025 17:16:47
-  entityCount: 28696
+  time: 05/09/2025 04:20:50
+  entityCount: 28694
 maps:
 - 951
 grids:
@@ -14586,7 +14586,7 @@ entities:
       pos: -29.5,15.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -260665.7
+      secondsUntilStateChange: -260701.36
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14834,7 +14834,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -115319.44
+      secondsUntilStateChange: -115355.09
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -22813,6 +22813,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 57.5,0.5
+      parent: 5350
+- proto: BorgChargerDroneSpawner
+  entities:
+  - uid: 25337
+    components:
+    - type: Transform
+      pos: 42.5,-2.5
       parent: 5350
 - proto: BoxBeaker
   entities:
@@ -84367,7 +84374,7 @@ entities:
       pos: 31.5,-33.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -38158.473
+      secondsUntilStateChange: -38194.13
       state: Closing
   - uid: 9615
     components:
@@ -151558,23 +151565,6 @@ entities:
     - type: Transform
       pos: 58.5,-11.5
       parent: 5350
-- proto: SpawnMobDrone
-  entities:
-  - uid: 28671
-    components:
-    - type: Transform
-      pos: 43.5,-2.5
-      parent: 5350
-  - uid: 28672
-    components:
-    - type: Transform
-      pos: 42.5,-2.5
-      parent: 5350
-  - uid: 28673
-    components:
-    - type: Transform
-      pos: 42.5,-1.5
-      parent: 5350
 - proto: SpawnMobFoxRenault
   entities:
   - uid: 1083
@@ -184710,7 +184700,7 @@ entities:
       pos: -28.5,-5.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -43870.383
+      secondsUntilStateChange: -43906.04
       state: Opening
   - uid: 17570
     components:

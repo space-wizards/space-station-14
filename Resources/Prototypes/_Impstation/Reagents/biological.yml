@@ -103,8 +103,9 @@
           types:
             Cellular: 2
       - !type:ChemVomit
-        probability: 0.75
+        probability: 0.25
       - !type:Jitter
+        probability: 0.25
 
 - type: reagent # can't parent it to blood because anybody should be able to drink it, the flesh/organs are the toxic parts (fugu moment)
   id: ShimmeringBlood

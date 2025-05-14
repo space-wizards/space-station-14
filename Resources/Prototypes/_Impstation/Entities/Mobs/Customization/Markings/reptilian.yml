@@ -64,6 +64,15 @@
     state: beard
 
 - type: marking
+  id: LizardDroopySnout
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/snout.rsi
+    state: droopy
+
+- type: marking
   id: LizardSnoutpiercings
   bodyPart: Snout
   markingCategory: Overlay
@@ -87,6 +96,15 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/Reptilian/snout.rsi
     state: tall
+
+- type: marking
+  id: LizardUpperSnout
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/snout.rsi
+    state: upper
 
 # Eyes
 
@@ -190,6 +208,24 @@
     state: hijabsimple
 
 - type: marking
+  id: LizardKoboldEarsMid
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headside.rsi
+    state: koboldearsmid
+
+- type: marking
+  id: LizardKoboldEarsTall
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headside.rsi
+    state: koboldearstall
+
+- type: marking
   id: NiqabLizard
   bodyPart: HeadSide
   markingCategory: HeadSide
@@ -246,6 +282,24 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/Reptilian/headtop.rsi
     state: nubby
+
+- type: marking
+  id: LizardLittleHorns
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headtop.rsi
+    state: little
+
+- type: marking
+  id: LizardFrill
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Reptilian ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Reptilian/headtop.rsi
+    state: frill
 
 # Tail
 

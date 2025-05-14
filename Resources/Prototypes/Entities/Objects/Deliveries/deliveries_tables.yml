@@ -104,6 +104,8 @@
       - id: Brutepack
       - id: Ointment
       - id: Gauze
+      - id: SimpleSuture #IMP
+      - id: Tincture #IMP
       - id: Bloodpack
 
 # Packages

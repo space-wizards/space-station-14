@@ -535,12 +535,12 @@
 - files: ["blatantly_nuclear.ogg"]
   license: "Custom"
   copyright: "Blatantly Nuclear by mrjajkes is licensed under the following terms: free use and modification with proper credit to the original creator, excluding usage by FulpStation, White Dream, Wizard's Den, and any ERP/sexually-oriented servers, or for commercial use unless granted permission by the author. For commercial use, please contact the author to discuss details."
-  source: "https://www.youtube.com/watch?v=peuTnilEv9g"
+  source: "https://www.youtube.com/watch?v=f5URIS00IIc"
 
 - files: ["boss.ogg"]
   license: "Custom"
   copyright: "Boss by Geoff Follin for Plok!"
-  source: "https://www.youtube.com/watch?v=f5URIS00IIc"
+  source: "https://www.youtube.com/watch?v=peuTnilEv9g"
 
 - files: ["cyber_grind.ogg"]
   license: "Custom"
@@ -628,3 +628,10 @@
   license: "Custom"
   copyright: "Timestopper Tactics by Corru.Works for Corru.Observer"
   source: "https://www.youtube.com/watch?v=gOEbWknk1NU"
+
+# emag only juke?
+
+- files: ["stars_and_games.ogg"]
+  license: "Custom"
+  copyright: "Stars and Games by Alf Saro / Konti Eckert"
+  source: "https://www.youtube.com/watch?v=N2uR67imAnA"

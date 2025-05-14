@@ -4,8 +4,8 @@ meta:
   engineVersion: 251.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/23/2025 18:18:47
-  entityCount: 21502
+  time: 05/09/2025 04:25:06
+  entityCount: 21500
 maps:
 - 1
 grids:
@@ -9615,15 +9615,13 @@ entities:
     - type: Transform
       pos: -6.5,23.5
       parent: 2
-  - uid: 11807
-    components:
-    - type: MetaData
-      name: tech vault (command-only)
-    - type: Transform
-      pos: 45.5,-46.5
-      parent: 2
 - proto: AirlockCommandLocked
   entities:
+  - uid: 11807
+    components:
+    - type: Transform
+      pos: 43.5,-43.5
+      parent: 2
   - uid: 20449
     components:
     - type: Transform
@@ -10028,7 +10026,7 @@ entities:
       pos: -36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -102885.9
+      secondsUntilStateChange: -102980.64
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -10368,7 +10366,7 @@ entities:
       pos: 33.5,-43.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -231223.02
+      secondsUntilStateChange: -231317.77
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11073,7 +11071,7 @@ entities:
       pos: 37.5,-46.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -53558.434
+      secondsUntilStateChange: -53653.176
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11707,7 +11705,7 @@ entities:
       pos: -8.5,-0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -45682.06
+      secondsUntilStateChange: -45776.8
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -99774,7 +99772,7 @@ entities:
   - uid: 5998
     components:
     - type: Transform
-      pos: 43.5,-43.5
+      pos: 45.5,-46.5
       parent: 2
 - proto: HighSecDoor
   entities:
@@ -117030,20 +117028,10 @@ entities:
       parent: 2
 - proto: SpawnMobDrone
   entities:
-  - uid: 21450
-    components:
-    - type: Transform
-      pos: 45.5,-42.5
-      parent: 2
   - uid: 21451
     components:
     - type: Transform
       pos: 46.5,-43.5
-      parent: 2
-  - uid: 21452
-    components:
-    - type: Transform
-      pos: 45.5,-44.5
       parent: 2
 - proto: SpawnMobFoxRenault
   entities:

@@ -26,7 +26,7 @@
             HeadOfSecurity: [ 1, 1 ]
             HospitalityDirector: [ 1, 1 ] # imp
             Quartermaster: [ 1, 1 ]
-            # service - 23
+            # service - 23 incl. service worker
             Bartender: [ 2, 2 ]
             Botanist: [ 3, 3 ]
             Chaplain: [ 1, 1 ]
@@ -37,7 +37,7 @@
             Mime: [ 2, 2 ]
             Musician: [ 2, 2 ]
             Reporter: [ 2, 2 ]
-            ServiceWorker: [ 2, 2 ]
+            #ServiceWorker: [ 2, 2 ] #imp
             Zookeeper: [ 1, 1 ]
             # engineering - 8-12
             AtmosphericTechnician: [ 3, 3 ]

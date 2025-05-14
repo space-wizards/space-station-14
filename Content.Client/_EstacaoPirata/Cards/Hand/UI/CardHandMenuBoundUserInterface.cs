@@ -1,9 +1,7 @@
 using Content.Shared._EstacaoPirata.Cards.Hand;
-using Content.Shared.RCD;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client._EstacaoPirata.Cards.Hand.UI;
 
@@ -42,6 +40,6 @@ public sealed class CardHandMenuBoundUserInterface : BoundUserInterface
         base.Dispose(disposing);
         if (!disposing) return;
 
-        _menu?.Dispose();
+        _menu?.Parent?.RemoveChild(_menu);
     }
 }

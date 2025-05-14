@@ -20,4 +20,11 @@ public sealed partial class JukeboxPrototype : IPrototype
 
     [DataField(required: true)]
     public SoundPathSpecifier Path = default!;
+
+    /// <summary>
+    /// IMP ADDITION
+    /// True if the song should only appear when the jukebox is emagged.
+    /// </summary>
+    [DataField]
+    public bool EmagOnly;
 }

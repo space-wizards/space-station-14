@@ -20,6 +20,27 @@ marking-RadiumGlow-radiumglow = Radium Glow
 
 # Head
 
+marking-GrayEyebags = Gray Eyebags
+marking-GrayEyebags-eyebags = Eyebags
+
+marking-GrayHeadgem = Gray Headgem
+marking-GrayHeadgem-gem = Headgem
+
+marking-GrayLittleEyebrows = Gray Little Eyebrows
+marking-GrayLittleEyebrows-littleeyebrows = Eyebrows
+
+marking-GraySpots = Gray Head Spots
+marking-GraySpots-spots = Spots
+
+marking-GraySunkenCheeks = Gray Sunken Cheeks
+marking-GraySunkenCheeks-sunkencheeks = Sunken Cheeks
+
+marking-GrayTallEars = Gray Ears (Tall)
+marking-GrayTallEars-tallears = Ears
+
+marking-GrayWrinkles = Gray Wrinkles
+marking-GrayWrinkles-wrinkles = Gray Wrinkles
+
 marking-RadiumGlowBrain = Radium Glow Brain
 marking-RadiumGlowBrain-radiumglowbrain = Radium Glow Brain
 

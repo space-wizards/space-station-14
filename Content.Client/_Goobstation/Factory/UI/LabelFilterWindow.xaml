@@ -1,0 +1,6 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+        xmlns:controls="using:Content.Client.UserInterface.Controls"
+        Title="{Loc 'label-filter-window-title'}"
+        MinSize="300 100">
+    <LineEdit Name="LabelEdit" PlaceHolder="{Loc 'label-filter-placeholder'}"/>
+</controls:FancyWindow>

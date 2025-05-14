@@ -1,5 +1,6 @@
 using System.Numerics;
 using System.Text;
+using Content.Server._Impstation.Administration.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
@@ -126,6 +127,8 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         {
             if (user is not null)
                 _popup.PopupEntity(Loc.GetString("food-sequence-no-space"), start, user.Value);
+            if (start.Comp.MaxLayers > start.Comp.EatThreshold)
+                EnsureComp<EatSignComponent>(start); // Imp eat sign
             return false;
         }
 

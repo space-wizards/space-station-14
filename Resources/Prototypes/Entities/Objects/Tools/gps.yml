@@ -5,12 +5,13 @@
   description: Helping lost spacemen find their way through the planets since 2016.
   components:
   - type: Sprite
-    sprite: Objects/Devices/gps.rsi
+    sprite: _Impstation/Objects/Devices/gps.rsi #imp, also did you know GPS is a tools object but a devices texture? i should attack
     layers:
     - state: icon
     - state: active
+      shader: unshaded
   - type: Item
-    sprite: Objects/Devices/gps.rsi
+    sprite: _Impstation/Objects/Devices/gps.rsi #imp
   - type: HandheldGPS
   - type: PhysicalComposition
     materialComposition:

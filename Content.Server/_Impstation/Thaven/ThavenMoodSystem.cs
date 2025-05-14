@@ -30,6 +30,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
     [Dependency] private readonly UserInterfaceSystem _bui = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
 
     public IReadOnlyList<ThavenMood> SharedMoods => _sharedMoods.AsReadOnly();
     private readonly List<ThavenMood> _sharedMoods = new();
@@ -60,7 +61,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>((_) => NewSharedMoods());
     }
 
-    private void NewSharedMoods()
+    public void NewSharedMoods()
     {
         _sharedMoods.Clear();
         for (int i = 0; i < _config.GetCVar(ImpCCVars.ThavenSharedMoodCount); i++)
@@ -296,6 +297,26 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
             UpdateBUIState(ent);
     }
 
+    /// <summary>
+    /// Clears the moods for a thaven, then applies a new set of moods.
+    /// </summary>
+    public void RefreshMoods(Entity<ThavenMoodsComponent> ent)
+    {
+        ent.Comp.Moods = _emptyMoods.ToList();
+
+        // "Yes, and" moods
+        if (TryPick(YesAndDataset, out var mood, GetActiveMoods(ent)))
+            TryAddMood(ent, mood, true, false);
+
+        // "No, and" moods
+        if (TryPick(NoAndDataset, out mood, GetActiveMoods(ent)))
+            TryAddMood(ent, mood, true, false);
+
+        // Wildcard moods
+        if (_emag.CheckFlag(ent, EmagType.Interaction))
+            AddWildcardMood(ent, false);
+    }
+
     public HashSet<ProtoId<ThavenMoodPrototype>> GetConflicts(IEnumerable<ThavenMood> moods)
     {
         var conflicts = new HashSet<ProtoId<ThavenMoodPrototype>>();
@@ -348,13 +369,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
 
     private void OnThavenMoodInit(Entity<ThavenMoodsComponent> ent, ref MapInitEvent args)
     {
-        // "Yes, and" moods
-        if (TryPick(YesAndDataset, out var mood, GetActiveMoods(ent)))
-            TryAddMood(ent, mood, true, false);
-
-        // "No, and" moods
-        if (TryPick(NoAndDataset, out mood, GetActiveMoods(ent)))
-            TryAddMood(ent, mood, true, false);
+        RefreshMoods(ent);
 
         ent.Comp.Action = _actions.AddAction(ent.Owner, ActionViewMoods);
     }

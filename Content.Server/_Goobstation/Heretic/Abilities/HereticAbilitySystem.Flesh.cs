@@ -10,14 +10,11 @@ using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
 using Content.Shared.Sprite; // imp
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization.Manager; // imp
 
 namespace Content.Server.Heretic.Abilities;
 
 public sealed partial class HereticAbilitySystem : EntitySystem
 {
-    [Dependency] private readonly ISerializationManager _serManager = default!; // imp
-
     private void SubscribeFlesh()
     {
         SubscribeLocalEvent<HereticComponent, EventHereticFleshSurgery>(OnFleshSurgery);
@@ -31,9 +28,9 @@ public sealed partial class HereticAbilitySystem : EntitySystem
             return;
 
         if (HasComp<GhoulComponent>(args.Target)
-        || (TryComp<HereticComponent>(args.Target, out var th) && th.CurrentPath == ent.Comp.CurrentPath))
+        || TryComp<HereticComponent>(args.Target, out var th) && th.CurrentPath == ent.Comp.CurrentPath)
         {
-            var dargs = new DoAfterArgs(EntityManager, ent, 10f, new EventHereticFleshSurgeryDoAfter(args.Target), ent, args.Target)
+            var dargs = new DoAfterArgs(EntityManager, ent, 10f, new EventHereticFleshSurgeryDoAfter(), ent, args.Target)
             {
                 BreakOnDamage = true,
                 BreakOnMove = true,
@@ -93,7 +90,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
             return;
 
         // heal teammates, mostly ghouls
-        _dmg.SetAllDamage((EntityUid) args.Target, dmg, 0);
+        _dmg.SetAllDamage((EntityUid)args.Target, dmg, 0);
         args.Handled = true;
     }
     private void OnFleshAscendPolymorph(Entity<HereticComponent> ent, ref EventHereticFleshAscend args)
@@ -133,7 +130,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
             }
         } // end imp
 
-        _aud.PlayPvs(new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg"), (EntityUid) urist, AudioParams.Default.AddVolume(2f));
+        _aud.PlayPvs(new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg"), (EntityUid)urist, AudioParams.Default.AddVolume(2f));
 
         args.Handled = true;
     }
@@ -144,7 +141,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
         Color eyeColor;
         Color bloodColor;
         if (TryComp<HumanoidAppearanceComponent>(entity, out var humanoid) && TryComp<BloodstreamComponent>(entity, out var bloodstream) // get the humanoidappearance and bloodstream
-        && _prot.TryIndex(bloodstream.BloodReagent, out ReagentPrototype? reagentProto) && reagentProto != null) // get the blood reagent 
+        && _prot.TryIndex(bloodstream.BloodReagent, out ReagentPrototype? reagentProto) && reagentProto != null) // get the blood reagent
         {
             skinColor = humanoid.SkinColor;
             eyeColor = humanoid.EyeColor;
@@ -153,6 +150,6 @@ public sealed partial class HereticAbilitySystem : EntitySystem
             return (skinColor, eyeColor, bloodColor);
         }
 
-        else return null; // if (for some reason - like perhaps admin intervention) a non-humanoid or someone with no bloodstream ascends, we don't want to try to modify the colors. 
+        else return null; // if (for some reason - like perhaps admin intervention) a non-humanoid or someone with no bloodstream ascends, we don't want to try to modify the colors.
     }
 }

@@ -1,0 +1,275 @@
+# these are HEAVILY based on the Bingle free-agent ghostrole from GoobStation, but reflavored and reprogrammed to make them more Robust (and less of a meme.)
+# all credit for the core gameplay concepts and a lot of the core functionality of the code goes to the folks over at Goob, but I re-wrote enough of it to justify putting it in our filestructure.
+# the original Bingle PR can be found here: https://github.com/Goob-Station/Goob-Station/pull/1519
+- type: entity
+  name: replicator
+  description: It's just a little guy. What harm could it do?
+  id: BaseMobReplicator
+  abstract: true
+  parent: PlayerSiliconBase
+  components:
+  - type: Replicator
+  - type: SiliconLawBound
+  - type: SiliconLawProvider
+    laws: Replicator
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    name: ghost-role-information-replicator-name
+    description: ghost-role-information-replicator-desc
+    rules: ghost-role-information-replicator-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: default
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Impstation/Mobs/Replicator/replicator.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+    - map: ["enum.ReplicatorVisuals.Combat"]
+      state: combat_level1
+      shader: unshaded
+      visible: false
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+  - type: Appearance
+  - type: ReplacementAccent
+    accent: silicon
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: CombatMode
+  - type: Actions
+  - type: ProtectedFromStepTriggers
+  - type: InputMover
+  - type: MobMover
+  - type: ContentEye
+    maxZoom: 1.2, 1.2
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - EmagImmune
+      - DoorBumpOpener
+      - CanPilot
+      - VimPilot
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      75: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel1:
+            min: 1
+            max: 6
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+  - type: DamageStateVisuals
+    rotate: false
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: MeleeWeapon
+    soundHit: 
+      path: "/Audio/Items/wirecutter.ogg"
+    angle: 0
+    wideAnimationRotation: 0
+    animation: WeaponArcSlash
+    damage:
+      types:
+        Slashing: 7
+  - type: StaminaDamageOnHit
+    damage: 10
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2 # same as slime
+    baseSprintSpeed: 4
+  - type: Stamina
+    critThreshold: 120
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Replicator1
+  - type: PassiveDamage # passive healing
+    allowedStates:
+    - Alive
+    damage:
+      groups:
+        Brute: -0.5
+        Burn: -0.5
+  - type: ThermalVision
+    lightRadius: 7
+  - type: FlashImmunity
+  - type: Puller
+    needsHands: false
+    applySpeedModifier: false
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 1
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+
+- type: entity
+  id: MobReplicatorQueen
+  parent: MobReplicator
+  categories: [ HideSpawnMenu ]
+  suffix: Queen, Level 1
+  components:
+  - type: Replicator
+    queen: true
+
+# Tier 1: These guys are mooks. They're vulnerable, bad at dragging, and don't do much damage, but they have the highest stun & a disabler ranged attack. 
+- type: entity
+  id: MobReplicator
+  parent: BaseMobReplicator
+  categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
+  components:
+  - type: StaminaDamageOnHit
+    damage: 20
+    sound: /Audio/Weapons/egloves.ogg
+  - type: ActionGun
+    action: ActionReplicatorStunRay
+    gunProto: ReplicatorStunRay
+  - type: Physics
+    bodyStatus: InAir
+  - type: CanMoveInAir
+  - type: MovementIgnoreGravity
+    gravityState: true
+  - type: FloatingVisuals
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2 # same as slime
+    baseSprintSpeed: 4
+    weightlessFriction: 1
+    weightlessFrictionNoInput: 2
+    weightlessAcceleration: 1.8
+  - type: NoSlip
+  - type: Sprite
+    drawDepth: SmallMobs
+    sprite: _Impstation/Mobs/Replicator/replicator.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+    - map: ["enum.ReplicatorVisuals.Combat"]
+      state: combat_level1
+      shader: unshaded
+      visible: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: Body
+    prototype: Replicator1
+
+# Tier 2: Deconstructors. These guys are a little bit tougher, and have tools to take things apart, but they don't have anywhere near as much stun & their attacks are just as weak as T1s. 
+- type: entity
+  id: MobReplicatorTier2
+  parent: BaseMobReplicator
+  categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
+  suffix: Level 2
+  components:
+  - type: StaminaDamageOnHit
+    damage: 10
+  - type: Replicator
+    upgradeStage: 1
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2 # same as slime
+    baseSprintSpeed: 4
+    weightlessFriction: 1
+    weightlessFrictionNoInput: 2
+    weightlessAcceleration: 1.2
+  - type: Sprite
+    drawDepth: Mobs
+    sprite: _Impstation/Mobs/Replicator/replicator.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive_level2
+    - map: ["enum.ReplicatorVisuals.Combat"]
+      state: combat_level2
+      shader: unshaded
+      visible: false
+  - type: NoSlip
+  - type: DamageStateVisuals
+    rotate: false
+    states:
+      Alive:
+        Base: alive_level2
+      Dead:
+        Base: dead_level2
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Replicator2
+  - type: Body
+    prototype: Replicator2
+  - type: Loadout
+    prototypes:
+      - StartingGearReplicatorTools
+
+# Tier 3: These guys are tanks. Their job is to tear shit apart and kill things. They're slow, tanky, and have a weapon that does 25 blunt 30 struct. 
+- type: entity
+  id: MobReplicatorTier3
+  parent: BaseMobReplicator
+  categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
+  description: Oh boy.
+  suffix: Level 3
+  components:
+  - type: Replicator
+    upgradeStage: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.6 # these fellas are the tanks, they rely on the smaller guys stunning things for them.
+    baseSprintSpeed: 4
+  - type: Sprite
+    drawDepth: Mobs
+    sprite: _Impstation/Mobs/Replicator/replicator.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive_level3
+    - map: ["enum.ReplicatorVisuals.Combat"]
+      state: combat_level3
+      shader: unshaded
+      visible: false
+  - type: DamageStateVisuals
+    rotate: false
+    states:
+      Alive:
+        Base: alive_level3
+      Dead:
+        Base: dead_level3
+  - type: Body
+    prototype: Replicator3
+  - type: Loadout
+    prototypes:
+      - StartingGearReplicatorWeapon
+  - type: NoSlip
+  - type: Magboots
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Replicator3

@@ -19,6 +19,8 @@
         - Brutepack
         - Ointment
         - Gauze
+        - SimpleSuture #IMP
+        - Tincture #IMP
         - EmergencyMedipen
         - PillCanisterIron
       chance: 0.9
@@ -52,7 +54,14 @@
         - Beaker
         - LargeBeaker
         - Brutepack
+        - SimpleSuture #IMP
+        - ElectrodePad #IMP
+        - Tincture #IMP
         - Ointment
+        - AloeCream #IMP (adding this)
+        - ShockGel #IMP
+        - ColdPack #IMP
+        - EZGraft #IMP
         - Gauze
         - EmergencyMedipen
         - ChemistryBottleEpinephrine

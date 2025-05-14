@@ -73,7 +73,7 @@ public sealed partial class HereticBladeSystem : EntitySystem
                 break;
 
             case "Rust":
-                var dmgProt = _proto.Index((ProtoId<DamageGroupPrototype>) "Poison");
+                var dmgProt = _proto.Index((ProtoId<DamageGroupPrototype>)"Poison");
                 var dmgSpec = new DamageSpecifier(dmgProt, 7.5f);
                 _damage.TryChangeDamage(target, dmgSpec);
                 break;
@@ -173,7 +173,7 @@ public sealed partial class HereticBladeSystem : EntitySystem
 
     private EntityCoordinates? SelectRandomTileInRange(TransformComponent userXform, float radius)
     {
-        var userCoords = userXform.Coordinates.ToMap(EntityManager, _xform);
+        var userCoords = _xform.ToMapCoordinates(userXform.Coordinates);
         _targetGrids.Clear();
         _lookupSystem.GetEntitiesInRange(userCoords, radius, _targetGrids);
         Entity<MapGridComponent>? targetGrid = null;
@@ -203,7 +203,7 @@ public sealed partial class HereticBladeSystem : EntitySystem
         {
             var valid = false;
 
-            var range = (float) Math.Sqrt(radius);
+            var range = (float)Math.Sqrt(radius);
             var box = Box2.CenteredAround(userCoords.Position, new Vector2(range, range));
             var tilesInRange = _mapSystem.GetTilesEnumerator(targetGrid.Value.Owner, targetGrid.Value.Comp, box, false);
             var tileList = new ValueList<Vector2i>();
@@ -225,7 +225,7 @@ public sealed partial class HereticBladeSystem : EntitySystem
 
                     if (body.BodyType != BodyType.Static ||
                         !body.Hard ||
-                        (body.CollisionLayer & (int) CollisionGroup.MobMask) == 0)
+                        (body.CollisionLayer & (int)CollisionGroup.MobMask) == 0)
                         continue;
 
                     valid = false;

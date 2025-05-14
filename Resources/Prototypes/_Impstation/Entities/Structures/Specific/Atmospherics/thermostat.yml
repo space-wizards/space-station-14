@@ -1,0 +1,40 @@
+# used for regulating room-temperature gases in pipes for heating/cooling rooms with radiators
+- type: entity
+  parent: GasPipeSensor
+  id: GasPipeSensorThermostat
+  suffix: Thermostat
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-thermostat
+  - type: AtmosMonitor
+    temperatureThresholdId: thermostatTemperature #see Prototypes/_Impstation/Atmospherics/thresholds.yml
+    pressureThresholdId: ignore
+    gasThresholdPrototypes:
+      Oxygen: ignore
+      Nitrogen: ignore
+      CarbonDioxide: ignore
+      Plasma: ignore
+      Tritium: ignore
+      WaterVapor: ignore
+      Ammonia: ignore
+      NitrousOxide: ignore
+      Frezon: ignore
+
+# yet another air alarm prototype with auto mode set to false, but this time with a unique sprite!
+- type: entity
+  parent: AirAlarm
+  id: AirAlarmThermostat
+  suffix: Pipe Thermostat, auto mode disabled
+  description: An air alarm for monitoring the heating pipes.
+  components:
+  - type: AirAlarm
+    autoMode: false
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    layers:
+    - state: alarm0
+      map: ["airAlarmBase"]
+    - state: alarmx
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - sprite: _Impstation/Structures/Wallmounts/air_monitors_thermostat.rsi
+      state: heat

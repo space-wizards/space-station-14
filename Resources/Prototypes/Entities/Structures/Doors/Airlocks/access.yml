@@ -1288,7 +1288,7 @@
       - HideLabel
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsExternal ]
+      board: [ DoorElectronicsMaintenance ] #imp edit until roundstart docking is fixed
 
 #HighSecDoors
 - type: entity

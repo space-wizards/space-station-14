@@ -193,16 +193,25 @@ public sealed class NukeSystem : EntitySystem
 
             var worldPos = _transform.GetWorldPosition(xform);
 
+            //imp edit start - make the nuke check for some number of nearby space tiles instead of failing on the first once
+            var total = 1f; //start at 1 to avoid a division by 0. it'll never actually happen but this pleases rider
+            var space = 0f;
             foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(worldPos, component.RequiredFloorRadius), false))
             {
-                if (!tile.IsSpace(_tileDefManager))
-                    continue;
+                if (tile.IsSpace(_tileDefManager))
+                    space++;
 
+                total++;
+            }
+
+            if (space / total > component.MaxAllowedSpaceFrac)
+            {
                 var msg = Loc.GetString("nuke-component-cant-anchor-floor");
                 _popups.PopupEntity(msg, uid, args.Actor, PopupType.MediumCaution);
 
                 return;
             }
+            //imp edit end
 
             _transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid());
             _transform.AnchorEntity(uid, xform);

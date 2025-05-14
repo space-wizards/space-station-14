@@ -268,9 +268,6 @@
     energy: 1.5
     color: "#fca3c0"
     castShadows: false
-  - type: Summonable # imp
-    requiresBibleUser: false
-    specialItem: SpawnPointGhostAnomalitePyroclastic
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -284,9 +281,6 @@
     energy: 10
     color: "#1e070e"
     castShadows: false
-  - type: Summonable # imp
-    requiresBibleUser: false
-    specialItem: SpawnPointGhostAnomaliteGravity
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -300,9 +294,6 @@
     energy: 1.5
     color: "#befaff"
     castShadows: false
-  - type: Summonable # imp
-    requiresBibleUser: false
-    specialItem: SpawnPointGhostAnomaliteIce
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -317,9 +308,6 @@
     energy: 3.5
     color: "#cb5b7e"
     castShadows: false
-  - type: Summonable # imp
-    requiresBibleUser: false
-    specialItem: SpawnPointGhostAnomaliteFlesh
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -333,9 +321,6 @@
     energy: 3.5
     color: "#5ca8cb"
     castShadows: false
-  - type: Summonable # imp
-    requiresBibleUser: false
-    specialItem: SpawnPointGhostAnomaliteRock
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -349,9 +334,6 @@
     energy: 3.5
     color: "#ffffff"
     castShadows: false
-  - type: Summonable # imp
-    requiresBibleUser: false
-    specialItem: SpawnPointGhostAnomaliteLiquid
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -365,9 +347,6 @@
     energy: 3.5
     color: "#00ccff"
     castShadows: false
-  - type: Summonable # imp
-    requiresBibleUser: false
-    specialItem: SpawnPointGhostAnomaliteBluespace
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -381,9 +360,6 @@
     energy: 2.0
     color: "#ffffaa"
     castShadows: false
-  - type: Summonable # imp
-    requiresBibleUser: false
-    specialItem: SpawnPointGhostAnomaliteElectricity
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -399,9 +375,6 @@
     energy: 2.0
     color: "#6270bb"
     castShadows: false
-  - type: Summonable # imp
-    requiresBibleUser: false
-    specialItem: SpawnPointGhostAnomaliteFlora
 
 - type: entity
   parent: [ BaseAnomalyInertCore, BaseShadow ]
@@ -415,9 +388,6 @@
     energy: 2.0
     color: "#793a80"
     castShadows: false
-  - type: Summonable # imp
-    requiresBibleUser: false
-    specialItem: SpawnPointGhostAnomaliteShadow
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -431,9 +401,6 @@
     energy: 2.0
     color: "#56c1e8"
     castShadows: false
-  - type: Summonable # imp
-    requiresBibleUser: false
-    specialItem: SpawnPointGhostAnomaliteTech
 
 - type: entity
   parent: BaseAnomalyInertCore

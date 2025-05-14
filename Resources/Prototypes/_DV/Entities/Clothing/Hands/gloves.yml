@@ -11,6 +11,7 @@
   - type: Fiber
     fiberMaterial: fibers-rubber
     fiberColor: fibers-black
+  - type: FingerprintMask
   - type: Armor
     modifiers:
       coefficients:

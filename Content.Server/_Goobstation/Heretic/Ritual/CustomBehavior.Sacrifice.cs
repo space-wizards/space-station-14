@@ -1,23 +1,23 @@
-using Content.Shared.Heretic.Prototypes;
-using Content.Shared.Mobs.Components;
-using Robust.Shared.Prototypes;
-using Content.Shared.Humanoid;
-using Content.Server.Revolutionary.Components;
-using Content.Server.Objectives.Components;
-using Content.Shared.Mind;
-using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
-using Content.Shared.Heretic;
+using Content.Server._Goobstation.Heretic.EntitySystems;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
+using Content.Server.Heretic.Components;
 using Content.Server.Heretic.EntitySystems;
 using Content.Server.Humanoid;
-using Content.Shared.Forensics.Components;
-using Robust.Server.GameObjects;
-using Content.Server.Heretic.Components;
-using Content.Server.Body.Systems;
-using Content.Server.Body.Components;
-using Content.Server._Goobstation.Heretic.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
+using Content.Server.Objectives.Components;
+using Content.Server.Revolutionary.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.Forensics.Components;
+using Content.Shared.Heretic;
+using Content.Shared.Heretic.Prototypes;
+using Content.Shared.Humanoid;
+using Content.Shared.Mind;
+using Content.Shared.Mobs.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 
 
 namespace Content.Server.Heretic.Ritual;
@@ -27,7 +27,8 @@ namespace Content.Server.Heretic.Ritual;
 ///     gibs it and gives the heretic knowledge points.
 /// </summary>
 // these classes should be lead out and shot
-[Virtual] public partial class RitualSacrificeBehavior : RitualCustomBehavior
+[Virtual]
+public partial class RitualSacrificeBehavior : RitualCustomBehavior
 {
     /// <summary>
     ///     Minimal amount of corpses.
@@ -41,40 +42,37 @@ namespace Content.Server.Heretic.Ritual;
 
     // this is awful but it works so i'm not complaining
     // i'm complaining -kandiyaki
-    protected SharedMindSystem _mind = default!;
-    protected HereticSystem _heretic = default!;
-    protected SharedTransformSystem _xform = default!;
-    protected DamageableSystem _damage = default!;
-    protected EntityLookupSystem _lookup = default!;
-    protected HumanoidAppearanceSystem _humanoid = default!;
-    protected TransformSystem _transformSystem = default!;
-    protected HellWorldSystem _hellworld = default!;
-    protected BloodstreamSystem _bloodstream = default!;
-    protected SharedSolutionContainerSystem _solutionContainerSystem = default!;
-
-
-    [Dependency] protected IPrototypeManager _proto = default!;
-    [Dependency] protected IEntityManager _entmanager = default!;
-
-
-    protected List<EntityUid> uids = new();
+    // IM ALSO COMPLAINING -mq
+    private BloodstreamSystem _bloodstream = default!;
+    private DamageableSystem _damage = default!;
+    private EntityLookupSystem _lookup = default!;
+    private HellWorldSystem _hellworld = default!;
+    private HereticSystem _heretic = default!;
+    private HumanoidAppearanceSystem _humanoid = default!;
+    private IEntityManager _entmanager = default!;
+    private IPrototypeManager _proto = default!;
+    private SharedMindSystem _mind = default!;
+    private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    private SharedTransformSystem _xform;
+    private TransformSystem _transformSystem = default!;
+    protected List<EntityUid> Uids = new();
 
     public override bool Execute(RitualData args, out string? outstr)
     {
-        //it was like this when i got here -kandiyaki
-        _mind = args.EntityManager.System<SharedMindSystem>();
-        _heretic = args.EntityManager.System<HereticSystem>();
-        _xform = args.EntityManager.System<SharedTransformSystem>();
-        _damage = args.EntityManager.System<DamageableSystem>();
-        _lookup = args.EntityManager.System<EntityLookupSystem>();
-        _humanoid = args.EntityManager.System<HumanoidAppearanceSystem>();
-        _transformSystem = args.EntityManager.System<TransformSystem>();
-        _hellworld = args.EntityManager.System<HellWorldSystem>();
+        // this fucking sucks -mq
         _bloodstream = args.EntityManager.System<BloodstreamSystem>();
-        _solutionContainerSystem = args.EntityManager.System<SharedSolutionContainerSystem>();
-
-        _proto = IoCManager.Resolve<IPrototypeManager>();
+        _damage = args.EntityManager.System<DamageableSystem>();
         _entmanager = IoCManager.Resolve<IEntityManager>();
+        _hellworld = args.EntityManager.System<HellWorldSystem>();
+        _heretic = args.EntityManager.System<HereticSystem>();
+        _humanoid = args.EntityManager.System<HumanoidAppearanceSystem>();
+        _lookup = args.EntityManager.System<EntityLookupSystem>();
+        _mind = args.EntityManager.System<SharedMindSystem>();
+        _proto = IoCManager.Resolve<IPrototypeManager>();
+        _solutionContainerSystem = args.EntityManager.System<SharedSolutionContainerSystem>();
+        _transformSystem = args.EntityManager.System<TransformSystem>();
+        _xform = args.EntityManager.System<SharedTransformSystem>();
+        _xform = args.EntityManager.System<SharedTransformSystem>();
 
         //if the performer isn't a heretic, stop
         if (!args.EntityManager.TryGetComponent<HereticComponent>(args.Performer, out var hereticComp))
@@ -101,11 +99,11 @@ namespace Content.Server.Heretic.Ritual;
                 continue;
 
             if (mobstate.CurrentState == Shared.Mobs.MobState.Dead)
-                uids.Add(look);
+                Uids.Add(look);
         }
 
         //if none are dead, say so
-        if (uids.Count < Min)
+        if (Uids.Count < Min)
         {
             outstr = Loc.GetString("heretic-ritual-fail-sacrifice-ineligible");
             return false;
@@ -121,11 +119,11 @@ namespace Content.Server.Heretic.Ritual;
 
         for (int i = 0; i < Max; i++)
         {
-            var isCommand = args.EntityManager.HasComponent<CommandStaffComponent>(uids[i]);
+            var isCommand = args.EntityManager.HasComponent<CommandStaffComponent>(Uids[i]);
             var knowledgeGain = isCommand ? 2f : 1f;
 
             //get the humanoid appearance component
-            if (!args.EntityManager.TryGetComponent<HumanoidAppearanceComponent>(uids[i], out var humanoid))
+            if (!args.EntityManager.TryGetComponent<HumanoidAppearanceComponent>(Uids[i], out var humanoid))
                 return;
 
             //get the species prototype from that
@@ -135,10 +133,10 @@ namespace Content.Server.Heretic.Ritual;
             //spawn a clone of the victim
             //this should really use the cloningsystem but i coded this before that existed
             //and it works so i'm not changing it unless it causes issues
-            var sacrificialWhiteBoy = args.EntityManager.Spawn(speciesPrototype.Prototype, _transformSystem.GetMapCoordinates(uids[i]));
-            _humanoid.CloneAppearance(uids[i], sacrificialWhiteBoy);
+            var sacrificialWhiteBoy = args.EntityManager.Spawn(speciesPrototype.Prototype, _transformSystem.GetMapCoordinates(Uids[i]));
+            _humanoid.CloneAppearance(Uids[i], sacrificialWhiteBoy);
             //make sure it has the right DNA
-            if (args.EntityManager.TryGetComponent<DnaComponent>(uids[i], out var victimDna))
+            if (args.EntityManager.TryGetComponent<DnaComponent>(Uids[i], out var victimDna))
             {
                 if (args.EntityManager.TryGetComponent<BloodstreamComponent>(sacrificialWhiteBoy, out var dummyBlood))
                 {
@@ -150,13 +148,13 @@ namespace Content.Server.Heretic.Ritual;
                         {
                             List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
                             reagentData.RemoveAll(x => x is DnaData);
-                            reagentData.AddRange(_bloodstream.GetEntityBloodData(uids[i]));
+                            reagentData.AddRange(_bloodstream.GetEntityBloodData(Uids[i]));
                         }
                     }
                 }
             }
             //beat the clone to death. this is just to get matching organs
-            if (args.EntityManager.TryGetComponent<DamageableComponent>(uids[i], out var dmg))
+            if (args.EntityManager.TryGetComponent<DamageableComponent>(Uids[i], out var dmg))
             {
                 var prot = (ProtoId<DamageGroupPrototype>)"Brute";
                 var dmgtype = _proto.Index(prot);
@@ -164,18 +162,18 @@ namespace Content.Server.Heretic.Ritual;
             }
 
             //send the target to hell world
-            _hellworld.AddVictimComponent(uids[i]);
+            _hellworld.AddVictimComponent(Uids[i]);
 
             //teleport the body to a midround antag spawn spot so it's not just tossed into space
-            _hellworld.TeleportRandomly(args, uids[i]);
+            _hellworld.TeleportRandomly(args, Uids[i]);
 
             //make sure that my shitty AddVictimComponent thing actually worked before trying to use a mind that isn't there
-            if (args.EntityManager.TryGetComponent<HellVictimComponent>(uids[i], out var hellVictim))
+            if (args.EntityManager.TryGetComponent<HellVictimComponent>(Uids[i], out var hellVictim))
             {
                 //i'm so sorry to all of my computer science professors. i've failed you
                 if (hellVictim.HasMind)
                 {
-                    _hellworld.SendToHell(uids[i], args, speciesPrototype);
+                    _hellworld.SendToHell(Uids[i], args, speciesPrototype);
                 }
 
             }
@@ -200,7 +198,7 @@ namespace Content.Server.Heretic.Ritual;
         }
 
         // reset it because it refuses to work otherwise.
-        uids = new();
+        Uids = new();
         args.EntityManager.EventBus.RaiseLocalEvent(args.Performer, new EventHereticUpdateTargets());
     }
 }

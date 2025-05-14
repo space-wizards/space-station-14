@@ -4,8 +4,8 @@ meta:
   engineVersion: 251.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/25/2025 02:24:23
-  entityCount: 23445
+  time: 05/08/2025 05:38:30
+  entityCount: 23446
 maps:
 - 1
 grids:
@@ -54890,15 +54890,16 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 7.5,-28.5
       parent: 2
-  - uid: 8553
-    components:
-    - type: Transform
-      pos: -61.5,-20.5
-      parent: 2
   - uid: 8554
     components:
     - type: Transform
       pos: -6.5,76.5
+      parent: 2
+  - uid: 23446
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -56.5,-64.5
       parent: 2
 - proto: ComputerAnalysisConsole
   entities:
@@ -86374,13 +86375,6 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#0055CCFF'
-  - uid: 12819
-    components:
-    - type: Transform
-      pos: -59.5,-61.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#0335FCFF'
   - uid: 12820
     components:
     - type: Transform
@@ -108775,6 +108769,11 @@ entities:
       parent: 2
 - proto: PortableGeneratorJrPacman
   entities:
+  - uid: 12819
+    components:
+    - type: Transform
+      pos: -58.5,-21.5
+      parent: 2
   - uid: 16186
     components:
     - type: Transform
@@ -146931,6 +146930,11 @@ entities:
       parent: 2
 - proto: WeldingFuelTankFull
   entities:
+  - uid: 8553
+    components:
+    - type: Transform
+      pos: -61.5,-20.5
+      parent: 2
   - uid: 22812
     components:
     - type: Transform

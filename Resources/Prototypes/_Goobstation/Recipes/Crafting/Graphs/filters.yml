@@ -1,0 +1,51 @@
+- type: constructionGraph
+  id: AutomationFilter
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: label
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+      - material: Cable
+        amount: 3
+        doAfter: 1
+    - to: name
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+      - material: Glass
+        doAfter: 1
+      - material: Cable
+        amount: 3
+        doAfter: 1
+    - to: stack
+      steps:
+      - material: Steel
+        amount: 3
+        doAfter: 2
+      - material: Cable
+        amount: 4
+        doAfter: 2
+    - to: combined
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+      - material: Glass
+        amount: 2
+        doAfter: 2
+      - material: Cable
+        amount: 5
+        doAfter: 1
+  - node: label
+    entity: AutomationFilterLabel
+  - node: name
+    entity: AutomationFilterName
+  - node: stack
+    entity: AutomationFilterStack
+  - node: combined
+    entity: AutomationFilterCombined

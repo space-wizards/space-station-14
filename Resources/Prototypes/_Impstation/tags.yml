@@ -76,6 +76,9 @@
   id: JanitorialWelder
 
 - type: Tag
+  id: JukeboxBoard
+
+- type: Tag
   id: KodeEdible
 
 - type: Tag
@@ -131,6 +134,9 @@
 
 - type: Tag
   id: ShellShotgunBeanbag
+
+- type: Tag
+  id: ShellCoconut
 
 - type: Tag
   id: SpiderFood

@@ -104,7 +104,7 @@
   - Drone1
   - Drone2
   - Drone3
-  obeysTo: laws-owner-beings
+  obeysTo: laws-owner-station-ai # imp
 
 # Syndicate
 - type: siliconLaw

@@ -1,0 +1,264 @@
+- type: entity
+  name: simple suture
+  description: A standard issue suture; perfect for gashes, and - to a lesser extent - stab wounds. Helps prevent bleeding, too!
+  parent: BaseHealingItem
+  id: SimpleSuture
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Brutepack
+  - type: Sprite
+    state: simple-suture
+  - type: Item
+    heldPrefix: simple-suture
+    storedRotation: 90
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Slash: -10
+        Piercing: -5
+    bloodlossModifier: -10
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: SimpleSuture
+    count: 10
+  - type: StackPrice
+    price: 5
+
+- type: entity
+  id: SimpleSuture1
+  parent: SimpleSuture
+  suffix: Single
+  components:
+  - type: Stack
+    stackType: SimpleSuture
+    count: 1
+
+- type: entity
+  name: shock gel
+  description: Easily the most creative rebranding you've ever seen.
+  parent: BaseHealingItem
+  id: ShockGel
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Ointment
+  - type: Sprite
+    state: shock-gel
+  - type: Item
+    heldPrefix: shock-gel
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Shock: -10
+        Heat: -5
+    healingBeginSound:
+      path: "/Audio/Items/Medical/ointment_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
+  - type: Stack
+    stackType: ShockGel
+    count: 10
+  - type: StackPrice
+    price: 5
+
+- type: entity
+  id: ShockGel1
+  parent: ShockGel
+  suffix: Single
+  components:
+  - type: Stack
+    stackType: ShockGel
+    count: 1
+
+- type: entity
+  name: electrode pad
+  description: A miniature one-time-use electrical device that reverses blunt force trauma via electrotherapy. Not strong enough to wake the dead, but damn near close.
+  parent: BaseHealingItem
+  id: ElectrodePad
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Brutepack
+  - type: Sprite
+    state: electrode-pad
+  - type: Item
+    heldPrefix: electrode-pad
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Blunt: -10
+        Asphyxiation: -5
+    healingBeginSound:
+      path: "/Audio/Items/appraiser.ogg"
+    healingEndSound:
+      path: "/Audio/Effects/sparks4.ogg"
+  - type: Stack
+    stackType: ElectrodePad
+    count: 10
+  - type: StackPrice
+    price: 5
+  - type: StunOnHeal # imp
+
+- type: entity
+  id: ElectrodePad1
+  parent: ElectrodePad
+  suffix: Single
+  components:
+  - type: Stack
+    stackType: ElectrodePad
+    count: 1
+
+- type: entity
+  name: tincture
+  description: A simple blend of weak, broad spectrum chemicals turned into a gel. Be careful not to break the bottle!
+  parent: BaseHealingItem
+  id: Tincture
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Brutepack
+    - Ointment
+  - type: Sprite
+    state: tincture
+  - type: Item
+    heldPrefix: tincture
+  - type: Healing
+    damageContainers:
+    - Biological
+    damage:
+      groups:
+        Brute: -6 #2 of each
+        Burn: -8 #2 of each
+    healingBeginSound:
+      path: "/Audio/Items/Medical/ointment_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
+  - type: Stack
+    stackType: Tincture
+    count: 10
+  - type: StackPrice
+    price: 5
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: Tincture1
+  parent: Tincture
+  suffix: Single
+  components:
+  - type: Stack
+    stackType: Tincture
+    count: 1
+
+- type: entity
+  name: EZ Graft
+  description: "There's a scratched up instructional sticker on the bottom. It reads:\nStep 1.) Locate Cau####d Wound.\nStep 2.) Roll EZ-Gr###t on the burn.\nStep 3.) Treat any ###aining cuts.\nStep 4.) Enjoy your###w skin!\nWARNING: Do NOT ove##pply!"
+  parent: BaseHealingItem
+  id: EZGraft
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Ointment
+  - type: Sprite
+    state: ez-graft
+  - type: Item
+    heldPrefix: ez-graft
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Caustic: -5
+        Slash: 3
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
+  - type: Stack
+    stackType: EZGraft
+    count: 10
+  - type: StackPrice
+    price: 5
+
+- type: entity
+  id: EZGraft1
+  parent: EZGraft
+  suffix: Single
+  components:
+  - type: Stack
+    stackType: EZGraft
+    count: 1
+
+- type: entity
+  name: cold pack
+  description: "'A time and tested true method of getting rid of colds,' as famous unnamed medical doctors say. Sloshy."
+  parent: BaseHealingItem
+  id: ColdPack
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Ointment
+  - type: Sprite
+    state: cold-pack
+  - type: Item
+    heldPrefix: cold-pack
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Cold: -10
+    healingBeginSound:
+      path: "/Audio/Items/Toys/ToyFall2.ogg" #the logic is flawless.
+    healingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
+  - type: EmitSoundOnLand
+    sound:
+      path: "/Audio/Voice/Slime/slime_squish.ogg" # Added Immersion.
+  - type: Stack
+    stackType: ColdPack
+    count: 10
+  - type: StackPrice
+    price: 5
+
+- type: entity
+  id: ColdPack1
+  parent: ColdPack
+  suffix: Single
+  components:
+  - type: Stack
+    stackType: ColdPack
+    count: 1

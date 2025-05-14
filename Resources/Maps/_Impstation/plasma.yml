@@ -4,8 +4,8 @@ meta:
   engineVersion: 251.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/30/2025 03:49:52
-  entityCount: 26429
+  time: 05/09/2025 04:28:42
+  entityCount: 26431
 maps:
 - 1
 grids:
@@ -133532,6 +133532,12 @@ entities:
     - type: Transform
       pos: -98.5,11.5
       parent: 2
+  - uid: 26431
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -99.5,-35.5
+      parent: 2
 - proto: PoweredStrobeLightEmpty
   entities:
   - uid: 3985
@@ -140827,6 +140833,13 @@ entities:
     components:
     - type: Transform
       pos: -101.5,25.5
+      parent: 2
+- proto: SignDrones
+  entities:
+  - uid: 26430
+    components:
+    - type: Transform
+      pos: -107.5,-30.5
       parent: 2
 - proto: SignElectricalMed
   entities:
@@ -167756,7 +167769,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -207976.1
+      secondsUntilStateChange: -208065.02
       state: Opening
     - type: Airlock
       autoClose: False

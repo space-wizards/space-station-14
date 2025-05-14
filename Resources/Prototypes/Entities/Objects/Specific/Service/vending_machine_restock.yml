@@ -142,6 +142,7 @@
     - WinterDrobeInventory
     - CuraDrobeInventory
     - CourierDrobeInventory # imp
+    - PrideDrobeInventory # imp
   - type: Sprite
     layers:
     - state: base
@@ -343,7 +344,7 @@
     - SpaceUpInventory
     - SodaInventory
     - DrGibbInventory
-    - SmiteInventory 
+    - SmiteInventory
   - type: Sprite
     layers:
     - state: base

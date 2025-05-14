@@ -1,0 +1,41 @@
+- type: entity
+  name: coconut gun
+  categories: [ DoNotMap ]
+  parent: BaseStorageItem
+  id: LauncherCoconutGun
+  description: When it shoots ya...
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Cannons/coconutgun.rsi
+    layers:
+    - state: icon
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,7,5
+    whitelist:
+      tags:
+      - ShellCoconut
+    storageOpenSound:
+      path: /Audio/_Impstation/Weapons/Guns/Toys/dkyeah.ogg
+  - type: Gun
+    fireRate: 5
+    burstFireRate: 8
+    shotsPerBurst: 3
+    burstCooldown: 0.40
+    selectedMode: Burst
+    availableModes:
+      - Burst
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Toys/guncoconut.ogg
+    soundEmpty:
+      path: /Audio/_Impstation/Weapons/Guns/Empty/dry_fire.ogg
+    clumsyProof: true
+  - type: ContainerAmmoProvider
+    container: storagebase
+  - type: Item
+    size: Normal
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []

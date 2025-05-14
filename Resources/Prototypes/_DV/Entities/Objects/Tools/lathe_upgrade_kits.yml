@@ -1,0 +1,56 @@
+# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+# SPDX-FileCopyrightText: 2025 deltanedas <39013340+deltanedas@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseLatheUpgradeKit
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Tools/lathe_upgrade_kit.rsi
+    state: icon
+  - type: UpgradeKit
+    whitelist:
+      components:
+      - Lathe
+    blacklist:
+      components:
+      - UpgradedMachine
+    # ALWAYS add UpgradedMachine to components in inheritors
+
+- type: entity
+  parent: BaseLatheUpgradeKit
+  id: LatheUpgradeKitHyper
+  name: hyper-convection upgrade kit
+  description: An upgrade kit with all the parts needed to upgrade a lathe. This one will save materials at the cost of speed and producing heat.
+  components:
+  - type: UpgradeKit
+    components:
+    - type: UpgradedMachine
+      upgrade: lathe-upgrade-kit-hyper-convection
+    - type: LatheUpgrade
+      materialUseMultiplier: 0.5
+      timeMultiplier: 1.5
+    - type: LatheHeatProducing
+    - type: ReagentSpeed
+      solution: lube
+      modifiers:
+        SpaceLube: 0.8 # being faster means less heat so lube needs to be nerfed
+        SpaceGlue: 5 # no change from normal lathe, overheat!!!
+
+- type: entity
+  parent: BaseLatheUpgradeKit
+  id: LatheUpgradeKitCryo
+  name: cryo-stabilizing upgrade kit
+  description: An upgrade kit with all the parts needed to upgrade a lathe. This one will speed up production at the cost of freezing the area.
+  components:
+  - type: UpgradeKit
+    components:
+    - type: UpgradedMachine
+      upgrade: lathe-upgrade-kit-cryo-stabilizing
+    - type: LatheUpgrade
+      timeMultiplier: 0.5
+    - type: LatheHeatProducing
+      energyPerSecond: -20000 # cool instead of heat, not as extreme

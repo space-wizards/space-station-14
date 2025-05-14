@@ -604,6 +604,7 @@
   - type: Tag
     tags:
       - PillCanister
+      - SmartFridgeRetainStorage # DeltaV
   - type: Storage
     grid:
     - 0,0,4,1

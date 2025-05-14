@@ -2,6 +2,7 @@ using Content.Shared._DV.CartridgeLoader.Cartridges;
 using Content.Shared._DV.NanoChat;
 using Content.Shared.Audio;
 using Content.Shared.CartridgeLoader;
+using Robust.Shared.Audio;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
@@ -65,7 +66,7 @@ public sealed partial class LogProbeCartridgeSystem
         _audio.PlayEntity(ent.Comp.SoundScan,
             args.InteractEvent.User,
             target,
-            AudioHelpers.WithVariation(0.25f, _random));
+            AudioParams.Default.WithVariation(0.25f));
         _popup.PopupCursor(Loc.GetString("log-probe-scan-nanochat", ("card", target)), args.InteractEvent.User);
 
         ent.Comp.PulledAccessLogs.Clear();

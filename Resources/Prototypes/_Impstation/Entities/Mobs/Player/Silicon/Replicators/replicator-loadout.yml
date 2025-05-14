@@ -1,0 +1,43 @@
+- type: startingGear
+  id: StartingGearReplicatorTools
+  inhand:
+    - OmnitoolUnremoveable
+    - WelderExperimentalUnremoveable
+
+- type: startingGear
+  id: StartingGearReplicatorWeapon
+  inhand:
+    - ReplicatorT3Weapon
+
+- type: entity
+  id: ReplicatorT3Weapon
+  parent: BaseItem
+  name: replicator arm
+  description: You are a weapon.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - Pickaxe
+  - type: Sprite
+    sprite: _Impstation/Mobs/Replicator/replicator.rsi
+    state: t3weapon
+  - type: MeleeWeapon
+    attackRate: 0.7
+    wideAnimationRotation: 180
+    soundHit: 
+      path: "/Audio/Effects/metal_slam4.ogg"
+    animation: WeaponArcSlash
+    damage:
+      types:
+        Blunt: 25
+        Structural: 30
+  - type: StaminaDamageOnHit
+    damage: 5
+  - type: Unremoveable
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 1
+    useSound:
+      path: /Audio/Items/crowbar.ogg

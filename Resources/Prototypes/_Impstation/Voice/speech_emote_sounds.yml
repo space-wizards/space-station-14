@@ -864,3 +864,46 @@
       path: /Audio/_EE/Supermatter/charge.ogg
     DefaultDeathgasp:
       path: /Audio/_EE/Supermatter/status/ohfuck.ogg
+
+#body emotes
+- type: emoteSounds
+  id: SlimeBodyEmotes
+  sounds:
+    Clap:
+      collection: Claps
+    ClapSingle:
+      collection: ClapSingle
+    Snap:
+      collection: Snaps
+      params:
+        volume: -3
+    Salute:
+      collection: Salutes
+    Crack:
+      collection: Cracks
+    Blink:
+      collection: WetBlinks
+      params:
+        volume: -3
+        variation: 0.1
+
+- type: emoteSounds
+  id: GastropoidBodyEmotes
+  sounds:
+    Clap:
+      collection: Claps
+    ClapSingle:
+      collection: ClapSingle
+    Snap:
+      collection: Snaps
+      params:
+        volume: -3
+    Salute:
+      collection: Salutes
+    Crack:
+      collection: Cracks
+    Blink:
+      collection: WetBlinks
+      params:
+        volume: -3
+        variation: 0.1

@@ -1,0 +1,89 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseAutomationFilter
+  name: filter
+  description: A filter that can be installed in a robotic arm.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Misc/filter.rsi
+    state: icon
+  - type: Item
+    size: Tiny
+  - type: AutomationFilter
+  - type: Construction
+    graph: AutomationFilter
+
+- type: entity
+  parent: BaseAutomationFilter
+  id: AutomationFilterLabel
+  name: label filter
+  description: A filter that can be installed in a robotic arm. This one scans labels of attached items.
+  components:
+  - type: LabelFilter
+  - type: ActivatableUI
+    key: enum.LabelFilterUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.LabelFilterUiKey.Key:
+        type: LabelFilterBUI
+  - type: Construction
+    node: label
+
+- type: entity
+  parent: BaseAutomationFilter
+  id: AutomationFilterName
+  name: name filter
+  description: A filter that can be installed in a robotic arm. This one uses complex AI vision technology to identify items.
+  components:
+  - type: NameFilter
+  - type: ActivatableUI
+    key: enum.NameFilterUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.NameFilterUiKey.Key:
+        type: NameFilterBUI
+  - type: Construction
+    node: name
+
+- type: entity
+  parent: BaseAutomationFilter
+  id: AutomationFilterStack
+  name: stack filter
+  description: A filter that can be installed in a robotic arm. This one weighs items to compare it to a stack size.
+  components:
+  - type: StackFilter
+  - type: ActivatableUI
+    key: enum.StackFilterUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.StackFilterUiKey.Key:
+        type: StackFilterBUI
+  - type: Construction
+    node: stack
+
+- type: entity
+  parent: BaseAutomationFilter
+  id: AutomationFilterCombined
+  name: combined filter
+  description: A filter that can be installed in a robotic arm. This one uses a logic gate to combine 2 installed item filters.
+  components:
+  - type: CombinedFilter
+  - type: ItemSlots
+    slots:
+      combined_filter_a:
+        name: Filter A
+        whitelist:
+          components:
+          - AutomationFilter
+      combined_filter_b:
+        name: Filter B
+        whitelist:
+          components:
+          - AutomationFilter
+  - type: ContainerContainer
+    containers:
+      combined_filter_a: !type:ContainerSlot
+      combined_filter_b: !type:ContainerSlot
+  - type: Construction
+    node: combined

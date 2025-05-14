@@ -123,6 +123,9 @@ marking-KodeMothEyesUneven = Eyes (Moth Uneven)
 marking-KodeMothEyesUneven-moth1 = Right
 marking-KodeMothEyesUneven-moth2 = Left
 
+marking-KodeSharkminnowEyes = Eyes (Sharkminnow)
+marking-KodeSharkminnowEyes-sharkminnow = Eyes
+
 marking-SquareEyes = Eyes (Square)
 marking-SquareEyes-squareeyes = Eyes
 
@@ -297,6 +300,10 @@ marking-KodeAmalgamTail-amalgam4 = Spines
 marking-KodeCrabLegs = Legs (Crab)
 marking-KodeCrabLegs-crablegs = Legs
 
+marking-KodeFlowers = Overlay (Floral)
+marking-KodeFlowers-flowers1 = Flowers
+marking-KodeFlowers-flowers2 = Flowers
+
 marking-KodeFluffyTail = Tail (Fluffy)
 marking-KodeFluffyTail-fluffy = Tail
 
@@ -345,6 +352,10 @@ marking-KodeVoxTail-vox = Tail
 
 # RArmExtension
 
+marking-JellyCapeStripes = Cape (Jelly Striped)
+marking-JellyCapeStripes-jellycapestripes1 = Bell
+marking-JellyCapeStripes-jellycapestripes2 = Stripes
+
 marking-KodeArmsCrab = Arms (Decapoid)
 marking-KodeArmsCrab-crabclaws = Arms
 
@@ -367,6 +378,18 @@ marking-KodeCloakArms-cloakarms2 = Top Band
 marking-KodeCloakArms-cloakarms3 = Middle Band
 marking-KodeCloakArms-cloakarms4 = Bottom Band
 
+marking-KodeDionaArms = Arms (Diona)
+marking-KodeDionaArms-dionaarms1 = Bush
+marking-KodeDionaArms-dionaarms2 = Vines
+
+marking-KodeMothChecks = Wings (Moth Checks)
+marking-KodeMothChecks-mothwingschecks1 = Wings
+marking-KodeMothChecks-mothwingschecks2 = Checks
+
+marking-KodeMothInk = Wings (Moth Ink)
+marking-KodeMothInk-mothwingsoutline1 = Wings
+marking-KodeMothInk-mothwingsoutline2 = Outline
+
 marking-KodeMyFirstWings = My First Wings
 marking-KodeMyFirstWings-myfirstwings1 = Main
 marking-KodeMyFirstWings-myfirstwings2 = Tips
@@ -379,6 +402,12 @@ marking-KodeSwanWings = Wings (Swan)
 marking-KodeSwanWings-swanwings1 = Main
 marking-KodeSwanWings-swanwings2 = Stripes
 marking-KodeSwanWings-swanwings3 = Spots
+
+marking-KodeTattooArms = Arms (Human Tattooed)
+marking-KodeTattooArms-humanarmstattoo1 = Arms
+marking-KodeTattooArms-humanarmstattoo2 = Heart Tattoo
+marking-KodeTattooArms-humanarmstattoo3 = Bracelet
+marking-KodeTattooArms-humanarmstattoo4 = Collar
 
 marking-KodeTentaWings = Cape (Tentacles)
 marking-KodeTentaWings-tentawings = Cape
@@ -403,3 +432,15 @@ marking-KodeWingsMoth-mothwings2 = Spots
 marking-KodeWingsThing = Wings (Thing)
 marking-KodeWingsThing-thingwings1 = Wings
 marking-KodeWingsThing-thingwings2 = Spots
+
+marking-KodeUrchinArms = Cape (Urchin)
+marking-KodeUrchinArms-urchinarms = Cape
+
+marking-PuffCapeCrackle = Cape (Puffy Crackle)
+marking-PuffCapeCrackle-puffcapecrackle1 = Cape
+marking-PuffCapeCrackle-puffcapecrackle2 = Crackle
+
+marking-PuffCapeFloral = Cape (Puffy Floral)
+marking-PuffCapeFloral-puffcapefloral1 = Cape
+marking-PuffCapeFloral-puffcapefloral2 = Flowers
+marking-PuffCapeFloral-puffcapefloral3 = Leaves

@@ -25,7 +25,7 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     /// The maximum number of layers of food that can be placed on this item.
     /// </summary>
     [DataField]
-    public int MaxLayers = 30;
+    public int MaxLayers = 10;
 
     /// <summary>
     /// Can we put more layers?
@@ -38,6 +38,12 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     /// </summary>
     [DataField]
     public string Solution = "food";
+
+    /// <summary>
+    /// The threshold for EatSign to be applied to a foodsequence item (IMP ADDITION)
+    /// </summary>
+    [DataField]
+    public int EatThreshold = 80;
 
     #region name generation
 

@@ -55,6 +55,8 @@
       Male: MaleSlime
       Female: FemaleSlime
       Unsexed: UnisexSlime
+  - type: BodyEmotes #imp edit
+    soundsId: SlimeBodyEmotes
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime

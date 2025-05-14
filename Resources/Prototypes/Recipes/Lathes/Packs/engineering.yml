@@ -73,6 +73,8 @@
   - WeaponParticleDecelerator
 
 - type: latheRecipePack
+  parent:
+  - EngineeringBoardsGoob # Goobstation
   id: EngineeringBoards
   recipes:
   - ThermomachineFreezerMachineCircuitBoard

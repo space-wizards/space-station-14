@@ -163,6 +163,10 @@ marking-UndershirtRolledT-rolledundershirt = Undershirt
 
 marking-BurqaSolidThaven = Burqa
 
+marking-HairFloralLongThaven = Floral hair (Long)
+
+marking-HairFloralMidThaven = Floral hair (Medium)
+
 marking-HijabFashionableThaven = Hijab (Fashionable)
 
 marking-HijabSimpleThaven = Hijab (Simple)
@@ -546,6 +550,8 @@ marking-ThavenHairSpikey = Spiky
 marking-ThavenHairSpiky = Spiky 2
 
 marking-ThavenHairSpiky2 = Spiky 3
+
+marking-ThavenHairSpikyponytailLong = Ponytail (Spiky Long)
 
 marking-ThavenHairSpikyponytail = Ponytail (Spiky)
 

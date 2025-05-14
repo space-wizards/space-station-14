@@ -1,20 +1,13 @@
 using Content.Shared.Actions;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Fluids;
+using Content.Shared.Movement.Systems;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Robust.Shared.Serialization;
-using Robust.Shared.Prototypes;
 using Content.Shared.Popups;
 using Robust.Shared.Network;
-using Content.Shared.Nutrition.Components;
-using Content.Shared.Stacks;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Systems;
-using Content.Shared.StepTrigger.Components;
-using Content.Shared.StepTrigger.Systems;
-using Content.Shared.Fluids;
-using Content.Shared.Fluids.Components;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Excretion;
 
@@ -25,19 +18,13 @@ public abstract partial class SharedExcretionSystem : EntitySystem
 {
     // Managers
     [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-
     // Systems
+    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly ThirstSystem _thirstSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedStackSystem _stackSystem = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-    [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
-    [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly SharedPuddleSystem _puddleSystem = default!;
+    [Dependency] private readonly ThirstSystem _thirstSystem = default!;
 
     public override void Initialize()
     {
@@ -56,7 +43,7 @@ public abstract partial class SharedExcretionSystem : EntitySystem
     {
         _actionsSystem.AddAction(uid, ref comp.ActionEntity, comp.Action);
         /// refreshes the movement speed modifier so that the snailSlowdownModifier triggers.
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+        _movement.RefreshMovementSpeedModifiers(uid);
     }
 
     /// <summary>

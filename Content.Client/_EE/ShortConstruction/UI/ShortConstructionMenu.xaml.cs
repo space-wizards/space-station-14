@@ -1,12 +1,9 @@
-using System.Numerics;
 using Content.Client.Construction;
 using Content.Client.UserInterface.Controls;
 using Content.Shared._EE.ShortConstruction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Popups;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Client.Input;
 using Robust.Client.Placement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -14,6 +11,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+using System.Numerics;
 
 namespace Content.Client._EE.ShortConstruction.UI;
 
@@ -23,12 +21,10 @@ namespace Content.Client._EE.ShortConstruction.UI;
 
 public sealed class ShortConstructionMenu : RadialMenu
 {
-    [Dependency] private readonly IClyde _displayManager = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly EntityManager _entManager = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IPlacementManager _placementManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     private readonly ConstructionSystem _construction;
 
     private readonly SpriteSystem _spriteSystem;
@@ -97,10 +93,10 @@ public sealed class ShortConstructionMenu : RadialMenu
         }
 
         _placementManager.BeginPlacing(new PlacementInformation
-            {
-                IsTile = false,
-                PlacementOption = prototype.PlacementMode
-            },
+        {
+            IsTile = false,
+            PlacementOption = prototype.PlacementMode
+        },
             new ConstructionPlacementHijack(_construction, prototype));
 
         // Should only close the menu if we're placing a construction hijack.

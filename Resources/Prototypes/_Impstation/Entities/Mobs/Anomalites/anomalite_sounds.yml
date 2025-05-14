@@ -1,0 +1,24 @@
+- type: speechSounds
+  id: Anomalite
+  saySound:
+    path: /Audio/_Impstation/Voice/Talk/Anomalite/anomalite.ogg
+  askSound:
+    path: /Audio/_Impstation/Voice/Talk/Anomalite/anomalite_ask.ogg
+  exclaimSound:
+    path: /Audio/_Impstation/Voice/Talk/Anomalite/anomalite_exclaim.ogg
+
+- type: speechVerb
+  id: Anomalite
+  name: chat-speech-verb-name-anomalite
+  speechVerbStrings:
+  - chat-speech-verb-anomalite-1
+  - chat-speech-verb-anomalite-2
+  - chat-speech-verb-anomalite-3
+
+- type: emoteSounds
+  id: Anomalite
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/_Impstation/Voice/Talk/Anomalite/anomalite_scream.ogg

@@ -1,0 +1,41 @@
+- type: stack
+  id: SimpleSuture
+  name: simple suture
+  icon: { sprite: "/Textures/_Impstation/Objects/Specific/Medical/medical.rsi", state: ointment }
+  spawn: SimpleSuture
+  maxCount: 10
+
+- type: stack
+  id: ElectrodePad
+  name: electrode pad
+  icon: { sprite: "/Textures/_Impstation/Objects/Specific/Medical/medical.rsi", state: ointment }
+  spawn: ElectrodePad
+  maxCount: 10
+
+- type: stack
+  id: Tincture
+  name: tincture
+  icon: { sprite: "/Textures/_Impstation/Objects/Specific/Medical/medical.rsi", state: ointment }
+  spawn: Tincture
+  maxCount: 10
+
+- type: stack
+  id: EZGraft
+  name: EZ graft
+  icon: { sprite: "/Textures/_Impstation/Objects/Specific/Medical/medical.rsi", state: ointment }
+  spawn: EZGraft
+  maxCount: 10
+
+- type: stack
+  id: ColdPack
+  name: cold pack
+  icon: { sprite: "/Textures/_Impstation/Objects/Specific/Medical/medical.rsi", state: ointment }
+  spawn: ColdPack
+  maxCount: 10
+
+- type: stack
+  id: ShockGel
+  name: shock gel
+  icon: { sprite: "/Textures/_Impstation/Objects/Specific/Medical/medical.rsi", state: ointment }
+  spawn: ShockGel
+  maxCount: 10

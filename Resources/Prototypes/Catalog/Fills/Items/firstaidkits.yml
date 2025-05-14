@@ -21,6 +21,7 @@
     contents:
       - id: Ointment
         amount: 2
+      - id: Tincture #IMP
       - id: PillCanisterKelotane
       - id: PillCanisterDermaline
 
@@ -33,6 +34,7 @@
     contents:
       - id: Brutepack
       - id: Gauze
+      - id: SimpleSuture #IMP
       - id: PillCanisterIron
       - id: PillCanisterCopper
 
@@ -56,8 +58,9 @@
   components:
   - type: StorageFill
     contents:
+      - id: ElectrodePad #IMP
+      - id: EmergencyOxygenTankFilled #IMP; repositioned for inventory's sake
       - id: ClothingMaskBreathMedical
-      - id: EmergencyOxygenTankFilled
       - id: EmergencyMedipen
       - id: SyringeInaprovaline
       - id: PillCanisterDexalin
@@ -69,8 +72,9 @@
   components:
   - type: StorageFill
     contents:
+      - id: ElectrodePad #IMP
+      - id: EmergencyNitrogenTankFilled #IMP; repositioned for inventory's sake
       - id: ClothingMaskBreathMedical
-      - id: EmergencyNitrogenTankFilled
       - id: EmergencyMedipen
       - id: PillCanisterDylovene
       - id: PillCanisterDexalin
@@ -96,8 +100,8 @@
     contents:
       - id: MedicatedSuture
       - id: RegenerativeMesh
-      - id: Bloodpack
-        amount: 2
+      - id: Tincture #IMP
+      - id: Bloodpack #IMP; Reduced from 2 -> 1. People keep throwing these out...
 
 - type: entity
   id: MedkitCombatFilled
