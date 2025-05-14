@@ -1,6 +1,6 @@
 - type: entity
   parent: [BaseMob, StripableInventoryBase]
-  id: XenoborgsBaseChassi
+  id: XenoborgsBaseChassis
   name: xenoborg
   description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army.
   save: false
@@ -318,7 +318,7 @@
 
 # the xenoborg types
 - type: entity
-  parent: [ XenoborgsBaseChassi, XenoborgTransponder ]
+  parent: [ XenoborgsBaseChassis, XenoborgTransponder ]
   id: XenoborgEngi
   name: engi xenoborg
   suffix: with brain
@@ -372,7 +372,7 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ XenoborgsBaseChassi, XenoborgTransponder ]
+  parent: [ XenoborgsBaseChassis, XenoborgTransponder ]
   id: XenoborgHeavy
   name: heavy xenoborg
   suffix: with brain
@@ -459,7 +459,7 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ XenoborgsBaseChassi, XenoborgTransponder ]
+  parent: [ XenoborgsBaseChassis, XenoborgTransponder ]
   id: XenoborgScout
   name: scout xenoborg
   suffix: with brain
@@ -512,7 +512,7 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ XenoborgsBaseChassi, XenoborgTransponder ]
+  parent: [ XenoborgsBaseChassis, XenoborgTransponder ]
   id: XenoborgStealth
   name: stealth xenoborg
   suffix: with brain
