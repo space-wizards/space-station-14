@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: artifacts now listen for all types of @ emotes instead of only the special
-      ones on the quick wheel
-    type: Tweak
-  id: 1175
-  time: '2025-02-21T02:50:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1704
 - author: hivehum, devin
   changes:
   - message: Added nine new CRAZY HAMBURGERS!!!
@@ -4208,3 +4200,10 @@
   id: 1674
   time: '2025-05-14T18:01:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2454
+- author: starlighthowls
+  changes:
+  - message: Adds the drink Moonrise Blend
+    type: Add
+  id: 1675
+  time: '2025-05-14T18:03:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2483
