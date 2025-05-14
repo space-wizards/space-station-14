@@ -102,7 +102,7 @@
     Cognizine:
       amount: 5
     Slime:
-      amount: 20
+      amount: 15
   effects:
     - !type:CreateEntityReactionEffect
       entity: MobAdultSlimesGreen
@@ -112,7 +112,7 @@
   quantized: true
   reactants:
     Vestine:
-      amount: 15
+      amount: 5
     Slime:
       amount: 15
   effects:
