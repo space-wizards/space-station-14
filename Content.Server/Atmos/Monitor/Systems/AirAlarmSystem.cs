@@ -478,6 +478,9 @@ public sealed class AirAlarmSystem : EntitySystem
             mode = AirAlarmMode.Panic;
         }
 
+        if (controller.CurrentMode == mode)
+            return;
+
         controller.CurrentMode = mode;
 
         // setting it to UI only means we don't have
