@@ -15,7 +15,7 @@ namespace Content.Server.Stunnable
                 if (!knockedDown.AutoStand || knockedDown.DoAfter.HasValue || knockedDown.NextUpdate > GameTiming.CurTime)
                     continue;
 
-                TryStanding(uid, out knockedDown.DoAfter, true);
+                TryStanding(uid, out knockedDown.DoAfter);
             }
         }
     }
