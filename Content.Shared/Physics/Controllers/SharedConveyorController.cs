@@ -51,8 +51,8 @@ public abstract class SharedConveyorController : VirtualController
         UpdatesAfter.Add(typeof(SharedMoverController));
 
         SubscribeLocalEvent<ConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
-        //SubscribeLocalEvent<ConveyedComponent, MoverTileDefEvent>(OnMoverTileDefEvent);
-        SubscribeLocalEvent<ConveyedComponent, MoverFrictionBulldozeEvent>(OnMoverFrictionBulldoze);
+        SubscribeLocalEvent<ConveyedComponent, MoverTileDefEvent>(OnMoverTileDefEvent);
+        //SubscribeLocalEvent<ConveyedComponent, MoverFrictionBulldozeEvent>(OnMoverFrictionBulldoze);
         SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
         SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
 
@@ -71,7 +71,7 @@ public abstract class SharedConveyorController : VirtualController
         args.Modifier = 0f;
     }
 
-    /*private void OnMoverTileDefEvent(Entity<ConveyedComponent> ent, ref MoverTileDefEvent args)
+    private void OnMoverTileDefEvent(Entity<ConveyedComponent> ent, ref MoverTileDefEvent args)
     {
         if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
             return;
@@ -79,8 +79,7 @@ public abstract class SharedConveyorController : VirtualController
         args.MobFriction = 1f;
         args.Friction = 1f;
         args.MobAcceleration = 1f;
-
-    }*/
+    }
 
     private void OnMoverFrictionBulldoze(Entity<ConveyedComponent> ent, ref MoverFrictionBulldozeEvent args)
     {
