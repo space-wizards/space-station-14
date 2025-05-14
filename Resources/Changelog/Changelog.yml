@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Flare Shells no longer restricted contraband
-    type: Tweak
-  id: 7983
-  time: '2025-02-20T00:27:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34705
 - author: Winkarst-cpu
   changes:
   - message: Now all toys and bike horns make an appropriate sound.
@@ -3923,3 +3916,10 @@
   id: 8485
   time: '2025-05-14T20:39:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36439
+- author: IProduceWidgets
+  changes:
+  - message: more wizard name variety
+    type: Add
+  id: 8486
+  time: '2025-05-14T21:06:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36437
