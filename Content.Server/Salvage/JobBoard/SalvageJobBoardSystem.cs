@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Server.Cargo.Systems;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Labels.EntitySystems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Salvage.JobBoard;
@@ -9,6 +11,7 @@ public sealed class SalvageJobBoardSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly CargoSystem _cargo = default!;
+    [Dependency] private readonly LabelSystem _label = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -18,9 +21,20 @@ public sealed class SalvageJobBoardSystem : EntitySystem
 
     private void OnSold(ref EntitySoldEvent args)
     {
+        if (!TryComp<SalvageJobsDataComponent>(args.Station, out var salvageJobsData))
+            return;
+
         foreach (var sold in args.Sold)
         {
+            if (!_label.TryGetLabel<JobBoardLabelComponent>(sold, out var labelEnt))
+                continue;
 
+            var jobId = labelEnt.Value.Comp.JobId;
+
+            if (!_cargo.IsBountyComplete(sold, jobId))
+                continue;
+
+            TryCompleteSalvageJob((args.Station, salvageJobsData), jobId);
         }
     }
 
@@ -90,5 +104,33 @@ public sealed class SalvageJobBoardSystem : EntitySystem
         }
         // base case
         return ent.Comp.RankThresholds[0];
+    }
+
+    public bool TryCompleteSalvageJob(Entity<SalvageJobsDataComponent> ent, ProtoId<CargoBountyPrototype> job)
+    {
+        if (ent.Comp.CompletedJobs.Contains(job) || !GetAvailableJobs(ent).Contains(job))
+            return false;
+
+        var jobProto = _prototypeManager.Index(job);
+
+        var curRank = GetRank(ent);
+        ent.Comp.CompletedJobs.Add(job);
+        var newRank = GetRank(ent);
+
+        // Add reward
+        if (TryComp<StationBankAccountComponent>(ent, out var stationBankAccount))
+        {
+            _cargo.UpdateBankAccount(
+                (ent.Owner, stationBankAccount),
+                jobProto.Reward,
+                _cargo.CreateAccountDistribution((ent,  stationBankAccount)));
+        }
+
+        if (curRank != newRank)
+        {
+
+        }
+
+        return true;
     }
 }

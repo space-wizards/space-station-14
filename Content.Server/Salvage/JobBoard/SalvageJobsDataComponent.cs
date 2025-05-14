@@ -24,6 +24,12 @@ public sealed partial class SalvageJobsDataComponent : Component
     /// </summary>
     [DataField]
     public List<ProtoId<CargoBountyPrototype>> CompletedJobs = new();
+
+    /// <summary>
+    /// Account where rewards are deposited.
+    /// </summary>
+    [DataField]
+    public ProtoId<CargoAccountPrototype> RewardAccount = "Cargo";
 }
 
 /// <summary>
