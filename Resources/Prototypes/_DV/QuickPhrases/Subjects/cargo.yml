@@ -1,0 +1,161 @@
+- type: quickPhrase
+  id: BaseCargoSubjectPhrase
+  parent: [ BaseSubjectPhrase, BaseCargoPhrase ]
+  abstract: true
+
+- type: quickPhrase
+  id: BountyPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-bounty
+
+- type: quickPhrase
+  id: CargoShuttlePhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-cargo-shuttle
+
+- type: quickPhrase
+  id: CratePhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-crate
+
+- type: quickPhrase
+  id: MailPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-mail
+
+- type: quickPhrase
+  id: OrderPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-order
+
+- type: quickPhrase
+  id: OreProcessorPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-ore-processor
+
+- type: quickPhrase
+  id: RequestPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-request
+
+- type: quickPhrase
+  id: SpesosPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-spesos
+
+- type: quickPhrase
+  id: RestockPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-restock
+
+- type: quickPhrase
+  id: FultonPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-fulton
+
+- type: quickPhrase
+  id: JetpackPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-jetpack
+
+- type: quickPhrase
+  id: CrusherPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-crusher
+
+- type: quickPhrase
+  id: PKAPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-pka
+
+- type: quickPhrase
+  id: PickaxePhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-pickaxe
+
+- type: quickPhrase
+  id: DrillPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-drill
+
+- type: quickPhrase
+  id: OreBagPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-ore-bag
+
+- type: quickPhrase
+  id: SalvMagnetPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-salv-magnet
+
+- type: quickPhrase
+  id: ExpeditionPhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-expedition
+
+- type: quickPhrase
+  id: PlanetsidePhrase
+  parent: BaseCargoSubjectPhrase
+  text: phrase-planetside
+
+# Ores
+
+- type: quickPhrase
+  id: PhraseCargoIron
+  parent: BaseCargoSubjectPhrase
+  text: phrase-iron
+
+- type: quickPhrase
+  id: PhraseCargoCoal
+  parent: BaseCargoSubjectPhrase
+  text: phrase-coal
+
+- type: quickPhrase
+  id: PhraseCargoQuartz
+  parent: BaseCargoSubjectPhrase
+  text: phrase-quartz
+
+- type: quickPhrase
+  id: PhraseCargoSalt
+  parent: BaseCargoSubjectPhrase
+  text: phrase-salt
+
+- type: quickPhrase
+  id: PhraseCargoGold
+  parent: BaseCargoSubjectPhrase
+  text: phrase-gold
+
+- type: quickPhrase
+  id: PhraseCargoSilver
+  parent: BaseCargoSubjectPhrase
+  text: phrase-silver
+
+- type: quickPhrase
+  id: PhraseCargoPlasma
+  parent: BaseCargoSubjectPhrase
+  text: phrase-plasma
+
+- type: quickPhrase
+  id: PhraseCargoUranium
+  parent: BaseCargoSubjectPhrase
+  text: phrase-uranium
+
+- type: quickPhrase
+  id: PhraseCargoBananium
+  parent: BaseCargoSubjectPhrase
+  text: phrase-bananium
+
+- type: quickPhrase
+  id: PhraseCargoArtifactFragment
+  parent: BaseCargoSubjectPhrase
+  text: phrase-artifact-fragment
+
+- type: quickPhrase
+  id: PhraseCargoBluespaceCrystal
+  parent: BaseCargoSubjectPhrase
+  text: phrase-bluespace-crystal
+
+- type: quickPhrase
+  id: PhraseCargoDiamond
+  parent: BaseCargoSubjectPhrase
+  text: phrase-diamond

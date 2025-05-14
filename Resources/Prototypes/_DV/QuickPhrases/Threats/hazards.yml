@@ -1,0 +1,136 @@
+- type: quickPhrase
+  id: BaseHazardThreatPhrase
+  parent: BaseThreatPhrase
+  group: Hazards
+  styleClass: EngineeringButton
+  abstract: true
+
+- type: quickPhrase
+  id: HazardSpacePhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-space
+
+- type: quickPhrase
+  id: HazardLowPresurePhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-low-presure
+
+- type: quickPhrase
+  id: HazardHighPresurePhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-high-presure
+
+- type: quickPhrase
+  id: HazardHeatPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-heat
+
+- type: quickPhrase
+  id: HazardColdPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-cold
+
+- type: quickPhrase
+  id: HazardGasLeakPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-gas-leak
+
+- type: quickPhrase
+  id: HazardExplosionPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-explosion
+
+- type: quickPhrase
+  id: HazardRadiationPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-radiation
+
+- type: quickPhrase
+  id: HazardStructureDamagePhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-structure-damage
+
+- type: quickPhrase
+  id: HazardChemicalSpillPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-chemical-spill
+
+- type: quickPhrase
+  id: HazardShockPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-shock
+
+- type: quickPhrase
+  id: HazardPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard
+
+- type: quickPhrase
+  id: HazardMeteorsPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-meteors
+
+- type: quickPhrase
+  id: HazardPoisonPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-poison
+
+- type: quickPhrase
+  id: HazardFirePhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-fire
+
+- type: quickPhrase
+  id: HazardPowerOutagePhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-power-outage
+
+- type: quickPhrase
+  id: HazardLowPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-low
+
+- type: quickPhrase
+  id: HazardInfectionPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-infection
+
+- type: quickPhrase
+  id: HazardViralThreatPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-viral-threat
+
+- type: quickPhrase
+  id: HazardBrokenEquipmentPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-broken-equipment
+
+- type: quickPhrase
+  id: HazardHotPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-hot
+
+- type: quickPhrase
+  id: HazardBurningPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-burning
+
+- type: quickPhrase
+  id: HazardBadTemperaturePhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-bad-temperature
+
+- type: quickPhrase
+  id: HazardFreezingPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-freezing
+
+- type: quickPhrase
+  id: HazardDarknessPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-hazard-darkness
+
+- type: quickPhrase
+  id: HazardBloodPhrase
+  parent: BaseHazardThreatPhrase
+  text: phrase-blood

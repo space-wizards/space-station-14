@@ -1,0 +1,85 @@
+- type: quickPhrase
+  id: BaseNounsPhrase
+  parent: BaseCommonPhrase
+  group: Nouns and Pronouns
+  abstract: true
+
+- type: quickPhrase
+  id: IPhrase
+  parent: BaseNounsPhrase
+  text: phrase-i
+
+- type: quickPhrase
+  id: YouPhrase
+  parent: BaseNounsPhrase
+  text: phrase-you
+
+- type: quickPhrase
+  id: SomeonePhrase
+  parent: BaseNounsPhrase
+  text: phrase-someone
+
+- type: quickPhrase
+  id: SomethingPhrase
+  parent: BaseNounsPhrase
+  text: phrase-something
+
+- type: quickPhrase
+  id: HePhrase
+  parent: BaseNounsPhrase
+  text: phrase-he
+
+- type: quickPhrase
+  id: ShePhrase
+  parent: BaseNounsPhrase
+  text: phrase-she
+
+- type: quickPhrase
+  id: TheyPhrase
+  parent: BaseNounsPhrase
+  text: phrase-they
+
+- type: quickPhrase
+  id: ItPhrase
+  parent: BaseNounsPhrase
+  text: phrase-it
+
+- type: quickPhrase
+  id: EveryonePhrase
+  parent: BaseNounsPhrase
+  text: phrase-everyone
+
+- type: quickPhrase
+  id: NoOnePhrase
+  parent: BaseNounsPhrase
+  text: phrase-no-one
+
+- type: quickPhrase
+  id: AnyonePhrase
+  parent: BaseNounsPhrase
+  text: phrase-anyone
+
+- type: quickPhrase
+  id: MePhrase
+  parent: BaseNounsPhrase
+  text: phrase-me
+
+- type: quickPhrase
+  id: IAmPhrase
+  parent: BaseNounsPhrase
+  text: phrase-i-am
+
+- type: quickPhrase
+  id: YouArePhrase
+  parent: BaseNounsPhrase
+  text: phrase-you-are
+
+- type: quickPhrase
+  id: MinePhrase
+  parent: BaseNounsPhrase
+  text: phrase-mine
+
+- type: quickPhrase
+  id: YoursPhrase
+  parent: BaseNounsPhrase
+  text: phrase-yours

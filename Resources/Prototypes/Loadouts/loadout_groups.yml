@@ -75,6 +75,7 @@
   - TowelColorYellow
   - TutorialAI_Newcomer #imp <15 hours
   - WalkingCane #imp
+  - AACTablet # DeltaV
 
 - type: loadoutGroup
   id: Glasses

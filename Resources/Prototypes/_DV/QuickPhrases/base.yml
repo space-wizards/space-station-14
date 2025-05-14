@@ -1,0 +1,80 @@
+# Tabs
+
+- type: quickPhrase
+  id: BaseCommonPhrase
+  tab: Common Phrases
+  abstract: true
+
+- type: quickPhrase
+  id: BaseJobPhrase
+  tab: Jobs
+  abstract: true
+
+- type: quickPhrase
+  id: BaseLocationPhrase
+  tab: Locations
+  abstract: true
+
+- type: quickPhrase
+  id: BaseSubjectPhrase
+  tab: Subjects
+  abstract: true
+
+- type: quickPhrase
+  id: BaseThreatPhrase
+  tab: Safety
+  abstract: true
+
+- type: quickPhrase
+  id: BaseSpeciesPhrase
+  tab: Species
+  abstract: true
+
+# Departments
+
+- type: quickPhrase
+  id: BaseCivilianPhrase
+  group: Civilian
+  abstract: true
+
+- type: quickPhrase
+  id: BaseCommandPhrase
+  group: Command
+  styleClass: CommandButton
+  abstract: true
+
+- type: quickPhrase
+  id: BaseEngineeringPhrase
+  group: Engineering
+  styleClass: EngineeringButton
+  abstract: true
+
+- type: quickPhrase
+  id: BaseSciencePhrase
+  group: Science
+  styleClass: ScienceButton
+  abstract: true
+
+- type: quickPhrase
+  id: BaseCargoPhrase
+  group: Cargo
+  styleClass: CargoButton
+  abstract: true
+
+- type: quickPhrase
+  id: BaseMedicalPhrase
+  group: Medical
+  styleClass: MedicalButton
+  abstract: true
+
+- type: quickPhrase
+  id: BaseSecurityPhrase
+  group: Security
+  styleClass: SecurityButton
+  abstract: true
+
+- type: quickPhrase
+  id: BaseServicePhrase
+  group: Service
+  styleClass: ServiceButton
+  abstract: true

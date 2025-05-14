@@ -1,0 +1,85 @@
+- type: quickPhrase
+  id: BaseQualitativePhrase
+  parent: BaseCommonPhrase
+  group: Quantity and Quality
+  abstract: true
+
+- type: quickPhrase
+  id: MorePhrase
+  parent: BaseQualitativePhrase
+  text: phrase-more
+
+- type: quickPhrase
+  id: LessPhrase
+  parent: BaseQualitativePhrase
+  text: phrase-less
+
+- type: quickPhrase
+  id: AllPhrase
+  parent: BaseQualitativePhrase
+  text: phrase-all
+
+- type: quickPhrase
+  id: NothingPhrase
+  parent: BaseQualitativePhrase
+  text: phrase-nothing
+
+- type: quickPhrase
+  id: MostPhrase
+  parent: BaseQualitativePhrase
+  text: phrase-most
+
+- type: quickPhrase
+  id: SomePhrase
+  parent: BaseQualitativePhrase
+  text: phrase-some
+
+- type: quickPhrase
+  id: ManyPhrase
+  parent: BaseQualitativePhrase
+  text: phrase-many
+
+- type: quickPhrase
+  id: FewPhrase
+  parent: BaseQualitativePhrase
+  text: phrase-few
+
+- type: quickPhrase
+  id: SinglePhrase
+  parent: BaseQualitativePhrase
+  text: phrase-single
+
+- type: quickPhrase
+  id: TooMuchPhrase
+  parent: BaseQualitativePhrase
+  text: phrase-too-much
+
+- type: quickPhrase
+  id: NotEnoughPhrase
+  parent: BaseQualitativePhrase
+  text: phrase-not-enough
+
+- type: quickPhrase
+  id: GoodPhrase
+  parent: BaseQualitativePhrase
+  text: phrase-good
+
+- type: quickPhrase
+  id: BadPhrase
+  parent: BaseQualitativePhrase
+  text: phrase-bad
+
+- type: quickPhrase
+  id: OnPhrase
+  parent: BaseQualitativePhrase
+  text: phrase-on
+
+- type: quickPhrase
+  id: OffPhrase
+  parent: BaseQualitativePhrase
+  text: phrase-off
+
+- type: quickPhrase
+  id: NotPhrase
+  parent: BaseQualitativePhrase
+  text: phrase-not

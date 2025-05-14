@@ -1,0 +1,60 @@
+- type: quickPhrase
+  id: BaseQuestionPhrase
+  parent: BaseCommonPhrase
+  group: Question
+  abstract: true
+
+- type: quickPhrase
+  id: WherePhrase
+  parent: BaseQuestionPhrase
+  text: phrase-where
+
+- type: quickPhrase
+  id: WhoPhrase
+  parent: BaseQuestionPhrase
+  text: phrase-who
+
+- type: quickPhrase
+  id: WhatPhrase
+  parent: BaseQuestionPhrase
+  text: phrase-what
+
+- type: quickPhrase
+  id: WhyPhrase
+  parent: BaseQuestionPhrase
+  text: phrase-why
+
+- type: quickPhrase
+  id: HowPhrase
+  parent: BaseQuestionPhrase
+  text: phrase-how
+
+- type: quickPhrase
+  id: WhenPhrase
+  parent: BaseQuestionPhrase
+  text: phrase-when
+
+- type: quickPhrase
+  id: DoYouHavePhrase
+  parent: BaseQuestionPhrase
+  text: phrase-do-you-have
+
+- type: quickPhrase
+  id: HowDoIPhrase
+  parent: BaseQuestionPhrase
+  text: phrase-how-do-i
+
+- type: quickPhrase
+  id: CanIPhrase
+  parent: BaseQuestionPhrase
+  text: phrase-can-i
+
+- type: quickPhrase
+  id: ShouldIPhrase
+  parent: BaseQuestionPhrase
+  text: phrase-should-i
+
+- type: quickPhrase
+  id: WhichPhrase
+  parent: BaseQuestionPhrase
+  text: phrase-which

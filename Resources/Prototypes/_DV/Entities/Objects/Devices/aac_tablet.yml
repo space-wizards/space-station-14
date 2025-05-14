@@ -1,0 +1,43 @@
+- type: entity
+  parent: BaseItem
+  id: AACTablet
+  name: AAC tablet
+  description: An "augmentative and alternative communication" device that allows speech-impaired individuals to communicate.
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Devices/tablets.rsi
+    layers:
+      - state: aac_tablet
+      - state: aac_screen
+        shader: unshaded
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: aac-inhand-left
+      - state: aac_screen-inhand-left
+        shader: unshaded
+      right:
+      - state: aac-inhand-right
+      - state: aac_screen-inhand-right
+        shader: unshaded
+  - type: ActivatableUI
+    singleUser: false
+    key: enum.AACTabletKey.Key
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+  - type: UserInterface
+    interfaces:
+      enum.AACTabletKey.Key:
+        type: AACBoundUserInterface
+  - type: Speech
+    speechSounds: Borg
+  - type: AACTablet
+  - type: VoiceMask

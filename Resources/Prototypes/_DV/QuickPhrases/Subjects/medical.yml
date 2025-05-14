@@ -1,0 +1,184 @@
+- type: quickPhrase
+  id: BaseMedicalSubjectPhrase
+  parent: [ BaseSubjectPhrase, BaseMedicalPhrase ]
+  abstract: true
+
+- type: quickPhrase
+  id: BaseDamageTypePhrase
+  parent: BaseMedicalSubjectPhrase
+  abstract: true
+
+- type: quickPhrase
+  id: BaseMedicinePhrase
+  parent: BaseMedicalSubjectPhrase
+  abstract: true
+
+- type: quickPhrase
+  id: DamageBrutePhrase
+  parent: BaseDamageTypePhrase
+  text: damage-group-brute
+
+- type: quickPhrase
+  id: DamageBurnPhrase
+  parent: BaseDamageTypePhrase
+  text: damage-group-burn
+
+- type: quickPhrase
+  id: DamageAirlossPhrase
+  parent: BaseDamageTypePhrase
+  text: damage-group-airloss
+
+- type: quickPhrase
+  id: DamageToxinPhrase
+  parent: BaseDamageTypePhrase
+  text: damage-group-toxin
+
+- type: quickPhrase
+  id: DamageGeneticPhrase
+  parent: BaseDamageTypePhrase
+  text: damage-group-genetic
+
+- type: quickPhrase
+  id: DamageBloodlossPhrase
+  parent: BaseDamageTypePhrase
+  text: damage-type-bloodloss
+
+- type: quickPhrase
+  id: DamageRadiationPhrase
+  parent: BaseDamageTypePhrase
+  text: damage-type-radiation
+
+- type: quickPhrase
+  id: ChemDylovenePhrase
+  parent: BaseMedicinePhrase
+  text: reagent-name-dylovene
+
+- type: quickPhrase
+  id: ChemArithrazinePhrase
+  parent: BaseMedicinePhrase
+  text: reagent-name-arithrazine
+
+- type: quickPhrase
+  id: ChemBicaridinePhrase
+  parent: BaseMedicinePhrase
+  text: reagent-name-bicaridine
+
+- type: quickPhrase
+  id: ChemDermalinePhrase
+  parent: BaseMedicinePhrase
+  text: reagent-name-dermaline
+
+- type: quickPhrase
+  id: ChemDexalinPhrase
+  parent: BaseMedicinePhrase
+  text: reagent-name-dexalin
+
+- type: quickPhrase
+  id: ChemKelotanePhrase
+  parent: BaseMedicinePhrase
+  text: reagent-name-kelotane
+
+- type: quickPhrase
+  id: ChemTricordrazinePhrase
+  parent: BaseMedicinePhrase
+  text: reagent-name-tricordrazine
+
+- type: quickPhrase
+  id: ChemOmnizinePhrase
+  parent: BaseMedicinePhrase
+  text: reagent-name-omnizine
+
+- type: quickPhrase
+  id: ChemPyrazinePhrase
+  parent: BaseMedicinePhrase
+  text: reagent-name-pyrazine
+
+- type: quickPhrase
+  id: TopicalPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-topical
+
+- type: quickPhrase
+  id: TopicalBrutePackPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-topical-brute-pack
+
+- type: quickPhrase
+  id: TopicalGauzePhrase
+  parent: BaseMedicinePhrase
+  text: phrase-topical-gauze
+
+- type: quickPhrase
+  id: TopicalBloodpackPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-topical-bloodpack
+
+- type: quickPhrase
+  id: DefibrillatorPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-defibrillator
+
+- type: quickPhrase
+  id: CryopodPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-cryopod
+
+- type: quickPhrase
+  id: StasisBedPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-stasis-bed
+
+- type: quickPhrase
+  id: FirstAidKitPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-first-aid-kit
+
+- type: quickPhrase
+  id: ClonePhrase
+  parent: BaseMedicinePhrase
+  text: phrase-clone
+
+- type: quickPhrase
+  id: CloningPodPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-cloning-pod
+
+- type: quickPhrase
+  id: BiomassPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-biomass
+
+- type: quickPhrase
+  id: SyringePhrase
+  parent: BaseMedicinePhrase
+  text: phrase-syringe
+
+- type: quickPhrase
+  id: PillPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-pill
+
+- type: quickPhrase
+  id: AlivePhrase
+  parent: BaseMedicinePhrase
+  text: phrase-alive
+
+- type: quickPhrase
+  id: CritPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-crit
+
+- type: quickPhrase
+  id: DeadPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-dead
+
+- type: quickPhrase
+  id: HealthyPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-healthy
+
+- type: quickPhrase
+  id: MedicalChemicalsPhrase
+  parent: BaseMedicinePhrase
+  text: phrase-chemicals

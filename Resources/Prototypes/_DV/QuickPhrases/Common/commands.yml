@@ -1,0 +1,80 @@
+- type: quickPhrase
+  id: BaseImperativePhrase
+  parent: BaseCommonPhrase
+  group: Commands and Requests
+  abstract: true
+
+- type: quickPhrase
+  id: GiveMePhrase
+  parent: BaseImperativePhrase
+  text: phrase-give-me
+
+- type: quickPhrase
+  id: NeedPhrase
+  parent: BaseImperativePhrase
+  text: phrase-need
+
+- type: quickPhrase
+  id: WantPhrase
+  parent: BaseImperativePhrase
+  text: phrase-want
+
+- type: quickPhrase
+  id: CantPhrase
+  parent: BaseImperativePhrase
+  text: phrase-cant
+
+- type: quickPhrase
+  id: GoAwayPhrase
+  parent: BaseImperativePhrase
+  text: phrase-go-away
+
+- type: quickPhrase
+  id: ComeHerePhrase
+  parent: BaseImperativePhrase
+  text: phrase-come-here
+
+- type: quickPhrase
+  id: GoToPhrase
+  parent: BaseImperativePhrase
+  text: phrase-go-to
+
+- type: quickPhrase
+  id: DoNotPhrase
+  parent: BaseImperativePhrase
+  text: phrase-do-not
+
+- type: quickPhrase
+  id: WaitPhrase
+  parent: BaseImperativePhrase
+  text: phrase-wait
+
+- type: quickPhrase
+  id: WillPhrase
+  parent: BaseImperativePhrase
+  text: phrase-will
+
+- type: quickPhrase
+  id: ThisPhrase
+  parent: BaseImperativePhrase
+  text: phrase-this
+
+- type: quickPhrase
+  id: TakePhrase
+  parent: BaseImperativePhrase
+  text: phrase-take
+
+- type: quickPhrase
+  id: LeavePhrase
+  parent: BaseImperativePhrase
+  text: phrase-leave
+
+- type: quickPhrase
+  id: StayPhrase
+  parent: BaseImperativePhrase
+  text: phrase-stay
+
+- type: quickPhrase
+  id: StopPhrase
+  parent: BaseImperativePhrase
+  text: phrase-stop
