@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pronana
-  changes:
-  - message: the crusher dagger now does everything a knife can and can be thrown.
-    type: Tweak
-  id: 7975
-  time: '2025-02-18T15:16:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35259
 - author: lizelive
   changes:
   - message: AI can now see job icons while inside of an intellicard.
@@ -3926,3 +3919,10 @@
   id: 8477
   time: '2025-05-14T04:42:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37439
+- author: Hitlinemoss
+  changes:
+  - message: The chef's closet no longer contains an emergency crowbar.
+    type: Remove
+  id: 8478
+  time: '2025-05-14T05:16:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37403
