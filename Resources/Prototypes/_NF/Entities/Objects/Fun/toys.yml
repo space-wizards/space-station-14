@@ -50,7 +50,7 @@
       prob: 0.1
       orGroup: Rock
   - type: Storage # imp
-    maxItemSize: Small
+    maxItemSize: Normal
     grid:
     - 0,0,1,1
 
