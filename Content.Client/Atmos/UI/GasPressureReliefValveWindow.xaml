@@ -1,30 +1,37 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-               SetSize="345 255"
-               MinSize="345 255"
-               Title="Pressure Relief Valve"
+               SetSize="345 275"
+               MinSize="345 275"
+               Title="{Loc gas-pressure-relief-valve-ui-title}"
                Resizable="False">
 
     <BoxContainer Orientation="Vertical">
 
+        <BoxContainer Orientation="Horizontal" Align="Center" Margin="5">
 
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Align="Center" Margin="10 10 10 10">
-            <BoxContainer Orientation="Vertical">
-                <Label Text="{Loc gas-pressure-relief-valve-ui-valve-status}" Margin="0 0 5 0" HorizontalAlignment="Right" />
-                <Label Text="{Loc gas-pressure-relief-valve-ui-current-flow-rate}" Margin="0 0 5 0" HorizontalAlignment="Right" />
-                <Label Text="{Loc gas-pressure-relief-valve-ui-threshold-pressure}" Margin="0 0 5 0" HorizontalAlignment="Right" />
+            <BoxContainer Orientation="Vertical" Align="Center" HorizontalExpand="True">
+                <Label Text="{Loc gas-pressure-relief-valve-ui-target}" Align="Right" StyleClasses="LabelKeyText" />
+                <BoxContainer Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label Name="TargetPressureLabel" Margin="0 0 4 0"/>
+                    <Label Text="{Loc gas-pressure-relief-valve-ui-pressure-unit}" />
+                </BoxContainer>
             </BoxContainer>
-            <BoxContainer Orientation="Vertical" Margin="10 0 10 0">
-                <Label Name="ValveStatusLabel" HorizontalExpand="True" HorizontalAlignment="Center" />
-                <Label Name="FlowRateLabel" HorizontalExpand="True" HorizontalAlignment="Center" />
-                <Label Name="ThresholdPressureLabel" HorizontalExpand="True" HorizontalAlignment="Center" />
+
+            <ProgressBar Name="ToTargetBar" MaxValue="1" SetSize="5 75" Margin="10" Vertical="True" />
+
+            <SpriteView Name="EntityView" SetSize="64 64" Scale="3 3" OverrideDirection="North" Margin="0" />
+
+            <ProgressBar Name="FlowRateBar" MaxValue="1" SetSize="5 75" Margin="10" Vertical="True" />
+
+            <BoxContainer Orientation="Vertical" Align="Center" HorizontalExpand="True">
+                <Label Text="{Loc gas-pressure-relief-valve-ui-flow}" StyleClasses="LabelKeyText" />
+                <BoxContainer Orientation="Horizontal">
+                    <Label Name="CurrentFlowLabel" Margin="0 0 4 0"/>
+                    <Label Text="{Loc gas-pressure-relief-valve-ui-flow-rate-unit}" />
+                </BoxContainer>
             </BoxContainer>
-            <BoxContainer Orientation="Vertical">
-                <Label Text="   " Margin="5 0 0 0" HorizontalAlignment="Left" />
-                <Label Text="{Loc gas-pressure-relief-valve-ui-flow-rate-unit}" Margin="5 0 0 0" HorizontalAlignment="Left" />
-                <Label Text="{Loc gas-pressure-relief-valve-ui-pressure-unit}" Margin="5 0 0 0" HorizontalAlignment="Left" />
-            </BoxContainer>
+
         </BoxContainer>
 
         <!-- Controls to Set Pressure -->

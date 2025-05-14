@@ -17,6 +17,8 @@ public sealed class GasPressureReliefValveBoundUserInterface(EntityUid owner, En
 
         _window = this.CreateWindow<GasPressureReliefValveWindow>();
 
+        _window.SetEntity(Owner);
+
         _window.ThresholdPressureChanged += OnThresholdChanged;
 
         if (EntMan.TryGetComponent(Owner, out GasPressureReliefValveComponent? valveComponent))
