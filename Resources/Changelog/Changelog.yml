@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: Fixed Janitor-Restricted contraband unintentionally stating Security
-      may use it too.
-    type: Fix
-  id: 7974
-  time: '2025-02-18T13:07:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35281
-- author: Pronana
-  changes:
-  - message: the crusher dagger now does everything a knife can and can be thrown.
-    type: Tweak
-  id: 7975
-  time: '2025-02-18T15:16:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35259
-- author: lizelive
-  changes:
-  - message: AI can now see job icons while inside of an intellicard.
-    type: Fix
-  id: 7976
-  time: '2025-02-18T22:23:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35282
 - author: CooperWallace
   changes:
   - message: A popup is now displayed at the item's previous location when it is recalled
@@ -3926,3 +3904,25 @@
   id: 8476
   time: '2025-05-13T17:15:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32468
+- author: BigfootBravo
+  changes:
+  - message: Cargo acquisition slips can now fit into folders, clipboards, and envelopes,
+      like other papers can.
+    type: Fix
+  id: 8477
+  time: '2025-05-14T04:42:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37439
+- author: Hitlinemoss
+  changes:
+  - message: The chef's closet no longer contains an emergency crowbar.
+    type: Remove
+  id: 8478
+  time: '2025-05-14T05:16:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37403
+- author: BigfootBravo
+  changes:
+  - message: No more spammed error message when trying to write on a acquisition slip.
+    type: Fix
+  id: 8479
+  time: '2025-05-14T05:56:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37442
