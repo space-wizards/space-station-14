@@ -30,6 +30,7 @@ using Robust.Shared.Utility;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared;
 using Content.Server.Radio.Components;
+using Content.Server.Radio.Systems;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -49,6 +50,7 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly ClothingSystem _clothingSystem = default!; //🌟Starlight🌟
     [Dependency] private readonly InventorySystem _inventorySystem = default!; //🌟Starlight🌟
     [Dependency] private readonly InventorySystem _inventory = default!; //🌟Starlight🌟
+    [Dependency] private readonly RadioChimeMuteSystem _radioChimeMuteSystem = default!; //🌟Starlight🌟
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -173,7 +175,7 @@ public sealed class RadioSystem : EntitySystem
             if (TryComp<ActorComponent>(messageSource, out var aiActor))
             {
                 var aiFilter = Filter.Empty().AddPlayer(aiActor.PlayerSession);
-                _audio.PlayGlobal(aiChimeSound, aiFilter, true, AudioParams.Default.WithVolume(-14f));
+                _audio.PlayGlobal(aiChimeSound, aiFilter, true, AudioParams.Default.WithVolume(-10f));
             }
         }
 
@@ -194,7 +196,7 @@ public sealed class RadioSystem : EntitySystem
                 while (radioQueryChime.MoveNext(out var aiEntity, out var _, out var aiActorComp))
                 {
                     var aiFilter = Filter.Empty().AddPlayer(aiActorComp.PlayerSession);
-                    _audio.PlayGlobal(senderChimeSound, aiFilter, true, AudioParams.Default.WithVolume(-14f));
+                    _audio.PlayGlobal(senderChimeSound, aiFilter, true, AudioParams.Default.WithVolume(-10f));
                 }
             }
         }
@@ -228,11 +230,20 @@ public sealed class RadioSystem : EntitySystem
                     var parent = transform.ParentUid;
                     if (parent == null || !TryComp<ActorComponent>(parent, out var actor))
                         continue;
+                        
+                    // Skip players who have muted radio chimes
+                    if (_radioChimeMuteSystem.IsPlayerMuted(actor.PlayerSession))
+                        continue;
 
                     filterBuilder = filterBuilder.AddPlayer(actor.PlayerSession);
                     count++;
                 }
-                _audio.PlayGlobal(soundPath, filterBuilder, true, AudioParams.Default.WithVolume(-14f));
+                
+                // Only play the sound if there are players who haven't muted it
+                if (count > 0)
+                {
+                    _audio.PlayGlobal(soundPath, filterBuilder, true, AudioParams.Default.WithVolume(-10f));
+                }
             }
         }
 
@@ -306,10 +317,10 @@ public sealed class RadioSystem : EntitySystem
                         TryComp<ActorComponent>(parent, out receiverActor);
                 }
 
-                if (receiverActor != null)
+                if (receiverActor != null && !_radioChimeMuteSystem.IsPlayerMuted(receiverActor.PlayerSession))
                 {
                     var receiverFilter = Filter.Empty().AddPlayer(receiverActor.PlayerSession);
-                    _audio.PlayGlobal(aiChimeSound, receiverFilter, true, AudioParams.Default.WithVolume(-14f));
+                    _audio.PlayGlobal(aiChimeSound, receiverFilter, true, AudioParams.Default.WithVolume(-10f));
                 }
             }
 

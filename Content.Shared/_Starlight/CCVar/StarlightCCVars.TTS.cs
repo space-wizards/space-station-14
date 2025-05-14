@@ -47,4 +47,10 @@ public sealed partial class StarlightCCVars
 
     public static readonly CVarDef<float> TTSAnnounceVolume =
         CVarDef.Create("tts.announce_volume", 0.50f, CVar.CLIENTONLY | CVar.ARCHIVE);
+        
+    /// <summary>
+    /// Option to mute radio chime sounds
+    /// </summary>
+    public static readonly CVarDef<bool> RadioChimeMuted =
+        CVarDef.Create("audio.radio_chime_muted", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 }
