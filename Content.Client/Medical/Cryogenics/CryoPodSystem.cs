@@ -9,6 +9,7 @@ namespace Content.Client.Medical.Cryogenics;
 public sealed class CryoPodSystem : SharedCryoPodSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -32,7 +33,7 @@ public sealed class CryoPodSystem : SharedCryoPodSystem
         }
 
         component.PreviousOffset = spriteComponent.Offset;
-        spriteComponent.Offset = new Vector2(0, 1);
+        _sprite.SetOffset((uid, spriteComponent), new Vector2(0, 1));
     }
 
     private void OnCryoPodRemoval(EntityUid uid, InsideCryoPodComponent component, ComponentRemove args)
@@ -42,7 +43,7 @@ public sealed class CryoPodSystem : SharedCryoPodSystem
             return;
         }
 
-        spriteComponent.Offset = component.PreviousOffset;
+        _sprite.SetOffset((uid, spriteComponent), component.PreviousOffset);
     }
 
     private void OnAppearanceChange(EntityUid uid, CryoPodComponent component, ref AppearanceChangeEvent args)
@@ -60,14 +61,14 @@ public sealed class CryoPodSystem : SharedCryoPodSystem
 
         if (isOpen)
         {
-            args.Sprite.LayerSetState(CryoPodVisualLayers.Base, "pod-open");
-            args.Sprite.LayerSetVisible(CryoPodVisualLayers.Cover, false);
+            _sprite.LayerSetRsiState((uid, args.Sprite), CryoPodVisualLayers.Base, "pod-open");
+            _sprite.LayerSetVisible((uid, args.Sprite), CryoPodVisualLayers.Cover, false);
         }
         else
         {
-            args.Sprite.LayerSetState(CryoPodVisualLayers.Base, isOn ? "pod-on" : "pod-off");
-            args.Sprite.LayerSetState(CryoPodVisualLayers.Cover, isOn ? "cover-on" : "cover-off");
-            args.Sprite.LayerSetVisible(CryoPodVisualLayers.Cover, true);
+            _sprite.LayerSetRsiState((uid, args.Sprite), CryoPodVisualLayers.Base, isOn ? "pod-on" : "pod-off");
+            _sprite.LayerSetRsiState((uid, args.Sprite), CryoPodVisualLayers.Cover, isOn ? "cover-on" : "cover-off");
+            _sprite.LayerSetVisible((uid, args.Sprite), CryoPodVisualLayers.Cover, true);
         }
     }
 }
