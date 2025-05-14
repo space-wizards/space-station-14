@@ -1902,17 +1902,9 @@
 
 ## -Dogs
 - type: entity
-  parent: [SimpleMobBase, StripableInventoryBase]
-  id: MobDogBase
   abstract: true
+  id: MobDoglike
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Animals/corgi.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: corgi
-  - type: Physics
   - type: Speech
     speechVerb: Canine
     speechSounds: Dog
@@ -1930,14 +1922,12 @@
   - type: Inventory
     speciesId: dog
     templateId: pet
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: corgi
-      Critical:
-        Base: corgi-dead
-      Dead:
-        Base: corgi-dead
+  - type: InteractionPopup
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
   - type: MeleeWeapon
     soundHit:
         path: /Audio/Effects/bite.ogg
@@ -1947,18 +1937,33 @@
       types:
         Piercing: 3
         Slash: 2
+
+- type: entity
+  parent: [ MobDoglike, SimpleMobBase, StripableInventoryBase ]
+  id: MobDogBase
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: corgi
+  - type: Physics
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: corgi
+      Critical:
+        Base: corgi-dead
+      Dead:
+        Base: corgi-dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
       amount: 2
   - type: ReplacementAccent
     accent: dog
-  - type: InteractionPopup
-    interactSuccessString: petting-success-dog
-    interactFailureString: petting-failure-generic
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/small_dog_bark_happy.ogg
   - type: Grammar
     attributes:
       gender: epicene
@@ -2031,7 +2036,7 @@
       Dead:
         Base: puppy-dead
 
-- type: entity ## Not chaplains hellhound
+- type: entity # Not chaplains hellhound
   name: corrupted corgi
   parent: MobCorgi
   id: MobCorgiNarsi
@@ -2087,14 +2092,14 @@
       types:
         Heat : 1
 
-- type: entity
-  parent: MobCorgiBase
+- type: entity # Ademe
+  parent: [ MobDoglike, SimpleMobBase, StripableInventoryBase ]
   id: MobCorgiSmart
   name: smart corgi
   description: An unusually smart dog.
   components:
-  # Use corgi sprite, need to add handcuff layer
-  - type: Sprite
+  - type: Sprite # Use corgi sprite, need to add handcuff layer
+    sprite: Mobs/Animals/corgi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
@@ -2109,8 +2114,7 @@
         type: StrippableBoundUserInterface
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
-  # Custom inventory template
-  - type: Inventory
+  - type: Inventory # Custom inventory template
     speciesId: dog
     templateId: SmartCorgi
     displacements:
@@ -2124,13 +2128,12 @@
           32:
             sprite: Mobs/Pets/corgi.rsi
             state: belt_displacement
-  - type: Hands # HANDS!
+  - type: Hands
   - type: Puller
-  - type: Cuffable # bad dog!
+  - type: Cuffable
   - type: BlockWriting # dogs can't write, paws unwieldy; mouth-writing is a myth
   - type: Stripping
   - type: ComplexInteraction
-  # Implement custom borgi body type
   - type: Body
     prototype: SmartCorgi
   - type: RotationVisuals
@@ -2138,15 +2141,17 @@
     horizontalRotation: 180
   - type: Grammar
     attributes:
-      gender: epicene # Gender neutral
+      gender: epicene
       proper: true
   - type: Tag
     tags:
     - VimPilot
     - CanPilot
     - DoorBumpOpener
-  - type: StatusIcon # marks them as crew
+  - type: StatusIcon
     bounds: -0.5,-0.5,0.5,0.5
+  - type: MobPrice
+    price: 200
 
 - type: entity
   name: bull terrier
