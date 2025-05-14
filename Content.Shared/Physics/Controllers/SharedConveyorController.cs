@@ -167,6 +167,7 @@ public abstract class SharedConveyorController : VirtualController
 
             var physics = ent.Entity.Comp3;
             var velocity = physics.LinearVelocity;
+            var angularVelocity = physics.AngularVelocity;
             var targetDir = ent.Direction;
 
             if (physics.BodyStatus != BodyStatus.OnGround)
@@ -189,10 +190,8 @@ public abstract class SharedConveyorController : VirtualController
                 // they'll go too slow.
                 if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
                 {
-                    var angularVelocity = physics.AngularVelocity;
-
                     _mover.Friction(0f, frameTime: frameTime, friction: 10f, ref velocity);
-                    _mover.AngularFriction(0f, frameTime: frameTime, friction: 20f, ref angularVelocity);
+                    _mover.Friction(0f, frameTime: frameTime, friction: 10f, ref angularVelocity);
 
                     PhysicsSystem.SetAngularVelocity(ent.Entity.Owner, angularVelocity);
                 }
@@ -204,6 +203,7 @@ public abstract class SharedConveyorController : VirtualController
                 // Need friction to outweigh the movement as it will bounce a bit against the wall.
                 // This facilitates being able to sleep entities colliding into walls.
                 _mover.Friction(0f, frameTime: frameTime, friction: 20f, ref velocity);
+                _mover.Friction(0f, frameTime: frameTime, friction: 20f, ref angularVelocity);
             }
 
             PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity, wakeBody: false);
