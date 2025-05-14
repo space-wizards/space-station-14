@@ -279,9 +279,10 @@ public abstract class SharedMagicSystem : EntitySystem
         var userVelocity = _physics.GetMapLinearVelocity(ev.Performer);
 
         // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
-        var ent = Spawn(ev.Prototype, fromCoords);
+        var fromMap = _transform.ToMapCoordinates(fromCoords);
+        var ent = Spawn(ev.Prototype, fromMap);
         var direction = _transform.ToMapCoordinates(toCoords).Position -
-                         _transform.ToMapCoordinates(fromCoords).Position;
+                         fromMap.Position;
         _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer);
     }
     // End Projectile Spells
