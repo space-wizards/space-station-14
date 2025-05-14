@@ -2384,7 +2384,7 @@
     FoodBreadCottonSlice: 2
     FoodCheeseSlice: 1
     FoodButterSlice: 1
-    
+
 - type: microwaveMealRecipe
   id: RecipeBreakfastAmerican
   name: full american breakfast recipe
@@ -2397,7 +2397,7 @@
     FoodMeatBacon: 2
     FoodPotato: 1
     FoodBakedPancake: 2
-    
+
 - type: microwaveMealRecipe
   id: RecipeBreakfastEnglish
   name: full english breakfast recipe
