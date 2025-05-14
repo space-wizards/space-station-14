@@ -37,9 +37,6 @@
     - id: PetRockPepper
       prob: 0.1
       orGroup: Rock
-    - id: PetRockRock
-      prob: 0.1
-      orGroup: Rock
     - id: PetRockSexyRock
       prob: 0.1
       orGroup: Rock
@@ -105,8 +102,6 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-    - type: Item # imp
-      size: Small
 
 - type: entity
   parent: BasePetRock

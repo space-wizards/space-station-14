@@ -773,5 +773,5 @@
   - type: EmitSoundOnUse
     sound:
       collection: KodePlushie
-    params:
-      variation: .125
+      params:
+        variation: .125

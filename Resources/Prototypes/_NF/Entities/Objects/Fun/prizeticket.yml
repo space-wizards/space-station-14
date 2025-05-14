@@ -20,7 +20,7 @@
     - id: PlushieApid
       prob: 0.82
       orGroup: Prize
-    - id: PlushieArachnid
+    - id: PlushieArachind # i am going to become the joker
       prob: 0.82
       orGroup: Prize
     - id: PlushieBee
