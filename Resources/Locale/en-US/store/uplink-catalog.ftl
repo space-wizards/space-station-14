@@ -108,7 +108,7 @@ uplink-speedloader-magnu-desc = Revolver speedloader with 6 armor-piercing catri
 
 #imp ammo correction
 uplink-mosin-ammo-name = Ammunition box (.30 rifle)
-uplink-mosin-ammo-desc = A box of 50 cartridges for the surplus rifle.
+uplink-mosin-ammo-desc = A box of 60 cartridges for the surplus rifle.
 
 #imp desc tweak
 uplink-sniper-ammo-name = Ammunition box (.60 antimateriel)

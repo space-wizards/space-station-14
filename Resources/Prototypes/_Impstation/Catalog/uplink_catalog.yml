@@ -143,3 +143,13 @@
     Telecrystal: 7
   categories:
     - UplinkWeaponry
+
+- type: listing
+  id: UplinkSawAmmo
+  name: uplink-saw-ammo-name
+  description: uplink-saw-ammo-desc
+  productEntity: MagazineBoxRifle
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkAmmo

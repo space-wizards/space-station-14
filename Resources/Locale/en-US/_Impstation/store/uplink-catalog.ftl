@@ -30,3 +30,6 @@ uplink-fugitivecloak-desc = While this cloak hides your extra appendages, it als
 
 uplink-bloodredrosekit-name = Blood Red Rose Kit
 uplink-bloodredrosekit-desc = A set of roses for the romantic killer to get close to their dear victims.
+
+uplink-saw-ammo-name = Ammunition box (.20 rifle)
+uplink-saw-ammo-desc = A box of 50 cartridges compatible with the L6 Nidhogg light machine gun. Doesn't come with any ammo boxes, load it yourself!
