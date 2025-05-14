@@ -1,76 +1,82 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24. Stonk pocket by Tayrtahn on GitHub. Carp pocket by deltanedas (GitHub), modified by ps3moira (GitHub)",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "banana"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24. Stonk pocket by Tayrtahn on GitHub. Carp pocket by deltanedas (GitHub). Modified by ps3moira (GitHub). 'moth-box' and 'moth' States by kosticia on GitHub",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "banana-box"
-    },
-    {
-      "name": "berry"
-    },
-    {
-      "name": "berry-box"
-    },
-    {
-      "name": "dank"
-    },
-    {
-      "name": "pizza"
-    },
-    {
-      "name": "pizza-box"
-    },
-    {
-      "name": "plain"
-    },
-    {
-      "name": "box"
-    },
-    {
-      "name": "spicy"
-    },
-    {
-      "name": "spicy-box"
-    },
-    {
-      "name": "teriyaki"
-    },
-    {
-      "name": "teriyaki-box"
-    },
-    {
-      "name": "dink-box"
-    },
-    {
-      "name": "dink"
-    },
-    {
-      "name": "stonk-box"
-    },
-    {
-      "name": "stonk"
-    },
-    {
-      "name": "carp-box"
-    },
-    {
-      "name": "carp"
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "banana"
+        },
+        {
+            "name": "banana-box"
+        },
+        {
+            "name": "berry"
+        },
+        {
+            "name": "berry-box"
+        },
+        {
+            "name": "dank"
+        },
+        {
+            "name": "pizza"
+        },
+        {
+            "name": "pizza-box"
+        },
+        {
+            "name": "plain"
+        },
+        {
+            "name": "box"
+        },
+        {
+            "name": "spicy"
+        },
+        {
+            "name": "spicy-box"
+        },
+        {
+            "name": "teriyaki"
+        },
+        {
+            "name": "teriyaki-box"
+        },
+        {
+            "name": "dink-box"
+        },
+        {
+            "name": "dink"
+        },
+        {
+            "name": "stonk-box"
+        },
+        {
+            "name": "stonk"
+        },
+        {
+            "name": "carp-box"
+        },
+        {
+            "name": "carp"
+        },
+        {
+            "name": "moth-box"
+        },
+        {
+            "name": "moth"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
 }
