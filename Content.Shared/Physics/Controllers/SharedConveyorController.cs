@@ -159,12 +159,13 @@ public abstract class SharedConveyorController : VirtualController
                 continue;
 
             var physics = ent.Entity.Comp3;
-            var velocity = physics.LinearVelocity;
-            var angularVelocity = physics.AngularVelocity;
-            var targetDir = ent.Direction;
 
             if (physics.BodyStatus != BodyStatus.OnGround)
                 continue;
+
+            var velocity = physics.LinearVelocity;
+            var angularVelocity = physics.AngularVelocity;
+            var targetDir = ent.Direction;
 
             // If mob is moving with the conveyor then combine the directions.
             var wishDir = _mover.GetWishDir(ent.Entity.Owner);
