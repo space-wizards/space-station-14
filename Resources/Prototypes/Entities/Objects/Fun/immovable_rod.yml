@@ -79,6 +79,7 @@
       types:
         Blunt: 40
         Structural: 170
+    stunTime: 2
   - type: MovementIgnoreGravity
     gravityState: true
   - type: InputMover

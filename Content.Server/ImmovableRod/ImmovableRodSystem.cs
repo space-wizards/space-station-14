@@ -5,6 +5,7 @@ using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
+using Content.Server.Stunnable;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
@@ -26,6 +27,7 @@ public sealed class ImmovableRodSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
@@ -123,6 +125,7 @@ public sealed class ImmovableRodSystem : EntitySystem
                     return;
 
                 _damageable.TryChangeDamage(ent, component.Damage, ignoreResistances: true);
+                _stunSystem.TryKnockdown(ent, TimeSpan.FromSeconds(component.StunTime), false);
                 return;
             }
 

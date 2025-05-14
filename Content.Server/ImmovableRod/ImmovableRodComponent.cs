@@ -49,4 +49,10 @@ public sealed partial class ImmovableRodComponent : Component
     /// </summary>
     [DataField]
     public DamageSpecifier? Damage;
+
+    /// <summary>
+    ///     How long it should stun for, if not gibbing
+    /// </summary>
+    [DataField]
+    public float StunTime;
 }
