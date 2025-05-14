@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
@@ -19,6 +20,13 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+
+    // The largest size ANY machine can theoretically have.
+    // Used to aid search for machines in range of parts that have been anchored/constructed.
+    private const float MaximumRange = 30;
+    private readonly HashSet<Entity<MultipartMachineComponent>> _entitiesInRange = [];
+
     public override void Initialize()
     {
         base.Initialize();
@@ -172,12 +180,6 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     /// <param name="args">Args for the startup.</param>
     private void OnComponentStartup(Entity<MultipartMachineComponent> ent, ref ComponentStartup args)
     {
-        foreach (var (_, part) in ent.Comp.Parts)
-        {
-            if (part.Offset.Length > ent.Comp.MaxRange)
-                ent.Comp.MaxRange = part.Offset.Length;
-        }
-
         // If anchored, perform a rescan of this machine when the component starts so we can immediately
         // jump to an assembled state if needed.
         if (XformQuery.TryGetComponent(ent.Owner, out var xform) && xform.Anchored)
@@ -213,14 +215,10 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         if (!XformQuery.TryGetComponent(ent.Owner, out var constructXform))
             return;
 
-        var query = EntityQueryEnumerator<MultipartMachineComponent>();
-        while (query.MoveNext(out var uid, out var machineComp))
+        _lookupSystem.GetEntitiesInRange(constructXform.Coordinates, MaximumRange, _entitiesInRange);
+        foreach (var machine in _entitiesInRange)
         {
-            var machine = (uid, machineComp);
-            if (!IsMachineInRange(machine, constructXform.LocalPosition))
-                continue; // This part is outside the max range of the machine, ignore
-
-            foreach (var part in machineComp.Parts.Values)
+            foreach (var part in machine.Comp.Parts.Values)
             {
                 if (args.Graph == part.Graph &&
                     (args.PreviousNode == part.ExpectedNode || args.CurrentNode == part.ExpectedNode))
@@ -260,31 +258,12 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         if (!XformQuery.TryGetComponent(ent.Owner, out var constructXform))
             return;
 
-        var query = EntityQueryEnumerator<MultipartMachineComponent>();
-        while (query.MoveNext(out var uid, out var machineComp))
+        _lookupSystem.GetEntitiesInRange(constructXform.Coordinates, MaximumRange, _entitiesInRange);
+        foreach (var machine in _entitiesInRange)
         {
-            var machine = (uid, machineComp);
-            if (!IsMachineInRange(machine, constructXform.LocalPosition))
-                continue; // This part is outside the max range of the machine, ignore
-
-            if (Rescan(machine) && HasPartEntity(machine, ent.Owner))
+            if (Rescan(machine) && HasPartEntity(machine.AsNullable(), ent.Owner))
                 return; // This machine is using this entity so we don't need to go any further
         }
-    }
-
-    /// <summary>
-    /// Checks whether a given position is within the MaxRange of the specified machine.
-    /// </summary>
-    /// <param name="machine">Specific machine to check against.</param>
-    /// <param name="position">Position to check against.</param>
-    /// <returns>True if the position is within the MaxRange of the machine, false otherwise</returns>
-    private bool IsMachineInRange(Entity<MultipartMachineComponent> machine, Vector2 position)
-    {
-        if (!XformQuery.TryGetComponent(machine.Owner, out var machineXform))
-            return false;
-
-        var direction = position - machineXform.LocalPosition;
-        return direction.Length() <= machine.Comp.MaxRange;
     }
 
     /// <summary>
