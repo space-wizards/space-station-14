@@ -5,8 +5,6 @@ namespace Content.Client.Xenoarchaeology.XenoArtifacts;
 
 public sealed class RandomArtifactSpriteSystem : VisualizerSystem<RandomArtifactSpriteComponent>
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-
     protected override void OnAppearanceChange(EntityUid uid, RandomArtifactSpriteComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -25,24 +23,24 @@ public sealed class RandomArtifactSpriteSystem : VisualizerSystem<RandomArtifact
         var spritePrefix = isUnlocking ? "_on" : "";
 
         // layered artifact sprite
-        if (_sprite.LayerMapTryGet((uid, args.Sprite), ArtifactsVisualLayers.UnlockingEffect, out var layer, false))
+        if (args.Sprite.LayerMapTryGet(ArtifactsVisualLayers.UnlockingEffect, out var layer))
         {
             var spriteState = "ano" + spriteIndexStr;
-            _sprite.LayerSetRsiState((uid, args.Sprite), ArtifactsVisualLayers.Base, spriteState);
-            _sprite.LayerSetRsiState((uid, args.Sprite), layer, spriteState + "_on");
-            _sprite.LayerSetVisible((uid, args.Sprite), layer, isUnlocking);
+            args.Sprite.LayerSetState(ArtifactsVisualLayers.Base, spriteState);
+            args.Sprite.LayerSetState(layer, spriteState + "_on");
+            args.Sprite.LayerSetVisible(layer, isUnlocking);
 
-            if (_sprite.LayerMapTryGet((uid, args.Sprite), ArtifactsVisualLayers.ActivationEffect, out var activationEffectLayer, false))
+            if (args.Sprite.LayerMapTryGet(ArtifactsVisualLayers.ActivationEffect, out var activationEffectLayer))
             {
-                _sprite.LayerSetRsiState((uid, args.Sprite), activationEffectLayer, "artifact-activation");
-                _sprite.LayerSetVisible((uid, args.Sprite), activationEffectLayer, isActivated);
+                args.Sprite.LayerSetState(activationEffectLayer, "artifact-activation");
+                args.Sprite.LayerSetVisible(activationEffectLayer, isActivated);
             }
         }
         // non-layered
         else
         {
             var spriteState = "ano" + spriteIndexStr + spritePrefix;
-            _sprite.LayerSetRsiState((uid, args.Sprite), ArtifactsVisualLayers.Base, spriteState);
+            args.Sprite.LayerSetState(ArtifactsVisualLayers.Base, spriteState);
         }
     }
 }

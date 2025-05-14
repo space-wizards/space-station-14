@@ -10,7 +10,6 @@ public struct TileFrictionEvent
 
     public TileFrictionEvent(float modifier)
     {
-        // TODO: If something ever uses different angular and linear modifiers, split this into two modifiers
         Modifier = modifier;
     }
 }

@@ -31,6 +31,7 @@ namespace Content.Server.Power.EntitySystems
         private readonly HashSet<ApcNet> _apcNetReconnectQueue = new();
 
         private EntityQuery<ApcPowerReceiverBatteryComponent> _apcBatteryQuery;
+        private EntityQuery<AppearanceComponent> _appearanceQuery;
         private EntityQuery<BatteryComponent> _batteryQuery;
 
         private BatteryRampPegSolver _solver = new();
@@ -40,6 +41,7 @@ namespace Content.Server.Power.EntitySystems
             base.Initialize();
 
             _apcBatteryQuery = GetEntityQuery<ApcPowerReceiverBatteryComponent>();
+            _appearanceQuery = GetEntityQuery<AppearanceComponent>();
             _batteryQuery = GetEntityQuery<BatteryComponent>();
 
             UpdatesAfter.Add(typeof(NodeGroupSystem));
@@ -315,25 +317,15 @@ namespace Content.Server.Power.EntitySystems
             _powerNetReconnectQueue.Clear();
         }
 
-        private bool IsPoweredCalculate(ApcPowerReceiverComponent comp)
-        {
-            return !comp.PowerDisabled
-                   && (!comp.NeedsPower
-                       || MathHelper.CloseToPercent(comp.NetworkLoad.ReceivingPower,
-                           comp.Load));
-        }
-
-        public override bool IsPoweredCalculate(SharedApcPowerReceiverComponent comp)
-        {
-            return IsPoweredCalculate((ApcPowerReceiverComponent)comp);
-        }
-
         private void UpdateApcPowerReceiver(float frameTime)
         {
             var enumerator = AllEntityQuery<ApcPowerReceiverComponent>();
             while (enumerator.MoveNext(out var uid, out var apcReceiver))
             {
-                var powered = IsPoweredCalculate(apcReceiver);
+                var powered = !apcReceiver.PowerDisabled
+                              && (!apcReceiver.NeedsPower
+                                  || MathHelper.CloseToPercent(apcReceiver.NetworkLoad.ReceivingPower,
+                                      apcReceiver.Load));
 
                 MetaDataComponent? metadata = null;
 
@@ -389,6 +381,9 @@ namespace Content.Server.Power.EntitySystems
 
                 var ev = new PowerChangedEvent(powered, apcReceiver.NetworkLoad.ReceivingPower);
                 RaiseLocalEvent(uid, ref ev);
+
+                if (_appearanceQuery.TryComp(uid, out var appearance))
+                    _appearance.SetData(uid, PowerDeviceVisuals.Powered, powered, appearance);
             }
         }
 
