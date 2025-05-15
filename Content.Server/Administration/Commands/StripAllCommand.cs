@@ -5,88 +5,88 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Robust.Shared.Console;
 
-namespace Content.Server.Administration.Commands
+namespace Content.Server.Administration.Commands;
+
+[AdminCommand(AdminFlags.Debug)]
+public sealed class StripAllCommand : LocalizedEntityCommands
 {
-    [AdminCommand(AdminFlags.Debug)]
-    public sealed class StripAllCommand : IConsoleCommand
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+
+    public override string Command => "stripall";
+    public override string Description => Loc.GetString("cmd-stripall-desc");
+    public override string Help => Loc.GetString("cmd-stripall-help");
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
-
-        public string Command => "stripall";
-        public string Description => "Strips an entity of all their inventory and hands.";
-
-        public string Help =>
-            "stripall <entity>\nStrips an entity of all their inventory and hands. " +
-            "Autofill shows all entities with an inventory.";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        var player = shell.Player;
+        if (player == null)
         {
-            var player = shell.Player;
-            if (player == null)
-            {
-                shell.WriteLine("Only players can use this command");
-                return;
-            }
-
-            if (args.Length != 1)
-            {
-                shell.WriteLine("Expected a single argument.");
-                return;
-            }
-
-            if (!EntityUid.TryParse(args[0], out var entInt))
-            {
-                shell.WriteLine(Loc.GetString("shell-entity-uid-must-be-number"));
-                return;
-            }
-
-            if (!_entManager.TryGetComponent<InventoryComponent>(entInt, out var inventory))
-            {
-                shell.WriteLine("Entity must have an inventory.");
-                return;
-            }
-
-            var inventorySystem = _entManager.System<InventorySystem>();
-            var handsSystem = _entManager.System<SharedHandsSystem>();
-
-            var slots = inventorySystem.GetSlotEnumerator((entInt, inventory));
-            while (slots.NextItem(out _, out var slot))
-            {
-                inventorySystem.TryUnequip(entInt, entInt, slot.Name, true, true, inventory: inventory);
-            }
-
-            if (_entManager.TryGetComponent<HandsComponent>(entInt, out var hands))
-            {
-                foreach (var hand in handsSystem.EnumerateHands(entInt, hands))
-                {
-                    handsSystem.TryDrop(entInt, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
-                }
-            }
+            shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
+            return;
         }
 
-        private IEnumerable<string> GetEntitiesWithInventory()
+        if (args.Length != 1)
         {
-            List<string> points = new(_entManager.Count<InventoryComponent>());
-            var query = _entManager.AllEntityQueryEnumerator<InventoryComponent>();
-            while (query.MoveNext(out var uid, out _))
-            {
-                points.Add(uid.ToString());
-            }
-
-            points.Sort();
-            return points;
+            shell.WriteLine(Loc.GetString("shell-need-exactly-one-argument"));
+            return;
         }
 
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        if (!NetEntity.TryParse(args[0], out var targetUidNet) || !_entManager.TryGetEntity(targetUidNet, out var targetEntity))
         {
-            if (args.Length == 1)
+            shell.WriteLine(Loc.GetString("shell-entity-uid-must-be-number"));
+            return;
+        }
+
+        if (!_entManager.TryGetComponent<InventoryComponent>(targetEntity, out var inventory))
+        {
+            shell.WriteLine(Loc.GetString("shell-entity-target-lacks-component", ("componentName", nameof(InventoryComponent))));
+            return;
+        }
+
+        var slots = _inventorySystem.GetSlotEnumerator((targetEntity.Value, inventory));
+        while (slots.NextItem(out _, out var slot))
+        {
+            _inventorySystem.TryUnequip(targetEntity.Value, targetEntity.Value, slot.Name, true, true, inventory: inventory);
+        }
+
+        if (_entManager.TryGetComponent<HandsComponent>(targetEntity, out var hands))
+        {
+            foreach (var hand in _handsSystem.EnumerateHands(targetEntity.Value, hands))
             {
-                var options = new[] { "?" }.Concat(GetEntitiesWithInventory());
-
-                return CompletionResult.FromHintOptions(options, "<EntityUid>");
+                _handsSystem.TryDrop(targetEntity.Value,
+                    hand,
+                    checkActionBlocker: false,
+                    doDropInteraction: false,
+                    handsComp: hands);
             }
-
-            return CompletionResult.Empty;
         }
     }
+
+    private IEnumerable<string> GetEntitiesWithInventory()
+    {
+        List<string> points = new(_entManager.Count<InventoryComponent>());
+        var query = _entManager.AllEntityQueryEnumerator<InventoryComponent>();
+        while (query.MoveNext(out var uid, out _))
+        {
+            points.Add(uid.ToString());
+        }
+
+        points.Sort();
+        return points;
+    }
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            var options = GetEntitiesWithInventory();
+
+            return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-stripall-player-completion"));
+        }
+
+        return CompletionResult.Empty;
+    }
 }
+
