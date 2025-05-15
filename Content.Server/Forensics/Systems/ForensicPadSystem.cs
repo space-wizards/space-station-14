@@ -137,12 +137,6 @@ namespace Content.Server.Forensics
         {
             sample = null;
 
-            if (_inventory.TryGetSlotEntity(ent, "gloves", out var gloves))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("forensic-pad-gloves", ("target", Identity.Entity(ent, EntityManager))), ent, user);
-                return false;
-            }
-
             if (TryComp<FingerprintComponent>(ent, out var fingerprint) && fingerprint.Fingerprint != null)
             {
                 if (user != ent)
