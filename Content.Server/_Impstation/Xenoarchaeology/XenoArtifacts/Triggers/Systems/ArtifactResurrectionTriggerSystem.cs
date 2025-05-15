@@ -1,41 +1,41 @@
-﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
-using Content.Shared.Mobs;
+﻿// using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
+// using Content.Shared.Mobs;
 
-namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
+// namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
-public sealed class ArtifactResurrectionTriggerSystem : EntitySystem
-{
-    [Dependency] private readonly ArtifactSystem _artifact = default!;
+// public sealed class ArtifactResurrectionTriggerSystem : EntitySystem
+// {
+//     // [Dependency] private readonly ArtifactSystem _artifact = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
-    }
+//     /// <inheritdoc/>
+//     public override void Initialize()
+//     {
+//         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+//     }
 
-    private void OnMobStateChanged(MobStateChangedEvent ev)
-    {
-        if (ev.OldMobState != MobState.Dead || ev.NewMobState == MobState.Dead)
-            return;
+//     private void OnMobStateChanged(MobStateChangedEvent ev)
+//     {
+//         if (ev.OldMobState != MobState.Dead || ev.NewMobState == MobState.Dead)
+//             return;
 
-        var resurrectionXform = Transform(ev.Target);
+//         var resurrectionXform = Transform(ev.Target);
 
-        var toActivate = new List<Entity<ArtifactResurrectionTriggerComponent>>();
-        var query = EntityQueryEnumerator<ArtifactResurrectionTriggerComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var trigger, out var xform))
-        {
-            if (!resurrectionXform.Coordinates.TryDistance(EntityManager, xform.Coordinates, out var distance))
-                continue;
+//         var toActivate = new List<Entity<ArtifactResurrectionTriggerComponent>>();
+//         var query = EntityQueryEnumerator<ArtifactResurrectionTriggerComponent, TransformComponent>();
+//         while (query.MoveNext(out var uid, out var trigger, out var xform))
+//         {
+//             if (!resurrectionXform.Coordinates.TryDistance(EntityManager, xform.Coordinates, out var distance))
+//                 continue;
 
-            if (distance > trigger.Range)
-                continue;
+//             if (distance > trigger.Range)
+//                 continue;
 
-            toActivate.Add((uid, trigger));
-        }
+//             toActivate.Add((uid, trigger));
+//         }
 
-        foreach (var a in toActivate)
-        {
-            _artifact.TryActivateArtifact(a);
-        }
-    }
-}
+//         foreach (var a in toActivate)
+//         {
+//             // _artifact.TryActivateArtifact(a);
+//         }
+//     }
+// }

@@ -1,13 +1,11 @@
-using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared._DV.Shipyard;
 using Content.Shared._DV.Shipyard.Prototypes;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Whitelist;
-using Robust.Server.GameObjects;
 using Robust.Shared.Random;
-using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Utility;
 
 namespace Content.Server._DV.Shipyard;
@@ -40,7 +38,7 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
         if (GetBankAccount(ent) is not {} bank)
             return;
 
-        if (bank.Comp.Balance < vessel.Price)
+        if (bank.Comp.Accounts[bank.Comp.PrimaryAccount] < vessel.Price)
         {
             var popup = Loc.GetString("cargo-console-insufficient-funds", ("cost", vessel.Price));
             Popup.PopupEntity(popup, ent, user);
@@ -58,12 +56,11 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
 
         _meta.SetEntityName(shuttle, $"{vessel.Name} {_random.Next(1000):000}");
 
-        _cargo.UpdateBankAccount(bank.Owner, -vessel.Price);
+        _cargo.UpdateBankAccount((bank, bank), -vessel.Price, _cargo.CreateAccountDistribution(bank));
 
         var message = Loc.GetString("shipyard-console-docking", ("vessel", vessel.Name.ToString()));
         _radio.SendRadioMessage(ent, message, ent.Comp.Channel, ent);
         Audio.PlayPvs(ent.Comp.ConfirmSound, ent);
-        UpdateUI(ent, bank.Comp.Balance);
     }
 
     private void OnOpened(Entity<ShipyardConsoleComponent> ent, ref BoundUIOpenedEvent args)
@@ -74,7 +71,7 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
     private void UpdateUI(EntityUid uid)
     {
         if (GetBankAccount(uid) is {} bank)
-            UpdateUI(uid, bank.Comp.Balance);
+            UpdateUI(uid, bank.Comp.Accounts[bank.Comp.PrimaryAccount]);
     }
 
     private void UpdateUI(EntityUid uid, int balance)
