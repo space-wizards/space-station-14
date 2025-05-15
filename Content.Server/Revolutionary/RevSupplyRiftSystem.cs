@@ -23,6 +23,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Linq;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Revolutionary;
 
@@ -38,6 +41,7 @@ public sealed class RevSupplyRiftSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     private const string RevSupplyRiftListingId = "RevSupplyRiftListing";
     
@@ -90,6 +94,13 @@ public sealed class RevSupplyRiftSystem : EntitySystem
 
         // Send a message to all revolutionaries about the rift
         SendRiftPlacedMessage(uid);
+        
+        // Play the soviet choir sound in a 5-tile radius around the rift
+        if (TryComp<TransformComponent>(uid, out var transform))
+        {
+            var soundPath = new SoundPathSpecifier("/Audio/_Starlight/Effects/sov_choir.ogg");
+            _audio.PlayPvs(soundPath, uid, AudioParams.Default.WithMaxDistance(5f).WithVolume(0f));
+        }
     }
 
     private void OnRevRiftStartup(EntityUid uid, RevSupplyRiftComponent component, ComponentStartup args)

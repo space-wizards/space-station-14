@@ -27,7 +27,7 @@ rev-break-control = {$name} has remembered their true allegiance!
 
 rev-role-greeting =
     Comrade {$name}! You are an USSP revolutionary!
-    You are tasked with taking over the station and to defend a supply rift while protecting and promoting the interests your head revolutionaries!
+    You are tasked with taking over the station and to promote the interests your head revolutionaries!
     Execute or convert the brainwashed corporate command staff scum!
     Gone are the days of oppression and the unfair treatment of contractors!
     Glory to the USSP!
