@@ -59,6 +59,6 @@ namespace Content.Shared.Clothing.Components
         /// Entity prototype to spawn when used, using the whistle one
         /// </summary>
         [DataField]
-        public EntProtoId Effect = "WhistleExclamation";
+        public EntProtoId ExclamationEffect = "WhistleExclamation";
     }
 }

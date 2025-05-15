@@ -7,27 +7,22 @@ using Content.Shared.Whistle;
 using Robust.Shared.Timing;
 using System;
 using Content.Shared.Chat;
+using System.Security.Cryptography;
+using Content.Shared.Stealth.Components;
+using Content.Shared.Humanoid;
 
 namespace Content.Shared.Clothing.EntitySystems
 {
     public abstract class SharedSecurityHailerSystem : EntitySystem
     {
         [Dependency] private readonly SharedActionsSystem _actions = default!;
-        [Dependency] private readonly SharedChatSystem _chat = default!;
+        
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<SecurityHailerComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<SecurityHailerComponent, ClothingGotEquippedEvent>(OnEquip);
-            SubscribeLocalEvent<ActionSecHailerActionEvent>(OnHailOrder);
-        }
-
-        private void OnHailOrder(ActionSecHailerActionEvent ev)
-        {
-            //Exclamation point code here so it can be predicted
-
-            Log.Debug("OnHailOrder exclamation point !");
         }
 
         private void OnEquip(EntityUid uid, SecurityHailerComponent comp, ClothingGotEquippedEvent args)
