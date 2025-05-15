@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.SprayPainter.UI;
 
 /// <summary>
-/// Used to display the decal menu in the spray painter menu.
+/// Used to control decal painting parameters for the spray painter.
 /// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class SprayPainterDecals : Control

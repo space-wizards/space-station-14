@@ -11,6 +11,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.SprayPainter.UI;
 
+/// <summary>
+/// A window to select spray painter settings by object type, as well as pipe colours and decals.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class SprayPainterWindow : DefaultWindow
 {
@@ -91,11 +94,11 @@ public sealed partial class SprayPainterWindow : DefaultWindow
     }
 
     /// <summary>
-    /// Setup function for 
+    /// Setup function for the window.
     /// </summary>
-    /// <param name="stylesByGroup"></param>
-    /// <param name="groupsByCategory"></param>
-    /// <param name="decals"></param>
+    /// <param name="stylesByGroup">Each group, mapped by name to the set of named styles by their associated entity prototype.</param>
+    /// <param name="groupsByCategory">The set of categories and the groups associated with them.</param>
+    /// <param name="decals">A list of each decal.</param>
     public void PopulateCategories(Dictionary<string, Dictionary<string, EntProtoId>> stylesByGroup, Dictionary<string, List<string>> groupsByCategory, List<SprayPainterDecalEntry> decals)
     {
         bool tabsCleared = false;

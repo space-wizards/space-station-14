@@ -96,7 +96,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Charges.TryUseCharges(new Entity<LimitedChargesComponent?>(ent, EnsureComp<LimitedChargesComponent>(ent)), args.Cost);
 
         var paintedComponent = EnsureComp<PaintedComponent>(target);
-        paintedComponent.RemoveTime = _timing.CurTime + ent.Comp.FreshPaintDuration;
+        paintedComponent.DryTime = _timing.CurTime + ent.Comp.FreshPaintDuration;
         Dirty(target, paintedComponent);
 
         RaiseLocalEvent(target,
@@ -204,7 +204,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
     private void OnPainedExamined(Entity<PaintedComponent> ent, ref ExaminedEvent args)
     {
         // If the paint's dried, it isn't detectable.
-        if (_timing.CurTime > ent.Comp.RemoveTime)
+        if (_timing.CurTime > ent.Comp.DryTime)
             return;
 
         args.PushText(Loc.GetString("spray-painter-on-examined-painted-message"));

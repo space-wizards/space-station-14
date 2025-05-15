@@ -16,7 +16,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.SprayPainter;
 
 /// <summary>
-/// Responsible for caching info for the spray painter menu.
+/// Client-side spray painter functions. Caches information for spray painter windows and updates the UI to reflect component state.
 /// </summary>
 public sealed class SprayPainterSystem : SharedSprayPainterSystem
 {
