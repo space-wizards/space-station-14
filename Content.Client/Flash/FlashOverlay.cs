@@ -27,10 +27,8 @@ namespace Content.Client.Flash
         public float PercentComplete = 0.0f;
         public Texture? ScreenshotTexture;
 
-        [ValidatePrototypeId<ShaderPrototype>]
-        private const string FlashedEffect = "FlashedEffect";
-        [ValidatePrototypeId<ShaderPrototype>]
-        private const string FlashedEffectReducedMotion = "FlashedEffectReducedMotion";
+        private readonly ProtoId<ShaderPrototype> _flashedEffect = "FlashedEffect";
+        private readonly ProtoId<ShaderPrototype> _flashedEffectReducedMotion = "FlashedEffectReducedMotion";
 
 
         public FlashOverlay()
@@ -38,7 +36,7 @@ namespace Content.Client.Flash
             IoCManager.InjectDependencies(this);
             // Default to the normal flashed effect so that _shader can be initialized in the constructor
             // and does not need to be nullable
-            _shader = _prototypeManager.Index<ShaderPrototype>(FlashedEffect).InstanceUnique();
+            _shader = _prototypeManager.Index(_flashedEffect).InstanceUnique();
 
             // Set the shader according to the CVar when it is changed and also now.
             _configManager.OnValueChanged(CCVars.ReducedMotion, OnReducedMotionChanged, invokeImmediately: true);
@@ -49,7 +47,7 @@ namespace Content.Client.Flash
 
         private void OnReducedMotionChanged(bool reducedMotion)
         {
-            var effectName = reducedMotion ? FlashedEffectReducedMotion : FlashedEffect;
+            var effectName = reducedMotion ? _flashedEffectReducedMotion : _flashedEffect;
             _shader = _prototypeManager.Index<ShaderPrototype>(effectName).InstanceUnique();
         }
 
