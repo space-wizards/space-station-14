@@ -4,7 +4,7 @@ roles-antag-rev-head-name = USSP Head Revolutionary
 roles-antag-rev-head-objective = Your objective is to take over the station by converting people to your cause, setting up supply rifts and killing or convert all of Command staff on station.
 
 head-rev-role-greeting =
-    Comrade! You are a Head Revolutionary promoting the interests of USSP!
+    Comrade {$name}! You are a Head Revolutionary promoting the interests of USSP!
     You are tasked with removing all of Command from station via conversion, death or imprisonment.
     The USSP has sponsored you with a flash that converts the crew to your side.
     Beware, this won't work on those with a mindshield or wearing flash protection, such as sunglasses and welding masks/goggles.

@@ -43,6 +43,7 @@ using Content.Server.Revolutionary;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Store.Systems;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Audio;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -79,7 +80,18 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<HeadRevolutionaryComponent, MobStateChangedEvent>(OnHeadRevMobStateChanged);
 
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
+        SubscribeLocalEvent<RevolutionaryRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntitySelected);
+    }
 
+    private void OnAfterAntagEntitySelected(EntityUid uid, RevolutionaryRuleComponent comp, ref AfterAntagEntitySelectedEvent args)
+    {
+        // Check if this is a head revolutionary
+        if (!HasComp<HeadRevolutionaryComponent>(args.EntityUid) || args.Session == null)
+            return;
+
+        // Send a custom briefing with the character's name
+        var name = Identity.Entity(args.EntityUid, EntityManager);
+        _antag.SendBriefing(args.Session, Loc.GetString("head-rev-role-greeting", ("name", name)), Color.LightYellow, new SoundPathSpecifier("/Audio/Ambience/Antag/headrev_start.ogg"));
     }
 
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -256,7 +268,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         if (mind?.Session != null)
-            _antag.SendBriefing(mind.Session, Loc.GetString("rev-role-greeting"), Color.LightYellow, revComp.RevStartSound);
+            _antag.SendBriefing(mind.Session, Loc.GetString("rev-role-greeting", ("name", Identity.Entity(ev.Target, EntityManager))), Color.LightYellow, revComp.RevStartSound);
     }
 
     //TODO: Enemies of the revolution
