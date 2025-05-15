@@ -154,7 +154,7 @@
 - type: latheRecipe
   parent: BaseToolRecipe
   id: SprayPainter
-  result: SprayPainter
+  result: SprayPainterEmpty
   materials:
     Steel: 300
     Plastic: 100

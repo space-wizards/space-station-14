@@ -40,9 +40,17 @@
       Steel: 100
 
 - type: entity
-  name: compressed paint
+  parent: SprayPainter
+  id: SprayPainterEmpty
+  suffix: Empty
+  components:
+  - type: LimitedCharges
+    lastCharges: -1
+
+- type: entity
   parent: BaseItem
   id: SprayPainterAmmo
+  name: compressed paint
   description: A cartridge of highly compressed paint, commonly used in spray painters.
   components:
   - type: SprayPainterAmmo
