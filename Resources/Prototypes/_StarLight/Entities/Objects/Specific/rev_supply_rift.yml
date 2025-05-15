@@ -5,6 +5,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: RevSupplyRift
   - type: DragonRift
     spawn: CrateSovietArmaments
     spawnCooldown: 35  # Spawn a crate every 35 seconds
