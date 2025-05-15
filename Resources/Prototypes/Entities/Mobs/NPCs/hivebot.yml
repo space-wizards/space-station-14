@@ -5,6 +5,12 @@
   name: hivebot
   description: Agitating, mechanized pests.
   components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/hivebot.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: basic_attack
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
@@ -14,12 +20,6 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/hivebot.rsi
-    layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: basic_attack
   - type: Fixtures
     fixtures:
       fix1:
@@ -95,7 +95,7 @@
     useKey: false
     selectedMode: FullAuto
     availableModes:
-      - FullAuto
+    - FullAuto
     soundGunshot: /Audio/Weapons/Guns/Gunshots/smg.ogg
   - type: MovementSpeedModifier #Slower then normal to make them easier to hit
     baseWalkSpeed: 1
