@@ -24,6 +24,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Shared.Humanoid;
 using Content.Shared.Explosion.Components;
+using Content.Shared.Audio;
+using Content.Server.Audio;
 
 namespace Content.Server._Impstation.Replicator;
 
@@ -42,6 +44,7 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PinpointerSystem _pinpointer = default!;
+    [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
 
     public override void Initialize()
     {
@@ -102,7 +105,8 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
         ent.Comp.NextSpawnAt = ent.Comp.SpawnNewAt;
         ent.Comp.NextUpgradeAt = ent.Comp.UpgradeAt;
 
-        ent.Comp.PointsStorage = EnsureComp<ReplicatorNestPointsStorageComponent>(Spawn("ReplicatorNestPointsStorage", Transform(ent).Coordinates));
+        ent.Comp.PointsStorageEntity = Spawn("ReplicatorNestPointsStorage", Transform(ent).Coordinates);
+        ent.Comp.PointsStorage = EnsureComp<ReplicatorNestPointsStorageComponent>(ent.Comp.PointsStorageEntity);
     }
 
     private void OnStepTriggerAttempt(Entity<ReplicatorNestComponent> ent, ref StepTriggerAttemptEvent args)
@@ -199,6 +203,9 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
             // set the target to the queen
             _pinpointer.SetTarget(pocket1.Value, queen, pinpointer);
         }
+
+        if (TryComp<AmbientSoundComponent>(ent.Comp.PointsStorageEntity, out var ambientComp))
+            _ambientSound.SetAmbience(ent.Comp.PointsStorageEntity, false, ambientComp);
     }
 
     private void OnRoundEndTextAppend(RoundEndTextAppendEvent args)

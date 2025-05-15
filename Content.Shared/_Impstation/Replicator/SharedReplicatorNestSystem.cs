@@ -203,6 +203,7 @@ public abstract class SharedReplicatorNestSystem : EntitySystem
             // threshold increases plateau at the endgame level.
             ent.Comp.NextUpgradeAt += ent.Comp.CurrentLevel >= ent.Comp.EndgameLevel ? ent.Comp.UpgradeAt * ent.Comp.EndgameLevel : ent.Comp.UpgradeAt * ent.Comp.CurrentLevel;
             UpgradeAll(ent);
+            _audio.PlayPvs(ent.Comp.LevelUpSound, ent);
         }
 
         // after upgrading, if we exceed the next spawn threshold, spawn a new (un-upgraded) replicator, then set the next spawn threshold.

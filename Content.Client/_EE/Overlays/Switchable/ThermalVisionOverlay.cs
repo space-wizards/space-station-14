@@ -87,7 +87,8 @@ public sealed class ThermalVisionOverlay : Overlay
         var entities = _entity.EntityQueryEnumerator<BodyComponent, SpriteComponent, TransformComponent>();
         while (entities.MoveNext(out var uid, out var body, out var sprite, out var xform))
         {
-            if (!CanSee(uid, sprite) || !body.ThermalVisibility)
+            if (!CanSee(uid, sprite) || !body.ThermalVisibility
+                || _entity.HasComponent<ThermalVisionImmuneComponent>(uid)) // imp - added ThermalVisionImmune
                 continue;
 
             var entity = uid;
@@ -96,7 +97,7 @@ public sealed class ThermalVisionOverlay : Overlay
             {
                 var owner = container.Owner;
 
-                if (_entity.HasComponent<ReplicatorNestComponent>(owner)) // imp - blacklist ReplicatorNests.
+                if (_entity.HasComponent<ThermalVisionImmuneComponent>(owner)) // imp - added ThermalVisionImmune
                     continue;
 
                 if (_entity.TryGetComponent<SpriteComponent>(owner, out var ownerSprite)

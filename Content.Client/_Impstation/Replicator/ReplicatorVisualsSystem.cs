@@ -2,6 +2,7 @@
 // all credit for the core gameplay concepts and a lot of the core functionality of the code goes to the folks over at Goob, but I re-wrote enough of it to justify putting it in our filestructure.
 // the original Bingle PR can be found here: https://github.com/Goob-Station/Goob-Station/pull/1519
 
+using Content.Client.DamageState;
 using Content.Shared._Impstation.Replicator;
 using Content.Shared.CombatMode;
 using Content.Shared.Mobs;
@@ -44,10 +45,22 @@ public sealed class ReplicatorVisualsSystem : EntitySystem
             return;
         if (!TryComp<CombatModeComponent>(ent, out var combat))
             return;
-        if (!args.Sprite.LayerMapTryGet(ReplicatorVisuals.Combat, out var layer))
+        if (!args.Sprite.LayerMapTryGet(ReplicatorVisuals.Combat, out var layerIndex)
+            || !args.Sprite.LayerMapTryGet(DamageStateVisualLayers.Base, out var baseIndex))
             return;
+
+        // make sure we can sync the frames
+        if (!args.Sprite.TryGetLayer(layerIndex, out var combatLayer)
+            || !args.Sprite.TryGetLayer(baseIndex, out var baseLayer)
+            || combatLayer == null || baseLayer == null)
+            return;
+
         // turn on combat visuals if the mob is alive and in combat mode. otherwise turn them off
-        args.Sprite.LayerSetVisible(layer, _mobState.IsAlive(ent) && combat.IsInCombatMode);
+        args.Sprite.LayerSetVisible(layerIndex, _mobState.IsAlive(ent) && combat.IsInCombatMode);
+        // then sync them to the base animation
+        combatLayer.SetAnimationTime(baseLayer.AnimationTime);
+        combatLayer.AnimationFrame = baseLayer.AnimationFrame;
+        combatLayer.AnimationTimeLeft = baseLayer.AnimationTimeLeft;
     }
 
     private void OnMobStateChanged(Entity<ReplicatorComponent> ent, ref MobStateChangedEvent args)

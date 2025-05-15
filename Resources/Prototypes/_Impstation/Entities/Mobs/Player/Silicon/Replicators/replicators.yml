@@ -24,6 +24,7 @@
     raffle:
       settings: default
   - type: Sprite
+    granularLayersRendering: true
     drawdepth: Mobs
     sprite: _Impstation/Mobs/Replicator/replicator.rsi
     layers:
@@ -152,7 +153,7 @@
 - type: entity
   id: MobReplicator
   parent: BaseMobReplicator
-  categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
+  #categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
   components:
   - type: StaminaDamageOnHit
     damage: 20
@@ -163,7 +164,7 @@
   - type: MovementIgnoreGravity
     gravityState: true
   - type: MovementAlwaysTouching
-  - type: FloatingVisuals
+  - type: SyncSprite
   - type: MovementSpeedModifier
     baseWalkSpeed: 2 # same as slime
     baseSprintSpeed: 4
@@ -172,6 +173,7 @@
     weightlessAcceleration: 1.8
   - type: NoSlip
   - type: Sprite
+    granularLayersRendering: true
     drawDepth: SmallMobs
     sprite: _Impstation/Mobs/Replicator/replicator.rsi
     layers:
@@ -204,7 +206,7 @@
   id: MobReplicatorTier2
   name: deconstructor replicator
   parent: BaseMobReplicator
-  categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
+  #categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
   suffix: Level 2
   components:
   - type: Replicator
@@ -217,6 +219,7 @@
     weightlessAcceleration: 1.2
   - type: MovementAlwaysTouching
   - type: Sprite
+    granularLayersRendering: true
     drawDepth: Mobs
     sprite: _Impstation/Mobs/Replicator/replicator.rsi
     layers:
@@ -249,7 +252,7 @@
   id: MobReplicatorTier3
   name: defender replicator
   parent: BaseMobReplicator
-  categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
+  #categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
   description: Oh boy.
   suffix: Level 3
   components:
@@ -259,6 +262,7 @@
     baseWalkSpeed: 0.5 # these fellas are the tanks, they rely on the smaller guys stunning things for them.
     baseSprintSpeed: 4
   - type: Sprite
+    granularLayersRendering: true
     drawDepth: Mobs
     sprite: _Impstation/Mobs/Replicator/replicator.rsi
     layers:

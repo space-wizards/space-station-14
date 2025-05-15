@@ -43,3 +43,8 @@
   categories: [HideSpawnMenu]
   components:
   - type: ReplicatorNestPointsStorage
+  - type: AmbientSound
+    volume: +2
+    range: 6
+    sound:
+      path: /Audio/_Impstation/Ambience/replicator_ambiance.ogg
