@@ -12,7 +12,6 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Threading;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Physics.Controllers;
 
