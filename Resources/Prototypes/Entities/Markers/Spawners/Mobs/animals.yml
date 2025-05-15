@@ -80,7 +80,7 @@
     layers:
     - state: green
     - sprite: Mobs/Animals/cockroach.rsi
-      state: cockroach_icon
+      state: cockroach-icon
     - state: ai
   - type: ConditionalSpawner
     prototypes:
@@ -150,7 +150,7 @@
   - type: Sprite
     layers:
     - state: green
-    - state: crawling
+    - state: gorilla
       sprite: Mobs/Animals/gorilla.rsi
   - type: ConditionalSpawner
     prototypes:
@@ -169,20 +169,6 @@
   - type: ConditionalSpawner
     prototypes:
     - MobLizard
-
-- type: entity
-  parent: MarkerBase
-  id: SpawnMobMonkey
-  name: Monkey Spawner
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: monkey
-      sprite: Mobs/Animals/monkey.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobMonkey
 
 - type: entity
   parent: MarkerBase
@@ -237,8 +223,8 @@
   - type: Sprite
     layers:
     - state: green
-    - state: reindeer_buck_still
-      sprite: Mobs/Animals/reindeer_buck.rsi
+    - state: buck
+      sprite: Mobs/Animals/reindeer.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobReindeerBuck
@@ -251,8 +237,8 @@
   - type: Sprite
     layers:
     - state: green
-    - state: reindeer_doe_still
-      sprite: Mobs/Animals/reindeer_doe.rsi
+    - state: doe
+      sprite: Mobs/Animals/reindeer.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobReindeerDoe
