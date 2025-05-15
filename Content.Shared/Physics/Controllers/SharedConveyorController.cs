@@ -71,7 +71,7 @@ public abstract class SharedConveyorController : VirtualController
     {
         // We explicitly don't check if this has been handled yet because Conveyors are special
 
-        if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
+        if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsOnConveyor((ent, fixture)))
             return;
 
         args.MobAcceleration = 1f;

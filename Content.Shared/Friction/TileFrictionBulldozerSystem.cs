@@ -18,6 +18,8 @@ public sealed class TileFrictionBulldozer : VirtualController
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<TileFrictionOverwrittenComponent, MoverTileDefEvent>(OnMoverTileDef);
         SubscribeLocalEvent<TileFrictionBulldozerComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<TileFrictionBulldozerComponent, EndCollideEvent>(OnEndCollide);
