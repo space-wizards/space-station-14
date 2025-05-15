@@ -1,0 +1,31 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprited by crocodilecarousel (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "blunt",
+            "directions": 4
+        },
+        {
+            "name": "daisy",
+            "directions": 4
+        },
+        {
+            "name": "heart",
+            "directions": 4
+        },
+        {
+            "name": "horn",
+            "directions": 4
+        },
+        {
+            "name": "smallspike",
+            "directions": 4
+        }
+    ]
+}

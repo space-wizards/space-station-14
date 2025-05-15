@@ -199,6 +199,10 @@
       Plastic: 100
   - type: StaticPrice
     price: 30 # increases in price after decomposed into raw materials
+  - type: HideLayerClothing #imp PUT YOUR FUCKING NOSE AWAY.
+    layers:
+      Snout: Mask
+    hideOnToggle: true
 
 - type: entity
   parent: ClothingMaskBase

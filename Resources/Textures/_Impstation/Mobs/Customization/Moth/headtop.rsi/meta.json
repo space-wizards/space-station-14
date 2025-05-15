@@ -44,6 +44,26 @@
                     0.3
                 ]
             ]
+        },
+        {
+            "name": "cockroach",
+            "directions": 4
+        },
+        {
+            "name": "fly",
+            "directions": 4
+        },
+        {
+            "name": "heart1",
+            "directions": 4
+        },
+        {
+            "name": "heart2",
+            "directions": 4
+        },
+        {
+            "name": "nub",
+            "directions": 4
         }
     ]
 }

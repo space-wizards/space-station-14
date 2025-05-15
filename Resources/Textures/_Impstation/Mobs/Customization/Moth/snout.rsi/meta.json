@@ -1,0 +1,39 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprited by crocodilecarousel (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "fulgoridae",
+            "directions": 4
+        },
+        {
+            "name": "fulgoridaeupturned",
+            "directions": 4
+        },
+        {
+            "name": "hymenoptera",
+            "directions": 4
+        },
+        {
+            "name": "hymenopteralarge",
+            "directions": 4
+        },
+        {
+            "name": "proboscisdownturned",
+            "directions": 4
+        },
+        {
+            "name": "proboscisupturned",
+            "directions": 4
+        },
+        {
+            "name": "schistocerca",
+            "directions": 4
+        }
+    ]
+}

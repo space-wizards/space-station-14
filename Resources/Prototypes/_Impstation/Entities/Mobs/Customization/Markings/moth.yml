@@ -20,7 +20,7 @@
   bodyPart: Chest
   markingCategory: Chest
   speciesRestriction: [ Moth ]
-  sexRestriction: [ Male ]
+  sexRestriction: [ Male, Unsexed ]
   coloring:
     default:
       type:
@@ -45,7 +45,7 @@
   bodyPart: Chest
   markingCategory: Chest
   speciesRestriction: [ Moth ]
-  sexRestriction: [ Male ]
+  sexRestriction: [ Male, Unsexed ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/Moth/chest.rsi
     state: twistingleftm
@@ -65,7 +65,7 @@
   bodyPart: Chest
   markingCategory: Chest
   speciesRestriction: [ Moth ]
-  sexRestriction: [ Male ]
+  sexRestriction: [ Male, Unsexed ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/Moth/chest.rsi
     state: twistingrightm
@@ -206,6 +206,89 @@
     state: slashright
 
 # Snout
+
+- type: marking
+  id: MouthpartsFulgoridae
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Moth ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/snout.rsi
+    state: fulgoridae
+
+- type: marking
+  id: MouthpartsFulgoridaeUpturned
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Moth ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/snout.rsi
+    state: fulgoridaeupturned
+
+- type: marking
+  id: MouthpartsHymenoptera
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Moth ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/snout.rsi
+    state: hymenoptera
+
+- type: marking
+  id: MouthpartsHymenopteraLarge
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Moth ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/snout.rsi
+    state: hymenopteralarge
+
+- type: marking
+  id: MouthpartsProboscisDownturned
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Moth ]
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+        negative: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/snout.rsi
+    state: proboscisdownturned
+
+- type: marking
+  id: MouthpartsProboscisUpturned
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Moth ]
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+        negative: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/snout.rsi
+    state: proboscisupturned
+
+- type: marking
+  id: MouthpartsSchistocerca
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Moth ]
+  followSkinColor: true
+  forcedColoring: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/snout.rsi
+    state: schistocerca
 
 # Eyes
 
@@ -484,6 +567,61 @@
 
 # HeadSide
 
+- type: marking
+  id: PlateBlunt
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Moth ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/headside.rsi
+    state: blunt
+
+- type: marking
+  id: PlateDaisy
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Moth ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/headside.rsi
+    state: daisy
+
+- type: marking
+  id: PlateHeart
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Moth ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/headside.rsi
+    state: heart
+
+- type: marking
+  id: PlateHorn
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Moth ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/headside.rsi
+    state: horn
+
+- type: marking
+  id: PlateSmallSpike
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Moth ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/headside.rsi
+    state: smallspike
+
 # HeadTop
 
 - type: marking
@@ -517,6 +655,44 @@
   - sprite: _Impstation/Mobs/Customization/Moth/headtop.rsi
     state: glowantenna
   shader: unshaded
+
+- type: marking
+  id: AntennaCockroach
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Moth ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/headtop.rsi
+    state: cockroach
+
+- type: marking
+  id: AntennaFly
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Moth ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/headtop.rsi
+    state: fly
+
+- type: marking
+  id: AntennaHeart
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Moth ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/headtop.rsi
+    state: heart1
+  - sprite: _Impstation/Mobs/Customization/Moth/headtop.rsi
+    state: heart2
+
+- type: marking
+  id: AntennaShort
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Moth ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/headtop.rsi
+    state: nub
 
 # Tail
 
@@ -634,5 +810,40 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/Moth/tail.rsi
     state: backstabbed
+
+- type: marking
+  id: WingsDragonfly
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Moth ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/tail.rsi
+    state: dragonfly1
+  - sprite: _Impstation/Mobs/Customization/Moth/tail.rsi
+    state: dragonfly2
+  - sprite: _Impstation/Mobs/Customization/Moth/tail.rsi
+    state: dragonfly3
+
+- type: marking
+  id: WingsFly
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Moth ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/tail.rsi
+    state: fly1
+  - sprite: _Impstation/Mobs/Customization/Moth/tail.rsi
+    state: fly2
+  - sprite: _Impstation/Mobs/Customization/Moth/tail.rsi
+    state: fly3
+
+- type: marking
+  id: WingsLanternfly
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Moth ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/tail.rsi
+    state: lanternfly
 
 # RArmExtension
