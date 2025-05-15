@@ -11,13 +11,15 @@ namespace Content.Shared.Friction;
 /// <summary>
 /// This handles the bulldozing of tileFriction when we want to
 /// </summary>
-public sealed class TileFrictionBulldozer : VirtualController
+public sealed class TileFrictionBulldozerSystem : VirtualController
 {
 
     [Dependency] private   readonly FixtureSystem _fixtures = default!;
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<TileFrictionOverwrittenComponent, MoverTileDefEvent>(OnMoverTileDef);
         SubscribeLocalEvent<TileFrictionBulldozerComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<TileFrictionBulldozerComponent, EndCollideEvent>(OnEndCollide);
