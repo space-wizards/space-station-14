@@ -45,6 +45,12 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     private CharacterSetupGuiSavePanel? _savePanel;
 
     /// <summary>
+    /// Event invoked when any character or job selection or job priority is changed.
+    /// Basically anything that might change round start character/job selection.
+    /// </summary>
+    public event Action? OnAnyCharacterOrJobChange;
+
+    /// <summary>
     /// This is the characher preview panel in the chat. This should only update if their character updates.
     /// </summary>
     private LobbyCharacterPreviewPanel? PreviewPanel => GetLobbyPreview();
@@ -124,6 +130,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
                 _profileEditor.RefreshTraits();
             }
         }
+        OnAnyCharacterOrJobChange?.Invoke();
     }
 
     private void PreferencesDataLoaded()
@@ -200,6 +207,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     private void SaveJobPriorities(Dictionary<ProtoId<JobPrototype>, JobPriority> newJobPriorities)
     {
         _preferencesManager.UpdateJobPriorities(newJobPriorities);
+        OnAnyCharacterOrJobChange?.Invoke();
         _jobPriorityEditor?.LoadJobPriorities();
         var (characterGui, _) = EnsureGui();
         characterGui.ReloadCharacterPickers(selectJobPriorities: true);
@@ -217,6 +225,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             fixedProfile = new HumanoidCharacterProfile(EditedProfile) { Enabled = humanoid.Enabled };
 
         _preferencesManager.UpdateCharacter(fixedProfile, EditedSlot.Value);
+        OnAnyCharacterOrJobChange?.Invoke();
         _profileEditor?.SetProfile(EditedSlot.Value);
         ReloadCharacterSetup();
     }
@@ -341,6 +350,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         _characterSetup.SetCharacterEnable += args =>
         {
             _preferencesManager.SetCharacterEnable(args.Item1, args.Item2);
+            OnAnyCharacterOrJobChange?.Invoke();
             _characterSetup?.ReloadCharacterPickers();
         };
 

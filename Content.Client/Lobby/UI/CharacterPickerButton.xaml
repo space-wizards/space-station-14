@@ -2,7 +2,8 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:style="clr-namespace:Content.Client.Stylesheets"
          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-         xmlns:profile="clr-namespace:Content.Client.Lobby.UI.ProfileEditorControls">
+         xmlns:profile="clr-namespace:Content.Client.Lobby.UI.ProfileEditorControls"
+         HorizontalExpand="True">
     <BoxContainer Orientation="Horizontal"
                   HorizontalExpand="True"
                   SeparationOverride="0"
@@ -12,29 +13,33 @@
                                           OverrideDirection="South"
                                           Name="View"
                                           SetSize="64 64"/>
-        <Label Name="DescriptionLabel"
-               ClipText="True"
-               HorizontalExpand="True"/>
-        <BoxContainer Orientation="Vertical" VerticalAlignment="Center" VerticalExpand="True" SeparationOverride="4">
+        <Label Name="DescriptionLabel" HorizontalExpand="True" ClipText="True"/>
+        <PanelContainer Name="ButtonDivider" MinSize="2 0">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
+            </PanelContainer.PanelOverride>
+        </PanelContainer>
+        <BoxContainer Name="ButtonBox" Orientation="Vertical" VerticalAlignment="Center" VerticalExpand="True"
+                      SeparationOverride="4" SetWidth="80" Margin="8 0 0 0">
                 <PanelContainer Name="EnabledCheckOutline">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxTexture />
                     </PanelContainer.PanelOverride>
-                    <Button Name="EnabledCheck" ToggleMode="True"
+                    <Button Name="EnabledCheck" ToggleMode="True" HorizontalAlignment="Stretch"
                             Text="{Loc 'character-setup-gui-character-picker-button-enabled-button'}"/>
                 </PanelContainer>
                 <PanelContainer Name="DeleteButtonOutline" Visible="False">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxTexture/>
                     </PanelContainer.PanelOverride>
-                    <Button Name="DeleteButton"
+                    <Button Name="DeleteButton" HorizontalAlignment="Stretch"
                             Text="{Loc 'character-setup-gui-character-picker-button-delete-button'}"/>
                 </PanelContainer>
                 <PanelContainer Name="ConfirmDeleteButtonOutline" Visible="False">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxTexture/>
                     </PanelContainer.PanelOverride>
-                    <Button Name="ConfirmDeleteButton"
+                    <Button Name="ConfirmDeleteButton" HorizontalAlignment="Stretch"
                             Text="{Loc 'character-setup-gui-character-picker-button-confirm-delete-button'}"
                             ModulateSelfOverride="{x:Static style:StyleNano.ButtonColorCautionDefault}"/>
                 </PanelContainer>
