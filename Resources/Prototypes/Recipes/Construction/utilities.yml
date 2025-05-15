@@ -470,7 +470,7 @@
   - GasPipeFourway
   - GasPipeFourwayAlt1
   - GasPipeFourwayAlt2
-  
+
 - type: construction
   id: GasPipeManifold
   graph: GasPipe

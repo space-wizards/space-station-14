@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Components;
 
 /// <summary>
-/// Contains layer data for atmos pipes. Layers allow multiple atmos pipes with the 
+/// Contains layer data for atmos pipes. Layers allow multiple atmos pipes with the
 /// same orientation to be anchored to the same tile without their contents mixing.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
@@ -53,7 +53,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
 
     /// <summary>
     /// Entity prototypes with alternative layers; will replace the current
-    /// one when using position dependent entity placement via AlignAtmosPipeLayers. 
+    /// one when using position dependent entity placement via AlignAtmosPipeLayers.
     /// </summary>
     /// <remarks>
     /// If an array is not empty there should be an entry for each pipe layer
@@ -63,7 +63,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     public EntProtoId[] AlternativePrototypes = [];
 
     /// <summary>
-    /// The pipe layers of this entity cannot be changed when this value is true. 
+    /// The pipe layers of this entity cannot be changed when this value is true.
     /// </summary>
     [DataField]
     public bool PipeLayersLocked;

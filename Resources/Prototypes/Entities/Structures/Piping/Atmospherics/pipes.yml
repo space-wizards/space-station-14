@@ -67,7 +67,7 @@
     price: 30
 
 - type: entity
-  abstract: true  
+  abstract: true
   parent: GasPipeSansLayers
   id: GasPipeBase
   components:
@@ -77,7 +77,7 @@
         - Structures/Piping/Atmospherics/pipe.rsi
         - Structures/Piping/Atmospherics/pipe_alt1.rsi
         - Structures/Piping/Atmospherics/pipe_alt2.rsi
-  
+
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 
 - type: entity
@@ -85,7 +85,7 @@
   id: GasPipeHalf
   suffix: Half
   placement:
-    mode: AlignAtmosPipeLayers  
+    mode: AlignAtmosPipeLayers
   components:
   - type: NodeContainer
     nodes:
@@ -120,7 +120,7 @@
   id: GasPipeStraight
   suffix: Straight
   placement:
-    mode: AlignAtmosPipeLayers  
+    mode: AlignAtmosPipeLayers
   components:
   - type: NodeContainer
     nodes:
@@ -256,7 +256,7 @@
   id: GasPipeFourway
   suffix: Fourway
   placement:
-    mode: AlignAtmosPipeLayers  
+    mode: AlignAtmosPipeLayers
   components:
   - type: Transform
     noRot: true

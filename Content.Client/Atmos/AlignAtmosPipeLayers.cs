@@ -17,7 +17,7 @@ using static Robust.Client.Placement.PlacementManager;
 namespace Content.Client.Atmos;
 
 /// <summary>
-/// Allows users to place atmos pipes on different layers depending on how the mouse cursor is positioned within a grid tile. 
+/// Allows users to place atmos pipes on different layers depending on how the mouse cursor is positioned within a grid tile.
 /// </summary>
 /// <remarks>
 /// This placement mode is not on the engine because it is content specific.

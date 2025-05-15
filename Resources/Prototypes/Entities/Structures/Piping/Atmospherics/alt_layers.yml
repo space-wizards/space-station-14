@@ -1,4 +1,4 @@
-## This file contains duplicated pipe prototypes with 
+## This file contains duplicated pipe prototypes with
 ## different layer offsets to faciliate mapping
 
 # Layer 1
@@ -8,7 +8,7 @@
   components:
   - type: AtmosPipeLayers
     pipeLayer: 1
-    
+
 # Layer 2
 - type: entity
   abstract: true
@@ -39,7 +39,7 @@
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
   - type: Construction
     node: straightAlt2
-    
+
 # GasPipeHalf
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeHalf]
@@ -51,7 +51,7 @@
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
   - type: Construction
     node: halfAlt1
-    
+
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeHalf]
   id: GasPipeHalfAlt2
@@ -62,7 +62,7 @@
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
   - type: Construction
     node: halfAlt2
-    
+
 # GasPipeBend
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeBend]
@@ -85,7 +85,7 @@
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
   - type: Construction
     node: bendAlt2
-    
+
 # GasPipeTJunction
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeTJunction]
@@ -97,7 +97,7 @@
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
   - type: Construction
     node: tjunctionAlt1
-    
+
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeTJunction]
   id: GasPipeTJunctionAlt2
@@ -108,7 +108,7 @@
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
   - type: Construction
     node: tjunctionAlt2
-    
+
 # GasPipeFourway
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeFourway]
@@ -120,7 +120,7 @@
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
   - type: Construction
     node: fourwayAlt1
-    
+
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeFourway]
   id: GasPipeFourwayAlt2
