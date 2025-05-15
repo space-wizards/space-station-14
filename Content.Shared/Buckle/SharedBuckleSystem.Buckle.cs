@@ -366,9 +366,6 @@ public abstract partial class SharedBuckleSystem
         else if (user != null)
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} buckled {ToPrettyString(buckle)} to {ToPrettyString(strap)}");
 
-        if (TryComp<PullableComponent>(strap.Owner, out var pullable) && pullable.Puller == buckle.Owner)
-            _pullingSystem.TryStopPull(strap.Owner, pullable);
-
         _audio.PlayPredicted(strap.Comp.BuckleSound, strap, user);
 
         SetBuckledTo(buckle, strap!);
