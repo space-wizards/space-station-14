@@ -227,9 +227,9 @@
       - XenoborgModuleGeneric
       - XenoborgModuleStealth
   - type: MovementAlwaysTouching # it flies in space with tiny thrusters
-  - type: SpamEmitSound # longer interval to make the creppy sound
-    minInterval: 50
-    maxInterval: 150
+  # - type: SpamEmitSound # longer interval to make the creppy sound
+  #   minInterval: 50
+  #   maxInterval: 150
   - type: ContainerFill
     containers:
       borg_brain:

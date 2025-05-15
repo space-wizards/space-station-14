@@ -442,16 +442,15 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepXenoborg
-  - type: SpamEmitSound # makes a creppy noise randomly
-    minInterval: 30
-    maxInterval: 45
-    sound:
-      path: /Audio/Machines/genetics.ogg
-      params:
-        volume: -8
-        maxDistance: 5
-        variation: 0.05
-  - type: SpamEmitSoundRequirePower
+  # - type: SpamEmitSound # makes a creppy noise randomly
+  #   minInterval: 30
+  #   maxInterval: 45
+  #   sound:
+  #     path: /Audio/Machines/genetics.ogg
+  #     params:
+  #       volume: -8
+  #       maxDistance: 5
+  #       variation: 0.05
   - type: NpcFactionMember
     factions:
     - Xenoborg
