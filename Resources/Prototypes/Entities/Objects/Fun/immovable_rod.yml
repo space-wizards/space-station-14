@@ -1,7 +1,7 @@
 - type: entity
   id: ImmovableRod
   name: immovable rod
-  description: You can sense that it's hungry. That's usually a bad sign.
+  description: You can sense that it's hungry.
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -11,12 +11,6 @@
     state: icon
     noRot: false
   - type: ImmovableRod
-    deletionBlacklist:
-      components:
-        - Organ # Rods are appropriately splatter-y
-        - Nuke # Prevents rarely halting round progression
-        - StationAnchor # Prevents "fun"
-        - StationAiCore # Prevents an unlucky rod RDMing the AI
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
@@ -75,12 +69,10 @@
     maxSpeed: 20 # Because the Wizard's camera follows the rod, it needs slowing down a lot.
     destroyTiles: false
     randomizeVelocity: false
-    shouldGib: false
-    shouldDelete: false
     damage:
       types:
-        Piercing: 50 # OH GOD, MY INSIDES
-        Structural: 200 # OH FUCK, MY CAR
+        Piercing: 50 # OH GOD, MY INSIDES!
+        Structural: 200 # OH GOD, MY CAR!
   - type: MovementIgnoreGravity
     gravityState: true
   - type: InputMover
@@ -196,3 +188,40 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
     noRot: false
+
+  - type: entity
+    parent: ImmovableRodKeepTilesStill
+    id: ImmovableRodSus
+    name: immovable among pequeño
+    description: They were not the impostor.
+    components:
+    - type: Sprite
+      sprite: Objects/Fun/pequeno.rsi
+      layers:
+      - state: base
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+      - state: visor
+
+  - type: entity
+    parent: ImmovableRodKeepTilesStill
+    id: ImmovableRodSpearOfGourmand
+    name: immovable spear
+    description: Legends say this was thrown into orbit by the biggest chungus on Planet Wawa, shortly before a long nap.
+    components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/spear.rsi
+      layers:
+      - state: spear
+      - state: spear1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodToolbox
+  name: the robustest toolbox
+  description: Garbage collection!!
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
+    state: icon

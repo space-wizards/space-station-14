@@ -6,12 +6,12 @@ namespace Content.Server.ImmovableRod;
 
 public sealed class ImmovableRodSystem : SharedImmovableRodSystem
 {
-    protected override void OnCollide(EntityUid uid, ImmovableRodComponent component, ref StartCollideEvent args)
+    protected override void OnCollide(Entity<ImmovableRodComponent> ent, ref StartCollideEvent args)
     {
         // Save thyself from the wrath of Rod.
-        if (TryComp<PolymorphedEntityComponent>(uid, out var polymorphed) && polymorphed.Parent == args.OtherEntity)
+        if (TryComp<PolymorphedEntityComponent>(ent, out var polymorphed) && polymorphed.Parent == args.OtherEntity)
             return;
 
-        base.OnCollide(uid, component, ref args);
+        base.OnCollide(ent, ref args);
     }
 }

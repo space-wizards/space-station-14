@@ -22,23 +22,32 @@ public abstract class SharedImmovableRodSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
+    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<ImmovableRodComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<ImmovableRodComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ImmovableRodComponent, ExaminedEvent>(OnExamined);
+    }
+
+    // TODO: Move this code to a different component (and make it shared with the Singulo etc).
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        // we are deliberately including paused entities. rod hungers for all
-        foreach (var (rod, trans) in EntityManager.EntityQuery<ImmovableRodComponent, TransformComponent>(true))
+        // TODO: Not a fan of this being called each update.
+        while (AllEntityQuery<ImmovableRodComponent, TransformComponent>().MoveNext(out var rod, out var trans))
         {
             if (!rod.DestroyTiles)
                 continue;
@@ -50,25 +59,15 @@ public abstract class SharedImmovableRodSystem : EntitySystem
         }
     }
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ImmovableRodComponent, StartCollideEvent>(OnCollide);
-        SubscribeLocalEvent<ImmovableRodComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<ImmovableRodComponent, ExaminedEvent>(OnExamined);
-    }
-
     private void OnMapInit(EntityUid uid, ImmovableRodComponent component, MapInitEvent args)
     {
-        if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? phys))
+        if (!TryComp<PhysicsComponent>(uid, out var physics))
             return;
 
-        _physics.SetLinearDamping(uid, phys, 0f);
-        _physics.SetFriction(uid, phys, 0f);
-        _physics.SetBodyStatus(uid, phys, BodyStatus.InAir);
+        _physics.SetLinearDamping(uid, physics, 0f);
+        _physics.SetFriction(uid, physics, 0f);
+        _physics.SetBodyStatus(uid, physics, BodyStatus.InAir);
 
-        var xform = Transform(uid);
         var (worldPos, worldRot) = _transform.GetWorldPositionRotation(uid);
         var vel = worldRot.ToWorldVec() * component.MaxSpeed;
 
@@ -77,85 +76,81 @@ public abstract class SharedImmovableRodSystem : EntitySystem
             vel = component.DirectionOverride.Degrees switch
             {
                 0f => _random.NextVector2(component.MinSpeed, component.MaxSpeed),
-                _ => worldRot.RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
+                _ => worldRot.RotateVec(component.DirectionOverride.ToVec()) *
+                     _random.NextFloat(component.MinSpeed, component.MaxSpeed),
             };
         }
 
-        _physics.ApplyLinearImpulse(uid, vel, body: phys);
-        xform.LocalRotation = (vel - worldPos).ToWorldAngle() + MathHelper.PiOver2;
+        _physics.ApplyLinearImpulse(uid, vel, body: physics);
+        Transform(uid).LocalRotation = (vel - worldPos).ToWorldAngle() + MathHelper.PiOver2;
     }
 
-    protected virtual void OnCollide(EntityUid uid, ImmovableRodComponent component, ref StartCollideEvent args)
+    protected virtual void OnCollide(Entity<ImmovableRodComponent> ent, ref StartCollideEvent args)
     {
-        var ent = args.OtherEntity;
+        /*
+         * Note for future maintainers: it used to be the case that Immovable Rods (and wizards that polymorphed into
+         * one) literally _deleted_ things they hit. As in, they called QueueDel() on them.
+         *
+         * Do not make the Project Lead write threatening mald PRs:
+         * https://github.com/space-wizards/space-station-14/pull/37004
+         */
 
         // Clang!
-        if (_random.Prob(component.HitSoundProbability))
-            _audio.PlayPvs(component.Sound, uid);
+        if (_random.Prob(ent.Comp.HitSoundProbability))
+            _audio.PlayPvs(ent.Comp.HitSound, ent);
 
-        // Oh nyo.
-        if (HasComp<ImmovableRodComponent>(ent))
-            HandleRodRodCollision(uid, ent);
-        // Mobs never automatically get deleted by Rodney, because being instantly deleted is not any fun.
-        else if (TryComp<MobStateComponent>(ent, out var mob))
-            HandleRodMobCollision(uid, component, args);
-        // Admiral Roddington XIV may have been limited in his desire to delete everythng.
-        // What's the point of an immovable rod if it deletes all those organs it's just splattered?
-        else if (component.ShouldDelete && !_whitelist.IsWhitelistPass(component.DeletionBlacklist, ent))
-            QueueDel(ent);
-        // The Amulet of Yendor has powers some may deem... unnatural. Clang!
-        else if (component.Damage != null)
-            _damageable.TryChangeDamage(ent, component.Damage, ignoreResistances: true);
+        if (HasComp<ImmovableRodComponent>(args.OtherEntity))
+            HandleRodCollision(ent, args.OtherEntity);
+        else if (HasComp<MobStateComponent>(args.OtherEntity))
+            HandleMobCollision(ent, args);
+        else if (ent.Comp.Damage != null)
+            _damageable.TryChangeDamage(args.OtherEntity, ent.Comp.Damage, ignoreResistances: true);
     }
 
-    private void HandleRodRodCollision(EntityUid uid, EntityUid ent)
+    private void HandleRodCollision(Entity<ImmovableRodComponent> rod, EntityUid target)
     {
-        // :panik:
-        var coords = Transform(uid).Coordinates;
-        _popup.PopupCoordinates(Loc.GetString("immovable-rod-collided-rod-not-good"), coords, PopupType.LargeCaution);
-
-        // :kalm:
-        Del(uid);
-        Del(ent);
-
-        // :panik:
-        Spawn("Singularity", coords);
-    }
-
-    private void HandleRodMobCollision(EntityUid uid, ImmovableRodComponent component, StartCollideEvent args)
-    {
-        var ent = args.OtherEntity;
-
-        // TODO: Immovable rods are weird because they're projectiles that don't get consumed after they collide.
-        // We could store who the projectile has already hit, but prediction makes that non-trivial, and I've
-        // not found a good example in the codebase that mimics the rod's desired behaviour.
-        // Temporary hack: use the same collision layer that MobCollision uses.
-        if (args.OtherFixtureId != "flammable")
-            return;
-
-        // Ma'am, this is a Christian Minecraft server.
-        _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid, PopupType.LargeCaution);
-        component.MobCount++;
-
-        if (component.ShouldGib && TryComp<BodyComponent>(ent, out var body))
+        if (rod.Comp.SpawnOnRodCollision != null)
         {
-            _bodySystem.GibBody(ent, body: body);
+            var coords = Transform(target).Coordinates;
+            var popup = Loc.GetString(rod.Comp.OnRodCollisionPopup);
 
-            return;
+            _popup.PopupCoordinates(popup, coords, PopupType.LargeCaution);
+
+            SpawnAtPosition(rod.Comp.SpawnOnRodCollision, coords);
         }
 
-        if (component.Damage != null)
-            _damageable.TryChangeDamage(ent, component.Damage, ignoreResistances: true);
+        Del(rod);
+        Del(target);
+    }
 
-        if (component.StaminaDamage > 0 && TryComp<StaminaComponent>(ent, out var stamComp))
-            _stamina.TakeStaminaDamage(ent, component.StaminaDamage, stamComp, ignoreResist: true);
+    private void HandleMobCollision(Entity<ImmovableRodComponent> ent, StartCollideEvent args)
+    {
+        /*
+         * TODO: Immovable rods are weird. Ergo, always only collide with one fixture on a mob.
+         */
+        if (args.OtherFixtureId != ent.Comp.MobCollisionFixtureId)
+            return;
+
+        var entityHitByRod = args.OtherEntity;
+
+        var popup = Loc.GetString(ent.Comp.OnMobCollisionPopup, ("rod", ent), ("mob", entityHitByRod));
+        _popup.PopupEntity(popup, ent, PopupType.LargeCaution);
+
+        ent.Comp.MobCount++;
+
+        if (ent.Comp.Damage != null)
+            _damageable.TryChangeDamage(entityHitByRod, ent.Comp.Damage, ignoreResistances: true);
+
+        if (ent.Comp.StaminaDamage > 0)
+            _stamina.TakeStaminaDamage(entityHitByRod, ent.Comp.StaminaDamage, ignoreResist: true);
     }
 
     private void OnExamined(EntityUid uid, ImmovableRodComponent component, ExaminedEvent args)
     {
-        if (component.MobCount == 0)
-            args.PushText(Loc.GetString("immovable-rod-consumed-none", ("rod", uid)));
-        else
-            args.PushText(Loc.GetString("immovable-rod-consumed-souls", ("rod", uid), ("amount", component.MobCount)));
+        args.PushText(
+            component.MobCount > 0
+            ? Loc.GetString("immovable-rod-consumed-souls", ("rod", uid), ("amount", component.MobCount))
+            : Loc.GetString("immovable-rod-consumed-none", ("rod", uid))
+        );
     }
 }

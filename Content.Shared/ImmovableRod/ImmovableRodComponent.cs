@@ -7,65 +7,96 @@ namespace Content.Shared.ImmovableRod;
 [RegisterComponent]
 public sealed partial class ImmovableRodComponent : Component
 {
+    /// <summary>
+    ///     Tracks the number of mobs that this rod has slaughtered.
+    /// </summary>
     public int MobCount = 0;
 
-    [DataField("hitSound")]
-    public SoundSpecifier Sound = new SoundCollectionSpecifier("MetalSlam");
+    /// <summary>
+    ///     How should this rod CLANG?
+    /// </summary>
+    [DataField]
+    public SoundSpecifier HitSound = new SoundCollectionSpecifier("MetalSlam");
 
-    [DataField("hitSoundProbability")]
+    /// <summary>
+    ///     How often should this rod CLANG?
+    /// </summary>
+    [DataField]
     public float HitSoundProbability = 0.1f;
 
-    [DataField("minSpeed")]
+    /// <summary>
+    ///     How slow can this rod be going?
+    /// </summary>
+    [DataField]
     public float MinSpeed = 10f;
 
-    [DataField("maxSpeed")]
+    /// <summary>
+    ///     How fast can this rod be going?
+    /// </summary>
+    [DataField]
     public float MaxSpeed = 35f;
 
+    /// <summary>
+    ///     Should the rod randomize its velocity on spawn?
+    /// </summary>
     /// <remarks>
-    ///     Stuff like wizard rods might want to set this to false, so that they can set the velocity themselves.
+    ///     Should be false for entity-controlled mobs, such as polymorphed wizards.
     /// </remarks>
-    [DataField("randomizeVelocity")]
+    [DataField]
     public bool RandomizeVelocity = true;
 
     /// <summary>
     ///     Overrides the random direction for an immovable rod.
     /// </summary>
-    [DataField("directionOverride")]
+    [DataField]
     public Angle DirectionOverride = Angle.Zero;
 
     /// <summary>
-    ///     With this set to true, rods will automatically set the tiles under them to space.
+    ///     Should this rod set the tiles it passes over to empty space?
     /// </summary>
-    [DataField("destroyTiles")]
+    /// <remarks>
+    ///     Remember that tile destruction is a very powerful and often very un-fun mechanic. Use sparingly.
+    /// </remarks>
+    [DataField]
     public bool DestroyTiles = true;
 
     /// <summary>
-    /// Should this rod gib bodies?
+    ///     How much damage, if any, does this rod do?
     /// </summary>
-    [DataField]
-    public bool ShouldGib = true;
-
-    /// <summary>
-    /// Should this rod just delete things it hits?
-    /// </summary>
-    [DataField]
-    public bool ShouldDelete = true;
-
-    /// <summary>
-    ///     Damage done, if not gibbing
-    /// </summary>
+    /// <remarks>
+    ///     Remember that structural damage is there to allow for mega-damage to inorganic matter without obliterating
+    ///     Urist McBystander!
+    /// </remarks>
     [DataField]
     public DamageSpecifier? Damage;
 
     /// <summary>
-    ///     What is spared the wrath of Rod?
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? DeletionBlacklist;
-
-    /// <summary>
-    /// If you are somehow alive after being hit by an immovable rod, you should not be walking about.
+    ///     How much stamina damage should this rod do to appropriate mobs?
     /// </summary>
     [DataField]
     public float StaminaDamage = 200.0f;
+
+    /// <summary>
+    ///     Should this rod spawn anything when it hits another rod?
+    /// </summary>
+    [DataField]
+    public string? SpawnOnRodCollision;
+
+    /// <summary>
+    ///     If this rod spawns anything when it hits another rod, what popup text should appear?
+    /// </summary>
+    [DataField]
+    public string OnRodCollisionPopup = "immovable-rod-collided-rod-not-good";
+
+    /// <summary>
+    ///     What popup should be displayed when this rod hits someone?
+    /// </summary>
+    [DataField]
+    public string OnMobCollisionPopup = "immovable-rod-penetrated-mob"; // Ma'am, this is a Christian Minecraft server.
+
+    /// <summary>
+    /// What fixture is used to detect that the rod has hit a mob?
+    /// </summary>
+    [DataField]
+    public string MobCollisionFixtureId = "flammable"; // Temporary default; aligns with mob collision code.
 }
