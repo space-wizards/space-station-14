@@ -56,6 +56,9 @@ spray-painter-tab-group-cratesteel = Steel
 spray-painter-tab-group-crateplastic = Plastic
 spray-painter-tab-group-cratesteelsec = Secure
 
+spray-painter-tab-group-locker = Standing
+spray-painter-tab-group-walllocker = Wallmount
+
 # Airlocks
 spray-painter-style-airlockstandard-atmospherics = Atmospheric
 spray-painter-style-airlockstandard-basic = Basic
@@ -72,7 +75,7 @@ spray-painter-style-airlockstandard-security = Security
 spray-painter-style-airlockstandard-virology = Virology
 spray-painter-style-airlockstandard-salvage = Salvage
 
-spray-painter-style-airlockglass-atmospherics = Atmospheric
+spray-painter-style-airlockglass-atmospherics = Atmospherics
 spray-painter-style-airlockglass-basic = Basic
 spray-painter-style-airlockglass-cargo = Cargo
 spray-painter-style-airlockglass-chemistry = Chemistry
@@ -87,7 +90,7 @@ spray-painter-style-airlockglass-virology = Virology
 spray-painter-style-airlockglass-salvage = Salvage
 
 # Lockers
-spray-painter-style-locker-atmospheric = Atmospheric
+spray-painter-style-locker-atmospherics = Atmospherics
 spray-painter-style-locker-basic = Basic
 spray-painter-style-locker-botanist = Botanist
 spray-painter-style-locker-brigmedic = Brigmedic
@@ -111,7 +114,6 @@ spray-painter-style-locker-salvage = Salvage
 spray-painter-style-locker-scientist = Scientist
 spray-painter-style-locker-security = Security
 spray-painter-style-locker-welding = Welding
-
 spray-painter-style-locker-tool = Tools
 spray-painter-style-locker-radiation = Radiation suit
 spray-painter-style-locker-emergency = Emergency (oxygen)
@@ -127,6 +129,22 @@ spray-painter-style-locker-biohazard-janitor = Biohazard (janitor)
 spray-painter-style-locker-chef = Chef
 spray-painter-style-locker-janitor = Janitor
 spray-painter-style-locker-legal = Lawyer
+
+spray-painter-style-walllocker-basic = Basic
+spray-painter-style-walllocker-emergency = Emergency (oxygen)
+spray-painter-style-walllocker-emergency-nitrogen = Emergency (nitrogen)
+spray-painter-style-walllocker-fire = Fire-safety
+spray-painter-style-walllocker-blue = Blue
+spray-painter-style-walllocker-pink = Pink
+spray-painter-style-walllocker-black = Black
+spray-painter-style-walllocker-green = Green
+spray-painter-style-walllocker-orange = Orange
+spray-painter-style-walllocker-yellow = Yellow
+spray-painter-style-walllocker-white = White
+spray-painter-style-walllocker-grey = Grey
+spray-painter-style-walllocker-mixed = Mixed
+spray-painter-style-walllocker-atmospherics = Atmospherics
+spray-painter-style-walllocker-medical = Medical
 
 # Crates
 spray-painter-style-cratesteel-basic = Basic

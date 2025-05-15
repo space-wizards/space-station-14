@@ -2,6 +2,7 @@
   id: Lockers
   groups:
   - Locker
+  - WallLocker
 
 - type: paintableGroup
   id: Locker
@@ -24,7 +25,7 @@
     salvage: LockerSalvageSpecialist
     electrical: LockerElectricalSupplies
     welding: LockerWeldingSupplies
-    atmospheric: LockerAtmospherics
+    atmospherics: LockerAtmospherics
     engineer: LockerEngineer
     botanist: LockerBotanist
     medicine: LockerMedicine
@@ -49,3 +50,24 @@
     chef: ClosetChef
     janitor: ClosetJanitor
     legal: ClosetLegal
+
+- type: paintableGroup
+  id: WallLocker
+  cost: 2
+  defaultStyle: basic
+  styles:
+    basic: ClosetWall
+    emergency: ClosetWallEmergency
+    emergency-nitrogen: ClosetWallEmergencyN2
+    fire: ClosetWallFire
+    blue: ClosetWallBlue
+    pink: ClosetWallPink
+    black: ClosetWallBlack
+    green: ClosetWallGreen
+    orange: ClosetWallOrange
+    yellow: ClosetWallYellow
+    white: ClosetWallWhite
+    grey: ClosetWallGrey
+    mixed: ClosetWallMixed
+    atmospherics: ClosetWallAtmospherics
+    medical: LockerWallMedical
