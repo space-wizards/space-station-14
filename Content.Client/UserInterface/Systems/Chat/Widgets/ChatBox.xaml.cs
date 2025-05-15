@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using Content.Client.UserInterface.Systems.Chat.Controls;
 using Content.Shared.Chat;
 using Content.Shared.Input;

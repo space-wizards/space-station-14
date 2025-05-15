@@ -70,26 +70,26 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
         _characterInfo.RequestCharacterInfo();
     }
 
-    public void UpdateHighlights(string highlights, bool firstload = false)
+    public void UpdateHighlights(string new_highlights, bool firstload = false)
     {
-        // Do nothing if the provided highlighs are the same as the old ones and it is not the first time.
-        if (!firstload && _config.GetCVar(CCVars.ChatHighlights).Equals(highlights, StringComparison.CurrentCultureIgnoreCase))
+        // Do nothing if the provided highlights are the same as the old ones and it is not the first time.
+        if (!firstload && _config.GetCVar(CCVars.ChatHighlights).Equals(new_highlights, StringComparison.CurrentCultureIgnoreCase))
             return;
 
-        _config.SetCVar(CCVars.ChatHighlights, highlights);
+        _config.SetCVar(CCVars.ChatHighlights, new_highlights);
         _config.SaveToFile();
 
-        // Make sure any name tagged as ours gets highlighted only when others say it.
-        highlights = highlights.Replace("@", "(?<=(?<=/name.*)|(?<=,.*\"\".*))");
-
         // Replace any " character with a whole-word regex tag,
-        // this tag will make the words to match are separated by spaces or punctuation.
-        highlights = highlights.Replace("\"", "\\b");
+        // this tag will make sure the words to match are separated by spaces or punctuation.
+        new_highlights = new_highlights.Replace("\"", "\\b");
+
+        // Make sure any name tagged as ours gets highlighted only when others say it.
+        new_highlights = new_highlights.Replace("@", "(?<=(?<=/name.*)|(?<=,.*\"\".*))");
 
         _highlights.Clear();
 
         // Fill the array with the highlights separated by newlines, disregarding empty entries.
-        string[] arrHighlights = highlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        string[] arrHighlights = new_highlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         foreach (var keyword in arrHighlights)
         {
             _highlights.Add(keyword);

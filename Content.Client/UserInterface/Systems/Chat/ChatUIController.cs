@@ -829,7 +829,7 @@ public sealed partial class ChatUIController : UIController
                 msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
         }
 
-        // Color any words choosen by the client.
+        // Color any words chosen by the client.
         foreach (var highlight in _highlights)
         {
             msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", _highlightsColor);
