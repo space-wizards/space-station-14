@@ -24,10 +24,7 @@ namespace Content.Server.Stunnable
                 return;
 
             var ent = args.OtherEntity;
-            _stunSystem.TryParalyze(ent, TimeSpan.FromSeconds(component.StunTime), false);
-            
+            _stunSystem.TryParalyze(ent, TimeSpan.FromSeconds(component.StunTime), false);          
         }
-
-        
     }
 }
