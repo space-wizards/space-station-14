@@ -63,7 +63,7 @@
 - type: entity
   id: DefibrillatorOneHandedUnpowered
   parent: BaseDefibrillator
-  suffix: One-Handed, Unpowered
+  suffix: One-Handed, Always Powered
 
 - type: entity
   id: DefibrillatorCompact # This should be a research item at some point
