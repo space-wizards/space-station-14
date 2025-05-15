@@ -209,14 +209,6 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
         // turn off the ambient sound on the points storage entity.
         if (TryComp<AmbientSoundComponent>(ent.Comp.PointsStorage, out var ambientComp))
             _ambientSound.SetAmbience(ent.Comp.PointsStorage, false, ambientComp);
-
-        // update the points storage ent to make sure it's up to date.
-        if (!TryComp<ReplicatorNestPointsStorageComponent>(ent.Comp.PointsStorage, out var pointsStorageComponent))
-            pointsStorageComponent = EnsureComp<ReplicatorNestPointsStorageComponent>(ent.Comp.PointsStorage);
-
-        pointsStorageComponent.Level = ent.Comp.CurrentLevel;
-        pointsStorageComponent.TotalPoints = ent.Comp.TotalPoints;
-        pointsStorageComponent.TotalReplicators = ent.Comp.SpawnedMinions.Count;
     }
 
     private void OnRoundEndTextAppend(RoundEndTextAppendEvent args)
