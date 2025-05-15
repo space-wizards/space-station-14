@@ -5781,4 +5781,11 @@ Entries:
   id: 801
   time: '2025-05-15T23:32:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/618
+- author: RoadTrain
+  changes:
+  - message: Removed the active power draw from mech lights.
+    type: Remove
+  id: 802
+  time: '2025-05-15T23:34:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/613
 
