@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix storage windows being duplicated when reconnecting.
-    type: Fix
-  id: 7986
-  time: '2025-02-20T16:51:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35054
 - author: Boaz1111
   changes:
   - message: Added colored light bulbs! You can make them just like colored light
@@ -3918,3 +3911,11 @@
   id: 8488
   time: '2025-05-15T01:45:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37467
+- author: kosticia
+  changes:
+  - message: Hamsters, mice, butterflies, mothroaches, bees, bats, snails, rats, ticks
+      and cockroaches now don't leave organs on gibbing.
+    type: Fix
+  id: 8489
+  time: '2025-05-15T03:45:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37080
