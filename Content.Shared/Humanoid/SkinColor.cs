@@ -10,12 +10,12 @@ public static class SkinColor
 
     public const float MinHuesLightness = 0.175f;
 
-    public const float MinFeathersHue = 29f / 360;
-    public const float MaxFeathersHue = 174f / 360;
-    public const float MinFeathersSaturation = 20f / 100;
-    public const float MaxFeathersSaturation = 88f / 100;
-    public const float MinFeathersValue = 36f / 100;
-    public const float MaxFeathersValue = 55f / 100;
+    public const float MinFeathersHue = 0 / 360;
+    public const float MaxFeathersHue = 360 / 360;
+    public const float MinFeathersSaturation = 0 / 100;
+    public const float MaxFeathersSaturation = 100 / 100;
+    public const float MinFeathersValue = 0 / 100;
+    public const float MaxFeathersValue = 100 / 100;
 
     public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
 
