@@ -43,7 +43,7 @@ public sealed partial class SprayPainterDecals : Control
     private void UseCustomColorCheckBoxOnOnPressed(BaseButton.ButtonEventArgs _)
     {
         OnColorChanged?.Invoke(UseCustomColorCheckBox.Pressed ? ColorSelector.Color : null);
-        UpdateColorButtons();
+        UpdateColorButtons(UseCustomColorCheckBox.Pressed);
     }
 
     private void SnapToTileCheckBoxOnOnPressed(BaseButton.ButtonEventArgs _)
@@ -106,22 +106,23 @@ public sealed partial class SprayPainterDecals : Control
 
         OnColorChanged?.Invoke(color);
 
-        UpdateColorButtons();
+        UpdateColorButtons(UseCustomColorCheckBox.Pressed);
     }
 
-    private void UpdateColorButtons()
+    private void UpdateColorButtons(bool apply)
     {
+        Color modulateColor = apply ? ColorSelector.Color : Color.White;
         foreach (var button in DecalsGrid.Children)
         {
             switch (button)
             {
                 case TextureButton:
-                    button.Modulate = ColorSelector.Color;
+                    button.Modulate = modulateColor;
                     break;
                 case PanelContainer panelContainer:
                     {
                         foreach (TextureButton textureButton in panelContainer.Children)
-                            textureButton.Modulate = ColorSelector.Color;
+                            textureButton.Modulate = modulateColor;
 
                         break;
                     }
@@ -163,7 +164,7 @@ public sealed partial class SprayPainterDecals : Control
         UseCustomColorCheckBox.Pressed = color != null;
         if (color != null)
             ColorSelector.Color = color.Value;
-        UpdateColorButtons();
+        UpdateColorButtons(UseCustomColorCheckBox.Pressed);
     }
 
     public void SetSnap(bool snap)
