@@ -4,6 +4,7 @@ using Content.Server.Containers;
 using Content.Server.EUI;
 using Content.Server.Flash;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Implants;
 using Content.Server.Inventory; // Added this line for InventorySystem
 using Content.Shared.Inventory;
 using Content.Shared.Store.Components;
@@ -146,6 +147,20 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         var uplinkSystem = EntityManager.System<UplinkSystem>();
         var inventorySystem = EntityManager.System<InventorySystem>();
+        var implantSystem = EntityManager.System<SubdermalImplantSystem>();
+
+        // Check for USSPUplinkImplant in user's implants
+        if (implantSystem.TryGetImplants(user, out var implants))
+        {
+            foreach (var implant in implants)
+            {
+                if (EntityManager.HasComponent<StoreComponent>(implant) &&
+                    EntityManager.GetComponent<MetaDataComponent>(implant).EntityPrototype?.ID == "USSPUplinkImplant")
+                {
+                    return implant;
+                }
+            }
+        }
 
         // Search container slots
         if (inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
