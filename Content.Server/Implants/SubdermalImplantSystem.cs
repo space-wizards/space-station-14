@@ -231,7 +231,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     }
     
     /// <summary>
-    /// Tries to get all implants from an entity
+    /// Starlight: Tries to get all implants from an entity
     /// </summary>
     /// <param name="uid">The entity to get implants from</param>
     /// <param name="implants">The list of implants found</param>
