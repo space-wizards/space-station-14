@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sparlight
-  changes:
-  - message: All dogs now make dog noises when speaking.
-    type: Tweak
-  id: 7989
-  time: '2025-02-22T21:34:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35383
 - author: GrownSamoyedDog
   changes:
   - message: Fixed Guidebook Entry Ordering / Sorting
@@ -3919,3 +3912,10 @@
   id: 8491
   time: '2025-05-15T03:55:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36977
+- author: BlitzTheSquishy
+  changes:
+  - message: You're no longer allowed to fire the Hristov or Mosin one handed anymore.
+    type: Tweak
+  id: 8492
+  time: '2025-05-15T04:12:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33708
