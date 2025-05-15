@@ -17,7 +17,6 @@
     blacklist:
       components:
       - Nuke # nice try
-      - FloorTile
       tags:
       - BROS # too many of em. therefore worthless
       - Cartridge
