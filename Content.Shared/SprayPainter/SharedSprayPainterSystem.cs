@@ -99,14 +99,12 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         paintedComponent.DryTime = _timing.CurTime + ent.Comp.FreshPaintDuration;
         Dirty(target, paintedComponent);
 
-        RaiseLocalEvent(target,
-            new EntityPaintedEvent
-            {
-                User = args.User,
-                Tool = ent,
-                Prototype = args.Prototype,
-                Group = args.Group
-            });
+        var ev = new EntityPaintedEvent(
+            user: args.User,
+            tool: ent,
+            prototype: args.Prototype,
+            group: args.Group);
+        RaiseLocalEvent(target, ref ev);
 
         AdminLogger.Add(LogType.Action,
             LogImpact.Low,

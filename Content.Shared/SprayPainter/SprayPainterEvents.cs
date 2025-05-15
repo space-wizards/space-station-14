@@ -44,27 +44,16 @@ public sealed class SprayPainterTabChangedMessage(int index, bool isSelectedTabW
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterSetPaintableStyleMessage : BoundUserInterfaceMessage
+public sealed class SprayPainterSetPaintableStyleMessage(string group, string style) : BoundUserInterfaceMessage
 {
-    public readonly string Group;
-    public readonly string Style;
-
-    public SprayPainterSetPaintableStyleMessage(string group, string style)
-    {
-        Group = group;
-        Style = style;
-    }
+    public readonly string Group = group;
+    public readonly string Style = style;
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterSetPipeColorMessage : BoundUserInterfaceMessage
+public sealed class SprayPainterSetPipeColorMessage(string? key) : BoundUserInterfaceMessage
 {
-    public readonly string? Key;
-
-    public SprayPainterSetPipeColorMessage(string? key)
-    {
-        Key = key;
-    }
+    public readonly string? Key = key;
 }
 
 [Serializable, NetSerializable]
@@ -104,31 +93,17 @@ public sealed partial class SprayPainterPipeDoAfterEvent : DoAfterEvent
 }
 
 /// <summary>
-/// An action raised on an item when it's spray painted.
+/// An action raised on an item when it was spray painted.
 /// </summary>
-public sealed partial class EntityPaintedEvent : EntityEventArgs
+[ByRefEvent]
+public partial record struct EntityPaintedEvent(EntityUid? user, EntityUid tool, EntProtoId prototype, ProtoId<PaintableGroupPrototype> group)
 {
-    /// <summary>
-    /// The entity painting this item.
-    /// </summary>
-    [DataField]
-    public EntityUid? User = default!;
-
-    /// <summary>
-    /// The entity used to paint this item.
-    /// </summary>
-    [DataField]
-    public EntityUid Tool = default!;
-
-    /// <summary>
-    /// The prototype being used to generate the new painted appearance.
-    /// </summary>
-    [DataField]
-    public EntProtoId Prototype = default!;
-
-    /// <summary>
-    /// The group of item being painted (e.g. airlocks with glass, canisters).
-    /// </summary>
-    [DataField]
-    public ProtoId<PaintableGroupPrototype> Group = default!;
+    /// <summary>The entity painting this item.</summary>
+    public EntityUid? User = user;
+    /// <summary>The entity used to paint this item.</summary>
+    public EntityUid Tool = tool;
+    /// <summary>The prototype used to generate the new painted appearance.</summary>
+    public EntProtoId Prototype = prototype;
+    /// <summary>The group of item being painted (e.g. airlocks with glass, canisters).</summary>
+    public ProtoId<PaintableGroupPrototype> Group = group;
 }

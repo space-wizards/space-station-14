@@ -60,7 +60,7 @@ public sealed partial class SprayPainterComponent : Component
     /// <summary>
     /// Whether or not the painter should be painting decals.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField, AutoNetworkedField]
     public bool IsPaintingDecals = false;
 
     /// <summary>
