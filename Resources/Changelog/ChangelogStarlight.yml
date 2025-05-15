@@ -5729,4 +5729,11 @@ Entries:
   id: 794
   time: '2025-05-10T07:04:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/610
+- author: RoadTrain
+  changes:
+  - message: Fixed gygax not getting thrusters despite them being used in construction.
+    type: Fix
+  id: 795
+  time: '2025-05-15T12:53:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/617
 
