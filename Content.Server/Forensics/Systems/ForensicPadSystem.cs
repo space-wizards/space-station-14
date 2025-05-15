@@ -124,7 +124,6 @@ namespace Content.Server.Forensics
 
             if (!TryGetSample(target, user, out var sample) || sample is null)
                 return;
-
             StartScan(ent, user, target, ent.Comp, sample);
         }
 
