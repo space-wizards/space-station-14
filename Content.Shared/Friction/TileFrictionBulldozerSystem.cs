@@ -56,6 +56,10 @@ public sealed class TileFrictionBulldozerSystem : VirtualController
             RemComp<TileFrictionOverwrittenComponent>(uid);
     }
 
+    /// <summary>
+    /// Iterates through all tileFrictionBulldozers we are touching and averages their friction values.
+    /// If nothing is overwritten, or we aren't touching any bulldozers, remove the component.
+    /// </summary>
     private bool CalculateTileFriction(Entity<TileFrictionOverwrittenComponent> entity, PhysicsComponent? physics = null, EntityUid? ignore = null)
     {
         var friction = (0.0f, 0);

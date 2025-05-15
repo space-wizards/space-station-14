@@ -6,6 +6,11 @@
 [RegisterComponent]
 public sealed partial class TileFrictionBulldozerComponent : Component
 {
+
+    /// <summary>
+    /// These three datafields correspond to the three friction datafields tiles have.
+    /// If defined they will overwrite the corresponding friction value normally given by a tile.
+    /// </summary>
     [DataField]
     public float? Friction;
 
