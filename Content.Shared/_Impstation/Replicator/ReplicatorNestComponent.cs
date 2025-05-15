@@ -100,8 +100,7 @@ public sealed partial class ReplicatorNestComponent : Component
     public int NextUpgradeAt;
     [DataField, AutoNetworkedField]
     public bool NeedsUpdate;
-    public EntityUid PointsStorageEntity;
-    public ReplicatorNestPointsStorageComponent PointsStorage;
+    public Entity<ReplicatorNestPointsStorageComponent> PointsStorage;
 }
 
 [Serializable, NetSerializable]

@@ -105,8 +105,10 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
         ent.Comp.NextSpawnAt = ent.Comp.SpawnNewAt;
         ent.Comp.NextUpgradeAt = ent.Comp.UpgradeAt;
 
-        ent.Comp.PointsStorageEntity = Spawn("ReplicatorNestPointsStorage", Transform(ent).Coordinates);
-        ent.Comp.PointsStorage = EnsureComp<ReplicatorNestPointsStorageComponent>(ent.Comp.PointsStorageEntity);
+        var pointsStorageEnt = Spawn("ReplicatorNestPointsStorage", Transform(ent).Coordinates);
+        var pointsStorageComp = EnsureComp<ReplicatorNestPointsStorageComponent>(pointsStorageEnt);
+
+        ent.Comp.PointsStorage = (pointsStorageEnt, pointsStorageComp);
     }
 
     private void OnStepTriggerAttempt(Entity<ReplicatorNestComponent> ent, ref StepTriggerAttemptEvent args)
@@ -204,8 +206,8 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
             _pinpointer.SetTarget(pocket1.Value, queen, pinpointer);
         }
 
-        if (TryComp<AmbientSoundComponent>(ent.Comp.PointsStorageEntity, out var ambientComp))
-            _ambientSound.SetAmbience(ent.Comp.PointsStorageEntity, false, ambientComp);
+        if (TryComp<AmbientSoundComponent>(ent.Comp.PointsStorage, out var ambientComp))
+            _ambientSound.SetAmbience(ent.Comp.PointsStorage, false, ambientComp);
     }
 
     private void OnRoundEndTextAppend(RoundEndTextAppendEvent args)
