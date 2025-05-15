@@ -8,7 +8,7 @@ namespace Content.Shared.Clothing.Components
     /// <summary>
     /// Handle the hails (audible orders to stop) coming from a security gas mask / swat mask
     /// </summary>
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class SecurityHailerComponent : Component
     {
         /// <summary>
@@ -28,7 +28,7 @@ namespace Content.Shared.Clothing.Components
             Emag
         }
 
-        [DataField]
+        [DataField, AutoNetworkedField]
         public AggresionState AggresionLevel = AggresionState.Low;
 
         [DataField]

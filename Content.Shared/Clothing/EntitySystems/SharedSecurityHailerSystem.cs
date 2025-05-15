@@ -20,17 +20,14 @@ namespace Content.Shared.Clothing.EntitySystems
             base.Initialize();
             SubscribeLocalEvent<SecurityHailerComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<SecurityHailerComponent, ClothingGotEquippedEvent>(OnEquip);
-            SubscribeLocalEvent<ActionSecHailerActionEvent>(HailOrder);
+            SubscribeLocalEvent<ActionSecHailerActionEvent>(OnHailOrder);
         }
 
-        private void HailOrder(ActionSecHailerActionEvent ev)
+        private void OnHailOrder(ActionSecHailerActionEvent ev)
         {
-            Log.Debug("HailOrder reached !");
-            //if (ev.Handled)
-            //    return;
+            //Exclamation point code here so it can be predicted
 
-            //_chat.TrySendInGameICMessage(ev.Performer, comp.Battlecry, InGameICChatType.Speak, true, true, checkRadioPrefix: false);  //Speech that isn't sent to chat or adminlogs
-
+            Log.Debug("OnHailOrder exclamation point !");
         }
 
         private void OnEquip(EntityUid uid, SecurityHailerComponent comp, ClothingGotEquippedEvent args)
