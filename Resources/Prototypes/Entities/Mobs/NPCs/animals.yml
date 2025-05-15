@@ -424,7 +424,7 @@
     animation: WeaponArcBite
     damage:
       types:
-        Piercing: 0
+        Piercing: 1 # imp edit
   - type: NightVision # EE edit
     isActive: true
     toggleAction: null
