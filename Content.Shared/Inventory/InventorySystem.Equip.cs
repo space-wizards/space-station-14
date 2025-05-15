@@ -286,23 +286,21 @@ public abstract partial class InventorySystem
         }
 
         var attemptEvent = new IsEquippingAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(target, attemptEvent, true);
+        RaiseLocalEvent(actor, attemptEvent, true);
+
         if (attemptEvent.Cancelled)
         {
             reason = attemptEvent.Reason ?? reason;
             return false;
         }
 
-        if (actor != target)
+        var targetAttemptEvent = new IsEquippingTargetAttemptEvent(actor, target, itemUid, slotDefinition);
+        RaiseLocalEvent(target, targetAttemptEvent, true);
+
+        if (targetAttemptEvent.Cancelled)
         {
-            //reuse the event. this is gucci, right?
-            attemptEvent.Reason = null;
-            RaiseLocalEvent(actor, attemptEvent, true);
-            if (attemptEvent.Cancelled)
-            {
-                reason = attemptEvent.Reason ?? reason;
-                return false;
-            }
+            reason = targetAttemptEvent.Reason ?? reason;
+            return false;
         }
 
         var itemAttemptEvent = new BeingEquippedAttemptEvent(actor, target, itemUid, slotDefinition);
@@ -524,30 +522,28 @@ public abstract partial class InventorySystem
         }
 
         var attemptEvent = new IsUnequippingAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(target, attemptEvent, true);
+        RaiseLocalEvent(actor, attemptEvent, true);
+
         if (attemptEvent.Cancelled)
         {
             reason = attemptEvent.Reason ?? reason;
             return false;
         }
 
-        if (actor != target)
+        var targetAttemptEvent = new IsUnequippingTargetAttemptEvent(actor, target, itemUid, slotDefinition);
+        RaiseLocalEvent(target, targetAttemptEvent, true);
+
+        if (targetAttemptEvent.Cancelled)
         {
-            //reuse the event. this is gucci, right?
-            attemptEvent.Reason = null;
-            RaiseLocalEvent(actor, attemptEvent, true);
-            if (attemptEvent.Cancelled)
-            {
-                reason = attemptEvent.Reason ?? reason;
-                return false;
-            }
+            reason = targetAttemptEvent.Reason ?? reason;
+            return false;
         }
 
         var itemAttemptEvent = new BeingUnequippedAttemptEvent(actor, target, itemUid, slotDefinition);
         RaiseLocalEvent(itemUid, itemAttemptEvent, true);
         if (itemAttemptEvent.Cancelled)
         {
-            reason = attemptEvent.Reason ?? reason;
+            reason = itemAttemptEvent.Reason ?? reason;
             return false;
         }
 
