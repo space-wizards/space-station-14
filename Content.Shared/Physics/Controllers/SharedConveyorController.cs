@@ -1,8 +1,6 @@
 ﻿using System.Numerics;
 using Content.Shared.Conveyor;
-using Content.Shared.Friction;
 using Content.Shared.Gravity;
-using Content.Shared.Maps;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
@@ -14,7 +12,6 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Threading;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Physics.Controllers;
 
@@ -22,7 +19,6 @@ public abstract class SharedConveyorController : VirtualController
 {
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private   readonly IParallelManager _parallel = default!;
-    [Dependency] private   readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private   readonly CollisionWakeSystem _wake = default!;
     [Dependency] protected readonly EntityLookupSystem Lookup = default!;
     [Dependency] private   readonly FixtureSystem _fixtures = default!;
@@ -64,7 +60,7 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnConveyedFriction(Entity<ConveyedComponent> ent, ref TileFrictionEvent args)
     {
-        if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
+        if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsOnConveyor((ent, fixture)))
             return;
 
         // Conveyed entities don't get friction, they just get wishdir applied so will inherently slowdown anyway.
@@ -73,10 +69,13 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnMoverTileDefEvent(Entity<ConveyedComponent> ent, ref MoverTileDefEvent args)
     {
+        // We explicitly don't check if this has been handled yet because Conveyors are special
+
         if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
             return;
 
         args.MobAcceleration = 1f;
+        args.Handled = true;
     }
 
     private void OnFrictionBulldozeEvent(Entity<ConveyedComponent> ent, ref FrictionBulldozeEvent args)
@@ -413,6 +412,39 @@ public abstract class SharedConveyorController : VirtualController
             var other = contact.OtherEnt(ent.Owner);
 
             if (_conveyorQuery.HasComp(other))
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool IsOnConveyor(Entity<FixturesComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        // Can't be on a conveyor if we're on the ground
+        if (!PhysicsQuery.TryComp(ent, out var body) || body.BodyStatus != BodyStatus.OnGround)
+            return false;
+
+        var transform = PhysicsSystem.GetPhysicsTransform(ent);
+
+        var contacts = PhysicsSystem.GetContacts(ent.Owner);
+
+        while (contacts.MoveNext(out var contact))
+        {
+            if (!contact.IsTouching)
+                continue;
+
+            var other = contact.OtherEnt(ent.Owner);
+
+            if (!_conveyorQuery.HasComp(other))
+                continue;
+
+            var otherFixture = contact.OtherFixture(ent.Owner);
+            var otherTransform = PhysicsSystem.GetPhysicsTransform(other);
+
+            if (_fixtures.TestPoint(otherFixture.Item2.Shape, otherTransform, transform.Position))
                 return true;
         }
 

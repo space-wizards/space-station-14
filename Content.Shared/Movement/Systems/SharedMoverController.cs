@@ -298,6 +298,7 @@ public abstract partial class SharedMoverController : VirtualController
         if (wishDir != Vector2.Zero)
             friction = Math.Min(friction, accel);
         friction = Math.Max(friction, _minDamping);
+
         var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
 
         var bulldozeEv = new FrictionBulldozeEvent()
