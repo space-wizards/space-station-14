@@ -1,16 +1,16 @@
 meta:
   format: 7
-  category: Grid
+  category: Map
   engineVersion: 254.1.0
   forkId: ""
   forkVersion: ""
-  time: 04/22/2025 13:15:55
-  entityCount: 311
-maps: []
+  time: 05/15/2025 03:42:33
+  entityCount: 309
+maps:
+- 71
 grids:
 - 1
-orphans:
-- 1
+orphans: []
 nullspace: []
 tilemap:
   0: Space
@@ -30,7 +30,7 @@ entities:
       name: grid
     - type: Transform
       pos: -6.40625,3.0859375
-      parent: invalid
+      parent: 71
     - type: MapGrid
       chunks:
         0,0:
@@ -146,6 +146,18 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
+  - uid: 71
+    components:
+    - type: MetaData
+      name: Map Entity
+    - type: Transform
+    - type: Map
+      mapPaused: True
+    - type: PhysicsMap
+    - type: GridTree
+    - type: MovedGrids
+    - type: Broadphase
+    - type: OccluderTree
 - proto: ActionSleep
   entities:
   - uid: 223
@@ -184,14 +196,6 @@ entities:
     components:
     - type: Transform
       pos: 7.5,-9.5
-      parent: 1
-- proto: AirlockSecurityLocked
-  entities:
-  - uid: 125
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 9.5,-5.5
       parent: 1
 - proto: APCBasic
   entities:
@@ -1229,18 +1233,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,-9.5
       parent: 1
-  - uid: 127
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 8.5,-5.5
-      parent: 1
-  - uid: 143
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 10.5,-5.5
-      parent: 1
   - uid: 146
     components:
     - type: Transform
@@ -1340,6 +1332,13 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 15.5,-5.5
       parent: 1
+- proto: HighSecCommandLocked
+  entities:
+  - uid: 143
+    components:
+    - type: Transform
+      pos: 9.5,-5.5
+      parent: 1
 - proto: LockerMedicineFilled
   entities:
   - uid: 35
@@ -1347,31 +1346,12 @@ entities:
     - type: Transform
       pos: 10.5,-12.5
       parent: 1
-- proto: LockerSecurity
-  entities:
-  - uid: 136
-    components:
-    - type: Transform
-      pos: 8.5,-4.5
-      parent: 1
 - proto: MachineFrameDestroyed
   entities:
   - uid: 37
     components:
     - type: Transform
       pos: 4.5,-11.5
-      parent: 1
-- proto: MagazinePistol
-  entities:
-  - uid: 184
-    components:
-    - type: Transform
-      pos: 8.493269,-2.5623722
-      parent: 1
-  - uid: 185
-    components:
-    - type: Transform
-      pos: 8.680769,-2.6404972
       parent: 1
 - proto: MedicalBed
   entities:
@@ -1443,6 +1423,11 @@ entities:
       parent: 1
 - proto: Rack
   entities:
+  - uid: 125
+    components:
+    - type: Transform
+      pos: 8.5,-3.5
+      parent: 1
   - uid: 182
     components:
     - type: Transform
@@ -1485,18 +1470,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-9.5
-      parent: 1
-  - uid: 144
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 8.5,-5.5
-      parent: 1
-  - uid: 145
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 10.5,-5.5
       parent: 1
   - uid: 186
     components:
@@ -1573,6 +1546,18 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,-5.5
       parent: 1
+- proto: SalvageSpawnerTreasureValuable
+  entities:
+  - uid: 72
+    components:
+    - type: Transform
+      pos: 8.5,-3.5
+      parent: 1
+  - uid: 136
+    components:
+    - type: Transform
+      pos: 8.5,-2.5
+      parent: 1
 - proto: ShardGlassReinforced
   entities:
   - uid: 19
@@ -1631,6 +1616,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.3842125,-9.339777
+      parent: 1
+- proto: SignVault
+  entities:
+  - uid: 127
+    components:
+    - type: Transform
+      pos: 10.5,-5.5
       parent: 1
 - proto: SMESBasic
   entities:
@@ -1692,13 +1684,6 @@ entities:
     - type: Transform
       pos: 10.5,-15.5
       parent: 1
-- proto: VendingMachineSec
-  entities:
-  - uid: 138
-    components:
-    - type: Transform
-      pos: 8.5,-1.5
-      parent: 1
 - proto: WallReinforced
   entities:
   - uid: 10
@@ -1750,11 +1735,36 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 7.5,-3.5
       parent: 1
+  - uid: 126
+    components:
+    - type: Transform
+      pos: 8.5,-5.5
+      parent: 1
   - uid: 128
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 7.5,-5.5
+      parent: 1
+  - uid: 138
+    components:
+    - type: Transform
+      pos: 10.5,-5.5
+      parent: 1
+  - uid: 144
+    components:
+    - type: Transform
+      pos: 7.5,-2.5
+      parent: 1
+  - uid: 145
+    components:
+    - type: Transform
+      pos: 7.5,-1.5
+      parent: 1
+  - uid: 183
+    components:
+    - type: Transform
+      pos: 7.5,-4.5
       parent: 1
   - uid: 188
     components:
@@ -1887,28 +1897,5 @@ entities:
     components:
     - type: Transform
       pos: 6.5,-3.5
-      parent: 1
-  - uid: 71
-    components:
-    - type: Transform
-      pos: 7.5,-2.5
-      parent: 1
-  - uid: 72
-    components:
-    - type: Transform
-      pos: 7.5,-1.5
-      parent: 1
-  - uid: 126
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 7.5,-4.5
-      parent: 1
-- proto: WeaponPistolMk58
-  entities:
-  - uid: 183
-    components:
-    - type: Transform
-      pos: 8.493269,-2.3279972
       parent: 1
 ...

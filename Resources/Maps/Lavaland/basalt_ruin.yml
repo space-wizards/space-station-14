@@ -1,16 +1,16 @@
 meta:
   format: 7
-  category: Grid
+  category: Map
   engineVersion: 254.1.0
   forkId: ""
   forkVersion: ""
-  time: 04/22/2025 08:41:50
+  time: 05/15/2025 03:40:24
   entityCount: 227
-maps: []
+maps:
+- 71
 grids:
 - 1
-orphans:
-- 1
+orphans: []
 nullspace: []
 tilemap:
   1: Space
@@ -25,7 +25,7 @@ entities:
       name: grid
     - type: Transform
       pos: -5.6343684,3.518619
-      parent: invalid
+      parent: 71
     - type: MapGrid
       chunks:
         0,0:
@@ -141,6 +141,18 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
+  - uid: 71
+    components:
+    - type: MetaData
+      name: Map Entity
+    - type: Transform
+    - type: Map
+      mapPaused: True
+    - type: PhysicsMap
+    - type: GridTree
+    - type: MovedGrids
+    - type: Broadphase
+    - type: OccluderTree
 - proto: BasaltRandom
   entities:
   - uid: 138
@@ -863,12 +875,12 @@ entities:
     - type: Transform
       pos: 12.5,-7.5
       parent: 1
-- proto: SpeedLoaderMagnum
+- proto: SalvageSpawnerTreasureValuable
   entities:
   - uid: 72
     components:
     - type: Transform
-      pos: 0.69145966,-2.6113546
+      pos: 0.5,-2.5
       parent: 1
 - proto: TorsoSkeleton
   entities:
@@ -1374,13 +1386,6 @@ entities:
     components:
     - type: Transform
       pos: 5.5,-6.5
-      parent: 1
-- proto: WeaponRevolverPython
-  entities:
-  - uid: 71
-    components:
-    - type: Transform
-      pos: 0.45708466,-2.4238546
       parent: 1
 - proto: WoodenSupport
   entities:
