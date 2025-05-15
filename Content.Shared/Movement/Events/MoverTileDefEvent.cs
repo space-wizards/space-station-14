@@ -12,4 +12,6 @@ public record struct MoverTileDefEvent
     public float? MobFriction;
 
     public float? MobAcceleration;
+
+    public bool Handled;
 }
