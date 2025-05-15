@@ -4,7 +4,7 @@ meta:
   engineVersion: 254.1.0
   forkId: ""
   forkVersion: ""
-  time: 04/25/2025 06:26:44
+  time: 04/26/2025 04:37:53
   entityCount: 17819
 maps:
 - 1
@@ -7285,7 +7285,7 @@ entities:
       pos: -30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -56299.75
+      secondsUntilStateChange: -56414.664
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -44025,7 +44025,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -304055.3
+      secondsUntilStateChange: -304170.22
       state: Opening
   - uid: 6747
     components:
@@ -44033,7 +44033,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -304056.03
+      secondsUntilStateChange: -304170.94
       state: Opening
   - uid: 6749
     components:
@@ -44041,7 +44041,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -304054.6
+      secondsUntilStateChange: -304169.5
       state: Opening
   - uid: 6750
     components:
@@ -44049,7 +44049,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -304053.97
+      secondsUntilStateChange: -304168.88
       state: Opening
   - uid: 9721
     components:
@@ -97993,16 +97993,18 @@ entities:
       parent: 2
 - proto: TurnstileGenpopEnter
   entities:
-  - uid: 4291
+  - uid: 2244
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: -5.5,45.5
       parent: 2
 - proto: TurnstileGenpopLeave
   entities:
-  - uid: 2244
+  - uid: 4291
     components:
     - type: Transform
+      rot: 1.5707963267948966 rad
       pos: -0.5,44.5
       parent: 2
   - uid: 4995
