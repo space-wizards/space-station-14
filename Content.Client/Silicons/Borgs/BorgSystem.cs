@@ -10,6 +10,7 @@ namespace Content.Client.Silicons.Borgs;
 public sealed class BorgSystem : SharedBorgSystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -56,7 +57,7 @@ public sealed class BorgSystem : SharedBorgSystem
         {
             if (state != MobState.Alive)
             {
-                sprite.LayerSetVisible(BorgVisualLayers.Light, false);
+                _sprite.LayerSetVisible((uid, sprite), BorgVisualLayers.Light, false);
                 return;
             }
         }
@@ -64,8 +65,8 @@ public sealed class BorgSystem : SharedBorgSystem
         if (!_appearance.TryGetData<bool>(uid, BorgVisuals.HasPlayer, out var hasPlayer, appearance))
             hasPlayer = false;
 
-        sprite.LayerSetVisible(BorgVisualLayers.Light, component.BrainEntity != null || hasPlayer);
-        sprite.LayerSetState(BorgVisualLayers.Light, hasPlayer ? component.HasMindState : component.NoMindState);
+        _sprite.LayerSetVisible((uid, sprite), BorgVisualLayers.Light, component.BrainEntity != null || hasPlayer);
+        _sprite.LayerSetRsiState((uid, sprite), BorgVisualLayers.Light, hasPlayer ? component.HasMindState : component.NoMindState);
     }
 
     private void OnMMIAppearanceChanged(EntityUid uid, MMIComponent component, ref AppearanceChangeEvent args)
@@ -79,17 +80,17 @@ public sealed class BorgSystem : SharedBorgSystem
         if (!_appearance.TryGetData(uid, MMIVisuals.HasMind, out bool hasMind))
             hasMind = false;
 
-        sprite.LayerSetVisible(MMIVisualLayers.Brain, brain);
+        _sprite.LayerSetVisible((uid, sprite), MMIVisualLayers.Brain, brain);
         if (!brain)
         {
-            sprite.LayerSetState(MMIVisualLayers.Base, component.NoBrainState);
+            _sprite.LayerSetRsiState((uid, sprite), MMIVisualLayers.Base, component.NoBrainState);
         }
         else
         {
             var state = hasMind
                 ? component.HasMindState
                 : component.NoMindState;
-            sprite.LayerSetState(MMIVisualLayers.Base, state);
+            _sprite.LayerSetRsiState((uid, sprite), MMIVisualLayers.Base, state);
         }
     }
 

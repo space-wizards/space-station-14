@@ -63,6 +63,9 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
     {
         base.Update(frameTime);
 
+        if (!_time.IsFirstTimePredicted)
+            return;
+
         // check if client didn't changed chat text box for a long time
         if (_isClientTyping)
         {

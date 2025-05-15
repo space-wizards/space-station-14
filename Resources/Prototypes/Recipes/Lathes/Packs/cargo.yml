@@ -5,7 +5,6 @@
   recipes:
   - AppraisalTool
   - Pickaxe
-  - CircuitImprinterMachineCircuitboardAutolathe
 
 - type: latheRecipePack
   id: CargoBoardsStatic

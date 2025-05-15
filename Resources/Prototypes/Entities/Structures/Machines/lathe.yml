@@ -399,7 +399,7 @@
     - SecurityWeaponsStatic
     dynamicPacks:
     - SalvageSecurityBoards
-    - SalvageSecurityWeapons
+    # - SalvageSecurityWeapons
     - SecurityEquipment
     - SecurityBoards
     - SecurityExplosives
@@ -534,6 +534,7 @@
         - Sheet
         - RawMaterial
         - Ingot
+  - type: OreSiloClient
 
 - type: entity
   id: Biogenerator
