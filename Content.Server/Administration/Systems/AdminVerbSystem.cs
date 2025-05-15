@@ -479,9 +479,9 @@ namespace Content.Server.Administration.Systems
                     });
                 }
 
+                // set outfit verb
                 if (_groupController.CanCommand(player, "setoutfit"))
                 {
-                    // Set clothing verb
                     Verb verb = new()
                     {
                         Text = Loc.GetString("set-outfit-verb-get-data-text"),
