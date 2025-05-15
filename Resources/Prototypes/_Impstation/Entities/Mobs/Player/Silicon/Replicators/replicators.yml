@@ -55,6 +55,8 @@
   - type: NoContractionsAccent
   - type: ProperPunctuation
   - type: ProperCapitalization
+  - type: ReplacementAccent
+    accent: silicon
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
