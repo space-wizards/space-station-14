@@ -1,4 +1,3 @@
-using Content.Server.Bed.Components;
 using Content.Shared.Actions;
 using Content.Shared.Bed.Components;
 using Content.Shared.Bed.Sleep;
@@ -18,6 +17,7 @@ public abstract class SharedBedSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<HealOnBuckleComponent, MapInitEvent>(OnHealMapInit);
         SubscribeLocalEvent<HealOnBuckleComponent, StrappedEvent>(OnStrapped);
         SubscribeLocalEvent<HealOnBuckleComponent, UnstrappedEvent>(OnUnstrapped);
@@ -26,6 +26,7 @@ public abstract class SharedBedSystem : EntitySystem
     private void OnHealMapInit(Entity<HealOnBuckleComponent> ent, ref MapInitEvent args)
     {
         _actConts.EnsureAction(ent.Owner, ref ent.Comp.SleepAction, SleepingSystem.SleepActionId);
+        Dirty(ent);
     }
 
     private void OnStrapped(Entity<HealOnBuckleComponent> bed, ref StrappedEvent args)
