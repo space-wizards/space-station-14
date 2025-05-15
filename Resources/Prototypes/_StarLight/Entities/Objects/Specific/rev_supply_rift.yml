@@ -1,7 +1,7 @@
 - type: entity
   id: RevSupplyRift
   name: red supply rift
-  description: A shady portal that coughs up Soviet stuff. Occasionally mumbles in Russian.
+  description: A shady portal that coughs up Soviet stuff. Occasionally mumbles in Russian. This exposes everyone.
   placement:
     mode: SnapgridCenter
   components:

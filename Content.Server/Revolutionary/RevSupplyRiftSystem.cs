@@ -10,6 +10,7 @@ using Content.Server.Store.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Dragon;
 using Content.Shared.FixedPoint;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.NPC.Systems;
@@ -79,14 +80,82 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         // Store the active rift
         _activeRift = uid;
         
-        // Try to get the name of the player who placed the rift
-        if (component.Dragon != null && TryComp<MetaDataComponent>(component.Dragon, out var metadata))
+        // Try to get the name of the revolutionary who placed the rift
+        // The Dragon property in DragonRiftComponent is actually the revolutionary player entity
+        var revolutionary = component.Dragon;
+        Logger.InfoS("rev-supply-rift", $"Revolutionary entity: {revolutionary}");
+        
+        if (revolutionary != null)
         {
-            revRift.PlacedBy = metadata.EntityName;
+            // Use the Identity system to get the player's name
+            // This is more reliable than trying to get it from the mind component
+            var name = Identity.Name(revolutionary.Value, EntityManager);
+            Logger.InfoS("rev-supply-rift", $"Got name from Identity system: {name}");
+            
+            if (!string.IsNullOrEmpty(name))
+            {
+                revRift.PlacedBy = name;
+                Logger.InfoS("rev-supply-rift", $"Set PlacedBy to: {revRift.PlacedBy}");
+            }
+            else
+            {
+                // Fall back to metadata if Identity system doesn't have a name
+                if (TryComp<MetaDataComponent>(revolutionary.Value, out var metadata))
+                {
+                    revRift.PlacedBy = metadata.EntityName;
+                    Logger.InfoS("rev-supply-rift", $"Set PlacedBy to metadata name: {revRift.PlacedBy}");
+                }
+                else
+                {
+                    revRift.PlacedBy = "Unknown";
+                    Logger.InfoS("rev-supply-rift", "Set PlacedBy to Unknown (no metadata)");
+                }
+            }
         }
         else
         {
-            revRift.PlacedBy = "Unknown";
+            // Try to find a nearby humanoid entity to use as the placer
+            if (TryComp<TransformComponent>(uid, out var riftTransform))
+            {
+                // Get all entities with HumanoidAppearanceComponent within a small radius
+                var nearbyHumanoids = EntityManager.EntityQuery<Content.Shared.Humanoid.HumanoidAppearanceComponent, TransformComponent>()
+                    .Where(pair => 
+                    {
+                        var (_, otherTransform) = pair;
+                        return riftTransform.MapID == otherTransform.MapID && 
+                               (riftTransform.WorldPosition - otherTransform.WorldPosition).LengthSquared() < 4; // 2 unit radius
+                    })
+                    .Select(pair => pair.Item1.Owner)
+                    .ToList();
+                
+                if (nearbyHumanoids.Count > 0)
+                {
+                    // Use the first nearby humanoid
+                    var humanoid = nearbyHumanoids[0];
+                    var name = Identity.Name(humanoid, EntityManager);
+                    
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        revRift.PlacedBy = name;
+                        Logger.InfoS("rev-supply-rift", $"Revolutionary entity is null, using nearby humanoid: {name}");
+                    }
+                    else
+                    {
+                        revRift.PlacedBy = "Unknown";
+                        Logger.InfoS("rev-supply-rift", "Revolutionary entity is null, nearby humanoid has no name");
+                    }
+                }
+                else
+                {
+                    revRift.PlacedBy = "Unknown";
+                    Logger.InfoS("rev-supply-rift", "Revolutionary entity is null, no nearby humanoids found");
+                }
+            }
+            else
+            {
+                revRift.PlacedBy = "Unknown";
+                Logger.InfoS("rev-supply-rift", "Revolutionary entity is null, set PlacedBy to Unknown");
+            }
         }
 
         // Update the supply rift listing for all revolutionaries
@@ -170,6 +239,13 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         if (_activeRift == null || !TryComp<RevSupplyRiftComponent>(_activeRift.Value, out var revRift))
             return;
         
+        // Get the location of the rift
+        string locationString = "unknown location";
+        if (TryComp<TransformComponent>(_activeRift.Value, out var xform))
+        {
+            locationString = _navMap.GetNearestBeaconString((_activeRift.Value, xform));
+        }
+        
         // Find all store components
         var query = EntityQueryEnumerator<StoreComponent>();
         while (query.MoveNext(out var uid, out var store))
@@ -185,10 +261,9 @@ public sealed class RevSupplyRiftSystem : EntitySystem
                         _originalDescriptions[uid] = listing.Description ?? "";
                     }
                     
-                    // Update the description with the charging status
-                    var chargingText = Loc.GetString("rev-supply-rift-charging", 
-                        ("percentage", revRift.ChargePercentage), 
-                        ("name", revRift.PlacedBy ?? "Unknown"));
+                    // Update the description with the charging status and location
+                    // Don't use color tags as they're not properly handled in the UI
+                    var chargingText = $"Supply Rift (Charging: {revRift.ChargePercentage}% - Placed by {revRift.PlacedBy ?? "Unknown"} near {locationString})";
                     
                     listing.Description = chargingText;
                     
@@ -291,8 +366,10 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         var query = EntityQueryEnumerator<MindContainerComponent>();
         while (query.MoveNext(out var uid, out var mindContainer))
         {
-            if (!mindContainer.HasMind || !_mind.TryGetMind(uid, out var mindId, out var mind))
+            if (!mindContainer.HasMind || mindContainer.Mind == null)
                 continue;
+
+            var mind = Comp<MindComponent>(mindContainer.Mind.Value);
 
             // Check if the entity is a revolutionary or head revolutionary
             if (HasComp<RevolutionaryComponent>(uid) || HasComp<HeadRevolutionaryComponent>(uid))

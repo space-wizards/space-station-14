@@ -72,12 +72,12 @@ namespace Content.Server.Implants
                 _storeSystem.TryAddCurrency(currencyToAdd, args.StoreUid);
                 
                 // Find the owner of the uplink
-                if (TryComp<SubdermalImplantComponent>(args.StoreUid, out var implant) && implant.ImplantedEntity != null)
-                {
-                    _popup.PopupEntity("Conversion is not spent", implant.ImplantedEntity.Value, PopupType.Medium);
-                }
-                
-                Logger.InfoS("ussp-uplink", $"Restored {spentAmount} Conversion currency after purchase");
+                //if (TryComp<SubdermalImplantComponent>(args.StoreUid, out var implant) && implant.ImplantedEntity != null)
+                //{
+                //    _popup.PopupEntity("Conversion is not spent", implant.ImplantedEntity.Value, PopupType.Medium);
+                //}
+                //
+                //Logger.InfoS("ussp-uplink", $"Restored {spentAmount} Conversion currency after purchase");
             }
         }
 
