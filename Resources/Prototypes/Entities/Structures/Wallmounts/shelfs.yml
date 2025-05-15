@@ -12,7 +12,7 @@
   - type: Clickable
   - type: Tag
     tags:
-      - Structure
+    - Structure
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Storage/Shelfs/wood.rsi
@@ -74,7 +74,6 @@
   - type: EntityStorageVisuals
     stateDoorOpen: open
     stateDoorClosed: closed
-
   - type: AccessReader
 
 # Normal
@@ -136,9 +135,6 @@
             max: 4
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Tag
-    tags:
-    - Structure
   - type: Construction
     graph: Shelf
     node: ShelfMetal
@@ -171,9 +167,6 @@
             max: 2
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Tag
-    tags:
-    - Structure
   - type: Construction
     graph: Shelf
     node: ShelfGlass
@@ -322,13 +315,6 @@
     grid:
     - 0,0,5,1
     - 0,3,5,4
-    maxItemSize: Normal
-    whitelist:
-      tags:
-        - DrinkGlass
-        - DrinkBottle
-        - DrinkCan
-        - Beer
   - type: Construction
     graph: Shelf
     node: ShelfBar
@@ -376,25 +362,6 @@
     grid:
     - 0,0,5,1
     - 0,3,5,4
-    maxItemSize: Normal
-    whitelist:
-      tags:
-        - DrinkBottle
-        - DrinkCan
-        - DrinkCup
-        - DrinkGlass
-        - BoxCardboard
-        - MonkeyCube
-        - Enzyme
-        - Mayo
-        - Packet
-        - Cleaver
-        - Knife
-        - KitchenKnife
-        - RollingPin
-        - Ingredient
-        - Trash
-        - Plastic
   - type: Construction
     graph: Shelf
     node: ShelfKitchen
@@ -448,17 +415,9 @@
     grid:
     - 0,0,5,1
     - 0,3,5,4
-    maxItemSize: Normal
-    whitelist:
-      tags:
-        - ChemDispensable
-        - GlassBeaker
-        - Bottle
   - type: Construction
     graph: Shelf
     node: ShelfChemistry
-
-
 
 # Access presets
 # Try to keep alphabetical sorting if adding more
