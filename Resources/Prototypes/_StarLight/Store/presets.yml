@@ -44,7 +44,10 @@
     name: store-preset-name-uplink
     categories:
     - RevUplinkWeaponry
+    - RevUplinkPassive
     currencyWhitelist:
     - Telebond
+    - Conversion
     balance:
       Telebond: 0
+      Conversion: 0

@@ -5,3 +5,11 @@
     Telebond: 4
   categories:
   - RevUplinkWeaponry
+
+- type: listing
+  id: RevSupplyRiftListing
+  productEntity: RevSupplyRift
+  cost:
+    Conversion: 1
+  categories:
+  - RevUplinkPassive

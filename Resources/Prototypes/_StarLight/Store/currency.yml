@@ -7,7 +7,12 @@
 
 - type: currency
   id: Telebond
-  displayName: "telebond"
+  displayName: "Telebonds"
   cash:
     1: Telebond1
   canWithdraw: true
+
+- type: currency
+  id: Conversion
+  displayName: "Total Conversions"
+  canWithdraw: false

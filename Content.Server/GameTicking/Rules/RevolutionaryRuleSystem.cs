@@ -43,6 +43,7 @@ using Content.Server.Revolutionary;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Store.Systems;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Audio;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -79,7 +80,18 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<HeadRevolutionaryComponent, MobStateChangedEvent>(OnHeadRevMobStateChanged);
 
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
+        SubscribeLocalEvent<RevolutionaryRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntitySelected);
+    }
 
+    private void OnAfterAntagEntitySelected(EntityUid uid, RevolutionaryRuleComponent comp, ref AfterAntagEntitySelectedEvent args)
+    {
+        // Check if this is a head revolutionary
+        if (!HasComp<HeadRevolutionaryComponent>(args.EntityUid) || args.Session == null)
+            return;
+
+        // Send a custom briefing with the character's name
+        var name = Identity.Entity(args.EntityUid, EntityManager);
+        _antag.SendBriefing(args.Session, Loc.GetString("head-rev-role-greeting", ("name", name)), Color.LightYellow, new SoundPathSpecifier("/Audio/Ambience/Antag/headrev_start.ogg"));
     }
 
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -226,6 +238,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
             var storeSystem = EntityManager.System<StoreSystem>();
 
+            // Add Telebond to the converter's uplink
             var uplinkEntity = FindUSSPUplink(ev.User.Value);
             if (uplinkEntity != null)
             {
@@ -238,6 +251,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     _popup.PopupEntity("+1 Telebond", ev.User.Value, PopupType.Large);
                 }
             }
+            
+            // Add Conversion to ALL head revolutionary uplinks
+            AddConversionToAllHeadRevs(storeSystem);
 
             if (_mind.TryGetMind(ev.User.Value, out var revMindId, out _))
             {
@@ -252,7 +268,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         if (mind?.Session != null)
-            _antag.SendBriefing(mind.Session, Loc.GetString("rev-role-greeting"), Color.LightYellow, revComp.RevStartSound);
+            _antag.SendBriefing(mind.Session, Loc.GetString("rev-role-greeting", ("name", Identity.Entity(ev.Target, EntityManager))), Color.LightYellow, revComp.RevStartSound);
     }
 
     //TODO: Enemies of the revolution
@@ -393,4 +409,27 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         // revs lost and heads died
         "rev-stalemate"
     };
+    
+    /// <summary>
+    /// Adds Conversion currency to all head revolutionary uplinks.
+    /// This is a shared counter that tracks total conversions by all head revolutionaries.
+    /// </summary>
+    private void AddConversionToAllHeadRevs(StoreSystem storeSystem)
+    {
+        Logger.Info("Adding Conversion to all head revolutionary uplinks");
+        
+        var headRevs = AllEntityQuery<HeadRevolutionaryComponent>();
+        while (headRevs.MoveNext(out var headRevUid, out _))
+        {
+            var uplinkEntity = FindUSSPUplink(headRevUid);
+            if (uplinkEntity != null)
+            {
+                var currencyToAdd = new Dictionary<string, FixedPoint2> { { "Conversion", FixedPoint2.New(1) } };
+                var success = storeSystem.TryAddCurrency(currencyToAdd, uplinkEntity.Value);
+                Logger.Info($"Added Conversion to head rev {ToPrettyString(headRevUid)}, success: {success}");
+                
+                _popup.PopupEntity("+1 Conversion", headRevUid, PopupType.Medium);
+            }
+        }
+    }
 }
