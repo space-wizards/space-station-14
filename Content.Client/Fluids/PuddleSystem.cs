@@ -27,7 +27,7 @@ public sealed class PuddleSystem : SharedPuddleSystem
 
         if (args.AppearanceData.TryGetValue(PuddleVisuals.CurrentVolume, out var volumeObj))
         {
-            volume = (float) volumeObj;
+            volume = (float)volumeObj;
         }
 
         // Update smoothing and sprite based on volume.
@@ -58,7 +58,7 @@ public sealed class PuddleSystem : SharedPuddleSystem
 
         if (args.AppearanceData.TryGetValue(PuddleVisuals.SolutionColor, out var colorObj))
         {
-            var color = (Color) colorObj;
+            var color = (Color)colorObj;
             args.Sprite.Color = color * baseColor;
         }
         else

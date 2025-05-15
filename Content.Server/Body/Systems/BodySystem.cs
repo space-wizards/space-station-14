@@ -115,7 +115,7 @@ public sealed class BodySystem : SharedBodySystem
             return new HashSet<EntityUid>();
 
         var gibs = base.GibBody(bodyId, gibOrgans, body, launchGibs: launchGibs,
-            splatDirection: splatDirection, splatModifier: splatModifier, splatCone:splatCone);
+            splatDirection: splatDirection, splatModifier: splatModifier, splatCone: splatCone);
 
         var ev = new BeingGibbedEvent(gibs);
         RaiseLocalEvent(bodyId, ref ev);

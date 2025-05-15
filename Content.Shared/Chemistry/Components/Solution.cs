@@ -189,7 +189,7 @@ namespace Content.Shared.Chemistry.Components
         public void ValidateSolution()
         {
             // sandbox forbids: [Conditional("DEBUG")]
-    #if DEBUG
+#if DEBUG
             // Correct volume
             DebugTools.Assert(Contents.Select(x => x.Quantity).Sum() == Volume);
 
@@ -207,7 +207,7 @@ namespace Content.Shared.Chemistry.Components
                 UpdateHeatCapacity(null);
                 DebugTools.Assert(MathHelper.CloseTo(_heatCapacity, cur, tolerance: 0.01));
             }
-    #endif
+#endif
         }
 
         void ISerializationHooks.AfterDeserialization()
@@ -656,7 +656,7 @@ namespace Content.Shared.Chemistry.Components
             var origVol = Volume;
             var effVol = Volume.Value;
             newSolution = new Solution(Contents.Count) { Temperature = Temperature };
-            var remaining = (long) toTake.Value;
+            var remaining = (long)toTake.Value;
 
             for (var i = Contents.Count - 1; i >= 0; i--) // iterate backwards because of remove swap.
             {
@@ -672,7 +672,7 @@ namespace Content.Shared.Chemistry.Components
                     continue;
                 }
 
-                var splitQuantity = FixedPoint2.FromCents((int) split);
+                var splitQuantity = FixedPoint2.FromCents((int)split);
                 var newQuantity = quantity - splitQuantity;
 
                 DebugTools.Assert(newQuantity >= 0);
@@ -719,7 +719,7 @@ namespace Content.Shared.Chemistry.Components
 
             var effVol = Volume.Value;
             Volume -= toTake;
-            var remaining = (long) toTake.Value;
+            var remaining = (long)toTake.Value;
             for (var i = Contents.Count - 1; i >= 0; i--)// iterate backwards because of remove swap.
             {
                 var (reagent, quantity) = Contents[i];
@@ -734,7 +734,7 @@ namespace Content.Shared.Chemistry.Components
                     continue;
                 }
 
-                var splitQuantity = FixedPoint2.FromCents((int) split);
+                var splitQuantity = FixedPoint2.FromCents((int)split);
                 var newQuantity = quantity - splitQuantity;
 
                 if (newQuantity > FixedPoint2.Zero)
@@ -831,24 +831,18 @@ namespace Content.Shared.Chemistry.Components
                 {
                     continue;
                 }
+                Color reagentColor = proto.SubstanceColor;
 
                 if (first)
                 {
                     first = false;
-                    mixColor = proto.SubstanceColor;
-                    List<ReagentData> reagentData = reagent.EnsureReagentData();
-                    BloodColorData? bloodData = reagentData.OfType<BloodColorData>().FirstOrDefault();
-                    if (null != bloodData)
-                    {
-                        mixColor = bloodData.SubstanceColor;
-                    }
-
-                    continue;
                 }
-
-
+                List<ReagentData> reagentData = reagent.EnsureReagentData();
+                BloodColorData? bloodData = reagentData.OfType<BloodColorData>().FirstOrDefault();
+                if (null != bloodData)
+                    reagentColor = bloodData.SubstanceColor;
                 var interpolateValue = quantity.Float() / runningTotalQuantity.Float();
-                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
+                mixColor = Color.InterpolateBetween(mixColor, reagentColor, interpolateValue);
             }
             return mixColor;
         }

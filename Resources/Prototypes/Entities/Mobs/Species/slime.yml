@@ -65,11 +65,11 @@
     damageOverlayGroups:
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
-        color: "#2cf274"
+        color: "#ffffff"
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Bloodstream
-    bloodReagent: Slime # TODO Color slime blood based on their slime color or smth
+    bloodReagent: Slime
   - type: Barotrauma
     damage:
       types:
