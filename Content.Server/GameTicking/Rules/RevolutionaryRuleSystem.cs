@@ -233,6 +233,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 var currencyToAdd = new Dictionary<string, FixedPoint2> { { "Telebond", FixedPoint2.New(1) } };
                 var success = storeSystem.TryAddCurrency(currencyToAdd, uplinkEntity.Value);
                 Logger.Info($"OnPostFlash: TryAddCurrency success: {success}");
+                if (ev.User.HasValue)
+                {
+                    _popup.PopupEntity("+1 Telebond", ev.User.Value, PopupType.Large);
+                }
             }
 
             if (_mind.TryGetMind(ev.User.Value, out var revMindId, out _))
