@@ -5766,4 +5766,12 @@ Entries:
   id: 799
   time: '2025-05-15T20:23:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/627
+- author: Conflee
+  changes:
+  - message: Under markings, enabled a disabled marking so characters can have cat
+      ears or cat tail, to RP as half-Felionid half-Human
+    type: Add
+  id: 800
+  time: '2025-05-15T23:28:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/626
 
