@@ -3906,7 +3906,7 @@
   url: https://github.com/space-wizards/space-station-14/pull/37168
 - author: K-Dynamic
   changes:
-  - message: Engineering goggles and industrial advanced welders may be found in welding
+  - message: Industrial advanced welders may be found in welding
       supplies lockers.
     type: Tweak
   id: 8491
