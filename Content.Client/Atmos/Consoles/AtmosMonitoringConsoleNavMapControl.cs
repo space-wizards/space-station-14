@@ -146,7 +146,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
         if (chunks == null || grid == null)
             return decodedOutput;
 
-        // Clear stale look up table values 
+        // Clear stale look up table values
         _horizLines.Clear();
         _horizLinesReversed.Clear();
         _vertLines.Clear();
@@ -227,8 +227,10 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
                         new Vector2(grid.TileSize * 0f, -grid.TileSize * layerFraction) : origin;
 
                     // Scale up the vectors and convert to vector2i so we can merge them
-                    AddOrUpdateNavMapLine(ConvertVector2ToVector2i(tile + horizLineOrigin, ScaleModifier), ConvertVector2ToVector2i(tile + horizLineTerminus, ScaleModifier), horizLines, horizLinesReversed);
-                    AddOrUpdateNavMapLine(ConvertVector2ToVector2i(tile + vertLineOrigin, ScaleModifier), ConvertVector2ToVector2i(tile + vertLineTerminus, ScaleModifier), vertLines, vertLinesReversed);
+                    AddOrUpdateNavMapLine(ConvertVector2ToVector2i(tile + horizLineOrigin, ScaleModifier),
+                        ConvertVector2ToVector2i(tile + horizLineTerminus, ScaleModifier), horizLines, horizLinesReversed);
+                    AddOrUpdateNavMapLine(ConvertVector2ToVector2i(tile + vertLineOrigin, ScaleModifier),
+                        ConvertVector2ToVector2i(tile + vertLineTerminus, ScaleModifier), vertLines, vertLinesReversed);
                 }
             }
         }
