@@ -22,7 +22,7 @@
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
     raffle:
-      settings: default
+      settings: short
   - type: Sprite
     granularLayersRendering: true
     drawdepth: Mobs
@@ -39,11 +39,29 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
   - type: Appearance
-  - type: ReplacementAccent
-    accent: silicon
   - type: ActionGrant
     actions:
     - ActionViewLaws
+  - type: TypingIndicator
+    proto: replicator
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Replicator
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: DamagedSiliconAccent
+  - type: Monotonous
+  - type: NoContractionsAccent
+  - type: ProperPunctuation
+  - type: ProperCapitalization
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
   - type: CombatMode
   - type: Actions
   - type: ProtectedFromStepTriggers
@@ -71,7 +89,7 @@
     - trigger:
         !type:DamageTypeTrigger
         damageType: Blunt
-        damage: 100
+        damage: 150
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -153,7 +171,7 @@
 - type: entity
   id: MobReplicator
   parent: BaseMobReplicator
-  #categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
+  categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
   components:
   - type: StaminaDamageOnHit
     damage: 20
@@ -204,9 +222,9 @@
 # They also have MovementAlwaysTouching, because they're still small enough to be affected by the thrusters.
 - type: entity
   id: MobReplicatorTier2
-  name: deconstructor replicator
+  name: deconstructor
   parent: BaseMobReplicator
-  #categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
+  categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
   suffix: Level 2
   components:
   - type: Replicator
@@ -250,9 +268,9 @@
 # They *DON'T* have MovementAlwaysTouching, because they're too big and heavy. 
 - type: entity
   id: MobReplicatorTier3
-  name: defender replicator
+  name: defender
   parent: BaseMobReplicator
-  #categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
+  categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
   description: Oh boy.
   suffix: Level 3
   components:

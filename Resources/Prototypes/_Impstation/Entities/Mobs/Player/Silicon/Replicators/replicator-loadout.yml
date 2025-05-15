@@ -71,18 +71,18 @@
     state: t1weapon
   - type: Appearance
   - type: Gun
-    fireRate: 1
+    fireRate: 0.3
     soundGunshot:
       path: /Audio/_Impstation/Weapons/Guns/Gunshots/stunprojector.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: HitscanDisabler
+    proto: HitscanReplicator
     fireCost: 150
   - type: Battery
     maxCharge: 150
     startingCharge: 150
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 50
+    autoRechargeRate: 1000
   - type: MeleeWeapon
     wideAnimationRotation: -80
   - type: StaminaDamageOnHit
@@ -128,3 +128,18 @@
   components:
   - type: Unremoveable
 
+- type: hitscan
+  id: HitscanReplicator
+  staminaDamage: 40
+  damage:
+    types:
+      Heat: 0
+  muzzleFlash:
+    sprite: _Impstation/Mobs/Replicator/replicator_gun.rsi
+    state: muzzle_repli
+  travelFlash:
+    sprite: _Impstation/Mobs/Replicator/replicator_gun.rsi
+    state: beam_repli
+  impactFlash:
+    sprite: _Impstation/Mobs/Replicator/replicator_gun.rsi
+    state: impact_repli

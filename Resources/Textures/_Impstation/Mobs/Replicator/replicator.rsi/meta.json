@@ -180,6 +180,15 @@
     },
     {
       "name": "t1weapon"
+    },
+    {
+      "name": "replicator0",
+      "directions": 1,
+      "delays": [
+        [
+            0.4, 0.4, 0.4, 0.4
+        ]
+      ]
     }
   ]
 }

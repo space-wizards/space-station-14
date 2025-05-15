@@ -51,8 +51,7 @@ public sealed class ReplicatorVisualsSystem : EntitySystem
 
         // make sure we can sync the frames
         if (!args.Sprite.TryGetLayer(layerIndex, out var combatLayer)
-            || !args.Sprite.TryGetLayer(baseIndex, out var baseLayer)
-            || combatLayer == null || baseLayer == null)
+            || !args.Sprite.TryGetLayer(baseIndex, out var baseLayer))
             return;
 
         // turn on combat visuals if the mob is alive and in combat mode. otherwise turn them off
