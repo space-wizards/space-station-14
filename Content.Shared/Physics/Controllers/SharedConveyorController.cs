@@ -96,6 +96,11 @@ public abstract class SharedConveyorController : VirtualController
         {
             var other = contact.OtherEnt(conveyorUid);
 
+            if (contact.OtherFixture(conveyorUid).Item2.Hard && contact.OtherBody(conveyorUid).BodyType != BodyType.Static)
+            {
+                EnsureComp<ConveyedComponent>(other);
+            }
+
             if (_conveyedQuery.HasComp(other))
             {
                 PhysicsSystem.WakeBody(other);
