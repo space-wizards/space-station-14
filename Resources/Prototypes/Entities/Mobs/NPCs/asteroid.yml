@@ -121,8 +121,10 @@
   id: GoliathTentacle
   name: tentacle
   components:
+  - type: Transform
+    anchored: True
   - type: Physics
-    bodyType: Dynamic
+    bodyType: Static
     canCollide: true
   - type: InteractionOutline
   - type: Sprite
