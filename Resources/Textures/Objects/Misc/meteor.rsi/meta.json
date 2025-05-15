@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/31dd6749bfe32810c46e7913efc99a187479cd51/icons/obj/meteor.dmi. cow_pixel, clown_pixel, potato - modified original sprites from different catalogs by B_Kirill.",
+  "copyright": "Taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/31dd6749bfe32810c46e7913efc99a187479cd51/icons/obj/meteor.dmi. cow_pixel - taken from https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b and modified by B_Kirill. potato by Chaoticaa (GitHub), modified by B_Kirill.",
   "size": {
     "x": 32,
     "y": 32
