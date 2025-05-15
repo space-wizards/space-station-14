@@ -5,7 +5,7 @@ namespace Content.Shared.CCVar;
 public sealed partial class CCVars
 {
     /// <summary>
-    /// Is the API enabled? Requests will not be sent or saved if it is disabled.
+    /// Marker, for if the GitHub api is enabled. If it is not enabled, any actions that require GitHub API will be ignored.
     /// </summary>
     public static readonly CVarDef<bool> GithubEnabled =
         CVarDef.Create("github.github_enabled", true, CVar.SERVERONLY | CVar.CONFIDENTIAL);

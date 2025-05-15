@@ -15,7 +15,7 @@ public sealed class GetZen : IGithubRequest
         return "zen";
     }
 
-    public List<HttpStatusCode> GetExpectedResponseCodes()
+    public IReadOnlyCollection<HttpStatusCode> GetExpectedResponseCodes()
     {
         return [ HttpStatusCode.OK ];
     }

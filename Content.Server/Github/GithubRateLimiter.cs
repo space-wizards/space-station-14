@@ -90,7 +90,7 @@ public sealed class GithubRateLimiter : IPostInjectInit
     /// </summary>
     /// <param name="response">The actual response from the request made.</param>
     /// <param name="expectedStatusCodes">Expected status codes from the request.</param>
-    public void ReleaseWithResponse(HttpResponseMessage response, List<HttpStatusCode> expectedStatusCodes)
+    public void ReleaseWithResponse(HttpResponseMessage response, IReadOnlyCollection<HttpStatusCode> expectedStatusCodes)
     {
         _nextValidRequestTime = CalculateNextRequestTime(response, expectedStatusCodes);
         _lock.Release();
@@ -104,7 +104,7 @@ public sealed class GithubRateLimiter : IPostInjectInit
     /// <param name="response">The last response from the API.</param>
     /// <param name="expectedStatusCodes">Expected status codes - will return true if the response code is one of these.</param>
     /// <returns>The amount of time to wait until the next request.</returns>
-    private DateTime CalculateNextRequestTime(HttpResponseMessage response, List<HttpStatusCode> expectedStatusCodes)
+    private DateTime CalculateNextRequestTime(HttpResponseMessage response, IReadOnlyCollection<HttpStatusCode> expectedStatusCodes)
     {
         var headers = response.Headers;
         var statusCode = response.StatusCode;

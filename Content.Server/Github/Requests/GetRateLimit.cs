@@ -18,7 +18,7 @@ public sealed class GetRateLimit : IGithubRequest
     }
 
     // The spec says that 304 is also valid but there is currently no way to handle that so we will treat it as an error.
-    public List<HttpStatusCode> GetExpectedResponseCodes()
+    public IReadOnlyCollection<HttpStatusCode> GetExpectedResponseCodes()
     {
         return [ HttpStatusCode.OK ];
     }

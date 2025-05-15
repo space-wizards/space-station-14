@@ -32,5 +32,5 @@ public interface IGithubRequest
     /// <returns>
     /// A list of the expected response codes for this request.
     /// </returns>
-    public List<HttpStatusCode> GetExpectedResponseCodes();
+    public IReadOnlyCollection<HttpStatusCode> GetExpectedResponseCodes();
 }

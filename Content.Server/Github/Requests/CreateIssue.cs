@@ -30,7 +30,7 @@ public sealed class CreateIssue : IGithubRequest
         return $"repos/{owner}/{repository}/issues";
     }
 
-    public List<HttpStatusCode> GetExpectedResponseCodes()
+    public IReadOnlyCollection<HttpStatusCode> GetExpectedResponseCodes()
     {
         return [ HttpStatusCode.Created ];
     }
