@@ -224,7 +224,7 @@
   - RipleyMKII
   completetime: 10
   materials:
-    Steel: 500
+    Plasteel: 1000
 
 # H.O.N.K.
 - type: latheRecipe
