@@ -3,6 +3,7 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Stunnable;
+using Content.Server.Polymorph.Components;
 
 namespace Content.Server.Stunnable
 {
@@ -19,8 +20,11 @@ namespace Content.Server.Stunnable
 
         private void OnCollide(EntityUid uid, StunOnTouchComponent component, ref StartCollideEvent args)
         {
+            if(TryComp<PolymorphedEntityComponent>(uid, out var polymoprhed) && polymoprhed.Parent == args.OtherEntity)
+                return;
+
             var ent = args.OtherEntity;
-            _stunSystem.TryKnockdown(ent, TimeSpan.FromSeconds(component.StunTime), false);
+            _stunSystem.TryParalyze(ent, TimeSpan.FromSeconds(component.StunTime), false);
             
         }
 
