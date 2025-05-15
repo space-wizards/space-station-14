@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Thavens can now select masculine/feminine voices by changing the 'sex'
-      selection, or unisex to keep the current voices
-    type: Add
-  id: 1183
-  time: '2025-02-21T05:18:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1760
 - author: AvianMaiden
   changes:
   - message: Stun Kammerers should now match their lethal counterparts in terms of
@@ -4221,3 +4213,10 @@
   id: 1682
   time: '2025-05-15T00:40:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2460
+- author: TheLuggage05
+  changes:
+  - message: Night vision goggle lens slots are fixed for real
+    type: Fix
+  id: 1683
+  time: '2025-05-15T12:36:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2498
