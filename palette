@@ -3,6 +3,7 @@
 138 140 119 90 - Cafeteria Floor Dark
 211 214 182 25 - Cafeteria Floor Light
 125 127 108 100 - Cafeteria Path Edges
+84 84 84 65 - Cafeteria hall wash
 
 181 228 242 15 - Hallway Floors
 31 66 77 100 - Hallway Edges
@@ -28,6 +29,8 @@
 48 28 85 50 (HSV) - Shields Siding
 	BrickTileSteelLine
 
+84 84 94 65 - Storage Floor
+
 48 25 57 100 - Electrical Siding
 	BrickTileWhiteLine
 
@@ -46,6 +49,8 @@ Advanced->serviceblack  - Security Hallway Writing
 115 90 155 65 - Reactor Floor Dark
 		Siding: (A 100) BrickTileWhiteLine, 
 100 90 180 35 - Nuke Room Floor
+
+109 162 120 65 - Security Floor (mimicking the tile color of the hydro floor)
 
 191 129 63 100 - Engine Room Floor Cables
 

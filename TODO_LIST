@@ -8,24 +8,30 @@ Would it be too radical to totally left/right swap the Atmos
 Deal with very long TEG pipeline somehow.
 Swap nuke/PA? Move nuke to vault?
 Move oxy miner to where the other gasses are?
+Could maybe still get the circuit scrap into the shuttle guns, just not as a machine board? Would it fit in a different containter category?
 
 TECHNICAL:
 -I am wrong about sec monitors being restricted to general.
+Telescreens: Wallmount components to 180 and 270 degrees.
+	No, 0 and 90 degrees?
+	No, 180 and 270 degrees? ???
+Nanomeds and wall televisions were right, and now they're wrong again?
+	And now they're right again?
+		Just like in a long, long trailer
+	And now they're wrong again. I dun't geddit.
+
+SHUTTERS:
+Library shutter won't shut over closed doors
+Chapel doors also have the shutter problem
+Meeting room shutter *also* won't close over camera. Why shutters so much no work!?
 
 OTHER:
-Stars moving the wrong way??
-	Is it just spinning? Do I need a... something... to stop that?
-Could maybe still get the circuit scrap into the shuttle guns, just not as a machine board? Would it fit in a different containter category?
+Where's the storage fix wiring maints door even getting power from now?
+	Literally the tiny dot of wiring under the APC directly.
+Maybe replace a couple of the firelocks in caf with small ones and change the tiling or something
+	to make paths clearer?
 
 Check this stuff:
--Check roundstart tider shop light again. I turned the attached switch on. Did that break the door being bolted?
-	Light is still on anyway. :/ IG, it's set to on in the PoweredLight component?
-	I *might* have been testing the wrong version.
-	Nope, still on.
-	I changed the switch hookup to toggle by status instead of on to off. Maybe this fixes? I have no idea.
-	Still on.
-	Once more, sigh
--Execution telescreen facing.
 
 THINGS I COULD MAKE:
 - Plastic table
@@ -493,3 +499,151 @@ Check the det/prosc door *again*.
 /*       deviceNetId: Wireless */
 /* Tile variation command thingy */
 /* Grime everything up a bit again. */
+/* -Check roundstart tider shop light again. I turned the attached switch on. Did that break the door being bolted? */
+/* 	Light is still on anyway. :/ IG, it's set to on in the PoweredLight component? */
+/* 	I *might* have been testing the wrong version. */
+/* 	Nope, still on. */
+/* 	I changed the switch hookup to toggle by status instead of on to off. Maybe this fixes? I have no idea. */
+/* 	Still on. */
+/* 	Once more, sigh */
+/* 	It's off, but the dang shutter occluders aren't fixed. */
+/* 	Opening and closing the shutters fixes them. */
+/* 	Switched the button for a switch. */
+/* 	Still brokedydoken. I think they're trying to start out open or something? */
+/* 	Updating to latest on Master fixed this, apparently! */
+/* Unlink tider shop door from bulb... right? */
+/* Science closet blocked by lockbox + pacman */
+/* 	Probably I should move the circuit tiles so they don't hide the pacman, too */
+/* Disposals: It's silly to have the recycler recycle things right before they're sent to the airlock, right? */
+/* Power cells in maints robotics room give it away with the green light */
+/* Does the cafe have two eggplants? */
+/* 	No. */
+/* Engie locker room doors have odd tiling under them. */
+/* 	I feel like this room could use a little something extra, too. Maybe just a table with stuff. */
+/* 		Would help unclutter the break room table. */
+/* Take out cigs except "beneath the sink experience" from maint flooded room */
+/* South of tider shop: APC makes the continued corridor obvious. Maybe block with a single wall? */
+/* 	Girder also doesn't do much to obscure the path, since diagonal is visible. And */
+/* 		the locker's handle has a red light. */
+/* Chapel door tiles are mismatched */
+/* Uncleanable dirt behind the bar */
+/* -Re-check tider shop bulb now that the bulb's unlinked from the door */
+/* -Does the air sensor under tider shop give the tunnel away? */
+/* 	Nope. */
+	/* Also check what network they have. */
+/* -Prison mail delivery */
+/* -Bar tiles cleanable */
+/* -Execution telescreen facing. */
+/* 	They are just... always usable from the west. */
+/* 		Not anymore. */
+/* 	I replaced them post-update, so maybe that's enough to fix. Otherwise, I can change */
+/* 	the wallmount component. */
+/* Replace maint locker with welding supplies under tider shop */
+/* Take out lightbulbs, too */
+/* Too many maps in hallway north of medbay */
+/* -Disposals lever */
+/* 	Doesn't start in the right (left) position. */
+/* Prison mail makes the flash go off */
+/* Power conflict between restaurant bathroom and service hallway doors */
+/* Fix fix wiring in nw storage */
+/* 	Generally, fix wiring should have catwalks or something I guess? */
+/* I think the vault flare still isn't burnt out - do it in dev */
+/* Disposals lever again */
+/* Label APC in engie closet next to disposals */
+/* Fix the two APCs in sci that are connected with LV */
+/* Distro pipe east of command meeting goes under walls */
+/* Nav fix wiring needs clarity. */
+/* Give cargo more crates? Except of course there are plenty in Storage. */
+/* 	Does Storage need better signage? */
+/* Light in cargo maints outside of robotic area is kinda giving it away */
+/* Brigmedic maints door should probably allow both med and sec. */
+/* Make psych role actually exist D: */
+/* Robotics: Give 'em at least one power cell */
+/* Robotics: Is chassis things getting stuck in the wall a problem? */
+/* R&D: Doors need tiles under them */
+/* RD: Teapot is empty */
+/* 	Check genpop teapot too? */
+/* 		It has tea! */
+/* 	Wait, maybe the mice drank it? */
+/* Artis: Put the multitool right on top of the console. */
+/* Artis: Anchored canister blocks the gas pump */
+/* 	But it's still interactable. Just, not the blast shutter button */
+/* Chem: Outer windoor (facing hallway) should be general access */
+/* 	Could maybe give 'em a shutter, too, though */
+/* Botany: There's a non-secure windoor just for hydroponics */
+/* Sec: Label the damn fine cup of coffee and the cherry pie that'll kill ya */
+/* Sec: Should warden's office doors be set to "brig," or is there warden-specific? */
+/* Sec: Give genpop's microwave a box of donk pockets or something */
+/* 	It already has one. */
+/* Sec: Genpop's botany needs eyedroppers, *maybe* a scythe? */
+/* 	Eyedroppers not strictly required */
+/* Sec: Give warden a reagent grinder so that they can grind stuff up for prisoner botanists? */
+/* How actually do you make blunts with dried cannabis leaves? */
+/* Chapel: Bell's behind the organ */
+/* Chapel: Light switch, maybe? */
+* Clown: Door perms should be theater */
+/* 	Ditto mime and musician, right? */
+/* Janitor: Supply crate AND lockers is way too much */ 
+/* Emergency light overlapping normal one just by Nav */
+/* Def Lawyer: No tile under door to meeting room */
+/* Prosc: No books in bookshelf? */
+/* Lawyer: Sec door perms? */
+/* AI: Can't actually use the TV right next to it */
+/* AI: Can see into the north airlock because glass */
+/* Soap in sec/reactor hallway restroom is stuck in the wall */
+/* AI: Vision into teg airlock is a bit bleh */
+/* Detective: No holopad */
+/* NW cafeteria fire alarms don't work? */
+/* 	They're hooked up correctly, though. */
+/* Def Lawyer: Holopad isn't private */
+/* 	It's in a public area. */
+/* AI: Gap in vision at hallway outside coms */
+/* AI: No vision of salv shuttle area */
+/* Cameras across halls from dorm rooms so AI can peek in open doors? */
+/* 	Maybe, maybe not. */
+/* Genpop curtains start open? To make it less obvious there's a blind spot */
+/* AI: Little hole in vision at west Storage hall doors */
+/* Bar: Tonic and soda water got bigger and now fit weirdly on bar shelves */
+/* Bar: What's supposed to be on the table in the back room? */
+/* 	Toy spawner. Probably got et. */
+/* Chef: If there's supposed to be something in the hydroponics crate in the kitchen, there isn't. */
+/* 	But it does make sense as a place to put all the stuff that botany makes. */
+/* Chef: What if the shutter button also turned off the restaurant lights? */
+/* Chef: Assembly camera at the dish rack, hidden under a plate */
+/* Bar: Possible to climb over counter next to bar door */
+/* Chem: Also outer med side windoor should be medic-locked, not chem */
+/* Salv: Salv dock airlocks are engineering-locked? */
+/* Salv: Lower-left conveyor belt still isn't hooked up to levers */
+/* Salv: Salv magnet is pointing wrong way or something? Asteroid showed up on the opposite side of the station */
+/* HoP: Another assembly camera! Behind durathread and such */
+/* 2 parameds instead of 1? */
+/* AI Approach: Take out live turret for now */
+/* Library: Book return goes to wrong crate */
+/* AI: There's randomly a positronic brain on the AI computer? */
+/* 	Not when I'm not testing? */
+/* Def Lawyer (or prosc?): Coin for flipping, Terezi style */
+/* 	No point if it can't actually be flipped. */
+/* Stars moving the wrong way?? */
+/* 	Is it just spinning? Do I need a... something... to stop that? */
+/* Chef: What if the shutter button also turned off the restaurant lights? */
+/* Artis: No way to vent the central area */
+/* Make psych role actually exist D: */
+/* Chapel: Light switch, maybe? */
+/* Chapel: Bell's behind the organ */
+/* 	Yeah, this just happens. I'll have to move it, I guess. */
+/* Kitchen: Start the restaurant locked */
+	/* No, because the chef needs to see the effects of fixing the wiring. */
+/* Book return has "atmos front" and "engineering front"? They don't affect its operation, though. */
+/* 	Library: Try removing the MailingUnitComponent live */
+/* 	This worked! */
+/* 	Do it to prison mail too! */
+/* Bar: Bartender no access to carbon dioxide can */
+/* Brigmedic maints doors should probably allow both med and sec. */
+/* 	Med doesn't work? */
+/* 	Test it again - access configurator's complaining about not having */
+/* 		med now, not just sec. */
+/* 	Nope. */
+/* 	Actually, the execution area doesn't work either. */
+/* AI: Can't actually use the TV right next to it */
+/* 	This worked, but it's screwy and I should undo it. */
+/* Lots of hallyway decals under doors are wrong */
