@@ -1,11 +1,14 @@
 - type: entity
   id: RevSupplyRift
   name: supply rift
-  description: A rift that can be summoned by revolutionaries to bring in reinforcements.
+  description: A rift that can be summoned by revolutionaries to bring in Soviet armaments periodically.
   placement:
     mode: SnapgridCenter
   components:
   - type: DragonRift
+    spawn: CrateSovietArmaments
+    spawnCooldown: 35  # Spawn a crate every 35 seconds
+    spawnAccumulator: 35  # Spawn a crate immediately upon creation
   - type: Transform
     anchored: true
   - type: Physics

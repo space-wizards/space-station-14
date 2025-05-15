@@ -1,0 +1,28 @@
+- type: entity
+  id: CrateSovietArmaments
+  parent: CrateGeneric
+  name: soviet armaments crate
+  description: A steel crate with red markings containing revolutionary armaments.
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/generic.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/generic.rsi
+    color: "#cc3333"  # Red color to match revolutionary theme
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Effects/teleport_arrival.ogg
+  - type: EntityStorage
+    isCollidable: true
+    showContents: false
+    occludesLight: true
+  - type: SpawnOnOpen
+    prototypes:
+      - WeaponSniperMosin
+      - Finka
+      - WeaponPistolAPS
+      - WeaponPistolMakarov
+      - SpearUranium
+      - ClothingOuterArmorBasic
+    chance: 1.0
+    rng: SovietCrateRNG
