@@ -83,27 +83,19 @@ public sealed class PlantAnalyzerProduceData(int yield, float potency, List<stri
 
     private static string ObscurePotency(float potency)
     {
-        var potencyFtl = "plant-analyzer-potency-";
-        if (potency <= 5)      // 5 should still be tiny
-            potencyFtl += "tiny";
-        else if (potency < 10) // 10 should be below-average
-            potencyFtl += "small";
-        else if (potency < 15)
-            potencyFtl += "below-average";
-        else if (potency < 20)
-            potencyFtl += "average";
-        else if (potency <= 25) // 25 is the highest starting value
-            potencyFtl += "above-average";
-        else if (potency < 30)
-            potencyFtl += "large";
-        else if (potency < 40)
-            potencyFtl += "huge";
-        else if (potency < 50)
-            potencyFtl += "gigantic";
-        else if (potency < 60)
-            potencyFtl += "ludicrous";
-        else
-            potencyFtl += "immeasurable";
+        var potencyFtl = "plant-analyzer-potency-" + potency switch
+        {
+            <= 5 => "tiny",                     // 5 should still be tiny
+            > 5 and < 10 => "small",
+            >= 10 and < 15 => "below-average",  // 10 should be below-average
+            >= 15 and < 20 => "average",
+            >= 20 and <= 25 => "above-average", // 25 is the highest starting value
+            >= 20 and < 30 => "large",
+            >= 30 and < 40 => "huge",
+            >= 40 and < 50 => "gigantic",
+            >= 50 and < 60 => "ludicrous",
+            _ => "immeasurable"
+        };
 
         return potencyFtl;
     }
