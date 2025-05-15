@@ -9,7 +9,6 @@ namespace Content.Server.Github.Requests;
 /// </summary>
 public sealed class CreateIssue : IGithubRequest
 {
-    [JsonIgnore]
     public HttpMethod RequestMethod => HttpMethod.Post;
 
     [JsonPropertyName("title"), JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

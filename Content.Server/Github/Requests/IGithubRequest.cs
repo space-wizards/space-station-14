@@ -18,7 +18,6 @@ public interface IGithubRequest
     /// <summary>
     /// What kind of request should we make for this?
     /// </summary>
-    [JsonIgnore]
     public HttpMethod RequestMethod { get; }
 
     /// <summary>

@@ -9,7 +9,6 @@ namespace Content.Server.Github.Requests;
 /// </summary>
 public sealed class GetRateLimit : IGithubRequest
 {
-    [JsonIgnore]
     public HttpMethod RequestMethod => HttpMethod.Get;
 
     public string GetLocation(string owner, string repository)
