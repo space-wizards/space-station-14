@@ -17,8 +17,8 @@ namespace Content.Server.Forensics
     public sealed class ForensicPadSystem : EntitySystem
     {
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly ForensicsSystem _forensics = default!;
         [Dependency] private readonly LabelSystem _label = default!;
 
         public override void Initialize()
@@ -60,8 +60,19 @@ namespace Content.Server.Forensics
                 return;
             }
 
-            if (!TryGetSample(args.Target.Value, args.User, out var sample) || sample is null)
+            if (!_forensics.CanAccessFingerprint(args.Target.Value, out var blocker))
+            {
+
+                if (blocker is { } item)
+                    _popupSystem.PopupEntity(Loc.GetString("forensic-pad-no-access-due", ("entity", Identity.Entity(item, EntityManager))), args.Target.Value, args.User);
+                else
+                    _popupSystem.PopupEntity(Loc.GetString("forensic-pad-no-access"), args.Target.Value, args.User);
+
                 return;
+            }
+            
+            if (!TryGetSample(args.Target.Value, args.User, out var sample) || sample is null)
+              return;
 
             StartScan(uid, args.User, args.Target.Value, component, sample);
         }

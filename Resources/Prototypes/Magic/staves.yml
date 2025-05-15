@@ -7,6 +7,10 @@
   name: RGB staff
   description: Helps fix the underabundance of RGB gear on the station.
   components:
+  - type: LimitedCharges
+    maxCharges: 25
+  - type: AutoRecharge
+    rechargeDuration: 30
   - type: Sprite
     sprite: Objects/Weapons/Guns/Basic/staves.rsi
     layers:
@@ -14,6 +18,7 @@
     - state: nothing-unshaded
       shader: unshaded
   - type: ActionOnInteract
+    requiresCharge: true
     actions:
     - ActionRgbLight
   - type: Item
@@ -38,11 +43,16 @@
   name: staff of animation
   description: Brings inanimate objects to life!
   components:
+  - type: LimitedCharges
+    maxCharges: 5
+  - type: AutoRecharge
+    rechargeDuration: 30
   - type: Sprite
     sprite: Objects/Weapons/Guns/Basic/staves.rsi
     layers:
     - state: animation
   - type: ActionOnInteract
+    requiresCharge: true
     actions:
     - ActionAnimateSpell
   - type: Item
@@ -61,7 +71,6 @@
   components:
   - type: EntityTargetAction
     whitelist: { components: [ PointLight ] }
-    charges: 25
     sound: /Audio/Magic/blink.ogg
     event: !type:ChangeComponentsSpellEvent
       toAdd:

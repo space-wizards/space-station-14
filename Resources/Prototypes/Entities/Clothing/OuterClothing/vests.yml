@@ -1,56 +1,4 @@
-#Web vest
-- type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]
-  id: ClothingOuterVestWeb
-  name: web vest
-  description: A synthetic armor vest. This one has added webbing and ballistic plates.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Vests/webvest.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/webvest.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.6 #ballistic plates = better protection
-        Slash: 0.6
-        Piercing: 0.3
-        Heat: 0.9
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
-
-#Mercenary web vest
-- type: entity
-  parent: [ BaseMajorContraband, ClothingOuterVestWeb] #web vest so it should have some pockets for ammo
-  id: ClothingOuterVestWebMerc
-  name: mercenary web vest
-  description: A high-quality armored vest made from a hard synthetic material. It's surprisingly flexible and light, despite formidable armor plating.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.7 #slightly better overall protection but slightly worse than bulletproof armor against bullets seems sensible
-        Slash: 0.7
-        Piercing: 0.5
-        Heat: 0.9
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
-
-#Detective's vest
-- type: entity
-  parent: [ClothingOuterArmorBase, BaseSecurityContraband]
-  id: ClothingOuterVestDetective
-  name: detective's vest
-  description: A hard-boiled private investigator's armored vest.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Vests/detvest.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/detvest.rsi
+#NOTE: vests with armor belong to armor.yml
 
 #Hazard vest
 - type: entity
@@ -99,3 +47,7 @@
     sprite: Clothing/OuterClothing/Vests/tankharness.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/tankharness.rsi
+  - type: Item
+    size: Normal # Make smaller than typical outer clothing
+    shape:
+    - 0, 0, 0, 1
