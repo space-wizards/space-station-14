@@ -1,0 +1,26 @@
+hail-0 = You have the right to remain silent... forever!!
+hail-1 = Dead or alive, you're coming with me!!
+hail-2 = Go ahead, make my day!!
+hail-3 = Respect my authoritah!!
+hail-4 = I will find you and I will kill you !!
+hail-5 = Freeze ! Security!!
+hail-6 = I am the law!!
+hail-7 = You're under arrest... or under ground!!
+hail-8 = You just bought a toolbox to a gunfight!!
+hail-9 = Drop the weapon... or I drop you!!
+hail-10 = You think you're bad ? I've buried guys like you!!
+hail-11 = Tell it to the HOS... if you make it that far!!
+hail-12 = Drop the gun, creep!!
+hail-13 = Do you feel lucky, punk ?!!
+hail-14 = Stop or be erased !!
+hail-15 = This is your last chance. Get on your knees!!
+hail-16 = You're a disease... and I'm the cure!!
+hail-17 = You're coming with me!!
+hail-18 = You have to remain silent... so shut the hell up!!
+hail-19 = Death to the tide!!
+hail-20 = You have the right to get beat down!!
+hail-21 = Game over, loser!!
+hail-22 = Resistance is futile!!
+hail-23 = The safe word is police brutality!!
+hail-24 = Stop hitting yourself, stop hitting yourself !!
+
