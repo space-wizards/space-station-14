@@ -70,7 +70,7 @@
   components:
   - type: GameRule
   - type: BasicStationEventScheduler
-    minimumTimeUntilFirstEvent: 600 # 10 min 
+    minimumTimeUntilFirstEvent: 600 # 10 min
     minMaxEventTiming:
       min: 750 # 12.5 min
       max: 930 # 17.5 min
@@ -211,7 +211,7 @@
   - type: ImmovableRodRule
     rodPrototypes:
     - id: ImmovableRodKeepTilesStill
-      prob: 0.94
+      prob: 0.925
       orGroup: rodProto
     - id: ImmovableRodMop
       prob: 0.0075
@@ -237,3 +237,12 @@
     - id: ImmovableRodWeh
       prob: 0.0075
       orGroup: rodProto
+    # - id: ImmovableRodSus
+    #   prob: 0.0075
+    #   orGroup: rodProto
+    # - id: ImmovableRodSpearOfGourmand
+    #   prob: 0.0075
+    #   orGroup: rodProto
+    # - id: ImmovableRodToolbox
+    #   prob: 0.0075
+    #   orGroup: rodProto

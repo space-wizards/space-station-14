@@ -189,39 +189,39 @@
     state: plushie_lizard
     noRot: false
 
-  - type: entity
-    parent: ImmovableRodKeepTilesStill
-    id: ImmovableRodSus
-    name: immovable among pequeño
-    description: They were not the impostor.
-    components:
-    - type: Sprite
-      sprite: Objects/Fun/pequeno.rsi
-      layers:
-      - state: base
-        map: [ "enum.DamageStateVisualLayers.Base" ]
-      - state: visor
+# - type: entity
+#   parent: ImmovableRodKeepTilesStill
+#   id: ImmovableRodSus
+  # name: immovable among pequeño
+  # description: They were not the impostor.
+  # components:
+  # - type: Sprite
+  #   sprite: Objects/Fun/pequeno.rsi
+  #   layers:
+  #   - state: base
+  #     map: [ "enum.DamageStateVisualLayers.Base" ]
+  #   - state: visor
 
-  - type: entity
-    parent: ImmovableRodKeepTilesStill
-    id: ImmovableRodSpearOfGourmand
-    name: immovable spear
-    description: Legends say this was thrown into orbit by the biggest chungus on Planet Wawa, shortly before a long nap.
-    components:
-    - type: Sprite
-      sprite: Objects/Weapons/Melee/spear.rsi
-      layers:
-      - state: spear
-      - state: spear1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+# - type: entity
+#   parent: ImmovableRodKeepTilesStill
+#   id: ImmovableRodSpearOfGourmand
+  # name: immovable spear
+  # description: Legends say this was thrown into orbit by the biggest chungus on Planet Wawa, shortly before a long nap.
+  # components:
+  # - type: Sprite
+  #   sprite: Objects/Weapons/Melee/spear.rsi
+  #   layers:
+  #   - state: spear
+  #   - state: spear1
+  #     map: ["enum.SolutionContainerLayers.Fill"]
+  #     visible: false
 
-- type: entity
-  parent: ImmovableRodKeepTilesStill
-  id: ImmovableRodToolbox
-  name: the robustest toolbox
-  description: Garbage collection!!
-  components:
-  - type: Sprite
-    sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
-    state: icon
+# - type: entity
+#   parent: ImmovableRodKeepTilesStill
+#   id: ImmovableRodToolbox
+  # name: the robustest toolbox
+  # description: Garbage collection!!
+  # components:
+  # - type: Sprite
+  #   sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
+  #   state: icon
