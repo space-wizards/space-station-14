@@ -303,7 +303,7 @@
     totalIntensity: 200 # bigger kaboom
     intensitySlope: 20
     maxIntensity: 100
-    canCreateVacuum: false 
+    canCreateVacuum: false
 
 - type: entity
   id: BaseBorgChassisNT
