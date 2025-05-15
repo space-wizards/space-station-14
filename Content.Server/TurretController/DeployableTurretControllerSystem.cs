@@ -115,8 +115,8 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
     protected override void ChangeExemptAccessLevels
         (Entity<DeployableTurretControllerComponent> ent,
         HashSet<ProtoId<AccessLevelPrototype>> exemptions,
-        bool enabled, EntityUid?
-        user = null)
+        bool enabled,
+        EntityUid? user = null)
     {
         base.ChangeExemptAccessLevels(ent, exemptions, enabled, user);
 

@@ -12,8 +12,7 @@
     <BoxContainer Orientation="Vertical" HorizontalExpand="True">
 
         <!--Header-->
-        <BoxContainer SetHeight="26" Margin="4 2 8 0" Orientation="Horizontal">
-            <Control HorizontalExpand="True"/>
+        <BoxContainer SetHeight="26" Margin="4 2 8 0" Orientation="Horizontal" HorizontalAlignment="Right">
             <TextureButton Name="CloseButton" StyleClasses="windowCloseButton" Modulate="#646464" VerticalAlignment="Center" Margin="0 4 4 0"/>
         </BoxContainer>
 

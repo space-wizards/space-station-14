@@ -37,7 +37,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
 
     // Temp values
     private List<CheckBox> _checkBoxes = new();
-    private HashSet<AccessLevelPrototype> _accessLevelsForTab = new();
+    private List<AccessLevelPrototype> _accessLevelsForTab = new();
     private List<AccessLevelEntry> _accessLevelEntries = new();
 
     // Events
@@ -57,8 +57,6 @@ public sealed partial class TurretControllerWindow : BaseWindow
         _accessReaderSystem = _entManager.System<AccessReaderSystem>();
 
         CloseButton.OnPressed += _ => Close();
-        XamlChildren = ContentsContainer.Children;
-
         OnAccessGroupChangedEvent += OnAccessGroupChanged;
 
         var smallFont = _cache.NotoStack(size: 8);
@@ -190,7 +188,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
         var canInteract = IsLocalPlayerAllowedToInteract();
 
         // Create a list of known access groups with which to populate the UI
-        var groupedAccessLevels = new Dictionary<AccessGroupPrototype, HashSet<AccessLevelPrototype>>();
+        var groupedAccessLevels = new Dictionary<AccessGroupPrototype, List<AccessLevelPrototype>>();
 
         foreach (var accessGroup in turretControls.AccessGroups)
         {
@@ -306,7 +304,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
 
         // Get the access levels associated with the current tab
         _accessLevelsForTab = groupedAccessLevels[orderedAccessGroups[_accessGroupTabIndex]];
-        _accessLevelsForTab = _accessLevelsForTab.OrderBy(x => x.GetAccessLevelName()).ToHashSet();
+        _accessLevelsForTab = _accessLevelsForTab.OrderBy(x => x.GetAccessLevelName()).ToList();
 
         // Remove excess access level buttons from the UI
         // Note: if _accessLevelsForTab is length 'n', AccessLevelGrid should have 'n + 1' children at the end
@@ -383,7 +381,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
         // Update the access levels buttons' appearance
         for (int i = 0; i < _accessLevelEntries.Count; i++)
         {
-            var accessLevel = _accessLevelsForTab.ElementAt(i);
+            var accessLevel = _accessLevelsForTab[i];
             var accessLevelEntry = _accessLevelEntries[i];
 
             accessLevelEntry.AccessLevel = accessLevel;
