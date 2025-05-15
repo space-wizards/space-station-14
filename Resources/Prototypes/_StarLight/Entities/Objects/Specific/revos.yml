@@ -21,6 +21,34 @@
   - type: Currency
     price:
       Telebond: 1
+  - type: Food
+    solution: food
+    delay: 2
+    forceFeedDelay: 2
+    useSound:
+      collection: eating
+  - type: FlavorProfile
+    flavors:
+    - paper
+    - metallic
+    - chemical
+  - type: BadFood
+  - type: ContextMenuFood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 16
+        reagents:
+        - ReagentId: Razorium
+          Quantity: 2
+        - ReagentId: Ephedrine
+          Quantity: 3
+        - ReagentId: Silicon
+          Quantity: 4
+        - ReagentId: Vodka
+          Quantity: 5
+        - ReagentId: Tazinide
+          Quantity: 2
 
 - type: entity
   parent: Telebond
