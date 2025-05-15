@@ -301,19 +301,10 @@ public abstract partial class SharedMoverController : VirtualController
 
         var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
 
-        var bulldozeEv = new FrictionBulldozeEvent()
-        {
-            Friction = friction,
-            MinimumFrictionSpeed = minimumFrictionSpeed,
-            Acceleration = accel,
-        };
-
-        RaiseLocalEvent(uid, ref bulldozeEv);
-
-        Friction(bulldozeEv.MinimumFrictionSpeed, frameTime, bulldozeEv.Friction, ref velocity);
+        Friction(minimumFrictionSpeed, frameTime, friction, ref velocity);
 
         if (!weightless || touching)
-            Accelerate(ref velocity, in wishDir, bulldozeEv.Acceleration, frameTime);
+            Accelerate(ref velocity, in wishDir, accel, frameTime);
 
         SetWishDir((uid, mover), wishDir);
 
