@@ -52,6 +52,7 @@ public abstract class SharedConveyorController : VirtualController
 
         SubscribeLocalEvent<ConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
         SubscribeLocalEvent<ConveyedComponent, MoverTileDefEvent>(OnMoverTileDefEvent);
+        SubscribeLocalEvent<ConveyedComponent, FrictionBulldozeEvent>(OnFrictionBulldozeEvent);
         SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
         SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
 
@@ -75,15 +76,12 @@ public abstract class SharedConveyorController : VirtualController
         if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
             return;
 
-        var bodyCompensation = 1f;
-
-        if (TryComp<MovementSpeedModifierComponent>(ent, out var move)
-            && !MathHelper.CloseTo(move.BaseFriction, MovementSpeedModifierComponent.DefaultFriction))
-            bodyCompensation *= move.BaseFriction / MovementSpeedModifierComponent.DefaultFriction;
-
-        args.MobFriction = 0.5f * bodyCompensation;
-        args.Friction = 0.5f * bodyCompensation;
         args.MobAcceleration = 1f;
+    }
+
+    private void OnFrictionBulldozeEvent(Entity<ConveyedComponent> ent, ref FrictionBulldozeEvent args)
+    {
+        args.Friction = 10f;
     }
 
     private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)
