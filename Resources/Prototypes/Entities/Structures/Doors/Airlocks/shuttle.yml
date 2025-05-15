@@ -57,6 +57,8 @@
     node: airlock
   - type: StaticPrice
     price: 350
+  - type: Paintable
+    group: null
 
 - type: entity
   id: AirlockGlassShuttle

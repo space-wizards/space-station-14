@@ -18,6 +18,8 @@
     sprite: Structures/Doors/Airlocks/Standard/external.rsi
   - type: Wires
     layoutId: AirlockExternal
+  - type: Paintable
+    group: null
 
 - type: entity
   parent: AirlockExternal
@@ -41,5 +43,3 @@
         - FullTileMask
         layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
         - GlassAirlockLayer
-  - type: Paintable
-    group: AirlockGlass
