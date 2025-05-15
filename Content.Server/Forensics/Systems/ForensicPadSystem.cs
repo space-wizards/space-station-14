@@ -70,9 +70,8 @@ namespace Content.Server.Forensics
 
                 return;
             }
-            
             if (!TryGetSample(args.Target.Value, args.User, out var sample) || sample is null)
-              return;
+                return;
 
             StartScan(uid, args.User, args.Target.Value, component, sample);
         }
