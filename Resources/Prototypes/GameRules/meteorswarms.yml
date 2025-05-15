@@ -237,12 +237,12 @@
     - id: ImmovableRodWeh
       prob: 0.0075
       orGroup: rodProto
-    # - id: ImmovableRodSus
-    #   prob: 0.0075
-    #   orGroup: rodProto
-    # - id: ImmovableRodSpearOfGourmand
-    #   prob: 0.0075
-    #   orGroup: rodProto
-    # - id: ImmovableRodToolbox
-    #   prob: 0.0075
-    #   orGroup: rodProto
+    - id: ImmovableRodSus
+      prob: 0.0075
+      orGroup: rodProto
+    - id: ImmovableRodSpearOfGourmand
+      prob: 0.0075
+      orGroup: rodProto
+    - id: ImmovableRodToolbox
+      prob: 0.0075
+      orGroup: rodProto

@@ -11,6 +11,10 @@
     state: icon
     noRot: false
   - type: ImmovableRod
+    damage:
+      types:
+        Piercing: 85 # CLANG
+        Structural: 1000 # C L A N G
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
@@ -55,15 +59,6 @@
     minSpeed: 1
     maxSpeed: 5
 
-- type: entity
-  parent: ImmovableRodDespawn
-  id: ImmovableRodKeepTiles
-  suffix: Keep Tiles
-  components:
-  - type: ImmovableRod
-    destroyTiles: false
-    hitSoundProbability: 1.0
-
 # For Wizard Polymorph
 - type: entity
   parent: ImmovableRod
@@ -72,7 +67,6 @@
   components:
   - type: ImmovableRod # Deliberately significantly weaker than the non-spell counterpart.
     maxSpeed: 20 # Because the Wizard's camera follows the rod, it needs slowing down a lot.
-    destroyTiles: false
     randomizeVelocity: false
     damage:
       types:
@@ -92,16 +86,17 @@
   - type: NoSlip
 
 - type: entity
-  parent: ImmovableRodKeepTiles
-  id: ImmovableRodKeepTilesStill
-  suffix: Keep Tiles, Still
+  parent: ImmovableRod
+  id: ImmovableRodStill
+  name: Immobile Rod
+  description: Shh, it's sleeping.
   components:
   - type: ImmovableRod
     randomizeVelocity: false
     maxSpeed: 0
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodMop
   name: immovable mop
   description: Hurled like a javelin, with the power of a thousand furious janitors.
@@ -113,7 +108,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodShark
   name: immovable shark
   description: SHARK TORNADO!
@@ -125,7 +120,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodClown
   name: immovable clown
   description: Ejected from the neighbouring station one solar system over. HONK!
@@ -137,7 +132,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodBanana
   name: immovable banana
   description: At least you won't slip on it.
@@ -148,7 +143,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodHammer
   name: immovable hammer
   description: Bwoink.
@@ -160,7 +155,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodThrongler
   name: immovable throngler
   description: If you catch it, you can keep it.
@@ -172,7 +167,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodGibstick
   name: immovable gibstick
   description: What did you expect?
@@ -184,7 +179,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodWeh
   name: immovable weh
   description: WEH!
@@ -194,39 +189,39 @@
     state: plushie_lizard
     noRot: false
 
-# - type: entity
-#   parent: ImmovableRodKeepTilesStill
-#   id: ImmovableRodSus
-  # name: immovable among pequeño
-  # description: They were not the impostor.
-  # components:
-  # - type: Sprite
-  #   sprite: Objects/Fun/pequeno.rsi
-  #   layers:
-  #   - state: base
-  #     map: [ "enum.DamageStateVisualLayers.Base" ]
-  #   - state: visor
+- type: entity
+  parent: ImmovableRod
+  id: ImmovableRodSus
+  name: immovable among pequeño
+  description: They were not the impostor.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pequeno.rsi
+    layers:
+    - state: base
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: visor
 
-# - type: entity
-#   parent: ImmovableRodKeepTilesStill
-#   id: ImmovableRodSpearOfGourmand
-  # name: immovable spear
-  # description: Legends say this was thrown into orbit by the biggest chungus on Planet Wawa, shortly before a long nap.
-  # components:
-  # - type: Sprite
-  #   sprite: Objects/Weapons/Melee/spear.rsi
-  #   layers:
-  #   - state: spear
-  #   - state: spear1
-  #     map: ["enum.SolutionContainerLayers.Fill"]
-  #     visible: false
+- type: entity
+  parent: ImmovableRod
+  id: ImmovableRodSpearOfGourmand
+  name: immovable spear
+  description: Legends say this was thrown into orbit by the biggest chungus on Planet Wawa, shortly before a long nap.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/spear.rsi
+    layers:
+    - state: spear
+    - state: spear1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
 
-# - type: entity
-#   parent: ImmovableRodKeepTilesStill
-#   id: ImmovableRodToolbox
-  # name: the robustest toolbox
-  # description: Garbage collection!!
-  # components:
-  # - type: Sprite
-  #   sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
-  #   state: icon
+- type: entity
+  parent: ImmovableRod
+  id: ImmovableRodToolbox
+  name: the robustest toolbox
+  description: Garbage collection!!
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
+    state: icon

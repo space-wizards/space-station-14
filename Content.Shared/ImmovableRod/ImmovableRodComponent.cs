@@ -52,15 +52,6 @@ public sealed partial class ImmovableRodComponent : Component
     public Angle DirectionOverride = Angle.Zero;
 
     /// <summary>
-    ///     Should this rod set the tiles it passes over to empty space?
-    /// </summary>
-    /// <remarks>
-    ///     Remember that tile destruction is a very powerful and often very un-fun mechanic. Use sparingly.
-    /// </remarks>
-    [DataField]
-    public bool DestroyTiles = true;
-
-    /// <summary>
     ///     How much damage, if any, does this rod do?
     /// </summary>
     /// <remarks>
@@ -80,7 +71,7 @@ public sealed partial class ImmovableRodComponent : Component
     ///     Should this rod spawn anything when it hits another rod?
     /// </summary>
     [DataField]
-    public string? SpawnOnRodCollision;
+    public string? SpawnOnRodCollision = "Singularity";
 
     /// <summary>
     ///     If this rod spawns anything when it hits another rod, what popup text should appear?
@@ -99,4 +90,10 @@ public sealed partial class ImmovableRodComponent : Component
     /// </summary>
     [DataField]
     public string MobCollisionFixtureId = "flammable"; // Temporary default; aligns with mob collision code.
+
+    /// <summary>
+    /// Has this rod already hit another immovable rod? Used to avoid "oops, two singularities!"
+    /// bugs because collisions are evaluated on the same simulation tick.
+    /// </summary>
+    public bool HasCollidedWithRod;
 }

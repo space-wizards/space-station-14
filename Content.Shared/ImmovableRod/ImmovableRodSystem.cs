@@ -3,8 +3,6 @@ using Content.Shared.Examine;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -22,7 +20,6 @@ public abstract class SharedImmovableRodSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
 
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedStaminaSystem _stamina = default!;
@@ -34,24 +31,6 @@ public abstract class SharedImmovableRodSystem : EntitySystem
         SubscribeLocalEvent<ImmovableRodComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<ImmovableRodComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ImmovableRodComponent, ExaminedEvent>(OnExamined);
-    }
-
-    // TODO: Move this code to a different component (and make it shared with the Singulo etc).
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        // TODO: Not a fan of this being called each update.
-        while (AllEntityQuery<ImmovableRodComponent, TransformComponent>().MoveNext(out var rod, out var trans))
-        {
-            if (!rod.DestroyTiles)
-                continue;
-
-            if (!TryComp<MapGridComponent>(trans.GridUid, out var grid))
-                continue;
-
-            _map.SetTile(trans.GridUid.Value, grid, trans.Coordinates, Tile.Empty);
-        }
     }
 
     private void OnMapInit(EntityUid uid, ImmovableRodComponent component, MapInitEvent args)
@@ -94,17 +73,17 @@ public abstract class SharedImmovableRodSystem : EntitySystem
         if (_random.Prob(ent.Comp.HitSoundProbability))
             _audio.PlayPvs(ent.Comp.HitSound, ent);
 
-        if (HasComp<ImmovableRodComponent>(args.OtherEntity))
-            HandleRodCollision(ent, args.OtherEntity);
+        if (TryComp<ImmovableRodComponent>(args.OtherEntity, out var othComp))
+            HandleRodCollision(ent, (args.OtherEntity, othComp));
         else if (HasComp<MobStateComponent>(args.OtherEntity))
             HandleMobCollision(ent, args);
         else if (ent.Comp.Damage != null)
             _damageable.TryChangeDamage(args.OtherEntity, ent.Comp.Damage, ignoreResistances: true);
     }
 
-    private void HandleRodCollision(Entity<ImmovableRodComponent> rod, EntityUid target)
+    private void HandleRodCollision(Entity<ImmovableRodComponent> rod, Entity<ImmovableRodComponent> target)
     {
-        if (rod.Comp.SpawnOnRodCollision != null)
+        if (rod.Comp is {SpawnOnRodCollision: not null, HasCollidedWithRod: false} && !target.Comp.HasCollidedWithRod)
         {
             var coords = Transform(target).Coordinates;
             var popup = Loc.GetString(rod.Comp.OnRodCollisionPopup);
@@ -113,6 +92,9 @@ public abstract class SharedImmovableRodSystem : EntitySystem
 
             SpawnAtPosition(rod.Comp.SpawnOnRodCollision, coords);
         }
+
+        rod.Comp.HasCollidedWithRod = true;
+        target.Comp.HasCollidedWithRod = true;
 
         Del(rod);
         Del(target);
