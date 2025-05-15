@@ -87,8 +87,6 @@
       weight: 0.25
     - id: ClothingHeadHatWeldingMaskPainted
       weight: 0.25
-    - id: ClothingEyesGlassesMeson
-      weight: 0.25
 
 - type: entityTable
   id: FillWelderSuppliesMask
