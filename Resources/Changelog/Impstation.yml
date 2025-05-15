@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: theqwat
-  changes:
-  - message: 'Changeling tentacle: a new utility arm for changelings... get your "friends"
-      from across the bar! (remember to eat before stretching your limbs)'
-    type: Add
-  id: 1181
-  time: '2025-02-21T05:13:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1723
-- author: Sha-Seng
-  changes:
-  - message: Glowing eyes markings for thaven in the Head category
-    type: Add
-  - message: +1 Head (Top) marking slot so you can have two piercings and eyeliner
-    type: Tweak
-  id: 1182
-  time: '2025-02-21T05:17:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1740
 - author: Sha-Seng
   changes:
   - message: Thavens can now select masculine/feminine voices by changing the 'sex'
@@ -4209,3 +4192,32 @@
   id: 1680
   time: '2025-05-14T22:41:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2497
+- author: Kandiyaki
+  changes:
+  - message: Sacrificing a fellow crewmember as heretic will now provide an extra
+      knowledge point. totaling to 2 for a non-command and 3 for a command.
+    type: Tweak
+  - message: Heretic's ritual of knowledge will no longer break when attempting to
+      use it without all the requirements present.
+    type: Fix
+  - message: Eldritch tomes will now notify onlookers when a heretic begins to read
+      them.
+    type: Tweak
+  - message: Eldritch tomes have had their descriptions slightly changed.
+    type: Tweak
+  - message: Reality tears will now last 10 seconds before disappearing and spitting
+      out an eldritch tome.
+    type: Tweak
+  - message: Reality tears are now audible from a much larger radius.
+    type: Tweak
+  id: 1681
+  time: '2025-05-15T00:40:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2484
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Gave Mothroaches and Cockroaches a 1 damage bite attack. Its time to
+      fight back my roach brethren!
+    type: Tweak
+  id: 1682
+  time: '2025-05-15T00:40:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2460
