@@ -1,4 +1,5 @@
-﻿using Content.Server.Chat.Managers;
+﻿using System.Threading.Tasks;
+using Content.Server.Chat.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Discord.WebSocket;
@@ -60,20 +61,17 @@ public sealed class DiscordChatLink
         if (message.Author.IsBot)
             return;
 
-        _taskManager.RunOnMainThread(() =>
+        if (message.Channel.Id == _oocChannelId)
         {
-            if (message.Channel.Id == _oocChannelId)
-            {
-                _chatManager.SendHookOOC(message.Author.Username, message.Content);
-            }
-            else if (message.Channel.Id == _adminChannelId)
-            {
-                _chatManager.SendHookAdmin(message.Author.Username, message.Content);
-            }
-        });
+            _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(message.Author.Username, message.Content));
+        }
+        else if (message.Channel.Id == _adminChannelId)
+        {
+            _taskManager.RunOnMainThread(() => _chatManager.SendHookAdmin(message.Author.Username, message.Content));
+        }
     }
 
-    public void SendMessage(string message, string author, ChatChannel channel)
+    public async Task SendMessage(string message, string author, ChatChannel channel)
     {
         var channelId = channel switch
         {
@@ -91,6 +89,6 @@ public sealed class DiscordChatLink
         // @ and < are both problematic for discord due to pinging. / is sanitized solely to kneecap links to murder embeds via blunt force
         message = message.Replace("@", "\\@").Replace("<", "\\<").Replace("/", "\\/");
 
-        _ = _discordLink.SendMessageAsync(channelId.Value, $"**{channel.ToString().ToUpper()}**: `{author}`: {message}");
+        await _discordLink.SendMessageAsync(channelId.Value, $"**{channel.GetString()}**: `{author}`: {message}");
     }
 }

@@ -134,20 +134,19 @@ public sealed class DiscordLink : IPostInjectInit
         });
     }
 
-    public void Shutdown()
+    public async Task Shutdown()
     {
         if (_client != null)
         {
             _sawmill.Info("Disconnecting from Discord.");
-            _client.Log -= Log;
 
             // Unsubscribe from the events.
             _client.MessageReceived -= OnCommandReceivedInternal;
             _client.MessageReceived -= OnMessageReceivedInternal;
 
-            _client.LogoutAsync();
-            _client.StopAsync();
-            _client.Dispose();
+            await _client.LogoutAsync();
+            await _client.StopAsync();
+            await _client.DisposeAsync();
             _client = null;
         }
 
@@ -185,7 +184,9 @@ public sealed class DiscordLink : IPostInjectInit
 
     private string FormatLog(LogMessage msg)
     {
-        return msg.Exception is null ? $"{msg.Source}: {msg.Message}" : $"{msg.Source}: {msg.Exception}\n{msg.Message}";
+        return msg.Exception is null
+            ? $"{msg.Source}: {msg.Message}"
+            : $"{msg.Source}: {msg.Message}\n{msg.Exception}";
     }
 
     private Task Log(LogMessage msg)
@@ -218,8 +219,8 @@ public sealed class DiscordLink : IPostInjectInit
         OnCommandReceived?.Invoke(new CommandReceivedEventArgs
         {
             Command = split[0],
-            Arguments = split.Skip(1).ToArray(),
-            Message = message
+            Arguments = split[1..],
+            Message = message,
         });
         return Task.CompletedTask;
     }
