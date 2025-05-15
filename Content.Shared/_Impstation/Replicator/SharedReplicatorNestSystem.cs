@@ -217,9 +217,12 @@ public abstract class SharedReplicatorNestSystem : EntitySystem
         Dirty(ent);
 
         // finally, update the PointsStorage entity.
-        ent.Comp.PointsStorage.Comp.Level = ent.Comp.CurrentLevel;
-        ent.Comp.PointsStorage.Comp.TotalPoints = ent.Comp.TotalPoints;
-        ent.Comp.PointsStorage.Comp.TotalReplicators = ent.Comp.SpawnedMinions.Count;
+        if (!TryComp<ReplicatorNestPointsStorageComponent>(ent.Comp.PointsStorage, out var pointsStorageComponent))
+            pointsStorageComponent = EnsureComp<ReplicatorNestPointsStorageComponent>(ent.Comp.PointsStorage);
+
+        pointsStorageComponent.Level = ent.Comp.CurrentLevel;
+        pointsStorageComponent.TotalPoints = ent.Comp.TotalPoints;
+        pointsStorageComponent.TotalReplicators = ent.Comp.SpawnedMinions.Count;
     }
 
     private void SpawnNew(Entity<ReplicatorNestComponent> ent)

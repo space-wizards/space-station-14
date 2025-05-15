@@ -106,9 +106,9 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
         ent.Comp.NextUpgradeAt = ent.Comp.UpgradeAt;
 
         var pointsStorageEnt = Spawn("ReplicatorNestPointsStorage", Transform(ent).Coordinates);
-        var pointsStorageComp = EnsureComp<ReplicatorNestPointsStorageComponent>(pointsStorageEnt);
+        EnsureComp<ReplicatorNestPointsStorageComponent>(pointsStorageEnt);
 
-        ent.Comp.PointsStorage = (pointsStorageEnt, pointsStorageComp);
+        ent.Comp.PointsStorage = pointsStorageEnt;
     }
 
     private void OnStepTriggerAttempt(Entity<ReplicatorNestComponent> ent, ref StepTriggerAttemptEvent args)
@@ -206,8 +206,17 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
             _pinpointer.SetTarget(pocket1.Value, queen, pinpointer);
         }
 
+        // turn off the ambient sound on the points storage entity.
         if (TryComp<AmbientSoundComponent>(ent.Comp.PointsStorage, out var ambientComp))
             _ambientSound.SetAmbience(ent.Comp.PointsStorage, false, ambientComp);
+
+        // update the points storage ent to make sure it's up to date.
+        if (!TryComp<ReplicatorNestPointsStorageComponent>(ent.Comp.PointsStorage, out var pointsStorageComponent))
+            pointsStorageComponent = EnsureComp<ReplicatorNestPointsStorageComponent>(ent.Comp.PointsStorage);
+
+        pointsStorageComponent.Level = ent.Comp.CurrentLevel;
+        pointsStorageComponent.TotalPoints = ent.Comp.TotalPoints;
+        pointsStorageComponent.TotalReplicators = ent.Comp.SpawnedMinions.Count;
     }
 
     private void OnRoundEndTextAppend(RoundEndTextAppendEvent args)
