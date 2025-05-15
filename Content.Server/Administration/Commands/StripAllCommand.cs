@@ -58,16 +58,9 @@ public sealed class StripAllCommand : LocalizedEntityCommands
     {
         if (args.Length == 1)
         {
-            List<string> options = new(EntityManager.Count<InventoryComponent>());
-            var query = EntityManager.AllEntityQueryEnumerator<InventoryComponent>();
-            while (query.MoveNext(out var uid, out _))
-            {
-                options.Add(uid.ToString());
-            }
-
-            options.Sort();
-
-            return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-stripall-player-completion"));
+            return CompletionResult.FromHintOptions(
+                CompletionHelper.Components<InventoryComponent>(args[0]),
+                Loc.GetString("cmd-stripall-player-completion"));
         }
 
         return CompletionResult.Empty;
