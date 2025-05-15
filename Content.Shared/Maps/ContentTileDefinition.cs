@@ -70,6 +70,11 @@ namespace Content.Shared.Maps
         [DataField("variants")] public byte Variants { get; set; } = 1;
 
         /// <summary>
+        ///     Allows the tile to be rotated/mirrored when placed on a grid.
+        /// </summary>
+        [DataField] public bool AllowRotationMirror { get; set; } = false;
+
+        /// <summary>
         /// This controls what variants the `variantize` command is allowed to use.
         /// </summary>
         [DataField("placementVariants")] public float[] PlacementVariants { get; set; } = { 1f };
