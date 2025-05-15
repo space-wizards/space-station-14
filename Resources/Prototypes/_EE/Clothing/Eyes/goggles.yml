@@ -26,7 +26,7 @@
     sprite: _EE/Clothing/Eyes/Goggles/security_nightvision.rsi
 
 - type: entity
-  parent: [ClothingEyesNightVisionGoggles, ClothingEyesHudMedical]
+  parent: [ClothingEyesNightVisionGoggles, ShowMedicalIcons]
   id: ClothingEyesNightVisionMedicalGoggles
   name: night vision medical goggles
   components:
@@ -36,7 +36,7 @@
     sprite: _EE/Clothing/Eyes/Goggles/medical_nightvision.rsi
 
 - type: entity
-  parent: [ClothingEyesNightVisionGoggles, ClothingEyesHudDiagnostic]
+  parent: ClothingEyesNightVisionGoggles
   id: ClothingEyesNightVisionDiagnosticGoggles
   name: night vision diagnostic goggles
   components:
@@ -44,6 +44,10 @@
     sprite: _EE/Clothing/Eyes/Goggles/diagnostic_nightvision.rsi
   - type: Clothing
     sprite: _EE/Clothing/Eyes/Goggles/diagnostic_nightvision.rsi
+  - type: ShowHealthBars
+    damageContainers:
+    - Inorganic
+    - Silicon
 
 - type: entity
   parent: ClothingEyesNightVisionGoggles
