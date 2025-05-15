@@ -14,7 +14,7 @@
           map: [ "enum.PowerDeviceVisualLayers.Powered" ]
         - state: variant-crew
         - state: server_o
-          map: ["enum.WiresVisualLayers.MaintenancePanel"] 
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Construction
       graph: Machine
       node: machine

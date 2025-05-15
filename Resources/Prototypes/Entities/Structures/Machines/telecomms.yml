@@ -43,8 +43,8 @@
     mapLayers:
       variant-nokey:
         whitelist:
-          components: 
-          - EncryptionKey  #Shown when no keys are present 
+          components:
+          - EncryptionKey  #Shown when no keys are present
         minCount: 0
       variant-default:
         whitelist:
@@ -86,7 +86,7 @@
       variant-multiple:
         whitelist:
           components:
-          - EncryptionKey  #Shown when multiple keys are present 
+          - EncryptionKey  #Shown when multiple keys are present
         minCount: 2
   - type: PointLight
     enabled: false
