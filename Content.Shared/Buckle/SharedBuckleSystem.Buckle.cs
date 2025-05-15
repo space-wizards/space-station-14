@@ -354,10 +354,9 @@ public abstract partial class SharedBuckleSystem
         if (!TryComp<PullableComponent>(strap.Owner, out var pullable))
             return false;
 
-        if (pullable.Puller != buckle.Owner)
-            return false;
-
-        return _pullingSystem.TryStopPull(strap.Owner, pullable);
+        if (pullable.Puller == buckle.Owner)
+            return _pullingSystem.TryStopPull(strap.Owner, pullable);
+        return true;
     }
 
     private void Buckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? user)
