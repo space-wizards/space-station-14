@@ -5774,4 +5774,11 @@ Entries:
   id: 800
   time: '2025-05-15T23:28:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/626
+- author: RoadTrain
+  changes:
+  - message: Exosuit upgrade kit cost. Was 5 steel, is 10 plasteel.
+    type: Tweak
+  id: 801
+  time: '2025-05-15T23:32:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/618
 
