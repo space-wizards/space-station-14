@@ -5750,4 +5750,20 @@ Entries:
   id: 797
   time: '2025-05-15T16:04:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/614
+- author: Killer Tamashi
+  changes:
+  - message: Voxes have been forced to take showers, allowing their true colors to
+      show through.
+    type: Tweak
+  id: 798
+  time: '2025-05-15T20:23:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/627
+- author: Killer Tamashi
+  changes:
+  - message: Removed color limitation on most species (except dwarf/human) allowing
+      for darker colors.
+    type: Tweak
+  id: 799
+  time: '2025-05-15T20:23:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/627
 
