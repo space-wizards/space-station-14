@@ -5788,4 +5788,27 @@ Entries:
   id: 802
   time: '2025-05-15T23:34:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/613
+- author: PubliclyExecutedPig
+  changes:
+  - message: Due to "Nostalgia Strikes" in Syndicate weapons subsidiaries, the Kardashev-Mosin,
+      Hristov sniper rifle, and China-Lake grenade launcher once again need to be
+      cycled in between shots
+    type: Tweak
+  id: 803
+  time: '2025-05-15T23:45:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/611
+- author: PubliclyExecutedPig
+  changes:
+  - message: The Hristov's firerate has gone up from 0.4 to 0.5
+    type: Tweak
+  id: 804
+  time: '2025-05-15T23:45:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/611
+- author: PubliclyExecutedPig
+  changes:
+  - message: The China-Lake's firerate has gone down from 1 to 0.8
+    type: Tweak
+  id: 805
+  time: '2025-05-15T23:45:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/611
 
