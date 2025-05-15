@@ -467,7 +467,7 @@ namespace Content.Server.Administration.Systems
             if (TryComp<InventoryComponent>(args.Target, out var inventoryComponent))
             {
                 // Strip all verb
-                if (_groupController.CanCommand(player, "aghost"))
+                if (_groupController.CanCommand(player, "stripall"))
                 {
                     args.Verbs.Add(new Verb
                     {
@@ -475,22 +475,7 @@ namespace Content.Server.Administration.Systems
                         Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                         Category = VerbCategory.Debug,
                         Impact = LogImpact.Medium,
-                        Act = () =>
-                        {
-                            var slots = _inventorySystem.GetSlotEnumerator((args.Target, inventoryComponent));
-                            while (slots.NextItem(out _, out var slot))
-                            {
-                                _inventorySystem.TryUnequip(args.Target, args.Target, slot.Name, true, true, inventory: inventoryComponent);
-                            }
-
-                            if (TryComp(args.Target, out HandsComponent? hands))
-                            {
-                                foreach (var hand in _handsSystem.EnumerateHands(args.Target, hands))
-                                {
-                                    _handsSystem.TryDrop(args.Target, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
-                                }
-                            }
-                        }
+                        Act = () => _console.RemoteExecuteCommand(player, $"stripall \"{args.Target}\"")
                     });
                 }
 
