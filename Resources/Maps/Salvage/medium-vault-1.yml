@@ -239,7 +239,7 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 202.38435
+          temperature: 139.98299
           moles:
           - 0
           - 0
@@ -306,12 +306,12 @@ entities:
     - type: Transform
       pos: 3.5,1.5
       parent: 222
-- proto: BoxShotgunFlare
+- proto: BlueprintSeismicCharge
   entities:
-  - uid: 25
+  - uid: 217
     components:
     - type: Transform
-      pos: 0.5821538,-2.3847435
+      pos: 0.5,-4.518282
       parent: 222
 - proto: CableApcExtension
   entities:
@@ -650,13 +650,6 @@ entities:
     - type: Transform
       pos: -1.6170431,-2.424334
       parent: 222
-- proto: ClothingBackpackMerc
-  entities:
-  - uid: 20
-    components:
-    - type: Transform
-      pos: 0.5821538,-4.4794393
-      parent: 222
 - proto: ClothingBeltUtility
   entities:
   - uid: 196
@@ -664,40 +657,41 @@ entities:
     - type: Transform
       pos: -6.516491,-5.5462
       parent: 222
-- proto: ClothingShoesBootsCombatFilled
+- proto: ClothingNeckChameleon
   entities:
-  - uid: 220
+  - uid: 25
     components:
     - type: Transform
-      parent: 149
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 221
-    components:
-    - type: Transform
-      parent: 149
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: ClothingUniformJumpskirtOperative
+      pos: -1.5,-3.5
+      parent: 222
+- proto: ClothingNeckScarfStripedSyndieGreen
   entities:
-  - uid: 217
+  - uid: 203
     components:
     - type: Transform
-      parent: 149
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: ClothingUniformJumpsuitOperative
+      pos: -1.5,-3.5
+      parent: 222
+- proto: ClothingNeckScarfStripedSyndieRed
   entities:
-  - uid: 216
+  - uid: 204
     components:
     - type: Transform
-      parent: 149
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
+      pos: -1.5,-3.5
+      parent: 222
+- proto: ClothingUniformJumpskirtSyndieFormalDress
+  entities:
+  - uid: 205
+    components:
+    - type: Transform
+      pos: -1.5,-3.5
+      parent: 222
+- proto: ClothingUniformJumpsuitSyndieFormal
+  entities:
+  - uid: 17
+    components:
+    - type: Transform
+      pos: -1.5,-3.5
+      parent: 222
 - proto: ComputerBroken
   entities:
   - uid: 48
@@ -787,11 +781,34 @@ entities:
     - type: Transform
       pos: -1.5,-3.5
       parent: 222
+    - type: Lock
+      locked: False
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape: !type:PolygonShape
+            radius: 0.01
+            vertices:
+            - -0.25,-0.48
+            - 0.25,-0.48
+            - 0.25,0.48
+            - -0.25,0.48
+          mask:
+          - Impassable
+          - TableLayer
+          - LowImpassable
+          layer:
+          - BulletImpassable
+          - Opaque
+          density: 75
+          hard: True
+          restitution: 0
+          friction: 0.4
     - type: EntityStorage
       air:
         volume: 200
         immutable: False
-        temperature: 102.54218
+        temperature: 127.50272
         moles:
         - 0
         - 0
@@ -805,26 +822,28 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 216
-          - 217
-          - 220
-          - 221
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
+      open: True
+      removedMasks: 20
+    - type: PlaceableSurface
+      isPlaceable: True
 - proto: MachineFrameDestroyed
   entities:
   - uid: 197
     components:
     - type: Transform
       pos: -3.5,-6.5
+      parent: 222
+- proto: MaterialDiamond1
+  entities:
+  - uid: 210
+    components:
+    - type: Transform
+      pos: -1.390625,-4.737032
+      parent: 222
+  - uid: 216
+    components:
+    - type: Transform
+      pos: -1.75,-4.455782
       parent: 222
 - proto: PartRodMetal1
   entities:
@@ -961,12 +980,26 @@ entities:
     - type: Transform
       pos: -6.5,4.5
       parent: 222
+- proto: ResearchDisk10000
+  entities:
+  - uid: 207
+    components:
+    - type: Transform
+      pos: -1.515625,-4.643282
+      parent: 222
 - proto: SalvageCanisterSpawner
   entities:
   - uid: 209
     components:
     - type: Transform
       pos: 4.5,0.5
+      parent: 222
+- proto: SalvageLootSpawner
+  entities:
+  - uid: 20
+    components:
+    - type: Transform
+      pos: 0.5,-2.5
       parent: 222
 - proto: SalvageMaterialCrateSpawner
   entities:
@@ -1420,13 +1453,6 @@ entities:
     components:
     - type: Transform
       pos: -1.5,-5.5
-      parent: 222
-- proto: WeaponShotgunImprovisedLoaded
-  entities:
-  - uid: 17
-    components:
-    - type: Transform
-      pos: -1.5115962,-4.5263143
       parent: 222
 - proto: WeaponTurretHostile
   entities:

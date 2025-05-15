@@ -1,0 +1,24 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    MinSize="400 230"
+    SetSize="450 260">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="10 5 10 10">
+        <BoxContainer Orientation="Vertical" VerticalAlignment="Top" VerticalExpand="True" HorizontalExpand="True" Margin="20 0">
+            <RichTextLabel Name="NameLabel"/>
+            <LineEdit Name="NameEdit"/>
+            <Control MinWidth="5"/>
+            <RichTextLabel Name="SentenceLabel"/>
+            <LineEdit Name="SentenceEdit"/>
+            <Control MinWidth="5"/>
+            <RichTextLabel Name="CrimeLabel"/>
+            <LineEdit Name="CrimeEdit"/>
+        </BoxContainer>
+        <Control VerticalExpand="True"/>
+        <BoxContainer VerticalExpand="True" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <Button Name="DoneButton" Text="{Loc 'genpop-locket-ui-button-done'}" Disabled="True"/>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
+
+

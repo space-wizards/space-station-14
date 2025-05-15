@@ -25,9 +25,9 @@ public sealed class DamageOverlay : Overlay
     /// <summary>
     /// Handles the red pulsing overlay
     /// </summary>
-    public float BruteLevel = 0f;
+    public float PainLevel = 0f;
 
-    private float _oldBruteLevel = 0f;
+    private float _oldPainLevel = 0f;
 
     /// <summary>
     /// Handles the darkening overlay.
@@ -92,14 +92,14 @@ public sealed class DamageOverlay : Overlay
             DeadLevel = 0f;
         }
 
-        if (!MathHelper.CloseTo(_oldBruteLevel, BruteLevel, 0.001f))
+        if (!MathHelper.CloseTo(_oldPainLevel, PainLevel, 0.001f))
         {
-            var diff = BruteLevel - _oldBruteLevel;
-            _oldBruteLevel += GetDiff(diff, lastFrameTime);
+            var diff = PainLevel - _oldPainLevel;
+            _oldPainLevel += GetDiff(diff, lastFrameTime);
         }
         else
         {
-            _oldBruteLevel = BruteLevel;
+            _oldPainLevel = PainLevel;
         }
 
         if (!MathHelper.CloseTo(_oldOxygenLevel, OxygenLevel, 0.001f))
@@ -135,7 +135,7 @@ public sealed class DamageOverlay : Overlay
 
         // Makes debugging easier don't @ me
         float level = 0f;
-        level = _oldBruteLevel;
+        level = _oldPainLevel;
 
         // TODO: Lerping
         if (level > 0f && _oldCritLevel <= 0f)
@@ -165,7 +165,7 @@ public sealed class DamageOverlay : Overlay
         }
         else
         {
-            _oldBruteLevel = BruteLevel;
+            _oldPainLevel = PainLevel;
         }
 
         level = State != MobState.Critical ? _oldOxygenLevel : 1f;

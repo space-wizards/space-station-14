@@ -30,7 +30,6 @@
   - type: SecretStash
     tryInsertItemSound: /Audio/Effects/plant_rustle.ogg
     tryRemoveItemSound: /Audio/Effects/plant_rustle.ogg
-    hasVerbs: false
     secretStashName: secret-stash-plant
   - type: ContainerContainer
     containers:
