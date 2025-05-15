@@ -99,6 +99,9 @@ public sealed partial class SprayPainterComponent : Component
     [DataField]
     public TimeSpan FreshPaintDuration = TimeSpan.FromMinutes(15);
 
+    /// <summary>
+    /// The sound to play when swapping between decal modes.
+    /// </summary>
     [DataField]
-    public SoundSpecifier SoundSwitchMode = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg", AudioParams.Default.WithVolume(1.5f));
+    public SoundSpecifier SoundSwitchDecalMode = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg", AudioParams.Default.WithVolume(1.5f));
 }

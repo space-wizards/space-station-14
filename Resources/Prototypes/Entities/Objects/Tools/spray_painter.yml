@@ -57,6 +57,9 @@
   - type: Sprite
     sprite: Objects/Tools/spray_painter.rsi
     state: ammo
+  - type: Item
+    sprite: Objects/Tools/spray_painter.rsi
+    heldPrefix: ammo
   - type: PhysicalComposition
     materialComposition:
       Steel: 10

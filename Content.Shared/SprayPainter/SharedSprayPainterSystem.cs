@@ -143,7 +143,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         // Make the machine beep.
         var pitch = ent.Comp.IsPaintingDecals ? 1 : 0.8f;
-        Audio.PlayPredicted(ent.Comp.SoundSwitchMode, ent, user, ent.Comp.SoundSwitchMode.Params.WithPitchScale(pitch));
+        Audio.PlayPredicted(ent.Comp.SoundSwitchDecalMode, ent, user, ent.Comp.SoundSwitchDecalMode.Params.WithPitchScale(pitch));
     }
 
     private void OnPaintableInteract(Entity<PaintableComponent> ent, ref InteractUsingEvent args)
