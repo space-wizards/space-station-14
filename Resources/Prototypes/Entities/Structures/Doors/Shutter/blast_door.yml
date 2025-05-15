@@ -109,8 +109,8 @@
     mode: SnapgridCenter
 
 - type: entity
-  id: BlastDoorXeno
   parent: BlastDoor
+  id: BlastDoorXeno
   name: xeno blast door
   description: Don't lose an arm!
   components:
@@ -135,8 +135,8 @@
     mode: NoSprite
 
 - type: entity
-  id: BlastDoorXenoOpen
   parent: BlastDoorXeno
+  id: BlastDoorXenoOpen
   suffix: Open
   components:
   - type: Door
@@ -151,8 +151,8 @@
     enabled: false
 
 - type: entity
-  id: BlastDoorXenoFrame
   parent: BaseStructureDynamic
+  id: BlastDoorXenoFrame
   name: xeno blast door frame
   description: This one says 'BLAST DONGER'.
   components:

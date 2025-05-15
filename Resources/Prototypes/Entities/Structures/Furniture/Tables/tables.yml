@@ -611,8 +611,8 @@
       collection: FootstepCarpet
 
 - type: entity
-  id: TableXeno
   parent: TableBase
+  id: TableXeno
   name: xeno table
   description: I wouldn't put the silverware on it.
   components:

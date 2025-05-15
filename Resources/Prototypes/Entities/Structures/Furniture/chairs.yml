@@ -405,9 +405,9 @@
     price: 50
 
 - type: entity
-  name: xeno chair
-  id: ChairXeno
   parent: StoolBase
+  id: ChairXeno
+  name: xeno chair
   components:
   - type: Sprite
     state: xeno-chair

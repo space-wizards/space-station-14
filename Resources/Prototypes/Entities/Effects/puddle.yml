@@ -57,8 +57,8 @@
           Quantity: 5
 
 - type: entity
-  id: PuddleBloodSmall
   parent: PuddleTemporary
+  id: PuddleBloodSmall
   suffix: Blood (5u)
   components:
   - type: SolutionContainerManager
@@ -70,8 +70,8 @@
           Quantity: 5
 
 - type: entity
-  id: PuddleBlood
   parent: PuddleTemporary
+  id: PuddleBlood
   suffix: Blood (30u)
   components:
   - type: SolutionContainerManager
@@ -83,8 +83,8 @@
           Quantity: 30
 
 - type: entity
-  id: PuddleFluorosulfuricAcidSmall
   parent: PuddleTemporary
+  id: PuddleFluorosulfuricAcidSmall
   suffix: FluorosulfuricAcid (5u)
   components:
   - type: SolutionContainerManager
@@ -96,8 +96,8 @@
           Quantity: 5
 
 - type: entity
-  id: PuddleFluorosulfuricAcid
   parent: PuddleTemporary
+  id: PuddleFluorosulfuricAcid
   suffix: FluorosulfuricAcid (15u)
   components:
   - type: SolutionContainerManager

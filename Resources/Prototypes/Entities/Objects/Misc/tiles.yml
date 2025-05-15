@@ -520,9 +520,9 @@
     stackType: FloorTileTechmaint
 
 - type: entity
-  name: dark techmaint floor
   parent: FloorTileItemBase
   id: FloorTileItemTechmaintDark
+  name: dark techmaint floor
   components:
   - type: Sprite
     state: techfloordark
@@ -530,8 +530,8 @@
     heldPrefix: dark
   - type: FloorTile
     outputs:
-      - Plating
-      - FloorTechMaintDark
+    - Plating
+    - FloorTechMaintDark
   - type: Stack
     stackType: FloorTileTechmaintDark
 

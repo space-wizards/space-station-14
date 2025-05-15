@@ -897,9 +897,9 @@
     - MobGingerbreadAI
 
 - type: entity
-  name: xeno lone praetorian spawner
-  id: SpawnMobXenoPraetorian
   parent: MarkerBase
+  id: SpawnMobXenoPraetorian
+  name: xeno lone praetorian spawner
   components:
   - type: Sprite
     layers:
