@@ -277,7 +277,7 @@
   - type: StationEvent
     weight: 7.5
     duration: 1
-    earliestStart: 45
+    earliestStart: 15
     minimumPlayers: 20
   - type: RandomSpawnRule
     prototype: MobRevenant
