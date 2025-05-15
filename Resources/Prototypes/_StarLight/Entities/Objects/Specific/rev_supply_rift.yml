@@ -1,7 +1,7 @@
 - type: entity
   id: RevSupplyRift
-  name: supply rift
-  description: A rift that can be summoned by revolutionaries to bring in Soviet armaments periodically.
+  name: red supply rift
+  description: A shady portal that coughs up Soviet stuff. Occasionally mumbles in Russian.
   placement:
     mode: SnapgridCenter
   components:

@@ -248,7 +248,7 @@
       playerRatio: 15
       briefing:
         text: head-rev-role-greeting
-        color: CornflowerBlue
+        color: LightYellow
         sound: "/Audio/Ambience/Antag/headrev_start.ogg"
       startingGear: HeadRevGear
       components:

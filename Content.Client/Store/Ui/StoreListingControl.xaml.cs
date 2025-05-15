@@ -52,6 +52,10 @@ public sealed partial class StoreListingControl : Control
         if (_data.RestockTime > stationTime)
             return false;
 
+        // Check if the listing is marked as unavailable (e.g., when a rift is active)
+        if (_data.Unavailable)
+            return false;
+
         return true;
     }
 

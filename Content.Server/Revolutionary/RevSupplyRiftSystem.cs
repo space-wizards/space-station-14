@@ -7,6 +7,7 @@ using Content.Server.Pinpointer;
 using Content.Shared.Store.Components;
 using Content.Server.Revolutionary.Components;
 using Content.Server.Store.Systems;
+using Content.Shared.Chat;
 using Content.Shared.Dragon;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mind;
@@ -14,11 +15,14 @@ using Content.Shared.Mind.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Store;
+using Robust.Shared.Maths;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Server.Revolutionary;
 
@@ -28,6 +32,7 @@ namespace Content.Server.Revolutionary;
 public sealed class RevSupplyRiftSystem : EntitySystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly Chat.Managers.IChatManager _chatManager = default!;
     [Dependency] private readonly DragonRiftSystem _dragonRift = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly StoreSystem _store = default!;
@@ -35,15 +40,24 @@ public sealed class RevSupplyRiftSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
 
     private const string RevSupplyRiftListingId = "RevSupplyRiftListing";
-    private readonly Dictionary<EntityUid, ListingCondition> _riftConditions = new();
+    
+    /// <summary>
+    /// The current active rift entity, if any.
+    /// </summary>
+    private EntityUid? _activeRift = null;
+    
+    /// <summary>
+    /// Dictionary to track the original descriptions of listings.
+    /// </summary>
+    private readonly Dictionary<EntityUid, string> _originalDescriptions = new();
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<DragonRiftComponent, ComponentStartup>(OnRiftStartup);
-        SubscribeLocalEvent<DragonRiftComponent, ComponentShutdown>(OnRiftShutdown);
         SubscribeLocalEvent<RevSupplyRiftComponent, ComponentStartup>(OnRevRiftStartup);
+        SubscribeLocalEvent<RevSupplyRiftComponent, ComponentShutdown>(OnRevRiftShutdown);
     }
 
     private void OnRiftStartup(EntityUid uid, DragonRiftComponent component, ComponentStartup args)
@@ -56,9 +70,23 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         var revRift = EnsureComp<RevSupplyRiftComponent>(uid);
         revRift.PlacedTime = _timing.CurTime;
         revRift.State = DragonRiftState.Charging;
+        revRift.ChargePercentage = 0;
+        
+        // Store the active rift
+        _activeRift = uid;
+        
+        // Try to get the name of the player who placed the rift
+        if (component.Dragon != null && TryComp<MetaDataComponent>(component.Dragon, out var metadata))
+        {
+            revRift.PlacedBy = metadata.EntityName;
+        }
+        else
+        {
+            revRift.PlacedBy = "Unknown";
+        }
 
-        // Disable the supply rift listing for all revolutionaries
-        DisableSupplyRiftListing();
+        // Update the supply rift listing for all revolutionaries
+        UpdateSupplyRiftListing();
 
         // Send a message to all revolutionaries about the rift
         SendRiftPlacedMessage(uid);
@@ -75,7 +103,7 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         component.State = dragonRift.State;
     }
 
-    private void OnRiftShutdown(EntityUid uid, DragonRiftComponent component, ComponentShutdown args)
+    private void OnRevRiftShutdown(EntityUid uid, RevSupplyRiftComponent component, ComponentShutdown args)
     {
         // Only apply to supply rifts
         if (!HasComp<RevSupplyRiftComponent>(uid))
@@ -93,6 +121,21 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         var query = EntityQueryEnumerator<RevSupplyRiftComponent, DragonRiftComponent>();
         while (query.MoveNext(out var uid, out var revRift, out var dragonRift))
         {
+            // Calculate the charge percentage
+            var percentage = (int)MathF.Round(dragonRift.Accumulator / dragonRift.MaxAccumulator * 100);
+            
+            // Update the charge percentage if it changed
+            if (revRift.ChargePercentage != percentage)
+            {
+                revRift.ChargePercentage = percentage;
+                
+                // Update the listing description
+                if (_activeRift == uid)
+                {
+                    UpdateSupplyRiftListing();
+                }
+            }
+            
             // Update the state from the dragon rift component
             if (revRift.State != dragonRift.State)
             {
@@ -101,6 +144,7 @@ public sealed class RevSupplyRiftSystem : EntitySystem
                 // If the rift is now finished, enable the supply rift listing
                 if (revRift.State == DragonRiftState.Finished)
                 {
+                    _activeRift = null;
                     EnableSupplyRiftListing();
                 }
             }
@@ -108,13 +152,13 @@ public sealed class RevSupplyRiftSystem : EntitySystem
     }
 
     /// <summary>
-    /// Disables the supply rift listing in all revolutionary uplinks.
+    /// Updates the supply rift listing in all revolutionary uplinks with the current charging status.
     /// </summary>
-    private void DisableSupplyRiftListing()
+    private void UpdateSupplyRiftListing()
     {
-        // Create a condition that always returns false
-        var condition = new RevSupplyRiftDisabledCondition();
-
+        if (_activeRift == null || !TryComp<RevSupplyRiftComponent>(_activeRift.Value, out var revRift))
+            return;
+        
         // Find all store components
         var query = EntityQueryEnumerator<StoreComponent>();
         while (query.MoveNext(out var uid, out var store))
@@ -124,15 +168,60 @@ public sealed class RevSupplyRiftSystem : EntitySystem
             {
                 if (listing.ID == RevSupplyRiftListingId)
                 {
-                    // Add our condition to disable the listing
-                    if (listing.Conditions == null)
-                        listing.Conditions = new List<ListingCondition>();
-
-                    _riftConditions[uid] = condition;
-                    listing.Conditions.Add(condition);
+                    // Store the original description if we haven't already
+                    if (!_originalDescriptions.TryGetValue(uid, out _))
+                    {
+                        _originalDescriptions[uid] = listing.Description ?? "";
+                    }
+                    
+                    // Update the description with the charging status
+                    var chargingText = Loc.GetString("rev-supply-rift-charging", 
+                        ("percentage", revRift.ChargePercentage), 
+                        ("name", revRift.PlacedBy ?? "Unknown"));
+                    
+                    listing.Description = chargingText;
+                    
+                    // Disable the listing while a rift is charging
+                    listing.Unavailable = true;
+                    
                     break;
                 }
             }
+            
+            // Update the UI to reflect the changes
+            _store.UpdateUserInterface(null, uid, store);
+        }
+    }
+
+    /// <summary>
+    /// Disables the supply rift listing in all revolutionary uplinks.
+    /// </summary>
+    private void DisableSupplyRiftListing()
+    {
+        // Find all store components
+        var query = EntityQueryEnumerator<StoreComponent>();
+        while (query.MoveNext(out var uid, out var store))
+        {
+            // Find the supply rift listing
+            foreach (var listing in store.FullListingsCatalog)
+            {
+                if (listing.ID == RevSupplyRiftListingId)
+                {
+                    // Store the original description if we haven't already
+                    if (!_originalDescriptions.TryGetValue(uid, out _))
+                    {
+                        _originalDescriptions[uid] = listing.Description ?? "";
+                    }
+                    
+                    // Disable the listing
+                    listing.Unavailable = true;
+                    
+                    break;
+                }
+            }
+            
+            // Update the UI to reflect the changes
+            _store.UpdateUserInterface(null, uid, store);
         }
 
         Logger.InfoS("rev-supply-rift", "Disabled supply rift listing in all uplinks");
@@ -150,14 +239,19 @@ public sealed class RevSupplyRiftSystem : EntitySystem
             // Find the supply rift listing
             foreach (var listing in store.FullListingsCatalog)
             {
-                if (listing.ID == RevSupplyRiftListingId && listing.Conditions != null)
+                if (listing.ID == RevSupplyRiftListingId)
                 {
-                    // Remove our condition to enable the listing
-                    if (_riftConditions.TryGetValue(uid, out var condition))
+                    // Restore the original description if we have it
+                    if (_originalDescriptions.TryGetValue(uid, out var originalDesc))
                     {
-                        listing.Conditions.Remove(condition);
-                        _riftConditions.Remove(uid);
+                        listing.Description = originalDesc;
                     }
+                    // Don't set a new description if we don't have the original
+                    // This will use the default description from the prototype
+                    
+                    // Enable the listing
+                    listing.Unavailable = false;
+                    
                     break;
                 }
             }
@@ -180,6 +274,7 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         // Get the nearest beacon location
         var locationString = _navMap.GetNearestBeaconString((riftUid, xform));
         var message = Loc.GetString("rev-supply-rift-placed", ("location", locationString));
+        var sender = Loc.GetString("rev-supply-rift-sender");
 
         // Find all revolutionaries and head revolutionaries
         var query = EntityQueryEnumerator<MindContainerComponent>();
@@ -192,21 +287,20 @@ public sealed class RevSupplyRiftSystem : EntitySystem
             if (HasComp<RevolutionaryComponent>(uid) || HasComp<HeadRevolutionaryComponent>(uid))
             {
                 // Send a private message to the revolutionary
-                _chat.TrySendInGameICMessage(uid, message, InGameICChatType.Whisper, false, true);
+                var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", 
+                    ("sender", sender), 
+                    ("message", message));
+                
+                // Only send if the player is connected
+                if (mind.Session != null)
+                {
+                    // Use red color for the message
+                    var color = Color.Red;
+                    _chatManager.ChatMessageToOne(ChatChannel.Radio, message, wrappedMessage, uid, false, mind.Session.Channel, color);
+                }
             }
         }
 
         Logger.InfoS("rev-supply-rift", $"Sent rift placed message to all revolutionaries: {message}");
-    }
-}
-
-/// <summary>
-/// A condition that always returns false, used to disable the supply rift listing.
-/// </summary>
-public sealed class RevSupplyRiftDisabledCondition : ListingCondition
-{
-    public override bool Condition(ListingConditionArgs args)
-    {
-        return false;
     }
 }

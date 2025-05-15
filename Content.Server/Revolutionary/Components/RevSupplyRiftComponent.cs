@@ -21,4 +21,16 @@ public sealed partial class RevSupplyRiftComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan PlacedTime = TimeSpan.Zero;
+    
+    /// <summary>
+    /// The current charge percentage of the rift (0-100).
+    /// </summary>
+    [DataField]
+    public int ChargePercentage = 0;
+    
+    /// <summary>
+    /// The name of the player who placed the rift.
+    /// </summary>
+    [DataField]
+    public string? PlacedBy = null;
 }
