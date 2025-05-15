@@ -5743,4 +5743,11 @@ Entries:
   id: 796
   time: '2025-05-15T12:58:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/621
+- author: walksanatora
+  changes:
+  - message: polymorphing no longer cryosleeps you causing you to be round-removed
+    type: Fix
+  id: 797
+  time: '2025-05-15T16:04:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/614
 
