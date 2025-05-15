@@ -1,0 +1,8 @@
+## TODO: complete copyright thingy with the chosen files. Be more explicit with TGStation (commit #)
+- files: ["*.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Voice and audio work by Banedon for SS14."
+- files: ["asshole.ogg, bash.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Voice and audio work by Banedon for SS14. Original lines script from TGStation."
+  source: "https://github.com/tgstation/tgstation"
