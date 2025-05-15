@@ -62,7 +62,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         else
             position = position.Offset(new(-0.5f, -0.5f));
 
-        if (!_decals.TryAddDecal(ent.Comp.SelectedDecal, position, out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, true))
+        if (!_decals.TryAddDecal(ent.Comp.SelectedDecal, position, out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, false))
             return;
 
         _audio.PlayPvs(ent.Comp.SpraySound, ent);

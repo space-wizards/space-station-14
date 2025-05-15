@@ -58,8 +58,14 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
     private void OnMapInit(Entity<SprayPainterComponent> ent, ref MapInitEvent args)
     {
+        bool stylesByGroupPopulated = false;
         foreach (var groupProto in Proto.EnumeratePrototypes<PaintableGroupPrototype>())
+        {
             ent.Comp.StylesByGroup[groupProto.ID] = groupProto.DefaultStyle;
+            stylesByGroupPopulated = true;
+        }
+        if (stylesByGroupPopulated)
+            Dirty(ent);
 
         if (ent.Comp.ColorPalette.Count > 0)
             SetPipeColor(ent, ent.Comp.ColorPalette.First().Key);
