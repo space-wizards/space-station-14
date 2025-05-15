@@ -60,18 +60,8 @@ public sealed partial class CCVars
         CVarDef.Create("github.github_repository_owner", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
     /// <summary>
-    /// The maximum number of times the api will retry requests before giving up. Is used both for both requests and initialization.
+    /// The maximum number of times the api will retry requests before giving up.
     /// </summary>
     public static readonly CVarDef<int> GithubMaxRetries =
         CVarDef.Create("github.github_max_retries", 3, CVar.SERVERONLY | CVar.CONFIDENTIAL);
-
-    /// <summary>
-    /// When we reach this number of requests the api will stop making new requests until the api credits are refreshed.
-    /// This is just a small buffer to ensure that you never get rate limited.
-    /// <br/>
-    /// <br/> You get 5000 requests per hour so stopping a little early is fine for this use case -
-    /// <see href="https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28#primary-rate-limit-for-authenticated-users">Rate limit for authenticated users</see>.
-    /// </summary>
-    public static readonly CVarDef<long> GithubRequestBuffer =
-        CVarDef.Create("github.github_request_buffer", 15L, CVar.SERVERONLY | CVar.CONFIDENTIAL);
 }

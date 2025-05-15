@@ -20,15 +20,6 @@ public sealed class GithubRateLimiter : IPostInjectInit
 
     private ISawmill _sawmill = default!;
 
-    // This assumes all requests use the same "Core" resource. If more methods are added, this will need to be updated to be more robust.
-    private long _remainingRequests;
-
-    // See the ccvar for more information!
-    private long _requestBuffer;
-
-    /// If true, there is currently an outgoing requests.
-    private bool _ongoingRequest;
-
     /// The next valid time to make a request to the API.
     private DateTime _nextValidRequestTime = DateTime.UtcNow;
 
@@ -109,20 +100,17 @@ public sealed class GithubRateLimiter : IPostInjectInit
         var headers = response.Headers;
         var statusCode = response.StatusCode;
 
-        if (_remainingRequests > _requestBuffer)
+        // If the code matches one of the expected codes, just return the standard wait time.
+        foreach (var code in expectedStatusCodes)
         {
-            // If the code matches one of the expected codes, just return the standard wait time.
-            foreach (var code in expectedStatusCodes)
-            {
-                if (statusCode == code)
-                    return DateTime.UtcNow.AddSeconds(DefaultDelayTime);
-            }
+            if (statusCode == code)
+                return DateTime.UtcNow.AddSeconds(DefaultDelayTime);
         }
 
         _sawmill.Warning("Github api is potentially being rate limited.");
 
         // Specific checks for rate limits.
-        if (_remainingRequests <= _requestBuffer || statusCode == HttpStatusCode.Forbidden || statusCode == HttpStatusCode.TooManyRequests)
+        if (statusCode == HttpStatusCode.Forbidden || statusCode == HttpStatusCode.TooManyRequests)
         {
             // Retry after header
             if (GithubApiManager.TryGetLongHeader(headers, RetryAfterHeader) is { } retryAfterSeconds)
@@ -131,7 +119,7 @@ public sealed class GithubRateLimiter : IPostInjectInit
             // Reset header (Tells us when we get more api credits)
             if (GithubApiManager.TryGetLongHeader(headers, RemainingHeader) is { } remainingRequests &&
                 GithubApiManager.TryGetLongHeader(headers, RateLimitResetHeader) is { } resetTime &&
-                remainingRequests <= _remainingRequests)
+                remainingRequests == 0)
             {
                 var delayTime = resetTime - DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                 return DateTime.UtcNow.AddSeconds(delayTime + ExtraBufferTime);
@@ -146,25 +134,6 @@ public sealed class GithubRateLimiter : IPostInjectInit
     private DateTime ExponentialBackoff()
     {
         return DateTime.UtcNow.AddSeconds(60 * Math.Pow(ExponentialBackoffB, _exponentialBackoffC++));
-    }
-
-    /// <summary>
-    /// Manually update the remaining requests. This could be called from functions that aren't rate limited
-    /// but have useful rate limiting information.
-    /// </summary>
-    /// <param name="remaining">Remaining api requests.</param>
-    public void UpdateRequests(long remaining)
-    {
-        _remainingRequests = remaining;
-    }
-
-    /// <summary>
-    /// Update the buffer, should really only be called when the ccvar is updated.
-    /// </summary>
-    /// <param name="buffer">The new buffer value.</param>
-    public void UpdateRequestBuffer(long buffer)
-    {
-        _requestBuffer = buffer;
     }
 
     public void PostInject()

@@ -1,14 +1,11 @@
-using System.Collections.Concurrent;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Content.Server.Github.Requests;
-using Content.Server.Github.Responses;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -45,8 +42,6 @@ public sealed class GithubApiManager
     private const string VersionHeader = "X-GitHub-Api-Version";
     private const string VersionNumber = "2022-11-28";
 
-    private const string RemainingHeader = "x-ratelimit-remaining";
-
     #endregion
 
     private readonly Uri BaseUri = new("https://api.github.com/");
@@ -61,22 +56,17 @@ public sealed class GithubApiManager
 
     #endregion
 
-    private bool _apiInitialized;
-
     private readonly GithubRateLimiter _rateLimiter = new();
 
     public void Initialize()
     {
-        _cfg.OnValueChanged(CCVars.GithubEnabled, val => UpdateAndTryInitialize(ref _enabled, val), true);
-        _cfg.OnValueChanged(CCVars.GithubAuthToken, val => UpdateAndTryInitialize(ref _authToken, val), true);
-        _cfg.OnValueChanged(CCVars.GithubRepositoryName, val => UpdateAndTryInitialize(ref _repository, val), true);
-        _cfg.OnValueChanged(CCVars.GithubRepositoryOwner, val => UpdateAndTryInitialize(ref _owner, val), true);
+        _cfg.OnValueChanged(CCVars.GithubEnabled, val => _enabled = val, true);
+        _cfg.OnValueChanged(CCVars.GithubAuthToken, val => _authToken = val, true);
+        _cfg.OnValueChanged(CCVars.GithubRepositoryName, val => _repository = val, true);
+        _cfg.OnValueChanged(CCVars.GithubRepositoryOwner, val => _owner = val, true);
         _cfg.OnValueChanged(CCVars.GithubMaxRetries, val => _maxRetries = val, true);
-        _cfg.OnValueChanged(CCVars.GithubRequestBuffer, _rateLimiter.UpdateRequestBuffer, true);
 
         _sawmill = _log.GetSawmill("github");
-
-        TryInitializeApi();
     }
 
     #region Public functions
@@ -118,11 +108,6 @@ public sealed class GithubApiManager
 
         var response = await _http.Client.SendAsync(httpRequest);
 
-        // Update rate limit
-        var remainingRequests = TryGetLongHeader(response.Headers, RemainingHeader);
-        if (remainingRequests != null)
-            _rateLimiter.UpdateRequests(remainingRequests.Value);
-
         _sawmill.Info($"Made a github api request to: {BaseUri+request.GetLocation(_owner, _repository)}");
 
         return response;
@@ -150,12 +135,6 @@ public sealed class GithubApiManager
                 return null;
 
             await _rateLimiter.TryAcquire();
-
-            if (_apiInitialized == false)
-            {
-                _sawmill.Info("Tried to make a github api request but the api was not initialized.");
-                return null;
-            }
 
             var response = await TryMakeRequest(request);
 
@@ -208,64 +187,6 @@ public sealed class GithubApiManager
 
     # endregion
 
-    /// <summary>
-    /// This will try to initialize the api! This really just means ensuring you aren't currently rate limited.
-    /// Will instantly return and do nothing if the api is already initialized.
-    /// </summary>
-    private async Task TryInitializeApi(uint attempts = 0)
-    {
-        try
-        {
-            if (!ApiEnabled() || _apiInitialized)
-                return;
-
-            if (attempts > _maxRetries)
-            {
-                _sawmill.Error($"Could not initialize Github API after {attempts} attempts.");
-                return;
-            }
-
-            await _rateLimiter.TryAcquire();
-
-            var rateLimitRequest = new GetRateLimit();
-            var response = await TryMakeRequest(rateLimitRequest);
-
-            // This should never happen but if it somehow does, we would want to return.
-            if (response == null)
-            {
-                _rateLimiter.Release();
-                return;
-            }
-
-            var rateLimitRespJson = await response.Content.ReadFromJsonAsync<RateLimitResponse>();
-
-            if (rateLimitRespJson == null || !IsValidResponse(response, rateLimitRequest.GetExpectedResponseCodes()))
-            {
-                _sawmill.Error($"Could not initialize Github API {attempts}/{_maxRetries} attempts.");
-                _rateLimiter.ReleaseWithResponse(response, rateLimitRequest.GetExpectedResponseCodes());
-                await TryInitializeApi(attempts+1);
-                return;
-            }
-
-            var remainingRequests = rateLimitRespJson.Resources.Core.Remaining;
-
-            _rateLimiter.UpdateRequests(remainingRequests);
-            _apiInitialized = true;
-
-            _sawmill.Info($"Github api initialized with {remainingRequests} requests");
-
-            // TODO: Probably a good idea to also check if your using the most up to date api version:
-            // https://docs.github.com/en/rest/meta/meta?apiVersion=2022-11-28#get-all-api-versions
-
-            _rateLimiter.ReleaseWithResponse(response, rateLimitRequest.GetExpectedResponseCodes());
-        }
-        catch (Exception e)
-        {
-            _sawmill.Error($"Github API initialization exception: {e.Message}");
-            _rateLimiter.ReleaseNoResponse();
-        }
-    }
-
     #region Helper functions
 
     private bool ApiEnabled()
@@ -306,20 +227,6 @@ public sealed class GithubApiManager
         // TODO: Add custom warnings depending on the status code. E.g unsupported api version is code 400.
         _sawmill.Warning($"Github api had an invalid response. Status code: {response.StatusCode}");
         return false;
-    }
-
-    /// <summary>
-    /// Updates the passed in ccvar and also will try to initialize the api if it wasn't initialized yet.
-    /// </summary>
-    /// <param name="field">The ccvar field that we have cached in this class.</param>
-    /// <param name="newValue">The new value to update the field with.</param>
-    /// <typeparam name="T">Type of the ccvar.</typeparam>
-    private void UpdateAndTryInitialize<T>(ref T field, T newValue)
-    {
-        var enabledBefore = ApiEnabled();
-        field = newValue;
-        if (!enabledBefore && ApiEnabled() && !_apiInitialized)
-            TryInitializeApi();
     }
 
     #endregion
