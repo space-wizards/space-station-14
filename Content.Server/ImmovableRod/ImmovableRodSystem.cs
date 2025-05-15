@@ -5,7 +5,6 @@ using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
-using Content.Server.Stunnable;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
@@ -125,7 +124,6 @@ public sealed class ImmovableRodSystem : EntitySystem
                     return;
 
                 _damageable.TryChangeDamage(ent, component.Damage, ignoreResistances: true);
-                _stunSystem.TryKnockdown(ent, TimeSpan.FromSeconds(component.StunTime), false);
                 return;
             }
 
