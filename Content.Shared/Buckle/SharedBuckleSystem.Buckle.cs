@@ -216,76 +216,63 @@ public abstract partial class SharedBuckleSystem
     /// <summary>
     /// Checks whether or not buckling is possible
     /// </summary>
-    /// <param name="buckleUid"> Uid of the owner of BuckleComponent </param>
-    /// <param name="user">
+    /// <param name="userUid">
     ///     Uid of a third party entity,
     ///     i.e, the uid of someone else you are dragging to a chair.
     ///     Can equal buckleUid sometimes
     /// </param>
-    /// <param name="strapUid"> Uid of the owner of strap component </param>
-    /// <param name="strapComp"></param>
-    /// <param name="buckleComp"></param>
-    private bool CanBuckle(EntityUid buckleUid,
-        EntityUid? user,
-        EntityUid strapUid,
-        bool popup,
-        [NotNullWhen(true)] out StrapComponent? strapComp,
-        BuckleComponent buckleComp)
+    private bool CanBuckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? userUid, bool popup)
     {
-        strapComp = null;
-        if (!Resolve(strapUid, ref strapComp, false))
-            return false;
-
         // Does it pass the Whitelist
-        if (_whitelistSystem.IsWhitelistFail(strapComp.Whitelist, buckleUid) ||
-            _whitelistSystem.IsBlacklistPass(strapComp.Blacklist, buckleUid))
+        if (_whitelistSystem.IsWhitelistFail(strap.Comp.Whitelist, buckle.Owner) ||
+            _whitelistSystem.IsBlacklistPass(strap.Comp.Blacklist, buckle.Owner))
         {
             if (popup)
-                _popup.PopupClient(Loc.GetString("buckle-component-cannot-fit-message"), user, PopupType.Medium);
+                _popup.PopupClient(Loc.GetString("buckle-component-cannot-fit-message"), userUid, PopupType.Medium);
 
             return false;
         }
 
-        if (!_interaction.InRangeUnobstructed(buckleUid,
-                strapUid,
-                buckleComp.Range,
-                predicate: entity => entity == buckleUid || entity == user || entity == strapUid,
+        if (!_interaction.InRangeUnobstructed(buckle.Owner,
+                buckle.Owner,
+                buckle.Comp.Range,
+                predicate: entity => entity == buckle.Owner || entity == userUid || entity == buckle.Owner,
                 popup: true))
         {
             return false;
         }
 
-        if (!_container.IsInSameOrNoContainer((buckleUid, null, null), (strapUid, null, null)))
+        if (!_container.IsInSameOrNoContainer((buckle.Owner, null, null), (strap.Owner, null, null)))
             return false;
 
-        if (user != null && !HasComp<HandsComponent>(user))
+        if (userUid != null && !HasComp<HandsComponent>(userUid))
         {
             if (popup)
-                _popup.PopupClient(Loc.GetString("buckle-component-no-hands-message"), user);
+                _popup.PopupClient(Loc.GetString("buckle-component-no-hands-message"), userUid);
 
             return false;
         }
 
-        if (buckleComp.Buckled && !TryUnbuckle(buckleUid, user, buckleComp))
+        if (buckle.Comp.Buckled && !TryUnbuckle(buckle.Owner, userUid, buckle.Comp))
         {
             if (popup)
             {
-                var message = Loc.GetString(buckleUid == user
+                var message = Loc.GetString(buckle.Owner == userUid
                     ? "buckle-component-already-buckled-message"
                     : "buckle-component-other-already-buckled-message",
-                ("owner", Identity.Entity(buckleUid, EntityManager)));
+                ("owner", Identity.Entity(buckle.Owner, EntityManager)));
 
-                _popup.PopupClient(message, user);
+                _popup.PopupClient(message, userUid);
             }
 
             return false;
         }
 
         // Check whether someone is attempting to buckle something to their own child
-        var parent = Transform(strapUid).ParentUid;
+        var parent = Transform(strap.Owner).ParentUid;
         while (parent.IsValid())
         {
-            if (parent != buckleUid)
+            if (parent != buckle.Owner)
             {
                 parent = Transform(parent).ParentUid;
                 continue;
@@ -293,39 +280,39 @@ public abstract partial class SharedBuckleSystem
 
             if (popup)
             {
-                var message = Loc.GetString(buckleUid == user
+                var message = Loc.GetString(buckle.Owner == userUid
                     ? "buckle-component-cannot-buckle-message"
                     : "buckle-component-other-cannot-buckle-message",
-                ("owner", Identity.Entity(buckleUid, EntityManager)));
+                ("owner", Identity.Entity(buckle.Owner, EntityManager)));
 
-                _popup.PopupClient(message, user);
+                _popup.PopupClient(message, userUid);
             }
 
             return false;
         }
 
-        if (!StrapHasSpace(strapUid, buckleComp, strapComp))
+        if (!StrapHasSpace(strap.Owner, buckle.Comp, strap.Comp))
         {
             if (popup)
             {
-                var message = Loc.GetString(buckleUid == user
+                var message = Loc.GetString(buckle.Owner == userUid
                     ? "buckle-component-cannot-buckle-message"
                     : "buckle-component-other-cannot-buckle-message",
-                ("owner", Identity.Entity(buckleUid, EntityManager)));
+                ("owner", Identity.Entity(buckle.Owner, EntityManager)));
 
-                _popup.PopupClient(message, user);
+                _popup.PopupClient(message, userUid);
             }
 
             return false;
         }
 
-        var buckleAttempt = new BuckleAttemptEvent((strapUid, strapComp), (buckleUid, buckleComp), user, popup);
-        RaiseLocalEvent(buckleUid, ref buckleAttempt);
+        var buckleAttempt = new BuckleAttemptEvent(strap, buckle, userUid, popup);
+        RaiseLocalEvent(buckle.Owner, ref buckleAttempt);
         if (buckleAttempt.Cancelled)
             return false;
 
-        var strapAttempt = new StrapAttemptEvent((strapUid, strapComp), (buckleUid, buckleComp), user, popup);
-        RaiseLocalEvent(strapUid, ref strapAttempt);
+        var strapAttempt = new StrapAttemptEvent(strap, buckle, userUid, popup);
+        RaiseLocalEvent(strap.Owner, ref strapAttempt);
         if (strapAttempt.Cancelled)
             return false;
 
@@ -333,25 +320,44 @@ public abstract partial class SharedBuckleSystem
     }
 
     /// <summary>
-    /// Attempts to buckle an entity to a strap
+    /// Attempts to buckle an entity to a strapUid
     /// </summary>
-    /// <param name="buckle"> Uid of the owner of BuckleComponent </param>
-    /// <param name="user">
+    /// <param name="buckleUid"> Uid of the owner of BuckleComponent </param>
+    /// <param name="userUid">
     /// Uid of a third party entity,
     /// i.e, the uid of someone else you are dragging to a chair.
     /// Can equal buckleUid sometimes
     /// </param>
-    /// <param name="strap"> Uid of the owner of strap component </param>
-    public bool TryBuckle(EntityUid buckle, EntityUid? user, EntityUid strap, BuckleComponent? buckleComp = null, bool popup = true)
+    /// <param name="strapUid"> Uid of the owner of strapUid component </param>
+    public bool TryBuckle(EntityUid buckleUid, EntityUid? userUid, EntityUid strapUid, BuckleComponent? buckleComp = null, bool popup = true)
     {
-        if (!Resolve(buckle, ref buckleComp, false))
+        if (!Resolve(buckleUid, ref buckleComp, false))
+            return false;
+        var buckle = (buckleUid, buckleComp);
+
+        if (!TryComp<StrapComponent>(strapUid, out var strapComp))
+            return false;
+        var strap = (strapUid, strapComp);
+
+        if (!CanBuckle(buckle, strap, userUid, popup))
             return false;
 
-        if (!CanBuckle(buckle, user, strap, popup, out var strapComp, buckleComp))
+        if (!InvalidateSelfPulling(buckle, strap))
             return false;
 
-        Buckle((buckle, buckleComp), (strap, strapComp), user);
+        Buckle(buckle, strap, userUid);
         return true;
+    }
+
+    private bool InvalidateSelfPulling(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap)
+    {
+        if (!TryComp<PullableComponent>(strap.Owner, out var pullable))
+            return false;
+
+        if (pullable.Puller != buckle.Owner)
+            return false;
+
+        return _pullingSystem.TryStopPull(strap.Owner, pullable);
     }
 
     private void Buckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? user)
