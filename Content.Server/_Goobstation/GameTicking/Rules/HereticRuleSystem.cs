@@ -91,9 +91,13 @@ public sealed partial class HereticRuleSystem : GameRuleSystem<HereticRuleCompon
 
     private void SpawnRifts(int min, int max)
     {
-        for (int i = 0; i < _rand.Next(min, max); i++)
+        for (var i = 0; i < _rand.Next(min, max); i++)
             if (TryFindRandomTile(out var _, out var _, out var _, out var coords))
-                _audio.PlayPvs(RiftSpawnSound, Spawn("RealityTear", coords)); //reality tears disappear after 1 second, leaving behind an eldritch book
+            {
+                _audio.PlayPvs(RiftSpawnSound, Spawn("RealityTear", coords),
+                AudioParams.Default.WithMaxDistance(15f).WithRolloffFactor(0.8f));
+                //reality tears disappear after 10 seconds, leaving behind an eldritch book
+            }
     }
 
     public bool TryMakeHeretic(EntityUid target, HereticRuleComponent rule)
