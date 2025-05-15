@@ -19,8 +19,14 @@
                         <FloatSpinBox Name="CVolumeRate" HorizontalExpand="True" />
                     </BoxContainer>
                 </BoxContainer>
-                <BoxContainer>
-                    <CheckBox Name="CWideNet" Text="{Loc 'air-alarm-ui-scrubber-wide-net-label'}" />
+                <BoxContainer Orientation="Horizontal" Margin="0 0 0 2" HorizontalExpand="True">
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                        <CheckBox Name="CWideNet" Text="{Loc 'air-alarm-ui-scrubber-wide-net-label'}" />
+                    </BoxContainer>
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                        <Label Text="{Loc 'air-alarm-ui-scrubber-target-pressure-label'}" Margin="0 0 0 1" />
+                        <FloatSpinBox Name="CTargetPressure" HorizontalExpand="True" />
+                    </BoxContainer>
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal" Margin ="0 0 0 2">
                     <Button Name="CCopySettings" Text="{Loc 'air-alarm-ui-widget-copy'}" ToolTip="{Loc 'air-alarm-ui-widget-copy-tooltip'}" />

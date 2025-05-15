@@ -10,8 +10,10 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         public bool Dirty { get; set; }
         public bool IgnoreAlarms { get; set; } = false;
         public HashSet<Gas> FilterGases { get; set; } = new(DefaultFilterGases);
+        public HashSet<Gas> OverflowGases { get; set; } = new(DefaultOverflowGases);
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
         public float VolumeRate { get; set; } = 200f;
+        public float TargetPressure { get; set; } = Atmospherics.OneAtmosphere;
         public bool WideNet { get; set; } = false;
         public bool AirAlarmPanicWireCut { get; set; }
 
@@ -25,6 +27,11 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             Gas.NitrousOxide,
             Gas.Frezon
         };
+        public static HashSet<Gas> DefaultOverflowGases = new()
+        {
+            Gas.Oxygen,
+            Gas.Nitrogen
+        };
 
         // Presets for 'dumb' air alarm modes
 
@@ -32,8 +39,10 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         {
             Enabled = true,
             FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+            OverflowGases = new(GasVentScrubberData.DefaultOverflowGases),
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
+            TargetPressure = Atmospherics.OneAtmosphere,
             WideNet = false
         };
 
@@ -41,8 +50,10 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         {
             Enabled = true,
             FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+            OverflowGases = new(GasVentScrubberData.DefaultOverflowGases),
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
+            TargetPressure = Atmospherics.OneAtmosphere,
             WideNet = true
         };
 
@@ -50,9 +61,11 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         {
             Enabled = false,
             Dirty = true,
-            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+            FilterGases = [],
+            OverflowGases = [],
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
+            TargetPressure = Atmospherics.OneAtmosphere,
             WideNet = false
         };
 
@@ -61,20 +74,11 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             Enabled = true,
             Dirty = true,
             FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+            OverflowGases = new(GasVentScrubberData.DefaultOverflowGases),
             PumpDirection = ScrubberPumpDirection.Siphoning,
             VolumeRate = 200f,
+            TargetPressure = 0f,
             WideNet = true
-        };
-
-        public static GasVentScrubberData ReplaceModePreset = new GasVentScrubberData
-        {
-            Enabled = true,
-            IgnoreAlarms = true,
-            Dirty = true,
-            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
-            PumpDirection = ScrubberPumpDirection.Siphoning,
-            VolumeRate = 200f,
-            WideNet = false
         };
     }
 
