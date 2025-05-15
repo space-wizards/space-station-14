@@ -61,7 +61,7 @@
 
 # For Wizard Polymorph
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodWizard
   suffix: Wizard
   components:
@@ -71,7 +71,7 @@
     damage:
       types:
         Piercing: 50 # OH GOD, MY INSIDES!
-        Structural: 200 # OH GOD, MY CAR!
+        Structural: 1000 # OH GOD, MY CAR!
   - type: MovementIgnoreGravity
     gravityState: true
   - type: InputMover
@@ -86,9 +86,10 @@
   - type: NoSlip
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodStill
-  name: Immobile Rod
+  name: immobile Rod
+  suffix: still
   description: Shh, it's sleeping.
   components:
   - type: ImmovableRod
@@ -96,7 +97,7 @@
     maxSpeed: 0
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodMop
   name: immovable mop
   description: Hurled like a javelin, with the power of a thousand furious janitors.
@@ -108,7 +109,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodShark
   name: immovable shark
   description: SHARK TORNADO!
@@ -120,7 +121,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodClown
   name: immovable clown
   description: Ejected from the neighbouring station one solar system over. HONK!
@@ -132,7 +133,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodBanana
   name: immovable banana
   description: At least you won't slip on it.
@@ -143,7 +144,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodHammer
   name: immovable hammer
   description: Bwoink.
@@ -155,7 +156,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodThrongler
   name: immovable throngler
   description: If you catch it, you can keep it.
@@ -167,7 +168,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodGibstick
   name: immovable gibstick
   description: What did you expect?
@@ -179,7 +180,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodWeh
   name: immovable weh
   description: WEH!
@@ -190,7 +191,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodSus
   name: immovable among pequeño
   description: They were not the impostor.
@@ -203,7 +204,7 @@
     - state: visor
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodSpearOfGourmand
   name: immovable spear
   description: Legends say this was thrown into orbit by the biggest chungus on Planet Wawa, shortly before a long nap.
@@ -217,7 +218,7 @@
       visible: false
 
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodToolbox
   name: the robustest toolbox
   description: Garbage collection!!
