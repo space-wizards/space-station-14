@@ -472,10 +472,10 @@ namespace Content.Server.Administration.Systems
                     args.Verbs.Add(new Verb
                     {
                         Text = Loc.GetString("strip-all-verb-get-data-text"),
-                        Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                         Category = VerbCategory.Debug,
-                        Impact = LogImpact.Medium,
-                        Act = () => _console.RemoteExecuteCommand(player, $"stripall \"{args.Target}\"")
+                        Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
+                        Act = () => _console.RemoteExecuteCommand(player, $"stripall \"{args.Target}\""),
+                        Impact = LogImpact.Medium
                     });
                 }
 
