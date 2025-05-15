@@ -59,18 +59,18 @@
     - state: trash
       map: [ "enum.DeliveryVisualLayers.Trash" ]
       visible: false
-    - state: postmark
-    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
-      offset: -0.21875, -0.25
-    - state: fragile
-      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
-      visible: false
-    - state: locked
-      map: [ "enum.DeliveryVisualLayers.Lock" ]
     - state: priority
       map: [ "enum.DeliveryVisualLayers.PriorityTape" ]
       visible: false
       shader: unshaded
+    - state: fragile
+      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
+      visible: false
+    - state: postmark
+    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
+      offset: -0.21875, -0.25
+    - state: locked
+      map: [ "enum.DeliveryVisualLayers.Lock" ]
     - state: broken
       map: [ "enum.DeliveryVisualLayers.Breakage" ]
       visible: false
@@ -102,18 +102,18 @@
     - state: trash
       map: [ "enum.DeliveryVisualLayers.Trash" ]
       visible: false
-    - state: postmark
-    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
-      offset: -0.125, -0.0625
-    - state: fragile
-      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
-      visible: false
-    - state: locked
-      map: [ "enum.DeliveryVisualLayers.Lock" ]
     - state: priority
       map: [ "enum.DeliveryVisualLayers.PriorityTape" ]
       visible: false
       shader: unshaded
+    - state: fragile
+      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
+      visible: false
+    - state: postmark
+    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
+      offset: -0.125, -0.0625
+    - state: locked
+      map: [ "enum.DeliveryVisualLayers.Lock" ]
     - state: broken
       map: [ "enum.DeliveryVisualLayers.Breakage" ]
       visible: false

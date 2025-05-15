@@ -347,6 +347,7 @@ public abstract class SharedStorageSystem : EntitySystem
         storage = null;
 
         if (!ContainerSystem.TryGetContainingContainer(itemEnt, out container) ||
+            container.ID != StorageComponent.ContainerId ||
             !TryComp(container.Owner, out storage) ||
             !_itemQuery.Resolve(itemEnt, ref itemEnt.Comp, false))
         {
