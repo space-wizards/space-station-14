@@ -11,3 +11,8 @@
   cash:
     1: Telebond1
   canWithdraw: true
+
+- type: currency
+  id: Conversion
+  displayName: "conversions"
+  canWithdraw: false

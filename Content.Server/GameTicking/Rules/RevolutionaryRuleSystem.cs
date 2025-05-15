@@ -226,6 +226,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
             var storeSystem = EntityManager.System<StoreSystem>();
 
+            // Add Telebond to the converter's uplink
             var uplinkEntity = FindUSSPUplink(ev.User.Value);
             if (uplinkEntity != null)
             {
@@ -238,6 +239,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     _popup.PopupEntity("+1 Telebond", ev.User.Value, PopupType.Large);
                 }
             }
+            
+            // Add Conversion to ALL head revolutionary uplinks
+            AddConversionToAllHeadRevs(storeSystem);
 
             if (_mind.TryGetMind(ev.User.Value, out var revMindId, out _))
             {
@@ -393,4 +397,27 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         // revs lost and heads died
         "rev-stalemate"
     };
+    
+    /// <summary>
+    /// Adds Conversion currency to all head revolutionary uplinks.
+    /// This is a shared counter that tracks total conversions by all head revolutionaries.
+    /// </summary>
+    private void AddConversionToAllHeadRevs(StoreSystem storeSystem)
+    {
+        Logger.Info("Adding Conversion to all head revolutionary uplinks");
+        
+        var headRevs = AllEntityQuery<HeadRevolutionaryComponent>();
+        while (headRevs.MoveNext(out var headRevUid, out _))
+        {
+            var uplinkEntity = FindUSSPUplink(headRevUid);
+            if (uplinkEntity != null)
+            {
+                var currencyToAdd = new Dictionary<string, FixedPoint2> { { "Conversion", FixedPoint2.New(1) } };
+                var success = storeSystem.TryAddCurrency(currencyToAdd, uplinkEntity.Value);
+                Logger.Info($"Added Conversion to head rev {ToPrettyString(headRevUid)}, success: {success}");
+                
+                _popup.PopupEntity("+1 Conversion", headRevUid, PopupType.Medium);
+            }
+        }
+    }
 }

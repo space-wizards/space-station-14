@@ -112,3 +112,7 @@
 - type: storeCategory
   id: RevUplinkWeaponry
   name: Weaponry
+
+- type: storeCategory
+  id: RevUplinkPassive
+  name: Passive
