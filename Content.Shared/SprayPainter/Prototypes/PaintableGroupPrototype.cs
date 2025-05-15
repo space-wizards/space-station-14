@@ -13,16 +13,22 @@ public sealed partial class PaintableGroupPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
-    /// The field is responsible for in which tab of the spray painter menu the group will be displayed.
-    /// </summary>
-    [DataField(required: true)]
-    public ProtoId<PaintableGroupCategoryPrototype> Category;
-
-    /// <summary>
     /// The time required to paint an object from a given group.
     /// </summary>
     [DataField]
     public float Time = 2.0f;
+
+    /// <summary>
+    /// To number of charges needed to paint an object of this group.
+    /// </summary>
+    [DataField]
+    public int Cost = 1;
+
+    /// <summary>
+    /// The default style to start painting.
+    /// </summary>
+    [DataField(required: true)]
+    public string DefaultStyle = default!;
 
     /// <summary>
     /// Map from localization keys and entity identifiers displayed in the spray painter menu.

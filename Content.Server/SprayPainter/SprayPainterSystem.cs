@@ -46,7 +46,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (args.Handled || !args.CanReach || args.Target != null)
             return;
 
-        if (!ent.Comp.IsPaintingDecals || !ent.Comp.SelectedDecal.HasValue)
+        if (!ent.Comp.IsPaintingDecals)
             return;
 
         if (TryComp(ent, out LimitedChargesComponent? charges) && charges.LastCharges < ent.Comp.DecalChargeCost)
@@ -62,14 +62,14 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         else
             position = position.Offset(new(-0.5f, -0.5f));
 
-        if (!_decals.TryAddDecal(ent.Comp.SelectedDecal.Value, position, out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, true))
+        if (!_decals.TryAddDecal(ent.Comp.SelectedDecal, position, out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, true))
             return;
 
         _audio.PlayPvs(ent.Comp.SpraySound, ent);
 
         _charges.TryUseCharges((ent, charges), ent.Comp.DecalChargeCost);
 
-        AdminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{EntityManager.ToPrettyString(args.User):user} drew a {ent.Comp.SelectedDecal.Value}");
+        AdminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{EntityManager.ToPrettyString(args.User):user} drew a {ent.Comp.SelectedDecal}");
         args.Handled = true;
     }
 

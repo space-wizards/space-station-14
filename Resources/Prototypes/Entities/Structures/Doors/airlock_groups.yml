@@ -1,12 +1,14 @@
 - type: paintableGroupCategory
   id: Airlocks
-  cost: 3
+  groups:
+  - AirlockStandard
+  - AirlockGlass
 
 - type: paintableGroup
-  category: Airlocks
   id: AirlockStandard
-  iconPriority: 100
-  time: 3.0
+  time: 3
+  cost: 3
+  defaultStyle: basic
   styles:
     atmospherics: AirlockAtmospherics
     basic: Airlock
@@ -24,10 +26,10 @@
     virology: AirlockVirology
 
 - type: paintableGroup
-  category: Airlocks
   id: AirlockGlass
-  iconPriority: 90
-  time: 3.0
+  time: 3
+  cost: 3
+  defaultStyle: basic
   styles:
     atmospherics: AirlockAtmosphericsGlass
     basic: AirlockGlass

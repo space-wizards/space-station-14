@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.SprayPainter.Components;
 
 /// <summary>
-/// The component is used to charge the spray painter.
+/// Items with this component can be used to recharge a spray painter.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SprayPainterAmmoSystem))]

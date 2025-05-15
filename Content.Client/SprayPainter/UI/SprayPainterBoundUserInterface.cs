@@ -33,7 +33,7 @@ public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) 
         }
 
         var sprayPainter = EntMan.System<SprayPainterSystem>();
-        _window.PopulateCategories(sprayPainter.Entries, sprayPainter.Decals);
+        _window.PopulateCategories(sprayPainter.PaintableStylesByGroup, sprayPainter.PaintableGroupsByCategory, sprayPainter.Decals);
         Update();
 
         if (EntMan.TryGetComponent(Owner, out SprayPainterComponent? sprayPainterComp))
@@ -51,9 +51,8 @@ public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) 
         _window.PopulateColors(sprayPainter.ColorPalette);
         if (sprayPainter.PickedColor != null)
             _window.SelectColor(sprayPainter.PickedColor);
-        _window.SetSelectedStyles(sprayPainter.Indexes);
-        if (sprayPainter.SelectedDecal != null)
-            _window.SetSelectedDecal(sprayPainter.SelectedDecal);
+        _window.SetSelectedStyles(sprayPainter.StylesByGroup);
+        _window.SetSelectedDecal(sprayPainter.SelectedDecal);
         _window.SetDecalAngle(sprayPainter.SelectedDecalAngle);
         _window.SetDecalColor(sprayPainter.SelectedDecalColor);
         _window.SetDecalSnap(sprayPainter.SnapDecals);
@@ -84,9 +83,9 @@ public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) 
         SendPredictedMessage(new SprayPainterTabChangedMessage(index, isSelectedTabWithDecals));
     }
 
-    private void OnSpritePicked(string category, int index)
+    private void OnSpritePicked(string group, string style)
     {
-        SendPredictedMessage(new SprayPainterSetPaintablePrototypeMessage(category, index));
+        SendPredictedMessage(new SprayPainterSetPaintableStyleMessage(group, style));
     }
 
     private void OnSetPipeColor(ItemList.ItemListSelectedEventArgs args)

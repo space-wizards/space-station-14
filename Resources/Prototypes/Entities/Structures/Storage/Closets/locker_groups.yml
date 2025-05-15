@@ -1,11 +1,12 @@
 - type: paintableGroupCategory
   id: Lockers
-  cost: 2
+  groups:
+  - Locker
 
 - type: paintableGroup
-  category: Lockers
   id: Locker
-  iconPriority: 90
+  cost: 2
+  defaultStyle: basic
   styles:
     basic: ClosetSteelBase
     # Lockers

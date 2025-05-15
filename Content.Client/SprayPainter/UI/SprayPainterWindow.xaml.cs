@@ -20,7 +20,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
     private readonly SpriteSystem _spriteSystem;
 
     // Events
-    public Action<string, int>? OnSpritePicked;
+    public Action<string, string>? OnSpritePicked;
     public Action<int, bool>? OnTabChanged;
     public Action<ProtoId<DecalPrototype>>? OnDecalChanged;
     public Action<ItemList.ItemListSelectedEventArgs>? OnSetPipeColor;
@@ -34,10 +34,13 @@ public sealed partial class SprayPainterWindow : DefaultWindow
 
     private Dictionary<string, Color> _currentPalette = new();
     private const string ColorLocKeyPrefix = "pipe-painter-color-";
-    private Dictionary<string, List<SprayPainterEntry>> _currentEntries = new();
+
+    // Paintable objects
+    private Dictionary<string, Dictionary<string, EntProtoId>> _currentStylesByGroup = new();
+    private Dictionary<string, List<string>> _currentGroupsByCategory = new();
 
     // Tab controls
-    private Dictionary<string, BoxContainer> _paintableControls = new();
+    private Dictionary<string, SprayPainterGroup> _paintableControls = new();
     private BoxContainer? _pipeControl;
 
     // Decals
@@ -70,23 +73,35 @@ public sealed partial class SprayPainterWindow : DefaultWindow
 
     public string? IndexToColorKey(int index)
     {
-        return (string?)_colorList[index].Metadata;
+        return _colorList[index].Text;
     }
 
-    private void OnItemSelected(BaseButton.ButtonEventArgs args, ListData data)
+    private void OnStyleSelected(ListData data)
     {
-        if (data is SpriteListData listData && args.Button is ListContainerButton button)
-            OnSpritePicked?.Invoke(listData.Category, button.Index);
+        if (data is SpriteListData listData)
+            OnSpritePicked?.Invoke(listData.Group, listData.Style);
     }
 
-    public void PopulateCategories(Dictionary<string, List<SprayPainterEntry>> entries,
-        List<SprayPainterDecalEntry> decals)
+    /// <summary>
+    /// Wrapper to allow for selecting/deselecting the event to avoid loops
+    /// </summary>
+    private void OnColorPicked(ItemList.ItemListSelectedEventArgs args)
+    {
+        OnSetPipeColor?.Invoke(args);
+    }
+
+    /// <summary>
+    /// Setup function for 
+    /// </summary>
+    /// <param name="stylesByGroup"></param>
+    /// <param name="groupsByCategory"></param>
+    /// <param name="decals"></param>
+    public void PopulateCategories(Dictionary<string, Dictionary<string, EntProtoId>> stylesByGroup, Dictionary<string, List<string>> groupsByCategory, List<SprayPainterDecalEntry> decals)
     {
         bool tabsCleared = false;
         var lastTab = Tabs.CurrentTab;
 
-        // Only clear if the entries change. Otherwise the list would "jump" after selecting an item
-        if (!_currentEntries.Equals(entries))
+        if (!_currentGroupsByCategory.Equals(groupsByCategory))
         {
             // Destroy all existing tabs
             tabsCleared = true;
@@ -94,33 +109,71 @@ public sealed partial class SprayPainterWindow : DefaultWindow
             _pipeControl = null;
             _sprayPainterDecals = null;
             Tabs.RemoveAllChildren();
+        }
 
-            _currentEntries = entries;
+        // Only clear if the entries change. Otherwise the list would "jump" after selecting an item
+        if (tabsCleared || !_currentStylesByGroup.Equals(stylesByGroup))
+        {
+            _currentStylesByGroup = stylesByGroup;
 
-            foreach (var (category, indexCategory) in entries.Keys.Order().Select((x, i) => (x, i)))
+            var tabIndex = 0;
+            foreach (var (categoryName, categoryGroups) in groupsByCategory.OrderBy(c => c.Key))
             {
-                var box = new BoxContainer() { Orientation = BoxContainer.LayoutOrientation.Vertical };
-                var label = new Label() { Text = Loc.GetString("spray-painter-selected-style") };
+                if (categoryGroups.Count <= 0)
+                    continue;
 
-                var spriteList = new ListContainer()
+                // Repopulating controls:
+                //      ensure that categories with multiple groups have separate subtabs
+                //      but single-group categories do not.
+                if (tabsCleared)
                 {
-                    Toggle = true,
-                    Group = true,
-                    GenerateItem = GenerateItems,
-                };
-                var dataList = entries[category]
-                    .Select(e => new SpriteListData(category, e.Name, e.Proto, 0))
-                    .ToList();
-                spriteList.PopulateList(dataList);
-                spriteList.ItemPressed += OnItemSelected;
+                    TabContainer? subTabs = null;
+                    if (categoryGroups.Count > 1)
+                        subTabs = new();
 
-                box.AddChild(label);
-                box.AddChild(spriteList);
-                Tabs.AddChild(box);
-                _paintableControls[category] = box;
+                    foreach (var group in categoryGroups)
+                    {
+                        if (!stylesByGroup.TryGetValue(group, out var styles))
+                            continue;
 
-                var tabLocalization = Loc.GetString("spray-painter-tabs-" + category.ToLower());
-                TabContainer.SetTabTitle(box, tabLocalization);
+                        var groupControl = new SprayPainterGroup();
+                        groupControl.OnButtonPressed += OnStyleSelected;
+                        _paintableControls[group] = groupControl;
+                        if (categoryGroups.Count > 1)
+                        {
+                            if (subTabs != null)
+                            {
+                                subTabs?.AddChild(groupControl);
+                                var subTabLocalization = Loc.GetString("spray-painter-tab-group-" + group.ToLower());
+                                TabContainer.SetTabTitle(groupControl, subTabLocalization);
+                            }
+                        }
+                        else
+                        {
+                            Tabs.AddChild(groupControl);
+                        }
+                    }
+
+                    if (subTabs != null)
+                        Tabs.AddChild(subTabs);
+
+                    var tabLocalization = Loc.GetString("spray-painter-tab-category-" + categoryName.ToLower());
+                    Tabs.SetTabTitle(tabIndex, tabLocalization);
+                    tabIndex++;
+                }
+
+                // Finally, populate all groups with new data.
+                foreach (var group in categoryGroups)
+                {
+                    if (!stylesByGroup.TryGetValue(group, out var styles) ||
+                        !_paintableControls.TryGetValue(group, out var control))
+                        continue;
+
+                    var dataList = styles
+                        .Select(e => new SpriteListData(group, e.Key, e.Value, 0))
+                        .ToList();
+                    control.PopulateList(dataList);
+                }
             }
         }
 
@@ -140,7 +193,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
                 _sprayPainterDecals.OnSnapChanged += snap => OnDecalSnapChanged?.Invoke(snap);
 
                 Tabs.AddChild(_sprayPainterDecals);
-                TabContainer.SetTabTitle(_sprayPainterDecals, Loc.GetString("spray-painter-tabs-decals"));
+                TabContainer.SetTabTitle(_sprayPainterDecals, Loc.GetString("spray-painter-tab-category-decals"));
             }
 
             _sprayPainterDecals.PopulateDecals(decals, _spriteSystem);
@@ -161,12 +214,13 @@ public sealed partial class SprayPainterWindow : DefaultWindow
             var label = new Label() { Text = Loc.GetString("spray-painter-selected-color") };
 
             _colorList = new ItemList() { VerticalExpand = true };
+            _colorList.OnItemSelected += OnColorPicked;
 
             _pipeControl.AddChild(label);
             _pipeControl.AddChild(_colorList);
 
             Tabs.AddChild(_pipeControl);
-            TabContainer.SetTabTitle(_pipeControl, Loc.GetString("spray-painter-tabs-pipes"));
+            TabContainer.SetTabTitle(_pipeControl, Loc.GetString("spray-painter-tab-category-pipes"));
             tabCreated = true;
         }
 
@@ -181,9 +235,8 @@ public sealed partial class SprayPainterWindow : DefaultWindow
             foreach (var color in palette)
             {
                 var locString = GetColorLocString(color.Key);
-                var item = _colorList.AddItem(locString, _spriteSystem.Frame0(_colorEntryIconTexture));
+                var item = _colorList.AddItem(locString, _spriteSystem.Frame0(_colorEntryIconTexture), metadata: color.Key);
                 item.IconModulate = color.Value;
-                item.Metadata = color.Key;
 
                 ItemColorIndex.Add(color.Key, index);
                 index++;
@@ -191,26 +244,26 @@ public sealed partial class SprayPainterWindow : DefaultWindow
         }
     }
 
-    public void SetSelectedStyles(Dictionary<string, int> selectedStyles)
+    # region Setters
+    public void SetSelectedStyles(Dictionary<string, string> selectedStyles)
     {
-        foreach (var (style, value) in selectedStyles)
+        foreach (var (group, style) in selectedStyles)
         {
-            if (!_paintableControls.TryGetValue(style, out var control))
+            if (!_paintableControls.TryGetValue(group, out var control))
                 continue;
 
-            // TODO: turn these into a class.
-            if (control.ChildCount < 2 || control.GetChild(1) is not ItemList list)
-                continue;
-
-            if (list.Count > value)
-                list[value].Selected = true;
+            control.SelectItemByStyle(style);
         }
     }
 
     public void SelectColor(string color)
     {
         if (_colorList != null && ItemColorIndex.TryGetValue(color, out var colorIdx))
+        {
+            _colorList.OnItemSelected -= OnColorPicked;
             _colorList[colorIdx].Selected = true;
+            _colorList.OnItemSelected += OnColorPicked;
+        }
     }
 
     public void SetSelectedTab(int tab)
@@ -241,28 +294,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
         if (_sprayPainterDecals != null)
             _sprayPainterDecals.SetSnap(snap);
     }
-
-    private void GenerateItems(ListData data, ListContainerButton button)
-    {
-        if (data is not SpriteListData spriteListData)
-            return;
-
-        var box = new BoxContainer() { Orientation = BoxContainer.LayoutOrientation.Horizontal };
-        var protoView = new EntityPrototypeView();
-        protoView.SetPrototype(spriteListData.Prototype);
-        var label = new Label()
-        {
-            Text = Loc.GetString($"spray-painter-style-{spriteListData.Category.ToLower()}-{spriteListData.Style}")
-        };
-
-        box.AddChild(protoView);
-        box.AddChild(label);
-        button.AddChild(box);
-        button.AddStyleClass(ListContainer.StyleClassListContainerButton);
-
-        if (spriteListData.SelectedIndex == button.Index)
-            button.Pressed = true;
-    }
+    # endregion
 }
 
-record SpriteListData(string Category, string Style, EntProtoId? Prototype, int SelectedIndex) : ListData;
+public record SpriteListData(string Group, string Style, EntProtoId Prototype, int SelectedIndex) : ListData;

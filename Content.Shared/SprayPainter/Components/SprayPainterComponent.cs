@@ -11,6 +11,9 @@ namespace Content.Shared.SprayPainter.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class SprayPainterComponent : Component
 {
+    public const string DefaultPickedColor = "red";
+    public static readonly ProtoId<DecalPrototype> DefaultDecal = "Arrows";
+
     /// <summary>
     /// The sound to be played after painting the entities.
     /// </summary>
@@ -30,10 +33,10 @@ public sealed partial class SprayPainterComponent : Component
     public int PipeChargeCost = 1;
 
     /// <summary>
-    /// The currently selected color by its key, null if none selected.
+    /// The currently selected color by its key.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string? PickedColor;
+    public string PickedColor = DefaultPickedColor;
 
     /// <summary>
     /// Pipe colors that can be selected.
@@ -43,10 +46,9 @@ public sealed partial class SprayPainterComponent : Component
 
     /// <summary>
     /// Spray paintable object styles selected per object.
-    /// After prototype reload this might not be the same style but it will never be out of bounds.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<string, int> Indexes = new();
+    public Dictionary<string, string> StylesByGroup = new();
 
     /// <summary>
     /// The currently open tab of the painter
@@ -65,7 +67,7 @@ public sealed partial class SprayPainterComponent : Component
     /// The currently selected decal prototype.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<DecalPrototype>? SelectedDecal;
+    public ProtoId<DecalPrototype> SelectedDecal = DefaultDecal;
 
     /// <summary>
     /// The color in which to paint the decal.

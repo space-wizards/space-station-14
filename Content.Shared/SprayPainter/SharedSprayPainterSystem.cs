@@ -32,13 +32,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    public Dictionary<ProtoId<PaintableGroupCategoryPrototype>, PaintableTargets> Targets { get; } = new();
-
     public override void Initialize()
     {
         base.Initialize();
-
-        CacheStyles();
 
         SubscribeLocalEvent<SprayPainterComponent, MapInitEvent>(OnMapInit);
 
@@ -50,7 +46,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Subs.BuiEvents<SprayPainterComponent>(SprayPainterUiKey.Key,
             subs =>
             {
-                subs.Event<SprayPainterSetPaintablePrototypeMessage>(OnSetPaintable);
+                subs.Event<SprayPainterSetPaintableStyleMessage>(OnSetPaintable);
                 subs.Event<SprayPainterSetPipeColorMessage>(OnSetPipeColor);
                 subs.Event<SprayPainterTabChangedMessage>(OnTabChanged);
                 subs.Event<SprayPainterSetDecalMessage>(OnSetDecal);
@@ -58,14 +54,12 @@ public abstract class SharedSprayPainterSystem : EntitySystem
                 subs.Event<SprayPainterSetDecalAngleMessage>(OnSetDecalAngle);
                 subs.Event<SprayPainterSetDecalSnapMessage>(OnSetDecalSnap);
             });
-
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
     }
 
     private void OnMapInit(Entity<SprayPainterComponent> ent, ref MapInitEvent args)
     {
-        foreach (var target in Targets.Keys.ToList())
-            ent.Comp.Indexes[target] = 0;
+        foreach (var groupProto in Proto.EnumeratePrototypes<PaintableGroupPrototype>())
+            ent.Comp.StylesByGroup[groupProto.ID] = groupProto.DefaultStyle;
 
         if (ent.Comp.ColorPalette.Count > 0)
             SetPipeColor(ent, ent.Comp.ColorPalette.First().Key);
@@ -80,7 +74,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
             return;
 
         ent.Comp.PickedColor = paletteKey;
-        Dirty(ent, ent.Comp);
+        Dirty(ent);
         UpdateUi(ent);
     }
 
@@ -111,7 +105,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
                 User = args.User,
                 Tool = ent,
                 Prototype = args.Prototype,
-                Category = args.Category
+                Group = args.Group
             });
 
         AdminLogger.Add(LogType.Action,
@@ -153,6 +147,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         var pitch = ent.Comp.IsPaintingDecals ? 1 : 0.8f;
         Audio.PlayPredicted(ent.Comp.SoundSwitchMode, ent, user, ent.Comp.SoundSwitchMode.Params.WithPitchScale(pitch));
     }
+
     private void OnPaintableInteract(Entity<PaintableComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -161,38 +156,33 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (!TryComp<SprayPainterComponent>(args.Used, out var painter))
             return;
 
-        if (ent.Comp.Group == null
-            || !Proto.TryIndex(ent.Comp.Group, out var group)
-            || !Proto.TryIndex(group.Category, out var category)
-            || !Targets.TryGetValue(group.Category, out var target))
+        if (ent.Comp.Group is not { } group
+            || !painter.StylesByGroup.TryGetValue(group, out var selectedStyle)
+            || !Proto.TryIndex(group, out PaintableGroupPrototype? targetGroup))
             return;
 
         // Valid paint target.
         args.Handled = true;
 
         if (TryComp<LimitedChargesComponent>(args.Used, out var charges)
-            && charges.LastCharges < category.Cost)
+            && charges.LastCharges < targetGroup.Cost)
         {
             var msg = Loc.GetString("spray-painter-interact-no-charges");
             _popup.PopupClient(msg, args.User, args.User);
             return;
         }
 
-        var selected = painter.Indexes.GetValueOrDefault(group.Category, 0);
-        var style = target.Styles[selected];
-
-        if (!group.Styles.TryGetValue(style, out var proto))
+        if (!targetGroup.Styles.TryGetValue(selectedStyle, out var proto))
         {
             var msg = Loc.GetString("spray-painter-style-not-available");
             _popup.PopupClient(msg, args.User, args.User);
             return;
         }
 
-        var time = target.Time;
         var doAfterEventArgs = new DoAfterArgs(EntityManager,
             args.User,
-            time,
-            new SprayPainterDoAfterEvent(proto, group.Category, category.Cost),
+            targetGroup.Time,
+            new SprayPainterDoAfterEvent(proto, group, targetGroup.Cost),
             args.Used,
             target: ent,
             used: args.Used)
@@ -208,7 +198,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         // Log the attempt
         AdminLogger.Add(LogType.Action,
             LogImpact.Low,
-            $"{ToPrettyString(args.User):user} is painting {ToPrettyString(ent):target} to '{style}' at {Transform(ent).Coordinates:targetlocation}");
+            $"{ToPrettyString(args.User):user} is painting {ToPrettyString(ent):target} to '{selectedStyle}' at {Transform(ent).Coordinates:targetlocation}");
     }
 
     private void OnPainedExamined(Entity<PaintedComponent> ent, ref ExaminedEvent args)
@@ -224,12 +214,12 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
     #region UI
 
-    private void OnSetPaintable(Entity<SprayPainterComponent> ent, ref SprayPainterSetPaintablePrototypeMessage args)
+    private void OnSetPaintable(Entity<SprayPainterComponent> ent, ref SprayPainterSetPaintableStyleMessage args)
     {
-        if (!ent.Comp.Indexes.ContainsKey(args.Category))
+        if (!ent.Comp.StylesByGroup.ContainsKey(args.Group))
             return;
 
-        ent.Comp.Indexes[args.Category] = args.Index;
+        ent.Comp.StylesByGroup[args.Group] = args.Style;
         Dirty(ent);
         UpdateUi(ent);
     }
@@ -278,48 +268,4 @@ public abstract class SharedSprayPainterSystem : EntitySystem
     }
 
     #endregion
-
-    #region Style caching
-
-    protected virtual void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
-    {
-        if (!args.WasModified<PaintableGroupPrototype>())
-            return;
-
-        Targets.Clear();
-        CacheStyles();
-    }
-
-    protected virtual void CacheStyles()
-    {
-        foreach (var proto in Proto.EnumeratePrototypes<PaintableGroupPrototype>())
-        {
-            var targetExists = Targets.ContainsKey(proto.Category);
-
-            SortedSet<string> styles = targetExists
-                ? new(Targets[proto.Category].Styles)
-                : new();
-            var groups = targetExists
-                ? Targets[proto.Category].Groups
-                : new();
-
-            groups.Add(proto);
-            foreach (var style in proto.Styles.Keys)
-            {
-                styles.Add(style);
-            }
-
-            Targets[proto.Category] = new(styles.ToList(), groups, proto.Time);
-        }
-    }
-
-    #endregion
 }
-
-/// <summary>
-/// Used for convenient cache storage.
-/// </summary>
-public record PaintableTargets(
-    List<string> Styles,
-    List<PaintableGroupPrototype> Groups,
-    float Time);

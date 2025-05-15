@@ -1,11 +1,14 @@
 - type: paintableGroupCategory
   id: Crates
-  cost: 2
+  groups:
+  - CrateSteel
+  - CratePlastic
+  - CrateSteelSec
 
 - type: paintableGroup
-  category: Crates
   id: CrateSteel
-  iconPriority: 100
+  cost: 2
+  defaultStyle: basic
   styles:
     basic: CrateGenericSteel
     electrical: CrateElectrical
@@ -15,9 +18,9 @@
     surgery: CrateSurgery
 
 - type: paintableGroup
-  category: Crates
   id: CratePlastic
-  iconPriority: 90
+  cost: 2
+  defaultStyle: basic
   styles:
     basic: CratePlastic
     hydroponics: CrateHydroponics
@@ -25,9 +28,9 @@
     oxygen: CrateInternals
 
 - type: paintableGroup
-  category: Crates
   id: CrateSteelSec
-  iconPriority: 80
+  cost: 2
+  defaultStyle: basic
   styles:
     basic: CrateSecure
     secgear: CrateSecgear

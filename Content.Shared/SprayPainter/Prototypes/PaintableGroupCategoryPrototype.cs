@@ -12,8 +12,8 @@ public sealed partial class PaintableGroupCategoryPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
-    /// To number of charges needed to paint an object of this category.
+    /// Each group that makes up this category.
     /// </summary>
-    [DataField]
-    public int Cost = 1;
+    [DataField(required: true)]
+    public List<ProtoId<PaintableGroupPrototype>> Groups = new();
 }

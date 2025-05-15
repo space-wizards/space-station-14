@@ -20,10 +20,11 @@ namespace Content.Client.SprayPainter;
 /// </summary>
 public sealed class SprayPainterSystem : SharedSprayPainterSystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    public Dictionary<string, List<SprayPainterEntry>> Entries { get; private set; } = new();
+
     public List<SprayPainterDecalEntry> Decals = [];
+    public Dictionary<string, List<string>> PaintableGroupsByCategory = new();
+    public Dictionary<string, Dictionary<string, EntProtoId>> PaintableStylesByGroup = new();
 
     public override void Initialize()
     {
@@ -31,6 +32,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 
         Subs.ItemStatus<SprayPainterComponent>(ent => new StatusControl(ent));
         SubscribeLocalEvent<SprayPainterComponent, AfterAutoHandleStateEvent>(OnStateUpdate);
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
         CachePrototypes();
     }
@@ -46,11 +48,9 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             bui.Update();
     }
 
-    protected override void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
-        base.OnPrototypesReloaded(args);
-
-        if (!args.WasModified<PaintableGroupPrototype>())
+        if (!args.WasModified<PaintableGroupCategoryPrototype>() || !args.WasModified<PaintableGroupPrototype>() || !args.WasModified<DecalPrototype>())
             return;
 
         CachePrototypes();
@@ -58,29 +58,26 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 
     private void CachePrototypes()
     {
-        foreach (var category in Targets.Keys)
+        PaintableGroupsByCategory.Clear();
+        PaintableStylesByGroup.Clear();
+        foreach (var category in Proto.EnumeratePrototypes<PaintableGroupCategoryPrototype>().OrderBy(x => x.ID))
         {
-            var target = Targets[category];
-            Entries.Add(category, new());
-
-            foreach (var style in target.Styles)
+            var groupList = new List<string>();
+            foreach (var groupId in category.Groups)
             {
-                var group = target.Groups
-                    .FindAll(x => x.Styles.ContainsKey(style))
-                    .MaxBy(x => x.IconPriority);
-
-                if (group == null ||
-                    !group.Styles.TryGetValue(style, out var protoId))
-                {
-                    Entries[category].Add(new SprayPainterEntry(style, null));
+                if (!Proto.TryIndex(groupId, out var group))
                     continue;
-                }
 
-                Entries[category].Add(new SprayPainterEntry(style, protoId));
+                groupList.Add(groupId);
+                PaintableStylesByGroup[groupId] = group.Styles;
             }
+
+            if (groupList.Count > 0)
+                PaintableGroupsByCategory[category.ID] = groupList;
         }
 
-        foreach (var decalPrototype in _prototypeManager.EnumeratePrototypes<DecalPrototype>().OrderBy(x => x.ID))
+        Decals.Clear();
+        foreach (var decalPrototype in Proto.EnumeratePrototypes<DecalPrototype>().OrderBy(x => x.ID))
         {
             if (!decalPrototype.Tags.Contains("station") && !decalPrototype.Tags.Contains("markings"))
                 continue;
@@ -120,11 +117,6 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         }
     }
 }
-
-/// <summary>
-/// A spray paintable object, mapped by arbitary key.
-/// </summary>
-public sealed record SprayPainterEntry(string Name, EntProtoId? Proto);
 
 /// <summary>
 /// A spray paintable decal, mapped by ID.

@@ -44,15 +44,15 @@ public sealed class SprayPainterTabChangedMessage(int index, bool isSelectedTabW
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterSetPaintablePrototypeMessage : BoundUserInterfaceMessage
+public sealed class SprayPainterSetPaintableStyleMessage : BoundUserInterfaceMessage
 {
-    public readonly string Category;
-    public readonly int Index;
+    public readonly string Group;
+    public readonly string Style;
 
-    public SprayPainterSetPaintablePrototypeMessage(string category, int index)
+    public SprayPainterSetPaintableStyleMessage(string group, string style)
     {
-        Category = category;
-        Index = index;
+        Group = group;
+        Style = style;
     }
 }
 
@@ -74,15 +74,15 @@ public sealed partial class SprayPainterDoAfterEvent : DoAfterEvent
     public string Prototype;
 
     [DataField]
-    public string Category;
+    public string Group;
 
     [DataField]
     public int Cost;
 
-    public SprayPainterDoAfterEvent(string prototype, string category, int cost)
+    public SprayPainterDoAfterEvent(string prototype, string group, int cost)
     {
         Prototype = prototype;
-        Category = category;
+        Group = group;
         Cost = cost;
     }
 
@@ -127,8 +127,8 @@ public sealed partial class EntityPaintedEvent : EntityEventArgs
     public EntProtoId Prototype = default!;
 
     /// <summary>
-    /// The category of item being painted (e.g. lockers, airlocks, canisters).
+    /// The group of item being painted (e.g. airlocks with glass, canisters).
     /// </summary>
     [DataField]
-    public ProtoId<PaintableGroupCategoryPrototype> Category = default!;
+    public ProtoId<PaintableGroupPrototype> Group = default!;
 }
