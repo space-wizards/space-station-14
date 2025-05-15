@@ -231,6 +231,9 @@
       state: metal_foam-north
     - map: [ "enum.EdgeLayer.West" ]
       state: metal_foam-west
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: FlimsyMetallic
   - type: Destructible
     thresholds:
     - trigger:
