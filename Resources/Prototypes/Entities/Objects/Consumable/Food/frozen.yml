@@ -16,6 +16,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
+  - type: Tag
+    tags:
+    - VoxFood
 
 # Ice-cream
 
