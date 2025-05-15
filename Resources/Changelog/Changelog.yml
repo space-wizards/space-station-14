@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Storage now makes sound if you open it on verb or on interact.
-    type: Fix
-  id: 7991
-  time: '2025-02-23T02:01:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35413
 - author: K-Dynamic
   changes:
   - message: Lattice tiles footsteps now sound like catwalks.
@@ -3916,3 +3909,10 @@
   id: 8493
   time: '2025-05-15T12:52:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37414
+- author: Chartman95
+  changes:
+  - message: Soaked Smokes retain their 40u max capacity.
+    type: Tweak
+  id: 8494
+  time: '2025-05-15T14:47:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37482
