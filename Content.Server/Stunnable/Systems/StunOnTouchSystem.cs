@@ -14,7 +14,6 @@ namespace Content.Server.Stunnable
         public override void Initialize()
         {
             base.Initialize();
-
             SubscribeLocalEvent<StunOnTouchComponent, StartCollideEvent>(OnCollide);
         }
 
@@ -24,7 +23,7 @@ namespace Content.Server.Stunnable
                 return;
 
             var ent = args.OtherEntity;
-            _stunSystem.TryParalyze(ent, TimeSpan.FromSeconds(component.StunTime), false);          
+            _stunSystem.TryParalyze(ent, TimeSpan.FromSeconds(component.StunTime), false);
         }
     }
 }

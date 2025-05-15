@@ -41,7 +41,7 @@
 
 - type: listing
   id: SpellbookCellularSmite
-  name: spellbook-cellular-smite-name 
+  name: spellbook-cellular-smite-name
   description: spellbook-cellular-smite-desc
   productAction: ActionCellularSmite
   cost:

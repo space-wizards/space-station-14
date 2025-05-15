@@ -6,7 +6,7 @@ namespace Content.Shared.Stunnable;
 /// Component that allows you to add a stun on collision with anything (not just projectiles)
 [RegisterComponent]
 [Access(typeof(SharedStunOnTouchSystem))]
-public sealed partial class StunOnTouchComponent : Component 
+public sealed partial class StunOnTouchComponent : Component
 {
     /// <summary>
     ///     How long the stun should last.
