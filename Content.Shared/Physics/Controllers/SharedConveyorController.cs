@@ -1,6 +1,8 @@
 ﻿using System.Numerics;
 using Content.Shared.Conveyor;
+using Content.Shared.Friction;
 using Content.Shared.Gravity;
+using Content.Shared.Maps;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
@@ -12,6 +14,7 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Threading;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Physics.Controllers;
 
@@ -19,6 +22,7 @@ public abstract class SharedConveyorController : VirtualController
 {
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private   readonly IParallelManager _parallel = default!;
+    [Dependency] private   readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private   readonly CollisionWakeSystem _wake = default!;
     [Dependency] protected readonly EntityLookupSystem Lookup = default!;
     [Dependency] private   readonly FixtureSystem _fixtures = default!;
@@ -47,6 +51,7 @@ public abstract class SharedConveyorController : VirtualController
         UpdatesAfter.Add(typeof(SharedMoverController));
 
         SubscribeLocalEvent<ConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
+        SubscribeLocalEvent<ConveyedComponent, MoverTileDefEvent>(OnMoverTileDefEvent);
         SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
         SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
 
@@ -66,6 +71,22 @@ public abstract class SharedConveyorController : VirtualController
 
         // Conveyed entities don't get friction, they just get wishdir applied so will inherently slowdown anyway.
         args.Modifier = 0f;
+    }
+
+    private void OnMoverTileDefEvent(Entity<ConveyedComponent> ent, ref MoverTileDefEvent args)
+    {
+        if(!TryComp<FixturesComponent>(ent, out var fixture) || !IsConveyed((ent, fixture)))
+            return;
+
+        var bodyCompensation = 1f;
+
+        if (TryComp<MovementSpeedModifierComponent>(ent, out var move)
+            && !MathHelper.CloseTo(move.BaseFriction, MovementSpeedModifierComponent.DefaultFriction))
+            bodyCompensation *= move.BaseFriction / MovementSpeedModifierComponent.DefaultFriction;
+
+        args.MobFriction = 0.5f * bodyCompensation;
+        args.Friction = 0.5f * bodyCompensation;
+        args.MobAcceleration = 1f;
     }
 
     private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)
@@ -166,8 +187,8 @@ public abstract class SharedConveyorController : VirtualController
                 // they'll go too slow.
                 if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
                 {
-                    _mover.Friction(0f, frameTime: frameTime, friction: 5f, ref velocity);
-                    _mover.Friction(0f, frameTime: frameTime, friction: 5f, ref angularVelocity);
+                    _mover.Friction(0f, frameTime: frameTime, friction: 10f, ref velocity);
+                    _mover.Friction(0f, frameTime: frameTime, friction: 10f, ref angularVelocity);
                 }
 
                 SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
