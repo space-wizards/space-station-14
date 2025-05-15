@@ -20,6 +20,7 @@ using Content.Shared.Mind.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
+using Content.Shared.Throwing;
 
 namespace Content.Shared._Impstation.Replicator;
 
@@ -39,6 +40,8 @@ public abstract class SharedReplicatorNestSystem : EntitySystem
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     public override void Initialize()
     {
@@ -74,6 +77,21 @@ public abstract class SharedReplicatorNestSystem : EntitySystem
         // dont accept if they are already falling
         if (HasComp<ReplicatorNestFallingComponent>(args.Tripper))
             return;
+
+        // *reject* if blacklisted
+        if (_whitelist.IsBlacklistPass(ent.Comp.Blacklist, args.Tripper))
+        {
+            if (TryComp<PullableComponent>(args.Tripper, out var pullable) && pullable.BeingPulled)
+                _pulling.TryStopPull(args.Tripper, pullable);
+
+            var xform = Transform(ent);
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            var worldPos = _xform.GetWorldPosition(xform, xformQuery);
+
+            var direction = _xform.GetWorldPosition(args.Tripper, xformQuery) - worldPos;
+            _throwing.TryThrow(args.Tripper, direction * 10, 7, ent, 0);
+            return;
+        }
 
         var isReplicator = HasComp<ReplicatorComponent>(args.Tripper);
 
@@ -111,9 +129,6 @@ public abstract class SharedReplicatorNestSystem : EntitySystem
 
     private void HandlePoints(Entity<ReplicatorNestComponent> ent, EntityUid tripper) // this is its own method because I think it reads cleaner. also the way goobcode handled this sucked.
     {
-        if (_whitelist.IsBlacklistPass(ent.Comp.Blacklist, tripper))
-            return;
-
         // regardless of what falls in, you get at least one point.
         ent.Comp.TotalPoints++;
         ent.Comp.SpawningProgress++;
@@ -188,17 +203,26 @@ public abstract class SharedReplicatorNestSystem : EntitySystem
             // threshold increases plateau at the endgame level.
             ent.Comp.NextUpgradeAt += ent.Comp.CurrentLevel >= ent.Comp.EndgameLevel ? ent.Comp.UpgradeAt * ent.Comp.EndgameLevel : ent.Comp.UpgradeAt * ent.Comp.CurrentLevel;
             UpgradeAll(ent);
+            _audio.PlayPvs(ent.Comp.LevelUpSound, ent);
         }
 
         // after upgrading, if we exceed the next spawn threshold, spawn a new (un-upgraded) replicator, then set the next spawn threshold.
         if (ent.Comp.SpawningProgress >= ent.Comp.NextSpawnAt)
         {
             SpawnNew(ent);
-            ent.Comp.NextSpawnAt += ent.Comp.SpawnNewAt;
+            ent.Comp.NextSpawnAt += ent.Comp.SpawnNewAt * ent.Comp.UnclaimedSpawners.Count;
         }
 
         // and dirty so the client knows if it's supposed to update the nest visuals
         Dirty(ent);
+
+        // finally, update the PointsStorage entity.
+        if (!TryComp<ReplicatorNestPointsStorageComponent>(ent.Comp.PointsStorage, out var pointsStorageComponent))
+            pointsStorageComponent = EnsureComp<ReplicatorNestPointsStorageComponent>(ent.Comp.PointsStorage);
+
+        pointsStorageComponent.Level = ent.Comp.CurrentLevel;
+        pointsStorageComponent.TotalPoints = ent.Comp.TotalPoints;
+        pointsStorageComponent.TotalReplicators = ent.Comp.SpawnedMinions.Count;
     }
 
     private void SpawnNew(Entity<ReplicatorNestComponent> ent)
@@ -241,9 +265,9 @@ public abstract class SharedReplicatorNestSystem : EntitySystem
             var targetAction = comp.TargetUpgradeStage == 1 ? comp.Level2Action : comp.Level3Action;
 
             if (!mindContainer.HasMind)
-                _actions.AddAction(replicator, targetAction);
+                comp.Actions.Add(_actions.AddAction(replicator, targetAction));
             else if (mindContainer.Mind != null)
-                _actionContainer.AddAction((EntityUid)mindContainer.Mind, targetAction);
+                comp.Actions.Add(_actionContainer.AddAction((EntityUid)mindContainer.Mind, targetAction));
         }
     }
 

@@ -10,12 +10,19 @@
     mode: SnapGridCenter
   components:
   - type: ReplicatorNest
+    fallingSound:
+      path: /Audio/_Impstation/Effects/falling.ogg
+      params:
+        variation: 0.1
     blacklist:
+      components:
+      - Nuke # nice try
       tags:
       - BROS # too many of em. therefore worthless
       - Cartridge
       - CartridgeMagnum
       - Trash
+  - type: ThermalVisionImmune
   - type: StepTrigger
     requiredTriggeredSpeed: 0
     intersectRatio: 0.4
@@ -44,9 +51,20 @@
     - map: ["enum.ReplicatorNestVisuals.Level2"]
       state: nest2
       visible: false
+    - map: ["enum.ReplicatorNestVisuals.Level2Unshaded"]
+      state: nest2unshaded
+      shader: unshaded
+      visible: false
     - map: ["enum.ReplicatorNestVisuals.Level3"]
       state: nest3
       visible: false
+    - map: ["enum.ReplicatorNestVisuals.Level3Unshaded"]
+      state: nest3unshaded
+      shader: unshaded
+      visible: false
+    - map: ["enum.ReplicatorNestVisuals.Level1Unshaded"] # this one last, so it always renders on top 
+      state: nest1unshaded
+      shader: unshaded
   - type: InteractionOutline
   - type: Clickable
   - type: Damageable
@@ -60,9 +78,6 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: EmitSoundOnSpawn
-    sound:
-      path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg # TODO: Probably replace this.
   - type: RequireProjectileTarget
   - type: SolutionContainerManager
     solutions:

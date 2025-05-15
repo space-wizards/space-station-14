@@ -3,14 +3,20 @@
 // the original Bingle PR can be found here: https://github.com/Goob-Station/Goob-Station/pull/1519
 
 using Content.Server.Actions;
+using Content.Server.Emp;
 using Content.Server.Ghost.Roles.Events;
+using Content.Server.Pinpointer;
 using Content.Server.Popups;
+using Content.Server.Stunnable;
 using Content.Shared._Impstation.Replicator;
 using Content.Shared._Impstation.SpawnedFromTracker;
 using Content.Shared.Actions;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Pinpointer;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -26,16 +32,22 @@ public sealed class ReplicatorSystem : EntitySystem
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly StunSystem _stun = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly PinpointerSystem _pinpointer = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ReplicatorComponent, MindAddedMessage>(OnMindAdded);
+        SubscribeLocalEvent<ReplicatorComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<ReplicatorComponent, AttackAttemptEvent>(OnAttackAttempt);
         SubscribeLocalEvent<ReplicatorComponent, ToggleCombatActionEvent>(OnCombatToggle);
         SubscribeLocalEvent<ReplicatorComponent, GhostRoleSpawnerUsedEvent>(OnGhostRoleSpawnerUsed);
         SubscribeLocalEvent<ReplicatorComponent, ReplicatorSpawnNestActionEvent>(OnSpawnNestAction);
+        SubscribeLocalEvent<ReplicatorComponent, EmpPulseEvent>(OnEmpPulse);
+        SubscribeLocalEvent<ReplicatorComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
     private void OnMindAdded(Entity<ReplicatorComponent> ent, ref MindAddedMessage args)
@@ -50,11 +62,20 @@ public sealed class ReplicatorSystem : EntitySystem
                 return;
 
             if (!mindContainer.HasMind)
-                _actions.AddAction((EntityUid)ent, ent.Comp.SpawnNewNestAction);
+                ent.Comp.Actions.Add(_actions.AddAction((EntityUid)ent, ent.Comp.SpawnNewNestAction));
             else
-                _actionContainer.AddAction((EntityUid)mindContainer.Mind, ent.Comp.SpawnNewNestAction);
+                ent.Comp.Actions.Add(_actionContainer.AddAction((EntityUid)mindContainer.Mind, ent.Comp.SpawnNewNestAction));
 
             ent.Comp.HasSpawnedNest = true;
+        }
+    }
+
+    private void OnMindRemoved(Entity<ReplicatorComponent> ent, ref MindRemovedMessage args)
+    {
+        // remove all the actions when the mind is removed. 
+        foreach (var action in ent.Comp.Actions)
+        {
+            QueueDel(action);
         }
     }
 
@@ -73,11 +94,21 @@ public sealed class ReplicatorSystem : EntitySystem
         var myNest = Spawn("ReplicatorNest", xform.Coordinates);
         var myNestComp = EnsureComp<ReplicatorNestComponent>(myNest);
 
+        // add ourselves to the list of related replicators if the nest hasn't been destroyed (and therefore there are no orphaned replicators)
+        if (ent.Comp.RelatedReplicators.Count <= 0 || ent.Comp.Queen && !ent.Comp.RelatedReplicators.Contains(ent))
+            ent.Comp.RelatedReplicators.Add(ent);
+
         // then set that nest's spawned minions to our saved list of related replicators.
+        // while we're in here, we might as well update all their pinpointers.
         HashSet<EntityUid> newMinions = [];
         foreach (var (uid, _) in ent.Comp.RelatedReplicators)
         {
             newMinions.Add(uid);
+
+            if (!_inventory.TryGetSlotEntity(uid, "pocket1", out var pocket1) || !TryComp<PinpointerComponent>(pocket1, out var pinpointer))
+                continue;
+            // set the target to the nest
+            _pinpointer.SetTarget(pocket1.Value, myNest, pinpointer);
         }
         myNestComp.SpawnedMinions = newMinions;
         // make sure the nest knows who we are, and vice versa.
@@ -99,7 +130,7 @@ public sealed class ReplicatorSystem : EntitySystem
         // then remove the spawner from the nest's list of unclaimed spawners.
         nestComp.UnclaimedSpawners.Remove(args.Spawner);
 
-        // finally, tell the new fella who they momma is
+        // tell the new fella who they momma is
         ent.Comp.MyNest = tracker.SpawnedFrom;
     }
 
@@ -127,5 +158,18 @@ public sealed class ReplicatorSystem : EntitySystem
 
         // visual indicator that the replicator is aggressive. 
         _appearance.SetData(ent, ReplicatorVisuals.Combat, combat.IsInCombatMode);
+    }
+
+    private void OnMobStateChanged(Entity<ReplicatorComponent> ent, ref MobStateChangedEvent args)
+    {
+        if (args.NewMobState == MobState.Critical || args.NewMobState == MobState.Dead)
+            _appearance.SetData(ent, ReplicatorVisuals.Combat, false);
+    }
+
+    private void OnEmpPulse(Entity<ReplicatorComponent> ent, ref EmpPulseEvent args)
+    {
+        args.Affected = true;
+        args.Disabled = true;
+        _stun.TryParalyze(ent, ent.Comp.EmpStunTime, true);
     }
 }

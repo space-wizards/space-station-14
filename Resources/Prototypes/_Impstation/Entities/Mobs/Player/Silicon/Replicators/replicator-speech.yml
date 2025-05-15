@@ -1,0 +1,13 @@
+- type: typingIndicator
+  id: replicator
+  spritePath: /Textures/_Impstation/Mobs/Replicator/replicator.rsi
+  typingState: replicator0
+
+- type: speechSounds
+  id: Replicator
+  saySound:
+    path: /Audio/_Impstation/Effects/replicator_speak.ogg
+  askSound:
+    path: /Audio/_Impstation/Effects/replicator_ask.ogg
+  exclaimSound:
+    path: /Audio/_Impstation/Effects/replicator_exclaim.ogg

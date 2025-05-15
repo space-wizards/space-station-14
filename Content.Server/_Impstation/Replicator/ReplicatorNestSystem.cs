@@ -10,16 +10,22 @@ using Content.Server.Stunnable;
 using Content.Shared._Impstation.Replicator;
 using Content.Shared.Actions;
 using Content.Shared.Destructible;
+using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Stunnable;
+using Content.Shared.Pinpointer;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Humanoid;
+using Content.Shared.Explosion.Components;
+using Content.Shared.Audio;
+using Content.Server.Audio;
 
 namespace Content.Server._Impstation.Replicator;
 
@@ -36,6 +42,9 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly PinpointerSystem _pinpointer = default!;
+    [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
 
     public override void Initialize()
     {
@@ -54,15 +63,30 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
     {
         base.Update(frameTime);
 
+        HashSet<EntityUid> toDel = [];
+
         var query = EntityQueryEnumerator<ReplicatorNestFallingComponent>();
         while (query.MoveNext(out var uid, out var falling))
         {
             if (_timing.CurTime < falling.NextDeletionTime)
                 continue;
 
+            // if it doesn't have humanoidappearance *and* it either doesn't have a mindComponent, or, if it has a mindComponent, that mindComponent doesn't have a mind...
+            // man fuck this sentence
+            if (!HasComp<OnUseTimerTriggerComponent>(uid) && // we also want to prevent it from deleting grenades, as that's one of the more reliable ways of destroying it
+                !HasComp<HumanoidAppearanceComponent>(uid) && !TryComp<MindContainerComponent>(uid, out var mind) | (mind != null && !mind!.HasMind))
+            {
+                toDel.Add(uid);
+            }
+
             _containerSystem.Insert(uid, falling.FallingTarget.Comp.Hole);
             EnsureComp<StunnedComponent>(uid); // used stunned to prevent any funny being done inside the pit
             RemCompDeferred(uid, falling);
+        }
+
+        foreach (var uid in toDel)
+        {
+            QueueDel(uid);
         }
     }
 
@@ -80,6 +104,11 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
 
         ent.Comp.NextSpawnAt = ent.Comp.SpawnNewAt;
         ent.Comp.NextUpgradeAt = ent.Comp.UpgradeAt;
+
+        var pointsStorageEnt = Spawn("ReplicatorNestPointsStorage", Transform(ent).Coordinates);
+        EnsureComp<ReplicatorNestPointsStorageComponent>(pointsStorageEnt);
+
+        ent.Comp.PointsStorage = pointsStorageEnt;
     }
 
     private void OnStepTriggerAttempt(Entity<ReplicatorNestComponent> ent, ref StepTriggerAttemptEvent args)
@@ -146,6 +175,7 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
 
             _popup.PopupEntity(Loc.GetString("replicator-nest-destroyed"), replicator, replicator);
         }
+
         // if there are living replicators, select one and give the action to create a new nest.
         if (livingReplicators.Count > 0)
         {
@@ -155,24 +185,38 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
 
             var comp = EnsureComp<ReplicatorComponent>((EntityUid)queen);
             comp.Queen = true;
+            livingReplicators.Add(((EntityUid)queen, comp));
             comp.RelatedReplicators = livingReplicators; // make sure we know who belongs to our nest
 
             if (!TryComp<MindContainerComponent>(queen, out var mindContainer) || mindContainer.Mind == null)
                 return;
 
             if (!mindContainer.HasMind)
-                _actions.AddAction((EntityUid)queen, ent.Comp.SpawnNewNestAction);
+                comp.Actions.Add(_actions.AddAction((EntityUid)queen, ent.Comp.SpawnNewNestAction));
             else
-                _actionContainer.AddAction((EntityUid)mindContainer.Mind, ent.Comp.SpawnNewNestAction);
+                comp.Actions.Add(_actionContainer.AddAction((EntityUid)mindContainer.Mind, ent.Comp.SpawnNewNestAction));
         }
+
+        // finally, loop over our living replicators and set their pinpointers to target the queen.
+        foreach (var replicator in livingReplicators)
+        {
+            if (!_inventory.TryGetSlotEntity(replicator, "pocket1", out var pocket1) || !TryComp<PinpointerComponent>(pocket1, out var pinpointer))
+                continue;
+            // set the target to the queen
+            _pinpointer.SetTarget(pocket1.Value, queen, pinpointer);
+        }
+
+        // turn off the ambient sound on the points storage entity.
+        if (TryComp<AmbientSoundComponent>(ent.Comp.PointsStorage, out var ambientComp))
+            _ambientSound.SetAmbience(ent.Comp.PointsStorage, false, ambientComp);
     }
 
     private void OnRoundEndTextAppend(RoundEndTextAppendEvent args)
     {
-        List<Entity<ReplicatorNestComponent>> nests = [];
+        List<Entity<ReplicatorNestPointsStorageComponent>> nests = [];
 
         // get all the nests that have existed this round in a list
-        var query = AllEntityQuery<ReplicatorNestComponent>();
+        var query = AllEntityQuery<ReplicatorNestPointsStorageComponent>();
         while (query.MoveNext(out var uid, out var comp))
             nests.Add((uid, comp));
 
@@ -185,19 +229,18 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
         // add a bit for every nest showing their location, level at the end of the round, and points. 
         foreach (var ent in nests)
         {
+            var pointsStorage = ent.Comp;
             var location = "Unknown";
             var mapCoords = _transform.ToMapCoordinates(Transform(ent).Coordinates);
             if (_navMap.TryGetNearestBeacon(mapCoords, out var beacon, out _) && beacon?.Comp.Text != null)
                 location = beacon?.Comp.Text!;
 
-            var points = ent.Comp.TotalPoints;
+            var points = pointsStorage.TotalPoints;
 
-            var replicators = ent.Comp.SpawnedMinions.Count;
+            var replicators = pointsStorage.TotalReplicators;
 
-            args.AddLine(Loc.GetString("replicator-end-of-round", ("location", location), ("level", ent.Comp.CurrentLevel), ("points", points), ("replicators", replicators)));
+            args.AddLine(Loc.GetString("replicator-nest-end-of-round", ("location", location), ("level", pointsStorage.Level), ("points", points), ("replicators", replicators)));
+            args.AddLine("");
         }
-
-        // linebreak
-        args.AddLine("");
     }
 }

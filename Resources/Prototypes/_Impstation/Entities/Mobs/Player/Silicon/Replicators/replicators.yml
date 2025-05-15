@@ -9,6 +9,8 @@
   parent: PlayerSiliconBase
   components:
   - type: Replicator
+  - type: NameIdentifier
+    group: Replicator
   - type: SiliconLawBound
   - type: SiliconLawProvider
     laws: Replicator
@@ -20,8 +22,9 @@
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
     raffle:
-      settings: default
+      settings: short
   - type: Sprite
+    granularLayersRendering: true
     drawdepth: Mobs
     sprite: _Impstation/Mobs/Replicator/replicator.rsi
     layers:
@@ -36,11 +39,31 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
   - type: Appearance
-  - type: ReplacementAccent
-    accent: silicon
   - type: ActionGrant
     actions:
     - ActionViewLaws
+  - type: TypingIndicator
+    proto: replicator
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Replicator
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: DamagedSiliconAccent
+  - type: Monotonous
+  - type: NoContractionsAccent
+  - type: ProperPunctuation
+  - type: ProperCapitalization
+  - type: ReplacementAccent
+    accent: silicon
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
   - type: CombatMode
   - type: Actions
   - type: ProtectedFromStepTriggers
@@ -68,15 +91,15 @@
     - trigger:
         !type:DamageTypeTrigger
         damageType: Blunt
-        damage: 100
+        damage: 150
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetPlasteel1:
+          PinpointerReplicator:
             min: 1
-            max: 6
+            max: 1
   - type: StatusEffects
     allowed:
     - Stun
@@ -98,8 +121,6 @@
     damage:
       types:
         Slashing: 7
-  - type: StaminaDamageOnHit
-    damage: 10
   - type: MovementSpeedModifier
     baseWalkSpeed: 2 # same as slime
     baseSprintSpeed: 4
@@ -117,6 +138,7 @@
         Burn: -0.5
   - type: ThermalVision
     lightRadius: 7
+    color: "#d70aa0"
   - type: FlashImmunity
   - type: Puller
     needsHands: false
@@ -130,6 +152,9 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
+  - type: Inventory
+    templateId: replicator
+  - type: InventorySlots
 
 - type: entity
   id: MobReplicatorQueen
@@ -139,8 +164,12 @@
   components:
   - type: Replicator
     queen: true
+  - type: Loadout
+    prototypes:
+    - StartingGearReplicatorT1Weapon
 
 # Tier 1: These guys are mooks. They're vulnerable, bad at dragging, and don't do much damage, but they have the highest stun & a disabler ranged attack. 
+# They also have MovementAlwaysTouching, because they're floaty little guys.
 - type: entity
   id: MobReplicator
   parent: BaseMobReplicator
@@ -149,15 +178,13 @@
   - type: StaminaDamageOnHit
     damage: 20
     sound: /Audio/Weapons/egloves.ogg
-  - type: ActionGun
-    action: ActionReplicatorStunRay
-    gunProto: ReplicatorStunRay
   - type: Physics
     bodyStatus: InAir
   - type: CanMoveInAir
   - type: MovementIgnoreGravity
     gravityState: true
-  - type: FloatingVisuals
+  - type: MovementAlwaysTouching
+  - type: SyncSprite
   - type: MovementSpeedModifier
     baseWalkSpeed: 2 # same as slime
     baseSprintSpeed: 4
@@ -166,6 +193,7 @@
     weightlessAcceleration: 1.8
   - type: NoSlip
   - type: Sprite
+    granularLayersRendering: true
     drawDepth: SmallMobs
     sprite: _Impstation/Mobs/Replicator/replicator.rsi
     layers:
@@ -188,16 +216,19 @@
         - SmallMobLayer
   - type: Body
     prototype: Replicator1
+  - type: Loadout
+    prototypes:
+    - StartingGearReplicatorT1Weapon
 
 # Tier 2: Deconstructors. These guys are a little bit tougher, and have tools to take things apart, but they don't have anywhere near as much stun & their attacks are just as weak as T1s. 
+# They also have MovementAlwaysTouching, because they're still small enough to be affected by the thrusters.
 - type: entity
   id: MobReplicatorTier2
+  name: deconstructor
   parent: BaseMobReplicator
   categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
   suffix: Level 2
   components:
-  - type: StaminaDamageOnHit
-    damage: 10
   - type: Replicator
     upgradeStage: 1
   - type: MovementSpeedModifier
@@ -206,7 +237,9 @@
     weightlessFriction: 1
     weightlessFrictionNoInput: 2
     weightlessAcceleration: 1.2
+  - type: MovementAlwaysTouching
   - type: Sprite
+    granularLayersRendering: true
     drawDepth: Mobs
     sprite: _Impstation/Mobs/Replicator/replicator.rsi
     layers:
@@ -234,8 +267,10 @@
       - StartingGearReplicatorTools
 
 # Tier 3: These guys are tanks. Their job is to tear shit apart and kill things. They're slow, tanky, and have a weapon that does 25 blunt 30 struct. 
+# They *DON'T* have MovementAlwaysTouching, because they're too big and heavy. 
 - type: entity
   id: MobReplicatorTier3
+  name: defender
   parent: BaseMobReplicator
   categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
   description: Oh boy.
@@ -244,9 +279,10 @@
   - type: Replicator
     upgradeStage: 2
   - type: MovementSpeedModifier
-    baseWalkSpeed: 0.6 # these fellas are the tanks, they rely on the smaller guys stunning things for them.
+    baseWalkSpeed: 0.5 # these fellas are the tanks, they rely on the smaller guys stunning things for them.
     baseSprintSpeed: 4
   - type: Sprite
+    granularLayersRendering: true
     drawDepth: Mobs
     sprite: _Impstation/Mobs/Replicator/replicator.rsi
     layers:
@@ -267,7 +303,7 @@
     prototype: Replicator3
   - type: Loadout
     prototypes:
-      - StartingGearReplicatorWeapon
+      - StartingGearReplicatorT3Weapon
   - type: NoSlip
   - type: Magboots
   - type: Damageable

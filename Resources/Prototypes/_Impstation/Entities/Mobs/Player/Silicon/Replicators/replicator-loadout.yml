@@ -3,11 +3,22 @@
   inhand:
     - OmnitoolUnremoveable
     - WelderExperimentalUnremoveable
+  equipment:
+    pocket1: PinpointerReplicatorUnremoveable
 
 - type: startingGear
-  id: StartingGearReplicatorWeapon
+  id: StartingGearReplicatorT1Weapon
+  inhand:
+    - ReplicatorT1Weapon
+  equipment:
+    pocket1: PinpointerReplicatorUnremoveable
+
+- type: startingGear
+  id: StartingGearReplicatorT3Weapon
   inhand:
     - ReplicatorT3Weapon
+  equipment:
+    pocket1: PinpointerReplicatorUnremoveable
 
 - type: entity
   id: ReplicatorT3Weapon
@@ -30,7 +41,7 @@
     animation: WeaponArcSlash
     damage:
       types:
-        Blunt: 25
+        Blunt: 15
         Structural: 30
   - type: StaminaDamageOnHit
     damage: 5
@@ -41,3 +52,94 @@
     speedModifier: 1
     useSound:
       path: /Audio/Items/crowbar.ogg
+
+- type: entity
+  id: ReplicatorT1Weapon
+  parent: [ BaseWeaponBatterySmall, BaseItem ]
+  name: replicator stun projector
+  description: You will protect the nest.
+  suffix: Unremoveable
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Replicator/replicator.rsi
+    layers:
+      - state: t1weapon
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Icon
+    sprite: _Impstation/Mobs/Replicator/replicator.rsi
+    state: t1weapon
+  - type: Appearance
+  - type: Gun
+    fireRate: 0.3
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/stunprojector.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: HitscanReplicator
+    fireCost: 150
+  - type: Battery
+    maxCharge: 150
+    startingCharge: 150
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 1000
+  - type: MeleeWeapon
+    wideAnimationRotation: -80
+  - type: StaminaDamageOnHit
+    damage: 20
+    sound: /Audio/Weapons/egloves.ogg
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 1
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: Unremoveable
+
+- type: entity
+  parent: PinpointerBase
+  id: PinpointerReplicator
+  name: internal gyroscope
+  suffix: ReplicatorNest
+  description: Locates the Nest.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Devices/pinpointer.rsi
+    layers:
+    - sprite: _Impstation/Objects/Devices/pinpointer_replicator.rsi
+      state: pinpointer-replicator
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
+      shader: unshaded
+      visible: false
+  - type: Icon
+    sprite: _Impstation/Objects/Devices/pinpointer_replicator.rsi
+    state: pinpointer-replicator
+  - type: Pinpointer
+    component: ReplicatorNest
+    targetName: replicator nest
+    activateImmediately: true
+
+- type: entity
+  parent: PinpointerReplicator
+  id: PinpointerReplicatorUnremoveable
+  categories: [HideSpawnMenu]
+  components:
+  - type: Unremoveable
+
+- type: hitscan
+  id: HitscanReplicator
+  staminaDamage: 40
+  damage:
+    types:
+      Heat: 0
+  muzzleFlash:
+    sprite: _Impstation/Mobs/Replicator/replicator_gun.rsi
+    state: muzzle_repli
+  travelFlash:
+    sprite: _Impstation/Mobs/Replicator/replicator_gun.rsi
+    state: beam_repli
+  impactFlash:
+    sprite: _Impstation/Mobs/Replicator/replicator_gun.rsi
+    state: impact_repli

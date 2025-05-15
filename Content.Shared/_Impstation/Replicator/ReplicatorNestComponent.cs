@@ -60,10 +60,10 @@ public sealed partial class ReplicatorNestComponent : Component
     public int BonusPointsHumanoid = 2;
     /// <summary>
     /// The number of points required to spawn a new replicator. 
-    /// Does not increase over time.
+    /// Increases linearly with the number of unclaimed ghostroles. 
     /// </summary>
     [DataField]
-    public int SpawnNewAt = 20;
+    public int SpawnNewAt = 30;
     /// <summary>
     /// The number of points required to upgrade existing replicators & the nest itself.
     /// Multiplied by current nest level.
@@ -91,13 +91,16 @@ public sealed partial class ReplicatorNestComponent : Component
     public EntProtoId SpawnNewNestAction = "ActionReplicatorSpawnNest";
 
     [DataField]
-    public SoundSpecifier FallingSound = new SoundPathSpecifier("/Audio/Effects/falling.ogg");
+    public SoundSpecifier FallingSound = new SoundPathSpecifier("/Audio/_Impstation/Effects/falling.ogg");
+    [DataField]
+    public SoundSpecifier LevelUpSound = new SoundPathSpecifier("/Audio/_Impstation/Ambience/hole_2.ogg");
     public HashSet<EntityUid> SpawnedMinions = [];
     public HashSet<EntityUid> UnclaimedSpawners = [];
     public int NextSpawnAt;
     public int NextUpgradeAt;
     [DataField, AutoNetworkedField]
     public bool NeedsUpdate;
+    public EntityUid PointsStorage;
 }
 
 [Serializable, NetSerializable]
@@ -105,7 +108,10 @@ public enum ReplicatorNestVisuals : byte
 {
     Level1,
     Level2,
-    Level3
+    Level3,
+    Level1Unshaded,
+    Level2Unshaded,
+    Level3Unshaded
 }
 
 [Serializable, NetSerializable]

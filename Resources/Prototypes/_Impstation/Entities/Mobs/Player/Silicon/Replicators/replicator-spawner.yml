@@ -14,7 +14,7 @@
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
     raffle:
-      settings: default
+      settings: short
   - type: GhostRoleMobSpawner
     prototype: MobReplicator
   - type: Sprite
@@ -36,3 +36,15 @@
   components:
   - type: GhostRoleMobSpawner
     prototype: MobReplicatorQueen
+
+- type: entity
+  parent: MarkerBase
+  id: ReplicatorNestPointsStorage
+  categories: [HideSpawnMenu]
+  components:
+  - type: ReplicatorNestPointsStorage
+  - type: AmbientSound
+    volume: +2
+    range: 6
+    sound:
+      path: /Audio/_Impstation/Ambience/replicator_ambiance.ogg

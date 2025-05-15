@@ -30,10 +30,21 @@ public sealed partial class ReplicatorNestVisualsSystem : SharedReplicatorNestSy
             _ => ReplicatorNestVisuals.Level1,
         };
 
+        var targetLayerUnshaded = ent.Comp.CurrentLevel switch
+        {
+            >= 3 => ReplicatorNestVisuals.Level3Unshaded,
+            2 => ReplicatorNestVisuals.Level2Unshaded,
+            _ => ReplicatorNestVisuals.Level1Unshaded,
+        };
+
         if (!sprite.LayerMapTryGet(targetLayer, out var layerIndex))
             return;
 
+        if (!sprite.LayerMapTryGet(targetLayerUnshaded, out var layerIndexUnshaded))
+            return;
+
         sprite.LayerSetVisible(layerIndex, true);
+        sprite.LayerSetVisible(layerIndexUnshaded, true);
 
         _appearance.OnChangeData(ent.Owner, sprite);
     }

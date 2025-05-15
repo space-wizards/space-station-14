@@ -12,6 +12,12 @@ namespace Content.Shared._Impstation.Replicator;
 public sealed partial class ReplicatorComponent : Component
 {
     /// <summary>
+    /// The duration for which a replicator of this type will be stunned upon recieving an EMP effect.
+    /// </summary>
+    [DataField]
+    public TimeSpan EmpStunTime = TimeSpan.FromSeconds(5);
+
+    /// <summary>
     /// If a replicator is Queen, it will spawn a nest when it spawns.
     /// </summary>
     [DataField]
@@ -56,6 +62,9 @@ public sealed partial class ReplicatorComponent : Component
     [DataField]
     public EntProtoId SpawnNewNestAction = "ActionReplicatorSpawnNest";
     // prevent adding additional nest action if someone ghosts out and re-attaches
+
+    public HashSet<EntityUid?> Actions = [];
+
     public bool HasSpawnedNest;
 }
 

@@ -5,6 +5,10 @@
   slots:
     torso:
       part: TorsoBorg
+      connections:
+      - hand 1
+    hand 1:
+      part: LeftArmBorg
 
 - type: body
   id: Replicator2
