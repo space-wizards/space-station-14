@@ -1,108 +1,4 @@
 ﻿Entries:
-- author: CooperWallace
-  changes:
-  - message: A popup is now displayed at the item's previous location when it is recalled
-      by the recall wizard spell.
-    type: Add
-  id: 7977
-  time: '2025-02-19T01:47:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35272
-- author: SpaceLizard24
-  changes:
-  - message: Moved saxophones from the Brass Ensemble crate to the Woodwind Ensemble
-      crate.
-    type: Tweak
-  - message: Adjusted the prices of Woodwind Ensemble and Brass Ensemble crates.
-    type: Tweak
-  id: 7978
-  time: '2025-02-19T06:05:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35257
-- author: K-Dynamic
-  changes:
-  - message: Returned Explosive Technology recipes (triggers, payloads, signaller)
-      back to the Protolathe following undocumented removal.
-    type: Fix
-  id: 7979
-  time: '2025-02-19T11:34:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35303
-- author: Winkarst-cpu
-  changes:
-  - message: Now outer clothing hides PDA and belt sprites under it.
-    type: Tweak
-  id: 7980
-  time: '2025-02-19T13:13:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33448
-- author: Booblesnoot42
-  changes:
-  - message: When removing encryption keys from an intercom, excess keys will now
-      be dropped at the remover's feet instead of dropping inside the wall.
-    type: Fix
-  id: 7981
-  time: '2025-02-19T13:46:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34582
-- author: cerebralerror, robinthedragon
-  changes:
-  - message: 'New barsigns: Maltroach (based on sign by MoffNyan, from tgstation)
-      and Whiskey Echoes (by cerebralerror, from frontier station)'
-    type: Add
-  id: 7982
-  time: '2025-02-19T19:25:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35296
-- author: FungiFellow
-  changes:
-  - message: Flare Shells no longer restricted contraband
-    type: Tweak
-  id: 7983
-  time: '2025-02-20T00:27:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34705
-- author: Winkarst-cpu
-  changes:
-  - message: Now all toys and bike horns make an appropriate sound.
-    type: Tweak
-  id: 7984
-  time: '2025-02-20T01:12:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33449
-- author: Zokkie
-  changes:
-  - message: Argocytes, Mimics, Butterflies, Bees, Space Kangaroos, Laser Raptors
-      and Watchers their corpses can now be butchered.
-    type: Fix
-  - message: Butterflies can now be picked up and can also be put into trash bags.
-    type: Fix
-  - message: You can now grind Butterflies and Bees in the reagent grinder.
-    type: Fix
-  id: 7985
-  time: '2025-02-20T16:12:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33727
-- author: metalgearsloth
-  changes:
-  - message: Fix storage windows being duplicated when reconnecting.
-    type: Fix
-  id: 7986
-  time: '2025-02-20T16:51:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35054
-- author: Boaz1111
-  changes:
-  - message: Added colored light bulbs! You can make them just like colored light
-      tubes, in the crafting menu.
-    type: Add
-  id: 7987
-  time: '2025-02-21T18:01:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35333
-- author: themias
-  changes:
-  - message: Fixed sink draining noise continuous playback
-    type: Fix
-  id: 7988
-  time: '2025-02-22T09:20:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34173
-- author: Sparlight
-  changes:
-  - message: All dogs now make dog noises when speaking.
-    type: Tweak
-  id: 7989
-  time: '2025-02-22T21:34:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35383
 - author: GrownSamoyedDog
   changes:
   - message: Fixed Guidebook Entry Ordering / Sorting
@@ -3926,3 +3822,100 @@
   id: 8479
   time: '2025-05-14T05:56:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37442
+- author: ToastEnjoyer
+  changes:
+  - message: Removed the high value target status on certain computer boards, replacing
+      them with command restricted status.
+    type: Tweak
+  id: 8480
+  time: '2025-05-14T17:47:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37452
+- author: LevitatingTree
+  changes:
+  - message: Changed the names of the neurodivergent pins to more accurately reflect
+      their meanings.
+    type: Tweak
+  id: 8481
+  time: '2025-05-14T18:03:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37416
+- author: metalgearsloth
+  changes:
+  - message: Predict gas valves.
+    type: Tweak
+  id: 8482
+  time: '2025-05-14T18:06:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33836
+- author: MisterImp
+  changes:
+  - message: A new recipe has been added for dracos (dragon meat tacos).
+    type: Add
+  id: 8483
+  time: '2025-05-14T19:33:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37212
+- author: LaCumbiaDelCoronavirus
+  changes:
+  - message: Maximum radius (not diameter) of atmos tank explosions has been increased
+      to 10 tiles, however the scale of their increase in size has been decreased.
+    type: Tweak
+  id: 8484
+  time: '2025-05-14T19:49:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36780
+- author: qwerltaz
+  changes:
+  - message: Snipping the panic wire in an air alarm now forces panic mode until the
+      wire is mended.
+    type: Tweak
+  id: 8485
+  time: '2025-05-14T20:39:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36439
+- author: IProduceWidgets
+  changes:
+  - message: more wizard name variety
+    type: Add
+  id: 8486
+  time: '2025-05-14T21:06:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36437
+- author: archee1
+  changes:
+  - message: Bike horns of all varieties have had their textures updated slightly.
+    type: Tweak
+  id: 8487
+  time: '2025-05-14T22:05:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37413
+- author: slarticodefast
+  changes:
+  - message: Fixed paradox clones not copying the mute, snoring and frontal lisp traits.
+    type: Fix
+  id: 8488
+  time: '2025-05-15T01:45:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37467
+- author: kosticia
+  changes:
+  - message: Hamsters, mice, butterflies, mothroaches, bees, bats, snails, rats, ticks
+      and cockroaches now don't leave organs on gibbing.
+    type: Fix
+  id: 8489
+  time: '2025-05-15T03:45:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37080
+- author: EmoGarbage404
+  changes:
+  - message: Goliath tentacles no longer miss if you stand still.
+    type: Fix
+  id: 8490
+  time: '2025-05-15T03:55:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37168
+- author: K-Dynamic
+  changes:
+  - message: Engineering goggles and industrial advanced welders may be found in welding
+      supplies lockers.
+    type: Tweak
+  id: 8491
+  time: '2025-05-15T03:55:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36977
+- author: BlitzTheSquishy
+  changes:
+  - message: You're no longer allowed to fire the Hristov or Mosin one handed anymore.
+    type: Tweak
+  id: 8492
+  time: '2025-05-15T04:12:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33708
