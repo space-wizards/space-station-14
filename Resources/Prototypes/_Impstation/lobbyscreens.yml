@@ -117,3 +117,9 @@
   background: /Textures/_Impstation/LobbyScreens/dont_care.webp
   name: Dont care
   artist: Ionward
+
+- type: lobbyBackground
+  id: smoko
+  background: /Textures/_Impstation/LobbyScreens/smoko.webp
+  name: Smoko?
+  artist: Wowls
