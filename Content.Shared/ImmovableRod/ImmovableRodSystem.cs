@@ -1,10 +1,7 @@
-using Content.Shared.Body.Systems;
-using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
-using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -12,8 +9,6 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
-using Content.Shared.Movement.Systems;
-using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 
 namespace Content.Shared.ImmovableRod;
@@ -30,7 +25,7 @@ public abstract class SharedImmovableRodSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _map = default!;
 
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly StaminaSystem _stamina = default!;
+    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
 
     public override void Initialize()
     {
