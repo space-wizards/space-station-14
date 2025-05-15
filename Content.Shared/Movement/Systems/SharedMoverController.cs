@@ -260,7 +260,8 @@ public abstract partial class SharedMoverController : VirtualController
         else
         {
             if (MapGridQuery.TryComp(xform.GridUid, out var gridComp)
-                && _mapSystem.TryGetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates, out var tile))
+                && _mapSystem.TryGetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates, out var tile)
+                && physicsComponent.BodyStatus == BodyStatus.OnGround)
                 tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
             var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
@@ -403,6 +404,17 @@ public abstract partial class SharedMoverController : VirtualController
         var speed = velocity.Length();
 
         if (speed < minimumFrictionSpeed)
+            return;
+
+        // This equation is lifted from the Physics Island solver.
+        // We re-use it here because Kinematic Controllers can't/shouldn't use the Physics Friction
+        velocity *= Math.Clamp(1.0f - frameTime * friction, 0.0f, 1.0f);
+
+    }
+
+    public void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref float velocity)
+    {
+        if (velocity < minimumFrictionSpeed)
             return;
 
         // This equation is lifted from the Physics Island solver.

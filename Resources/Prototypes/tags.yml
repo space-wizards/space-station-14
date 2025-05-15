@@ -350,6 +350,9 @@
 - type: Tag
   id: CoordinatesDisk
 
+- type: Tag # designed to let corgis wear things; at present only for SmartCorgi.  View PR 33737 on upstream for more dog wearables
+  id: CorgiWearable
+
 - type: Tag #Ohioans die happy
   id: Corn
 
@@ -610,6 +613,9 @@
   id: Goliath
 
 - type: Tag
+  id: GoliathPlate
+
+- type: Tag
   id: GPS
 
 - type: Tag
@@ -701,6 +707,9 @@
 
 - type: Tag
   id: HighSecDoor
+
+- type: Tag
+  id: HivelordRemains
 
 - type: Tag
   id: HiViz
