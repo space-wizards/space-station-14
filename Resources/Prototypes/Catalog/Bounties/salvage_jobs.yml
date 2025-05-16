@@ -2,51 +2,68 @@
 # If you don't do this, you won't raise the limit for completing a given rank and may throw off some balance.
 
 # TODO: REDO DESCRIPTIONS
+# Tier 1
 
 - type: cargoBounty
   id: BountyTeethSpaceCarp
-  reward: 7500
+  reward: 10000
   description: bounty-description-tooth-space-carp
   group: SalvageJobTier1
+  sprite:
+    sprite: Mobs/Aliens/Carps/space.rsi
+    state: icon
   entries:
   - name: bounty-item-tooth-space-carp
-    amount: 8
+    amount: 10
     whitelist:
       tags:
       - ToothSpaceCarp
 
+# Tier 2
+
 - type: cargoBounty
   id: BountyTeethSharkminnow
-  reward: 15000
+  reward: 20000
   description: bounty-description-tooth-sharkminnow
   group: SalvageJobTier2
+  sprite:
+    sprite: Mobs/Aliens/Carps/sharkminnow.rsi
+    state: icon
   entries:
   - name: bounty-item-tooth-sharkminnow
-    amount: 5
+    amount: 3
     whitelist:
       tags:
       - ToothSharkminnow
 
+# Tier 3
+
 - type: cargoBounty
-  id: BountyPlates
-  reward: 20000
+  id: BountyGoliathPlates
+  reward: 30000
   description: bounty-description-plates
   group: SalvageJobTier3
+  sprite:
+    sprite: Mobs/Aliens/Asteroid/goliath.rsi
+    state: goliath
   entries:
   - name: bounty-item-plates
-    amount: 4
+    amount: 6
     whitelist:
       tags:
       - GoliathPlate
 
 - type: cargoBounty
-  id: BountyRemains
-  reward: 15000
+  id: BountyHivelordRemains
+  reward: 30000
   description: bounty-description-remains
   group: SalvageJobTier3
+  sprite:
+    sprite: Mobs/Aliens/Asteroid/hivelord.rsi
+    state: hivelord
   entries:
   - name: bounty-item-remains
-    amount: 2
+    amount: 3
     whitelist:
       tags:
       - HivelordRemains

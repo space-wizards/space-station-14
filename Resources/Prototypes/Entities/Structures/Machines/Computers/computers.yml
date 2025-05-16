@@ -1225,8 +1225,8 @@
     key: enum.SalvageJobBoardUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.SalvageJobBoardUiKey.Key: #todo: something else
-        type: FundingAllocationConsoleBoundUserInterface
+      enum.SalvageJobBoardUiKey.Key:
+        type: SalvageJobBoardBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Computer

@@ -1,8 +1,11 @@
 using System.Linq;
 using Content.Server.Cargo.Systems;
+using Content.Server.Station.Systems;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Labels.EntitySystems;
+using Content.Shared.Salvage.JobBoard;
+using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Salvage.JobBoard;
@@ -12,11 +15,14 @@ public sealed class SalvageJobBoardSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly CargoSystem _cargo = default!;
     [Dependency] private readonly LabelSystem _label = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<EntitySoldEvent>(OnSold);
+        SubscribeLocalEvent<SalvageJobBoardConsoleComponent, BoundUIOpenedEvent>(OnBUIOpened);
     }
 
     private void OnSold(ref EntitySoldEvent args)
@@ -69,16 +75,17 @@ public sealed class SalvageJobBoardSystem : EntitySystem
             return 1;
         var completedCount = ent.Comp.CompletedJobs.Count;
 
-        var high = ent.Comp.RankThresholds.Keys.First();
-        int low;
-        for (var i = 1; i < ent.Comp.RankThresholds.Count; i++)
+        foreach (var (low, rank) in ent.Comp.RankThresholds.Reverse())
         {
-            low = high;
-            high = ent.Comp.RankThresholds.Keys.ElementAt(i);
-
-            if (completedCount >= high)
+            if (completedCount < low)
                 continue;
-            return Math.Clamp(MathHelper.Lerp(low, high, completedCount), 0, 1);
+            var totalCount = _prototypeManager.EnumeratePrototypes<CargoBountyPrototype>()
+                .Count(p => p.Group == rank.BountyGroup);
+
+            if (totalCount == 0)
+                return 1;
+
+            return (completedCount - low) / (float) totalCount;
         }
 
         return 1f;
@@ -124,8 +131,28 @@ public sealed class SalvageJobBoardSystem : EntitySystem
                 _cargo.CreateAccountDistribution((ent,  stationBankAccount)));
         }
 
-        // TODO: implement
+        // TODO: implement unlocking cargo orders
 
         return true;
+    }
+
+    private void OnBUIOpened(Entity<SalvageJobBoardConsoleComponent> ent, ref BoundUIOpenedEvent args)
+    {
+        if (args.UiKey is not SalvageJobBoardUiKey.Key)
+            return;
+
+        if (_station.GetOwningStation(ent.Owner) is not { } station ||
+            !TryComp<SalvageJobsDataComponent>(station, out var jobData))
+            return;
+
+        var stationEnt = (Entity<SalvageJobsDataComponent>) (station, jobData);
+        var jobs = GetAvailableJobs(stationEnt);
+
+        var state = new SalvageJobBoardConsoleState(
+            GetRank(stationEnt).Title,
+            GetRankProgression(stationEnt),
+            jobs.Except(stationEnt.Comp.CompletedJobs).ToList());
+
+        _ui.SetUiState(ent.Owner, SalvageJobBoardUiKey.Key, state);
     }
 }
