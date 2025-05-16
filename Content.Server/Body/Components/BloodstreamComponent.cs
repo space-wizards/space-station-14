@@ -12,7 +12,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Access(typeof(BloodstreamSystem), typeof(ReactionMixerSystem))]
+    [RegisterComponent, Access(typeof(BloodstreamSystem), typeof(ReactionMixerSystem), typeof(SlimeSystem))]
     public sealed partial class BloodstreamComponent : Component
     {
         public static string DefaultChemicalsSolutionName = "chemicals";
@@ -182,5 +182,12 @@ namespace Content.Server.Body.Components
 
         [DataField]
         public ProtoId<AlertPrototype> BleedingAlert = "Bleed";
+
+        /// <summary>
+        /// A color to override the color of the blood
+        /// set by external components responding to the bloodColorOverrideEvent.
+        /// Otherwise blood just uses it's reagent color.
+        /// </summary>
+        public Color? BloodOverrideColor = null;
     }
 }

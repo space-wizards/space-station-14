@@ -545,16 +545,10 @@ public sealed class BloodstreamSystem : EntitySystem
 
         if (TryComp<BloodstreamComponent>(uid, out var bloodstreamComp))
         {
+            var ev = new BloodColorOverrideEvent { Owner = uid, BloodstreamComp = bloodstreamComp };
+            RaiseLocalEvent(uid, ref ev);
             var bloodProto = _prototypeManager.Index<ReagentPrototype>(bloodstreamComp.BloodReagent);
-            if ("Slime" == bloodProto.ID
-                && TryComp<HumanoidAppearanceComponent>(uid, out var appearanceComp))
-            {
-                bloodColorData.SubstanceColor = appearanceComp.SkinColor;
-            }
-            else
-            {
-                bloodColorData.SubstanceColor = bloodProto.SubstanceColor;
-            }
+            bloodColorData.SubstanceColor = bloodstreamComp.BloodOverrideColor ?? bloodProto.SubstanceColor;
         }
 
         bloodData.Add(dnaData);

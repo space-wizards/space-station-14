@@ -117,6 +117,7 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: SlimeBlood
 
 - type: entity
   parent: MobHumanDummy
