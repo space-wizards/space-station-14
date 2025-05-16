@@ -14,7 +14,7 @@ public sealed class DisplacementMapSystem : EntitySystem
     /// Attempting to apply a displacement map to a specific layer of SpriteComponent
     /// </summary>
     /// <param name="data">Information package for applying the displacement map</param>
-    /// <param name="sprite">SpriteComponent</param>
+    /// <param name="sprite">Entity with SpriteComponent</param>
     /// <param name="index">Index of the layer where the new map layer will be added</param>
     /// <param name="key">Unique layer key, which will determine which layer to apply displacement map to</param>
     /// <param name="displacementKey">The key of the new displacement map layer added by this function.</param>
