@@ -20,6 +20,8 @@
   - type: Tag
     tags:
     - Trash
+  - type: Food
+    requiresSpecialDigestion: true
   - type: PhysicalComposition
     materialComposition:
       Plastic: 50
