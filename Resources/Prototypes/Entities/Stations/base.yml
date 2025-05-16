@@ -68,6 +68,7 @@
           stationGrid: false
           paths:
           - /Maps/Ruins/abandoned_outpost.yml
+          - /Maps/Ruins/atmos_interchange.yml
           - /Maps/Ruins/chunked_tcomms.yml
           - /Maps/Ruins/biodome_satellite.yml
           - /Maps/Ruins/derelict.yml
@@ -80,6 +81,7 @@
           - /Maps/Ruins/whiteship_ancient.yml
           - /Maps/Ruins/whiteship_bluespacejumper.yml
           - /Maps/Ruins/wrecklaimer.yml
+          - /Maps/Ruins/displaced_telescience.yml
         wrecks: !type:DungeonSpawnGroup
           minimumDistance: 150
           maximumDistance: 300
