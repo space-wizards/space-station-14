@@ -1,0 +1,16 @@
+- type: entity
+  id: ClothingBeltMedicalSecurityWebbingFilled
+  parent: ClothingBeltMedicalSecurityWebbing
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Brutepack
+        amount: 2
+      - id: Ointment
+        amount: 1
+      - id: Bloodpack
+        amount: 1
+      - id: Gauze
+      - id: EmergencyMedipen #You never know what people are going to latejoin into
+        amount: 2

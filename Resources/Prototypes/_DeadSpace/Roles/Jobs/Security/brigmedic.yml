@@ -40,7 +40,7 @@
     head: ClothingHeadHatBeretBrigmedic
     id: BrigmedicPDA
     ears: ClothingHeadsetBrigmedic
-    belt: ClothingBeltMedicalSecurityWebbing
+    belt: ClothingBeltMedicalSecurityWebbingFilled
   storage:
     back:
     - Flash
