@@ -56,7 +56,7 @@ namespace Content.Server.Forensics
                 component.Fibers,
                 component.TouchDNAs,
                 component.SolutionDNAs,
-                component.Residues,
+                component.CleaningAgents,
                 component.LastScannedName,
                 component.PrintCooldown,
                 component.PrintReadyAt);
@@ -79,14 +79,14 @@ namespace Content.Server.Forensics
                     scanner.Fingerprints = new();
                     scanner.Fibers = new();
                     scanner.TouchDNAs = new();
-                    scanner.Residues = new();
+                    scanner.CleaningAgents = new();
                 }
                 else
                 {
                     scanner.Fingerprints = forensics.Fingerprints.ToList();
                     scanner.Fibers = forensics.Fibers.ToList();
                     scanner.TouchDNAs = forensics.DNAs.ToList();
-                    scanner.Residues = forensics.Residues.ToList();
+                    scanner.CleaningAgents = forensics.CleaningAgents.ToList();
                 }
 
                 if (_tag.HasTag(args.Args.Target.Value, DNASolutionScannableTag))
@@ -236,8 +236,8 @@ namespace Content.Server.Forensics
                 text.AppendLine(dna);
             }
             text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
-            foreach (var residue in component.Residues)
+            text.AppendLine(Loc.GetString("forensic-scanner-interface-cleaning-agents"));
+            foreach (var residue in component.CleaningAgents)
             {
                 text.AppendLine(residue);
             }

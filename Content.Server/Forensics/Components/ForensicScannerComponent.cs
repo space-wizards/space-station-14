@@ -35,10 +35,10 @@ namespace Content.Server.Forensics
         public List<string> SolutionDNAs = new();
 
         /// <summary>
-        /// Residue that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
+        /// Cleaning agents that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField("residues")]
-        public List<string> Residues = new();
+        [ViewVariables(VVAccess.ReadOnly), DataField]
+        public List<string> CleaningAgents = [];
 
         /// <summary>
         /// What is the name of the entity that was scanned last?

@@ -11,4 +11,16 @@ public sealed partial class CleansForensicsComponent : Component
     /// </summary>
     [DataField]
     public float CleanDelay = 12.0f;
+
+    /// <summary>
+    /// The adjective for the cleaning agent, e.g slippery
+    /// </summary>
+    [DataField]
+    public LocId AgentAdjective = "cleaning-agent-unknown";
+
+    /// <summary>
+    /// An optional color for this cleaning agent
+    /// </summary>
+    [DataField]
+    public string? AgentColor;
 }

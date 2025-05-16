@@ -141,9 +141,9 @@ namespace Content.Server.Forensics
                 dest.Fingerprints.Add(print);
             }
 
-            foreach (var residue in src.Residues)
+            foreach (var residue in src.CleaningAgents)
             {
-                dest.Residues.Add(residue);
+                dest.CleaningAgents.Add(residue);
             }
         }
 
@@ -267,8 +267,8 @@ namespace Content.Server.Forensics
             if (TryComp<FiberComponent>(args.Used, out var fiber))
                 targetComp.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
 
-            if (TryComp<ResidueComponent>(args.Used, out var residue))
-                targetComp.Residues.Add(string.IsNullOrEmpty(residue.ResidueColor) ? Loc.GetString("forensic-residue", ("adjective", residue.ResidueAdjective)) : Loc.GetString("forensic-residue-colored", ("color", residue.ResidueColor), ("adjective", residue.ResidueAdjective)));
+            if (TryComp<CleansForensicsComponent>(args.Used, out var agent))
+                targetComp.CleaningAgents.Add(string.IsNullOrEmpty(agent.AgentColor) ? Loc.GetString("forensic-cleaning-agent", ("adjective", agent.AgentAdjective)) : Loc.GetString("forensic-cleaning-agent-colored", ("color", agent.AgentColor), ("adjective", agent.AgentAdjective)));
         }
 
         public string GenerateFingerprint()

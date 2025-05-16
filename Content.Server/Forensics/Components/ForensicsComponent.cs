@@ -12,8 +12,11 @@ namespace Content.Server.Forensics
         [DataField("dnas")]
         public HashSet<string> DNAs = new();
 
-        [DataField("residues")]
-        public HashSet<string> Residues = new();
+        /// <summary>
+        /// Unique set of cleaning agents found on the entity, separate from actual evidence
+        /// </summary>
+        [DataField]
+        public HashSet<string> CleaningAgents = [];
 
         /// <summary>
         /// How close you must be to wipe the prints/blood/etc. off of this entity
