@@ -54,7 +54,7 @@ public sealed class ElectrocutionHUDVisualizerSystem : VisualizerSystem<Electroc
     private void ShowHUD()
     {
         var electrifiedQuery = AllEntityQuery<ElectrocutionHUDVisualsComponent, AppearanceComponent, SpriteComponent>();
-        while (electrifiedQuery.MoveNext(out var uid, out var _, out var appearanceComp, out var spriteComp))
+        while (electrifiedQuery.MoveNext(out var uid, out _, out var appearanceComp, out var spriteComp))
         {
             if (!AppearanceSystem.TryGetData<bool>(uid, ElectrifiedVisuals.IsElectrified, out var electrified, appearanceComp))
                 continue;
@@ -68,7 +68,7 @@ public sealed class ElectrocutionHUDVisualizerSystem : VisualizerSystem<Electroc
     private void RemoveHUD()
     {
         var electrifiedQuery = AllEntityQuery<ElectrocutionHUDVisualsComponent, AppearanceComponent, SpriteComponent>();
-        while (electrifiedQuery.MoveNext(out var uid, out var _, out _, out var spriteComp))
+        while (electrifiedQuery.MoveNext(out var uid, out _, out _, out var spriteComp))
         {
             _sprite.LayerSetVisible((uid, spriteComp), ElectrifiedLayers.HUD, false);
         }
