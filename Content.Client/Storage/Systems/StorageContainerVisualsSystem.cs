@@ -8,6 +8,8 @@ namespace Content.Client.Storage.Systems;
 /// <inheritdoc cref="StorageContainerVisualsComponent"/>
 public sealed class StorageContainerVisualsSystem : VisualizerSystem<StorageContainerVisualsComponent>
 {
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
     protected override void OnAppearanceChange(EntityUid uid, StorageContainerVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -19,9 +21,9 @@ public sealed class StorageContainerVisualsSystem : VisualizerSystem<StorageCont
         if (!AppearanceSystem.TryGetData<int>(uid, StorageVisuals.Capacity, out var capacity, args.Component))
             return;
 
-        var fraction = used / (float) capacity;
+        var fraction = used / (float)capacity;
 
-        if (!args.Sprite.LayerMapTryGet(component.FillLayer, out var fillLayer))
+        if (!_sprite.LayerMapTryGet((uid, args.Sprite), component.FillLayer, out var fillLayer, false))
             return;
 
         var closestFillSprite = Math.Min(ContentHelpers.RoundToNearestLevels(fraction, 1, component.MaxFillLevels + 1),
@@ -32,13 +34,13 @@ public sealed class StorageContainerVisualsSystem : VisualizerSystem<StorageCont
             if (component.FillBaseName == null)
                 return;
 
-            args.Sprite.LayerSetVisible(fillLayer, true);
+            _sprite.LayerSetVisible((uid, args.Sprite), fillLayer, true);
             var stateName = component.FillBaseName + closestFillSprite;
-            args.Sprite.LayerSetState(fillLayer, stateName);
+            _sprite.LayerSetRsiState((uid, args.Sprite), fillLayer, stateName);
         }
         else
         {
-            args.Sprite.LayerSetVisible(fillLayer, false);
+            _sprite.LayerSetVisible((uid, args.Sprite), fillLayer, false);
         }
     }
 }
