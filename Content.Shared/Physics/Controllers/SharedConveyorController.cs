@@ -29,6 +29,11 @@ public abstract class SharedConveyorController : VirtualController
 
     private ConveyorJob _job;
 
+    // TODO: These values should be defined by ConveyorComponent and then passed to Conveyed entities
+    private float _friction = 10f;
+    private float _stopFriction = 40f;
+    private float _acceleration = 20f;
+
     private EntityQuery<ConveyorComponent> _conveyorQuery;
     private EntityQuery<ConveyedComponent> _conveyedQuery;
     protected EntityQuery<PhysicsComponent> PhysicsQuery;
@@ -183,18 +188,18 @@ public abstract class SharedConveyorController : VirtualController
                 // they'll go too slow.
                 if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
                 {
-                    _mover.Friction(0f, frameTime: frameTime, friction: 10f, ref velocity);
-                    _mover.Friction(0f, frameTime: frameTime, friction: 10f, ref angularVelocity);
+                    _mover.Friction(0f, frameTime, _friction, ref velocity);
+                    _mover.Friction(0f, frameTime, _friction, ref angularVelocity);
                 }
 
-                SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
+                SharedMoverController.Accelerate(ref velocity, targetDir, _acceleration, frameTime);
             }
             else if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
             {
                 // Need friction to outweigh the movement as it will bounce a bit against the wall.
                 // This facilitates being able to sleep entities colliding into walls.
-                _mover.Friction(0f, frameTime: frameTime, friction: 40f, ref velocity);
-                _mover.Friction(0f, frameTime: frameTime, friction: 40f, ref angularVelocity);
+                _mover.Friction(0f, frameTime, _stopFriction, ref velocity);
+                _mover.Friction(0f, frameTime, _stopFriction, ref angularVelocity);
             }
 
             PhysicsSystem.SetAngularVelocity(ent.Entity.Owner, angularVelocity);
