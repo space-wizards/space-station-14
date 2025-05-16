@@ -353,6 +353,6 @@
     icon:
       sprite: Clothing/Mask/gassecurity.rsi
       state: icon
-    useDelay: 10
+    useDelay: 1 #TESTIN PURPOSES, change to 10 at final
     itemIconStyle: BigAction
     event: !type:HailerActionEvent

@@ -41,6 +41,7 @@
         Heat: 0.95
   - type: SecurityHailer
     distance: 5
+    aggresionLevel: High
 
 - type: entity
   parent: [ClothingMaskGas, BaseSyndicateContraband]

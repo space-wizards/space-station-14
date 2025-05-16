@@ -1,17 +1,20 @@
 - type: soundCollection
   id: SecHailLow
   files:
-    - /Audio/Items/Whistle/whistle_1.ogg
+    - /Audio/Voice/SecurityHails/NT_law.ogg
+    - /Audio/Voice/SecurityHails/game_over.ogg
 
 - type: soundCollection
   id: SecHailMedium
   files:
-    - /Audio/Items/Whistle/trench_whistle_1.ogg
+    - /Audio/Voice/SecurityHails/asshole.ogg
+    - /Audio/Voice/SecurityHails/asshole.ogg
 
 - type: soundCollection
   id: SecHailHigh
   files:
-    - /Audio/Items/Whistle/trench_whistle_1.ogg
+    - /Audio/Voice/SecurityHails/mald.ogg
+    - /Audio/Voice/SecurityHails/STFU.ogg
 
 - type: soundCollection
   id: SecHailEmag

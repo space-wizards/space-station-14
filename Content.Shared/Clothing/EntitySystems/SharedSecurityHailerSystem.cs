@@ -1,28 +1,26 @@
 using Content.Shared.Actions;
-using Content.Shared.Chasm;
-using Content.Shared.Clothing.ActionEvent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Coordinates;
-using Content.Shared.Whistle;
-using Robust.Shared.Timing;
-using System;
-using Content.Shared.Chat;
-using System.Security.Cryptography;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Humanoid;
+using Content.Shared.Interaction;
+using Content.Shared.Tools.Systems;
 
 namespace Content.Shared.Clothing.EntitySystems
 {
     public abstract class SharedSecurityHailerSystem : EntitySystem
     {
         [Dependency] private readonly SharedActionsSystem _actions = default!;
-        
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<SecurityHailerComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<SecurityHailerComponent, ClothingGotEquippedEvent>(OnEquip);
+            SubscribeLocalEvent<SecurityHailerComponent, InteractUsingEvent>(OnInteractUsing);
         }
 
         private void OnEquip(EntityUid uid, SecurityHailerComponent comp, ClothingGotEquippedEvent args)
@@ -40,6 +38,49 @@ namespace Content.Shared.Clothing.EntitySystems
 
             _actions.AddAction(uid, ref comp.ActionEntity, comp.Action);
             Dirty(uid, comp);
+        }
+
+        /// <summary>
+        /// Put an exclamation mark around humanoid standing at the distance specified in the component.
+        /// </summary>
+        /// <param name="ent"></param>
+        /// <returns></returns>
+        protected bool ExclamateHumanoidsAround(Entity<SecurityHailerComponent> ent) //Put in shared for predictions purposes
+        {
+            var (uid, comp) = ent;
+            if (!Resolve(uid, ref comp, false) || comp.Distance <= 0)
+                return false;
+
+            StealthComponent? stealth = null;
+            foreach (var iterator in
+                _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), comp.Distance))
+            {
+                //Avoid pinging invisible entities
+                if (TryComp(iterator, out stealth) && stealth.Enabled)
+                    continue;
+
+                //We don't want to ping user of whistle
+                if (iterator.Owner == uid)
+                    continue;
+
+                SpawnAttachedTo(comp.ExclamationEffect, iterator.Owner.ToCoordinates());
+            }
+
+            return true;
+        }
+
+        private void OnInteractUsing(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            //Is it a wirecutter, a screwdriver or an EMAG ?
+            //if (!(_toolSystem.HasQuality(args.Used, SharedToolSystem.PulseQuality)
+            //    || _toolSystem.HasQuality(args.Used, SharedToolSystem.CutQuality)
+            //    || _toolSystem.HasQuality(args.Used, SharedToolSystem.)))
+            //    return;
+
+            Log.Debug("is it a screwdriver ? :" + args.Used.Id);
         }
     }
 }

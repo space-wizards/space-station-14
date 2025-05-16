@@ -2,10 +2,6 @@ using Content.Shared.Clothing.ActionEvent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Server.Chat.Systems;
-using Content.Shared.Humanoid;
-using Content.Shared.Stealth.Components;
-using Robust.Shared.Physics;
-using Content.Shared.Coordinates;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
 
@@ -14,8 +10,6 @@ namespace Content.Server.Clothing.Systems
     public sealed class SecurityHailerSystem : SharedSecurityHailerSystem
     {
         [Dependency] private readonly ChatSystem _chat = default!;
-        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
 
         public override void Initialize()
@@ -26,52 +20,48 @@ namespace Content.Server.Clothing.Systems
 
         private void OnHailOrder(Entity<SecurityHailerComponent> ent, ref ActionSecHailerActionEvent ev)
         {
-            Log.Debug("OnHailOrder servers side reached !");
-
+            //If the event is already handled
             if (ev.Handled)
                 return;
-            bool exclamation = ExclamateHumanoidsAround(ent);
 
-            int index = PlaySoundEffect(ent);
+            //Put the exclamations mark around people at the distance specified in the comp side
+            //Just like a whistle
+            bool exclamationHandled = base.ExclamateHumanoidsAround(ent);
 
-            //Play the voice line
-            _chat.TrySendInGameICMessage(ev.Performer, "HALT!!", InGameICChatType.Speak, true, true, checkRadioPrefix: false);  //Speech that isn't sent to chat or adminlogs
+            //Play the damn sound
+            int index = PlaySoundEffect(ent); // index gotten from AudioSystem.ResolveSound() of the sound chosen in the soundcollection (Basically, which random line is playing ?)
+            bool chatHandled = SayChatMessage(ent, ev, index);
 
+            //If both exclamation and chat were done, we handled it yay !
+            ev.Handled = exclamationHandled && chatHandled;
+        }
 
-            ev.Handled = exclamation;
+        private bool SayChatMessage(Entity<SecurityHailerComponent> ent, ActionSecHailerActionEvent ev, int index)
+        {
+            //Make a chat line with the sec hailer as speaker, in bold and UPPERCASE for added impact
+            string ftlLine = $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}"; //hail-aggression_level_index
+            Log.Debug(ftlLine);
+            _chat.TrySendInGameICMessage(ev.Performer, Loc.GetString(ftlLine).ToUpper(), InGameICChatType.Speak, hideChat: false, hideLog: true, nameOverride: ent.Comp.ChatName, checkRadioPrefix: false);
+            return true;
         }
 
         private int PlaySoundEffect(Entity<SecurityHailerComponent> ent)
         {
-            var resolver = _audio.ResolveSound(ent.Comp.LowAggressionSounds);
+            var (uid, comp) = ent;
+            var currentSpecifier = comp.AggresionLevel switch
+            {
+                SecurityHailerComponent.AggresionState.Medium => comp.MediumAggressionSounds,
+                SecurityHailerComponent.AggresionState.High => comp.HighAggressionSounds,
+                SecurityHailerComponent.AggresionState.Emag => comp.EmagAggressionSounds,
+                _ => comp.LowAggressionSounds,
+            };
+            var resolver = _audio.ResolveSound(currentSpecifier);
             if (resolver is not ResolvedCollectionSpecifier collectionResolver)
                 return -1;
 
+            _audio.PlayPvs(resolver, ent.Owner); //TODO: check if works
+
             return collectionResolver.Index;
-        }
-
-        private bool ExclamateHumanoidsAround(Entity<SecurityHailerComponent> ent)
-        {
-            var (uid, comp) = ent;
-            if (!Resolve(uid, ref comp, false) || comp.Distance <= 0)
-                return false;
-
-            StealthComponent? stealth = null;
-            foreach (var iterator in
-                _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), comp.Distance))
-            {
-                //Avoid pinging invisible entities
-                if (TryComp(iterator, out stealth) && stealth.Enabled)
-                    continue;
-
-                //We don't want to ping user of whistle
-                if (iterator.Owner == uid)
-                    continue;
-
-                SpawnAttachedTo(comp.ExclamationEffect, iterator.Owner.ToCoordinates());
-            }
-
-            return true;
         }
     }
 }

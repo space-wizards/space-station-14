@@ -18,29 +18,28 @@ namespace Content.Shared.Clothing.Components
         public float Distance = 0;
 
         /// <summary>
+        /// The name displayed as the speaker when hailing orders.
+        /// </summary>
+        [DataField]
+        public string? ChatName = "Security Hailer";
+
+        /// <summary>
         /// How aggresive are the orders coming from the hailer ? Higher means more aggressive / shitsec
         /// </summary>
-        public enum AggresionState
+        public enum AggresionState : byte
         {
-            Low,
-            Medium,
-            High,
-            Emag
+            Low = 0,
+            Medium = 1,
+            High = 2,
+            Emag = 3
         }
 
         [DataField, AutoNetworkedField]
         public AggresionState AggresionLevel = AggresionState.Low;
 
-        [DataField]
         public SoundSpecifier LowAggressionSounds = new SoundCollectionSpecifier("SecHailLow");
-
-        [DataField]
         public SoundSpecifier MediumAggressionSounds = new SoundCollectionSpecifier("SecHailMedium");
-
-        [DataField]
         public SoundSpecifier HighAggressionSounds = new SoundCollectionSpecifier("SecHailHigh");
-
-        [DataField]
         public SoundSpecifier EmagAggressionSounds = new SoundCollectionSpecifier("SecHailEmag");
 
         /// <summary>

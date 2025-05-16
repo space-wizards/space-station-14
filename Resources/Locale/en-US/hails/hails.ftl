@@ -1,3 +1,11 @@
+hail-low-0 = You have broken Nanotransen's law!!
+hail-low-1 = Game over, criminal!!
+hail-medium-0 = Stop breaking the law asshole!!
+hail-medium-1 = My batong is itching!!
+hail-high-0 = Go on, mald about it!!
+hail-high-1 = You have the right to shut the fuck up!!
+
+
 hail-0 = You have the right to remain silent... forever!!
 hail-1 = Dead or alive, you're coming with me!!
 hail-2 = Go ahead, make my day!!
