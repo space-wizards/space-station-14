@@ -46,6 +46,7 @@
         reagents:
         - ReagentId: ToxinTrash
           Quantity: 5
+  - type: Food
     requiresSpecialDigestion: true
   - type: PhysicalComposition
     materialComposition:
