@@ -47,9 +47,18 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
   - type: Tag
     tags:
     - Trash
+  - type: Food
+    requiresSpecialDigestion: true
   - type: PhysicalComposition
     materialComposition:
       Glass: 60
@@ -68,9 +77,18 @@
     shape:
     - 0,0,1,0
     storedOffset: 0,-6
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
   - type: Tag
     tags:
     - Trash
+  - type: Food
+    requiresSpecialDigestion: true
   - type: SpaceGarbage
 
 # Small Plate
@@ -134,9 +152,18 @@
     shape:
     - 0,0,1,0
     storedOffset: 0,-6
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
   - type: Tag
     tags:
     - Trash
+  - type: Food
+    requiresSpecialDigestion: true
 
 - type: entity
   name: plastic plate
@@ -151,9 +178,18 @@
     shape:
     - 0,0,1,0
     storedOffset: 0,-3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
   - type: Tag
     tags:
     - Trash
+  - type: Food
+    requiresSpecialDigestion: true
 
 # Pie Tin
 
@@ -171,9 +207,18 @@
     shape:
     - 0,0,1,0
     storedOffset: 0,-3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
   - type: Tag
     tags:
     - Trash
+  - type: Food
+    requiresSpecialDigestion: true
   - type: PhysicalComposition
     materialComposition:
       Steel: 60
@@ -195,9 +240,18 @@
     shape:
     - 0,0,1,0
     storedOffset: 0,-3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
   - type: Tag
     tags:
     - Trash
+  - type: Food
+    requiresSpecialDigestion: true
   - type: PhysicalComposition
     materialComposition:
       Steel: 30

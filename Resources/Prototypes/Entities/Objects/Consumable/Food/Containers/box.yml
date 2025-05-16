@@ -277,7 +277,7 @@
       prob: 0.05
       orGroup: Pizza
     - id: KnifePlastic
-  
+
 - type: entity
   name: pizza box
   parent: FoodBoxPizzaFilled
@@ -517,10 +517,18 @@
     maxItemSize: Normal
     grid:
     - 0,0,3,3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
   - type: Tag
     tags:
     - Trash
-    - HappyHonk
+  - type: Food
+    requiresSpecialDigestion: true
   - type: StorageFill
     contents:
       - id: ToyMouse
