@@ -1,7 +1,5 @@
 using Content.Server.Shuttles.Components;
-using Content.Server.Stunnable;
 using Content.Shared.Audio;
-using Content.Shared.Buckle.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
 using Content.Shared.Damage;
@@ -11,18 +9,12 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
 using Content.Shared.Slippery;
-using Content.Shared.Throwing;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using System.Numerics;
 
@@ -51,6 +43,15 @@ public sealed partial class ShuttleSystem
 
     private EntityQuery<DamageableComponent> _dmgQuery;
     private EntityQuery<ProjectileComponent> _projQuery;
+
+    private HashSet<EntityUid> _countedEnts = new();
+    private HashSet<EntityUid> _intersecting = new();
+
+    private EntProtoId _sparkEffect = "EffectSparks";
+    private const float SparkChance = 0.2f;
+
+    // exists primarily for optimisation so not a cvar
+    private const float MinImpulseVelocity = 0.1f;
 
     private void InitializeImpact()
     {
@@ -138,8 +139,9 @@ public sealed partial class ShuttleSystem
 
             var ourMass = GetRegionMass(uid, ourGrid, ourTile, ImpactRadius, out var ourTiles);
             var otherMass = GetRegionMass(args.OtherEntity, otherGrid, otherTile, ImpactRadius, out var otherTiles);
+
             if (ourTiles == 0 || otherTiles == 0) // i have no idea why this happens
-                return;
+                continue;
 
             Log.Info($"Shuttle impact of {ToPrettyString(uid)} with {ToPrettyString(args.OtherEntity)}; our mass: {ourMass}, other: {otherMass}, velocity {jungleDiff}, impact point {worldPoint}");
 
@@ -175,25 +177,16 @@ public sealed partial class ShuttleSystem
         }
     }
 
-    // exists primarily for optimisation so not a cvar
-    private const float MinImpulseVelocity = 0.1f;
-
     /// <summary>
     /// Knocks and throws all unbuckled entities on the specified grid.
     /// </summary>
     private void ThrowEntitiesOnGrid(EntityUid gridUid, TransformComponent xform, Vector2 direction)
     {
-        if (!_gridQuery.TryComp(gridUid, out var grid))
-            return;
-
         // Find all entities on the grid
         var noSlipQuery = GetEntityQuery<NoSlipComponent>();
         var magbootsQuery = GetEntityQuery<MagbootsComponent>();
         var itemToggleQuery = GetEntityQuery<ItemToggleComponent>();
         var knockdownTime = TimeSpan.FromSeconds(5);
-
-        // Get all entities with MobState component on the grid
-        var query = EntityQueryEnumerator<MobStateComponent, TransformComponent>();
 
         var childEnumerator = xform.ChildEnumerator;
         var minsq = MinThrowVelocity * MinThrowVelocity;
@@ -216,8 +209,7 @@ public sealed partial class ShuttleSystem
                     (noSlipQuery.HasComponent(shoes) ||
                         (magbootsQuery.HasComponent(shoes) &&
                         itemToggleQuery.TryGetComponent(shoes, out var toggle) &&
-                        toggle.Activated
-                        )
+                        toggle.Activated)
                     )
                 )
                 continue;
@@ -243,20 +235,19 @@ public sealed partial class ShuttleSystem
     {
         tileCount = 0;
         var mass = 0f;
-        var ceilRadius = (int)MathF.Ceiling(radius);
-        HashSet<EntityUid> counted = new();
-        HashSet<EntityUid> intersecting = new();
+        _countedEnts.Clear();
+
         foreach (var tileRef in _mapSystem.GetLocalTilesIntersecting(uid, grid, new Circle(centerTile, radius)))
         {
             var def = (ContentTileDefinition)_tileDefManager[tileRef.Tile.TypeId];
             mass += def.Mass;
             tileCount++;
 
-            intersecting.Clear();
-            _lookup.GetLocalEntitiesIntersecting(uid, tileRef.GridIndices, intersecting, gridComp: grid);
-            foreach (var localUid in intersecting)
+            _intersecting.Clear();
+            _lookup.GetLocalEntitiesIntersecting(uid, tileRef.GridIndices, _intersecting, gridComp: grid);
+            foreach (var localUid in _intersecting)
             {
-                if (!counted.Add(localUid))
+                if (!_countedEnts.Add(localUid))
                     continue;
 
                 if (_physicsQuery.TryComp(localUid, out var physics))
@@ -298,8 +289,6 @@ public sealed partial class ShuttleSystem
         }
     }
 
-    private Vector2 ToTileCenterVec = new Vector2(0.5f, 0.5f);
-
     /// <summary>
     /// Process a batch of tiles from the impact zone
     /// </summary>
@@ -320,6 +309,8 @@ public sealed partial class ShuttleSystem
         };
 
         var entitiesOnTile = new HashSet<Entity<TransformComponent>>();
+        var tileCenter = new Vector2(grid.TileSize / 2f, grid.TileSize / 2f);
+
         for (var i = startIndex; i < endIndex; i++)
         {
             var tileData = tilesToProcess[i];
@@ -334,7 +325,7 @@ public sealed partial class ShuttleSystem
             foreach (var localEnt in entitiesOnTile)
             {
                 // the query can ocassionally return entities barely touching this tile so check for that
-                var toCenter = ((Vector2)tileData.Tile + ToTileCenterVec - localEnt.Comp.Coordinates.Position);
+                var toCenter = tileData.Tile + tileCenter - localEnt.Comp.Coordinates.Position;
                 if (MathF.Abs(toCenter.X) > 0.5f || MathF.Abs(toCenter.Y) > 0.5f)
                     continue;
 
@@ -368,7 +359,7 @@ public sealed partial class ShuttleSystem
             }
 
             // Mark tiles for spark effects
-            if (tileData.Energy > SparkEnergy && tileData.DistanceFactor > 0.7f && _random.Prob(0.2f))
+            if (tileData.Energy > SparkEnergy && tileData.DistanceFactor > 0.7f && _random.Prob(SparkChance))
                 sparkTiles.Add(tileData.Tile);
 
             if (!canBreakTile)
@@ -401,7 +392,7 @@ public sealed partial class ShuttleSystem
         foreach (var tile in sparkTiles)
         {
             var coords = _mapSystem.GridTileToLocal(uid, grid, tile);
-            Spawn("EffectSparks", coords);
+            Spawn(_sparkEffect, coords);
         }
     }
 }
