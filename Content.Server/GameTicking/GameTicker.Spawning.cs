@@ -131,6 +131,7 @@ namespace Content.Server.GameTicking
                 var playerProfiles = playerPrefs.GetAllEnabledProfilesForJob(job.Value);
                 var filteredPlayerProfiles = playerProfiles.Values.Where(profile =>
                     JobRequirements.TryRequirementsMet(job.Value,
+                        _playerManager.GetSessionById(player),
                         null,
                         out _,
                         EntityManager,
@@ -260,7 +261,8 @@ namespace Content.Server.GameTicking
                 return;
             }
 
-            _newLifeSystem.SaveCharacterToUsed(player.UserId, character.Slot);     //🌟Starlight🌟
+            
+            _newLifeSystem.SaveCharacterToUsed(player.UserId, playerPreferences.IndexOfCharacter(character));     //🌟Starlight🌟
             PlayerJoinGame(player, silent);
 
             var data = player.ContentData();

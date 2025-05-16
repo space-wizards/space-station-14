@@ -29,6 +29,8 @@ public sealed partial class CharacterPickerButton : ContainerButton
     /// </summary>
     public event Action<bool>? OnEnableToggled;
 
+    public HumanoidCharacterProfile Profile { get; private init; }
+
     /// <summary>
     /// Create a new character picker button
     /// </summary>
@@ -54,6 +56,8 @@ public sealed partial class CharacterPickerButton : ContainerButton
         AddStyleClass(StyleClassButton);
         ToggleMode = true;
         Group = group;
+
+        Profile = profile;
 
         View.Initialize(prefMan, protoMan, entMan, playerMan);
         View.LoadPreview(profile);

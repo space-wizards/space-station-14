@@ -12,6 +12,7 @@ public static class JobRequirements
 {
     public static bool TryRequirementsMet(
         JobPrototype job,
+        ICommonSession? player,
         IReadOnlyDictionary<string, TimeSpan>? playTimes,
         [NotNullWhen(false)] out FormattedMessage? reason,
         IEntityManager entManager,
@@ -35,6 +36,7 @@ public static class JobRequirements
 
     public static bool TryRequirementsMet(
         ProtoId<JobPrototype> job,
+        ICommonSession? player,
         IReadOnlyDictionary<string, TimeSpan>? playTimes,
         [NotNullWhen(false)] out FormattedMessage? reason,
         IEntityManager entManager,
@@ -42,7 +44,7 @@ public static class JobRequirements
         HumanoidCharacterProfile? profile)
     {
         if (protoManager.TryIndex(job, out var jobProto))
-            return TryRequirementsMet(jobProto, playTimes, out reason, entManager, protoManager, profile);
+            return TryRequirementsMet(jobProto, player, playTimes, out reason, entManager, protoManager, profile);
 
         reason = FormattedMessage.FromUnformatted("Failed to get job prototype");
         return false;

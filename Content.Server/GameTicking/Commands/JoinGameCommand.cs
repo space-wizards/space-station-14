@@ -47,21 +47,6 @@ namespace Content.Server.GameTicking.Commands
             var ticker = _entManager.System<GameTicker>();
             var stationJobs = _entManager.System<StationJobsSystem>();
 
-            if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
-            {
-                //🌟Starlight🌟 start
-                var newLifeSystem = _entManager.System<NewLifeSystem>();
-                var slot = _preferencesManager.GetPreferences(player.UserId).SelectedCharacterIndex; 
-
-                if (!newLifeSystem.SlotIsAvailable(player.UserId, slot))
-                {
-                    Logger.InfoS("security", $"{player.Name} ({player.UserId}) attempted to latejoin while in-game.");
-                    shell.WriteError($"{player.Name} is not in the lobby.   This incident will be reported.");
-                    return;
-                }
-                //🌟Starlight🌟 end
-            }
-
             if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
             {
                 shell.WriteLine("Round has not started.");
@@ -78,6 +63,20 @@ namespace Content.Server.GameTicking.Commands
                 if (!int.TryParse(args[2], out var sid))
                 {
                     shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
+                }
+                
+                if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
+                {
+                    //🌟Starlight🌟 start
+                    var newLifeSystem = _entManager.System<NewLifeSystem>();
+
+                    if (!newLifeSystem.SlotIsAvailable(player.UserId, charSlot))
+                    {
+                        Logger.InfoS("security", $"{player.Name} ({player.UserId}) attempted to latejoin while in-game.");
+                        shell.WriteError($"{player.Name} is not in the lobby.   This incident will be reported.");
+                        return;
+                    }
+                    //🌟Starlight🌟 end
                 }
 
                 var station = _entManager.GetEntity(new NetEntity(sid));

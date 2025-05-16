@@ -216,7 +216,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         var playTimes = GetPlayTimesIfEnabled(player);
 
         var allProfilesForJob = _preferencesManager.GetPreferences(player.UserId).GetAllEnabledProfilesForJob(job);
-        return allProfilesForJob.Values.Any(profile => JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, profile));
+        return allProfilesForJob.Values.Any(profile => JobRequirements.TryRequirementsMet(job, player, playTimes, out _, EntityManager, _prototypes, profile));
     }
 
     public HashSet<ProtoId<JobPrototype>> GetDisallowedJobs(ICommonSession player)
@@ -228,7 +228,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
         {
             var allProfilesForJob = _preferencesManager.GetPreferences(player.UserId).GetAllEnabledProfilesForJob(job);
-            if (allProfilesForJob.Values.All(profile => !JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, profile)))
+            if (allProfilesForJob.Values.All(profile => !JobRequirements.TryRequirementsMet(job, player, playTimes, out _, EntityManager, _prototypes, profile)))
                 roles.Add(job.ID);
         }
 
@@ -247,7 +247,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
                 continue;
             var allProfilesForJob = _preferencesManager.GetPreferences(player.UserId).GetAllEnabledProfilesForJob(job);
             if (allProfilesForJob.Values.All(profile =>
-                    !JobRequirements.TryRequirementsMet(jobToRemove, playTimes, out _, EntityManager, _prototypes, profile)))
+                    !JobRequirements.TryRequirementsMet(jobToRemove, player, playTimes, out _, EntityManager, _prototypes, profile)))
                 jobs.Remove(job);
         }
     }
