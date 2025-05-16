@@ -1,6 +1,8 @@
 job-supervisors-centcom = Central Command
 job-supervisors-captain = the Captain
 job-supervisors-hop = the Head of Personnel
+#imp edit for departmental command
+job-supervisors-hop-captain = the Head of Personnel and the Captain
 job-supervisors-hos = the Head of Security
 job-supervisors-ce = the Chief Engineer
 job-supervisors-cmo = the Chief Medical Officer

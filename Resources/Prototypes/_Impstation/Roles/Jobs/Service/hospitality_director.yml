@@ -21,7 +21,7 @@
   weight: 10
   startingGear: HospitalityDirectorGear
   icon: JobIconHospitalityDirector
-  supervisors: job-supervisors-captain
+  supervisors: job-supervisors-hop-captain
   canBeAntag: false
   accessGroups:
   - Service #why don't other heads have their accesses set up this way?

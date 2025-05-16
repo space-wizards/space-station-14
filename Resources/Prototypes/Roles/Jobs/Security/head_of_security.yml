@@ -18,7 +18,7 @@
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"
-  supervisors: job-supervisors-captain
+  supervisors: job-supervisors-hop-captain #imp
   canBeAntag: false
   access:
   - HeadOfSecurity

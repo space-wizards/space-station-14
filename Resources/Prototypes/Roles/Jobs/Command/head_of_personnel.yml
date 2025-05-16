@@ -25,7 +25,7 @@
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
-  supervisors: job-supervisors-captain
+  supervisors: job-supervisors-captain #imp
   canBeAntag: false
   access:
   - Command
