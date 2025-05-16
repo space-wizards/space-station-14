@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Weapons.Misc;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
@@ -23,6 +24,8 @@ public sealed class TetherGunOverlay : Overlay
         var forceQuery = _entManager.GetEntityQuery<ForceGunComponent>();
         var worldHandle = args.WorldHandle;
         var xformSystem = _entManager.System<SharedTransformSystem>();
+
+        worldHandle.SetTransform(Matrix3x2.Identity);
 
         while (query.MoveNext(out var uid, out var tethered))
         {
