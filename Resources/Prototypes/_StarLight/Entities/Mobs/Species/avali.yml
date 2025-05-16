@@ -143,10 +143,10 @@
     stasisColdHealPerSecond: 2
     stasisAdditionalDamageResistance: 1.5
     stasisEnterEffect: EffectNanitesEnter
-    stasisEnterEffectLifetime: 3.0
+    stasisEnterEffectLifetime: 2.7
     stasisEnterSound: /Audio/_Starlight/Misc/alien_teleport.ogg
     stasisExitEffect: EffectNanitesExit
-    stasisExitEffectLifetime: 30
+    stasisExitEffectLifetime: 2.7
     stasisExitSound: /Audio/_Starlight/Misc/alien_teleport.ogg
     stasisContinuousEffect: EffectNanitesCurrent
     bleedHealPerSecond: 1.0
