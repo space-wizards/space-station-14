@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: GrownSamoyedDog
-  changes:
-  - message: Fixed Guidebook Entry Ordering / Sorting
-    type: Fix
-  - message: Rearranged Guidebook Contents
-    type: Tweak
-  id: 7990
-  time: '2025-02-23T01:00:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34960
-- author: lzk228
-  changes:
-  - message: Storage now makes sound if you open it on verb or on interact.
-    type: Fix
-  id: 7991
-  time: '2025-02-23T02:01:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35413
-- author: K-Dynamic
-  changes:
-  - message: Lattice tiles footsteps now sound like catwalks.
-    type: Tweak
-  id: 7992
-  time: '2025-02-23T11:43:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35421
 - author: metalgearsloth
   changes:
   - message: Fix several interface window positions not saving.
@@ -3906,8 +3883,7 @@
   url: https://github.com/space-wizards/space-station-14/pull/37168
 - author: K-Dynamic
   changes:
-  - message: Engineering goggles and industrial advanced welders may be found in welding
-      supplies lockers.
+  - message: Industrial advanced welders may be found in welding supplies lockers.
     type: Tweak
   id: 8491
   time: '2025-05-15T03:55:54.0000000+00:00'
@@ -3919,3 +3895,24 @@
   id: 8492
   time: '2025-05-15T04:12:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33708
+- author: metalgearsloth
+  changes:
+  - message: Predict bed action when you buckle to a sleepable entity.
+    type: Tweak
+  id: 8493
+  time: '2025-05-15T12:52:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37414
+- author: Chartman95
+  changes:
+  - message: Soaked Smokes retain their 40u max capacity.
+    type: Tweak
+  id: 8494
+  time: '2025-05-15T14:47:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37482
+- author: lzk228
+  changes:
+  - message: Recycler can shred clothing that can be butchered.
+    type: Tweak
+  id: 8495
+  time: '2025-05-15T23:44:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31518
