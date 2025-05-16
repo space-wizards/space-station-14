@@ -40,7 +40,8 @@ namespace Content.Server.Clothing.Systems
         {
             //Make a chat line with the sec hailer as speaker, in bold and UPPERCASE for added impact
             string ftlLine = ent.Comp.Emagged ? $"hail-emag-{index}" : $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}"; //hail - aggression_level/emag - index
-            _chat.TrySendInGameICMessage(ev.Performer, Loc.GetString(ftlLine).ToUpper(), InGameICChatType.Speak, hideChat: false, hideLog: true, nameOverride: ent.Comp.ChatName, checkRadioPrefix: false);
+            _chat.TrySendInGameICMessage(ev.Performer, Loc.GetString(ftlLine).ToUpper(), InGameICChatType.Speak, hideChat: false, hideLog: true, nameOverride: ent.Comp.ChatName,
+                checkRadioPrefix: false, ignoreActionBlocker: true, skipTransform: true);
             return true;
         }
 
