@@ -46,7 +46,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Slash: 8
+        Slash: 9
   - type: GuideHelp
     guides:
     - Chef
