@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Added microwave cooking recipes to the guidebook
-    type: Add
-  id: 7995
-  time: '2025-02-23T15:24:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34105
 - author: Errant
   changes:
   - message: The game version can now be displayed as an optional watermark on the
@@ -3912,3 +3905,10 @@
   id: 8497
   time: '2025-05-16T12:44:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37504
+- author: BigfootBravo
+  changes:
+  - message: Vox can now eat untagged human food again!
+    type: Fix
+  id: 8498
+  time: '2025-05-16T19:05:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37497
