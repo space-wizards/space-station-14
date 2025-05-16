@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: The Clown Costume Duffel Bag no longer contains a headset and PDA.
-    type: Remove
-  id: 1188
-  time: '2025-02-23T01:47:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1769
 - author: AvianMaiden
   changes:
   - message: Many new sounds for weapon racking that used the default! Enjoy shotgun
@@ -4219,3 +4212,13 @@
   id: 1687
   time: '2025-05-16T22:24:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2510
+- author: Pinkbat5
+  changes:
+  - message: The Head of Personnel is now the second in command of the station. Act
+      accordingly!
+    type: Tweak
+  - message: Removed guidebook references to the HoP as the head of the service department.
+    type: Fix
+  id: 1688
+  time: '2025-05-16T23:19:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2381
