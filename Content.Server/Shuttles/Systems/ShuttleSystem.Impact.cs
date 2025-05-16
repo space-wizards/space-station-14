@@ -93,122 +93,86 @@ public sealed partial class ShuttleSystem
         var otherBody = args.OtherBody;
 
         // TODO: Would also be nice to have a continuous sound for scraping.
-        var ourXform = Transform(uid);
+        var ourXform = Transform(args.OurEntity);
         var otherXform = Transform(args.OtherEntity);
+        var worldPoints = args.WorldPoints;
 
-        var ourPoint = _transform.ToCoordinates(args.OurEntity, new MapCoordinates(args.WorldPoint, ourXform.MapID));
-        var otherPoint = _transform.ToCoordinates(args.OtherEntity, new MapCoordinates(args.WorldPoint, otherXform.MapID));
-
-        bool evil = false;
-
-        // for whatever reason collisions decide to go schizo sometimes and "collide" at some apparently random point
-        if (!OnOrNearGrid((uid, ourGrid), ourPoint))
-            evil = true;
-
-        if (!evil && !OnOrNearGrid((args.OtherEntity, otherGrid), otherPoint))
-            evil = true;
-
-        var point = args.WorldPoint;
-
-        // pointhack: engine has provided a WorldPoint in the middle of nowhere, try workaround
-        // TODO: remove this once engine fixed
-        if (evil)
+        for (var i = 0; i < worldPoints.Length; i++)
         {
-            var contacts = _physics.GetContacts(uid);
-            var coord = new Vector2(0, 0);
-            while (contacts.MoveNext(out var contact))
+            var worldPoint = worldPoints[i];
+
+            var ourPoint = _transform.ToCoordinates((args.OurEntity, ourXform), new MapCoordinates(worldPoint, ourXform.MapID));
+            var otherPoint = _transform.ToCoordinates((args.OtherEntity, otherXform), new MapCoordinates(worldPoint, otherXform.MapID));
+
+            var ourVelocity = _physics.GetLinearVelocity(uid, ourPoint.Position, ourBody, ourXform);
+            var otherVelocity = _physics.GetLinearVelocity(args.OtherEntity, otherPoint.Position, otherBody, otherXform);
+            var jungleDiff = (ourVelocity - otherVelocity).Length();
+
+            // this is cursed but makes it so that collisions of small grid with large grid count the inertia as being approximately the small grid's
+            var effectiveInertiaMult = 1f / (1f / ourBody.FixturesMass + 1f / otherBody.FixturesMass);
+            var effectiveInertia = jungleDiff * effectiveInertiaMult;
+
+            // TODO: squish damage so that a tiny splinter grid can't stop 2 big grids by being in the way
+            if (jungleDiff < MinimumImpactVelocity && effectiveInertia < MinimumImpactInertia
+                || ourXform.MapUid == null
+                || float.IsNaN(jungleDiff))
             {
-                if (contact.IsTouching && (contact.EntityA == args.OtherEntity || contact.EntityB == args.OtherEntity))
-                {
-                    // i copypasted this i have no idea what it does
-                    Span<Vector2> points = stackalloc Vector2[2];
-                    var transformA = _physics.GetPhysicsTransform(contact.EntityA);
-                    var transformB = _physics.GetPhysicsTransform(contact.EntityB);
-                    contact.GetWorldManifold(transformA, transformB, out var normal, points);
-                    int count = 0;
-                    foreach (var p in points)
-                    {
-                        if (p.LengthSquared() > 0.001f) // ignore zero-vectors
-                            count++;
-                        coord += p;
-                    }
-
-                    coord *= 1f / count;
-                    break;
-                }
+                continue;
             }
-            point = coord;
-            ourPoint = _transform.ToCoordinates(args.OurEntity, new MapCoordinates(coord, ourXform.MapID));
-            otherPoint = _transform.ToCoordinates(args.OtherEntity, new MapCoordinates(coord, otherXform.MapID));
 
-            Log.Debug($"Bugged collision at {args.WorldPoint}, new point: {coord}");
+            // Play impact sound
+            var coordinates = new EntityCoordinates(ourXform.MapUid.Value, worldPoint);
 
-            if (!OnOrNearGrid((uid, ourGrid), ourPoint) || !OnOrNearGrid((args.OtherEntity, otherGrid), otherPoint))
+            var volume = MathF.Min(10f, 1f * MathF.Pow(jungleDiff, 0.5f) - 5f);
+            var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(volume);
+            _audio.PlayPvs(_shuttleImpactSound, coordinates, audioParams);
+
+            if (!Enabled)
+            {
+                continue;
+            }
+
+            // Convert the collision point directly to tile indices
+            var ourTile = new Vector2i((int)Math.Floor(ourPoint.X / ourGrid.TileSize), (int)Math.Floor(ourPoint.Y / ourGrid.TileSize));
+            var otherTile = new Vector2i((int)Math.Floor(otherPoint.X / otherGrid.TileSize), (int)Math.Floor(otherPoint.Y / otherGrid.TileSize));
+
+            var ourMass = GetRegionMass(uid, ourGrid, ourTile, ImpactRadius, out var ourTiles);
+            var otherMass = GetRegionMass(args.OtherEntity, otherGrid, otherTile, ImpactRadius, out var otherTiles);
+            if (ourTiles == 0 || otherTiles == 0) // i have no idea why this happens
                 return;
+
+            Log.Info($"Shuttle impact of {ToPrettyString(uid)} with {ToPrettyString(args.OtherEntity)}; our mass: {ourMass}, other: {otherMass}, velocity {jungleDiff}, impact point {worldPoint}");
+
+            var energyMult = MathF.Pow(jungleDiff, 2) / 2;
+            // multiplier to make the area with more mass take less damage so a reinforced wall rammer doesn't die to lattice
+            var biasMult = MathF.Pow(ourMass / otherMass, MassBias);
+            // multiplier to make large grids not just bonk against each other
+            var inertiaMult = MathF.Pow(effectiveInertiaMult / BaseShuttleMass, InertiaScaling);
+            var ourEnergy = ourMass * energyMult * inertiaMult * MathF.Min(1f, biasMult);
+            var otherEnergy = otherMass * energyMult * inertiaMult / MathF.Max(1f, biasMult);
+
+            var ourRadius = Math.Min(ImpactRadius, MathF.Sqrt(otherEnergy / TileBreakEnergyMultiplier / PlatingMass));
+            var otherRadius = Math.Min(ImpactRadius, MathF.Sqrt(ourEnergy / TileBreakEnergyMultiplier / PlatingMass));
+
+            var totalInertia = ourVelocity * ourMass + otherVelocity * otherMass;
+            var unelasticVel = totalInertia / (ourMass + otherMass);
+            var ourPostImpactVelocity = Vector2.Lerp(ourVelocity, unelasticVel, MathF.Min(1f, ImpactSlowdown * ourTiles * args.OurFixture.Density / ourBody.FixturesMass));
+            var otherPostImpactVelocity = Vector2.Lerp(otherVelocity, unelasticVel, MathF.Min(1f, ImpactSlowdown * otherTiles * args.OtherFixture.Density / otherBody.FixturesMass));
+            var ourDeltaV = -ourVelocity + ourPostImpactVelocity;
+            var otherDeltaV = -otherVelocity + otherPostImpactVelocity;
+            _physics.ApplyLinearImpulse(uid, ourDeltaV * ourBody.FixturesMass, body: ourBody);
+            _physics.ApplyLinearImpulse(args.OtherEntity, otherDeltaV * otherBody.FixturesMass, body: otherBody);
+
+            var dir = (ourVelocity.Length() > otherVelocity.Length() ? ourVelocity : -otherVelocity).Normalized();
+            ProcessImpactZone(uid, ourGrid, ourTile, otherEnergy, -dir, ourRadius);
+            ProcessImpactZone(args.OtherEntity, otherGrid, otherTile, ourEnergy, dir, otherRadius);
+
+            if (ourDeltaV.Length() > MinImpulseVelocity)
+                ThrowEntitiesOnGrid(uid, ourXform, -ourDeltaV);
+
+            if (otherDeltaV.Length() > MinImpulseVelocity)
+                ThrowEntitiesOnGrid(args.OtherEntity, otherXform, -otherDeltaV);
         }
-
-        var ourVelocity = _physics.GetLinearVelocity(uid, ourPoint.Position, ourBody, ourXform);
-        var otherVelocity = _physics.GetLinearVelocity(args.OtherEntity, otherPoint.Position, otherBody, otherXform);
-        var jungleDiff = (ourVelocity - otherVelocity).Length();
-
-        // this is cursed but makes it so that collisions of small grid with large grid count the inertia as being approximately the small grid's
-        var effectiveInertiaMult = 1f / (1f / ourBody.FixturesMass + 1f / otherBody.FixturesMass);
-        var effectiveInertia = jungleDiff * effectiveInertiaMult;
-
-        // TODO: squish damage so that a tiny splinter grid can't stop 2 big grids by being in the way
-        if (jungleDiff < MinimumImpactVelocity && effectiveInertia < MinimumImpactInertia
-            || ourXform.MapUid == null
-            || float.IsNaN(jungleDiff))
-            return;
-
-        // Play impact sound
-        var coordinates = new EntityCoordinates(ourXform.MapUid.Value, point);
-
-        var volume = MathF.Min(10f, 1f * MathF.Pow(jungleDiff, 0.5f) - 5f);
-        var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(volume);
-        _audio.PlayPvs(_shuttleImpactSound, coordinates, audioParams);
-
-        if (!Enabled)
-            return;
-
-        // Convert the collision point directly to tile indices
-        var ourTile = new Vector2i((int)Math.Floor(ourPoint.X / ourGrid.TileSize), (int)Math.Floor(ourPoint.Y / ourGrid.TileSize));
-        var otherTile = new Vector2i((int)Math.Floor(otherPoint.X / otherGrid.TileSize), (int)Math.Floor(otherPoint.Y / otherGrid.TileSize));
-
-        var ourMass = GetRegionMass(uid, ourGrid, ourTile, ImpactRadius, out var ourTiles);
-        var otherMass = GetRegionMass(args.OtherEntity, otherGrid, otherTile, ImpactRadius, out var otherTiles);
-        if (ourTiles == 0 || otherTiles == 0) // i have no idea why this happens
-            return;
-        Log.Info($"Shuttle impact of {ToPrettyString(uid)} with {ToPrettyString(args.OtherEntity)}; our mass: {ourMass}, other: {otherMass}, velocity {jungleDiff}, impact point {point}");
-
-        var energyMult = MathF.Pow(jungleDiff, 2) / 2;
-        // multiplier to make the area with more mass take less damage so a reinforced wall rammer doesn't die to lattice
-        var biasMult = MathF.Pow(ourMass / otherMass, MassBias);
-        // multiplier to make large grids not just bonk against each other
-        var inertiaMult = MathF.Pow(effectiveInertiaMult / BaseShuttleMass, InertiaScaling);
-        var ourEnergy = ourMass * energyMult * inertiaMult * MathF.Min(1f, biasMult);
-        var otherEnergy = otherMass * energyMult * inertiaMult / MathF.Max(1f, biasMult);
-
-        var ourRadius = Math.Min(ImpactRadius, MathF.Sqrt(otherEnergy / TileBreakEnergyMultiplier / PlatingMass));
-        var otherRadius = Math.Min(ImpactRadius, MathF.Sqrt(ourEnergy / TileBreakEnergyMultiplier / PlatingMass));
-
-        var totalInertia = ourVelocity * ourMass + otherVelocity * otherMass;
-        var unelasticVel = totalInertia / (ourMass + otherMass);
-        var ourPostImpactVelocity = Vector2.Lerp(ourVelocity, unelasticVel, MathF.Min(1f, ImpactSlowdown * ourTiles * args.OurFixture.Density / ourBody.FixturesMass));
-        var otherPostImpactVelocity = Vector2.Lerp(otherVelocity, unelasticVel, MathF.Min(1f, ImpactSlowdown * otherTiles * args.OtherFixture.Density / otherBody.FixturesMass));
-        var ourDeltaV = -ourVelocity + ourPostImpactVelocity;
-        var otherDeltaV = -otherVelocity + otherPostImpactVelocity;
-        _physics.ApplyLinearImpulse(uid, ourDeltaV * ourBody.FixturesMass, body: ourBody);
-        _physics.ApplyLinearImpulse(args.OtherEntity, otherDeltaV * otherBody.FixturesMass, body: otherBody);
-
-        var dir = (ourVelocity.Length() > otherVelocity.Length() ? ourVelocity : -otherVelocity).Normalized();
-        ProcessImpactZone(uid, ourGrid, ourTile, otherEnergy, -dir, ourRadius);
-        ProcessImpactZone(args.OtherEntity, otherGrid, otherTile, ourEnergy, dir, otherRadius);
-
-        if (ourDeltaV.Length() > MinImpulseVelocity)
-            ThrowEntitiesOnGrid(uid, ourXform, -ourDeltaV);
-        if (otherDeltaV.Length() > MinImpulseVelocity)
-            ThrowEntitiesOnGrid(args.OtherEntity, otherXform, -otherDeltaV);
     }
 
     // exists primarily for optimisation so not a cvar
@@ -439,20 +403,5 @@ public sealed partial class ShuttleSystem
             var coords = _mapSystem.GridTileToLocal(uid, grid, tile);
             Spawn("EffectSparks", coords);
         }
-    }
-
-    // if you want to reuse this, copy into a more appropriate system as a public method
-    private bool OnOrNearGrid(
-        Entity<MapGridComponent> grid,
-        EntityCoordinates at,
-        float tolerance = 3f
-    )
-    {
-        var bounds = new Box2(at.Position - new Vector2(tolerance, tolerance), at.Position + new Vector2(tolerance, tolerance));
-        // this only finds non-empty tiles so return true if we find anything
-        foreach (var tileRef in _mapSystem.GetLocalTilesIntersecting(grid, grid.Comp, bounds))
-            return true;
-
-        return false;
     }
 }
