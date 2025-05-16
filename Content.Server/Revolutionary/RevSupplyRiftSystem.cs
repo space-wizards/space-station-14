@@ -55,6 +55,11 @@ public sealed class RevSupplyRiftSystem : EntitySystem
     /// Dictionary to track the original descriptions of listings.
     /// </summary>
     private readonly Dictionary<EntityUid, string> _originalDescriptions = new();
+    
+    /// <summary>
+    /// Tracks whether a rift has been destroyed.
+    /// </summary>
+    private bool _riftDestroyed = false;
 
     public override void Initialize()
     {
@@ -168,7 +173,7 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         if (TryComp<TransformComponent>(uid, out var transform))
         {
             var soundPath = new SoundPathSpecifier("/Audio/_Starlight/Effects/sov_choir.ogg");
-            _audio.PlayPvs(soundPath, uid, AudioParams.Default.WithMaxDistance(5f).WithVolume(0f));
+            _audio.PlayPvs(soundPath, uid, AudioParams.Default.WithMaxDistance(5f).WithVolume(4f));
         }
     }
 
@@ -189,8 +194,66 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         if (!HasComp<RevSupplyRiftComponent>(uid))
             return;
 
-        // Re-enable the supply rift listing for all revolutionaries
-        EnableSupplyRiftListing();
+        // Check if this is a rift that was destroyed (not just a normal shutdown)
+        if (TryComp<DragonRiftComponent>(uid, out var dragonRift) && 
+            dragonRift.State != DragonRiftState.Finished && 
+            _activeRift == uid)
+        {
+            // Mark that a rift has been destroyed
+            _riftDestroyed = true;
+            _activeRift = null;
+            
+            // Update all uplinks with the destroyed message
+            UpdateRiftDestroyedListing();
+            
+            Logger.InfoS("rev-supply-rift", "A supply rift was destroyed!");
+        }
+        else
+        {
+            // Normal shutdown (e.g., rift finished charging)
+            // Re-enable the supply rift listing for all revolutionaries if no rift has been destroyed
+            if (!_riftDestroyed)
+            {
+                EnableSupplyRiftListing();
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Updates all revolutionary uplinks with the rift destroyed message.
+    /// </summary>
+    private void UpdateRiftDestroyedListing()
+    {
+        // Find all store components
+        var query = EntityQueryEnumerator<StoreComponent>();
+        while (query.MoveNext(out var uid, out var store))
+        {
+            // Find the supply rift listing
+            foreach (var listing in store.FullListingsCatalog)
+            {
+                if (listing.ID == RevSupplyRiftListingId)
+                {
+                    // Store the original description if we haven't already
+                    if (!_originalDescriptions.TryGetValue(uid, out _))
+                    {
+                        _originalDescriptions[uid] = listing.Description ?? "";
+                    }
+                    
+                    // Update the description with the destroyed message
+                    listing.Description = Loc.GetString("rev-supply-rift-destroyed");
+                    
+                    // Disable the listing permanently
+                    listing.Unavailable = true;
+                    
+                    break;
+                }
+            }
+            
+            // Update the UI to reflect the changes
+            _store.UpdateUserInterface(null, uid, store);
+        }
+
+        Logger.InfoS("rev-supply-rift", "Updated all uplinks with rift destroyed message");
     }
 
     public override void Update(float frameTime)
@@ -221,11 +284,11 @@ public sealed class RevSupplyRiftSystem : EntitySystem
             {
                 revRift.State = dragonRift.State;
 
-                // If the rift is now finished, enable the supply rift listing
+                // If the rift is now finished, update the listing with the charged description
                 if (revRift.State == DragonRiftState.Finished)
                 {
                     _activeRift = null;
-                    EnableSupplyRiftListing();
+                    UpdateChargedRiftListing();
                 }
             }
         }
@@ -314,6 +377,48 @@ public sealed class RevSupplyRiftSystem : EntitySystem
     }
 
     /// <summary>
+    /// Updates all revolutionary uplinks with the charged rift description and active rift count.
+    /// </summary>
+    private void UpdateChargedRiftListing()
+    {
+        // Count active rifts (those that are in Finished state)
+        int activeRiftCount = 0;
+        var riftsQuery = EntityQueryEnumerator<RevSupplyRiftComponent, DragonRiftComponent>();
+        while (riftsQuery.MoveNext(out _, out var revRift, out var dragonRift))
+        {
+            if (revRift.State == DragonRiftState.Finished)
+            {
+                activeRiftCount++;
+            }
+        }
+        
+        // Find all store components
+        var query = EntityQueryEnumerator<StoreComponent>();
+        while (query.MoveNext(out var uid, out var store))
+        {
+            // Find the supply rift listing
+            foreach (var listing in store.FullListingsCatalog)
+            {
+                if (listing.ID == RevSupplyRiftListingId)
+                {
+                    // Update the description with the charged message and active rift count
+                    listing.Description = Loc.GetString("rev-supply-rift-charged", ("count", activeRiftCount));
+                    
+                    // Enable the listing since the rift is charged
+                    listing.Unavailable = false;
+                    
+                    break;
+                }
+            }
+            
+            // Update the UI to reflect the changes
+            _store.UpdateUserInterface(null, uid, store);
+        }
+
+        Logger.InfoS("rev-supply-rift", $"Updated all uplinks with charged rift description. Active rifts: {activeRiftCount}");
+    }
+
+    /// <summary>
     /// Enables the supply rift listing in all revolutionary uplinks.
     /// </summary>
     private void EnableSupplyRiftListing()
@@ -354,12 +459,14 @@ public sealed class RevSupplyRiftSystem : EntitySystem
     /// </summary>
     private void SendRiftPlacedMessage(EntityUid riftUid)
     {
-        if (!TryComp<TransformComponent>(riftUid, out var xform))
+        if (!TryComp<TransformComponent>(riftUid, out var xform) || 
+            !TryComp<RevSupplyRiftComponent>(riftUid, out var revRift))
             return;
 
         // Get the nearest beacon location
         var locationString = _navMap.GetNearestBeaconString((riftUid, xform));
-        var message = Loc.GetString("rev-supply-rift-placed", ("location", locationString));
+        var placedBy = revRift.PlacedBy ?? "Unknown";
+        var message = Loc.GetString("rev-supply-rift-placed", ("location", locationString), ("name", placedBy));
         var sender = Loc.GetString("rev-supply-rift-sender");
 
         // Find all revolutionaries and head revolutionaries

@@ -1,7 +1,7 @@
 - type: entity
   id: RevSupplyRift
-  name: red supply rift
-  description: A shady portal that coughs up Soviet stuff. Occasionally mumbles in Russian. This exposes everyone.
+  name: Soviet Armaments Rift
+  description: (!) A shady rift that coughs up Soviet stuff. Occasionally mumbles in Russian. This exposes them! If it's destroyed, commies won't be able to open another!
   placement:
     mode: SnapgridCenter
   components:
@@ -10,6 +10,7 @@
     spawn: CrateSovietArmaments
     spawnCooldown: 35  # Spawn a crate every 35 seconds
     spawnAccumulator: 35  # Spawn a crate immediately upon creation
+  - type: RevolutionaryRift
   - type: Transform
     anchored: true
   - type: Physics
