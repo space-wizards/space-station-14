@@ -75,10 +75,12 @@ namespace Content.Shared.Clothing.EntitySystems
                 return;
 
             //Is it a wirecutter, a screwdriver or an EMAG ?
-            //if (!(_toolSystem.HasQuality(args.Used, SharedToolSystem.PulseQuality)
-            //    || _toolSystem.HasQuality(args.Used, SharedToolSystem.CutQuality)
-            //    || _toolSystem.HasQuality(args.Used, SharedToolSystem.)))
-            //    return;
+            if (!(_toolSystem.HasQuality(args.Used, SharedToolSystem.PulseQuality)
+                || _toolSystem.HasQuality(args.Used, SharedToolSystem.CutQuality)
+                || _toolSystem.HasQuality(args.Used, SharedToolSystem.ScrewQuality)))
+                //TODO: ADD EMAG
+                return;
+
 
             Log.Debug("is it a screwdriver ? :" + args.Used.Id);
         }

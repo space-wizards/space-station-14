@@ -383,7 +383,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         {
             if (args.Handled
              || component.UnderPressureLockout == false
-             || !_toolSystem.HasQuality(args.Used, "Screwing")
+             || !_toolSystem.HasQuality(args.Used, SharedToolSystem.ScrewQuality)
              || !Transform(uid).Anchored
             )
             {

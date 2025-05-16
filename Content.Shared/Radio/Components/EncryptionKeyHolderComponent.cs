@@ -1,5 +1,6 @@
 using Content.Shared.Chat;
 using Content.Shared.Tools;
+using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -24,7 +25,7 @@ public sealed partial class EncryptionKeyHolderComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("keysExtractionMethod", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-    public string KeysExtractionMethod = "Screwing";
+    public string KeysExtractionMethod = SharedToolSystem.ScrewQuality;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("keySlots")]
