@@ -10,7 +10,6 @@
   - type: Tag
     tags:
       - FoodSnack
-      - VoxFood
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
   - type: SolutionContainerManager
@@ -498,9 +497,6 @@
           Quantity: 10
         - ReagentId: Theobromine
           Quantity: 3
-  - type: Tag
-    tags:
-    - VoxFood
 
 # Trash
 
