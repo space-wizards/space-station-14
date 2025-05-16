@@ -23,6 +23,9 @@ public sealed class AutomaticAtmosSystem : EntitySystem
 
     private void OnTileChanged(ref TileChangedEvent ev)
     {
+        if (_atmosphereSystem.HasAtmosphere(ev.Entity) || !TryComp<PhysicsComponent>(ev.Entity, out var physics))
+            return;
+
         foreach (var change in ev.Changes)
         {
             // Only if a atmos-holding tile has been added or removed.
@@ -34,12 +37,10 @@ public sealed class AutomaticAtmosSystem : EntitySystem
             var newSpace = change.NewTile.IsSpace(_tileDefinitionManager);
 
             if (!(oldSpace && !newSpace ||
-                !oldSpace && newSpace) ||
-                _atmosphereSystem.HasAtmosphere(ev.Entity))
+                  !oldSpace && newSpace))
+            {
                 continue;
-
-            if (!TryComp<PhysicsComponent>(ev.Entity, out var physics))
-                return;
+            }
 
             // We can't actually count how many tiles there are efficiently, so instead estimate with the mass.
             if (physics.Mass / ShuttleSystem.TileMassMultiplier >= 7.0f)
@@ -47,8 +48,10 @@ public sealed class AutomaticAtmosSystem : EntitySystem
                 AddComp<GridAtmosphereComponent>(ev.Entity);
                 Log.Info($"Giving grid {ev.Entity} GridAtmosphereComponent.");
             }
+
             // It's not super important to remove it should the grid become too small again.
             // If explosions ever gain the ability to outright shatter grids, do rethink this.
+            return;
         }
     }
 }
