@@ -526,6 +526,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: CBURN
       requirements:
       - !type:OverallPlaytimeRequirement
         time: 72000 # 20h
