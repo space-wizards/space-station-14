@@ -265,6 +265,34 @@
     stackType: FloorTileSteelDiagonal
 
 - type: entity
+  name: steel vertical slat tile
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelVerticalSlats
+  components:
+  - type: Sprite
+    state: steel-vertical-slats
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelVerticalSlats
+  - type: Stack
+    stackType: FloorTileSteelVerticalSlats
+
+- type: entity
+  name: steel single row vertical slat tile
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelVerticalSlatsSingleRow
+  components:
+  - type: Sprite
+    state: steel-vertical-slats
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelVerticalSlatsSingleRow
+  - type: Stack
+    stackType: FloorTileSteelVerticalSlatsSingleRow
+
+- type: entity
   name: steel herringbone
   parent: FloorTileItemSteel
   id: FloorTileItemSteelHerringbone

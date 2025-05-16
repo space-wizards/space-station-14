@@ -89,6 +89,18 @@
   maxCount: 30
 
 - type: stack
+  id: FloorTileSteelVerticalSlats
+  name: stack-steel-vertical-slats-tile
+  spawn: FloorTileItemSteelVerticalSlats
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelVerticalSlatsSingleRow
+  name: stack-steel-vertical-slats-single-row-tile
+  spawn: FloorTileItemSteelVerticalSlatsSingleRow
+  maxCount: 30
+
+- type: stack
   id: FloorTileSteelMono
   name: stack-steel-mono-tile
   spawn: FloorTileItemSteelMono
