@@ -7,6 +7,8 @@ namespace Content.Server.Explosion.EntitySystems;
 
 /// <summary>
 /// Releases a gas mixture to the atmosphere when triggered.
+/// Can also release gas over a set timespan to prevent trolling people
+/// with the instant-wall-of-pressure-inator.
 /// </summary>
 public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTriggerSystem
 {
@@ -19,68 +21,72 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
 
         SubscribeLocalEvent<ReleaseGasOnTriggerComponent, TriggerEvent>(OnTrigger);
         SubscribeLocalEvent<ReleaseGasOnTriggerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<ReleaseGasOnTriggerComponent, ComponentInit>(OnComponentInit);
     }
 
-    private void OnComponentInit(Entity<ReleaseGasOnTriggerComponent> ent, ref ComponentInit args)
+    private void OnMapInit(Entity<ReleaseGasOnTriggerComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.VolumeDivision = ent.Comp.Air.Volume - ent.Comp.Air.Volume / ent.Comp.ReleaseOverTimespan;
-    }
-
-    private void OnTrigger(Entity<ReleaseGasOnTriggerComponent> ent, ref TriggerEvent args)
-    {
-        // yeah
-        ent.Comp.Active = true;
+        ent.Comp.NextReleaseTime = _timing.CurTime + ent.Comp.ReleaseInterval;
+        ent.Comp.VolumeFraction = ent.Comp.Air.Volume / ent.Comp.ReleaseOverTimespan;
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var currentTime = _timing.CurTime;
+        var curtime = _timing.CurTime;
 
         var query = EntityQueryEnumerator<ReleaseGasOnTriggerComponent>();
-
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (!comp.Active)
+            if (!comp.Active || comp.NextReleaseTime > curtime)
                 continue;
 
-            if (comp.ReleaseOverTimespan != 0 && comp.NextRelease > currentTime)
-                continue;
-
-            // Get the total volume and do a series of restrictions depending on what's specified.
-            var released = comp.Air.Volume;
+            var desiredVolume = comp.Air.Volume;
 
             if (comp.ReleaseOverTimespan != 0)
             {
-                released = comp.VolumeDivision;
-                comp.NextRelease = currentTime + TimeSpan.FromSeconds(comp.ReleaseOverTimespan);
+                // Engage count dracula
+                // Assume goal of 500 L over 5 seconds
+                // 500 L / 5 s = 100 L/s
+                // Multiply by dt, usually 0.5 s, so ex.
+                // 100 L/s * 0.5 s = 50 L
+                desiredVolume = comp.VolumeFraction * comp.ReleaseInterval.Seconds;
             }
 
             if (comp.FlowRateLimit != 0)
-                released = Math.Min(released, comp.FlowRateLimit);
+            {
+                desiredVolume = Math.Min(desiredVolume, comp.FlowRateLimit);
+            }
 
-
-            var giverGasMix = comp.Air.RemoveVolume(released);
+            // If we want 50 L and starting with 500 L:
+            // 500 L - 50 L = 450 L
+            // giverGasMix will get the remainder of 50 L which is what we want
+            var giverGasMix = comp.Air.RemoveVolume(comp.Air.Volume - desiredVolume);
 
             var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
             if (environment != null)
             {
                 _atmosphereSystem.Merge(environment, giverGasMix);
-                if (comp.PressureLimit != 0 && environment.Pressure >= comp.PressureLimit)
+                comp.NextReleaseTime += comp.ReleaseInterval;
+                if (comp.PressureLimit != 0 && environment.Pressure >= comp.PressureLimit ||
+                    comp.Air.Volume <= 0)
                 {
+                    // Grenade did its job, and we don't want it sitting around any longer
                     // !basketball_skate.gif
                     QueueDel(uid);
                 }
+
+                continue;
             }
+
+            // Middle finger the grenade because someone threw it into space
+            QueueDel(uid);
         }
     }
 
-
-    private void OnMapInit(Entity<ReleaseGasOnTriggerComponent> ent, ref MapInitEvent args)
+    private void OnTrigger(Entity<ReleaseGasOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (ent.Comp.ReleaseOverTimespan != 0)
-            ent.Comp.NextRelease = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.ReleaseOverTimespan);
+        // yeah
+        ent.Comp.Active = true;
     }
 }

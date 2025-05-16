@@ -7,7 +7,7 @@ namespace Content.Shared.Explosion.Components.OnTrigger;
 /// <summary>
 /// Contains a GasMixture that will release its contents to the atmosphere when triggered.
 /// </summary>
-[RegisterComponent] [NetworkedComponent]
+[RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentPause]
 public sealed partial class ReleaseGasOnTriggerComponent : Component, IGasMixtureHolder
 {
@@ -26,11 +26,11 @@ public sealed partial class ReleaseGasOnTriggerComponent : Component, IGasMixtur
     public float FlowRateLimit = 200;
 
     /// <summary>
-    /// The server time at which the next sound will play.
+    /// Time at which the next release will occur.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
-    public TimeSpan NextRelease = TimeSpan.Zero;
+    public TimeSpan NextReleaseTime = TimeSpan.Zero;
 
     /// <summary>
     /// The cap at which this grenade can fill the exposed atmosphere to.
@@ -43,6 +43,12 @@ public sealed partial class ReleaseGasOnTriggerComponent : Component, IGasMixtur
     public float PressureLimit;
 
     /// <summary>
+    /// How often the grenade will update.
+    /// </summary>
+    [DataField]
+    public TimeSpan ReleaseInterval = TimeSpan.FromSeconds(0.5f);
+
+    /// <summary>
     /// Determines the length of time the gas will be released over, in seconds.
     /// </summary>
     /// <example>If set to 5, the grenade will partition the gas
@@ -53,12 +59,12 @@ public sealed partial class ReleaseGasOnTriggerComponent : Component, IGasMixtur
     public float ReleaseOverTimespan = 5;
 
     /// <summary>
-    /// Volume of gas to release to the atmosphere, if
-    /// the gas is being released in parts as defined by
-    /// <see cref="ReleaseOverTimespan"/>
+    /// A partial portion of the volume of the gas mixture that will be
+    /// released to the current tile atmosphere when triggered, used when
+    /// <see cref="ReleaseOverTimespan"/> is populated.
     /// </summary>
-    [DataField]
-    public float VolumeDivision;
+    [DataField(readOnly: true)]
+    public float VolumeFraction;
 
     /// <summary>
     /// The gas mixture that will be released to the current tile atmosphere when triggered.

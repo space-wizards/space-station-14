@@ -462,13 +462,21 @@
     price: 350
 
 - type: entity
-  parent: [ BaseEngineeringContraband, SmokeGrenade ]
+  parent: [ BaseEngineeringContraband, GrenadeBase ] # Prevent inheriting DeleteOnTrigger from SmokeGrenade
   id: AirGrenade
   name: air grenade
   description: A special solid state chemical grenade used for quickly releasing standard air into a spaced area. It's like magic!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/metalfoam.rsi
+  - type: SmokeOnTrigger
+    duration: 30
+    spreadAmount: 50
+  - type: SoundOnTrigger
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Items/smoke_grenade_prime.ogg
   - type: OnUseTimerTrigger
     delay: 3
   - type: ReleaseGasOnTrigger
