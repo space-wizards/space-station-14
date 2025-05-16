@@ -36,8 +36,20 @@
   id: USSPUplinkImplanter
   suffix: USSP uplink
   parent: BaseImplantOnlyImplanterSyndi_StarLight
-  name: USSP implanter
-  description: A compact disposable syringe exclusively designed for the injection of USSP subdermal implants.
+  name: SNKVD implanter
+  description: A brittle disposable syringe exclusively designed for the injection of old SNKVD subdermal implants. Dissolves on use.
   components:
   - type: Implanter
     implant: USSPUplinkImplant
+  - type: Item
+    sprite: _Starlight/Objects/Specific/USSP/SNKVD_implanter.rsi
+    heldPrefix: implanter
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/USSP/SNKVD_implanter.rsi
+    state: implanter1
+    layers:
+      - state: implanter0
+        map: [ "implantFull" ]
+        visible: true
+      - state: implanter1
+        map: [ "implantOnly" ]

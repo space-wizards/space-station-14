@@ -195,7 +195,7 @@ namespace Content.Server.Implants
                     var telebonds = storeAfterSync.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
                     var conversions = storeAfterSync.Balance.GetValueOrDefault("Conversion", FixedPoint2.Zero);
                     
-                    _popup.PopupEntity(Loc.GetString($"Uplink implanted. Current Telebonds: {telebonds}, Conversions: {conversions}"), 
+                    _popup.PopupEntity(Loc.GetString($"Implanted! Current Telebonds: {telebonds}, Conversions: {conversions}"), 
                         args.Implanted.Value, args.Implanted.Value, PopupType.Medium);
                 }
                 
@@ -448,7 +448,7 @@ namespace Content.Server.Implants
                             var finalConversions = finalStore.Balance.GetValueOrDefault("Conversion", FixedPoint2.Zero);
                             
                             // Show an additional popup with the updated values
-                            _popup.PopupEntity(Loc.GetString($"Uplink synchronized. Current Telebonds: {finalTelebonds}, Conversions: {finalConversions}"), 
+                            _popup.PopupEntity(Loc.GetString($"Uplink synchronized! Current Telebonds: {finalTelebonds}, Conversions: {finalConversions}"), 
                                 args.Implanted.Value, args.Implanted.Value, PopupType.Medium);
                         }
                     }
