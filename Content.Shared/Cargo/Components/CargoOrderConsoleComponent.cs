@@ -78,7 +78,7 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// All of the <see cref="CargoProductPrototype.Group"/>s that are supported.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<string> AllowedGroups = new() { "market" };
+    public List<ProtoId<CargoMarketPrototype>> AllowedGroups = new() { "market" };
 
     /// <summary>
     /// Access needed to toggle the limit on this console.
@@ -126,6 +126,18 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier ScanSound = new SoundCollectionSpecifier("CargoBeep");
+
+    /// <summary>
+    /// The time at which the console will be able to play the deny sound.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextDenySoundTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The time between playing the deny sound.
+    /// </summary>
+    [DataField]
+    public TimeSpan DenySoundDelay = TimeSpan.FromSeconds(2);
 }
 
 /// <summary>

@@ -98,4 +98,45 @@
   id: 13
   time: '2025-05-06T06:56:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37216
+- author: Southbridge, Flipsie27
+  changes:
+  - message: On Amber, gave the captain a tertiary ID card.
+    type: Add
+  - message: On Amber, gave Atmos their own front desk across from sec.
+    type: Add
+  - message: On Amber, gave botany a large water container.
+    type: Tweak
+  - message: On Amber, overhauled the security department to introduce GenPop.
+    type: Tweak
+  - message: On Amber, overhauled and moved the AI satellite to the east side of the
+      map, enlarging it to accommodate AI turrets in the future.
+    type: Tweak
+  id: 14
+  time: '2025-05-08T01:39:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37262
+- author: Deerstop
+  changes:
+  - message: On Elkridge, the botany area has been improved with additional trays,
+      vents, and scrubbers.
+    type: Tweak
+  - message: On Elkridge, firelocks and emergency lights have been added to security.
+    type: Fix
+  - message: On Elkridge, the backstage area is now accessible to service and theatre
+      access.
+    type: Tweak
+  - message: On Elkridge, the service request console is now backstage
+    type: Tweak
+  id: 15
+  time: '2025-05-11T00:49:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37206
+- author: spanky-spanky
+  changes:
+  - message: On Omega, the TEG burn chamber blast door buttons are now engineering
+      access instead of atmospherics.
+    type: Fix
+  - message: On Omega, security now get hardsuits.
+    type: Fix
+  id: 16
+  time: '2025-05-16T02:10:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37490
 Order: 1
