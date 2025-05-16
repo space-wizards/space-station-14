@@ -14,7 +14,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'LS'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/_Starlight/Shuttles/emergency_manor.yml
+          emergencyShuttlePath: /Maps/Shuttles/emergency_hotel.yml
         - type: StationJobs
           availableJobs:
             #service
