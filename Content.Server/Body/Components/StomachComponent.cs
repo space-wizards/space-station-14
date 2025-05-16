@@ -48,10 +48,10 @@ namespace Content.Server.Body.Components
         public EntityWhitelist? SpecialDigestible = null;
 
         /// <summary>
-        ///     A whitelist for what special-digestible-required foods this stomach is capable of eating. Not-exclusive whitelist, entities can eat foods not on this whitelist.
+        ///     A bool for if the diet is exclusive to a whitelist. If they have additional foods they can eat on top of the human diet, that would be true. Else, it is false.
         /// </summary>
         [DataField]
-        public EntityWhitelist? SpecialExtraDigestible = null;
+        public bool SpecialExtraDiet = false;
 
         /// <summary>
         ///     Used to track how long each reagent has been in the stomach
