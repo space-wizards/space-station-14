@@ -371,15 +371,22 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                             }
                         }
                         
+                        // Get the final telebond value after synchronization
+                        var finalTelebond = FixedPoint2.Zero;
+                        if (TryComp<StoreComponent>(uplinkUid.Value, out var finalStoreComp))
+                        {
+                            finalTelebond = finalStoreComp.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
+                        }
+                        
                         // Show popup to the head revolutionary (private)
-                        _popup.PopupEntity(Loc.GetString("+1 Telebond"), ev.User.Value, ev.User.Value, PopupType.Large);
+                        _popup.PopupEntity(Loc.GetString($"+1 Telebond (Total: {finalTelebond})"), ev.User.Value, ev.User.Value, PopupType.Large);
                         
                         // If the uplink is implanted in someone else, show them a popup too
                         if (TryComp<SubdermalImplantComponent>(uplinkUid.Value, out var implant) && 
                             implant.ImplantedEntity != null && 
                             implant.ImplantedEntity.Value != ev.User.Value)
                         {
-                            _popup.PopupEntity(Loc.GetString($"+1 Telebond (for {Identity.Name(ev.User.Value, EntityManager)})"), 
+                            _popup.PopupEntity(Loc.GetString($"+1 Telebond (Total: {finalTelebond}) (for {Identity.Name(ev.User.Value, EntityManager)})"), 
                                 implant.ImplantedEntity.Value, implant.ImplantedEntity.Value, PopupType.Large);
                         }
                         
@@ -432,6 +439,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             // Add Conversion to ALL head revolutionary uplinks
             var uplinkSystem = EntitySystem.Get<USSPUplinkSystem>();
             uplinkSystem.AddConversionToAllHeadRevs(storeSystem);
+            
+            // Synchronize all uplinks again to ensure the conversion value is updated everywhere
+            uplinkSystem.SynchronizeAllUplinks();
 
             if (_mind.TryGetMind(ev.User.Value, out var revMindId, out _))
             {
@@ -852,6 +862,50 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 {
                     store.Balance["Conversion"] = maxConversion;
                     Logger.Info($"Updated Conversion currency in uplink {ToPrettyString(uplink)} to {maxConversion}");
+                }
+            }
+        }
+        
+        // Also update the global conversion value for all USSP uplinks in the game
+        // This ensures that all uplinks have the same conversion value, regardless of owner
+        var allUplinkQuery = EntityManager.EntityQuery<MetaDataComponent, StoreComponent>();
+        foreach (var (metadata, uplinkStore) in allUplinkQuery)
+        {
+            // Skip uplinks we've already processed
+            if (allUplinks.Contains(metadata.Owner))
+                continue;
+                
+            // Only process USSP uplink implants, not PDAs or other store components
+            if (metadata.EntityPrototype?.ID != "USSPUplinkImplant")
+                continue;
+                
+            // Make sure the store has the Conversion currency initialized
+            if (!uplinkStore.Balance.ContainsKey("Conversion"))
+            {
+                uplinkStore.Balance["Conversion"] = FixedPoint2.Zero;
+            }
+            
+            // Update the Conversion currency if it's lower than the maximum
+            if (uplinkStore.Balance["Conversion"] < maxConversion)
+            {
+                uplinkStore.Balance["Conversion"] = maxConversion;
+                Logger.Info($"Updated global Conversion currency in uplink {ToPrettyString(metadata.Owner)} to {maxConversion}");
+            }
+            
+            // Check if this uplink has a higher Conversion value
+            if (uplinkStore.Balance["Conversion"] > maxConversion)
+            {
+                maxConversion = uplinkStore.Balance["Conversion"];
+                Logger.Info($"Found higher global Conversion value: {maxConversion}");
+                
+                // Update all uplinks we've already processed with this higher value
+                foreach (var processedUplink in allUplinks)
+                {
+                    if (TryComp<StoreComponent>(processedUplink, out var processedStore))
+                    {
+                        processedStore.Balance["Conversion"] = maxConversion;
+                        Logger.Info($"Updated Conversion currency in uplink {ToPrettyString(processedUplink)} to {maxConversion}");
+                    }
                 }
             }
         }
