@@ -432,6 +432,7 @@ public sealed class FoodSystem : EntitySystem
         // Does the mob have enough stomachs?
         if (stomachs.Count < component.RequiredStomachs)
             return false;
+
         // Run through the mobs' stomachs
         foreach (var ent in stomachs)
         {
@@ -443,7 +444,7 @@ public sealed class FoodSystem : EntitySystem
                 return true;
 
             // If their diet is whitelist exclusive, then they cannot eat anything but what follows their whitelisted tags. Else, they can eat their tags AND human food.
-            if (!ent.Comp1.SpecialExtraDiet)
+            if (ent.Comp1.IsSpecialDigestiableExclusive)
                 return false;
         }
 
