@@ -806,6 +806,7 @@
   components:
   - type: Item
     size: Small
+    heldPrefix: mozanplush
     sprite: _Starlight/Objects/Fun/toys.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/toys.rsi
@@ -905,6 +906,7 @@
   components:
   - type: Item
     size: Small
+    heldPrefix: pandaplushie
     sprite: _Starlight/Objects/Fun/toys.rsi
   - type: Sprite
     sprite: _Starlight/Objects/Fun/toys.rsi

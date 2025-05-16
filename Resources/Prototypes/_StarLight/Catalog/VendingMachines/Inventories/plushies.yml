@@ -249,7 +249,7 @@
   - SLPlushies
   conditions:
   - !type:ListingLimitedStockCondition
-    stock: 3
+    stock: 1
 
 # SLSpecies
 
