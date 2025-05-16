@@ -1,16 +1,16 @@
+using Content.Shared.Forensics;
+using Robust.Shared.Prototypes;
+
 namespace Content.Server.Forensics
 {
     [RegisterComponent]
     public sealed partial class ForensicsComponent : Component
     {
-        [DataField("fingerprints")]
-        public HashSet<string> Fingerprints = new();
-
-        [DataField("fibers")]
-        public HashSet<string> Fibers = new();
-
-        [DataField("dnas")]
-        public HashSet<string> DNAs = new();
+        /// <summary>
+        /// A dictionary of types of evidence to a unique collection of strings for it.
+        /// </summary>
+        [DataField]
+        public Dictionary<ProtoId<ForensicEvidencePrototype>, HashSet<string>> Evidence = [];
 
         /// <summary>
         /// Unique set of cleaning agents found on the entity, separate from actual evidence
