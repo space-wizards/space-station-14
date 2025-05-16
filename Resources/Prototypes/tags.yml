@@ -79,6 +79,9 @@
   id: BodyBag
 
 - type: Tag
+  id: Boll
+
+- type: Tag
   id: Book
 
 - type: Tag
@@ -347,11 +350,17 @@
 - type: Tag
   id: CoordinatesDisk
 
+- type: Tag # designed to let corgis wear things; at present only for SmartCorgi.  View PR 33737 on upstream for more dog wearables
+  id: CorgiWearable
+
 - type: Tag #Ohioans die happy
   id: Corn
 
 - type: Tag
   id: CottonBoll
+
+- type: Tag
+  id: CottonBurger
 
 - type: Tag
   id: Cow
@@ -385,6 +394,9 @@
 
 - type: Tag
   id: CrayonYellow
+
+- type: Tag
+  id: Creamsicle
 
 - type: Tag
   id: Crowbar
@@ -581,6 +593,10 @@
 - type: Tag
   id: GeigerCounter
 
+# Used for warps
+- type: Tag
+  id: GhostOnlyWarp
+
 - type: Tag
   id: GlassAirlock
 
@@ -595,6 +611,9 @@
 
 - type: Tag
   id: Goliath
+
+- type: Tag
+  id: GoliathPlate
 
 - type: Tag
   id: GPS
@@ -613,6 +632,15 @@
 
 - type: Tag
   id: GuideEmbeded
+
+- type: Tag
+  id: GunUpgradeDamage
+
+- type: Tag
+  id: GunUpgradeRange
+
+- type: Tag
+  id: GunUpgradeReloadSpeed
 
 - type: Tag
   id: Hamster
@@ -640,6 +668,9 @@
 
 - type: Tag
   id: Handcuffs
+
+- type: Tag
+  id: HandGrenade
 
 - type: Tag
   id: HappyHonk
@@ -676,6 +707,9 @@
 
 - type: Tag
   id: HighSecDoor
+
+- type: Tag
+  id: HivelordRemains
 
 - type: Tag
   id: HiViz
@@ -871,9 +905,6 @@
   id: MimeHappyHonk
 
 - type: Tag
-  id: MindShield
-
-- type: Tag
   id: MindTransferTarget
 
 - type: Tag
@@ -940,6 +971,9 @@
   id: Pancake
 
 - type: Tag
+  id: ParcelWrapBlacklist
+
+- type: Tag
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
@@ -973,7 +1007,13 @@
   id: Pipe
 
 - type: Tag
+  id: Pistachios
+
+- type: Tag
   id: Pizza
+
+- type: Tag
+  id: PKAUpgrade
 
 - type: Tag
   id: PlantAnalyzer
@@ -1143,6 +1183,9 @@
 
 - type: Tag
   id: SilentStorageUser # used in SharedStorageSystem, so the entity will do all silently
+
+- type: Tag
+  id: SiliconEmotes
 
 - type: Tag
   id: SkeletonMotorcycleKeys
@@ -1392,5 +1435,20 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+- type: Tag
+  id: XenoborgModuleEngi
+
+- type: Tag
+  id: XenoborgModuleGeneric
+
+- type: Tag
+  id: XenoborgModuleHeavy
+
+- type: Tag
+  id: XenoborgModuleScout
+
+- type: Tag
+  id: XenoborgModuleStealth
 
 # ALPHABETICAL
