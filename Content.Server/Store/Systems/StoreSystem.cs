@@ -10,6 +10,8 @@ using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Robust.Shared.Timing;
+using Content.Shared.Mind;
 using Content.Shared.Access.Components;
 using Robust.Shared.GameObjects;
 using Content.Shared.Access.Systems;
@@ -25,6 +27,7 @@ public sealed partial class StoreSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -80,10 +83,13 @@ public sealed partial class StoreSystem : EntitySystem
         if (!component.OwnerOnly)
             return;
 
-        component.AccountOwner ??= args.User;
+        if (!_mind.TryGetMind(args.User, out var mind, out _))
+            return;
+
+        component.AccountOwner ??= mind;
         DebugTools.Assert(component.AccountOwner != null);
 
-        if (component.AccountOwner == args.User)
+        if (component.AccountOwner == mind)
             return;
 
         _popup.PopupEntity(Loc.GetString("store-not-account-owner", ("store", uid)), uid, args.User);

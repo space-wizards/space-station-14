@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Shuttles.Components;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -286,6 +287,14 @@ public sealed partial class DockingSystem
 
         var targetGridAngle = _transform.GetWorldRotation(targetGrid).Reduced();
 
+        //starlight start
+        //if priority tag is not set, try to see if the shuttle has one in its component
+        if (priorityTag == null && TryComp<ShuttleComponent>(shuttleUid, out var shuttleComp))
+        {
+            priorityTag = shuttleComp.PriorityTag;
+        }
+        //starlight end
+
         // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
         validDockConfigs = validDockConfigs
            .OrderByDescending(x => IsConfigPriority(x, priorityTag))
@@ -323,7 +332,9 @@ public sealed partial class DockingSystem
             // If it's a map check no hard collidable anchored entities overlap
             if (isMap)
             {
-                foreach (var tile in _mapSystem.GetLocalTilesIntersecting(gridEntity.Owner, gridEntity.Comp, aabb))
+                var localTiles = _mapSystem.GetLocalTilesEnumerator(gridEntity.Owner, gridEntity.Comp, aabb);
+
+                while (localTiles.MoveNext(out var tile))
                 {
                     var anchoredEnumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridEntity.Owner, gridEntity.Comp, tile.GridIndices);
 

@@ -68,6 +68,7 @@ bounty-item-microwave-machine-board = Microwave machine board
 bounty-item-flash = Flash
 bounty-item-tooth-space-carp = Space Carp Tooth
 bounty-item-tooth-sharkminnow = Sharkminnow Tooth
+bounty-item-oven-machine-board = Oven machine board
 
 bounty-description-artifact = NanoTrasen is in some hot water for stealing artifacts from non-spacefaring planets. Return one and we'll compensate you for it.
 bounty-description-baseball-bat = Baseball fever is going on at CentComm! Be a dear and ship them some baseball bats, so that management can live out their childhood dream.
@@ -138,3 +139,4 @@ bounty-description-microwave-machine-board = Mr. Giggles thought it'd be funny t
 bounty-description-flashes = GREETINGS \[Station] WE REQUIRE 6 FLASHES DUE TO A NORMAL \[TrainingExercise] WITH SECURITY. EVERYTHING IS \[Normal].
 bounty-description-tooth-space-carp = Some lads from "down unda" need some teeth to make their traditional apparel. Send them a few from some space carp.
 bounty-description-tooth-sharkminnow = The chef is claiming that the teeth of sharkminnows are some kind of high-quality knife. I don't know what they're on about, but they want a set. Send it to them.
+bounty-description-oven-machine-board = We need another oven to speed up the cooking process, could you please send a board? Mr. Giggles would be very pleased.

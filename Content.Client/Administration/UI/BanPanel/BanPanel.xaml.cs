@@ -150,7 +150,7 @@ public sealed partial class BanPanel : DefaultWindow
             CreateRoleGroup(proto.ID, proto.Roles.Select(p =>  p.Id), proto.Color);
         }
 
-        CreateRoleGroup("Antagonist", prototypeManager.EnumeratePrototypes<AntagPrototype>().Select(p => p.ID), Color.Red);
+        //CreateRoleGroup("Antagonist", prototypeManager.EnumeratePrototypes<AntagPrototype>().Select(p => p.ID), Color.Red); No Antagonists role bans
     }
 
     private void CreateRoleGroup(string roleName, IEnumerable<string> roleList, Color color)

@@ -134,6 +134,39 @@ public sealed class HTNSystem : EntitySystem
     }
 
     /// <summary>
+    /// Enable / disable the hierarchical task network of an entity
+    /// </summary>
+    /// <param name="ent">The entity and its <see cref="HTNComponent"/></param>
+    /// <param name="state">Set 'true' to enable, or 'false' to disable, the HTN</param>
+    /// <param name="planCooldown">Specifies a time in seconds before the entity can start planning a new action (only takes effect when the HTN is enabled)</param>
+    // ReSharper disable once InconsistentNaming
+    [PublicAPI]
+    public void SetHTNEnabled(Entity<HTNComponent> ent, bool state, float planCooldown = 0f)
+    {
+        if (ent.Comp.Enabled == state)
+            return;
+
+        ent.Comp.Enabled = state;
+        ent.Comp.PlanAccumulator = planCooldown;
+
+        ent.Comp.PlanningToken?.Cancel();
+        ent.Comp.PlanningToken = null;
+
+        if (ent.Comp.Plan != null)
+        {
+            var currentOperator = ent.Comp.Plan.CurrentOperator;
+
+            ShutdownTask(currentOperator, ent.Comp.Blackboard, HTNOperatorStatus.Failed);
+            ShutdownPlan(ent.Comp);
+
+            ent.Comp.Plan = null;
+        }
+
+        if (ent.Comp.Enabled && ent.Comp.PlanAccumulator <= 0)
+            RequestPlan(ent.Comp);
+    }
+
+    /// <summary>
     /// Forces the NPC to replan.
     /// </summary>
     [PublicAPI]
@@ -147,11 +180,14 @@ public sealed class HTNSystem : EntitySystem
         _planQueue.Process();
         var query = EntityQueryEnumerator<ActiveNPCComponent, HTNComponent>();
 
-        while(query.MoveNext(out var uid, out _, out var comp))
+        while (query.MoveNext(out var uid, out _, out var comp))
         {
             // If we're over our max count or it's not MapInit then ignore the NPC.
             if (count >= maxUpdates)
                 break;
+
+            if (!comp.Enabled)
+                continue;
 
             if (comp.PlanningJob != null)
             {

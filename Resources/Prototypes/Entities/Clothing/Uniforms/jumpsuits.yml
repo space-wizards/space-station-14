@@ -1,5 +1,36 @@
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitAssistant
+  name: assistant jumpsuit
+  description: A tasteful green jumpsuit that reminds you of the good old days.
+  components:
+  - type: RollUpSleeves
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color.rsi
+    layers:
+    - state: icon
+      color: "#639137"
+    - state: trinkets-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#639137"
+      - state: trinkets-inhand-left
+      right:
+      - state: inhand-right
+        color: "#639137"
+      - state: trinkets-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#639137"
+      - state: trinkets-equipped-INNERCLOTHING
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitDeathSquad
   name: death squad uniform
   description: Advanced armored jumpsuit used by special forces in special operations.
@@ -389,7 +420,7 @@
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitHoSGrey
   name: head of security's grey jumpsuit
-  description: A grey jumpsuit of Head of Security, which make him look somewhat like a passenger.
+  description: A grey jumpsuit of Head of Security, which make him look somewhat like a assistant.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hos_grey.rsi
@@ -491,7 +522,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitPrisoner
   name: prisoner jumpsuit
-  description: Busted.
+  description: A jumpsuit used for prisoners. It has suit sensors automatically enabled at all times.
   components:
   - type: RollUpSleeves
   - type: Sprite
@@ -607,7 +638,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/roboticist.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformJumpsuitSec
   name: security jumpsuit
   description: A jumpsuit made of strong material, providing robust protection.
@@ -642,7 +673,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/security_blue.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformJumpsuitSecGrey
   name: grey security jumpsuit
   description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
@@ -653,7 +684,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/security_grey.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformSecurityTrooper
   name: trooper uniform
   description: A formal uniform issued to the Nanotrasen Troopers, usually it comes with a car.
@@ -664,7 +695,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/security_trooper.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformJumpsuitWarden
   name: warden's uniform
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
@@ -1213,7 +1244,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/senior_physician.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformJumpsuitSeniorOfficer
   name: senior officer jumpsuit
   description: A sign of skill and prestige within the security department.

@@ -5,7 +5,7 @@
   playTimeTracker: JobCentralCommandOperator
   setPreference: false
   startingGear: CentcomOperatorGear
-  icon: "JobIconNanotrasen"
+  icon: "JobIconCentComm"
   supervisors: job-supervisors-hos
   canBeAntag: false
   accessGroups:
@@ -19,7 +19,7 @@
     jumpsuit: ClothingUniformJumpsuitCentcomOfficial
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatCentcom
-    eyes: ClothingEyesGlassesSunglasses
+    eyes: ClothingEyesGlassesCentComm
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterArmorBasic
     id: CentCommOperatorPDA

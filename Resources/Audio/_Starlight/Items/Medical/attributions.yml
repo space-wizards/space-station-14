@@ -1,0 +1,9 @@
+- files: ["medical.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Goonstation"
+  source: "https://github.com/goonstation/goonstation/blob/master/sound/items/mender.ogg"
+
+- files: ["medical2.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Goonstation"
+  source: "https://github.com/goonstation/goonstation/blob/master/sound/items/mender2.ogg"

@@ -21,7 +21,7 @@
   If you do not have a PDA when you are activated, an [color=cyan]uplink implant[/color] is provided [bold]for the full [color=red]TC[/color] price of the implant.[/bold]
   It can be accessed from your hotbar.
   <Box>
-    <GuideEntityEmbed Entity="PassengerPDA" Caption="PDA"/>
+    <GuideEntityEmbed Entity="AssistantPDA" Caption="PDA"/>
     <GuideEntityEmbed Entity="Telecrystal" Caption="Telecrystals"/>
     <GuideEntityEmbed Entity="BaseUplinkRadio" Caption="Uplink Implant"/>
   </Box>

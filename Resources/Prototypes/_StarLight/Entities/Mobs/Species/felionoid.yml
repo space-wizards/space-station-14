@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: BaseMobSpeciesOrganic
+  parent: [BaseMobSpeciesOrganic, BaseSpeciesPickupable]
   id: BaseMobFelionoid
   abstract: true
   components:
@@ -31,6 +31,10 @@
       0: Alive
       75: Critical
       150: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      45: 0.7 
+      60: 0.5
   - type: Butcherable
     butcheringType: Spike
     spawned:
@@ -67,6 +71,13 @@
         showInChat: true
   - type: Sprite 
     scale: 0.8, 0.8
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - Felionoid
   - type: Fixtures
     fixtures: 
       fix1:

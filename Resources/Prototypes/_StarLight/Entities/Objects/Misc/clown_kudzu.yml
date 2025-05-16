@@ -1,0 +1,33 @@
+﻿- type: entity
+  id: ClownKudzu
+  parent: FleshKudzu
+  suffix: clown
+  description: A rapidly growing cluster of slippery tendons. WHY THE HONKING HONK ARE YOU STOPPING TO LOOK AT IT?!
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/clownkudzu.rsi
+      state: kudzu_11
+      drawdepth: Overdoors
+    - type: DamageContacts
+      damage:
+        types:
+          Slash: 0.5
+          Piercing: 0.5
+      ignoreWhitelist:
+        tags:
+          - ClownKudzu
+    - type: Slippery
+      superSlippery: true
+    - type: StepTrigger
+      intersectRatio: 0.2
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+            - ReagentId: Laughter
+              Quantity: 2
+            - ReagentId: Protein
+              Quantity: 1
+    - type: SpeedModifierContacts
+      walkSpeedModifier: 1.0
+      sprintSpeedModifier: 1.0

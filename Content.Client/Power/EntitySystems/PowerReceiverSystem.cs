@@ -27,6 +27,8 @@ public sealed class PowerReceiverSystem : SharedPowerReceiverSystem
             return;
 
         component.Powered = state.Powered;
+        component.NeedsPower = state.NeedsPower;
+        component.PowerDisabled = state.PowerDisabled;
     }
 
     public override bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component)

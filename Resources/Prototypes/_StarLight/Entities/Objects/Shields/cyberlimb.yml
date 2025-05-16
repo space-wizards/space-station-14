@@ -1,0 +1,105 @@
+- type: entity
+  name: bulwark
+  parent: [BaseItem, BaseSecurityContraband]
+  id: EnergyShieldCyber
+  description: The true shield for warriors, made out of hard-light materials making it lightweight and portable.
+  components:
+    - type: ItemToggle
+      soundActivate:
+        path: /Audio/Weapons/ebladeon.ogg
+      soundDeactivate:
+        path: /Audio/Weapons/ebladeoff.ogg
+    - type: ItemToggleActiveSound
+      activeSound:
+        path: /Audio/Weapons/ebladehum.ogg
+    - type: ItemToggleSize
+      activatedSize: Huge
+    - type: ComponentToggler
+      components:
+      - type: DisarmMalus
+        malus: 0.6
+    - type: Sprite
+      sprite: _Starlight/Objects/Weapons/Melee/cybershield.rsi
+      layers:
+        - state: cybershieldoff
+        - state: cybershield
+          color: "#FFFFFF"
+          visible: false
+          shader: unshaded
+          map: [ "shield" ]
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Weapons/Melee/cybershield.rsi
+      heldPrefix: cybershieldoff
+    - type: UseDelay
+      delay: 0.5
+    - type: ToggleableLightVisuals
+      spriteLayer: shield
+    - type: PointLight
+      netsync: false
+      enabled: false
+      radius: 1.5
+      energy: 3
+      color: "#a22529"
+    - type: ItemTogglePointLight
+    - type: Reflect
+      reflectProb: 0.1
+      reflects:
+        - Energy
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.75
+          Slash: 0.75
+          Piercing: 0.75
+          Heat: 0.75
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.45
+          Slash: 0.45
+          Piercing: 0.45
+          Heat: 0.45
+        flatReductions:
+          Heat: 1
+          Piercing: 1
+    - type: Appearance
+    - type: Damageable
+      damageContainer: Shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 150
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            #- !type:SpawnEntitiesBehavior - Breaks arm. Who'da thunk?
+              #spawn:
+                #BrokenEnergyShieldCyber:
+                  #min: 1
+                  #max: 1
+    - type: StaticPrice
+      price: 350
+
+#- type: entity
+  #name: broken bulwark
+  #parent: BaseItem
+  #id: BrokenEnergyShieldCyber
+  #description: Too damaged to effectively protect. Time to get a new one!
+  #components:
+    #- type: Sprite
+      #sprite: Objects/Weapons/Melee/e_shield.rsi
+      #state: eshield-icon
+    #- type: Item
+      #sprite: Objects/Weapons/Melee/e_shield.rsi
+      #size: Small
+      #heldPrefix: eshield

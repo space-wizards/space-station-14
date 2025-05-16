@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Radio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Research.Prototypes;
@@ -6,7 +7,7 @@ namespace Content.Shared.Research.Prototypes;
 /// <summary>
 /// This is a prototype for a technology that can be unlocked.
 /// </summary>
-[Prototype("technology")]
+[Prototype]
 public sealed partial class TechnologyPrototype : IPrototype
 {
     /// <inheritdoc/>
@@ -69,6 +70,12 @@ public sealed partial class TechnologyPrototype : IPrototype
     /// </summary>
     [DataField]
     public IReadOnlyList<GenericUnlock> GenericUnlocks = new List<GenericUnlock>();
+
+    /// <summary>
+    /// Radio Channel to broadast on in addition to science when a technology of this discipline is unlocked.
+    /// <\summary>
+    [DataField("radioChannels", required: false)]
+    public List<ProtoId<RadioChannelPrototype>> RadioChannels = [];
 }
 
 [DataDefinition]

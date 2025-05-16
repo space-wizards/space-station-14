@@ -17,7 +17,7 @@
   - type: ActivatableUI
     key: enum.CryostorageUIKey.Key
   - type: AccessReader
-    breakOnEmag: false
+    breakOnAccessBreaker: false
     access: [["Cryogenics"]]
   - type: InteractionOutline
   - type: Cryostorage
@@ -25,6 +25,7 @@
     canCollide: false
   - type: DragInsertContainer
     containerId: storage
+    entryDelay: 2
   - type: ExitContainerOnMove
     containerId: storage
   - type: PointLight

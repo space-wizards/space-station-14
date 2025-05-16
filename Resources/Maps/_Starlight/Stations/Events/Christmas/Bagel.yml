@@ -9297,8 +9297,6 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-    - type: Parallax
-      parallax: BagelStation
     - type: LoadedMap
   - uid: 7536
     components:
@@ -14090,8 +14088,6 @@ entities:
       pos: -37.5,58.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 24756
 - proto: AirSensorVox
@@ -108284,8 +108280,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 24756
   - uid: 24024
@@ -108297,8 +108291,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 24756
   - uid: 24025
@@ -108310,8 +108302,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 24756
   - uid: 24358
@@ -140975,7 +140965,7 @@ entities:
     - type: Transform
       pos: 48.5,-17.5
       parent: 60
-- proto: SpawnPointPassenger
+- proto: SpawnPointAssistant
   entities:
   - uid: 6329
     components:
@@ -147287,7 +147277,7 @@ entities:
     - type: Transform
       pos: -116.54863,15.725244
       parent: 60
-- proto: ToyFigurinePassenger
+- proto: ToyFigurineAssistant
   entities:
   - uid: 6331
     components:

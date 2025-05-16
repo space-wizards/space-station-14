@@ -1,5 +1,6 @@
 - type: latheRecipe
   id: SheetSteel
+  printTicket: true
   result: SheetSteel1
   completetime: 0
   materials:
@@ -8,6 +9,8 @@
 
 - type: latheRecipe
   id: SheetSteel30
+  printTicket: true
+  ticketProtoId: SalvageTicket30
   result: SheetSteel
   completetime: 2
   materials:
@@ -16,6 +19,7 @@
 
 - type: latheRecipe
   id: SheetGlass1
+  printTicket: true
   result: SheetGlass1
   completetime: 0
   materials:
@@ -23,6 +27,8 @@
 
 - type: latheRecipe
   id: SheetGlass30
+  printTicket: true
+  ticketProtoId: SalvageTicket30
   result: SheetGlass
   completetime: 2
   materials:
@@ -31,6 +37,7 @@
 # This version is for the autolathe
 - type: latheRecipe
   id: SheetRGlass
+  printTicket: true
   result: SheetRGlass1
   completetime: 0
   materials:
@@ -40,6 +47,7 @@
 # This version is for the ore processor
 - type: latheRecipe
   id: SheetRGlassRaw
+  printTicket: true
   result: SheetRGlass1
   completetime: 0
   materials:
@@ -49,6 +57,8 @@
 
 - type: latheRecipe
   id: SheetRGlass30
+  printTicket: true
+  ticketProtoId: SalvageTicket50
   result: SheetRGlass
   completetime: 2
   materials:
@@ -58,6 +68,7 @@
 
 - type: latheRecipe
   id: SheetPGlass1
+  printTicket: true
   result: SheetPGlass1
   completetime: 0
   materials:
@@ -66,6 +77,8 @@
 
 - type: latheRecipe
   id: SheetPGlass30
+  printTicket: true
+  ticketProtoId: SalvageTicket50
   result: SheetPGlass
   completetime: 2
   materials:
@@ -74,6 +87,7 @@
 
 - type: latheRecipe
   id: SheetRPGlass1
+  printTicket: true
   result: SheetRPGlass1
   completetime: 0
   materials:
@@ -84,6 +98,8 @@
 
 - type: latheRecipe
   id: SheetRPGlass30
+  printTicket: true
+  ticketProtoId: SalvageTicket50
   result: SheetRPGlass
   completetime: 2
   materials:
@@ -94,6 +110,7 @@
 
 - type: latheRecipe
   id: SheetPlasma1
+  printTicket: true
   result: SheetPlasma1
   completetime: 0
   materials:
@@ -101,6 +118,8 @@
 
 - type: latheRecipe
   id: SheetPlasma30
+  printTicket: true
+  ticketProtoId: SalvageTicket30
   result: SheetPlasma
   completetime: 2
   materials:
@@ -108,6 +127,7 @@
 
 - type: latheRecipe
   id: SheetPlasteel1
+  printTicket: true
   result: SheetPlasteel1
   completetime: 0
   materials:
@@ -117,6 +137,8 @@
 
 - type: latheRecipe
   id: SheetPlasteel30
+  printTicket: true
+  ticketProtoId: SalvageTicket50
   result: SheetPlasteel
   completetime: 5
   materials:
@@ -126,6 +148,8 @@
 
 - type: latheRecipe
   id: SheetUranium30
+  printTicket: true
+  ticketProtoId: SalvageTicket50
   result: SheetUranium
   completetime: 2
   materials:
@@ -133,6 +157,7 @@
 
 - type: latheRecipe
   id: SheetUGlass1
+  printTicket: true
   result: SheetUGlass1
   completetime: 0
   materials:
@@ -141,6 +166,8 @@
 
 - type: latheRecipe
   id: SheetUGlass30
+  printTicket: true
+  ticketProtoId: SalvageTicket50
   result: SheetUGlass
   completetime: 2
   materials:
@@ -149,6 +176,7 @@
 
 - type: latheRecipe
   id: SheetRUGlass1
+  printTicket: true
   result: SheetRUGlass1
   completetime: 0
   materials:
@@ -159,6 +187,8 @@
 
 - type: latheRecipe
   id: SheetRUGlass30
+  printTicket: true
+  ticketProtoId: SalvageTicket50
   result: SheetRUGlass
   completetime: 2
   materials:
@@ -169,6 +199,8 @@
 
 - type: latheRecipe
   id: IngotGold30
+  printTicket: true
+  ticketProtoId: SalvageTicket50
   result: IngotGold
   completetime: 2
   materials:
@@ -176,6 +208,8 @@
 
 - type: latheRecipe
   id: IngotSilver30
+  printTicket: true
+  ticketProtoId: SalvageTicket50
   result: IngotSilver
   completetime: 2
   materials:
@@ -183,6 +217,7 @@
 
 - type: latheRecipe
   id: MaterialBananium10
+  printTicket: true
   result: MaterialBananium
   completetime: 2
   materials:
@@ -190,6 +225,8 @@
 
 - type: latheRecipe
   id: MaterialDiamond
+  printTicket: true
+  ticketProtoId: SalvageTicket100
   result: MaterialDiamond1
   completetime: 0
   materials:
@@ -197,6 +234,7 @@
 
 - type: latheRecipe
   id: SheetUranium1
+  printTicket: true
   result: SheetUranium1
   completetime: 0
   materials:
@@ -204,6 +242,7 @@
 
 - type: latheRecipe
   id: IngotGold1
+  printTicket: true
   result: IngotGold1
   completetime: 0
   materials:
@@ -211,6 +250,7 @@
 
 - type: latheRecipe
   id: IngotSilver1
+  printTicket: true
   result: IngotSilver1
   completetime: 0
   materials:
@@ -218,6 +258,7 @@
 
 - type: latheRecipe
   id: SheetPlastic
+  printTicket: true
   result: SheetPlastic1
   applyMaterialDiscount: false
   completetime: 0
@@ -226,6 +267,7 @@
 
 - type: latheRecipe
   id: MaterialBananium1
+  printTicket: true
   result: MaterialBananium1
   completetime: 0
   materials:
@@ -233,6 +275,7 @@
 
 - type: latheRecipe
   id: MaterialSheetMeat
+  printTicket: true
   result: MaterialSheetMeat1
   completetime: 6.4
   materials:
@@ -240,6 +283,7 @@
 
 - type: latheRecipe
   id: SheetPaper
+  printTicket: true
   result: SheetPaper1
   completetime: 1
   materials:

@@ -1,0 +1,131 @@
+- type: entity
+  name: patch
+  description: On-touch administration of chemicals.	
+  parent: BaseStarlightHealingItem
+  id: BasePatch
+  abstract: true
+  components:
+  - type: Sprite
+    state: bandaid
+  - type: SolutionContainerManager
+    solutions:
+      patch:
+        maxVol: 20
+  - type: Item
+    size: Small
+  - type: Appearance
+  - type: Patch
+  - type: Tag
+    tags:
+      - Patch
+      
+- type: entity
+  id: Patch
+  parent: BasePatch
+  
+- type: entity
+  id: PatchBrute
+  name: brute patch
+  parent: BasePatch
+  components:
+  - type: Sprite
+    state: bandaid-brute
+  - type: SolutionContainerManager
+    solutions:
+      patch:
+        maxVol: 20
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 15
+          
+- type: entity
+  id: PatchBurnSmall
+  name: burn patch small
+  parent: BasePatch
+  components:
+  - type: Sprite
+    state: bandaid-burn-small
+  - type: SolutionContainerManager
+    solutions:
+      patch:
+        maxVol: 20
+        reagents:
+        - ReagentId: Dermaline
+          Quantity: 10
+          
+- type: entity
+  id: PatchBurn
+  name: burn patch
+  parent: BasePatch
+  components:
+  - type: Sprite
+    state: bandaid-burn
+  - type: SolutionContainerManager
+    solutions:
+      patch:
+        maxVol: 20
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 20
+          
+- type: entity
+  id: PatchMedical
+  name: medical patch
+  parent: BasePatch
+  components:
+  - type: Sprite
+    state: bandaid-med
+  - type: SolutionContainerManager
+    solutions:
+      patch:
+        maxVol: 20
+        reagents:
+        - ReagentId: Dermaline
+          Quantity: 10
+        - ReagentId: Bicaridine
+          Quantity: 10
+          
+- type: entity
+  id: PatchClown
+  name: clown patch
+  parent: BasePatch
+  components:
+  - type: Sprite
+    state: bandaid-clown
+  - type: SolutionContainerManager
+    solutions:
+      patch:
+        maxVol: 20
+        reagents:
+        - ReagentId: Bananadine
+          Quantity: 5
+        - ReagentId: Happiness
+          Quantity: 5
+        - ReagentId: MuteToxin
+          Quantity: 10
+          
+- type: entity
+  name: patch pack
+  id: PatchPack
+  parent: BaseStorageItem
+  description: Storage of multiple patches efficiently.
+  components:
+  - type: Item
+    size: Tiny
+    sprite: _Starlight/Objects/Specific/Chemistry/patch_pack.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Chemistry/patch_pack.rsi
+    state: icon
+  - type: Tag
+    tags:
+      - PatchPack
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,4,1
+    quickInsert: true
+    areaInsert: true
+    areaInsertRadius: 1
+    whitelist: 
+      tags:
+      - Patch

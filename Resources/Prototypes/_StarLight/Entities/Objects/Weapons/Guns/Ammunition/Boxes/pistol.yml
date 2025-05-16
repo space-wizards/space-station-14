@@ -14,14 +14,89 @@
     - state: rubber
     
 - type: entity
-  parent: BaseMagazineBoxPistol
-  id: MagazineBoxPistol40Nr
-  name: ammunition box (40 NR)
+  parent: BaseItem
+  id: BaseMagazineBoxPistol40
+  name: ammunition box (.40)
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
     whitelist:
       tags:
-        - CartridgePistolSP8
-    proto: CartridgePistol40NrSP
-    capacity: 60
+        - CartridgePistolDP
+    proto: CartridgePistol40SP
+    capacity: 20
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  parent: BaseMagazineBoxPistol40
+  id: MagazineBoxPistol40SP
+  name: ammunition box (.40 SP)
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    proto: CartridgePistol40SP
+  - type: Sprite    
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: sp
+
+- type: entity
+  parent: BaseMagazineBoxPistol40
+  id: MagazineBoxPistol40HP
+  name: ammunition box (.40 HP)
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    proto: CartridgePistol40HP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseMagazineBoxPistol40
+  id: MagazineBoxPistol40FMJ
+  name: ammunition box (.40 FMJ)
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    proto: CartridgePistol40FMJ
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: fmj
+
+- type: entity
+  parent: BaseMagazineBoxPistol40
+  id: MagazineBoxPistol40AP
+  name: ammunition box (.40 AP)
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    proto: CartridgePistol40AP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: ap

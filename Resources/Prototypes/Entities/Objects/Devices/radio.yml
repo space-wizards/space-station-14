@@ -28,7 +28,7 @@
 - type: entity
   name: security radio
   description: A handy security radio.
-  parent: [ RadioHandheld, BaseRestrictedContraband ]
+  parent: [ RadioHandheld, BaseSecurityContraband ]
   id: RadioHandheldSecurity
   components:
   - type: RadioMicrophone

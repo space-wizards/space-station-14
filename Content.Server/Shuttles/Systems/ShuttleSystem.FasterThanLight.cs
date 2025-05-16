@@ -236,7 +236,7 @@ public sealed partial class ShuttleSystem
         {
 
             // Too large to FTL
-            if (FTLMassLimit > 0 &&  shuttlePhysics.Mass > FTLMassLimit)
+            if (FTLMassLimit > 0 &&  shuttlePhysics.Mass > FTLMassLimit && TryComp<ShuttleComponent>(shuttleUid, out var shuttleComp) && shuttleComp.FTLMassLimits)
             {
                 reason = Loc.GetString("shuttle-console-mass");
                 return false;
@@ -504,6 +504,14 @@ public sealed partial class ShuttleSystem
         {
             var config = _dockSystem.GetDockingConfigAt(uid, target.EntityId, target, entity.Comp1.TargetAngle);
             var mapCoordinates = _transform.ToMapCoordinates(target);
+
+            //starlight
+            if (config == null)
+            {
+                //try to find a dock, ignoring the angle information
+                config = _dockSystem.GetDockingConfig(uid, target.EntityId);
+            }
+            //starlight end
 
             // Couldn't dock somehow so just fallback to regular position FTL.
             if (config == null)

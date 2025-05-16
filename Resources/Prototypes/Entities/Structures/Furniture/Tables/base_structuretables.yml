@@ -5,6 +5,7 @@
   description: A square piece of metal standing on four metal legs.
   abstract: true
   components:
+  - type: Animateable
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
@@ -36,6 +37,10 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepHull
+  - type: Tag
+    tags:
+    - ForceFixRotations
+    - Table
 
 - type: entity
   id: CounterBase

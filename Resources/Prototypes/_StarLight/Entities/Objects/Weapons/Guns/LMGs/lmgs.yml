@@ -11,10 +11,20 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-3
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/LMGs/M492.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
   - type: MagazineVisuals
     magState: mag
     steps: 4
     zeroVisible: true
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
   - type: Gun
     minAngle: 20
     maxAngle: 35

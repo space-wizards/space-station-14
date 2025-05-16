@@ -36,6 +36,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Flash.Components;
 
 namespace Content.Server.Vampire;
 

@@ -34,6 +34,8 @@
         type: NavMapBeaconBoundUserInterface
   - type: Item
     size: Small
+  - type: Visibility
+    layer: 1
   - type: SubFloorHide
   - type: Anchorable
   - type: Construction

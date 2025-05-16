@@ -44,6 +44,9 @@
       tags:
         - GasVent
         - Unstackable
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
@@ -77,7 +80,11 @@
         path: /Audio/Ambience/Objects/gas_vent.ogg
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
-      
+    - type: GuideHelp
+      guides:
+      - AirVent
+      - DeviceMonitoringAndControl
+
 - type: entity
   parent: GasUnaryBase
   id: GasPassiveVent
@@ -86,6 +93,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
@@ -103,7 +113,10 @@
       node: passivevent
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
-      
+    - type: GuideHelp
+      guides:
+      - PassiveVent
+
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
   id: GasVentScrubber
@@ -128,6 +141,9 @@
       tags:
         - GasScrubber
         - Unstackable
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/scrubber.rsi
@@ -161,7 +177,11 @@
         path: /Audio/Ambience/Objects/gas_vent.ogg
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentScrubber
-      
+    - type: GuideHelp
+      guides:
+      - AirScrubber
+      - DeviceMonitoringAndControl
+
 - type: entity
   parent: GasUnaryBase
   id: GasOutletInjector
@@ -210,6 +230,9 @@
     - type: ContainerContainer
       containers:
         VentCrawTube: !type:Container
+    - type: GuideHelp
+      guides:
+      - AirInjector
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
@@ -256,7 +279,10 @@
     - type: PowerSwitch
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: Thermoregulator
-      
+    - type: GuideHelp
+      guides:
+      - Thermomachines
+
 - type: entity
   parent: BaseGasThermoMachine
   id: GasThermoMachineFreezer
@@ -463,3 +489,6 @@
   - type: PowerSwitch
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: Thermoregulator
+  - type: GuideHelp
+    guides:
+    - GasCondensing

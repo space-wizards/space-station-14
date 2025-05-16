@@ -22,3 +22,9 @@
   copyright: '"forcewall.ogg", "knock.ogg", "blink.ogg", "ethereal_enter.ogg", and "ethereal_exit.ogg" by Citadel Station 13'
   license: CC-BY-SA-3.0
   source: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/35a1723e98a60f375df590ca572cc90f1bb80bd5
+
+- files:
+  - voidblink.ogg
+  copyright: '"voidblink.ogg" by Citadel Station 13'
+  license: CC-BY-SA-3.0
+  source: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/e145bdafe83e2cf38d148c39f073da5e7b0cb456

@@ -3,7 +3,8 @@
 - type: latheRecipe
   abstract: true
   id: BaseWeaponRecipe
-  category: Weapons
+  categories:
+  - Weapons
   completetime: 2
   materials:
     Steel: 300
@@ -18,7 +19,8 @@
 - type: latheRecipe
   abstract: true
   id: BaseAmmoRecipe
-  category: Ammo
+  categories:
+  - Ammo
   completetime: 5
 
 - type: latheRecipe
@@ -194,119 +196,6 @@
   result: TargetSyndicate
 
 - type: latheRecipe
-  parent: BaseEmptyAmmoRecipe
-  id: MagazinePistolSubMachineGunEmpty
-  result: MagazinePistolSubMachineGunEmpty
-  materials:
-    Steel: 30
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: MagazinePistolSubMachineGunSP
-  result: MagazinePistolSubMachineGunSP
-  materials:
-    Steel: 300
-
-- type: latheRecipe
-  parent: BaseEmptyAmmoRecipe
-  id: MagazinePistolSubMachineGunTopMountedEmpty
-  result: MagazinePistolSubMachineGunTopMountedEmpty
-  materials:
-    Steel: 30
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: MagazinePistolSubMachineGunTopMounted
-  result: MagazinePistolSubMachineGunTopMounted
-  materials:
-    Steel: 300
-
-
-
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: BoxLethalshot
-  result: BoxLethalshot
-  materials:
-    Steel: 320
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: BoxBeanbag
-  result: BoxBeanbag
-  materials:
-    Steel: 160
-    Plastic: 240
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: BoxShotgunSlug
-  result: BoxShotgunSlug
-  materials:
-    Steel: 240
-    Plastic: 160
-
-- type: latheRecipe
-  parent: BaseEmptyAmmoRecipe
-  id: MagazineShotgunEmpty
-  result: MagazineShotgunEmpty
-  materials:
-    Steel: 50
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: MagazineShotgun
-  result: MagazineShotgun
-  materials:
-    Steel: 240
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: MagazineShotgunBeanbag
-  result: MagazineShotgunBeanbag
-  materials:
-    Steel: 150
-    Plastic: 140
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: MagazineShotgunSlug
-  result: MagazineShotgunSlug
-  materials:
-    Steel: 190
-    Plastic: 100
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: MagazineShotgunIncendiary
-  result: MagazineShotgunIncendiary
-  materials:
-    Steel: 100
-    Plastic: 190
-
-
-
-
-
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: BoxShotgunFlare
-  result: BoxShotgunFlare
-  materials:
-    Steel: 80
-    Plastic: 80
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: BoxShotgunIncendiary
-  result: BoxShotgunIncendiary
-  materials:
-    Steel: 80
-    Plastic: 320
-
-- type: latheRecipe
   parent: BaseWeaponRecipe
   id: WeaponLaserCarbinePractice
   result: WeaponLaserCarbinePractice
@@ -325,21 +214,6 @@
     Steel: 500
     Glass: 100
     Plastic: 200
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: BoxShotgunPractice
-  result: BoxShotgunPractice
-  materials:
-    Steel: 80
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: BoxShotgunUranium
-  result: BoxShotgunUranium
-  materials:
-    Plastic: 320
-    Uranium: 240
 
 - type: latheRecipe
   parent: BaseWeaponRecipe
@@ -368,16 +242,6 @@
     Steel: 1000
     Glass: 500
     Plastic: 500
-
-- type: latheRecipe
-  id: EnergyDomeDirectionalTurtle
-  result: EnergyDomeDirectionalTurtle
-  completetime: 12
-  materials:
-    Steel: 1000
-    Plastic: 500
-    Gold: 250
-    Uranium: 50
      
 - type: latheRecipe
   id: MagazineGrenadeEmpty
@@ -424,105 +288,3 @@
     Plastic: 1000
     Plasma: 500
     Glass: 500
-
-# Mech Weapons
-- type: latheRecipe
-  id: WeaponMechCombatImmolationGun
-  result: WeaponMechCombatImmolationGun
-  category: MechWeapons
-  completetime: 10
-  materials:
-    Steel: 2800
-    Plastic: 1000
-    Plasma: 750
-    Glass: 500
-
-- type: latheRecipe
-  id: WeaponMechCombatSolarisLaser
-  result: WeaponMechCombatSolarisLaser
-  category: MechWeapons
-  completetime: 10
-  materials:
-    Steel: 1650
-    Plastic: 300
-    Plasma: 250
-    Glass: 200
-
-- type: latheRecipe
-  id: WeaponMechCombatFiredartLaser
-  result: WeaponMechCombatFiredartLaser
-  category: MechWeapons
-  completetime: 10
-  materials:
-    Steel: 1200
-    Plastic: 200
-    Plasma: 150
-    Glass: 50
-
-- type: latheRecipe
-  id: WeaponMechCombatUltraRifle
-  result: WeaponMechCombatUltraRifle
-  category: MechWeapons
-  completetime: 10
-  materials:
-    Steel: 1000
-    Plastic: 200
-
-- type: latheRecipe
-  id: WeaponMechCombatShotgun
-  result: WeaponMechCombatShotgun
-  category: MechWeapons
-  completetime: 10
-  materials:
-    Steel: 1600
-    Plastic: 550
-
-- type: latheRecipe
-  id: WeaponMechCombatShotgunIncendiary
-  result: WeaponMechCombatShotgunIncendiary
-  category: MechWeapons
-  completetime: 10
-  materials:
-    Steel: 1500
-    Plastic: 800
-    Plasma: 300
-
-- type: latheRecipe
-  id: WeaponMechCombatDisabler
-  result: WeaponMechCombatDisabler
-  category: MechWeapons
-  completetime: 10
-  materials:
-    Steel: 750
-    Glass: 250
-    Plastic: 300
-
-- type: latheRecipe
-  id: WeaponMechCombatFlashbangLauncher
-  result: WeaponMechCombatFlashbangLauncher
-  category: MechWeapons
-  completetime: 10
-  materials:
-    Steel: 1200
-    Glass: 300
-    Plastic: 450
-
-- type: latheRecipe
-  id: WeaponMechCombatMissileRack8
-  result: WeaponMechCombatMissileRack8
-  category: MechWeapons
-  completetime: 10
-  materials:
-    Steel: 2500
-    Glass: 1500
-    Plastic: 750
-
-- type: latheRecipe
-  id: MechEquipmentKineticAccelerator
-  result: WeaponMechIndustrialKineticAccelerator
-  category: MechEquipment
-  completetime: 10
-  materials:
-    Steel: 1500
-    Glass: 750
-    Silver: 150

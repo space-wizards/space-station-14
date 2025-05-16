@@ -7,8 +7,7 @@
     issuer: objective-issuer-thief
   - type: RoleRequirement
     roles:
-      mindRoles:
-      - ThiefRole
+    - ThiefRole
 
 - type: entity
   abstract: true
@@ -118,6 +117,20 @@
     stealGroup: TechnologyDisk
     minCollectionSize: 5
     maxCollectionSize: 15
+    verifyMapExistence: false
+  - type: Objective
+    difficulty: 0.8
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: MailStealCollectionObjective
+  components:
+  - type: NotJobRequirement
+    job: CargoTechnician
+  - type: StealCondition
+    stealGroup: Mail
+    minCollectionSize: 4
+    maxCollectionSize: 8
     verifyMapExistence: false
   - type: Objective
     difficulty: 0.8

@@ -19,3 +19,14 @@
     sprite: _Starlight/Clothing/Head/Hats/blueshield.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Head/Hats/blueshield.rsi
+
+- type: entity
+  parent: [ClothingHeadBase, BaseSecurityContraband]
+  id: ClothingHeadHatBeretCorpsman
+  name: Corpsman's Beret
+  description: Losing this hat is considered grounds for demotion.. Kidding, though you will be ridiculed by your fellow corpsmans.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/beret_corpsman.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/beret_corpsman.rsi

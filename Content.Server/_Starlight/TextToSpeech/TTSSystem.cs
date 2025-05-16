@@ -50,6 +50,7 @@ public sealed partial class TTSSystem : EntitySystem
         SubscribeLocalEvent<TransformSpeechEvent>(OnTransformSpeech);
         SubscribeLocalEvent<TextToSpeechComponent, EntitySpokeEvent>(OnEntitySpoke);
         SubscribeLocalEvent<RadioSpokeEvent>(OnRadioReceiveEvent);
+        SubscribeLocalEvent<CollectiveMindSpokeEvent>(OnCollectiveMindReceiveEvent);
         SubscribeLocalEvent<AnnouncementSpokeEvent>(OnAnnouncementSpoke);
     }
 
@@ -90,6 +91,24 @@ public sealed partial class TTSSystem : EntitySystem
         {
             var voice = _prototypeManager.TryIndex(voiceId, out VoicePrototype? proto) ? proto.Voice : 1;
             HandleRadio(args.Receivers, args.Message, voice);
+        }
+    }
+
+    private void OnCollectiveMindReceiveEvent(CollectiveMindSpokeEvent args)
+    {
+        if (!_isEnabled
+            || args.Message.Length > MaxChars)
+            return;
+
+        if (!TryComp(args.Source, out TextToSpeechComponent? senderComponent)
+            || senderComponent.VoicePrototypeId is not string voiceId)
+        {
+            HandleCollectiveMind(args.Receivers, args.Message, 92);
+        }
+        else
+        {
+            var voice = _prototypeManager.TryIndex(voiceId, out VoicePrototype? proto) ? proto.Voice : 1;
+            HandleCollectiveMind(args.Receivers, args.Message, voice);
         }
     }
 
@@ -230,6 +249,15 @@ public sealed partial class TTSSystem : EntitySystem
     }
 
     private async void HandleRadio(EntityUid[] uIds, string message, int voice)
+    {
+        var soundData = await GenerateTTS(message, voice, isRadio: true);
+        if (soundData is null)
+            return;
+
+        RaiseNetworkEvent(new PlayTTSEvent { IsRadio = true, Data = soundData }, Filter.Entities(uIds).RemovePlayers(_ignoredRecipients));
+    }
+
+    private async void HandleCollectiveMind(EntityUid[] uIds, string message, int voice)
     {
         var soundData = await GenerateTTS(message, voice, isRadio: true);
         if (soundData is null)

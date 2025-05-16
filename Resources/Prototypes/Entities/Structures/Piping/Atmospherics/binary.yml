@@ -39,6 +39,9 @@
   - type: Rotatable
   - type: Transform
     noRot: false
+  - type: SubFloorHide
+    visibleLayers:
+    - enum.SubfloorLayers.FirstLayer
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
@@ -81,6 +84,9 @@
   - type: ContainerContainer
     containers:
       VentCrawTube: !type:Container
+  - type: GuideHelp
+    guides:
+    - Pumps
 
 - type: entity
   parent: GasBinaryBase
@@ -98,6 +104,9 @@
     - type: Rotatable
     - type: Transform
       noRot: false
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
@@ -146,6 +155,9 @@
     - type: ContainerContainer
       containers:
         VentCrawTube: !type:Container
+    - type: GuideHelp
+      guides:
+      - Pumps
 
 - type: entity
   parent: GasBinaryBase
@@ -155,6 +167,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
@@ -183,6 +198,9 @@
     - type: ContainerContainer
       containers:
         VentCrawTube: !type:Container
+    - type: GuideHelp
+      guides:
+      - PassiveGate
 
 - type: entity
   parent: GasBinaryBase
@@ -193,6 +211,9 @@
     mode: SnapgridCenter
   components:
     # TODO ATMOS: Give unique sprite.
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
@@ -239,6 +260,9 @@
     - type: ContainerContainer
       containers:
         VentCrawTube: !type:Container
+    - type: GuideHelp
+      guides:
+      - ManualValve
 
 - type: entity
   parent: GasBinaryBase
@@ -249,6 +273,9 @@
     mode: SnapgridCenter
   components:
   - type: StationAiWhitelist
+  - type: SubFloorHide
+    visibleLayers:
+    - enum.SubfloorLayers.FirstLayer
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
@@ -306,6 +333,9 @@
   - type: ContainerContainer
     containers:
       VentCrawTube: !type:Container
+  - type: GuideHelp
+    guides:
+    - SignalValve
 
 - type: entity
   parent: GasBinaryBase
@@ -315,6 +345,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
       layers:
@@ -345,6 +378,9 @@
     - type: ContainerContainer
       containers:
         VentCrawTube: !type:Container
+    - type: GuideHelp
+      guides:
+      - GasCanisters
 
 - type: entity
   parent: GasVentPump
@@ -354,6 +390,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
@@ -403,7 +442,10 @@
       enabled: true
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
-      
+    - type: GuideHelp
+      guides:
+      - AirVent
+
 - type: entity
   parent: [ BaseMachine, ConstructibleMachine ]
   id: GasRecycler
@@ -467,7 +509,7 @@
     board: GasRecyclerMachineCircuitboard
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasValve
-    
+
 - type: entity
   parent: GasBinaryBase
   id: HeatExchanger
@@ -509,12 +551,18 @@
     node: radiator
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: Thermoregulator
+  - type: GuideHelp
+    guides:
+    - Radiators
 
 - type: entity
   parent: HeatExchanger
   id: HeatExchangerBend
   suffix: Bend
   components:
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       layers:
       - sprite: Structures/Piping/Atmospherics/pipe.rsi

@@ -1,0 +1,52 @@
+
+- type: entity
+  name: WizCoin
+  parent: [BaseItem, BaseMagicalContraband]
+  id: WizCoin
+  suffix: 20 WC
+  description: It seems to be pulsing with magical energy.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/wizcoin.rsi
+    state: wizcoin
+  - type: Item
+    sprite: _Starlight/Objects/Specific/wizcoin.rsi
+    size: Tiny
+  - type: Stack
+    count: 20
+    stackType: WizCoin
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      WizCoin: 1
+  - type: PointLight
+    energy: 10
+    radius: 1.1
+    color: "#FFC0CBFF"
+
+- type: entity
+  parent: WizCoin
+  id: WizCoin1
+  suffix: 1 WC
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: WizCoin
+  id: WizCoin5
+  suffix: 5 WC
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent: WizCoin
+  id: WizCoin10
+  suffix: 10 WC
+  components:
+  - type: Stack
+    count: 10

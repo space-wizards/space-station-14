@@ -1,0 +1,67 @@
+- type: entity
+  parent: BaseStructureDynamic
+  id: BaseStructureFlatpack
+  name: base structure flatpack
+  description: A flatpack used for constructing something.
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: Animateable
+  - type: Transform
+    noRot: true
+  - type: Icon
+    sprite: Structures/Storage/Crates/generic.rsi
+    state: base
+  - type: Sprite
+    sprite: Objects/Devices/flatpack.rsi
+    layers:
+    - state: base
+    - state: overlay
+      color: "#cec8ac"
+      map: ["enum.FlatpackVisualLayers.Overlay"]
+    - state: icon-default
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.29"
+        density: 50
+        mask:
+        - CrateMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer
+  - type: Appearance
+  - type: Flatpack
+    boardColors:
+      command: "#334E6D"
+      medical: "#52B4E9"
+      service: "#9FED58"
+      engineering: "#EFB341"
+      security: "#DE3A3A"
+      science: "#D381C9"
+      supply: "#A46106"
+      cpu_command: "#334E6D"
+      cpu_medical: "#52B4E9"
+      cpu_service: "#9FED58"
+      cpu_engineering: "#EFB341"
+      cpu_security: "#DE3A3A"
+      cpu_science: "#D381C9"
+      cpu_supply: "#A46106"
+  - type: StaticPrice
+    price: 250
+
+- type: entity
+  parent: [BaseStructureFlatpack, BaseEngineeringContraband]
+  id: SupermatterFlatpack
+  name: supermatter flatpack
+  description: A flatpack used for constructing a Supermatter Crystal.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/flatpack.rsi
+    layers:
+    - state: large
+  - type: Flatpack
+    entity: SupermatterCrystal

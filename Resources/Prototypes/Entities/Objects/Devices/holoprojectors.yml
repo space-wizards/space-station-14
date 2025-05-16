@@ -54,7 +54,7 @@
   parent: Holoprojector
   id: HolofanProjector
   name: holofan projector
-  description: Stop suicidal passengers from killing everyone during atmos emergencies.
+  description: Stop suicidal assistants from killing everyone during atmos emergencies.
   components:
   - type: HolosignProjector
     signProto: HoloFan
@@ -67,6 +67,11 @@
       - HolofanProjector
   - type: StaticPrice
     price: 80
+  - type: GuideHelp
+    guides:
+    - AtmosTools
+    - Fires
+    - Spacing
 
 - type: entity
   parent: HolofanProjector

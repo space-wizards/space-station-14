@@ -5,7 +5,7 @@ reagent-name-dylovene = dylovene
 reagent-desc-dylovene = A broad-spectrum anti-toxin, which treats toxin damage in organisms. Overdosing will cause vomiting, dizzyness and pain.
 
 reagent-name-diphenhydramine = diphenhydramine
-reagent-desc-diphenhydramine = Rapidly purges the body of histamine, reduces jitteriness, and treats poison damage.
+reagent-desc-diphenhydramine = Rapidly purges the body of histamine, reduces jitteriness, causes drowsiness, and treats poison damage. Often included in sleep medication.
 
 reagent-name-arithrazine = arithrazine
 reagent-desc-arithrazine = A mildly unstable medication used for the most extreme case of radiation poisoning. Exerts minor stress on the body.
@@ -17,7 +17,7 @@ reagent-name-cryoxadone = cryoxadone
 reagent-desc-cryoxadone = Required for the proper function of cryogenics. Heals all standard types of damage, but only works in temperatures under 213K. It can treat and rejuvenate plants when applied in small doses.
 
 reagent-name-doxarubixadone = doxarubixadone
-reagent-desc-doxarubixadone = A cryogenics chemical. Heals certain types of cellular damage done by Slimes and improper use of other chemicals.
+reagent-desc-doxarubixadone = A cryogenics chemical. Heals cellular damage caused by dangerous gasses and chemicals.
 
 reagent-name-dermaline = dermaline
 reagent-desc-dermaline = An advanced chemical that is more effective at treating burn damage than kelotane.

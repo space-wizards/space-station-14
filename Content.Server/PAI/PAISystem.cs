@@ -1,14 +1,15 @@
-using Content.Server.Ghost.Roles;
+// Starlight-edit: alphabetized
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Ghost.Roles;
 using Content.Server.Instruments;
-using Content.Server.Kitchen.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.PAI;
 using Content.Shared.Popups;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using System.Text;
-using Robust.Shared.Player;
 
 namespace Content.Server.PAI;
 
@@ -37,6 +38,8 @@ public sealed class PAISystem : SharedPAISystem
 
     private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)
     {
+        // Not checking for Handled because ToggleableGhostRoleSystem already marks it as such.
+
         if (!TryComp<MindContainerComponent>(uid, out var mind) || !mind.HasMind)
             component.LastUser = args.User;
     }

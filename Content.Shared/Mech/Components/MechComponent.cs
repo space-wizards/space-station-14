@@ -1,5 +1,6 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -19,6 +20,41 @@ public sealed partial class MechComponent : Component
     [DataField("breakOnEmag")]
     [AutoNetworkedField]
     public bool BreakOnEmag = true;
+    
+    /// <summary>
+    /// is the mech in maintenance mode?
+    /// </summary>
+    [DataField("maintenance")]
+    [AutoNetworkedField]
+    public bool MaintenanceMode = false;
+    
+    /// <summary>
+    /// is the mech internals enabled?
+    /// </summary>
+    [DataField("internals")]
+    [AutoNetworkedField]
+    public bool Internals = false;
+    
+    /// <summary>
+    /// is the mech lights are toggled?
+    /// </summary>
+    [DataField("light")]
+    [AutoNetworkedField]
+    public bool Light = false;
+    
+    /// <summary>
+    /// is the mech siren are toggled?
+    /// </summary>
+    [DataField("sirenToggled")]
+    [AutoNetworkedField]
+    public bool Siren = false;
+    
+    /// <summary>
+    /// is the mech has siren?
+    /// </summary>
+    [DataField("siren")]
+    [AutoNetworkedField]
+    public bool SirenAvailable = false;
 
     /// <summary>
     /// How much "health" the mech has left.
@@ -54,6 +90,15 @@ public sealed partial class MechComponent : Component
 
     [ViewVariables]
     public readonly string BatterySlotId = "mech-battery-slot";
+    
+    /// <summary>
+    /// The slot the gas tank is stored in.
+    /// </summary>
+    [ViewVariables]
+    public ContainerSlot GasTankSlot = default!;
+
+    [ViewVariables]
+    public readonly string GasTankSlotId = "mech-gas-tank-slot";
 
     /// <summary>
     /// A multiplier used to calculate how much of the damage done to a mech
@@ -151,6 +196,14 @@ public sealed partial class MechComponent : Component
     public EntProtoId MechUiAction = "ActionMechOpenUI";
     [DataField]
     public EntProtoId MechEjectAction = "ActionMechEject";
+    [DataField]
+    public EntProtoId MechToggleLightAction = "ActionMechToggleLights";
+    [DataField]
+    public EntProtoId MechToggleInternalsAction = "ActionMechToggleInternals";
+    [DataField]
+    public EntProtoId MechToggleSirenAction = "ActionMechToggleSirens";
+    [DataField]
+    public EntProtoId MechToggleThrustersAction = "ActionMechToggleThrusters";
     #endregion
 
     #region Visualizer States
@@ -161,8 +214,33 @@ public sealed partial class MechComponent : Component
     [DataField]
     public string? BrokenState;
     #endregion
+    
+    #region Sounds
+    [DataField]
+    public SoundSpecifier ToggleLightSound = new SoundPathSpecifier("/Audio/Items/flashlight_pda.ogg");
+    [DataField]
+    public SoundSpecifier LowPowerSound = new SoundPathSpecifier("/Audio/Mecha/lowpower.ogg");
+    [DataField]
+    public SoundSpecifier NominalSound = new SoundPathSpecifier("/Audio/Mecha/nominal.ogg");
+    [DataField]
+    public SoundSpecifier NominalLongSound = new SoundPathSpecifier("/Audio/Mecha/longnanoactivation.ogg");
+    [DataField]
+    public SoundSpecifier PowerupSound = new SoundPathSpecifier("/Audio/Mecha/powerup.ogg");
+    [DataField]
+    public SoundSpecifier CriticalDamageSound = new SoundPathSpecifier("/Audio/Mecha/critnano.ogg");
+    
+    [DataField]
+    public bool FirstStart = false;
+    
+    [DataField]
+    public bool PlayPowerSound = true;
+    #endregion
 
     [DataField] public EntityUid? MechCycleActionEntity;
     [DataField] public EntityUid? MechUiActionEntity;
     [DataField] public EntityUid? MechEjectActionEntity;
+    [DataField] public EntityUid? MechToggleLightActionEntity;
+    [DataField] public EntityUid? MechToggleInternalsActionEntity;
+    [DataField] public EntityUid? MechToggleSirenActionEntity;
+    [DataField] public EntityUid? MechToggleThrustersActionEntity;
 }

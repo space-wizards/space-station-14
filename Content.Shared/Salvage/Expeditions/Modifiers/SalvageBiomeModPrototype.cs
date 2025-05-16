@@ -9,10 +9,10 @@ namespace Content.Shared.Salvage.Expeditions.Modifiers;
 /// <summary>
 /// Affects the biome to be used for salvage.
 /// </summary>
-[Prototype("salvageBiomeMod")]
+[Prototype]
 public sealed partial class SalvageBiomeModPrototype : IPrototype, ISalvageMod
 {
-    [IdDataField] public string ID { get; } = default!;
+    [IdDataField] public string ID { get; private set; } = default!;
 
     [DataField("desc")] public LocId Description { get; private set; } = string.Empty;
 

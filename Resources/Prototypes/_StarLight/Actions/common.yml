@@ -1,0 +1,35 @@
+- type: entity
+  id: ActionToggleCyberLimb
+  name: Toggle Limb
+  description: Toggle Limb.
+  components:
+  - type: InstantAction
+    itemIconStyle: BigItem
+    useDelay: 1 
+    event: !type:ToggleLimbEvent
+
+- type: entity
+  id: ActionToggleCyberHandLeft
+  name: Toggle Hand.
+  description: Toggle the left hand
+  components:
+  - type: InstantAction
+    itemIconStyle: BigItem
+    useDelay: 1 
+    icon:
+      sprite: _Starlight/Interface/Actions/actions_cyber.rsi
+      state: cyber-hand-left
+    event: !type:ToggleLimbEvent
+
+- type: entity
+  id: ActionToggleCyberHandRight
+  name: Toggle Hand.
+  description: Toggle the right hand
+  components:
+  - type: InstantAction
+    itemIconStyle: BigItem
+    useDelay: 1 
+    icon:
+      sprite: _Starlight/Interface/Actions/actions_cyber.rsi
+      state: cyber-hand-right
+    event: !type:ToggleLimbEvent

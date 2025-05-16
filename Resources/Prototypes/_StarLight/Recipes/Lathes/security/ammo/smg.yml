@@ -1,0 +1,65 @@
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazinePistolSubMachineGunEmpty
+  result: MagazinePistolSubMachineGunEmpty
+  materials:
+    Steel: 30
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunSP
+  result: MagazinePistolSubMachineGunSP
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazinePistolSubMachineGunHP
+  result: MagazinePistolSubMachineGunHP
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunFMJ
+  result: MagazinePistolSubMachineGunFMJ
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazinePistolSubMachineGunIncendiary
+  result: MagazinePistolSubMachineGunIncendiary
+  materials:
+    Plastic: 310
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunUranium
+  result: MagazinePistolSubMachineGunUranium
+  materials:
+    Plastic: 160
+    Uranium: 310
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunAP
+  result: MagazinePistolSubMachineGunAP
+  materials:
+    Plastic: 150
+    Steel: 150
+    Uranium: 300
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazinePistolSubMachineGunTopMountedEmpty
+  result: MagazinePistolSubMachineGunTopMountedEmpty
+  materials:
+    Steel: 30
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunTopMounted
+  result: MagazinePistolSubMachineGunTopMounted
+  materials:
+    Steel: 300

@@ -30,6 +30,11 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.Power;
+using System.Linq;
+using Content.Shared.Ghost;
+using Content.Shared.Inventory;
+using Robust.Server.Containers;
+using Content.Server.Storage.EntitySystems;
 
 namespace Content.Server.Fax;
 
@@ -50,6 +55,12 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly FaxecuteSystem _faxecute = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
+    //starlight
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly EntityStorageSystem _storage = default!;
+    //end
 
     private const string PaperSlotId = "Paper";
 
@@ -227,7 +238,7 @@ public sealed class FaxSystem : EntitySystem
                 return;
             }
 
-            if (component.KnownFaxes.ContainsValue(newName) && !HasComp<EmaggedComponent>(uid)) // Allow existing names if emagged for fun
+            if (component.KnownFaxes.ContainsValue(newName) && !_emag.CheckFlag(uid, EmagType.Interaction)) // Allow existing names if emagged for fun
             {
                 _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-exist"), uid);
                 return;
@@ -246,7 +257,12 @@ public sealed class FaxSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, FaxMachineComponent component, ref GotEmaggedEvent args)
     {
-        _audioSystem.PlayPvs(component.EmagSound, uid);
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
         args.Handled = true;
     }
 
@@ -260,7 +276,7 @@ public sealed class FaxSystem : EntitySystem
             switch (command)
             {
                 case FaxConstants.FaxPingCommand:
-                    var isForSyndie = HasComp<EmaggedComponent>(uid) &&
+                    var isForSyndie = _emag.CheckFlag(uid, EmagType.Interaction) &&
                                       args.Data.ContainsKey(FaxConstants.FaxSyndicateData);
                     if (!isForSyndie && !component.ResponsePings)
                         return;
@@ -405,7 +421,7 @@ public sealed class FaxSystem : EntitySystem
             { DeviceNetworkConstants.Command, FaxConstants.FaxPingCommand }
         };
 
-        if (HasComp<EmaggedComponent>(uid))
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
             payload.Add(FaxConstants.FaxSyndicateData, true);
 
         _deviceNetworkSystem.QueuePacket(uid, null, payload);
@@ -443,6 +459,9 @@ public sealed class FaxSystem : EntitySystem
     public void Copy(EntityUid uid, FaxMachineComponent? component, FaxCopyMessage args)
     {
         if (!Resolve(uid, ref component))
+            return;
+
+        if (component.SendTimeoutRemaining > 0)
             return;
 
         var sendEntity = component.PaperSlot.Item;
@@ -487,6 +506,9 @@ public sealed class FaxSystem : EntitySystem
     public void Send(EntityUid uid, FaxMachineComponent? component, FaxSendMessage args)
     {
         if (!Resolve(uid, ref component))
+            return;
+
+        if (component.SendTimeoutRemaining > 0)
             return;
 
         var sendEntity = component.PaperSlot.Item;
@@ -564,7 +586,7 @@ public sealed class FaxSystem : EntitySystem
         _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
 
         if (component.NotifyAdmins)
-            NotifyAdmins(faxName);
+            NotifyAdmins(faxName, printout); // Starlight edit
 
         component.PrintingQueue.Enqueue(printout);
     }
@@ -605,9 +627,61 @@ public sealed class FaxSystem : EntitySystem
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {ToPrettyString(uid):tool} printed {ToPrettyString(printed):subject}: {printout.Content}");
     }
 
-    private void NotifyAdmins(string faxName)
+    private void NotifyAdmins(string faxName, FaxPrintout printout)
     {
         _chat.SendAdminAnnouncement(Loc.GetString("fax-machine-chat-notify", ("fax", faxName)));
         _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
+
+        //starlight start
+        //get all admins that are attached to a ghost
+        var clients = _adminManager.ActiveAdmins;
+
+        //get their ghost entities
+        foreach (var client in clients)
+        {
+            //check if attached
+            if (client.AttachedEntity == null)
+                continue;
+            
+            //check if they are a ghost
+            if (!TryComp<GhostComponent>(client.AttachedEntity.Value, out var ghostComp))
+                continue;
+
+            Logger.Info($"Admin {client.Name} is a ghost, sending fax to them.");
+
+            //get their inventory
+            if (_inventory.TryGetSlotEntity(client.AttachedEntity.Value, "back", out var worn))
+            {
+                Logger.Info($"Admin {client.Name} has a back slot, sending fax to them.");
+                //generate the entity
+                var entityToSpawn = printout.PrototypeId;
+                if (EntityManager.TrySpawnInContainer(entityToSpawn, worn.Value, "storagebase", out var printed))
+                {
+                    if (TryComp<PaperComponent>(printed.Value, out var paper))
+                    {
+                        _paperSystem.SetContent((printed.Value, paper), printout.Content);
+
+                        // Apply stamps
+                        if (printout.StampState != null)
+                        {
+                            foreach (var stamp in printout.StampedBy)
+                            {
+                                _paperSystem.TryStamp((printed.Value, paper), stamp, printout.StampState);
+                            }
+                        }
+
+                        paper.EditingDisabled = printout.Locked;
+                    }
+
+                    _metaData.SetEntityName(printed.Value, printout.Name);
+
+                    if (printout.Label is { } label)
+                    {
+                        _labelSystem.Label(printed.Value, label);
+                    }
+                }
+            }
+        }
+        //starlight end
     }
 }

@@ -24,6 +24,12 @@
     },
     {
       "name": "obs"
+    },
+    {
+      "name": "surgeon"
+    },
+    {
+      "name": "mailtech"
     }
   ]
 }

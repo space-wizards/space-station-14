@@ -28,7 +28,7 @@
         - MidImpassable, LowImpassable, BulletImpassable
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
-    state: normal
+    state: solar_panel_glass
   - type: NodeContainer
     examinable: true
     nodes:
@@ -39,7 +39,7 @@
     group: Generator
     loadNode: output
     sprite: Structures/Power/Generation/solar_panel.rsi
-    state: static
+    state: solar_panel_glass
     collectionName: SolarPanel
   - type: Anchorable
   - type: Pullable
@@ -50,6 +50,77 @@
     requirePower: true
     highVoltageNode: output
   - type: RequireProjectileTarget
+  - type: GuideHelp
+    guides:
+    - SolarPanels
+
+- type: entity
+  id: SolarPanelPlasma
+  parent: SolarPanelBasePhysSprite
+  name: solar panel plasma
+  description: A plasma solar panel that generates power.
+  components:
+  - type: PowerSupplier
+    supplyRampTolerance: 500
+    supplyRampRate: 500
+  - type: SolarPanel
+    maxSupply: 1000
+  - type: Sprite
+    sprite: Structures/Power/Generation/solar_panel.rsi
+    state: solar_panel_plasma
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: solarpanelplasma_broken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Construction
+    graph: SolarPanel
+    node: solarpanelplasma
+
+- type: entity
+  id: SolarPanelUranium
+  parent: SolarPanelBasePhysSprite
+  name: solar panel uranium
+  description: A uranium solar panel that generates power.
+  components:
+  - type: PowerSupplier
+    supplyRampTolerance: 500
+    supplyRampRate: 500
+  - type: SolarPanel
+    maxSupply: 1500
+  - type: Sprite
+    sprite: Structures/Power/Generation/solar_panel.rsi
+    state: solar_panel_uranium
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: solarpaneluranium_broken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Construction
+    graph: SolarPanel
+    node: solarpaneluranium
 
 - type: entity
   id: SolarPanel
@@ -89,7 +160,7 @@
   suffix: Broken
   components:
   - type: Sprite
-    state: broken
+    state: solar_panel_glass_broken
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
@@ -112,6 +183,70 @@
   - type: Construction
     graph: SolarPanel
     node: solarpanel_broken
+
+- type: entity
+  id: SolarPanelPlasmaBroken
+  parent: SolarPanelBasePhysSprite
+  name: plasma solar panel
+  description: A broken plasma solar panel.
+  suffix: Broken
+  components:
+  - type: Sprite
+    state: solar_panel_plasma_broken
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassPlasma:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: SolarPanel
+    node: solarpanelplasma_broken
+
+- type: entity
+  id: SolarPanelUraniumBroken
+  parent: SolarPanelBasePhysSprite
+  name: uranium solar panel
+  description: A broken uranium solar panel.
+  suffix: Broken
+  components:
+  - type: Sprite
+    state: solar_panel_uranium_broken
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassUranium:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: SolarPanel
+    node: solarpaneluranium_broken
 
 - type: entity
   id: SolarAssembly
@@ -159,6 +294,9 @@
     node: solarassembly
     defaultTarget: solarpanel
   - type: RequireProjectileTarget
+  - type: GuideHelp
+    guides:
+    - SolarPanels
 
 - type: entity
   id: SolarTracker
@@ -204,3 +342,6 @@
     graph: SolarPanel
     node: solartracker
   - type: RequireProjectileTarget
+  - type: GuideHelp
+    guides:
+    - SolarPanels

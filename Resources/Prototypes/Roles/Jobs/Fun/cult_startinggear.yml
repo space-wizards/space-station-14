@@ -8,7 +8,7 @@
     neck: BedsheetCult
     outerClothing: ClothingOuterArmorCult
     shoes: ClothingShoesCult
-    id: PassengerPDA
+    id: AssistantPDA
     ears: ClothingHeadsetService
   storage:
     back:
@@ -22,7 +22,7 @@
     head: ClothingHeadHatHoodCulthood
     outerClothing: ClothingOuterRobesCult
     shoes: ClothingShoesColorRed
-    id: PassengerPDA
+    id: AssistantPDA
     ears: ClothingHeadsetService
   storage:
     back:

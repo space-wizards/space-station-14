@@ -5,8 +5,10 @@
   color: "#A46106"
   roles:
   - CargoTechnician
+  - MailTech
   - Quartermaster
   - SalvageSpecialist
+  - MiningSpecialist
 
 - type: department
   id: Civilian
@@ -26,7 +28,7 @@
   - Librarian
   - Mime
   - Musician
-  - Passenger
+  - Assistant
   - Reporter
   - Visitor
   - Zookeeper
@@ -100,6 +102,7 @@
   - MedicalIntern
   - Psychologist
   - Paramedic
+  - Surgeon # Starlight-edit
 
 - type: department
   id: Security

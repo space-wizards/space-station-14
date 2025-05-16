@@ -165,7 +165,7 @@ public sealed class SolutionTransferSystem : EntitySystem
         Entity<SolutionComponent> target,
         FixedPoint2 amount)
     {
-        var transferAttempt = new SolutionTransferAttemptEvent(sourceEntity, targetEntity);
+        var transferAttempt = new SolutionTransferAttemptEvent(sourceEntity, targetEntity, source);
 
         // Check if the source is cancelling the transfer
         RaiseLocalEvent(sourceEntity, ref transferAttempt);
@@ -218,7 +218,7 @@ public sealed class SolutionTransferSystem : EntitySystem
 /// To not mispredict this should always be cancelled in shared code and not server or client.
 /// </summary>
 [ByRefEvent]
-public record struct SolutionTransferAttemptEvent(EntityUid From, EntityUid To, string? CancelReason = null)
+public record struct SolutionTransferAttemptEvent(EntityUid From, EntityUid To, Entity<SolutionComponent> SolutionEntity, string? CancelReason = null)
 {
     /// <summary>
     /// Cancels the transfer.

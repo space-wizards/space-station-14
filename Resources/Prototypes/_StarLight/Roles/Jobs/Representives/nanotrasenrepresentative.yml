@@ -11,6 +11,7 @@
       flags:
       - Staff
       - Mentor
+      - ExtRoles
       - Retiree
   startingGear: NanoTrasenRepresentativeGear
   icon: JobIconNanotrasen
@@ -52,7 +53,6 @@
   id: NanoTrasenRepresentativeGear
   equipment:
     shoes: ClothingShoesBootsLaceup
-    eyes: ClothingEyesSunGlassesHudSkill
     head: ClothingHeadHatCapNtrep
     id: NanoTrasenRepresentativePDA
     ears: ClothingHeadsetAltCommand

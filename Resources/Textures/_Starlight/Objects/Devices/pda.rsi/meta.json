@@ -37,6 +37,12 @@
     },
     {
       "name": "pda-blueshield"
+    },
+    {
+      "name": "pda-mining"
+    },
+    {
+      "name": "pda-mailtech"
     }
   ]
 }

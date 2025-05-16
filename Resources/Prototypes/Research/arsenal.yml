@@ -13,6 +13,8 @@
   - WeaponProtoKineticAccelerator
   - ShuttleGunKineticCircuitboard
   - MechEquipmentKineticAccelerator
+  radioChannels:
+  - Supply
   # These are roundstart but not replenishable for salvage
 
 - type: technology
@@ -28,6 +30,7 @@
   - BoxShotgunIncendiary
   - MagazineRifleIncendiary
   - MagazinePistolIncendiary
+  - MagazinePistolSubMachineGunIncendiary
   - MagazineLightRifleIncendiary
   - SpeedLoaderMagnumIncendiary
   - MagazineShotgunIncendiary
@@ -36,6 +39,10 @@
   - MagazineBoxLightRifleIncendiary
   - MagazineBoxRifleIncendiary
   - LightRifleHeavyMagazineIncendiary
+  - MagazinePistolSubMachineGunIncendiary
+  - SpeedLoaderShotgunIncendiary
+  radioChannels:
+  - Security
 
 - type: technology
   id: WeaponizedLaserManipulation
@@ -49,12 +56,14 @@
   recipeUnlocks:
   - WeaponLaserCarbine
   - WeaponMechCombatFiredartLaser
+  radioChannels:
+  - Security
 
 - type: technology
   id: NonlethalAmmunition
   name: research-technology-nonlethal-ammunition
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi
     state: beanbag
   discipline: Arsenal
   tier: 1
@@ -73,6 +82,8 @@
   - MagazineBoxMagnumRubber
   - MagazineBoxLightRifleRubber
   - MagazineBoxRifleRubber
+  radioChannels:
+  - Security
 
 - type: technology
   id: UraniumMunitions
@@ -86,6 +97,7 @@
   recipeUnlocks:
   - MagazineRifleUranium
   - MagazinePistolUranium
+  - MagazinePistolSubMachineGunUranium
   - MagazineLightRifleUranium
   - SpeedLoaderMagnumUranium
   - MagazineBoxPistolUranium
@@ -94,6 +106,10 @@
   - MagazineBoxRifleUranium
   - BoxShotgunUranium
   - LightRifleHeavyMagazineUranium
+  - MagazinePistolSubMachineGunUranium
+  - SpeedLoaderShotgunUranium
+  radioChannels:
+  - Security
 
 - type: technology
   id: AdvancedRiotControl
@@ -109,6 +125,8 @@
   - TelescopicShield
   - HoloprojectorSecurity
   - WeaponDisablerSMG
+  radioChannels:
+  - Security
 
 - type: technology
   id: ExplosiveTechnology
@@ -127,6 +145,8 @@
   - FlashPayload
   - ExplosivePayload
   - ChemicalPayload
+  radioChannels:
+  - Security
 
 - type: technology
   id: SpecialMeans
@@ -139,6 +159,8 @@
   cost: 5000
   recipeUnlocks:
   - ClothingBackpackElectropack
+  radioChannels:
+  - Security
 
 # Tier 2
 
@@ -155,6 +177,8 @@
   - WeaponLaserCannon
   - WeaponMechCombatSolarisLaser
   - WeaponLaserImmolator
+  radioChannels:
+  - Security
 
 - type: technology
   id: WaveParticleHarnessing
@@ -167,18 +191,8 @@
   cost: 10000
   recipeUnlocks:
   - WeaponXrayCannon
-
-- type: technology
-  id: EnergyBarriers
-  name: research-technology-energy_barriers
-  icon: 
-    sprite: Objects/Tools/EnergyDome/reinhardt.rsi
-    state: icon
-  discipline: Arsenal
-  tier: 2
-  cost: 6000
-  recipeUnlocks:
-  - EnergyDomeDirectionalTurtle
+  radioChannels:
+  - Security
   
 - type: technology
   id: BasicShuttleArmament
@@ -201,30 +215,8 @@
   - ShuttleGunFriendshipCircuitboard
   technologyPrerequisites:
   - SalvageWeapons
-
-- type: technology
-  id: Gygax
-  name: research-technology-gygax
-  icon:
-    sprite: Objects/Specific/Mech/mecha.rsi
-    state: gygax
-  discipline: Arsenal
-  tier: 2
-  cost: 12000
-  recipeUnlocks:
-  - GygaxHarness
-  - GygaxArmor
-  - GygaxHead
-  - GygaxLArm
-  - GygaxLLeg
-  - GygaxRArm
-  - GygaxRLeg
-  - GygaxCentralElectronics
-  - GygaxPeripheralsElectronics
-  - GygaxTargetingElectronics
-  - WeaponMechCombatUltraRifle
-  technologyPrerequisites:
-  - Ripley2
+  radioChannels:
+  - Security
 
 # Tier 3
 
@@ -241,20 +233,8 @@
   - WeaponAdvancedLaser
   - PortableRecharger
   - WeaponMechCombatImmolationGun
-
-- type: technology
-  id: ExplosiveMechAmmunition
-  name: research-technology-explosive-mech-ammunition
-  icon:
-    sprite: Objects/Specific/Mech/mecha_equipment.rsi
-    state: mecha_missilerack
-  discipline: Arsenal
-  tier: 3
-  cost: 15000
-  recipeUnlocks:
-  - WeaponMechCombatMissileRack8
-  technologyPrerequisites:
-  - ExplosiveTechnology
+  radioChannels:
+  - Security
 
 - type: technology
   id: ExperimentalBatteryAmmo
@@ -267,6 +247,8 @@
   cost: 15000
   recipeUnlocks:
   - WeaponLaserSvalinn
+  radioChannels:
+  - Security
 
 - type: technology
   id: AdvancedShuttleWeapon
@@ -283,28 +265,5 @@
   - ShuttleGunDusterCircuitboard
   technologyPrerequisites:
   - BasicShuttleArmament
-
-- type: technology
-  id: Durand
-  name: research-technology-durand
-  icon:
-    sprite: Objects/Specific/Mech/mecha.rsi
-    state: durand
-  discipline: Arsenal
-  tier: 3
-  cost: 16000
-  recipeUnlocks:
-  - DurandHarness
-  - DurandArmor
-  - DurandHead
-  - DurandLArm
-  - DurandLLeg
-  - DurandRArm
-  - DurandRLeg
-  - DurandCentralElectronics
-  - DurandPeripheralsElectronics
-  - DurandTargetingElectronics
-  - WeaponMechCombatShotgun
-  - WeaponMechCombatShotgunIncendiary
-  technologyPrerequisites:
-  - Gygax
+  radioChannels:
+  - Security

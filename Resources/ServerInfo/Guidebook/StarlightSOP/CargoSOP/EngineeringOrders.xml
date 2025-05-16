@@ -1,0 +1,26 @@
+<Document>
+
+    # Engineering Orders
+
+    Basic Materials
+    <Box>
+        <GuideEntityEmbed Entity="SheetSteel"/>
+        <GuideEntityEmbed Entity="SheetGlass"/>
+        <GuideEntityEmbed Entity="SheetPlastic"/>
+        <GuideEntityEmbed Entity="SheetPlasteel"/> 
+    </Box>
+
+    Cables
+    <Box>
+        <GuideEntityEmbed Entity="CableApcStack"/> 
+        <GuideEntityEmbed Entity="CableMVStack"/> 
+        <GuideEntityEmbed Entity="CableHVStack"/> 
+    </Box>
+
+    Other
+    <Box>
+        <GuideEntityEmbed Entity="VendingMachineRestockEngineering"/> 
+        <GuideEntityEmbed Entity="AmeJar"/> 
+    </Box>
+
+</Document>

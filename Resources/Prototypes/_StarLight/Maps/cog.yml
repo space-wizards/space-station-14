@@ -41,6 +41,7 @@
             MedicalIntern: [ 3, 3 ]
             Psychologist: [ 1, 1 ]
             Paramedic: [ 1, 1 ]
+            Surgeon: [ 2, 2 ]  
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 5, 5 ]
@@ -57,8 +58,10 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 4, 4 ]
+            MailTech: [ 1, 2 ]
+            MiningSpecialist: [ 3, 3 ]
             #civilian
-            Passenger: [ -1, -1 ]
+            Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]

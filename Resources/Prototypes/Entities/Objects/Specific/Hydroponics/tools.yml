@@ -120,7 +120,7 @@
   description: A bag for botanists to easily move their huge harvests.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
+    sprite: _Starlight/Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
     state: icon
   - type: Item
     storedRotation: -90

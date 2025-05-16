@@ -18,6 +18,12 @@ public sealed partial class FlatpackComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public ProtoId<ToolQualityPrototype> QualityNeeded = "Pulsing";
+    
+    /// <summary>
+    /// Is Flatpack allowed to unpuck on tables? (For microwaves, etc.)
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool AllowUnpackOnTables = false; // Starlight-edit
 
     /// <summary>
     /// The entity that is spawned when this object is unpacked.

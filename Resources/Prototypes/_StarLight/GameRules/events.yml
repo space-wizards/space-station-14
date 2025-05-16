@@ -9,7 +9,7 @@
     duration: 1
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/ShuttleEvent/abductor_shuttle.yml
+    gridPath: /Maps/_Starlight/Shuttles/ShuttleEvent/abductor_shuttle.yml
   - type: AntagObjectives
     objectives:
     - AbductObjective
@@ -76,7 +76,7 @@
   components:
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/Signaleer.yml
+    gridPath: /Maps/_Starlight/Shuttles/Signaleer.yml
     
 - type: entity
   parent: BaseGameRule
@@ -84,7 +84,7 @@
   components:
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/LancePirates.yml
+    gridPath: /Maps/_Starlight/Shuttles/LancePirates.yml
     
 - type: entity
   parent: BaseGameRule
@@ -92,4 +92,76 @@
   components:
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/_Starlight/Shuttles/VoxATS.yml
+    gridPath: /Maps/_Starlight/Shuttles/VoxATS.yml
+
+  #Pig's ERT Shuttle
+- type: entity
+  parent: BaseGameRule
+  id: ERTShuttleSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/ERTShuttle.yml
+
+    #Pig's DS Shuttle
+- type: entity
+  parent: BaseGameRule
+  id: DeathsquadShuttleSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/DSshuttle.yml
+    
+    #Pig's RadioTower
+- type: entity
+  parent: BaseGameRule
+  id: RadioTowerSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/Radiotower.yml
+
+      #Pig's CBURN Shuttle
+- type: entity
+  parent: BaseGameRule
+  id: CBURNShuttleSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/CBURN.yml
+
+# Karma's Quantum Ark Shuttles
+- type: entity
+  parent: BaseGameRule
+  id: QuantumArkDerelictEvent
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/quantum_ark_event.yml
+
+- type: entity
+  parent: BaseGameRule
+  id: QuantumArkSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/quantum_ark.yml
+
+# Karma's SS Ana
+- type: entity
+  parent: BaseGameRule
+  id: AnaSpawn
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      gridPath: /Maps/_Starlight/Shuttles/ss_ana.yml
+
+# vlorgan's Admeme Experimental botany shuttle
+- type: entity
+  parent: BaseGameRule
+  id: ExperimentalBotanyShuttle
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      gridPath: /Maps/_Starlight/Shuttles/NT-Experimental-Botany-shuttle.yml
+    

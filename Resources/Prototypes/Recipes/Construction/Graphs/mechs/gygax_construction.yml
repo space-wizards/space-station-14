@@ -138,6 +138,7 @@
 
       - tag: MechAirTank
         name: exosuit air tank
+        store: gas-tank-container
         icon:
           sprite: Objects/Specific/Mech/mecha_equipment.rsi
           state: mecha_air_tank
@@ -157,7 +158,7 @@
       - tag: GygaxArmor
         name: gygax armor plates
         icon:
-          sprite: "Objects/Specific/Mech/gygax_construction.rsi"
+          sprite: "Objects/Specific/Mech/Mechs/Basic/gygax.rsi"
           state: gygax_armor
         completed:
         - !type:VisualizerDataInt

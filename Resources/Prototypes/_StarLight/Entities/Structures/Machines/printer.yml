@@ -25,63 +25,11 @@
     producingSound: /Audio/Machines/scanning.ogg
     idleState: icon
     runningState: building
-    staticRecipes:
-# Reports
-      - PrintedDocumentReportStationRecipe
-      - PrintedDocumentReportOnEliminationOfViolationsRecipe
-      - PrintedDocumentReporDepartmentRecipe
-      - PrintedDocumentReportEmployeePerformanceRecipe
-      - PrintedDocumentReportOnTheChaptersMeetingRecipe
-      - PrintedDocumentInternalAffairsAgentsReportRecipe
-      - PrintedDocumentConditionReportRecipe
-      - PrintedDocumentObjectInvestigationReportRecipe
-      - PrintedDocumentExperimentReportRecipe
-      - PrintedDocumentDisposalReportRecipe
-# Statements
-      - PrintedDocumentStatementAppointmentInterimChapterRecipe
-      - PrintedDocumentEmploymentStatementRecipe
-      - PrintedDocumentResignationStatementRecipe
-      - PrintedDocumentAccessRequestStatementRecipe
-      - PrintedDocumentEquipmentRequestStatementRecipe
-# InquiriesAndAppeals
-      - PrintedDocumentInvocationRecipe
-      - PrintedDocumentEvacuationShuttleRequestRecipe
-      - PrintedDocumentShuttleRegistrationRequestRecipe
-      - PrintedDocumentRequestCallCentCommMembersRecipe
-      - PrintedDocumentRequestRequestEstablishThreatLevelRecipe
-      - PrintedDocumentRequestForNonlistedEmploymentRecipe
-      - PrintedDocumentRequestForPromotionRecipe
-      - PrintedDocumentRequestDocumentsRecipe
-      - PrintedDocumentRequestEuthanasiaRecipe
-      - PrintedDocumentRequestConstructionWorkRecipe
-      - PrintedDocumentRequestModernizationRecipe
-# Complaintst
-      - PrintedDocumentComplaintViolationLaborRulesRecipe
-      - PrintedDocumentComplaintOffenseRecipe
-# Permissions
-      - PrintedDocumentPermissionEquipmentRecipe
-      - PrintedDocumentPermissionToTravelInCaseOfThreatRecipe
-      - PrintedDocumentSearchPermissionRecipe
-      - PrintedDocumentPermissionToCarryWeaponsRecipe
-      - PrintedDocumentPrescriptionDrugAuthorizationRecipe
-      - PrintedDocumentPermissionDisposeBodyRecipe
-      - PrintedDocumentConstructionPermitRecipe
-# OrdersAndInstructions
-      - PrintedDocumentDismissalOrderRecipe
-      - PrintedDocumentAccessRevocationOrderRecipe
-      - PrintedDocumentIncentiveOrderRecipe
-      - PrintedDocumentPrisonerParoleOrderRecipe
-      - PrintedDocumentOrderRecognizingReasonablenessCreatureRecipe
-      - PrintedDocumentMedicalInterventionOrderRecipe
-# Orders
-      - PrintedDocumentProductOrderRecipe
+    staticPacks:
+    - StarlightDocs
 #  - type: EmagLatheRecipes
-#    emagStaticRecipes:
-#        - PrintedDocumentErrorLoadingFormHeaderRecipe
-#        - PrintedDocumentNoticeOfLiquidationRecipe
-#        - PrintedDocumentBusinessDealRecipe
-#        - PrintedDocumentNoteBeginningMilitaryActionsRecipe
-#        - PrintedDocumentReportAccomplishmentGoalsRecipe
+#    emagStaticPacks:
+#    - StarlightDocsEmag
   - type: Fixtures
     fixtures:
       fix1:

@@ -16,8 +16,6 @@ using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Tag;
-using Content.Shared.Mech.Components;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
@@ -35,25 +33,22 @@ namespace Content.Shared.Weapons.Melee;
 
 public abstract class SharedMeleeWeaponSystem : EntitySystem
 {
-    [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
-    [Dependency] protected readonly ActionBlockerSystem Blocker = default!;
-    [Dependency] protected readonly SharedCombatModeSystem CombatMode = default!;
-    [Dependency] protected readonly DamageableSystem Damageable = default!;
-    [Dependency] protected readonly SharedInteractionSystem Interaction = default!;
-    [Dependency] protected readonly IMapManager MapManager = default!;
-    [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly MeleeSoundSystem _meleeSound = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly StaminaSystem _stamina = default!;
+    [Dependency] protected readonly ISharedAdminLogManager   AdminLogger     = default!;
+    [Dependency] protected readonly ActionBlockerSystem      Blocker         = default!;
+    [Dependency] protected readonly SharedCombatModeSystem   CombatMode      = default!;
+    [Dependency] protected readonly DamageableSystem         Damageable      = default!;
+    [Dependency] protected readonly SharedInteractionSystem  Interaction     = default!;
+    [Dependency] protected readonly IMapManager              MapManager      = default!;
+    [Dependency] protected readonly SharedPopupSystem        PopupSystem     = default!;
+    [Dependency] protected readonly IGameTiming              Timing          = default!;
+    [Dependency] protected readonly SharedTransformSystem    TransformSystem = default!;
+    [Dependency] private   readonly InventorySystem         _inventory       = default!;
+    [Dependency] private   readonly MeleeSoundSystem        _meleeSound      = default!;
+    [Dependency] private   readonly SharedPhysicsSystem     _physics         = default!;
+    [Dependency] private   readonly IPrototypeManager       _protoManager    = default!;
+    [Dependency] private   readonly StaminaSystem           _stamina         = default!;
 
-    [Dependency] protected readonly TagSystem TagSystem = default!;
-    public const string IgnoreMeleeTag = "IgnoreMelee";
-
-    private const int AttackMask = (int)(CollisionGroup.MobMask | CollisionGroup.Opaque);
+    private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
 
     /// <summary>
     /// Maximum amount of targets allowed for a wide-attack.
@@ -85,7 +80,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
 #if DEBUG
         SubscribeLocalEvent<MeleeWeaponComponent,
-                            MapInitEvent>(OnMapInit);
+                            MapInitEvent>                   (OnMapInit);
     }
 
     private void OnMapInit(EntityUid uid, MeleeWeaponComponent component, MapInitEvent args)
@@ -109,7 +104,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (gun.NextFire > component.NextAttack)
         {
             component.NextAttack = gun.NextFire;
-            Dirty(uid, component);
+            DirtyField(uid, component, nameof(MeleeWeaponComponent.NextAttack));
         }
     }
 
@@ -133,7 +128,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
 
         component.NextAttack = minimum;
-        Dirty(uid, component);
+        DirtyField(uid, component, nameof(MeleeWeaponComponent.NextAttack));
     }
 
     private void OnGetBonusMeleeDamage(EntityUid uid, BonusMeleeDamageComponent component, ref GetMeleeDamageEvent args)
@@ -173,12 +168,12 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
 
         weapon.Attacking = false;
-        Dirty(weaponUid, weapon);
+        DirtyField(weaponUid, weapon, nameof(MeleeWeaponComponent.Attacking));
     }
 
     private void OnLightAttack(LightAttackEvent msg, EntitySessionEventArgs args)
     {
-        if (args.SenderSession.AttachedEntity is not { } user)
+        if (args.SenderSession.AttachedEntity is not {} user)
             return;
 
         if (!TryGetWeapon(user, out var weaponUid, out var weapon) ||
@@ -192,18 +187,21 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     private void OnHeavyAttack(HeavyAttackEvent msg, EntitySessionEventArgs args)
     {
-        if (args.SenderSession.AttachedEntity == null
-            || HasComp<MechPilotComponent>(args.SenderSession.AttachedEntity)
-            || !TryGetWeapon(args.SenderSession.AttachedEntity.Value, out var weaponUid, out var weapon)
-            || weaponUid != GetEntity(msg.Weapon))
+        if (args.SenderSession.AttachedEntity is not {} user)
             return;
 
-        AttemptAttack(args.SenderSession.AttachedEntity.Value, weaponUid, weapon, msg, args.SenderSession);
+        if (!TryGetWeapon(user, out var weaponUid, out var weapon) ||
+            weaponUid != GetEntity(msg.Weapon))
+        {
+            return;
+        }
+
+        AttemptAttack(user, weaponUid, weapon, msg, args.SenderSession);
     }
 
     private void OnDisarmAttack(DisarmAttackEvent msg, EntitySessionEventArgs args)
     {
-        if (args.SenderSession.AttachedEntity is not { } user)
+        if (args.SenderSession.AttachedEntity is not {} user)
             return;
 
         if (TryGetWeapon(user, out var weaponUid, out var weapon))
@@ -218,7 +216,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!Resolve(uid, ref component, false))
             return new DamageSpecifier();
 
-        var ev = new GetMeleeDamageEvent(uid, new(component.Damage), new(), user, component.ResistanceBypass);
+        var ev = new GetMeleeDamageEvent(uid, new(component.Damage * Damageable.UniversalMeleeDamageModifier), new(), user, component.ResistanceBypass);
         RaiseLocalEvent(uid, ref ev);
 
         return DamageSpecifier.ApplyModifierSets(ev.Damage, ev.Modifiers);
@@ -251,7 +249,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
-        var ev = new GetMeleeDamageEvent(uid, new(component.Damage), new(), user, component.ResistanceBypass);
+        var ev = new GetMeleeDamageEvent(uid, new(component.Damage * Damageable.UniversalMeleeDamageModifier), new(), user, component.ResistanceBypass);
         RaiseLocalEvent(uid, ref ev);
 
         return ev.ResistanceBypass;
@@ -394,7 +392,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             swings++;
         }
 
-        Dirty(weaponUid, weapon);
+        DirtyField(weaponUid, weapon, nameof(MeleeWeaponComponent.NextAttack));
 
         // Do this AFTER attack so it doesn't spam every tick
         var ev = new AttemptMeleeEvent(user);
@@ -444,6 +442,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         RaiseLocalEvent(user, ref attackEv);
 
         weapon.Attacking = true;
+        DirtyField(weaponUid, weapon, nameof(MeleeWeaponComponent.Attacking));
         return true;
     }
 
@@ -513,9 +512,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         RaiseLocalEvent(target.Value, attackedEvent);
 
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
-        var damageResult = Damageable.TryChangeDamage(target, modifiedDamage, origin: user, ignoreResistances: resistanceBypass);
+        var damageResult = Damageable.TryChangeDamage(target, modifiedDamage, origin:user, ignoreResistances:resistanceBypass);
 
-        if (damageResult is { Empty: false })
+        if (damageResult is {Empty: false})
         {
             // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
             if (damageResult.DamageDict.TryGetValue("Blunt", out var bluntDamage))
@@ -546,7 +545,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
     }
 
-    protected abstract void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform);
+    protected abstract void DoDamageEffect(List<EntityUid> targets, EntityUid? user,  TransformComponent targetXform);
 
     private bool DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
     {
@@ -588,8 +587,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
             return true;
         }
-
-        entities = entities.Where(x => !TagSystem.HasTag(x, IgnoreMeleeTag)).ToList(); //🌟Starlight🌟
 
         // Naughty input
         if (entities.Count > MaxTargets)
@@ -670,7 +667,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             RaiseLocalEvent(entity, attackedEvent);
             var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
 
-            var damageResult = Damageable.TryChangeDamage(entity, modifiedDamage, origin: user);
+            var damageResult = Damageable.TryChangeDamage(entity, modifiedDamage, origin:user);
 
             if (damageResult != null && damageResult.GetTotal() > FixedPoint2.Zero)
             {
@@ -715,7 +712,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     {
         // TODO: This is pretty sucky.
         var widthRad = arcWidth;
-        var increments = 1 + 35 * (int)Math.Ceiling(widthRad / (2 * Math.PI));
+        var increments = 1 + 35 * (int) Math.Ceiling(widthRad / (2 * Math.PI));
         var increment = widthRad / increments;
         var baseAngle = angle - widthRad / 2;
 
@@ -724,13 +721,25 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         for (var i = 0; i < increments; i++)
         {
             var castAngle = new Angle(baseAngle + increment * i);
-            var ray = new CollisionRay(position, castAngle.ToWorldVec(), AttackMask);
-            var res = _physics.IntersectRay(mapId, ray, range, ignore, false)
-                .Where(x => !TagSystem.HasTag(x.HitEntity, IgnoreMeleeTag)) 
+            var res = _physics.IntersectRay(mapId,
+                new CollisionRay(position,
+                    castAngle.ToWorldVec(),
+                    AttackMask),
+                range,
+                ignore,
+                false)
                 .ToList();
 
             if (res.Count != 0)
-                resSet.Add(res[0].HitEntity);
+            {
+                // If there's exact distance overlap, we simply have to deal with all overlapping objects to avoid selecting randomly.
+                var resChecked = res.Where(x => x.Distance.Equals(res[0].Distance));
+                foreach (var r in resChecked)
+                {
+                    if (Interaction.InRangeUnobstructed(ignore, r.HitEntity, range + 0.1f, overlapCheck: false))
+                        resSet.Add(r.HitEntity);
+                }
+            }
         }
 
         return resSet;
@@ -830,15 +839,21 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 //Setting deactivated damage to the weapon's regular value before changing it.
                 itemToggleMelee.DeactivatedDamage ??= meleeWeapon.Damage;
                 meleeWeapon.Damage = itemToggleMelee.ActivatedDamage;
+                DirtyField(uid, meleeWeapon, nameof(MeleeWeaponComponent.Damage));
             }
 
-            meleeWeapon.HitSound = itemToggleMelee.ActivatedSoundOnHit;
+            if (meleeWeapon.HitSound?.Equals(itemToggleMelee.ActivatedSoundOnHit) != true)
+            {
+                meleeWeapon.HitSound = itemToggleMelee.ActivatedSoundOnHit;
+                DirtyField(uid, meleeWeapon, nameof(MeleeWeaponComponent.HitSound));
+            }
 
             if (itemToggleMelee.ActivatedSoundOnHitNoDamage != null)
             {
                 //Setting the deactivated sound on no damage hit to the weapon's regular value before changing it.
                 itemToggleMelee.DeactivatedSoundOnHitNoDamage ??= meleeWeapon.NoDamageSound;
                 meleeWeapon.NoDamageSound = itemToggleMelee.ActivatedSoundOnHitNoDamage;
+                DirtyField(uid, meleeWeapon, nameof(MeleeWeaponComponent.NoDamageSound));
             }
 
             if (itemToggleMelee.ActivatedSoundOnSwing != null)
@@ -846,28 +861,41 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 //Setting the deactivated sound on no damage hit to the weapon's regular value before changing it.
                 itemToggleMelee.DeactivatedSoundOnSwing ??= meleeWeapon.SwingSound;
                 meleeWeapon.SwingSound = itemToggleMelee.ActivatedSoundOnSwing;
+                DirtyField(uid, meleeWeapon, nameof(MeleeWeaponComponent.SwingSound));
             }
 
             if (itemToggleMelee.DeactivatedSecret)
+            {
                 meleeWeapon.Hidden = false;
+            }
         }
         else
         {
             if (itemToggleMelee.DeactivatedDamage != null)
+            {
                 meleeWeapon.Damage = itemToggleMelee.DeactivatedDamage;
+                DirtyField(uid, meleeWeapon, nameof(MeleeWeaponComponent.Damage));
+            }
 
             meleeWeapon.HitSound = itemToggleMelee.DeactivatedSoundOnHit;
+            DirtyField(uid, meleeWeapon, nameof(MeleeWeaponComponent.HitSound));
 
             if (itemToggleMelee.DeactivatedSoundOnHitNoDamage != null)
+            {
                 meleeWeapon.NoDamageSound = itemToggleMelee.DeactivatedSoundOnHitNoDamage;
+                DirtyField(uid, meleeWeapon, nameof(MeleeWeaponComponent.NoDamageSound));
+            }
 
             if (itemToggleMelee.DeactivatedSoundOnSwing != null)
+            {
                 meleeWeapon.SwingSound = itemToggleMelee.DeactivatedSoundOnSwing;
+                DirtyField(uid, meleeWeapon, nameof(MeleeWeaponComponent.SwingSound));
+            }
 
             if (itemToggleMelee.DeactivatedSecret)
+            {
                 meleeWeapon.Hidden = true;
+            }
         }
-
-        Dirty(uid, meleeWeapon);
     }
 }

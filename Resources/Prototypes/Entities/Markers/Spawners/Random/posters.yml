@@ -38,7 +38,6 @@
       - PosterContrabandSyndicateRecruitment
       - PosterContrabandClown
       - PosterContrabandSmoke
-      - PosterContrabandGreyTide
       - PosterContrabandMissingGloves
       - PosterContrabandHackingGuide
       - PosterContrabandRIPBadger
@@ -161,4 +160,5 @@
       - PosterLegitCalendar
       - PosterLegitCleanHands
       - PosterLegitEyeChart
+      - PosterLegitTyrone
     chance: 1

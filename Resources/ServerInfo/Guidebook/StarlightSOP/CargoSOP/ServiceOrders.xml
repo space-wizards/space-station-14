@@ -1,0 +1,29 @@
+<Document>
+
+# Service Orders
+
+Bartender
+<Box>
+    <GuideEntityEmbed Entity="CrateFoodBarSupply"/>
+</Box>
+
+Botanist
+<Box>
+    <GuideEntityEmbed Entity="VendingMachineRestockSeeds"/>
+</Box>
+
+Janitor
+<Box>
+    <GuideEntityEmbed Entity="JanitorialTrolley"/>
+    <GuideEntityEmbed Entity="CrateServiceJanitorialSupplies"/>
+</Box>
+
+Clown/Mime
+<Box>
+    Any and all orders require QM and HoP stamps for approval
+</Box>
+
+
+</Document>
+
+

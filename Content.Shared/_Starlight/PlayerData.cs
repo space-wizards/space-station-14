@@ -59,4 +59,5 @@ public enum PlayerFlags : uint
     CopperEventWinner = 1 << 13,
 
     AllRoles = 1 << 14,
+    ExtRoles = 1 << 15,
 }

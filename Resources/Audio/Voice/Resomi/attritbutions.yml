@@ -1,0 +1,17 @@
+- files: [resomi_scream.ogg]
+  copyright: '"'
+
+- files: [resomi_chirp1.ogg, resomi_chirp2.ogg, resomi_chirp3.ogg, resomi_chirp4.ogg, resomi_chirp5.ogg]
+  copyright: "Bird Chirps by whiskeyecho, Taken from https://freesound.org/"
+  license: "CC0-1.0"
+  source: https://freesound.org/s/727256/
+
+- files: [resomi_whistle.ogg]
+  copyright: "CanaryArtie-3.wav by ReadeOnly, Taken from https://freesound.org/"
+  license: "CC0-1.0"
+  source: https://freesound.org/s/85403/
+
+- files: [resomi_laugh1.ogg, resomi_laugh2.ogg, resomi_laugh3.ogg]
+  copyright: "galah0X.wav by ImmergoMedia, Taken from https://freesound.org/"
+  license: "CC0-1.0"
+  source: https://freesound.org/people/ImmergoMedia/

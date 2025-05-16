@@ -10,6 +10,7 @@
     - !type:RoleTimeRequirement
       role: JobDetective
       time: 3600 # 1 hr
+  weight: 5
   startingGear: WardenGear
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos
@@ -31,12 +32,11 @@
 - type: startingGear
   id: WardenGear
   equipment:
-    eyes: ClothingEyesGlassesSecurity
     id: WardenPDA
     ears: ClothingHeadsetSecurity
-    pocket1: WeaponPistolSP8
+    pocket1: WeaponPistolDP
   storage:
     back:
     - Flash
-    - MagazinePistol40Nr
-    - MagazinePistol40Nr
+    - MagazinePistol40SP
+    - MagazinePistol40SP

@@ -18,9 +18,6 @@ namespace Content.Shared.Starlight.Medical.Surgery;
 public abstract partial class SharedSurgerySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-
-    protected float _delayAccumulator = 0f;
-    protected readonly Queue<Action> _delayQueue = new();
     private void InitializeSteps()
     {
         SubscribeLocalEvent<SurgeryStepComponent, SurgeryStepCompleteEvent>(OnStepComplete);
@@ -47,7 +44,7 @@ public abstract partial class SharedSurgerySystem
                 Dirty(args.Target.Value, dirtyPart, Comp<MetaDataComponent>(args.Target.Value));
             return;
         }
-        
+
         if (!_random.Prob(args.SuccessRate))
         {
             if (_net.IsClient) return;
@@ -71,9 +68,7 @@ public abstract partial class SharedSurgerySystem
         };
         RaiseLocalEvent(step, ref evComplete);
 
-        if (_net.IsClient) return;
-        _delayAccumulator = 0f;
-        _delayQueue.Enqueue(() => RefreshUI(ent));
+        RefreshUI(ent);
     }
 
     private void OnClearProgressStep(Entity<SurgeryClearProgressComponent> ent, ref SurgeryStepCompleteEvent args)
@@ -223,13 +218,17 @@ public abstract partial class SharedSurgerySystem
         {
             var progress = Comp<SurgeryProgressComponent>(part);
             Dirty(part, progress);
-            _delayAccumulator = 0f;
-            _delayQueue.Enqueue(() => RefreshUI(body));
+            RefreshUI(ent);
             return;
         }
 
+        if (_net.IsServer && TryComp(step, out MetaDataComponent? meta))
+        {
+            var surgeonName = MetaData(user).EntityName;
+            _popup.PopupEntity($"{surgeonName.ToLower()} starts {meta.EntityName.ToLower()}", part, PopupType.LargeCaution);
+        }
+
         var duration = stepComp.Duration;
-        
         float SmallestSuccessRate = 1f;
 
         foreach (var tool in validTools)
@@ -237,7 +236,7 @@ public abstract partial class SharedSurgerySystem
             {
                 duration *= toolComp.Speed;
                 if (toolComp.StartSound != null) _audio.PlayPvs(toolComp.StartSound, tool);
-                
+
                 if(toolComp.SuccessRate < SmallestSuccessRate)
                     SmallestSuccessRate = toolComp.SuccessRate;
             }
