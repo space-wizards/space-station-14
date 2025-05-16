@@ -8,7 +8,7 @@
   id: SecHailMedium
   files:
     - /Audio/Voice/SecurityHails/asshole.ogg
-    - /Audio/Voice/SecurityHails/asshole.ogg
+    - /Audio/Voice/SecurityHails/batong.ogg
 
 - type: soundCollection
   id: SecHailHigh
@@ -19,4 +19,4 @@
 - type: soundCollection
   id: SecHailEmag
   files:
-    - /Audio/Items/Whistle/trench_whistle_1.ogg
+    - /Audio/Items/Whistle/cybersun.ogg

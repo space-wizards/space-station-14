@@ -5,6 +5,10 @@ using Content.Shared.Stealth.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Systems;
+using Content.Shared.DoAfter;
+using Content.Shared.Swab;
+using Content.Shared.Clothing.Event;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Clothing.EntitySystems
 {
@@ -14,6 +18,8 @@ namespace Content.Shared.Clothing.EntitySystems
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedToolSystem _toolSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _sharedAudio = default!;
 
         public override void Initialize()
         {
@@ -21,7 +27,10 @@ namespace Content.Shared.Clothing.EntitySystems
             SubscribeLocalEvent<SecurityHailerComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<SecurityHailerComponent, ClothingGotEquippedEvent>(OnEquip);
             SubscribeLocalEvent<SecurityHailerComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<SecurityHailerComponent, SecHailerToolDoAfterEvent>(OnScrewingDoAfter);
         }
+
+        
 
         private void OnEquip(EntityUid uid, SecurityHailerComponent comp, ClothingGotEquippedEvent args)
         {
@@ -76,36 +85,60 @@ namespace Content.Shared.Clothing.EntitySystems
 
             //Is it a wirecutter, a screwdriver or an EMAG ?
             if (_toolSystem.HasQuality(args.Used, SharedToolSystem.CutQuality))
-                OnInteractCutting(ent, args);
+                OnInteractCutting(ent, ref args);
             else if (_toolSystem.HasQuality(args.Used, SharedToolSystem.ScrewQuality))
-                OnInteractScrewing(ent, args);
+                OnInteractScrewing(ent, ref args);
             else if (false) //TODO: ADD EMAG
-                OnInteractEmag(ent, args);
+                OnInteractEmag(ent, ref args);
             else
                 return;
         }
-        private void OnInteractCutting(Entity<SecurityHailerComponent> ent, InteractUsingEvent args)
+        private void OnInteractCutting(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
         {
             throw new NotImplementedException();
         }
 
-        private void OnInteractScrewing(Entity<SecurityHailerComponent> ent, InteractUsingEvent args)
+        private void OnInteractScrewing(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
         {
             //If it's emagged we don't change it
             if (ent.Comp.Emagged)
                 return;
+
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, ent.Comp.ScrewingDoAfterDelay, new SecHailerToolDoAfterEvent(), ent.Owner, target: args.Target, used: args.Used)
+            {
+                Broadcast = true,
+                BreakOnMove = true,
+                NeedHand = true,
+            });
+
+            args.Handled = true;
+        }
+
+        private void OnScrewingDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+        {
+            //Play a click sound just like the headset
+            _sharedAudio.PlayPvs(ent.Comp.ScrewedSounds, ent.Owner);
+
+            if (args.Cancelled || args.Handled || !TryComp<SecurityHailerComponent>(args.Args.Target, out var plant))
+                return;
+
             var comp = ent.Comp;
 
+            //Up the aggression level by one or back to one
             if (comp.AggresionLevel == SecurityHailerComponent.AggresionState.High)
                 comp.AggresionLevel = SecurityHailerComponent.AggresionState.Low;
             else
                 comp.AggresionLevel++;
+
+            args.Handled = true;
         }
 
 
-        private void OnInteractEmag(Entity<SecurityHailerComponent> ent, InteractUsingEvent args)
+        private void OnInteractEmag(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
         {
             throw new NotImplementedException();
         }
     }
+
+    
 }

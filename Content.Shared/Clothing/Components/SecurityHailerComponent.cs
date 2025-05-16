@@ -12,13 +12,13 @@ namespace Content.Shared.Clothing.Components
     public sealed partial class SecurityHailerComponent : Component
     {
         /// <summary>
-        /// Range value.
+        /// Range value
         /// </summary>
         [DataField]
         public float Distance = 0;
 
         /// <summary>
-        /// The name displayed as the speaker when hailing orders.
+        /// The name displayed as the speaker when hailing orders
         /// </summary>
         [DataField]
         public string? ChatName = "Security Hailer";
@@ -28,6 +28,12 @@ namespace Content.Shared.Clothing.Components
         /// </summary>
         [DataField]
         public bool Emagged = false;
+
+        /// <summary>
+        /// Delay when the hailer is screwed to change aggression level
+        /// </summary>
+        [DataField]
+        public float ScrewingDoAfterDelay = 1f;
 
         /// <summary>
         /// How aggresive are the orders coming from the hailer ? Higher means more aggressive / shitsec
@@ -46,6 +52,7 @@ namespace Content.Shared.Clothing.Components
         public SoundSpecifier MediumAggressionSounds = new SoundCollectionSpecifier("SecHailMedium");
         public SoundSpecifier HighAggressionSounds = new SoundCollectionSpecifier("SecHailHigh");
         public SoundSpecifier EmagAggressionSounds = new SoundCollectionSpecifier("SecHailEmag");
+        public SoundSpecifier ScrewedSounds = new SoundCollectionSpecifier("Screwdriver"); //From the soundcollection of tools
 
         /// <summary>
         ///     The action that gets displayed when the gas mask is equipped.
