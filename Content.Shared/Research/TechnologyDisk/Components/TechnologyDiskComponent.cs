@@ -21,4 +21,16 @@ public sealed partial class TechnologyDiskComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<WeightedRandomPrototype> TierWeightPrototype = "TechDiskTierWeights";
+
+    /// <summary>
+    /// A discipline to constrain the disk to.
+    /// </summary>
+    [DataField]
+    public ProtoId<TechDisciplinePrototype>? Discipline;
+
+    /// <summary>
+    /// A tier to constrain the disk to.
+    /// </summary>
+    [DataField]
+    public int? Tier;
 }

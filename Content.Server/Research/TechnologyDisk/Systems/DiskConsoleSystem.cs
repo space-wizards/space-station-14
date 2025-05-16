@@ -5,6 +5,7 @@ using Content.Shared.Research;
 using Content.Shared.Research.Components;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Research.TechnologyDisk.Systems;
@@ -15,6 +16,7 @@ public sealed class DiskConsoleSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly ResearchSystem _research = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -38,7 +40,7 @@ public sealed class DiskConsoleSystem : EntitySystem
                 continue;
 
             RemComp(uid, printing);
-            Spawn(console.DiskPrototype, xform.Coordinates);
+            Spawn(_robustRandom.Pick(console.DiskPrototypes), xform.Coordinates);
         }
     }
 
