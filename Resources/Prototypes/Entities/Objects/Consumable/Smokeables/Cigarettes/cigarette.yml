@@ -83,6 +83,13 @@
             Quantity: 10
           - ReagentId: Omnizine
             Quantity: 30
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nicotine
+          Quantity: 10
+        - ReagentId: Omnizine
+          Quantity: 30
 
 - type: entity
   id: CigaretteOmnizine
@@ -98,6 +105,13 @@
             Quantity: 10
           - ReagentId: Omnizine
             Quantity: 10
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nicotine
+          Quantity: 10
+        - ReagentId: Omnizine
+          Quantity: 10
 
 - type: entity
   id: CigaretteIron
@@ -113,7 +127,13 @@
             Quantity: 10
           - ReagentId: Iron
             Quantity: 10
-
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nicotine
+          Quantity: 10
+        - ReagentId: Iron
+          Quantity: 10
 - type: entity
   id: CigaretteTricordrazine
   parent: SoakedCigarette
@@ -128,6 +148,13 @@
             Quantity: 10
           - ReagentId: Tricordrazine
             Quantity: 10
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nicotine
+          Quantity: 10
+        - ReagentId: Tricordrazine
+          Quantity: 10
 
 - type: entity
   id: CigaretteDylovene
@@ -143,6 +170,11 @@
             Quantity: 10
           - ReagentId: Dylovene
             Quantity: 10
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
 
 - type: entity
   id: CigaretteDermaline
