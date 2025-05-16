@@ -29,7 +29,6 @@
           Quantity: 5
   - type: Food
     requiresSpecialDigestion: true
-
   - type: PhysicalComposition
     materialComposition:
       Plastic: 50
