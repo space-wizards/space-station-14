@@ -142,15 +142,15 @@ public sealed class ThrusterSystem : EntitySystem
         // The shuttle's inertia has changed, so subtraction would be incorrect. We have to re-accumulate.
         ent.Comp.AngularThrust = 0f;
 
-        var allThrusters = EntityQueryEnumerator<ThrusterComponent, ApcPowerReceiverComponent, TransformComponent>();
-
-        while (allThrusters.MoveNext(out var thrusterUid, out var thrusterComp, out var thrusterPowerReceiver, out var thrusterXform))
+        foreach (var thrusterUid in ent.Comp.AngularThrusters)
         {
-            if (thrusterXform.GridUid != ent.Owner)
+            if (!TryComp<ThrusterComponent>(thrusterUid, out var thrusterComp))
                 continue;
 
-            if (ent.Comp.AngularThrusters.Contains(thrusterUid))
-                ent.Comp.AngularThrust += thrusterComp.Thrust * GetInertiaThresholdScale((thrusterUid, thrusterComp), thrusterXform);
+            ent.Comp.AngularThrust += thrusterComp.Thrust * GetInertiaThresholdScale((thrusterUid, thrusterComp));
+
+            if (!TryComp<ApcPowerReceiverComponent>(thrusterUid, out var thrusterPowerReceiver))
+                continue;
 
             UpdatePowerLoad((thrusterUid, thrusterComp), thrusterPowerReceiver);
         }
