@@ -33,8 +33,7 @@ public sealed class DisplacementMapSystem : EntitySystem
         if (data.ShaderOverride != null)
             sprite.Comp.LayerSetShader(index, data.ShaderOverride);
 
-        if (_sprite.LayerMapTryGet(sprite.AsNullable(), displacementKey, out var oldIndex, false))
-            _sprite.RemoveLayer(sprite.AsNullable(), oldIndex);
+        _sprite.RemoveLayer(sprite.AsNullable(), displacementKey, false);
 
         //allows you not to write it every time in the YML
         foreach (var pair in data.SizeMaps)
