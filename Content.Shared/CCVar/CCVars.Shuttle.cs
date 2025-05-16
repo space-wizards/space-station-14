@@ -237,7 +237,7 @@ public sealed partial class CCVars
     /// Kinetic energy required to spawn sparks
     /// </summary>
     public static readonly CVarDef<float> SparkEnergy =
-        CVarDef.Create("shuttle.impact.spark_energy", 5000000f, CVar.SERVERONLY);
+        CVarDef.Create("shuttle.impact.spark_energy", 2000000f, CVar.SERVERONLY);
 
     /// <summary>
     /// Area to consider for impact calculations
@@ -252,7 +252,7 @@ public sealed partial class CCVars
         CVarDef.Create("shuttle.impact.slowdown", 0.8f, CVar.SERVERONLY);
 
     /// <summary>
-    /// Minimum velocity change from impact to throw entities on-grid
+    /// Minimum velocity change from impact for special throw effects (e.g. stuns, beakers breaking) to occur
     /// </summary>
     public static readonly CVarDef<float> ImpactMinThrowVelocity =
         CVarDef.Create("shuttle.impact.min_throw_velocity", 1f, CVar.SERVERONLY); // due to how it works this is about 16 m/s for cargo shuttle
