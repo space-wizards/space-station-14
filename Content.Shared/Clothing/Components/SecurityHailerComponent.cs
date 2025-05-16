@@ -1,6 +1,7 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 
 namespace Content.Shared.Clothing.Components
@@ -11,6 +12,12 @@ namespace Content.Shared.Clothing.Components
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class SecurityHailerComponent : Component
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataField]
+        public SecMaskState CurrentState = SecMaskState.Functional;
+
         /// <summary>
         /// Range value
         /// </summary>
@@ -53,6 +60,7 @@ namespace Content.Shared.Clothing.Components
         public SoundSpecifier HighAggressionSounds = new SoundCollectionSpecifier("SecHailHigh");
         public SoundSpecifier EmagAggressionSounds = new SoundCollectionSpecifier("SecHailEmag");
         public SoundSpecifier ScrewedSounds = new SoundCollectionSpecifier("Screwdriver"); //From the soundcollection of tools
+        public SoundSpecifier CutSounds = new SoundCollectionSpecifier("Wirecutter"); //From the soundcollection of tools
 
         /// <summary>
         ///     The action that gets displayed when the gas mask is equipped.
@@ -71,5 +79,18 @@ namespace Content.Shared.Clothing.Components
         /// </summary>
         [DataField]
         public EntProtoId ExclamationEffect = "WhistleExclamation";
+    }
+
+    [Serializable, NetSerializable]
+    public enum SecMaskVisuals : byte
+    {
+        State
+    }
+
+    [Serializable, NetSerializable]
+    public enum SecMaskState : byte
+    {
+        Functional,
+        WiresCut
     }
 }

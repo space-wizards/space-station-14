@@ -32,6 +32,13 @@
     sprite: Clothing/Mask/gassecurity.rsi
   - type: Clothing
     sprite: Clothing/Mask/gassecurity.rsi
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SecMaskVisuals.State:
+        mask:
+          Functional: { state: icon }
+          WiresCut: { state: icon-wires-cut }
   - type: Armor
     modifiers:
       coefficients:

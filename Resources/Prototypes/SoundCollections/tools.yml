@@ -20,3 +20,8 @@
   files:
     - /Audio/Items/screwdriver.ogg
     - /Audio/Items/screwdriver2.ogg
+
+- type: soundCollection
+  id: Wirecutter
+  files:
+    - /Audio/Items/wirecutter.ogg

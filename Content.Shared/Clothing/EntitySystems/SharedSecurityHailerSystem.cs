@@ -20,6 +20,9 @@ namespace Content.Shared.Clothing.EntitySystems
         [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAudioSystem _sharedAudio = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
+        private EntityUid _wearer;
 
         public override void Initialize()
         {
@@ -30,13 +33,18 @@ namespace Content.Shared.Clothing.EntitySystems
             SubscribeLocalEvent<SecurityHailerComponent, SecHailerToolDoAfterEvent>(OnScrewingDoAfter);
         }
 
-        
-
-        private void OnEquip(EntityUid uid, SecurityHailerComponent comp, ClothingGotEquippedEvent args)
+        private void OnEquip(Entity<SecurityHailerComponent> ent, ref ClothingGotEquippedEvent args)
         {
+            var (uid, comp) = ent;
+
+            if (comp.CurrentState != SecMaskState.Functional)
+                return;
+
+            _wearer = args.Wearer;
             _actions.AddAction(args.Wearer, ref comp.ActionEntity, comp.Action, uid);
         }
 
+        //In case someone spawns with it ?
         private void OnMapInit(Entity<SecurityHailerComponent> ent, ref MapInitEvent args)
         {
             //COPY PASTED, IS THIS GOOD ?
@@ -45,7 +53,8 @@ namespace Content.Shared.Clothing.EntitySystems
             if (string.IsNullOrEmpty(comp.Action))
                 return;
 
-            _actions.AddAction(uid, ref comp.ActionEntity, comp.Action);
+            if (comp.CurrentState == SecMaskState.Functional)
+                _actions.AddAction(uid, ref comp.ActionEntity, comp.Action);
             Dirty(uid, comp);
         }
 
@@ -95,7 +104,22 @@ namespace Content.Shared.Clothing.EntitySystems
         }
         private void OnInteractCutting(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
         {
-            throw new NotImplementedException();
+            // Snip, snip !
+            _sharedAudio.PlayPvs(ent.Comp.CutSounds, ent.Owner);
+
+            var (uid, comp) = ent;
+            if (comp.CurrentState == SecMaskState.Functional)
+            {
+                comp.CurrentState = SecMaskState.WiresCut;
+                _actions.RemoveAction(_wearer, comp.ActionEntity);
+            }
+            else if (comp.CurrentState == SecMaskState.WiresCut)
+            {
+                comp.CurrentState = SecMaskState.Functional ;
+                //_actions.AddAction(_wearer, ref comp.ActionEntity, comp.Action, uid);
+            }
+            _appearance.SetData(ent, SecMaskVisuals.State, comp.CurrentState);
+            args.Handled = true;
         }
 
         private void OnInteractScrewing(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
