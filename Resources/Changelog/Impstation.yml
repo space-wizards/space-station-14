@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Incredibly minor Cowboy accent tweaks
-    type: Tweak
-  id: 1187
-  time: '2025-02-23T01:48:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1766
 - author: hivehum
   changes:
   - message: The Clown Costume Duffel Bag no longer contains a headset and PDA.
@@ -4219,3 +4212,10 @@
   id: 1686
   time: '2025-05-15T23:50:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2504
+- author: rainyatrium
+  changes:
+  - message: decapoid salvager's coat is now available from the salvdrobe
+    type: Add
+  id: 1687
+  time: '2025-05-16T22:24:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2510
