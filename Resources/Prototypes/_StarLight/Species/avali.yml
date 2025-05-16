@@ -165,8 +165,8 @@
   description: Allows Avali to enter nanite induced stasis.
   components:
     - type: AvaliStasis
-      enterStasisAction: AvaliEnterStasisAction
-      exitStasisAction: AvaliExitStasisAction
+      enterStasisAction: ActionAvaliStasisEnter
+      exitStasisAction: ActionAvaliStasisExit
       stasisCooldown: 30
       stasisBluntHealPerSecond: 5
       stasisSlashingHealPerSecond: 5
