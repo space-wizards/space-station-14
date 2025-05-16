@@ -133,6 +133,7 @@
         reagents:
         - ReagentId: ToxinTrash
           Quantity: 5
+
 - type: entity
   id: CigaretteTricordrazine
   parent: SoakedCigarette

@@ -527,6 +527,7 @@
   - type: Tag
     tags:
     - Trash
+    - HappyHonk
   - type: Food
     requiresSpecialDigestion: true
   - type: StorageFill
