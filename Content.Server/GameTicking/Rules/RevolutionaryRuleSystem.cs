@@ -506,6 +506,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         // Cuffing Head Revs is not enough - they must be killed.
         if (IsGroupDetainedOrDead(headRevList, false, false, false))
         {
+            // Delete all USSP uplinks and turn supply rifts and SNKVD implanters to ash
+            DeleteUplinksTurnItemsToAsh();
+            
             var rev = AllEntityQuery<RevolutionaryComponent, MindContainerComponent>();
             while (rev.MoveNext(out var uid, out _, out var mc))
             {
@@ -533,6 +536,88 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         return false;
+    }
+    
+    /// <summary>
+    /// Deletes all USSP uplinks and turns supply rifts and SNKVD implanters to ash when all head revolutionaries are dead.
+    /// </summary>
+    private void DeleteUplinksTurnItemsToAsh()
+    {
+        Logger.InfoS("rev-rule", "All head revolutionaries are dead. Deleting uplinks and turning items to ash.");
+        
+        // Find and delete all USSP uplinks
+        var uplinkQuery = EntityManager.EntityQuery<MetaDataComponent>(true);
+        var uplinksToDelete = new List<EntityUid>();
+        
+        foreach (var metadata in uplinkQuery)
+        {
+            if (metadata.EntityPrototype?.ID == "USSPUplinkImplant")
+            {
+                uplinksToDelete.Add(metadata.Owner);
+                Logger.InfoS("rev-rule", $"Found USSP uplink to delete: {ToPrettyString(metadata.Owner)}");
+            }
+        }
+        
+        // Delete all uplinks
+        foreach (var uplink in uplinksToDelete)
+        {
+            if (EntityManager.EntityExists(uplink))
+            {
+                EntityManager.DeleteEntity(uplink);
+                Logger.InfoS("rev-rule", $"Deleted USSP uplink: {ToPrettyString(uplink)}");
+            }
+        }
+        
+        // Find all supply rifts and collect them for deletion
+        var riftsToDelete = new List<(EntityUid Entity, Robust.Shared.Map.EntityCoordinates Coordinates)>();
+        var riftQuery = EntityManager.EntityQuery<RevSupplyRiftComponent, TransformComponent>();
+        
+        foreach (var (rift, transform) in riftQuery)
+        {
+            riftsToDelete.Add((rift.Owner, transform.Coordinates));
+            Logger.InfoS("rev-rule", $"Found supply rift to turn to ash: {ToPrettyString(rift.Owner)}");
+        }
+        
+        // Process all supply rifts
+        foreach (var (entity, coordinates) in riftsToDelete)
+        {
+            if (EntityManager.EntityExists(entity))
+            {
+                // Spawn ash at the rift's location
+                EntityManager.SpawnEntity("Ash", coordinates);
+                Logger.InfoS("rev-rule", $"Turned supply rift to ash: {ToPrettyString(entity)}");
+                
+                // Delete the rift
+                EntityManager.DeleteEntity(entity);
+            }
+        }
+        
+        // Find all SNKVD implanters and collect them for deletion
+        var implantersToDelete = new List<(EntityUid Entity, Robust.Shared.Map.EntityCoordinates Coordinates)>();
+        var implanterQuery = EntityManager.EntityQuery<MetaDataComponent, TransformComponent>(true);
+        
+        foreach (var (metadata, transform) in implanterQuery)
+        {
+            if (metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
+            {
+                implantersToDelete.Add((metadata.Owner, transform.Coordinates));
+                Logger.InfoS("rev-rule", $"Found SNKVD implanter to turn to ash: {ToPrettyString(metadata.Owner)}");
+            }
+        }
+        
+        // Process all SNKVD implanters
+        foreach (var (entity, coordinates) in implantersToDelete)
+        {
+            if (EntityManager.EntityExists(entity))
+            {
+                // Spawn ash at the implanter's location
+                EntityManager.SpawnEntity("Ash", coordinates);
+                Logger.InfoS("rev-rule", $"Turned SNKVD implanter to ash: {ToPrettyString(entity)}");
+                
+                // Delete the implanter
+                EntityManager.DeleteEntity(entity);
+            }
+        }
     }
 
     /// <summary>
