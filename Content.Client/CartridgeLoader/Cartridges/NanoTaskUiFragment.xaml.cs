@@ -38,10 +38,12 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
 
         foreach (var task in tasks)
         {
-            var container = task.Data.Priority switch {
+            var container = task.Data.Priority switch
+            {
                 NanoTaskPriority.High => HighContainer,
                 NanoTaskPriority.Medium => MediumContainer,
                 NanoTaskPriority.Low => LowContainer,
+                _ => throw new ArgumentException("Invalid priority"),
             };
             var control = new NanoTaskItemControl(task);
             container.AddChild(control);

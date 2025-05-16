@@ -19,3 +19,9 @@
   - type: Tag
     tags:
     - GPS
+
+- type: entity #why does this exist? Well, "global positioning system" is too long to fit in the cyborg's hand slot.
+  name: Integrated GPS
+  parent: HandheldGPSBasic
+  id: BorgHandheldGPSBasic
+  description: A miniaturized Global Positioning System for use in cyborg units.
