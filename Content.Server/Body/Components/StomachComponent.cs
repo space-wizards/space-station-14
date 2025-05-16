@@ -42,10 +42,16 @@ namespace Content.Server.Body.Components
         public TimeSpan DigestionDelay = TimeSpan.FromSeconds(20);
 
         /// <summary>
-        ///     A whitelist for what special-digestible-required foods this stomach is capable of eating.
+        ///     A whitelist for what special-digestible-required foods this stomach is capable of eating. Exclusive whitelist, entities can only eat what is on this whitelist.
         /// </summary>
         [DataField]
         public EntityWhitelist? SpecialDigestible = null;
+
+        /// <summary>
+        ///     A whitelist for what special-digestible-required foods this stomach is capable of eating. Not-exclusive whitelist, entities can eat foods not on this whitelist.
+        /// </summary>
+        [DataField]
+        public EntityWhitelist? SpecialExtraDigestible = null;
 
         /// <summary>
         ///     Used to track how long each reagent has been in the stomach

@@ -17,7 +17,7 @@
 - type: entity
   parent: OrganHumanStomach
   id: OrganVoxStomach
-  name: stomach
+  name: vox stomach
   description: "A stomach that smells of ammonia."
   components:
   - type: Metabolizer #Skreeeee!
@@ -27,14 +27,9 @@
     specialDigestible:
       tags:
       - Trash
-      - Fruit
-      - ReptilianFood
-      - Meat
-      - Pill
-      - Crayon
-      - Paper
-      - VoxFood
-      - Vegetable
+    specialExtraDigestible:
+      tags:
+      - Trash
 
 - type: entity
   parent: OrganHumanLiver
