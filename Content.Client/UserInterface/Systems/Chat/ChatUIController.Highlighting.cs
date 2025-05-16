@@ -1,7 +1,8 @@
 using System.Linq;
-using Content.Shared.CCVar;
+using System.Text.RegularExpressions;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
+using Content.Shared.CCVar;
 using Content.Client.CharacterInfo;
 using static Content.Client.CharacterInfo.CharacterInfoSystem;
 
@@ -70,28 +71,36 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
         _characterInfo.RequestCharacterInfo();
     }
 
-    public void UpdateHighlights(string new_highlights, bool firstload = false)
+    public void UpdateHighlights(string newHighlights, bool firstLoad = false)
     {
         // Do nothing if the provided highlights are the same as the old ones and it is not the first time.
-        if (!firstload && _config.GetCVar(CCVars.ChatHighlights).Equals(new_highlights, StringComparison.CurrentCultureIgnoreCase))
+        if (!firstLoad && _config.GetCVar(CCVars.ChatHighlights).Equals(newHighlights, StringComparison.CurrentCultureIgnoreCase))
             return;
 
-        _config.SetCVar(CCVars.ChatHighlights, new_highlights);
+        _config.SetCVar(CCVars.ChatHighlights, newHighlights);
         _config.SaveToFile();
-
-        // Replace any " character with a whole-word regex tag,
-        // this tag will make sure the words to match are separated by spaces or punctuation.
-        new_highlights = new_highlights.Replace("\"", "\\b");
-
-        // Make sure any name tagged as ours gets highlighted only when others say it.
-        new_highlights = new_highlights.Replace("@", "(?<=(?<=/name.*)|(?<=,.*\"\".*))");
 
         _highlights.Clear();
 
-        // Fill the array with the highlights separated by newlines, disregarding empty entries.
-        string[] arrHighlights = new_highlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-        foreach (var keyword in arrHighlights)
+        // We first subdivide the highlights based on newlines to prevent replacing
+        // a valid "\n" tag and adding it to the final regex.
+        string[] splittedHighlights = newHighlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        for (int i = 0; i < splittedHighlights.Length; i++)
         {
+            // Replace every "\" character with a "\\" to prevent "\n", "\0", etc...
+            string keyword = splittedHighlights[i].Replace("\\", "\\\\");
+
+            // Escape the keyword to prevent special characters like "(" and ")" to be considered valid regex.
+            keyword = Regex.Escape(keyword);
+
+            // Replace any double quote (") character with a whole-word (\b) regex tag,
+            // this tag will make sure the words to match are separated by spaces or punctuation.
+            keyword = keyword.Replace("\"", "\\b");
+
+            // Make sure any name tagged as ours gets highlighted only when others say it.
+            keyword = keyword.Replace("@", "(?<=(?<=/name.*)|(?<=,.*\"\".*))");
+
             _highlights.Add(keyword);
         }
 
