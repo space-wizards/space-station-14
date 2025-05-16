@@ -5,24 +5,24 @@
   description: A hand-held scanner built to collect information on various anomalous objects.
   components:
   - type: Sprite
+    sprite: Objects/Specific/Research/anomalyscanner.rsi
     layers:
       - state: icon
-        sprite: Objects/Specific/Research/anomalyscanner.rsi
       - map: ["enum.AnomalyScannerVisualLayers.Screen"]
-        shader: unshaded
         visible: false
+        shader: unshaded
       - state: severity_mask
-        sprite: Objects/Specific/Research/anomalyscanner.rsi
         map: ["enum.AnomalyScannerVisualLayers.SeverityMask"]
-        shader: unshaded
         visible: false
-      - state: icon-frame
-        sprite: Objects/Specific/Research/anomalyscanner.rsi
-        map: [ "enum.AnomalyScannerVisualLayers.StabilityFrame" ]
         shader: unshaded
+      - map: ["enum.AnomalyScannerVisualLayers.Stability"]
         visible: false
-      - sprite: Objects/Specific/Research/anomalyscanner.rsi
-        map: ["enum.AnomalyScannerVisualLayers.Stability"]
+        shader: unshaded
+      - visible: false
+        map: ["enum.AnomalyScannerVisualLayers.Pulse"]
+        shader: unshaded
+      - state: supercritical
+        map: ["enum.AnomalyScannerVisualLayers.Supercritical"]
         shader: unshaded
         visible: false
   - type: ActivatableUI
@@ -43,15 +43,29 @@
         enum.AnomalyScannerVisualLayers.SeverityMask:
           True: { visible: true }
           False: { visible: false }
+        enum.AnomalyScannerVisualLayers.Stability:
+          False: { visible: false }
+        enum.AnomalyScannerVisualLayers.Pulse:
+          False: { visible: false }
+        enum.AnomalyScannerVisualLayers.Supercritical:
+          False: { visible: false }
       enum.AnomalyScannerVisuals.AnomalyStability:
-        enum.AnomalyScannerVisualLayers.StabilityFrame:
-          Stable: { visible: false }
-          Decaying: { visible: true }
-          Growing: { visible: true }
         enum.AnomalyScannerVisualLayers.Stability:
           Stable: { visible: false }
           Decaying: { visible: true, state: decaying }
           Growing: { visible: true, state: growing }
+      enum.AnomalyScannerVisuals.AnomalyNextPulse:
+        enum.AnomalyScannerVisualLayers.Pulse:
+          0: { visible: false }
+          1: { visible: true, state: timer_1 }
+          2: { visible: true, state: timer_2 }
+          3: { visible: true, state: timer_3 }
+          4: { visible: true, state: timer_4 }
+          5: { visible: true, state: timer_5 }
+      enum.AnomalyScannerVisuals.AnomalyIsSupercritical:
+        enum.AnomalyScannerVisualLayers.Supercritical:
+          True: { visible: true }
+          False: { visible: false }
   - type: AnomalyScanner
   - type: GuideHelp
     guides:

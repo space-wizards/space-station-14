@@ -136,6 +136,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         var super = AddComp<AnomalySupercriticalComponent>(ent);
         super.EndTime = Timing.CurTime + super.SupercriticalDuration;
         Appearance.SetData(ent, AnomalyVisuals.Supercritical, true);
+        SetScannerSupercritical((ent, ent.Comp), true);
         Dirty(ent, super);
     }
 
@@ -336,7 +337,10 @@ public abstract class SharedAnomalySystem : EntitySystem
                 ChangeAnomalyHealth(ent, anomaly.HealthChangePerSecond * frameTime, anomaly);
             }
 
-            if (Timing.CurTime > anomaly.NextPulseTime)
+            var secondsUntilNextPulse = (anomaly.NextPulseTime - Timing.CurTime).TotalSeconds;
+            UpdateScannerPulseTimers((ent, anomaly),  secondsUntilNextPulse);
+
+            if (secondsUntilNextPulse < 0)
             {
                 DoAnomalyPulse(ent, anomaly);
             }
@@ -359,6 +363,34 @@ public abstract class SharedAnomalySystem : EntitySystem
                 continue;
             DoAnomalySupercriticalEvent(ent, anom);
             // Removal of the supercritical component is handled by DoAnomalySupercriticalEvent
+        }
+    }
+
+    private void UpdateScannerPulseTimers(Entity<AnomalyComponent> anomalyEnt, double secondsUntilNextPulse)
+    {
+        if (secondsUntilNextPulse > 5)
+            return;
+        var rounded = Math.Max(0, (int)Math.Ceiling(secondsUntilNextPulse));
+
+        var scannerQuery = EntityQueryEnumerator<AnomalyScannerComponent>();
+        while (scannerQuery.MoveNext(out var scannerUid, out var scanner))
+        {
+            if (scanner.ScannedAnomaly != anomalyEnt)
+                continue;
+
+            Appearance.SetData(scannerUid, AnomalyScannerVisuals.AnomalyNextPulse, rounded);
+        }
+    }
+
+    private void SetScannerSupercritical(Entity<AnomalyComponent> anomalyEnt, bool value)
+    {
+        var scannerQuery = EntityQueryEnumerator<AnomalyScannerComponent>();
+        while (scannerQuery.MoveNext(out var scannerUid, out var scanner))
+        {
+            if (scanner.ScannedAnomaly != anomalyEnt)
+                continue;
+
+            Appearance.SetData(scannerUid, AnomalyScannerVisuals.AnomalyIsSupercritical, value);
         }
     }
 

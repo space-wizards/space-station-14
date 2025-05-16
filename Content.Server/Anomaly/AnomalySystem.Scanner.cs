@@ -1,4 +1,5 @@
 using Content.Server.Anomaly.Components;
+using Content.Server.Anomaly.Effects;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.DoAfter;
@@ -14,6 +15,8 @@ namespace Content.Server.Anomaly;
 public sealed partial class AnomalySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SecretDataAnomalySystem _secretData = default!;
+
     private void InitializeScanner()
     {
         SubscribeLocalEvent<AnomalyScannerComponent, BoundUIOpenedEvent>(OnScannerUiOpened);
@@ -35,33 +38,35 @@ public sealed partial class AnomalySystem
 
             _ui.CloseUi(uid, AnomalyScannerUiKey.Key);
             _appearance.SetData(uid, AnomalyScannerVisuals.HasAnomaly, false);
+            _appearance.SetData(uid, AnomalyScannerVisuals.AnomalyIsSupercritical, false);
+            _appearance.SetData(uid, AnomalyScannerVisuals.AnomalyNextPulse, 0);
         }
 
     }
 
     private void OnScannerAnomalySeverityChanged(ref AnomalySeverityChangedEvent args)
     {
+        var severity = _secretData.IsSecret(args.Anomaly, AnomalySecretData.Severity) ? 0 : args.Severity;
         var query = EntityQueryEnumerator<AnomalyScannerComponent>();
         while (query.MoveNext(out var uid, out var component))
         {
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
             UpdateScannerUi(uid, component);
-            _appearance.SetData(uid, AnomalyScannerVisuals.AnomalySeverity, args.Severity);
-            // RaiseNetworkEvent(new AnomalyChangedEvent(GetNetEntity(uid), args.Severity));
+            _appearance.SetData(uid, AnomalyScannerVisuals.AnomalySeverity, severity);
         }
     }
 
     private void OnScannerAnomalyStabilityChanged(ref AnomalyStabilityChangedEvent args)
     {
+        var stability = _secretData.IsSecret(args.Anomaly, AnomalySecretData.Stability) ? AnomalyStabilityVisuals.Stable : GetStabilityVisualOrStable(args.Anomaly);
         var query = EntityQueryEnumerator<AnomalyScannerComponent>();
         while (query.MoveNext(out var uid, out var component))
         {
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
             UpdateScannerUi(uid, component);
-            // RaiseNetworkEvent(new AnomalyChangedEvent(GetNetEntity(uid), args.Severity));
-            _appearance.SetData(uid, AnomalyScannerVisuals.AnomalyStability, GetStabilityVisualOrStable(args.Anomaly));
+            _appearance.SetData(uid, AnomalyScannerVisuals.AnomalyStability, stability);
         }
     }
 
@@ -84,6 +89,7 @@ public sealed partial class AnomalySystem
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
             UpdateScannerUi(uid, component);
+            // TODO: change hidden fields here
         }
     }
 
@@ -144,9 +150,12 @@ public sealed partial class AnomalySystem
         UpdateScannerUi(scanner, scannerComp);
         AppearanceComponent? appearanceComp = null;
         _appearance.SetData(scanner, AnomalyScannerVisuals.HasAnomaly, true, appearanceComp);
-        _appearance.SetData(scanner, AnomalyScannerVisuals.AnomalyStability, GetStabilityVisualOrStable((anomaly, anomalyComp)), appearanceComp);
-        _appearance.SetData(scanner, AnomalyScannerVisuals.AnomalySeverity, anomalyComp.Severity, appearanceComp);
-        // RaiseNetworkEvent(new AnomalyChangedEvent(GetNetEntity(scanner), anomalyComp.Severity));
+        var stability = _secretData.IsSecret(anomaly, AnomalySecretData.Stability)
+            ? AnomalyStabilityVisuals.Stable
+            : GetStabilityVisualOrStable((anomaly, anomalyComp));
+        _appearance.SetData(scanner, AnomalyScannerVisuals.AnomalyStability, stability, appearanceComp);
+        var severity = _secretData.IsSecret(anomaly, AnomalySecretData.Severity) ? 0 : anomalyComp.Severity;
+        _appearance.SetData(scanner, AnomalyScannerVisuals.AnomalySeverity, severity, appearanceComp);
     }
 
     public FormattedMessage GetScannerMessage(AnomalyScannerComponent component)

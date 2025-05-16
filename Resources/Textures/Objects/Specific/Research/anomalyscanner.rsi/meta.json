@@ -38,6 +38,27 @@
     },
     {
       "name": "icon-frame"
+    },
+    {
+      "name": "timer_1"
+    },
+    {
+      "name": "timer_2"
+    },
+    {
+      "name": "timer_3"
+    },
+    {
+      "name": "timer_4"
+    },
+    {
+      "name": "timer_5"
+    },
+    {
+      "name": "supercritical",
+      "delays": [
+        [ 0.125, 0.125, 0.125, 0.125 ]
+      ]
     }
   ]
 }
