@@ -1302,7 +1302,7 @@
   name: force wall
   components:
     - type: TimedDespawn
-      lifetime: 12
+      lifetime: 10
     - type: Tag
       tags:
         - Wall
