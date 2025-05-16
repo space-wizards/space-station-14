@@ -24,14 +24,19 @@ namespace Content.Shared.Clothing.Components
         public string? ChatName = "Security Hailer";
 
         /// <summary>
+        /// Is it emagged, causing particuliar hails ?
+        /// </summary>
+        [DataField]
+        public bool Emagged = false;
+
+        /// <summary>
         /// How aggresive are the orders coming from the hailer ? Higher means more aggressive / shitsec
         /// </summary>
         public enum AggresionState : byte
         {
             Low = 0,
             Medium = 1,
-            High = 2,
-            Emag = 3
+            High = 2
         }
 
         [DataField, AutoNetworkedField]

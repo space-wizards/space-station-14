@@ -4,7 +4,8 @@ hail-medium-0 = Stop breaking the law asshole!!
 hail-medium-1 = My batong is itching!!
 hail-high-0 = Go on, mald about it!!
 hail-high-1 = You have the right to shut the fuck up!!
-
+hail-emag-0 = LOLOLOLOLOL!!
+hail-emag-1 = 010101010101110101001!!
 
 hail-0 = You have the right to remain silent... forever!!
 hail-1 = Dead or alive, you're coming with me!!

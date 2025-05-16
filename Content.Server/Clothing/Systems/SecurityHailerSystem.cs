@@ -39,8 +39,7 @@ namespace Content.Server.Clothing.Systems
         private bool SayChatMessage(Entity<SecurityHailerComponent> ent, ActionSecHailerActionEvent ev, int index)
         {
             //Make a chat line with the sec hailer as speaker, in bold and UPPERCASE for added impact
-            string ftlLine = $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}"; //hail-aggression_level_index
-            Log.Debug(ftlLine);
+            string ftlLine = ent.Comp.Emagged ? $"hail-emag-{index}" : $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}"; //hail - aggression_level/emag - index
             _chat.TrySendInGameICMessage(ev.Performer, Loc.GetString(ftlLine).ToUpper(), InGameICChatType.Speak, hideChat: false, hideLog: true, nameOverride: ent.Comp.ChatName, checkRadioPrefix: false);
             return true;
         }
@@ -48,13 +47,19 @@ namespace Content.Server.Clothing.Systems
         private int PlaySoundEffect(Entity<SecurityHailerComponent> ent)
         {
             var (uid, comp) = ent;
-            var currentSpecifier = comp.AggresionLevel switch
+
+            SoundSpecifier currentSpecifier;
+            if (ent.Comp.Emagged)
+                currentSpecifier = ent.Comp.EmagAggressionSounds;
+            else
             {
-                SecurityHailerComponent.AggresionState.Medium => comp.MediumAggressionSounds,
-                SecurityHailerComponent.AggresionState.High => comp.HighAggressionSounds,
-                SecurityHailerComponent.AggresionState.Emag => comp.EmagAggressionSounds,
-                _ => comp.LowAggressionSounds,
-            };
+                currentSpecifier = comp.AggresionLevel switch
+                {
+                    SecurityHailerComponent.AggresionState.Medium => comp.MediumAggressionSounds,
+                    SecurityHailerComponent.AggresionState.High => comp.HighAggressionSounds,
+                    _ => comp.LowAggressionSounds,
+                };
+            }
             var resolver = _audio.ResolveSound(currentSpecifier);
             if (resolver is not ResolvedCollectionSpecifier collectionResolver)
                 return -1;

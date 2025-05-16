@@ -75,14 +75,37 @@ namespace Content.Shared.Clothing.EntitySystems
                 return;
 
             //Is it a wirecutter, a screwdriver or an EMAG ?
-            if (!(_toolSystem.HasQuality(args.Used, SharedToolSystem.PulseQuality)
-                || _toolSystem.HasQuality(args.Used, SharedToolSystem.CutQuality)
-                || _toolSystem.HasQuality(args.Used, SharedToolSystem.ScrewQuality)))
-                //TODO: ADD EMAG
+            if (_toolSystem.HasQuality(args.Used, SharedToolSystem.CutQuality))
+                OnInteractCutting(ent, args);
+            else if (_toolSystem.HasQuality(args.Used, SharedToolSystem.ScrewQuality))
+                OnInteractScrewing(ent, args);
+            else if (false) //TODO: ADD EMAG
+                OnInteractEmag(ent, args);
+            else
                 return;
+        }
+        private void OnInteractCutting(Entity<SecurityHailerComponent> ent, InteractUsingEvent args)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OnInteractScrewing(Entity<SecurityHailerComponent> ent, InteractUsingEvent args)
+        {
+            //If it's emagged we don't change it
+            if (ent.Comp.Emagged)
+                return;
+            var comp = ent.Comp;
+
+            if (comp.AggresionLevel == SecurityHailerComponent.AggresionState.High)
+                comp.AggresionLevel = SecurityHailerComponent.AggresionState.Low;
+            else
+                comp.AggresionLevel++;
+        }
 
 
-            Log.Debug("is it a screwdriver ? :" + args.Used.Id);
+        private void OnInteractEmag(Entity<SecurityHailerComponent> ent, InteractUsingEvent args)
+        {
+            throw new NotImplementedException();
         }
     }
 }
