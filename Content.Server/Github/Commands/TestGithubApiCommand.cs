@@ -55,50 +55,50 @@ public sealed class TestGithubApiCommand : LocalizedEntityCommands
 
         // Rate limit request
         var rateLimitRequest = new GetRateLimit();
-        var rateLimitResponse = await _git.TryMakeRequest(rateLimitRequest);
+        var rateLimitResponse = _git.TryMakeRequest(rateLimitRequest);
 
-        if (rateLimitResponse == null)
+        if (rateLimitResponse == false)
         {
             shell.WriteError(Loc.GetString("github-command-could-not-request"));
             return;
         }
 
-        var rateLimitRespJson = await rateLimitResponse.Content.ReadFromJsonAsync<RateLimitResponse>();
+        // var rateLimitRespJson = await rateLimitResponse.Content.ReadFromJsonAsync<RateLimitResponse>();
+        //
+        // if (rateLimitRespJson == null || !rateLimitRequest.GetExpectedResponseCodes().Contains(rateLimitResponse.StatusCode))
+        // {
+        //     shell.WriteError(Loc.GetString("github-command-rate-limit-resp-fail", ("error", rateLimitResponse.StatusCode)));
+        //     return;
+        // }
 
-        if (rateLimitRespJson == null || !rateLimitRequest.GetExpectedResponseCodes().Contains(rateLimitResponse.StatusCode))
-        {
-            shell.WriteError(Loc.GetString("github-command-rate-limit-resp-fail", ("error", rateLimitResponse.StatusCode)));
-            return;
-        }
+        // var remainingRequests = rateLimitRespJson.Resources.Core.Remaining;
 
-        var remainingRequests = rateLimitRespJson.Resources.Core.Remaining;
+        // if (remainingRequests == 0)
+        // {
+        //     shell.WriteError("github-command-rate-limit-limit-reached");
+        //     return;
+        // }
 
-        if (remainingRequests == 0)
-        {
-            shell.WriteError("github-command-rate-limit-limit-reached");
-            return;
-        }
-
-        shell.WriteLine(Loc.GetString("github-command-rate-limit-success", ("rateLimit", remainingRequests.ToString())));
+        // shell.WriteLine(Loc.GetString("github-command-rate-limit-success", ("rateLimit", remainingRequests.ToString())));
 
         // Make zen request
-        var zenRequest = new GetZen();
-        var zenResponse = await _git.TryMakeRequest(zenRequest);
-
-        if (zenResponse == null)
-        {
-            shell.WriteError(Loc.GetString("github-command-could-not-request"));
-            return;
-        }
-
-        if (!rateLimitRequest.GetExpectedResponseCodes().Contains(zenResponse.StatusCode))
-        {
-            shell.WriteError(Loc.GetString("github-command-zen-failure", ("error", zenResponse.StatusCode)));
-            return;
-        }
-
-        var zenText = await zenResponse.Content.ReadAsStringAsync();
-        shell.WriteLine(Loc.GetString("github-command-zen-success", ("zen", zenText)));
+        // var zenRequest = new GetZen();
+        // var zenResponse = await _git.TryMakeRequest(zenRequest);
+        //
+        // if (zenResponse == null)
+        // {
+        //     shell.WriteError(Loc.GetString("github-command-could-not-request"));
+        //     return;
+        // }
+        //
+        // if (!rateLimitRequest.GetExpectedResponseCodes().Contains(zenResponse.StatusCode))
+        // {
+        //     shell.WriteError(Loc.GetString("github-command-zen-failure", ("error", zenResponse.StatusCode)));
+        //     return;
+        // }
+        //
+        // var zenText = await zenResponse.Content.ReadAsStringAsync();
+        // shell.WriteLine(Loc.GetString("github-command-zen-success", ("zen", zenText)));
 
         // Create two issues and send them to the api.
         var request1 = new CreateIssue
@@ -113,28 +113,28 @@ public sealed class TestGithubApiCommand : LocalizedEntityCommands
             Body = Loc.GetString("github-command-issue-description-two"),
         };
 
-        var task1 = _git.TryMakeRequestSafe(request1);
-        var task2 = _git.TryMakeRequestSafe(request2);
+        var task1 = _git.TryMakeRequest(request1);
+        var task2 = _git.TryMakeRequest(request2);
 
-        var response1 = await task1;
-        var response2 = await task2;
-
-        if (response1 == null || response2 == null)
-        {
-            shell.WriteError(Loc.GetString("github-command-could-not-request"));
-            return;
-        }
-
-        if (!request1.GetExpectedResponseCodes().Contains(response1.StatusCode))
-            shell.WriteError(Loc.GetString("github-command-issue-failure", ("error", response1.StatusCode)));
-        else
-            shell.WriteLine(Loc.GetString("github-command-issue-success"));
-
-        if (!request2.GetExpectedResponseCodes().Contains(response2.StatusCode))
-            shell.WriteError(Loc.GetString("github-command-issue-failure", ("error", response2.StatusCode)));
-        else
-            shell.WriteLine(Loc.GetString("github-command-issue-success"));
-
+        // var response1 = await task1;
+        // var response2 = await task2;
+        //
+        // if (response1 == null || response2 == null)
+        // {
+        //     shell.WriteError(Loc.GetString("github-command-could-not-request"));
+        //     return;
+        // }
+        //
+        // if (!request1.GetExpectedResponseCodes().Contains(response1.StatusCode))
+        //     shell.WriteError(Loc.GetString("github-command-issue-failure", ("error", response1.StatusCode)));
+        // else
+        //     shell.WriteLine(Loc.GetString("github-command-issue-success"));
+        //
+        // if (!request2.GetExpectedResponseCodes().Contains(response2.StatusCode))
+        //     shell.WriteError(Loc.GetString("github-command-issue-failure", ("error", response2.StatusCode)));
+        // else
+        //     shell.WriteLine(Loc.GetString("github-command-issue-success"));
+        //
 
         shell.WriteLine(Loc.GetString("github-command-finish"));
     }

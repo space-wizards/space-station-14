@@ -113,12 +113,12 @@ public sealed class GithubRateLimiter : IPostInjectInit
         if (statusCode == HttpStatusCode.Forbidden || statusCode == HttpStatusCode.TooManyRequests)
         {
             // Retry after header
-            if (GithubApiManager.TryGetLongHeader(headers, RetryAfterHeader) is { } retryAfterSeconds)
+            if (GithubQueueHandler.TryGetLongHeader(headers, RetryAfterHeader) is { } retryAfterSeconds)
                 return DateTime.UtcNow.AddSeconds(retryAfterSeconds + ExtraBufferTime);
 
             // Reset header (Tells us when we get more api credits)
-            if (GithubApiManager.TryGetLongHeader(headers, RemainingHeader) is { } remainingRequests &&
-                GithubApiManager.TryGetLongHeader(headers, RateLimitResetHeader) is { } resetTime &&
+            if (GithubQueueHandler.TryGetLongHeader(headers, RemainingHeader) is { } remainingRequests &&
+                GithubQueueHandler.TryGetLongHeader(headers, RateLimitResetHeader) is { } resetTime &&
                 remainingRequests == 0)
             {
                 var delayTime = resetTime - DateTimeOffset.UtcNow.ToUnixTimeSeconds();
