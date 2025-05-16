@@ -1,12 +1,16 @@
 using System.Linq;
+using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
+using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Labels.EntitySystems;
+using Content.Shared.Radio;
 using Content.Shared.Salvage.JobBoard;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Salvage.JobBoard;
 
@@ -15,8 +19,14 @@ public sealed class SalvageJobBoardSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly CargoSystem _cargo = default!;
     [Dependency] private readonly LabelSystem _label = default!;
+    [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+
+    /// <summary>
+    /// Radio channel that unlock messages are broadcast on.
+    /// </summary>
+    public static ProtoId<RadioChannelPrototype> UnlockChannel = "Supply";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -120,7 +130,11 @@ public sealed class SalvageJobBoardSystem : EntitySystem
 
         var jobProto = _prototypeManager.Index(job);
 
+        var oldRank = GetRank(ent);
+
         ent.Comp.CompletedJobs.Add(job);
+
+        var newRank = GetRank(ent);
 
         // Add reward
         if (TryComp<StationBankAccountComponent>(ent, out var stationBankAccount))
@@ -131,7 +145,30 @@ public sealed class SalvageJobBoardSystem : EntitySystem
                 _cargo.CreateAccountDistribution((ent,  stationBankAccount)));
         }
 
-        // TODO: implement unlocking cargo orders
+        // We ranked up!
+        if (oldRank != newRank)
+        {
+            // We need to find a computer to send the message from.
+            var computerQuery = EntityQueryEnumerator<SalvageJobBoardConsoleComponent>();
+            while (computerQuery.MoveNext(out var uid, out _))
+            {
+                var message = Loc.GetString("job-board-radio-announce", ("rank", FormattedMessage.RemoveMarkupPermissive(Loc.GetString(newRank.Title))));
+                _radio.SendRadioMessage(uid, message, UnlockChannel, uid, false);
+                break;
+            }
+
+            if (newRank.UnlockedMarket is { } market &&
+                TryComp<StationCargoOrderDatabaseComponent>(ent, out var stationCargoOrder))
+            {
+                stationCargoOrder.Markets.Add(market);
+            }
+        }
+
+        var enumerator = EntityQueryEnumerator<SalvageJobBoardConsoleComponent>();
+        while (enumerator.MoveNext(out var consoleUid, out var console))
+        {
+            UpdateUi((consoleUid, console), ent);
+        }
 
         return true;
     }
@@ -145,7 +182,11 @@ public sealed class SalvageJobBoardSystem : EntitySystem
             !TryComp<SalvageJobsDataComponent>(station, out var jobData))
             return;
 
-        var stationEnt = (Entity<SalvageJobsDataComponent>) (station, jobData);
+        UpdateUi(ent, (station, jobData));
+    }
+
+    private void UpdateUi(Entity<SalvageJobBoardConsoleComponent> ent, Entity<SalvageJobsDataComponent> stationEnt)
+    {
         var jobs = GetAvailableJobs(stationEnt);
 
         var state = new SalvageJobBoardConsoleState(

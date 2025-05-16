@@ -1229,6 +1229,8 @@
         type: SalvageJobBoardBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
+  - type: ActiveRadio
+    channels: [ Supply ]
   - type: Computer
     board: SalvageJobBoardComputerCircuitboard
   - type: PointLight
