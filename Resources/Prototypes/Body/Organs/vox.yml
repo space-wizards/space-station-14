@@ -27,7 +27,7 @@
     specialDigestible:
       tags:
       - Trash
-    isSpecialDigestiableExclusive: false
+    isSpecialDigestibleExclusive: false
 
 - type: entity
   parent: OrganHumanLiver
