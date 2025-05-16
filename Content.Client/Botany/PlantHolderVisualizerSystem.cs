@@ -38,7 +38,7 @@ public sealed class PlantHolderVisualizerSystem : VisualizerSystem<PlantHolderVi
 
             if (valid)
             {
-                _sprite.LayerSetRsi((uid, args.Sprite), (int)PlantHolderLayers.Plant, new ResPath(rsi));
+                _sprite.LayerSetRsi((uid, args.Sprite), PlantHolderLayers.Plant, new ResPath(rsi));
                 _sprite.LayerSetRsiState((uid, args.Sprite), PlantHolderLayers.Plant, state);
             }
         }
