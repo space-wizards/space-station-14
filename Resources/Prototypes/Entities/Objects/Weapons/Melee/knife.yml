@@ -43,6 +43,10 @@
     state: icon
   - type: Item
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 8
   - type: GuideHelp
     guides:
     - Chef
@@ -67,6 +71,10 @@
     damage:
       types:
         Slash: 13
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 10
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/cleaver.rsi
