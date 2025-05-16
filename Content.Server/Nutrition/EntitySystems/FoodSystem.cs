@@ -133,9 +133,6 @@ public sealed class FoodSystem : EntitySystem
         if (!TryGetRequiredUtensils(user, foodComp, out _))
             return (false, false);
 
-        //if (!SpecialDigestibleExclusive(food, foodComp, stomachs))
-        //    return (false, false);
-
         // Check for used storage on the food item
         if (TryComp<StorageComponent>(food, out var storageState) && storageState.Container.ContainedEntities.Any())
         {
@@ -560,28 +557,4 @@ public sealed class FoodSystem : EntitySystem
 
         return Math.Max(1, (int) Math.Ceiling((solution.Volume / (FixedPoint2) comp.TransferAmount).Float()));
     }
-/*
-    private bool SpecialDigestibleExclusive(EntityUid food, FoodComponent component, List<Entity<StomachComponent, OrganComponent>> stomachs)
-    {
-        var digestible = true;
-
-        // Does the mob have enough stomachs?
-        if (stomachs.Count < component.RequiredStomachs)
-            return false;
-
-        if (component.RequiresSpecialDigestion)
-        {
-            // Run through the mobs' stomachs
-            foreach (var ent in stomachs)
-            {
-                // Find a stomach with a SpecialDigestible
-                if (ent.Comp1.SpecialDigestible == null)
-                    continue;
-                // Check if the food is in the whitelist
-                if (_whitelistSystem.IsWhitelistPass(ent.Comp1.SpecialDigestible, food))
-                    return true;
-            }
-        }
-        return digestible;
-    }*/
 }
