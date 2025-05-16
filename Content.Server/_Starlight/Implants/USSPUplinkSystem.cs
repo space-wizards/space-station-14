@@ -177,12 +177,12 @@ namespace Content.Server.Implants
                 {
                     if (!store.Balance.ContainsKey("Telebond"))
                     {
-                        store.Balance["Telebond"] = FixedPoint2.New(1);
+                        store.Balance["Telebond"] = FixedPoint2.Zero;
                     }
                     
                     if (!store.Balance.ContainsKey("Conversion"))
                     {
-                        store.Balance["Conversion"] = FixedPoint2.New(1);
+                        store.Balance["Conversion"] = FixedPoint2.Zero;
                     }
                 }
                 
@@ -307,12 +307,12 @@ namespace Content.Server.Implants
                     // Make sure the store has both currencies initialized
                     if (!store.Balance.ContainsKey("Telebond"))
                     {
-                        store.Balance["Telebond"] = FixedPoint2.New(1);
+                        store.Balance["Telebond"] = FixedPoint2.Zero;
                     }
                     
                     if (!store.Balance.ContainsKey("Conversion"))
                     {
-                        store.Balance["Conversion"] = FixedPoint2.New(1);
+                        store.Balance["Conversion"] = FixedPoint2.Zero;
                     }
                     
                     // Find all uplinks owned by the same head revolutionary and get the maximum currency values
@@ -511,17 +511,17 @@ namespace Content.Server.Implants
         }
         
         // Also show popup to all revolutionaries with implants
-        var revQuery = EntityManager.EntityQuery<RevolutionaryComponent, HeadRevolutionaryImplantComponent>();
-        foreach (var (_, revImplant) in revQuery)
-        {
-            if (revImplant.ImplantUid != null && 
-                EntityManager.EntityExists(revImplant.ImplantUid.Value) &&
-                TryComp<StoreComponent>(revImplant.ImplantUid.Value, out var store))
-            {
-                var conversionValue = store.Balance.GetValueOrDefault("Conversion", FixedPoint2.New(1));
-                _popup.PopupEntity(Loc.GetString($"+1 Conversion (Total: {conversionValue})"), revImplant.Owner, revImplant.Owner, PopupType.Medium);
-            }
-        }
+        // var revQuery = EntityManager.EntityQuery<RevolutionaryComponent, HeadRevolutionaryImplantComponent>();
+        // foreach (var (_, revImplant) in revQuery)
+        // {
+        //     if (revImplant.ImplantUid != null && 
+        //         EntityManager.EntityExists(revImplant.ImplantUid.Value) &&
+        //         TryComp<StoreComponent>(revImplant.ImplantUid.Value, out var store))
+        //     {
+        //         var conversionValue = store.Balance.GetValueOrDefault("Conversion", FixedPoint2.New(1));
+        //         _popup.PopupEntity(Loc.GetString($"+1 Conversion (Total: {conversionValue})"), revImplant.Owner, revImplant.Owner, PopupType.Medium);
+        //     }
+        // }
     }
         
         /// <summary>

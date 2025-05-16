@@ -379,7 +379,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                         }
                         
                         // Show popup to the head revolutionary (private)
-                        _popup.PopupEntity(Loc.GetString($"+1 Telebond (Total: {finalTelebond})"), ev.User.Value, ev.User.Value, PopupType.Large);
+                        _popup.PopupEntity(Loc.GetString($"+1 Telebond (Total: {finalTelebond})"), ev.User.Value, ev.User.Value, PopupType.Medium);
                         
                         // If the uplink is implanted in someone else, show them a popup too
                         if (TryComp<SubdermalImplantComponent>(uplinkUid.Value, out var implant) && 
