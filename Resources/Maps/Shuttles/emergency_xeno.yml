@@ -4,8 +4,8 @@ meta:
   engineVersion: 259.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/16/2025 15:59:25
-  entityCount: 997
+  time: 05/16/2025 17:04:48
+  entityCount: 998
 maps: []
 grids:
 - 2
@@ -915,6 +915,12 @@ entities:
     components:
     - type: Transform
       pos: 0.5,-11.5
+      parent: 2
+  - uid: 998
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 17.5,1.5
       parent: 2
 - proto: BaseComputer
   entities:
