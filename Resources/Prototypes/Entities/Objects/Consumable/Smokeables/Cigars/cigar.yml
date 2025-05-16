@@ -36,6 +36,11 @@
     solutions:
       smokable:
         maxVol: 20
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
   - type: Tag
     tags:
       - Cigar

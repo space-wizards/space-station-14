@@ -15,11 +15,6 @@
     solutions:
       drink:
         maxVol: 100
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: ToxinTrash
-          Quantity: 5
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5
@@ -77,9 +72,6 @@
   - type: Tag
     tags:
     - Trash
-  - type: Food
-    requiresSpecialDigestion: true
-
   - type: PhysicalComposition
     materialComposition:
       Glass: 100
@@ -98,11 +90,6 @@
     solutions:
       drink:
         maxVol: 50
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: ToxinTrash
-          Quantity: 5
 
 - type: entity
   name: base empty carton
@@ -118,11 +105,6 @@
     solutions:
       drink:
         maxVol: 50
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: ToxinTrash
-          Quantity: 5
   - type: MixableSolution
     solution: drink
   - type: SolutionTransfer
@@ -157,8 +139,6 @@
   - type: Tag
     tags:
     - Trash
-  - type: Food
-    requiresSpecialDigestion: true
   - type: PhysicalComposition
     materialComposition:
       Cardboard: 20
@@ -176,11 +156,6 @@
     solutions:
       drink:
         maxVol: 100
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: ToxinTrash
-          Quantity: 5
 
 # Containers
 - type: entity

@@ -28,6 +28,11 @@
         reagents:
           - ReagentId: THC
             Quantity: 20
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
   - type: RandomMetadata
     nameSegments: [NamesRollie]
 
@@ -58,6 +63,11 @@
 #         Quantity: 1.33
         - ReagentId: Psicodine
           Quantity: 0.8
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
 
 - type: entity
   id: Blunt
@@ -119,3 +129,8 @@
 #         Quantity: 1.33
         - ReagentId: Psicodine
           Quantity: 0.8
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
