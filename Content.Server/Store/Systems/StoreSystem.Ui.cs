@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
 using Content.Server.PDA.Ringer;
+using Content.Server.Revolutionary;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
@@ -30,6 +31,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly RevSupplyRiftSystem _revSupplyRift = default!;
 
     private void InitializeUi()
     {
@@ -138,6 +140,20 @@ public sealed partial class StoreSystem
         }
 
         var buyer = msg.Actor;
+        
+        // Special handling for RevSupplyRiftListing to prevent spam-clicking
+        if (listing.ID == "RevSupplyRiftListing")
+        {
+            // Check if there's already an active rift being processed or placed
+            if (_revSupplyRift.IsRiftBeingProcessed())
+            {
+                // A rift is already being processed, so cancel this purchase
+                return;
+            }
+            
+            // Mark that we're processing a rift purchase
+            _revSupplyRift.SetRiftProcessing(true);
+        }
 
         //verify that we can actually buy this listing and it wasn't added
         if (!ListingHasCategory(listing, component.Categories))
@@ -275,6 +291,12 @@ public sealed partial class StoreSystem
             StoreUid = uid
         };
         RaiseLocalEvent(ref buyFinished);
+        
+        // If this was a supply rift purchase, mark processing as complete
+        if (listing.ID == "RevSupplyRiftListing")
+        {
+            _revSupplyRift.SetRiftProcessing(false);
+        }
 
         UpdateUserInterface(buyer, uid, component);
     }

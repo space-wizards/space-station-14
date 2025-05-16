@@ -60,6 +60,12 @@ public sealed class RevSupplyRiftSystem : EntitySystem
     /// Tracks whether a rift has been destroyed.
     /// </summary>
     private bool _riftDestroyed = false;
+    
+    /// <summary>
+    /// Flag to track if a rift purchase is currently being processed.
+    /// This prevents multiple rifts from being purchased by spam-clicking.
+    /// </summary>
+    private bool _isProcessingRift = false;
 
     public override void Initialize()
     {
@@ -68,6 +74,25 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         SubscribeLocalEvent<DragonRiftComponent, ComponentStartup>(OnRiftStartup);
         SubscribeLocalEvent<RevSupplyRiftComponent, ComponentStartup>(OnRevRiftStartup);
         SubscribeLocalEvent<RevSupplyRiftComponent, ComponentShutdown>(OnRevRiftShutdown);
+    }
+    
+    /// <summary>
+    /// Checks if a rift purchase is currently being processed.
+    /// </summary>
+    /// <returns>True if a rift is being processed, false otherwise.</returns>
+    public bool IsRiftBeingProcessed()
+    {
+        // Return true if either a rift is currently being processed or there's already an active rift
+        return _isProcessingRift || _activeRift != null;
+    }
+    
+    /// <summary>
+    /// Sets the rift processing flag.
+    /// </summary>
+    /// <param name="isProcessing">Whether a rift is being processed.</param>
+    public void SetRiftProcessing(bool isProcessing)
+    {
+        _isProcessingRift = isProcessing;
     }
 
     private void OnRiftStartup(EntityUid uid, DragonRiftComponent component, ComponentStartup args)
@@ -173,7 +198,7 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         if (TryComp<TransformComponent>(uid, out var transform))
         {
             var soundPath = new SoundPathSpecifier("/Audio/_Starlight/Effects/sov_choir.ogg");
-            _audio.PlayPvs(soundPath, uid, AudioParams.Default.WithMaxDistance(5f).WithVolume(4f));
+            _audio.PlayPvs(soundPath, uid, AudioParams.Default.WithMaxDistance(5f).WithVolume(5f));
         }
     }
 
