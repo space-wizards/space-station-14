@@ -26,6 +26,19 @@
   - type: Tag
     tags:
     - Cake
+  - type: SecretStash
+    maxItemSize: "Normal"
+    secretStashName: secret-stash-cake
+    damageEatenItemInside:
+      types:
+        Slash: 7.5
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: Slicing
+    verbOnly: true
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
 
 - type: entity
   parent: FoodCakeBase
@@ -759,8 +772,8 @@
     speechSounds: Cat
     speechVerb: SmallMob
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5
-    baseSprintSpeed : 3
+    baseWalkSpeed : 3
+    baseSprintSpeed : 5
   - type: Tag
     tags:
     - VimPilot
