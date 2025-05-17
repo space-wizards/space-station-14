@@ -14,43 +14,68 @@ namespace Content.Client.Mapping;
 public sealed partial class MappingPrototypeList : Control
 {
     private (int start, int end) _lastIndices;
-    private readonly List<MappingPrototype> _prototypes = new();
+    private readonly List<MappingPrototype> _allPrototypes = new();
     private readonly List<Texture> _insertTextures = new();
     private readonly List<MappingPrototype> _search = new();
 
     public MappingSpawnButton? Selected;
+    public MappingPrototype FavoritesPrototype;
+    private MappingSpawnButton? _favoriteList;
+
+    /// <summary>
+    ///     if true, elements with no children will be grouped into a grid
+    /// </summary>
+    public bool Gallery { get; set; }
+
+    /// <summary>
+    ///     A color that applies to all textures in the list
+    /// </summary>
+    public Color? TexturesModulate { get; set; }
+
     public Action<IPrototype, List<Texture>>? GetPrototypeData;
-    public event Action<MappingSpawnButton, IPrototype?>? SelectionChanged;
-    public event Action<MappingSpawnButton, ButtonToggledEventArgs>? CollapseToggled;
+    public event Action<MappingPrototypeList, MappingSpawnButton, IPrototype?>? SelectionChanged;
+    public event Action<MappingPrototype>? FavoriteChanged;
 
     public MappingPrototypeList()
     {
         RobustXamlLoader.Load(this);
+        FavoritesPrototype = new MappingPrototype(null, Loc.GetString("mapping-favorite"));
 
         MeasureButton.Measure(Vector2Helpers.Infinity);
 
         ScrollContainer.OnScrolled += UpdateSearch;
+        CollapseAllButton.OnPressed += OnCollapseAll;
+        SearchBar.OnTextChanged += OnSearch;
+        ClearSearchButton.OnPressed += _ => SearchBar.SetText(string.Empty, true);
         OnResized += UpdateSearch;
+
+        CollapseAllButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/collapse.svg.192dpi.png";
+        ClearSearchButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/xmark-solid.svg.192dpi.png";
     }
 
-    public void UpdateVisible(List<MappingPrototype> prototypes)
+    public void UpdateVisible(List<MappingPrototype> prototypes, List<MappingPrototype> allPrototypes)
     {
-        _prototypes.Clear();
-
+        _allPrototypes.Clear();
         PrototypeList.DisposeAllChildren();
-
-        _prototypes.AddRange(prototypes);
+        _allPrototypes.AddRange(allPrototypes);
 
         Selected = null;
         ScrollContainer.SetScrollValue(new Vector2(0, 0));
 
-        foreach (var prototype in _prototypes)
+        _favoriteList = Insert(PrototypeList, FavoritesPrototype, false, false);
+        _favoriteList.CollapseButtonWrapper.Visible = true;
+        _favoriteList.CollapseButton.Visible = true;
+        _favoriteList.FavoriteButton.Visible = false;
+        _favoriteList.CollapseButton.OnToggled += _ => ToggleCollapse(_favoriteList);
+
+        foreach (var prototype in prototypes)
         {
-            Insert(PrototypeList, prototype, true);
+            var insertedButton = Insert(PrototypeList, prototype, true, false);
+            insertedButton.FavoriteButton.Visible = false;
         }
     }
 
-    public MappingSpawnButton Insert(Container list, MappingPrototype mapping, bool includeChildren)
+    private MappingSpawnButton Insert(Container list, MappingPrototype mapping, bool includeChildren, bool galleryLayout)
     {
         var prototype = mapping.Prototype;
 
@@ -61,15 +86,13 @@ public sealed partial class MappingPrototypeList : Control
 
         var button = new MappingSpawnButton { Prototype = mapping };
         button.Label.Text = mapping.Name;
+        button.Button.ToolTip = button.Label.Text;
 
         if (_insertTextures.Count > 0)
         {
-            button.Texture.Textures.AddRange(_insertTextures);
-            button.Texture.InvalidateMeasure();
-        }
-        else
-        {
-            button.Texture.Visible = false;
+            button.SetTextures(_insertTextures);
+            if (TexturesModulate is { } modulate)
+                button.Texture.Modulate = modulate;
         }
 
         if (prototype != null && button.Prototype == Selected?.Prototype)
@@ -80,15 +103,23 @@ public sealed partial class MappingPrototypeList : Control
 
         list.AddChild(button);
 
-        button.Button.OnToggled += _ => SelectionChanged?.Invoke(button, prototype);
+        button.Button.OnToggled += _ => SelectionChanged?.Invoke(this, button, prototype);
+        button.FavoriteButton.OnToggled += _ => OnFavoriteToggle(button);
+        FavoriteChanged += proto =>
+        {
+            if (proto == button.Prototype)
+                button.ToggleFavorite(proto.Favorite);
+        };
 
         if (includeChildren && mapping.Children?.Count > 0)
         {
             button.CollapseButton.Visible = true;
-            button.CollapseButton.OnToggled += args => CollapseToggled?.Invoke(button, args);
+            button.CollapseButton.OnToggled += _ => ToggleCollapse(button);
         }
         else
         {
+            if (galleryLayout)
+                button.Gallery();
             button.CollapseButtonWrapper.Visible = false;
             button.CollapseButton.Visible = false;
         }
@@ -96,7 +127,7 @@ public sealed partial class MappingPrototypeList : Control
         return button;
     }
 
-    public void Search(List<MappingPrototype> prototypes)
+    private void Search(List<MappingPrototype> prototypes)
     {
         _search.Clear();
         SearchList.DisposeAllChildren();
@@ -158,13 +189,126 @@ public sealed partial class MappingPrototypeList : Control
         // insert buttons that can now be seen, from the start
         for (var i = Math.Min(prevStart - 1, endIndex); i >= startIndex; i--)
         {
-            Insert(SearchList, _search[i], false).SetPositionInParent(0);
+            Insert(SearchList, _search[i], false, false).SetPositionInParent(0);
         }
 
         // insert buttons that can now be seen, from the end
         for (var i = Math.Max(prevEnd + 1, startIndex); i <= endIndex; i++)
         {
-            Insert(SearchList, _search[i], false);
+            Insert(SearchList, _search[i], false, false);
         }
+    }
+
+    private void OnCollapseAll(ButtonEventArgs args)
+    {
+        foreach (var child in PrototypeList.Children)
+        {
+            if (child is not MappingSpawnButton button)
+                continue;
+
+            button.Collapse();
+        }
+
+        ScrollContainer.SetScrollValue(Vector2.Zero);
+    }
+
+    public void ToggleCollapse(MappingSpawnButton button)
+    {
+        if (!button.CollapseButton.Pressed)
+        {
+            button.Collapse();
+            return;
+        }
+
+        if (button.Prototype?.Children == null)
+            return;
+
+        button.UnCollapse();
+        foreach (var child in button.Prototype.Children)
+        {
+            if (child.Children == null && Gallery)
+                Insert(button.ChildrenPrototypesGallery, child, false, true);
+            else
+                Insert(button.ChildrenPrototypes, child, true, false);
+        }
+    }
+
+    private void OnSearch(LineEdit.LineEditEventArgs args)
+    {
+        if (string.IsNullOrEmpty(args.Text))
+        {
+            PrototypeList.Visible = true;
+            SearchList.Visible = false;
+            return;
+        }
+
+        var matches = new List<MappingPrototype>();
+        foreach (var prototype in _allPrototypes)
+        {
+            if (prototype.Prototype != null &&
+                (prototype.Name.Contains(args.Text, StringComparison.OrdinalIgnoreCase) ||
+                prototype.Prototype.ID.Contains(args.Text, StringComparison.OrdinalIgnoreCase)))
+                matches.Add(prototype);
+        }
+
+        matches.Sort(static (a, b) =>
+            string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase));
+
+        PrototypeList.Visible = false;
+        SearchList.Visible = true;
+        Search(matches);
+    }
+
+    private void OnFavoriteToggle(MappingSpawnButton button)
+    {
+        if (button.Prototype is not { } prototype || _favoriteList == null)
+            return;
+
+        FavoritesPrototype.Children ??= [];
+        if (button.FavoriteButton.Pressed)
+        {
+            if (prototype.Favorite)
+                return;
+
+            if (!FavoritesPrototype.Children.Contains(prototype))
+                FavoritesPrototype.Children.Add(prototype);
+
+            if (_favoriteList.CollapseButton.Pressed)
+            {
+                prototype.Favorite = true;
+                var insertedButton =
+                    prototype.Children == null && Gallery
+                        ? Insert(_favoriteList.ChildrenPrototypesGallery, prototype, false, true)
+                        : Insert(_favoriteList.ChildrenPrototypes, prototype, true, false);
+
+                insertedButton.ToggleFavorite(true);
+            }
+        }
+        else
+        {
+            if (!prototype.Favorite)
+                return;
+
+            FavoritesPrototype.Children.Remove(prototype);
+            if (_favoriteList.CollapseButton.Pressed)
+            {
+                var lists = new List<Container> { _favoriteList.ChildrenPrototypes, _favoriteList.ChildrenPrototypesGallery };
+                foreach (var list in lists)
+                {
+                    foreach (var child in list.Children)
+                    {
+                        if (child is not MappingSpawnButton childButton
+                            || childButton.Prototype != prototype)
+                            continue;
+
+                        list.RemoveChild(childButton);
+                        break;
+                    }
+                }
+            }
+        }
+
+        prototype.Favorite = button.FavoriteButton.Pressed;
+        FavoriteChanged?.Invoke(prototype);
     }
 }
