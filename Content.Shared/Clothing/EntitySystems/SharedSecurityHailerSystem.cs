@@ -78,7 +78,7 @@ namespace Content.Shared.Clothing.EntitySystems
                     continue;
 
                 //We don't want to ping user of whistle
-                if (iterator.Owner == uid)
+                if (iterator.Owner == _wearer)
                     continue;
 
                 SpawnAttachedTo(comp.ExclamationEffect, iterator.Owner.ToCoordinates());
