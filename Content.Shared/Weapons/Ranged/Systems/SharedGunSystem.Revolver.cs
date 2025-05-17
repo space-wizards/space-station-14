@@ -1,3 +1,5 @@
+using System.Linq;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
@@ -6,11 +8,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System;
-using System.Linq;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Wieldable;
-using Content.Shared.Wieldable.Components;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
@@ -440,13 +437,13 @@ public partial class SharedGunSystem
             component.AmmoSlots.Add(null);
         }
 
-        component.Chambers = new bool?[component.Capacity];
-
-        if (component.FillPrototype != null)
+        // Set chambers to default if they are not equal to the capacity or empty them if protoId is null.
+        if (component.Chambers.Length != component.Capacity || component.FillPrototype == null)
         {
+            component.Chambers = new bool?[component.Capacity];
             for (var i = 0; i < component.Capacity; i++)
             {
-                if (component.AmmoSlots[i] != null)
+                if (component.AmmoSlots[i] != null || component.FillPrototype == null)
                 {
                     component.Chambers[i] = null;
                     continue;
