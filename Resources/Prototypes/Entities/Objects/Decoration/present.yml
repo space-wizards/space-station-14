@@ -198,7 +198,7 @@
         orGroup: GiftPool
       - id: ClothingNeckCloakAdmin
         orGroup: GiftPool
-      - id: ToySkeleton
+      - id: ToyFigurineSkeleton
         orGroup: GiftPool
       - id: Basketball
         orGroup: GiftPool

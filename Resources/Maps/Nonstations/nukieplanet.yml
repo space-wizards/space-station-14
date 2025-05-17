@@ -13722,7 +13722,7 @@ entities:
     - type: Transform
       pos: 12.453509,14.985125
       parent: 104
-- proto: ToySkeleton
+- proto: ToyFigurineSkeleton
   entities:
   - uid: 17
     components:
