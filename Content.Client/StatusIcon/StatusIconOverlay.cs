@@ -121,6 +121,7 @@ public sealed class StatusIconOverlay : Overlay
             }
 
             handle.UseShader(null);
+            handle.SetTransform(Matrix3x2.Identity);
         }
     }
 }
