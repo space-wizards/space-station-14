@@ -41,11 +41,9 @@ namespace Content.Client.Chemistry.UI
             _window.BufferDiscardButton.OnPressed += _ => SendMessage(
                 new ChemMasterSetModeMessage(ChemMasterMode.Discard));
             _window.PillNumber.ValueChanged += _ => SendMessage(
-                new ChemMasterSetPillNumberAndDosageMessage(
-                    (uint)_window.PillDosage.Value, (uint)_window.PillNumber.Value));
+                new ChemMasterSetPillNumberMessage((uint)_window.PillNumber.Value));
             _window.PillDosage.ValueChanged += _ => SendMessage(
-                new ChemMasterSetPillNumberAndDosageMessage(
-                    (uint)_window.PillDosage.Value, (uint)_window.PillNumber.Value));
+                new ChemMasterSetPillDosageMessage((uint)_window.PillDosage.Value));
             _window.CreatePillButton.OnPressed += _ => SendMessage(
                 new ChemMasterCreatePillsMessage(_window.LabelLine));
             _window.BottleDosage.ValueChanged += _ => SendMessage(

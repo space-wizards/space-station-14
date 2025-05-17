@@ -56,15 +56,24 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterSetPillNumberAndDosageMessage : BoundUserInterfaceMessage
+    public sealed class ChemMasterSetPillNumberMessage : BoundUserInterfaceMessage
     {
-        public readonly uint Dosage;
         public readonly uint Number;
 
-        public ChemMasterSetPillNumberAndDosageMessage(uint dosage, uint number)
+        public ChemMasterSetPillNumberMessage(uint number)
+        {
+            Number = number;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ChemMasterSetPillDosageMessage : BoundUserInterfaceMessage
+    {
+        public readonly uint Dosage;
+
+        public ChemMasterSetPillDosageMessage(uint dosage)
         {
             Dosage = dosage;
-            Number = number;
         }
     }
 

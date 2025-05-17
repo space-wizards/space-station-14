@@ -56,7 +56,8 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterSortingTypeCycleMessage>(OnCycleSortingTypeMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterSetPillTypeMessage>(OnSetPillTypeMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterReagentAmountButtonMessage>(OnReagentButtonMessage);
-            SubscribeLocalEvent<ChemMasterComponent, ChemMasterSetPillNumberAndDosageMessage>(OnSetPillNumberAndDosageMessage);
+            SubscribeLocalEvent<ChemMasterComponent, ChemMasterSetPillNumberMessage>(OnSetPillNumberMessage);
+            SubscribeLocalEvent<ChemMasterComponent, ChemMasterSetPillDosageMessage>(OnSetPillDosageMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterCreatePillsMessage>(OnCreatePillsMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterSetBottleDosageMessage>(OnSetBottleDosageMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterOutputToBottleMessage>(OnOutputToBottleMessage);
@@ -188,12 +189,15 @@ namespace Content.Server.Chemistry.EntitySystems
             UpdateUiState(chemMaster, updateLabel: fromBuffer);
         }
 
-        private void OnSetPillNumberAndDosageMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSetPillNumberAndDosageMessage message)
+        private void OnSetPillNumberMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSetPillNumberMessage message)
         {
             // Ensure the number is valid.
             if (message.Number > 0)
                 chemMaster.Comp.PillNumber = message.Number;
+        }
 
+        private void OnSetPillDosageMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSetPillDosageMessage message)
+        {
             // Ensure the dosage is valid.
             if (message.Dosage > 0 && message.Dosage <= chemMaster.Comp.PillDosageLimit)
                 chemMaster.Comp.PillDosage = message.Dosage;

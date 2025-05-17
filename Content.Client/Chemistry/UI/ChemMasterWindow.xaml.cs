@@ -169,18 +169,23 @@ namespace Content.Client.Chemistry.UI
 
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
 
-            PillNumber.Value = Math.Min((int)castState.SelectedPillNumber, pillNumberMax);
-            PillDosage.Value = Math.Min((int)castState.SelectedPillDosage, (int)Math.Min(bufferVolume, castState.PillDosageLimit));
-            BottleDosage.Value = Math.Min((int)castState.SelectedBottleDosage, (int)Math.Min(bottleAmountMax, bufferVolume));
+            // Set values without triggering ValueChanged event
+            PillNumber.OverrideValue(Math.Min((int)castState.SelectedPillNumber, pillNumberMax));
+            PillDosage.OverrideValue(Math.Min((int)castState.SelectedPillDosage, (int)Math.Min(bufferVolume, castState.PillDosageLimit)));
+            BottleDosage.OverrideValue(Math.Min((int)castState.SelectedBottleDosage, (int)Math.Min(bottleAmountMax, bufferVolume)));
 
-            PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
+            PillNumber.IsValid = x => x > 0 && x <= pillNumberMax;
             PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
-            BottleDosage.IsValid = x => x >= 0 && x <= bottleAmountMax;
+            BottleDosage.IsValid = x => x > 0 && x <= bottleAmountMax;
 
-            // Avoid division by zero
-            if (PillDosage.Value > 0 && PillNumber.Value == 0)
+            // Adjust pill number based on buffer volume 
+            if (bufferVolume == 0)
             {
-                PillNumber.Value = Math.Min(bufferVolume / PillDosage.Value, pillNumberMax);
+                PillNumber.OverrideValue(0);
+            }
+            else if (PillDosage.Value > 0 && PillNumber.Value == 0)
+            {
+                PillNumber.OverrideValue(Math.Min(bufferVolume / PillDosage.Value, pillNumberMax));
             }
         }
 
