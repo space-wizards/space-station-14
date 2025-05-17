@@ -10,6 +10,7 @@ using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Wires;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -142,7 +143,7 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
 
         // Change the turret's fixtures
         if (ent.Comp.DeployedFixture != null &&
-            TryComp(ent, out FixturesComponent? fixtures) &&
+            TryComp(ent, out PhysicsComponent? fixtures) &&
             fixtures.Fixtures.TryGetValue(ent.Comp.DeployedFixture, out var fixture))
         {
             _physics.SetHard(ent, fixture, enabled);

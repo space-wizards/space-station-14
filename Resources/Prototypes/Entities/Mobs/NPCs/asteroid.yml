@@ -123,9 +123,6 @@
   components:
   - type: Transform
     anchored: True
-  - type: Physics
-    bodyType: Static
-    canCollide: true
   - type: InteractionOutline
   - type: Sprite
     sprite: Mobs/Aliens/Asteroid/goliath.rsi
@@ -135,7 +132,9 @@
     blacklist:
       tags:
       - Goliath
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
+    canCollide: true
     fixtures:
       fix:
         shape:

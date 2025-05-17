@@ -12,7 +12,7 @@
     - state: turnstile
       map: [ "enum.TurnstileVisualLayers.Base" ]
   - type: AnimationPlayer
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

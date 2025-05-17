@@ -49,7 +49,7 @@
       - !type:EmptyAllContainersBehaviour
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

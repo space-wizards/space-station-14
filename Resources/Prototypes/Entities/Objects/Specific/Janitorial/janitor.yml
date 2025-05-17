@@ -150,7 +150,6 @@
     enabled: false
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
       slips:
         shape:
@@ -217,7 +216,7 @@
       head:
         - state: equipped-HELMET
           offset: "0, 0.15625"
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape: !type:PhysShapeCircle

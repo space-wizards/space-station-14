@@ -231,8 +231,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: BecomesStation
       id: Saltern
@@ -21741,7 +21739,6 @@ entities:
       parent: 31
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 4328
     components:
@@ -21751,7 +21748,6 @@ entities:
       parent: 31
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 6414
     components:
@@ -21760,7 +21756,6 @@ entities:
       parent: 31
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 6930
     components:
@@ -21769,7 +21764,6 @@ entities:
       parent: 31
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 6941
     components:
@@ -21778,7 +21772,6 @@ entities:
       parent: 31
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 7913
     components:
@@ -21794,7 +21787,6 @@ entities:
       parent: 31
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 10255
     components:
@@ -26629,7 +26621,7 @@ entities:
     - type: Transform
       pos: -27.5,-15.5
       parent: 31
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -33597,28 +33589,28 @@ entities:
     - type: Transform
       pos: 15.5,-17.5
       parent: 31
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 2300
     components:
     - type: Transform
       pos: -18.5,-11.5
       parent: 31
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 4337
     components:
     - type: Transform
       pos: 12.5,27.5
       parent: 31
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 9108
     components:
     - type: Transform
       pos: 17.5,-0.5
       parent: 31
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 9109
     components:
@@ -33626,7 +33618,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -10.5,-4.5
       parent: 31
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FloorTileItemArcadeBlue
   entities:

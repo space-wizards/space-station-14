@@ -35,7 +35,7 @@
   - type: Sprite
     sprite: Structures/Holo/holofan.rsi
     state: icon
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -52,13 +52,11 @@
   name: holographic barrier
   description: A barrier of hard light that blocks movement, but pretty weak.
   components:
-    - type: Physics
-      bodyType: Static
-      canCollide: true
     - type: Sprite
       sprite: Structures/Holo/security.rsi
       state: icon
-    - type: Fixtures
+    - type: Physics
+      canCollide: true
       fixtures:
         fix1:
           shape:
@@ -83,13 +81,11 @@
   name: holographic force field
   description: A powerful temporal containment field that doesn't let anything through, not even a tesla or singularity.
   components:
-  - type: Physics
-    bodyType: Static
-    canCollide: true
   - type: Sprite
     sprite: Structures/Holo/field.rsi
     state: icon
-  - type: Fixtures
+  - type: Physics
+    canCollide: true
     fixtures:
       fix1:
         shape:

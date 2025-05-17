@@ -62,11 +62,10 @@
     - DoorBumpOpener
     - FootstepSound
   - type: Pullable
-  - type: Physics
-    bodyType: KinematicController
   - type: Clickable
   - type: WiresPanel
-  - type: Fixtures
+  - type: Physics
+    bodyType: KinematicController
     fixtures:
       fix1:
         shape:
@@ -253,7 +252,7 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: vim
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

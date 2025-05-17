@@ -19,7 +19,7 @@
   - type: Icon
     sprite: Structures/Machines/VendingMachines/cola.rsi
     state: normal
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

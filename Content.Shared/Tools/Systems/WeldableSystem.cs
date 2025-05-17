@@ -4,6 +4,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using LayerChangeOnWeldComponent = Content.Shared.Tools.Components.LayerChangeOnWeldComponent;
 
@@ -95,7 +96,7 @@ public sealed class WeldableSystem : EntitySystem
 
     private void OnWeldChanged(EntityUid uid, LayerChangeOnWeldComponent component, ref WeldableChangedEvent args)
     {
-        if (!TryComp<FixturesComponent>(uid, out var fixtures))
+        if (!TryComp<PhysicsComponent>(uid, out var fixtures))
             return;
 
         foreach (var (id, fixture) in fixtures.Fixtures)
@@ -103,11 +104,11 @@ public sealed class WeldableSystem : EntitySystem
             switch (args.IsWelded)
             {
                 case true when fixture.CollisionLayer == (int) component.UnWeldedLayer:
-                    _physics.SetCollisionLayer(uid, id, fixture, (int) component.WeldedLayer);
+                    _physics.SetCollisionLayer(uid, id, fixture, (int) component.WeldedLayer, body: fixtures);
                     break;
 
                 case false when fixture.CollisionLayer == (int) component.WeldedLayer:
-                    _physics.SetCollisionLayer(uid, id, fixture, (int) component.UnWeldedLayer);
+                    _physics.SetCollisionLayer(uid, id, fixture, (int) component.UnWeldedLayer, body: fixtures);
                     break;
             }
         }

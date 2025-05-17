@@ -5,7 +5,8 @@
   description: A thruster that allows a shuttle to move.
   abstract: true
   components:
-    - type: Fixtures
+    - type: Physics
+      bodyType: Static
       fixtures:
         fix1:
           shape:
@@ -24,8 +25,6 @@
         path: /Audio/Effects/shuttle_thruster.ogg
     - type: Transform
       anchored: true
-    - type: Physics
-      bodyType: Static
     - type: Rotatable
       rotateWhileAnchored: true
     - type: Thruster

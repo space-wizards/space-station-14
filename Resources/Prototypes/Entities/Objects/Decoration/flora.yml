@@ -10,7 +10,6 @@
     sprite: Objects/Decoration/Flora/flora_rockssolid.rsi
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -47,7 +46,6 @@
     offset: 0,0.9
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -99,7 +97,7 @@
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_treessnow.rsi
     offset: 0,0.7
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -117,7 +115,7 @@
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_treeslarge.rsi
     offset: 0,1.55
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -135,7 +133,7 @@
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_treesconifer.rsi
     offset: 0,1.15
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -308,7 +306,7 @@
   components:
   - type: Sprite
     state: treechristmas02
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

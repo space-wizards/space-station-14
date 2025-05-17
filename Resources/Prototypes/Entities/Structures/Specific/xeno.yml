@@ -30,7 +30,6 @@
     damageModifierSet: Metallic
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -66,7 +65,7 @@
       shader: unshaded
     - state: teeth_unshaded
       shader: unshaded
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

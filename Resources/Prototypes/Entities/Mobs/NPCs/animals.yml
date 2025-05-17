@@ -17,7 +17,7 @@
     speechSounds: Squeak
     speechVerb: SmallMob
     allowedEmotes: ['Squeak']
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -95,7 +95,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: 0
       sprite: Mobs/Animals/bee.rsi
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -209,7 +209,7 @@
     noMovementLayers:
       movement:
         state: chicken-0
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -359,7 +359,6 @@
     rootTask:
       task: MouseCompound
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -483,7 +482,7 @@
     rules: ghost-role-information-freeagent-rules
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -650,7 +649,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: duck-0
     sprite: Mobs/Animals/duck.rsi
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -781,7 +780,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: butterfly
       sprite: Mobs/Animals/butterfly.rsi
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -864,7 +863,6 @@
     - id: MobCow
   - type: ReproductivePartner
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -945,7 +943,6 @@
       movement:
         state: crab
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -1005,7 +1002,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goat
       sprite: Mobs/Animals/goat.rsi
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -1109,7 +1106,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goose
       sprite: Mobs/Animals/goose.rsi
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -1158,7 +1155,6 @@
       state: crawling
       sprite: Mobs/Animals/gorilla.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -1218,7 +1214,7 @@
       - map: ["enum.DamageStateVisualLayers.Base"]
         state: kangaroo
         sprite: Mobs/Animals/kangaroo.rsi
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -1229,7 +1225,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Physics
   - type: Inventory
     speciesId: kangaroo
     templateId: kangaroo
@@ -1312,7 +1307,7 @@
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 90
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -1716,10 +1711,9 @@
     constantlyReplan: false
     rootTask:
       task: MouseCompound
-  - type: Physics
   - type: FaxableObject
     insertingState: inserting_mouse
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -1989,7 +1983,6 @@
       state: lizard
       sprite: Mobs/Animals/lizard.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -2045,7 +2038,6 @@
       state: slug
       sprite: Mobs/Animals/slug.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -2099,7 +2091,6 @@
       movement:
         state: frog
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -2160,7 +2151,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: parrot
       sprite: Mobs/Animals/parrot.rsi
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -2213,7 +2204,6 @@
       state: penguin
       sprite: Mobs/Animals/penguin.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -2284,7 +2274,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: penguin
       sprite: Mobs/Animals/grenadepenguin.rsi
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -2346,7 +2336,6 @@
       state: snake
       sprite: Mobs/Animals/snake.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -2388,7 +2377,6 @@
   abstract: true
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -2610,7 +2598,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: possum
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -2683,7 +2670,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: raccoon
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -2743,7 +2729,6 @@
       movement:
         state: fox
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -2814,11 +2799,10 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
-  - type: Physics
   - type: Speech
     speechVerb: Canine
     speechSounds: Dog
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -2969,7 +2953,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -3203,7 +3186,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: sloth
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -3256,7 +3238,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ferret
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -3330,10 +3311,9 @@
         state: hamster-0
   - type: Item
     size: Tiny
-  - type: Physics
   - type: FaxableObject
     insertingState: inserting_hamster
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -3461,7 +3441,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: pig
       sprite: Mobs/Animals/pig.rsi
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -3533,7 +3513,6 @@
       state: nymph
       sprite: Mobs/Animals/nymph.rsi
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -3629,7 +3608,6 @@
 #      movement:
 #        state: reindeer_buck_still
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

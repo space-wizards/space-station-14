@@ -29,7 +29,7 @@
     spawned:
     - id: FoodMeatHuman
       amount: 5
-  - type: Fixtures
+  - type: Physics
     fixtures: # TODO: This needs a second fixture just for mob collisions.
       fix1:
         shape:

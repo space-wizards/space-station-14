@@ -16,7 +16,6 @@
       map: ["enum.DoorVisualLayers.Base"]
   - type: AnimationPlayer
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -227,7 +226,6 @@
         acts: ["Destruction"]
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

@@ -35,7 +35,7 @@
     sprite: Structures/Doors/Airlocks/Glass/external.rsi
   - type: PaintableAirlock
     group: ExternalGlass
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

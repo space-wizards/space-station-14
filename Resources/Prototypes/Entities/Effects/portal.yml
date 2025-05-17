@@ -8,11 +8,10 @@
     anchored: True
   - type: InteractionOutline
   - type: Clickable
-  - type: Physics
-    bodyType: Static
   - type: Sprite
     sprite: /Textures/Effects/portal.rsi
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       portalFixture:
         shape:
@@ -51,7 +50,7 @@
     radius: 3
     energy: 1
     netsync: false
-    
+
 - type: entity
   id: PortalArtifact
   parent: BasePortal

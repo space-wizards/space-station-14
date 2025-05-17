@@ -4,7 +4,7 @@
   name: foam dart
   parent: BaseItem
   components:
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape: !type:PolygonShape

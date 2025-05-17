@@ -6,7 +6,6 @@
   components:
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       light:
         shape:

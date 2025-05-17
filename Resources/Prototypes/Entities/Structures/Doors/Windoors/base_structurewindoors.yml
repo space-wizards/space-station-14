@@ -13,7 +13,6 @@
   - type: InteractionOutline
   - type: StationAiWhitelist
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

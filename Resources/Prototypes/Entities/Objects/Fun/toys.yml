@@ -111,7 +111,11 @@
       state: icon
       noRot: true
     - type: Item
-    - type: Fixtures
+    - type: Physics
+      angularDamping: 0.02
+      linearDamping: 0.02
+      fixedRotation: true
+      bodyType: Dynamic
       fixtures:
         fix1:
           shape:
@@ -122,11 +126,6 @@
             - ItemMask
           restitution: 0.98
           friction: 0.01
-    - type: Physics
-      angularDamping: 0.02
-      linearDamping: 0.02
-      fixedRotation: true
-      bodyType: Dynamic
     - type: TileFrictionModifier
       modifier: 0.1
     - type: Tag
@@ -671,7 +670,7 @@
           effects:
             - !type:AddToSolutionReaction
               solution: plushie
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:
@@ -1945,7 +1944,6 @@
     enabled: false
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
       slips:
         shape:

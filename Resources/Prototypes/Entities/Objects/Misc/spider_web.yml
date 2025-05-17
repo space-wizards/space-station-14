@@ -29,7 +29,6 @@
     - type: Transform
       anchored: true
     - type: Physics
-    - type: Fixtures
       fixtures:
         fix1:
           hard: false
@@ -111,7 +110,6 @@
     - type: StepTrigger
       intersectRatio: 0.2
     - type: Physics
-    - type: Fixtures
       fixtures:
         slips:
           shape:

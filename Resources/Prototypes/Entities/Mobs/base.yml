@@ -11,7 +11,6 @@
   - type: MobCollision
   - type: Physics
     bodyType: KinematicController
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

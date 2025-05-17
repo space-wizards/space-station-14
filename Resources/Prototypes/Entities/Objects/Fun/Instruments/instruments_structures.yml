@@ -108,7 +108,7 @@
     program: 43
   - type: Sprite
     state: contrabass
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

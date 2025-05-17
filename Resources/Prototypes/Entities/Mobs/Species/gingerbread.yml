@@ -30,7 +30,7 @@
         amount: 5
   - type: Bloodstream
     bloodReagent: Sugar
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

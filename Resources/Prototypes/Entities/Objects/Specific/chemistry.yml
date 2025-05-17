@@ -484,7 +484,7 @@
   - type: SolutionInjectOnEmbed
     transferAmount: 1
     solution: injector
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape: !type:PhysShapeCircle

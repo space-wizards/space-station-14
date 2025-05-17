@@ -17,7 +17,6 @@
       map: ["display"]
       visible: false
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -143,7 +142,6 @@
       shader: unshaded
       visible: false
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

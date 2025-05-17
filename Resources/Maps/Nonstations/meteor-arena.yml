@@ -59,8 +59,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: BecomesStation
       id: Arena
@@ -515,7 +513,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,2.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 226
     components:
@@ -523,7 +521,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,2.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 227
     components:
@@ -531,7 +529,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,-3.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 228
     components:
@@ -539,7 +537,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,-3.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 229
     components:
@@ -547,7 +545,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -7.5,-2.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 230
     components:
@@ -555,7 +553,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -7.5,1.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 231
     components:
@@ -563,7 +561,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,-2.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 232
     components:
@@ -571,7 +569,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,1.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 233
     components:
@@ -579,7 +577,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,6.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 234
     components:
@@ -587,7 +585,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -2.5,6.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 235
     components:
@@ -595,7 +593,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -2.5,-7.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 236
     components:
@@ -603,7 +601,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,-7.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 237
     components:
@@ -611,7 +609,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -6.5,-6.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 238
     components:
@@ -619,7 +617,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 5.5,-6.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 239
     components:
@@ -627,7 +625,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 5.5,5.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 240
     components:
@@ -635,7 +633,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -6.5,5.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FloorLavaEntity
   entities:

@@ -87,7 +87,6 @@ namespace Content.IntegrationTests.Tests.Disposal
     damageContainer: Biological
   - type: Physics
     bodyType: KinematicController
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -105,7 +104,6 @@ namespace Content.IntegrationTests.Tests.Disposal
       - Anchoring
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -125,7 +123,6 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: ApcPowerReceiver
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

@@ -8,6 +8,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -218,9 +219,9 @@ public sealed partial class PathfindingSystem
         }
     }
 
-    private bool IsBodyRelevant(FixturesComponent fixtures)
+    private bool IsBodyRelevant(PhysicsComponent body)
     {
-        foreach (var fixture in fixtures.Fixtures.Values)
+        foreach (var fixture in body.Fixtures.Values)
         {
             if (!fixture.Hard)
                 continue;
@@ -270,7 +271,7 @@ public sealed partial class PathfindingSystem
 
     private void OnMoveEvent(ref MoveEvent ev)
     {
-        if (!_fixturesQuery.TryGetComponent(ev.Sender, out var fixtures) ||
+        if (!_physicsQuery.TryGetComponent(ev.Sender, out var fixtures) ||
             !IsBodyRelevant(fixtures) ||
             _gridQuery.HasComponent(ev.Sender))
         {
@@ -435,7 +436,7 @@ public sealed partial class PathfindingSystem
                 foreach (var ent in available)
                 {
                     // Irrelevant for pathfinding
-                    if (!_fixturesQuery.TryGetComponent(ent, out var fixtures) ||
+                    if (!_physicsQuery.TryGetComponent(ent, out var fixtures) ||
                         !IsBodyRelevant(fixtures))
                     {
                         continue;
@@ -467,7 +468,7 @@ public sealed partial class PathfindingSystem
 
                         foreach (var ent in tileEntities)
                         {
-                            if (!_fixturesQuery.TryGetComponent(ent, out var fixtures))
+                            if (!_physicsQuery.TryGetComponent(ent, out var fixtures))
                                 continue;
 
                             var colliding = false;
@@ -499,7 +500,7 @@ public sealed partial class PathfindingSystem
                                     continue;
                                 }
 
-                                if (!_fixtures.TestPoint(fixture.Shape, new Transform(xform.LocalPosition, xform.LocalRotation), localPos))
+                                if (!_physics.TestPoint(fixture.Shape, new Transform(xform.LocalPosition, xform.LocalRotation), localPos))
                                 {
                                     continue;
                                 }

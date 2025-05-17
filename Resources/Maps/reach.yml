@@ -97,8 +97,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: BecomesStation
       id: Reach
@@ -7521,14 +7519,14 @@ entities:
     - type: Transform
       pos: -4.5,3.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 1108
     components:
     - type: Transform
       pos: -5.5,-6.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FuelDispenser
   entities:

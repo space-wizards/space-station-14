@@ -11,16 +11,15 @@
     state: icon
     noRot: false
   - type: ImmovableRod
-  - type: Physics
-    bodyType: Dynamic
-    linearDamping: 0
   - type: TileFrictionModifier
     modifier: 0
   - type: PointLight
     radius: 3
     color: red
     energy: 2.0
-  - type: Fixtures
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
     fixtures:
       fix1:
         shape:

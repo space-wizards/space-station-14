@@ -96,7 +96,6 @@
       visible: false
   - type: Physics
     canCollide: false
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -154,7 +153,7 @@
       map: ["enum.ElectrifiedLayers.Sparks"]
       shader: unshaded
       visible: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -212,7 +211,7 @@
       map: ["enum.ElectrifiedLayers.Sparks"]
       shader: unshaded
       visible: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       # needs two shapes to properly handle a triangle corner without weirdness
       fix1:
@@ -259,7 +258,7 @@
       map: ["enum.ElectrifiedLayers.Sparks"]
       shader: unshaded
       visible: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -295,7 +294,7 @@
       map: [ "enum.ElectrifiedLayers.Sparks" ]
       shader: unshaded
       visible: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

@@ -21,7 +21,6 @@ namespace Content.IntegrationTests.Tests.Doors
   components:
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -41,7 +40,6 @@ namespace Content.IntegrationTests.Tests.Doors
     needsPower: false
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

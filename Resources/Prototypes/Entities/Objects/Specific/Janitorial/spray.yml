@@ -152,7 +152,6 @@
       map: ["enum.VaporVisualLayers.Base"]
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -179,7 +178,7 @@
     - state: chempuff
       scale: 2, 2
       map: ["enum.VaporVisualLayers.Base"]
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

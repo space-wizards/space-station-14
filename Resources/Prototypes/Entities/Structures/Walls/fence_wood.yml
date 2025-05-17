@@ -86,7 +86,7 @@
   - type: Sprite
     layers:
     - state: straight
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -115,7 +115,7 @@
   - type: Sprite
     layers:
     - state: end
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -144,7 +144,7 @@
   - type: Sprite
     layers:
     - state: corner
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -182,7 +182,7 @@
   - type: Sprite
     layers:
     - state: tjunction
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -219,7 +219,7 @@
     layers:
     - state: end
       map: ["enum.DoorVisualLayers.Base"]
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -269,7 +269,7 @@
   - type: Sprite
     layers:
     - state: straight_small
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -297,7 +297,7 @@
   - type: Sprite
     layers:
     - state: end_small
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -325,7 +325,7 @@
   - type: Sprite
     layers:
     - state: corner_small
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -362,7 +362,7 @@
   - type: Sprite
     layers:
     - state: tjunction_small
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -398,7 +398,7 @@
     layers:
     - state: end_small
       map: ["enum.DoorVisualLayers.Base"]
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

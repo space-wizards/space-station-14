@@ -510,8 +510,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5354,8 +5352,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5395,8 +5391,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5436,8 +5430,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5477,8 +5469,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5518,8 +5508,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5559,8 +5547,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5600,8 +5586,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5641,8 +5625,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5682,8 +5664,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5723,8 +5703,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5764,8 +5742,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5805,8 +5781,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5846,8 +5820,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5887,8 +5859,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5928,8 +5898,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -5969,8 +5937,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6010,8 +5976,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6051,8 +6015,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6092,8 +6054,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6133,8 +6093,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6174,8 +6132,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6215,8 +6171,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6256,8 +6210,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6297,8 +6249,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6338,8 +6288,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6379,8 +6327,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6420,8 +6366,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6462,8 +6406,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6503,8 +6445,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6544,8 +6484,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -6585,8 +6523,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -49450,7 +49386,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,-91.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 7523
     components:
@@ -49458,7 +49394,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,-54.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 7524
     components:
@@ -49466,7 +49402,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,-174.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 7525
     components:
@@ -49474,21 +49410,21 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 5.5,-167.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 7526
     components:
     - type: Transform
       pos: 15.5,-61.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 7527
     components:
     - type: Transform
       pos: -1.5,-172.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FloraTree
   entities:

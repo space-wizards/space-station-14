@@ -42,7 +42,6 @@
       map: ["base"]
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
       fix1:
         density: 30

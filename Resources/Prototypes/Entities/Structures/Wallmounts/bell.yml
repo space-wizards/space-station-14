@@ -31,7 +31,6 @@
   - type: Physics
     canCollide: false
     bodyType: Static
-  - type: Fixtures
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

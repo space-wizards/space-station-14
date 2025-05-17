@@ -18,7 +18,7 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -47,7 +47,7 @@
         state: telescreen_frame
       - map: ["computerLayerScreen"]
         state: telescreen
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -122,7 +122,7 @@
   name: television frame
   description: Finally, some decent reception around here...
   components:
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

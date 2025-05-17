@@ -7,7 +7,7 @@
     - type: Sprite
       sprite: Tiles/Misc/floortrap.rsi
       state: floortrap
-    - type: Fixtures
+    - type: Physics
       fixtures:
         floortrap:
           shape:
@@ -18,7 +18,6 @@
             - ItemMask
           layer:
             - SlipLayer
-    - type: Physics
     - type: Tag
       tags:
         - HideContextMenu

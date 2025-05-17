@@ -33,7 +33,7 @@
     state: side
   - type: Icon
     state: side
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -79,7 +79,7 @@
     state: corner
   - type: Icon
     state: corner
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -134,7 +134,7 @@
     state: corner_small
   - type: Icon
     state: corner_small
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -180,7 +180,7 @@
     state: round
   - type: Icon
     state: round
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

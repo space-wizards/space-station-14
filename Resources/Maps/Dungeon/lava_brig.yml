@@ -8082,7 +8082,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 8.5,28.5
       parent: 588
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 945
     components:
@@ -8090,7 +8090,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 10.5,28.5
       parent: 588
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FloorLavaEntity
   entities:

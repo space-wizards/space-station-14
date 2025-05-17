@@ -46,8 +46,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
@@ -709,7 +707,7 @@ entities:
     - type: Transform
       pos: -4.5,6.5
       parent: 1
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -1479,8 +1477,8 @@ entities:
 
                                            [bold]Crew of the NT-Quark[/bold]
 
-             [bold]Nuclear containment breach detected on long range 
-                 halcyon scanners. Seek immediate shelter. Avoid 
+             [bold]Nuclear containment breach detected on long range
+                 halcyon scanners. Seek immediate shelter. Avoid
                          contaminated materials. Do not panic.[/bold]
 
                               [color=red][bold]Alpha decay rates indicate estimated
@@ -1496,7 +1494,7 @@ entities:
       solutions: null
       containers:
       - food
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape: !type:PolygonShape

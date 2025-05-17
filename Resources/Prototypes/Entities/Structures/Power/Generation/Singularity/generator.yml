@@ -13,7 +13,6 @@
   - type: Clickable
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

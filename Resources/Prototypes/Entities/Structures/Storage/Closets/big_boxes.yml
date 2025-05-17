@@ -9,7 +9,6 @@
     - type: Clickable
     - type: Physics
       bodyType: KinematicController
-    - type: Fixtures
       fixtures:
         fix1:
           shape:
@@ -95,7 +94,7 @@
   name: ghost box
   description: Beware!
   components:
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:

@@ -4,7 +4,7 @@
   name: mail teleporter
   description: Periodically teleports in mail to deliver across the station.
   components:
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

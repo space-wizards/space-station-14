@@ -20,7 +20,7 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: unshaded
       shader: unshaded
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

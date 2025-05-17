@@ -55,7 +55,6 @@ entities:
       linearDamping: 0.05
       fixedRotation: False
       bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
@@ -1875,7 +1874,6 @@ entities:
       parent: 1
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 252
     components:
@@ -1885,7 +1883,6 @@ entities:
       parent: 1
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
 - proto: Carpet
   entities:

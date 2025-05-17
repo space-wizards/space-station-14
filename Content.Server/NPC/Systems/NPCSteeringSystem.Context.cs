@@ -63,12 +63,11 @@ public sealed partial class NPCSteeringSystem
 
         if (ents.Count > 0)
         {
-            var fixtures = _fixturesQuery.GetComponent(uid);
             var physics = _physicsQuery.GetComponent(uid);
 
             foreach (var intersecting in ents)
             {
-                if (!_physics.IsCurrentlyHardCollidable((uid, fixtures, physics), intersecting))
+                if (!_physics.IsCurrentlyHardCollidable((uid, physics), intersecting))
                 {
                     continue;
                 }

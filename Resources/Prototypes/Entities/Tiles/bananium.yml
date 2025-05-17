@@ -48,7 +48,6 @@
     intersectRatio: 0.2
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       slips:
         shape:

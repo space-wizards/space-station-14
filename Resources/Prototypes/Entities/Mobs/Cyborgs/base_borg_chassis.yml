@@ -19,7 +19,7 @@
   - type: NoSlip
   - type: StaticPrice
     price: 1250
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

@@ -27,7 +27,7 @@
         ano01_on: Rainbow
   - type: Transform
     noRot: true
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

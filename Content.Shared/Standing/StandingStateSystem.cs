@@ -4,6 +4,7 @@ using Content.Shared.Physics;
 using Content.Shared.Rotation;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Standing;
@@ -93,7 +94,7 @@ public sealed class StandingStateSystem : EntitySystem
         _appearance.SetData(uid, RotationVisuals.RotationState, RotationState.Horizontal, appearance);
 
         // Change collision masks to allow going under certain entities like flaps and tables
-        if (TryComp(uid, out FixturesComponent? fixtureComponent))
+        if (TryComp(uid, out PhysicsComponent? fixtureComponent))
         {
             foreach (var (key, fixture) in fixtureComponent.Fixtures)
             {
@@ -101,7 +102,7 @@ public sealed class StandingStateSystem : EntitySystem
                     continue;
 
                 standingState.ChangedFixtures.Add(key);
-                _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask & ~StandingCollisionLayer, manager: fixtureComponent);
+                _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask & ~StandingCollisionLayer, body: fixtureComponent);
             }
         }
 
@@ -148,7 +149,7 @@ public sealed class StandingStateSystem : EntitySystem
 
         _appearance.SetData(uid, RotationVisuals.RotationState, RotationState.Vertical, appearance);
 
-        if (TryComp(uid, out FixturesComponent? fixtureComponent))
+        if (TryComp(uid, out PhysicsComponent? fixtureComponent))
         {
             foreach (var key in standingState.ChangedFixtures)
             {

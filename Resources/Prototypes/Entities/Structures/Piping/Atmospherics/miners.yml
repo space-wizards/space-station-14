@@ -10,7 +10,6 @@
     - type: InteractionOutline
     - type: Physics
       canCollide: false
-    - type: Fixtures
       fixtures:
         fix1:
           shape:

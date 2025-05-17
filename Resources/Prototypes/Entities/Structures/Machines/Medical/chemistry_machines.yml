@@ -12,7 +12,6 @@
     snapCardinals: true
   - type: Appearance
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

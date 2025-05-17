@@ -49,7 +49,7 @@
     - map: ["enum.PowerChargerVisualLayers.Light"]
       state: "light-off"
       shader: "unshaded"
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -111,7 +111,7 @@
   id: PowerCageRecharger
   name: cage recharger
   components:
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

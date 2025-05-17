@@ -24,7 +24,6 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -69,7 +68,6 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -103,7 +101,6 @@
   - type: PowerNetworkBattery
   - type: InteractionOutline
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -164,7 +161,6 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

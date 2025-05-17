@@ -39,7 +39,6 @@
       map: ["enum.ElectrifiedLayers.Sparks"]
   - type: AnimationPlayer
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

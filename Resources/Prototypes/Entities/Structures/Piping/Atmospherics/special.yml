@@ -8,12 +8,11 @@
   components:
   - type: Transform
     anchored: true
-  - type: Physics
-    bodyType: Static
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/tinyfan.rsi
     state: icon
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       fix1:
         shape:
@@ -35,12 +34,11 @@
   components:
   - type: Transform
     anchored: true
-  - type: Physics
-    bodyType: Static
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/directionalfan.rsi
     state: icon
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       fix1:
         shape:

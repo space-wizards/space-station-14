@@ -19,7 +19,6 @@ namespace Content.IntegrationTests.Tests.Utility
   name: {BlockerDummyId}
   components:
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

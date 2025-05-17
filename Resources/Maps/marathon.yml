@@ -441,8 +441,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
@@ -44551,7 +44549,6 @@ entities:
       parent: 30
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 16264
     components:
@@ -44561,7 +44558,6 @@ entities:
       parent: 30
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 21949
     components:
@@ -66623,14 +66619,14 @@ entities:
     - type: Transform
       pos: -23.5,-5.5
       parent: 30
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 8547
     components:
     - type: Transform
       pos: -25.5,39.5
       parent: 30
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 10592
     components:
@@ -66638,7 +66634,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -15.5,-47.5
       parent: 30
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 13752
     components:
@@ -66646,7 +66642,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -43.5,64.5
       parent: 30
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 14330
     components:
@@ -66654,35 +66650,35 @@ entities:
       rot: 3.141592653589793 rad
       pos: 12.5,10.5
       parent: 30
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 20458
     components:
     - type: Transform
       pos: -17.5,15.5
       parent: 30
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 20459
     components:
     - type: Transform
       pos: -7.5,-7.5
       parent: 30
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 20460
     components:
     - type: Transform
       pos: -8.5,-11.5
       parent: 30
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 20461
     components:
     - type: Transform
       pos: -31.5,9.5
       parent: 30
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FloorTileItemEighties
   entities:

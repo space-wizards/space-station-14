@@ -112,7 +112,7 @@
     spawned:
     - id: FoodMeatXeno
       amount: 1
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -152,7 +152,7 @@
     spawned:
     - id: FoodMeatXeno
       amount: 1
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -401,7 +401,7 @@
     spawned:
     - id: FoodMeatXeno
       amount: 5
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -447,7 +447,7 @@
     spawned:
     - id: FoodMeatXeno
       amount: 10
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

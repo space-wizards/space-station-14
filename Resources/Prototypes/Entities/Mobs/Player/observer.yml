@@ -14,11 +14,10 @@
     baseSprintSpeed: 12
     baseWalkSpeed: 8
   - type: MovementIgnoreGravity
+  - type: CanMoveInAir
   - type: Physics
     bodyType: KinematicController
     bodyStatus: InAir
-  - type: CanMoveInAir
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

@@ -10,8 +10,6 @@
   - type: StationAnchor
   - type: Transform
     anchored: true
-  - type: Physics
-    bodyType: Static
   - type: AmbientSound
     enabled: false
     range: 4
@@ -34,7 +32,8 @@
           True: { visible: True }
           False: { visible: False }
   - type: Appearance
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       fix1:
         shape:

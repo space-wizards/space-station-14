@@ -46,8 +46,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -1325,7 +1323,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 9.5,-1.5
       parent: 1
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FoodBreadBun
   entities:
