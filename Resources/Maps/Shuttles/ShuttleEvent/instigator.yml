@@ -433,22 +433,6 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-- proto: ActionToggleInternals
-  entities:
-  - uid: 495
-    components:
-    - type: Transform
-      parent: 493
-    - type: InstantAction
-      container: 493
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 494
-    components:
-    - type: Transform
-      parent: 493
-    - type: InstantAction
-      container: 493
 - proto: AirCanister
   entities:
   - uid: 441
@@ -2731,17 +2715,6 @@ entities:
     - type: Transform
       pos: 8.505206,10.057987
       parent: 1
-    - type: GasTank
-      toggleActionEntity: 495
-    - type: Jetpack
-      toggleActionEntity: 494
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 494
-          - 495
 - proto: LockerSyndicate
   entities:
   - uid: 471

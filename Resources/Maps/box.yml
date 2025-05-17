@@ -10691,51 +10691,6 @@ entities:
     - type: Transform
       pos: -1.4590547,-61.356407
       parent: 8364
-- proto: ActionToggleInternals
-  entities:
-  - uid: 10072
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 9182
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 9182
-  - uid: 25167
-    components:
-    - type: Transform
-      parent: 21419
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 21419
-  - uid: 25181
-    components:
-    - type: Transform
-      parent: 20121
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 20121
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 10071
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 9182
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 9182
-- proto: ActionToggleLight
-  entities:
-  - uid: 16587
-    components:
-    - type: Transform
-      parent: 11756
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 11756
 - proto: AirAlarm
   entities:
   - uid: 2
@@ -89270,24 +89225,6 @@ entities:
     - type: Transform
       pos: 49.481064,16.680466
       parent: 8364
-    - type: HandheldLight
-      toggleActionEntity: 16587
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 16587
-    - type: ActionsContainer
   - uid: 11760
     components:
     - type: Transform
@@ -128448,19 +128385,8 @@ entities:
     components:
     - type: Transform
       parent: 8783
-    - type: GasTank
-      toggleActionEntity: 10072
-    - type: Jetpack
-      toggleActionEntity: 10071
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 10071
-          - 10072
     - type: InsideEntityStorage
   - uid: 10032
     components:
@@ -132143,14 +132069,6 @@ entities:
     - type: Transform
       pos: 79.485985,-43.45112
       parent: 8364
-    - type: GasTank
-      toggleActionEntity: 25167
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 25167
 - proto: OxygenTankFilled
   entities:
   - uid: 20121
@@ -132158,14 +132076,6 @@ entities:
     - type: Transform
       pos: 78.58031,-56.4234
       parent: 8364
-    - type: GasTank
-      toggleActionEntity: 25181
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 25181
   - uid: 27619
     components:
     - type: Transform
