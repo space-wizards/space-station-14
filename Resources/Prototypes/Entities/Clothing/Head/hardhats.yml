@@ -66,6 +66,11 @@
     tags:
     - WhitelistChameleon
     - Hardhat
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+      HeadTop : HEAD
+      HeadSide : HEAD 
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
