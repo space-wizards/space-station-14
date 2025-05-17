@@ -162,28 +162,12 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
     /// <summary>
     /// Called when an item is purchased to update the stock count and last purchaser.
     /// </summary>
-    public static void OnItemPurchased(string listingId, string purchaserName)
+    public static void OnItemPurchased(string listingId, string purchaserName, int stockLimit = 1)
     {
         // Initialize stock count and limit for this listing if it doesn't exist
         if (!_stockCounts.ContainsKey(listingId))
         {
-            // Get the stock limit based on the listing ID
-            int stockLimit;
-            
-            // Set appropriate stock limits for different items
-            switch (listingId)
-            {
-                case "AKMSweapon":
-                    stockLimit = 4; // 4 AKMS rifles
-                    break;
-                case "SovietEVABundle":
-                    stockLimit = 4; // 4 EVA suits
-                    break;
-                default:
-                    stockLimit = 4; // Default to 4 for any new items
-                    break;
-            }
-            
+            // Use the provided stockLimit or default to 1
             _stockCounts[listingId] = stockLimit;
             _stockLimits[listingId] = stockLimit;
         }

@@ -1,8 +1,8 @@
 - type: entity
   id: CrateSovietArmaments
-  parent: CrateGeneric
-  name: soviet armaments crate
-  description: A steel crate with red markings containing revolutionary armaments.
+  parent: [CrateGeneric, BaseSovietContraband]
+  name: SNKVD armaments crate
+  description: The red tide is here.
   components:
   - type: Icon
     sprite: _Starlight/Structures/Storage/USSP/revolutionary.rsi

@@ -343,7 +343,7 @@ public sealed partial class StoreSystem
                     }
                     
                     // Update the stock count and last purchaser
-                    StockLimitedListingCondition.OnItemPurchased(listing.ID, buyerName);
+                    StockLimitedListingCondition.OnItemPurchased(listing.ID, buyerName, stockCondition.StockLimit);
                     break;
                 }
             }

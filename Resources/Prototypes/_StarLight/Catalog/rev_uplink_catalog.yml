@@ -9,7 +9,7 @@
   - RevUplinkWeaponry
   conditions:
   - !type:StockLimitedListingCondition
-    stockLimit: 4
+    stockLimit: 2
 
 - type: listing
   id: RevSupplyRiftListing
