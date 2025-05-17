@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Shared.Random;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
@@ -14,24 +15,10 @@ public sealed partial class DiskConsoleComponent : Component
     public int PricePerDisk = 1000;
 
     /// <summary>
-    /// The prototypes of what's being printed. Chosen randomly.
+    /// A weighted random prototype for how rare each disk's tier should be.
     /// </summary>
-    [DataField("diskPrototypes", customTypeSerializer: typeof(PrototypeIdArraySerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string[] DiskPrototypes =
-    [
-        "TechnologyDiskIndustrialT1",
-        "TechnologyDiskIndustrialT2",
-        "TechnologyDiskIndustrialT3",
-        "TechnologyDiskArsenalT1",
-        "TechnologyDiskArsenalT2",
-        "TechnologyDiskArsenalT3",
-        "TechnologyDiskExperimentalT1",
-        "TechnologyDiskExperimentalT2",
-        "TechnologyDiskExperimentalT3",
-        "TechnologyDiskCivilianServicesT1",
-        "TechnologyDiskCivilianServicesT2",
-        "TechnologyDiskCivilianServicesT3",
-    ];
+    [DataField]
+    public ProtoId<WeightedRandomPrototype> DiskTierWeightPrototype = "TechDiskTierWeights";
 
     /// <summary>
     /// How long it takes to print <see cref="DiskPrototype"/>

@@ -10,27 +10,21 @@ namespace Content.Shared.Research.TechnologyDisk.Components;
 public sealed partial class TechnologyDiskComponent : Component
 {
     /// <summary>
-    /// The recipe that will be added. If null, one will be randomly generated
-    /// </summary>
-    [DataField]
-    [AutoNetworkedField]
-    public List<ProtoId<LatheRecipePrototype>>? Recipes;
-
-    /// <summary>
-    /// A weighted random prototype for how rare each tier should be.
-    /// </summary>
-    [DataField]
-    public ProtoId<WeightedRandomPrototype> TierWeightPrototype = "TechDiskTierWeights";
-
-    /// <summary>
     /// A discipline to constrain the disk to.
     /// </summary>
     [DataField]
-    public ProtoId<TechDisciplinePrototype>? Discipline;
+    public ProtoId<TechDisciplinePrototype> Discipline;
 
     /// <summary>
     /// A tier to constrain the disk to.
     /// </summary>
     [DataField]
-    public int? Tier;
+    public int Tier;
+
+    /// <summary>
+    /// The recipe that will be added. If null, one will be randomly generated
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public List<ProtoId<LatheRecipePrototype>>? Recipes;
 }
