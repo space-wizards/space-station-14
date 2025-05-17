@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: hivehum, crocodilecarousel
-  changes:
-  - message: Chaplains have been given a huge new selection of outfits to better suit
-      their religious beliefs.
-    type: Add
-  - message: Drones are now Mensch.
-    type: Tweak
-  - message: The Head of Security may now select the security clown mask. As they
-      deserve.
-    type: Tweak
-  id: 1190
-  time: '2025-02-23T02:13:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1768
 - author: rainyatrium
   changes:
   - message: dragon beard, flat head, and tall snout markings for reptilians
@@ -4221,3 +4208,10 @@
   id: 1689
   time: '2025-05-17T12:41:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2486
+- author: Mousetrinity
+  changes:
+  - message: we painted security different colors for fun.
+    type: Tweak
+  id: 1690
+  time: '2025-05-17T12:44:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2511
