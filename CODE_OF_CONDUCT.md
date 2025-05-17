@@ -8,7 +8,7 @@ This isn’t an exhaustive list of things that you can’t do. Rather, take it i
 
 This code of conduct applies specifically to the Github repositories and its spaces managed by the Space Station 14 project or Space Wizards Federation. Some spaces, such as the SS14 Discord or the official Wizard's Den game servers, have their own rules but are in spirit equal to what may be found in here. 
 
-If you believe someone is violating the code of conduct, we ask that you report it by contacting a Maintainer, Project Manager or Wizard staff member through [Discord](https://discord.ss14.io/) or [the forums](https://forum.spacestation14.com/), or emailing [telecommunications@spacestation14.com](mailto:telecommunications@spacestation14.com). 
+If you believe someone is violating the code of conduct, we ask that you report it by contacting a Maintainer, Project Manager or Wizard staff member through [Discord](https://discord.ss14.io/), [the forums](https://forum.spacestation14.com/), or emailing [telecommunications@spacestation14.com](mailto:telecommunications@spacestation14.com). 
 
 - **Be friendly and patient.** 
 - **Be welcoming.** We strive to be a community that welcomes and supports people of all backgrounds and identities. This includes, but is not limited to members of any race, ethnicity, culture, national origin, colour, immigration status, social and economic class, educational level, sex, sexual orientation, gender identity and expression, age, size, family status, political belief, religion, and mental and physical ability.
@@ -35,4 +35,4 @@ This is to ensure SS14 is a healthy community in which contributors feel encoura
 
 ## Questions?
 
-If you have questions, please see [Faq](https://docs.spacestation14.com/index.html). If that doesn't answer your questions, feel free to reach out on Discord, Discourse or [contact us via e-mail](mailto:mailto:telecommunications@spacestation14.com).
+If you have questions, please see [Faq](https://docs.spacestation14.com/index.html). If that doesn't answer your questions, feel free to reach out on [Discord](https://discord.ss14.io/), [the forums](https://forum.spacestation14.com/), or emailing [telecommunications@spacestation14.com](mailto:telecommunications@spacestation14.com). 
