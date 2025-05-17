@@ -35,4 +35,4 @@ This is to ensure SS14 is a healthy community in which contributors feel encoura
 
 ## Questions?
 
-If you have questions, please see [Faq](https://docs.spacestation14.com/index.html). If that doesn't answer your questions, feel free to reach out on [Discord](https://discord.ss14.io/), [the forums](https://forum.spacestation14.com/), or emailing [telecommunications@spacestation14.com](mailto:telecommunications@spacestation14.com). 
+If you have questions, please see [our docs](https://docs.spacestation14.com/index.html) or the [Github Moderation Guidelines](https://docs.spacestation14.com/en/general-development/github-moderation-guidelines.html). If that doesn't answer your questions, feel free to reach out on [Discord](https://discord.ss14.io/), [the forums](https://forum.spacestation14.com/), or emailing [telecommunications@spacestation14.com](mailto:telecommunications@spacestation14.com). 
