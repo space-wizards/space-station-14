@@ -62,8 +62,18 @@ public abstract class SharedPortalSystem : EntitySystem
                 if (link == null || disabled)
                     return;
 
-                var ent = link.LinkedEntities.First();
-                TeleportEntity(uid, args.User, Transform(ent).Coordinates, ent, false);
+                var destination = link.LinkedEntities.First();
+
+                // client can't predict outside of simple portal-to-portal interactions due to randomness involved
+                // --also can't predict if the target doesn't exist on the client / is outside of PVS
+                if (_netMan.IsClient)
+                {
+                    var exists = Exists(destination);
+                    if (!exists || (exists && Transform(destination).MapID == MapId.Nullspace))
+                        return;
+                }
+
+                TeleportEntity(uid, args.User, Transform(destination).Coordinates, destination, false);
             },
             Disabled = disabled,
             Text = Loc.GetString("portal-component-ghost-traverse"),
