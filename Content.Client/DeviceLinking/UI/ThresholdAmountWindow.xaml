@@ -1,0 +1,13 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+            Title="{Loc 'ui-powersensor-amount-title'}"
+            Resizable="False"
+            MinSize="240 80">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4">
+        <LineEdit Name="AmountLineEdit" Access="Public" HorizontalExpand="True" PlaceHolder="{Loc 'ui-powersensor-amount-line-edit-placeholder'}"/>
+        <BoxContainer Orientation="Horizontal">
+          <Label Name="MinimumAmount" Access="Public" HorizontalExpand="True" />
+          <Label Name="MaximumAmount" Access="Public" />
+        </BoxContainer>
+        <Button Name="ApplyButton" Access="Public" Text="{Loc 'ui-powersensor-amount-apply'}"/>
+    </BoxContainer>
+</DefaultWindow>
