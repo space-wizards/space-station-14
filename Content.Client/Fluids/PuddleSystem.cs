@@ -10,6 +10,7 @@ namespace Content.Client.Fluids;
 public sealed class PuddleSystem : SharedPuddleSystem
 {
     [Dependency] private readonly IconSmoothSystem _smooth = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -35,19 +36,19 @@ public sealed class PuddleSystem : SharedPuddleSystem
         {
             if (volume < LowThreshold)
             {
-                args.Sprite.LayerSetState(0, $"{smooth.StateBase}a");
+                _sprite.LayerSetRsiState((uid, args.Sprite), 0, $"{smooth.StateBase}a");
                 _smooth.SetEnabled(uid, false, smooth);
             }
             else if (volume < MediumThreshold)
             {
-                args.Sprite.LayerSetState(0, $"{smooth.StateBase}b");
+                _sprite.LayerSetRsiState((uid, args.Sprite), 0, $"{smooth.StateBase}b");
                 _smooth.SetEnabled(uid, false, smooth);
             }
             else
             {
                 if (!smooth.Enabled)
                 {
-                    args.Sprite.LayerSetState(0, $"{smooth.StateBase}0");
+                    _sprite.LayerSetRsiState((uid, args.Sprite), 0, $"{smooth.StateBase}0");
                     _smooth.SetEnabled(uid, true, smooth);
                     _smooth.DirtyNeighbours(uid);
                 }
@@ -59,11 +60,11 @@ public sealed class PuddleSystem : SharedPuddleSystem
         if (args.AppearanceData.TryGetValue(PuddleVisuals.SolutionColor, out var colorObj))
         {
             var color = (Color)colorObj;
-            args.Sprite.Color = color * baseColor;
+            _sprite.SetColor((uid, args.Sprite), color * baseColor);
         }
         else
         {
-            args.Sprite.Color *= baseColor;
+            _sprite.SetColor((uid, args.Sprite), args.Sprite.Color * baseColor);
         }
     }
 
