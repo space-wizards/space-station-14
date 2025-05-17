@@ -1,43 +1,43 @@
-﻿- type: entity
+- type: entity
+  parent: BaseAction
   id: ActionBlink
   name: Blink
   description: Teleport to the clicked location.
   components:
-  - type: WorldTargetAction
+  - type: Action
     useDelay: 10
-    range: 16 # default examine-range.
-    # ^ should probably add better validation that the clicked location is on the users screen somewhere,
+    itemIconStyle: BigAction
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/blink.ogg
-    itemIconStyle: BigAction
-    checkCanAccess: false
-    repeat: false
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: blink
+  - type: TargetAction
+    range: 16 # default examine-range.
+    # ^ should probably add better validation that the clicked location is on the users screen somewhere,
+    repeat: false
+    checkCanAccess: false
+  - type: WorldTargetAction
     event: !type:TeleportSpellEvent
 
 # TODO: Second level upgrade sometime that allows swapping with all objects
 - type: entity
+  parent: BaseEntitySpellAction
   id: ActionVoidApplause
   name: Void Applause
   description: Clap your hands and swap places with the target.
   components:
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 15
-    range: 16
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/Eldritch/voidblink.ogg
-    itemIconStyle: BigAction
-    whitelist:
-      components:
-      - Body
-    canTargetSelf: false
-    interactOnMiss: false
-    checkCanAccess: false
-    repeat: false
     icon:
       sprite: Objects/Magic/Eldritch/eldritch_actions.rsi
       state: voidblink
+  - type: TargetAction
+    checkCanAccess: false
+    repeat: false
+    range: 16
+  - type: EntityTargetAction
     event: !type:VoidApplauseSpellEvent
       effect: EffectVoidBlink

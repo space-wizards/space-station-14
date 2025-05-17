@@ -20,13 +20,15 @@
   - type: Mask
 
 - type: entity
+  parent: BaseAction
   id: ActionToggleMask
   name: Toggle Mask
   description: Handy, but prevents insertion of pie into your pie hole.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Clothing/Mask/gas.rsi, state: icon }
     iconOn: Interface/Default/blocked.png
+  - type: InstantAction
     event: !type:ToggleMaskEvent
 
 - type: entity
