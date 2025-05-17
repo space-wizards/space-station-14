@@ -49,13 +49,13 @@ namespace Content.Shared.Lathe
 
         #region Temperature
         /// <summary>
-        ///     If air reaches this temperature, lathe stops work. Prevents abusing via flaps.
+        ///     If air reaches this temperature the lathe will stop working. Prevents abusing via flaps.
         /// </summary>
         [DataField]
         public float? MaxTemp;
 
         /// <summary>
-        ///     If air reaches this temperature, lathe stops work. Prevents abusing via flaps and space.
+        ///     If air reaches this temperature the lathe will stop working. Prevents abusing via flaps and space.
         /// </summary>
         [DataField]
         public float? MinTemp;

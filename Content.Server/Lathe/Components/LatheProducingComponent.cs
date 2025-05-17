@@ -22,6 +22,6 @@ public sealed partial class LatheProducingComponent : Component
     ///     For the current status of producing.
     /// </summary>
     [ViewVariables]
-    public bool Stoped;
+    public bool Paused;
 }
 
