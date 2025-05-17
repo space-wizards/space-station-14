@@ -1,4 +1,7 @@
+using Content.Shared.Decals;
 using Content.Shared.DoAfter;
+using Content.Shared.SprayPainter.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SprayPainter;
@@ -10,46 +13,66 @@ public enum SprayPainterUiKey
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterSpritePickedMessage : BoundUserInterfaceMessage
+public sealed class SprayPainterSetDecalMessage(ProtoId<DecalPrototype> protoId) : BoundUserInterfaceMessage
 {
-    public readonly int Index;
-
-    public SprayPainterSpritePickedMessage(int index)
-    {
-        Index = index;
-    }
+    public ProtoId<DecalPrototype> DecalPrototype = protoId;
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterColorPickedMessage : BoundUserInterfaceMessage
+public sealed class SprayPainterSetDecalColorMessage(Color? color) : BoundUserInterfaceMessage
 {
-    public readonly string? Key;
-
-    public SprayPainterColorPickedMessage(string? key)
-    {
-        Key = key;
-    }
+    public Color? Color = color;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterDoorDoAfterEvent : DoAfterEvent
+public sealed class SprayPainterSetDecalSnapMessage(bool snap) : BoundUserInterfaceMessage
 {
-    /// <summary>
-    /// Base RSI path to set for the door sprite.
-    /// </summary>
-    [DataField]
-    public string Sprite;
+    public bool Snap = snap;
+}
 
-    /// <summary>
-    /// Department id to set for the door, if the style has one.
-    /// </summary>
-    [DataField]
-    public string? Department;
+[Serializable, NetSerializable]
+public sealed class SprayPainterSetDecalAngleMessage(int angle) : BoundUserInterfaceMessage
+{
+    public int Angle = angle;
+}
 
-    public SprayPainterDoorDoAfterEvent(string sprite, string? department)
+[Serializable, NetSerializable]
+public sealed class SprayPainterTabChangedMessage(int index, bool isSelectedTabWithDecals) : BoundUserInterfaceMessage
+{
+    public readonly int Index = index;
+    public readonly bool IsSelectedTabWithDecals = isSelectedTabWithDecals;
+}
+
+[Serializable, NetSerializable]
+public sealed class SprayPainterSetPaintableStyleMessage(string group, string style) : BoundUserInterfaceMessage
+{
+    public readonly string Group = group;
+    public readonly string Style = style;
+}
+
+[Serializable, NetSerializable]
+public sealed class SprayPainterSetPipeColorMessage(string? key) : BoundUserInterfaceMessage
+{
+    public readonly string? Key = key;
+}
+
+[Serializable, NetSerializable]
+public sealed partial class SprayPainterDoAfterEvent : DoAfterEvent
+{
+    [DataField]
+    public string Prototype;
+
+    [DataField]
+    public string Group;
+
+    [DataField]
+    public int Cost;
+
+    public SprayPainterDoAfterEvent(string prototype, string group, int cost)
     {
-        Sprite = sprite;
-        Department = department;
+        Prototype = prototype;
+        Group = group;
+        Cost = cost;
     }
 
     public override DoAfterEvent Clone() => this;
@@ -58,9 +81,6 @@ public sealed partial class SprayPainterDoorDoAfterEvent : DoAfterEvent
 [Serializable, NetSerializable]
 public sealed partial class SprayPainterPipeDoAfterEvent : DoAfterEvent
 {
-    /// <summary>
-    /// Color of the pipe to set.
-    /// </summary>
     [DataField]
     public Color Color;
 
@@ -70,4 +90,20 @@ public sealed partial class SprayPainterPipeDoAfterEvent : DoAfterEvent
     }
 
     public override DoAfterEvent Clone() => this;
+}
+
+/// <summary>
+/// An action raised on an item when it was spray painted.
+/// </summary>
+[ByRefEvent]
+public partial record struct EntityPaintedEvent(EntityUid? user, EntityUid tool, EntProtoId prototype, ProtoId<PaintableGroupPrototype> group)
+{
+    /// <summary>The entity painting this item.</summary>
+    public EntityUid? User = user;
+    /// <summary>The entity used to paint this item.</summary>
+    public EntityUid Tool = tool;
+    /// <summary>The prototype used to generate the new painted appearance.</summary>
+    public EntProtoId Prototype = prototype;
+    /// <summary>The group of item being painted (e.g. airlocks with glass, canisters).</summary>
+    public ProtoId<PaintableGroupPrototype> Group = group;
 }

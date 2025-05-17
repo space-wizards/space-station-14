@@ -12,6 +12,8 @@
     - Energy
     reflectProb: 0.2
     spread: 90
+  - type: Paintable
+    group: CrateSteel
   - type: RadiationBlockingContainer
     resistance: 2.5
 
@@ -31,6 +33,8 @@
     - entity_storage
   - type: StaticPrice
     price: 100
+  - type: Paintable
+    group: CratePlastic
 
 - type: entity
   parent: CratePlastic
@@ -49,6 +53,8 @@
     node: done
     containers:
     - entity_storage
+  - type: Paintable
+    group: null
 
 - type: entity
   parent: CratePlastic
@@ -804,6 +810,8 @@
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,0.03125"
       map: ["enum.PaperLabelVisuals.Layer"]
+  - type: Paintable
+    group: null
 
 - type: entity
   parent: CrateBaseSecure
@@ -830,6 +838,8 @@
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: AccessReader
     access: [["Janitor"]]
+  - type: Paintable
+    group: null
 
 - type: entity
   parent: CrateBaseWeldable

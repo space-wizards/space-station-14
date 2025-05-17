@@ -11949,8 +11949,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -15.5,31.5
       parent: 5350
-    - type: PaintableAirlock
-      department: Medical
     - type: AccessReader
       access:
       - - Medical
