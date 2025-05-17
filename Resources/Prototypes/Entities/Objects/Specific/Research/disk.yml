@@ -42,7 +42,7 @@
     unlockAllTech: true
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseScienceContraband]
   id: TechnologyDisk
   name: technology disk
   description: A disk for the R&D server containing research technology.

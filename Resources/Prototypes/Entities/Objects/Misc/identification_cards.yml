@@ -26,6 +26,14 @@
   - type: StealTarget
     stealGroup: IDCard
 
+- type: entity
+  parent: IDCardStandard
+  id: IDCardCommand
+  abstract: true
+  components:
+   - type: StealTarget
+     stealGroup: CommandID
+
 #IDs with layers
 
 - type: entity
@@ -101,7 +109,7 @@
     - state: idintern-service
 
 - type: entity
-  parent: [IDCardStandard, BaseGrandTheftContraband]
+  parent: [IDCardCommand ,BaseGrandTheftContraband]
   id: CaptainIDCard
   name: captain ID card
   components:
@@ -219,7 +227,7 @@
     job: SalvageSpecialist
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: QuartermasterIDCard
   name: quartermaster ID card
   components:
@@ -369,7 +377,7 @@
       job: Lawyer
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: HoPIDCard
   name: head of personnel ID card
   components:
@@ -383,7 +391,7 @@
     job: HeadOfPersonnel
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: CEIDCard
   name: chief engineer ID card
   components:
@@ -397,7 +405,7 @@
     job: ChiefEngineer
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: CMOIDCard
   name: chief medical officer ID card
   components:
@@ -411,7 +419,7 @@
     job: ChiefMedicalOfficer
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: RDIDCard
   name: research director ID card
   components:
@@ -425,7 +433,7 @@
     job: ResearchDirector
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: HoSIDCard
   name: head of security ID card
   components:
@@ -464,7 +472,7 @@
     - state: idbrigmedic
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: CentcomIDCard
   name: command officer ID card
   components:
@@ -478,7 +486,7 @@
     job: CentralCommandOfficial
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: ERTLeaderIDCard
   name: ERT leader ID card
   components:
@@ -492,7 +500,7 @@
     heldPrefix: gold
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: ERTChaplainIDCard
   name: ERT chaplain ID card
   components:
@@ -506,7 +514,7 @@
     heldPrefix: blue
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: ERTEngineerIDCard
   name: ERT engineer ID card
   components:
@@ -518,7 +526,7 @@
     job: ERTEngineer
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: ERTJanitorIDCard
   name: ERT janitor ID card
   components:
@@ -530,7 +538,7 @@
     job: ERTJanitor
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: ERTMedicIDCard
   name: ERT medic ID card
   components:
@@ -542,7 +550,7 @@
     job: ERTMedical
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: ERTSecurityIDCard
   name: ERT security ID card
   components:
@@ -566,7 +574,7 @@
       job: Musician
 
 - type: entity
-  parent: IDCardStandard
+  parent: IDCardCommand
   id: CentcomIDCardDeathsquad
   name: death squad ID card
   components:
