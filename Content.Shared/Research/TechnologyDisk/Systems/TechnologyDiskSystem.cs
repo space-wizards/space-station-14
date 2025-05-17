@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Lathe;
@@ -35,14 +36,35 @@ public sealed class TechnologyDiskSystem : EntitySystem
         if (ent.Comp.Recipes != null)
             return;
 
-        var weightedRandom = _protoMan.Index(ent.Comp.TierWeightPrototype);
-        var tier = int.Parse(weightedRandom.Pick(_random));
+        int tier;
+        if (ent.Comp.Tier.HasValue)
+        {
+            tier = ent.Comp.Tier.Value;
+        }
+        else
+        {
+            var weightedRandom = _protoMan.Index(ent.Comp.TierWeightPrototype);
+            tier = int.Parse(weightedRandom.Pick(_random));
+        }
+
+        ProtoId<TechDisciplinePrototype> discipline;
+        if (ent.Comp.Discipline.HasValue)
+        {
+            discipline = ent.Comp.Discipline.Value;
+        }
+        else
+        {
+            var disciplinePool = _protoMan.EnumeratePrototypes<TechDisciplinePrototype>()
+                .ToArray();
+            var disciplineIndex = _random.Next(disciplinePool.Length);
+            discipline = disciplinePool[disciplineIndex];
+        }
 
         //get a list of every distinct recipe in all the technologies.
         var techs = new HashSet<ProtoId<LatheRecipePrototype>>();
         foreach (var tech in _protoMan.EnumeratePrototypes<TechnologyPrototype>())
         {
-            if (tech.Tier != tier)
+            if (tech.Tier != tier || tech.Discipline != discipline)
                 continue;
 
             techs.UnionWith(tech.RecipeUnlocks);
