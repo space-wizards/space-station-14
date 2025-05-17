@@ -51,6 +51,7 @@ namespace Content.IntegrationTests.Tests
             "/Maps/gate.yml", // Contains positronic brain and LSE-1200c "Perforator"
             "/Maps/meta.yml", // Contains warden's rubber stamp
             "/Maps/reach.yml", // Contains handheld crew monitor
+            "/Maps/skeld.yml", // Contains two EXP-2100g "Duster"s, but with no functionality and no machine boards inside
             "/Maps/Shuttles/ShuttleEvent/cruiser.yml", // Contains LSE-1200c "Perforator"
             "/Maps/Shuttles/ShuttleEvent/honki.yml", // Contains golden honker, clown's rubber stamp
             "/Maps/Shuttles/ShuttleEvent/instigator.yml", // Contains EXP-320g "Friendship"
@@ -82,8 +83,8 @@ namespace Content.IntegrationTests.Tests
             "Elkridge",
             "Convex",
             "Relic",
-            "dm01-entryway"
-
+            "dm01-entryway",
+	    "Skeld"
         };
 
         /// <summary>
