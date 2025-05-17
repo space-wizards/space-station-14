@@ -1,53 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Entering a mech or other container now ends chameleon projections.
-    type: Fix
-  id: 7997
-  time: '2025-02-23T19:29:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35070
-- author: NoElkaTheGod
-  changes:
-  - message: Hitting a holoparasite will now ignore the host's armor.
-    type: Tweak
-  id: 7998
-  time: '2025-02-23T20:03:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35418
-- author: TiniestShark
-  changes:
-  - message: Scarves, pins and other neckwear now render above the backpack.
-    type: Tweak
-  id: 7999
-  time: '2025-02-23T23:29:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35322
-- author: metalgearsloth
-  changes:
-  - message: Fix arrivals.
-    type: Fix
-  id: 8000
-  time: '2025-02-24T09:43:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35439
-- author: Vortebo
-  changes:
-  - message: Added a new Relic arrivals shuttle
-    type: Add
-  id: 8001
-  time: '2025-02-24T21:35:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35194
-- author: Errant
-  changes:
-  - message: The version watermark is now less visually annoying.
-    type: Tweak
-  id: 8002
-  time: '2025-02-24T23:21:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35484
-- author: slarticodefast
-  changes:
-  - message: Fixed mousetraps not being armed when used.
-    type: Fix
-  id: 8003
-  time: '2025-02-25T03:52:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35486
 - author: pheenty
   changes:
   - message: Fixed borgs being given the scream action.
@@ -3912,3 +3863,60 @@
   id: 8499
   time: '2025-05-16T21:19:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37507
+- author: EmoGarbage404
+  changes:
+  - message: Fixed the mining asteroid not having a name.
+    type: Fix
+  id: 8500
+  time: '2025-05-17T01:27:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37513
+- author: EmoGarbage404
+  changes:
+  - message: You can now patch holes in the floors of the evac shuttle and ATS.
+    type: Fix
+  id: 8501
+  time: '2025-05-17T01:54:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36989
+- author: Lanedon
+  changes:
+  - message: Multiple head gear now hides the hair !
+    type: Fix
+  id: 8502
+  time: '2025-05-17T05:05:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36818
+- author: ArtisticRoomba
+  changes:
+  - message: Metal foam grenades have been added to station engineer lockers.
+    type: Add
+  - message: Metal foam grenades have been tweaked to cover more area over a longer
+      period of time.
+    type: Tweak
+  - message: Metal foam grenades now have a 5 second timer.
+    type: Tweak
+  - message: Aluminum foam walls now take one hit to destroy.
+    type: Tweak
+  id: 8503
+  time: '2025-05-17T05:21:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37476
+- author: EmoGarbage404
+  changes:
+  - message: Fixed tetherguns not having a beam when dragging.
+    type: Fix
+  id: 8504
+  time: '2025-05-17T05:22:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37510
+- author: aada
+  changes:
+  - message: Id cards now have the same max length as character names.
+    type: Fix
+  id: 8505
+  time: '2025-05-17T05:27:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35407
+- author: ArtisticRoomba
+  changes:
+  - message: Radiation collector power output has been buffed. Remember engineers,
+      the third level on the PA is safe for long term use!
+    type: Tweak
+  id: 8506
+  time: '2025-05-17T07:45:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37475

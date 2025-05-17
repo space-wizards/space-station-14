@@ -139,4 +139,11 @@
   id: 16
   time: '2025-05-16T02:10:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37490
+- author: Spessmann
+  changes:
+  - message: On Convex, added a window to sec EVA storage
+    type: Add
+  id: 17
+  time: '2025-05-17T04:49:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37533
 Order: 1
