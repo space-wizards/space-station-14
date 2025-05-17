@@ -1,8 +1,11 @@
+using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Alert;
+using Content.Shared.Body;
+using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
@@ -14,14 +17,18 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.HealthExaminable;
+using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Speech.EntitySystems;
+using Content.Shared.Sprite;
 using Robust.Server.Audio;
+using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
 
@@ -39,6 +46,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -55,6 +63,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<BloodstreamComponent, GenerateDnaEvent>(OnDnaGenerated);
+        SubscribeLocalEvent<BloodstreamComponent, LoadedHumanoidAppearanceEvent>(OnHumanoidAppearanceLoaded);
     }
 
     private void OnMapInit(Entity<BloodstreamComponent> ent, ref MapInitEvent args)
@@ -150,7 +159,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 // Multiplying by 2 is arbitrary but works for this case, it just prevents the time from running out
                 _drunkSystem.TryApplyDrunkenness(
                     uid,
-                    (float) bloodstream.UpdateInterval.TotalSeconds * 2,
+                    (float)bloodstream.UpdateInterval.TotalSeconds * 2,
                     applySlur: false);
                 _stutteringSystem.DoStutter(uid, bloodstream.UpdateInterval * 2, refresh: false);
 
@@ -268,9 +277,33 @@ public sealed class BloodstreamSystem : EntitySystem
         }
     }
 
+    private void ColorGibbedPart(EntityUid part, Color color)
+    {
+        if (TryComp<AppearanceComponent>(part, out AppearanceComponent? appearanceComp))
+        {
+            _appearanceSystem.SetData(part, GoreVisuals.ColorTint, color, appearanceComp);
+        }
+    }
+
     private void OnBeingGibbed(Entity<BloodstreamComponent> ent, ref BeingGibbedEvent args)
     {
         SpillAllSolutions(ent, ent);
+        if (!TryComp<BloodstreamComponent>(ent, out var bloodstreamComp)
+            || !TryComp<HumanoidAppearanceComponent>(ent, out var humanoidAppearanceComp))
+        {
+            return;
+        }
+        var bloodData = GetEntityBloodData(ent);
+        var bloodColorData = bloodData.OfType<BloodColorData>().FirstOrDefault();
+        if (null == bloodColorData)
+            return;
+        foreach (EntityUid part in args.GibbedParts)
+        {
+            if (TryComp<OrganComponent>(part, out OrganComponent? organComp))
+            {
+                ColorGibbedPart(part, bloodColorData.SubstanceColor);
+            }
+        }
     }
 
     private void OnApplyMetabolicMultiplier(
@@ -404,7 +437,7 @@ public sealed class BloodstreamSystem : EntitySystem
             _alertsSystem.ClearAlert(uid, component.BleedingAlert);
         else
         {
-            var severity = (short) Math.Clamp(Math.Round(component.BleedAmount, MidpointRounding.ToZero), 0, 10);
+            var severity = (short)Math.Clamp(Math.Round(component.BleedAmount, MidpointRounding.ToZero), 0, 10);
             _alertsSystem.ShowAlert(uid, component.BleedingAlert, severity);
         }
 
@@ -472,12 +505,23 @@ public sealed class BloodstreamSystem : EntitySystem
 
     private void OnDnaGenerated(Entity<BloodstreamComponent> entity, ref GenerateDnaEvent args)
     {
+        RefreshBloodData(entity);
+    }
+    private void OnHumanoidAppearanceLoaded(Entity<BloodstreamComponent> entity, ref LoadedHumanoidAppearanceEvent args)
+    {
+        // Blood color = skin color, for slimes.
+        // So we refresh when appearance is loaded.
+        RefreshBloodData(entity);
+    }
+
+    private void RefreshBloodData(Entity<BloodstreamComponent> entity)
+    {
         if (_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
         {
             foreach (var reagent in bloodSolution.Contents)
             {
                 List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
-                reagentData.RemoveAll(x => x is DnaData);
+                reagentData.Clear();
                 reagentData.AddRange(GetEntityBloodData(entity.Owner));
             }
         }
@@ -492,13 +536,23 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         var bloodData = new List<ReagentData>();
         var dnaData = new DnaData();
+        var bloodColorData = new BloodColorData();
 
         if (TryComp<DnaComponent>(uid, out var donorComp) && donorComp.DNA != null)
             dnaData.DNA = donorComp.DNA;
         else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
 
+        if (TryComp<BloodstreamComponent>(uid, out var bloodstreamComp))
+        {
+            var ev = new BloodColorOverrideEvent { Owner = uid, BloodstreamComp = bloodstreamComp };
+            RaiseLocalEvent(uid, ref ev);
+            var bloodProto = _prototypeManager.Index<ReagentPrototype>(bloodstreamComp.BloodReagent);
+            bloodColorData.SubstanceColor = bloodstreamComp.BloodOverrideColor ?? bloodProto.SubstanceColor;
+        }
+
         bloodData.Add(dnaData);
+        bloodData.Add(bloodColorData);
 
         return bloodData;
     }
