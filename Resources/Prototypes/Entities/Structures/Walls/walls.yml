@@ -1479,7 +1479,7 @@
 - type: entity
   id: Cardwall
   parent: BaseStructure
-  name: card wall
+  name: cardboard wall
   description: Budget cuts are hitting hard.
   placement:
     mode: SnapgridCenter

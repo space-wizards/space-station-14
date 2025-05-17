@@ -1820,7 +1820,7 @@
 - type: entity
   parent: BaseItem
   id: CardSword
-  name: card sword
+  name: cardboard sword
   description: A cardboard tube thats been fashioned into a sword.
   components:
   - type: Sprite

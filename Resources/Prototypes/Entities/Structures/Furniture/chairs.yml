@@ -375,7 +375,7 @@
     node: chairSteelBench
 
 - type: entity
-  name: card stool
+  name: cardboard stool
   id: CardStool
   parent: UnanchoredChairBase
   description: Make sure you sit *really* gently.

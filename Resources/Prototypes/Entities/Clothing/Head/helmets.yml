@@ -515,7 +515,7 @@
 - type: entity
   parent: ClothingHeadHelmetBase
   id: CardHelmet
-  name: card helmet
+  name: cardboard helmet
   description: A medieval helmet built from cardboard.
   components:
   - type: Sprite

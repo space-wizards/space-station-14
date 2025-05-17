@@ -181,7 +181,7 @@
       price: 150
 
 - type: entity
-  name: card shield
+  name: cardboard shield
   parent: BaseShield
   id: CardShield
   description: A shield that wont shield you from much.

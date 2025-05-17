@@ -479,7 +479,7 @@
 - type: entity
   parent: ClothingOuterArmorBase
   id: CardArmour
-  name: card armour
+  name: cardboard armour
   description: A medieval chestpiece built from cardboard.
   components:
   - type: Sprite

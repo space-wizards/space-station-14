@@ -372,7 +372,7 @@
 - type: entity
   id: CarpetCard
   parent: BaseStructure
-  name: card "carpet"
+  name: cardboard "carpet"
   description: "Even lino is better."
   components:
   - type: Sprite

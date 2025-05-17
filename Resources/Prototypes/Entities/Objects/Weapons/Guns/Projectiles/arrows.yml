@@ -189,7 +189,7 @@
 - type: entity
   parent: BaseArrow
   id: ArrowCard
-  name: card arrow
+  name: cardboard arrow
   description: Cant kill no matter how hard you try.
   components:
   - type: Sprite

@@ -303,7 +303,7 @@
 - type: entity
   id: TableCard
   parent: TableBase
-  name: card table
+  name: cardboard table
   description: Cardboard sheets wrapped around a metal table frame.
   components:
   - type: Sprite

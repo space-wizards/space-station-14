@@ -260,7 +260,7 @@
 - type: entity
   id: CardDoor
   parent: BaseStructure
-  name: card door
+  name: cardboard door
   description: A door, where will it lead?
   components:
   - type: InteractionOutline
