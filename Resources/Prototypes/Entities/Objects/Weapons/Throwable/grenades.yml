@@ -465,7 +465,7 @@
   parent: [ BaseEngineeringContraband, GrenadeBase ] # Prevent inheriting DeleteOnTrigger from SmokeGrenade
   id: AirGrenade
   name: air grenade
-  description: A special solid state chemical grenade used for quickly releasing standard air into a spaced area. It's like magic!
+  description: A special solid state chemical grenade used for quickly releasing standard air into a spaced area. Fills up to 30 tiles!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/metalfoam.rsi

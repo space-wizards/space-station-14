@@ -131,6 +131,7 @@
       - id: HolofanProjector
       - id: RCD
       - id: RCDAmmo
+      - id: AirGrenade
 
 - type: entity
   id: LockerEngineerFilledHardsuit
