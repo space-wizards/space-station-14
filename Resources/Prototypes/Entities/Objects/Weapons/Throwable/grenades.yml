@@ -480,7 +480,7 @@
   - type: OnUseTimerTrigger
     delay: 3
   - type: ReleaseGasOnTrigger
-    removeFraction: 0.5
+    removeFraction: 0.25
     air:
       volume: 1000
       moles: # Target is 3117.84 mols total for filling 30 tiles (goal is 101.325 kPa @ 20C)

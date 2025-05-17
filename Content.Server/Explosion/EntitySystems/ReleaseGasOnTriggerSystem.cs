@@ -29,6 +29,7 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
     {
         ent.Comp.Active = true;
         ent.Comp.NextReleaseTime = _timing.CurTime;
+        ent.Comp.StartingTotalMoles = ent.Comp.Air.TotalMoles;
     }
 
     public override void Update(float frameTime)
@@ -43,8 +44,7 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
             if (!comp.Active || comp.NextReleaseTime > curTime)
                 continue;
 
-            var fraction = comp.RemoveFraction ?? 1f;
-            var giverGasMix = comp.Air.RemoveRatio(fraction);
+            var giverGasMix = comp.Air.Remove(comp.StartingTotalMoles * comp.RemoveFraction);
             var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
 
             if (environment == null)
@@ -64,13 +64,14 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
             }
 
             if (comp.ExponentialRise)
-                UpdateExponentialRise(comp, fraction);
+                UpdateExponentialRise(comp, comp.RemoveFraction);
         }
     }
 
     /// <summary>
     /// Updates the RemoveFraction for exponential rise.
     /// </summary>
+    /// <remarks>See https://www.desmos.com/calculator/fx9gfrhoim</remarks>
     private static void UpdateExponentialRise(ReleaseGasOnTriggerComponent comp, float baseFraction)
     {
         comp.TimesReleased++;

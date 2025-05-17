@@ -9,7 +9,7 @@ namespace Content.Shared.Explosion.Components.OnTrigger;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentPause]
-public sealed partial class ReleaseGasOnTriggerComponent : Component, IGasMixtureHolder
+public sealed partial class ReleaseGasOnTriggerComponent : Component
 {
     /// <summary>
     /// Whether this grenade is active and releasing gas.
@@ -19,11 +19,16 @@ public sealed partial class ReleaseGasOnTriggerComponent : Component, IGasMixtur
     public bool Active;
 
     /// <summary>
-    /// If true, the gas will be released in an exponential manner.
-    /// Commonly necessary due to the gas being partitioned over and over again.
+    /// The gas mixture that will be released to the current tile atmosphere when triggered.
     /// </summary>
     [DataField]
-    public bool ExponentialRise = true;
+    public GasMixture Air;
+
+    /// <summary>
+    /// If true, the gas will be released in an exponential manner.
+    /// </summary>
+    [DataField]
+    public bool ExponentialRise;
 
     /// <summary>
     /// Time at which the next release will occur.
@@ -50,13 +55,21 @@ public sealed partial class ReleaseGasOnTriggerComponent : Component, IGasMixtur
     public TimeSpan ReleaseInterval = TimeSpan.FromSeconds(1);
 
     /// <summary>
-    /// A float from 0 to 1, representing a partial portion of the volume
+    /// A float from 0 to 1, representing a partial portion of the moles
     /// of the gas mixture that will be
     /// released to the current tile atmosphere when triggered.
     /// </summary>
-    /// <remarks>If null, the entire volume will be transferred.</remarks>
+    /// <remarks>If undefined on the prototype, the entire molar amount will be transferred.</remarks>
     [DataField]
-    public float? RemoveFraction;
+    public float RemoveFraction = 1;
+
+    /// <summary>
+    /// Stores the total moles initially in the grenade upon activation.
+    /// Used to calculate the moles released over time.
+    /// </summary>
+    /// <remarks>Set when the grenade is activated.</remarks>
+    [DataField(readOnly: true)]
+    public float StartingTotalMoles;
 
     /// <summary>
     /// Stores the number of times the grenade has been released,
@@ -64,10 +77,4 @@ public sealed partial class ReleaseGasOnTriggerComponent : Component, IGasMixtur
     /// </summary>
     [DataField]
     public int TimesReleased;
-
-    /// <summary>
-    /// The gas mixture that will be released to the current tile atmosphere when triggered.
-    /// </summary>
-    [DataField]
-    public GasMixture Air { get; set; }
 }
