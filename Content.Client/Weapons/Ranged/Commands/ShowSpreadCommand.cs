@@ -10,7 +10,6 @@ public sealed class ShowSpreadCommand : LocalizedEntityCommands
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         _gun.SpreadOverlay ^= true;
-
         shell.WriteLine(Loc.GetString($"cmd-showgunspread-status", ("status", _gun.SpreadOverlay)));
     }
 }
