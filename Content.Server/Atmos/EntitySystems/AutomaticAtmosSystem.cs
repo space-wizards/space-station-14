@@ -25,7 +25,7 @@ public sealed class AutomaticAtmosSystem : EntitySystem
             return;
 
         // We can't actually count how many tiles there are efficiently, so instead estimate with the mass.
-        if (ev.NewMass / ShuttleSystem.TileMassMultiplier >= 7.0f)
+        if (ev.NewMass / ShuttleSystem.TileDensityMultiplier >= 7.0f)
         {
             AddComp<GridAtmosphereComponent>(ent);
             Log.Info($"Giving grid {ent} GridAtmosphereComponent.");
