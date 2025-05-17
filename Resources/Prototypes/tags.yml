@@ -676,6 +676,9 @@
   id: HappyHonk
 
 - type: Tag
+  id: Hardhat
+  
+- type: Tag
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
 
 - type: Tag

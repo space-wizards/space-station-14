@@ -65,6 +65,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - Hardhat
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
