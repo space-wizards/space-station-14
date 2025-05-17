@@ -1,11 +1,11 @@
 <Document>
-  # Elves
+  # Dwarves
 
   <Box>
     <GuideEntityEmbed Entity="MobDwarf" Caption=""/>
   </Box>
 
-  Elves are very similar to humans for the most part, but speak with a strange accent and are EXTREMELY arrogant.
+  Dwarves are similar to humans in most respect, but tolerate alcohol better and are healed by it.
 
 
 </Document>
