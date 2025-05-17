@@ -1,0 +1,171 @@
+﻿- type: entity
+  id: PetRockCarrier
+  parent: HappyHonk
+  name: pet rock carrier
+  description: Your new (and only) best friend's home! # imp grammar
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Storage/Happyhonk/rock_carrier.rsi
+    state: box
+  - type: Item
+    sprite: _NF/Objects/Storage/Happyhonk/rock_carrier.rsi
+    heldPrefix: box
+  - type: StorageFill
+    contents:
+    - id: PetRock
+      prob: 0.5
+      orGroup: Rock
+    # imp edit below
+    - id: PetRockBosco
+      prob: 0.1
+      orGroup: Rock
+    - id: PetRockConstance
+      prob: 0.1
+      orGroup: Rock
+    - id: PetRockGayRock
+      prob: 0.1
+      orGroup: Rock
+    - id: PetRockGoogler
+      prob: 0.1
+      orGroup: Rock
+    - id: PetRockMisha
+      prob: 0.1
+      orGroup: Rock
+    - id: PetRockPainty
+      prob: 0.1
+      orGroup: Rock
+    - id: PetRockPepper
+      prob: 0.1
+      orGroup: Rock
+    - id: PetRockSexyRock
+      prob: 0.1
+      orGroup: Rock
+    - id: PetRockShoosh
+      prob: 0.1
+      orGroup: Rock
+    - id: PetRockSkipper
+      prob: 0.1
+      orGroup: Rock
+    - id: PetRockTony
+      prob: 0.1
+      orGroup: Rock
+  - type: Storage # imp
+    maxItemSize: Normal
+    grid:
+    - 0,0,1,1
+
+- type: entity
+  parent: [BaseItem, MrChips]
+  id: BasePetRock
+  name: pet rock
+  description: Your new (and only) best friend! # imp grammar
+  abstract: true
+  components:
+  - type: StaticPrice
+    price: 5
+  - type: VentriloquistPuppet
+    removeHand:
+    - ventriloquist-rock-release-hand
+    removedHand:
+    - ventriloquist-rock-released-hand
+    insertHand:
+    - ventriloquist-rock-grasp-hand
+    insertedHand:
+    - ventriloquist-rock-grasped-hand
+    puppetRoleName:
+    - ventriloquist-rock-role-name
+    puppetRoleDescription:
+    - ventriloquist-rock-role-description
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 1
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Ash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: BasePetRock
+  id: PetRock
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/petrock.rsi # imp resprite
+    layers:
+    - state: rock
+
+- type: entity
+  name: toy RPG
+  parent: [ BaseWeaponLauncher ] # imp - have to unparent because of contraband fuckery
+  id: WeaponLauncherRocketToy
+  suffix: Toy
+  description: A plush toy, this launches foam "grenades". There are stitches on the side that spell out "SAM".
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Fun/emotional_support_rpg.rsi
+    layers: # explicit just in case the base changes.
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _NF/Objects/Fun/emotional_support_rpg.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      collection: ToySqueak
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - NFFoamRPG
+    proto: BulletFoamRPG
+    soundInsert:
+      collection: ToySqueak
+  - type: EmitSoundOnCollide
+    sound:
+      collection: ToySqueak
+  # imp below - from unparenting
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: BulletFoamRPG
+  description: Looks like the REAL THING... if you squint. I hope your target's wearing face protection.
+  name: foam RPG rocket
+  parent: BaseItem
+  components:
+  - type: Tag
+    tags:
+    - NFFoamRPG
+    - Trash
+  - type: Ammo
+  - type: Sprite
+    sprite: _NF/Objects/Fun/emotional_support_rocket.rsi
+    state: icon
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Weapons/rubberhammer.ogg
+  - type: StaminaDamageOnCollide
+    damage: 20

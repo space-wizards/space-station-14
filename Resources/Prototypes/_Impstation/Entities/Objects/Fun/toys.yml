@@ -746,3 +746,32 @@
       head:
       - state: odds-equipped-HELMET
         offset: "0, 0.06"
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieKodepiia
+  name: kodepiia plushie
+  description: This thing looks really familiar.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    layers:
+    - state: plushie_kodepiia1
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        plushie_kodepiia1: ""
+    - enum.DamageStateVisualLayers.Base:
+        plushie_kodepiia2: ""
+    - enum.DamageStateVisualLayers.Base:
+        plushie_kodepiia3: ""
+    - enum.DamageStateVisualLayers.Base:
+        plushie_kodepiia4: ""
+    - enum.DamageStateVisualLayers.Base:
+        plushie_kodepiia5: ""
+  - type: EmitSoundOnUse
+    sound:
+      collection: KodePlushie
+      params:
+        variation: .125

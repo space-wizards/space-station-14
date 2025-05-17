@@ -1,0 +1,203 @@
+﻿- type: entity
+  parent: BaseItem # imp - not sure why it inherited from presents
+  id: PrizeBall
+  name: prize ball
+  description: I wonder what's inside! # imp typo fix
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Fun/prizeticket.rsi
+    layers:
+    - state: prizeball
+  - type: SpawnItemsOnUse # imp i literally fully replaced this selection sorry
+    items:
+    - id: PresentTrash
+      # R rarity - species plushies, staples that are easily available elsewhere
+    - id: PrizeTicketBronze
+      orGroup: Prize
+    - id: BirdToyInstrument
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieApid
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieArachind # i am going to become the joker
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieBee
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieCarp
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieDecapoid
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieDiona
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieGhost
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieGoblin
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieGray
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieHampter
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieHuman # i hate this thing
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieKodepiia
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieLizard
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieMoth
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieSharkBlue
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieSharkGrey
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieSharkPink
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieSlime
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieSnail
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieSnake
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieThaven
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieVox
+      prob: 0.82
+      orGroup: Prize
+    - id: ToyMouse
+      prob: 0.82
+      orGroup: Prize
+    - id: ToyRubberDuck
+      prob: 0.82
+      orGroup: Prize
+    # SR rarity - variants of R rarity plushies or otherwise uncommon finds. deities etc
+    - id: PrizeTicketSilver
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieAtmosian
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieCosmicCult
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieDoll
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieDollHair
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieGhostRevenant
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieGollylad
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieGriffy
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieLamp
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieNar
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieRainbowCarp
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieRainbowLizard
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieRatvar
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieRGBee
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieRouny
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieSpaceLizard
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieThavenWeird
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieUrsaMinor
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieXeno
+      prob: 0.15
+      orGroup: Prize
+    # SSR rarity - getting these should feel like winning the lottery. all blorbo plushies go here also
+    - id: PrizeTicketGold
+      prob: 0.03
+      orGroup: Prize
+    - id: DehydratedSpaceCarp
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieBug
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieCaptain
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieDwarf
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieEvilBug
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieFinfin
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieGiantBear # don't worry about how it fits in there
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieHeadofPersonnel
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieHolocarp
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieImp
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieLizardInversed
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieMagicarp
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieNuke
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieOdds
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieThrongler
+      prob: 0.03
+      orGroup: Prize
+    - id: ToyNuke
+      prob: 0.03
+      orGroup: Prize
+    sound:
+      path: /Audio/Effects/unwrap.ogg

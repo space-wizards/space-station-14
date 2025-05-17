@@ -401,3 +401,10 @@
   - /Audio/Voice/Human/whistle_2.ogg
   - /Audio/Voice/Human/whistle_3.ogg
   - /Audio/Voice/Human/whistle_4.ogg
+
+- type: soundCollection
+  id: KodePlushie # so it can have all kode vocal sounds
+  files:
+  - /Audio/_Impstation/Kodepiia/kodeask.ogg
+  - /Audio/_Impstation/Kodepiia/kodeexclaim.ogg
+  - /Audio/_Impstation/Kodepiia/kodetalk.ogg

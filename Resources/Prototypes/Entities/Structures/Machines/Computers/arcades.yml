@@ -99,7 +99,6 @@
     - GunpetInstrument
     - BirdToyInstrument
     - MysteryFigureBox
-    - PlushieGiantBear # imp
     - PlushieHampter
     - PlushieLizard
     - PlushieRainbowLizard
@@ -155,6 +154,23 @@
     - WeaponWaterPistol
     - WhoopieCushion
     - Whistle
+    # imp below
+    - PlushieGiantBear
+    - PlushieFinfin
+    - PlushieGray
+    - PlushieUrsaMinor
+    - PlushieDecapoid
+    - PlushieSnail
+    - PlushieThaven
+    - PlushieGoblin
+    - PlushieApid
+    - PlushieGriffy
+    - PrizeTicketGold
+    - PrizeTicketSilver
+    - PrizeTicketBronze
+    - PlushieKodepiia
+    - PetRockCarrier
+    - WeaponLauncherRocketToy
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade
