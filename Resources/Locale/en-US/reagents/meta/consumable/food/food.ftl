@@ -1,20 +1,20 @@
-reagent-name-nutriment = juice that fills your tummy
+reagent-name-nutriment = nutriment
 reagent-desc-nutriment = All the vitamins, minerals, and carbohydrates the body needs in pure form.
 
-reagent-name-glucose = juice that makes you fat
+reagent-name-glucose = glucose
 reagent-desc-glucose = A simple sugar found in many foods.
 
-reagent-name-vitamin = juice that makes you healthy
+reagent-name-vitamin = vitamin
 reagent-desc-vitamin = Found in healthy, complete meals.
 
-reagent-name-protein = juice that builds your muscles
+reagent-name-protein = protein
 reagent-desc-protein = Found in certain meals, good for bodily health.
 
-reagent-name-cocoapowder = juice used to make chocolate
+reagent-name-cocoapowder = cocoa powder
 reagent-desc-cocoapowder = From the best varieties of cocoa beans
 
-reagent-name-butter = juice that makes bread moist
+reagent-name-butter = butter
 reagent-desc-butter = You can believe it!
 
-reagent-name-pumpkin-flesh = juice that makes things spooky
+reagent-name-pumpkin-flesh = pumpkin flesh
 reagent-desc-pumpkin-flesh = The mushy, sweet remains of a pumpkin.
