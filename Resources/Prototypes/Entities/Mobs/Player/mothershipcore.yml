@@ -5,7 +5,7 @@
   - Omnitool
 
 - type: entity
-  parent: 
+  parent:
   - BaseMachinePowered
   - BaseMob
   - StripableInventoryBase
