@@ -141924,7 +141924,7 @@ entities:
     - type: Transform
       pos: -6.522576,13.64284
       parent: 60
-- proto: ToyOwlman
+- proto: ToyFigurineOwlman
   entities:
   - uid: 8021
     components:

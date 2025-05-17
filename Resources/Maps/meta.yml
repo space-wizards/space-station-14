@@ -161527,7 +161527,7 @@ entities:
     - type: Transform
       pos: 6.5,2.5
       parent: 5350
-- proto: ToySkeleton
+- proto: ToyFigurineSkeleton
   entities:
   - uid: 17624
     components:

@@ -92804,14 +92804,14 @@ entities:
     - type: Transform
       pos: -8.133195,-94.51872
       parent: 2
-- proto: ToyGriffin
+- proto: ToyFigurineGriffin
   entities:
   - uid: 13936
     components:
     - type: Transform
       pos: -2.8305314,-148.27542
       parent: 2
-- proto: ToyOwlman
+- proto: ToyFigurineOwlman
   entities:
   - uid: 13937
     components:
