@@ -184,6 +184,12 @@ public sealed partial class CCVars
         CVarDef.Create("ban.hardware_ids", true, CVar.SERVERONLY);
 
     /// <summary>
+    /// Determines if we'll reject connections from clients who don't have a modern hwid.
+    /// </summary>
+    public static readonly CVarDef<bool> RequireModernHardwareId =
+        CVarDef.Create("admin.require_modern_hwid", true, CVar.SERVERONLY);
+
+    /// <summary>
     /// If true, players are allowed to connect to multiple game servers at once.
     /// If false, they will be kicked from the first when connecting to another.
     /// </summary>

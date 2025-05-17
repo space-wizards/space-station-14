@@ -16,12 +16,12 @@
     - HamsterWearable
     - WhitelistChameleon
   - type: HideLayerClothing
-    slots:
-    - Snout
+    layers:
+      Snout: Mask
     hideOnToggle: true
 
 - type: entity
-  parent: [ClothingMaskGas, BaseRestrictedContraband]
+  parent: [ClothingMaskGas, BaseSecurityContraband]
   id: ClothingMaskGasSecurity
   name: security gas mask
   description: A standard issue Security gas mask.
@@ -137,6 +137,10 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 50
 
 - type: entity
   parent: ClothingMaskBreathMedical
@@ -202,7 +206,10 @@
     - WhitelistChameleon
   - type: HideLayerClothing
     slots:
+    - Hair
     - Snout
+    - HeadTop
+    - HeadSide
 
 - type: entity
   parent: ClothingMaskClownBase
@@ -215,7 +222,10 @@
     - WhitelistChameleon
   - type: HideLayerClothing
     slots:
+    - Hair
     - Snout
+    - HeadTop
+    - HeadSide
 
 - type: entity
   parent: ClothingMaskClown
@@ -231,7 +241,7 @@
     node: mask
 
 - type: entity
-  parent: [ClothingMaskClown, BaseRestrictedContraband]
+  parent: [ClothingMaskClown, BaseSecurityContraband]
   id: ClothingMaskClownSecurity
   name: security clown wig and mask
   description: A debatably oxymoronic but protective mask and wig.
@@ -358,7 +368,7 @@
     accent: StutteringAccent
 
 - type: entity
-  parent: [ ClothingMaskGas, BaseRestrictedContraband ]
+  parent: [ ClothingMaskGas, BaseSecurityContraband ]
   id: ClothingMaskGasSwat
   name: swat gas mask
   description: A elite issue Security gas mask.
@@ -374,6 +384,8 @@
     slots:
     - Hair
     - Snout
+    - HeadTop
+    - HeadSide
     hideOnToggle: true
   - type: Armor
     modifiers:
@@ -439,6 +451,11 @@
     sprite: Clothing/Mask/squadron.rsi
   - type: Clothing
     sprite: Clothing/Mask/squadron.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
   - type: Armor
     modifiers:
       coefficients:
@@ -687,3 +704,16 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+
+# Entity tables
+- type: entityTable
+  id: AnimalMaskTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingMaskFox
+    - id: ClothingMaskBat
+    - id: ClothingMaskBear
+    - id: ClothingMaskBee
+    - id: ClothingMaskRaven
+    - id: ClothingMaskRat
+    - id: ClothingMaskJackal

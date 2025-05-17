@@ -1,5 +1,5 @@
 {
-   "copyright" : "Taken from https://github.com/tgstation/tgstation at commit a21274e56ae84b2c96e8b6beeca805df3d5402e8.",
+   "copyright" : "Taken from https://github.com/tgstation/tgstation at commit a21274e56ae84b2c96e8b6beeca805df3d5402e8, Inhand sprites by onesch",
    "license" : "CC-BY-SA-3.0",
    "size" : {
       "x" : 32,
@@ -8,6 +8,14 @@
    "states" : [
       {
          "name" : "spray_painter"
+      },
+      {
+          "name": "inhand-left",
+          "directions": 4
+      },
+      {
+          "name": "inhand-right",
+          "directions": 4
       }
    ],
    "version" : 1

@@ -13,10 +13,7 @@
           !type:PhysShapeCircle
           radius: 0.25
         mask:
-        - SubfloorMask
-        layer:
-        - LowImpassable
-        hard: false
+        - Impassable
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: StationAiVision
@@ -150,8 +147,7 @@
 - type: entity
   id: HolopadHologram
   name: hologram
-  categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
+  categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Transform
     anchored: true
