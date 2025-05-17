@@ -164,16 +164,15 @@
       - !type:SatiateThirst
         factor: 1.5
     # Dragon doesn't require airloss healing, so omnizine is still best for humans.
+    # Want to use the EvenHealthChange property which requires the use of airloss.
       - !type:ModifyBloodLevel
         amount: 3
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Burn: -5
-            Brute: -5
-            Toxin: -2
-          types:
-            Bloodloss: -5
+          Burn: -5
+          Toxin: -2
+          Airloss: -5
+          Brute: -5
       - !type:ModifyBleedAmount
         amount: -1.5
   # Just in case you REALLY want to water your plants
