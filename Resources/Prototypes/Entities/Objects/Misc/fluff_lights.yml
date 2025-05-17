@@ -45,7 +45,9 @@
     radius: 3
     energy: 2
     netsync: false
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
+    spriteLayer: light
+  - type: ItemTogglePointLight
   - type: Appearance
   - type: Physics
     canCollide: false
