@@ -252,6 +252,18 @@
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 0.25
+      - !type:EvenHealthChange
+        conditions:
+        - !type:OrganType
+          type: Rat
+        - !type:ReagentThreshold
+          reagent: Ammonia
+          min: 1
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          Brute: -5
+          Burn: -5
       - !type:HealthChange
         conditions:
         - !type:OrganType

@@ -603,8 +603,6 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Brute: -3.5
           types:
             Asphyxiation: -2.5
       - !type:HealthChange
@@ -691,6 +689,9 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:EvenHealthChange
+        damage:
+          Brute: -3.5
       - !type:HealthChange
         damage:
           types:
@@ -781,13 +782,17 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:EvenHealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          Brute: -1
       - !type:HealthChange
         conditions:
         - !type:TotalDamage
           max: 50
         damage:
-          groups:
-            Brute: -1
           types:
             Poison: -0.5 ##Should be about what it was when it healed the toxin group
             Heat: -0.33
