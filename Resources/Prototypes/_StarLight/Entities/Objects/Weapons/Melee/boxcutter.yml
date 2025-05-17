@@ -10,6 +10,7 @@
   - type: Item
     sprite: _Starlight/Objects/Weapons/Melee/boxcutter.rsi
     storedSprite:
+  - type: UseDelay #bug fix to prevent spamming use to reset the swing delay
   - type: ItemSwitch
     state: sheathed
     states:
