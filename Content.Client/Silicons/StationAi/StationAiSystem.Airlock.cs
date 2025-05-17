@@ -11,63 +11,80 @@ public sealed partial class StationAiSystem
 
     private void InitializeAirlock()
     {
-        SubscribeLocalEvent<DoorBoltComponent, GetStationAiRadialEvent>(OnDoorBoltGetRadial);
-        SubscribeLocalEvent<AirlockComponent, GetStationAiRadialEvent>(OnEmergencyAccessGetRadial);
-        SubscribeLocalEvent<ElectrifiedComponent, GetStationAiRadialEvent>(OnDoorElectrifiedGetRadial);
+        SubscribeLocalEvent<DoorComponent, GetStationAiRadialEvent>(OnDoorGetRadial);
     }
 
-    private void OnDoorBoltGetRadial(Entity<DoorBoltComponent> ent, ref GetStationAiRadialEvent args)
+    private void OnDoorGetRadial(Entity<DoorComponent> ent, ref GetStationAiRadialEvent args)
     {
+        if (TryComp<AirlockComponent>(ent.Owner, out var airlockComp)) {
+            var airlockEnt = (ent.Owner, airlockComp);
+
+            GetRadialAirlockDoorBolt(airlockEnt, ref args);
+            GetRadialAirlockEmergencyAccess(airlockEnt, ref args);
+            GetRadialAirlockElectrified(airlockEnt, ref args);
+        }
+    }
+
+    private void GetRadialAirlockDoorBolt(Entity<AirlockComponent> ent, ref GetStationAiRadialEvent args)
+    {
+        if (!TryComp<DoorBoltComponent>(ent, out var doorBolt))
+            return;
+
         args.Actions.Add(
             new StationAiRadial
             {
-                Sprite = ent.Comp.BoltsDown
+                Sprite = doorBolt.BoltsDown
                     ? new SpriteSpecifier.Rsi(_aiActionsRsi, "unbolt_door")
                     : new SpriteSpecifier.Rsi(_aiActionsRsi, "bolt_door"),
-                Tooltip = ent.Comp.BoltsDown
+                Tooltip = doorBolt.BoltsDown
                     ? Loc.GetString("bolt-open")
                     : Loc.GetString("bolt-close"),
                 Event = new StationAiBoltEvent
                 {
-                    Bolted = !ent.Comp.BoltsDown,
+                    Bolted = !doorBolt.BoltsDown,
                 }
             }
         );
     }
 
-    private void OnEmergencyAccessGetRadial(Entity<AirlockComponent> ent, ref GetStationAiRadialEvent args)
+    private void GetRadialAirlockEmergencyAccess(Entity<AirlockComponent> ent, ref GetStationAiRadialEvent args)
     {
+        var airlock = ent.Comp;
+
         args.Actions.Add(
             new StationAiRadial
             {
-                Sprite = ent.Comp.EmergencyAccess
+                Sprite = airlock.EmergencyAccess
                     ? new SpriteSpecifier.Rsi(_aiActionsRsi, "emergency_off")
                     : new SpriteSpecifier.Rsi(_aiActionsRsi, "emergency_on"),
-                Tooltip = ent.Comp.EmergencyAccess
+                Tooltip = airlock.EmergencyAccess
                     ? Loc.GetString("emergency-access-off")
                     : Loc.GetString("emergency-access-on"),
                 Event = new StationAiEmergencyAccessEvent
                 {
-                    EmergencyAccess = !ent.Comp.EmergencyAccess,
+                    EmergencyAccess = !airlock.EmergencyAccess,
                 }
             }
         );
     }
 
-    private void OnDoorElectrifiedGetRadial(Entity<ElectrifiedComponent> ent, ref GetStationAiRadialEvent args)
+    private void GetRadialAirlockElectrified(Entity<AirlockComponent> ent, ref GetStationAiRadialEvent args)
     {
+        if (!TryComp<ElectrifiedComponent>(ent, out var electrified))
+            return;
+
         args.Actions.Add(
             new StationAiRadial
             {
-                Sprite = ent.Comp.Enabled
+                Sprite = electrified.Enabled
                     ? new SpriteSpecifier.Rsi(_aiActionsRsi, "door_overcharge_off")
                     : new SpriteSpecifier.Rsi(_aiActionsRsi, "door_overcharge_on"),
-                Tooltip = ent.Comp.Enabled
+                Tooltip = electrified.Enabled
                     ? Loc.GetString("electrify-door-off")
                     : Loc.GetString("electrify-door-on"),
                 Event = new StationAiElectrifiedEvent
                 {
-                    Electrified = !ent.Comp.Enabled,
+                    Electrified = !electrified.Enabled,
                 }
             }
         );
