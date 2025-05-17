@@ -52,11 +52,6 @@ namespace Content.Client.PDA
                 SendPredictedMessage(new ItemSlotButtonPressedEvent(PdaComponent.PdaPaiSlotId));
             };
 
-            _menu.ActivateMusicButton.OnPressed += _ =>
-            {
-                SendMessage(new PdaShowMusicMessage());
-            };
-
             _menu.AccessRingtoneButton.OnPressed += _ =>
             {
                 SendMessage(new PdaShowRingtoneMessage());
