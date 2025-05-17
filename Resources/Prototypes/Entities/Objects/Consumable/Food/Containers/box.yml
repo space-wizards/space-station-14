@@ -808,7 +808,7 @@
         orGroup: GiftPool
       - id: ToyFigurinePassenger
         orGroup: GiftPool
-    #  - id: ToyFigurineGriffin Out of rotation due to consistency with outer figurines
+    #  - id: ToyFigurineGriffin Out of rotation due to consistency with other figurines
     #    orGroup: GiftPool
       - id: ToyHonk
         orGroup: GiftPool
@@ -822,7 +822,7 @@
         orGroup: GiftPool
       - id: ToyOdysseus
         orGroup: GiftPool
-     # - id: ToyFigurineOwlman
+     # - id: ToyFigurineOwlman  Out of rotation due to consistency with other figurines
      #   orGroup: GiftPool
       - id: ToyDeathRipley
         orGroup: GiftPool
@@ -838,7 +838,7 @@
         orGroup: GiftPool
       - id: ToyDurand
         orGroup: GiftPool
-    #  - id: ToyFigurineSkeleton
+    #  - id: ToyFigurineSkeleton  Out of rotation due to consistency with other figurines
     #    orGroup: GiftPool
       - id: FoamBlade
         orGroup: GiftPool
