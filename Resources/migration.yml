@@ -630,3 +630,7 @@ CigaretteMuteToxin: CigaretteSodiumPolyacrylate
 CigaretteSpaceDrugs: CigaretteLipolicide
 CigaretteMilk: CigaretteHaloperidol
 CigaretteBread: CigaretteBbqSauce
+
+# 2025-05-05
+ChemistryHotplate: MachineThermobath
+HotplateMachineCircuitboard: ThermobathMachineCircuitboard
