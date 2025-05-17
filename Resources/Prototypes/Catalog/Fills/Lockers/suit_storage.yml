@@ -90,16 +90,16 @@
 
 #HARDSUITS
 #instance here
-#Basic hardsuit
+#Antique hardsuit
 - type: entity
-  id: SuitStorageBasic
+  id: SuitStorageAntique
   parent: SuitStorageBase
-  suffix: Basic Hardsuit
+  suffix: Antique Hardsuit
   components:
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitBasic
+        - id: ClothingOuterHardsuitAntique
         - id: ClothingMaskBreath
 
 #Engineering hardsuit

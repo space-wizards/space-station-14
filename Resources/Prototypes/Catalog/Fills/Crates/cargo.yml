@@ -180,7 +180,7 @@
       prob: 0.001
       orGroup: Clothes
       #instance here
-    - id: ClothingOuterHardsuitBasic
+    - id: ClothingOuterHardsuitAntique
       prob: 0.001
       orGroup: Clothes
     - id: ClothingBackpackERTClown

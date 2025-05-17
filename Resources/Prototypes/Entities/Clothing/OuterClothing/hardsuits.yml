@@ -2,17 +2,20 @@
 
 #CREW HARDSUITS
 #instance here
-#Basic Hardsuit
+#Antique hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitBasic
-  name: basic hardsuit
-  description: A basic, universal hardsuit that protects the wearer against the horrors of life in space. Beats not having a hardsuit, at least.
+  id: ClothingOuterHardsuitAntique
+  name: antique hardsuit
+  description: Maneuverable but minimally protective, this luxury command variant of the obsolete basic-hardsuit is an extremely rare and valuable antique and in excellent condition.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/antique.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/antique.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: Armor
@@ -23,11 +26,11 @@
         Piercing: 0.9
         Caustic: 0.9
   - type: ClothingSpeedModifier
-    walkModifier: 0.80
-    sprintModifier: 0.80
+    walkModifier: 0.85
+    sprintModifier: 0.85
   - type: HeldSpeedModifier
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitBasic
+    clothingPrototype: ClothingHeadHelmetHardsuitAntique
 
 #Atmospherics Hardsuit
 - type: entity

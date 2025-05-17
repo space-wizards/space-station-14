@@ -6,17 +6,20 @@
 
 #CREW HARDSUITS
 #instance here
-#Standard Hardsuit
+#Antique hardsuit
 - type: entity
   parent: ClothingHeadHardsuitBase
-  id: ClothingHeadHelmetHardsuitBasic
-  name: basic hardsuit helmet
-  description: This basic hardsuit isn't just an antique, but the stupidly rare durathread model. These were issued to esteemed HoPs back in the day.
+  id: ClothingHeadHelmetHardsuitAntique
+  name: antique hardsuit helmet
+  description: An outdated looking hardsuit helmet, antique but in excellent condition.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/basic.rsi
+    sprite: Clothing/Head/Hardsuits/antique.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/basic.rsi
+    sprite: Clothing/Head/Hardsuits/antique.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
   - type: HideLayerClothing
     slots:
     - Hair

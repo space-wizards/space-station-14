@@ -389,7 +389,7 @@
     contents:
     - id: WeaponRevolverDeckard
     #instance here
-    - id: ClothingOuterHardsuitBasic
+    - id: ClothingOuterHardsuitAntique
     - id: JetpackBlue
     - id: SpaceCash1000
     - id: BeachBall
