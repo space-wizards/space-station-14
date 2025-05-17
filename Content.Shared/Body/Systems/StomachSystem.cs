@@ -3,6 +3,8 @@ using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -23,6 +25,8 @@ namespace Content.Shared.Body.Systems
             SubscribeLocalEvent<StomachComponent, EntityUnpausedEvent>(OnUnpaused);
             SubscribeLocalEvent<StomachComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
             SubscribeLocalEvent<StomachComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+            SubscribeLocalEvent<StomachComponent, ReactionAttemptEvent>(OnReactionAttempt);
+            SubscribeLocalEvent<StomachComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         }
 
         private void OnMapInit(Entity<StomachComponent> ent, ref MapInitEvent args)
@@ -43,6 +47,27 @@ namespace Content.Shared.Body.Systems
 
             // Cleared our cached reference to the solution entity
             ent.Comp.Solution = null;
+        }
+
+        private void OnReactionAttempt(Entity<StomachComponent> ent, ref ReactionAttemptEvent args)
+        {
+            if (args.Cancelled)
+                return;
+
+            // If our stomach has a reaction (e.g., table salt + water) which
+            // produces reagents, make sure we add that to our reagent deltas.
+            foreach (var (product, amt) in args.Reaction.Products)
+            {
+                ent.Comp.ReagentDeltas.Add(new StomachComponent.ReagentDelta(new ReagentQuantity(product, amt)));
+            }
+        }
+
+        private void OnReactionAttempt(Entity<StomachComponent> ent, ref SolutionRelayEvent<ReactionAttemptEvent> args)
+        {
+            if (args.Name != DefaultSolutionName)
+                return;
+
+            OnReactionAttempt(ent, ref args.Event);
         }
 
         public override void Update(float frameTime)
