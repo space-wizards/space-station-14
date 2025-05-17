@@ -3,6 +3,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Dice;
 
+/// <summary>
+///     A die, which can be rolled as a source of IC randomness.
+/// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedDiceSystem))]
 [AutoGenerateComponentState(true)]
 public sealed partial class DiceComponent : Component
