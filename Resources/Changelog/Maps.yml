@@ -129,4 +129,14 @@
   id: 15
   time: '2025-05-11T00:49:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37206
+- author: spanky-spanky
+  changes:
+  - message: On Omega, the TEG burn chamber blast door buttons are now engineering
+      access instead of atmospherics.
+    type: Fix
+  - message: On Omega, security now get hardsuits.
+    type: Fix
+  id: 16
+  time: '2025-05-16T02:10:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37490
 Order: 1
