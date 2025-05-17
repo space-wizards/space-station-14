@@ -189,6 +189,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.7
+        showInChat: true
   metabolisms:
     Poison:
       metabolismRate : 3.00
@@ -205,6 +206,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.3
+        showInChat: true
 
 - type: reagent
   id: Fresium
@@ -335,7 +337,6 @@
       effects:
       - !type:Emote
         emote: Weh
-        showInChat: true
         force: true
         probability: 0.5
       - !type:Polymorph
@@ -367,7 +368,6 @@
       effects:
       - !type:Emote
         emote: Hew
-        showInChat: true
         force: true
         probability: 0.5
       - !type:Polymorph
