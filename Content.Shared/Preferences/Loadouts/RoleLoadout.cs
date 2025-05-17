@@ -213,7 +213,8 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             SelectedLoadouts.Clear();
 
         var collection = IoCManager.Instance!;
-        var roleProto = protoManager.Index(Role);
+        if(!protoManager.TryIndex(Role, out var roleProto, logError: false))
+            return;
 
         for (var i = roleProto.Groups.Count - 1; i >= 0; i--)
         {
