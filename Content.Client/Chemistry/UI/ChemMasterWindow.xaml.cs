@@ -178,7 +178,7 @@ namespace Content.Client.Chemistry.UI
             PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
             BottleDosage.IsValid = x => x > 0 && x <= bottleAmountMax;
 
-            // Adjust pill number based on buffer volume 
+            // Adjust pill number based on buffer volume
             if (bufferVolume == 0)
             {
                 PillNumber.OverrideValue(0);

@@ -215,7 +215,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return; // output can't fit pills
             }
 
-            // Ensure there is room for the pills. 
+            // Ensure there is room for the pills.
             if (!_storageSystem.HasSpace((container, storage)))
                 return;
 
