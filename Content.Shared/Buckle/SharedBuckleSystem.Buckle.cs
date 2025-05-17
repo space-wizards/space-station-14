@@ -234,9 +234,9 @@ public abstract partial class SharedBuckleSystem
         }
 
         if (!_interaction.InRangeUnobstructed(buckle.Owner,
-                buckle.Owner,
+                strap.Owner,
                 buckle.Comp.Range,
-                predicate: entity => entity == buckle.Owner || entity == userUid || entity == buckle.Owner,
+                predicate: entity => entity == buckle.Owner || entity == userUid || entity == strap.Owner,
                 popup: true))
         {
             return false;
@@ -352,11 +352,12 @@ public abstract partial class SharedBuckleSystem
     private bool InvalidateSelfPulling(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap)
     {
         if (!TryComp<PullableComponent>(strap.Owner, out var pullable))
-            return false;
+            return true; // strap owner is not pullable, self pulling not possible
 
-        if (pullable.Puller == buckle.Owner)
-            return _pullingSystem.TryStopPull(strap.Owner, pullable);
-        return true;
+        if (pullable.Puller != buckle.Owner)
+            return true;
+
+        return _pullingSystem.TryStopPull(strap.Owner, pullable);
     }
 
     private void Buckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? user)
