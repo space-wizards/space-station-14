@@ -29,9 +29,11 @@ namespace Content.Shared.Clothing.EntitySystems
             base.Initialize();
             SubscribeLocalEvent<SecurityHailerComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<SecurityHailerComponent, ClothingGotEquippedEvent>(OnEquip);
+            SubscribeLocalEvent<SecurityHailerComponent, ClothingGotUnequippedEvent>(OnUnequip);
             SubscribeLocalEvent<SecurityHailerComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<SecurityHailerComponent, SecHailerToolDoAfterEvent>(OnScrewingDoAfter);
         }
+
 
         private void OnEquip(Entity<SecurityHailerComponent> ent, ref ClothingGotEquippedEvent args)
         {
@@ -42,6 +44,16 @@ namespace Content.Shared.Clothing.EntitySystems
 
             _wearer = args.Wearer;
             _actions.AddAction(args.Wearer, ref comp.ActionEntity, comp.Action, uid);
+        }
+
+        private void OnUnequip(Entity<SecurityHailerComponent> ent, ref ClothingGotUnequippedEvent args)
+        {
+            var (uid, comp) = ent;
+
+            if (comp.CurrentState != SecMaskState.Functional)
+                return;
+            _actions.RemoveAction(_wearer, comp.ActionEntity);
+            _wearer = EntityUid.Invalid;
         }
 
         //In case someone spawns with it ?
@@ -112,11 +124,16 @@ namespace Content.Shared.Clothing.EntitySystems
             {
                 comp.CurrentState = SecMaskState.WiresCut;
                 _actions.RemoveAction(_wearer, comp.ActionEntity);
+                Dirty(ent);
             }
             else if (comp.CurrentState == SecMaskState.WiresCut)
             {
-                comp.CurrentState = SecMaskState.Functional ;
-                //_actions.AddAction(_wearer, ref comp.ActionEntity, comp.Action, uid);
+                comp.CurrentState = SecMaskState.Functional;
+                if (_wearer != EntityUid.Invalid)
+                {
+                    _actions.AddAction(_wearer, ref comp.ActionEntity, comp.Action, uid);
+                    Dirty(ent);
+                }
             }
             _appearance.SetData(ent, SecMaskVisuals.State, comp.CurrentState);
             args.Handled = true;
