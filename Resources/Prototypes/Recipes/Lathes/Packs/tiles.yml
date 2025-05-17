@@ -9,6 +9,8 @@
   - FloorTileItemDarkHerringbone
   - FloorTileItemDarkMini
   - FloorTileItemDarkMono
+  - FloorTileItemDarkVerticalSlats
+  - FloorTileItemDarkVerticalSlatsSingleRow
   - FloorTileItemDarkPavement
   - FloorTileItemDarkPavementVertical
   - FloorTileItemDarkOffset
@@ -31,6 +33,8 @@
   - FloorTileItemWhiteHerringbone
   - FloorTileItemWhiteMini
   - FloorTileItemWhiteMono
+  - FloorTileItemWhiteVerticalSlats
+  - FloorTileItemWhiteVerticalSlatsSingleRow
   - FloorTileItemWhitePavement
   - FloorTileItemWhitePavementVertical
   - FloorTileItemSteelCheckerLight

@@ -57,6 +57,16 @@
 
 - type: latheRecipe
   parent: BaseTileRecipe
+  id: FloorTileItemDarkVerticalSlats
+  result: FloorTileItemDarkVerticalSlats
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemDarkVerticalSlatsSingleRow
+  result: FloorTileItemDarkVerticalSlatsSingleRow
+
+- type: latheRecipe
+  parent: BaseTileRecipe
   id: FloorTileItemDarkPavement
   result: FloorTileItemDarkPavement
 
@@ -164,6 +174,16 @@
   parent: BaseTileRecipe
   id: FloorTileItemWhiteMono
   result: FloorTileItemWhiteMono
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemWhiteVerticalSlats
+  result: FloorTileItemWhiteVerticalSlats
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemWhiteVerticalSlatsSingleRow
+  result: FloorTileItemWhiteVerticalSlatsSingleRow
 
 - type: latheRecipe
   parent: BaseTileRecipe

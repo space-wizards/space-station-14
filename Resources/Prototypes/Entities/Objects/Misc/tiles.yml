@@ -190,6 +190,34 @@
     stackType: FloorTileDarkPavementVertical
 
 - type: entity
+  name: dark steel vertical slat tile
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkVerticalSlats
+  components:
+  - type: Sprite
+    state: dark-vertical-slats
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorDarkVerticalSlats
+  - type: Stack
+    stackType: FloorTileDarkVerticalSlats
+
+- type: entity
+  name: dark steel single row vertical slat tile
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkVerticalSlatsSingleRow
+  components:
+  - type: Sprite
+    state: dark-vertical-slats
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorDarkVerticalSlatsSingleRow
+  - type: Stack
+    stackType: FloorTileDarkVerticalSlatsSingleRow
+
+- type: entity
   name: offset dark steel tile
   parent: FloorTileItemDark
   id: FloorTileItemDarkOffset
@@ -492,6 +520,34 @@
       - FloorWhitePavementVertical
   - type: Stack
     stackType: FloorTileWhitePavementVertical
+
+- type: entity
+  name: white steel single row vertical slat tile
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhiteVerticalSlatsSingleRow
+  components:
+  - type: Sprite
+    state: white-vertical-slats
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWhiteVerticalSlatsSingleRow
+  - type: Stack
+    stackType: FloorTileWhiteVerticalSlatsSingleRow
+
+- type: entity
+  name: white steel vertical slat tile
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhiteVerticalSlats
+  components:
+  - type: Sprite
+    state: white-vertical-slats
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWhiteVerticalSlats
+  - type: Stack
+    stackType: FloorTileWhiteVerticalSlats
 
 - type: entity
   name: steel tile

@@ -325,6 +325,42 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorWhiteVerticalSlats
+  name: tiles-white-floor-vertical-slats
+  sprite: /Textures/Tiles/white_vertical_slats.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemWhiteVerticalSlats
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorWhiteVerticalSlatsSingleRow
+  name: tiles-white-floor-vertical-slats-single-row
+  sprite: /Textures/Tiles/white_vertical_slats_single_row.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemWhiteVerticalSlatsSingleRow
+  heatCapacity: 10000
+
+- type: tile
   id: FloorWhitePavement
   name: tiles-white-floor-pavement
   sprite: /Textures/Tiles/white_pavement.png
@@ -496,6 +532,42 @@
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemDarkMini
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkVerticalSlats
+  name: tiles-dark-floor-vertical-slats
+  sprite: /Textures/Tiles/dark_vertical_slats.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemDarkVerticalSlats
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkVerticalSlatsSingleRow
+  name: tiles-dark-floor-vertical-slats-single-row
+  sprite: /Textures/Tiles/dark_vertical_slats_single_row.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemDarkVerticalSlatsSingleRow
   heatCapacity: 10000
 
 - type: tile
