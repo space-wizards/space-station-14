@@ -419,9 +419,8 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var xform = Transform(args.Target);
-                    var fixtures = Comp<FixturesComponent>(args.Target);
                     _transformSystem.Unanchor(args.Target, xform); // Just in case.
-                    _physics.SetBodyType(args.Target, BodyType.Dynamic, manager: fixtures, body: physics);
+                    _physics.SetBodyType(args.Target, BodyType.Dynamic, body: physics);
                     _physics.SetBodyStatus(args.Target, physics, BodyStatus.InAir);
                     _physics.WakeBody(args.Target, body: physics);
 
@@ -453,8 +452,6 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
                 Act = () =>
                 {
-                    var xform = Transform(args.Target);
-                    var fixtures = Comp<FixturesComponent>(args.Target);
                     _transformSystem.Unanchor(args.Target); // Just in case.
 
                     _physics.SetBodyType(args.Target, BodyType.Dynamic, body: physics);

@@ -439,9 +439,9 @@ public sealed class RCDSystem : EntitySystem
                 return false;
             }
 
-            if (prototype.CollisionMask != CollisionGroup.None && TryComp<FixturesComponent>(ent, out var fixtures))
+            if (prototype.CollisionMask != CollisionGroup.None && TryComp<PhysicsComponent>(ent, out var otherBody))
             {
-                foreach (var fixture in body.Fixtures.Values)
+                foreach (var fixture in otherBody.Fixtures.Values)
                 {
                     // Continue if no collision is possible
                     if (!fixture.Hard || fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) prototype.CollisionMask) == 0)

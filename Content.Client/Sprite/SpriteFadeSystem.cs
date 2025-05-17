@@ -9,6 +9,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Client.Sprite;
 
@@ -21,7 +22,6 @@ public sealed class SpriteFadeSystem : EntitySystem
 
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
@@ -35,7 +35,7 @@ public sealed class SpriteFadeSystem : EntitySystem
     private EntityQuery<SpriteComponent> _spriteQuery;
     private EntityQuery<SpriteFadeComponent> _fadeQuery;
     private EntityQuery<FadingSpriteComponent> _fadingQuery;
-    private EntityQuery<FixturesComponent> _fixturesQuery;
+    private EntityQuery<PhysicsComponent> _fixturesQuery;
 
     private const float TargetAlpha = 0.4f;
     private const float ChangeRate = 1f;
@@ -47,7 +47,7 @@ public sealed class SpriteFadeSystem : EntitySystem
         _spriteQuery = GetEntityQuery<SpriteComponent>();
         _fadeQuery = GetEntityQuery<SpriteFadeComponent>();
         _fadingQuery = GetEntityQuery<FadingSpriteComponent>();
-        _fixturesQuery = GetEntityQuery<FixturesComponent>();
+        _fixturesQuery = GetEntityQuery<PhysicsComponent>();
 
         SubscribeLocalEvent<FadingSpriteComponent, ComponentShutdown>(OnFadingShutdown);
     }
@@ -106,7 +106,7 @@ public sealed class SpriteFadeSystem : EntitySystem
                             if (!fixture.Hard)
                                 continue;
 
-                            if (_fixtures.TestPoint(fixture.Shape, transform, mapPos.Position))
+                            if (_physics.TestPoint(fixture.Shape, transform, mapPos.Position))
                             {
                                 collided = true;
                                 break;

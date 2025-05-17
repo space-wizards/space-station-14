@@ -127,7 +127,6 @@
     node: grilleBroken
     deconstructionTarget: start
   - type: Physics # overwrite BaseStructure parent.
-  - type: Physics
     bodyType: Static
     canCollide: false
   - type: Tag

@@ -23,7 +23,7 @@
     enabled: false
   - type: InteractionOutline
   - type: Physics
-  	bodyType: Dynamic
+    bodyType: Dynamic
     fixtures:
       fix1:
         shape:

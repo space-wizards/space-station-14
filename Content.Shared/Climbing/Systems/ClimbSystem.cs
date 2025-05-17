@@ -261,7 +261,7 @@ public sealed partial class ClimbSystem : VirtualController
     }
 
     public void Climb(EntityUid uid, EntityUid user, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
-        PhysicsComponent? physics = null, FixturesComponent? fixtures = null, ClimbableComponent? comp = null)
+        PhysicsComponent? physics = null, ClimbableComponent? comp = null)
     {
         if (!Resolve(uid, ref climbing, ref physics, false))
             return;

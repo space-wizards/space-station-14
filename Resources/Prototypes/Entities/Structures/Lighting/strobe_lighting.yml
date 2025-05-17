@@ -40,7 +40,6 @@
   - type: RotatingLight
   - type: Physics
     bodyType: Static
-  - type: Physics
     fixtures:
       fix1:
         shape:
