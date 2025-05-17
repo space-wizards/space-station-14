@@ -239,7 +239,6 @@
   recipeUnlocks:
   - ClothingShoesBootsSpeed
   
-  
 - type: technology
   id: LauncherSyringe
   name: research-technology-launcher-syringe
