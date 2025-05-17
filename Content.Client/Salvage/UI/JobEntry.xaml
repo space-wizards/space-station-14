@@ -5,7 +5,7 @@
               Visible="True">
     <PanelContainer StyleClasses="AngleRect" HorizontalExpand="True">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <BoxContainer Orientation="Vertical" MaxWidth="380">
+            <BoxContainer HorizontalExpand="True" Orientation="Vertical" MaxWidth="380">
                 <RichTextLabel Name="NameLabel" StyleClasses="LabelKeyText"/>
                 <customControls:HSeparator Margin="0 0 0 5"/>
                 <RichTextLabel Name="DescriptionLabel" HorizontalExpand="True"/>

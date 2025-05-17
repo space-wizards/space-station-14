@@ -3,6 +3,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Salvage.JobBoard;
 
+/// <summary>
+/// holds information for a station relating to the salvage job board
+/// </summary>
 [RegisterComponent]
 [Access(typeof(SalvageJobBoardSystem))]
 public sealed partial class SalvageJobsDataComponent : Component

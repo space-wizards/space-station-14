@@ -156,11 +156,11 @@
       0:
         title: salvage-job-rank-title-0
         bountyGroup: SalvageJobTier1
-      1: # TODO: 3
+      3:
         title: salvage-job-rank-title-1
         bountyGroup: SalvageJobTier2
         unlockedMarket: SalvageJobReward2
-      2: # TODO: 6
+      6:
         title: salvage-job-rank-title-2
         bountyGroup: SalvageJobTier3
         unlockedMarket: SalvageJobReward3

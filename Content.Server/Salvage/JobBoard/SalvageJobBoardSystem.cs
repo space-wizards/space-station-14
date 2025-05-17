@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Radio.EntitySystems;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
@@ -34,7 +33,7 @@ public sealed class SalvageJobBoardSystem : EntitySystem
     /// <summary>
     /// Radio channel that unlock messages are broadcast on.
     /// </summary>
-    public static ProtoId<RadioChannelPrototype> UnlockChannel = "Supply";
+    private static readonly ProtoId<RadioChannelPrototype> UnlockChannel = "Supply";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -101,17 +100,22 @@ public sealed class SalvageJobBoardSystem : EntitySystem
             return 1;
         var completedCount = ent.Comp.CompletedJobs.Count;
 
-        foreach (var (low, rank) in ent.Comp.RankThresholds.Reverse())
+        for (var i = ent.Comp.RankThresholds.Count - 1; i >= 0; i--)
         {
+            var low = ent.Comp.RankThresholds.Keys.ElementAt(i);
+
             if (completedCount < low)
                 continue;
-            var totalCount = _prototypeManager.EnumeratePrototypes<CargoBountyPrototype>()
-                .Count(p => p.Group == rank.BountyGroup);
 
-            if (totalCount == 0)
-                return 1;
+            // don't worry abooouuuuut it (it'll be O K !)
+            var high = i != ent.Comp.RankThresholds.Count - 1
+                ? ent.Comp.RankThresholds.Keys.ElementAt(i + 1)
+                :  _prototypeManager.EnumeratePrototypes<CargoBountyPrototype>()
+                .Count(p => ent.Comp.RankThresholds.Values
+                    .Select(r => r.BountyGroup)
+                    .Contains(p.Group));
 
-            return (completedCount - low) / (float) totalCount;
+            return (completedCount - low) / (float)(high - low);
         }
 
         return 1f;
