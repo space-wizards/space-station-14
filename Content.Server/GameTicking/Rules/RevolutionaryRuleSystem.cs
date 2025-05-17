@@ -427,7 +427,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                                          ownerComp.OwnerUid == ev.User.Value))
                                     {
                                         _popup.PopupEntity(Loc.GetString($"+1 Telebond (for {Identity.Name(ev.User.Value, EntityManager)})"), 
-                                            rev.Owner, rev.Owner, PopupType.Large);
+                                            rev.Owner, rev.Owner, PopupType.Medium);
                                         break;
                                     }
                                 }
@@ -436,12 +436,16 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     }
                 }
             
-            // Add Conversion to ALL head revolutionary uplinks
+            // Add Conversion to ALL head revolutionary uplinks with a 1-second delay
+            // This prevents the Conversion popup from appearing at the same time as the Telebond popup
             var uplinkSystem = EntitySystem.Get<USSPUplinkSystem>();
-            uplinkSystem.AddConversionToAllHeadRevs(storeSystem);
-            
-            // Synchronize all uplinks again to ensure the conversion value is updated everywhere
-            uplinkSystem.SynchronizeAllUplinks();
+            Timer.Spawn(TimeSpan.FromSeconds(1), () => 
+            {
+                uplinkSystem.AddConversionToAllHeadRevs(storeSystem);
+                
+                // Synchronize all uplinks again to ensure the conversion value is updated everywhere
+                uplinkSystem.SynchronizeAllUplinks();
+            });
 
             if (_mind.TryGetMind(ev.User.Value, out var revMindId, out _))
             {

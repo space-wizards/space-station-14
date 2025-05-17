@@ -1,20 +1,20 @@
 ## Rev Head
 
 roles-antag-rev-head-name = USSP Head Revolutionary
-roles-antag-rev-head-objective = Your objective is to take over the station by converting people to your cause, setting up supply rifts and killing or convert all of Command staff on station.
+roles-antag-rev-head-objective = Your objective is to take over the station by bringing back people to your cause, setting up supply rifts, killing, converting or imprisoning all of Command staff on station.
 
 head-rev-role-greeting =
     Comrade {$name}! You are a Head Revolutionary promoting the interests of USSP!
     You are tasked with removing all of Command from station via conversion, death or imprisonment.
-    The USSP has sponsored you with a flash that converts the crew to your side.
-    Beware, this won't work on those with a mindshield or wearing flash protection, such as sunglasses and welding masks/goggles.
+    The USSP has sponsored you with a flash that brings back the crew to your side.
+    Beware, this won't work on those brainwashed with a 'mindshield' or wearing flash protection, such as sunglasses and welding masks/goggles.
     With enough crew, you may attempt to create a supply rift that will aid in your glorious revolution! But beware, it will alert the station of your influence!
     Glory to the USSP!
 
 head-rev-briefing =
-    Use flashes to convert people to your cause.
+    Use flashes bring people to your cause.
     Get rid of or convert all heads to take over the station.
-    Lots of used Flashes are the biggest indicator of a revolution to security, so be careful!
+    Lots of used flashes are the biggest indicator of a revolution to security, so be careful!
 
 head-rev-break-mindshield = The Mindshield was destroyed!
 
