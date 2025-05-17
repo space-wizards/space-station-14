@@ -13,18 +13,16 @@ public sealed class ShowAccessReadersCommand : LocalizedEntityCommands
 
     public override string Command => "showaccessreaders";
 
-    public override string Description => Loc.GetString($"cmd-show-access-readers-desc");
-    public override string Help => Loc.GetString($"cmd-show-access-readers-help");
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (_overlay.RemoveOverlay<AccessOverlay>())
         {
-            shell.WriteLine(Loc.GetString($"cmd-show-access-readers-disabled"));
+            shell.WriteLine(Loc.GetString($"cmd-showaccessreaders-disabled"));
             return;
         }
 
         _overlay.AddOverlay(new AccessOverlay(_ent, _cahce, _xform));
-        shell.WriteLine(Loc.GetString($"cmd-show-access-readers-enabled"));
+        shell.WriteLine(Loc.GetString($"cmd-showaccessreaders-enabled"));
 
     }
 }
