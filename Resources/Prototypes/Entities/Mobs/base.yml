@@ -75,6 +75,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawnInContainer: true
+        offset: 0
         spawn:
           Ash:
             min: 1

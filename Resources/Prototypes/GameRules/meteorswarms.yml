@@ -35,19 +35,30 @@
     - id: GameRuleUristSwarm
     - id: ImmovableRodSpawn
 
-- type: weightedRandomEntity
+- type: entityTable
   id: MeteorSpawnAsteroidWallTable
-  weights:
-    MeteorRock: 10
-    MeteorRockCoal: 5
-    MeteorRockQuartz: 5
-    MeteorRockTin: 5
-    MeteorRockSilver: 2
-    MeteorRockGold: 2
-    MeteorRockPlasma: 2
-    MeteorRockDiamond: 2
-    MeteorRockUranium: 0.5
-    MeteorRockBananium: 0.5
+  table: !type:GroupSelector
+    children:
+    - id: MeteorRock
+      weight: 10
+    - !type:GroupSelector
+      weight: 15 # weight 5 for non-valuable metals
+      children:
+      - id: MeteorRockCoal
+      - id: MeteorRockQuartz
+      - id: MeteorRockTin
+    - !type:GroupSelector
+      weight: 8 # weight 2 for valuable metals
+      children:
+      - id: MeteorRockSilver
+      - id: MeteorRockGold
+      - id: MeteorRockPlasma
+      - id: MeteorRockDiamond
+    - !type:GroupSelector
+      weight: 1 # weight 0.5 for rare metals
+      children:
+      - id: MeteorRockUranium
+      - id: MeteorRockBananium
 
 # Event Schedulers
 
