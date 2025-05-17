@@ -6,7 +6,7 @@ namespace Content.Server.Body.Components
     /// Used by the SlimeSystem to respond
     /// to BloodColorOverrideEvents.
     /// </summary>
-    [RegisterComponent, Access(typeof(SlimeSystem))]
+    [RegisterComponent, Access(typeof(SlimeBloodSystem))]
     public sealed partial class SlimeBloodComponent : Component
     {
     }

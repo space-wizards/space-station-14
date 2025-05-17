@@ -1,15 +1,13 @@
 using Content.Server.Body.Components;
 
+/// <summary>
+/// Subscribe to this event and set the
+/// BloodOverrideColor to override blood
+/// reagent color
+/// </summary>
 [ByRefEvent]
 public record struct BloodColorOverrideEvent()
 {
-    /// <summary>
-    /// The entity getting the appearance component.
-    /// </summary>
     public EntityUid Owner;
-
-    /// <summary>
-    /// The apearance component that was modified.
-    /// </summary>
     public BloodstreamComponent? BloodstreamComp;
 }

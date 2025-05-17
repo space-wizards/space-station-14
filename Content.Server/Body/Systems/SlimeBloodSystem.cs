@@ -9,7 +9,7 @@ namespace Content.Server.Body.Systems;
 /// Listens for the BloodColorOverrideEvent
 /// so it can provide a color to slime blood.
 /// </summary>
-public sealed class SlimeSystem : EntitySystem
+public sealed class SlimeBloodSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
