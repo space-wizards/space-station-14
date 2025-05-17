@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: Auto Disabler's maximum inaccuracy cone has been narrowed by 3 degrees
-      (18 -> 15)
-    type: Tweak
-  - message: Stun Projector's rate of fire reduced from 1.3 to 0.9 shots per second.
-      Was stunning faster than intended prior.
-    type: Tweak
-  id: 1194
-  time: '2025-02-24T11:20:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1772
 - author: hivehum
   changes:
   - message: Supply assistants can no longer be antagonists.
@@ -4221,3 +4210,23 @@
   id: 1693
   time: '2025-05-17T14:02:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2499
+- author: widgetbeck
+  changes:
+  - message: Defender Replicators are a bit tougher.
+    type: Tweak
+  - message: The Replicator Hive now displays as one entity on the round-end screen.
+    type: Tweak
+  - message: The Replicator Nest no longer deletes steal targets, but *does* delete
+      borgs.
+    type: Tweak
+  - message: Replicators should no longer get Upgrade actions that don't work.
+    type: Fix
+  - message: Replicators should no longer be able to get multiple Manufacture Nest
+      actions.
+    type: Fix
+  - message: Removed network configurator functionality from Omnitools, because it
+      generally caused more problems than it solved.
+    type: Remove
+  id: 1694
+  time: '2025-05-17T18:28:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2512
