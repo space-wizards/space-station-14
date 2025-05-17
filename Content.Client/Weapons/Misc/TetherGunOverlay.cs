@@ -24,7 +24,7 @@ public sealed class TetherGunOverlay : Overlay
         var forceQuery = _entManager.GetEntityQuery<ForceGunComponent>();
         var worldHandle = args.WorldHandle;
         var xformSystem = _entManager.System<SharedTransformSystem>();
-        
+
         while (query.MoveNext(out var uid, out var tethered))
         {
             var gun = tethered.Tetherer;
