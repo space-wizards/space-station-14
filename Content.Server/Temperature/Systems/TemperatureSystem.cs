@@ -45,7 +45,7 @@ public sealed class TemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
         SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
-        Subs.SubscribeWithRelay<TemperatureProtectionComponent, ModifyChangedTemperatureEvent>(OnTemperatureChangeAttempt);
+        Subs.SubscribeWithRelay<TemperatureProtectionComponent, ModifyChangedTemperatureEvent>(OnTemperatureChangeAttempt, held: false);
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
 
