@@ -75,6 +75,27 @@
       - PowerCellSmall
 
 - type: entity
+  name: power cell
+  description: A rechargeable power cell. This is the cheapest kind you can find.
+  id: PowerCellDebug
+  suffix: DEBUG
+  parent: BasePowerCell
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: small
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Battery
+    maxCharge: 9999999
+    startingCharge: 9999999
+  - type: Tag
+    tags:
+      - PowerCellSmall
+
+- type: entity
   id: PowerCellSmallPrinted
   suffix: Empty
   parent: PowerCellSmall
@@ -309,6 +330,43 @@
   - type: Battery
     maxCharge: 1400
     startingCharge: 1400
+
+- type: entity
+  id: PowerCageSmall
+  parent: BasePowerCage
+  name: small-capacity power cage
+  description: A rechargeable power cage for big devices. This is the cheapest kind you can find.
+  components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: small
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Battery
+    maxCharge: 1400
+    startingCharge: 1400
+
+- type: entity
+  id: PowerCageDebug
+  parent: BasePowerCage
+  name: Power Cage
+  description: A rechargeable power cage for big devices. This is the cheapest kind you can find.
+  suffix: DEBUG
+  components:
+  - type: Sprite
+    sprite: Objects/Power/power_cages.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: small
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Battery
+    maxCharge: 9999999
+    startingCharge: 9999999
 
 - type: entity
   id: PowerCageMedium
