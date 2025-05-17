@@ -4,39 +4,27 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Access.Commands;
 
-public sealed class ShowAccessReadersCommand : IConsoleCommand
+public sealed class ShowAccessReadersCommand : LocalizedEntityCommands
 {
-    public string Command => "showaccessreaders";
+    [Dependency] private readonly IEntityManager _ent = default!;
+    [Dependency] private readonly IOverlayManager _overlay = default!;
+    [Dependency] private readonly IResourceCache _cahce = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
 
-    public string Description => "Toggles showing access reader permissions on the map";
-    public string Help => """
-        Overlay Info:
-        -Disabled | The access reader is disabled
-        +Unrestricted | The access reader has no restrictions
-        +Set [Index]: [Tag Name]| A tag in an access set (accessor needs all tags in the set to be allowed by the set)
-        +Key [StationUid]: [StationRecordKeyId] | A StationRecordKey that is allowed
-        -Tag [Tag Name] | A tag that is not allowed (takes priority over other allows)
-        """;
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "showaccessreaders";
+
+    public override string Description => Loc.GetString($"cmd-show-access-readers-desc");
+    public override string Help => Loc.GetString($"cmd-show-access-readers-help");
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var collection = IoCManager.Instance;
-
-        if (collection == null)
-            return;
-
-        var overlay = collection.Resolve<IOverlayManager>();
-
-        if (overlay.RemoveOverlay<AccessOverlay>())
+        if (_overlay.RemoveOverlay<AccessOverlay>())
         {
-            shell.WriteLine($"Set access reader debug overlay to false");
+            shell.WriteLine(Loc.GetString($"cmd-show-access-readers-disabled"));
             return;
         }
 
-        var entManager = collection.Resolve<IEntityManager>();
-        var cache = collection.Resolve<IResourceCache>();
-        var xform = entManager.System<SharedTransformSystem>();
+        _overlay.AddOverlay(new AccessOverlay(_ent, _cahce, _xform));
+        shell.WriteLine(Loc.GetString($"cmd-show-access-readers-enabled"));
 
-        overlay.AddOverlay(new AccessOverlay(entManager, cache, xform));
-        shell.WriteLine($"Set access reader debug overlay to true");
     }
 }
