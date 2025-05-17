@@ -177,7 +177,7 @@
   - type: LockingWhitelist
     blacklist:
       components:
-      - RoboticsConsole 
+      - RoboticsConsole
     whitelist:
       components:
       - BorgChassis
