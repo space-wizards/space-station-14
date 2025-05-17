@@ -299,6 +299,7 @@
   - type: AccessReader
     access: [["Command"], ["Research"]]
   - type: ShowJobIcons
+    includeCrewBorder: true
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
@@ -358,3 +359,4 @@
   - type: IonStormTarget
     chance: 1
   - type: ShowJobIcons
+    includeCrewBorder: true

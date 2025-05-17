@@ -71,6 +71,7 @@
     title: comms-console-announcement-title-station-ai
     color: "#5ed7aa"
   - type: ShowJobIcons
+    includeCrewBorder: true
 
 - type: entity
   id: AiHeldIntellicard
@@ -93,6 +94,7 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
   - type: ShowJobIcons
+    includeCrewBorder: true
 
 # Ai
 - type: entity
