@@ -1,6 +1,36 @@
 #When adding new hardsuits, please try to keep the organization consistent with hardsuit-helmets.yml (if possible.)
 
 #CREW HARDSUITS
+#Antique hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitAntique
+  name: antique hardsuit
+  description: Maneuverable but minimally protective, this luxury command variant of the obsolete basic-hardsuit is an extremely rare and valuable antique and in excellent condition.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/antique.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/antique.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Caustic: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitAntique
+
 #Atmospherics Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseEngineeringContraband]

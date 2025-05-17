@@ -5,6 +5,27 @@
 #Generally, unless you're adding something like caustic damage, you should probably avoid messing with armor here outside of the above scenario.
 
 #CREW HARDSUITS
+#Antique hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitAntique
+  name: antique hardsuit helmet
+  description: An outdated looking hardsuit helmet, antique but in excellent condition.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/antique.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/antique.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+
 #Atmospherics Hardsuit
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
