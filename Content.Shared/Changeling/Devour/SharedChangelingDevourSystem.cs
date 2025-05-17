@@ -18,6 +18,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using YamlDotNet.Core.Tokens;
 
 namespace Content.Shared.Changeling.Devour;
 
@@ -129,7 +130,10 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             return;
         }
 
-        StartSound(ent, new SoundPathSpecifier(_audio.GetSound(ent.Comp.DevourWindupNoise!)));
+        //Why does your dad let you have Two IsFirstTimePredicted checks
+        if (_timing.IsFirstTimePredicted)
+            ent.Comp.CurrentDevourSound = _audio.PlayPredicted(ent.Comp.DevourWindupNoise!, ent, ent, new AudioParams())!.Value.Entity;
+
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent:player} started changeling devour windup against {target:player}");
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.DevourWindupTime, new ChangelingDevourWindupDoAfterEvent(), ent, target: target, used: ent)
@@ -148,7 +152,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         var curTime = _timing.CurTime;
         args.Handled = true;
 
-        StopSound(ent);
+        _audio.Stop(ent.Comp.CurrentDevourSound!);
 
         if (args.Cancelled)
             return;
@@ -158,9 +162,10 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             null,
             PopupType.LargeCaution);
 
-        StartSound(ent, new SoundPathSpecifier(_audio.GetSound(ent.Comp.ConsumeNoise!)));
+        if (_timing.IsFirstTimePredicted)
+            ent.Comp.CurrentDevourSound = _audio.PlayPredicted(ent.Comp.ConsumeNoise!, ent, ent, new AudioParams())!.Value.Entity;
 
-        ent.Comp.NextTick = curTime + TimeSpan.FromSeconds(1);
+        ent.Comp.NextTick = curTime + ent.Comp.DamageTimeBetweenTicks;
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} began to devour {ToPrettyString(args.Target):player} identity");
 
@@ -187,7 +192,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         if (target == null)
             return;
 
-        StopSound(ent);
+        _audio.Stop(ent.Comp.CurrentDevourSound!);
 
         if (args.Cancelled)
             return;
@@ -226,10 +231,6 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         }
         Dirty(ent);
     }
-
-    protected virtual void StartSound(Entity<ChangelingDevourComponent> ent, SoundSpecifier? sound) { }
-
-    protected virtual void StopSound(Entity<ChangelingDevourComponent> ent) { }
 
     protected virtual void RipClothing(EntityUid uid, Entity<ButcherableComponent> item) { }
 

@@ -13,15 +13,18 @@ using Content.Shared.Popups;
 using Content.Shared.Speech;
 using Content.Shared.Wagging;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 
 namespace Content.Shared.Changeling.Transform;
 
 public abstract partial class SharedChangelingTransformSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -29,6 +32,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -85,7 +89,9 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             return;
 
         _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), ent, null, PopupType.MediumCaution);
-        StartSound(ent, ent.Comp.TransformAttemptNoise);
+
+        if(_timing.IsFirstTimePredicted)
+            ent.Comp.CurrentTransformSound = _audio.PlayPredicted(ent.Comp.TransformAttemptNoise, ent, ent)!.Value.Entity;
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             ent,
@@ -108,7 +114,10 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         var selectedIdentity = args.TargetIdentity;
 
         _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), ent, null, PopupType.MediumCaution);
-        StartSound(ent, ent.Comp.TransformAttemptNoise);
+
+        if(_timing.IsFirstTimePredicted)
+           ent.Comp.CurrentTransformSound = _audio.PlayPredicted(ent.Comp.TransformAttemptNoise, ent, ent)!.Value.Entity;
+
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(GetEntity(selectedIdentity))}\"");
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
@@ -130,7 +139,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     {
         args.Handled = true;
 
-        StopSound(ent);
+        _audio.Stop(ent.Comp.CurrentTransformSound);
         if (args.Cancelled)
             return;
 
@@ -147,62 +156,8 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
         Dirty(ent);
     }
-    public virtual void TransformGrammarSet(EntityUid uid, Gender gender) { }
-    protected virtual void StartSound(Entity<ChangelingTransformComponent> ent, SoundSpecifier? sound) { }
-    protected virtual void StopSound(Entity<ChangelingTransformComponent> ent) { }
+
     protected virtual void ApplyComponentChanges(EntityUid ent, EntityUid target, ProtoId<CloningSettingsPrototype> settingsId) { }
 }
 
-public sealed partial class ChangelingTransformActionEvent : InstantActionEvent;
 
-[Serializable, NetSerializable]
-public sealed partial class ChangelingTransformWindupDoAfterEvent : SimpleDoAfterEvent
-{
-    public NetEntity TargetIdentity;
-
-    public ChangelingTransformWindupDoAfterEvent(NetEntity targetIdentity)
-    {
-        TargetIdentity = targetIdentity;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class ChangelingTransformIdentitySelectMessage : BoundUserInterfaceMessage
-{
-    public readonly NetEntity TargetIdentity;
-
-    public ChangelingTransformIdentitySelectMessage(NetEntity targetIdentity)
-    {
-        TargetIdentity = targetIdentity;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class ChangelingIdentityData
-{
-    public readonly NetEntity Identity;
-    public string Name;
-
-    public ChangelingIdentityData(NetEntity identity, string name)
-    {
-        Identity = identity;
-        Name = name;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class ChangelingTransformBoundUserInterfaceState : BoundUserInterfaceState
-{
-    public readonly List<ChangelingIdentityData> Identites;
-
-    public ChangelingTransformBoundUserInterfaceState(List<ChangelingIdentityData> identities)
-    {
-        Identites = identities;
-    }
-}
-
-[Serializable, NetSerializable]
-public enum TransformUi : byte
-{
-    Key,
-}

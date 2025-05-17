@@ -118,7 +118,7 @@ public sealed partial class ChangelingDevourComponent : Component
     /// <summary>
     /// The next Tick to deal damage on (utilized during the consumption "do-during" (a do after with an attempt event))
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan NextTick = TimeSpan.Zero;
 
     /// <summary>
@@ -128,4 +128,3 @@ public sealed partial class ChangelingDevourComponent : Component
     public float DevourPreventionPercentageThreshold = 0.1f;
 
 }
-

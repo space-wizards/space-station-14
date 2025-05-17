@@ -19,21 +19,6 @@ public sealed partial class ChangelingTransformSystem : SharedChangelingTransfor
     [Dependency] private readonly CloningSystem _cloningSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
-
-    protected override void StartSound(Entity<ChangelingTransformComponent> ent, SoundSpecifier? sound)
-    {
-        if(sound is not null)
-            ent.Comp.CurrentTransformSound = _audioSystem.PlayPvs(sound, ent)!.Value.Entity;
-    }
-
-    protected override void StopSound(Entity<ChangelingTransformComponent> ent)
-    {
-        if (ent.Comp.CurrentTransformSound is not null)
-            _audioSystem.Stop(ent.Comp.CurrentTransformSound);
-
-        ent.Comp.CurrentTransformSound = null;
-    }
-
     protected override void ApplyComponentChanges(EntityUid ent, EntityUid target, ProtoId<CloningSettingsPrototype> settingsId)
     {
         if (!_prototype.TryIndex(settingsId, out var settings))
