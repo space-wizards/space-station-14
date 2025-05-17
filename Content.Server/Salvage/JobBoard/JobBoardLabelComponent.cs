@@ -13,5 +13,5 @@ public sealed partial class JobBoardLabelComponent : Component
     /// The bounty corresponding to this label.
     /// </summary>
     [DataField]
-    public ProtoId<CargoBountyPrototype> JobId;
+    public ProtoId<CargoBountyPrototype>? JobId;
 }

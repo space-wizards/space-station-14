@@ -214,8 +214,11 @@ public sealed class SalvageJobBoardSystem : EntitySystem
 
         if (!_label.TryGetLabel<JobBoardLabelComponent>(uid, out var labelEnt))
             return false;
-        job = labelEnt.Value.Comp.JobId;
 
+        if (labelEnt.Value.Comp.JobId is not { } jobId)
+            return false;
+
+        job = jobId;
 
         if (station is null)
         {
