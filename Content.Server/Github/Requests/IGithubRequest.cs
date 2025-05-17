@@ -27,9 +27,4 @@ public interface IGithubRequest
     /// <param name="repository">The repository to make the request.</param>
     /// <returns>The api location for this request.</returns>
     public string GetLocation(string owner, string repository);
-
-    /// <returns>
-    /// A list of the expected response codes for this request.
-    /// </returns>
-    public IReadOnlyCollection<HttpStatusCode> GetExpectedResponseCodes();
 }

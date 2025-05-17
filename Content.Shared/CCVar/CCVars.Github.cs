@@ -64,4 +64,37 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<int> GithubMaxRetries =
         CVarDef.Create("github.github_max_retries", 3, CVar.SERVERONLY | CVar.CONFIDENTIAL);
+
+    /// <summary>
+    /// Limit for amount github issues could be created by single user until
+    /// admins are notified of 'excessive' user activity.
+    /// </summary>
+    public static readonly CVarDef<int> GitHubIssuePerUserRateLimitAnnounceAdmins =
+        CVarDef.Create("github.issue_limit_notify_admins", 3, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Marker, if notifying admins on github issue created limit was reached.
+    /// </summary>
+    public static readonly CVarDef<bool> IsGitHubIssuePerUserRateLimitAnnounceAdminsEnabled =
+        CVarDef.Create("github.is_issue_limit_notify_admins_enabled", true, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Window during which rate limit of github issue creation per-user is calculated.
+    /// Rate limit values are accounted in periods of this size (seconds).
+    /// After the period has passed, the count resets.
+    /// </summary>
+    /// <seealso cref="GithubIssueRateLimitCount"/>
+    public static readonly CVarDef<float> GithubIssueRateLimitPeriod =
+        CVarDef.Create("github.rate_limit_period", 3600f, CVar.SERVERONLY);
+
+    /// <summary>
+    /// How many github issues are allowed in a single rate limit period.
+    /// </summary>
+    /// <remarks>
+    /// The total rate limit throughput per second is effectively
+    /// <see cref="GithubIssueRateLimitCount"/> divided by <see cref="ChatRateLimitCount"/>.
+    /// </remarks>
+    /// <seealso cref="GithubIssueRateLimitPeriod"/>
+    public static readonly CVarDef<int> GithubIssueRateLimitCount =
+        CVarDef.Create("github.rate_limit_count", 10, CVar.SERVERONLY);
 }

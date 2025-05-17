@@ -45,7 +45,7 @@ namespace Content.Server.Entry
 
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
-        private GithubQueueHandler _gitQueue = default!;
+        private GithubBackgroundWorker _githubWorker = default!;
         private GithubApiManager _gitManager = default!;
         private ServerUpdateManager _updateManager = default!;
         private PlayTimeTrackingManager? _playTimeTracking;
@@ -95,8 +95,6 @@ namespace Content.Server.Entry
             {
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
-                _gitQueue = new GithubQueueHandler();
-                IoCManager.InjectDependencies(_gitQueue);
                 _gitManager = IoCManager.Resolve<GithubApiManager>();
                 _updateManager = IoCManager.Resolve<ServerUpdateManager>();
                 _playTimeTracking = IoCManager.Resolve<PlayTimeTrackingManager>();
@@ -104,6 +102,13 @@ namespace Content.Server.Entry
                 _sysMan = IoCManager.Resolve<IEntitySystemManager>();
                 _dbManager = IoCManager.Resolve<IServerDbManager>();
                 _watchlistWebhookManager = IoCManager.Resolve<IWatchlistWebhookManager>();
+
+                var githubClient = new GithubClient();
+                IoCManager.InjectDependencies(_githubWorker);
+                githubClient.Initialize();
+                _githubWorker = new GithubBackgroundWorker(githubClient);
+                IoCManager.InjectDependencies(_githubWorker);
+                _githubWorker.Initialize();
 
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
@@ -120,20 +125,20 @@ namespace Content.Server.Entry
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();
-                _gitQueue.Initialize();
-                var writeChannel = _gitQueue.InitChannel();
-
-                _gitManager.Initialize(writeChannel);
-
-                Task.Run(async () =>
-                {
-                    await _gitQueue.HandleQueue();
-                });
 
                 _playTimeTracking.Initialize();
                 _watchlistWebhookManager.Initialize();
+                _gitManager.Initialize(_githubWorker.Writer);
                 IoCManager.Resolve<JobWhitelistManager>().Initialize();
                 IoCManager.Resolve<PlayerRateLimitManager>().Initialize();
+
+                Task.Factory.StartNew(
+                    async () =>
+                    {
+                        await _githubWorker.HandleQueue();
+                    },
+                    TaskCreationOptions.LongRunning
+                );
             }
         }
 

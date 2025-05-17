@@ -1,4 +1,3 @@
-using System.Net;
 using System.Net.Http;
 using System.Text.Json.Serialization;
 
@@ -27,10 +26,5 @@ public sealed class CreateIssue : IGithubRequest
     public string GetLocation(string owner, string repository)
     {
         return $"repos/{owner}/{repository}/issues";
-    }
-
-    public IReadOnlyCollection<HttpStatusCode> GetExpectedResponseCodes()
-    {
-        return [ HttpStatusCode.Created ];
     }
 }

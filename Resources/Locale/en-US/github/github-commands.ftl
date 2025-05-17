@@ -26,3 +26,7 @@ github-command-issue-failure = Failed to create issue w/ error: {$error}.
 github-command-issue-success = Successfully created issue!
 
 github-command-finish = Check your repository for (2) newly created issues! If you don't see any, check the console for errors.
+
+github-issue-create-requested-by-unknown = Unknown entity tried to create issue - invalid entityUid was provided.
+github-create-issue-manager-rate-limited = You are creating too many github issues, limit was reached.
+gtihub-create-issue-rate-limit-admin-announcement = Player {$player} tried to create a lot of github issues per current window.

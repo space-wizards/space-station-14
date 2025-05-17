@@ -1,4 +1,3 @@
-using System.Net;
 using System.Net.Http;
 
 namespace Content.Server.Github.Requests;
@@ -13,10 +12,5 @@ public sealed class GetZen : IGithubRequest
     public string GetLocation(string owner, string repository)
     {
         return "zen";
-    }
-
-    public IReadOnlyCollection<HttpStatusCode> GetExpectedResponseCodes()
-    {
-        return [ HttpStatusCode.OK ];
     }
 }

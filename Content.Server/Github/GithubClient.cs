@@ -1,15 +1,15 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Channels;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Github.Requests;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
-using Robust.Shared.Network;
 
 namespace Content.Server.Github;
 
@@ -24,11 +24,11 @@ namespace Content.Server.Github;
 /// <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28">Rate limit information</see>
 /// <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/troubleshooting-the-rest-api?apiVersion=2022-11-28">Troubleshooting</see>
 /// </summary>
-public sealed class GithubQueueHandler
+public sealed class GithubClient
 {
     [Dependency] private readonly ILogManager _log = default!;
-    [Dependency] private readonly IHttpClientHolder _http = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    private HttpClient _httpClient = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -45,13 +45,10 @@ public sealed class GithubQueueHandler
 
     #endregion
 
-    private ChannelReader<IGithubRequest> IncomingRequests = default!;
-
-    private readonly Uri BaseUri = new("https://api.github.com/");
+    private readonly Uri _baseUri = new("https://api.github.com/");
 
     #region CCvar values
 
-    private bool _enabled;
     private string _authToken = "";
     private string _repository = "";
     private string _owner = "";
@@ -59,71 +56,40 @@ public sealed class GithubQueueHandler
 
     #endregion
 
-    private readonly GithubRateLimiter _rateLimiter = new();
-
     public void Initialize()
     {
-        _cfg.OnValueChanged(CCVars.GithubEnabled, val => _enabled = val, true);
-        _cfg.OnValueChanged(CCVars.GithubAuthToken, val => _authToken = val, true);
-        _cfg.OnValueChanged(CCVars.GithubRepositoryName, val => _repository = val, true);
-        _cfg.OnValueChanged(CCVars.GithubRepositoryOwner, val => _owner = val, true);
-        _cfg.OnValueChanged(CCVars.GithubMaxRetries, val => _maxRetries = val, true);
+        _cfg.OnValueChanged(CCVars.GithubAuthToken, val => SetValueAndInitHttpClient(ref _authToken, val), true);
+        _cfg.OnValueChanged(CCVars.GithubRepositoryName, val => SetValueAndInitHttpClient(ref _repository, val), true);
+        _cfg.OnValueChanged(CCVars.GithubRepositoryOwner, val => SetValueAndInitHttpClient(ref _owner, val), true);
+        _cfg.OnValueChanged(CCVars.GithubMaxRetries, val => SetValueAndInitHttpClient(ref _maxRetries, val), true);
 
         _sawmill = _log.GetSawmill("github");
     }
 
-    public ChannelWriter<IGithubRequest> InitChannel()
+    private void SetValueAndInitHttpClient<T>(ref T toSet, T value)
     {
-        var channel = Channel.CreateUnbounded<IGithubRequest>();
+        Interlocked.Exchange(ref toSet, value);
 
-        IncomingRequests = channel.Reader;
+        if(!HaveFullApiData())
+            return;
 
-        return channel.Writer;
+
+        var httpMessageHandler = new RetryHandler(new HttpClientHandler(), _maxRetries, _sawmill);
+        var newClient = new HttpClient(httpMessageHandler)
+        {
+            BaseAddress = _baseUri,
+            DefaultRequestHeaders =
+            {
+                { AcceptHeader, AcceptHeaderType },
+                { AuthHeader, AuthHeaderBearer + _authToken },
+                { VersionHeader, VersionNumber },
+            },
+            Timeout = TimeSpan.FromSeconds(15)
+        };
+        Interlocked.Exchange(ref _httpClient, newClient);
     }
 
     #region Public functions
-
-    /// <summary>
-    /// Directly send a request to the API. This does not have any rate limits checks so be careful!
-    /// <b>Only use this if you have a very good reason to!</b>
-    /// </summary>
-    /// <remarks>If you want the safe way to send requests, look at <see cref="TryMakeRequestSafe"/>></remarks>
-    /// <param name="request">The request to make.</param>
-    /// <returns>The direct HTTP response from the API. If null the request could not be made.</returns>
-    private async Task<HttpResponseMessage?> TryMakeRequest(IGithubRequest request)
-    {
-        if (!ApiEnabled())
-        {
-            _sawmill.Info("Tried to make a github api request but the api was not enabled.");
-            return null;
-        }
-
-        var json = JsonSerializer.Serialize(request);
-        var payload = new StringContent(json, Encoding.UTF8, "application/json");
-
-        var builder = new UriBuilder(BaseUri);
-        builder.Port = -1;
-        builder.Path = request.GetLocation(_owner, _repository);
-
-        var httpRequest = new HttpRequestMessage
-        {
-            Method = request.RequestMethod,
-            Headers =
-            {
-                { AcceptHeader, AcceptHeaderType },
-                { AuthHeader, AuthHeaderBearer+_authToken },
-                { VersionHeader, VersionNumber },
-            },
-            RequestUri = builder.Uri,
-            Content = payload,
-        };
-
-        var response = await _http.Client.SendAsync(httpRequest);
-
-        _sawmill.Info($"Made a github api request to: {BaseUri+request.GetLocation(_owner, _repository)}");
-
-        return response;
-    }
 
     /// <summary>
     /// The standard way to make requests to the GitHub api. This will ensure that the request respects the rate limit
@@ -131,49 +97,21 @@ public sealed class GithubQueueHandler
     /// on what exactly is going on! Only await for it if you're willing to wait a long time.
     /// </summary>
     /// <param name="request">The request you want to make.</param>
+    /// <param name="ct">Token for operation cancellation.</param>
     /// <returns>The direct HTTP response from the API. If null the request could not be made.</returns>
-    private async Task<HttpResponseMessage?> TryMakeRequestSafe(IGithubRequest request)
+    public async Task TryMakeRequestSafe(IGithubRequest request, CancellationToken ct)
     {
-        return await TryMakeRequestSafe(request, 0);
-    }
-
-    /// <inheritdoc cref="TryMakeRequestSafe"/>
-    /// <param name="attempts">The number of attempts made for this request.</param>
-    private async Task<HttpResponseMessage?> TryMakeRequestSafe(IGithubRequest request, uint attempts)
-    {
-        try
+        if (!HaveFullApiData())
         {
-            if (attempts > _maxRetries)
-                return null;
-
-            await _rateLimiter.TryAcquire();
-
-            var response = await TryMakeRequest(request);
-
-            // No response
-            if (response == null)
-            {
-                _rateLimiter.ReleaseNoResponse();
-                return await TryMakeRequestSafe(request, attempts+1);
-            }
-
-            // Invalid response
-            if (!IsValidResponse(response, request.GetExpectedResponseCodes()))
-            {
-                _rateLimiter.ReleaseWithResponse(response, request.GetExpectedResponseCodes());
-                return await TryMakeRequestSafe(request, attempts+1);
-            }
-
-            // Successful response
-            _rateLimiter.ReleaseWithResponse(response, request.GetExpectedResponseCodes());
-            return response;
+            _sawmill.Info("Tried to make a github api request but the api was not enabled.");
+            return;
         }
-        catch (Exception e)
-        {
-            _sawmill.Error($"Github API exception: {e.Message}");
-            _rateLimiter.ReleaseNoResponse();
-            return null;
-        }
+
+        var httpRequestMessage = BuildRequest(request);
+
+        var response = await _httpClient.SendAsync(httpRequestMessage, ct);
+
+        _sawmill.Info("Made a github api request to: '{uri}', status is {status}", httpRequestMessage.RequestUri, response.StatusCode);
     }
 
     /// <summary>
@@ -182,32 +120,27 @@ public sealed class GithubQueueHandler
     /// </summary>
     /// <param name="headers">The headers that you want to search.</param>
     /// <param name="header">The header you want to get the long value for.</param>
+    /// <param name="value">Value of header, if found, null otherwise.</param>
     /// <returns>The headers value if it exists, null otherwise.</returns>
-    public static long? TryGetLongHeader(HttpResponseHeaders? headers, string header)
+    public static bool TryGetHeaderAsLong(HttpResponseHeaders? headers, string header, [NotNullWhen(true)] out long? value)
     {
+        value = null;
         if (headers == null)
-            return null;
+            return false;
 
         if (!headers.TryGetValues(header, out var headerValues))
-            return null;
+            return false;
 
         if (!long.TryParse(headerValues.First(), out var result))
-            return null;
+            return false;
 
-        return result;
+        value = result;
+        return true;
     }
 
     # endregion
 
     #region Helper functions
-
-    private bool ApiEnabled()
-    {
-        return _enabled                                &&
-               !string.IsNullOrWhiteSpace(_authToken)  &&
-               !string.IsNullOrWhiteSpace(_repository) &&
-               !string.IsNullOrWhiteSpace(_owner);
-    }
 
     /// <summary>
     /// Check if response is valid. Mainly used for printing out useful error messages!
@@ -241,17 +174,33 @@ public sealed class GithubQueueHandler
         return false;
     }
 
-    #endregion
-
-    public async Task HandleQueue()
+    private HttpRequestMessage BuildRequest(IGithubRequest request)
     {
-        while (true)
-        {
-            await IncomingRequests.WaitToReadAsync();
-            if (!IncomingRequests.TryRead(out var request))
-                continue;
+        var json = JsonSerializer.Serialize(request);
+        var payload = new StringContent(json, Encoding.UTF8, "application/json");
 
-            await TryMakeRequestSafe(request);
-        }
+        var builder = new UriBuilder(_baseUri)
+        {
+            Port = -1,
+            Path = request.GetLocation(_owner, _repository),
+        };
+
+        var httpRequest = new HttpRequestMessage
+        {
+            Method = request.RequestMethod,
+            RequestUri = builder.Uri,
+            Content = payload,
+        };
+        return httpRequest;
     }
+
+
+    private bool HaveFullApiData()
+    {
+        return !string.IsNullOrWhiteSpace(_authToken) &&
+               !string.IsNullOrWhiteSpace(_repository) &&
+               !string.IsNullOrWhiteSpace(_owner);
+    }
+
+    #endregion
 }
