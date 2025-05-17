@@ -6,8 +6,9 @@ laws-owner-replicatorhive = the Replicator hive.
 replicator-on-replicator-attack-fail = You cannot harm your kin.
 replicator-on-nest-attack-fail = You cannot harm the nest.
 
-replicator-nest-end-of-round = The Replicator Nest near [color=#d70aa0]{$location}[/color]:
-                               - Grew to [color=#d70aa0]Level {$level}[/color].
+replicator-nest-end-of-round = The Replicator Hive: 
+                               - Colonized [color=#d70aa0]{$location}[/color]
+                               - Grew to a maximum [color=#d70aa0]Level[/color] of [color=#d70aa0]{$level}[/color].
                                - Produced a total of [color=#d70aa0]{$replicators} Replicators[/color].
                                - Amassed a total of [color=#d70aa0]{$points} points[/color].
 
@@ -16,6 +17,8 @@ replicator-upgrade-t1-others = {CAPITALIZE(THE($replicator))} clicks and whirrs 
 
 replicator-upgrade-t2-self = More nanites coalesce. You can become stronger.
 replicator-upgrade-t2-others = {CAPITALIZE(THE($replicator))} chitters loudly.
+
+replicator-cant-find-nest = You are not linked to a nest. You cannot upgrade without it.
 
 # messages for when the nest is upgraded
 replicator-nest-level2 = The nest chitters loudly.

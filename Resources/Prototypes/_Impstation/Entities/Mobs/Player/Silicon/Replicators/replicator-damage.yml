@@ -23,9 +23,9 @@
 - type: damageModifierSet
   id: Replicator3
   coefficients:
-    Blunt: 0.7
+    Blunt: 0.5
     Slash: 0.5
-    Piercing: 0.6
+    Piercing: 0.5
     Shock: 1.2
     Structural: 1.5
   flatReductions:
