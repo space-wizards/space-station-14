@@ -5,18 +5,15 @@ using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
-using Content.Shared.Popups;
 using Content.Shared.Power;
-using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
-using Content.Shared.UserInterface;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
 public abstract class SharedGasPressurePumpSystem : EntitySystem
 {
     [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private   readonly SharedPowerReceiverSystem _receiver = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UserInterfaceSystem = default!;
 
@@ -36,62 +33,71 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
         SubscribeLocalEvent<GasPressurePumpComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnExamined(EntityUid uid, GasPressurePumpComponent pump, ExaminedEvent args)
+    private void OnExamined(Entity<GasPressurePumpComponent> ent, ref ExaminedEvent args)
     {
-        if (!Transform(uid).Anchored)
+        if (!Transform(ent).Anchored)
             return;
 
-        if (Loc.TryGetString("gas-pressure-pump-system-examined", out var str,
+        if (Loc.TryGetString("gas-pressure-pump-system-examined",
+                out var str,
                 ("statusColor", "lightblue"), // TODO: change with pressure?
-                ("pressure", pump.TargetPressure)
+                ("pressure", ent.Comp.TargetPressure)
             ))
         {
             args.PushMarkup(str);
         }
     }
 
-    private void OnInit(EntityUid uid, GasPressurePumpComponent pump, ComponentInit args)
+    private void OnInit(Entity<GasPressurePumpComponent> ent, ref ComponentInit args)
     {
-        UpdateAppearance(uid, pump);
+        UpdateAppearance(ent);
     }
 
-    private void OnPowerChanged(EntityUid uid, GasPressurePumpComponent component, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<GasPressurePumpComponent> ent, ref PowerChangedEvent args)
     {
-        UpdateAppearance(uid, component);
+        UpdateAppearance(ent);
     }
 
-    private void UpdateAppearance(EntityUid uid, GasPressurePumpComponent? pump = null, AppearanceComponent? appearance = null)
+    private void UpdateAppearance(Entity<GasPressurePumpComponent, AppearanceComponent?> ent)
     {
-        if (!Resolve(uid, ref pump, ref appearance, false))
+        if (!Resolve(ent, ref ent.Comp2, false))
             return;
 
-        var pumpOn = pump.Enabled && _receiver.IsPowered(uid);
-        Appearance.SetData(uid, PumpVisuals.Enabled, pumpOn, appearance);
+        var pumpOn = ent.Comp1.Enabled && _receiver.IsPowered(ent.Owner);
+        _appearance.SetData(ent, PumpVisuals.Enabled, pumpOn, ent.Comp2);
     }
 
-    private void OnToggleStatusMessage(EntityUid uid, GasPressurePumpComponent pump, GasPressurePumpToggleStatusMessage args)
+    private void OnToggleStatusMessage(Entity<GasPressurePumpComponent> ent, ref GasPressurePumpToggleStatusMessage args)
     {
-        pump.Enabled = args.Enabled;
-        _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
-        Dirty(uid, pump);
-        UpdateAppearance(uid, pump);
+        ent.Comp.Enabled = args.Enabled;
+        _adminLogger.Add(LogType.AtmosPowerChanged,
+            LogImpact.Medium,
+            $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(ent):device} to {args.Enabled}");
+        Dirty(ent);
+        UpdateAppearance(ent);
+        UpdateUi(ent);
     }
 
-    private void OnOutputPressureChangeMessage(EntityUid uid, GasPressurePumpComponent pump, GasPressurePumpChangeOutputPressureMessage args)
+    private void OnOutputPressureChangeMessage(Entity<GasPressurePumpComponent> ent, ref GasPressurePumpChangeOutputPressureMessage args)
     {
-        pump.TargetPressure = Math.Clamp(args.Pressure, 0f, Atmospherics.MaxOutputPressure);
-        _adminLogger.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the pressure on {ToPrettyString(uid):device} to {args.Pressure}kPa");
-        Dirty(uid, pump);
+        ent.Comp.TargetPressure = Math.Clamp(args.Pressure, 0f, Atmospherics.MaxOutputPressure);
+        _adminLogger.Add(LogType.AtmosPressureChanged,
+            LogImpact.Medium,
+            $"{ToPrettyString(args.Actor):player} set the pressure on {ToPrettyString(ent):device} to {args.Pressure}kPa");
+        Dirty(ent);
+        UpdateUi(ent);
     }
 
-    private void OnPumpLeaveAtmosphere(EntityUid uid, GasPressurePumpComponent pump, ref AtmosDeviceDisabledEvent args)
+    private void OnPumpLeaveAtmosphere(Entity<GasPressurePumpComponent> ent, ref AtmosDeviceDisabledEvent args)
     {
-        pump.Enabled = false;
-        Dirty(uid, pump);
-        UpdateAppearance(uid, pump);
+        ent.Comp.Enabled = false;
+        Dirty(ent);
+        UpdateAppearance(ent);
 
-        UserInterfaceSystem.CloseUi(uid, GasPressurePumpUiKey.Key);
+        UserInterfaceSystem.CloseUi(ent.Owner, GasPressurePumpUiKey.Key);
+    }
+
+    protected virtual void UpdateUi(Entity<GasPressurePumpComponent> ent)
+    {
     }
 }

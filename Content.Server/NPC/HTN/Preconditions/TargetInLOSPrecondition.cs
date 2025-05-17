@@ -1,4 +1,5 @@
 using Content.Server.Interaction;
+using Content.Shared.Physics;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 
@@ -12,6 +13,9 @@ public sealed partial class TargetInLOSPrecondition : HTNPrecondition
 
     [DataField("rangeKey")]
     public string RangeKey = "RangeKey";
+
+    [DataField("opaqueKey")]
+    public bool UseOpaqueForLOSChecksKey = true;
 
     public override void Initialize(IEntitySystemManager sysManager)
     {
@@ -27,7 +31,8 @@ public sealed partial class TargetInLOSPrecondition : HTNPrecondition
             return false;
 
         var range = blackboard.GetValueOrDefault<float>(RangeKey, _entManager);
+        var collisionGroup = UseOpaqueForLOSChecksKey ? CollisionGroup.Opaque : (CollisionGroup.Impassable | CollisionGroup.InteractImpassable);
 
-        return _interaction.InRangeUnobstructed(owner, target, range);
+        return _interaction.InRangeUnobstructed(owner, target, range, collisionGroup);
     }
 }

@@ -1,0 +1,22 @@
+﻿- type: constructionGraph
+  id: HardsuitGoliath
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: hardsuitGoliath
+      steps:
+      - tag: HardsuitSpatio
+        icon:
+          sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
+          state: icon
+        name: construction-graph-tag-spationaut-hardsuit
+        doAfter: 10
+      - material: Durathread
+        amount: 5
+        doAfter: 10
+      - material: GoliathHide
+        amount: 12
+        doAfter: 10
+  - node: hardsuitGoliath
+    entity: ClothingOuterHardsuitGoliath

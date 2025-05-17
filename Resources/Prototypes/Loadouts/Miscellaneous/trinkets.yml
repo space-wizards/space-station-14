@@ -107,6 +107,12 @@
     - ClothingNeckLGBTPin
 
 - type: loadout
+  id: ClothingNeckAllyPin
+  storage:
+    back:
+    - ClothingNeckAllyPin
+
+- type: loadout
   id: ClothingNeckAromanticPin
   storage:
     back:
@@ -117,6 +123,12 @@
   storage:
     back:
     - ClothingNeckAsexualPin
+
+- type: loadout
+  id: ClothingNeckAroacePin
+  storage:
+    back:
+    - ClothingNeckAroacePin
 
 - type: loadout
   id: ClothingNeckBisexualPin
@@ -153,6 +165,30 @@
   storage:
     back:
     - ClothingNeckPansexualPin
+
+- type: loadout
+  id: ClothingNeckPluralPin
+  storage:
+    back:
+    - ClothingNeckPluralPin
+
+- type: loadout
+  id: ClothingNeckOmnisexualPin
+  storage:
+    back:
+    - ClothingNeckOmnisexualPin
+
+- type: loadout
+  id: ClothingNeckGenderqueerPin
+  storage:
+    back:
+    - ClothingNeckGenderqueerPin
+
+- type: loadout
+  id: ClothingNeckGenderfluidPin
+  storage:
+    back:
+    - ClothingNeckGenderfluidPin
 
 - type: loadout
   id: ClothingNeckTransPin

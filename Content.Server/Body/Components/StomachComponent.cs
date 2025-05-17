@@ -25,8 +25,8 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     The solution inside of this stomach this transfers reagents to the body.
         /// </summary>
-        [DataField]
-        public Entity<SolutionComponent>? Solution = null;
+        [ViewVariables]
+        public Entity<SolutionComponent>? Solution;
 
         /// <summary>
         ///     What solution should this stomach push reagents into, on the body?
@@ -46,6 +46,12 @@ namespace Content.Server.Body.Components
         /// </summary>
         [DataField]
         public EntityWhitelist? SpecialDigestible = null;
+
+        /// <summary>
+        /// Controls whitelist behavior. If true, this stomach can digest <i>only</i> food that passes the whitelist. If false, it can digest normal food <i>and</i> any food that passes the whitelist.
+        /// </summary>
+        [DataField]
+        public bool IsSpecialDigestibleExclusive = true;
 
         /// <summary>
         ///     Used to track how long each reagent has been in the stomach

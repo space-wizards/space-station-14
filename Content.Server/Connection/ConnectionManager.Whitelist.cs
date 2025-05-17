@@ -17,7 +17,7 @@ public sealed partial class ConnectionManager
 {
     private PlayerConnectionWhitelistPrototype[]? _whitelists;
 
-    public void PostInit()
+    private void InitializeWhitelist()
     {
         _cfg.OnValueChanged(CCVars.WhitelistPrototypeList, UpdateWhitelists, true);
     }
