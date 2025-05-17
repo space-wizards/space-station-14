@@ -110,9 +110,6 @@
           - type: Gravity
             enabled: true
             inherent: true
-          - type: IFF
-            flags: HideLabel
-            color: "#d67e27"
           protos:
           - VGRoid
 
