@@ -1,6 +1,6 @@
-﻿using Content.Shared.Bed.Sleep;
+﻿using Content.Server.StatusEffectNew;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Drowsiness;
-using Content.Shared.StatusEffect;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -8,20 +8,18 @@ namespace Content.Server.Drowsiness;
 
 public sealed class DrowsinessSystem : SharedDrowsinessSystem
 {
-    [ValidatePrototypeId<StatusEffectPrototype>]
-    private const string SleepKey = "ForcedSleep"; // Same one used by N2O and other sleep chems.
 
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly StatusEffectNewSystem _statusEffects = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<DrowsinessComponent, ComponentStartup>(OnInit);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, ComponentStartup>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, DrowsinessComponent component, ComponentStartup args)
+    private void OnInit(EntityUid uid, DrowsinessStatusEffectComponent component, ComponentStartup args)
     {
         component.NextIncidentTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.TimeBetweenIncidents.X, component.TimeBetweenIncidents.Y));
     }
@@ -29,7 +27,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DrowsinessComponent>();
+        var query = EntityQueryEnumerator<DrowsinessStatusEffectComponent>();
         while (query.MoveNext(out var uid, out var component))
         {
             if (_timing.CurTime < component.NextIncidentTime)
@@ -44,7 +42,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
             // Make sure the sleep time doesn't cut into the time to next incident.
             component.NextIncidentTime += duration;
 
-            _statusEffects.TryAddStatusEffect<ForcedSleepingComponent>(uid, SleepKey, duration, false);
+            _statusEffects.TryAddStatusEffect(uid, SleepingSystem.StatusEffectForcedSleeping, duration);
         }
     }
 }
