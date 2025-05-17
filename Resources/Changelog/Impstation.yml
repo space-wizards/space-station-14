@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: You should hear echolalia more often.
-    type: Tweak
-  id: 1193
-  time: '2025-02-24T11:18:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1773
 - author: DVDPlayerOfDiscordFame
   changes:
   - message: Auto Disabler's maximum inaccuracy cone has been narrowed by 3 degrees
@@ -4214,3 +4207,17 @@
   id: 1692
   time: '2025-05-17T13:22:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2500
+- author: hivehum, whatston3, dvir001, foxxotrystan
+  changes:
+  - message: Kodepiiae continue to blend right in, now in plushie form.
+    type: Add
+  - message: 'From the Frontier sector: pet rocks! Now you can have friends, that
+      are definitely real, and can talk to you.'
+    type: Add
+  - message: Added more gambling!!!!! Yay!!!!!!!!!
+    type: Add
+  - message: Several completely harmless toys are no longer considered contraband.
+    type: Tweak
+  id: 1693
+  time: '2025-05-17T14:02:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2499
