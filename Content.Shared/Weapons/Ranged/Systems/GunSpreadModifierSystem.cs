@@ -20,7 +20,7 @@ public sealed class GunSpreadModifierSystem: EntitySystem
 
     private void OnExamine(EntityUid uid, GunSpreadModifierComponent comp, ExaminedEvent args)
     {
-        var percentage = comp.Spread * 100;
+        var percentage = (1 / comp.Spread) * 100;
         var msg = Loc.GetString("examine-gun-spread-modifier", ("percentage", percentage));
         args.PushMarkup(msg);
     }
