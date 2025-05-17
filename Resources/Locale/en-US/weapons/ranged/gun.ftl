@@ -50,3 +50,6 @@ gun-revolver-insert = Inserted
 gun-revolver-spin = Spin revolver
 gun-revolver-spun = Spun
 gun-speedloader-empty = Speedloader empty
+
+# GunSpreadModifier
+examine-gun-spread-modifier = It has [color=yellow]{$percentage}%[/color] tighter spread than usual.
