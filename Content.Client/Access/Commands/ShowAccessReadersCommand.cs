@@ -8,7 +8,7 @@ public sealed class ShowAccessReadersCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
-    [Dependency] private readonly IResourceCache _cahce = default!;
+    [Dependency] private readonly IResourceCache _cache = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     public override string Command => "showaccessreaders";
@@ -21,7 +21,7 @@ public sealed class ShowAccessReadersCommand : LocalizedEntityCommands
             return;
         }
 
-        _overlay.AddOverlay(new AccessOverlay(_ent, _cahce, _xform));
+        _overlay.AddOverlay(new AccessOverlay(_ent, _cache, _xform));
         shell.WriteLine(Loc.GetString($"cmd-showaccessreaders-enabled"));
 
     }
