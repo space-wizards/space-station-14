@@ -24,15 +24,8 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="ExternalWindowDunGen"/>
     /// </summary>
-    private async Task PostGen(ExternalWindowDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(ExternalWindowDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
-            !data.SpawnGroups.TryGetValue(DungeonDataKey.Window, out var windowGroup))
-        {
-            _sawmill.Error($"Unable to get dungeon data for {nameof(gen)}");
-            return;
-        }
-
         // Iterate every tile with N chance to spawn windows on that wall per cardinal dir.
         var chance = 0.25 / 3f;
 
@@ -42,7 +35,7 @@ public sealed partial class DungeonJob
         random.Shuffle(validTiles);
 
         var tiles = new List<(Vector2i, Tile)>();
-        var tileDef = _tileDefManager[tileProto];
+        var tileDef = _tileDefManager[gen.Tile];
         var count = Math.Floor(validTiles.Count * chance);
         var index = 0;
         var takenTiles = new HashSet<Vector2i>();
@@ -120,15 +113,13 @@ public sealed partial class DungeonJob
         }
 
         _maps.SetTiles(_gridUid, _grid, tiles);
-        index = 0;
-        var spawnEntry = _prototype.Index(windowGroup);
+        var contents = _prototype.Index(gen.Contents);
 
         foreach (var tile in tiles)
         {
             var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile.Item1);
 
-            index += spawnEntry.Entries.Count;
-            _entManager.SpawnEntities(gridPos, EntitySpawnCollection.GetSpawns(spawnEntry.Entries, random));
+            _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(contents, random));
             await SuspendDungeon();
 
             if (!ValidateResume())

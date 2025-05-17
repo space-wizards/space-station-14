@@ -13,6 +13,9 @@ namespace Content.Server.Procedural.DungeonJob;
 
 public sealed partial class DungeonJob
 {
+    /// <summary>
+    /// <see cref="MobsDunGen"/>
+    /// </summary>
     private async Task PostGen(
         MobsDunGen gen,
         Dungeon dungeon,
@@ -21,8 +24,8 @@ public sealed partial class DungeonJob
         var availableRooms = new ValueList<DungeonRoom>();
         availableRooms.AddRange(dungeon.Rooms);
         var availableTiles = new ValueList<Vector2i>(dungeon.AllTiles);
+        var contents = _prototype.Index(gen.Contents);
 
-        var entities = EntitySpawnCollection.GetSpawns(gen.Groups, random);
         var count = random.Next(gen.MinCount, gen.MaxCount + 1);
         var npcs = _entManager.System<NPCSystem>();
 
@@ -37,6 +40,8 @@ public sealed partial class DungeonJob
                 {
                     continue;
                 }
+
+                var entities = _entTable.GetSpawns(contents, random);
 
                 foreach (var ent in entities)
                 {

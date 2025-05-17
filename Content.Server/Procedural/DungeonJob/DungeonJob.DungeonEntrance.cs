@@ -12,18 +12,12 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="DungeonEntranceDunGen"/>
     /// </summary>
-    private async Task PostGen(DungeonEntranceDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(DungeonEntranceDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
-            !data.SpawnGroups.TryGetValue(DungeonDataKey.Entrance, out var entrance))
-        {
-            LogDataError(typeof(DungeonEntranceDunGen));
-            return;
-        }
-
         var rooms = new List<DungeonRoom>(dungeon.Rooms);
         var roomTiles = new List<Vector2i>();
-        var tileDef = (ContentTileDefinition) _tileDefManager[tileProto];
+        var tileDef = (ContentTileDefinition) _tileDefManager[gen.Tile];
+        var contents = _prototype.Index(gen.Contents);
 
         for (var i = 0; i < gen.Count; i++)
         {
@@ -82,7 +76,7 @@ public sealed partial class DungeonJob
                     var gridCoords = _maps.GridTileToLocal(_gridUid, _grid, tile);
                     // Need to offset the spawn to avoid spawning in the room.
 
-                    foreach (var ent in EntitySpawnCollection.GetSpawns(_prototype.Index(entrance).Entries, random))
+                    foreach (var ent in _entTable.GetSpawns(contents, random))
                     {
                         _entManager.SpawnAtPosition(ent, gridCoords);
                     }
