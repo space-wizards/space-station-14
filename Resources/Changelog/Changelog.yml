@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix arrivals.
-    type: Fix
-  id: 8000
-  time: '2025-02-24T09:43:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35439
 - author: Vortebo
   changes:
   - message: Added a new Relic arrivals shuttle
@@ -3912,3 +3905,17 @@
   id: 8502
   time: '2025-05-17T05:05:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36818
+- author: ArtisticRoomba
+  changes:
+  - message: Metal foam grenades have been added to station engineer lockers.
+    type: Add
+  - message: Metal foam grenades have been tweaked to cover more area over a longer
+      period of time.
+    type: Tweak
+  - message: Metal foam grenades now have a 5 second timer.
+    type: Tweak
+  - message: Aluminum foam walls now take one hit to destroy.
+    type: Tweak
+  id: 8503
+  time: '2025-05-17T05:21:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37476
