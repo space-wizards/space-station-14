@@ -102,7 +102,7 @@
   name: brigmedic winter coat
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    sprite: _Impstation/Clothing/OuterClothing/WinterCoats/brigmediccoat.rsi #imp
     layers:
     - state: BRIGMEDIC-icon
   - type: Item
@@ -112,7 +112,7 @@
       right:
       - state: BRIGMEDIC-inhand-right
   - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    sprite: _Impstation/Clothing/OuterClothing/WinterCoats/brigmediccoat.rsi #imp
     clothingVisuals:
       outerClothing:
       - state: BRIGMEDIC-equipped-OUTERCLOTHING
@@ -388,9 +388,9 @@
   description: A sturdy, utilitarian winter coat designed to protect a head of security from any brig-bound threats and hypothermic events.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/WinterCoats/coathosarmored.rsi
+    sprite: _Impstation/Clothing/OuterClothing/WinterCoats/coathosarmored.rsi #imp
   - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coathosarmored.rsi
+    sprite: _Impstation/Clothing/OuterClothing/WinterCoats/coathosarmored.rsi #imp
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterHOS
 ##########################################################
@@ -747,9 +747,9 @@
   description: A sturdy, utilitarian winter coat designed to protect a warden from any brig-bound threats and hypothermic events.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/WinterCoats/coatwardenarmored.rsi
+    sprite: _Impstation/Clothing/OuterClothing/WinterCoats/coatwardenarmored.rsi #imp
   - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coatwardenarmored.rsi
+    sprite: _Impstation/Clothing/OuterClothing/WinterCoats/coatwardenarmored.rsi #imp
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterWarden
 ################################################################
@@ -761,7 +761,7 @@
   description: A sturdy coat, a warm coat, but not an armored coat.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    sprite: _Impstation/Clothing/OuterClothing/WinterCoats/wardencoat.rsi #imp
     layers:
     - state: WARD-icon
   - type: Item
@@ -771,7 +771,7 @@
       right:
       - state: WARD-inhand-right
   - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    sprite: _ImpstationClothing/OuterClothing/WinterCoats/wardencoat.rsi #imp
     clothingVisuals:
       outerClothing:
       - state: WARD-equipped-OUTERCLOTHING

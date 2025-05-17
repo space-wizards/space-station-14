@@ -181,9 +181,9 @@
   description: It's bright red and rather crisp, much like security's victims tend to be.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hos.rsi #imp
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hos.rsi #imp
   - type: Item
     inhandVisuals:
       left:
@@ -288,9 +288,9 @@
   description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/brigmedic.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/brigmedic.rsi #imp
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/brigmedic.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/brigmedic.rsi #imp
 
 - type: entity
   parent: ClothingUniformBase
@@ -393,23 +393,23 @@
   description: A jumpskirt made of strong material, providing robust protection.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/security.rsi #imp
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/security.rsi #imp
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
         color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        sprite: _Impstation/Clothing/Uniforms/Jumpskirt/color.rsi #imp
       - state: overlay-inhand-left
-        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+        sprite: _Impstation/Clothing/Uniforms/Jumpsuit/security.rsi #imp
       right:
       - state: inhand-right
         color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        sprite: _Impstation/Clothing/Uniforms/Jumpskirt/color.rsi #imp
       - state: overlay-inhand-right
-        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+        sprite: _Impstation/Clothing/Uniforms/Jumpsuit/security.rsi #imp
 
 
 - type: entity
@@ -419,9 +419,9 @@
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/warden.rsi #imp
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/warden.rsi #imp
   - type: Item
     inhandVisuals:
       left:

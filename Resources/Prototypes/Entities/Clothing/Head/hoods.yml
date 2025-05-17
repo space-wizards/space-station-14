@@ -279,9 +279,9 @@
   name: brigmedic winter coat hood
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hoods/Coat/hoodbrigmedic.rsi
+    sprite: _Impstation/Clothing/Head/Hoods/Coat/hoodbrigmedic.rsi #imp
   - type: Clothing
-    sprite: Clothing/Head/Hoods/Coat/hoodbrigmedic.rsi
+    sprite: _Impstation/Clothing/Head/Hoods/Coat/hoodbrigmedic.rsi #imp
 
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
@@ -523,9 +523,9 @@
   name: warden's coat hood
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
+    sprite: _Impstation/Clothing/Head/Hoods/Coat/hoodwarden.rsi #imp
   - type: Clothing
-    sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
+    sprite: _Impstation/Clothing/Head/Hoods/Coat/hoodwarden.rsi #imp
 
 - type: entity
   parent: ClothingHeadHatHoodWinterBase

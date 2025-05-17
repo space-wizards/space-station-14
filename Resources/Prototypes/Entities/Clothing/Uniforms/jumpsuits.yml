@@ -318,9 +318,9 @@
   description: It's bright red and rather crisp, much like security's victims tend to be.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hos.rsi #imp
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hos.rsi #imp
   - type: Item
     inhandVisuals:
       left:
@@ -450,9 +450,9 @@
   description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/brigmedic.rsi #imp
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/brigmedic.rsi #imp
 
 - type: entity
   parent: ClothingUniformBase
@@ -573,18 +573,18 @@
   description: A jumpsuit made of strong material, providing robust protection.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/security.rsi #imp
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
         color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpsuit/color.rsi
+        sprite: _Impstation/Clothing/Uniforms/Jumpsuit/color.rsi #imp
       - state: overlay-inhand-left
       right:
       - state: inhand-right
         color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpsuit/color.rsi
+        sprite: _Impstation/Clothing/Uniforms/Jumpsuit/color.rsi #imp
       - state: overlay-inhand-right
 
 - type: entity
@@ -627,9 +627,9 @@
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/warden.rsi #imp
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/warden.rsi #imp
   - type: Item
     inhandVisuals:
       left:

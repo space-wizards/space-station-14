@@ -321,9 +321,9 @@
   description: A sturdy, utilitarian jacket designed to protect a warden from any brig-bound threats.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/warden.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Coats/warden.rsi #imp
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/warden.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Coats/warden.rsi #imp
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -405,9 +405,9 @@
   components:
   - type: AllowSuitStorage
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/brigmedic.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Coats/brigmedic.rsi #imp
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/brigmedic.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Coats/brigmedic.rsi #imp
   - type: Armor
     modifiers:
       coefficients:
