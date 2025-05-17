@@ -23,6 +23,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using Robust.Shared.Map.Events;
+using System.Text.RegularExpressions;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -55,7 +56,15 @@ namespace Content.IntegrationTests.Tests
             "/Maps/Shuttles/ShuttleEvent/honki.yml", // Contains golden honker, clown's rubber stamp
             "/Maps/Shuttles/ShuttleEvent/instigator.yml", // Contains EXP-320g "Friendship"
             "/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", // Contains syndicate rubber stamp
+            "/Maps/Shuttles/AdminSpawn/**" // admin gaming
         };
+
+        /// <summary>
+        /// Converts the above globs into regex so your eyes dont bleed trying to add filepaths.
+        /// </summary>
+        private static readonly Regex[] DoNotMapWhiteListRegexes = DoNotMapWhitelist
+            .Select(glob => new Regex(GlobToRegex(glob), RegexOptions.IgnoreCase | RegexOptions.Compiled))
+            .ToArray();
 
         private static readonly string[] GameMaps =
         {
@@ -255,12 +264,30 @@ namespace Content.IntegrationTests.Tests
         }
 
         /// <summary>
+        /// Lets us the convert the filepaths to regex without eyeglaze trying to add new paths.
+        /// </summary>
+        private static string GlobToRegex(string glob)
+        {
+            var regex = Regex.Escape(glob)
+                .Replace(@"\*\*", "**") // replace **
+                .Replace(@"\*", "*")    // replace *
+                .Replace("**", ".*")    // ** → match across folders
+                .Replace("*", @"[^/]*") // * → match within a single folder
+                .Replace(@"\?", ".");   // ? → any single character
+
+            return $"^{regex}$";
+        }
+
+        /// <summary>
         /// Check that maps do not have any entities that belong to the DoNotMap entity category
         /// </summary>
         private void CheckDoNotMap(ResPath map, YamlNode node, IPrototypeManager protoManager)
         {
-            if (DoNotMapWhitelist.Contains(map.ToString()))
-                return;
+            foreach (var regex in DoNotMapWhiteListRegexes)
+            {
+                if (regex.IsMatch(map.ToString()))
+                    return;
+            }
 
             var yamlEntities = node["entities"];
             if (!protoManager.TryIndex<EntityCategoryPrototype>("DoNotMap", out var dnmCategory))
