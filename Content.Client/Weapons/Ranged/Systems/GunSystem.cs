@@ -130,9 +130,9 @@ public sealed partial class GunSystem : SharedGunSystem
             _xform.SetLocalRotationNoLerp(ent, xform.LocalRotation + delta, xform);
 
             sprite[EffectLayers.Unshaded].AutoAnimated = false;
-            sprite.LayerSetSprite(EffectLayers.Unshaded, rsi);
-            sprite.LayerSetState(EffectLayers.Unshaded, rsi.RsiState);
-            sprite.Scale = new Vector2(a.Distance, 1f);
+            _sprite.LayerSetSprite((ent, sprite), EffectLayers.Unshaded, rsi);
+            _sprite.LayerSetRsiState((ent, sprite), EffectLayers.Unshaded, rsi.RsiState);
+            _sprite.SetScale((ent, sprite), new Vector2(a.Distance, 1f));
             sprite[EffectLayers.Unshaded].Visible = true;
 
             var anim = new Animation()
