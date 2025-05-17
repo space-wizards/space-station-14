@@ -27,11 +27,12 @@ namespace Content.Shared.Remotes
 
         private void OnBeforeInteract(Entity<DoorRemoteComponent> entity, ref BeforeRangedInteractEvent args)
         {
-            bool isAirlock = TryComp<AirlockComponent>(args.Target, out var airlockComp);
-
-            if (args.Handled
-                || args.Target == null
-                || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
+            if (args.Handled || args.Target == null)
+                return;
+            var isAirlock = TryComp<AirlockComponent>(args.Target, out var airlockComp);
+            var isDoor = TryComp<DoorComponent>(args.Target, out var doorComp);
+            var hasBolts = TryComp<DoorBoltComponent>(args.Target, out var boltsComp);
+            if( !isDoor && !hasBolts // If it isn't a door and it doesn't have bolts we don't use it
                 // Only able to control doors if they are within your vision and within your max range.
                 // Not affected by mobs or machines anymore.
                 || !_examine.InRangeUnOccluded(args.User,
@@ -63,21 +64,21 @@ namespace Content.Shared.Remotes
             switch (entity.Comp.Mode)
             {
                 case OperatingMode.OpenClose:
-                    if (_doorSystem.TryToggleDoor(args.Target.Value, doorComp, args.Used))
+                    if (doorComp != null && _doorSystem.TryToggleDoor(args.Target.Value, doorComp, args.Used))
+                    {
                         _adminLogger.Add(LogType.Action,
                             LogImpact.Medium,
                             $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)}: {doorComp.State}");
+                    }
+
                     break;
                 case OperatingMode.ToggleBolts:
-                    if (TryComp<DoorBoltComponent>(args.Target, out var boltsComp))
+                    if (boltsComp is { BoltWireCut: false })
                     {
-                        if (!boltsComp.BoltWireCut)
-                        {
-                            _doorSystem.SetBoltsDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, args.Used);
-                            _adminLogger.Add(LogType.Action,
-                                LogImpact.Medium,
-                                $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");
-                        }
+                        _doorSystem.SetBoltsDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, args.Used);
+                        _adminLogger.Add(LogType.Action,
+                            LogImpact.Medium,
+                            $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");
                     }
 
                     break;
