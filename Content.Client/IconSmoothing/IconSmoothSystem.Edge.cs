@@ -19,15 +19,15 @@ public sealed partial class IconSmoothSystem
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        sprite.LayerSetOffset(EdgeLayer.South, new Vector2(0, -1f));
-        sprite.LayerSetOffset(EdgeLayer.East, new Vector2(1f, 0f));
-        sprite.LayerSetOffset(EdgeLayer.North, new Vector2(0, 1f));
-        sprite.LayerSetOffset(EdgeLayer.West, new Vector2(-1f, 0f));
+        _sprite.LayerSetOffset((uid, sprite), EdgeLayer.South, new Vector2(0, -1f));
+        _sprite.LayerSetOffset((uid, sprite), EdgeLayer.East, new Vector2(1, 0f));
+        _sprite.LayerSetOffset((uid, sprite), EdgeLayer.North, new Vector2(0, 1f));
+        _sprite.LayerSetOffset((uid, sprite), EdgeLayer.West, new Vector2(-1, 0f));
 
-        sprite.LayerSetVisible(EdgeLayer.South, false);
-        sprite.LayerSetVisible(EdgeLayer.East, false);
-        sprite.LayerSetVisible(EdgeLayer.North, false);
-        sprite.LayerSetVisible(EdgeLayer.West, false);
+        _sprite.LayerSetVisible((uid, sprite), EdgeLayer.South, false);
+        _sprite.LayerSetVisible((uid, sprite), EdgeLayer.East, false);
+        _sprite.LayerSetVisible((uid, sprite), EdgeLayer.North, false);
+        _sprite.LayerSetVisible((uid, sprite), EdgeLayer.West, false);
     }
 
     private void OnEdgeShutdown(EntityUid uid, SmoothEdgeComponent component, ComponentShutdown args)
@@ -35,10 +35,10 @@ public sealed partial class IconSmoothSystem
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        sprite.LayerMapRemove(EdgeLayer.South);
-        sprite.LayerMapRemove(EdgeLayer.East);
-        sprite.LayerMapRemove(EdgeLayer.North);
-        sprite.LayerMapRemove(EdgeLayer.West);
+        _sprite.LayerMapRemove((uid, sprite), EdgeLayer.South);
+        _sprite.LayerMapRemove((uid, sprite), EdgeLayer.East);
+        _sprite.LayerMapRemove((uid, sprite), EdgeLayer.North);
+        _sprite.LayerMapRemove((uid, sprite), EdgeLayer.West);
     }
 
     private void CalculateEdge(EntityUid uid, DirectionFlag directions, SpriteComponent? sprite = null, SmoothEdgeComponent? component = null)
@@ -48,16 +48,16 @@ public sealed partial class IconSmoothSystem
 
         for (var i = 0; i < 4; i++)
         {
-            var dir = (DirectionFlag) Math.Pow(2, i);
+            var dir = (DirectionFlag)Math.Pow(2, i);
             var edge = GetEdge(dir);
 
             if ((dir & directions) != 0x0)
             {
-                sprite.LayerSetVisible(edge, false);
+                _sprite.LayerSetVisible((uid, sprite), edge, false);
                 continue;
             }
 
-            sprite.LayerSetVisible(edge, true);
+            _sprite.LayerSetVisible((uid, sprite), edge, true);
         }
     }
 
