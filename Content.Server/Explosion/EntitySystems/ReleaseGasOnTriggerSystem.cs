@@ -20,15 +20,25 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
         base.Initialize();
 
         SubscribeLocalEvent<ReleaseGasOnTriggerComponent, TriggerEvent>(OnTrigger);
-        SubscribeLocalEvent<ReleaseGasOnTriggerComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnMapInit(Entity<ReleaseGasOnTriggerComponent> ent, ref MapInitEvent args)
+    /// <summary>
+    /// Shrimply sets the component to active when triggered, allowing it to
+    /// release over time.
+    /// </summary>
+    private void OnTrigger(Entity<ReleaseGasOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        ent.Comp.NextReleaseTime = _timing.CurTime + ent.Comp.ReleaseInterval;
-        ent.Comp.VolumeFraction = ent.Comp.Air.Volume / ent.Comp.ReleaseOverTimespan;
+        // yeah
+        ent.Comp.Active = true;
+        // If the grenade marinates forever, it'll have its next release time
+        // an hour back, which causes it to release instantly.
+        // So we set it when it becomes active.
+        ent.Comp.NextReleaseTime = _timing.CurTime;
     }
 
+    /// <summary>
+    /// Releases gas to the exposed atmosphere, depending on a series of set parameters.
+    /// </summary>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -41,39 +51,35 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
             if (!comp.Active || comp.NextReleaseTime > curtime)
                 continue;
 
-            var desiredVolume = comp.Air.Volume;
+            var fraction = comp.RemoveFraction ?? 1f;
 
-            if (comp.ReleaseOverTimespan != 0)
-            {
-                // Engage count dracula
-                // Assume goal of 500 L over 5 seconds
-                // 500 L / 5 s = 100 L/s
-                // Multiply by dt, usually 0.5 s, so ex.
-                // 100 L/s * 0.5 s = 50 L
-                desiredVolume = comp.VolumeFraction * comp.ReleaseInterval.Seconds;
-            }
-
-            if (comp.FlowRateLimit != 0)
-            {
-                desiredVolume = Math.Min(desiredVolume, comp.FlowRateLimit);
-            }
-
-            // If we want 50 L and starting with 500 L:
-            // 500 L - 50 L = 450 L
-            // giverGasMix will get the remainder of 50 L which is what we want
-            var giverGasMix = comp.Air.RemoveVolume(comp.Air.Volume - desiredVolume);
+            var giverGasMix = comp.Air.RemoveRatio(fraction);
 
             var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
             if (environment != null)
             {
                 _atmosphereSystem.Merge(environment, giverGasMix);
+
                 comp.NextReleaseTime += comp.ReleaseInterval;
+
                 if (comp.PressureLimit != 0 && environment.Pressure >= comp.PressureLimit ||
-                    comp.Air.Volume <= 0)
+                    comp.Air.TotalMoles <= 0)
                 {
                     // Grenade did its job, and we don't want it sitting around any longer
                     // !basketball_skate.gif
                     QueueDel(uid);
+                }
+
+                if (comp.ExponentialRise)
+                {
+                    comp.TimesReleased++;
+                    // Because we're ratioing the gas mixture, we need to increase the amount of gas
+                    // we take per run otherwise the grenade sits there forever.
+
+                    // Exponential rise: fraction = 1 - (1 - baseFraction) ^ n, where n is the number of releases so far.
+                    // n = Time since activation / release interval
+                    var newFraction = 1f - MathF.Pow(1f - fraction, comp.TimesReleased);
+                    comp.RemoveFraction = newFraction;
                 }
 
                 continue;
@@ -82,11 +88,5 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
             // Middle finger the grenade because someone threw it into space
             QueueDel(uid);
         }
-    }
-
-    private void OnTrigger(Entity<ReleaseGasOnTriggerComponent> ent, ref TriggerEvent args)
-    {
-        // yeah
-        ent.Comp.Active = true;
     }
 }

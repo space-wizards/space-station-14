@@ -470,8 +470,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/metalfoam.rsi
   - type: SmokeOnTrigger
-    duration: 30
-    spreadAmount: 50
+    duration: 5
+    spreadAmount: 15
   - type: SoundOnTrigger
     sound: /Audio/Items/smoke_grenade_smoke.ogg
   - type: TimerTriggerVisuals
@@ -480,8 +480,9 @@
   - type: OnUseTimerTrigger
     delay: 3
   - type: ReleaseGasOnTrigger
+    removeFraction: 0.5
     air:
-      volume: 3000
+      volume: 1000
       moles: # Target is 3117.84 mols total for filling 30 tiles (goal is 101.325 kPa @ 20C)
       - 654.7464 # oxygen
       - 2463.0936 # nitrogen

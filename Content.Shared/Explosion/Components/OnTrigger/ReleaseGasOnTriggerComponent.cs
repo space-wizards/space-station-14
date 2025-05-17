@@ -19,14 +19,15 @@ public sealed partial class ReleaseGasOnTriggerComponent : Component, IGasMixtur
     public bool Active;
 
     /// <summary>
-    /// Limit the flow rate of the gas released to the atmosphere, in L/s.
+    /// If true, the gas will be released in an exponential manner.
+    /// Commonly necessary due to the gas being partitioned over and over again.
     /// </summary>
-    /// <remarks>If zero, the flow rate will be unlimited.</remarks>
     [DataField]
-    public float FlowRateLimit = 200;
+    public bool ExponentialRise = true;
 
     /// <summary>
     /// Time at which the next release will occur.
+    /// This is automatically set when the grenade activates.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
@@ -43,28 +44,26 @@ public sealed partial class ReleaseGasOnTriggerComponent : Component, IGasMixtur
     public float PressureLimit;
 
     /// <summary>
-    /// How often the grenade will update.
+    /// How often the grenade will release gas.
     /// </summary>
     [DataField]
-    public TimeSpan ReleaseInterval = TimeSpan.FromSeconds(0.5f);
+    public TimeSpan ReleaseInterval = TimeSpan.FromSeconds(1);
 
     /// <summary>
-    /// Determines the length of time the gas will be released over, in seconds.
+    /// A float from 0 to 1, representing a partial portion of the volume
+    /// of the gas mixture that will be
+    /// released to the current tile atmosphere when triggered.
     /// </summary>
-    /// <example>If set to 5, the grenade will partition the gas
-    /// to release the full amount over the course of 5 seconds.</example>
-    /// <remarks>If zero (unset), the gas will be released instantly unless restricted
-    /// in some other way (ex. <see cref="FlowRateLimit"/>)</remarks>
+    /// <remarks>If null, the entire volume will be transferred.</remarks>
     [DataField]
-    public float ReleaseOverTimespan = 5;
+    public float? RemoveFraction;
 
     /// <summary>
-    /// A partial portion of the volume of the gas mixture that will be
-    /// released to the current tile atmosphere when triggered, used when
-    /// <see cref="ReleaseOverTimespan"/> is populated.
+    /// Stores the number of times the grenade has been released,
+    /// for exponential rise calculations.
     /// </summary>
-    [DataField(readOnly: true)]
-    public float VolumeFraction;
+    [DataField]
+    public int TimesReleased;
 
     /// <summary>
     /// The gas mixture that will be released to the current tile atmosphere when triggered.
