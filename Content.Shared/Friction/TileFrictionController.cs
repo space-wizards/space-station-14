@@ -157,6 +157,9 @@ namespace Content.Shared.Friction
                     tileModifier *= friction.Modifier;
             }
 
+            if (TryComp<TileFrictionOverwrittenComponent>(uid, out var tileDefOverride) && tileDefOverride.Friction.HasValue)
+                return tileDefOverride.Friction.Value * tileModifier;
+
             var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
             return tileDef.Friction * tileModifier;
         }
