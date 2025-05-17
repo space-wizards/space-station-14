@@ -1,3 +1,4 @@
+using Content.Shared.EntityTable;
 using Content.Shared.Maps;
 using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
@@ -13,5 +14,5 @@ public sealed partial class RoomEntranceDunGen : IDunGenLayer
     public ProtoId<ContentTileDefinition> Tile;
 
     [DataField]
-    public ProtoId<EntitySpawnEntryPrototype> Contents;
+    public ProtoId<EntityTablePrototype> Contents;
 }

@@ -1,3 +1,4 @@
+using Content.Shared.EntityTable;
 using Content.Shared.Maps;
 using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
@@ -25,8 +26,8 @@ public sealed partial class MiddleConnectionDunGen : IDunGenLayer
     public ProtoId<ContentTileDefinition> Tile;
 
     [DataField(required: true)]
-    public ProtoId<EntitySpawnEntryPrototype> Contents;
+    public ProtoId<EntityTablePrototype> Contents;
 
     [DataField]
-    public ProtoId<EntitySpawnEntryPrototype>? Flank;
+    public ProtoId<EntityTablePrototype>? Flank;
 }

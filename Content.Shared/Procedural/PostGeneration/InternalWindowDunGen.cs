@@ -1,5 +1,5 @@
+using Content.Shared.EntityTable;
 using Content.Shared.Maps;
-using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural.PostGeneration;
@@ -13,5 +13,5 @@ public sealed partial class InternalWindowDunGen : IDunGenLayer
     public ProtoId<ContentTileDefinition> Tile;
 
     [DataField(required: true)]
-    public ProtoId<EntitySpawnEntryPrototype> Contents;
+    public ProtoId<EntityTablePrototype> Contents;
 }

@@ -1,3 +1,4 @@
+using Content.Shared.EntityTable;
 using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
 
@@ -12,5 +13,5 @@ public sealed partial class CornerClutterDunGen : IDunGenLayer
     public float Chance = 0.50f;
 
     [DataField(required:true)]
-    public ProtoId<EntitySpawnEntryPrototype> Contents = new();
+    public ProtoId<EntityTablePrototype> Contents = new();
 }
