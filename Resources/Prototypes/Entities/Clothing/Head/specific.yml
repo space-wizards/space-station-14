@@ -49,3 +49,18 @@
     containers:
       storagebase: !type:Container
         ents: [ ]
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitChameleon
+  name: EVA helmet
+  description: An old-but-gold helmet designed for extravehicular activites. Infamous for making security officers paranoid.
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/eva.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/eva.rsi
+  - type: ChameleonClothing
+    slot: [head]
+    default: ClothingHeadHelmetEVA
