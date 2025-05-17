@@ -9,7 +9,6 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
-
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -20,33 +19,25 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
 
     private void OnMapInit(Entity<NPCUseActionOnTargetComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.ActionEnt = _actions.AddAction(ent, ent.Comp.ActionId);
+        foreach (var action in ent.Comp.Actions)
+        {
+            //TODO: This should have a way to differentiate between needing to add an action or reference an action
+            action.ActionEnt = _actions.AddAction(ent, action.ActionId);
+        }
     }
 
-    public bool TryUseTentacleAttack(Entity<NPCUseActionOnTargetComponent?> user, EntityUid target)
+    public void TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, Components.NPCActionsData action, EntityUid target)
     {
         if (!Resolve(user, ref user.Comp, false))
-            return false;
+            return;
 
-        if (!TryComp<EntityWorldTargetActionComponent>(user.Comp.ActionEnt, out var action))
-            return false;
-
-        if (!_actions.ValidAction(action))
-            return false;
-
-        if (action.Event != null)
+        if (action.ActionEnt is not { Valid: true } entityTarget)
         {
-            action.Event.Coords = Transform(target).Coordinates;
+            Log.Error($"An NPC attempted to perform an entity-targeted action without a target!");
+            return;
         }
 
-        _actions.PerformAction(user,
-            null,
-            user.Comp.ActionEnt.Value,
-            action,
-            action.BaseEvent,
-            _timing.CurTime,
-            false);
-        return true;
+        _actions.TryValidAction(user.Owner, entityTarget, target, Transform(target).Coordinates);
     }
 
     public override void Update(float frameTime)
@@ -57,10 +48,13 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         var query = EntityQueryEnumerator<NPCUseActionOnTargetComponent, HTNComponent>();
         while (query.MoveNext(out var uid, out var comp, out var htn))
         {
-            if (!htn.Blackboard.TryGetValue<EntityUid>(comp.TargetKey, out var target, EntityManager))
-                continue;
+            foreach (var action in comp.Actions)
+            {
+                if (!htn.Blackboard.TryGetValue<EntityUid>(action.TargetKey, out var target, EntityManager))
+                    continue;
 
-            TryUseTentacleAttack((uid, comp), target);
+                TryUseAction((uid, comp), action, target);
+            }
         }
     }
 }
