@@ -45,6 +45,7 @@
   parent: BaseItem
   id: TechnologyDisk
   abstract: true
+  name: technology disk
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -106,8 +107,7 @@
 - type: entity
   parent: [ TechnologyDiskIndustrial, TechnologyDiskT1 ]
   id: TechnologyDiskIndustrialT1
-  name: technology disk (Tier 1 Industrial)
-  description: A disk for the R&D server containing Tier 1 Industrial branch research technology.
+  description: A disk for the R&D server containing a Tier 1 Industrial branch research technology.
   components:
   - type: Sprite
     layers:
@@ -120,40 +120,33 @@
 - type: entity
   parent: [ TechnologyDiskIndustrial, TechnologyDiskT2 ]
   id: TechnologyDiskIndustrialT2
-  name: technology disk (Tier 2 Industrial)
-  description: A disk for the R&D server containing Tier 2 Industrial branch research technology.
+  description: A disk for the R&D server containing a Tier 2 Industrial branch research technology.
   components:
   - type: Sprite
     layers:
     - state: datadisk_base
       color: "#eeac34"
     - state: datadisk_label
-    - state: datadisk_t2_marks
-      shader: unshaded
   - type: TechnologyDisk
     tier: 2
 
 - type: entity
   parent: [ TechnologyDiskIndustrial, TechnologyDiskT3 ]
   id: TechnologyDiskIndustrialT3
-  name: technology disk (Tier 3 Industrial)
-  description: A disk for the R&D server containing Tier 3 Industrial branch research technology.
+  description: A disk for the R&D server containing a Tier 3 Industrial branch research technology.
   components:
   - type: Sprite
     layers:
     - state: datadisk_base
       color: "#eeac34"
     - state: datadisk_label
-    - state: datadisk_t3_marks
-      shader: unshaded
   - type: TechnologyDisk
     tier: 3
 
 - type: entity
   parent: [ TechnologyDiskArsenal, TechnologyDiskT1 ]
   id: TechnologyDiskArsenalT1
-  name: technology disk (Tier 1 Arsenal)
-  description: A disk for the R&D server containing Tier 1 Arsenal branch research technology.
+  description: A disk for the R&D server containing a Tier 1 Arsenal branch research technology.
   components:
   - type: Sprite
     layers:
@@ -166,8 +159,7 @@
 - type: entity
   parent: [ TechnologyDiskArsenal, TechnologyDiskT2 ]
   id: TechnologyDiskArsenalT2
-  name: technology disk (Tier 2 Arsenal)
-  description: A disk for the R&D server containing Tier 2 Arsenal branch research technology.
+  description: A disk for the R&D server containing a Tier 2 Arsenal branch research technology.
   components:
   - type: Sprite
     layers:
@@ -176,14 +168,14 @@
     - state: datadisk_label
     - state: datadisk_t2_marks
       shader: unshaded
+    - state: datadisk_t2_border
   - type: TechnologyDisk
     tier: 2
 
 - type: entity
   parent: [ TechnologyDiskArsenal, TechnologyDiskT3 ]
   id: TechnologyDiskArsenalT3
-  name: technology disk (Tier 3 Arsenal)
-  description: A disk for the R&D server containing Tier 3 Arsenal branch research technology.
+  description: A disk for the R&D server containing a Tier 3 Arsenal branch research technology.
   components:
   - type: Sprite
     layers:
@@ -192,14 +184,14 @@
     - state: datadisk_label
     - state: datadisk_t3_marks
       shader: unshaded
+    - state: datadisk_t3_border
   - type: TechnologyDisk
     tier: 3
 
 - type: entity
   parent: [ TechnologyDiskExperimental, TechnologyDiskT1 ]
   id: TechnologyDiskExperimentalT1
-  name: technology disk (Tier 1 Experimental)
-  description: A disk for the R&D server containing Tier 1 Experimental branch research technology.
+  description: A disk for the R&D server containing a Tier 1 Experimental branch research technology.
   components:
   - type: Sprite
     layers:
@@ -212,8 +204,7 @@
 - type: entity
   parent: [ TechnologyDiskExperimental, TechnologyDiskT2 ]
   id: TechnologyDiskExperimentalT2
-  name: technology disk (Tier 2 Experimental)
-  description: A disk for the R&D server containing Tier 2 Experimental branch research technology.
+  description: A disk for the R&D server containing a Tier 2 Experimental branch research technology.
   components:
   - type: Sprite
     layers:
@@ -222,14 +213,14 @@
     - state: datadisk_label
     - state: datadisk_t2_marks
       shader: unshaded
+    - state: datadisk_t2_border
   - type: TechnologyDisk
     tier: 2
 
 - type: entity
   parent: [ TechnologyDiskExperimental, TechnologyDiskT3 ]
   id: TechnologyDiskExperimentalT3
-  name: technology disk (Tier 3 Experimental)
-  description: A disk for the R&D server containing Tier 3 Experimental branch research technology.
+  description: A disk for the R&D server containing a Tier 3 Experimental branch research technology.
   components:
   - type: Sprite
     layers:
@@ -238,14 +229,14 @@
     - state: datadisk_label
     - state: datadisk_t3_marks
       shader: unshaded
+    - state: datadisk_t3_border
   - type: TechnologyDisk
     tier: 3
 
 - type: entity
   parent: [ TechnologyDiskCivilianServices, TechnologyDiskT1 ]
   id: TechnologyDiskCivilianServicesT1
-  name: technology disk (Tier 1 Civilian Services)
-  description: A disk for the R&D server containing Tier 1 Civilian Services branch research technology.
+  description: A disk for the R&D server containing a Tier 1 Civilian branch research technology.
   components:
   - type: Sprite
     layers:
@@ -258,8 +249,7 @@
 - type: entity
   parent: [ TechnologyDiskCivilianServices, TechnologyDiskT2 ]
   id: TechnologyDiskCivilianServicesT2
-  name: technology disk (Tier 2 Civilian Services)
-  description: A disk for the R&D server containing Tier 2 Civilian Services branch research technology.
+  description: A disk for the R&D server containing a Tier 2 Civilian branch research technology.
   components:
   - type: Sprite
     layers:
@@ -268,14 +258,14 @@
     - state: datadisk_label
     - state: datadisk_t2_marks
       shader: unshaded
+    - state: datadisk_t2_border
   - type: TechnologyDisk
     tier: 2
 
 - type: entity
   parent: [ TechnologyDiskCivilianServices, TechnologyDiskT3 ]
   id: TechnologyDiskCivilianServicesT3
-  name: technology disk (Tier 3 Civilian Services)
-  description: A disk for the R&D server containing Tier 3 Civilian Services branch research technology.
+  description: A disk for the R&D server containing a Tier 3 Civilian branch research technology.
   components:
   - type: Sprite
     layers:
@@ -284,6 +274,7 @@
     - state: datadisk_label
     - state: datadisk_t3_marks
       shader: unshaded
+    - state: datadisk_t3_border
   - type: TechnologyDisk
     tier: 3
 
