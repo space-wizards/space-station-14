@@ -18,6 +18,7 @@
     - Human
     - Moth
     - Reptilian
+    - Vulpkanin
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
