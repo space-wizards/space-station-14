@@ -1,12 +1,10 @@
+using Content.Shared.Examine;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 
-namespace Content.Server.Weapons.Ranged.Systems;
+namespace Content.Shared.Weapons.Ranged.Systems;
 
-/// <summary>
-/// Ensures that GunSpreadModifierComponent works by listening to the GunGetAmmoSpreadEvent.
-/// Also adds an examine message.
-/// </summary>
+
 public sealed class GunSpreadModifierSystem: EntitySystem
 {
     public override void Initialize()
@@ -18,5 +16,12 @@ public sealed class GunSpreadModifierSystem: EntitySystem
     private void OnGunGetAmmoSpread(EntityUid uid, GunSpreadModifierComponent comp, GunGetAmmoSpreadEvent args)
     {
         args.Spread *= comp.Spread;
+    }
+
+    private void OnExamine(EntityUid uid, GunSpreadModifierComponent comp, ExaminedEvent args)
+    {
+        var percentage = comp.Spread * 100;
+        var msg = Loc.GetString("examine-gun-spread-modifier", ("percentage", percentage));
+        args.PushMarkup(msg);
     }
 }
