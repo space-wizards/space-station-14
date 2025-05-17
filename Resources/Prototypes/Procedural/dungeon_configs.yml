@@ -347,16 +347,12 @@
     # Ore
     - id: WallRockSalt
       prob: 0.6
-      orGroup: content
     - id: WallRockCoal
       prob: 0.6
-      orGroup: content
     - id: WallRockTin
       prob: 0.4
-      orGroup: content
     - id: WallMining
       prob: 0.8
-      orGroup: content
 
 # Science lab
 - type: entityTable
@@ -365,16 +361,12 @@
     children:
     # Posters
     - id: RandomPosterLegit
-      orGroup: content
     - id: ExtinguisherCabinetFilled
       prob: 0.2
-      orGroup: content
     - id: RandomPainting
       prob: 0.05
-      orGroup: content
     - id: IntercomCommon
       prob: 0.1
-      orGroup: content
 
 # Snowy labs
 - type: entityTable
@@ -390,13 +382,9 @@
     children:
     # Posters
     - id: RandomPosterLegit
-      orGroup: content
     - id: ExtinguisherCabinetFilled
       prob: 0.2
-      orGroup: content
     - id: RandomPainting
       prob: 0.05
-      orGroup: content
     - id: IntercomScience
       prob: 0.1
-      orGroup: content
