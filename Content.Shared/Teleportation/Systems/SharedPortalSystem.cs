@@ -44,7 +44,7 @@ public abstract class SharedPortalSystem : EntitySystem
         SubscribeLocalEvent<PortalComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
     }
 
-    private void OnGetVerbs(EntityUid uid, PortalComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetVerbs(Entity<PortalComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         // Traversal altverb for ghosts to use that bypasses normal functionality
         if (!args.CanAccess || !HasComp<GhostComponent>(args.User))
@@ -52,8 +52,9 @@ public abstract class SharedPortalSystem : EntitySystem
 
         // Don't use the verb with unlinked or with multi-output portals
         // (this is only intended to be useful for ghosts to see where a linked portal leads)
-        var disabled = !TryComp<LinkedEntityComponent>(uid, out var link) || link.LinkedEntities.Count != 1;
+        var disabled = !TryComp<LinkedEntityComponent>(ent, out var link) || link.LinkedEntities.Count != 1;
 
+        var subject = args.User;
         args.Verbs.Add(new AlternativeVerb
         {
             Priority = 11,
@@ -73,7 +74,7 @@ public abstract class SharedPortalSystem : EntitySystem
                         return;
                 }
 
-                TeleportEntity(uid, args.User, Transform(destination).Coordinates, destination, false);
+                TeleportEntity(ent, subject, Transform(destination).Coordinates, destination, false);
             },
             Disabled = disabled,
             Text = Loc.GetString("portal-component-ghost-traverse"),
@@ -91,7 +92,7 @@ public abstract class SharedPortalSystem : EntitySystem
         return ourId == PortalFixture && (other.Hard || otherId == ProjectileFixture);
     }
 
-    private void OnCollide(EntityUid uid, PortalComponent component, ref StartCollideEvent args)
+    private void OnCollide(Entity<PortalComponent> ent, ref StartCollideEvent args)
     {
         if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId, args.OurFixture, args.OtherFixture))
             return;
@@ -120,7 +121,7 @@ public abstract class SharedPortalSystem : EntitySystem
             return;
         }
 
-        if (TryComp<LinkedEntityComponent>(uid, out var link))
+        if (TryComp<LinkedEntityComponent>(ent, out var link))
         {
             if (link.LinkedEntities.Count == 0)
                 return;
@@ -142,11 +143,11 @@ public abstract class SharedPortalSystem : EntitySystem
             {
                 // if target is a portal, signal that they shouldn't be immediately portaled back
                 var timeout = EnsureComp<PortalTimeoutComponent>(subject);
-                timeout.EnteredPortal = uid;
+                timeout.EnteredPortal = ent;
                 Dirty(subject, timeout);
             }
 
-            TeleportEntity(uid, subject, Transform(target).Coordinates, target);
+            TeleportEntity(ent, subject, Transform(target).Coordinates, target);
             return;
         }
 
@@ -154,11 +155,11 @@ public abstract class SharedPortalSystem : EntitySystem
             return;
 
         // no linked entity--teleport randomly
-        if (component.RandomTeleport)
-            TeleportRandomly(uid, subject, component);
+        if (ent.Comp.RandomTeleport)
+            TeleportRandomly(ent, subject);
     }
 
-    private void OnEndCollide(EntityUid uid, PortalComponent component, ref EndCollideEvent args)
+    private void OnEndCollide(Entity<PortalComponent> ent, ref EndCollideEvent args)
     {
         if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId, args.OurFixture, args.OtherFixture))
             return;
@@ -166,25 +167,21 @@ public abstract class SharedPortalSystem : EntitySystem
         var subject = args.OtherEntity;
 
         // if they came from (not us), remove the timeout
-        if (TryComp<PortalTimeoutComponent>(subject, out var timeout) && timeout.EnteredPortal != uid)
+        if (TryComp<PortalTimeoutComponent>(subject, out var timeout) && timeout.EnteredPortal != ent)
         {
             RemCompDeferred<PortalTimeoutComponent>(subject);
         }
     }
 
-    private void TeleportEntity(EntityUid portal, EntityUid subject, EntityCoordinates target, EntityUid? targetEntity = null, bool playSound = true,
-        PortalComponent? portalComponent = null)
+    private void TeleportEntity(Entity<PortalComponent> ent, EntityUid subject, EntityCoordinates target, EntityUid? targetEntity = null, bool playSound = true)
     {
-        if (!Resolve(portal, ref portalComponent))
-            return;
-
-        var ourCoords = Transform(portal).Coordinates;
+        var ourCoords = Transform(ent).Coordinates;
         var onSameMap = _transform.GetMapId(ourCoords) == _transform.GetMapId(target);
-        var distanceInvalid = portalComponent.MaxTeleportRadius != null
+        var distanceInvalid = ent.Comp.MaxTeleportRadius != null
                               && ourCoords.TryDistance(EntityManager, target, out var distance)
-                              && distance > portalComponent.MaxTeleportRadius;
+                              && distance > ent.Comp.MaxTeleportRadius;
 
-        if (!onSameMap && !portalComponent.CanTeleportToOtherMaps || distanceInvalid)
+        if (!onSameMap && !ent.Comp.CanTeleportToOtherMaps || distanceInvalid)
         {
             if (!_netMan.IsServer)
                 return;
@@ -196,7 +193,7 @@ public abstract class SharedPortalSystem : EntitySystem
             _popup.PopupCoordinates(Loc.GetString("portal-component-invalid-configuration-fizzle"),
                 target, Filter.Pvs(target, entityMan: EntityManager), true);
 
-            QueueDel(portal);
+            QueueDel(ent);
 
             if (targetEntity != null)
                 QueueDel(targetEntity.Value);
@@ -204,8 +201,8 @@ public abstract class SharedPortalSystem : EntitySystem
             return;
         }
 
-        var arrivalSound = CompOrNull<PortalComponent>(targetEntity)?.ArrivalSound ?? portalComponent.ArrivalSound;
-        var departureSound = portalComponent.DepartureSound;
+        var arrivalSound = CompOrNull<PortalComponent>(targetEntity)?.ArrivalSound ?? ent.Comp.ArrivalSound;
+        var departureSound = ent.Comp.DepartureSound;
 
         // Some special cased stuff: projectiles should stop ignoring shooter when they enter a portal, to avoid
         // stacking 500 bullets in between 2 portals and instakilling people--you'll just hit yourself instead
@@ -215,28 +212,25 @@ public abstract class SharedPortalSystem : EntitySystem
             projectile.IgnoreShooter = false;
         }
 
-        LogTeleport(portal, subject, Transform(subject).Coordinates, target);
+        LogTeleport(ent, subject, Transform(subject).Coordinates, target);
 
         _transform.SetCoordinates(subject, target);
 
         if (!playSound)
             return;
 
-        _audio.PlayPredicted(departureSound, portal, subject);
+        _audio.PlayPredicted(departureSound, ent, subject);
         _audio.PlayPredicted(arrivalSound, subject, subject);
     }
 
-    private void TeleportRandomly(EntityUid portal, EntityUid subject, PortalComponent? component = null)
+    private void TeleportRandomly(Entity<PortalComponent> ent, EntityUid subject)
     {
-        if (!Resolve(portal, ref component))
-            return;
-
-        var xform = Transform(portal);
+        var xform = Transform(ent);
         var coords = xform.Coordinates;
-        var newCoords = coords.Offset(_random.NextVector2(component.MaxRandomRadius));
+        var newCoords = coords.Offset(_random.NextVector2(ent.Comp.MaxRandomRadius));
         for (var i = 0; i < MaxRandomTeleportAttempts; i++)
         {
-            var randVector = _random.NextVector2(component.MaxRandomRadius);
+            var randVector = _random.NextVector2(ent.Comp.MaxRandomRadius);
             newCoords = coords.Offset(randVector);
             if (!_lookup.AnyEntitiesIntersecting(_transform.ToMapCoordinates(newCoords), LookupFlags.Static))
             {
@@ -244,7 +238,7 @@ public abstract class SharedPortalSystem : EntitySystem
             }
         }
 
-        TeleportEntity(portal, subject, newCoords);
+        TeleportEntity(ent, subject, newCoords);
     }
 
     protected virtual void LogTeleport(EntityUid portal, EntityUid subject, EntityCoordinates source,
