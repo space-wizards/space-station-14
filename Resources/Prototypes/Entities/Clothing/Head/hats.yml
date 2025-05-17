@@ -41,7 +41,7 @@
   - type: Tag
     tags:
     - ClothMade
-    - Recyclable    
+    - Recyclable
     - WhitelistChameleon
 
 - type: entity
@@ -482,8 +482,6 @@
     - state: icon-nobeard
       map: [ "foldedLayer" ]
       visible: true
-  
-    
 
 - type: entity
   parent: ClothingHeadBase
