@@ -1,2 +1,2 @@
-﻿cmd-ambient-overlay-desc = Shows all AmbientSoundComponents in the viewport
-cmd-ambient-overlay-status = Ambient sound overlay set to {$status}
+﻿cmd-showambient-desc = Shows all AmbientSoundComponents in the viewport
+cmd-showambient-status = Ambient sound overlay set to {$status}
