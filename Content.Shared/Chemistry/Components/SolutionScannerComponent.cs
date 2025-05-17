@@ -1,7 +1,7 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Chemistry.Components;
 
-[RegisterComponent]
-public sealed partial class SolutionScannerComponent : Component
-{
-}
+[RegisterComponent, NetworkedComponent]
+public sealed partial class SolutionScannerComponent : Component;
 
