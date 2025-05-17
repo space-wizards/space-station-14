@@ -14,6 +14,14 @@
       - material: Steel
         amount: 2
         doAfter: 1
+    - to: signaler
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+      - material: Cable
+        amount: 1
+        doAfter: 1
     - to: trunk
       steps:
       - material: Steel
@@ -104,6 +112,20 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  - node: signaler
+    entity: DisposalSignaler
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
       - !type:DeleteEntity
       steps:
       - tool: Welding
