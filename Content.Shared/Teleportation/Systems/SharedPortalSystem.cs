@@ -19,8 +19,10 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Teleportation.Systems;
 
 /// <summary>
-/// This handles teleporting entities through portals, and creating new linked portals.
+/// This handles teleporting entities from a portal to a linked portal, or to a random nearby destination.
+/// Uses <see cref="LinkedEntitySystem"/> to get linked portals.
 /// </summary>
+/// <seealso cref="PortalComponent"/>
 public abstract class SharedPortalSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -39,9 +41,10 @@ public abstract class SharedPortalSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+        SubscribeLocalEvent<PortalComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+
         SubscribeLocalEvent<PortalComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<PortalComponent, EndCollideEvent>(OnEndCollide);
-        SubscribeLocalEvent<PortalComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
     }
 
     private void OnGetVerbs(Entity<PortalComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -65,7 +68,7 @@ public abstract class SharedPortalSystem : EntitySystem
 
                 var destination = link.LinkedEntities.First();
 
-                // client can't predict outside of simple portal-to-portal interactions due to randomness involved
+                // client can't predict outside of simple portal-to-portal
                 // --also can't predict if the target doesn't exist on the client / is outside of PVS
                 if (_netMan.IsClient)
                 {
@@ -83,13 +86,6 @@ public abstract class SharedPortalSystem : EntitySystem
                 : Loc.GetString("portal-component-can-ghost-traverse"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"))
         });
-    }
-
-    private bool ShouldCollide(string ourId, string otherId, Fixture our, Fixture other)
-    {
-        // most non-hard fixtures shouldn't pass through portals, but projectiles are non-hard as well
-        // and they should still pass through
-        return ourId == PortalFixture && (other.Hard || otherId == ProjectileFixture);
     }
 
     private void OnCollide(Entity<PortalComponent> ent, ref StartCollideEvent args)
@@ -173,6 +169,26 @@ public abstract class SharedPortalSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Checks if the colliding fixtures are the ones we want.
+    /// </summary>
+    /// <returns>
+    /// False if our fixture is not a portal fixture.
+    /// False if other fixture is not hard, but makes an exception for projectiles.
+    /// </returns>
+    private bool ShouldCollide(string ourId, string otherId, Fixture our, Fixture other)
+    {
+        return ourId == PortalFixture && (other.Hard || otherId == ProjectileFixture);
+    }
+
+    /// <summary>
+    /// Handles teleporting a subject from the portal entity to a coordinate.
+    /// Also deletes invalid portals.
+    /// </summary>
+    /// <param name="ent"> The portal being collided with. </param>
+    /// <param name="subject"> The entity getting teleported. </param>
+    /// <param name="target"> The location to teleport to. </param>
+    /// <param name="targetEntity"> The portal on the other side of the teleport. </param>
     private void TeleportEntity(Entity<PortalComponent> ent, EntityUid subject, EntityCoordinates target, EntityUid? targetEntity = null, bool playSound = true)
     {
         var ourCoords = Transform(ent).Coordinates;
@@ -181,12 +197,12 @@ public abstract class SharedPortalSystem : EntitySystem
                               && ourCoords.TryDistance(EntityManager, target, out var distance)
                               && distance > ent.Comp.MaxTeleportRadius;
 
+        // Early out if this is an invalid configuration
         if (!onSameMap && !ent.Comp.CanTeleportToOtherMaps || distanceInvalid)
         {
             if (!_netMan.IsServer)
                 return;
 
-            // Early out if this is an invalid configuration
             _popup.PopupCoordinates(Loc.GetString("portal-component-invalid-configuration-fizzle"),
                 ourCoords, Filter.Pvs(ourCoords, entityMan: EntityManager), true);
 
@@ -223,6 +239,12 @@ public abstract class SharedPortalSystem : EntitySystem
         _audio.PlayPredicted(arrivalSound, subject, subject);
     }
 
+    /// <summary>
+    /// Finds a random coordinate within the portal's radius and teleports the subject there.
+    /// Makes <see cref="MaxRandomTeleportAttempts"> attempts to not put the subject inside a static entity (e.g. wall).
+    /// </summary>
+    /// <param name="ent"> The portal being collided with. </param>
+    /// <param name="subject"> The entity getting teleported. </param>
     private void TeleportRandomly(Entity<PortalComponent> ent, EntityUid subject)
     {
         var xform = Transform(ent);
@@ -234,8 +256,10 @@ public abstract class SharedPortalSystem : EntitySystem
             newCoords = coords.Offset(randVector);
             if (!_lookup.AnyEntitiesIntersecting(_transform.ToMapCoordinates(newCoords), LookupFlags.Static))
             {
+                // newCoords is not a wall
                 break;
             }
+            /// after <see cref="MaxRandomTeleportAttempts"> attempts, end up in the walls
         }
 
         TeleportEntity(ent, subject, newCoords);
