@@ -1,9 +1,12 @@
 using Content.Shared.Armor;
+using Content.Shared.Atmos;
 using Content.Shared.Chat;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Hypospray.Events;
 using Content.Shared.Climbing.Events;
+using Content.Shared.Contraband;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Events;
 using Content.Shared.Electrocution;
 using Content.Shared.Explosion;
 using Content.Shared.Eye.Blinding.Systems;
@@ -14,6 +17,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Overlays;
+using Content.Shared.Projectiles;
 using Content.Shared.Radio;
 using Content.Shared.Slippery;
 using Content.Shared.Standing;
@@ -21,6 +25,7 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Zombies;
 
 namespace Content.Shared.Inventory;
 
@@ -43,14 +48,23 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, SelfBeforeGunShotEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SelfBeforeClimbEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, CoefficientQueryEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, ZombificationResistanceQueryEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, IsEquippingTargetAttemptEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, IsUnequippingTargetAttemptEvent>(RelayInventoryEvent);
 
         // by-ref events
+        SubscribeLocalEvent<InventoryComponent, RefreshFrictionModifiersEvent>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, BeforeStaminaDamageEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetExplosionResistanceEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, IsWeightlessEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetSpeedModifierContactCapEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetSlowedOverSlipperyModifierEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ModifySlowOnDamageSpeedEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, FellDownEvent>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, ExtinguishEvent>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, ProjectileReflectAttemptEvent>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, HitScanReflectAttemptEvent>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, GetContrabandDetailsEvent>(RefRelayInventoryEvent);
 
         // Eye/vision events
         SubscribeLocalEvent<InventoryComponent, CanSeeAttemptEvent>(RelayInventoryEvent);
@@ -67,6 +81,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowMindShieldIconsComponent>>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowSyndicateIconsComponent>>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowCriminalRecordIconsComponent>>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<BlackAndWhiteOverlayComponent>>(RefRelayInventoryEvent);
 
         SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<EquipmentVerb>>(OnGetEquipmentVerbs);
         SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<InnateVerb>>(OnGetInnateVerbs);

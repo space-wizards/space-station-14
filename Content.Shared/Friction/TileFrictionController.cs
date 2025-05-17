@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Gravity;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
@@ -8,6 +9,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
@@ -21,7 +23,6 @@ namespace Content.Shared.Friction
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedMapSystem _map = default!;
 
         private EntityQuery<TileFrictionModifierComponent> _frictionQuery;
@@ -30,16 +31,19 @@ namespace Content.Shared.Friction
         private EntityQuery<PullableComponent> _pullableQuery;
         private EntityQuery<MapGridComponent> _gridQuery;
 
-        private float _stopSpeed;
         private float _frictionModifier;
-        public const float DefaultFriction = 0.3f;
+        private float _minDamping;
+        private float _airDamping;
+        private float _offGridDamping;
 
         public override void Initialize()
         {
             base.Initialize();
 
             Subs.CVar(_configManager, CCVars.TileFrictionModifier, value => _frictionModifier = value, true);
-            Subs.CVar(_configManager, CCVars.StopSpeed, value => _stopSpeed = value, true);
+            Subs.CVar(_configManager, CCVars.MinFriction, value => _minDamping = value, true);
+            Subs.CVar(_configManager, CCVars.AirFriction, value => _airDamping = value, true);
+            Subs.CVar(_configManager, CCVars.OffgridFriction, value => _offGridDamping = value, true);
             _frictionQuery = GetEntityQuery<TileFrictionModifierComponent>();
             _xformQuery = GetEntityQuery<TransformComponent>();
             _pullerQuery = GetEntityQuery<PullerComponent>();
@@ -56,12 +60,9 @@ namespace Content.Shared.Friction
                 var uid = body.Owner;
 
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
-                if (prediction && !body.Predict ||
-                    body.BodyStatus == BodyStatus.InAir ||
-                    _mover.UseMobMovement(uid))
-                {
+                // We may want to instead only apply friction to dynamic entities and not mobs ever.
+                if (prediction && !body.Predict || _mover.UseMobMovement(uid))
                     continue;
-                }
 
                 if (body.LinearVelocity.Equals(Vector2.Zero) && body.AngularVelocity.Equals(0f))
                     continue;
@@ -72,7 +73,15 @@ namespace Content.Shared.Friction
                     continue;
                 }
 
-                var surfaceFriction = GetTileFriction(uid, body, xform);
+                float friction;
+
+                // If we're not touching the ground, don't use tileFriction.
+                // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
+                if (body.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(uid, body, xform) || !xform.Coordinates.IsValid(EntityManager))
+                    friction = xform.GridUid == null || !_gridQuery.HasComp(xform.GridUid) ? _offGridDamping : _airDamping;
+                else
+                    friction = _frictionModifier * GetTileFriction(uid, body, xform);
+
                 var bodyModifier = 1f;
 
                 if (_frictionQuery.TryGetComponent(uid, out var frictionComp))
@@ -94,75 +103,27 @@ namespace Content.Shared.Friction
                     bodyModifier *= 0.2f;
                 }
 
-                var friction = _frictionModifier * surfaceFriction * bodyModifier;
+                friction *= bodyModifier;
 
-                ReduceLinearVelocity(uid, prediction, body, friction, frameTime);
-                ReduceAngularVelocity(uid, prediction, body, friction, frameTime);
+                friction = Math.Max(_minDamping, friction);
+
+                PhysicsSystem.SetLinearDamping(uid, body, friction);
+                PhysicsSystem.SetAngularDamping(uid, body, friction);
+
+                if (body.BodyType != BodyType.KinematicController)
+                    continue;
+
+                // Physics engine doesn't apply damping to Kinematic Controllers so we have to do it here.
+                // BEWARE YE TRAVELLER:
+                // You may think you can just pass the body.LinearVelocity to the Friction function and edit it there!
+                // But doing so is unpredicted! And you will doom yourself to 1000 years of rubber banding!
+                var velocity = body.LinearVelocity;
+                var angVelocity = body.AngularVelocity;
+                _mover.Friction(0f, frameTime, friction, ref velocity);
+                _mover.Friction(0f, frameTime, friction, ref angVelocity);
+                PhysicsSystem.SetLinearVelocity(uid, velocity, body: body);
+                PhysicsSystem.SetAngularVelocity(uid, angVelocity, body: body);
             }
-        }
-
-        private void ReduceLinearVelocity(EntityUid uid, bool prediction, PhysicsComponent body, float friction, float frameTime)
-        {
-            var speed = body.LinearVelocity.Length();
-
-            if (speed <= 0.0f)
-                return;
-
-            // This is the *actual* amount that speed will drop by, we just do some multiplication around it to be easier.
-            var drop = 0.0f;
-            float control;
-
-            if (friction > 0.0f)
-            {
-                // TBH I can't really tell if this makes a difference.
-                if (!prediction)
-                {
-                    control = speed < _stopSpeed ? _stopSpeed : speed;
-                }
-                else
-                {
-                    control = speed;
-                }
-
-                drop += control * friction * frameTime;
-            }
-
-            var newSpeed = MathF.Max(0.0f, speed - drop);
-
-            newSpeed /= speed;
-            _physics.SetLinearVelocity(uid, body.LinearVelocity * newSpeed, body: body);
-        }
-
-        private void ReduceAngularVelocity(EntityUid uid, bool prediction, PhysicsComponent body, float friction, float frameTime)
-        {
-            var speed = MathF.Abs(body.AngularVelocity);
-
-            if (speed <= 0.0f)
-                return;
-
-            // This is the *actual* amount that speed will drop by, we just do some multiplication around it to be easier.
-            var drop = 0.0f;
-            float control;
-
-            if (friction > 0.0f)
-            {
-                // TBH I can't really tell if this makes a difference.
-                if (!prediction)
-                {
-                    control = speed < _stopSpeed ? _stopSpeed : speed;
-                }
-                else
-                {
-                    control = speed;
-                }
-
-                drop += control * friction * frameTime;
-            }
-
-            var newSpeed = MathF.Max(0.0f, speed - drop);
-
-            newSpeed /= speed;
-            _physics.SetAngularVelocity(uid, body.AngularVelocity * newSpeed, body: body);
         }
 
         [Pure]
@@ -171,19 +132,13 @@ namespace Content.Shared.Friction
             PhysicsComponent body,
             TransformComponent xform)
         {
-            // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
-            if (_gravity.IsWeightless(uid, body, xform))
-                return 0.0f;
-
-            if (!xform.Coordinates.IsValid(EntityManager))
-                return 0.0f;
-
-            // If not on a grid then return the map's friction.
+            var tileModifier = 1f;
+            // If not on a grid and not in the air then return the map's friction.
             if (!_gridQuery.TryGetComponent(xform.GridUid, out var grid))
             {
                 return _frictionQuery.TryGetComponent(xform.MapUid, out var friction)
                     ? friction.Modifier
-                    : DefaultFriction;
+                    : tileModifier;
             }
 
             var tile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
@@ -192,21 +147,18 @@ namespace Content.Shared.Friction
             if (tile.Tile.IsEmpty &&
                 HasComp<MapComponent>(xform.GridUid) &&
                 (!TryComp<GravityComponent>(xform.GridUid, out var gravity) || gravity.Enabled))
-            {
-                return DefaultFriction;
-            }
+                return tileModifier;
 
-            // If there's an anchored ent that modifies friction then fallback to that instead.
-            var anc = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
-
+            // Check for anchored ents that modify friction
+            var anc = _map.GetAnchoredEntitiesEnumerator(xform.GridUid.Value, grid, tile.GridIndices);
             while (anc.MoveNext(out var tileEnt))
             {
                 if (_frictionQuery.TryGetComponent(tileEnt, out var friction))
-                    return friction.Modifier;
+                    tileModifier *= friction.Modifier;
             }
 
             var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
-            return tileDef.Friction;
+            return tileDef.Friction * tileModifier;
         }
 
         public void SetModifier(EntityUid entityUid, float value, TileFrictionModifierComponent? friction = null)
