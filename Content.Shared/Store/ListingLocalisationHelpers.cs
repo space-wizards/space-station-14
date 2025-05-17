@@ -31,8 +31,15 @@ public static class ListingLocalisationHelpers
                     }
                     else
                     {
-                        // Use the localization with the stock count parameter
-                        name = Loc.GetString(listingData.Name, ("stock", stock));
+                        // Get the maximum stock limit if available
+                        int maxStock = stock;
+                        if (metadata.TryGetValue("maxStock", out var maxStockObj) && maxStockObj is int max)
+                        {
+                            maxStock = max;
+                        }
+                        
+                        // Use the localization with the stock count parameter in X/Y format
+                        name = Loc.GetString(listingData.Name, ("stock", $"{stock}/{maxStock}"));
                     }
                     
                     return name;
@@ -52,11 +59,12 @@ public static class ListingLocalisationHelpers
                             }
                             else
                             {
-                                // Get the current stock count
+                                // Get the current stock count and maximum stock limit
                                 var currentStock = StockLimitedListingCondition.GetCurrentStock(listingData.ID, stockCondition.StockLimit);
+                                var maxStock = StockLimitedListingCondition.GetMaxStock(listingData.ID, stockCondition.StockLimit);
                                 
-                                // Use the localization with the stock count parameter
-                                name = Loc.GetString(listingData.Name, ("stock", currentStock));
+                                // Use the localization with the stock count parameter in X/Y format
+                                name = Loc.GetString(listingData.Name, ("stock", $"{currentStock}/{maxStock}"));
                             }
                             
                             return name;
@@ -104,9 +112,16 @@ public static class ListingLocalisationHelpers
                     }
                     else
                     {
-                        // Use the localization with the stock count and last purchaser parameters
+                        // Get the maximum stock limit if available
+                        int maxStock = stock;
+                        if (metadata.TryGetValue("maxStock", out var maxStockObj) && maxStockObj is int max)
+                        {
+                            maxStock = max;
+                        }
+                        
+                        // Use the localization with the stock count and last purchaser parameters in X/Y format
                         desc = Loc.GetString(listingData.Description, 
-                            ("stock", stock),
+                            ("stock", $"{stock}/{maxStock}"),
                             ("lastPurchaser", purchaserText)
                         );
                     }
@@ -139,12 +154,13 @@ public static class ListingLocalisationHelpers
                             }
                             else
                             {
-                                // Get the current stock count
+                                // Get the current stock count and maximum stock limit
                                 var currentStock = StockLimitedListingCondition.GetCurrentStock(listingData.ID, stockCondition.StockLimit);
+                                var maxStock = StockLimitedListingCondition.GetMaxStock(listingData.ID, stockCondition.StockLimit);
                                 
                                 // Use the localization with the stock count and last purchaser parameters
                                 desc = Loc.GetString(listingData.Description, 
-                                    ("stock", currentStock),
+                                    ("stock", $"{currentStock}/{maxStock}"),
                                     ("lastPurchaser", lastPurchaserText)
                                 );
                             }

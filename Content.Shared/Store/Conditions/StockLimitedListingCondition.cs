@@ -42,6 +42,12 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
     /// Key is the listing ID, value is the current stock.
     /// </summary>
     private static readonly Dictionary<string, int> _stockCounts = new();
+    
+    /// <summary>
+    /// Dictionary to track the maximum stock limit of each listing.
+    /// Key is the listing ID, value is the maximum stock limit.
+    /// </summary>
+    private static readonly Dictionary<string, int> _stockLimits = new();
 
     /// <summary>
     /// Dictionary to track the last purchaser of each listing.
@@ -59,10 +65,11 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
     {
         var listingId = args.Listing.ID;
 
-        // Initialize stock count for this listing if it doesn't exist
+        // Initialize stock count and limit for this listing if it doesn't exist
         if (!_stockCounts.ContainsKey(listingId))
         {
             _stockCounts[listingId] = StockLimit;
+            _stockLimits[listingId] = StockLimit;
             CurrentStock = StockLimit; // Initialize CurrentStock
         }
         else
@@ -98,16 +105,18 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
     /// </summary>
     private void UpdateListingInfo(ListingData listing, string listingId)
     {
-        // Get the current stock count
+        // Get the current stock count and maximum stock limit
         var currentStock = _stockCounts.ContainsKey(listingId) ? _stockCounts[listingId] : StockLimit;
+        var maxStock = _stockLimits.ContainsKey(listingId) ? _stockLimits[listingId] : StockLimit;
 
         // Get the last purchaser
         var lastPurchaser = _lastPurchasers.ContainsKey(listingId) ? _lastPurchasers[listingId] : null;
 
-        // Store the stock count in the listing's metadata
+        // Store the stock count and limit in the listing's metadata
         var metadata = listing.GetOrCreateMetadata();
         
         metadata["stock"] = currentStock;
+        metadata["maxStock"] = maxStock;
         
         // Store the out of stock status in the metadata
         var outOfStock = currentStock <= 0;
@@ -125,14 +134,14 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
             // Get the base name without the stock count
             var baseName = Loc.GetString(listing.Name);
             
-            // Format the name with the stock count
+            // Format the name with the stock count in X/Y format
             if (outOfStock)
             {
                 listing.Name = $"{baseName} (Out of Stock)";
             }
             else
             {
-                listing.Name = $"{baseName} ({currentStock})";
+                listing.Name = $"{baseName} ({currentStock}/{maxStock})";
             }
         }
         
@@ -155,7 +164,7 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
     /// </summary>
     public static void OnItemPurchased(string listingId, string purchaserName)
     {
-        // Initialize stock count for this listing if it doesn't exist
+        // Initialize stock count and limit for this listing if it doesn't exist
         if (!_stockCounts.ContainsKey(listingId))
         {
             // Get the stock limit based on the listing ID
@@ -176,6 +185,7 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
             }
             
             _stockCounts[listingId] = stockLimit;
+            _stockLimits[listingId] = stockLimit;
         }
 
         // Decrement the stock count
@@ -194,6 +204,14 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
     public static int GetCurrentStock(string listingId, int defaultStockLimit)
     {
         return _stockCounts.ContainsKey(listingId) ? _stockCounts[listingId] : defaultStockLimit;
+    }
+    
+    /// <summary>
+    /// Gets the maximum stock limit for a listing.
+    /// </summary>
+    public static int GetMaxStock(string listingId, int defaultStockLimit)
+    {
+        return _stockLimits.ContainsKey(listingId) ? _stockLimits[listingId] : defaultStockLimit;
     }
 
     /// <summary>
