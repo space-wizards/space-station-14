@@ -19,7 +19,7 @@ public sealed class SalvageJobBoardBoundUserInterface(EntityUid owner, Enum uiKe
 
         _menu.OnLabelButtonPressed += id =>
         {
-            SendMessage(new BountyPrintLabelMessage(id));
+            SendMessage(new JobBoardPrintLabelMessage(id));
         };
     }
 

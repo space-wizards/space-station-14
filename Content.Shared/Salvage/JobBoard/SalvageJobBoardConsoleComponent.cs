@@ -1,16 +1,42 @@
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.Radio;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Salvage.JobBoard;
 
 /// <summary>
 /// Used to view the job board ui
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedSalvageSystem))]
-public sealed partial class SalvageJobBoardConsoleComponent : Component;
+[RegisterComponent, NetworkedComponent]
+public sealed partial class SalvageJobBoardConsoleComponent : Component
+{
+    /// <summary>
+    /// A label that this computer can print out.
+    /// </summary>
+    [DataField]
+    public EntProtoId LabelEntity = "PaperSalvageJobLabel";
+
+    /// <summary>
+    /// The sound made when printing occurs
+    /// </summary>
+    [DataField]
+    public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
+
+    /// <summary>
+    /// The time at which the console will be able to print a label again.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextPrintTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The time between prints.
+    /// </summary>
+    [DataField]
+    public TimeSpan PrintDelay = TimeSpan.FromSeconds(5);
+}
 
 [Serializable, NetSerializable]
 public sealed class SalvageJobBoardConsoleState : BoundUserInterfaceState
@@ -25,6 +51,17 @@ public sealed class SalvageJobBoardConsoleState : BoundUserInterfaceState
         Title = title;
         Progression = progression;
         AvailableJobs = availableJobs;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class JobBoardPrintLabelMessage : BoundUserInterfaceMessage
+{
+    public string JobId;
+
+    public JobBoardPrintLabelMessage(string jobId)
+    {
+        JobId = jobId;
     }
 }
 

@@ -6,19 +6,25 @@ using Content.Server.Station.Systems;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Labels.EntitySystems;
+using Content.Shared.Paper;
 using Content.Shared.Radio;
 using Content.Shared.Salvage.JobBoard;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Salvage.JobBoard;
 
 public sealed class SalvageJobBoardSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly CargoSystem _cargo = default!;
     [Dependency] private readonly LabelSystem _label = default!;
+    [Dependency] private readonly PaperSystem _paper = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -33,6 +39,11 @@ public sealed class SalvageJobBoardSystem : EntitySystem
     {
         SubscribeLocalEvent<EntitySoldEvent>(OnSold);
         SubscribeLocalEvent<SalvageJobBoardConsoleComponent, BoundUIOpenedEvent>(OnBUIOpened);
+        Subs.BuiEvents<SalvageJobBoardConsoleComponent>(SalvageJobBoardUiKey.Key,
+            subs =>
+            {
+                subs.Event<JobBoardPrintLabelMessage>(OnPrintLabelMessage);
+            });
     }
 
     private void OnSold(ref EntitySoldEvent args)
@@ -183,6 +194,40 @@ public sealed class SalvageJobBoardSystem : EntitySystem
             return;
 
         UpdateUi(ent, (station, jobData));
+    }
+
+    private void OnPrintLabelMessage(Entity<SalvageJobBoardConsoleComponent> ent, ref JobBoardPrintLabelMessage args)
+    {
+        if (_timing.CurTime < ent.Comp.NextPrintTime)
+            return;
+
+        if (_station.GetOwningStation(ent) is not { } station ||
+            !TryComp<SalvageJobsDataComponent>(station, out var jobsData))
+            return;
+
+        if (!_prototypeManager.TryIndex<CargoBountyPrototype>(args.JobId, out var job))
+            return;
+
+        if (jobsData.CompletedJobs.Contains(args.JobId))
+            return;
+
+        if (!GetAvailableJobs((station, jobsData)).Contains(args.JobId))
+            return;
+
+        _audio.PlayPvs(ent.Comp.PrintSound, ent);
+        var label = SpawnAtPosition(ent.Comp.LabelEntity, Transform(ent).Coordinates);
+        EnsureComp<JobBoardLabelComponent>(label).JobId = job.ID;
+
+        var target = new List<string>();
+        foreach (var entry in job.Entries)
+        {
+            target.Add(Loc.GetString("bounty-console-manifest-entry",
+                ("amount", entry.Amount),
+                ("item", Loc.GetString(entry.Name))));
+        }
+        _paper.SetContent(label, Loc.GetString("job-board-label-text", ("target", string.Join(',', target)), ("reward", job.Reward)));
+
+        ent.Comp.NextPrintTime = _timing.CurTime + ent.Comp.PrintDelay;
     }
 
     private void UpdateUi(Entity<SalvageJobBoardConsoleComponent> ent, Entity<SalvageJobsDataComponent> stationEnt)

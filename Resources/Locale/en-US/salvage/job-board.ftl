@@ -9,6 +9,15 @@ job-board-ui-window-title = Job Board
 job-board-ui-label-rank = [bold]Rank:[/bold]
 job-board-ui-label-items = Target: [color=red]{$item}[/color]
 
+job-board-label-text = [head=2]Salvage Job Shipment[/head]
+    {"[italic]For use only on official off-station salvage shipments.[/italic]"}
+
+    {"[bold]Target:[/bold]"} {$target}
+    {"[bold]Reward:[/bold]"} ${$reward}
+
+
+    {"[italic]Shipments are subject to inspection by the Donk corporation[/italic]"}
+
 salv-job-board-name-BountyTeethSpaceCarp = Space Carp
 
 salv-job-board-name-BountyTeethSharkminnow = Sharkminnow

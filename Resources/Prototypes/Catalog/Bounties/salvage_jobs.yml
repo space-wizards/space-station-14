@@ -6,7 +6,7 @@
 
 - type: cargoBounty
   id: BountyTeethSpaceCarp
-  reward: 10000
+  reward: 7500
   description: bounty-description-tooth-space-carp
   group: SalvageJobTier1
   sprite:
@@ -23,7 +23,7 @@
 
 - type: cargoBounty
   id: BountyTeethSharkminnow
-  reward: 20000
+  reward: 15000
   description: bounty-description-tooth-sharkminnow
   group: SalvageJobTier2
   sprite:
@@ -40,7 +40,7 @@
 
 - type: cargoBounty
   id: BountyGoliathPlates
-  reward: 30000
+  reward: 20000
   description: bounty-description-plates
   group: SalvageJobTier3
   sprite:
@@ -55,7 +55,7 @@
 
 - type: cargoBounty
   id: BountyHivelordRemains
-  reward: 30000
+  reward: 20000
   description: bounty-description-remains
   group: SalvageJobTier3
   sprite:
