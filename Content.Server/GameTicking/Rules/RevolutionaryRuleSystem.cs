@@ -87,33 +87,33 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     private void OnAfterAntagEntitySelected(EntityUid uid, RevolutionaryRuleComponent comp, ref AfterAntagEntitySelectedEvent args)
     {
         // Check if this is a head revolutionary
-        if (!HasComp<HeadRevolutionaryComponent>(args.EntityUid) || args.Session == null)
-            return;
+        // if (!HasComp<HeadRevolutionaryComponent>(args.EntityUid) || args.Session == null)
+        //     return;
 
-        // Create a USSP uplink implant for this head revolutionary
-        var uplinkImplant = EntityManager.SpawnEntity("USSPUplinkImplant", Transform(args.EntityUid).Coordinates);
+        // // Create a USSP uplink implant for this head revolutionary
+        // var uplinkImplant = EntityManager.SpawnEntity("USSPUplinkImplant", Transform(args.EntityUid).Coordinates);
         
-        // Store this uplink for future use
-        var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(args.EntityUid);
-        implantComponent.ImplantUid = uplinkImplant;
+        // // Store this uplink for future use
+        // var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(args.EntityUid);
+        // implantComponent.ImplantUid = uplinkImplant;
         
-        // Add a component to the uplink to track which head revolutionary it belongs to
-        var uplinkOwnerComp = EnsureComp<USSPUplinkOwnerComponent>(uplinkImplant);
-        uplinkOwnerComp.OwnerUid = args.EntityUid;
+        // // Add a component to the uplink to track which head revolutionary it belongs to
+        // var uplinkOwnerComp = EnsureComp<USSPUplinkOwnerComponent>(uplinkImplant);
+        // uplinkOwnerComp.OwnerUid = args.EntityUid;
         
-        // Initialize the uplink with zero currencies
-        if (TryComp<StoreComponent>(uplinkImplant, out var store))
-        {
-            var storeSystem = EntitySystem.Get<StoreSystem>();
-            var currencyToAdd = new Dictionary<string, FixedPoint2> 
-            { 
-                { "Telebond", FixedPoint2.Zero },
-                { "Conversion", FixedPoint2.Zero }
-            };
-            storeSystem.TryAddCurrency(currencyToAdd, uplinkImplant);
-            Logger.InfoS("rev-rule", $"Created new uplink {ToPrettyString(uplinkImplant)} for head revolutionary {ToPrettyString(args.EntityUid)}");
-            Logger.InfoS("rev-rule", $"Added USSPUplinkOwnerComponent to uplink {ToPrettyString(uplinkImplant)} with owner {ToPrettyString(args.EntityUid)}");
-        }
+        // // Initialize the uplink with zero currencies
+        // if (TryComp<StoreComponent>(uplinkImplant, out var store))
+        // {
+        //     var storeSystem = EntitySystem.Get<StoreSystem>();
+        //     var currencyToAdd = new Dictionary<string, FixedPoint2> 
+        //     { 
+        //         { "Telebond", FixedPoint2.Zero },
+        //         { "Conversion", FixedPoint2.Zero }
+        //     };
+        //     storeSystem.TryAddCurrency(currencyToAdd, uplinkImplant);
+        //     Logger.InfoS("rev-rule", $"Created new uplink {ToPrettyString(uplinkImplant)} for head revolutionary {ToPrettyString(args.EntityUid)}");
+        //     Logger.InfoS("rev-rule", $"Added USSPUplinkOwnerComponent to uplink {ToPrettyString(uplinkImplant)} with owner {ToPrettyString(args.EntityUid)}");
+        // }
 
         // Send a custom briefing with the character's name
         var name = Identity.Name(args.EntityUid, EntityManager);
@@ -915,45 +915,45 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
         }
         
-        // Now update all uplinks with the maximum values
-        foreach (var uplink in allUplinks)
-        {
-            if (TryComp<StoreComponent>(uplink, out var store))
-            {
-                // Make sure the store has both currencies initialized
-                if (!store.Balance.ContainsKey("Telebond"))
-                {
-                    store.Balance["Telebond"] = FixedPoint2.Zero;
-                }
+        // // Now update all uplinks with the maximum values
+        // foreach (var uplink in allUplinks)
+        // {
+        //     if (TryComp<StoreComponent>(uplink, out var store))
+        //     {
+        //         // Make sure the store has both currencies initialized
+        //         if (!store.Balance.ContainsKey("Telebond"))
+        //         {
+        //             store.Balance["Telebond"] = FixedPoint2.Zero;
+        //         }
                 
-                if (!store.Balance.ContainsKey("Conversion"))
-                {
-                    store.Balance["Conversion"] = FixedPoint2.Zero;
-                }
+        //         if (!store.Balance.ContainsKey("Conversion"))
+        //         {
+        //             store.Balance["Conversion"] = FixedPoint2.Zero;
+        //         }
                 
-                // Update the currencies if they're lower than the maximum
-                if (store.Balance["Telebond"] < maxTelebond)
-                {
-                    store.Balance["Telebond"] = maxTelebond;
-                    Logger.Info($"Updated Telebond currency in uplink {ToPrettyString(uplink)} to {maxTelebond}");
+        //         // Update the currencies if they're lower than the maximum
+        //         if (store.Balance["Telebond"] < maxTelebond)
+        //         {
+        //             store.Balance["Telebond"] = maxTelebond;
+        //             Logger.Info($"Updated Telebond currency in uplink {ToPrettyString(uplink)} to {maxTelebond}");
                     
-                    // Show popup to the implanted entity
-                    if (TryComp<SubdermalImplantComponent>(uplink, out var implant) && 
-                        implant.ImplantedEntity != null && 
-                        implant.ImplantedEntity.Value != headRevUid)
-                    {
-                        _popup.PopupEntity(Loc.GetString($"Telebond updated to {maxTelebond} (from {Identity.Name(headRevUid, EntityManager)})"), 
-                            implant.ImplantedEntity.Value, implant.ImplantedEntity.Value, PopupType.Medium);
-                    }
-                }
+        //             // Show popup to the implanted entity
+        //             if (TryComp<SubdermalImplantComponent>(uplink, out var implant) && 
+        //                 implant.ImplantedEntity != null && 
+        //                 implant.ImplantedEntity.Value != headRevUid)
+        //             {
+        //                 _popup.PopupEntity(Loc.GetString($"Telebond updated to {maxTelebond} (from {Identity.Name(headRevUid, EntityManager)})"), 
+        //                     implant.ImplantedEntity.Value, implant.ImplantedEntity.Value, PopupType.Medium);
+        //             }
+        //         }
                 
-                if (store.Balance["Conversion"] < maxConversion)
-                {
-                    store.Balance["Conversion"] = maxConversion;
-                    Logger.Info($"Updated Conversion currency in uplink {ToPrettyString(uplink)} to {maxConversion}");
-                }
-            }
-        }
+        //         if (store.Balance["Conversion"] < maxConversion)
+        //         {
+        //             store.Balance["Conversion"] = maxConversion;
+        //             Logger.Info($"Updated Conversion currency in uplink {ToPrettyString(uplink)} to {maxConversion}");
+        //         }
+        //     }
+        // }
         
         // Also update the global conversion value for all USSP uplinks in the game
         // This ensures that all uplinks have the same conversion value, regardless of owner
