@@ -116,3 +116,7 @@
 - type: storeCategory
   id: RevUplinkPassive
   name: Passive
+
+- type: storeCategory
+  id: RevUplinkWearables
+  name: Wearables

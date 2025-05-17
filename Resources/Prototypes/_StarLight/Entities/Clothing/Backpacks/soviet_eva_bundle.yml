@@ -1,0 +1,19 @@
+- type: entity
+  id: ClothingBackpackDuffelSovietEVABundle
+  name: soviet EVA bundle
+  parent: [ClothingBackpackDuffel, BaseSovietContraband]
+  description: Contains a soviet EVA suit and helmet, along with emergency oxygen and nitrogen tanks. For the workers of space!
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/syndicate.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: Storage
+    grid:
+    - 0,0,8,4
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSovietEVA
+      - id: ClothingHeadHelmetSovietEVA
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled

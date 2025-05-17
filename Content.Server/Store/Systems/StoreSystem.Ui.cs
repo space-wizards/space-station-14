@@ -12,6 +12,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
+using Content.Shared.Store.Conditions;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -154,6 +155,33 @@ public sealed partial class StoreSystem
             // Mark that we're processing a rift purchase
             _revSupplyRift.SetRiftProcessing(true);
         }
+        
+        // Check if this is a stock-limited listing and prevent spam-clicking
+        if (listing.Conditions != null)
+        {
+            foreach (var condition in listing.Conditions)
+            {
+                if (condition is Content.Shared.Store.Conditions.StockLimitedListingCondition)
+                {
+                    // Get the StockLimitedProcessingComponent
+                    if (!TryComp<StockLimitedProcessingComponent>(uid, out var processingComp))
+                    {
+                        processingComp = EnsureComp<StockLimitedProcessingComponent>(uid);
+                    }
+                    
+                    // Check if this listing is already being processed
+                    if (processingComp.ProcessingListings.TryGetValue(listing.ID, out var isProcessing) && isProcessing)
+                    {
+                        // This listing is already being processed, so cancel this purchase
+                        return;
+                    }
+                    
+                    // Mark that we're processing this listing
+                    processingComp.ProcessingListings[listing.ID] = true;
+                    break;
+                }
+            }
+        }
 
         //verify that we can actually buy this listing and it wasn't added
         if (!ListingHasCategory(listing, component.Categories))
@@ -168,6 +196,11 @@ public sealed partial class StoreSystem
             if (!conditionsMet)
                 return;
         }
+        
+        // Check if the listing is unavailable (e.g., out of stock)
+        // We still want to show the listing in the UI, but prevent purchase
+        if (listing.Unavailable)
+            return;
 
         //check that we have enough money
         var cost = listing.Cost;
@@ -285,6 +318,27 @@ public sealed partial class StoreSystem
         listing.PurchaseAmount++; //track how many times something has been purchased
         _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
 
+        // Check if this listing has a StockLimitedListingCondition
+        if (listing.Conditions != null)
+        {
+            foreach (var condition in listing.Conditions)
+            {
+                if (condition is StockLimitedListingCondition stockCondition)
+                {
+                    // Get the buyer's name
+                    var buyerName = "Unknown";
+                    if (TryComp<MetaDataComponent>(buyer, out var metadata))
+                    {
+                        buyerName = metadata.EntityName;
+                    }
+                    
+                    // Update the stock count and last purchaser
+                    StockLimitedListingCondition.OnItemPurchased(listing.ID, buyerName);
+                    break;
+                }
+            }
+        }
+        
         var buyFinished = new StoreBuyFinishedEvent
         {
             PurchasedItem = listing,
@@ -296,6 +350,20 @@ public sealed partial class StoreSystem
         if (listing.ID == "RevSupplyRiftListing")
         {
             _revSupplyRift.SetRiftProcessing(false);
+        }
+        
+        // If this was a stock-limited listing, mark processing as complete
+        if (listing.Conditions != null && TryComp<StockLimitedProcessingComponent>(uid, out var stockProcessingComp))
+        {
+            foreach (var condition in listing.Conditions)
+            {
+                if (condition is Content.Shared.Store.Conditions.StockLimitedListingCondition)
+                {
+                    // Mark that we're done processing this listing
+                    stockProcessingComp.ProcessingListings[listing.ID] = false;
+                    break;
+                }
+            }
         }
 
         UpdateUserInterface(buyer, uid, component);

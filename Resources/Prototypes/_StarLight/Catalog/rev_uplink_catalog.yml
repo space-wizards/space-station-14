@@ -13,3 +13,16 @@
     Conversion: 1
   categories:
   - RevUplinkPassive
+
+- type: listing
+  id: SovietEVABundle
+  name: soviet-eva-name
+  description: soviet-eva-desc
+  productEntity: ClothingBackpackDuffelSovietEVABundle
+  cost:
+    Telebond: 1
+  categories:
+  - RevUplinkWearables
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 4

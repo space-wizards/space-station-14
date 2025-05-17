@@ -45,6 +45,7 @@
     categories:
     - RevUplinkWeaponry
     - RevUplinkPassive
+    - RevUplinkWearables
     currencyWhitelist:
     - Telebond
     - Conversion
