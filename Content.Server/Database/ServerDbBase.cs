@@ -252,9 +252,12 @@ namespace Content.Server.Database
                 (
                     profile.HairName,
                     Color.FromHex(profile.HairColor),
+                    profile.HairGlowing,
                     profile.FacialHairName,
                     Color.FromHex(profile.FacialHairColor),
+                    profile.FacialHairGlowing,
                     Color.FromHex(profile.EyeColor),
+                    profile.EyeGlowing,
                     Color.FromHex(profile.SkinColor),
                     markings
                 ),
@@ -287,9 +290,12 @@ namespace Content.Server.Database
             profile.Gender = humanoid.Gender.ToString();
             profile.HairName = appearance.HairStyleId;
             profile.HairColor = appearance.HairColor.ToHex();
+            profile.HairGlowing = appearance.HairGlowing;
             profile.FacialHairName = appearance.FacialHairStyleId;
             profile.FacialHairColor = appearance.FacialHairColor.ToHex();
+            profile.FacialHairGlowing = appearance.FacialHairGlowing;
             profile.EyeColor = appearance.EyeColor.ToHex();
+            profile.EyeGlowing = appearance.EyeGlowing;
             profile.SkinColor = appearance.SkinColor.ToHex();
             profile.SpawnPriority = (int)humanoid.SpawnPriority;
             profile.Markings = markings;

@@ -6,15 +6,16 @@ namespace Content.Client.Humanoid;
 public sealed class EyeColorPicker : Control
 {
     public event Action<Color>? OnEyeColorPicked;
+    public Action<bool>? OnGlowingChanged;
 
     private readonly ColorSelectorSliders _colorSelectors;
+    private readonly CheckBox _glowCheckBox = new CheckBox(){
+        Text = Loc.GetString("marking-glowing")
+    };
 
-    private Color _lastColor;
-
-    public void SetData(Color color)
+    public void SetData(Color color, bool isGlowing)
     {
-        _lastColor = color;
-
+        _glowCheckBox.Pressed = isGlowing;
         _colorSelectors.Color = color;
     }
 
@@ -26,7 +27,13 @@ public sealed class EyeColorPicker : Control
         };
         AddChild(vBox);
 
+        vBox.AddChild(_glowCheckBox);
         vBox.AddChild(_colorSelectors = new ColorSelectorSliders());
+
+        _glowCheckBox.OnToggled += args =>
+        {
+            OnGlowingChanged?.Invoke(args.Pressed);
+        };
 
         _colorSelectors.OnColorChanged += ColorValueChanged;
     }
@@ -34,7 +41,5 @@ public sealed class EyeColorPicker : Control
     private void ColorValueChanged(Color newColor)
     {
         OnEyeColorPicked?.Invoke(newColor);
-
-        _lastColor = newColor;
     }
 }
