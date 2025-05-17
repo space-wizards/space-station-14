@@ -6,3 +6,7 @@
   license: "CC-BY-4.0"
   copyright: "Recorded by https://github.com/PixelTheKermit, modified by Dutch-VanDerLinde"
   source: "https://github.com/space-wizards/space-station-14/pull/23548"
+- files: ["arachnid_deathgasp.ogg", "arachnid_cough.ogg", "arachnid_yawn.ogg", "arachnid_gasp.ogg", "arachnid_cleanthroat.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Recorded by https://github.com/PixelTheKermit, modified by QWERTY"
+  source: "https://github.com/space-wizards/space-station-14/pull/35954"
