@@ -615,6 +615,10 @@ marking-TichelFashionableThaven = Tichel (Fashionable)
 
 marking-TichelSimpleThaven = Tichel (Simple)
 
+marking-ShaggyThaven = Shaggy
+
+marking-ShaggyLongerThaven = Shaggy (Longer)
+
 # HeadSide
 
 marking-ThavenEars1 = Small Ears

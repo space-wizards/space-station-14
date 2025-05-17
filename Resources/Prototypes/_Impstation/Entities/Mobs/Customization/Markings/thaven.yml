@@ -2396,6 +2396,24 @@
   - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
     state: tichelsimple
 
+- type: marking
+  id: ShaggyThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: thavenshaggy
+
+- type: marking
+  id: ShaggyLongerThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: thavenshaggylonger
+
 # HeadSide
 
 - type: marking
