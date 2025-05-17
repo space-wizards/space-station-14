@@ -1474,3 +1474,7 @@
   flavorType: Base
   description: flavor-base-trashy
 
+- type: flavor
+  id: bilk
+  flavorType: Complex
+  description: flavor-complex-bilk
