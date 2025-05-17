@@ -120,7 +120,7 @@ public sealed partial class ShuttleSystem
             var jungleDiff = (ourVelocity - otherVelocity).Length();
 
             // this is cursed but makes it so that collisions of small grid with large grid count the inertia as being approximately the small grid's
-            var effectiveInertiaMult = 1f / (1f / ourBody.FixturesMass + 1f / otherBody.FixturesMass);
+            var effectiveInertiaMult = (ourBody.FixturesMass * otherBody.FixturesMass) / (ourBody.FixturesMass + otherBody.FixturesMass);
             var effectiveInertia = jungleDiff * effectiveInertiaMult;
 
             // TODO: squish damage so that a tiny splinter grid can't stop 2 big grids by being in the way
@@ -134,7 +134,7 @@ public sealed partial class ShuttleSystem
             // Play impact sound
             var coordinates = new EntityCoordinates(ourXform.MapUid.Value, worldPoint);
 
-            var volume = MathF.Min(10f, 1f * MathF.Pow(jungleDiff, 0.5f) - 5f);
+            var volume = MathF.Min(10f, MathF.Pow(jungleDiff, 0.5f) - 5f);
             var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(volume);
             _audio.PlayPvs(_shuttleImpactSound, coordinates, audioParams);
 
@@ -178,16 +178,16 @@ public sealed partial class ShuttleSystem
 
             // uses local region mass for slowdown calculation so lattice doesn't have same slowdown as wall block
             var totalInertia = ourVelocity * ourMass + otherVelocity * otherMass;
-            var unelasticVel = totalInertia / (ourMass + otherMass);
+            var inelasticVel = totalInertia / (ourMass + otherMass);
 
-            DoGridImpact((args.OurEntity, ourGrid, ourXform, ourBody), args.OurFixture, unelasticVel, ourVelocity, ourTile, ourTiles, toUsEnergy);
-            DoGridImpact((args.OtherEntity, otherGrid, otherXform, otherBody), args.OtherFixture, unelasticVel, otherVelocity, otherTile, otherTiles, toOtherEnergy);
+            DoGridImpact((args.OurEntity, ourGrid, ourXform, ourBody), args.OurFixture, inelasticVel, ourVelocity, ourTile, ourTiles, toUsEnergy);
+            DoGridImpact((args.OtherEntity, otherGrid, otherXform, otherBody), args.OtherFixture, inelasticVel, otherVelocity, otherTile, otherTiles, toOtherEnergy);
         }
     }
 
     private void DoGridImpact(Entity<MapGridComponent, TransformComponent, PhysicsComponent> ent,
                               Fixture fix,
-                              Vector2 unelasticVelocity,
+                              Vector2 inelasticVelocity,
                               Vector2 velocity,
                               Vector2i tile,
                               int tiles,
@@ -201,7 +201,7 @@ public sealed partial class ShuttleSystem
 
         // slow us down since destroying impacting grid tiles prevents the collision
         // without this impacts which destroy tiles just make grids slice straight through each other
-        var postImpactVelocity = Vector2.Lerp(velocity, unelasticVelocity, MathF.Min(1f, _impactSlowdown * tiles * fix.Density / body.FixturesMass));
+        var postImpactVelocity = Vector2.Lerp(velocity, inelasticVelocity, MathF.Min(1f, _impactSlowdown * tiles * fix.Density / body.FixturesMass));
         var deltaV = -velocity + postImpactVelocity;
         _physics.ApplyLinearImpulse(ent, deltaV * body.FixturesMass, body: body);
 
