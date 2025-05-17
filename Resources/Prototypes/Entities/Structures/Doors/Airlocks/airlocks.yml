@@ -326,3 +326,33 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/centcomm.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockStandardGlass
+  suffix: Service
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/basic.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockXeno
+  suffix: Xeno
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/xeno.rsi
+  - type: IconSmooth
+    key: chitin
+    mode: NoSprite
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockGlassXeno
+  suffix: Xeno
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/xeno.rsi
+  - type: IconSmooth
+    key: chitin
+    mode: NoSprite
