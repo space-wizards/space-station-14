@@ -16,6 +16,7 @@
     tags:
     - Trash
   - type: Food
+    solution: "smokable"
     requiresSpecialDigestion: true
   - type: SpaceGarbage
   - type: StaticPrice
@@ -42,11 +43,6 @@
         reagents:
           - ReagentId: Nicotine
             Quantity: 10
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: ToxinTrash
-          Quantity: 5
 
 - type: entity
   parent: BaseSmokable
