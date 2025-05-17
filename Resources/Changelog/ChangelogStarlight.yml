@@ -5729,4 +5729,86 @@ Entries:
   id: 794
   time: '2025-05-10T07:04:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/610
+- author: RoadTrain
+  changes:
+  - message: Fixed gygax not getting thrusters despite them being used in construction.
+    type: Fix
+  id: 795
+  time: '2025-05-15T12:53:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/617
+- author: Citrea
+  changes:
+  - message: Fixed missing outer clothing displacement layer for Resomi
+    type: Fix
+  id: 796
+  time: '2025-05-15T12:58:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/621
+- author: walksanatora
+  changes:
+  - message: polymorphing no longer cryosleeps you causing you to be round-removed
+    type: Fix
+  id: 797
+  time: '2025-05-15T16:04:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/614
+- author: Killer Tamashi
+  changes:
+  - message: Voxes have been forced to take showers, allowing their true colors to
+      show through.
+    type: Tweak
+  id: 798
+  time: '2025-05-15T20:23:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/627
+- author: Killer Tamashi
+  changes:
+  - message: Removed color limitation on most species (except dwarf/human) allowing
+      for darker colors.
+    type: Tweak
+  id: 799
+  time: '2025-05-15T20:23:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/627
+- author: Conflee
+  changes:
+  - message: Under markings, enabled a disabled marking so characters can have cat
+      ears or cat tail, to RP as half-Felionid half-Human
+    type: Add
+  id: 800
+  time: '2025-05-15T23:28:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/626
+- author: RoadTrain
+  changes:
+  - message: Exosuit upgrade kit cost. Was 5 steel, is 10 plasteel.
+    type: Tweak
+  id: 801
+  time: '2025-05-15T23:32:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/618
+- author: RoadTrain
+  changes:
+  - message: Removed the active power draw from mech lights.
+    type: Remove
+  id: 802
+  time: '2025-05-15T23:34:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/613
+- author: PubliclyExecutedPig
+  changes:
+  - message: Due to "Nostalgia Strikes" in Syndicate weapons subsidiaries, the Kardashev-Mosin,
+      Hristov sniper rifle, and China-Lake grenade launcher once again need to be
+      cycled in between shots
+    type: Tweak
+  id: 803
+  time: '2025-05-15T23:45:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/611
+- author: PubliclyExecutedPig
+  changes:
+  - message: The Hristov's firerate has gone up from 0.4 to 0.5
+    type: Tweak
+  id: 804
+  time: '2025-05-15T23:45:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/611
+- author: PubliclyExecutedPig
+  changes:
+  - message: The China-Lake's firerate has gone down from 1 to 0.8
+    type: Tweak
+  id: 805
+  time: '2025-05-15T23:45:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/611
 
