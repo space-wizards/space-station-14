@@ -1,10 +1,15 @@
 - type: listing
   id: AKMSweapon
+  name: akms-weapon-name
+  description: akms-weapon-desc
   productEntity: WeaponRifleAk
   cost:
     Telebond: 4
   categories:
   - RevUplinkWeaponry
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 4
 
 - type: listing
   id: RevSupplyRiftListing

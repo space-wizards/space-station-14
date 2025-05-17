@@ -19,20 +19,35 @@ public static class ListingLocalisationHelpers
             // Check if this is a localized name that needs stock count
             if (listingData.Name.Contains("-name"))
             {
+                // If the name has already been modified by StockLimitedListingCondition, just return it
+                if (listingData.Name.Contains("(") && listingData.Name.Contains("/") && listingData.Name.Contains(")"))
+                {
+                    return listingData.Name;
+                }
+                
                 // Check if we have stock count in metadata
                 var metadata = listingData.GetMetadata();
                 if (metadata != null && metadata.TryGetValue("stock", out var stockObj) && stockObj is int stock)
                 {
+                    // Get the stock limit if available
+                    int stockLimit = 4; // Default to 4
+                    if (metadata.TryGetValue("stockLimit", out var stockLimitObj) && stockLimitObj is int limit)
+                    {
+                        stockLimit = limit;
+                    }
+                    
                     // Check if the item is out of stock
                     if (metadata.TryGetValue("outOfStock", out var outOfStockObj) && outOfStockObj is bool outOfStock && outOfStock)
                     {
-                                // Replace stock count with "Out of Stock" text
-                                name = Loc.GetString(listingData.Name, ("stock", Loc.GetString("store-ui-button-out-of-stock")));
+                        // Format with X/Y format
+                        var baseName = Loc.GetString(listingData.Name);
+                        name = $"{baseName} (0/{stockLimit})";
                     }
                     else
                     {
-                        // Use the localization with the stock count parameter
-                        name = Loc.GetString(listingData.Name, ("stock", stock));
+                        // Format with X/Y format
+                        var baseName = Loc.GetString(listingData.Name);
+                        name = $"{baseName} ({stock}/{stockLimit})";
                     }
                     
                     return name;
@@ -47,16 +62,18 @@ public static class ListingLocalisationHelpers
                             // Check if the item is out of stock
                             if (StockLimitedListingCondition.IsOutOfStock(listingData.ID))
                             {
-                                // Replace stock count with "Out of Stock" text
-                                name = Loc.GetString(listingData.Name, ("stock", Loc.GetString("store-ui-button-out-of-stock")));
+                                // Format with X/Y format
+                                var baseName = Loc.GetString(listingData.Name);
+                                name = $"{baseName} (0/{stockCondition.StockLimit})";
                             }
                             else
                             {
                                 // Get the current stock count
                                 var currentStock = StockLimitedListingCondition.GetCurrentStock(listingData.ID, stockCondition.StockLimit);
                                 
-                                // Use the localization with the stock count parameter
-                                name = Loc.GetString(listingData.Name, ("stock", currentStock));
+                                // Format with X/Y format
+                                var baseName = Loc.GetString(listingData.Name);
+                                name = $"{baseName} ({currentStock}/{stockCondition.StockLimit})";
                             }
                             
                             return name;

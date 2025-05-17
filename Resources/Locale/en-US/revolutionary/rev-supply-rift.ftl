@@ -14,3 +14,7 @@ soviet-eva-desc = A rugged space suit with the hammer and sickle emblazoned on t
 # Soviet EVA helmet
 soviet-eva-helm-name = Soviet EVA Helmet
 soviet-eva-helm-desc = A sturdy EVA helmet with a red star emblazoned on the front. Glory to the workers of space!
+
+# AKMS weapon
+akms-weapon-name = AKMS Rifle
+akms-weapon-desc = A reliable assault rifle chambered in 7.62x39mm. Standard issue for Soviet forces.

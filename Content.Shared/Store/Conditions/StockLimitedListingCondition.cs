@@ -44,6 +44,12 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
     private static readonly Dictionary<string, int> _stockCounts = new();
 
     /// <summary>
+    /// Dictionary to track the stock limit of each listing.
+    /// Key is the listing ID, value is the maximum stock.
+    /// </summary>
+    private static readonly Dictionary<string, int> _stockLimits = new();
+
+    /// <summary>
     /// Dictionary to track the last purchaser of each listing.
     /// Key is the listing ID, value is the name of the last purchaser.
     /// </summary>
@@ -59,11 +65,18 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
     {
         var listingId = args.Listing.ID;
 
+        // Store the stock limit for this listing
+        _stockLimits[listingId] = StockLimit;
+
         // Initialize stock count for this listing if it doesn't exist
         if (!_stockCounts.ContainsKey(listingId))
         {
+            // Use the StockLimit from the catalog
             _stockCounts[listingId] = StockLimit;
             CurrentStock = StockLimit; // Initialize CurrentStock
+            
+            // Log the initialization
+            Logger.InfoS("stock-limited", $"Initialized stock count for {listingId} to {StockLimit} from catalog");
         }
         else
         {
@@ -100,6 +113,9 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
     {
         // Get the current stock count
         var currentStock = _stockCounts.ContainsKey(listingId) ? _stockCounts[listingId] : StockLimit;
+        
+        // Get the stock limit
+        var stockLimit = _stockLimits.ContainsKey(listingId) ? _stockLimits[listingId] : StockLimit;
 
         // Get the last purchaser
         var lastPurchaser = _lastPurchasers.ContainsKey(listingId) ? _lastPurchasers[listingId] : null;
@@ -108,10 +124,7 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
         var metadata = listing.GetOrCreateMetadata();
         
         metadata["stock"] = currentStock;
-        
-        // Store the last purchaser in the listing's metadata
-        // Empty string for last purchaser to avoid showing it in the UI
-        metadata["lastPurchaser"] = "";
+        metadata["stockLimit"] = stockLimit;
         
         // Store the out of stock status in the metadata
         var outOfStock = currentStock <= 0;
@@ -122,6 +135,36 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
         
         // Update the LastPurchaser property
         LastPurchaser = lastPurchaser;
+        
+        // Directly update the name with the stock count
+        if (listing.Name != null && listing.Name.Contains("-name"))
+        {
+            // Get the base name without the stock count
+            var baseName = Loc.GetString(listing.Name);
+            
+            // Format the name with the stock count
+            if (outOfStock)
+            {
+                listing.Name = $"{baseName} (0/{stockLimit})";
+            }
+            else
+            {
+                listing.Name = $"{baseName} ({currentStock}/{stockLimit})";
+            }
+        }
+        
+        // Directly update the description with the last purchaser
+        if (listing.Description != null && listing.Description.Contains("-desc"))
+        {
+            // Get the base description without the last purchaser
+            var baseDesc = Loc.GetString(listing.Description);
+            
+            // Format the description with the last purchaser
+            if (!string.IsNullOrEmpty(lastPurchaser))
+            {
+                listing.Description = $"{baseDesc}\nLast purchased by: {lastPurchaser}";
+            }
+        }
     }
 
     /// <summary>
@@ -129,22 +172,36 @@ public sealed partial class StockLimitedListingCondition : ListingCondition
     /// </summary>
     public static void OnItemPurchased(string listingId, string purchaserName)
     {
-        // Initialize stock count for this listing if it doesn't exist
-        if (!_stockCounts.ContainsKey(listingId))
-        {
-            // Get the stock limit from the listing prototype
-            var stockLimit = 4; // Default to 4 for EVA suits
-            _stockCounts[listingId] = stockLimit;
-        }
-
+        // Get the current stock count and stock limit
+        var currentStock = _stockCounts.ContainsKey(listingId) ? _stockCounts[listingId] : 0;
+        
+        // Get the stock limit from the _stockLimits dictionary
+        var stockLimit = _stockLimits.ContainsKey(listingId) ? _stockLimits[listingId] : 4;
+        
         // Decrement the stock count
-        _stockCounts[listingId]--;
+        _stockCounts[listingId] = Math.Max(0, currentStock - 1);
 
         // Update the last purchaser
         _lastPurchasers[listingId] = purchaserName;
         
         // Update the out of stock status
         _outOfStock[listingId] = _stockCounts[listingId] <= 0;
+        
+        // Log the purchase for debugging
+        Logger.InfoS("stock-limited", $"Item {listingId} purchased by {purchaserName}. New stock: {_stockCounts[listingId]}/{stockLimit}");
+    }
+    
+    /// <summary>
+    /// Initializes the stock count for a listing if it doesn't exist.
+    /// </summary>
+    public static void InitializeStockCount(string listingId, int stockLimit)
+    {
+        if (!_stockCounts.ContainsKey(listingId))
+        {
+            _stockCounts[listingId] = stockLimit;
+            _stockLimits[listingId] = stockLimit;
+            Logger.InfoS("stock-limited", $"Initialized stock count for {listingId} to {stockLimit}");
+        }
     }
 
     /// <summary>
