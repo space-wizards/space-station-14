@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed mousetraps not being armed when used.
-    type: Fix
-  id: 8003
-  time: '2025-02-25T03:52:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35486
 - author: pheenty
   changes:
   - message: Fixed borgs being given the scream action.
@@ -3919,3 +3912,11 @@
   id: 8505
   time: '2025-05-17T05:27:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35407
+- author: ArtisticRoomba
+  changes:
+  - message: Radiation collector power output has been buffed. Remember engineers,
+      the third level on the PA is safe for long term use!
+    type: Tweak
+  id: 8506
+  time: '2025-05-17T07:45:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37475
