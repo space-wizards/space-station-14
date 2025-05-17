@@ -179,7 +179,6 @@
     - id: ClothingOuterHardsuitCBURN
       prob: 0.001
       orGroup: Clothes
-      #instance here
     - id: ClothingOuterHardsuitAntique
       prob: 0.001
       orGroup: Clothes

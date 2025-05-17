@@ -141,6 +141,7 @@
     - id: RubberStampHop
     - id: WeaponDisabler
     - id: ClothingEyesHudCommand
+    - id: ClothingOuterHardsuitAntique
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -388,8 +389,6 @@
   - type: StorageFill
     contents:
     - id: WeaponRevolverDeckard
-    #instance here
-    - id: ClothingOuterHardsuitAntique
     - id: JetpackBlue
     - id: SpaceCash1000
     - id: BeachBall
