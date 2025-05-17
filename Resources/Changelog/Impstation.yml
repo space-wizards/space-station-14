@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: Many new sounds for weapon racking that used the default! Enjoy shotgun
-      pump kerchunks and SMGs actually having a charging handle!
-    type: Add
-  id: 1189
-  time: '2025-02-23T01:54:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1761
 - author: hivehum, crocodilecarousel
   changes:
   - message: Chaplains have been given a huge new selection of outfits to better suit
@@ -4222,3 +4214,10 @@
   id: 1688
   time: '2025-05-16T23:19:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2381
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: Updated the Shining Spring and Mail RPDS Sprites.
+    type: Tweak
+  id: 1689
+  time: '2025-05-17T12:41:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2486
