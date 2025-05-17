@@ -18,6 +18,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Polymorph;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Weapons.Melee.Events;
@@ -61,6 +62,14 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, EmoteEvent>(OnEmote, before:
                 new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
 
+            SubscribeLocalEvent<ZombieComponent, PolymorphedEvent>(OnPolymorphed);
+            SubscribeLocalEvent<InitialInfectedComponent, PolymorphedEvent>(OnPolymorphed);
+            SubscribeLocalEvent<IncurableZombieComponent, PolymorphedEvent>(OnPolymorphed);
+            SubscribeLocalEvent<NonSpreaderZombieComponent, PolymorphedEvent>(OnPolymorphed);
+            SubscribeLocalEvent<PendingZombieComponent, PolymorphedEvent>(OnPolymorphed);
+            SubscribeLocalEvent<ZombieImmuneComponent, PolymorphedEvent>(OnPolymorphed);
+            SubscribeLocalEvent<ZombifyOnDeathComponent, PolymorphedEvent>(OnPolymorphed);
+
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
             SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
@@ -76,6 +85,42 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<IncurableZombieComponent, MapInitEvent>(OnPendingMapInit);
 
             SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
+        }
+
+        private void OnPolymorphed(Entity<ZombieComponent> ent, ref PolymorphedEvent args)
+        {
+            ZombifyEntity(args.NewEntity);
+        }
+
+        private void OnPolymorphed(Entity<InitialInfectedComponent> ent, ref PolymorphedEvent args)
+        {
+            CopyComp(ent, args.NewEntity, ent.Comp);
+        }
+
+        private void OnPolymorphed(Entity<IncurableZombieComponent> ent, ref PolymorphedEvent args)
+        {
+            var newComp = CopyComp(ent, args.NewEntity, ent.Comp);
+            _actions.AddAction(args.NewEntity, ref newComp.Action, newComp.ZombifySelfActionPrototype);
+        }
+
+        private void OnPolymorphed(Entity<NonSpreaderZombieComponent> ent, ref PolymorphedEvent args)
+        {
+            CopyComp(ent, args.NewEntity, ent.Comp);
+        }
+
+        private void OnPolymorphed(Entity<PendingZombieComponent> ent, ref PolymorphedEvent args)
+        {
+             CopyComp(ent, args.NewEntity, ent.Comp);
+        }
+
+        private void OnPolymorphed(Entity<ZombieImmuneComponent> ent, ref PolymorphedEvent args)
+        {
+            CopyComp(ent, args.NewEntity, ent.Comp);
+        }
+
+        private void OnPolymorphed(Entity<ZombifyOnDeathComponent> ent, ref PolymorphedEvent args)
+        {
+            CopyComp(ent, args.NewEntity, ent.Comp);
         }
 
         private void OnBeforeRemoveAnomalyOnDeath(Entity<PendingZombieComponent> ent, ref BeforeRemoveAnomalyOnDeathEvent args)

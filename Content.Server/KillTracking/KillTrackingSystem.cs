@@ -3,6 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Polymorph;
 using Robust.Shared.Player;
 
 namespace Content.Server.KillTracking;
@@ -18,6 +19,14 @@ public sealed class KillTrackingSystem : EntitySystem
         // Add damage to LifetimeDamage before MobStateChangedEvent gets raised
         SubscribeLocalEvent<KillTrackerComponent, DamageChangedEvent>(OnDamageChanged, before: [ typeof(MobThresholdSystem) ]);
         SubscribeLocalEvent<KillTrackerComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<KillTrackerComponent, PolymorphedEvent>(OnPolymorph);
+    }
+
+    private void OnPolymorph(Entity<KillTrackerComponent> ent, ref PolymorphedEvent args)
+    {
+        var newComp = EnsureComp<KillTrackerComponent>(args.NewEntity);
+        newComp.KillState = ent.Comp.KillState;
+        newComp.LifetimeDamage = ent.Comp.LifetimeDamage;
     }
 
     private void OnDamageChanged(EntityUid uid, KillTrackerComponent component, DamageChangedEvent args)

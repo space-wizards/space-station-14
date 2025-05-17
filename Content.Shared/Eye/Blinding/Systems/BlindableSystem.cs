@@ -1,5 +1,6 @@
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Polymorph;
 using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
 
@@ -13,8 +14,17 @@ public sealed class BlindableSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<BlindableComponent, PolymorphedEvent>(OnPolymorphed);
         SubscribeLocalEvent<BlindableComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<BlindableComponent, EyeDamageChangedEvent>(OnDamageChanged);
+    }
+
+    private void OnPolymorphed(Entity<BlindableComponent> ent, ref PolymorphedEvent args)
+    {
+        if (args.Configuration is { TransferStatusEffects: false })
+            return;
+        EnsureComp<BlindableComponent>(args.NewEntity);
+        AdjustEyeDamage(args.NewEntity, ent.Comp.EyeDamage);
     }
 
     private void OnRejuvenate(Entity<BlindableComponent> ent, ref RejuvenateEvent args)

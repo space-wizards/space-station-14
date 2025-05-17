@@ -7,6 +7,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Polymorph;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Configuration;
@@ -48,6 +49,7 @@ namespace Content.Shared.Damage
             SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
             SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
+            SubscribeLocalEvent<DamageableComponent, PolymorphedEvent>(OnPolymorphed);
             SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
 
             _appearanceQuery = GetEntityQuery<AppearanceComponent>();
@@ -84,6 +86,18 @@ namespace Content.Shared.Damage
             Subs.CVar(_config, CCVars.PlaytestThrownDamageModifier, value => UniversalThrownDamageModifier = value, true);
             Subs.CVar(_config, CCVars.PlaytestTopicalsHealModifier, value => UniversalTopicalsHealModifier = value, true);
             Subs.CVar(_config, CCVars.PlaytestMobDamageModifier, value => UniversalMobDamageModifier = value, true);
+        }
+
+        private void OnPolymorphed(Entity<DamageableComponent> ent, ref PolymorphedEvent args)
+        {
+            //Transfers all damage from the original to the new one
+            if (args.Configuration is { TransferDamage: true } &&
+                TryComp<DamageableComponent>(args.NewEntity, out var damageParent) &&
+                _mobThreshold.GetScaledDamage(ent, args.NewEntity, out var damage) &&
+                damage != null)
+            {
+                SetDamage(args.NewEntity, damageParent, damage);
+            }
         }
 
         /// <summary>

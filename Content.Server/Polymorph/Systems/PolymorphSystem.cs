@@ -224,15 +224,6 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (_container.TryGetContainingContainer((uid, targetTransformComp, null), out var cont))
             _container.Insert(child, cont);
 
-        //Transfers all damage from the original to the new one
-        if (configuration.TransferDamage &&
-            TryComp<DamageableComponent>(child, out var damageParent) &&
-            _mobThreshold.GetScaledDamage(uid, child, out var damage) &&
-            damage != null)
-        {
-            _damageable.SetDamage(child, damageParent, damage);
-        }
-
         if (configuration.Inventory == PolymorphInventoryChange.Transfer)
         {
             _inventory.TransferEntityInventories(uid, child);
@@ -258,9 +249,6 @@ public sealed partial class PolymorphSystem : EntitySystem
             }
         }
 
-        if (configuration.TransferName && TryComp(uid, out MetaDataComponent? targetMeta))
-            _metaData.SetEntityName(child, targetMeta.EntityName);
-
         if (configuration.TransferHumanoidAppearance)
         {
             _humanoid.CloneAppearance(uid, child);
@@ -275,7 +263,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             _transform.SetParent(uid, targetTransformComp, PausedMap.Value);
 
         // Raise an event to inform anything that wants to know about the entity swap
-        var ev = new PolymorphedEvent(uid, child, false);
+        var ev = new PolymorphedEvent(uid, child, false, configuration);
         RaiseLocalEvent(uid, ref ev);
 
         // visual effect spawn
@@ -355,7 +343,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         _transform.AttachToGridOrMap(parent, parentXform);
 
         // Raise an event to inform anything that wants to know about the entity swap
-        var ev = new PolymorphedEvent(uid, parent, true);
+        var ev = new PolymorphedEvent(uid, parent, true, component.Configuration);
         RaiseLocalEvent(uid, ref ev);
 
         // visual effect spawn
