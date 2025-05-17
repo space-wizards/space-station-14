@@ -1,14 +1,24 @@
 - type: vendingMachineInventory
   id: NanoMedPlusInventory
   startingInventory:
-    HandheldHealthAnalyzer: 3
-    Brutepack: 5
-    Ointment: 5
-    Bloodpack: 5
-    ChemistryBottleEpinephrine: 3
-    Syringe: 5
-    BoxBottle: 3
-    ClothingEyesHudMedical: 2
-    ClothingEyesEyepatchHudMedical: 2
+    - id: HandheldHealthAnalyzer
+      amount: 3
+    - id: Brutepack
+      amount: 5
+    - id: Ointment
+      amount: 5
+    - id: Bloodpack
+      amount: 5
+    - id: ChemistryBottleEpinephrine
+      amount: 3
+    - id: Syringe
+      amount: 5
+    - id: BoxBottle
+      amount: 3
+    - id: ClothingEyesHudMedical
+      amount: 2
+    - id: ClothingEyesEyepatchHudMedical
+      amount: 2
   contrabandInventory:
-    FoodApple: 1
+    - id: FoodApple
+      amount: 1

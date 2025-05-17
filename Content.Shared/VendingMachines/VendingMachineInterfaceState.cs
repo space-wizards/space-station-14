@@ -12,6 +12,17 @@ namespace Content.Shared.VendingMachines
             Type = type;
             ID = id;
         }
+
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class VendingMachineWithrawMessage : BoundUserInterfaceMessage
+    {
+        public VendingMachineWithrawMessage()
+        {
+
+        }
+
     }
 
     [Serializable, NetSerializable]

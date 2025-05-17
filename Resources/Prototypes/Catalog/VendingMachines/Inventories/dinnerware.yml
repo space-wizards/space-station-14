@@ -1,33 +1,62 @@
 - type: vendingMachineInventory
   id: DinnerwareInventory
   startingInventory:
-    ButchCleaver: 1
-    KitchenKnife: 5
-    RollingPin: 4
-    Spoon: 4
-    Fork: 4
-    PairedChopsticks: 4
-    FoodBowlBig: 10
-    FoodPlate: 10
-    FoodPlateSmall: 10
-    FoodPlateTin: 5
-    FoodPlateMuffinTin: 5
-    FoodKebabSkewer: 5
-    DrinkGlass: 5
-    Beaker: 5
-    LargeBeaker: 5
-    Pitcher: 2
-    DrinkMug: 5
-    DrinkMugBlack: 2
-    DrinkMugBlue: 2
-    DrinkMugGreen: 2
-    DrinkMugHeart: 1
-    DrinkMugMetal: 2
-    DrinkMugMoebius: 1
-    DrinkMugOne: 1
-    DrinkMugRainbow: 2
-    DrinkMugRed: 2
+    - id: ButchCleaver
+      amount: 1
+    - id: KitchenKnife
+      amount: 5
+    - id: RollingPin
+      amount: 4
+    - id: Spoon
+      amount: 4
+    - id: Fork
+      amount: 4
+    - id: PairedChopsticks
+      amount: 4
+    - id: FoodBowlBig
+      amount: 10
+    - id: FoodPlate
+      amount: 10
+    - id: FoodPlateSmall
+      amount: 10
+    - id: FoodPlateTin
+      amount: 5
+    - id: FoodPlateMuffinTin
+      amount: 5
+    - id: FoodKebabSkewer
+      amount: 5
+    - id: DrinkGlass
+      amount: 5
+    - id: Beaker
+      amount: 5
+    - id: LargeBeaker
+      amount: 5
+    - id: Pitcher
+      amount: 2
+    - id: DrinkMug
+      amount: 5
+    - id: DrinkMugBlack
+      amount: 2
+    - id: DrinkMugBlue
+      amount: 2
+    - id: DrinkMugGreen
+      amount: 2
+    - id: DrinkMugHeart
+      amount: 1
+    - id: DrinkMugMetal
+      amount: 2
+    - id: DrinkMugMoebius
+      amount: 1
+    - id: DrinkMugOne
+      amount: 1
+    - id: DrinkMugRainbow
+      amount: 2
+    - id: DrinkMugRed
+      amount: 2
   contrabandInventory:
-    CandyBowl: 1
-    BarSpoon: 2
-    DrinkShaker: 2
+    - id: CandyBowl
+      amount: 1
+    - id: BarSpoon
+      amount: 2
+    - id: DrinkShaker
+      amount: 2

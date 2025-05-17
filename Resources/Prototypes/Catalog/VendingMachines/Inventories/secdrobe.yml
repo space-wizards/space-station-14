@@ -1,32 +1,60 @@
 - type: vendingMachineInventory
   id: SecDrobeInventory
   startingInventory:
-    ClothingBackpackSecurity: 3
-    ClothingBackpackSatchelSecurity: 3
-    ClothingBackpackDuffelSecurity: 3
-    ClothingUniformJumpsuitSec: 3
-    ClothingShoesBootsJack: 3
-    ClothingHeadHatBeretSecurity: 3
-    ClothingHeadHatSecsoft: 3
-    ClothingHeadBandRed: 3
-    ClothingMaskNeckGaiterRed: 3
-    ClothingHandsGlovesColorBlack: 3
-    ClothingHandsGlovesFingerless: 3
-    ClothingUniformJumpskirtSec: 3
-    ClothingUniformJumpsuitSecGrey: 3
-    ClothingUniformJumpskirtSecGrey: 3
-    ClothingUniformJumpsuitSecBlue: 3
-    ClothingHeadsetSecurity: 3
-    ClothingOuterWinterSec: 2
-    ClothingOuterArmorBasic: 2
-    ClothingNeckScarfStripedRed: 3
-    ClothingOuterArmorBasicSlim: 2
-    ClothingEyesBlindfold: 1
-    ClothingShoesBootsCombat: 1
-    ClothingShoesBootsWinterSec: 2
-    ClothingHeadHelmetJustice: 1
+    - id: ClothingBackpackSecurity
+      amount: 3
+    - id: ClothingBackpackSatchelSecurity
+      amount: 3
+    - id: ClothingBackpackDuffelSecurity
+      amount: 3
+    - id: ClothingUniformJumpsuitSec
+      amount: 3
+    - id: ClothingShoesBootsJack
+      amount: 3
+    - id: ClothingHeadHatBeretSecurity
+      amount: 3
+    - id: ClothingHeadHatSecsoft
+      amount: 3
+    - id: ClothingHeadBandRed
+      amount: 3
+    - id: ClothingMaskNeckGaiterRed
+      amount: 3
+    - id: ClothingHandsGlovesColorBlack
+      amount: 3
+    - id: ClothingHandsGlovesFingerless
+      amount: 3
+    - id: ClothingUniformJumpskirtSec
+      amount: 3
+    - id: ClothingUniformJumpsuitSecGrey
+      amount: 3
+    - id: ClothingUniformJumpskirtSecGrey
+      amount: 3
+    - id: ClothingUniformJumpsuitSecBlue
+      amount: 3
+    - id: ClothingHeadsetSecurity
+      amount: 3
+    - id: ClothingOuterWinterSec
+      amount: 2
+    - id: ClothingOuterArmorBasic
+      amount: 2
+    - id: ClothingNeckScarfStripedRed
+      amount: 3
+    - id: ClothingOuterArmorBasicSlim
+      amount: 2
+    - id: ClothingEyesBlindfold
+      amount: 1
+    - id: ClothingShoesBootsCombat
+      amount: 1
+    - id: ClothingShoesBootsWinterSec
+      amount: 2
+    - id: ClothingHeadHelmetJustice
+      amount: 1
   contrabandInventory:
-    ClothingMaskClownSecurity: 1
-    ToyFigurineSecurity: 1
-    ToyFigurineWarden: 1
-    ToyFigurineHeadOfSecurity: 1
+    - id: ClothingMaskClownSecurity
+      amount: 1
+    - id: ToyFigurineSecurity
+      amount: 1
+    - id: ToyFigurineWarden
+      amount: 1
+    - id: ToyFigurineHeadOfSecurity
+      amount: 1

@@ -1,17 +1,28 @@
 - type: vendingMachineInventory
   id: HyDrobeInventory
   startingInventory:
-    ClothingBackpackHydroponics: 2
-    ClothingBackpackSatchelHydroponics: 2
-    ClothingBackpackDuffelHydroponics: 2
-    ClothingOuterApronBotanist: 2
-    ClothingUniformOveralls: 3
-    ClothingUniformJumpsuitHydroponics: 3
-    ClothingUniformJumpskirtHydroponics: 3
-    ClothingNeckScarfStripedGreen: 3
-    ClothingHeadBandBotany: 3
-    ClothingHeadsetService: 2
-    ClothingOuterWinterHydro: 2
+    - id: ClothingBackpackHydroponics
+      amount: 2
+    - id: ClothingBackpackSatchelHydroponics
+      amount: 2
+    - id: ClothingBackpackDuffelHydroponics
+      amount: 2
+    - id: ClothingOuterApronBotanist
+      amount: 2
+    - id: ClothingUniformOveralls
+      amount: 3
+    - id: ClothingUniformJumpsuitHydroponics
+      amount: 3
+    - id: ClothingUniformJumpskirtHydroponics
+      amount: 3
+    - id: ClothingNeckScarfStripedGreen
+      amount: 3
+    - id: ClothingHeadBandBotany
+      amount: 3
+    - id: ClothingHeadsetService
+      amount: 2
+    - id: ClothingOuterWinterHydro
+      amount: 2
   contrabandInventory:
-    ToyFigurineBotanist: 1
-
+    - id: ToyFigurineBotanist
+      amount: 1

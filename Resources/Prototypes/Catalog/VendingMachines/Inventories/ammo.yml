@@ -1,20 +1,27 @@
 - type: vendingMachineInventory
   id: AmmoVendInventory
   startingInventory:
-    MagazineBoxCaselessRifle: 6
-    MagazineBoxCaselessRiflePractice: 3
-
-    MagazineBoxLightRifleBig: 6
-    MagazineBoxLightRiflePractice: 3
-
-    MagazineBoxMagnum: 6
-    MagazineBoxMagnumPractice: 3
-
-    MagazineBoxPistol: 6
-    MagazineBoxPistolPractice: 3
-
-    MagazineBoxRifle: 6
-    MagazineBoxRiflePractice: 3
-
-    BoxLethalshot: 6
-    BoxShotgunPractice: 3
+    - id: MagazineBoxCaselessRifle
+      amount: 6
+    - id: MagazineBoxCaselessRiflePractice
+      amount: 3
+    - id: MagazineBoxLightRifleBig
+      amount: 6
+    - id: MagazineBoxLightRiflePractice
+      amount: 3
+    - id: MagazineBoxMagnum
+      amount: 6
+    - id: MagazineBoxMagnumPractice
+      amount: 3
+    - id: MagazineBoxPistol
+      amount: 6
+    - id: MagazineBoxPistolPractice
+      amount: 3
+    - id: MagazineBoxRifle
+      amount: 6
+    - id: MagazineBoxRiflePractice
+      amount: 3
+    - id: BoxLethalshot
+      amount: 6
+    - id: BoxShotgunPractice
+      amount: 3

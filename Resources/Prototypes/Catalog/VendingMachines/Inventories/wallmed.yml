@@ -1,10 +1,16 @@
 - type: vendingMachineInventory
   id: NanoMedInventory
   startingInventory:
-    Brutepack: 3
-    Ointment: 3
-    Bloodpack: 3
-    ChemistryBottleEpinephrine: 3
-    Syringe: 3
+    - id: Brutepack
+      amount: 3
+    - id: Ointment
+      amount: 3
+    - id: Bloodpack
+      amount: 3
+    - id: ChemistryBottleEpinephrine
+      amount: 3
+    - id: Syringe
+      amount: 3
   contrabandInventory:
-    PowerCellSmall: 2
+    - id: PowerCellSmall
+      amount: 2

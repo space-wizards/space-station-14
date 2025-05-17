@@ -1,28 +1,49 @@
 - type: vendingMachineInventory
   id: LawDrobeInventory
   startingInventory:
-    ClothingUniformJumpsuitLawyerBlue: 1
-    ClothingUniformJumpskirtLawyerBlue: 1
-    ClothingUniformJumpsuitLawyerPurple: 1
-    ClothingUniformJumpskirtLawyerPurple: 1
-    ClothingUniformJumpsuitLawyerRed: 1
-    ClothingUniformJumpskirtLawyerRed: 1
-    ClothingUniformJumpsuitLawyerBlack: 1
-    ClothingUniformJumpskirtLawyerBlack: 1
-    ClothingUniformJumpsuitLawyerGood: 1
-    ClothingUniformJumpskirtLawyerGood: 1
-    ClothingShoesBootsLaceup: 2
-    ClothingHeadsetService: 2
-    ClothingNeckLawyerbadge: 2
-    BriefcaseBrown: 2
-    BookSpaceLaw: 3
-    LuxuryPen: 2
-    HandLabeler: 2
+    - id: ClothingUniformJumpsuitLawyerBlue
+      amount: 1
+    - id: ClothingUniformJumpskirtLawyerBlue
+      amount: 1
+    - id: ClothingUniformJumpsuitLawyerPurple
+      amount: 1
+    - id: ClothingUniformJumpskirtLawyerPurple
+      amount: 1
+    - id: ClothingUniformJumpsuitLawyerRed
+      amount: 1
+    - id: ClothingUniformJumpskirtLawyerRed
+      amount: 1
+    - id: ClothingUniformJumpsuitLawyerBlack
+      amount: 1
+    - id: ClothingUniformJumpskirtLawyerBlack
+      amount: 1
+    - id: ClothingUniformJumpsuitLawyerGood
+      amount: 1
+    - id: ClothingUniformJumpskirtLawyerGood
+      amount: 1
+    - id: ClothingShoesBootsLaceup
+      amount: 2
+    - id: ClothingHeadsetService
+      amount: 2
+    - id: ClothingNeckLawyerbadge
+      amount: 2
+    - id: BriefcaseBrown
+      amount: 2
+    - id: BookSpaceLaw
+      amount: 3
+    - id: LuxuryPen
+      amount: 2
+    - id: HandLabeler
+      amount: 2
   contrabandInventory:
-    ClothingOuterRobesJudge: 1
-    ClothingHeadHatPwig: 1
-    # "Legally" obtained currency
-    SpaceCash100: 2
-    ToyFigurineLawyer: 1
+    - id: ClothingOuterRobesJudge
+      amount: 1
+    - id: ClothingHeadHatPwig
+      amount: 1
+    - id: SpaceCash100
+      amount: 2
+    - id: ToyFigurineLawyer
+      amount: 1
   emaggedInventory:
-    CyberPen: 1
+    - id: CyberPen
+      amount: 1

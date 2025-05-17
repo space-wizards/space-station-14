@@ -1,28 +1,50 @@
 - type: vendingMachineInventory
   id: ChefvendInventory
   startingInventory:
-    ReagentContainerFlour: 2
-    ReagentContainerCornmeal: 2
-    ReagentContainerSugar: 2
-    ReagentContainerRice: 2
-    FoodCondimentPacketSalt: 4
-    FoodCondimentBottleEnzyme: 2
-    FoodCondimentBottleHotsauce: 1
-    FoodCondimentBottleKetchup: 1
-    FoodCondimentBottleBBQ: 1
-    FoodCondimentBottleVinegar: 2
-    ReagentContainerOliveoil: 2
-    ReagentContainerMayo: 1
-    VariantCubeBox: 1
-    FoodContainerEgg: 1
-    DrinkMilkCarton: 2
-    DrinkSoyMilkCarton: 1
-    FoodButter: 3
-    FoodCheese: 1
-    FoodMeat: 6
+    - id: ReagentContainerFlour
+      amount: 2
+    - id: ReagentContainerCornmeal
+      amount: 2
+    - id: ReagentContainerSugar
+      amount: 2
+    - id: ReagentContainerRice
+      amount: 2
+    - id: FoodCondimentPacketSalt
+      amount: 4
+    - id: FoodCondimentBottleEnzyme
+      amount: 2
+    - id: FoodCondimentBottleHotsauce
+      amount: 1
+    - id: FoodCondimentBottleKetchup
+      amount: 1
+    - id: FoodCondimentBottleBBQ
+      amount: 1
+    - id: FoodCondimentBottleVinegar
+      amount: 2
+    - id: ReagentContainerOliveoil
+      amount: 2
+    - id: ReagentContainerMayo
+      amount: 1
+    - id: VariantCubeBox
+      amount: 1
+    - id: FoodContainerEgg
+      amount: 1
+    - id: DrinkMilkCarton
+      amount: 2
+    - id: DrinkSoyMilkCarton
+      amount: 1
+    - id: FoodButter
+      amount: 3
+    - id: FoodCheese
+      amount: 1
+    - id: FoodMeat
+      amount: 6
   contrabandInventory:
-    EggBoxBroken: 1
-    FoodBoxDonkpocket: 1
-    FoodFrozenSandwich: 2
-    FoodFrozenSandwichStrawberry: 2
-    
+    - id: EggBoxBroken
+      amount: 1
+    - id: FoodBoxDonkpocket
+      amount: 1
+    - id: FoodFrozenSandwich
+      amount: 2
+    - id: FoodFrozenSandwichStrawberry
+      amount: 2

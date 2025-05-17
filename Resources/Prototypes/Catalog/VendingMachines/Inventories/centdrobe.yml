@@ -1,23 +1,42 @@
 - type: vendingMachineInventory
   id: CentDrobeInventory
   startingInventory:
-    ClothingShoesBootsLaceup: 3
-    ClothingShoesBootsJack: 3
-    ClothingHandsGlovesCombat: 3
-    ClothingEyesGlassesSunglasses: 3
-    ClothingUniformJumpsuitCentcomOfficer: 3
-    ClothingUniformJumpsuitCentcomOfficial: 3
-    ClothingUniformJumpsuitCentcomAgent: 3
-    ClothingUniformJumpsuitCentcomFormal: 3
-    ClothingUniformJumpskirtCentcomFormalDress: 3
-    ClothingHeadHatCentcom: 3
-    ClothingHeadHatCentcomcap: 3
-    ClothingMaskGasCentcom: 3
-    ClothingHeadsetCentCom: 3
-    ClothingOuterWinterCentcom: 3
-    ClothingOuterCoatExpensive: 1
-    ClothingNeckScarfStripedCentcom: 3
-    ClothingNeckCloakCentcom: 3
+    - id: ClothingShoesBootsLaceup
+      amount: 3
+    - id: ClothingShoesBootsJack
+      amount: 3
+    - id: ClothingHandsGlovesCombat
+      amount: 3
+    - id: ClothingEyesGlassesSunglasses
+      amount: 3
+    - id: ClothingUniformJumpsuitCentcomOfficer
+      amount: 3
+    - id: ClothingUniformJumpsuitCentcomOfficial
+      amount: 3
+    - id: ClothingUniformJumpsuitCentcomAgent
+      amount: 3
+    - id: ClothingUniformJumpsuitCentcomFormal
+      amount: 3
+    - id: ClothingUniformJumpskirtCentcomFormalDress
+      amount: 3
+    - id: ClothingHeadHatCentcom
+      amount: 3
+    - id: ClothingHeadHatCentcomcap
+      amount: 3
+    - id: ClothingMaskGasCentcom
+      amount: 3
+    - id: ClothingHeadsetCentCom
+      amount: 3
+    - id: ClothingOuterWinterCentcom
+      amount: 3
+    - id: ClothingOuterCoatExpensive
+      amount: 1
+    - id: ClothingNeckScarfStripedCentcom
+      amount: 3
+    - id: ClothingNeckCloakCentcom
+      amount: 3
   contrabandInventory:
-    ToyFigurineCaptain: 1
-    ToyFigurineHeadOfPersonnel: 1
+    - id: ToyFigurineCaptain
+      amount: 1
+    - id: ToyFigurineHeadOfPersonnel
+      amount: 1

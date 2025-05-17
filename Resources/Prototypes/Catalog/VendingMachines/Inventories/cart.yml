@@ -1,21 +1,38 @@
 - type: vendingMachineInventory
   id: PTechInventory
   startingInventory:
-    PassengerPDA: 5
-    ClearPDA: 5
-    PassengerIDCard: 5
-    ClothingHeadsetGrey: 5
-    RubberStampApproved: 1
-    RubberStampDenied: 1
-    Paper: 10
-    Envelope: 10
-    HandLabeler: 2
-    EncryptionKeyCargo: 2
-    EncryptionKeyEngineering: 2
-    EncryptionKeyMedical: 2
-    EncryptionKeyScience: 2
-    EncryptionKeySecurity: 1
-    EncryptionKeyService: 3
+    - id: PassengerPDA
+      amount: 5
+    - id: ClearPDA
+      amount: 5
+    - id: PassengerIDCard
+      amount: 5
+    - id: ClothingHeadsetGrey
+      amount: 5
+    - id: RubberStampApproved
+      amount: 1
+    - id: RubberStampDenied
+      amount: 1
+    - id: Paper
+      amount: 10
+    - id: Envelope
+      amount: 10
+    - id: HandLabeler
+      amount: 2
+    - id: EncryptionKeyCargo
+      amount: 2
+    - id: EncryptionKeyEngineering
+      amount: 2
+    - id: EncryptionKeyMedical
+      amount: 2
+    - id: EncryptionKeyScience
+      amount: 2
+    - id: EncryptionKeySecurity
+      amount: 1
+    - id: EncryptionKeyService
+      amount: 3
   contrabandInventory:
-    BalloonNT: 2
-    LuxuryPen: 1
+    - id: BalloonNT
+      amount: 2
+    - id: LuxuryPen
+      amount: 1
