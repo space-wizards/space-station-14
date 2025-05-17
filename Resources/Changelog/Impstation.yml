@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ATDoop
-  changes:
-  - message: Diona markings are now easier to customize! 15 markings have been split
-      into layers and the markings limit has been increased, go nuts!
-    type: Tweak
-  id: 1192
-  time: '2025-02-23T15:59:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1763
 - author: hivehum
   changes:
   - message: You should hear echolalia more often.
@@ -4215,3 +4207,10 @@
   id: 1691
   time: '2025-05-17T12:45:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2503
+- author: animal-collective
+  changes:
+  - message: 2 new thaven hairstyles!
+    type: Add
+  id: 1692
+  time: '2025-05-17T13:22:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2500
