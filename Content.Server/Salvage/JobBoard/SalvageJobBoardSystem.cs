@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
@@ -53,18 +55,15 @@ public sealed class SalvageJobBoardSystem : EntitySystem
 
         foreach (var sold in args.Sold)
         {
-            if (!_label.TryGetLabel<JobBoardLabelComponent>(sold, out var labelEnt))
-                continue;
-
-            var jobId = labelEnt.Value.Comp.JobId;
-
-            if (!_cargo.IsBountyComplete(sold, jobId))
-                continue;
-
-            TryCompleteSalvageJob((args.Station, salvageJobsData), jobId);
+            if (!FulfillsSalvageJob(sold, (args.Station, salvageJobsData), out var jobId))
+                return;
+            TryCompleteSalvageJob((args.Station, salvageJobsData), jobId.Value);
         }
     }
 
+    /// <summary>
+    /// Gets the jobs that the station can currently access.
+    /// </summary>
     public List<ProtoId<CargoBountyPrototype>> GetAvailableJobs(Entity<SalvageJobsDataComponent> ent)
     {
         var outJobs = new List<ProtoId<CargoBountyPrototype>>();
@@ -82,6 +81,9 @@ public sealed class SalvageJobBoardSystem : EntitySystem
 
         foreach (var bounty in _prototypeManager.EnumeratePrototypes<CargoBountyPrototype>())
         {
+            if (ent.Comp.CompletedJobs.Contains(bounty))
+                continue;
+
             if (availableGroups.Contains(bounty.Group))
                 outJobs.Add(bounty);
         }
@@ -89,6 +91,9 @@ public sealed class SalvageJobBoardSystem : EntitySystem
         return outJobs;
     }
 
+    /// <summary>
+    /// Gets the "progression" of a rank, expressed as on the range [0, 1]
+    /// </summary>
     public float GetRankProgression(Entity<SalvageJobsDataComponent> ent)
     {
         // Need to have at least two of these.
@@ -112,11 +117,17 @@ public sealed class SalvageJobBoardSystem : EntitySystem
         return 1f;
     }
 
+    /// <summary>
+    /// Checks if the current station is the max rank
+    /// </summary>
     public bool IsMaxRank(Entity<SalvageJobsDataComponent> ent)
     {
-        return GetAvailableJobs(ent).Count == ent.Comp.CompletedJobs.Count;
+        return GetAvailableJobs(ent).Count == 0;
     }
 
+    /// <summary>
+    /// Gets the current rank of the station
+    /// </summary>
     public SalvageRankDatum GetRank(Entity<SalvageJobsDataComponent> ent)
     {
         if (IsMaxRank(ent))
@@ -134,9 +145,15 @@ public sealed class SalvageJobBoardSystem : EntitySystem
         return ent.Comp.RankThresholds[0];
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="job"></param>
+    /// <returns></returns>
     public bool TryCompleteSalvageJob(Entity<SalvageJobsDataComponent> ent, ProtoId<CargoBountyPrototype> job)
     {
-        if (ent.Comp.CompletedJobs.Contains(job) || !GetAvailableJobs(ent).Contains(job))
+        if (!GetAvailableJobs(ent).Contains(job))
             return false;
 
         var jobProto = _prototypeManager.Index(job);
@@ -184,6 +201,37 @@ public sealed class SalvageJobBoardSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Checks if a given entity fulfills a bounty for the station.
+    /// </summary>
+    public bool FulfillsSalvageJob(EntityUid uid, Entity<SalvageJobsDataComponent>? station, [NotNullWhen(true)] out ProtoId<CargoBountyPrototype>? job)
+    {
+        job = null;
+
+        if (!_label.TryGetLabel<JobBoardLabelComponent>(uid, out var labelEnt))
+            return false;
+        job = labelEnt.Value.Comp.JobId;
+
+
+        if (station is null)
+        {
+            if (_station.GetOwningStation(uid) is not { } stationUid ||
+                !TryComp<SalvageJobsDataComponent>(stationUid, out var stationComp))
+                return false;
+
+            station = (stationUid, stationComp);
+        }
+
+        if (!GetAvailableJobs((station.Value, station.Value.Comp)).Contains(job.Value))
+            return false;
+
+
+        if (!_cargo.IsBountyComplete(uid, job))
+            return false;
+
+        return true;
+    }
+
     private void OnBUIOpened(Entity<SalvageJobBoardConsoleComponent> ent, ref BoundUIOpenedEvent args)
     {
         if (args.UiKey is not SalvageJobBoardUiKey.Key)
@@ -208,9 +256,6 @@ public sealed class SalvageJobBoardSystem : EntitySystem
         if (!_prototypeManager.TryIndex<CargoBountyPrototype>(args.JobId, out var job))
             return;
 
-        if (jobsData.CompletedJobs.Contains(args.JobId))
-            return;
-
         if (!GetAvailableJobs((station, jobsData)).Contains(args.JobId))
             return;
 
@@ -232,12 +277,10 @@ public sealed class SalvageJobBoardSystem : EntitySystem
 
     private void UpdateUi(Entity<SalvageJobBoardConsoleComponent> ent, Entity<SalvageJobsDataComponent> stationEnt)
     {
-        var jobs = GetAvailableJobs(stationEnt);
-
         var state = new SalvageJobBoardConsoleState(
             GetRank(stationEnt).Title,
             GetRankProgression(stationEnt),
-            jobs.Except(stationEnt.Comp.CompletedJobs).ToList());
+            GetAvailableJobs(stationEnt));
 
         _ui.SetUiState(ent.Owner, SalvageJobBoardUiKey.Key, state);
     }
