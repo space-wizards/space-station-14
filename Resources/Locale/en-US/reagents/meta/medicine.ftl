@@ -136,6 +136,9 @@ reagent-desc-necrosol = A necrotic substance that seems to be able to heal froze
 reagent-name-aloxadone = aloxadone
 reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe third degree burns via regeneration of the burnt tissue. Works regardless of the patient being alive or dead.
 
+reagent-name-traumoxadone = traumoxadone
+reagent-desc-traumoxadone = A cryogenics chemical. Used to treat severe trauma to tissues via patching them with tiny particles within the liquid. Works regardless of the patient being alive or dead.
+
 reagent-name-mannitol = mannitol
 reagent-desc-mannitol = Efficiently restores brain damage.
 
