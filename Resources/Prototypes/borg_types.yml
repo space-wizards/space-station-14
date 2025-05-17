@@ -21,10 +21,7 @@
 
   # Visual
   inventoryTemplateId: borgShort
-  spriteBodyState: robot
-  spriteHasMindState: robot_e
-  spriteNoMindState: robot_e_r
-  spriteToggleLightState: robot_l
+  spritePath: Mobs/Silicon/Chassis/generic.rsi
 
   # Pet
   petSuccessString: petting-success-generic-cyborg
@@ -57,10 +54,7 @@
 
   # Visual
   inventoryTemplateId: borgShort
-  spriteBodyState: engineer
-  spriteHasMindState: engineer_e
-  spriteNoMindState: engineer_e_r
-  spriteToggleLightState: engineer_l
+  spritePath: Mobs/Silicon/Chassis/engineer.rsi
 
   # Pet
   petSuccessString: petting-success-engineer-cyborg
@@ -93,11 +87,8 @@
 
   # Visual
   inventoryTemplateId: borgTall
-  spriteBodyState: miner
-  spriteBodyMovementState: miner_moving
-  spriteHasMindState: miner_e
-  spriteNoMindState: miner_e_r
-  spriteToggleLightState: miner_l
+  spritePath: Mobs/Silicon/Chassis/miner.rsi
+  spriteBodyMovementState: borg_moving
 
   # Pet
   petSuccessString: petting-success-salvage-cyborg
@@ -129,11 +120,8 @@
 
   # Visual
   inventoryTemplateId: borgShort
-  spriteBodyState: janitor
-  spriteBodyMovementState: janitor_moving
-  spriteHasMindState: janitor_e
-  spriteNoMindState: janitor_e_r
-  spriteToggleLightState: janitor_l
+  spritePath: Mobs/Silicon/Chassis/janitor.rsi
+  spriteBodyMovementState: borg_moving
 
   # Pet
   petSuccessString: petting-success-janitor-cyborg
@@ -175,11 +163,8 @@
 
   # Visual
   inventoryTemplateId: borgDutch
-  spriteBodyState: medical
-  spriteBodyMovementState: medical_moving
-  spriteHasMindState: medical_e
-  spriteNoMindState: medical_e_r
-  spriteToggleLightState: medical_l
+  spritePath: Mobs/Silicon/Chassis/medical.rsi
+  spriteBodyMovementState: borg_moving
 
   # Pet
   petSuccessString: petting-success-medical-cyborg
@@ -217,10 +202,7 @@
 
   # Visual
   inventoryTemplateId: borgTall
-  spriteBodyState: service
-  spriteHasMindState: service_e
-  spriteNoMindState: service_e_r
-  spriteToggleLightState: service_l
+  spritePath: Mobs/Silicon/Chassis/service.rsi
 
   # Pet
   petSuccessString: petting-success-service-cyborg
