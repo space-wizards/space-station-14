@@ -448,15 +448,15 @@
   parent: [ BaseEngineeringContraband, SmokeGrenade ]
   id: MetalFoamGrenade
   name: metal foam grenade
-  description: An emergency tool used for patching breaches with special quick-set metal foam. Almost as good as real walls.
+  description: An emergency tool used for patching hull breaches with special quick-set metal foam. Almost as good as real floors!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/metalfoam.rsi
   - type: OnUseTimerTrigger
-    delay: 1.5
+    delay: 5
   - type: SmokeOnTrigger
-    duration: 2
-    spreadAmount: 5
+    duration: 10
+    spreadAmount: 20
     smokePrototype: AluminiumMetalFoam
   - type: StaticPrice
     price: 350
