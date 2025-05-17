@@ -7,6 +7,7 @@ using Content.Shared.Database;
 using Content.Shared.Friction;
 using Content.Shared.Gravity;
 using Content.Shared.Projectiles;
+using Content.Shared.Slippery;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -222,17 +223,16 @@ public sealed class ThrowingSystem : EntitySystem
             _recoil.KickCamera(user.Value, -direction * 0.04f);
 
         // Give thrower an impulse in the other direction
-        if (pushbackRatio != 0.0f &&
-            physics.Mass > 0f &&
-            TryComp(user.Value, out PhysicsComponent? userPhysics) &&
-            _gravity.IsWeightless(user.Value, userPhysics))
-        {
-            var msg = new ThrowPushbackAttemptEvent();
-            RaiseLocalEvent(uid, msg);
-            const float massLimit = 5f;
+        if (pushbackRatio == 0.0f ||
+            !(physics.Mass > 0f) ||
+            !TryComp(user.Value, out PhysicsComponent? userPhysics) ||
+            (!_gravity.IsWeightless(user.Value, userPhysics) && !HasComp<SlidingComponent>(user)))
+            return;
+        var msg = new ThrowPushbackAttemptEvent();
+        RaiseLocalEvent(uid, msg);
+        const float massLimit = 5f;
 
-            if (!msg.Cancelled)
-                _physics.ApplyLinearImpulse(user.Value, -impulseVector / physics.Mass * pushbackRatio * MathF.Min(massLimit, physics.Mass), body: userPhysics);
-        }
+        if (!msg.Cancelled)
+            _physics.ApplyLinearImpulse(user.Value, -impulseVector / physics.Mass * pushbackRatio * MathF.Min(massLimit, physics.Mass), body: userPhysics);
     }
 }
