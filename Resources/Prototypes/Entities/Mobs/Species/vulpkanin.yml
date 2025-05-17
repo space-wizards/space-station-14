@@ -35,16 +35,16 @@
       types:
         Blunt: 2
         Slash: 3
-  - type: Temperature # These are moth values, but do make sense for Vulpkanin. The heat damage per second might be high, but we can tune it if there are issues.
+  - type: Temperature # Similiar to moth values, but do make sense for Vulpkanin.
     heatDamageThreshold: 320
     coldDamageThreshold: 230
-    specificHeat: 46
+    specificHeat: 44
     coldDamage:
       types:
         Cold: 0.05 # Per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat: 3 # Per second, scales with temperature & other constants
+        Heat: 2 # Per second, scales with temperature & other constants
   - type: Wagging
     action: ActionToggleVulpakinWagging
   - type: TemperatureProtection
