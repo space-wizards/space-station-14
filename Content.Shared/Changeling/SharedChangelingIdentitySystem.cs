@@ -17,14 +17,40 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ChangelingIdentityComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ChangelingIdentityComponent, ComponentShutdown>(OnShutdown);
     }
 
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
     {
         CloneToNullspace(ent, ent.Owner);
     }
+    private void OnShutdown(Entity<ChangelingIdentityComponent> ent, ref ComponentShutdown args)
+    {
+        CleanupPvsOverride(ent);
+        CleanupChangelingNullspaceIdentities(ent);
+    }
 
+    /// <summary>
+    /// Cleanup all nullspaced Identities when the changeling no longer exists
+    /// </summary>
+    /// <param name="ent">the changeling</param>
+    public void CleanupChangelingNullspaceIdentities(Entity<ChangelingIdentityComponent> ent)
+    {
+        foreach (var consumedIdentity in ent.Comp.ConsumedIdentities)
+        {
+            QueueDel(consumedIdentity);
+        }
+    }
+    /// <summary>
+    /// Clone a target humanoid into nullspace and add it to the Changelings list of identities.
+    ///
+    /// It creates a perfect copy of the target and can be used to pull components down for future use
+    ///
+    /// </summary>
+    /// <param name="ent">the Changeling</param>
+    /// <param name="target">the targets uid</param>
     public void CloneToNullspace(Entity<ChangelingIdentityComponent> ent, EntityUid target)
     {
         if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
@@ -51,8 +77,10 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         Dirty(ent);
         HandlePvsOverride(ent, mob);
     }
+
+
     /// <summary>
-    /// Simple helper to add a PVS override to a
+    /// Simple helper to add a PVS override to a Nullspace Identity
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="target"></param>
@@ -63,6 +91,22 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
 
         _pvsOverrideSystem.AddSessionOverride(target, actor.PlayerSession);
     }
+
+    /// <summary>
+    /// Cleanup all Pvs Overrides for the owner of the ChangelingIdentity
+    /// </summary>
+    /// <param name="ent">the Changeling</param>
+    protected void CleanupPvsOverride(Entity<ChangelingIdentityComponent> ent)
+    {
+        if(!TryComp<ActorComponent>(ent.Owner, out var actor))
+            return;
+
+        foreach (var identity in ent.Comp.ConsumedIdentities)
+        {
+            _pvsOverrideSystem.RemoveSessionOverride(identity, actor.PlayerSession);
+        }
+    }
+
 
     /// <summary>
     /// Inform another Session of the entities stored for Transformation

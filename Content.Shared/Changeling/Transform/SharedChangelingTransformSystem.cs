@@ -37,6 +37,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ChangelingTransformComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformActionEvent>(OnTransformAction);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformWindupDoAfterEvent>(OnSuccessfulTransform);
@@ -45,14 +46,13 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
     private void OnMapInit(Entity<ChangelingTransformComponent> ent, ref MapInitEvent init)
     {
-        if(!ent.Comp.ChangelingTransformActionEntity.HasValue)
-            _actionsSystem.AddAction(ent, ref ent.Comp.ChangelingTransformActionEntity, ent.Comp.ChangelingTransformAction);
+        _actionsSystem.AddAction(ent, ref ent.Comp.ChangelingTransformActionEntity, ent.Comp.ChangelingTransformAction);
 
         var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
         _uiSystem.SetUi((ent, userInterfaceComp), TransformUi.Key, new InterfaceData("ChangelingTransformBoundUserInterface"));
     }
 
-    protected virtual void OnTransformAction(Entity<ChangelingTransformComponent> ent,
+    protected void OnTransformAction(Entity<ChangelingTransformComponent> ent,
         ref ChangelingTransformActionEvent args)
     {
         if (!HasComp<UserInterfaceComponent>(ent))
@@ -61,20 +61,18 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         if (!TryComp<ChangelingIdentityComponent>(ent, out var userIdentity))
             return;
 
-        Dirty(ent, userIdentity);
-
         if (!_uiSystem.IsUiOpen(ent.Owner, TransformUi.Key, args.Performer))
         {
             _uiSystem.OpenUi(ent.Owner, TransformUi.Key, args.Performer);
 
-            var x = userIdentity.ConsumedIdentities.Select(x =>
-            {
-                return new ChangelingIdentityData(GetNetEntity(x),
-                    Name(x));
-            })
-                .ToList();
+            var identityData = new List<ChangelingIdentityData>();
 
-            _uiSystem.SetUiState(ent.Owner, TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(x));
+            foreach (var consumedIdentity in userIdentity.ConsumedIdentities)
+            {
+                identityData.Add(new ChangelingIdentityData(GetNetEntity(consumedIdentity), Name(consumedIdentity)));
+            }
+
+            _uiSystem.SetUiState(ent.Owner, TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(identityData));
         }
         else // if the UI is already opened and the command action is done again, transform into the last consumed identity
         {

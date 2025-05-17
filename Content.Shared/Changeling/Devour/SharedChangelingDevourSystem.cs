@@ -41,6 +41,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ChangelingDevourComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourActionEvent>(OnDevourAction);
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourWindupDoAfterEvent>(OnDevourWindup);
@@ -75,10 +76,14 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         if (!TryComp<DamageableComponent>(target, out var damage))
             return;
 
-        if (damage.DamagePerGroup.TryGetValue("Brute", out var val) && val < comp.DevourConsumeDamageCap)
+        foreach (var damagePoints in comp.DamagePerTick.DamageDict)
         {
-            _damageable.TryChangeDamage(target, comp.DamagePerTick, true, true, damage, user);
+
+            if (damage.Damage.DamageDict.TryGetValue(damagePoints.Key, out var val) && val > comp.DevourConsumeDamageCap)
+                return;
         }
+        _damageable.TryChangeDamage(target, comp.DamagePerTick, true, true, damage, user);
+
     }
 
     private bool TargetIsProtected(EntityUid target, Entity<ChangelingDevourComponent> ent)
@@ -102,8 +107,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     {
 
         if (args.Handled || _whitelistSystem.IsWhitelistFailOrNull(ent.Comp.Whitelist, args.Target)
-                         || !HasComp<ChangelingIdentityComponent>(ent)
-                         || !HasComp<DamageableComponent>(args.Target))
+                         || !HasComp<ChangelingIdentityComponent>(ent))
             return;
 
         args.Handled = true;
