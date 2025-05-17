@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Content.Server.Acz;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
@@ -9,6 +10,7 @@ using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Server.GhostKick;
+using Content.Server.Github;
 using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
@@ -43,6 +45,8 @@ namespace Content.Server.Entry
 
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
+        private GithubQueueHandler _gitQueue = default!;
+        private GithubApiManager _gitManager = default!;
         private ServerUpdateManager _updateManager = default!;
         private PlayTimeTrackingManager? _playTimeTracking;
         private IEntitySystemManager? _sysMan;
@@ -91,6 +95,9 @@ namespace Content.Server.Entry
             {
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
+                _gitQueue = new GithubQueueHandler();
+                IoCManager.InjectDependencies(_gitQueue);
+                _gitManager = IoCManager.Resolve<GithubApiManager>();
                 _updateManager = IoCManager.Resolve<ServerUpdateManager>();
                 _playTimeTracking = IoCManager.Resolve<PlayTimeTrackingManager>();
                 _connectionManager = IoCManager.Resolve<IConnectionManager>();
@@ -113,6 +120,16 @@ namespace Content.Server.Entry
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();
+                _gitQueue.Initialize();
+                var writeChannel = _gitQueue.InitChannel();
+
+                _gitManager.Initialize(writeChannel);
+
+                Task.Run(async () =>
+                {
+                    await _gitQueue.HandleQueue();
+                });
+
                 _playTimeTracking.Initialize();
                 _watchlistWebhookManager.Initialize();
                 IoCManager.Resolve<JobWhitelistManager>().Initialize();
