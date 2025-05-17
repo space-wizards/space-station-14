@@ -388,7 +388,6 @@
   - type: StorageFill
     contents:
     - id: WeaponRevolverDeckard
-    #instance here
     - id: ClothingOuterHardsuitAntique
     - id: JetpackBlue
     - id: SpaceCash1000

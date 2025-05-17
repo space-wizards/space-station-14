@@ -1,7 +1,6 @@
 #When adding new hardsuits, please try to keep the organization consistent with hardsuit-helmets.yml (if possible.)
 
 #CREW HARDSUITS
-#instance here
 #Antique hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
