@@ -12,7 +12,7 @@ namespace Content.Server.NodeContainer.Nodes
 {
     /// <summary>
     ///     Connects with other <see cref="PipeNode"/>s whose <see cref="PipeDirection"/>
-    ///     correctly correspond.
+    ///     and <see cref="CurrentPipeLayer"/> correctly correspond.
     /// </summary>
     [DataDefinition]
     [Virtual]
@@ -23,6 +23,12 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         [DataField("pipeDirection")]
         public PipeDirection OriginalPipeDirection;
+
+        /// <summary>
+        ///     The *current* layer to which the pipe node is assigned.
+        /// </summary>
+        [DataField("pipeLayer")]
+        public byte CurrentPipeLayer;
 
         /// <summary>
         ///     The *current* pipe directions (accounting for rotation)
@@ -204,6 +210,7 @@ namespace Content.Server.NodeContainer.Nodes
             foreach (var pipe in PipesInDirection(pos, pipeDir, grid, nodeQuery))
             {
                 if (pipe.NodeGroupID == NodeGroupID
+                    && pipe.CurrentPipeLayer == CurrentPipeLayer
                     && pipe.CurrentPipeDirection.HasDirection(pipeDir.GetOpposite()))
                 {
                     yield return pipe;

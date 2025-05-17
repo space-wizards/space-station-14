@@ -1,0 +1,157 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation at commit 57cd1d59ca019dd0e7811ac451f295f818e573da. Signal valve is a digital valve modified by deltanedas. Manual valve modified by Deerstop at https://github.com/space-wizards/space-station-14/pull/34378. Modified by chromiumboy.",
+    "states": [
+        {
+            "name": "pumpDigitalValve",
+            "directions": 4
+        },
+        {
+            "name": "pumpManualValve",
+            "directions": 4
+        },
+        {
+            "name": "pumpManualValveOn",
+            "directions": 4
+        },
+        {
+            "name": "pumpSignalValve",
+            "directions": 4
+        },
+        {
+            "name": "pumpSignalValveOn",
+            "directions": 4
+        },
+        {
+            "name": "pumpPassiveGate",
+            "directions": 4
+        },
+        {
+            "name": "pumpPassiveGateOn",
+            "directions": 4
+        },
+        {
+            "name": "pumpPressure",
+            "directions": 4
+        },
+        {
+            "name": "pumpPressureOn",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "pumpVolume",
+            "directions": 4
+        },
+        {
+            "name": "pumpVolumeOn",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "pumpVolumeBlocked",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0,
+                    1.0
+                ],
+                [
+                    1.0,
+                    1.0
+                ],
+                [
+                    1.0,
+                    1.0
+                ],
+                [
+                    1.0,
+                    1.0
+                ]
+            ]
+        }
+    ]
+}
