@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Vortebo
-  changes:
-  - message: Added a new Relic arrivals shuttle
-    type: Add
-  id: 8001
-  time: '2025-02-24T21:35:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35194
 - author: Errant
   changes:
   - message: The version watermark is now less visually annoying.
@@ -3919,3 +3912,10 @@
   id: 8503
   time: '2025-05-17T05:21:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37476
+- author: EmoGarbage404
+  changes:
+  - message: Fixed tetherguns not having a beam when dragging.
+    type: Fix
+  id: 8504
+  time: '2025-05-17T05:22:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37510
