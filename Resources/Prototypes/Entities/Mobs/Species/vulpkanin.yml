@@ -31,9 +31,9 @@
     soundHit:
       path: /Audio/Weapons/pierce.ogg
     animation: WeaponArcClaw
-    damage: # For reference, lizards do five slash.
+    damage: # Slightly increased damage to 6 total instead of 5.
       types:
-        Blunt: 2
+        Piercing: 3
         Slash: 3
   - type: Temperature # Similiar to moth values, but do make sense for Vulpkanin.
     heatDamageThreshold: 320
@@ -49,7 +49,7 @@
     action: ActionToggleVulpakinWagging
   - type: TemperatureProtection
     heatingCoefficient: 1.2
-    coolingCoefficient: 0.75
+    coolingCoefficient: 0.50
   - type: Sharp
   - type: SolutionScanner
   - type: Sprite # Drawlayers. Top to bottom in order I believe.

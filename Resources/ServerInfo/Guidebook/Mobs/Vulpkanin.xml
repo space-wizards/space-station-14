@@ -5,7 +5,10 @@
     <GuideEntityEmbed Entity="MobVulpkanin" Caption=""/>
   </Box>
 
-  Vulpkanin, due to their fur, prefer [color=#12ABE8]slightly colder climates[/color]. Their claws do a mix of [color=#ffa500]
-  blunt and slash damage[/color].
+  Vulpkanin, due to their dense fur, are [color=#12ABE8]more resistant to cold temperatures[/color] and [color=#ffa500]heat up faster.[/color]
+  Their sharp claws and teeth allow them to butcher corpses and do a mix of slash and piercing damage.
 
+  Thanks to their good sense of smell, they are able to determine the contents of solutions without the need for any specialized equipment.
+
+  They take [color=#1e90ff]25% less Cold damage[/color] but [color=#ffa500]20% more Heat damage.[/color].
 </Document>
