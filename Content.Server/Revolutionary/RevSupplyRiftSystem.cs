@@ -351,7 +351,7 @@ public sealed class RevSupplyRiftSystem : EntitySystem
                     
                     // Update the description with the charging status and location
                     // Don't use color tags as they're not properly handled in the UI
-                    var chargingText = $"Supply Rift (Charging: {revRift.ChargePercentage}% - Placed by {revRift.PlacedBy ?? "Unknown"} near {locationString})";
+                    var chargingText = $"Supply Rift (Charging: {revRift.ChargePercentage}% - Placed by comrade {revRift.PlacedBy ?? "Unknown"} {locationString})";
                     
                     listing.Description = chargingText;
                     
