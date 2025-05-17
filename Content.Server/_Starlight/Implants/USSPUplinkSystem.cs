@@ -38,32 +38,6 @@ namespace Content.Server.Implants
         SubscribeLocalEvent<USSPUplinkImplantComponent, ImplantImplantedEvent>(OnImplantImplanted);
     }
     
-    /// <summary>
-    /// Updates all USSP uplink listings with the current stock count and last purchaser information.
-    /// </summary>
-    public void UpdateAllUplinkListings()
-    {
-        Logger.InfoS("ussp-uplink", "Updating all USSP uplink listings with current stock and last purchaser information");
-        
-        // Find all store components
-        var query = EntityManager.EntityQuery<StoreComponent>();
-        foreach (var storeComp in query)
-        {
-            var uid = storeComp.Owner;
-            
-            // Check if this is a USSP uplink store
-            if (!storeComp.CurrencyWhitelist.Contains("Telebond"))
-                continue;
-            
-            // Refresh all listings to ensure they have the latest stock count and last purchaser information
-            _storeSystem.RefreshAllListings(storeComp);
-            
-            // Update the UI to reflect the changes
-            _storeSystem.UpdateUserInterface(null, uid, storeComp);
-            
-            Logger.InfoS("ussp-uplink", $"Updated USSP uplink listings for {EntityManager.ToPrettyString(uid)}");
-        }
-    }
     
     /// <summary>
     /// Synchronizes all uplinks in the game to ensure they have the correct currency values.
@@ -484,10 +458,76 @@ namespace Content.Server.Implants
         }
         
         /// <summary>
+        /// Handles the event when a purchase is made from a store.
+        /// Restores any spent Conversion currency since it's a global headrev progression score, not a spendable currency.
+        /// Also updates all uplinks when a stock-limited item is purchased.
+        /// </summary>
+        private void OnStoreBuyFinished(ref StoreBuyFinishedEvent args)
+        {
+            // Get the store component
+            if (!_entityManager.TryGetComponent(args.StoreUid, out StoreComponent? store))
+                return;
+            
+            // Check if this store uses Conversion currency
+            if (store.CurrencyWhitelist.Contains("Conversion"))
+            {
+                // Check if Conversion was spent in this purchase
+                bool conversionWasSpent = false;
+                foreach (var (currency, amount) in args.PurchasedItem.Cost)
+                {
+                    if (currency == "Conversion" && amount > FixedPoint2.Zero)
+                    {
+                        conversionWasSpent = true;
+                        break;
+                    }
+                }
+                
+                if (conversionWasSpent)
+                {
+                    // Calculate how much Conversion was spent
+                    FixedPoint2 spentAmount = FixedPoint2.Zero;
+                    foreach (var (currency, amount) in args.PurchasedItem.Cost)
+                    {
+                        if (currency == "Conversion")
+                        {
+                            spentAmount = amount;
+                            break;
+                        }
+                    }
+                    
+                    // Add the Conversion currency back
+                    var currencyToAdd = new Dictionary<string, FixedPoint2> { { "Conversion", spentAmount } };
+                    _storeSystem.TryAddCurrency(currencyToAdd, args.StoreUid);
+                }
+            }
+            
+            // Check if this is a stock-limited listing
+            bool isStockLimited = false;
+            if (args.PurchasedItem.Conditions != null)
+            {
+                foreach (var condition in args.PurchasedItem.Conditions)
+                {
+                    if (condition is Content.Shared.Store.Conditions.StockLimitedListingCondition)
+                    {
+                        isStockLimited = true;
+                        break;
+                    }
+                }
+            }
+            
+            // If this is a stock-limited listing, update all uplinks
+            if (isStockLimited && store.CurrencyWhitelist.Contains("Telebond"))
+            {
+                // Update all uplinks with the latest stock count and last purchaser information
+                UpdateAllUplinkListings();
+            }
+        }
+        
+        /// <summary>
         /// Adds Conversion currency to all head revolutionary uplinks.
         /// This is a shared counter that tracks total conversions by all head revolutionaries.
         /// </summary>
-    public void AddConversionToAllHeadRevs(StoreSystem storeSystem)
+        public void AddConversionToAllHeadRevs(StoreSystem storeSystem)
     {
         Logger.InfoS("ussp-uplink", "Adding Conversion to all head revolutionary uplinks");
         
@@ -552,76 +592,24 @@ namespace Content.Server.Implants
     }
         
         /// <summary>
-        /// Handles the event when a purchase is made from a store.
-        /// Restores any spent Conversion currency since it's a global headrev progression score, not a spendable currency.
-        /// Also updates all uplinks when a stock-limited item is purchased.
+        /// Updates all USSP uplink listings with the current stock count and last purchaser information.
         /// </summary>
-        private void OnStoreBuyFinished(ref StoreBuyFinishedEvent args)
+        public void UpdateAllUplinkListings()
         {
-            // Get the store component
-            if (!_entityManager.TryGetComponent(args.StoreUid, out StoreComponent? store))
-                return;
+            Logger.InfoS("ussp-uplink", "Updating all USSP uplink listings with current stock and last purchaser information");
             
-            // Check if this store uses Conversion currency
-            if (store.CurrencyWhitelist.Contains("Conversion"))
-            {
-                // Check if Conversion was spent in this purchase
-                bool conversionWasSpent = false;
-                foreach (var (currency, amount) in args.PurchasedItem.Cost)
-                {
-                    if (currency == "Conversion" && amount > FixedPoint2.Zero)
-                    {
-                        conversionWasSpent = true;
-                        break;
-                    }
-                }
-                
-                if (conversionWasSpent)
-                {
-                    // Calculate how much Conversion was spent
-                    FixedPoint2 spentAmount = FixedPoint2.Zero;
-                    foreach (var (currency, amount) in args.PurchasedItem.Cost)
-                    {
-                        if (currency == "Conversion")
-                        {
-                            spentAmount = amount;
-                            break;
-                        }
-                    }
-                    
-                    // Add the Conversion currency back
-                    var currencyToAdd = new Dictionary<string, FixedPoint2> { { "Conversion", spentAmount } };
-                    _storeSystem.TryAddCurrency(currencyToAdd, args.StoreUid);
-                    
-                    // Find the owner of the uplink
-                    //if (TryComp<SubdermalImplantComponent>(args.StoreUid, out var implant) && implant.ImplantedEntity != null)
-                    //{
-                    //    _popup.PopupEntity("Conversion is not spent", implant.ImplantedEntity.Value, PopupType.Medium);
-                    //}
-                    //
-                    //Logger.InfoS("ussp-uplink", $"Restored {spentAmount} Conversion currency after purchase");
-                }
-            }
+            // Use the StoreSystem's method to update all USSP uplink UIs
+            _storeSystem.UpdateAllUSSPUplinkUIs();
             
-            // Check if this is a stock-limited listing
-            bool isStockLimited = false;
-            if (args.PurchasedItem.Conditions != null)
-            {
-                foreach (var condition in args.PurchasedItem.Conditions)
-                {
-                    if (condition is Content.Shared.Store.Conditions.StockLimitedListingCondition)
-                    {
-                        isStockLimited = true;
-                        break;
-                    }
-                }
-            }
+            // Also call the RevolutionaryRuleSystem to synchronize all uplinks
+            var revRuleSystem = EntitySystem.Get<Content.Server.GameTicking.Rules.RevolutionaryRuleSystem>();
             
-            // If this is a stock-limited listing, update all uplinks
-            if (isStockLimited && store.CurrencyWhitelist.Contains("Telebond"))
+            // Get all head revolutionaries
+            var headRevs = EntityManager.EntityQuery<HeadRevolutionaryComponent>();
+            foreach (var headRev in headRevs)
             {
-                // Update all uplinks with the latest stock count and last purchaser information
-                UpdateAllUplinkListings();
+                // Synchronize all uplinks owned by this head revolutionary
+                revRuleSystem.SynchronizeAllUplinksByOwner(headRev.Owner);
             }
         }
 

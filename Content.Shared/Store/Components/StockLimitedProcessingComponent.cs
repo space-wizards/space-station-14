@@ -6,16 +6,16 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Store.Components;
 
 /// <summary>
-/// This component is used to track which stock-limited listings are currently being processed
-/// to prevent spam-clicking and duplicate purchases.
+/// This component is used to track which store listings are currently being processed.
+/// This prevents spam-clicking on stock-limited items.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class StockLimitedProcessingComponent : Component
 {
     /// <summary>
     /// Dictionary to track which listings are currently being processed.
     /// Key is the listing ID, value is whether the listing is being processed.
     /// </summary>
-    [DataField("processingListings")]
+    [DataField("processingListings"), AutoNetworkedField]
     public Dictionary<string, bool> ProcessingListings = new();
 }
