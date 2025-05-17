@@ -3,7 +3,6 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Map;
 
 namespace Content.Client.Weapons.Melee;
 
@@ -20,8 +19,6 @@ public sealed class MeleeSpreadCommand : LocalizedEntityCommands
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public override string Command => "showmeleespread";
-    public override string Description => Loc.GetString($"cmd-melee-spread-desc");
-    public override string Help => $"{Command}";
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (_overlay.RemoveOverlay<MeleeArcOverlay>())
