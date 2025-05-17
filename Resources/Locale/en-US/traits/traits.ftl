@@ -62,3 +62,6 @@ trait-spanish-desc = Hola señor, donde esta la biblioteca.
 
 trait-painnumbness-name = Numb
 trait-painnumbness-desc = You lack any sense of feeling pain, being unaware of how hurt you may be.
+
+trait-unborgable-name = Unborgable
+trait-unborgable-desc = Your brain is impossible to insert into a man-machine interface.
