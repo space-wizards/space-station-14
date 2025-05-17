@@ -1,22 +1,22 @@
 ﻿- type: entity
-  id: OrganDwarfHeart
   parent: OrganHumanHeart
+  id: OrganDwarfHeart
   name: dwarf heart
   components:
   - type: Metabolizer
     metabolizerTypes: [Dwarf]
 
 - type: entity
-  id: OrganDwarfLiver
   parent: OrganHumanLiver
+  id: OrganDwarfLiver
   name: dwarf liver
   components:
   - type: Metabolizer
     metabolizerTypes: [Dwarf]
 
 - type: entity
-  id: OrganDwarfStomach
   parent: OrganHumanStomach
+  id: OrganDwarfStomach
   name: dwarf stomach
   components:
   - type: Sprite
@@ -31,7 +31,6 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Stomach
   - type: Metabolizer
     # mm very yummy
     maxReagents: 5
