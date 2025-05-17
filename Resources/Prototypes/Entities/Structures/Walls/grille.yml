@@ -126,7 +126,7 @@
     graph: Grille
     node: grilleBroken
     deconstructionTarget: start
-  - type: Fixtures # overwrite BaseStructure parent.
+  - type: Physics # overwrite BaseStructure parent.
   - type: Physics
     bodyType: Static
     canCollide: false
@@ -185,7 +185,7 @@
   - type: Tag
     tags:
     - Diagonal
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -223,7 +223,7 @@
   - type: Tag
     tags:
     - Diagonal
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

@@ -55,7 +55,7 @@
   components:
   - type: Sprite
     color: "#1a1a22" #yes, I bothered to get the actual color from 2001 a space odyssey
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

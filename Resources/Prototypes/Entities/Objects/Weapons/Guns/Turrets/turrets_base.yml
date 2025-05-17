@@ -7,7 +7,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Actions
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -97,7 +97,7 @@
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
     capacity: 500
-      
+
 - type: entity
   parent: BaseWeaponTurret
   id: BaseWeaponEnergyTurret

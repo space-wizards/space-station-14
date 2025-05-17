@@ -482,7 +482,7 @@
     rules: ghost-role-information-freeagent-rules
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -2802,7 +2802,7 @@
   - type: Speech
     speechVerb: Canine
     speechSounds: Dog
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

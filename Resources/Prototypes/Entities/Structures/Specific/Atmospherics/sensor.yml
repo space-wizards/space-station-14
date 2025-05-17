@@ -57,7 +57,7 @@
         acts: ["Destruction"]
   - type: Physics
     canCollide: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

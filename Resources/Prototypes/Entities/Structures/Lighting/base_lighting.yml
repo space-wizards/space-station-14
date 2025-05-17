@@ -46,7 +46,7 @@
     fx: EffectRCDDeconstruct2
   - type: Physics
     bodyType: Static
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -268,7 +268,7 @@
       enabled: true
     - type: Physics
       bodyType: Static
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:

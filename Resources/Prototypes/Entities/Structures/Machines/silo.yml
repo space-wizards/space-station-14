@@ -33,7 +33,7 @@
         type: OreSiloBoundUserInterface
   - type: Machine
     board: MaterialSiloMachineCircuitboard
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

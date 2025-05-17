@@ -450,7 +450,7 @@
           True: { visible: false }
           False: { visible: true }
   - type: OverrideSell
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

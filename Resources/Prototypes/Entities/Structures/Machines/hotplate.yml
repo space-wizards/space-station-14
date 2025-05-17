@@ -5,7 +5,7 @@
   id: BaseHeaterMachine
   components:
   - type: ItemPlacer
-  - type: Fixtures
+  - type: Physics
     fixtures:
       itemcollide:
         shape:

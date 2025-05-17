@@ -450,7 +450,7 @@
   - type: Ammo
     muzzleFlash: null
   - type: Physics
-  - type: Fixtures
+  - type: Physics
     fixtures:
       projectile:
         shape:
@@ -1100,7 +1100,7 @@
     - state: heavylaser
       shader: unshaded
   - type: Physics
-  - type: Fixtures
+  - type: Physics
     fixtures:
       projectile:
         shape:

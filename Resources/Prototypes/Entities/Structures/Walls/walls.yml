@@ -77,7 +77,7 @@
     airBlockedDirection:
     - South
     - East
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

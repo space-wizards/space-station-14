@@ -428,7 +428,7 @@
         pipe:
           Free: { state: conpipe-x }
           Anchored: { state: pipe-x }
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

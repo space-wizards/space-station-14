@@ -20,7 +20,7 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
