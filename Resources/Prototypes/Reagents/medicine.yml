@@ -601,6 +601,9 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:EvenHealthChange
+        damage:
+          Brute: -3.5
       - !type:HealthChange
         damage:
           types:
