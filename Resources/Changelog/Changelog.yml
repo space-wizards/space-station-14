@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: noirogen
-  changes:
-  - message: Added opacity slider for speech bubble backgrounds, text and speaker
-      names in the accessibility options.
-    type: Add
-  id: 8006
-  time: '2025-02-25T16:00:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35346
 - author: sowelipililimute
   changes:
   - message: Multiple inventory windows now close properly when you hit escape
@@ -3920,3 +3912,11 @@
   id: 8508
   time: '2025-05-17T17:20:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33825
+- author: YotaXP
+  changes:
+  - message: Favorites selected in the construction menu will now persist between
+      rounds.
+    type: Tweak
+  id: 8509
+  time: '2025-05-17T17:37:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35867
