@@ -17,6 +17,7 @@ public sealed partial class DungeonJob
         var rooms = new List<DungeonRoom>(dungeon.Rooms);
         var roomTiles = new List<Vector2i>();
         var tileDef = (ContentTileDefinition) _tileDefManager[gen.Tile];
+        var contents = _prototype.Index(gen.Contents);
 
         for (var i = 0; i < gen.Count; i++)
         {
@@ -75,7 +76,7 @@ public sealed partial class DungeonJob
                     var gridCoords = _maps.GridTileToLocal(_gridUid, _grid, tile);
                     // Need to offset the spawn to avoid spawning in the room.
 
-                    foreach (var ent in EntitySpawnCollection.GetSpawns(gen.Contents, random))
+                    foreach (var ent in _entTable.GetSpawns(contents, random))
                     {
                         _entManager.SpawnAtPosition(ent, gridCoords);
                     }

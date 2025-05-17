@@ -187,11 +187,12 @@
     maxCount: 15
     contents: VGRoidExteriorDungeonsMobs
 
-- type: entitySpawnEntry
+- type: entityTable
   id: VGRoidExteriorDungeonsMobs
-  entries:
-  - id: SalvageSpawnerMobMiningAsteroid
-    amount: 1
+  table: !type:GroupSelector
+    children:
+    - id: SalvageSpawnerMobMiningAsteroid
+      amount: 1
 
 #- type: dungeonConfig
 #  id: VGRoidInteriorDungeons
@@ -221,11 +222,12 @@
     maxCount: 35
     contents: VGRoidSmallPathsMobs
 
-- type: entitySpawnEntry
+- type: entityTable
   id: VGRoidSmallPathsMobs
-  entries:
-  - id: SalvageSpawnerMobMiningAsteroid
-    amount: 1
+  table: !type:GroupSelector
+    children:
+    - id: SalvageSpawnerMobMiningAsteroid
+      amount: 1
 
 #- type: dungeonConfig
 #  id: VGRoidOres

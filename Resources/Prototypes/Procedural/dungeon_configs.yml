@@ -98,7 +98,7 @@
 
 - type: entityTable
   id: HauntedClutter
-  table: !type:EntSelector
+  table: !type:GroupSelector
     children:
     - id: FloraStalagmite
 
@@ -293,20 +293,21 @@
 # Basic
 - type: entityTable
   id: BaseClutter
-  entries:
-  - id: PottedPlantRandom
-    amount: 1
+  table: !type:GroupSelector
+    children:
+    - id: PottedPlantRandom
+      amount: 1
 
 - type: entityTable
   id: BaseAirlock
-  table: !type:EntSelector
+  table: !type:GroupSelector
     children:
     - id: CableApcExtension
     - id: AirlockGlass
 
 - type: entityTable
   id: BaseWindow
-  table: !type:EntSelector
+  table: !type:GroupSelector
     children:
     - id: Grille
     - id: Window
@@ -314,7 +315,7 @@
 # Lava brig
 - type: entityTable
   id: LavaBrigEntrance
-  table: !type:EntSelector
+  table: !type:GroupSelector
     children:
     - id: CableApcExtension
     - id: AirlockSecurityGlassLocked
@@ -322,26 +323,26 @@
 # Mineshaft
 - type: entityTable
   id: BaseWoodWall
-  table: !type:EntSelector
+  table: !type:GroupSelector
     children:
     - id: RandomWoodenWall
 
 - type: entityTable
   id: BaseWoodSupport
-  table: !type:EntSelector
+  table: !type:GroupSelector
     children:
     - id: RandomWoodenSupport
 
 - type: entityTable
   id: MineshaftClutter
-  table: !type:EntSelector
+  table: !type:GroupSelector
     children:
     - id: RandomStalagmiteOrCrystal
       amount: 1
 
 - type: entityTable
   id: MineshaftWalls
-  table: !type:EntSelector
+  table: !type:GroupSelector
     children:
     # Ore
     - id: WallRockSalt
@@ -360,7 +361,7 @@
 # Science lab
 - type: entityTable
   id: ScienceLabsWalls
-  table: !type:EntSelector
+  table: !type:GroupSelector
     children:
     # Posters
     - id: RandomPosterLegit
@@ -378,14 +379,14 @@
 # Snowy labs
 - type: entityTable
   id: SnowyLabsEntrance
-  table: !type:EntSelector
+  table: !type:GroupSelector
     children:
     - id: CableApcExtension
     - id: AirlockFreezerHydroponicsLocked
 
 - type: entityTable
   id: SnowyLabsWalls
-  table: !type:EntSelector
+  table: !type:GroupSelector
     children:
     # Posters
     - id: RandomPosterLegit
