@@ -10,7 +10,7 @@
       sprite: _Impstation/Objects/Specific/Hydroponics/rose.rsi
 
 - type: entity
-  parent: SeedBase
+  parent: [SeedBase, BaseMajorContraband]
   name: packet of black rose seeds
   description: "Seeds of a most diabolical variety."
   id: BlackRoseSeeds
@@ -63,7 +63,7 @@
     sprite: _Impstation/Objects/Specific/Hydroponics/employedhops.rsi
 
 - type: entity
-  parent: SeedBase
+  parent: [SeedBase, Tier2Contraband]
   name: packet of agent grain seeds
   id: AgentGrainSeeds
   components:
