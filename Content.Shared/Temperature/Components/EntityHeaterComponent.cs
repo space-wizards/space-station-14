@@ -7,15 +7,14 @@ namespace Content.Shared.Temperature.Components;
 /// <summary>
 /// Adds thermal energy to entities with <see cref="TemperatureComponent"/> placed on it.
 /// </summary>
-[RegisterComponent, Access(typeof(SharedEntityHeaterSystem))]
-[NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, Access(typeof(SharedEntityHeaterSystem)), NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class EntityHeaterComponent : Component
 {
     /// <summary>
     /// Power used when heating at the high setting.
     /// Low and medium are 33% and 66% respectively.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float Power = 2400f;
 
     /// <summary>
@@ -27,6 +26,6 @@ public sealed partial class EntityHeaterComponent : Component
     /// <summary>
     /// An optional sound that plays when the setting is changed.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundPathSpecifier? SettingSound;
 }
