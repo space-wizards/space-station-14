@@ -75,7 +75,7 @@ doc-text-printer-report-department =
     Number of trainees:
 
     Inactive employees in the department:
-	[bullet] (Name, position, reason)
+    [bullet] (Name, position, reason)
     [bullet] ...
 
     Degree of target readiness:
