@@ -129,6 +129,11 @@
 
 - type: latheRecipe
   parent: BaseBorgModuleRecipe
+  id: BorgModuleCable
+  result: BorgModuleCable
+
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleFireExtinguisher
   result: BorgModuleFireExtinguisher
 
