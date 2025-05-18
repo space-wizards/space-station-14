@@ -10,3 +10,53 @@
         - BulletFoam
     proto: BulletFoam
     capacity: 100
+
+- type: entity
+  id: BaseMagazineFoam
+  name: "magazine (foam)"
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - MagazineFoam
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - BulletFoam
+    proto: BulletFoam
+    capacity: 24
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/foam_rifle_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: MagazineFoam
+  name: "magazine (foam)"
+  parent: BaseMagazineFoam
+  description: Curved 30-round double stack magazine for combat rifles. Intended to hold general-purpose kinetic ammunition.
+
+- type: entity
+  id: MagazineFoamEmpty
+  name: "magazine (foam)"
+  suffix: empty
+  parent: MagazineFoam
+  description: Curved 30-round double stack magazine for combat rifles.
+  components:
+  - type: BallisticAmmoProvider
+    proto: null

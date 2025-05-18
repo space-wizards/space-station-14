@@ -187,6 +187,9 @@
   id: BulletFoam
 
 - type: Tag
+  id: DartBundle
+
+- type: Tag
   id: Burnt
 
 - type: Tag
@@ -814,6 +817,9 @@
   id: MacroBomb
 
 # Magazines ordered by slot then caliber
+
+- type: Tag
+  id: MagazineFoam
 
 - type: Tag
   id: MagazineCalico

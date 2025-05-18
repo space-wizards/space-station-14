@@ -175,3 +175,17 @@
       proto: PelletShotgunUraniumSpread
     - type: SpentAmmoVisuals
       state: "depleted-uranium"
+
+- type: entity
+  id: DartBundle
+  name: foam dart bundle
+  parent: BaseShellShotgun
+  components:
+  - type: Sprite
+    layers:
+      - state: dart-bundle
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunDartSpread
+  - type: SpentAmmoVisuals
+    state: "dart-bundle"

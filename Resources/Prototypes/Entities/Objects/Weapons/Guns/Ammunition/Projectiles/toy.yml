@@ -32,3 +32,13 @@
   - type: ThrowingAngle
     angle: 180
   - type: LandAtCursor
+
+- type: entity
+  id: PelletShotgunDartSpread
+  categories: [ HideSpawnMenu ]
+  parent: BulletFoam
+  components:
+  - type: ProjectileSpread
+    proto: BulletFoam
+    count: 6
+    spread: 20

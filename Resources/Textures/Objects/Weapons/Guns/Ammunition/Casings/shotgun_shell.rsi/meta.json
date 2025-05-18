@@ -66,6 +66,12 @@
         },
         {
             "name": "tranquilizer-spent"
+        },
+        {
+            "name": "dart-bundle"
+        },
+        {
+            "name": "dart-bundle-spent"
         }
     ]
 }
