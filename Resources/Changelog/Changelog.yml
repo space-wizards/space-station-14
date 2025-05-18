@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MilenVolf
-  changes:
-  - message: Insect and Ammonia blood can be broken down in centrifuge.
-    type: Tweak
-  id: 8013
-  time: '2025-02-27T10:05:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33614
 - author: qwerltaz
   changes:
   - message: The T-ray scanner now shows sub-floor entities above catwalks.
@@ -3924,3 +3917,13 @@
   id: 8515
   time: '2025-05-18T04:32:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37531
+- author: EmoGarbage404
+  changes:
+  - message: Various salvage equipment can now be unlocked through the job board and
+      purchased through cargo.
+    type: Add
+  - message: Space debris and the mining asteroid no longer generate salvage equipment
+    type: Tweak
+  id: 8516
+  time: '2025-05-18T06:40:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37561
