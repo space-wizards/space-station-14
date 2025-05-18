@@ -163,4 +163,14 @@
   id: 19
   time: '2025-05-18T08:12:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37560
+- author: Spessmann
+  changes:
+  - message: On Convex, added a job board computer to the salvage bay.
+    type: Add
+  - message: On Convex, remove the extra pair of mass scanners and expedition consoles
+      from the salvage bay.
+    type: Remove
+  id: 20
+  time: '2025-05-18T17:43:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37579
 Order: 1
