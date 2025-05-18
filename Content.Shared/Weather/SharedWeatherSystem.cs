@@ -30,6 +30,7 @@ public abstract class SharedWeatherSystem : EntitySystem
         _blockQuery = GetEntityQuery<BlockWeatherComponent>();
 
         SubscribeLocalEvent<WeatherComponent, EntityUnpausedEvent>(OnWeatherUnpaused);
+        SubscribeLocalEvent<WeatherComponent, ComponentShutdown>(OnWeatherRemoved);
     }
 
     private void OnWeatherUnpaused(EntityUid uid, WeatherComponent component, ref EntityUnpausedEvent args)
@@ -233,6 +234,8 @@ public abstract class SharedWeatherSystem : EntitySystem
         Dirty(uid, component);
         return true;
     }
+
+    private void OnWeatherRemoved(EntityUid uid, WeatherComponent component, ref ComponentShutdown args) => component.Weather.ToList().ForEach(w => EndWeather(uid, component, w.Key));
 
     [Serializable, NetSerializable]
     protected sealed class WeatherComponentState : ComponentState

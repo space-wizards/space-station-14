@@ -25,7 +25,6 @@ public sealed class WeatherSystem : SharedWeatherSystem
     {
         base.Initialize();
         SubscribeLocalEvent<WeatherComponent, ComponentHandleState>(OnWeatherHandleState);
-        SubscribeLocalEvent<WeatherComponent, ComponentShutdown>(OnWeatherRemoved);
     }
 
     protected override void Run(EntityUid uid, WeatherData weather, WeatherPrototype weatherProto, float frameTime)
@@ -137,8 +136,6 @@ public sealed class WeatherSystem : SharedWeatherSystem
         weather.Stream = _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true)?.Entity;
         return true;
     }
-
-    private void OnWeatherRemoved(EntityUid uid, WeatherComponent component, ref ComponentShutdown args) => component.Weather.ToList().ForEach(w => EndWeather(uid, component, w.Key));
     private void OnWeatherHandleState(EntityUid uid, WeatherComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not WeatherComponentState state)
