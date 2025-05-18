@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kosticia
-  changes:
-  - message: Fire resists now can be examined.
-    type: Add
-  id: 8016
-  time: '2025-02-27T12:39:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35183
 - author: aada
   changes:
   - message: Filter categories have been added to the uniform printer.
@@ -3921,3 +3914,11 @@
   id: 8518
   time: '2025-05-18T07:47:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36112
+- author: ScarKy0
+  changes:
+  - message: Deliveries can now very rarely spawn as bomb-type! They grant A LOT of
+      spesos... at a price.
+    type: Add
+  id: 8519
+  time: '2025-05-18T08:57:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37069
