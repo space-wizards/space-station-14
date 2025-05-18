@@ -137,6 +137,7 @@
   - type: ReplacementAccent
     accent: tomatoKiller
   - type: Item
+  - type: MultiHandedItem
   - type: NpcFactionMember
     factions:
       - SimpleHostile
@@ -210,9 +211,7 @@
     group: GenericNumber
   - type: FootstepModifier
     footstepSoundCollection:
-      path: /Audio/Effects/Footsteps/slime1.ogg
-      params:
-        volume: 3
+      collection: FootstepSlime
   - type: Tag
     tags:
       - FootstepSound
