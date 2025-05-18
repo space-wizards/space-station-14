@@ -63,7 +63,7 @@ public sealed partial class ResearchSystem
     public void RegisterClient(EntityUid client, EntityUid server, ResearchClientComponent? clientComponent = null,
         ResearchServerComponent? serverComponent = null,  bool dirtyServer = true)
     {
-        if (!Resolve(client, ref clientComponent) || !Resolve(server, ref serverComponent))
+        if (!Resolve(client, ref clientComponent, false) || !Resolve(server, ref serverComponent, false))
             return;
 
         if (serverComponent.Clients.Contains(client))
