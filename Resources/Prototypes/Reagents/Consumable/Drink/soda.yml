@@ -140,7 +140,8 @@
   desc: reagent-desc-lemon-lime-clown-juice
   physicalDesc: reagent-physical-desc-fizzy
   flavor: funny
-  slippery: true
+  slipData:
+    requiredSlipSpeed: 3 # Slightly more slippery than regular soda
   color: "#A8CC84"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/clownjuice.rsi
