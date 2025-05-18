@@ -99,7 +99,7 @@
     heldPrefix: heart
   - type: Metabolizer
     updateInterval: 1.5
-    maxReagents: 2
+    maxPoisons: 2
     metabolizerTypes: [Arachnid]
     groups:
     - id: Medicine
@@ -120,7 +120,7 @@
     state: liver
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
     updateInterval: 1.5
-    maxReagents: 1
+    maxPoisons: 1
     metabolizerTypes: [Animal]
     groups:
     - id: Alcohol
@@ -143,7 +143,7 @@
     heldPrefix: kidneys
   - type: Metabolizer
     updateInterval: 1.5
-    maxReagents: 5
+    maxPoisons: 5
     metabolizerTypes: [Animal]
     removeEmpty: true
 

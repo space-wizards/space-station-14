@@ -28,6 +28,7 @@ namespace Content.Server.Body.Systems
 
         private EntityQuery<OrganComponent> _organQuery;
         private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
+        private static readonly string PoisonGroup = "Poison";
 
         public override void Initialize()
         {
@@ -146,7 +147,7 @@ namespace Content.Server.Body.Systems
             var list = solution.Contents.ToArray();
             _random.Shuffle(list);
 
-            int reagents = 0;
+            int poisons = 0;
             foreach (var (reagent, quantity) in list)
             {
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
@@ -163,9 +164,9 @@ namespace Content.Server.Body.Systems
                     continue;
                 }
 
-                // we're done here entirely if this is true
-                if (reagents >= ent.Comp1.MaxReagentsProcessable)
-                    return;
+                // Already processed all poisons, skip to the next reagent.
+                if (poisons >= ent.Comp1.MaxPoisons && proto.Metabolisms.ContainsKey(PoisonGroup))
+                    continue;
 
 
                 // loop over all our groups and see which ones apply
@@ -223,8 +224,9 @@ namespace Content.Server.Body.Systems
                 {
                     solution.RemoveReagent(reagent, mostToRemove);
 
-                    // We have processed a reagant, so count it towards the cap
-                    reagents += 1;
+                    // We have processed a poison, so count it towards the cap
+                    if (proto.Metabolisms.ContainsKey(PoisonGroup))
+                        poisons++;
                 }
             }
 

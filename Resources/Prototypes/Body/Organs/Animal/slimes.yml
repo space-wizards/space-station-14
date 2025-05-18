@@ -9,7 +9,7 @@
       state: brain-slime
     - type: Stomach
     - type: Metabolizer
-      maxReagents: 3
+      maxPoisons: 3
       metabolizerTypes: [ Slime ]
       removeEmpty: true
       groups:

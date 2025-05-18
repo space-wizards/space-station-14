@@ -9,7 +9,7 @@
       state: brain-slime
     - type: Stomach
     - type: Metabolizer
-      maxReagents: 6
+      maxPoisons: 6
       metabolizerTypes: [ Slime ]
       removeEmpty: true
       groups:
@@ -37,7 +37,7 @@
       size: Small
       heldPrefix: brain
 
-      
+
 - type: entity
   id: OrganSlimeLungs
   parent: BaseHumanOrgan

@@ -84,7 +84,7 @@
           Quantity: 5
   - type: Stomach
   - type: Metabolizer
-    maxReagents: 3
+    maxPoisons: 3
     metabolizerTypes: [ Animal ]
     groups:
     - id: Food
@@ -117,7 +117,7 @@
     state: liver
   - type: Organ
   - type: Metabolizer
-    maxReagents: 1
+    maxPoisons: 1
     metabolizerTypes: [ Animal ]
     groups:
     - id: Alcohol
@@ -136,7 +136,7 @@
     state: heart-on
   - type: Organ
   - type: Metabolizer
-    maxReagents: 2
+    maxPoisons: 2
     metabolizerTypes: [ Animal ]
     groups:
     - id: Medicine
@@ -158,7 +158,7 @@
     - state: kidney-r
   - type: Organ
   - type: Metabolizer
-    maxReagents: 5
+    maxPoisons: 5
     metabolizerTypes: [ Animal ]
     removeEmpty: true
   - type: Item
