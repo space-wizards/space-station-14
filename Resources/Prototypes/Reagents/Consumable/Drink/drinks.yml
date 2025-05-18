@@ -458,7 +458,7 @@
             shouldHave: true
           damage:
             types:
-              Heat: 8
+              Heat: 3
 
 - type: reagent
   id: Ice
