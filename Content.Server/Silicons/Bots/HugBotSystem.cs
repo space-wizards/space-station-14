@@ -50,8 +50,8 @@ public sealed class HugBotSystem : SharedHugBotSystem
             // ... and if their cooldown is complete...
             if (huggedComp.CooldownCompleteAfter <= _gameTiming.CurTime)
             {
-                // ... remove it, allowing them to receive the blessing a hugs once more.
-                RemComp<RecentlyHuggedByHugBotComponent>(huggedEnt);
+                // ... remove it, allowing them to receive the blessing of hugs once more.
+                RemCompDeferred<RecentlyHuggedByHugBotComponent>(huggedEnt);
             }
         }
     }
