@@ -148880,26 +148880,6 @@ entities:
       parent: 2
     - type: PointLight
       color: '#FF3300FF'
-- proto: TelecomServer
-  entities:
-  - uid: 15019
-    components:
-    - type: MetaData
-      desc: An old server, stuck compiling an unknown program...
-      name: Computron
-    - type: Transform
-      pos: -57.5,-78.5
-      parent: 2
-    - type: ApcPowerReceiver
-      powerLoad: 500
-    missingComponents:
-    - Destructible
-    - Machine
-    - WiresPanel
-    - EncryptionKeyHolder
-    - TelecomServer
-    - ContainerContainer
-    - Construction
 - proto: TelecomServerCircuitboard
   entities:
   - uid: 4499

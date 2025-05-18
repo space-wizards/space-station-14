@@ -513,6 +513,33 @@
   id: EmitterBolt
 
 - type: Tag
+  id: EncryptionCargo
+
+- type: Tag
+  id: EncryptionCommand
+
+- type: Tag
+  id: EncryptionCommon
+
+- type: Tag
+  id: EncryptionElse
+
+- type: Tag
+  id: EncryptionEngineering
+
+- type: Tag
+  id: EncryptionMedical
+
+- type: Tag
+  id: EncryptionScience
+
+- type: Tag
+  id: EncryptionSecurity
+
+- type: Tag
+  id: EncryptionService
+
+- type: Tag
   id: Enzyme
 
 - type: Tag
