@@ -67,5 +67,8 @@ namespace Content.Server.Communications
         /// </summary>
         [DataField]
         public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
+
+        [DataField]
+        public bool AnnounceSentBy = true;
     }
 }
