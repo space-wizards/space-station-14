@@ -1,10 +1,8 @@
-using Content.Shared.CCVar;
 using Content.Shared.Flash;
 using Content.Shared.Flash.Components;
 using Content.Shared.StatusEffect;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -17,36 +15,21 @@ namespace Content.Client.Flash
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         private readonly SharedFlashSystem _flash;
         private readonly StatusEffectsSystem _statusSys;
 
-        // time scale for the rotation speed of the shader, used for the reduced motion setting
-        // 1: normal effect
-        // 0: no movement
-        private float _timeScale;
-
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;
         public float PercentComplete = 0.0f;
-        public float Phase = 0.0f;
         public Texture? ScreenshotTexture;
 
         public FlashOverlay()
         {
             IoCManager.InjectDependencies(this);
-
             _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").InstanceUnique();
             _flash = _entityManager.System<SharedFlashSystem>();
             _statusSys = _entityManager.System<StatusEffectsSystem>();
-
-            _configManager.OnValueChanged(CCVars.ReducedMotion, OnReducedMotionChanged, invokeImmediately: true);
-        }
-
-        private void OnReducedMotionChanged(bool reducedMotion)
-        {
-            _timeScale = reducedMotion ? 0.0f : 1.0f;
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -64,8 +47,8 @@ namespace Content.Client.Flash
                 return;
 
             var curTime = _timing.CurTime;
-            var lastsFor = (float)(time.Value.Item2 - time.Value.Item1).TotalSeconds;
-            var timeDone = (float)(curTime - time.Value.Item1).TotalSeconds;
+            var lastsFor = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
+            var timeDone = (float) (curTime - time.Value.Item1).TotalSeconds;
 
             PercentComplete = timeDone / lastsFor;
         }
@@ -92,8 +75,6 @@ namespace Content.Client.Flash
 
             var worldHandle = args.WorldHandle;
             _shader.SetParameter("percentComplete", PercentComplete);
-            _shader.SetParameter("timeScale", _timeScale); // rotation speed
-            _shader.SetParameter("phase", Phase); // random starting phase
             worldHandle.UseShader(_shader);
             worldHandle.DrawTextureRectRegion(ScreenshotTexture, args.WorldBounds);
             worldHandle.UseShader(null);

@@ -1,9 +1,9 @@
 using Content.Shared.Flash;
 using Content.Shared.Flash.Components;
+using Content.Shared.StatusEffect;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 
 namespace Content.Client.Flash;
 
@@ -11,7 +11,6 @@ public sealed class FlashSystem : SharedFlashSystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     private FlashOverlay _overlay = default!;
 
@@ -44,7 +43,6 @@ public sealed class FlashSystem : SharedFlashSystem
         if (_player.LocalEntity == uid)
         {
             _overlay.RequestScreenTexture = true;
-            _overlay.Phase = _random.NextFloat(MathF.Tau); // random starting phase for movement effect
             _overlayMan.AddOverlay(_overlay);
         }
     }
