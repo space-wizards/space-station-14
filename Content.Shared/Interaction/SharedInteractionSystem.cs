@@ -56,12 +56,11 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ISharedChatManager _chat = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedPhysicsSystem _broadphase = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -597,7 +596,7 @@ namespace Content.Shared.Interaction
 
             predicate ??= _ => false;
             var ray = new CollisionRay(origin.Position, dir.Normalized(), collisionMask);
-            var rayResults = _broadphase.IntersectRayWithPredicate(origin.MapId, ray, dir.Length(), predicate.Invoke, false).ToList();
+            var rayResults = _physics.IntersectRayWithPredicate(origin.MapId, ray, dir.Length(), predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0)
                 return dir.Length();
@@ -660,7 +659,7 @@ namespace Content.Shared.Interaction
             }
 
             var ray = new CollisionRay(origin.Position, dir.Normalized(), (int) collisionMask);
-            var rayResults = _broadphase.IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
+            var rayResults = _physics.IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
 
             return rayResults.Count == 0;
         }
@@ -762,7 +761,7 @@ namespace Content.Shared.Interaction
                 var xfB = new Transform(targetPos.Position, parentRotB + otherAngle);
 
                 // Different map or the likes.
-                if (!_broadphase.TryGetNearest(
+                if (!_physics.TryGetNearest(
                         origin,
                         other,
                         out _,
@@ -854,21 +853,38 @@ namespace Content.Shared.Interaction
 
             if (_itemQuery.HasComp(target) && _physicsQuery.TryComp(target, out var physics) && physics.CanCollide)
             {
-                // If the target is an item, we ignore any colliding entities. Currently done so that if items get stuck
-                // inside of walls, users can still pick them up.
-                // TODO: Bandaid, alloc spam
-                // We use 0.01 range just in case it's perfectly in between 2 walls and 1 gets missed.
-                foreach (var otherEnt in _lookup.GetEntitiesInRange(target, 0.01f, flags: LookupFlags.Static))
+                // If an item is stuck in a wall (or for example, 2 walls), due to any number of reasons (construction, spawning)
+                // we still need to be able to ideally retrieve it.
+                // Previously we checked for intersecting entities but this frequently causes issues
+                // Now we just ignore any entities it's contacting if the contact is perpendicular to us (such as in a seam that's facing us).
+                var contacts = _physics.GetContacts(target);
+                var targetDir = (targetCoords.Position - origin.Position).Normalized();
+
+                // If it's contacting anything then ignore that entity if it's in a seam (i.e. close to perpendicular normal).
+                while (contacts.MoveNext(out var contact))
                 {
-                    if (target == otherEnt ||
-                        !_physicsQuery.TryComp(otherEnt, out var otherBody) ||
-                        !otherBody.CanCollide ||
-                        ((int) collisionMask & otherBody.CollisionLayer) == 0x0)
+                    var otherBody = contact.OtherBody(target);
+
+                    if (!otherBody.CanCollide ||
+                        ((int)collisionMask & otherBody.CollisionLayer) == 0x0)
                     {
                         continue;
                     }
 
-                    ignored.Add(otherEnt);
+                    var transformA = _physics.GetPhysicsTransform(contact.EntityA);
+                    var transformB = _physics.GetPhysicsTransform(contact.EntityB);
+
+                    contact.GetWorldManifold(transformA, transformB, out var worldNormal);
+                    var crossProduct = Vector2Helpers.Cross(targetDir, worldNormal);
+                    var absCrossProduct = MathF.Abs(crossProduct);
+
+                    // Make sure it's sufficiently perpendicular.
+                    if (absCrossProduct < 0.99f)
+                    {
+                        continue;
+                    }
+
+                    ignored.Add(contact.OtherEnt(target));
                 }
             }
             else if (_wallMountQuery.TryComp(target, out var wallMount))
