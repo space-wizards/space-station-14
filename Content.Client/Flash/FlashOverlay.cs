@@ -30,7 +30,6 @@ namespace Content.Client.Flash
         private readonly ProtoId<ShaderPrototype> _flashedEffect = "FlashedEffect";
         private readonly ProtoId<ShaderPrototype> _flashedEffectReducedMotion = "FlashedEffectReducedMotion";
 
-
         public FlashOverlay()
         {
             IoCManager.InjectDependencies(this);
