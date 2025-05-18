@@ -66,9 +66,6 @@ public sealed partial class ResearchSystem
         if (!Resolve(client, ref clientComponent, false) || !Resolve(server, ref serverComponent, false))
             return;
 
-        if (TerminatingOrDeleted(server))
-            return;
-
         if (serverComponent.Clients.Contains(client))
             return;
 
@@ -76,7 +73,7 @@ public sealed partial class ResearchSystem
         clientComponent.Server = server;
         SyncClientWithServer(client, clientComponent: clientComponent);
 
-        if (dirtyServer)
+        if (dirtyServer && !TerminatingOrDeleted(server))
             Dirty(server, serverComponent);
 
         var ev = new ResearchRegistrationChangedEvent(server);
@@ -114,14 +111,11 @@ public sealed partial class ResearchSystem
         if (!Resolve(client, ref clientComponent, false) || !Resolve(server, ref serverComponent, false))
             return;
 
-        if (TerminatingOrDeleted(server))
-            return;
-
         serverComponent.Clients.Remove(client);
         clientComponent.Server = null;
         SyncClientWithServer(client, clientComponent: clientComponent);
 
-        if (dirtyServer)
+        if (dirtyServer && !TerminatingOrDeleted(server))
         {
             Dirty(server, serverComponent);
         }
