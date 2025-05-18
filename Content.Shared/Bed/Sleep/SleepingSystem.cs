@@ -140,7 +140,9 @@ public sealed partial class SleepingSystem : EntitySystem
 
     private void OnSpeakAttempt(Entity<SleepingComponent> ent, ref SpeakAttemptEvent args)
     {
-        // TODO reduce duplication of this behavior with MobStateSystem somehow
+        if (Comp<MobStateComponent>(ent).CurrentState != MobState.Alive)
+            args.Cancel();
+
         if (HasComp<AllowNextCritSpeechComponent>(ent))
         {
             RemCompDeferred<AllowNextCritSpeechComponent>(ent);
