@@ -39,15 +39,10 @@ public abstract partial class SharedStatusEffectsSystem
         if (!CanAddStatusEffect(uid, effectProto))
             return false;
 
-        //Technically, on the client, all checks have been successful and we do not need to execute further code
-        //related to entity spawning, as this is the server's responsibility.
-        if (_net.IsClient)
-            return true;
-
         EnsureComp<StatusEffectContainerComponent>(uid, out var container);
 
         //And only if all checks passed we spawn the effect
-        var effect = SpawnAttachedTo(effectProto, Transform(uid).Coordinates);
+        var effect = PredictedSpawnAttachedTo(effectProto, Transform(uid).Coordinates);
         _transform.SetParent(effect, uid);
         if (!_effectQuery.TryComp(effect, out var effectComp))
             return false;
@@ -67,7 +62,7 @@ public abstract partial class SharedStatusEffectsSystem
 
     /// <summary>
     /// Attempting to remove a status effect from an entity.
-    /// Returns True if the status effect existed on the entity and was successfully removed, and False in any other case.
+    /// Returns True if the status effect existed on the entity and was successfully removed, and False in otherwise.
     /// </summary>
     public bool TryRemoveStatusEffect(EntityUid uid, EntProtoId effectProto)
     {
@@ -147,15 +142,12 @@ public abstract partial class SharedStatusEffectsSystem
     /// <param name="container">Optional. The status effect container component of the entity.</param>
     public bool TryGetTime(EntityUid uid,
         EntProtoId effectProto,
-        out (EntityUid EffectEnt, TimeSpan RemainigTime) time,
+        out (EntityUid EffectEnt, TimeSpan? RemainigTime) time,
         StatusEffectContainerComponent? container = null)
     {
         time = default;
-        if (container == null)
-        {
-            if (!_containerQuery.TryComp(uid, out container))
-                return false;
-        }
+        if (!Resolve(uid, ref container))
+            return false;
 
         foreach (var effect in container.ActiveStatusEffects)
         {
@@ -165,7 +157,7 @@ public abstract partial class SharedStatusEffectsSystem
                 if (!_effectQuery.TryComp(effect, out var effectComp))
                     return false;
 
-                time = (effect, effectComp.EndEffectTime ?? TimeSpan.Zero);
+                time = (effect, effectComp.EndEffectTime);
                 return true;
             }
         }

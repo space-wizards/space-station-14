@@ -47,8 +47,11 @@ public sealed class DrowsinessOverlay : Overlay
         if (!statusSys.TryGetTime(playerEntity.Value, SleepingSystem.StatusEffectForcedSleeping, out var effect))
             return;
 
+        if (effect.RemainigTime is null)
+            return;
+
         var curTime = _timing.CurTime;
-        var timeLeft = (float)(effect.RemainigTime - curTime).TotalSeconds;
+        var timeLeft = (float)(effect.RemainigTime - curTime).Value.TotalSeconds;
 
         CurrentPower += 8f * (0.5f * timeLeft - CurrentPower) * args.DeltaSeconds / (timeLeft + 1);
     }
