@@ -44,8 +44,7 @@
                        Access="Public"
                        HorizontalExpand="True"
                        VerticalExpand="True"
-                       StyleClasses="LabelSubText"
-                       ClipText="True" />
+                       StyleClasses="LabelSubText" />
 
                 <Label Name="Description"
                        Access="Public"

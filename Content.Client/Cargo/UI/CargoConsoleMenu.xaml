@@ -93,7 +93,8 @@
               <!-- Right Part -->
               <BoxContainer Orientation="Vertical"
                   SizeFlagsStretchRatio="0.8"
-                  HorizontalExpand="True">
+                  HorizontalExpand="True"
+                  Name="RightPart">
 
                   <!-- Requests Part -->
                   <BoxContainer Orientation="Vertical"
@@ -153,8 +154,7 @@
                           <BoxContainer Orientation="Vertical"
                               Margin="6">
                               <ScrollContainer VerticalExpand="True">
-                                  <BoxContainer Name="Orders"
-                                      Orientation="Vertical"
+                                  <BoxContainer Orientation="Vertical"
                                       StyleClasses="transparentItemList"
                                       VerticalExpand="True"
                                       SeparationOverride="6">
