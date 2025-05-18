@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DieselMohawk
-  changes:
-  - message: Joints and Blunts now have randomized names.
-    type: Fix
-  id: 8011
-  time: '2025-02-26T23:37:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35544
 - author: Pumkin69
   changes:
   - message: Wizard now has a stamp.
@@ -3922,3 +3915,10 @@
   id: 8513
   time: '2025-05-18T04:04:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36821
+- author: 0leshe
+  changes:
+  - message: Changed max and minimum amount of jigger transfer amount
+    type: Tweak
+  id: 8514
+  time: '2025-05-18T04:14:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35962
