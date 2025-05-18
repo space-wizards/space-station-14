@@ -35,6 +35,7 @@ wires-board-name-dawinstrument = DawInstrument
 wires-board-name-airlock = Airlock Control
 wires-board-name-firelock = Firelock Control
 wires-board-name-windoor = Windoor Control
+wires-board-name-turnstile = Turnstile Control
 wires-board-name-mech = Mech
 wires-board-name-fatextractor = FatExtractor
 wires-board-name-flatpacker = Flatpacker
