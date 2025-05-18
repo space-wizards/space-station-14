@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pumkin69
-  changes:
-  - message: Wizard now has a stamp.
-    type: Add
-  id: 8012
-  time: '2025-02-27T08:26:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35552
 - author: MilenVolf
   changes:
   - message: Insect and Ammonia blood can be broken down in centrifuge.
@@ -3922,3 +3915,12 @@
   id: 8514
   time: '2025-05-18T04:14:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35962
+- author: ArtisticRoomba
+  changes:
+  - message: Air grenades have been added! These can fill up a spaced room of ~30
+      tiles with fresh air. They can be found in Atmospheric Technician's lockers.
+      Use them wisely!
+    type: Add
+  id: 8515
+  time: '2025-05-18T04:32:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37531
