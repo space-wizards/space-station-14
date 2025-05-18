@@ -55,12 +55,12 @@ namespace Content.Server.Body.Components
         public bool RemoveEmpty = false;
 
         /// <summary>
-        ///     How many reagents can this metabolizer process at once?
+        ///     How many poisons can this metabolizer process at once?
         ///     Used to nerf 'stacked poisons' where having 5+ different poisons in a syringe, even at low
         ///     quantity, would be muuuuch better than just one poison acting.
         /// </summary>
-        [DataField("maxReagents")]
-        public int MaxReagentsProcessable = 3;
+        [DataField("maxPoisons")]
+        public int MaxPoisonsProcessable = 3;
 
         /// <summary>
         ///     A list of metabolism groups that this metabolizer will act on, in order of precedence.

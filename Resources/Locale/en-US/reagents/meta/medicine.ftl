@@ -17,7 +17,22 @@ reagent-name-cryoxadone = cryoxadone
 reagent-desc-cryoxadone = Required for the proper function of cryogenics. Used to treat bloodloss and asphyxiation, as well as to restore bodily fluids such as blood. It can treat and rejuvenate plants when applied in small doses. Works regardless of the patient being alive or dead.
 
 reagent-name-doxarubixadone = doxarubixadone
-reagent-desc-doxarubixadone = A cryogenics chemical. Heals cellular damage caused by dangerous gasses and chemicals.
+reagent-desc-doxarubixadone = A cryogenics chemical. Heals certain types of cellular damage done by Slimes and improper use of other chemicals. Works regardless of the patient being alive or dead.
+
+reagent-name-traumoxadone = traumoxadone
+reagent-desc-traumoxadone = A cryogenics chemical. Used to treat severe trauma via regeneration of the damaged tissue. Works regardless of the patient being alive or dead.  Product of Mystic Medical
+
+reagent-name-stelloxadone = stelloxadone
+reagent-desc-stelloxadone = A cryogenics chemical. Used to aggressively dissolve toxins from the body. Works regardless of the patient being alive or dead.  Product of Mystic Medical
+
+reagent-name-opporozidone = opporozidone
+reagent-desc-opporozidone= A difficult to synthesize cryogenic drug used to regenerate rotting tissue and brain matter.
+
+reagent-name-necrosol = necrosol
+reagent-desc-necrosol = A necrotic substance that seems to be able to heal frozen corpses. It can treat and rejuvenate plants when applied in small doses.
+
+reagent-name-aloxadone = aloxadone
+reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe burns and frostbite via regeneration of the affected tissue. Works regardless of the patient being alive or dead.
 
 reagent-name-dermaline = dermaline
 reagent-desc-dermaline = An advanced chemical that is more effective at treating burn damage than kelotane.
@@ -127,18 +142,6 @@ reagent-desc-pyrazine = Efficiently heals burns from the hottest of fires. Cause
 reagent-name-insuzine = insuzine
 reagent-desc-insuzine = Rapidly repairs dead tissue caused by electrocution, but cools you slightly. Completely freezes the patient when overdosed.
 
-reagent-name-opporozidone = opporozidone
-reagent-desc-opporozidone= A difficult to synthesize cryogenic drug used to regenerate rotting tissue and brain matter.
-
-reagent-name-necrosol = necrosol
-reagent-desc-necrosol = A necrotic substance that seems to be able to heal frozen corpses. It can treat and rejuvenate plants when applied in small doses.
-
-reagent-name-aloxadone = aloxadone
-reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe burns and frostbite via regeneration of the affected tissue. Works regardless of the patient being alive or dead.
-
-reagent-name-traumoxadone = traumoxadone
-reagent-desc-traumoxadone = A cryogenics chemical. Used to treat severe trauma to tissues via patching them with tiny particles within the liquid. Works regardless of the patient being alive or dead.
-
 reagent-name-mannitol = mannitol
 reagent-desc-mannitol = Efficiently restores brain damage.
 
@@ -150,6 +153,3 @@ reagent-desc-potassium-iodide = Will reduce the damaging effects of radiation by
 
 reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
-
-reagent-name-stelloxadone = stelloxadone
-reagent-desc-stelloxadone = A cryogenics chemical. Used to aggressively dissolve toxins from the body. Works regardless of the patient being alive or dead.

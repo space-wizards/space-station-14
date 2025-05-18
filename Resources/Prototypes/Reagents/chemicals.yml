@@ -185,3 +185,18 @@
         key: Adrenaline
         component: IgnoreSlowOnDamage
         time: 120
+
+- type: reagent
+  id: SalicylicAcid
+  name: reagent-name-salicylicacid
+  desc: reagent-desc-salicylicacid
+  physicalDesc: reagent-physical-desc-powdery
+  color: "#EEEEEE"
+
+- type: reagent
+  id: Formaldehyde
+  name: reagent-name-formaldehyde
+  desc: reagent-desc-formaldehyde
+  physicalDesc: reagent-physical-desc-sickly
+  color: "#F26724"
+  

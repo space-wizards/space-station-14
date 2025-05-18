@@ -30,3 +30,9 @@ reagent-desc-cellulose = A crystaline polydextrose polymer, plants swear by this
 
 reagent-name-rororium = rororium
 reagent-desc-rororium = A strange substance which fills the cores of the hivelords that roam the mining asteroid. Thought to be the source of their regenerative powers.
+
+reagent-name-salicylicacid = salicylic acid
+reagent-desc-salicylicacid = A powdery substance used for dermatological treatments.
+
+reagent-name-formaldehyde = formaldehyde
+reagent-desc-formaldehyde = A yellowish substance used for peservation of tissue.

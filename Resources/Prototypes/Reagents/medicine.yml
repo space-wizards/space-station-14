@@ -185,7 +185,7 @@
     Medicine:
       effects:
         - !type:ModifyBloodLevel
-          amount: 4
+          amount: 5
         - !type:HealthChange
           conditions:
           - !type:Temperature
@@ -213,7 +213,127 @@
             max: 213.0
           damage:
             types:
-             Cellular: -2
+             Cellular: -4
+
+- type: reagent
+  id: Necrosol
+  name: reagent-name-necrosol
+  group: Medicine
+  desc: reagent-desc-necrosol
+  physicalDesc: reagent-physical-desc-necrotic
+  flavor: medicine
+  color: "#86a5bd"
+  worksOnTheDead: true
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: -5
+  - !type:PlantAdjustHealth
+    amount: 5
+  - !type:PlantCryoxadone {}
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:Temperature
+            max: 213.0
+          damage:
+            groups:
+              Brute: -4
+              Burn: -5
+            types:
+              Poison: -2
+
+- type: reagent
+  id : Aloxadone
+  name: reagent-name-aloxadone
+  group: Medicine
+  desc: reagent-desc-aloxadone
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: medicine
+  color: "#89f77f"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:Temperature
+          max: 213.0
+        damage:
+          types:
+            Cold: -3.0
+            Heat: -3.0
+            Shock: -3.0
+            Caustic: -1
+
+            
+- type: reagent
+  id: Stelloxadone
+  name: reagent-name-stelloxadone
+  group: Medicine
+  desc: reagent-desc-stelloxadone
+  physicalDesc: reagent-physical-desc-murky
+  flavor: medicine
+  color: "#FFC683"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:Temperature
+          max: 213.0
+        damage:
+          types:
+            Poison: -6
+            Radiation: -3
+            Cellular: 1
+          groups:
+            Brute: 3
+
+- type: reagent
+  id : Traumoxadone
+  name: reagent-name-traumoxadone
+  group: Medicine
+  desc: reagent-desc-traumoxadone
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: medicine
+  color: "#880077"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:Temperature
+          max: 213.0
+        damage:
+          types:
+            Blunt: -2
+            Piercing: -2
+            Slash: -2
+
+- type: reagent
+  id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
+  name: reagent-name-opporozidone
+  group: Medicine
+  desc: reagent-desc-opporozidone
+  physicalDesc: reagent-physical-desc-sickly
+  flavor: acid
+  color: "#b5e36d"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:ReduceRotting
+          seconds: 20
+          conditions:
+          #Patient must be dead and in a cryo tube (or something cold)
+          - !type:Temperature
+            max: 150.0
+          - !type:MobStateCondition
+            mobstate: Dead
 
 - type: reagent
   id: Dermaline
@@ -1206,98 +1326,6 @@
           min: 12
 
 - type: reagent
-  id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
-  name: reagent-name-opporozidone
-  group: Medicine
-  desc: reagent-desc-opporozidone
-  physicalDesc: reagent-physical-desc-sickly
-  flavor: acid
-  color: "#b5e36d"
-  worksOnTheDead: true
-  metabolisms:
-    Medicine:
-      effects:
-        - !type:ReduceRotting
-          seconds: 20
-          conditions:
-          #Patient must be dead and in a cryo tube (or something cold)
-          - !type:Temperature
-            max: 150.0
-          - !type:MobStateCondition
-            mobstate: Dead
-
-- type: reagent
-  id: Necrosol
-  name: reagent-name-necrosol
-  group: Medicine
-  desc: reagent-desc-necrosol
-  physicalDesc: reagent-physical-desc-necrotic
-  flavor: medicine
-  color: "#86a5bd"
-  worksOnTheDead: true
-  plantMetabolism:
-  - !type:PlantAdjustToxins
-    amount: -5
-  - !type:PlantAdjustHealth
-    amount: 5
-  - !type:PlantCryoxadone {}
-  metabolisms:
-    Medicine:
-      effects:
-        - !type:HealthChange
-          conditions:
-          - !type:Temperature
-            max: 213.0
-          damage:
-            groups:
-              Brute: -4
-              Burn: -5
-            types:
-              Poison: -2
-
-- type: reagent
-  id : Aloxadone
-  name: reagent-name-aloxadone
-  group: Medicine
-  desc: reagent-desc-aloxadone
-  physicalDesc: reagent-physical-desc-soothing
-  flavor: medicine
-  color: "#89f77f"
-  worksOnTheDead: true
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        conditions:
-        - !type:Temperature
-          max: 213.0
-        damage:
-          types:
-            Cold: -4.0
-            Heat: -4.0
-            Shock: -4.0
-            Caustic: -1.5
-
-- type: reagent
-  id: Traumoxadone
-  name: reagent-name-traumoxadone
-  group: Medicine
-  desc: reagent-desc-traumoxadone
-  physicalDesc: reagent-physical-desc-cloudy
-  flavor: medicine
-  color: "#69304D"
-  worksOnTheDead: true
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:EvenHealthChange
-        conditions:
-        - !type:Temperature
-          max: 213.0
-        damage:
-          Brute: -4
-
-- type: reagent
   id : Mannitol # currently this is just a way to create psicodine
   name: reagent-name-mannitol
   group: Medicine
@@ -1439,27 +1467,3 @@
       - !type:AdjustReagent
         reagent: MindbreakerToxin
         amount: -3.0
-
-- type: reagent
-  id: Stelloxadone
-  name: reagent-name-stelloxadone
-  group: Medicine
-  desc: reagent-desc-stelloxadone
-  physicalDesc: reagent-physical-desc-murky
-  flavor: medicine
-  color: "#FFC683"
-  worksOnTheDead: true
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        conditions:
-        - !type:Temperature
-          max: 213.0
-        damage:
-          groups:
-            Brute: 3
-            Genetic: 1
-          types:
-            Poison: -6
-            Radiation: -3
