@@ -66,6 +66,9 @@ public sealed partial class ResearchSystem
         if (!Resolve(client, ref clientComponent, false) || !Resolve(server, ref serverComponent, false))
             return;
 
+        if (TerminatingOrDeleted(server))
+            return;
+
         if (serverComponent.Clients.Contains(client))
             return;
 
@@ -109,6 +112,9 @@ public sealed partial class ResearchSystem
         ResearchServerComponent? serverComponent = null, bool dirtyServer = true)
     {
         if (!Resolve(client, ref clientComponent, false) || !Resolve(server, ref serverComponent, false))
+            return;
+
+        if (TerminatingOrDeleted(server))
             return;
 
         serverComponent.Clients.Remove(client);
