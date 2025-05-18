@@ -232,7 +232,7 @@
   - type: Appearance
 
 - type: entity
-  parent: [ClothingBeltAmmoProviderBase, BaseSovietContraband]
+  parent: [ClothingBeltStorageBase, BaseSovietContraband]
   id: ClothingSovietBandolier
   name: Bandolier
   description: A rugged bandolier designed to carry extra ammunition.
@@ -243,8 +243,11 @@
     sprite: _Starlight/Clothing/Belt/soviet_bandolier.rsi
   - type: Item
     size: Normal
-  - type: BallisticAmmoProvider
+  - type: Storage
     whitelist:
       tags:
-        - ShellShotgun
-    capacity: 20
+        - Radio
+        - Knife
+      components:
+        - BallisticAmmoProvider
+        - Ammo

@@ -72,7 +72,7 @@
         startingItem: MagazineLightRifleMaxim
         whitelist:
           tags:
-            - LightRifleHeavy
+            - MagazineLightRiflePan
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifleSP
@@ -85,6 +85,6 @@
     maxAngle: 25
     angleIncrease: 2
     angleDecay: 10
-    fireRate: 7
+    fireRate: 5
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/dp28.ogg
