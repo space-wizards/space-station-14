@@ -5811,4 +5811,11 @@ Entries:
   id: 805
   time: '2025-05-15T23:45:21.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/611
+- author: Cyanogen (AutumnalModding)
+  changes:
+  - message: NTR and BSO playtime, 62k seconds -> 72k (20h)
+    type: Tweak
+  id: 806
+  time: '2025-05-18T17:21:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/644
 
