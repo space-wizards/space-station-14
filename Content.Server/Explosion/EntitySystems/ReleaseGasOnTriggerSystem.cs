@@ -12,6 +12,7 @@ namespace Content.Server.Explosion.EntitySystems;
 /// </summary>
 public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTriggerSystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -30,6 +31,7 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
         ent.Comp.Active = true;
         ent.Comp.NextReleaseTime = _timing.CurTime;
         ent.Comp.StartingTotalMoles = ent.Comp.Air.TotalMoles;
+        UpdateAppearance(ent.Owner, true);
     }
 
     public override void Update(float frameTime)
@@ -49,7 +51,8 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
 
             if (environment == null)
             {
-                QueueDel(uid);
+                UpdateAppearance(uid, false);
+                RemCompDeferred<ReleaseGasOnTriggerComponent>(uid);
                 continue;
             }
 
@@ -59,7 +62,8 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
             if (comp.PressureLimit != 0 && environment.Pressure >= comp.PressureLimit ||
                 comp.Air.TotalMoles <= 0)
             {
-                QueueDel(uid);
+                UpdateAppearance(uid, false);
+                RemCompDeferred<ReleaseGasOnTriggerComponent>(uid);
                 continue;
             }
 
@@ -76,5 +80,13 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
     {
         comp.TimesReleased++;
         comp.RemoveFraction = 1f - MathF.Pow(1f - baseFraction, comp.TimesReleased);
+    }
+
+    private void UpdateAppearance(Entity<AppearanceComponent?> entity, bool state)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
+        _appearance.SetData(entity, ReleaseGasOnTriggerComponent.ReleaseGasOnTriggerVisuals.Key, state);
     }
 }

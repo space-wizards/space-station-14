@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Atmos;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Explosion.Components.OnTrigger;
@@ -11,6 +12,16 @@ namespace Content.Shared.Explosion.Components.OnTrigger;
 [AutoGenerateComponentPause]
 public sealed partial class ReleaseGasOnTriggerComponent : Component
 {
+    /// <summary>
+    /// Represents visual states for whatever visuals that need to be applied
+    /// on state changes.
+    /// </summary>
+    [Serializable] [NetSerializable]
+    public enum ReleaseGasOnTriggerVisuals : byte
+    {
+        Key,
+    }
+
     /// <summary>
     /// Whether this grenade is active and releasing gas.
     /// Set to true when triggered, which starts gas release.

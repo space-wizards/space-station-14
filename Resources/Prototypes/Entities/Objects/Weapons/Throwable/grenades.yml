@@ -468,10 +468,7 @@
   description: A special solid state chemical grenade used for quickly releasing standard air into a spaced area. Fills up to 30 tiles!
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Grenades/metalfoam.rsi
-  - type: SmokeOnTrigger
-    duration: 5
-    spreadAmount: 15
+    sprite: Objects/Weapons/Grenades/airboom.rsi
   - type: SoundOnTrigger
     sound: /Audio/Items/smoke_grenade_smoke.ogg
   - type: TimerTriggerVisuals
@@ -489,6 +486,12 @@
       temperature: 293.15
   - type: StaticPrice
     price: 350
+  - type: GenericVisualizer
+    visuals:
+      enum.ReleaseGasOnTriggerVisuals.Key:
+        enabled:
+          True: { state: active }
+          False: { state: spent }
 
 # Non-explosive "dummy" grenades to use as a distraction.
 
