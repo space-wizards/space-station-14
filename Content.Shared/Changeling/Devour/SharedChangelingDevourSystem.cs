@@ -53,8 +53,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 
     private void OnMapInit(Entity<ChangelingDevourComponent> ent, ref MapInitEvent args)
     {
-        if(!ent.Comp.ChangelingDevourActionEntity.HasValue)
-            _actionsSystem.AddAction(ent, ref ent.Comp.ChangelingDevourActionEntity, ent.Comp.ChangelingDevourAction);
+        _actionsSystem.AddAction(ent, ref ent.Comp.ChangelingDevourActionEntity, ent.Comp.ChangelingDevourAction);
     }
 
     private void OnConsumeAttemptTick(Entity<ChangelingDevourComponent> ent,
