@@ -230,7 +230,7 @@
   parent: BaseGameRule
   components:
   - type: GameRule
-    minPlayers: 999 # TODO: make this reasonable once Changeling is out of WIP
+    minPlayers: 25
   - type: AntagSelection
     definitions:
     - prefRoles: [ Changeling ]
