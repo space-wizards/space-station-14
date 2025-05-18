@@ -27,6 +27,7 @@
           variation: 0.05
           volume: 10
     - type: UseDelay
+    - type: ExtinguishableSetCollisionWake
     - type: Flammable
       fireSpread: false
       canResistFire: false
@@ -74,7 +75,6 @@
       left:
       - state: inhand-left
         color: "#a12349"
-      - state: inhand-left-flame
       right:
       - state: inhand-right
         color: "#a12349"

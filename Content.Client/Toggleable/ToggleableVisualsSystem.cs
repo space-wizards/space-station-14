@@ -9,6 +9,7 @@ using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.Inventory;
 using Content.Shared.Light.Components;
+using Robust.Shared.EntitySerialization.Components;
 
 namespace Content.Client.Toggleable;
 
@@ -22,6 +23,7 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
 {
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -44,11 +46,11 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
 
         // Update the item's sprite
         if (args.Sprite != null && component.SpriteLayer != null &&
-            args.Sprite.LayerMapTryGet(component.SpriteLayer, out var layer))
+            _sprite.LayerMapTryGet((uid, args.Sprite), component.SpriteLayer, out var layer, false))
         {
-            args.Sprite.LayerSetVisible(layer, enabled);
+            _sprite.LayerSetVisible((uid, args.Sprite), layer, enabled);
             if (modulateColor)
-                args.Sprite.LayerSetColor(layer, color);
+                _sprite.LayerSetColor((uid, args.Sprite), component.SpriteLayer, color);
         }
 
         // If there's a `ItemTogglePointLightComponent` that says to apply the color to attached lights, do so.

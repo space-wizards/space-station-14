@@ -5,6 +5,7 @@
 desc             = "Official English Space Station 14 servers. Vanilla, roleplay ruleset."
 lobbyenabled     = true
 soft_max_players = 80
+lobbyduration    = 300 # 5 minutes lobby timer
 panic_bunker.enabled = true
 panic_bunker.min_overall_minutes = 120
 panic_bunker.disable_with_admins = true
@@ -32,7 +33,7 @@ appeal     = "https://appeal.ss14.io"
 rules_file = "StandardRuleset"
 
 [movement]
-mob_pushing = true
+mob_pushing = false
 
 [net]
 max_connections = 1024
@@ -51,10 +52,7 @@ alert.min_players_sharing_connection = 2
 allow_multi_server_play = false
 
 [atmos]
-max_explosion_range = 5
-
-[worldgen]
-enabled = true
+max_explosion_range = 10
 
 [status]
 privacy_policy_link = "https://spacestation14.com/about/privacy/#game-server-privacy-policy"
