@@ -235,7 +235,7 @@ public abstract class SharedWeatherSystem : EntitySystem
         return true;
     }
 
-    private void OnWeatherRemoved(EntityUid uid, WeatherComponent component, ref ComponentShutdown args) => component.Weather.ToList().ForEach(w => EndWeather(uid, component, w.Key));
+    private void OnWeatherRemoved(Entity<WeatherComponent> weatherEnt, ref ComponentShutdown args) => weatherEnt.Comp.Weather.ToList().ForEach(w => EndWeather(weatherEnt.Owner, weatherEnt.Comp, w.Key));
 
     [Serializable, NetSerializable]
     protected sealed class WeatherComponentState : ComponentState
