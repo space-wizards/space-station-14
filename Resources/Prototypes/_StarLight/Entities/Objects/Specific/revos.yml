@@ -78,17 +78,17 @@
 - type: entity
   parent: [BaseUplinkRadio, BaseSovietContraband, StorePresetUSSP]
   id: BaseRevUplinkRadio
-  name: USSP uplink
+  name: USSP uplink radio
   description: Suspiciously looking old radio... a hammer and sickle is ingrained in it.
   suffix: Empty
   components:
   - type: Sprite
-    sprite: _Starlight/Objects/Devices/communications.rsi
+    sprite: _Starlight/Objects/Devices/ussp-radio.rsi
     layers:
-    - state: rev-radio
+    - state: ussp-radio
   - type: Item
-    sprite: _Starlight/Objects/Devices/communications.rsi
-    heldPrefix: rev-radio-inhand-left
+    sprite: _Starlight/Objects/Devices/ussp-radio.rsi
+    heldPrefix: ussp-radio-inhand-left
   - type: UserInterface
     interfaces:
       enum.StoreUiKey.Key:
