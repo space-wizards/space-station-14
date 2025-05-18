@@ -27,7 +27,7 @@ public sealed class SlotBasedConnectedContainerSystem : EntitySystem
     /// </summary>
     /// <param name="uid">
     /// Entity for which connected container is required. If <see cref="SlotBasedConnectedContainerComponent"/>
-    /// is used - tries to find container in slot, returns false and null <see cref="slotEntity"/> otherwise. 
+    /// is used - tries to find container in slot, returns false and null <see cref="slotEntity"/> otherwise.
     /// </param>
     /// <param name="slotEntity">Found connected container entity or null.</param>
     /// <returns>True if connected container was found, false otherwise.</returns>
