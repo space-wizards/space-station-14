@@ -1,5 +1,5 @@
 - type: listing
-  id: AKMSweapon
+  id: SNKVDAKMSweapon
   name: akms-weapon-name
   description: akms-weapon-desc
   productEntity: WeaponRifleAk
@@ -20,7 +20,7 @@
   - RevUplinkPassive
 
 - type: listing
-  id: SovietEVABundle
+  id: SNKVDSovietEVABundle
   name: soviet-eva-name
   description: soviet-eva-desc
   productEntity: ClothingBackpackDuffelSovietEVABundle
@@ -31,3 +31,16 @@
   conditions:
   - !type:StockLimitedListingCondition
     stockLimit: 4
+
+- type: listing
+  id: SNKVDDP28
+  name: dp-name
+  description: dp-desc
+  productEntity: WeaponLightMachineGunDP28
+  cost:
+    Telebond: 15
+  categories:
+  - RevUplinkWeaponry
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1

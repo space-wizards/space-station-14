@@ -18,3 +18,7 @@ soviet-eva-helm-desc = A sturdy EVA helmet with a red star emblazoned on the fro
 # AKMS weapon
 akms-weapon-name = AKMS Rifle
 akms-weapon-desc = Discontinued but a reliable assault rifle still in broad use today. Uses .30 ammo.
+
+# DP-28
+dp-name = DP-28 LMG
+dp-desc = From RA-TA-TA-TA with love. Uses .30 ammo.
