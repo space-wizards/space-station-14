@@ -1,7 +1,6 @@
+using Content.Shared.Body.Components;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
-
-using Content.Server.Body.Components;
 
 namespace Content.Server.EntityEffects.EffectConditions;
 
@@ -21,8 +20,8 @@ public sealed partial class Internals : EntityEffectCondition
         if (!args.EntityManager.TryGetComponent(args.TargetEntity, out InternalsComponent? internalsComp))
             return !UsingInternals; // They have no internals to wear.
 
-        var InternalsState = (internalsComp.GasTankEntity == null);
-        return UsingInternals == InternalsState;
+        var internalsState = internalsComp.GasTankEntity == null;
+        return UsingInternals == internalsState;
     }
 
     public override string GuidebookExplanation(IPrototypeManager prototype)

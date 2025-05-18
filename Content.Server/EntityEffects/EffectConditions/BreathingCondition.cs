@@ -1,8 +1,7 @@
-using Content.Shared.EntityEffects;
-using Robust.Shared.Prototypes;
-
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
+using Content.Shared.EntityEffects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityEffects.EffectConditions;
 
@@ -22,8 +21,8 @@ public sealed partial class Breathing : EntityEffectCondition
         if (!args.EntityManager.TryGetComponent(args.TargetEntity, out RespiratorComponent? respiratorComp))
             return !IsBreathing; // They do no breathe.
 
-        var BreathingState = args.EntityManager.System<RespiratorSystem>().IsBreathing((args.TargetEntity, respiratorComp));
-        return IsBreathing == BreathingState;
+        var breathingState = args.EntityManager.System<RespiratorSystem>().IsBreathing((args.TargetEntity, respiratorComp));
+        return IsBreathing == breathingState;
     }
 
     public override string GuidebookExplanation(IPrototypeManager prototype)
