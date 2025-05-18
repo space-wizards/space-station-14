@@ -2,7 +2,7 @@
   name: M492 Smart LMG
   id: WeaponLightMachineGunM492
   parent: [BaseWeaponLightMachineGun, BaseSecurityContraband]
-  description: A high tech non-traditional LMG built specifically for combating the big threats among us.
+  description: A high tech non-traditional LMG built specifically for combating the big threats among us. Uses .30 ammo.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/LMGs/M492.rsi
@@ -52,7 +52,7 @@
   name: DP-28 LMG
   id: WeaponLightMachineGunDP28
   parent: [BaseWeaponLightMachineGun, BaseSovietContraband]
-  description: A classic Soviet-era light machine gun, known for its distinctive pan magazine and reliability.
+  description: From RA-TA-TA-TA with love. Uses .30 ammo.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/LMGs/DP28.rsi
@@ -80,9 +80,13 @@
         whitelist:
           tags:
             - CartridgeLightRifle
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
   - type: Gun
     minAngle: 20
-    maxAngle: 25
+    maxAngle: 27
     angleIncrease: 2
     angleDecay: 10
     fireRate: 5

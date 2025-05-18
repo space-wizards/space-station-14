@@ -19,7 +19,6 @@
     prototypes:
       - WeaponSniperMosin
       - Finka
-      - WeaponPistolAPS
       - WeaponPistolMakarov
       - SpearUranium
       - ClothingOuterArmorBasic

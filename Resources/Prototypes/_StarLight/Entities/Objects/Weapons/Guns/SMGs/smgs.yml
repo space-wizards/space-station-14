@@ -112,7 +112,7 @@
   name: PPSH 59 SMG
   parent: [BaseWeaponSubMachineGun, BaseMajorContraband]
   id: WeaponSubMachineGunPPSH
-  description: Classic Soviet submachine gun with a high rate of fire.
+  description: Beloved by USSP veterans and feared by friendly fire protocols everywhere. Uses .35 ammo.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/SMGs/PPSh59.rsi
@@ -123,7 +123,12 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Wieldable
     unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -9
+    maxAngle: -9
   - type: Gun
+    minAngle: 21
+    maxAngle: 32
     fireRate: 15
     selectedMode: FullAuto
     availableModes:
