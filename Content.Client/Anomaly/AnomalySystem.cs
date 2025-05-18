@@ -26,12 +26,6 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         InitializeScanner();
     }
 
-    // public override void FrameUpdate(float frameTime)
-    // {
-    //     base.FrameUpdate(frameTime);
-    //     FrameUpdateAnomalyScanner(frameTime);
-    // }
-
     private void OnStartup(EntityUid uid, AnomalyComponent component, ComponentStartup args)
     {
         _floating.FloatAnimation(uid, component.FloatingOffset, component.AnimationKey, component.AnimationTime);

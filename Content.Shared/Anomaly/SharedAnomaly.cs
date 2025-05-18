@@ -49,7 +49,7 @@ public enum AnomalousParticleType : byte
 public enum AnomalyVesselVisuals : byte
 {
     HasAnomaly,
-    AnomalySeverity
+    AnomalySeverity,
 }
 
 [Serializable, NetSerializable]

@@ -481,14 +481,8 @@ public abstract class SharedAnomalySystem : EntitySystem
 
     public AnomalyStabilityVisuals GetStabilityVisualOrStable(Entity<AnomalyComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp, logMissing: false))
-            return AnomalyStabilityVisuals.Stable;
-
-        if (ent.Comp.Stability <= ent.Comp.DecayThreshold)
-            return AnomalyStabilityVisuals.Decaying;
-
-        if (ent.Comp.Stability >= ent.Comp.GrowthThreshold)
-            return AnomalyStabilityVisuals.Growing;
+        if(TryGetStabilityVisual(ent, out var visual))
+            return visual.Value;
 
         return AnomalyStabilityVisuals.Stable;
     }

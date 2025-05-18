@@ -37,6 +37,7 @@ public sealed partial class AnomalySystem
                 continue;
 
             _ui.CloseUi(uid, AnomalyScannerUiKey.Key);
+            // Anomaly over, reset all the appearance data
             _appearance.SetData(uid, AnomalyScannerVisuals.HasAnomaly, false);
             _appearance.SetData(uid, AnomalyScannerVisuals.AnomalyIsSupercritical, false);
             _appearance.SetData(uid, AnomalyScannerVisuals.AnomalyNextPulse, 0);
@@ -90,7 +91,19 @@ public sealed partial class AnomalySystem
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
             UpdateScannerUi(uid, component);
-            // TODO: change hidden fields here
+            // If a field becomes secret, we want to set it to 0 or stable
+            // If a field becomes visible, we need to set it to the correct value, so we need to get the AnomalyComponent
+            if (!TryComp<AnomalyComponent>(args.Anomaly, out var anomalyComp))
+                return;
+            SecretDataAnomalyComponent? secretDataComp = null;
+            var severity = _secretData.IsSecret(args.Anomaly, AnomalySecretData.Severity, secretDataComp)
+                ? 0
+                : anomalyComp.Severity;
+            _appearance.SetData(uid, AnomalyScannerVisuals.AnomalySeverity, severity);
+            var stability = _secretData.IsSecret(args.Anomaly, AnomalySecretData.Stability, secretDataComp)
+                ? AnomalyStabilityVisuals.Stable
+                : GetStabilityVisualOrStable((uid, anomalyComp));
+            _appearance.SetData(uid, AnomalyScannerVisuals.AnomalyStability, stability);
         }
     }
 
@@ -139,7 +152,6 @@ public sealed partial class AnomalySystem
 
         var state = new AnomalyScannerUserInterfaceState(GetScannerMessage(component), nextPulse);
         _ui.SetUiState(uid, AnomalyScannerUiKey.Key, state);
-
     }
 
     public void UpdateScannerWithNewAnomaly(EntityUid scanner, EntityUid anomaly, AnomalyScannerComponent? scannerComp = null, AnomalyComponent? anomalyComp = null)

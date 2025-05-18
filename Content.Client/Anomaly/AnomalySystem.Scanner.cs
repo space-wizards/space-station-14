@@ -9,7 +9,6 @@ namespace Content.Client.Anomaly;
 public sealed partial class AnomalySystem
 {
     [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     private void InitializeScanner()
     {
@@ -59,7 +58,7 @@ public sealed partial class AnomalySystem
                 const float redHue = 0f;
                 var hue = Math.Clamp(2*greenHue * (1 - severity), redHue, greenHue);
                 var sev = (int)(severity * 10);
-                var color = new Rgba32(Robust.Shared.Maths.Color.FromHsv((hue, 1, 1, 1)).RGBA);
+                var color = new Rgba32(Color.FromHsv((hue, 1, 1, 1)).RGBA);
                 buf[y*10 + x]  = x < sev ? color : new Rgba32(0,0,0,255);
 
             }
