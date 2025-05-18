@@ -30,6 +30,7 @@
     FoodFrozenSandwich: 2
     FoodFrozenSandwichStrawberry: 2
     # Starlight-start
+  emaggedInventory:
     FoodMeatHuman: 4
     FoodFriedfelionoid: 1
     HeadVulpkanin: 1
