@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: The T-ray scanner now shows sub-floor entities above catwalks.
-    type: Tweak
-  - message: Sub-floor entities now retain the correct relative draw depth when using
-      a T-ray scanner.
-    type: Fix
-  id: 8014
-  time: '2025-02-27T10:46:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33012
 - author: Katzenminer, slarticodefast
   changes:
   - message: You now need to break eggs when using them for microwave recipes. Some
@@ -3927,3 +3917,10 @@
   id: 8516
   time: '2025-05-18T06:40:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37561
+- author: mrjajkes
+  changes:
+  - message: Add Blatantly Nuclear as a Nuke Song.
+    type: Add
+  id: 8517
+  time: '2025-05-18T07:30:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35927
