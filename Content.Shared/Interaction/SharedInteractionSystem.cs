@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
@@ -857,34 +858,37 @@ namespace Content.Shared.Interaction
                 // we still need to be able to ideally retrieve it.
                 // Previously we checked for intersecting entities but this frequently causes issues
                 // Now we just ignore any entities it's contacting if the contact is perpendicular to us (such as in a seam that's facing us).
-                var contacts = _physics.GetContacts(target);
-                var targetDir = (targetCoords.Position - origin.Position).Normalized();
-
-                // If it's contacting anything then ignore that entity if it's in a seam (i.e. close to perpendicular normal).
-                while (contacts.MoveNext(out var contact))
+                // TODO: Use physics here when fixtures is kill.
+                if (physics.ContactCount > 0)
                 {
-                    var otherBody = contact.OtherBody(target);
+                    var contacts = _physics.GetContacts(target);
+                    var targetDir = (targetCoords.Position - origin.Position).Normalized();
 
-                    if (!otherBody.CanCollide ||
-                        ((int)collisionMask & otherBody.CollisionLayer) == 0x0)
+                    // If it's contacting anything then ignore that entity if it's in a seam (i.e. close to perpendicular normal).
+                    while (contacts.MoveNext(out var contact))
                     {
-                        continue;
+                        var otherBody = contact.OtherBody(target);
+
+                        if (!otherBody.CanCollide ||
+                            ((int)collisionMask & otherBody.CollisionLayer) == 0x0)
+                        {
+                            continue;
+                        }
+
+                        var transformA = _physics.GetPhysicsTransform(contact.EntityA);
+                        var transformB = _physics.GetPhysicsTransform(contact.EntityB);
+
+                        contact.GetWorldManifold(transformA, transformB, out var worldNormal);
+                        var dotProduct = Vector2.Dot(targetDir, worldNormal);
+
+                        // Make sure it's sufficiently perpendicular.
+                        if (!MathHelper.CloseTo(dotProduct, 0f, 0.1f))
+                        {
+                            continue;
+                        }
+
+                        ignored.Add(contact.OtherEnt(target));
                     }
-
-                    var transformA = _physics.GetPhysicsTransform(contact.EntityA);
-                    var transformB = _physics.GetPhysicsTransform(contact.EntityB);
-
-                    contact.GetWorldManifold(transformA, transformB, out var worldNormal);
-                    var crossProduct = Vector2Helpers.Cross(targetDir, worldNormal);
-                    var absCrossProduct = MathF.Abs(crossProduct);
-
-                    // Make sure it's sufficiently perpendicular.
-                    if (absCrossProduct < 0.99f)
-                    {
-                        continue;
-                    }
-
-                    ignored.Add(contact.OtherEnt(target));
                 }
             }
             else if (_wallMountQuery.TryComp(target, out var wallMount))
