@@ -19,8 +19,11 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.GameTicking;
 using Content.Server.GameTicking;
+using Content.Server.RoundEnd;
 using Robust.Shared.Timing;
 using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Server.Implants
 {
@@ -29,6 +32,7 @@ namespace Content.Server.Implants
         [Dependency] private readonly StoreSystem _storeSystem = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
@@ -36,6 +40,102 @@ namespace Content.Server.Implants
         SubscribeLocalEvent<Content.Shared.Actions.OpenUplinkImplantEvent>(OnOpenUplinkImplant);
         SubscribeLocalEvent<StoreBuyFinishedEvent>(OnStoreBuyFinished);
         SubscribeLocalEvent<USSPUplinkImplantComponent, ImplantImplantedEvent>(OnImplantImplanted);
+        SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnRoundEnd);
+    }
+    
+    /// <summary>
+    /// Handles the event when a round ends.
+    /// Resets all stock-limited listings in the uplink catalog.
+    /// </summary>
+    private void OnRoundEnd(RoundEndSystemChangedEvent ev)
+    {
+        // Reset all stock-limited listings in the uplink catalog
+        ResetUplinkStocks();
+        Logger.InfoS("ussp-uplink", "Reset all uplink stocks for new round");
+    }
+    
+    /// <summary>
+    /// Resets all stock-limited listings in the uplink catalog.
+    /// This is called when a round ends to ensure each new round starts with fresh stock counts.
+    /// </summary>
+    private void ResetUplinkStocks()
+    {
+        // Use reflection to access the private static dictionaries in StockLimitedListingCondition
+        var type = typeof(Content.Shared.Store.Conditions.StockLimitedListingCondition);
+        
+        // Get the _stockCounts dictionary
+        var stockCountsField = type.GetField("_stockCounts", 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        
+        // Get the _stockLimits dictionary
+        var stockLimitsField = type.GetField("_stockLimits", 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        
+        // Get the _lastPurchasers dictionary
+        var lastPurchasersField = type.GetField("_lastPurchasers", 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        
+        // Get the _outOfStock dictionary
+        var outOfStockField = type.GetField("_outOfStock", 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        
+        // Get the _modifiedListings dictionary
+        var modifiedListingsField = type.GetField("_modifiedListings", 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        
+        // Reset the dictionaries
+        if (stockCountsField != null)
+        {
+            var stockCounts = stockCountsField.GetValue(null) as Dictionary<string, int>;
+            if (stockCounts != null)
+            {
+                stockCounts.Clear();
+                Logger.InfoS("ussp-uplink", "Reset stock counts dictionary");
+            }
+        }
+        
+        if (stockLimitsField != null)
+        {
+            var stockLimits = stockLimitsField.GetValue(null) as Dictionary<string, int>;
+            if (stockLimits != null)
+            {
+                stockLimits.Clear();
+                Logger.InfoS("ussp-uplink", "Reset stock limits dictionary");
+            }
+        }
+        
+        if (lastPurchasersField != null)
+        {
+            var lastPurchasers = lastPurchasersField.GetValue(null) as Dictionary<string, string>;
+            if (lastPurchasers != null)
+            {
+                lastPurchasers.Clear();
+                Logger.InfoS("ussp-uplink", "Reset last purchasers dictionary");
+            }
+        }
+        
+        if (outOfStockField != null)
+        {
+            var outOfStock = outOfStockField.GetValue(null) as Dictionary<string, bool>;
+            if (outOfStock != null)
+            {
+                outOfStock.Clear();
+                Logger.InfoS("ussp-uplink", "Reset out of stock dictionary");
+            }
+        }
+        
+        if (modifiedListingsField != null)
+        {
+            var modifiedListings = modifiedListingsField.GetValue(null) as Dictionary<string, bool>;
+            if (modifiedListings != null)
+            {
+                modifiedListings.Clear();
+                Logger.InfoS("ussp-uplink", "Reset modified listings dictionary");
+            }
+        }
+        
+        // Update all uplink UIs to show the reset stock counts
+        UpdateAllUplinkListings();
     }
     
     
