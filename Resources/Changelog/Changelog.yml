@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Implanters must now specificy which implant they're targeting when extracting,
-      and deals heavy damage to the person performing the extraction if no such implant
-      exists.
-    type: Tweak
-  id: 8021
-  time: '2025-02-27T17:57:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32136
 - author: AgentSmithRadio
   changes:
   - message: Reptilians can now eat chicken nuggets.
@@ -3923,3 +3914,11 @@
   id: 8523
   time: '2025-05-18T09:16:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37239
+- author: Simyon
+  changes:
+  - message: The Syndicate and Wizard Communications Console now no longer show who
+      the message was sent by.
+    type: Tweak
+  id: 8524
+  time: '2025-05-18T09:18:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37567
