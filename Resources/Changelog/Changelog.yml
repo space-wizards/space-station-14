@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Velken
-  changes:
-  - message: Wizard now has a cool PDA to store their pAI.
-    type: Add
-  id: 8023
-  time: '2025-03-01T02:12:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35572
 - author: LaCumbiaDelCoronavirus
   changes:
   - message: Slimepeople look a bit less bald now.
@@ -3924,3 +3917,10 @@
   id: 8525
   time: '2025-05-18T11:34:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36498
+- author: metalgearsloth
+  changes:
+  - message: Fixes being able to grab items through walls.
+    type: Fix
+  id: 8526
+  time: '2025-05-18T14:38:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37570
