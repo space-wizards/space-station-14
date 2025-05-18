@@ -6,13 +6,24 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Changeling.Transform;
 
+
+/// <summary>
+/// The component containing information about Changelings Transformation action
+/// Like how long their windup is, the sounds as well as the Target Cloning settings for changing between identities
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedChangelingTransformSystem))]
 public sealed partial class ChangelingTransformComponent : Component
 {
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? ChangelingTransformAction = "ActionChangelingTransform";
+    /// <summary>
+    /// The action Prototype for Transforming
+    /// </summary>
+    [DataField]
+    public EntProtoId? ChangelingTransformAction = "ActionChangelingTransform";
 
+    /// <summary>
+    /// The Action Entity for transforming associated with this Component
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? ChangelingTransformActionEntity;
 
@@ -34,6 +45,10 @@ public sealed partial class ChangelingTransformComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? CurrentTransformSound;
 
+    /// <summary>
+    /// The cloning settings passed to the CloningSystem, contains a list of all components to copy or have handled by their
+    /// respective systems
+    /// </summary>
     public ProtoId<CloningSettingsPrototype> TransformCloningSettings = "ChangelingCloningSettings";
 }
 
