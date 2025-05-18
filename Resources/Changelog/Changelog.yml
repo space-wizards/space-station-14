@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pumkin69
-  changes:
-  - message: Engineers can choose to not wear a headpiece now.
-    type: Fix
-  id: 8008
-  time: '2025-02-26T01:21:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35508
 - author: momochitters
   changes:
   - message: Lizard Plushie Slippers can now be constructed.
@@ -3920,3 +3913,10 @@
   id: 8510
   time: '2025-05-18T01:51:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37554
+- author: Spangs04
+  changes:
+  - message: Resprited Telecomms
+    type: Tweak
+  id: 8511
+  time: '2025-05-18T02:10:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35811
