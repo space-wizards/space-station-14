@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: momochitters
-  changes:
-  - message: Lizard Plushie Slippers can now be constructed.
-    type: Add
-  id: 8009
-  time: '2025-02-26T02:18:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35381
 - author: keronshb
   changes:
   - message: Added the Wizard Antagonist!
@@ -3920,3 +3913,12 @@
   id: 8511
   time: '2025-05-18T02:10:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35811
+- author: EmoGarbage404
+  changes:
+  - message: Added the salvage job board! This board allows salvagers to access and
+      complete a variety of jobs in order to rank up, earn spesos, and unlock new
+      cargo orders. Work hard and you too may become a Supreme Salvager.
+    type: Add
+  id: 8512
+  time: '2025-05-18T04:02:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37549
