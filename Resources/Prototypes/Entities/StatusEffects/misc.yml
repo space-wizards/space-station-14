@@ -2,7 +2,7 @@
   id: StatusEffectBase
   abstract: true
   components:
-  - type: StatusEffectNew
+  - type: StatusEffect
   - type: Sprite
     drawdepth: Effects
   - type: Tag
@@ -16,7 +16,7 @@
   name: forced sleep
   categories: [ HideSpawnMenu ]
   components:
-  - type: StatusEffectNew
+  - type: StatusEffect
     components:
     - type: ForcedSleepingStatusEffect
     whitelist:
@@ -30,7 +30,7 @@
   name: drowsiness
   categories: [ HideSpawnMenu ]
   components:
-  - type: StatusEffectNew
+  - type: StatusEffect
     components:
     - type: DrowsinessStatusEffect
     whitelist:
