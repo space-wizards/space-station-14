@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Katzenminer, slarticodefast
-  changes:
-  - message: You now need to break eggs when using them for microwave recipes. Some
-      recipes have been adjusted accordingly.
-    type: Tweak
-  - message: Fixed a reagent duplication bug when microwaving eggs.
-    type: Fix
-  id: 8015
-  time: '2025-02-27T12:39:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35459
 - author: kosticia
   changes:
   - message: Fire resists now can be examined.
@@ -3924,3 +3914,10 @@
   id: 8517
   time: '2025-05-18T07:30:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35927
+- author: metalgearsloth
+  changes:
+  - message: Shuttles now are treated as rooved for daylight.
+    type: Tweak
+  id: 8518
+  time: '2025-05-18T07:47:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36112
