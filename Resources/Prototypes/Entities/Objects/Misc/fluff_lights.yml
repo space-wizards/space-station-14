@@ -180,6 +180,8 @@
         enum.FlashVisuals.LightLayer:
           True: {visible: true}
           False: {visible: false}
+  - type: StealTarget
+    stealGroup: InterrogatorLamp
 
 - type: entity
   name: floodlight

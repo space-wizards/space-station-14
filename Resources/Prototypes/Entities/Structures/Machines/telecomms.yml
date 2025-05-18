@@ -184,6 +184,8 @@
       key_slots: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: StealTarget
+    stealGroup: TelecommsServer
 
 - type: entity
   parent: TelecomServer

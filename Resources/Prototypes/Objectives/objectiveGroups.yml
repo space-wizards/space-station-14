@@ -74,18 +74,26 @@
     FlippoEngravedLighterStealObjective: 0.5
     ClothingHeadHatWardenStealObjective: 1
     WantedListCartridgeStealObjective: 1
+    InterrogatorLampStealObjective: 1
+    ClothingNeckLawyerBadgeStealObjective: 1
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
     MedicalTechFabCircuitboardStealObjective: 1
     ClothingHeadsetAltMedicalStealObjective: 1
+    CrewMonitorServerBoardStealObjective: 1
     FireAxeStealObjective: 1                            #eng
     AmePartFlatpackStealObjective: 1
     ExpeditionsCircuitboardStealObjective: 1            #sup
     CargoShuttleCircuitboardStealObjective: 1
     SalvageShuttleCircuitboardStealObjective: 1
+    AstroNavCartridgeStealObjective: 1
     ClothingEyesHudBeerStealObjective: 1                #srv
     BibleStealObjective: 1
+    ButcherCleaverStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
+    SilverIDStealObjective: 1
+    AccessConfiguratorStealObjective: 1
+    ToolboxGoldenStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupStructure
@@ -100,6 +108,7 @@
     AltarNanotrasenStealObjective: 1
     PlantRDStealObjective: 1
     ToiletGoldenStealObjective: 1
+    TelecommsServerStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupAnimal
