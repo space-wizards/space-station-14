@@ -39,6 +39,12 @@ public sealed partial class CargoBountyPrototype : IPrototype
     /// </summary>
     [DataField]
     public string IdPrefix = "NT";
+
+    /// <summary>
+    /// When true, the arbitrage test skips this bounty.
+    /// </summary>
+    [DataField]
+    public bool AllowArbitrage;
 }
 
 [DataDefinition, Serializable, NetSerializable]
