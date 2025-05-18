@@ -27,6 +27,12 @@
 	},
     {
       "name": "idstationminer"
+    },
+    {
+      "name": "idmailtech"
+    },
+    {
+      "name": "sovietid"
     }
   ]
 }

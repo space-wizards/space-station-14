@@ -261,6 +261,9 @@
   - type: Battery
     maxCharge: 1500
     startingCharge: 1500
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 20
       
 - type: entity
   parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]

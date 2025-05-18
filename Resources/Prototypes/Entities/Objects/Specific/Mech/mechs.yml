@@ -195,6 +195,10 @@
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
+    equipmentWhitelist:
+      tags:
+      - IndustrialMech
+      - RipleyMKIIUpgradeKit
     baseState: base
     openState: base-open
     brokenState: base-broken
@@ -217,6 +221,10 @@
     radius: 3
     energy: 5
     enabled: false
+  - type: Construction
+    graph: RipleyMKIIUpgrade
+    node: start
+    defaultTarget: ripleymkii
 
 - type: entity
   id: MechRipleyBattery
@@ -289,7 +297,7 @@
   id: MechPaddy
   parent: [ BaseMech, CombatMech, BaseSecurityContraband ]
   name: Paddy
-  description: Autonomous Power Loader Unit Subtype Paddy. A Modified MK-I Ripley design intended for light security use.
+  description: Autonomous Power Loader Unit Subtype Paddy. A Modified MK-II Ripley design intended for light security use.
   components:
   - type: Sprite
     drawdepth: Mobs

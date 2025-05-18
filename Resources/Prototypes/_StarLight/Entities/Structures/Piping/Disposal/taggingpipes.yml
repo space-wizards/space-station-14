@@ -1,0 +1,628 @@
+- type: entity
+  id: DisposalTaggerCommand
+  parent: DisposalTagger   
+  suffix: Command
+  components:
+  - type: DisposalTagger   
+    tag: Command
+
+
+- type: entity
+  id: DisposalTaggerBridge
+  parent: DisposalTagger
+  suffix: Bridge
+  components:
+  - type: DisposalTagger
+    tag: Bridge
+
+
+- type: entity
+  id: DisposalTaggerVault
+  parent: DisposalTagger
+  suffix: Vault
+  components:
+  - type: DisposalTagger
+    tag: Vault
+
+
+- type: entity
+  id: DisposalTaggerGateway
+  parent: DisposalTagger
+  suffix: Gateway
+  components:
+  - type: DisposalTagger
+    tag: Gateway
+
+
+- type: entity
+  id: DisposalTaggerCaptain
+  parent: DisposalTagger
+  suffix: Captain
+  components:
+  - type: DisposalTagger
+    tag: Captain
+
+
+- type: entity
+  id: DisposalTaggerHoP
+  parent: DisposalTagger
+  suffix: HoP
+  components:
+  - type: DisposalTagger
+    tag: HoP
+
+
+- type: entity
+  id: DisposalTaggerSecurity
+  parent: DisposalTagger
+  suffix: Security
+  components:
+  - type: DisposalTagger
+    tag: Security
+
+
+- type: entity
+  id: DisposalTaggerBrig
+  parent: DisposalTagger
+  suffix: Brig
+  components:
+  - type: DisposalTagger
+    tag: Brig
+
+
+- type: entity
+  id: DisposalTaggerBrigMed
+  parent: DisposalTagger
+  suffix: BrigMed
+  components:
+  - type: DisposalTagger
+    tag: BrigMed
+
+
+- type: entity
+  id: DisposalTaggerWarden
+  parent: DisposalTagger
+  suffix: Warden
+  components:
+  - type: DisposalTagger
+    tag: Warden
+
+
+- type: entity
+  id: DisposalTaggerHoS
+  parent: DisposalTagger
+  suffix: HoS
+  components:
+  - type: DisposalTagger
+    tag: HoS
+
+
+- type: entity
+  id: DisposalTaggerArmory
+  parent: DisposalTagger
+  suffix: Armory
+  components:
+  - type: DisposalTagger
+    tag: Armory
+
+
+- type: entity
+  id: DisposalTaggerPerma
+  parent: DisposalTagger
+  suffix: Perma
+  components:
+  - type: DisposalTagger
+    tag: Perma
+
+
+- type: entity
+  id: DisposalTaggerDetective
+  parent: DisposalTagger
+  suffix: Detective
+  components:
+  - type: DisposalTagger
+    tag: Detective
+
+
+- type: entity
+  id: DisposalTaggerCourtroom
+  parent: DisposalTagger
+  suffix: Courtroom
+  components:
+  - type: DisposalTagger
+    tag: Courtroom
+
+
+- type: entity
+  id: DisposalTaggerLaw
+  parent: DisposalTagger
+  suffix: Law
+  components:
+  - type: DisposalTagger
+    tag: Law
+
+
+- type: entity
+  id: DisposalTaggerSecurityCheckpoint
+  parent: DisposalTagger
+  suffix: SecurityCheckpoint
+  components:
+  - type: DisposalTagger
+    tag: SecurityCheckpoint
+
+
+- type: entity
+  id: DisposalTaggerMedical
+  parent: DisposalTagger
+  suffix: Medical
+  components:
+  - type: DisposalTagger
+    tag: Medical
+
+
+- type: entity
+  id: DisposalTaggerMedbay
+  parent: DisposalTagger
+  suffix: Medbay
+  components:
+  - type: DisposalTagger
+    tag: Medbay
+
+
+- type: entity
+  id: DisposalTaggerChemistry
+  parent: DisposalTagger
+  suffix: Chemistry
+  components:
+  - type: DisposalTagger
+    tag: Chemistry
+
+
+- type: entity
+  id: DisposalTaggerCryogenics
+  parent: DisposalTagger
+  suffix: Cryogenics
+  components:
+  - type: DisposalTagger
+    tag: Cryogenics
+
+
+- type: entity
+  id: DisposalTaggerCMO
+  parent: DisposalTagger
+  suffix: CMO
+  components:
+  - type: DisposalTagger
+    tag: CMO
+
+
+- type: entity
+  id: DisposalTaggerMorgue
+  parent: DisposalTagger
+  suffix: Morgue
+  components:
+  - type: DisposalTagger
+    tag: Morgue
+
+
+- type: entity
+  id: DisposalTaggerSurgery
+  parent: DisposalTagger
+  suffix: Surgery
+  components:
+  - type: DisposalTagger
+    tag: Surgery
+
+
+- type: entity
+  id: DisposalTaggerPsychology
+  parent: DisposalTagger
+  suffix: Psychology
+  components:
+  - type: DisposalTagger
+    tag: Psychology
+
+
+- type: entity
+  id: DisposalTaggerClinic
+  parent: DisposalTagger
+  suffix: Clinic
+  components:
+  - type: DisposalTagger
+    tag: Clinic
+
+
+- type: entity
+  id: DisposalTaggerScience
+  parent: DisposalTagger
+  suffix: Science
+  components:
+  - type: DisposalTagger
+    tag: Science
+
+
+- type: entity
+  id: DisposalTaggerR&D
+  parent: DisposalTagger
+  suffix: R&D
+  components:
+  - type: DisposalTagger
+    tag: R&D
+
+
+- type: entity
+  id: DisposalTaggerRD
+  parent: DisposalTagger
+  suffix: RD
+  components:
+  - type: DisposalTagger
+    tag: RD
+
+
+- type: entity
+  id: DisposalTaggerRobotics
+  parent: DisposalTagger
+  suffix: Robotics
+  components:
+  - type: DisposalTagger
+    tag: Robotics
+
+
+- type: entity
+  id: DisposalTaggerArtifact
+  parent: DisposalTagger
+  suffix: Artifact
+  components:
+  - type: DisposalTagger
+    tag: Artifact
+
+
+- type: entity
+  id: DisposalTaggerAnomaly
+  parent: DisposalTagger
+  suffix: Anomaly
+  components:
+  - type: DisposalTagger
+    tag: Anomaly
+
+
+- type: entity
+  id: DisposalTaggerSupply
+  parent: DisposalTagger
+  suffix: Supply
+  components:
+  - type: DisposalTagger
+    tag: Supply
+
+
+- type: entity
+  id: DisposalTaggerCargo
+  parent: DisposalTagger
+  suffix: Cargo
+  components:
+  - type: DisposalTagger
+    tag: Cargo
+
+
+- type: entity
+  id: DisposalTaggerCargoBay
+  parent: DisposalTagger
+  suffix: CargoBay
+  components:
+  - type: DisposalTagger
+    tag: CargoBay
+
+
+- type: entity
+  id: DisposalTaggerQM
+  parent: DisposalTagger
+  suffix: QM
+  components:
+  - type: DisposalTagger
+    tag: QM
+
+
+- type: entity
+  id: DisposalTaggerSalvage
+  parent: DisposalTagger
+  suffix: Salvage
+  components:
+  - type: DisposalTagger
+    tag: Salvage
+
+
+- type: entity
+  id: DisposalTaggerEngineering
+  parent: DisposalTagger
+  suffix: Engineering
+  components:
+  - type: DisposalTagger
+    tag: Engineering
+
+
+- type: entity
+  id: DisposalTaggerCE
+  parent: DisposalTagger
+  suffix: CE
+  components:
+  - type: DisposalTagger
+    tag: CE
+
+
+- type: entity
+  id: DisposalTaggerAME
+  parent: DisposalTagger
+  suffix: AME
+  components:
+  - type: DisposalTagger
+    tag: AME
+
+
+- type: entity
+  id: DisposalTaggerGravityGenerator
+  parent: DisposalTagger
+  suffix: GravityGenerator
+  components:
+  - type: DisposalTagger
+    tag: GravityGenerator
+
+
+- type: entity
+  id: DisposalTaggerAnchor
+  parent: DisposalTagger
+  suffix: Anchor
+  components:
+  - type: DisposalTagger
+    tag: Anchor
+
+
+- type: entity
+  id: DisposalTaggerParticleAccelerator
+  parent: DisposalTagger
+  suffix: ParticleAccelerator
+  components:
+  - type: DisposalTagger
+    tag: ParticleAccelerator
+
+
+- type: entity
+  id: DisposalTaggerTelecomms
+  parent: DisposalTagger
+  suffix: Telecomms
+  components:
+  - type: DisposalTagger
+    tag: Telecomms
+
+
+- type: entity
+  id: DisposalTaggerAtmos
+  parent: DisposalTagger
+  suffix: Atmos
+  components:
+  - type: DisposalTagger
+    tag: Atmos
+
+
+- type: entity
+  id: DisposalTaggerTEG
+  parent: DisposalTagger
+  suffix: TEG
+  components:
+  - type: DisposalTagger
+    tag: TEG
+
+
+- type: entity
+  id: DisposalTaggerTechVault
+  parent: DisposalTagger
+  suffix: TechVault
+  components:
+  - type: DisposalTagger
+    tag: TechVault
+
+
+- type: entity
+  id: DisposalTaggerService
+  parent: DisposalTagger
+  suffix: Service
+  components:
+  - type: DisposalTagger
+    tag: Service
+
+
+- type: entity
+  id: DisposalTaggerKitchen
+  parent: DisposalTagger
+  suffix: Kitchen
+  components:
+  - type: DisposalTagger
+    tag: Kitchen
+
+
+- type: entity
+  id: DisposalTaggerBar
+  parent: DisposalTagger
+  suffix: Bar
+  components:
+  - type: DisposalTagger
+    tag: Bar
+
+
+- type: entity
+  id: DisposalTaggerBotany
+  parent: DisposalTagger
+  suffix: Botany
+  components:
+  - type: DisposalTagger
+    tag: Botany
+
+
+- type: entity
+  id: DisposalTaggerJanitor
+  parent: DisposalTagger
+  suffix: Janitor
+  components:
+  - type: DisposalTagger
+    tag: Janitor
+
+
+- type: entity
+  id: DisposalTaggerAI
+  parent: DisposalTagger
+  suffix: AI
+  components:
+  - type: DisposalTagger
+    tag: AI
+
+
+- type: entity
+  id: DisposalTaggerAISatellite
+  parent: DisposalTagger
+  suffix: AISatellite
+  components:
+  - type: DisposalTagger
+    tag: AISatellite
+
+
+- type: entity
+  id: DisposalTaggerAICore
+  parent: DisposalTagger
+  suffix: AICore
+  components:
+  - type: DisposalTagger
+    tag: AICore
+
+
+- type: entity
+  id: DisposalTaggerAIUpload
+  parent: DisposalTagger
+  suffix: AIUpload
+  components:
+  - type: DisposalTagger
+    tag: AIUpload
+
+
+- type: entity
+  id: DisposalTaggerAIPower
+  parent: DisposalTagger
+  suffix: AIPower
+  components:
+  - type: DisposalTagger
+    tag: AIPower
+
+
+- type: entity
+  id: DisposalTaggerArrivals
+  parent: DisposalTagger
+  suffix: Arrivals
+  components:
+  - type: DisposalTagger
+    tag: Arrivals
+
+
+- type: entity
+  id: DisposalTaggerEvac
+  parent: DisposalTagger
+  suffix: Evac
+  components:
+  - type: DisposalTagger
+    tag: Evac
+
+
+- type: entity
+  id: DisposalTaggerDockingArm
+  parent: DisposalTagger
+  suffix: DockingArm
+  components:
+  - type: DisposalTagger
+    tag: DockingArm
+
+
+- type: entity
+  id: DisposalTaggerEVAStorage
+  parent: DisposalTagger
+  suffix: EVAStorage
+  components:
+  - type: DisposalTagger
+    tag: EVAStorage
+
+
+- type: entity
+  id: DisposalTaggerChapel
+  parent: DisposalTagger
+  suffix: Chapel
+  components:
+  - type: DisposalTagger
+    tag: Chapel
+
+
+- type: entity
+  id: DisposalTaggerLibrary
+  parent: DisposalTagger
+  suffix: Library
+  components:
+  - type: DisposalTagger
+    tag: Library
+
+
+- type: entity
+  id: DisposalTaggerReporter
+  parent: DisposalTagger
+  suffix: Reporter
+  components:
+  - type: DisposalTagger
+    tag: Reporter
+
+
+- type: entity
+  id: DisposalTaggerTheater
+  parent: DisposalTagger
+  suffix: Theater
+  components:
+  - type: DisposalTagger
+    tag: Theater
+
+
+- type: entity
+  id: DisposalTaggerDorms
+  parent: DisposalTagger
+  suffix: Dorms
+  components:
+  - type: DisposalTagger
+    tag: Dorms
+
+
+- type: entity
+  id: DisposalTaggerTools
+  parent: DisposalTagger
+  suffix: Tools
+  components:
+  - type: DisposalTagger
+    tag: Tools
+
+
+- type: entity
+  id: DisposalTaggerDisposals
+  parent: DisposalTagger
+  suffix: Disposals
+  components:
+  - type: DisposalTagger
+    tag: Disposals
+
+
+- type: entity
+  id: DisposalTaggerCryosleep
+  parent: DisposalTagger
+  suffix: Cryosleep
+  components:
+  - type: DisposalTagger
+    tag: Cryosleep
+
+
+- type: entity
+  id: DisposalTaggerVox
+  parent: DisposalTagger
+  suffix: Vox
+  components:
+  - type: DisposalTagger
+    tag: Vox

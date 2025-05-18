@@ -1,0 +1,19 @@
+- type: cargoProduct
+  id: MailTrolleyFlatpackPurchase
+  icon:
+    sprite: _Starlight/Objects/Specific/Cargo/mail_cart.rsi
+    state: icon
+  product: MailTrolleyFlatpack
+  cost: 500
+  category: cargoproduct-category-name-cargo
+  group: market
+
+- type: cargoProduct
+  id: MailBagsPurchase
+  icon:
+    sprite: Objects/Specific/Cargo/mail_bag.rsi
+    state: icon
+  product: CrateMailBags
+  cost: 500
+  category: cargoproduct-category-name-cargo
+  group: market

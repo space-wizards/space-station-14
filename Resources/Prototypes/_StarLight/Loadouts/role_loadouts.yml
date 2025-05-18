@@ -66,3 +66,17 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobMailTech
+  groups:
+  - GroupTankHarness
+  - CargoTechnicianHead
+  - CargoTechnicianJumpsuit
+  - CargoTechnicianBackpack
+  - CargoTechnicianOuterClothing
+  - CargoTechnicianShoes
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool

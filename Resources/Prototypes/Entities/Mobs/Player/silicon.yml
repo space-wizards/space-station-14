@@ -17,6 +17,7 @@
     - Security
     - Service
     - Supply
+    - Law
   - type: ActiveRadio
     channels:
     - Binary
@@ -28,6 +29,7 @@
     - Security
     - Service
     - Supply
+    - Law
   - type: IgnoreUIRange
   - type: StationAiHeld
   - type: StationAiOverlay
@@ -70,7 +72,7 @@
   - type: CommunicationsConsole
     canShuttle: false
     title: comms-console-announcement-title-station-ai
-    color: "#5ed7aa"
+    color: "#00a2ff"
   - type: HolographicAvatar
     layerData:
     - sprite: Mobs/Silicon/station_ai.rsi

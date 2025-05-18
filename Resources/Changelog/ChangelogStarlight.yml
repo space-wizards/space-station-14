@@ -5126,4 +5126,607 @@ Entries:
   id: 710
   time: '2025-04-24T05:03:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/530
+- author: PubliclyExecutedPig
+  changes:
+  - message: Buffed Barotrauma Damage
+    type: Tweak
+  id: 711
+  time: '2025-04-25T04:29:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/535
+- author: CringeCursed
+  changes:
+  - message: added resistance to winter coats
+    type: Tweak
+  id: 712
+  time: '2025-04-25T04:32:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/524
+- author: CringeCursed
+  changes:
+  - message: make some of collective minds and syndicate radio channel more readable
+    type: Tweak
+  id: 713
+  time: '2025-04-25T04:32:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/534
+- author: InanimateIJK
+  changes:
+  - message: As originally intended... "breacher.ogg" by Artifyber to the lobby music
+      roll from the misc path basement.
+    type: Add
+  id: 714
+  time: '2025-04-25T04:34:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/532
+- author: Mephisto72
+  changes:
+  - message: The AI can now access Law Communications
+    type: Tweak
+  id: 715
+  time: '2025-04-25T04:35:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/519
+- author: Happyrobot33
+  changes:
+  - message: Added Mailman job.
+    type: Add
+  id: 716
+  time: '2025-04-25T04:52:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/496
+- author: Happyrobot33
+  changes:
+  - message: Added Mail Trolley
+    type: Add
+  id: 717
+  time: '2025-04-25T04:52:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/496
+- author: Happyrobot33
+  changes:
+  - message: Increased capacity of mail bag.
+    type: Tweak
+  id: 718
+  time: '2025-04-25T04:52:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/496
+- author: Happyrobot33
+  changes:
+  - message: Fixed ling biomass not decreasing.
+    type: Fix
+  id: 719
+  time: '2025-04-25T04:53:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/528
+- author: Happyrobot33
+  changes:
+  - message: Fixed Wielding guns also changing firing modes.
+    type: Fix
+  id: 720
+  time: '2025-04-26T07:27:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/547
+- author: PubliclyExecutedPig
+  changes:
+  - message: Made Orwell's armoury actually good! Sec mains rejoice! (I also added
+      a medfab).
+    type: Tweak
+  id: 721
+  time: '2025-04-26T07:29:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/543
+- author: Happyrobot33
+  changes:
+  - message: Fixed Mail Tech PDA UI Color.
+    type: Fix
+  id: 722
+  time: '2025-04-26T07:35:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/545
+- author: Happyrobot33
+  changes:
+  - message: Fixed Mail Tech NanoTask missing.
+    type: Fix
+  id: 723
+  time: '2025-04-26T07:35:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/545
+- author: PubliclyExecutedPig
+  changes:
+  - message: Badassified Warden's Hardsuit
+    type: Tweak
+  id: 724
+  time: '2025-04-26T07:39:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/541
+- author: PubliclyExecutedPig
+  changes:
+  - message: Mirrored Warden's Hardsuit's stats to Wizden's stat update
+    type: Tweak
+  id: 725
+  time: '2025-04-26T07:39:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/541
+- author: neurovermi
+  changes:
+  - message: Ling store text now reflects armblade absorption requirements
+    type: Fix
+  id: 726
+  time: '2025-04-26T07:39:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/540
+- author: Happyrobot33
+  changes:
+  - message: Fixed Boxcutter being dropped on toggle.
+    type: Fix
+  id: 727
+  time: '2025-04-26T07:55:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/538
+- author: Happyrobot33
+  changes:
+  - message: Added CommandFriend™ X-02 for BSO.
+    type: Add
+  id: 728
+  time: '2025-04-26T08:20:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/546
+- author: Happyrobot33
+  changes:
+  - message: Added health analyzer to BSO PDA.
+    type: Add
+  id: 729
+  time: '2025-04-26T08:20:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/546
+- author: Happyrobot33
+  changes:
+  - message: X-01 now has a slow battery recharge rate.
+    type: Tweak
+  id: 730
+  time: '2025-04-26T08:20:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/546
+- author: aedler
+  changes:
+  - message: Stripping is now dependent on the number of hands available. (With exception
+      to inserting items if hands are full)
+    type: Tweak
+  id: 731
+  time: '2025-04-26T10:01:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/517
+- author: aedler
+  changes:
+  - message: Stripping is now faster if the person is cuffed or under stamina crit/stun.
+    type: Tweak
+  id: 732
+  time: '2025-04-26T10:01:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/517
+- author: Happyrobot33
+  changes:
+  - message: Fixed TTS Announce/Radio volume slider logic. Both should work properly
+      now.
+    type: Fix
+  id: 733
+  time: '2025-04-26T15:23:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/549
+- author: ''
+  changes:
+  - message: Added Organ Tree
+    type: Add
+  id: 734
+  time: '2025-04-26T15:24:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/427
+- author: Happyrobot33
+  changes:
+  - message: Nukie gas masks and Ninja visors will no longer block special vision
+      effects.
+    type: Tweak
+  id: 735
+  time: '2025-04-26T15:25:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/508
+- author: Happyrobot33
+  changes:
+  - message: Lowered mail tech count.
+    type: Tweak
+  id: 736
+  time: '2025-04-28T21:33:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/554
+- author: Happyrobot33
+  changes:
+  - message: Added time requirements to Antag roles and Antag Ghost roles.
+    type: Tweak
+  id: 737
+  time: '2025-04-30T18:45:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/513
+- author: choccy
+  changes:
+  - message: for starboard removed guns scattered around the map, replaced with practise
+      gear
+    type: Fix
+  id: 738
+  time: '2025-04-30T18:46:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/548
+- author: choccy
+  changes:
+  - message: for starboard removed contraband scattered around the map
+    type: Fix
+  id: 739
+  time: '2025-04-30T18:46:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/548
+- author: choccy
+  changes:
+  - message: for starboard added a wall to command, changed door locking and accesses,
+      added external engineering access to the
+    type: Fix
+  id: 740
+  time: '2025-04-30T18:46:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/548
+- author: aedler
+  changes:
+  - message: Added new AI/Comms Console announcement sound. Now you know which announcement
+      is from the station or CC/events (previous default remains).
+    type: Add
+  id: 741
+  time: '2025-04-30T18:47:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/551
+- author: aedler
+  changes:
+  - message: Blue, Yellow, Red alert codes now have a bit of audio reverb of a grand
+      station.
+    type: Tweak
+  id: 742
+  time: '2025-04-30T18:47:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/551
+- author: aedler
+  changes:
+  - message: Changed Binary color. Easier for the eyes.
+    type: Tweak
+  id: 743
+  time: '2025-04-30T18:47:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/551
+- author: Rinary
+  changes:
+  - message: Added stove(check chefvend)
+    type: Add
+  id: 744
+  time: '2025-04-30T21:01:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/555
+- author: Rinary
+  changes:
+  - message: Added opened state at oven.
+    type: Add
+  id: 745
+  time: '2025-04-30T21:01:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/555
+- author: Salthew & Gensy
+  changes:
+  - message: Added Croft Plushie and Minttongue Plushie
+    type: Add
+  id: 746
+  time: '2025-04-30T21:02:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/556
+- author: Salthew & Gensy
+  changes:
+  - message: Updated sprites of the Jessica Plushie and Spiro Plushie
+    type: Tweak
+  id: 747
+  time: '2025-04-30T21:02:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/556
+- author: Happyrobot33
+  changes:
+  - message: Changed Resomi naming scheme to better match Avali.
+    type: Tweak
+  id: 748
+  time: '2025-04-30T21:06:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/558
+- author: Happyrobot33
+  changes:
+  - message: Changed Resomi age range to better match Avali.
+    type: Tweak
+  id: 749
+  time: '2025-04-30T21:06:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/558
+- author: STARLIGHT TEAM
+  changes:
+  - message: PetsNT now fight HonkHostile.
+    type: Fix
+  id: 750
+  time: '2025-04-30T21:08:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/559
+- author: Happyrobot33
+  changes:
+  - message: Gave Resomi a collective mind named the Nexus.
+    type: Add
+  id: 751
+  time: '2025-04-30T21:10:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/561
+- author: STARLIGHT TEAM
+  changes:
+  - message: Pacification is cleared at the end of the round.
+    type: Fix
+  id: 752
+  time: '2025-05-03T05:17:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/572
+- author: Happyrobot33
+  changes:
+  - message: Removed reverb on alert levels.
+    type: Remove
+  id: 753
+  time: '2025-05-03T09:59:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/574
+- author: Happyrobot33
+  changes:
+  - message: Made binary color brighter.
+    type: Tweak
+  id: 754
+  time: '2025-05-03T09:59:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/574
+- author: aedler
+  changes:
+  - message: Toned down the announce2 volume.
+    type: Tweak
+  id: 755
+  time: '2025-05-05T23:34:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/575
+- author: neurovermi
+  changes:
+  - message: Adds missing locale text for organ tree and the word "seeds" to the seed
+      packet
+    type: Fix
+  id: 756
+  time: '2025-05-05T23:36:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/577
+- author: choccy
+  changes:
+  - message: (Starboard) Barratrification!
+    type: Tweak
+  id: 757
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Tweaks many small features
+    type: Tweak
+  id: 758
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Tweaked security, doors and rechargers
+    type: Tweak
+  id: 759
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Tweaks the emergency shuttle to have a new security room
+    type: Tweak
+  id: 760
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Lots of new maints
+    type: Add
+  id: 761
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) Killed the honkbot
+    type: Tweak
+  id: 762
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: choccy
+  changes:
+  - message: (Starboard) New stoves, and mining lockers
+    type: Add
+  id: 763
+  time: '2025-05-06T04:21:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/565
+- author: Happyrobot33
+  changes:
+  - message: Raised ling biomass maximum to 60, lings start at 30 now.
+    type: Tweak
+  id: 764
+  time: '2025-05-06T04:29:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/560
+- author: Happyrobot33
+  changes:
+  - message: Fixed ling biomass warning and jitter system.
+    type: Fix
+  id: 765
+  time: '2025-05-06T04:29:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/560
+- author: Happyrobot33
+  changes:
+  - message: Updated Resomi guidebook.
+    type: Tweak
+  id: 766
+  time: '2025-05-06T04:34:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/580
+- author: Happyrobot33
+  changes:
+  - message: Speculative fix for event scheduler issues.
+    type: Fix
+  id: 767
+  time: '2025-05-06T04:35:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/583
+- author: Happyrobot33
+  changes:
+  - message: Lings start at 40 biomass
+    type: Tweak
+  id: 768
+  time: '2025-05-06T14:42:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/594
+- author: CringeCursed
+  changes:
+  - message: Changed Resomi Weight
+    type: Tweak
+  id: 769
+  time: '2025-05-06T15:24:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/593
+- author: CringeCursed
+  changes:
+  - message: Changed Resomi/Felinoids health thresholds for slowdown
+    type: Tweak
+  id: 770
+  time: '2025-05-06T15:24:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/593
+- author: Happyrobot33
+  changes:
+  - message: Tweaked minimum chat window size in separated to remove letterboxing.
+    type: Tweak
+  id: 771
+  time: '2025-05-07T04:18:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/584
+- author: PubliclyExecutedPig
+  changes:
+  - message: Updated the Gamma Armoury!
+    type: Tweak
+  id: 772
+  time: '2025-05-07T04:23:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/587
+- author: Happyrobot33
+  changes:
+  - message: Fixed Thermal vision and flash immunity system. Again.
+    type: Fix
+  id: 773
+  time: '2025-05-07T04:29:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/588
+- author: Happyrobot33
+  changes:
+  - message: All puddles will now be transparent regardless of if its blood or not.
+    type: Tweak
+  id: 774
+  time: '2025-05-07T04:45:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/589
+- author: CringeCursed
+  changes:
+  - message: pop up message on surgeon actions
+    type: Add
+  id: 775
+  time: '2025-05-07T17:56:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/597
+- author: Happyrobot33
+  changes:
+  - message: Added mail routing default prototypes for mappers.
+    type: Add
+  id: 776
+  time: '2025-05-07T19:55:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/582
+- author: Happyrobot33
+  changes:
+  - message: Added wildcard mode to disposal routers.
+    type: Add
+  id: 777
+  time: '2025-05-07T19:55:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/581
+- author: RoadTrain
+  changes:
+  - message: Added construction step for exosuit air tank to HAMTR.
+    type: Add
+  id: 778
+  time: '2025-05-08T21:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/592
+- author: RoadTrain
+  changes:
+  - message: Fixed typo 'calrke chassis'.
+    type: Fix
+  id: 779
+  time: '2025-05-08T21:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/592
+- author: RoadTrain
+  changes:
+  - message: 'Fixed Clarke''s left arm and right arm being swapped internally.:'
+    type: Fix
+  id: 780
+  time: '2025-05-08T21:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/592
+- author: RoadTrain
+  changes:
+  - message: Fixed pressurization not working for Durand, Hamtr, Gygax & Ripley mk
+      II.
+    type: Fix
+  id: 781
+  time: '2025-05-08T21:27:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/592
+- author: vlorgan
+  changes:
+  - message: Admeme botany shuttle
+    type: Add
+  id: 782
+  time: '2025-05-09T15:38:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/605
+- author: CringeCursed
+  changes:
+  - message: Signing system for paperwork
+    type: Add
+  id: 783
+  time: '2025-05-09T16:09:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/599
+- author: RoadTrain
+  changes:
+  - message: Changed Paddy's description to say it's derived from the Ripley MK-II
+      given it's airtight.
+    type: Tweak
+  id: 784
+  time: '2025-05-09T16:10:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/607
+- author: RoadTrain
+  changes:
+  - message: Fixed Exosuit Upgrade Kit not working. Also allows for new mech upgrade
+      kits to be introduced.
+    type: Fix
+  id: 785
+  time: '2025-05-09T17:52:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/606
+- author: Happyrobot33
+  changes:
+  - message: You can see your hivemind ID in the C menu now.
+    type: Add
+  id: 786
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Hiveminds now have TTS.
+    type: Tweak
+  id: 787
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Paradox clones now have the proper ID number for collective minds.
+    type: Fix
+  id: 788
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Collective minds are validated without needing to send a message first
+      now.
+    type: Fix
+  id: 789
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Shared hivemind for space dragon and space carps works properly now.
+    type: Fix
+  id: 790
+  time: '2025-05-10T04:51:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/579
+- author: Happyrobot33
+  changes:
+  - message: Changed chatbox minimum width to be configurable via settings.
+    type: Tweak
+  id: 791
+  time: '2025-05-10T04:54:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/602
+- author: Happyrobot33
+  changes:
+  - message: Fixed Escape Pod docking logic.
+    type: Fix
+  id: 792
+  time: '2025-05-10T04:58:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/609
+- author: Happyrobot33
+  changes:
+  - message: Rewrote entire vision overlay system for stability and maintainability
+      reasons.
+    type: Fix
+  id: 793
+  time: '2025-05-10T05:02:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/600
+- author: Happyrobot33
+  changes:
+  - message: Fixed issue with collective mind ID selection.
+    type: Fix
+  id: 794
+  time: '2025-05-10T07:04:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/610
 

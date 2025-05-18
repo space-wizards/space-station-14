@@ -142,6 +142,12 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
     private void OnUseInHandEvent(EntityUid uid, BatteryWeaponFireModesComponent component, UseInHandEvent args)
     {
+        //starlight
+        //ensure not handled yet
+        if (args.Handled)
+            return;
+        //starlight end
+
         TryCycleFireMode(uid, component, args.User);
     }
 

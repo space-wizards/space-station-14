@@ -1,0 +1,9 @@
+- type: entity
+  parent: BaseUnknownShuttleRule
+  id: ShuttleSyndiShadowOps
+  components:
+    - type: StationEvent
+      startAnnouncement: null # It should be silent.
+      maxOccurrences: 1 # should be the same as [copies] in shuttle_incoming_event.yml
+    - type: LoadMapRule
+      preloadedGrid: ShuttleSyndiShadowOps

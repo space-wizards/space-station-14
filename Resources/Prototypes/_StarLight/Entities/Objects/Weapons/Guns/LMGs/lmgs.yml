@@ -47,3 +47,44 @@
         whitelist:
           tags:
             - CartridgeLightRifle
+
+- type: entity
+  name: DP-28 LMG
+  id: WeaponLightMachineGunDP28
+  parent: [BaseWeaponLightMachineGun, BaseSovietContraband]
+  description: A classic Soviet-era light machine gun, known for its distinctive pan magazine and reliability.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/LMGs/DP28.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/LMGs/DP28.rsi
+    quickEquip: false
+  - type: Appearance
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLightRifleMaxim
+        whitelist:
+          tags:
+            - LightRifleHeavy
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLightRifleSP
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLightRifle
+  - type: Gun
+    minAngle: 20
+    maxAngle: 25
+    angleIncrease: 2
+    angleDecay: 10
+    fireRate: 7
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/dp28.ogg

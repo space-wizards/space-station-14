@@ -38,6 +38,9 @@
   
 - type: Tag
   id: MagazineRifleM52
+
+- type: Tag
+  id: MagazineSMGPPSH
   
 - type: Tag
   id: MagazineSMGUzi
@@ -50,6 +53,9 @@
 
 - type: Tag
   id: OvenMachineBoard
+  
+- type: Tag
+  id: StoveMachineBoard
   
 - type: Tag
   id: Patch
@@ -83,3 +89,6 @@
   
 - type: Tag
   id: Table
+
+- type: Tag
+  id: DockEscape

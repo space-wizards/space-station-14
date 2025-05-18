@@ -1,0 +1,98 @@
+- type: entity
+  id: BannerBase
+  parent: BaseStructureDynamic
+  name: base banner
+  description: It's the concept of a banner, you shouldn't be seeing this.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Decorations/Banners.rsi
+    state: banner
+    noRot: true
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - Opaque
+        - MidImpassable
+        - HighImpassable
+        - BulletImpassable
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseSign
+  id: BaseWallBanner
+  abstract: true
+  components:
+  - type: WallMount
+    arc: 360
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: _Starlight/Structures/Decorations/Banners.rsi
+
+
+- type: entity
+  parent: BaseWallBanner
+  id: BannerWallHammer
+  name: Hammer Banner
+  description: A red banner adorned with a golden hammer, symbolizing labor and unity.
+  components:
+  - type: Sprite
+    state: banner0
+
+- type: entity
+  parent: BaseWallBanner
+  id: BannerWallSoviet
+  name: Soviet Banner
+  description: A red banner reminiscent of a bygone era.
+  components:
+  - type: Sprite
+    state: banner1
+
+- type: entity
+  id: BannerSovietRegular
+  parent: BannerBase
+  name: Soviet regular banner
+  description: A red banner reminiscent of the Soviet era, evoking a sense of history and solidarity.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Decorations/Banners.rsi
+    state: banner2
+
+- type: entity
+  id: BannerSovietHammer
+  parent: BannerBase
+  name: soviet hammer banner
+  description: A red banner featuring a golden hammer, representing the strength and unity of the working class.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Decorations/Banners.rsi
+    state: banner3
+
+- type: entity
+  id: BannerSoviet
+  parent: BannerBase
+  name: soviet banner
+  description: A red standing banner adorned with Soviet iconography, evoking a sense of history and solidarity.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Decorations/Banners.rsi
+    state: banner4

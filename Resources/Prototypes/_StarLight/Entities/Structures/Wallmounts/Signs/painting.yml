@@ -1,0 +1,19 @@
+- type: entity
+  parent: PaintingBase
+  id: PaintingRedTide
+  name: Red Tide Painting
+  description: A vivid painting depicting a crimson wave crashing against dark rocks. 
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/paintings.rsi
+    state: Red_Tide_Painting
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingHammer
+  name: Soviet Hammer Painting
+  description: A bold painting of a hammer, symbolizing strength and unity.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/paintings.rsi
+    state: Hammer_Painting

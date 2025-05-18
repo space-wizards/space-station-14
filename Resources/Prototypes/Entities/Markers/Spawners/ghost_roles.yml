@@ -91,6 +91,9 @@
     - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5h
   - type: GhostRoleMobSpawner
     prototype: MobHumanNukeOp
   - type: Sprite
@@ -130,6 +133,9 @@
     rules: ghost-role-information-loneop-rules
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5h
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -148,6 +154,12 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 36000 # 10h
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 18000 # 5h
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -160,6 +172,12 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5h
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 18000 # 5h
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -172,6 +190,7 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    #inherits requirments from lone op
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -262,6 +281,9 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 90000 # 25h
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
