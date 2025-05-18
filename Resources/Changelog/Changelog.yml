@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AgentSmithRadio
-  changes:
-  - message: Reptilians can now eat chicken nuggets.
-    type: Tweak
-  id: 8022
-  time: '2025-02-27T23:35:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35569
 - author: Velken
   changes:
   - message: Wizard now has a cool PDA to store their pAI.
@@ -3922,3 +3915,12 @@
   id: 8524
   time: '2025-05-18T09:18:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37567
+- author: SuperGDPWYL
+  changes:
+  - message: A Lone Operative detonating the nuke on-station will now end the round.
+    type: Add
+  - message: The endscreen will now properly show how successful Lone Operatives were.
+    type: Fix
+  id: 8525
+  time: '2025-05-18T11:34:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36498
