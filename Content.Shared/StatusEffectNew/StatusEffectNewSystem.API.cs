@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.StatusEffectNew;
 
-public abstract partial class SharedStatusEffectNewSystem
+public abstract partial class SharedStatusEffectsSystem
 {
     /// <summary>
     /// Check whether a status effect can be imposed on a particular entity.
@@ -15,7 +15,7 @@ public abstract partial class SharedStatusEffectNewSystem
         if (!_proto.TryIndex(effectProto, out var effectProtoData))
             return false;
 
-        if (!effectProtoData.TryGetComponent<StatusEffectNewComponent>(out var effectProtoComp,
+        if (!effectProtoData.TryGetComponent<StatusEffectComponent>(out var effectProtoComp,
                 _compFactory))
             return false;
 
@@ -171,7 +171,7 @@ public abstract partial class SharedStatusEffectNewSystem
     /// <param name="container">Optional. The status effect container component of the entity.</param>
     public bool TryGetTime(EntityUid uid,
         EntProtoId effectProto,
-        out (EntityUid, TimeSpan) time,
+        out (EntityUid EffectEnt, TimeSpan RemainigTime) time,
         StatusEffectContainerComponent? container = null)
     {
         time = default;

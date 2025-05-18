@@ -7,11 +7,12 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.StatusEffectNew.Components;
 
 /// <summary>
-/// The base component for all status effects. Provides a link between the effect and the affected entity, and some data common to all status effects.
+/// Marker component for all status effects - every status effect entity should have it.
+/// Provides a link between the effect and the affected entity, and some data common to all status effects.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[Access(typeof(SharedStatusEffectNewSystem))]
-public sealed partial class StatusEffectNewComponent : Component
+[Access(typeof(SharedStatusEffectsSystem))]
+public sealed partial class StatusEffectComponent : Component
 {
     /// <summary>
     /// The entity that this status effect is applied to.
@@ -20,7 +21,7 @@ public sealed partial class StatusEffectNewComponent : Component
     public EntityUid? AppliedTo;
 
     /// <summary>
-    /// Status effect indication for the player
+    /// Status effect indication for the player. If Null, no Alert will be displayed. If Null, the effect lasts indefinitely.
     /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<AlertPrototype>? Alert;

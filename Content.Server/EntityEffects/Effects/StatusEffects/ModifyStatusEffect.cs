@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.EntityEffects.Effects.StatusEffects;
 
 /// <summary>
-/// Changes status effects on entities: Adds, removes or sets time
+/// Changes status effects on entities: Adds, removes or sets time.
 /// </summary>
 [UsedImplicitly]
 public sealed partial class ModifyStatusEffect : EntityEffect
@@ -14,24 +14,27 @@ public sealed partial class ModifyStatusEffect : EntityEffect
     [DataField(required: true)]
     public EntProtoId EffectProto;
 
+    /// <summary>
+    /// Time for which status effect should be applied. Behaviour changes according to <see cref="Refresh" />.
+    /// </summary>
     [DataField]
     public float Time = 2.0f;
 
     /// <remarks>
-    /// true - refresh status effect time, false - accumulate status effect time
+    /// true - refresh status effect time, false - accumulate status effect time.
     /// </remarks>
     [DataField]
     public bool Refresh = true;
 
     /// <summary>
-    ///     Should this effect add the status effect, remove time from it, or set its cooldown?
+    /// Should this effect add the status effect, remove time from it, or set its cooldown?
     /// </summary>
     [DataField]
     public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Add;
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<StatusEffectNewSystem>();
+        var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>();
 
         var time = Time;
         if (args is EntityEffectReagentArgs reagentArgs)

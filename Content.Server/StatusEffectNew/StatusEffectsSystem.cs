@@ -3,7 +3,8 @@ using Content.Shared.StatusEffectNew.Components;
 
 namespace Content.Server.StatusEffectNew;
 
-public sealed partial class StatusEffectNewSystem : SharedStatusEffectNewSystem
+/// <inheritdoc/>
+public sealed partial class StatusEffectsSystem : SharedStatusEffectsSystem
 {
     public override void Initialize()
     {

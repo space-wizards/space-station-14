@@ -7,7 +7,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.StatusEffectNew;
 
-public abstract partial class SharedStatusEffectNewSystem : EntitySystem
+/// <summary>
+/// This system controls status effects, their lifetime, and provides an API for adding them to entities,
+/// removing them from entities, or getting information about current effects on entities.
+/// </summary>
+public abstract partial class SharedStatusEffectsSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -18,24 +22,24 @@ public abstract partial class SharedStatusEffectNewSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
 
     private EntityQuery<StatusEffectContainerComponent> _containerQuery;
-    private EntityQuery<StatusEffectNewComponent> _effectQuery;
+    private EntityQuery<StatusEffectComponent> _effectQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StatusEffectNewComponent, StatusEffectApplied>(OnStatusEffectApplied);
-        SubscribeLocalEvent<StatusEffectNewComponent, StatusEffectRemoved>(OnStatusEffectRemoved);
+        SubscribeLocalEvent<StatusEffectComponent, StatusEffectApplied>(OnStatusEffectApplied);
+        SubscribeLocalEvent<StatusEffectComponent, StatusEffectRemoved>(OnStatusEffectRemoved);
 
         _containerQuery = GetEntityQuery<StatusEffectContainerComponent>();
-        _effectQuery = GetEntityQuery<StatusEffectNewComponent>();
+        _effectQuery = GetEntityQuery<StatusEffectComponent>();
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<StatusEffectNewComponent>();
+        var query = EntityQueryEnumerator<StatusEffectComponent>();
         while (query.MoveNext(out var ent, out var effect))
         {
             if (effect.EndEffectTime is null)
@@ -64,13 +68,15 @@ public abstract partial class SharedStatusEffectNewSystem : EntitySystem
         if (effectComp.AppliedTo is null)
             return;
 
+        effectComp.EndEffectTime += delta;
+
         if (effectComp.Alert is not null)
         {
-            effectComp.EndEffectTime += delta;
+            (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null ? null : (_timing.CurTime, effectComp.EndEffectTime.Value);
             _alerts.ShowAlert(
                 effectComp.AppliedTo.Value,
                 effectComp.Alert.Value,
-                cooldown: effectComp.EndEffectTime is null ? null : (_timing.CurTime, effectComp.EndEffectTime.Value));
+                cooldown: cooldown);
         }
     }
 
@@ -85,42 +91,40 @@ public abstract partial class SharedStatusEffectNewSystem : EntitySystem
         if (effectComp.Alert is not null)
         {
             effectComp.EndEffectTime = _timing.CurTime + duration;
+            (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null ? null : (_timing.CurTime, effectComp.EndEffectTime.Value);
             _alerts.ShowAlert(
                 effectComp.AppliedTo.Value,
                 effectComp.Alert.Value,
-                cooldown: effectComp.EndEffectTime is null ? null : (_timing.CurTime, effectComp.EndEffectTime.Value));
+                cooldown: cooldown);
         }
     }
 
-    private void OnStatusEffectApplied(Entity<StatusEffectNewComponent> ent, ref StatusEffectApplied args)
+    private void OnStatusEffectApplied(Entity<StatusEffectComponent> ent, ref StatusEffectApplied args)
     {
         if (ent.Comp.AppliedTo is null)
             return;
 
         if (ent.Comp.Alert is not null)
         {
+            (TimeSpan, TimeSpan)? cooldown = ent.Comp.EndEffectTime is null ? null : (_timing.CurTime, ent.Comp.EndEffectTime.Value);
             _alerts.ShowAlert(
                 ent.Comp.AppliedTo.Value,
                 ent.Comp.Alert.Value,
-                cooldown: ent.Comp.EndEffectTime is null ? null : (_timing.CurTime, ent.Comp.EndEffectTime.Value));
+                cooldown: cooldown);
         }
 
-        if (_net.IsServer)
-            EntityManager.AddComponents(args.Target, ent.Comp.Components);
+        EntityManager.AddComponents(args.Target, ent.Comp.Components);
     }
 
-    private void OnStatusEffectRemoved(Entity<StatusEffectNewComponent> ent, ref StatusEffectRemoved args)
+    private void OnStatusEffectRemoved(Entity<StatusEffectComponent> ent, ref StatusEffectRemoved args)
     {
         if (ent.Comp.AppliedTo is null)
             return;
 
         if (ent.Comp.Alert is not null)
-        {
             _alerts.ClearAlert(ent.Comp.AppliedTo.Value, ent.Comp.Alert.Value);
-        }
 
-        if (_net.IsServer)
-            EntityManager.RemoveComponents(args.Target, ent.Comp.Components);
+        EntityManager.RemoveComponents(args.Target, ent.Comp.Components);
     }
 }
 
@@ -128,13 +132,13 @@ public abstract partial class SharedStatusEffectNewSystem : EntitySystem
 /// Calls on both effect entity and target entity, when a status effect is applied.
 /// </summary>
 [ByRefEvent]
-public readonly record struct StatusEffectApplied(EntityUid Target, Entity<StatusEffectNewComponent> Effect);
+public readonly record struct StatusEffectApplied(EntityUid Target, Entity<StatusEffectComponent> Effect);
 
 /// <summary>
 /// Calls on both effect entity and target entity, when a status effect is removed.
 /// </summary>
 [ByRefEvent]
-public readonly record struct StatusEffectRemoved(EntityUid Target, Entity<StatusEffectNewComponent> Effect);
+public readonly record struct StatusEffectRemoved(EntityUid Target, Entity<StatusEffectComponent> Effect);
 
 /// <summary>
 /// Raised on an entity before a status effect is added to determine if adding it should be cancelled.

@@ -9,7 +9,7 @@ namespace Content.Server.Traits.Assorted;
 /// </summary>
 public sealed class NarcolepsySystem : EntitySystem
 {
-    [Dependency] private readonly StatusEffectNewSystem _statusEffects = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <inheritdoc/>

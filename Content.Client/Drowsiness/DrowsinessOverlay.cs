@@ -43,12 +43,12 @@ public sealed class DrowsinessOverlay : Overlay
         if (!_entityManager.HasComponent<DrowsinessStatusEffectComponent>(playerEntity))
             return;
 
-        var statusSys = _sysMan.GetEntitySystem<SharedStatusEffectNewSystem>();
-        if (!statusSys.TryGetTime(playerEntity.Value, SleepingSystem.StatusEffectForcedSleeping, out var time))
+        var statusSys = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
+        if (!statusSys.TryGetTime(playerEntity.Value, SleepingSystem.StatusEffectForcedSleeping, out var effect))
             return;
 
         var curTime = _timing.CurTime;
-        var timeLeft = (float)(time.Item2 - curTime).TotalSeconds;
+        var timeLeft = (float)(effect.RemainigTime - curTime).TotalSeconds;
 
         CurrentPower += 8f * (0.5f * timeLeft - CurrentPower) * args.DeltaSeconds / (timeLeft + 1);
     }

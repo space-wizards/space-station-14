@@ -3,10 +3,12 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.StatusEffectNew.Components;
 
 /// <summary>
-/// A component that is automatically added to any entities that have a status effect applied to them. Allows you to track which status effects are applied to an entity right now.
+/// Adds container for status effect entities that are applied to entity.
+/// Is applied automatically upon adding any status effect.
+/// Can be used for tracking currently applied status effects.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
-[Access(typeof(SharedStatusEffectNewSystem))]
+[Access(typeof(SharedStatusEffectsSystem))]
 public sealed partial class StatusEffectContainerComponent : Component
 {
     [DataField, AutoNetworkedField]
