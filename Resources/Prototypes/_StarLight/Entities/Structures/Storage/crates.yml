@@ -1,0 +1,10 @@
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateSoviet
+  name: Soviet Crate
+  description: A sturdy crate adorned with Soviet insignia, built to withstand harsh conditions and securely store valuable supplies. 
+  components:
+  - type: Icon
+    sprite: _Starlight/Structures/Storage/soviet.rsi
+  - type: Sprite
+    sprite: _Starlight/Structures/Storage/soviet.rsi

@@ -1,0 +1,65 @@
+- type: entity
+  parent: BaseItem
+  id: SovietDeskFlag
+  name: Soviet Desk Flag
+  description: A desk flag for when you need to wave the motherland's approval. Cyka blyat! 
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/soviet_desk_flag.rsi
+    state: icon
+  - type: Item
+    sprite: _Starlight/Objects/Misc/soviet_desk_flag.rsi
+
+
+- type: entity
+  id: RevolutionaryHandFlagSpear
+  name: Revolutionary HandFlag
+  description: A hand-held flag symbolizing the spirit of revolution. Wield it with pride!
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/rev_flag.rsi
+    state: icon
+  - type: Item
+    sprite: _Starlight/Objects/Misc/rev_flag.rsi
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Piercing: 8
+    angle: 0
+    animation: WeaponArcThrust
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 10
+  - type: EmbeddableProjectile
+    offset: -0.15,0.0
+  - type: ThrowingAngle
+    angle: 225
+  - type: LandAtCursor
+  - type: Tag
+    tags:
+    - Spear
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.40,-0.30
+            - -0.30,-0.40
+            - 0.40,0.30
+            - 0.30,0.40
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Sharp
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+        

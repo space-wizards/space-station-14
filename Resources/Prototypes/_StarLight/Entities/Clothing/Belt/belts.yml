@@ -230,3 +230,21 @@
   - type: Clothing
     sprite: _Starlight/Clothing/Belt/corpsmanbelt.rsi
   - type: Appearance
+
+- type: entity
+  parent: [ClothingBeltAmmoProviderBase, BaseSovietContraband]
+  id: ClothingSovietBandolier
+  name: Bandolier
+  description: A rugged bandolier designed to carry extra ammunition.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Belt/soviet_bandolier.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Belt/soviet_bandolier.rsi
+  - type: Item
+    size: Normal
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - ShellShotgun
+    capacity: 20

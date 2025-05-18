@@ -1,0 +1,15 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingSovietMedals
+  name: soviet medals
+  description: A set of medals awarded for exemplary service to the Soviet Union.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Medals/SovietMedals.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Neck/Medals/SovietMedals.rsi
+  - type: Tag
+    tags:
+      - Medal
+  - type: StaticPrice
+    price: 250

@@ -1,0 +1,14 @@
+- type: entity
+  parent: [ ClothingOuterEVASuitBase, BaseSovietContraband ]
+  id: ClothingOuterEVAHardsuitSoviet
+  name: Soviet EVA suit
+  description: Protects against the dangers of space and the evils of capitalism.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Suits/soviet_eva.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Suits/soviet_eva.rsi
+  - type: Tag
+    tags:
+    - SuitEVA
+    - MonkeyWearable

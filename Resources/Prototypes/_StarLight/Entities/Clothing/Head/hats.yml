@@ -30,3 +30,17 @@
     sprite: _Starlight/Clothing/Head/Hats/beret_corpsman.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Head/Hats/beret_corpsman.rsi
+
+- type: entity
+  parent: [ClothingHeadBase]
+  id: ClothingHeadHatUshankaAlt
+  name: Ushanka
+  description: The warmest hat for surviving both the cold and capitalist propaganda.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/Ushanka.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/Ushanka.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 1.025
+    coolingCoefficient: 0.65

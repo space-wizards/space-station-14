@@ -25,3 +25,21 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.95
+
+- type: entity
+  parent: [ClothingMaskGas, BaseSovietContraband]
+  id: ClothingSovietGasMask
+  name: Soviet gas mask
+  description: A rugged gas mask of Soviet design, built to withstand harsh conditions and keep the wearer safe from hazardous environments.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/sovietgas.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/sovietgas.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.90
+        Heat: 0.90
