@@ -31,7 +31,6 @@ public sealed partial class Emote : EntityEffect
     [DataField]
     public bool ShowInGuidebook;
 
-
     /// <summary>
     ///     If true, the entity will preform the emote even if they normally can't.
     /// </summary>
