@@ -281,12 +281,11 @@ namespace Content.Shared.Verbs
     }
 
     /// <summary>
-    ///     This is for verbs facilitated by components on the user.
+    ///     This is for verbs facilitated by components on the user or their clothing.
     ///     Verbs from clothing, species, etc. rather than a held item.
     /// </summary>
     /// <remarks>
-    ///     Add a component to the user's entity and sub to the get verbs event
-    ///     and it'll appear in the verbs menu on any target.
+    ///     This will get relayed to all clothing (Not pockets) through an inventory relay event.
     /// </remarks>
     [Serializable, NetSerializable]
     public sealed class InnateVerb : Verb
@@ -347,6 +346,7 @@ namespace Content.Shared.Verbs
         public override bool CloseMenuDefault => false; // for examine verbs, this will close the examine tooltip.
 
         public bool ShowOnExamineTooltip = true;
+        public bool HoverVerb = false; // aligned to the left, gives text on hover
     }
 
     /// <summary>

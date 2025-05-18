@@ -31,6 +31,8 @@
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Appearance
+  - type: Damageable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -38,7 +40,10 @@
         damage: 50
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
   - type: StationAiWhitelist
   - type: WiresPanel
   - type: Wires

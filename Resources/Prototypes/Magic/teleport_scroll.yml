@@ -1,0 +1,26 @@
+﻿- type: entity
+  id: WizardTeleportScroll
+  name: teleport scroll
+  suffix: Wizard
+  parent: [ BaseItem, BaseMagicalContraband ]
+  components:
+  - type: UserInterface
+    interfaces:
+      enum.TeleportLocationUiKey.Key:
+        type: TeleportLocationsBoundUserInterface
+  - type: ActivatableUI
+    key: enum.TeleportLocationUiKey.Key
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: TeleportLocations
+    name: teleportation-scroll-window-title
+    teleportEffect: WizardSmoke
+    closeAfterTeleport: true
+    speech: teleportation-scroll-speech-wizard
+  - type: UseDelay
+    delay: 1
+    delays:
+      TeleportDelay: !type:UseDelayInfo
+        length: 300
