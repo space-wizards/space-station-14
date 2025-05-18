@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Multiple inventory windows now close properly when you hit escape
-    type: Fix
-  id: 8007
-  time: '2025-02-25T16:40:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35040
 - author: Pumkin69
   changes:
   - message: Engineers can choose to not wear a headpiece now.
@@ -3920,3 +3913,10 @@
   id: 8509
   time: '2025-05-17T17:37:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35867
+- author: perryprog
+  changes:
+  - message: You can now link cutter machines to material silos.
+    type: Tweak
+  id: 8510
+  time: '2025-05-18T01:51:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37554
