@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Atmos;
+using Content.Shared.Explosion.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -10,6 +11,7 @@ namespace Content.Shared.Explosion.Components.OnTrigger;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentPause]
+[Access(typeof(SharedReleaseGasOnTriggerSystem))]
 public sealed partial class ReleaseGasOnTriggerComponent : Component
 {
     /// <summary>
