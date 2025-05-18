@@ -253,7 +253,7 @@ public abstract partial class SharedBuckleSystem
             return false;
         }
 
-        if (buckle.Comp.Buckled && !TryUnbuckle(buckle.Owner, userUid, buckle.Comp))
+        if (buckle.Comp.Buckled && !CanUnbuckle(buckle.Owner, userUid, true))
         {
             if (popup)
             {
@@ -352,19 +352,24 @@ public abstract partial class SharedBuckleSystem
         return true;
     }
 
-    private void Buckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? user)
+    private void Buckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? userUid)
     {
-        if (user == buckle.Owner)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} buckled themselves to {ToPrettyString(strap)}");
-        else if (user != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} buckled {ToPrettyString(buckle)} to {ToPrettyString(strap)}");
+        if (userUid == buckle.Owner)
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(userUid):player} buckled themselves to {ToPrettyString(strap)}");
+        else if (userUid != null)
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(userUid):player} buckled {ToPrettyString(buckle)} to {ToPrettyString(strap)}");
 
         if (TryComp<PullableComponent>(strap.Owner, out var pullable) && pullable.Puller == buckle.Owner)
         {
             _pullingSystem.StopPull((strap.Owner, pullable));
         }
 
-        _audio.PlayPredicted(strap.Comp.BuckleSound, strap, user);
+        if (buckle.Comp.Buckled)
+        {
+            Unbuckle(buckle.Owner, userUid);
+        }
+
+        _audio.PlayPredicted(strap.Comp.BuckleSound, strap, userUid);
 
         SetBuckledTo(buckle, strap!);
         Appearance.SetData(strap, StrapVisuals.State, true);
@@ -495,7 +500,7 @@ public abstract partial class SharedBuckleSystem
         RaiseLocalEvent(strap, ref strapEv);
     }
 
-    public bool CanUnbuckle(Entity<BuckleComponent?> buckle, EntityUid user, bool popup)
+    public bool CanUnbuckle(Entity<BuckleComponent?> buckle, EntityUid? user, bool popup)
     {
         return CanUnbuckle(buckle, user, popup, out _);
     }
