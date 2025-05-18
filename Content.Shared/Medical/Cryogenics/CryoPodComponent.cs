@@ -11,54 +11,46 @@ public sealed partial class CryoPodComponent : Component
     /// <summary>
     /// Specifies the name of the atmospherics port to draw gas from.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("port")]
     public string PortName { get; set; } = "port";
 
     /// <summary>
     /// Specifies the name of the slot that holds beaker with medicine.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("solutionContainerName")]
+    [DataField]
     public string SolutionContainerName { get; set; } = "beakerSlot";
 
     /// <summary>
     /// How often (seconds) are chemicals transferred from the beaker to the body?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("beakerTransferTime")]
+    [DataField]
     public float BeakerTransferTime = 1f;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("nextInjectionTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan? NextInjectionTime;
 
     /// <summary>
     /// How many units of each reagent to transfer per tick from the beaker to the mob?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("beakerTransferAmount")]
+    [DataField]
     public float BeakerTransferAmount = .25f;
 
     /// <summary>
     /// How potent (multiplier) the reagents are when transferred from the beaker to the mob.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("PotencyAmount")]
+    [DataField]
     public float PotencyMultiplier = 2f;
 
     /// <summary>
     ///     Delay applied when inserting a mob in the pod.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("entryDelay")]
+    [DataField]
     public float EntryDelay = 2f;
 
     /// <summary>
     /// Delay applied when trying to pry open a locked pod.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("pryDelay")]
+    [DataField]
     public float PryDelay = 5f;
 
     /// <summary>
@@ -70,15 +62,13 @@ public sealed partial class CryoPodComponent : Component
     /// <summary>
     /// If true, the eject verb will not work on the pod and the user must use a crowbar to pry the pod open.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("locked")]
+    [DataField]
     public bool Locked { get; set; }
 
     /// <summary>
     /// Causes the pod to be locked without being fixable by messing with wires.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("permaLocked")]
+    [DataField]
     public bool PermaLocked { get; set; }
 
     [Serializable, NetSerializable]
