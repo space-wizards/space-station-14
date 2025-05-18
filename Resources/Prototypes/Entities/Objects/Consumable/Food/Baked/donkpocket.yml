@@ -386,3 +386,46 @@
           Quantity: 1
   - type: Sprite
     state: dink
+
+- type: entity
+  name: moth-pocket
+  parent: FoodDonkpocketBase
+  id: FoodDonkpocketMoth
+  description: Buzzy edition of donk-pocket that was created during mass protests ab-... Actually who cares? Just donk-pockets for moths.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cotton
+    - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Sprite
+    state: moth
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - ClothMade
+    - DonkPocket
+
+- type: entity
+  name: warm moth-pocket
+  parent: FoodDonkpocketMoth
+  id: FoodDonkpocketMothWarm
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: Omnizine
+          Quantity: 2
