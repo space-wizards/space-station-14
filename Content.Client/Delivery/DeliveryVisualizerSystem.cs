@@ -42,4 +42,12 @@ public enum DeliveryVisualLayers : byte
     PriorityTape,
     Breakage,
     Trash,
+    Bomb,
+    BombPrimed,
 }
+
+public enum DeliverySpawnerVisualLayers : byte
+{
+    Contents,
+}
+

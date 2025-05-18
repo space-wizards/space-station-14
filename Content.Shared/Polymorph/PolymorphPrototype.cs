@@ -41,6 +41,14 @@ public sealed partial record PolymorphConfiguration
     public EntProtoId Entity;
 
     /// <summary>
+    /// Additional entity to spawn when polymorphing/reverting.
+    /// Gets parented to the entity polymorphed into.
+    /// Useful for visual effects.
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public EntProtoId? EffectProto;
+
+    /// <summary>
     /// The delay between the polymorph's uses in seconds
     /// Slightly weird as of right now.
     /// </summary>
