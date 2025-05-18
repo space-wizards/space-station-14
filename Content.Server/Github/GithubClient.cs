@@ -73,7 +73,6 @@ public sealed class GithubClient
         if(!HaveFullApiData())
             return;
 
-
         var httpMessageHandler = new RetryHandler(new HttpClientHandler(), _maxRetries, _sawmill);
         var newClient = new HttpClient(httpMessageHandler)
         {
@@ -141,38 +140,6 @@ public sealed class GithubClient
     # endregion
 
     #region Helper functions
-
-    /// <summary>
-    /// Check if response is valid. Mainly used for printing out useful error messages!
-    /// <br/>
-    /// <see href="https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28"/>
-    /// </summary>
-    /// <param name="response">The response from the request</param>
-    /// <param name="expectedStatusCodes"></param>
-    /// <returns>True if the request properly went through, false otherwise.</returns>
-    private bool IsValidResponse(HttpResponseMessage response, IEnumerable<HttpStatusCode> expectedStatusCodes)
-    {
-        foreach (var code in expectedStatusCodes)
-        {
-            if  (response.StatusCode == code)
-                return true;
-        }
-
-        // Check if the auth token is expired.
-        if (response.Headers.TryGetValues("github-authentication-token-expiration", out var authTokenExpHeader) &&
-            DateTime.TryParse(authTokenExpHeader.First(), out var authTokenExp))
-        {
-            if (authTokenExp <= DateTime.UtcNow)
-            {
-                _sawmill.Error($"Github authentication token has expired! Exp date: {authTokenExp}");
-                return false;
-            }
-        }
-
-        // TODO: Add custom warnings depending on the status code. E.g unsupported api version is code 400.
-        _sawmill.Warning($"Github api had an invalid response. Status code: {response.StatusCode}");
-        return false;
-    }
 
     private HttpRequestMessage BuildRequest(IGithubRequest request)
     {

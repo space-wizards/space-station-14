@@ -1,4 +1,3 @@
-using System.Net;
 using System.Net.Http;
 using System.Text.Json.Serialization;
 
@@ -10,9 +9,7 @@ namespace Content.Server.Github.Requests;
 /// <remarks>
 /// WARNING: You must add this JsonDerivedType for all requests that have json otherwise they will not parse properly!
 /// </remarks>
-[JsonDerivedType(typeof(GetRateLimit))]
 [JsonDerivedType(typeof(CreateIssue))]
-[JsonDerivedType(typeof(GetZen))]
 public interface IGithubRequest
 {
     /// <summary>

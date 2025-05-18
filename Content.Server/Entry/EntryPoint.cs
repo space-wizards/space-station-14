@@ -104,7 +104,7 @@ namespace Content.Server.Entry
                 _watchlistWebhookManager = IoCManager.Resolve<IWatchlistWebhookManager>();
 
                 var githubClient = new GithubClient();
-                IoCManager.InjectDependencies(_githubWorker);
+                IoCManager.InjectDependencies(githubClient);
                 githubClient.Initialize();
                 _githubWorker = new GithubBackgroundWorker(githubClient);
                 IoCManager.InjectDependencies(_githubWorker);
