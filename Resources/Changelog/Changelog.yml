@@ -1,19 +1,6 @@
 ﻿Entries:
 - author: SlamBamActionman
   changes:
-  - message: Pet carriers can no longer be put into toilets.
-    type: Fix
-  - message: You can now escape containers (such as pet carriers) inserted into other
-      containers.
-    type: Fix
-  - message: Thrown items no longer bypasses insertion checks for toilets and disposal
-      units.
-    type: Fix
-  id: 8020
-  time: '2025-02-27T17:43:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35557
-- author: SlamBamActionman
-  changes:
   - message: Implanters must now specificy which implant they're targeting when extracting,
       and deals heavy damage to the person performing the extraction if no such implant
       exists.
@@ -3928,3 +3915,11 @@
   id: 8522
   time: '2025-05-18T09:11:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37236
+- author: ScarKy0
+  changes:
+  - message: Aloxadone has been tweaked. The recipe has been altered to be simplier
+      to make and the healing values have been increased.
+    type: Tweak
+  id: 8523
+  time: '2025-05-18T09:16:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37239
