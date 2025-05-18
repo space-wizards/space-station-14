@@ -173,7 +173,7 @@ public sealed class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetMelee()
     {
         var values = new List<string[]>();
-        var meleeName = _entManager.ComponentFactory.GetComponentName(typeof(MeleeWeaponComponent));
+        var meleeName = _entManager.ComponentFactory.GetComponentName<MeleeWeaponComponent>();
 
         foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
         {
@@ -256,7 +256,7 @@ public sealed class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetDrawRateMessage()
     {
         var values = new List<string[]>();
-        var powerName = _entManager.ComponentFactory.GetComponentName(typeof(ApcPowerReceiverComponent));
+        var powerName = _entManager.ComponentFactory.GetComponentName<ApcPowerReceiverComponent>();
 
         foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
         {
