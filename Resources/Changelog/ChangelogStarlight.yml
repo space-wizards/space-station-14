@@ -5842,4 +5842,11 @@ Entries:
   id: 809
   time: '2025-05-18T17:37:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/640
+- author: Cyanogen
+  changes:
+  - message: Felinoid hissing when in space cleaner no longer shows in chat
+    type: Tweak
+  id: 810
+  time: '2025-05-18T21:31:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/651
 
