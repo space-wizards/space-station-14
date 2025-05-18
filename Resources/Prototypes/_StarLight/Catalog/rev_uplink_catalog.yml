@@ -4,7 +4,7 @@
   description: akms-weapon-desc
   productEntity: WeaponRifleAk
   cost:
-    Telebond: 4
+    Telebond: 7
   categories:
   - RevUplinkWeaponry
   conditions:

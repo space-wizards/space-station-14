@@ -87,6 +87,10 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     /// <param name="implanter">The implanter being used</param>
     public void TryImplant(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
+        // Check if the implantation is allowed before starting the doafter
+        if (!CanImplant(user, target, implanter, component, out var implant, out _))
+            return;
+            
         var args = new DoAfterArgs(EntityManager, user, component.ImplantTime, new ImplantEvent(), implanter, target: target, used: implanter)
         {
             BreakOnDamage = true,

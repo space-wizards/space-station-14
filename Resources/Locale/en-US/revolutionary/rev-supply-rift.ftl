@@ -9,7 +9,7 @@ rev-supply-rift-charged = (!) A shady portal that coughs up Soviet stuff. Occasi
 
 # Soviet EVA suit
 soviet-eva-name = Soviet EVA Suit
-soviet-eva-desc = A rugged space suit with the hammer and sickle emblazoned on the back. For the workers of space!
+soviet-eva-desc = A rugged space suit with the hammer and sickle emblazoned on the back.
 
 # Soviet EVA helmet
 soviet-eva-helm-name = Soviet EVA Helmet
@@ -17,4 +17,4 @@ soviet-eva-helm-desc = A sturdy EVA helmet with a red star emblazoned on the fro
 
 # AKMS weapon
 akms-weapon-name = AKMS Rifle
-akms-weapon-desc = A reliable assault rifle chambered in 7.62x39mm. Standard issue for Soviet forces.
+akms-weapon-desc = Discontinued but a reliable assault rifle still in broad use today. Uses .30 ammo.

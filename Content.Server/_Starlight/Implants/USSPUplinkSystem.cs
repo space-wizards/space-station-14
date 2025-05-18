@@ -93,10 +93,10 @@ namespace Content.Server.Implants
         EntityUid? sourceOwner = null;
         EntityUid? targetOwner = null;
         
-        if (TryComp<USSPUplinkOwnerComponent>(sourceUplinkUid, out var sourceOwnerComp))
+        if (TryComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(sourceUplinkUid, out var sourceOwnerComp))
             sourceOwner = sourceOwnerComp.OwnerUid;
             
-        if (TryComp<USSPUplinkOwnerComponent>(targetUplinkUid, out var targetOwnerComp))
+        if (TryComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(targetUplinkUid, out var targetOwnerComp))
             targetOwner = targetOwnerComp.OwnerUid;
             
         // If both uplinks have the same owner, or if one doesn't have an owner but the other does
@@ -107,7 +107,7 @@ namespace Content.Server.Implants
         // If target doesn't have an owner but source does, set target's owner to match source
         else if (sourceOwner != null && targetOwner == null)
         {
-            var newOwnerComp = EnsureComp<USSPUplinkOwnerComponent>(targetUplinkUid);
+            var newOwnerComp = EnsureComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(targetUplinkUid);
             newOwnerComp.OwnerUid = sourceOwner;
             sameOwner = true;
             Logger.InfoS("ussp-uplink", $"Set owner of uplink {ToPrettyString(targetUplinkUid)} to {ToPrettyString(sourceOwner.Value)}");
@@ -115,7 +115,7 @@ namespace Content.Server.Implants
         // If source doesn't have an owner but target does, set source's owner to match target
         else if (sourceOwner == null && targetOwner != null)
         {
-            var newOwnerComp = EnsureComp<USSPUplinkOwnerComponent>(sourceUplinkUid);
+            var newOwnerComp = EnsureComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(sourceUplinkUid);
             newOwnerComp.OwnerUid = targetOwner;
             sameOwner = true;
             Logger.InfoS("ussp-uplink", $"Set owner of uplink {ToPrettyString(sourceUplinkUid)} to {ToPrettyString(targetOwner.Value)}");
@@ -148,7 +148,7 @@ namespace Content.Server.Implants
             
             // First, check if this uplink already has an owner
             EntityUid? originalOwner = null;
-            if (TryComp<USSPUplinkOwnerComponent>(uid, out var existingOwnerComp) && existingOwnerComp.OwnerUid != null)
+                if (TryComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(uid, out var existingOwnerComp) && existingOwnerComp.OwnerUid != null)
             {
                 originalOwner = existingOwnerComp.OwnerUid;
                 Logger.InfoS("ussp-uplink", $"Uplink {ToPrettyString(uid)} already has an owner: {ToPrettyString(originalOwner.Value)}");
@@ -166,7 +166,7 @@ namespace Content.Server.Implants
                 // If the uplink doesn't have an owner yet, set this head revolutionary as the owner
                 if (originalOwner == null)
                 {
-                    var uplinkOwnerComp = EnsureComp<USSPUplinkOwnerComponent>(uid);
+                    var uplinkOwnerComp = EnsureComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(uid);
                     uplinkOwnerComp.OwnerUid = args.Implanted.Value;
                     originalOwner = args.Implanted.Value;
                     
@@ -205,7 +205,7 @@ namespace Content.Server.Implants
                 if (originalOwner != null && originalOwner.Value != args.Implanted.Value)
                 {
                     // Only change ownership if the implanted entity is a head revolutionary
-                    var uplinkOwnerComp = EnsureComp<USSPUplinkOwnerComponent>(uid);
+                    var uplinkOwnerComp = EnsureComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(uid);
                     uplinkOwnerComp.OwnerUid = args.Implanted.Value;
                     
                     Logger.InfoS("ussp-uplink", $"Changed ownership of uplink {ToPrettyString(uid)} from {ToPrettyString(originalOwner.Value)} to {ToPrettyString(args.Implanted.Value)}");
@@ -223,7 +223,7 @@ namespace Content.Server.Implants
                 // If the uplink doesn't have an owner component yet, try to find its owner
                 if (originalOwner == null)
                 {
-                    var ownerComp = EnsureComp<USSPUplinkOwnerComponent>(uid);
+                    var ownerComp = EnsureComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(uid);
                     Logger.InfoS("ussp-uplink", $"Added missing USSPUplinkOwnerComponent to uplink {ToPrettyString(uid)}");
                     
                     // Try to find a head revolutionary who might own this uplink
@@ -325,7 +325,7 @@ namespace Content.Server.Implants
                     if (originalOwner != null)
                     {
                         // Find all uplinks owned by this head revolutionary
-                        var uplinkQuery = EntityManager.EntityQuery<USSPUplinkOwnerComponent, StoreComponent>();
+                        var uplinkQuery = EntityManager.EntityQuery<Content.Shared.Implants.Components.USSPUplinkOwnerComponent, StoreComponent>();
                         foreach (var (uplinkOwner, uplinkStore) in uplinkQuery)
                         {
                             if (uplinkOwner.OwnerUid == originalOwner && uplinkOwner.Owner != uid)

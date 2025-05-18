@@ -1,21 +1,4 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Content.Shared.Implants.Components;
 
-namespace Content.Server.Implants
-{
-    /// <summary>
-    /// Component used for tracking which head revolutionary owns a USSP uplink.
-    /// This allows us to correctly associate telebonds with the specific head revolutionary
-    /// who earned them, even when the uplink is implanted in a regular revolutionary.
-    /// </summary>
-    [RegisterComponent]
-    public sealed partial class USSPUplinkOwnerComponent : Component
-    {
-        /// <summary>
-        /// The entity UID of the head revolutionary who owns this uplink.
-        /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public EntityUid? OwnerUid;
-    }
-}
+// This file is kept for backward compatibility
+// The actual implementation is now in Content.Shared.Implants.Components.USSPUplinkOwnerComponent

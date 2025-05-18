@@ -285,6 +285,14 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         _npcFaction.AddFaction(ev.Target, RevolutionaryNpcFaction);
         var revComp = EnsureComp<RevolutionaryComponent>(ev.Target);
+        
+        // Add a component to track which head revolutionary converted this revolutionary
+        if (ev.User != null && HasComp<HeadRevolutionaryComponent>(ev.User.Value))
+        {
+            var converterComp = EnsureComp<RevolutionaryConverterComponent>(ev.Target);
+            converterComp.ConverterUid = ev.User.Value;
+            Logger.Info($"Added RevolutionaryConverterComponent to {ToPrettyString(ev.Target)} with converter {ToPrettyString(ev.User.Value)}");
+        }
 
         if (ev.User != null)
         {
