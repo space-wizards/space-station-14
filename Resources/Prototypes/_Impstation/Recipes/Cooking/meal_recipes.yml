@@ -425,3 +425,12 @@
     Water: 10
   solids:
     FoodMeatSpiderLeg: 1
+
+- type: microwaveMealRecipe
+  id: RecipeHopTart
+  name: identification tart recipe
+  result: SpawnHoPTart
+  time: 5
+  group: Dessert
+  solids:
+    HopTart: 1

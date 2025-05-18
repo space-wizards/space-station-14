@@ -136,7 +136,7 @@
   plantRsi: _Impstation/Objects/Specific/Hydroponics/employedhops.rsi
   packetPrototype: HoPsSeeds
   productPrototypes:
-  - PassengerIDCard
+  - HopTart
   mutationPrototypes:
   - agentgrain
   harvestRepeat: Repeat

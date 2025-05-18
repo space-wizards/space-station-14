@@ -202,3 +202,214 @@
   id: moonrise
   flavorType: Complex
   description: flavor-complex-moonrise
+
+# ID Tart
+- type: flavor
+  id: armory
+  flavorType: Complex
+  description: flavor-complex-armory
+
+- type: flavor
+  id: atmospherics
+  flavorType: Complex
+  description: flavor-complex-atmospherics
+
+- type: flavor
+  id: bar
+  flavorType: Complex
+  description: flavor-complex-bar
+
+- type: flavor
+  id: brig
+  flavorType: Complex
+  description: flavor-complex-brig
+
+- type: flavor
+  id: captain
+  flavorType: Complex
+  description: flavor-complex-captain
+
+- type: flavor
+  id: cargo
+  flavorType: Complex
+  description: flavor-complex-cargo
+
+- type: flavor
+  id: centcomm
+  flavorType: Complex
+  description: flavor-complex-centcomm
+
+- type: flavor
+  id: chapel
+  flavorType: Complex
+  description: flavor-complex-chapel
+
+- type: flavor
+  id: chemistry
+  flavorType: Complex
+  description: flavor-complex-chemistry
+
+- type: flavor
+  id: chiefengineer
+  flavorType: Complex
+  description: flavor-complex-chiefengineer
+
+- type: flavor
+  id: chiefmedicalofficer
+  flavorType: Complex
+  description: flavor-complex-chiefmedicalofficer
+
+- type: flavor
+  id: clown
+  flavorType: Complex
+  description: flavor-complex-clown
+
+- type: flavor
+  id: command
+  flavorType: Complex
+  description: flavor-complex-command
+
+- type: flavor
+  id: courier
+  flavorType: Complex
+  description: flavor-complex-courier
+
+- type: flavor
+  id: cryogenics
+  flavorType: Complex
+  description: flavor-complex-cryogenics
+
+- type: flavor
+  id: detective
+  flavorType: Complex
+  description: flavor-complex-detective
+
+- type: flavor
+  id: engineering
+  flavorType: Complex
+  description: flavor-complex-engineering
+
+- type: flavor
+  id: external
+  flavorType: Complex
+  description: flavor-complex-external
+
+- type: flavor
+  id: headofpersonnel
+  flavorType: Complex
+  description: flavor-complex-headofpersonnel
+
+- type: flavor
+  id: headofsecurity
+  flavorType: Complex
+  description: flavor-complex-headofsecurity
+
+- type: flavor
+  id: hospitalitydirector
+  flavorType: Complex
+  description: flavor-complex-hospitalitydirector
+
+- type: flavor
+  id: hydroponics
+  flavorType: Complex
+  description: flavor-complex-hydroponics
+
+- type: flavor
+  id: janitor
+  flavorType: Complex
+  description: flavor-complex-janitor
+
+- type: flavor
+  id: kitchen
+  flavorType: Complex
+  description: flavor-complex-kitchen
+
+- type: flavor
+  id: lawyer
+  flavorType: Complex
+  description: flavor-complex-lawyer
+
+- type: flavor
+  id: librarian
+  flavorType: Complex
+  description: flavor-complex-librarian
+
+- type: flavor
+  id: logistics
+  flavorType: Complex
+  description: flavor-complex-logistics
+
+- type: flavor
+  id: maintenance
+  flavorType: Complex
+  description: flavor-complex-maintenance
+
+- type: flavor
+  id: medical
+  flavorType: Complex
+  description: flavor-complex-medical
+
+- type: flavor
+  id: mime
+  flavorType: Complex
+  description: flavor-complex-mime
+
+- type: flavor
+  id: musician
+  flavorType: Complex
+  description: flavor-complex-musician
+
+- type: flavor
+  id: nuclearoperative
+  flavorType: Complex
+  description: flavor-complex-nuclearoperative
+
+- type: flavor
+  id: quartermaster
+  flavorType: Complex
+  description: flavor-complex-nuclearoperative
+
+- type: flavor
+  id: reporter
+  flavorType: Complex
+  description: flavor-complex-reporter
+
+- type: flavor
+  id: research
+  flavorType: Complex
+  description: flavor-complex-research
+
+- type: flavor
+  id: researchdirector
+  flavorType: Complex
+  description: flavor-complex-researchdirector
+
+- type: flavor
+  id: salvage
+  flavorType: Complex
+  description: flavor-complex-salvage
+
+- type: flavor
+  id: security
+  flavorType: Complex
+  description: flavor-complex-security
+
+- type: flavor
+  id: service
+  flavorType: Complex
+  description: flavor-complex-service
+
+- type: flavor
+  id: syndicateagent
+  flavorType: Complex
+  description: flavor-complex-syndicateagent
+
+- type: flavor
+  id: theatre
+  flavorType: Complex
+  description: flavor-complex-theatre
+
+- type: flavor
+  id: wizard
+  flavorType: Complex
+  description: flavor-complex-wizard
