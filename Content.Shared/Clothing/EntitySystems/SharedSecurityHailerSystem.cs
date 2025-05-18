@@ -39,6 +39,7 @@ namespace Content.Shared.Clothing.EntitySystems
             SubscribeLocalEvent<SecurityHailerComponent, SecHailerToolDoAfterEvent>(OnScrewingDoAfter);
             SubscribeLocalEvent<SecurityHailerComponent, GotEmaggedEvent>(OnEmagging);
             SubscribeLocalEvent<SecurityHailerComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<SecurityHailerComponent, ToggleMaskEvent>(OnToggleMask);
         }
 
 
@@ -201,6 +202,21 @@ namespace Content.Shared.Clothing.EntitySystems
                 args.PushMarkup(Loc.GetString("sec-gas-mask-examined-wires-cut"));
             else
                 args.PushMarkup(Loc.GetString($"sec-gas-mask-examined-{ent.Comp.AggresionLevel.ToString().ToLower()}"));
+        }
+
+        private void OnToggleMask(Entity<SecurityHailerComponent> ent, ref ToggleMaskEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (TryComp(ent.Owner, out MaskComponent? mask)
+                && mask != null)
+            {
+                if (mask.IsToggled)
+                    _actions.RemoveAction(_wearer, ent.Comp.ActionEntity);
+                else
+                    _actions.AddAction(_wearer, ref ent.Comp.ActionEntity, ent.Comp.Action, ent.Owner);
+            }
         }
     }
 }
