@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: keronshb
-  changes:
-  - message: Added the Wizard Antagonist!
-    type: Add
-  id: 8010
-  time: '2025-02-26T05:34:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35406
 - author: DieselMohawk
   changes:
   - message: Joints and Blunts now have randomized names.
@@ -3922,3 +3915,10 @@
   id: 8512
   time: '2025-05-18T04:02:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37549
+- author: EmoGarbage404
+  changes:
+  - message: Lathes can no longer connect to research servers on separate grids
+    type: Tweak
+  id: 8513
+  time: '2025-05-18T04:04:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36821
