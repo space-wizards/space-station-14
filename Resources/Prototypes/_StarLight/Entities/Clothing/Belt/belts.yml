@@ -234,8 +234,8 @@
 - type: entity
   parent: [ClothingBeltStorageBase, BaseSovietContraband]
   id: ClothingSovietBandolier
-  name: Bandolier
-  description: A rugged bandolier designed to carry extra ammunition.
+  name: rugged regimental bandolier
+  description: Smells of oil, sweat, and questionable decisions.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Belt/soviet_bandolier.rsi
