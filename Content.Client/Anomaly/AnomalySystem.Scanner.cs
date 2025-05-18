@@ -42,8 +42,6 @@ public sealed partial class AnomalySystem
         if (severityObj is not float severity)
             severity = 0;
 
-        // var uid = GetEntity(args.Entity);
-
         if (!HasComp<SpriteComponent>(ent))
             return;
 
@@ -52,47 +50,20 @@ public sealed partial class AnomalySystem
         if (screen.ScreenTexture is null)
             return;
 
-
-        var buf = new Rgba32[50];
-        for(var y = 0; y < 5; y++)
+        var buf = new Rgba32[screen.Size.X * screen.Size.Y];
+        for(var y = 0; y < screen.Size.Y; y++)
         {
-            for (var x = 0; x < 10; x++)
+            for (var x = 0; x < screen.Size.X; x++)
             {
-                if (y is >= 1 and <= 3)
-                {
-                    const float greenHue = 110f / 360f;
-                    const float redHue = 0f;
-                    var hue = Math.Clamp(2*greenHue * (1 - severity), redHue, greenHue);
-                    var sev = (int)(severity * 10);
-                    var color = new Rgba32(Robust.Shared.Maths.Color.FromHsv((hue, 1, 1, 1)).RGBA);
-                    buf[y*10 + x]  = x < sev ? color : new Rgba32(0,0,0,255);
-                }
-                else
-                {
-                    buf[y*10 + x] = new Rgba32(0,0,0, 255);
-                }
+                const float greenHue = 110f / 360f;
+                const float redHue = 0f;
+                var hue = Math.Clamp(2*greenHue * (1 - severity), redHue, greenHue);
+                var sev = (int)(severity * 10);
+                var color = new Rgba32(Robust.Shared.Maths.Color.FromHsv((hue, 1, 1, 1)).RGBA);
+                buf[y*10 + x]  = x < sev ? color : new Rgba32(0,0,0,255);
+
             }
         }
-        screen.ScreenTexture.SetSubImage(screen.Offset, (10, 5), new ReadOnlySpan<Rgba32>(buf));
-
-        // sprite.LayerSetTexture(AnomalyScannerVisualLayers.Screen, tex);
-        // sprite.LayerSetVisible(AnomalyScannerVisualLayers.Screen, true);
-
-        // _appearance.SetData(uid, AnomalyScannerVisuals.AnomalyState, args.Stability);
+        screen.ScreenTexture.SetSubImage(screen.Offset, screen.Size, new ReadOnlySpan<Rgba32>(buf));
     }
-
-    // private void OnScannerAppearanceChanged(Entity<AnomalyScannerScreenComponent> ent, ref AppearanceChangeEvent args)
-    // {
-    //     if (!args.AppearanceData.TryGetValue(AnomalyScannerVisuals.AnomalyState, out var state))
-    //         return;
-    //     if (state is not AnomalyStabilityVisuals newVisual)
-    //         return;
-    //     _appearance.SetData(ent, AnomalyScannerVisuals.AnomalyState, newVisual);
-    // }
-
-
-    // private void FrameUpdateAnomalyScanner(float frameTime)
-    // {
-    //     throw new NotImplementedException();
-    // }
 }
