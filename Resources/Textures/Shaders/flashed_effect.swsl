@@ -1,4 +1,13 @@
-﻿uniform highp float percentComplete;
+﻿// progress of the status effect
+// between 0 and 1
+uniform highp float percentComplete;
+// How fast to do the rotating motion.
+// 1 for normal effect.
+// 0 for the reduced motion setting.
+uniform highp float timeScale;
+// starting phase for the rotation effect
+// needed so it doesn't always look the same for 0 motion
+uniform highp float phase;
 const highp float fadeFalloffExp = 8.0;
 
 void fragment() {
@@ -6,8 +15,9 @@ void fragment() {
     highp float remaining = -pow(percentComplete, fadeFalloffExp) + 1.0;
 
     // Two ghost textures that spin around the character
-    highp vec4 tex1 = zTexture(vec2(UV.x + (0.02) * sin(TIME * 3.0), UV.y + (0.02) * cos(TIME * 3.0)));
-    highp vec4 tex2 = zTexture(vec2(UV.x + (0.01) * sin(TIME * 2.0), UV.y + (0.01) * cos(TIME * 2.0)));
+    highp float time = TIME * timeScale + phase;
+    highp vec4 tex1 = zTexture(vec2(UV.x + (0.02) * sin(time * 3.0), UV.y + (0.02) * cos(time * 3.0)));
+    highp vec4 tex2 = zTexture(vec2(UV.x + (0.01) * sin(time * 2.0), UV.y + (0.01) * cos(time * 2.0)));
 
     highp vec4 textureMix = mix(tex1, tex2, 0.5);
 
