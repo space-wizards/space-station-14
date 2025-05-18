@@ -139,12 +139,12 @@ public sealed class PullingSystem : EntitySystem
     {
         // Prevent people from pulling the entity they are buckled to
         if (ent.Comp.Puller == args.Buckle.Owner && !args.Buckle.Comp.PullStrap)
-            StopPulling(ent);
+            StopPull(ent);
     }
 
     private void OnGotBuckled(Entity<PullableComponent> ent, ref BuckledEvent args)
     {
-        StopPulling(ent);
+        StopPull(ent);
     }
 
     private void OnAfterState(Entity<PullerComponent> ent, ref AfterAutoHandleStateEvent args)
@@ -320,7 +320,7 @@ public sealed class PullingSystem : EntitySystem
         if (args.Joint.ID != component.PullJointId || component.Puller == null)
             return;
 
-        StopPulling((uid, component));
+        StopPull((uid, component));
     }
 
     public bool IsPulled(EntityUid uid, PullableComponent? component = null)
@@ -526,12 +526,23 @@ public sealed class PullingSystem : EntitySystem
         return true;
     }
 
+    public bool TryStopPull(EntityUid pullableUid, PullableComponent pullableComp, EntityUid? user = null)
+    {
+        return TryStopPull((pullableUid, pullableComp), user);
+    }
+
+    public bool TryStopPull(Entity<PullableComponent> pullable, EntityUid? user = null)
+    {
+        if (!CanStopPull(pullable, user))
+            return false;
+
+        StopPull(pullable);
+        return true;
+    }
 
     public bool CanStopPull(Entity<PullableComponent> pullable, EntityUid? user = null)
     {
-        var pullerUidNull = pullable.Comp.Puller;
-
-        if (pullerUidNull == null)
+        if (pullable.Comp.Puller == null)
             return true;
 
         if (user != null && !_blocker.CanInteract(user.Value, pullable.Owner))
@@ -545,24 +556,10 @@ public sealed class PullingSystem : EntitySystem
         return true;
     }
 
-    public bool TryStopPull(EntityUid pullableUid, PullableComponent pullableComp, EntityUid? user = null)
-    {
-        return TryStopPull((pullableUid, pullableComp), user);
-    }
-
-    public bool TryStopPull(Entity<PullableComponent> pullable, EntityUid? user = null)
-    {
-        if (!CanStopPull(pullable, user))
-            return false;
-
-        StopPulling(pullable);
-        return true;
-    }
-
     /// <summary>
     /// Forces pulling to stop and handles cleanup.
     /// </summary>
-    private void StopPulling(Entity<PullableComponent> pullable)
+    public void StopPull(Entity<PullableComponent> pullable)
     {
         if (pullable.Comp.Puller == null)
             return;

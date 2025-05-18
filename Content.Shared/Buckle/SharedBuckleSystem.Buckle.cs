@@ -268,6 +268,12 @@ public abstract partial class SharedBuckleSystem
             return false;
         }
 
+        if (TryComp<PullableComponent>(strap.Owner, out var pullable) && pullable.Puller == buckle.Owner)
+        {
+            if (!_pullingSystem.CanStopPull((strap.Owner, pullable)))
+                return false;
+        }
+
         // Check whether someone is attempting to buckle something to their own child
         var parent = Transform(strap.Owner).ParentUid;
         while (parent.IsValid())
@@ -342,22 +348,8 @@ public abstract partial class SharedBuckleSystem
         if (!CanBuckle(buckle, strap, userUid, popup))
             return false;
 
-        if (!InvalidateSelfPulling(buckle, strap))
-            return false;
-
         Buckle(buckle, strap, userUid);
         return true;
-    }
-
-    private bool InvalidateSelfPulling(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap)
-    {
-        if (!TryComp<PullableComponent>(strap.Owner, out var pullable))
-            return true; // strap owner is not pullable, self pulling not possible
-
-        if (pullable.Puller != buckle.Owner)
-            return true;
-
-        return _pullingSystem.TryStopPull(strap.Owner, pullable);
     }
 
     private void Buckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? user)
@@ -366,6 +358,11 @@ public abstract partial class SharedBuckleSystem
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} buckled themselves to {ToPrettyString(strap)}");
         else if (user != null)
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} buckled {ToPrettyString(buckle)} to {ToPrettyString(strap)}");
+
+        if (TryComp<PullableComponent>(strap.Owner, out var pullable) && pullable.Puller == buckle.Owner)
+        {
+            _pullingSystem.StopPull((strap.Owner, pullable));
+        }
 
         _audio.PlayPredicted(strap.Comp.BuckleSound, strap, user);
 
