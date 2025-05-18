@@ -1,6 +1,10 @@
+using Content.Shared.Audio;
 using Content.Shared.Destructible;
 using Content.Shared.Examine;
+using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.NameModifier.EntitySystems;
+using JetBrains.Annotations;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -14,8 +18,11 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly NameModifierSystem _nameModifier = default!;
     [Dependency] private readonly SharedDeliverySystem _delivery = default!;
+    [Dependency] private readonly SharedExplosionSystem _explosion = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
 
     public override void Initialize()
     {
@@ -33,6 +40,14 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
         SubscribeLocalEvent<DeliveryFragileComponent, BreakageEventArgs>(OnFragileBreakage);
         SubscribeLocalEvent<DeliveryFragileComponent, ExaminedEvent>(OnFragileExamine);
         SubscribeLocalEvent<DeliveryFragileComponent, GetDeliveryMultiplierEvent>(OnGetFragileMultiplier);
+
+        SubscribeLocalEvent<DeliveryBombComponent, ComponentStartup>(OnExplosiveStartup);
+        SubscribeLocalEvent<PrimedDeliveryBombComponent, MapInitEvent>(OnPrimedExplosiveMapInit);
+        SubscribeLocalEvent<DeliveryBombComponent, ExaminedEvent>(OnExplosiveExamine);
+        SubscribeLocalEvent<DeliveryBombComponent, GetDeliveryMultiplierEvent>(OnGetExplosiveMultiplier);
+        SubscribeLocalEvent<DeliveryBombComponent, DeliveryUnlockedEvent>(OnExplosiveUnlock);
+        SubscribeLocalEvent<DeliveryBombComponent, DeliveryPriorityExpiredEvent>(OnExplosiveExpire);
+        SubscribeLocalEvent<DeliveryBombComponent, BreakageEventArgs>(OnExplosiveBreak);
     }
 
     #region Random
@@ -119,12 +134,80 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
     }
     #endregion
 
+    #region Explosive
+    private void OnExplosiveStartup(Entity<DeliveryBombComponent> ent, ref ComponentStartup args)
+    {
+        _delivery.UpdateBombVisuals(ent);
+    }
+
+    private void OnPrimedExplosiveMapInit(Entity<PrimedDeliveryBombComponent> ent, ref MapInitEvent args)
+    {
+        if (!TryComp<DeliveryBombComponent>(ent, out var bomb))
+            return;
+
+        bomb.NextExplosionRetry = _timing.CurTime;
+    }
+
+    private void OnExplosiveExamine(Entity<DeliveryBombComponent> ent, ref ExaminedEvent args)
+    {
+        var trueName = _nameModifier.GetBaseName(ent.Owner);
+
+        var isPrimed = HasComp<PrimedDeliveryBombComponent>(ent);
+
+        if (isPrimed)
+            args.PushMarkup(Loc.GetString("delivery-bomb-primed-examine", ("type", trueName)));
+        else
+            args.PushMarkup(Loc.GetString("delivery-bomb-examine", ("type", trueName)));
+    }
+
+    private void OnGetExplosiveMultiplier(Entity<DeliveryBombComponent> ent, ref GetDeliveryMultiplierEvent args)
+    {
+        // Big danger for big rewards
+        args.MultiplicativeMultiplier += ent.Comp.SpesoMultiplier;
+    }
+
+    private void OnExplosiveUnlock(Entity<DeliveryBombComponent> ent, ref DeliveryUnlockedEvent args)
+    {
+        if (!ent.Comp.PrimeOnUnlock)
+            return;
+
+        PrimeBombDelivery(ent);
+    }
+
+    private void OnExplosiveExpire(Entity<DeliveryBombComponent> ent, ref DeliveryPriorityExpiredEvent args)
+    {
+        if (!ent.Comp.PrimeOnExpire)
+            return;
+
+        PrimeBombDelivery(ent);
+    }
+
+    private void OnExplosiveBreak(Entity<DeliveryBombComponent> ent, ref BreakageEventArgs args)
+    {
+        if (!ent.Comp.PrimeOnBreakage)
+            return;
+
+        PrimeBombDelivery(ent);
+    }
+
+    [PublicAPI]
+    public void PrimeBombDelivery(Entity<DeliveryBombComponent> ent)
+    {
+        EnsureComp<PrimedDeliveryBombComponent>(ent);
+
+        _delivery.UpdateBombVisuals(ent);
+
+        _ambientSound.SetAmbience(ent, true);
+    }
+    #endregion
+
     #region Update Loops
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
         UpdatePriorty(frameTime);
+        UpdateBomb(frameTime);
     }
 
     private void UpdatePriorty(float frameTime)
@@ -146,6 +229,27 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
                 var ev = new DeliveryPriorityExpiredEvent();
                 RaiseLocalEvent(uid, ev);
             }
+        }
+    }
+
+    private void UpdateBomb(float frameTime)
+    {
+        var bombQuery = EntityQueryEnumerator<PrimedDeliveryBombComponent, DeliveryBombComponent>();
+        var curTime = _timing.CurTime;
+
+        while (bombQuery.MoveNext(out var uid, out _, out var bombData))
+        {
+            if (bombData.NextExplosionRetry > curTime)
+                continue;
+
+            bombData.NextExplosionRetry += bombData.ExplosionRetryDelay;
+
+            // Explosions cannot be predicted.
+            if (_net.IsServer && _random.NextFloat() < bombData.ExplosionChance)
+                _explosion.TriggerExplosive(uid);
+
+            bombData.ExplosionChance += bombData.ExplosionChanceRetryIncrease;
+            Dirty(uid, bombData);
         }
     }
     #endregion
