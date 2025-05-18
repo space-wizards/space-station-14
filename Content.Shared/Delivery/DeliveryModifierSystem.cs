@@ -41,7 +41,7 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
         SubscribeLocalEvent<DeliveryFragileComponent, ExaminedEvent>(OnFragileExamine);
         SubscribeLocalEvent<DeliveryFragileComponent, GetDeliveryMultiplierEvent>(OnGetFragileMultiplier);
 
-        SubscribeLocalEvent<DeliveryBombComponent, MapInitEvent>(OnExplosiveMapInit);
+        SubscribeLocalEvent<DeliveryBombComponent, ComponentStartup>(OnExplosiveStartup);
         SubscribeLocalEvent<PrimedDeliveryBombComponent, MapInitEvent>(OnPrimedExplosiveMapInit);
         SubscribeLocalEvent<DeliveryBombComponent, ExaminedEvent>(OnExplosiveExamine);
         SubscribeLocalEvent<DeliveryBombComponent, GetDeliveryMultiplierEvent>(OnGetExplosiveMultiplier);
@@ -135,7 +135,7 @@ public sealed partial class DeliveryModifierSystem : EntitySystem
     #endregion
 
     #region Explosive
-    private void OnExplosiveMapInit(Entity<DeliveryBombComponent> ent, ref MapInitEvent args)
+    private void OnExplosiveStartup(Entity<DeliveryBombComponent> ent, ref ComponentStartup args)
     {
         _delivery.UpdateBombVisuals(ent);
     }
