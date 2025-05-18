@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "license": "CC-BY-4.0",
+  "copyright": "Made by Lugzag (334419997566959624)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "white"
+    },
+    {
+      "name": "white-equipped-HAND",
+      "directions": 4
+    },
+    {
+      "name": "black"
+    },
+    {
+      "name": "black-equipped-HAND",
+      "directions": 4
+    },
+    {
+      "name": "black_white"
+    },
+    {
+      "name": "black_white-equipped-HAND",
+      "directions": 4
+    },
+    {
+      "name": "brown"
+    },
+    {
+      "name": "brown-equipped-HAND",
+      "directions": 4
+    }	
+  ]
+}
