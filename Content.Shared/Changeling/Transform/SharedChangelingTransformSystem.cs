@@ -16,6 +16,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -25,6 +26,7 @@ namespace Content.Shared.Changeling.Transform;
 public abstract partial class SharedChangelingTransformSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -88,8 +90,8 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
         _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), ent, null, PopupType.MediumCaution);
 
-        if(_timing.IsFirstTimePredicted)
-            ent.Comp.CurrentTransformSound = _audio.PlayPredicted(ent.Comp.TransformAttemptNoise, ent, ent)!.Value.Entity;
+        if(_net.IsServer) // Gotta do this on the server and with PlayPvs cause PlayPredicted doesn't return the Entity
+            ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent, new AudioParams())!.Value.Entity;
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             ent,
@@ -113,8 +115,8 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
         _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), ent, null, PopupType.MediumCaution);
 
-        if(_timing.IsFirstTimePredicted)
-           ent.Comp.CurrentTransformSound = _audio.PlayPredicted(ent.Comp.TransformAttemptNoise, ent, ent)!.Value.Entity;
+        if(_net.IsServer)
+           ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent, new AudioParams())!.Value.Entity;
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(GetEntity(selectedIdentity))}\"");
 

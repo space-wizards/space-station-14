@@ -16,6 +16,7 @@ using Content.Shared.Traits.Assorted;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using YamlDotNet.Core.Tokens;
@@ -25,6 +26,7 @@ namespace Content.Shared.Changeling.Devour;
 public abstract partial class SharedChangelingDevourSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
@@ -135,8 +137,8 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         }
 
         //Why does your dad let you have Two IsFirstTimePredicted checks
-        if (_timing.IsFirstTimePredicted)
-            ent.Comp.CurrentDevourSound = _audio.PlayPredicted(ent.Comp.DevourWindupNoise!, ent, ent, new AudioParams())!.Value.Entity;
+        if (_net.IsServer)
+            ent.Comp.CurrentDevourSound = _audio.PlayPvs(ent.Comp.DevourWindupNoise!, ent,  new AudioParams())!.Value.Entity;
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent:player} started changeling devour windup against {target:player}");
 
@@ -166,8 +168,8 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             null,
             PopupType.LargeCaution);
 
-        if (_timing.IsFirstTimePredicted)
-            ent.Comp.CurrentDevourSound = _audio.PlayPredicted(ent.Comp.ConsumeNoise!, ent, ent, new AudioParams())!.Value.Entity;
+        if (_net.IsServer)
+            ent.Comp.CurrentDevourSound = _audio.PlayPvs(ent.Comp.ConsumeNoise!, ent,  new AudioParams())!.Value.Entity;
 
         ent.Comp.NextTick = curTime + ent.Comp.DamageTimeBetweenTicks;
 
