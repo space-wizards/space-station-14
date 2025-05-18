@@ -11,6 +11,7 @@ using Content.Server.Stunnable;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
+using Content.Shared.Light.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
@@ -75,7 +76,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
-    public const float TileMassMultiplier = 0.5f;
+    public const float TileDensityMultiplier = 0.5f;
 
     public override void Initialize()
     {
@@ -111,7 +112,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     {
         foreach (var fixture in args.NewFixtures)
         {
-            _physics.SetDensity(uid, fixture.Key, fixture.Value, TileMassMultiplier, false, manager);
+            _physics.SetDensity(uid, fixture.Key, fixture.Value, TileDensityMultiplier, false, manager);
             _fixtures.SetRestitution(uid, fixture.Key, fixture.Value, 0.1f, false, manager);
         }
     }
@@ -121,7 +122,8 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         if (HasComp<MapComponent>(ev.EntityUid))
             return;
 
-        EntityManager.EnsureComponent<ShuttleComponent>(ev.EntityUid);
+        EnsureComp<ShuttleComponent>(ev.EntityUid);
+        EnsureComp<ImplicitRoofComponent>(ev.EntityUid);
     }
 
     private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)

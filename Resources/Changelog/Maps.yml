@@ -146,4 +146,21 @@
   id: 17
   time: '2025-05-17T04:49:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37533
+- author: Southbridge
+  changes:
+  - message: On Amber, gave salvage a job board.
+    type: Add
+  - message: On Amber, gave the warden a blue toolbox.
+    type: Add
+  id: 18
+  time: '2025-05-18T07:23:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37565
+- author: Minemoder
+  changes:
+  - message: The ATS station anchor room was rebuilt to prevent stealing from the
+      room, and to add shuttle miners to repressurize the ATS.
+    type: Tweak
+  id: 19
+  time: '2025-05-18T08:12:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37560
 Order: 1

@@ -1,137 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Multiple inventory windows now close properly when you hit escape
-    type: Fix
-  id: 8007
-  time: '2025-02-25T16:40:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35040
-- author: Pumkin69
-  changes:
-  - message: Engineers can choose to not wear a headpiece now.
-    type: Fix
-  id: 8008
-  time: '2025-02-26T01:21:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35508
-- author: momochitters
-  changes:
-  - message: Lizard Plushie Slippers can now be constructed.
-    type: Add
-  id: 8009
-  time: '2025-02-26T02:18:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35381
-- author: keronshb
-  changes:
-  - message: Added the Wizard Antagonist!
-    type: Add
-  id: 8010
-  time: '2025-02-26T05:34:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35406
-- author: DieselMohawk
-  changes:
-  - message: Joints and Blunts now have randomized names.
-    type: Fix
-  id: 8011
-  time: '2025-02-26T23:37:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35544
-- author: Pumkin69
-  changes:
-  - message: Wizard now has a stamp.
-    type: Add
-  id: 8012
-  time: '2025-02-27T08:26:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35552
-- author: MilenVolf
-  changes:
-  - message: Insect and Ammonia blood can be broken down in centrifuge.
-    type: Tweak
-  id: 8013
-  time: '2025-02-27T10:05:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33614
-- author: qwerltaz
-  changes:
-  - message: The T-ray scanner now shows sub-floor entities above catwalks.
-    type: Tweak
-  - message: Sub-floor entities now retain the correct relative draw depth when using
-      a T-ray scanner.
-    type: Fix
-  id: 8014
-  time: '2025-02-27T10:46:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33012
-- author: Katzenminer, slarticodefast
-  changes:
-  - message: You now need to break eggs when using them for microwave recipes. Some
-      recipes have been adjusted accordingly.
-    type: Tweak
-  - message: Fixed a reagent duplication bug when microwaving eggs.
-    type: Fix
-  id: 8015
-  time: '2025-02-27T12:39:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35459
-- author: kosticia
-  changes:
-  - message: Fire resists now can be examined.
-    type: Add
-  id: 8016
-  time: '2025-02-27T12:39:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35183
-- author: aada
-  changes:
-  - message: Filter categories have been added to the uniform printer.
-    type: Add
-  id: 8017
-  time: '2025-02-27T12:44:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34316
-- author: deltanedas
-  changes:
-  - message: LogProbe's access logs can now be printed out.
-    type: Tweak
-  id: 8018
-  time: '2025-02-27T13:47:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32255
-- author: Aisu9
-  changes:
-  - message: Changed Sap-Syrup conversion value.
-    type: Tweak
-  id: 8019
-  time: '2025-02-27T17:25:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32996
-- author: SlamBamActionman
-  changes:
-  - message: Pet carriers can no longer be put into toilets.
-    type: Fix
-  - message: You can now escape containers (such as pet carriers) inserted into other
-      containers.
-    type: Fix
-  - message: Thrown items no longer bypasses insertion checks for toilets and disposal
-      units.
-    type: Fix
-  id: 8020
-  time: '2025-02-27T17:43:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35557
-- author: SlamBamActionman
-  changes:
-  - message: Implanters must now specificy which implant they're targeting when extracting,
-      and deals heavy damage to the person performing the extraction if no such implant
-      exists.
-    type: Tweak
-  id: 8021
-  time: '2025-02-27T17:57:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32136
-- author: AgentSmithRadio
-  changes:
-  - message: Reptilians can now eat chicken nuggets.
-    type: Tweak
-  id: 8022
-  time: '2025-02-27T23:35:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35569
-- author: Velken
-  changes:
-  - message: Wizard now has a cool PDA to store their pAI.
-    type: Add
-  id: 8023
-  time: '2025-03-01T02:12:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35572
 - author: LaCumbiaDelCoronavirus
   changes:
   - message: Slimepeople look a bit less bald now.
@@ -3920,3 +3787,140 @@
   id: 8509
   time: '2025-05-17T17:37:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35867
+- author: perryprog
+  changes:
+  - message: You can now link cutter machines to material silos.
+    type: Tweak
+  id: 8510
+  time: '2025-05-18T01:51:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37554
+- author: Spangs04
+  changes:
+  - message: Resprited Telecomms
+    type: Tweak
+  id: 8511
+  time: '2025-05-18T02:10:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35811
+- author: EmoGarbage404
+  changes:
+  - message: Added the salvage job board! This board allows salvagers to access and
+      complete a variety of jobs in order to rank up, earn spesos, and unlock new
+      cargo orders. Work hard and you too may become a Supreme Salvager.
+    type: Add
+  id: 8512
+  time: '2025-05-18T04:02:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37549
+- author: EmoGarbage404
+  changes:
+  - message: Lathes can no longer connect to research servers on separate grids
+    type: Tweak
+  id: 8513
+  time: '2025-05-18T04:04:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36821
+- author: 0leshe
+  changes:
+  - message: Changed max and minimum amount of jigger transfer amount
+    type: Tweak
+  id: 8514
+  time: '2025-05-18T04:14:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35962
+- author: ArtisticRoomba
+  changes:
+  - message: Air grenades have been added! These can fill up a spaced room of ~30
+      tiles with fresh air. They can be found in Atmospheric Technician's lockers.
+      Use them wisely!
+    type: Add
+  id: 8515
+  time: '2025-05-18T04:32:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37531
+- author: EmoGarbage404
+  changes:
+  - message: Various salvage equipment can now be unlocked through the job board and
+      purchased through cargo.
+    type: Add
+  - message: Space debris and the mining asteroid no longer generate salvage equipment
+    type: Tweak
+  id: 8516
+  time: '2025-05-18T06:40:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37561
+- author: mrjajkes
+  changes:
+  - message: Add Blatantly Nuclear as a Nuke Song.
+    type: Add
+  id: 8517
+  time: '2025-05-18T07:30:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35927
+- author: metalgearsloth
+  changes:
+  - message: Shuttles now are treated as rooved for daylight.
+    type: Tweak
+  id: 8518
+  time: '2025-05-18T07:47:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36112
+- author: ScarKy0
+  changes:
+  - message: Deliveries can now very rarely spawn as bomb-type! They grant A LOT of
+      spesos... at a price.
+    type: Add
+  id: 8519
+  time: '2025-05-18T08:57:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37069
+- author: ScarKy0
+  changes:
+  - message: Added Stelloxadone! A cryochemical used to treat poison and radiation
+      damage in living patients as well as corpses, though it comes at a cost of genetic
+      damage.
+    type: Add
+  id: 8520
+  time: '2025-05-18T09:11:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37131
+- author: ScarKy0
+  changes:
+  - message: Cryoxadone now works on the dead.
+    type: Tweak
+  - message: Cryoxadone has been reworked. It no longer heals basic damage types.
+      Instead it heals asphyxiation, bloodloss and increases blood level.
+    type: Tweak
+  id: 8521
+  time: '2025-05-18T09:11:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37132
+- author: ScarKy0
+  changes:
+  - message: Added Traumoxadone! A cryochemical used to treat brute damage in living
+      patients as well as corpses.
+    type: Add
+  id: 8522
+  time: '2025-05-18T09:11:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37236
+- author: ScarKy0
+  changes:
+  - message: Aloxadone has been tweaked. The recipe has been altered to be simplier
+      to make and the healing values have been increased.
+    type: Tweak
+  id: 8523
+  time: '2025-05-18T09:16:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37239
+- author: Simyon
+  changes:
+  - message: The Syndicate and Wizard Communications Console now no longer show who
+      the message was sent by.
+    type: Tweak
+  id: 8524
+  time: '2025-05-18T09:18:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37567
+- author: SuperGDPWYL
+  changes:
+  - message: A Lone Operative detonating the nuke on-station will now end the round.
+    type: Add
+  - message: The endscreen will now properly show how successful Lone Operatives were.
+    type: Fix
+  id: 8525
+  time: '2025-05-18T11:34:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36498
+- author: metalgearsloth
+  changes:
+  - message: Fixes being able to grab items through walls.
+    type: Fix
+  id: 8526
+  time: '2025-05-18T14:38:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37570
