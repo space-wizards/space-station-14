@@ -75,7 +75,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
-    public const float TileMassMultiplier = 0.5f;
+    public const float TileDensityMultiplier = 0.5f;
 
     public override void Initialize()
     {
@@ -111,7 +111,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     {
         foreach (var fixture in args.NewFixtures)
         {
-            _physics.SetDensity(uid, fixture.Key, fixture.Value, TileMassMultiplier, false, manager);
+            _physics.SetDensity(uid, fixture.Key, fixture.Value, TileDensityMultiplier, false, manager);
             _fixtures.SetRestitution(uid, fixture.Key, fixture.Value, 0.1f, false, manager);
         }
     }
