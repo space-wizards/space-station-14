@@ -159,7 +159,9 @@ public abstract class SharedConveyorController : VirtualController
                 // We also don't want this to apply to mobs as they apply their own friction and otherwise
                 // they'll go too slow.
                 if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
+                {
                     _mover.Friction(0.2f, frameTime: frameTime, friction: 5f, ref velocity);
+                }
 
                 SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
             }
