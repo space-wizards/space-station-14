@@ -25,7 +25,6 @@ namespace Content.Shared.Changeling.Transform;
 
 public abstract partial class SharedChangelingTransformSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
