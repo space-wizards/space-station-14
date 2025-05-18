@@ -10,6 +10,9 @@ using Content.Shared.Swab;
 using Content.Shared.Clothing.Event;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Emag.Systems;
+using Content.Shared.Emag.Components;
+using Content.Shared.Examine;
 
 namespace Content.Shared.Clothing.EntitySystems
 {
@@ -34,6 +37,8 @@ namespace Content.Shared.Clothing.EntitySystems
             SubscribeLocalEvent<SecurityHailerComponent, ClothingGotUnequippedEvent>(OnUnequip);
             SubscribeLocalEvent<SecurityHailerComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<SecurityHailerComponent, SecHailerToolDoAfterEvent>(OnScrewingDoAfter);
+            SubscribeLocalEvent<SecurityHailerComponent, GotEmaggedEvent>(OnEmagging);
+            SubscribeLocalEvent<SecurityHailerComponent, ExaminedEvent>(OnExamine);
         }
 
 
@@ -111,8 +116,6 @@ namespace Content.Shared.Clothing.EntitySystems
                 OnInteractCutting(ent, ref args);
             else if (_toolSystem.HasQuality(args.Used, SharedToolSystem.ScrewQuality))
                 OnInteractScrewing(ent, ref args);
-            else if (false) //TODO: ADD EMAG
-                OnInteractEmag(ent, ref args);
             else
                 return;
         }
@@ -144,7 +147,7 @@ namespace Content.Shared.Clothing.EntitySystems
         private void OnInteractScrewing(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
         {
             //If it's emagged we don't change it
-            if (ent.Comp.Emagged)
+            if (HasComp<EmaggedComponent>(ent))
                 return;
 
             _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, ent.Comp.ScrewingDoAfterDelay, new SecHailerToolDoAfterEvent(), ent.Owner, target: args.Target, used: args.Used)
@@ -177,12 +180,27 @@ namespace Content.Shared.Clothing.EntitySystems
             args.Handled = true;
         }
 
-
-        private void OnInteractEmag(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
+        private void OnEmagging(Entity<SecurityHailerComponent> ent, ref GotEmaggedEvent args)
         {
-            throw new NotImplementedException();
+            if (args.Handled || HasComp<EmaggedComponent>(ent))
+                return;
+
+            //WE DO STUFF
+            _popupSystem.PopupEntity(Loc.GetString("sec-gas-mask-emagged"), ent.Owner);
+
+            args.Type = EmagType.Interaction;
+            args.Handled = true;
+
+        }
+
+        private void OnExamine(Entity<SecurityHailerComponent> ent, ref ExaminedEvent args)
+        {
+            if (HasComp<EmaggedComponent>(ent))
+                args.PushMarkup(Loc.GetString("sec-gas-mask-examined-emagged"));
+            else if (ent.Comp.CurrentState == SecMaskState.WiresCut)
+                args.PushMarkup(Loc.GetString("sec-gas-mask-examined-wires-cut"));
+            else
+                args.PushMarkup(Loc.GetString($"sec-gas-mask-examined-{ent.Comp.AggresionLevel.ToString().ToLower()}"));
         }
     }
-
-    
 }

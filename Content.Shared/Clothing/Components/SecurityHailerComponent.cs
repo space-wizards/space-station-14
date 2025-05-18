@@ -31,12 +31,6 @@ namespace Content.Shared.Clothing.Components
         public string? ChatName = "Security Hailer";
 
         /// <summary>
-        /// Is it emagged, causing particuliar hails ?
-        /// </summary>
-        [DataField]
-        public bool Emagged = false;
-
-        /// <summary>
         /// Delay when the hailer is screwed to change aggression level
         /// </summary>
         [DataField]

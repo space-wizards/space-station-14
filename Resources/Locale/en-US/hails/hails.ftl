@@ -58,3 +58,15 @@ hail-emag-5 = Death to the tide!!
 hail-emag-6 = Ever wondered why my uniform is red ?!!
 hail-emag-7 = Viva!!
 hail-emag-8 = Whiskey. Echo. Whiskey!!
+
+
+#Tools interaction
+sec-gas-mask-screwed = Changed to {$level} aggression
+sec-gas-mask-emagged = Changed to ERROR aggression
+
+#Examine description
+sec-gas-mask-examined-low = The aggression setting is set to [color=green]Low[/color].
+sec-gas-mask-examined-medium = The aggression setting is set to [color=yellow]Medium[/color].
+sec-gas-mask-examined-high = The aggression setting is set to [color=red]High[/color].
+sec-gas-mask-examined-emagged = The aggression setting is set to [color=red]ERROR[/color]. Weird.
+sec-gas-mask-examined-wires-cut = The hailer seems to have its wires cut off.

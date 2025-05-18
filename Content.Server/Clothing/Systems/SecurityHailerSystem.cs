@@ -4,6 +4,7 @@ using Content.Shared.Clothing.EntitySystems;
 using Content.Server.Chat.Systems;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
+using Content.Shared.Emag.Components;
 
 namespace Content.Server.Clothing.Systems
 {
@@ -39,7 +40,7 @@ namespace Content.Server.Clothing.Systems
         private bool SayChatMessage(Entity<SecurityHailerComponent> ent, ActionSecHailerActionEvent ev, int index)
         {
             //Make a chat line with the sec hailer as speaker, in bold and UPPERCASE for added impact
-            string ftlLine = ent.Comp.Emagged ? $"hail-emag-{index}" : $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}"; //hail - aggression_level/emag - index
+            string ftlLine = HasComp<EmaggedComponent>(ent) ? $"hail-emag-{index}" : $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}"; //hail - aggression_level/emag - index
             _chat.TrySendInGameICMessage(ev.Performer, Loc.GetString(ftlLine).ToUpper(), InGameICChatType.Speak, hideChat: false, hideLog: true, nameOverride: ent.Comp.ChatName,
                 checkRadioPrefix: false, ignoreActionBlocker: true, skipTransform: true);
             return true;
@@ -50,7 +51,7 @@ namespace Content.Server.Clothing.Systems
             var (uid, comp) = ent;
 
             SoundSpecifier currentSpecifier;
-            if (ent.Comp.Emagged)
+            if (HasComp<EmaggedComponent>(ent))
                 currentSpecifier = ent.Comp.EmagAggressionSounds;
             else
             {
@@ -65,7 +66,7 @@ namespace Content.Server.Clothing.Systems
             if (resolver is not ResolvedCollectionSpecifier collectionResolver)
                 return -1;
 
-            _audio.PlayPvs(resolver, ent.Owner); //TODO: check if works
+            _audio.PlayPvs(resolver, ent.Owner,audioParams: new AudioParams().WithVolume(-3f)); //TODO: check if works
 
             return collectionResolver.Index;
         }
