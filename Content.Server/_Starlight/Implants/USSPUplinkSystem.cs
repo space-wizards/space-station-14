@@ -287,6 +287,40 @@ namespace Content.Server.Implants
                     }
                 }
                 
+                // Find all revolutionaries that were converted by this head revolutionary
+                // and add telebonds for each one
+                var convertedRevs = EntityManager.EntityQuery<RevolutionaryComponent, RevolutionaryConverterComponent>();
+                int convertedCount = 0;
+                
+                foreach (var (_, converterComp) in convertedRevs)
+                {
+                    // Check if this revolutionary was converted by this head revolutionary
+                    if (converterComp.ConverterUid == args.Implanted.Value)
+                    {
+                        convertedCount++;
+                        
+                        // Add a telebond for each converted revolutionary
+                        if (TryComp<StoreComponent>(uid, out var storeComp))
+                        {
+                            // Make sure the store has the Telebond currency initialized
+                            if (!storeComp.Balance.ContainsKey("Telebond"))
+                            {
+                                storeComp.Balance["Telebond"] = FixedPoint2.Zero;
+                            }
+                            
+                            // Add a telebond
+                            storeComp.Balance["Telebond"] += FixedPoint2.New(1);
+                            Logger.InfoS("ussp-uplink", $"Added Telebond for previously converted revolutionary to uplink {ToPrettyString(uid)}");
+                        }
+                    }
+                }
+                
+                // Log the number of converted revolutionaries found
+                if (convertedCount > 0)
+                {
+                    Logger.InfoS("ussp-uplink", $"Added {convertedCount} Telebonds for previously converted revolutionaries to uplink {ToPrettyString(uid)}");
+                }
+                
                 // Synchronize all uplinks to ensure this one has the correct values
                 SynchronizeAllUplinks();
                 
@@ -296,7 +330,8 @@ namespace Content.Server.Implants
                     var telebonds = storeAfterSync.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
                     var conversions = storeAfterSync.Balance.GetValueOrDefault("Conversion", FixedPoint2.Zero);
                     
-                    _popup.PopupEntity(Loc.GetString($"Implanted! Current Telebonds: {telebonds}, Conversions: {conversions}"), 
+                    var convertedMessage = convertedCount > 0 ? $" (+{convertedCount} from previous conversions)" : "";
+                    _popup.PopupEntity(Loc.GetString($"Implanted! Current Telebonds: {telebonds}{convertedMessage}, Conversions: {conversions}"), 
                         args.Implanted.Value, args.Implanted.Value, PopupType.Medium);
                 }
                 

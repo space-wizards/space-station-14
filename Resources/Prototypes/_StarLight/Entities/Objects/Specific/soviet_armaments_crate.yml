@@ -23,5 +23,6 @@
       - WeaponPistolMakarov
       - SpearUranium
       - ClothingOuterArmorBasic
+      - MedkitFilled
     chance: 1.0
     rng: SovietCrateRNG
