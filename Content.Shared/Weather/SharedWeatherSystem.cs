@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.Maps;
@@ -27,6 +28,7 @@ public abstract class SharedWeatherSystem : EntitySystem
     {
         base.Initialize();
         _blockQuery = GetEntityQuery<BlockWeatherComponent>();
+
         SubscribeLocalEvent<WeatherComponent, EntityUnpausedEvent>(OnWeatherUnpaused);
     }
 
@@ -216,9 +218,9 @@ public abstract class SharedWeatherSystem : EntitySystem
         if (!component.Weather.TryGetValue(proto, out var data))
             return;
 
-        _audio.Stop(data.Stream);
-        data.Stream = null;
         component.Weather.Remove(proto);
+        _audio.SetState(data.Stream, Robust.Shared.Audio.Components.AudioState.Stopped, true); // _audio.Stop(); is cooked here and doesn't work
+        data.Stream = null;
         Dirty(uid, component);
     }
 
