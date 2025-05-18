@@ -1,3 +1,5 @@
+#Low aggro
+
 hail-low-0 = You have broken Nanotransen's law!!
 hail-low-1 = Game over, criminal!!
 hail-low-2 = Attention, citizen!!
@@ -11,6 +13,9 @@ hail-low-9 = Stop in the name of the law!!
 hail-low-10 = Resistance is futile!!
 hail-low-11 = Running will only increase your sentence!!
 hail-low-12 = Stop, stop, stop!!
+
+#Medium aggro
+
 hail-medium-0 = Stop breaking the law asshole!!
 hail-medium-1 = My batong is itching!!
 hail-medium-2 = Respect my authoritah!!
@@ -24,6 +29,9 @@ hail-medium-9 = Prepare for justice!!
 hail-medium-10 = This is your last chance, get on your knees!!
 hail-medium-11 = Shut up, crime!!
 hail-medium-12 = You just brought a toolbox to a gunfight!!
+
+#High aggro
+
 hail-high-0 = Go on, mald about it!!
 hail-high-1 = You have the right to shut the fuck up!!
 hail-high-2 = You think you're bad ? I've buried guys like you!!
@@ -39,6 +47,8 @@ hail-high-11 = You have the right to get beat down!!
 hail-high-12 = The safe word is "police brutality"!!
 hail-high-13 = Let me show you shitsec!!
 hail-high-14 = I will find you and I will kill you!!
+
+#Emag
 hail-emag-0 = Glory to cybersun!!
 hail-emag-1 = Pick up that can!!
 hail-emag-2 = DEATH DEATH DEATH!!
@@ -48,30 +58,3 @@ hail-emag-5 = Death to the tide!!
 hail-emag-6 = Ever wondered why my uniform is red ?!!
 hail-emag-7 = Viva!!
 hail-emag-8 = Whiskey. Echo. Whiskey!!
-
-hail-0 = You have the right to remain silent... forever!!
-hail-1 = Dead or alive, you're coming with me!!
-hail-2 = Go ahead, make my day!!
-hail-3 = Respect my authoritah!!
-hail-4 = I will find you and I will kill you !!
-hail-5 = Freeze ! Security!!
-hail-6 = I am the law!!
-hail-7 = You're under arrest... or under ground!!
-hail-8 = You just bought a toolbox to a gunfight!!
-hail-9 = Drop the weapon... or I drop you!!
-hail-10 = You think you're bad ? I've buried guys like you!!
-hail-11 = Tell it to the HOS... if you make it that far!!
-hail-12 = Drop the gun, creep!!
-hail-13 = Do you feel lucky, punk ?!!
-hail-14 = Stop or be erased !!
-hail-15 = This is your last chance. Get on your knees!!
-hail-16 = You're a disease... and I'm the cure!!
-hail-17 = You're coming with me!!
-hail-18 = You have to remain silent... so shut the hell up!!
-hail-19 = Death to the tide!!
-hail-20 = You have the right to get beat down!!
-hail-21 = Game over, loser!!
-hail-22 = Resistance is futile!!
-hail-23 = The safe word is police brutality!!
-hail-24 = Stop hitting yourself, stop hitting yourself !!
-

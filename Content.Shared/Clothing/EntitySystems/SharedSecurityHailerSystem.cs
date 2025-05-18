@@ -9,6 +9,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Swab;
 using Content.Shared.Clothing.Event;
 using Robust.Shared.Audio.Systems;
+using Content.Shared.Popups;
 
 namespace Content.Shared.Clothing.EntitySystems
 {
@@ -21,6 +22,7 @@ namespace Content.Shared.Clothing.EntitySystems
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAudioSystem _sharedAudio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         private EntityUid _wearer;
 
@@ -171,6 +173,7 @@ namespace Content.Shared.Clothing.EntitySystems
             else
                 comp.AggresionLevel++;
 
+            _popupSystem.PopupEntity(Loc.GetString("sec-gas-mask-screwed", ("level", ent.Comp.AggresionLevel.ToString().ToLower())), ent.Owner);
             args.Handled = true;
         }
 
