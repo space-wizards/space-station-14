@@ -51,12 +51,14 @@ public abstract partial class SharedXenoArtifactSystem
     /// <param name="user">Character that attempted to activate artifact.</param>
     /// <param name="target">Target, on which artifact activation attempt was used (for hand-held artifact - it can be 'clicked' over someone).</param>
     /// <param name="coordinates">Coordinates of <paramref name="target"/> entity.</param>
+    /// <param name="consumeDurability">Whether this activation will deplete durability on the activated nodes.</param>
     /// <returns>True, if activation was successful, false otherwise.</returns>
     public bool TryActivateXenoArtifact(
         Entity<XenoArtifactComponent> artifact,
         EntityUid? user,
         EntityUid? target,
-        EntityCoordinates coordinates
+        EntityCoordinates coordinates,
+        bool consumeDurability = true
     )
     {
         XenoArtifactComponent xenoArtifactComponent = artifact;
@@ -69,7 +71,7 @@ public abstract partial class SharedXenoArtifactSystem
         var success = false;
         foreach (var node in GetActiveNodes(artifact))
         {
-            success |= ActivateNode(artifact, node, user, target, coordinates);
+            success |= ActivateNode(artifact, node, user, target, coordinates, consumeDurability: consumeDurability);
         }
 
         if (!success)

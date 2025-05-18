@@ -385,6 +385,23 @@
     heat: -50000
 
 - type: entity
+  name: freezing bolt
+  id: BoltTempgunCold
+  parent: WatcherBolt
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    #   soundHit:  Waiting on serv3
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Cold: 10
+  - type: TimedDespawn
+    lifetime: 3
+  - type: ChangeTemperatureOnCollide
+    heat: -100000
+
+- type: entity
   name: magmawing watcher bolt
   id: WatcherBoltMagmawing
   parent: BaseBullet
@@ -404,6 +421,60 @@
         Heat: 0
   - type: ChangeTemperatureOnCollide
     heat: 50000
+
+- type: entity
+  name: scorching bolt
+  id: BoltTempgunHot
+  parent: WatcherBoltMagmawing
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    #   soundHit:  Waiting on serv3
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 10
+  - type: ChangeTemperatureOnCollide
+    heat: 100000 #This may be a bit underpowered, but in testing, 130000 was RIDICULOUS and killed in seconds.
+
+- type: entity
+  parent: BaseBullet
+  id: BasiliskRay
+  name: basilisk ray
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: ice
+      shader: unshaded
+  - type: Ammo
+    muzzleFlash: null
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Opaque
+      fly-by: *flybyfixture
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Cold: 5
+  - type: TimedDespawn
+    lifetime: 3
+  - type: ChangeTemperatureOnCollide
+    heat: -50000
 
 - type: entity
   id: BulletKinetic
@@ -429,7 +500,7 @@
         Structural: 30
   # Short lifespan
   - type: TimedDespawn
-    lifetime: 0.4
+    lifetime: 0.22 # roughly 5.5 tiles
   - type: GatheringProjectile
 
 - type: entity
@@ -782,6 +853,36 @@
     maxIntensity: 10
 
 - type: entity
+  parent: BaseBulletTrigger
+  id: BulletGrenadeCleanade
+  name: cleanade grenade round
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: cleanade
+  - type: ActiveTimerTrigger
+    timeRemaining: 0.3
+  - type: SmokeOnTrigger
+    duration: 3.5
+    spreadAmount: 30
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 30
+  - type: SoundOnTrigger
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 0.01 # a little pop
+    intensitySlope: 1
+    maxIntensity: 0.01
+    tileBreakScale: 0.01
+
+- type: entity
   id: BulletGrenadeEMP
   name: EMP rocket
   parent: BaseBulletTrigger
@@ -874,8 +975,20 @@
         - BulletImpassable
   - type: Vapor
     active: true
+    transferAmountPercentage: 1
   - type: Appearance
   - type: VaporVisuals
+
+- type: entity
+  id: BulletHivebot
+  name: hivebot bullet
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 10
 
 - type: entity
   id: BulletCannonBall

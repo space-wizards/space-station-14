@@ -40,7 +40,7 @@
                           HorizontalExpand="True"
                           VerticalExpand="True">
 
-                <Label Name="ProductName"
+                <RichTextLabel Name="ProductName"
                        Access="Public"
                        HorizontalExpand="True"
                        VerticalExpand="True"

@@ -64,43 +64,12 @@
 
 - type: entity
   parent: BaseXenoArtifactItem
-  id: SimpleXenoArtifactItem
-  suffix: hand-sized Simple
-  components:
-  - type: XenoArtifact
-    nodeCount:
-      min: 2
-      max: 5
-
-- type: entity
-  parent: BaseXenoArtifactItem
-  id: MediumXenoArtifactItem
-  suffix: hand-sized Medium
-  components:
-  - type: XenoArtifact
-    nodeCount:
-      min: 5
-      max: 9
-
-- type: entity
-  parent: BaseXenoArtifactItem
   id: ComplexXenoArtifactItem
-  suffix: hand-sized Complex
+  suffix: Hand-Sized
   components:
   - type: XenoArtifact
     nodeCount:
       min: 9
-      max: 13
-
-# this exists for crafting item artifacts so that the final result can be simple, medium, or complex.
-- type: entity
-  parent: BaseXenoArtifactItem
-  id: VariedXenoArtifactItem
-  suffix: hand-sized Varied
-  components:
-  - type: XenoArtifact
-    nodeCount:
-      min: 2
       max: 13
 
 - type: entity

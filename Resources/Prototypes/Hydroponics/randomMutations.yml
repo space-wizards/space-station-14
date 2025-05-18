@@ -3,15 +3,18 @@
   mutations:
     # disabled until 50 morbillion point lights don't cause the renderer to die
     #- name: Bioluminescent
+    #  description: mutation-plant-bioluminescent
     #  baseOdds: 0.036
     #  appliesToPlant: false
     #  effect: !type:Glow
     - name: Sentient
+      description: mutation-plant-sentient
       baseOdds: 0.0072
       appliesToProduce: false
       persists: false
       effect: !type:MakeSentient # existing effect.
     - name: Slippery
+      description: mutation-plant-slippery
       baseOdds: 0.036
       appliesToPlant: false
       effect: !type:Slipify
@@ -150,12 +153,12 @@
       persists: false
       effect: !type:PlantChangeStat
         targetValue: Seedless
-    - name: ChangeLigneous
+    - name: Lignification
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeStat
         targetValue: Ligneous
-    - name: ChangeTurnIntoKudzu
+    - name: Kudzufication
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeStat

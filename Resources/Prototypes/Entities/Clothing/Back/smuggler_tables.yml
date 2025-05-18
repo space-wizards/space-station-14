@@ -28,22 +28,23 @@
     - !type:NestedSelector
       tableId: RandomSatchelTable6
 
+  #number after each group indicates potential max inventory fill. If all combined fills are too high, it could result in an over-filled bag/error.
 - type: entityTable
   id: RandomSatchelTable1
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomSatchelGenericTable
+      tableId: RandomSatchelGenericTableSmallx2 #2x small
     - !type:NestedSelector
-      tableId: RandomSatchelFunnyTable
+      tableId: RandomSatchelFunnyTable #5x tiny
     - !type:NestedSelector
-      tableId: RandomSatchelClothingTable
+      tableId: RandomSatchelClothingTable #1x small
     - !type:NestedSelector
-      tableId: RandomSatchelCannabisTable
+      tableId: RandomSatchelCannabisTable #5x tiny
     - !type:NestedSelector
-      tableId: RandomSatchelGizmosTable
+      tableId: RandomSatchelGizmosTable #2x small
     - !type:NestedSelector
-      tableId: RandomSatchelChemsTable
+      tableId: RandomSatchelChemsTable #5x tiny
 
 - type: entityTable
   id: RandomSatchelFunnyTable
@@ -63,7 +64,7 @@
       amount: !type:RangeNumberSelector
         range: 1, 5
 
-- type: entityTable
+- type: entityTable #5x tiny
   id: RandomSatchelCannabisTable
   table: !type:GroupSelector
     children:
@@ -82,7 +83,7 @@
       amount: !type:RangeNumberSelector
         range: 1, 15
 
-- type: entityTable
+- type: entityTable #2x small
   id: RandomSatchelGizmosTable
   table: !type:GroupSelector
     children:
@@ -99,7 +100,7 @@
         range: 1, 2
     - id: ProximitySensor
 
-- type: entityTable
+- type: entityTable #5x tiny
   id: RandomSatchelChemsTable
   table: !type:GroupSelector
     children:
@@ -134,17 +135,17 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomSatchelTobaccoTable
+      tableId: RandomSatchelTobaccoTable #2x 2x3(12 slots)
     - !type:NestedSelector
-      tableId: RandomSatchelPartyTable
+      tableId: RandomSatchelPartyTable #5x small
     - !type:NestedSelector
-      tableId: RandomSatchelClothingTable
+      tableId: RandomSatchelClothingTable #1x small
     - !type:NestedSelector
-      tableId: RandomSatchelPayloadTable
+      tableId: RandomSatchelPayloadTable #2x small
     - !type:NestedSelector
-      tableId: RandomSatchelCircuitboardsTable
+      tableId: RandomSatchelCircuitboardsTable #1x small
 
-- type: entityTable
+- type: entityTable #2x 2x3(12 slots)
   id: RandomSatchelTobaccoTable
   table: !type:GroupSelector
     children:
@@ -157,14 +158,10 @@
     - id: CigCartonGreen
     - id: CigCartonBlack
     - id: CigarCase
-      amount: !type:RangeNumberSelector
-        range: 1, 2
     - id: CigarGoldCase
       weight: 0.25
-      amount: !type:RangeNumberSelector
-        range: 1, 2
 
-- type: entityTable
+- type: entityTable #5x small
   id: RandomSatchelPartyTable
   table: !type:GroupSelector
     children:
@@ -186,7 +183,7 @@
       amount: !type:RangeNumberSelector
         range: 1, 5
 
-- type: entityTable
+- type: entityTable #1x small
   id: RandomSatchelClothingTable
   table: !type:GroupSelector
     children:
@@ -200,7 +197,7 @@
     - id: ClothingHandsGlovesCombat
     - id: ClothingNeckScarfStripedSyndieRed
 
-- type: entityTable
+- type: entityTable #2x small
   id: RandomSatchelPayloadTable
   table: !type:GroupSelector
     children:
@@ -216,7 +213,7 @@
       amount: !type:RangeNumberSelector
         range: 1, 2
 
-- type: entityTable
+- type: entityTable #1x small
   id: RandomSatchelCircuitboardsTable
   table: !type:GroupSelector
     children:
@@ -245,19 +242,19 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomSatchelPresentsOrToysTable
+      tableId: RandomSatchelPresentsOrToysTable #3x small
     - !type:NestedSelector
-      tableId: RandomSatchelCashTable
+      tableId: RandomSatchelCashTable #1x small
     - !type:NestedSelector
-      tableId: RandomSatchelWeaponTable
+      tableId: RandomSatchelWeaponTable #5x small
     - !type:NestedSelector
-      tableId: RandomSatchelBurgerTable
+      tableId: RandomSatchelBurgerTable #5x small
     - !type:NestedSelector
-      tableId: RandomSatchelGenericTable
+      tableId: RandomSatchelGenericTableSmall #1x small
     - !type:NestedSelector
-      tableId: RandomSatchelKeysTable
+      tableId: RandomSatchelKeysTable #1x small
 
-- type: entityTable
+- type: entityTable #3x small
   id: RandomSatchelPresentsOrToysTable
   table: !type:GroupSelector
     children:
@@ -271,7 +268,7 @@
     - id: ToyFigurineQueen
     - id: ToyFigurineRatKing
 
-- type: entityTable
+- type: entityTable #1x small
   id: RandomSatchelCashTable
   table: !type:GroupSelector
     children:
@@ -301,7 +298,7 @@
       amount: !type:RangeNumberSelector
         range: 1, 10
 
-- type: entityTable
+- type: entityTable #5x small
   id: RandomSatchelWeaponTable
   table: !type:GroupSelector
     children:
@@ -312,7 +309,7 @@
       amount: !type:RangeNumberSelector
         range: 1, 5
 
-- type: entityTable
+- type: entityTable #5x small
   id: RandomSatchelBurgerTable
   table: !type:GroupSelector
     children:
@@ -331,8 +328,8 @@
       amount: !type:RangeNumberSelector
         range: 1, 5
 
-- type: entityTable
-  id: RandomSatchelGenericTable
+- type: entityTable #1x small
+  id: RandomSatchelGenericTableSmall
   table: !type:GroupSelector
     children:
     - id: SpaceCash100
@@ -342,6 +339,13 @@
     - id: WeaponFlareGun
     - id: ModularReceiver
     - id: RifleStock
+
+- type: entityTable #2x small
+  id: RandomSatchelGenericTableSmallx2
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 15
     - id: DrinkSpaceGlue
       amount: !type:RangeNumberSelector
         range: 1, 2
@@ -352,7 +356,7 @@
       amount: !type:RangeNumberSelector
         range: 1, 2
 
-- type: entityTable
+- type: entityTable #1x small
   id: RandomSatchelKeysTable
   table: !type:GroupSelector
     children:
@@ -377,17 +381,17 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomSatchelMaterialsTable
+      tableId: RandomSatchelMaterialsTable #1x medium
     - !type:NestedSelector
-      tableId: RandomSatchelImplantersTable
+      tableId: RandomSatchelImplantersTable #1x small
     - !type:NestedSelector
-      tableId: RandomSatchelCellsTable
+      tableId: RandomSatchelCellsTable #1x small
     - !type:NestedSelector
-      tableId: RandomSatchelSyndicateTable
+      tableId: RandomSatchelSyndicateTable #1x medium
     - !type:NestedSelector
-      tableId: RandomSatchelToolsTable
+      tableId: RandomSatchelToolsTable #1x small
 
-- type: entityTable
+- type: entityTable #1x medium
   id: RandomSatchelMaterialsTable
   table: !type:GroupSelector
     children:
@@ -424,7 +428,7 @@
         weight: 2
       - id: SheetUranium
 
-- type: entityTable
+- type: entityTable #1x small
   id: RandomSatchelImplantersTable
   table: !type:GroupSelector
     children:
@@ -434,7 +438,7 @@
     - id: BikeHornImplanter
     - id: SadTromboneImplanter
 
-- type: entityTable
+- type: entityTable #1x small
   id: RandomSatchelCellsTable
   table: !type:GroupSelector
     children:
@@ -444,7 +448,7 @@
     - id: PowerCellMicroreactor
     - id: PowerCellHigh
 
-- type: entityTable
+- type: entityTable #1x medium
   id: RandomSatchelSyndicateTable
   table: !type:GroupSelector
     children:
@@ -459,8 +463,9 @@
     - id: RadioJammer
     - id: SoapSyndie
     - id: SingularityToy
+    - id: DehydratedSpaceCarp
 
-- type: entityTable
+- type: entityTable #1x small
   id: RandomSatchelToolsTable
   table: !type:GroupSelector
     children:
@@ -477,15 +482,15 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomSatchelAlcoholTable
+      tableId: RandomSatchelAlcoholTable #2x medium
     - !type:NestedSelector
-      tableId: RandomSatchelInstrumentTable
+      tableId: RandomSatchelInstrumentTable #1x Medium
     - !type:NestedSelector
-      tableId: RandomSatchelMedsTable
+      tableId: RandomSatchelMedsTable #5x tiny
     - !type:NestedSelector
-      tableId: RandomSatchelMysteriesTable
+      tableId: RandomSatchelMysteriesTable #1x Medium
 
-- type: entityTable
+- type: entityTable #2x medium
   id: RandomSatchelAlcoholTable
   table: !type:GroupSelector
     children:
@@ -493,18 +498,18 @@
       weight: 5
     - id: DrinkCognacBottleFull
       amount: !type:RangeNumberSelector
-        range: 1, 4
+        range: 1, 2
     - id: DrinkGildlagerBottleFull
       amount: !type:RangeNumberSelector
-        range: 1, 4
+        range: 1, 2
     - id: DrinkPatronBottleFull
       amount: !type:RangeNumberSelector
-        range: 1, 4
+        range: 1, 2
     - id: DrinkRumBottleFull
       amount: !type:RangeNumberSelector
-        range: 1, 4
+        range: 1, 2
 
-- type: entityTable
+- type: entityTable #1x Medium
   id: RandomSatchelInstrumentTable
   table: !type:GroupSelector
     children:
@@ -517,7 +522,7 @@
     - id: RockGuitarInstrument
     - id: BassGuitarInstrument
 
-- type: entityTable
+- type: entityTable #5x tiny
   id: RandomSatchelMedsTable
   table: !type:GroupSelector
     children:
@@ -552,7 +557,7 @@
     - id: Stimpack
     - id: CombatMedipen
 
-- type: entityTable
+- type: entityTable #1x Medium
   id: RandomSatchelMysteriesTable
   table: !type:GroupSelector
     children:
@@ -597,13 +602,13 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomSatchelGearTable
+      tableId: RandomSatchelGearTable #1x Huge
     - !type:NestedSelector
-      tableId: RandomSatchelGadgetsTable
+      tableId: RandomSatchelGadgetsTable #2x small
     - !type:NestedSelector
-      tableId: CubeTable
+      tableId: CubeTable #10x tiny
 
-- type: entityTable
+- type: entityTable #1x Huge
   id: RandomSatchelGearTable
   table: !type:GroupSelector
     children:
@@ -615,7 +620,7 @@
     - id: HandheldStationMap
     - id: PinpointerStation
 
-- type: entityTable
+- type: entityTable #2x small
   id: RandomSatchelGadgetsTable
   table: !type:GroupSelector
     children:
@@ -633,7 +638,7 @@
     - id: ChameleonProjector
       weight: 0.25
 
-- type: entityTable
+- type: entityTable #10x tiny
   id: CubeTable
   table: !type:GroupSelector
     children:

@@ -210,6 +210,7 @@ namespace Content.Client.Cargo.UI
                 var productName = product.Name;
                 var requester = !string.IsNullOrEmpty(order.Requester) ?
                     order.Requester : Loc.GetString("cargo-console-menu-order-row-alerts-requester-unknown");
+                var account = _protoManager.Index(order.Account);
 
                 var row = new CargoOrderRow
                 {
@@ -228,9 +229,12 @@ namespace Content.Client.Cargo.UI
                     ProductName =
                     {
                         Text = Loc.GetString(
-                            "cargo-console-menu-order-row-product-name",
+                            "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
                             ("productName", productName),
-                            ("orderAmount", order.OrderQuantity))
+                            ("orderAmount", order.OrderQuantity),
+                            ("orderRequester", order.Requester),
+                            ("accountColor", account.Color),
+                            ("account", Loc.GetString(account.Code)))
                     },
 
                     Description =
@@ -301,6 +305,9 @@ namespace Content.Client.Cargo.UI
             AccountActionButton.Disabled = TransferSpinBox.Value <= 0 ||
                                            TransferSpinBox.Value > bankAccount.Accounts[orderConsole.Account] * orderConsole.TransferLimit ||
                                            _timing.CurTime < orderConsole.NextAccountActionTime;
+
+            OrdersSpacer.Visible = !orderConsole.SlipPrinter;
+            Orders.Visible = !orderConsole.SlipPrinter;
         }
     }
 }

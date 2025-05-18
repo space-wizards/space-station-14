@@ -122,7 +122,7 @@ public sealed class PaperSystem : EntitySystem
                 if (entity.Comp.EditingDisabled)
                 {
                     var paperEditingDisabledMessage = Loc.GetString("paper-tamper-proof-modified-message");
-                    _popupSystem.PopupEntity(paperEditingDisabledMessage, entity, args.User);
+                    _popupSystem.PopupClient(paperEditingDisabledMessage, entity, args.User);
 
                     args.Handled = true;
                     return;

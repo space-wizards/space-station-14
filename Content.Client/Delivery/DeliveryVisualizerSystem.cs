@@ -43,3 +43,9 @@ public enum DeliveryVisualLayers : byte
     Breakage,
     Trash,
 }
+
+public enum DeliverySpawnerVisualLayers : byte
+{
+    Contents,
+}
+
