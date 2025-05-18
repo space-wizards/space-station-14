@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Supply assistants can no longer be antagonists.
-    type: Tweak
-  id: 1195
-  time: '2025-02-24T22:09:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1776
 - author: ultramario1998
   changes:
   - message: Removed golden pAIs from the trinket loadout menu, per discussion on
@@ -4230,3 +4223,12 @@
   id: 1694
   time: '2025-05-17T18:28:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2512
+- author: Ecramox
+  changes:
+  - message: HoP plants can no longer be microwave farmed for all access.
+    type: Tweak
+  - message: IDs from HoP plants can have their seeds extracted.
+    type: Tweak
+  id: 1695
+  time: '2025-05-18T08:08:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2514
