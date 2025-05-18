@@ -126,6 +126,26 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
         EntityManager.RemoveComponents(args.Target, ent.Comp.Components);
     }
+
+    private bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
+    {
+        if (!_proto.TryIndex(effectProto, out var effectProtoData))
+            return false;
+
+        if (!effectProtoData.TryGetComponent<StatusEffectComponent>(out var effectProtoComp, _compFactory))
+            return false;
+
+        if (!_whitelist.CheckBoth(uid, effectProtoComp.Blacklist, effectProtoComp.Whitelist))
+            return false;
+
+        var ev = new BeforeStatusEffectAddedEvent(effectProto);
+        RaiseLocalEvent(uid, ref ev);
+
+        if (ev.Cancelled)
+            return false;
+
+        return true;
+    }
 }
 
 /// <summary>
