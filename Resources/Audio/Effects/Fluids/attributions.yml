@@ -26,4 +26,4 @@
 - files: ["vacuum-cleaner-fast.ogg"]
   license: "CC0-1.0"
   copyright: "Created by kyles + BrendanSound12"
-  source: "https://freesound.org/people/kyles/sounds/637927/ + https://freesound.org/people/BrendanSound12/sounds/445165/"
+  source: ["https://freesound.org/people/kyles/sounds/637927/", "https://freesound.org/people/BrendanSound12/sounds/445165/"]
