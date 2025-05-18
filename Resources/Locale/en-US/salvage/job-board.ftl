@@ -37,7 +37,7 @@ bounty-description-salvage-scrap = We are researching the effects of deep space 
 bounty-description-salvage-ore-gold = We are engaging in an experimental new electronics manufacturing process. Deliver us a large sum of unrefined gold ore. It can come from any source.
 bounty-description-salvage-ore-silver = We are studying the material effects of silver based on the refining methods. Send us a large amount of unrefined silver ore. It can come from any source.
 
-bounty-description-tooth-sharkminnow = We need you to get a sample of some Sharkminnow teeth. These guys are a fair bit nastier than the smaller carp you're familiar with. Take care to not let them bit you: they'll suck out your blood and heal.
+bounty-description-tooth-sharkminnow = We need you to get a sample of some Sharkminnow teeth. These guys are a fair bit nastier than the smaller carp you're familiar with. Take care to not let them bite you: they'll suck out your blood and heal.
 bounty-description-salvage-ore-plasma = We need a shipment of plasma ore to send over to the research station. Please provide us with some so that we can continue our testing. It can come from any source.
 bounty-description-salvage-ore-uranium = We need a sample of uranium ore for our ongoing experiments on nuclear devices. Be aware that while the uranium does glow slightly, it will probably not harm you. It can come from any source.
 bounty-description-salvage-ore-bananium = We have an ongoing project to decode the mystifying clown genomic sequence. We believe a sample of raw bananium will help us achieve this. Note that this only comes from the rarest of deep-space asteroids.
