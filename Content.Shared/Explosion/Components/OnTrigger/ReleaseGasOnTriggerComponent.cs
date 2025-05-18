@@ -15,16 +15,6 @@ namespace Content.Shared.Explosion.Components.OnTrigger;
 public sealed partial class ReleaseGasOnTriggerComponent : Component
 {
     /// <summary>
-    /// Represents visual states for whatever visuals that need to be applied
-    /// on state changes.
-    /// </summary>
-    [Serializable] [NetSerializable]
-    public enum ReleaseGasOnTriggerVisuals : byte
-    {
-        Key,
-    }
-
-    /// <summary>
     /// Whether this grenade is active and releasing gas.
     /// Set to true when triggered, which starts gas release.
     /// </summary>
@@ -38,12 +28,6 @@ public sealed partial class ReleaseGasOnTriggerComponent : Component
     public GasMixture Air;
 
     /// <summary>
-    /// If true, the gas will be released in an exponential manner.
-    /// </summary>
-    [DataField]
-    public bool ExponentialRise;
-
-    /// <summary>
     /// Time at which the next release will occur.
     /// This is automatically set when the grenade activates.
     /// </summary>
@@ -53,7 +37,7 @@ public sealed partial class ReleaseGasOnTriggerComponent : Component
 
     /// <summary>
     /// The cap at which this grenade can fill the exposed atmosphere to.
-    /// The grenade automatically deletes itself when the pressure is reached.
+    /// This component automatically removes itself when the pressure limit is reached.
     /// </summary>
     /// <example>If set to 101.325, the grenade will only fill the exposed
     /// atmosphere up to 101.325 kPa.</example>
@@ -83,11 +67,14 @@ public sealed partial class ReleaseGasOnTriggerComponent : Component
     /// <remarks>Set when the grenade is activated.</remarks>
     [DataField(readOnly: true)]
     public float StartingTotalMoles;
+}
 
-    /// <summary>
-    /// Stores the number of times the grenade has been released,
-    /// for exponential rise calculations.
-    /// </summary>
-    [DataField]
-    public int TimesReleased;
+/// <summary>
+/// Represents visual states for whatever visuals that need to be applied
+/// on state changes.
+/// </summary>
+[Serializable, NetSerializable]
+public enum ReleaseGasOnTriggerVisuals : byte
+{
+    Key,
 }
