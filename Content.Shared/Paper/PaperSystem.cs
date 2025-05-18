@@ -281,6 +281,12 @@ public sealed class PaperSystem : EntitySystem
         }
     }
 
+    public void SetContent(EntityUid entity, string content)
+    {
+        if (!TryComp<PaperComponent>(entity, out var paper))
+            return;
+        SetContent((entity, paper), content);
+    }
 
     public void SetContent(Entity<PaperComponent> entity, string content)
     {
