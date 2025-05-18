@@ -146,7 +146,7 @@ namespace Content.Server.Body.Systems
             var list = solution.Contents.ToArray();
             _random.Shuffle(list);
 
-            int poisons = 0;
+            int reagents = 0;
             foreach (var (reagent, quantity) in list)
             {
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
@@ -163,9 +163,9 @@ namespace Content.Server.Body.Systems
                     continue;
                 }
 
-                // Already processed all poisons, skip to the next reagent.
-                if (poisons >= ent.Comp1.MaxPoisonsProcessable && proto.Metabolisms.ContainsKey("Poison"))
-                    continue;
+                // we're done here entirely if this is true
+                if (reagents >= ent.Comp1.MaxReagentsProcessable)
+                    return;
 
 
                 // loop over all our groups and see which ones apply
@@ -223,9 +223,8 @@ namespace Content.Server.Body.Systems
                 {
                     solution.RemoveReagent(reagent, mostToRemove);
 
-                    // We have processed a poison, so count it towards the cap
-                    if (proto.Metabolisms.ContainsKey("Poison"))
-                        poisons++;
+                    // We have processed a reagant, so count it towards the cap
+                    reagents += 1;
                 }
             }
 
