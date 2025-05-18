@@ -1,5 +1,5 @@
 - type: gameMap
-  id: Lobster
+  id: ChristmasLobster
   mapName: 'Lobster Station'
   mapPath: /Maps/_Starlight/Stations/Lobster.yml
   minPlayers: 40
