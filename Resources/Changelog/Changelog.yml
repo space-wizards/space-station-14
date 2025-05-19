@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba, Cojoke-dot
-  changes:
-  - message: The detective can now find the go go hat in their locker. This hat has
-      the ability to store and retrieve items automatically via the saying of a catchphrase.
-      GO GO GADGET!
-    type: Add
-  id: 8026
-  time: '2025-03-01T18:03:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35438
 - author: SlamBamActionman
   changes:
   - message: Slimes no longer have cellular damage resistance.
@@ -3925,3 +3916,13 @@
   id: 8528
   time: '2025-05-19T01:17:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37588
+- author: keronshb
+  changes:
+  - message: Force Wall timers changed so it despawns faster than it can be cast.
+    type: Tweak
+  - message: Force Wall users can now interact while inside of the wall, but also
+      can be attacked while inside of the wall.
+    type: Tweak
+  id: 8529
+  time: '2025-05-19T01:30:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37525
