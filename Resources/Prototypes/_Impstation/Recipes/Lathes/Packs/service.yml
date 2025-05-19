@@ -50,6 +50,7 @@
     - Pitcher
     - BarSpoon
     - DrinkDisposableCup
+    - DrinkNoveltyMug
 
 - type: latheRecipePack
   id: KitchenPack

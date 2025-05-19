@@ -20,3 +20,28 @@
     fillBaseName: icon-
   - type: TrashOnSolutionEmpty
     solution: drink
+
+- type: entity
+  parent: DrinkBaseMug
+  id: DrinkNoveltyMug
+  name: novelty mug
+  description: A novelty mug with writing on it.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Drinks/noveltymug.rsi
+    layers:
+      - state: icon-0
+        map: [ "icon" ]
+      - state: icon-label
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-3
+        visible: false
+  - type: RandomSprite
+    available:
+      - icon:
+          icon-0: Emagged
+  - type: RandomMetadata
+    descriptionSegments: [NoveltyMugDescriptions]
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
