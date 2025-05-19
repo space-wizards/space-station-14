@@ -5811,4 +5811,85 @@ Entries:
   id: 805
   time: '2025-05-15T23:45:21.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/611
+- author: Cyanogen (AutumnalModding)
+  changes:
+  - message: NTR and BSO playtime, 62k seconds -> 72k (20h)
+    type: Tweak
+  id: 806
+  time: '2025-05-18T17:21:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/644
+- author: Salem!
+  changes:
+  - message: Resomi specific variants for the BSO & Detective armored vests have been
+      added, as I overlooked them the first time.
+    type: Add
+  id: 807
+  time: '2025-05-18T17:37:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/640
+- author: Salem!
+  changes:
+  - message: An outer clothing layer displacement map is now a thing, please ignore
+      the fact that it is the exact same as the suit storage displacement map.
+    type: Add
+  id: 808
+  time: '2025-05-18T17:37:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/640
+- author: Salem!
+  changes:
+  - message: Many Resomi displacement maps, and species parts related problems have
+      been reso(mi)lved.
+    type: Fix
+  id: 809
+  time: '2025-05-18T17:37:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/640
+- author: Cyanogen
+  changes:
+  - message: Felinoid hissing when in space cleaner no longer shows in chat
+    type: Tweak
+  id: 810
+  time: '2025-05-18T21:31:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/651
+- author: choccy
+  changes:
+  - message: (Starboard) Roboticists are real
+    type: Fix
+  id: 811
+  time: '2025-05-18T22:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/596
+- author: choccy
+  changes:
+  - message: (Starboard) Two wardens?
+    type: Tweak
+  id: 812
+  time: '2025-05-18T22:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/596
+- author: choccy
+  changes:
+  - message: (Starboard) Many small details changed, from decals to doors and decor
+    type: Tweak
+  id: 813
+  time: '2025-05-18T22:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/596
+- author: choccy
+  changes:
+  - message: (Starboard) Lots of new maints areas
+    type: Add
+  id: 814
+  time: '2025-05-18T22:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/596
+- author: Floating Lotus
+  changes:
+  - message: Mech's and Mech weapons now show their respective contraband level when
+      inspected
+    type: Fix
+  id: 815
+  time: '2025-05-19T12:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/656
+- author: Cyanogen
+  changes:
+  - message: ability to pick up monkeys and kobolds
+    type: Add
+  id: 816
+  time: '2025-05-19T12:23:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/655
 
