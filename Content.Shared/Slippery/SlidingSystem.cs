@@ -88,18 +88,12 @@ public sealed class SlidingSystem : EntitySystem
 
         var friction = 0.0f;
         var count = 0;
-        var sliding = 0;
 
         var colliders = _physics.GetContactingEntities(entity, entity.Comp2);
 
         foreach (var ent in colliders)
         {
-            if (!TryComp<SlipperyComponent>(ent, out var slippery) || !slippery.AffectsSliding)
-                continue;
-
-            sliding++;
-
-            if (ent == ignore)
+            if (ent == ignore || !TryComp<SlipperyComponent>(ent, out var slippery) || !slippery.AffectsSliding)
                 continue;
 
             friction += slippery.SlipData.SlipFriction;
@@ -107,15 +101,16 @@ public sealed class SlidingSystem : EntitySystem
             count++;
         }
 
-        if (count == 0)
+        if (count > 0)
         {
-            if (sliding == 0)
-                Log.Error($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
-            return false;
+            entity.Comp1.FrictionModifier = friction / count;
+            return true;
         }
 
-        entity.Comp1.FrictionModifier = friction / count;
-        return true;
+        if (!TryComp<SlipperyComponent>(ignore, out var slip) || !slip.AffectsSliding)
+            Log.Error($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
+
+        return false;
     }
 
     private void OnRefreshFrictionModifiers(Entity<SlidingComponent> entity, ref RefreshFrictionModifiersEvent args)
