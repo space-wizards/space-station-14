@@ -20,12 +20,13 @@ public sealed class SlidingSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SlidingComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<SlidingComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<SlidingComponent, StoodEvent>(OnStand);
         SubscribeLocalEvent<SlidingComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<SlidingComponent, EndCollideEvent>(OnEndCollide);
         SubscribeLocalEvent<SlidingComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionModifiers);
-        SubscribeLocalEvent<SlidingComponent, ThrowerImpulseEvent>(OnThrowPushbackAttempt);
-        SubscribeLocalEvent<SlidingComponent, ShooterImpulseEvent>(OnGunShot);
+        SubscribeLocalEvent<SlidingComponent, ThrowerImpulseEvent>(OnThrowerImpulse);
+        SubscribeLocalEvent<SlidingComponent, ShooterImpulseEvent>(ShooterImpulseEvent);
     }
 
     /// <summary>
@@ -39,6 +40,15 @@ public sealed class SlidingSystem : EntitySystem
 
         if (CalculateSlidingModifier(entity))
             _speedModifierSystem.RefreshFrictionModifiers(entity);
+    }
+
+    /// <summary>
+    ///     When the component is removed, refresh friction modifiers and set ours to 1 to avoid causing issues.
+    /// </summary>
+    private void OnComponentShutdown(Entity<SlidingComponent> entity, ref ComponentShutdown args)
+    {
+        entity.Comp.FrictionModifier = 1;
+        _speedModifierSystem.RefreshFrictionModifiers(entity);
     }
 
     /// <summary>
@@ -71,8 +81,8 @@ public sealed class SlidingSystem : EntitySystem
 
         if (!CalculateSlidingModifier(entity, args.OtherEntity))
         {
-            entity.Comp.FrictionModifier = 1;
             RemComp<SlidingComponent>(entity);
+            return;
         }
 
         _speedModifierSystem.RefreshFrictionModifiers(entity);
@@ -84,7 +94,10 @@ public sealed class SlidingSystem : EntitySystem
     private bool CalculateSlidingModifier(Entity<SlidingComponent, PhysicsComponent?> entity, EntityUid? ignore = null)
     {
         if (!Resolve(entity, ref entity.Comp2))
+        {
+            RemComp<SlidingComponent>(entity);
             return false;
+        }
 
         var friction = 0.0f;
         var count = 0;
@@ -107,6 +120,7 @@ public sealed class SlidingSystem : EntitySystem
             return true;
         }
 
+        // If we didn't collide with anything super slippery, and the ignored collider didn't cause us to slide, then how did we get here?
         if (!TryComp<SlipperyComponent>(ignore, out var slip) || !slip.AffectsSliding)
             Log.Error($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
 
@@ -119,12 +133,12 @@ public sealed class SlidingSystem : EntitySystem
         args.ModifyAcceleration(entity.Comp.FrictionModifier);
     }
 
-    private void OnThrowPushbackAttempt(Entity<SlidingComponent> entity, ref ThrowerImpulseEvent args)
+    private void OnThrowerImpulse(Entity<SlidingComponent> entity, ref ThrowerImpulseEvent args)
     {
         args.Push = true;
     }
 
-    private void OnGunShot(Entity<SlidingComponent> entity, ref ShooterImpulseEvent args)
+    private void ShooterImpulseEvent(Entity<SlidingComponent> entity, ref ShooterImpulseEvent args)
     {
         args.Push = true;
     }
