@@ -87,6 +87,19 @@
 
 - type: entity
   parent: IDCardStandard
+  id: NTCCBlueShieldIDCard
+  name: CC-NT consortium officer's ID card
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/id_cards.rsi
+    layers:
+    - state: gold
+    - state: idblueshield
+  - type: PresetIdCard
+    job: BlueShield
+
+- type: entity
+  parent: IDCardStandard
   id: MiningIDCard
   name: mining ID card
   components:

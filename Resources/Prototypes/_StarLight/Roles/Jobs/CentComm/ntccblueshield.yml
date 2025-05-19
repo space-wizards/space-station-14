@@ -1,0 +1,34 @@
+- type: job
+  id: NTCCBlueshield
+  name: job-name-ntccblueshield
+  description: job-description-ntccblueshield
+  playTimeTracker: JobCentralCommandOperator
+  setPreference: false
+  startingGear: NTCCBlueShieldGear
+  icon: JobIconBlueShield
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+    - !type:AddImplantSpecial
+      implants: [ MindShieldImplant, DeathRattleImplantCentcomm, RadioImplanterCentcomm ]
+
+- type: startingGear
+  id: NTCCBlueShieldGear
+  equipment:
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatBeretBlueShield
+    outerClothing: ClothingOuterArmorBlueShield
+    id: NTCCBlueShieldPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltBlueShieldWebbingFilled
+    gloves: ClothingHandsGlovesCombat
+    pocket1: WeaponMultiphaseGun
+    pocket2: WeaponPistolN1984
+  storage:
+    back:
+    - Flash
+    - ClothingMaskGasBSO
