@@ -1,17 +1,20 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction.Components;
+using Content.Server.Electrocution;
 using Content.Server.Temperature.Components;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Construction.Steps;
 using Content.Shared.DoAfter;
+using Content.Shared.Electrocution;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Prying.Systems;
 using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Stacks;
+using Content.Shared.Stunnable;
 using Content.Shared.Temperature;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Containers;
@@ -360,6 +363,19 @@ namespace Content.Server.Construction
                         return _toolSystem.HasQuality(interactUsing.Used, toolInsertStep.Tool)
                             ? HandleResult.Validated
                             : HandleResult.False;
+                    }
+
+                    if (toolInsertStep.TryElectrocute && EntityManager.TryGetComponent<ElectrifiedComponent>(uid, out var electrified))
+                    {
+                        var currentValue = electrified.Enabled;
+                        electrified.Enabled = true;
+
+                        EntityManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>().TryDoElectrifiedAct(uid, user.Value, electrified: electrified);
+
+                        electrified.Enabled = currentValue;
+
+                        if(EntityManager.HasComponent<StunnedComponent>(user.Value))
+                            return HandleResult.False;
                     }
 
                     // If we're handling an event after its DoAfter finished...

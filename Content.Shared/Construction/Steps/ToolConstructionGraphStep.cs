@@ -15,6 +15,8 @@ namespace Content.Shared.Construction.Steps
 
         [DataField("examine")] public string ExamineOverride { get; private set; } = string.Empty;
 
+        [DataField] public bool TryElectrocute { get; private set; }
+
         public override void DoExamine(ExaminedEvent examinedEvent)
         {
             if (!string.IsNullOrEmpty(ExamineOverride))
