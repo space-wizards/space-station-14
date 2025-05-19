@@ -76,10 +76,10 @@
 
 # Uplinks
 - type: entity
-  parent: [BaseUplinkRadio, BaseSovietContraband, StorePresetUSSP]
+  parent: [BaseUplinkRadio, StorePresetUSSP, BaseSovietContraband]
   id: BaseRevUplinkRadio
-  name: USSP uplink radio
-  description: Suspiciously looking old radio... a hammer and sickle is ingrained in it.
+  name: Svyaz-UZL radio
+  description: Soviet comm-link node radio broadly used by SKGB agents. Unauthorized use strongly discouraged, because we will find you.
   suffix: Empty
   components:
   - type: Sprite
@@ -99,8 +99,8 @@
     balance:
       Telebond: 0
 
-- type: entity
-  parent: [BaseRevUplinkRadio, StorePresetUSSP]
-  id: USSPUplinkRadioPreset
-  tags:
-  - SubdermalImplant
+# - type: entity
+#   parent: [BaseRevUplinkRadio, StorePresetUSSP]
+#   id: USSPUplinkRadioPreset
+#   tags:
+#   - SubdermalImplant
