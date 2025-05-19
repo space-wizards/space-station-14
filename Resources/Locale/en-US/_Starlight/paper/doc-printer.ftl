@@ -75,8 +75,8 @@ doc-text-printer-report-department =
     Number of trainees:
 
     Inactive employees in the department:
-    [bullet] (Name, position, reason)
-    [bullet] ...
+    ⠀[bullet] (Name, position, reason)
+    ⠀[bullet] ...
 
     Degree of target readiness:
 
@@ -629,7 +629,7 @@ doc-text-printer-request-documents =
     Compiler of the document:
  
     I, (full name), in the capacity of Internal Affairs Agent, request a copy/original of the following document(s) for verification of compliance with the Corporate Act:
-    [bullet] ...
+    ⠀[bullet] ...
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
