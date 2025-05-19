@@ -19,6 +19,7 @@
 - type: startingGear
   id: NTCCBlueShieldGear
   equipment:
+    jumpsuit: ClothingUniformJumpsuitFormalBlueShield
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatBeretBlueShield
     outerClothing: ClothingOuterArmorBlueShield
