@@ -57,4 +57,17 @@ public sealed class GasPressureReliefValveBoundUserInterface(EntityUid owner, En
 
         SendPredictedMessage(new GasPressureReliefValveChangeThresholdMessage(sentThreshold));
     }
+
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        base.ReceiveMessage(message);
+
+        if (_window == null)
+            return;
+
+        if (message is not PressureReliefValveUserMessage cast)
+            return;
+
+        _window.UpdateInfo(cast);
+    }
 }

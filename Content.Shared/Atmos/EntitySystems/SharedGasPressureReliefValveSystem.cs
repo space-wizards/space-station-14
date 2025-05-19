@@ -19,7 +19,8 @@ public abstract class SharedGasPressureReliefValveSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GasPressureReliefValveComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<GasPressureReliefValveComponent, GasPressureReliefValveChangeThresholdMessage>(OnThresholdChangeMessage);
+        SubscribeLocalEvent<GasPressureReliefValveComponent, GasPressureReliefValveChangeThresholdMessage>(
+            OnThresholdChangeMessage);
     }
 
     /// <summary>
@@ -40,9 +41,6 @@ public abstract class SharedGasPressureReliefValveSystem : EntitySystem
 
             args.PushMarkup(Loc.GetString("gas-pressure-relief-valve-examined-threshold-pressure",
                 ("threshold", $"{valveEntity.Comp.Threshold:0.#}")));
-
-            args.PushMarkup(Loc.GetString("gas-pressure-relief-valve-examined-flow-rate",
-                ("flowRate", $"{valveEntity.Comp.FlowRate:0.#}")));
         }
     }
 

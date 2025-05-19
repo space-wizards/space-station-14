@@ -6,8 +6,10 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Piping;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 
@@ -19,10 +21,11 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 [UsedImplicitly]
 public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
 
     public override void Initialize()
     {
@@ -110,9 +113,9 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         // Calculate the flow rate in L/s for the UI.
         valveEntity.Comp.FlowRate = MathF.Round(actualVolumeToTransfer * args.dt, 1);
-        DirtyField(valveEntity, valveEntity.Comp, nameof(valveEntity.Comp.FlowRate));
 
         ChangeStatus(true, valveEntity);
+        SendUIInfo(p1, p2, valveEntity.Comp.FlowRate, valveEntity.Owner);
     }
 
     /// <summary>
@@ -149,15 +152,25 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
             if (!enabled)
             {
                 valveEntity.Comp.FlowRate = 0;
-                DirtyFields(valveEntity,
-                    valveEntity.Comp,
-                    MetaData(valveEntity),
-                    nameof(valveEntity.Comp.FlowRate),
-                    nameof(valveEntity.Comp.Enabled));
-                return;
             }
 
             DirtyField(valveEntity!, nameof(valveEntity.Comp.Enabled));
         }
+    }
+
+    /// <summary>
+    /// Sends data down to the client for the UI.
+    /// </summary>
+    /// <param name="inletpressure">The pressure value at the inlet of the relief valve.</param>
+    /// <param name="outletpressure">The pressure value at the outlet of the relief valve.</param>
+    /// <param name="flowrate">The flow rate of gas through the valve.</param>
+    /// <param name="uid">The unique identifier for the entity associated with the gas pressure relief valve.</param>
+    private void SendUIInfo(float inletpressure, float outletpressure, float flowrate, EntityUid uid)
+    {
+        var message = new PressureReliefValveUserMessage(inletpressure,
+            outletpressure,
+            flowrate);
+
+        _userInterface.ServerSendUiMessage(uid, GasPressureReliefValveUiKey.Key, message);
     }
 }
