@@ -41,28 +41,7 @@
 
 - type: entity
   parent: BaseXenoArtifactStructure
-  id: SimpleXenoArtifact
-  suffix: Simple
-  components:
-  - type: XenoArtifact
-    nodeCount:
-      min: 2
-      max: 5
-
-- type: entity
-  parent: BaseXenoArtifactStructure
-  id: MediumXenoArtifact
-  suffix: Medium
-  components:
-  - type: XenoArtifact
-    nodeCount:
-      min: 5
-      max: 9
-
-- type: entity
-  parent: BaseXenoArtifactStructure
   id: ComplexXenoArtifact
-  suffix: Complex
   components:
   - type: XenoArtifact
     nodeCount:

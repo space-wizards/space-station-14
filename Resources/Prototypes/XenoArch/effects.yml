@@ -363,9 +363,6 @@
       mindRoles:
       - MindRoleGhostRoleFreeAgent
     - type: GhostTakeoverAvailable
-    - type: MovementSpeedModifier
-      baseWalkSpeed: 0.25
-      baseSprintSpeed: 0.5
 
 - type: entity
   id: XenoArtifactOmnitool
@@ -1062,14 +1059,9 @@
 
 - type: entity
   id: XenoArtifactAnomalySpawn
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Creates anomaly
   components:
-  - type: XenoArtifactNode
-    maxDurability: 2
-    maxDurabilityCanDecreaseBy:
-      min: 0
-      max: 1
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
