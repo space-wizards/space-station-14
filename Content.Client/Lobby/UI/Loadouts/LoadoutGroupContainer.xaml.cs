@@ -13,10 +13,12 @@ namespace Content.Client.Lobby.UI.Loadouts;
 [GenerateTypedNameReferences]
 public sealed partial class LoadoutGroupContainer : BoxContainer
 {
+    private const string CLOSED_GROUP_MARK = "▶";
+    private const string OPENED_GROUP_MARK = "▼";
+
     /// <summary>
-    /// List of all subcontainers and their corresponding subloadout containers.
+    /// A dictionary that stores open groups
     /// </summary>
-    private Dictionary<BoxContainer, PanelContainer?> _subContainersDict = new();
     private Dictionary<string, bool> _openedGroups = new();
 
     private readonly LoadoutGroupPrototype _groupProto;
@@ -38,7 +40,6 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     /// </summary>
     public void RefreshLoadouts(HumanoidCharacterProfile profile, RoleLoadout loadout, ICommonSession session, IDependencyCollection collection)
     {
-        _subContainersDict = new();
         var protoMan = collection.Resolve<IPrototypeManager>();
         var loadoutSystem = collection.Resolve<IEntityManager>().System<LoadoutSystem>();
         RestrictionsContainer.DisposeAllChildren();
@@ -81,21 +82,15 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
         .ToDictionary(g => g.Key, g => g.ToList());
 
         BoxContainer? contentContainer = null;
-        var countRows = 0;
 
         foreach (var kvp in groups)
         {
-            if (contentContainer == null || contentContainer.ChildCount >= 1)
+            contentContainer = new BoxContainer
             {
-                contentContainer = new BoxContainer
-                {
-                    HorizontalExpand = true,
-                    VerticalExpand = true
-                };
-                LoadoutsContainer.AddChild(contentContainer);
-                _subContainersDict.Add(contentContainer, null);
-                countRows++;
-            }
+                HorizontalExpand = true,
+                VerticalExpand = true
+            };
+            LoadoutsContainer.AddChild(contentContainer);
 
             var protos = kvp.Value;
 
@@ -112,41 +107,34 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                     })
                     .ToList();
 
-                var first = uiElements.FirstOrDefault(e => e.Select.Pressed) ?? uiElements[0];
+                var firstElement = uiElements.FirstOrDefault(e => e.Select.Pressed) ?? uiElements[0];
 
-                var otherElements = uiElements.Where(e => !ReferenceEquals(e, first)).ToList();
+                var otherElements = uiElements.Where(e => !ReferenceEquals(e, firstElement)).ToList();
 
-                first.HorizontalExpand = true;
-                var toggle = new ToggleLoadoutButton
-                {
-                    Text = "▶"
-                };
+                firstElement.HorizontalExpand = true;
+                var toggle = CreateToggleButton();
+
                 var subContainer = new SubLoadoutContainer(toggle)
                 {
-                    Visible = _openedGroups.ContainsKey(kvp.Key) ?
-                        _openedGroups[kvp.Key] : false
+                    Visible = _openedGroups.GetValueOrDefault(kvp.Key, false)
                 };
-                toggle.Text = subContainer.Visible ? "▼" : "▶";
+                toggle.Text = subContainer.Visible ? OPENED_GROUP_MARK : CLOSED_GROUP_MARK;
 
-                var subList = subContainer.Grid;
                 LoadoutsContainer.AddChild(subContainer);
 
                 toggle.OnPressed += _ =>
                 {
-                    var prev = _subContainersDict[row];
-                    if (prev != null && prev != subContainer)
-                        prev.Visible = false;
-
-                    bool willOpen = !subContainer.Visible;
+                    var willOpen = !subContainer.Visible;
                     subContainer.Visible = willOpen;
-                    toggle.Text = willOpen ? "▼" : "▶";
-                    _subContainersDict[row] = willOpen ? subContainer : null;
+                    toggle.Text = willOpen ? OPENED_GROUP_MARK : CLOSED_GROUP_MARK;
                     _openedGroups[kvp.Key] = willOpen;
                 };
 
-                first.AddChild(toggle);
+                var subList = subContainer.Grid;
+
+                firstElement.AddChild(toggle);
                 toggle.SetPositionFirst();
-                contentContainer.AddChild(first);
+                contentContainer.AddChild(firstElement);
                 foreach (var proto in otherElements)
                     subList.AddChild(proto);
                 UpdateToggleColor(toggle, subList);
@@ -160,7 +148,15 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
         }
     }
 
-    void UpdateToggleColor(Button toggle, BoxContainer subList)
+    private static ToggleLoadoutButton CreateToggleButton()
+    {
+        return new ToggleLoadoutButton
+        {
+            Text = CLOSED_GROUP_MARK
+        };
+    }
+
+    private void UpdateToggleColor(Button toggle, BoxContainer subList)
     {
         var anyActive = subList.Children
             .OfType<LoadoutContainer>()
@@ -175,9 +171,9 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     {
         var selected = loadout.SelectedLoadouts[_groupProto.ID];
 
-        bool pressed = selected.Any(e => e.Prototype == proto.ID);
+        var pressed = selected.Any(e => e.Prototype == proto.ID);
 
-        bool enabled = loadout.IsValid(profile, session, proto.ID, collection, out var reason);
+        var enabled = loadout.IsValid(profile, session, proto.ID, collection, out var reason);
 
         var cont = new LoadoutContainer(proto, !enabled, reason);
 

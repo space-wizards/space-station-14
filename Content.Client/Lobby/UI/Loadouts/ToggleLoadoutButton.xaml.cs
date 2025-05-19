@@ -5,12 +5,9 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client.Lobby.UI.Loadouts;
 
-[GenerateTypedNameReferences]
-public sealed partial class ToggleLoadoutButton : Button
-{
+/// <summary>
+/// A button that toggles the loadout groups. Needs for override default styles.
+/// </summary>
 
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-    }
-}
+[GenerateTypedNameReferences]
+public sealed partial class ToggleLoadoutButton : Button;

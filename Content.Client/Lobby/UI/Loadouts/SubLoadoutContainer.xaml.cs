@@ -18,16 +18,4 @@ public sealed partial class SubLoadoutContainer : PanelContainer
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
     }
-
-    protected override void VisibilityChanged(bool newVisible)
-    {
-        base.VisibilityChanged(newVisible);
-        if(GroupButton != null && !newVisible)
-            GroupButton.Text = "▶";
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-    }
 }

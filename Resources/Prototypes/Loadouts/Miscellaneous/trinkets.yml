@@ -56,35 +56,35 @@
   storage:
     back:
     - Lighter
-  groupBy: Smokeables
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigPackGreen
   storage:
     back:
     - CigPackGreen
-  groupBy: Smokeables
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigPackRed
   storage:
     back:
     - CigPackRed
-  groupBy: Smokeables
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigPackBlue
   storage:
     back:
     - CigPackBlue
-  groupBy: Smokeables
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigPackBlack
   storage:
     back:
     - CigPackBlack
-  groupBy: Smokeables
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigarCase
@@ -94,7 +94,7 @@
   storage:
     back:
     - CigarCase
-  groupBy: Smokeables
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigarGold
@@ -104,7 +104,7 @@
   storage:
     back:
     - CigarGold
-  groupBy: Smokeables
+  groupBy: "smokeables"
 
 # Pins
 - type: loadout
