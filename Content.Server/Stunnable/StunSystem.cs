@@ -1,6 +1,6 @@
 using Content.Shared.Stunnable;
 
-namespace Content.Server.Stunnable.Systems
+namespace Content.Server.Stunnable
 {
     public sealed class StunSystem : SharedStunSystem
     {
