@@ -23,7 +23,7 @@
     head: ClothingHeadHatBeretBlueShield
     outerClothing: ClothingOuterArmorBlueShield
     id: NTCCBlueShieldPDA
-    eyes: BlueShieldGlasses
+    eyes: ClothingEyesGlassesBlueShield
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltBlueShieldWebbingFilled
     gloves: ClothingHandsGlovesCombat
