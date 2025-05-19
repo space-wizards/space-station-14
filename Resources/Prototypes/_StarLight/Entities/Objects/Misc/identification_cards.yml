@@ -88,7 +88,7 @@
 - type: entity
   parent: IDCardStandard
   id: NTCCBlueShieldIDCard
-  name: CC-NT consortium officer's ID card
+  name: NT-CC consortium officer's ID card
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Misc/id_cards.rsi
