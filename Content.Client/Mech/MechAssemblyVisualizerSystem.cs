@@ -19,6 +19,7 @@ public sealed class MechAssemblyVisualizerSystem : VisualizerSystem<MechAssembly
 
         var state = component.StatePrefix + stage;
 
-        args.Sprite?.LayerSetState(0, state);
+        if (args.Sprite != null)
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, state);
     }
 }
