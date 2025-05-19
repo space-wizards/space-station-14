@@ -7,7 +7,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Storage.EntitySystems;
-using Content.Shared.Stunnable;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 
@@ -142,14 +141,14 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     ///     Does this entity have any empty hands, and how many?
     /// </summary>
-    public bool TryCountEmptyHands(EntityUid uid, [NotNullWhen(true)] out int? hands, HandsComponent? handComp = null)
+    public bool TryCountEmptyHands(Entity<HandsComponent?> entity, [NotNullWhen(true)] out int? hands)
     {
         hands = 0;
         var emptyHand = false;
-        if (!Resolve(uid, ref handComp, false) || handComp.Count == 0)
+        if (!Resolve(entity, ref entity.Comp, false) || entity.Comp.Count == 0)
             return false;
 
-        foreach (var hand in EnumerateHands(uid, handComp))
+        foreach (var hand in EnumerateHands(entity))
         {
             if (!hand.IsEmpty)
                 continue;

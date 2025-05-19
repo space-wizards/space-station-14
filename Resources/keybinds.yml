@@ -523,7 +523,7 @@ binds:
   key: Z
 - function: ToggleKnockdown
   type: State
-  key: R
+  key: H
 - function: OpenAbilitiesMenu
   type: State
   key: K

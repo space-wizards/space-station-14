@@ -18,15 +18,27 @@ namespace Content.Server.Stunnable.Components
         [DataField]
         public TimeSpan SlowdownAmount;
 
+        /// <summary>
+        /// Multiplier for a mob's walking speed
+        /// </summary>
         [DataField]
         public float WalkSpeedModifier = 1f;
 
+        /// <summary>
+        /// Multiplier for a mob's sprinting speed
+        /// </summary>
         [DataField]
         public float SprintSpeedModifier = 1f;
 
+        /// <summary>
+        /// Refresh Stun or Slowdown on hit
+        /// </summary>
         [DataField]
         public bool Refresh = true;
 
+        /// <summary>
+        /// Should the entity try and stand automatically after being knocked down?
+        /// </summary>
         [DataField]
         public bool AutoStand = true;
 

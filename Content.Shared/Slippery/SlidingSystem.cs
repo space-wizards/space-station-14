@@ -30,11 +30,11 @@ public sealed class SlidingSystem : EntitySystem
     /// </summary>
     private void OnComponentInit(Entity<SlidingComponent> entity, ref ComponentInit args)
     {
-        if (!_timing.IsFirstTimePredicted || !TryComp<PhysicsComponent>(entity, out var body))
+        if (!_timing.IsFirstTimePredicted)
             return;
 
-        if (!CalculateSlidingModifier(entity, physics: body))
-            throw new Exception($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
+        if (!CalculateSlidingModifier(entity))
+            Log.Error($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
 
         _speedModifierSystem.RefreshFrictionModifiers(entity);
     }
@@ -56,7 +56,7 @@ public sealed class SlidingSystem : EntitySystem
             return;
 
         if (!CalculateSlidingModifier(entity))
-            throw new Exception($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
+            Log.Error($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
 
         _speedModifierSystem.RefreshFrictionModifiers(entity);
     }
@@ -81,12 +81,15 @@ public sealed class SlidingSystem : EntitySystem
     /// <summary>
     ///     Gets contacting slippery entities and averages their friction modifiers.
     /// </summary>
-    private bool CalculateSlidingModifier(Entity<SlidingComponent> entity, EntityUid? ignore = null, PhysicsComponent? physics = null)
+    private bool CalculateSlidingModifier(Entity<SlidingComponent, PhysicsComponent?> entity, EntityUid? ignore = null)
     {
+        if (!Resolve(entity, ref entity.Comp2))
+            return false;
+
         var friction = 0.0f;
         var count = 0;
 
-        foreach (var ent in _physics.GetContactingEntities(entity, physics))
+        foreach (var ent in _physics.GetContactingEntities(entity, entity.Comp2))
         {
             if (ent == ignore || !TryComp<SlipperyComponent>(ent, out var slippery) || !slippery.AffectsSliding)
                 continue;
@@ -99,7 +102,7 @@ public sealed class SlidingSystem : EntitySystem
         if (count == 0)
             return false;
 
-        entity.Comp.FrictionModifier = friction / count;
+        entity.Comp1.FrictionModifier = friction / count;
         return true;
     }
 

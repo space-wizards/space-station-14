@@ -1,5 +1,4 @@
-﻿using Content.Shared.Alert;
-using Content.Shared.Bed.Sleep;
+﻿using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -19,7 +18,6 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Stunnable;
 
@@ -228,7 +226,7 @@ public abstract partial class SharedStunSystem
         if (!TryComp<StaminaComponent>(entity, out var stamina))
             return;
 
-        if (!_hands.TryGetEmptyHand(entity, out _))
+        if (!_hands.TryGetEmptyHand(entity.Owner, out _))
             return;
 
         var staminaDamage = stamina.ForceStandStamina;
@@ -415,66 +413,6 @@ public abstract partial class SharedStunSystem
     {
         RefreshKnockedMovement(entity);
     }
-
-    #endregion
-
-    #region Events
-
-    /// <summary>
-    ///     Raised directed on an entity when it is knocked down.
-    /// </summary>
-    [ByRefEvent]
-    public record struct KnockDownAttemptEvent(bool Cancelled = false)
-    {
-        public bool AutoStand;
-    }
-
-    /// <summary>
-    ///     Raised directed on an entity when it is knocked down.
-    /// </summary>
-    [ByRefEvent]
-    public record struct KnockedDownEvent
-    {
-        public TimeSpan KnockdownTime;
-    }
-
-    /// <summary>
-    ///     Raised on an entity that needs to refresh its knockdown modifiers
-    /// </summary>
-    [ByRefEvent]
-    public record struct KnockedDownRefreshEvent
-    {
-        public float SpeedModifier;
-        public float FrictionModifier;
-    }
-
-    /// <summary>
-    ///     Raised directed on an entity when it tries to stand up
-    /// </summary>
-    [ByRefEvent]
-    public record struct StandUpAttemptEvent(bool Cancelled);
-
-    [ByRefEvent]
-    public record struct StandUpArgsEvent
-    {
-        public bool AutoStand;
-        public TimeSpan DoAfterTime;
-    }
-
-    [ByRefEvent]
-
-    public record struct KnockdownEndEvent;
-
-    /// <summary>
-    ///     Raised when you click on the Knocked Down Alert
-    /// </summary>
-    public sealed partial class KnockedDownAlertEvent : BaseAlertEvent;
-
-    [ByRefEvent, Serializable, NetSerializable]
-    public sealed partial class TryStandDoAfterEvent : SimpleDoAfterEvent;
-
-    [Serializable, NetSerializable]
-    public sealed class ForceStandUpEvent : EntityEventArgs;
 
     #endregion
 }

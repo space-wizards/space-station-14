@@ -2,16 +2,17 @@ using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Stunnable;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStunSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause, Access(typeof(SharedStunSystem))]
 public sealed partial class KnockedDownComponent : Component
 {
     /// <summary>
     /// Game time that we can stand up.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextUpdate;
 
     /// <summary>
@@ -42,13 +43,14 @@ public sealed partial class KnockedDownComponent : Component
     /// <summary>
     /// How long does it take us to get up?
     /// </summary>
+    [DataField, AutoNetworkedField]
     public TimeSpan GetUpDoAfter = TimeSpan.FromSeconds(1);
 
     // TODO: This isn't my code reuse if able, prune if necessary
-    [DataField("helpAttemptSound")]
+    [DataField]
     public SoundSpecifier StunAttemptSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 
-    [DataField("helpInterval"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float HelpInterval = 1f;
 
     [ViewVariables, AutoNetworkedField]
