@@ -5877,4 +5877,12 @@ Entries:
   id: 814
   time: '2025-05-18T22:52:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/596
+- author: Floating Lotus
+  changes:
+  - message: Mech's and Mech weapons now show their respective contraband level when
+      inspected
+    type: Fix
+  id: 815
+  time: '2025-05-19T12:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/656
 
