@@ -16,11 +16,15 @@ public sealed partial class DungeonJob
     {
         var setTiles = new List<(Vector2i, Tile)>();
         var tileDef = _tileDefManager[gen.Tile];
+        var contents = _prototype.Index(gen.Contents);
 
         foreach (var room in dungeon.Rooms)
         {
             foreach (var entrance in room.Entrances)
             {
+                if (reservedTiles.Contains(entrance))
+                    continue;
+
                 setTiles.Add((entrance, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
             }
         }
@@ -31,9 +35,17 @@ public sealed partial class DungeonJob
         {
             foreach (var entrance in room.Entrances)
             {
-                _entManager.SpawnEntities(
+                if (reservedTiles.Contains(entrance))
+                    continue;
+
+                _entManager.SpawnEntitiesAttachedTo(
                     _maps.GridTileToLocal(_gridUid, _grid, entrance),
-                    EntitySpawnCollection.GetSpawns(gen.Contents, random));
+                    _entTable.GetSpawns(contents, random));
+
+                await SuspendDungeon();
+
+                if (!ValidateResume())
+                    return;
             }
         }
     }

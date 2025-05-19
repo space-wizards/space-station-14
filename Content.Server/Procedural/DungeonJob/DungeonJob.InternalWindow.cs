@@ -19,6 +19,8 @@ public sealed partial class DungeonJob
         var minDistance = 4;
         var maxDistance = 6;
         var tileDef = _tileDefManager[gen.Tile];
+        var contents = _prototype.Index(gen.Contents);
+
         foreach (var room in dungeon.Rooms)
         {
             var validTiles = new List<Vector2i>();
@@ -81,7 +83,7 @@ public sealed partial class DungeonJob
                     var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile);
                     _maps.SetTile(_gridUid, _grid, tile, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
 
-                    _entManager.SpawnEntities(gridPos, EntitySpawnCollection.GetSpawns(gen.Contents, random));
+                    _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(contents, random));
                 }
 
                 if (validTiles.Count > 0)

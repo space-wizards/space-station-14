@@ -96,10 +96,11 @@
     tile: FloorCaveDrought
     wall: WallRock
 
-- type: entitySpawnEntry
+- type: entityTable
   id: HauntedClutter
-  entries:
-  - id: FloraStalagmite
+  table: !type:GroupSelector
+    children:
+    - id: FloraStalagmite
 
 - type: dungeonConfig
   id: LavaBrig
@@ -290,101 +291,100 @@
 
 # Spawn groups
 # Basic
-- type: entitySpawnEntry
+- type: entityTable
   id: BaseClutter
-  entries:
-  - id: PottedPlantRandom
-    amount: 1
+  table: !type:GroupSelector
+    children:
+    - id: PottedPlantRandom
+      amount: 1
 
-- type: entitySpawnEntry
+- type: entityTable
   id: BaseAirlock
-  entries:
-  - id: CableApcExtension
-  - id: AirlockGlass
+  table: !type:GroupSelector
+    children:
+    - id: CableApcExtension
+    - id: AirlockGlass
 
-- type: entitySpawnEntry
+- type: entityTable
   id: BaseWindow
-  entries:
-  - id: Grille
-  - id: Window
+  table: !type:GroupSelector
+    children:
+    - id: Grille
+    - id: Window
 
 # Lava brig
-- type: entitySpawnEntry
+- type: entityTable
   id: LavaBrigEntrance
-  entries:
-  - id: CableApcExtension
-  - id: AirlockSecurityGlassLocked
+  table: !type:GroupSelector
+    children:
+    - id: CableApcExtension
+    - id: AirlockSecurityGlassLocked
 
 # Mineshaft
-- type: entitySpawnEntry
+- type: entityTable
   id: BaseWoodWall
-  entries:
-  - id: RandomWoodenWall
+  table: !type:GroupSelector
+    children:
+    - id: RandomWoodenWall
 
-- type: entitySpawnEntry
+- type: entityTable
   id: BaseWoodSupport
-  entries:
-  - id: RandomWoodenSupport
+  table: !type:GroupSelector
+    children:
+    - id: RandomWoodenSupport
 
-- type: entitySpawnEntry
+- type: entityTable
   id: MineshaftClutter
-  entries:
-  - id: RandomStalagmiteOrCrystal
-    amount: 1
+  table: !type:GroupSelector
+    children:
+    - id: RandomStalagmiteOrCrystal
+      amount: 1
 
-- type: entitySpawnEntry
+- type: entityTable
   id: MineshaftWalls
-  entries:
-  # Ore
-  - id: WallRockSalt
-    prob: 0.6
-    orGroup: content
-  - id: WallRockCoal
-    prob: 0.6
-    orGroup: content
-  - id: WallRockTin
-    prob: 0.4
-    orGroup: content
-  - id: WallMining
-    prob: 0.8
-    orGroup: content
+  table: !type:GroupSelector
+    children:
+    # Ore
+    - id: WallRockSalt
+      prob: 0.6
+    - id: WallRockCoal
+      prob: 0.6
+    - id: WallRockTin
+      prob: 0.4
+    - id: WallMining
+      prob: 0.8
 
 # Science lab
-- type: entitySpawnEntry
+- type: entityTable
   id: ScienceLabsWalls
-  entries:
-  # Posters
-  - id: RandomPosterLegit
-    orGroup: content
-  - id: ExtinguisherCabinetFilled
-    prob: 0.2
-    orGroup: content
-  - id: RandomPainting
-    prob: 0.05
-    orGroup: content
-  - id: IntercomCommon
-    prob: 0.1
-    orGroup: content
+  table: !type:GroupSelector
+    children:
+    # Posters
+    - id: RandomPosterLegit
+    - id: ExtinguisherCabinetFilled
+      prob: 0.2
+    - id: RandomPainting
+      prob: 0.05
+    - id: IntercomCommon
+      prob: 0.1
 
 # Snowy labs
-- type: entitySpawnEntry
+- type: entityTable
   id: SnowyLabsEntrance
-  entries:
-  - id: CableApcExtension
-  - id: AirlockFreezerHydroponicsLocked
+  table: !type:GroupSelector
+    children:
+    - id: CableApcExtension
+    - id: AirlockFreezerHydroponicsLocked
 
-- type: entitySpawnEntry
+- type: entityTable
   id: SnowyLabsWalls
-  entries:
-  # Posters
-  - id: RandomPosterLegit
-    orGroup: content
-  - id: ExtinguisherCabinetFilled
-    prob: 0.2
-    orGroup: content
-  - id: RandomPainting
-    prob: 0.05
-    orGroup: content
-  - id: IntercomScience
-    prob: 0.1
-    orGroup: content
+  table: !type:GroupSelector
+    children:
+    # Posters
+    - id: RandomPosterLegit
+    - id: ExtinguisherCabinetFilled
+      prob: 0.2
+    - id: RandomPainting
+      prob: 0.05
+    - id: IntercomScience
+      prob: 0.1
