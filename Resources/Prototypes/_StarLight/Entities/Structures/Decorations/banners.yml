@@ -52,8 +52,8 @@
 - type: entity
   parent: BaseWallBanner
   id: BannerWallHammer
-  name: Hammer Banner
-  description: A red banner adorned with a golden hammer, symbolizing labor and unity.
+  name: glorious revolutionary wall banner
+  description: Gone are the days of oppression and the unfair treatment of contractors!
   components:
   - type: Sprite
     state: banner0
@@ -80,8 +80,8 @@
 - type: entity
   id: BannerSovietHammer
   parent: BannerBase
-  name: soviet hammer banner
-  description: A red banner featuring a golden hammer, representing the strength and unity of the working class.
+  name: glorious revolutionary banner
+  description: Gone are the days of oppression and the unfair treatment of contractors!
   components:
   - type: Sprite
     sprite: _Starlight/Structures/Decorations/Banners.rsi
