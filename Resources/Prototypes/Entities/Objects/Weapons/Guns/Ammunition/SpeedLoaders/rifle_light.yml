@@ -1,6 +1,6 @@
 - type: entity
   id: SpeedLoaderLightRifle
-  name: "speed loader (.30 rifle)"
+  name: "speed loader (.45 magnum)" # Starlight
   parent: [ BaseItem, BaseSecurityContraband ]
   components:
   - type: Tag
@@ -11,9 +11,9 @@
     mayTransfer: true
     whitelist:
       tags:
-        - CartridgeLightRifle
+        - CartridgeMagnum # Starlight
     capacity: 5
-    proto: CartridgeLightRifleFMJ
+    proto: CartridgeMagnumSP # Starlight
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/LightRifle/light_rifle_speed_loader.rsi
     layers:
