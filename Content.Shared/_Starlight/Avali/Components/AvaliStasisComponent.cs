@@ -68,6 +68,36 @@ public sealed partial class AvaliStasisComponent : Component
     /// The amount of additional damage resistance while in stasis (0-1, where 1 is 100% resistance), so 0.1 resistance lowers damage by 10%.
     /// </summary>
     [DataField] [AutoNetworkedField] public float StasisAdditionalDamageResistance;
+    
+    /// <summary>
+    /// The amount of brute damage the stasis ability will heal in critical status, per second.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public float StasisInCritBluntHealPerSecond;
+
+    /// <summary>
+    /// The amount of sharp damage the stasis ability will heal in critical status, per second.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public float StasisInCritSlashingHealPerSecond;
+
+    /// <summary>
+    /// The amount of piercing damage the stasis ability will heal in critical status, per second.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public float StasisInCritPiercingHealPerSecond;
+
+    /// <summary>
+    /// The amount of heat damage the stasis ability will heal in critical status, per second.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public float StasisInCritHeatHealPerSecond;
+
+    /// <summary>
+    /// The amount of cold damage the stasis ability will heal in critical status, per second.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public float StasisInCritColdHealPerSecond;
+
+    /// <summary>
+    /// The amount of additional damage resistance while in stasis in critical status (0-1, where 1 is 100% resistance), so 0.1 resistance lowers damage by 10%.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public float StasisInCritAdditionalDamageResistance;
 
     /// <summary>
     /// The prototype ID of the stasis effect to spawn when entering stasis.

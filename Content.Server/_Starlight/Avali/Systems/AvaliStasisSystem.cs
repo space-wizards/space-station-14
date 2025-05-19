@@ -5,6 +5,8 @@ using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Robust.Shared.Timing;
 using Content.Shared.FixedPoint;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Starlight.Avali.Components;
 using Content.Shared.Starlight.Avali.Events;
 using Content.Shared.Starlight.Avali.Systems;
@@ -22,6 +24,18 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         base.Initialize();
 
         SubscribeLocalEvent<AvaliStasisComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+    }
+
+    private void OnMobStateChanged(MobStateChangedEvent args)
+    {
+        if (TryComp<AvaliStasisComponent>(args.Target, out var comp))
+        {
+            if (args.NewMobState == MobState.Dead && comp.IsInStasis)
+            {
+                RaiseLocalEvent(args.Target, new AvaliExitStasisActionEvent());
+            }
+        }
     }
 
     protected override void OnMapInit(EntityUid uid, AvaliStasisComponent comp, MapInitEvent args)
@@ -43,7 +57,7 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
     {
         comp.IsInStasis = true;
         Dirty(uid, comp);
-        
+
         EnsureComp<AvaliStasisFrozenComponent>(uid);
 
         _actionsSystem.RemoveAction(uid, comp.EnterStasisActionEntity);
@@ -56,7 +70,8 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         }
 
         // Send animation event to all clients
-        var ev = new AvaliStasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates), AvaliStasisAnimationType.Enter);
+        var ev = new AvaliStasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
+            AvaliStasisAnimationType.Enter);
         RaiseNetworkEvent(ev);
     }
 
@@ -64,7 +79,7 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
     {
         comp.IsInStasis = false;
         Dirty(uid, comp);
-        
+
         _actionsSystem.RemoveAction(uid, comp.ExitStasisActionEntity);
         _actionsSystem.AddAction(uid, ref comp.EnterStasisActionEntity, comp.EnterStasisAction);
         _actionsSystem.SetCooldown(comp.EnterStasisActionEntity, TimeSpan.FromSeconds(comp.StasisCooldown));
@@ -72,7 +87,8 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         RemComp<AvaliStasisFrozenComponent>(uid);
 
         // Send animation event to all clients
-        var ev = new AvaliStasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates), AvaliStasisAnimationType.Exit);
+        var ev = new AvaliStasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
+            AvaliStasisAnimationType.Exit);
         RaiseNetworkEvent(ev);
     }
 
@@ -83,18 +99,32 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         var query = EntityQueryEnumerator<AvaliStasisComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            OnStasisUpdate(uid, comp, new FrameEventArgs(frameTime));
+            if (TryComp<MobStateComponent>(uid, out var mobState))
+            {
+                var currentState = mobState.CurrentState;
+                var healingValues = GetHealingValues(currentState, comp);
+                OnStasisUpdate(uid, comp, new FrameEventArgs(frameTime), healingValues);
+            }
         }
     }
 
     private void OnDamageChanged(EntityUid uid, AvaliStasisComponent component, DamageChangedEvent args)
     {
-        // Skip if this is healing or if the damage change is from our own healing
+            if (TryComp<MobStateComponent>(uid, out var mobState))
+            {
+                var currentState = mobState.CurrentState;
+                var healingValues = GetHealingValues(currentState, component);
+                ApplyResistance(uid, args, component, healingValues);
+            }
+    }
+    
+    private void ApplyResistance(EntityUid uid, DamageChangedEvent args, AvaliStasisComponent comp, AvaliStasisHealingValues healingValues) {
+            // Skip if this is healing or if the damage change is from our own healing
         if (!args.DamageIncreased || args.DamageDelta == null || args.Origin == uid)
             return;
 
         // Only apply resistance if in stasis
-        if (!component.IsInStasis)
+        if (!comp.IsInStasis)
             return;
 
         // Skip if this damage was already modified by stasis
@@ -105,26 +135,27 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         var damageToApply = new DamageSpecifier();
         foreach (var (type, amount) in args.DamageDelta.DamageDict)
         {
-            damageToApply.DamageDict.Add(type, amount - amount * component.StasisAdditionalDamageResistance);
+            damageToApply.DamageDict.Add(type, amount - amount * healingValues.AdditionalDamageResistance);
         }
 
         // Apply the reduced damage
         _damageableSystem.TryChangeDamage(uid, damageToApply, true, origin: uid);
     }
 
-    private void OnStasisUpdate(EntityUid uid, AvaliStasisComponent comp, FrameEventArgs args)
+    private void OnStasisUpdate(EntityUid uid, AvaliStasisComponent comp, FrameEventArgs args,
+        AvaliStasisHealingValues healingValues)
     {
         if (!comp.IsInStasis)
             return;
 
         // Apply healing effect
         var healAmount = new DamageSpecifier();
-        healAmount.DamageDict.Add("Blunt", FixedPoint2.New(comp.StasisBluntHealPerSecond * args.DeltaSeconds * -1));
-        healAmount.DamageDict.Add("Slash", FixedPoint2.New(comp.StasisSlashingHealPerSecond * args.DeltaSeconds * -1));
+        healAmount.DamageDict.Add("Blunt", FixedPoint2.New(healingValues.BluntHeal * args.DeltaSeconds * -1));
+        healAmount.DamageDict.Add("Slash", FixedPoint2.New(healingValues.SlashHeal * args.DeltaSeconds * -1));
         healAmount.DamageDict.Add("Piercing",
-            FixedPoint2.New(comp.StasisPiercingHealPerSecond * args.DeltaSeconds * -1));
-        healAmount.DamageDict.Add("Heat", FixedPoint2.New(comp.StasisHeatHealPerSecond * args.DeltaSeconds * -1));
-        healAmount.DamageDict.Add("Cold", FixedPoint2.New(comp.StasisColdHealPerSecond * args.DeltaSeconds * -1));
+            FixedPoint2.New(healingValues.PiercingHeal * args.DeltaSeconds * -1));
+        healAmount.DamageDict.Add("Heat", FixedPoint2.New(healingValues.HeatHeal * args.DeltaSeconds * -1));
+        healAmount.DamageDict.Add("Cold", FixedPoint2.New(healingValues.ColdHeal * args.DeltaSeconds * -1));
 
         if (TryComp<DamageableComponent>(uid, out _))
         {
@@ -134,8 +165,38 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         // Heal bleeding
         if (TryComp<BloodstreamComponent>(uid, out var bloodstream) && bloodstream.BleedAmount > 0)
         {
-            _bloodstreamSystem.TryModifyBleedAmount(uid, -comp.BleedHealPerSecond * (float)args.DeltaSeconds,
+            _bloodstreamSystem.TryModifyBleedAmount(uid, -healingValues.BleedHeal * (float)args.DeltaSeconds,
                 bloodstream);
         }
     }
+
+    private AvaliStasisHealingValues GetHealingValues(MobState state, AvaliStasisComponent comp)
+    {
+        return state switch
+        {
+            MobState.Alive => new AvaliStasisHealingValues(comp.StasisBluntHealPerSecond, comp.StasisSlashingHealPerSecond, comp.StasisPiercingHealPerSecond, comp.StasisHeatHealPerSecond, comp.StasisColdHealPerSecond, comp.BleedHealPerSecond, comp.StasisAdditionalDamageResistance),
+            MobState.Critical => new AvaliStasisHealingValues(comp.StasisInCritBluntHealPerSecond, comp.StasisInCritSlashingHealPerSecond, comp.StasisInCritPiercingHealPerSecond, comp.StasisInCritHeatHealPerSecond, comp.StasisInCritColdHealPerSecond, comp.BleedHealPerSecond, comp.StasisInCritAdditionalDamageResistance),
+            MobState.Invalid =>  new AvaliStasisHealingValues(0, 0, 0, 0, 0, 0, 0),
+            MobState.Dead => new AvaliStasisHealingValues(0, 0, 0, 0, 0, 0, 0),
+            _ => new AvaliStasisHealingValues(0, 0, 0, 0, 0, 0, 0),
+        };
+    }
+}
+
+sealed class AvaliStasisHealingValues(
+    float bluntHeal,
+    float slashHeal,
+    float piercingHeal,
+    float heatHeal,
+    float coldHeal,
+    float bleedHeal,
+    float additionalDamageResistance)
+{
+    public float BluntHeal { get; private set; } = bluntHeal;
+    public float SlashHeal { get; private set; } = slashHeal;
+    public float PiercingHeal { get; private set; } = piercingHeal;
+    public float HeatHeal { get; private set; } = heatHeal;
+    public float ColdHeal { get; private set; } = coldHeal;
+    public float AdditionalDamageResistance { get; private set; } = additionalDamageResistance;
+    public float BleedHeal { get; private set; } = bleedHeal;
 }
