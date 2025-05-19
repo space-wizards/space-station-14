@@ -96,7 +96,7 @@
     - state: gold
     - state: idblueshield
   - type: PresetIdCard
-    job: ntccblueshield
+    job: NTCCBlueshield
 
 - type: entity
   parent: IDCardStandard
