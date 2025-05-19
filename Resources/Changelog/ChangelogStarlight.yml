@@ -5892,4 +5892,18 @@ Entries:
   id: 816
   time: '2025-05-19T12:23:21.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/655
+- author: choccy
+  changes:
+  - message: New starlight specific nukeops outpost!
+    type: Tweak
+  id: 817
+  time: '2025-05-19T21:11:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/612
+- author: choccy
+  changes:
+  - message: More gear on nukie base, mainly stuff that's good QoL!
+    type: Tweak
+  id: 818
+  time: '2025-05-19T21:11:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/612
 
