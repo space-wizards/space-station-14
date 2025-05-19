@@ -112,6 +112,13 @@ namespace Content.Shared.Clothing.EntitySystems
             if (args.Handled)
                 return;
 
+            if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("ert-gas-mask-impossible"), ent.Owner);
+                args.Handled = true;
+                return;
+            }
+
             //Is it a wirecutter, a screwdriver or an EMAG ?
             if (_toolSystem.HasQuality(args.Used, SharedToolSystem.CutQuality))
                 OnInteractCutting(ent, ref args);
@@ -196,7 +203,9 @@ namespace Content.Shared.Clothing.EntitySystems
 
         private void OnExamine(Entity<SecurityHailerComponent> ent, ref ExaminedEvent args)
         {
-            if (HasComp<EmaggedComponent>(ent))
+            if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+                args.PushMarkup(Loc.GetString("sec-gas-mask-examined-ert"));
+            else if (HasComp<EmaggedComponent>(ent))
                 args.PushMarkup(Loc.GetString("sec-gas-mask-examined-emagged"));
             else if (ent.Comp.CurrentState == SecMaskState.WiresCut)
                 args.PushMarkup(Loc.GetString("sec-gas-mask-examined-wires-cut"));

@@ -63,3 +63,17 @@
     - /Audio/Voice/SecurityHails/uniform.ogg
     - /Audio/Voice/SecurityHails/viva.ogg
     - /Audio/Voice/SecurityHails/wew.ogg
+
+- type: soundCollection
+  id: SecHailERT
+  files:
+    - /Audio/Voice/SecurityHails/ERT/centcom.ogg
+    - /Audio/Voice/SecurityHails/ERT/dangerous.ogg
+    - /Audio/Voice/SecurityHails/ERT/dimwit.ogg
+    - /Audio/Voice/SecurityHails/ERT/mandatory.ogg
+    - /Audio/Voice/SecurityHails/ERT/obey.ogg
+
+- type: soundCollection
+  id: SecHailHOS
+  files:
+    - /Audio/Voice/SecurityHails/hos_centcom.ogg

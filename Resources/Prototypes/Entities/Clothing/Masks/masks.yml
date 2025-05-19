@@ -403,6 +403,10 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.95
+  - type: SecurityHailer #Because the HOS has this one
+    distance: 5
+    aggressionLevel: High
+    specialCircumtance: HOS
 
 - type: entity
   parent: [ ClothingMaskGas, BaseSecurityCargoContraband ]
@@ -449,6 +453,10 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+  - type: SecurityHailer #For security ERT and because it's fitting really
+    distance: 5
+    aggressionLevel: High #This is just for examination purposes
+    specialCircumtance: ERT
 
 - type: entity
   parent: ClothingMaskGasERT

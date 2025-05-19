@@ -12,6 +12,7 @@ namespace Content.Server.Clothing.Systems
     {
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
+        private readonly (string, string) _replaceLineHos = ("hail-high-8", "hail-high-HOS"); //the line to replace if a HOS gas mask hails
 
         public override void Initialize()
         {
@@ -39,10 +40,13 @@ namespace Content.Server.Clothing.Systems
 
         private bool SayChatMessage(Entity<SecurityHailerComponent> ent, ActionSecHailerActionEvent ev, int index)
         {
+            string ftlLine = GetTheCorrectLine(ent, index);
+            if (IsVoiceReplaced(ent, index)) //This is some bandaid code, replace it omg
+                ftlLine = _replaceLineHos.Item2;
+
             //Make a chat line with the sec hailer as speaker, in bold and UPPERCASE for added impact
-            string ftlLine = HasComp<EmaggedComponent>(ent) ? $"hail-emag-{index}" : $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}"; //hail - aggression_level/emag - index
             _chat.TrySendInGameICMessage(ev.Performer, Loc.GetString(ftlLine).ToUpper(), InGameICChatType.Speak, hideChat: false, hideLog: true, nameOverride: ent.Comp.ChatName,
-                checkRadioPrefix: false, ignoreActionBlocker: true, skipTransform: true);
+            checkRadioPrefix: false, ignoreActionBlocker: true, skipTransform: true);
             return true;
         }
 
@@ -51,7 +55,9 @@ namespace Content.Server.Clothing.Systems
             var (uid, comp) = ent;
 
             SoundSpecifier currentSpecifier;
-            if (HasComp<EmaggedComponent>(ent))
+            if (comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+                currentSpecifier = comp.ERTAggressionSounds;
+            else if (HasComp<EmaggedComponent>(ent))
                 currentSpecifier = ent.Comp.EmagAggressionSounds;
             else
             {
@@ -66,9 +72,37 @@ namespace Content.Server.Clothing.Systems
             if (resolver is not ResolvedCollectionSpecifier collectionResolver)
                 return -1;
 
-            _audio.PlayPvs(resolver, ent.Owner,audioParams: new AudioParams().WithVolume(-3f)); //TODO: check if works
+            if (IsVoiceReplaced(ent, collectionResolver.Index))
+            {
+                collectionResolver = (ResolvedCollectionSpecifier)_audio.ResolveSound(comp.HOSReplaceSounds); //add a check ? What to do if multiple in future ?
+            }
+
+            _audio.PlayPvs(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
 
             return collectionResolver.Index;
+        }
+
+        private bool IsVoiceReplaced(Entity<SecurityHailerComponent> ent, int index)
+        {
+            if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.HOS && GetTheCorrectLine(ent, index) == _replaceLineHos.Item1)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private string GetTheCorrectLine(Entity<SecurityHailerComponent> ent, int index)
+        {
+            string finalLine = String.Empty;
+            if (HasComp<EmaggedComponent>(ent))
+                finalLine = $"hail-emag-{index}";
+            else if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+                finalLine = $"hail-ERT-{index}";
+            else
+                finalLine = $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}";
+
+            return finalLine;
         }
     }
 }

@@ -59,14 +59,25 @@ hail-emag-6 = Ever wondered why my uniform is red ?!!
 hail-emag-7 = Viva!!
 hail-emag-8 = Whiskey. Echo. Whiskey!!
 
+#ERT - No low, med, high since I don't think they will have time to mess with their setting
+hail-ERT-1 = By centcom's authority!!
+hail-ERT-2 = Dangerous element sighted!!
+hail-ERT-3 = Don't mess with us, dimwit!!
+hail-ERT-4 = Compliance is mandatory!!
+hail-ERT-5 = You shall obey or you shall die!!
+
+#Special cases
+hail-high-HOS = Tell it to centcom... if you make it that far!!
 
 #Tools interaction
 sec-gas-mask-screwed = Changed to {$level} aggression
 sec-gas-mask-emagged = Changed to ERROR aggression
+ert-gas-mask-impossible = It seems impervious to external change.
 
 #Examine description
 sec-gas-mask-examined-low = The aggression setting is set to [color=green]Low[/color].
 sec-gas-mask-examined-medium = The aggression setting is set to [color=yellow]Medium[/color].
 sec-gas-mask-examined-high = The aggression setting is set to [color=red]High[/color].
+sec-gas-mask-examined-ert = The aggression setting is set to [color=red]High[/color] and doesn't seem capable of being switched.
 sec-gas-mask-examined-emagged = The aggression setting is set to [color=red]ERROR[/color]. Weird.
 sec-gas-mask-examined-wires-cut = The hailer seems to have its wires cut off.
