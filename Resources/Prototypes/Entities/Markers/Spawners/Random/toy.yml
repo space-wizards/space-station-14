@@ -52,14 +52,12 @@
         - ToyAi
         - ToyNuke
         - ToyFigurinePassenger
-      #  - ToyFigurineGriffin Out of rotation due to consistency with outer figurines
         - ToyHonk
         - ToyIan
         - ToyMarauder
         - ToyMauler
         - ToyGygax
         - ToyOdysseus
-      #  - ToyFigurineOwlman Out of rotation due to consistency with outer figurines
         - ToyDeathRipley
         - ToyPhazon
         - ToyFireRipley
@@ -67,7 +65,6 @@
         - ToyRipley
         - ToySeraph
         - ToyDurand
-      #  - ToyFigurineSkeleton Out of rotation due to consistency with outer figurines
         - MysteryFigureBox
       chance: 0.5
       offset: 0.2
