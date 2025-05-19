@@ -110,3 +110,29 @@
       steps:
       - tool: Prying
         doAfter: 5
+
+    - to: turnstileShocked
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: MetalRod
+        amount: 2
+        doAfter: 1
+
+  - node: turnstileShocked
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level5
+      wiresAccessible: false
+    edges:
+    - to: turnstile
+      completed:
+      - !type:AttemptElectrocute
+      - !type:GivePrototype
+        prototype: PartRodMetal1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Cutting
+        doAfter: 0.5

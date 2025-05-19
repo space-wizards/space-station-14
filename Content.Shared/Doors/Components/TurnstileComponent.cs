@@ -14,15 +14,18 @@ namespace Content.Shared.Doors.Components;
 [Access(typeof(SharedTurnstileSystem))]
 public sealed partial class TurnstileComponent : Component
 {
-    [DataField, AutoNetworkedField]
-    public bool Powered;
-
     /// <summary>
     /// A whitelist of the things this turnstile can choose to block or let through.
     /// Things not in this whitelist will be ignored by default.
     /// </summary>
     [DataField]
     public EntityWhitelist? ProcessWhitelist;
+
+    /// <summary>
+    /// If the turnstile is emagged, it will flip directions
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Flipped;
 
     /// <summary>
     /// The next time at which the resist message can show.
