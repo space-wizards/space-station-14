@@ -32,6 +32,13 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: default
+      job: NTCCBlueshield
+      requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 72000 # 20h
+      - !type:RoleTimeRequirement
+        role: JobSecurityOfficer
+        time: 18000 # 5h
     - type: Loadout
       prototypes: [ NTCCBlueShieldGear ]
       roleLoadout: [ RoleSurvivalStandard ]
