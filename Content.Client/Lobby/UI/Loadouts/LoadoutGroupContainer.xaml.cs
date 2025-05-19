@@ -16,7 +16,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     /// <summary>
     /// List of all subcontainers and their corresponding subloadout containers.
     /// </summary>
-    private Dictionary<BoxContainer, PanelContainer?> _subContainersList = new();
+    private Dictionary<BoxContainer, PanelContainer?> _subContainersDict = new();
 
     private readonly LoadoutGroupPrototype _groupProto;
 
@@ -37,7 +37,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     /// </summary>
     public void RefreshLoadouts(HumanoidCharacterProfile profile, RoleLoadout loadout, ICommonSession session, IDependencyCollection collection)
     {
-        _subContainersList = new();
+        _subContainersDict = new();
         var protoMan = collection.Resolve<IPrototypeManager>();
         var loadoutSystem = collection.Resolve<IEntityManager>().System<LoadoutSystem>();
         RestrictionsContainer.DisposeAllChildren();
@@ -92,7 +92,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                     VerticalExpand = true
                 };
                 LoadoutsContainer.AddChild(contentContainer);
-                _subContainersList.Add(contentContainer, null);
+                _subContainersDict.Add(contentContainer, null);
                 countRows++;
             }
 
@@ -129,14 +129,14 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 
                 toggle.OnPressed += _ =>
                 {
-                    var prev = _subContainersList[row];
+                    var prev = _subContainersDict[row];
                     if (prev != null && prev != subContainer)
                         prev.Visible = false;
 
                     bool willOpen = !subContainer.Visible;
                     subContainer.Visible = willOpen;
                     toggle.Text = willOpen ? "▼" : "▶";
-                    _subContainersList[row] = willOpen ? subContainer : null;
+                    _subContainersDict[row] = willOpen ? subContainer : null;
                 };
 
                 first.AddChild(toggle);
