@@ -180,3 +180,13 @@
     notificationPrefix: prayer-chat-notify-honkmother
     verb: prayer-verbs-call
     verbImage: null
+  - type: TelecomExempt
+  - type: RadioMicrophone
+    broadcastChannel: Common
+    toggleOnInteract: false
+    enabled: true
+  - type: RadioSpeaker
+    channels:
+    - Common
+    toggleOnInteract: false
+    enabled: true
