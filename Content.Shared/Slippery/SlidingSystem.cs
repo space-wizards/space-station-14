@@ -37,10 +37,8 @@ public sealed class SlidingSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        if (!CalculateSlidingModifier(entity))
-            Log.Error($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
-
-        _speedModifierSystem.RefreshFrictionModifiers(entity);
+        if (CalculateSlidingModifier(entity))
+            _speedModifierSystem.RefreshFrictionModifiers(entity);
     }
 
     /// <summary>
@@ -59,9 +57,7 @@ public sealed class SlidingSystem : EntitySystem
         if (!TryComp<SlipperyComponent>(args.OtherEntity, out var slippery) || !slippery.AffectsSliding)
             return;
 
-        if (!CalculateSlidingModifier(entity))
-            Log.Error($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
-
+        CalculateSlidingModifier(entity);
         _speedModifierSystem.RefreshFrictionModifiers(entity);
     }
 
@@ -93,7 +89,15 @@ public sealed class SlidingSystem : EntitySystem
         var friction = 0.0f;
         var count = 0;
 
-        foreach (var ent in _physics.GetContactingEntities(entity, entity.Comp2))
+        var colliders = _physics.GetContactingEntities(entity, entity.Comp2);
+
+        if (colliders.Count == 0)
+        {
+            Log.Error($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
+            return false;
+        }
+
+        foreach (var ent in colliders)
         {
             if (ent == ignore || !TryComp<SlipperyComponent>(ent, out var slippery) || !slippery.AffectsSliding)
                 continue;
