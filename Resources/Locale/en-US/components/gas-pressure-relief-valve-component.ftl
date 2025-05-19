@@ -14,6 +14,8 @@ gas-pressure-relief-valve-ui-subtract-1000 = -1000
 gas-pressure-relief-valve-ui-title = Pressure Relief Valve
 gas-pressure-relief-valve-ui-target = Target
 gas-pressure-relief-valve-ui-flow = Flow
+gas-pressure-relief-valve-ui-outlet = Outlet
+gas-pressure-relief-valve-ui-inlet = Inlet
 
 # Units
 gas-pressure-relief-valve-ui-flow-rate-unit = L/s

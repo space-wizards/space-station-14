@@ -71,17 +71,6 @@ public sealed partial class GasPressureReliefValveWindow : FancyWindow
         TargetPressureLabel.Text = threshold.ToString(CultureInfo.CurrentCulture);
     }
 
-    public void SetFlowRate(float flowRate)
-    {
-        CurrentFlowLabel.Text = float.IsNaN(flowRate) ? "0" : flowRate.ToString(CultureInfo.CurrentCulture);
-        _flowRate = flowRate;
-    }
-
-    public void SetValveStatus(bool enabled)
-    {
-        ToTargetBar.Value = enabled ? 1 : 0;
-    }
-
     /// <summary>
     /// Sets the threshold pressure input field with the given value.
     /// When the client opens the UI the field will be autofilled with the current threshold pressure.
@@ -92,16 +81,29 @@ public sealed partial class GasPressureReliefValveWindow : FancyWindow
         ThresholdInput.Text = input.ToString(CultureInfo.CurrentCulture);
     }
 
+    /// <summary>
+    /// Sets the entity to be visible in the UI.
+    /// </summary>
+    /// <param name="entity"></param>
     public void SetEntity(EntityUid entity)
     {
         EntityView.SetEntity(entity);
     }
 
+    /// <summary>
+    /// Updates the UI information for the gas pressure relief valve.
+    /// </summary>
+    /// <param name="msg">The message containing updated pressure and flow rate values.</param>
     public void UpdateInfo(PressureReliefValveUserMessage msg)
     {
-        ToTargetBar.Value = (msg.InletPressure - msg.OutletPressure) / msg.InletPressure;
-        InletPressureLabel.Text = msg.InletPressure.ToString(CultureInfo.CurrentCulture);
-        OutletPressureLabel.Text = msg.OutletPressure.ToString(CultureInfo.CurrentCulture);
+        if (float.TryParse(TargetPressureLabel.Text, out var parsedfloat))
+            ToTargetBar.Value = msg.InletPressure / parsedfloat;
+
+        InletPressureLabel.Text = float.Round(msg.InletPressure).ToString(CultureInfo.CurrentCulture);
+        OutletPressureLabel.Text = float.Round(msg.OutletPressure).ToString(CultureInfo.CurrentCulture);
+
+        CurrentFlowLabel.Text = float.IsNaN(msg.FlowRate) ? "0" : msg.FlowRate.ToString(CultureInfo.CurrentCulture);
+        _flowRate = msg.FlowRate;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

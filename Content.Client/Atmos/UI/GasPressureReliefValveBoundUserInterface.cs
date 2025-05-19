@@ -38,8 +38,6 @@ public sealed class GasPressureReliefValveBoundUserInterface(EntityUid owner, En
             return;
 
         _window.SetThresholdPressureLabel(valveComponent.Threshold);
-        _window.SetValveStatus(valveComponent.Enabled);
-        _window.SetFlowRate(valveComponent.FlowRate);
     }
 
     private void OnThresholdChanged(string newThreshold)

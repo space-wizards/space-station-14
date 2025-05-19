@@ -8,6 +8,7 @@ using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Audio;
+using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 
@@ -33,6 +34,27 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         SubscribeLocalEvent<GasPressureReliefValveComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<GasPressureReliefValveComponent, AtmosDeviceUpdateEvent>(OnReliefValveUpdated);
+        SubscribeLocalEvent<GasPressureReliefValveComponent, ActivateInWorldEvent>(OnActivated);
+    }
+
+    /// <summary>
+    /// Sens UI info down to the client when someone opens the UI.
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="args"></param>
+    private void OnActivated(Entity<GasPressureReliefValveComponent> ent, ref ActivateInWorldEvent args)
+    {
+        if (_nodeContainer.TryGetNodes(ent.Owner,
+                ent.Comp.InletName,
+                ent.Comp.OutletName,
+                out PipeNode? inletPipeNode,
+                out PipeNode? outletPipeNode))
+        {
+            SendUIInfo(inletPipeNode.Air.Pressure,
+                outletPipeNode.Air.Pressure,
+                ent.Comp.FlowRate,
+                ent.Owner);
+        }
     }
 
     private void OnInit(Entity<GasPressureReliefValveComponent> valveEntity, ref ComponentInit args)
@@ -78,6 +100,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         if (p1 <= valveEntity.Comp.Threshold || p2 >= p1)
         {
             ChangeStatus(false, valveEntity);
+            SendUIInfo(p1, p2, valveEntity.Comp.FlowRate, valveEntity.Owner);
             return;
         }
 
@@ -92,7 +115,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         var deltaMolesToEqualizePressure =
             float.Round(_atmosphere.FractionToEqualizePressure(inletPipeNode.Air, outletPipeNode.Air) *
                         inletPipeNode.Air.TotalMoles,
-                digits: 3,
+                1,
                 MidpointRounding.ToPositiveInfinity);
 
         // Third, make sure we only transfer the minimum of the two.
@@ -164,7 +187,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
     /// <param name="inletpressure">The pressure value at the inlet of the relief valve.</param>
     /// <param name="outletpressure">The pressure value at the outlet of the relief valve.</param>
     /// <param name="flowrate">The flow rate of gas through the valve.</param>
-    /// <param name="uid">The unique identifier for the entity associated with the gas pressure relief valve.</param>
+    /// <param name="uid">Valve EntityUID.</param>
     private void SendUIInfo(float inletpressure, float outletpressure, float flowrate, EntityUid uid)
     {
         var message = new PressureReliefValveUserMessage(inletpressure,

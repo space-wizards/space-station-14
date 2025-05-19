@@ -1,19 +1,24 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      SetSize="345 275"
-                      MinSize="345 275"
+                      SetSize="345 380"
+                      MinSize="345 380"
                       Title="{Loc gas-pressure-relief-valve-ui-title}"
                       Resizable="False">
 
     <BoxContainer Orientation="Vertical">
 
-        <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical" Margin="0 10 0 10">
 
-            <Label Text="{Loc gas-pressure-relief-valve-ui-outlet}" Align="Center" StyleClasses="LabelKeyText" />
-            <Label Name="OutletPressureLabel" Align="Center" />
+            <BoxContainer Orientation="Vertical" Align="Center">
+                <Label Text="{Loc gas-pressure-relief-valve-ui-outlet}" Align="Center" StyleClasses="LabelKeyText" />
+                <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Name="OutletPressureLabel" Text="N/A" Margin="0 0 4 0" />
+                    <Label Text="{Loc gas-pressure-relief-valve-ui-pressure-unit}" />
+                </BoxContainer>
+            </BoxContainer>
 
-            <BoxContainer Orientation="Horizontal" Align="Center" Margin="5">
+            <BoxContainer Orientation="Horizontal" Align="Center">
                 <BoxContainer Orientation="Vertical" Align="Center" HorizontalExpand="True">
                     <Label Text="{Loc gas-pressure-relief-valve-ui-target}" Align="Right" StyleClasses="LabelKeyText" />
                     <BoxContainer Orientation="Horizontal" HorizontalAlignment="Right">
@@ -31,14 +36,19 @@
                 <BoxContainer Orientation="Vertical" Align="Center" HorizontalExpand="True">
                     <Label Text="{Loc gas-pressure-relief-valve-ui-flow}" StyleClasses="LabelKeyText" />
                     <BoxContainer Orientation="Horizontal">
-                        <Label Name="CurrentFlowLabel" Margin="0 0 4 0" />
+                        <Label Name="CurrentFlowLabel" Text="N/A" Margin="0 0 4 0" />
                         <Label Text="{Loc gas-pressure-relief-valve-ui-flow-rate-unit}" />
                     </BoxContainer>
                 </BoxContainer>
             </BoxContainer>
 
-            <Label Text="{Loc gas-pressure-relief-valve-ui-inlet}" Align="Center" StyleClasses="LabelKeyText" />
-            <Label Name="InletPressureLabel" Align="Center" />
+            <BoxContainer Orientation="Vertical" Align="Center" Margin="1">
+                <Label Text="{Loc gas-pressure-relief-valve-ui-inlet}" Align="Center" StyleClasses="LabelKeyText" />
+                <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Name="InletPressureLabel" Text="N/A" Margin="0 0 4 0" />
+                    <Label Text="{Loc gas-pressure-relief-valve-ui-pressure-unit}" />
+                </BoxContainer>
+            </BoxContainer>
 
         </BoxContainer>
 
