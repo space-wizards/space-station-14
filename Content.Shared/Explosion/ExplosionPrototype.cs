@@ -115,19 +115,13 @@ public sealed partial class ExplosionPrototype : IPrototype
     /// </summary>
     public float TileBreakChance(float intensity)
     {
-        if (_tileBreakChance.Length == 0 || _tileBreakChance.Length != _tileBreakIntensity.Length)
-        {
-            Logger.Error($"Malformed tile break chance definitions for explosion prototype: {ID}");
-            return 0;
-        }
-
         if (intensity >= _tileBreakIntensity[^1] || _tileBreakIntensity.Length == 1)
             return _tileBreakChance[^1];
 
         if (intensity <= _tileBreakIntensity[0])
             return _tileBreakChance[0];
 
-        int i = Array.FindIndex(_tileBreakIntensity, k => k >= intensity);
+        var i = Array.FindIndex(_tileBreakIntensity, k => k >= intensity);
 
         var slope = (_tileBreakChance[i] - _tileBreakChance[i - 1]) / (_tileBreakIntensity[i] - _tileBreakIntensity[i - 1]);
         return _tileBreakChance[i - 1] + slope * (intensity - _tileBreakIntensity[i - 1]);
