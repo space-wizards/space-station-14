@@ -122,16 +122,16 @@
   - type: Temperature
     heatDamageThreshold: 310
     coldDamageThreshold: 223
-    currentTemperature: 296.15
+    currentTemperature: 261
     specificHeat: 48
   - type: ThermalRegulator
     metabolismHeat: 400 # icebirb go brrr
     radiatedHeat: 100
-    implicitHeatRegulation: 500
+    implicitHeatRegulation: 1500
     sweatHeatRegulation: 2000
     shiveringHeatRegulation: 2000
-    normalBodyTemperature: 296.15
-    thermalRegulationTemperatureThreshold: 10
+    normalBodyTemperature: 261
+    thermalRegulationTemperatureThreshold: 1
   - type: AvaliStasis
     enterStasisAction: ActionAvaliStasisEnter
     exitStasisAction: ActionAvaliStasisExit
