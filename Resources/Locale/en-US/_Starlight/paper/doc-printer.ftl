@@ -720,7 +720,7 @@ doc-text-printer-complaint-violation-labor-rules =
 
                   [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
     ────────────────────────────────────────
-    [bold]COMPLAINT FOR VIOLATION OF LABOUR REGULATIONS[/bold]
+    ⠀⠀[bold]COMPLAINT FOR VIOLATION OF LABOUR REGULATIONS[/bold]
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
