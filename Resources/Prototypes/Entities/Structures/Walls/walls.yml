@@ -1315,9 +1315,9 @@
           !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         mask:
-          - SpecialWallLayer
+        - SpecialWallLayer
         layer:
-          - SpecialWallLayer
+        - SpecialWallLayer
   - type: Airtight
   - type: Sprite
     sprite: Structures/Magic/forcewall.rsi
