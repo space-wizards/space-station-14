@@ -11,9 +11,10 @@ public sealed class GunSpreadModifierSystem: EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<GunSpreadModifierComponent, GunGetAmmoSpreadEvent>(OnGunGetAmmoSpread);
+        SubscribeLocalEvent<GunSpreadModifierComponent, ExaminedEvent>(OnExamine);
     }
 
-    private void OnGunGetAmmoSpread(EntityUid uid, GunSpreadModifierComponent comp, GunGetAmmoSpreadEvent args)
+    private void OnGunGetAmmoSpread(EntityUid uid, GunSpreadModifierComponent comp, ref GunGetAmmoSpreadEvent args)
     {
         args.Spread *= comp.Spread;
     }
