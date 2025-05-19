@@ -29,6 +29,7 @@ using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
+using Robust.Shared.Collections;
 using Robust.Shared.Containers;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -90,6 +91,8 @@ namespace Content.Shared.Interaction
         public const string RateLimitKey = "Interaction";
 
         private static readonly ProtoId<TagPrototype> BypassInteractionRangeChecksTag = "BypassInteractionRangeChecks";
+
+        private List<EntityUid> _entList = new();
 
         public delegate bool Ignored(EntityUid entity);
 
@@ -858,13 +861,15 @@ namespace Content.Shared.Interaction
                 // we still need to be able to ideally retrieve it.
                 // Previously we checked for intersecting entities but this frequently causes issues
                 // Now we just ignore any entities it's contacting if the contact is perpendicular to us (such as in a seam that's facing us).
-                // TODO: Use physics here when fixtures is kill.
+                // Additionally, if there's any contacts pointing away from us then also consider it blocked.
+
                 if (physics.ContactCount > 0)
                 {
+                    // TODO: Use physics here when fixtures is kill.
                     var contacts = _physics.GetContacts(target);
                     var targetDir = (targetCoords.Position - origin.Position).Normalized();
+                    _entList.Clear();
 
-                    // If it's contacting anything then ignore that entity if it's in a seam (i.e. close to perpendicular normal).
                     while (contacts.MoveNext(out var contact))
                     {
                         var otherBody = contact.OtherBody(target);
@@ -881,14 +886,27 @@ namespace Content.Shared.Interaction
                         contact.GetWorldManifold(transformA, transformB, out var worldNormal);
                         var dotProduct = Vector2.Dot(targetDir, worldNormal);
 
+                        // There's at least 1 contact pointing away from us so ignore these checks entirely.
+                        // This is mainly so if it's in a seam but there's something in between that might be blocking us
+                        // we ignore the seam check entirely and pretend it's blocked. Generally this shouldn't be triggered.
+                        if (dotProduct < -0.95f)
+                        {
+                            _entList.Clear();
+                            break;
+                        }
+
                         // Make sure it's sufficiently perpendicular.
+                        // If you want corners to work you need about abs(0.4) or higher to grab those though that means
+                        // people can more easily grab around corners and may have other interactions I haven't thought of yet.
                         if (!MathHelper.CloseTo(dotProduct, 0f, 0.1f))
                         {
                             continue;
                         }
 
-                        ignored.Add(contact.OtherEnt(target));
+                        _entList.Add(contact.OtherEnt(target));
                     }
+
+                    ignored.UnionWith(_entList);
                 }
             }
             else if (_wallMountQuery.TryComp(target, out var wallMount))
