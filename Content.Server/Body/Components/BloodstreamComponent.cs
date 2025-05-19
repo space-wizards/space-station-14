@@ -182,12 +182,5 @@ namespace Content.Server.Body.Components
 
         [DataField]
         public ProtoId<AlertPrototype> BleedingAlert = "Bleed";
-
-        /// <summary>
-        /// A color to override the color of the blood
-        /// set by external components responding to the BloodColorOverrideEvent.
-        /// Otherwise blood just uses it's reagent color.
-        /// </summary>
-        public Color? BloodOverrideColor = null;
     }
 }

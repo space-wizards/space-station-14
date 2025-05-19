@@ -1,13 +1,15 @@
-using Content.Server.Body.Systems;
-
-namespace Content.Server.Body.Components
+namespace Content.Server.Body.Components;
+/// <summary>
+/// Used by the SlimeSystem to respond to BloodColorOverrideEvents.
+/// </summary>
+[RegisterComponent]
+public sealed partial class SlimeBloodComponent : Component
 {
     /// <summary>
-    /// Used by the SlimeSystem to respond
-    /// to BloodColorOverrideEvents.
+    /// If set, the SlimeBloodSystem will set the slime color to this.
+    /// Useful for slime creatures. If null, the color is derived from
+    /// HumanoidAppearanceComponent.SkinColor.
     /// </summary>
-    [RegisterComponent, Access(typeof(SlimeBloodSystem))]
-    public sealed partial class SlimeBloodComponent : Component
-    {
-    }
+    [DataField]
+    public Color? ManualOverrideColor = null;
 }

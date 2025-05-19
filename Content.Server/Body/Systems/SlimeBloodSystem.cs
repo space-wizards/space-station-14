@@ -1,34 +1,30 @@
 using Content.Server.Body.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Humanoid;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Body.Systems;
 
 /// <summary>
-/// Listens for the BloodColorOverrideEvent
-/// so it can provide a color to slime blood.
+/// Overrides slime blood color.
 /// </summary>
 public sealed class SlimeBloodSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<SlimeBloodComponent, BloodColorOverrideEvent>(OnBloodColorOverride);
+        SubscribeLocalEvent<SlimeBloodComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnBloodColorOverride(Entity<SlimeBloodComponent> uid, ref BloodColorOverrideEvent args)
+    private void OnBloodColorOverride(Entity<SlimeBloodComponent> ent, ref BloodColorOverrideEvent args)
     {
-        if (null == args.BloodstreamComp)
-            return;
-        var bloodProto = _prototypeManager.Index<ReagentPrototype>(args.BloodstreamComp.BloodReagent);
-        if ("Slime" == bloodProto.ID
-            && TryComp<HumanoidAppearanceComponent>(uid, out var appearanceComp))
-        {
-            args.BloodstreamComp.BloodOverrideColor = appearanceComp.SkinColor;
-        }
+        TryComp<HumanoidAppearanceComponent>(ent.Owner, out var appearanceComp);
+        args.OverrideColor = ent.Comp.ManualOverrideColor ?? appearanceComp?.SkinColor;
+    }
+
+    private void OnMapInit(Entity<SlimeBloodComponent> ent, ref MapInitEvent args)
+    {
+        var ev = new RefreshBloodEvent { };
+        RaiseLocalEvent(ent.Owner, ref ev);
     }
 }

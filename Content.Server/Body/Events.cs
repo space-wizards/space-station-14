@@ -1,5 +1,5 @@
-using Content.Server.Body.Components;
 
+namespace Content.Server.Body;
 /// <summary>
 /// Subscribe to this event and set the
 /// BloodOverrideColor to override blood
@@ -8,6 +8,10 @@ using Content.Server.Body.Components;
 [ByRefEvent]
 public record struct BloodColorOverrideEvent()
 {
-    public EntityUid Owner;
-    public BloodstreamComponent? BloodstreamComp;
+    public Color? OverrideColor;
+}
+
+[ByRefEvent]
+public record struct RefreshBloodEvent()
+{
 }

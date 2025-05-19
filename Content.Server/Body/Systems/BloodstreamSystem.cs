@@ -62,8 +62,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
-        SubscribeLocalEvent<BloodstreamComponent, GenerateDnaEvent>(OnDnaGenerated);
-        SubscribeLocalEvent<BloodstreamComponent, LoadedHumanoidAppearanceEvent>(OnHumanoidAppearanceLoaded);
+        SubscribeLocalEvent<BloodstreamComponent, RefreshBloodEvent>(OnRefreshBlood);
     }
 
     private void OnMapInit(Entity<BloodstreamComponent> ent, ref MapInitEvent args)
@@ -277,33 +276,27 @@ public sealed class BloodstreamSystem : EntitySystem
         }
     }
 
-    private void ColorGibbedPart(EntityUid part, Color color)
+    private void ColorGibbedParts(EntityUid ent, HashSet<EntityUid> gibbedParts)
     {
-        if (TryComp<AppearanceComponent>(part, out AppearanceComponent? appearanceComp))
+        var bloodData = GetEntityBloodData(ent);
+        var bloodColorData = bloodData.OfType<BloodColorData>().FirstOrDefault();
+        if (null == bloodColorData)
+            return;
+        foreach (var part in gibbedParts)
         {
-            _appearanceSystem.SetData(part, GoreVisuals.ColorTint, color, appearanceComp);
+            // TODO: It's only organs we want to tint for now, but perhaps we
+            // could put blood tint/decal/overlay on all items here?
+            if (HasComp<OrganComponent>(part))
+            {
+                _appearanceSystem.SetData(part, GoreVisuals.ColorTint, bloodColorData.SubstanceColor);
+            }
         }
     }
 
     private void OnBeingGibbed(Entity<BloodstreamComponent> ent, ref BeingGibbedEvent args)
     {
         SpillAllSolutions(ent, ent);
-        if (!TryComp<BloodstreamComponent>(ent, out var bloodstreamComp)
-            || !TryComp<HumanoidAppearanceComponent>(ent, out var humanoidAppearanceComp))
-        {
-            return;
-        }
-        var bloodData = GetEntityBloodData(ent);
-        var bloodColorData = bloodData.OfType<BloodColorData>().FirstOrDefault();
-        if (null == bloodColorData)
-            return;
-        foreach (EntityUid part in args.GibbedParts)
-        {
-            if (TryComp<OrganComponent>(part, out OrganComponent? organComp))
-            {
-                ColorGibbedPart(part, bloodColorData.SubstanceColor);
-            }
-        }
+        ColorGibbedParts(ent, args.GibbedParts);
     }
 
     private void OnApplyMetabolicMultiplier(
@@ -503,18 +496,7 @@ public sealed class BloodstreamSystem : EntitySystem
             _solutionContainerSystem.TryAddReagent(component.BloodSolution.Value, component.BloodReagent, currentVolume, null, GetEntityBloodData(uid));
     }
 
-    private void OnDnaGenerated(Entity<BloodstreamComponent> entity, ref GenerateDnaEvent args)
-    {
-        RefreshBloodData(entity);
-    }
-    private void OnHumanoidAppearanceLoaded(Entity<BloodstreamComponent> entity, ref LoadedHumanoidAppearanceEvent args)
-    {
-        // Blood color = skin color, for slimes.
-        // So we refresh when appearance is loaded.
-        RefreshBloodData(entity);
-    }
-
-    private void RefreshBloodData(Entity<BloodstreamComponent> entity)
+    private void OnRefreshBlood(Entity<BloodstreamComponent> entity, ref RefreshBloodEvent args)
     {
         if (_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
         {
@@ -526,7 +508,7 @@ public sealed class BloodstreamSystem : EntitySystem
             }
         }
         else
-            Log.Error("Unable to set bloodstream DNA, solution entity could not be resolved");
+            Log.Error("Unable to refresh blood data, solution entity could not be resolved");
     }
 
     /// <summary>
@@ -534,25 +516,27 @@ public sealed class BloodstreamSystem : EntitySystem
     /// </summary>
     public List<ReagentData> GetEntityBloodData(EntityUid uid)
     {
+        // All blood always has DNA data, even if it's invalid, but color data is
+        // only added whatsoever if the color is overridden in the event.
         var bloodData = new List<ReagentData>();
         var dnaData = new DnaData();
-        var bloodColorData = new BloodColorData();
 
         if (TryComp<DnaComponent>(uid, out var donorComp) && donorComp.DNA != null)
             dnaData.DNA = donorComp.DNA;
         else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
-
-        if (TryComp<BloodstreamComponent>(uid, out var bloodstreamComp))
-        {
-            var ev = new BloodColorOverrideEvent { Owner = uid, BloodstreamComp = bloodstreamComp };
-            RaiseLocalEvent(uid, ref ev);
-            var bloodProto = _prototypeManager.Index<ReagentPrototype>(bloodstreamComp.BloodReagent);
-            bloodColorData.SubstanceColor = bloodstreamComp.BloodOverrideColor ?? bloodProto.SubstanceColor;
-        }
-
         bloodData.Add(dnaData);
-        bloodData.Add(bloodColorData);
+
+        var ev = new BloodColorOverrideEvent { OverrideColor = null };
+        RaiseLocalEvent(uid, ref ev);
+        if (null != ev.OverrideColor)
+        {
+            var bloodColorData = new BloodColorData
+            {
+                SubstanceColor = ev.OverrideColor.Value
+            };
+            bloodData.Add(bloodColorData);
+        }
 
         return bloodData;
     }

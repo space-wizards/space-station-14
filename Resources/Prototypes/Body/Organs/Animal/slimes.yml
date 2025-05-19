@@ -4,6 +4,8 @@
   name: sentient slimes core
   description: "The source of incredible, unending gooeyness."
   components:
+    - type: Appearance
+    - type: Organ
     - type: Sprite
       sprite: Mobs/Species/Slime/organs.rsi
       state: brain-slime
@@ -31,6 +33,8 @@
   name: slimes gas sacs
   description: "Collects nitrogen, which slime cells use for maintenance."
   components:
+    - type: Appearance
+    - type: Organ
     - type: Sprite
       sprite: Mobs/Species/Slime/organs.rsi
       layers:
