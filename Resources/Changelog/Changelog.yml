@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: You can no longer fax, stamp or write on paper scrap.
-    type: Fix
-  id: 8025
-  time: '2025-03-01T14:08:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35596
 - author: ArtisticRoomba, Cojoke-dot
   changes:
   - message: The detective can now find the go go hat in their locker. This hat has
@@ -3924,3 +3917,11 @@
   id: 8527
   time: '2025-05-18T22:55:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32751
+- author: slarticodefast
+  changes:
+  - message: Added a new keybind for swapping hands in the other direction (if you
+      got more than two). Defaults to Shift+X. Useful for cycling through borg modules.
+    type: Add
+  id: 8528
+  time: '2025-05-19T01:17:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37588
