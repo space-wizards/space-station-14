@@ -12,37 +12,33 @@
 
 
 - type: entity
-  id: RevolutionaryHandFlagSpear
-  name: Revolutionary HandFlag
-  description: A hand-held flag symbolizing the spirit of revolution. Wield it with pride!
-  parent: BaseItem
+  id: RevolutionaryHeldBanner
+  name: glorious revolutionary banner
+  description: A towering revolutionary banner that makes you an easy target. A makarov in the other hand is recommended.
+  parent: [BaseItem, BaseSovietContraband]
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Misc/rev_flag.rsi
     state: icon
   - type: Item
     sprite: _Starlight/Objects/Misc/rev_flag.rsi
+    size: Ginormous
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
       types:
-        Piercing: 8
-    angle: 0
-    animation: WeaponArcThrust
+        Blunt: 5
+    animation: WeaponArcSlash
     soundHit:
-      path: /Audio/Weapons/bladeslice.ogg
+      collection: MetalThud
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.85
+  - type: HeldSpeedModifier
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 10
-  - type: EmbeddableProjectile
-    offset: -0.15,0.0
-  - type: ThrowingAngle
-    angle: 225
-  - type: LandAtCursor
-  - type: Tag
-    tags:
-    - Spear
+        Blunt: 5
   - type: Fixtures
     fixtures:
       fix1:
@@ -57,9 +53,23 @@
         - ItemMask
         restitution: 0.3
         friction: 0.2
-  - type: Sharp
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 5
+  - type: Blocking
+    passiveBlockModifier:
+      coefficients:
+        Blunt: 0.2
+        Slash: 0.2
+        Piercing: 0.05
+        Heat: 0.2
+    activeBlockModifier:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.1
+        Heat: 0.3
+      flatReductions:
+        Blunt: 10
+        Slash: 10
+        Piercing: 6
+  - type: StaticPrice
+    price: 1000
         

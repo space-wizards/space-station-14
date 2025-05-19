@@ -52,7 +52,7 @@
 - type: entity
   parent: BaseWallBanner
   id: BannerWallHammer
-  name: glorious revolutionary wall banner
+  name: revolutionary wall banner
   description: Gone are the days of oppression and the unfair treatment of contractors! URAA!
   components:
   - type: Sprite
@@ -80,7 +80,7 @@
 - type: entity
   id: BannerSovietHammer
   parent: BannerBase
-  name: glorious revolutionary banner
+  name: revolutionary banner
   description: Gone are the days of oppression and the unfair treatment of contractors! URAA!
   components:
   - type: Sprite

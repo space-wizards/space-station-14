@@ -120,3 +120,7 @@
 - type: storeCategory
   id: RevUplinkWearables
   name: Wearables
+
+- type: storeCategory
+  id: RevUplinkPointless
+  name: Pointless

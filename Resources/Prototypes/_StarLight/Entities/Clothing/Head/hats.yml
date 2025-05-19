@@ -34,8 +34,8 @@
 - type: entity
   parent: [ClothingHeadBase]
   id: ClothingHeadHatUshankaAlt
-  name: Ushanka
-  description: The warmest hat for surviving both the cold and capitalist propaganda.
+  name: SNKVD ushanka
+  description: Disappearances are entirely voluntary, tovarisch.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Head/Hats/Ushanka.rsi

@@ -1,3 +1,18 @@
+### Total Conversion category
+
+- type: listing
+  id: SKGBBanner
+  name: banner-name
+  description: banner-desc
+  productEntity: RevolutionaryHeldBanner
+  cost:
+    Conversion: 1
+  categories:
+  - RevUplinkPassive
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 4
+
 # 500 crates
 - type: listing
   id: RevSupplyRiftListing
@@ -7,14 +22,44 @@
   categories:
   - RevUplinkPassive
 
+### Telebonds category
 # Weapons, some modern some discontinued like the PPSH
+# The AKMS is candidate of discontinued weapons, but it's just a better DP28 right now.
+# - type: listing
+#   id: SKGBAKMSweapon
+#   name: akms-weapon-name
+#   description: akms-weapon-desc
+#   productEntity: WeaponRifleAk
+#   cost:
+#     Telebond: 7
+#   categories:
+#   - RevUplinkWeaponry
+#   conditions:
+#   - !type:StockLimitedListingCondition
+#     stockLimit: 2
+
 - type: listing
-  id: SKGBAKMSweapon
-  name: akms-weapon-name
-  description: akms-weapon-desc
-  productEntity: WeaponRifleAk
+  id: SKGBMakarov
+  name: makarov-name
+  description: makarov-desc
+  icon: { sprite: _Starlight/Objects/Weapons/Guns/Pistols/makarov.rsi, state: icon }
+  productEntity: WeaponPistolMakarov
   cost:
-    Telebond: 7
+    Telebond: 2
+  categories:
+  - RevUplinkWeaponry
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 4
+
+- type: listing
+  id: SNKVDFinka
+  name: finka-name
+  description: finka-desc
+  icon: { sprite: _Starlight/Objects/Weapons/Melee/finka.rsi, state: icon }
+  productEntity: Finka
+  cost:
+    Telebond: 2
   categories:
   - RevUplinkWeaponry
   conditions:
@@ -22,12 +67,41 @@
     stockLimit: 2
 
 - type: listing
+  id: SKGBMosin
+  name: mosin-name
+  description: mosin-desc
+  icon: { sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi, state: base }
+  productEntity: WeaponSniperMosin
+  cost:
+    Telebond: 3
+  categories:
+  - RevUplinkWeaponry
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 6
+
+- type: listing
   id: SKGBDP28
   name: dp-name
   description: dp-desc
+  icon: { sprite: _Starlight/Objects/Weapons/Guns/LMGs/DP28.rsi, state: icon }
   productEntity: WeaponLightMachineGunDP28
   cost:
-    Telebond: 15
+    Telebond: 26
+  categories:
+  - RevUplinkWeaponry
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
+  id: SKGBPPSH
+  name: ppsh-name
+  description: ppsh-desc
+  icon: { sprite: _Starlight/Objects/Weapons/Guns/SMGs/PPSh59.rsi, state: icon }
+  productEntity: WeaponSubMachineGunPPSH
+  cost:
+    Telebond: 32
   categories:
   - RevUplinkWeaponry
   conditions:
@@ -42,7 +116,7 @@
   icon: { sprite: _Starlight/Clothing/OuterClothing/Suits/soviet_eva.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSovietEVABundle
   cost:
-    Telebond: 1
+    Telebond: 4
   categories:
   - RevUplinkWearables
   conditions:
@@ -55,9 +129,63 @@
   description: soviet-bandolier-desc
   productEntity: ClothingSovietBandolier
   cost:
-    Telebond: 1
+    Telebond: 2
+  categories:
+  - RevUplinkWearables
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 3
+
+- type: listing
+  id: SKGBGasMask
+  name: soviet-gas-mask-name
+  description: soviet-gas-mask-desc
+  productEntity: ClothingSovietGasMask
+  cost:
+    Telebond: 3
   categories:
   - RevUplinkWearables
   conditions:
   - !type:StockLimitedListingCondition
     stockLimit: 2
+
+- type: listing
+  id: USSPCoat
+  name: soviet-coat-name
+  description: soviet-coat-desc
+  productEntity: ClothingOuterSovietCoat
+  cost:
+    Telebond: 4
+  categories:
+  - RevUplinkWearables
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 4
+
+# Pointless
+
+- type: listing
+  id: USSPMedals
+  name: soviet-medals-name
+  description: soviet-medals-desc
+  productEntity: ClothingSovietMedals
+  cost:
+    Telebond: 0
+  categories:
+  - RevUplinkPointless
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2
+
+- type: listing
+  id: USSPUshanka
+  name: ushanka-name
+  description: ushanka-desc
+  productEntity: ClothingHeadHatUshanka
+  cost:
+    Telebond: 0
+  categories:
+  - RevUplinkPointless
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 4

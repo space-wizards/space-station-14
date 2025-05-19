@@ -2,7 +2,7 @@
   name: finka
   parent: [BaseKnife, BaseSovietContraband]
   id: Finka
-  description: Legendary NKVD dagger, an excellent melee weapon, and it's said there was a secret technique for throwing this knife.
+  description: Legendary SNKVD dagger, an excellent melee weapon, and it's said there was a secret technique for throwing this knife.
   components:
   - type: Tag
     tags:
