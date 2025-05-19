@@ -117,7 +117,7 @@
   cost: 500
   category: cargoproduct-category-name-fun
   group: market
-  
+
 - type: cargoProduct
   id: FunSharkPlushies
   icon:
