@@ -134,7 +134,7 @@ namespace Content.Server.Chemistry.EntitySystems
             // Ensure that the reagent is something this reagent dispenser can dispense.
             var storageLocation = message.StorageLocation;
             var storedContainer = storage.StoredItems.FirstOrDefault(kvp => kvp.Value == storageLocation).Key;
-            if (storedContainer == default)
+            if (storedContainer == EntityUid.Invalid)
                 return;
 
             var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
@@ -165,7 +165,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var storageLocation = message.StorageLocation;
             var storedContainer = storage.StoredItems.FirstOrDefault(kvp => kvp.Value == storageLocation).Key;
-            if (storedContainer == default)
+            if (storedContainer == EntityUid.Invalid)
                 return;
 
             _handsSystem.TryPickupAnyHand(message.Actor, storedContainer);
