@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed various traits and abilites being lost when getting cloned.
-    type: Fix
-  - message: Fixed various bugs when cloning zombified players.
-    type: Fix
-  - message: Unrevivable characters can no longer be cloned.
-    type: Tweak
-  - message: Fixed default device linking for the cloning console.
-    type: Fix
-  id: 8031
-  time: '2025-03-02T15:50:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35555
 - author: HTMLSystem
   changes:
   - message: Arachnids and moths now have new sprites when wearing glasses, huds,
@@ -3925,3 +3912,11 @@
   id: 8533
   time: '2025-05-19T22:39:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37593
+- author: SpeltIncorrectyl
+  changes:
+  - message: Kammerer now has a tighter spread to compensate for its lower rate of
+      fire.
+    type: Tweak
+  id: 8534
+  time: '2025-05-19T22:45:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37616
