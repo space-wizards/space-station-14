@@ -120,7 +120,7 @@ doc-text-printer-report-on-the-chapters-meeting =
     ─────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-	Position of Document Compiler:
+    Position of Document Compiler:
     
     Reason for calling the Chapters' Meeting:
 
@@ -177,7 +177,7 @@ doc-text-printer-condition-report =
     
     The (name of the system or object) was inspected, the results of the inspection were analyzed, and the causes of unstable operation of the object were analyzed.
     
-	Cause of object failure:
+    Cause of object failure:
     
     Identified damage to the facility:
     
@@ -202,7 +202,7 @@ doc-text-printer-object-investigation-report =
     
     A device with unexplored properties was submitted for expert examination by (who or what department handed over the object). In the course of the expertise the object was studied, the properties of the object and its species affiliation were established.
     
-	External description of the object:
+    External description of the object:
     
     Identified properties of the object:
     
@@ -356,7 +356,7 @@ doc-text-printer-resignation-statement =
     I, (full name), in the current position of (full job title), wish to resign from (name of department) for (reason).
     I undertake to pay the penalty established by the terms of termination of fixed-term/permanent contract at the Central Command station.
 
-	I agree to surrender my department work gear and equipment upon resignation.
+    I agree to surrender my department work gear and equipment upon resignation.
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -629,7 +629,7 @@ doc-text-printer-request-documents =
     Compiler of the document:
  
     I, (full name), in the capacity of Internal Affairs Agent, request a copy/original of the following document(s) for verification of compliance with the Corporate Act:
-	[bullet] ...
+    [bullet] ...
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -779,7 +779,7 @@ doc-text-printer-permission-equipment =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-	Position of Document Compiler:
+    Position of Document Compiler:
 
     Authorize the use of departmental work equipment of the following department:
 
