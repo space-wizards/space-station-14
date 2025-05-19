@@ -35,10 +35,10 @@ public sealed class SlidingSystem : EntitySystem
     /// </summary>
     private void OnComponentInit(Entity<SlidingComponent> entity, ref ComponentInit args)
     {
-        if (!_timing.IsFirstTimePredicted)
+        if (!_timing.IsFirstTimePredicted || !TryComp<PhysicsComponent>(entity, out var physics))
             return;
 
-        if (CalculateSlidingModifier(entity))
+        if (CalculateSlidingModifier((entity.Owner, entity.Comp, physics)))
             _speedModifierSystem.RefreshFrictionModifiers(entity);
     }
 
@@ -94,10 +94,7 @@ public sealed class SlidingSystem : EntitySystem
     private bool CalculateSlidingModifier(Entity<SlidingComponent, PhysicsComponent?> entity, EntityUid? ignore = null)
     {
         if (!Resolve(entity, ref entity.Comp2))
-        {
-            RemComp<SlidingComponent>(entity);
             return false;
-        }
 
         var friction = 0.0f;
         var count = 0;
