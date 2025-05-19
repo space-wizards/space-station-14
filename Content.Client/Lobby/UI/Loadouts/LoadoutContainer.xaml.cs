@@ -21,9 +21,6 @@ public sealed partial class LoadoutContainer : BoxContainer
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IEntitySystemManager _systemManager = default!;
 
-    private readonly ExamineSystem _examineSystem;
-    private readonly GuidebookSystem _guidebookSystem;
-
     private readonly EntityUid? _entity;
 
     public Button Select => SelectButton;
@@ -38,12 +35,8 @@ public sealed partial class LoadoutContainer : BoxContainer
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-        _examineSystem = _systemManager.GetEntitySystem<ExamineSystem>();
-        _guidebookSystem = _systemManager.GetEntitySystem<GuidebookSystem>();
 
         SelectButton.Disabled = disabled;
-
-        SelectButton.OnKeyBindDown += KeyBindDown;
 
         if (disabled && reason != null)
         {
@@ -69,29 +62,9 @@ public sealed partial class LoadoutContainer : BoxContainer
         }
     }
 
-    protected override void KeyBindDown(GUIBoundKeyEventArgs args)
-    {
-        base.KeyBindDown(args);
-        // get an entity associated with this element
-        var entity = _entity;
-
-        // Deleted() automatically checks for null & existence.
-        if (_entManager.Deleted(entity))
-            return;
-
-        // do examination?
-        if (args.Function == ContentKeyFunctions.ExamineEntity)
-        {
-            _examineSystem.DoExamine(entity.Value,
-                userOverride: _guidebookSystem.GetGuidebookUser());
-            args.Handle();
-        }
-    }
-
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        SelectButton.OnKeyBindDown -= KeyBindDown;
         if (!disposing)
             return;
 

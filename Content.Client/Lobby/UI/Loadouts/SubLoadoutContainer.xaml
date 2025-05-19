@@ -4,6 +4,6 @@
               StyleClasses="PanelBackgroundBaseDark">
     <BoxContainer Name="SubGridContainer"
                   Orientation="Vertical"
-                  HorizontalExpand = "true"/>
+                  HorizontalExpand="true"/>
   
 </PanelContainer>

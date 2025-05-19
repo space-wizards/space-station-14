@@ -16,8 +16,7 @@ namespace Content.Client.Lobby.UI.Loadouts;
 [GenerateTypedNameReferences]
 public sealed partial class LoadoutGroupContainer : BoxContainer
 {
-    const int Columns = 1;
-    private Dictionary<GridContainer, PanelContainer?> _openSubLists = new();
+    private Dictionary<BoxContainer, PanelContainer?> _openSubLists = new();
 
     private readonly LoadoutGroupPrototype _groupProto;
 
@@ -72,26 +71,23 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 
         LoadoutsContainer.DisposeAllChildren();
 
-        var validProtos = _groupProto.Loadouts
-        .Where(id => protoMan.TryIndex(id, out _))
-        .Select(id => protoMan.Index<LoadoutPrototype>(id));
+        var validProtos = _groupProto.Loadouts.Select(id => protoMan.Index(id));
 
         var groups = validProtos
-        .GroupBy(p => string.IsNullOrEmpty(p.GroupByTag)
+        .GroupBy(p => string.IsNullOrEmpty(p.GroupBy)
                          ? p.ID
-                         : p.GroupByTag)
+                         : p.GroupBy)
         .ToDictionary(g => g.Key, g => g.ToList());
 
-        GridContainer? contentContainer = null;
-        int countRows = 0;
+        BoxContainer? contentContainer = null;
+        var countRows = 0;
 
         foreach (var kvp in groups)
         {
-            if (contentContainer == null || contentContainer.ChildCount >= Columns)
+            if (contentContainer == null)
             {
-                contentContainer = new GridContainer
+                contentContainer = new BoxContainer
                 {
-                    Columns = Columns,
                     HorizontalExpand = true,
                     VerticalExpand = true
                 };
@@ -128,7 +124,6 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                     HorizontalAlignment = HAlignment.Right,
                     VerticalAlignment = VAlignment.Center,
                 };
-                
                 var subContainer = new SubLoadoutContainer(toggle)
                 {
                     Visible = false
@@ -161,15 +156,12 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                 );
             }
         }
-        if (countRows > 1 && contentContainer != null && contentContainer.ChildCount > 0 && contentContainer.ChildCount < Columns)
+        if (countRows > 1 && contentContainer != null && contentContainer.ChildCount > 0)
         {
-            for (int i = contentContainer.ChildCount; i < Columns; i++)
+            contentContainer.AddChild(new Control
             {
-                contentContainer.AddChild(new Control
-                {
-                    HorizontalExpand = true
-                });
-            }
+                HorizontalExpand = true
+            });
         }
     }
 
