@@ -1,6 +1,7 @@
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Decals;
 using Content.Shared.CCVar;
 using Content.Shared.Ghost;
 using Content.Shared.Procedural.Components;
@@ -144,6 +145,10 @@ public sealed partial class NewBiomeSystem : EntitySystem
             {
                 var layer = biome.Layers[layerId];
 
+                // If it can't unload then ignore it.
+                if (!layer.CanUnload)
+                    continue;
+
                 // Go through each loaded chunk and check if they can be unloaded by checking if any players are in range.
                 foreach (var chunk in loadedLayer.Keys)
                 {
@@ -175,6 +180,7 @@ public sealed partial class NewBiomeSystem : EntitySystem
             var job = new BiomeUnloadJob(_loadTime)
             {
                 Biome = (uid, biome),
+                ToUnload = toUnload,
             };
             _biomeQueue.EnqueueJob(job);
         }
@@ -337,8 +343,11 @@ public sealed partial class NewBiomeSystem : EntitySystem
 
 public sealed class BiomeUnloadJob : Job<bool>
 {
+    private EntityManager _entManager;
+
     public List<Vector2i> Chunks = new();
-    public Entity<NewBiomeComponent> Biome;
+    public Entity<MapGridComponent, NewBiomeComponent> Biome;
+    public Dictionary<string, List<Vector2i>> ToUnload = default!;
 
     public BiomeUnloadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
@@ -350,7 +359,71 @@ public sealed class BiomeUnloadJob : Job<bool>
 
     protected override async Task<bool> Process()
     {
-        //
+        var grid = Biome.Comp1;
+        var biome = Biome.Comp2;
+        DebugTools.Assert(biome.Loading);
+        var maps = _entManager.System<SharedMapSystem>();
+        var decals = _entManager.System<DecalSystem>();
+
+        foreach (var (layer, chunkOrigins) in ToUnload)
+        {
+            if (!biome.Layers.TryGetValue(layer, out var meta))
+                continue;
+
+            DebugTools.Assert(meta.CanUnload);
+
+            if (!biome.LoadedData.TryGetValue(layer, out var data))
+                continue;
+
+            foreach (var chunk in chunkOrigins)
+            {
+                // Not loaded anymore?
+                if (!data.TryGetValue(chunk, out var loaded))
+                    continue;
+
+                if (loaded.LoadedEntities != null)
+                {
+                    foreach (var ent in loaded.LoadedEntities)
+                    {
+                        var xform = _entManager.TransformQuery.Comp(ent);
+
+                        // TODO: Position check
+                        if (_entManager.IsDefault(ent))
+                        {
+                            _entManager.DeleteEntity(ent);
+                            continue;
+                        }
+
+                        var entTile = maps.LocalToTile(Biome.Owner, grid, xform.Coordinates);
+                        biome.ModifiedTiles.Add(entTile);
+                    }
+                }
+
+                await SuspendIfOutOfTime();
+
+                if (loaded.LoadedDecals != null)
+                {
+                    foreach (var decal in loaded.LoadedDecals)
+                    {
+                        if (!decals.RemoveDecal(Biome.Owner, decal))
+                        {
+                            // TODO: Need the tile.
+                            biome.ModifiedTiles.Add(de);
+                        }
+                    }
+                }
+
+                await SuspendIfOutOfTime();
+
+                // TODO: Need to store loaded tiles.
+                if (loaded.LoadedTiles)
+                {
+
+                }
+
+                await SuspendIfOutOfTime();
+            }
+        }
 
         Biome.Comp.Loading = false;
         return true;

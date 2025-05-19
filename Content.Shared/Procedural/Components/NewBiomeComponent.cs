@@ -55,6 +55,13 @@ public sealed partial class NewBiomeComponent : Component
     [DataField]
     public Dictionary<string, Dictionary<Vector2i, BiomeLoadedData>> LoadedData = new();
 
+    // Wanted to use a bitmask originally but some stuff like mobs may have massive chunk sizes.
+    /// <summary>
+    /// Flag modified tiles so we don't try and unload / reload them.
+    /// </summary>
+    [DataField]
+    public HashSet<Vector2i> ModifiedTiles = new();
+
     /// <summary>
     /// Bounds loaded by players for this tick.
     /// </summary>
