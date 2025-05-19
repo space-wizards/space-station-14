@@ -4,7 +4,6 @@
   name: exosuit drill
   suffix: Mech Weapon, Melee, Industrial
   description: Equipment for mining exosuits. This is the drill that'll pierce the rocks!
-  
   components:
   - type: Sprite
     state: mecha_drill
