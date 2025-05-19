@@ -56,11 +56,11 @@
     sprite: Structures/Power/Generation/Tesla/coil.rsi
     state: coil
   - type: Battery
-    maxCharge: 2000000
+    maxCharge: 5000000
     startingCharge: 0
   - type: BatteryDischarger
   - type: TeslaCoil
-    chargeFromLightning: 2000000
+    chargeFromLightning: 5000000
   - type: LightningTarget
     priority: 4
     hitProbability: 0.5
