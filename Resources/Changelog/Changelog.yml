@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Predict vending machine UI and have the buttons reflect whether the UI
-      is useable.
-    type: Tweak
-  id: 8029
-  time: '2025-03-02T02:47:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33412
 - author: SlamBamActionman
   changes:
   - message: Phalanximine now has an overdose threshold and works slower, along with
@@ -3926,3 +3918,13 @@
   id: 8531
   time: '2025-05-19T18:23:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36358
+- author: Entvari
+  changes:
+  - message: Hyper Capacity Powercells are now available as Tier 3 Industrial Research.
+    type: Add
+  - message: The Tier 3 Industrial Research 'Portable Fission' has been renamed to
+      Optimized Microgalvanism to better reflect this.
+    type: Tweak
+  id: 8532
+  time: '2025-05-19T22:35:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37619
