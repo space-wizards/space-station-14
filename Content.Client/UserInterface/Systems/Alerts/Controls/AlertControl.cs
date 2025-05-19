@@ -74,7 +74,7 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
         {
             var msg = FormattedMessage.FromMarkupOrThrow(Loc.GetString(Alert.Name));
             var desc = FormattedMessage.FromMarkupOrThrow(Loc.GetString(Alert.Description));
-            return new ActionAlertTooltip(msg, desc) {Cooldown = Cooldown};
+            return new ActionAlertTooltip(msg, desc) { Cooldown = Cooldown };
         }
 
         /// <summary>
@@ -88,9 +88,10 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
 
             if (!_entityManager.TryGetComponent<SpriteComponent>(_spriteViewEntity, out var sprite))
                 return;
+            var spriteSys = _entityManager.System<SpriteSystem>();
             var icon = Alert.GetIcon(_severity);
-            if (sprite.LayerMapTryGet(AlertVisualLayers.Base, out var layer))
-                sprite.LayerSetSprite(layer, icon);
+            if (spriteSys.LayerMapTryGet((_spriteViewEntity, sprite), AlertVisualLayers.Base, out var layer, false))
+                spriteSys.LayerSetSprite((_spriteViewEntity, sprite), layer, icon);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -116,9 +117,10 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
             _spriteViewEntity = _entityManager.Spawn(Alert.AlertViewEntity);
             if (_entityManager.TryGetComponent<SpriteComponent>(_spriteViewEntity, out var sprite))
             {
+                var spriteSys = _entityManager.System<SpriteSystem>();
                 var icon = Alert.GetIcon(_severity);
-                if (sprite.LayerMapTryGet(AlertVisualLayers.Base, out var layer))
-                    sprite.LayerSetSprite(layer, icon);
+                if (spriteSys.LayerMapTryGet((_spriteViewEntity, sprite), AlertVisualLayers.Base, out var layer, false))
+                    spriteSys.LayerSetSprite((_spriteViewEntity, sprite), layer, icon);
             }
 
             _icon.SetEntity(_spriteViewEntity);
