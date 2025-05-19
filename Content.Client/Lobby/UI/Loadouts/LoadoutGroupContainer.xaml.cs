@@ -15,7 +15,7 @@ namespace Content.Client.Lobby.UI.Loadouts;
 [GenerateTypedNameReferences]
 public sealed partial class LoadoutGroupContainer : BoxContainer
 {
-    const int Columns = 4;
+    const int Columns = 1;
     private Dictionary<GridContainer, PanelContainer?> _openSubLists = new();
 
     private readonly LoadoutGroupPrototype _groupProto;
@@ -114,7 +114,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                 var uiElements = protos
                     .Select(proto =>
                     {
-                        var elem = CreateLoadoutUI(proto, profile, loadout, session, collection);
+                        var elem = CreateLoadoutUI(proto, profile, loadout, session, collection, loadoutSystem);
                         elem.HorizontalExpand = true;
                         return elem;
                     })
@@ -161,7 +161,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             else
             {
                 contentContainer.AddChild(
-                    CreateLoadoutUI(protos[0], profile, loadout, session, collection)
+                    CreateLoadoutUI(protos[0], profile, loadout, session, collection, loadoutSystem)
                 );
             }
         }
@@ -177,7 +177,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
         }
     }
 
-    void UpdateToggleColor(Button toggle, GridContainer subList)
+    void UpdateToggleColor(Button toggle, BoxContainer subList)
     {
         var anyActive = subList.Children
             .OfType<LoadoutContainer>()
@@ -188,7 +188,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             : Color.White;
     }
 
-    private LoadoutContainer CreateLoadoutUI(LoadoutPrototype proto, HumanoidCharacterProfile profile, RoleLoadout loadout, ICommonSession session, IDependencyCollection collection)
+    private LoadoutContainer CreateLoadoutUI(LoadoutPrototype proto, HumanoidCharacterProfile profile, RoleLoadout loadout, ICommonSession session, IDependencyCollection collection, LoadoutSystem loadoutSystem)
     {
         var selected = loadout.SelectedLoadouts[_groupProto.ID];
 
@@ -197,6 +197,8 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
         bool enabled = loadout.IsValid(profile, session, proto.ID, collection, out var reason);
 
         var cont = new LoadoutContainer(proto, !enabled, reason);
+
+        cont.Text = loadoutSystem.GetName(proto);
 
         cont.Select.Pressed = pressed;
 

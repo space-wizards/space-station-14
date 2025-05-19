@@ -2,8 +2,8 @@
               xmlns="https://spacestation14.io"
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
               StyleClasses="PanelBackgroundBaseDark">
-    <GridContainer Name="SubGridContainer"
-                    Columns = "4"
-                    HorizontalExpand = "true"/>
+    <BoxContainer Name="SubGridContainer"
+                  Orientation="Vertical"
+                  HorizontalExpand = "true"/>
   
 </PanelContainer>

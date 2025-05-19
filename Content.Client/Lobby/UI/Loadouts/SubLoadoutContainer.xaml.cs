@@ -18,7 +18,7 @@ namespace Content.Client.Lobby.UI.Loadouts;
 [GenerateTypedNameReferences]
 public sealed partial class SubLoadoutContainer : PanelContainer
 {
-    public GridContainer Grid => SubGridContainer;
+    public BoxContainer Grid => SubGridContainer;
 
     public Button GroupButton;
 

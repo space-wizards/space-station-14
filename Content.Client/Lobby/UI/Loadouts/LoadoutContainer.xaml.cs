@@ -28,6 +28,12 @@ public sealed partial class LoadoutContainer : BoxContainer
 
     public Button Select => SelectButton;
 
+    public string? Text
+    {
+        get => SelectButton.Text;
+        set => SelectButton.Text = value;
+    }
+
     public LoadoutContainer(ProtoId<LoadoutPrototype> proto, bool disabled, FormattedMessage? reason)
     {
         RobustXamlLoader.Load(this);
