@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Phalanximine now has an overdose threshold and works slower, along with
-      other minor tweaks.
-    type: Tweak
-  - message: Arithrazine now deals increased damage during treatment.
-    type: Tweak
-  id: 8030
-  time: '2025-03-02T12:56:16.674298+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32209
 - author: slarticodefast
   changes:
   - message: Fixed various traits and abilites being lost when getting cloned.
@@ -3928,3 +3918,10 @@
   id: 8532
   time: '2025-05-19T22:35:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37619
+- author: RedBookcase
+  changes:
+  - message: The Salvage section of the guidebook has been updated.
+    type: Fix
+  id: 8533
+  time: '2025-05-19T22:39:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37593
