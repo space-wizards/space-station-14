@@ -157,7 +157,7 @@
   - type: Puller
   - type: Eye
     drawFov: false
-  - type: StationAiOverlay
+  # - type: StationAiOverlay # removed until is no longer buggy
   - type: IgnoreUIRange
   - type: ComplexInteraction
   - type: MindContainer
