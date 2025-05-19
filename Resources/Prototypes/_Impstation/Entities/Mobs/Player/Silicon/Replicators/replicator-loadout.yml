@@ -41,7 +41,8 @@
     animation: WeaponArcSlash
     damage:
       types:
-        Blunt: 15
+        Blunt: 10
+        Shock: 10
         Structural: 30
   - type: StaminaDamageOnHit
     damage: 5
@@ -133,7 +134,7 @@
   staminaDamage: 40
   damage:
     types:
-      Heat: 0
+      Shock: 7
   muzzleFlash:
     sprite: _Impstation/Mobs/Replicator/replicator_gun.rsi
     state: muzzle_repli

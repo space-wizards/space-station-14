@@ -322,6 +322,7 @@ public abstract class SharedReplicatorNestSystem : EntitySystem
         var upgradedComp = EnsureComp<ReplicatorComponent>(upgraded);
         upgradedComp.RelatedReplicators = ent.Comp.RelatedReplicators;
         upgradedComp.TargetUpgradeStage = ent.Comp.TargetUpgradeStage;
+        upgradedComp.MyNest = ent.Comp.MyNest;
 
         if (ent.Comp.MyNest != null)
         {
