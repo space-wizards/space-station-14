@@ -4,6 +4,8 @@
   name: artifact container
   description: Used to safely contain and move artifacts.
   components:
+    - type: OverrideSell
+      overrideAccount: Science
     - type: Transform
       noRot: true
     - type: AccessReader
@@ -126,7 +128,7 @@
       components:
       - Artifact
   - type: Item
-    sprite: Objects/Storage/artifact_container.rsi  
+    sprite: Objects/Storage/artifact_container.rsi
     size: Huge
   - type: MeleeWeapon
     damage:
