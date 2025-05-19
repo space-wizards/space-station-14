@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: Burst-fire modes on the WT550 and C-20R SMGs should feel better to use;
-      try them out on your friends and foes!
-    type: Tweak
-  id: 1197
-  time: '2025-02-25T02:20:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1762
 - author: DinnerCalzone
   changes:
   - message: Slime bubble and vox chitter emotes should now use positional audio properly.
@@ -4232,3 +4224,14 @@
   id: 1696
   time: '2025-05-19T00:24:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2519
+- author: kipdotnet
+  changes:
+  - message: Added novelty mugs to the service techfab. They have random colours and
+      random descriptions.
+    type: Add
+  - message: All mugs can now hold 30u, up from 20, to match the capacity of metamorphic
+      glasses.
+    type: Tweak
+  id: 1697
+  time: '2025-05-19T00:32:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2452
