@@ -2,7 +2,7 @@
   id: NTCCBlueshield
   name: job-name-ntccblueshield
   description: job-description-ntccblueshield
-  playTimeTracker: JobCentralCommandOperator
+  playTimeTracker: ConsortiumBlueShield
   setPreference: false
   startingGear: NTCCBlueShieldGear
   icon: JobIconBlueShield
