@@ -337,6 +337,7 @@ ui-options-net-pvs-leave-tooltip = This limits the rate at which the client will
 ## Toggle window console command
 cmd-options-desc = Opens options menu, optionally with a specific tab selected.
 cmd-options-help = Usage: options [tab]
+ cmd-parse-failure-int = Failed to parse '{ $arg }' as a valid tab ID.
 
 ## Accessibility menu
 
