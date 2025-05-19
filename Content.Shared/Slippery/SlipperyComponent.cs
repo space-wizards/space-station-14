@@ -53,10 +53,16 @@ namespace Content.Shared.Slippery
     public sealed partial class SlipperyEffectEntry
     {
         /// <summary>
-        /// How many seconds the mob will be paralyzed for.
+        /// How many seconds the mob will be stunned for.
         /// </summary>
         [DataField]
-        public TimeSpan ParalyzeTime = TimeSpan.FromSeconds(1.5);
+        public TimeSpan StunTime = TimeSpan.FromSeconds(0.5);
+
+        /// <summary>
+        /// How many seconds the mob will be knocked down for.
+        /// </summary>
+        [DataField]
+        public TimeSpan KnockdownTime = TimeSpan.FromSeconds(1.5);
 
         /// <summary>
         /// Should the slipped entity try to stand up when Knockdown ends?

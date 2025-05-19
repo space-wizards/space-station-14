@@ -35,6 +35,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
+using static Content.Shared.Stunnable.SharedStunSystem;
 
 namespace Content.Shared.Cuffs
 {
@@ -89,8 +90,8 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
             SubscribeLocalEvent<HandcuffComponent, AddCuffDoAfterEvent>(OnAddCuffDoAfter);
             SubscribeLocalEvent<HandcuffComponent, VirtualItemDeletedEvent>(OnCuffVirtualItemDeleted);
-            SubscribeLocalEvent<CuffableComponent, SharedStunSystem.StandUpArgsEvent>(OnCuffableStandupArgs);
-            SubscribeLocalEvent<CuffableComponent, SharedStunSystem.KnockedDownRefreshEvent>(OnCuffableKnockdownRefresh);
+            SubscribeLocalEvent<CuffableComponent, StandUpArgsEvent>(OnCuffableStandupArgs);
+            SubscribeLocalEvent<CuffableComponent, KnockedDownRefreshEvent>(OnCuffableKnockdownRefresh);
         }
 
         private void CheckInteract(Entity<CuffableComponent> ent, ref InteractionAttemptEvent args)
@@ -420,7 +421,7 @@ namespace Content.Shared.Cuffs
         /// <summary>
         ///     Takes longer to stand up when cuffed
         /// </summary>
-        private void OnCuffableStandupArgs(Entity<CuffableComponent> ent, ref SharedStunSystem.StandUpArgsEvent args)
+        private void OnCuffableStandupArgs(Entity<CuffableComponent> ent, ref StandUpArgsEvent args)
         {
             if (!HasComp<KnockedDownComponent>(ent) || !IsCuffed(ent) || !TryComp<HandcuffComponent>(ent.Comp.LastAddedCuffs, out var handcuff))
                 return;
@@ -428,7 +429,7 @@ namespace Content.Shared.Cuffs
             args.DoAfterTime *= handcuff.StandupMod;
         }
 
-        private void OnCuffableKnockdownRefresh(Entity<CuffableComponent> ent, ref SharedStunSystem.KnockedDownRefreshEvent args)
+        private void OnCuffableKnockdownRefresh(Entity<CuffableComponent> ent, ref KnockedDownRefreshEvent args)
         {
             if (!IsCuffed(ent) || !TryComp<HandcuffComponent>(ent.Comp.LastAddedCuffs, out var handcuff))
                 return;
