@@ -1,5 +1,6 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors.Components;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power;
@@ -30,7 +31,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         SubscribeLocalEvent<TurnstileComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<TurnstileComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<TurnstileComponent, EndCollideEvent>(OnEndCollide);
-        SubscribeLocalEvent<TurnstileComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<TurnstileComponent, GotEmaggedEvent>(OnEmagged);
     }
 
     private void OnPreventCollide(Entity<TurnstileComponent> ent, ref PreventCollideEvent args)
@@ -60,7 +61,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
             return;
         }
 
-        if (ent.Comp.Powered && !_doorSystem.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
+        if (!_doorSystem.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
         {
             if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 return;
@@ -87,7 +88,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
     {
         if (!ent.Comp.CollideExceptions.Contains(args.OtherEntity))
         {
-            if (ent.Comp.Powered && !_doorSystem.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
+            if (!_doorSystem.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
             {
                 if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 {
@@ -119,6 +120,8 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         var otherXform = Transform(other);
 
         var (pos, rot) = _transform.GetWorldPositionRotation(xform);
+        if(ent.Comp.Flipped)
+            rot += Angle.FromDegrees(180);
         var otherPos = _transform.GetWorldPosition(otherXform);
 
         var approachAngle = (pos - otherPos).ToAngle();
@@ -137,9 +140,13 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
 
     }
 
-    private void OnPowerChanged(EntityUid uid, TurnstileComponent component, ref PowerChangedEvent args)
+    private void OnEmagged(Entity<TurnstileComponent> ent, ref GotEmaggedEvent args)
     {
-        component.Powered = args.Powered;
-        Dirty(uid, component);
+        if (args.Type != EmagType.Interaction)
+            return;
+        args.Handled = true;
+        args.Repeatable = true;
+        ent.Comp.Flipped = !ent.Comp.Flipped;
+        Dirty(ent);
     }
 }
