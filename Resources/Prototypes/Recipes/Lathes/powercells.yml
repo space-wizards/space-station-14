@@ -39,10 +39,11 @@
   - Parts
   completetime: 10
   materials:
-    Steel: 600
-    Glass: 600
+    Steel: 800
+    Glass: 700
     Plasma: 300
     Gold: 200
+    Silver: 300
 
 - type: latheRecipe
   id: PowerCellMicroreactor

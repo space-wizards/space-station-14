@@ -200,14 +200,14 @@
   - ClothingBackpackDuffelHolding
 
 - type: technology
-  id: MaximizedPowercells
-  name: research-technology-maximized-powercells
+  id: OptimizedMicrogalvanism
+  name: research-technology-optimized-microgalvanism
   icon:
     sprite: Objects/Power/power_cells.rsi
     state: microreactor
   discipline: Industrial
   tier: 3
-  cost: 12500
+  cost: 10000
   recipeUnlocks:
   - PowerCellMicroreactor
   - PowerCellHyper
