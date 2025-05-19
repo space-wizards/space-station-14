@@ -14,7 +14,7 @@
   - CentralCommand
   special:
     - !type:AddImplantSpecial
-      implants: [ MindShieldImplant, DeathRattleImplantCentcomm, RadioImplanterCentcomm ]
+      implants: [ MindShieldImplant, DeathRattleImplantCentcomm, RadioImplantCentcomm ]
 
 - type: startingGear
   id: NTCCBlueShieldGear
