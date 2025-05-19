@@ -110,7 +110,7 @@ public abstract partial class SharedStunSystem
         if (!TryComp<KnockedDownComponent>(playerEnt, out var component))
             TryKnockdown(playerEnt, TimeSpan.FromSeconds(0.5), true, false); // TODO: Unhardcode these numbers
         else
-            component.AutoStand = TryStanding(playerEnt, out component.DoAfter); // Have a better way of doing this
+            component.AutoStand = !TryStanding(playerEnt, out component.DoAfter); // Have a better way of doing this
     }
 
     public bool TryStanding(Entity<KnockedDownComponent?> entity, out DoAfterId? id)
