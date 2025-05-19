@@ -64,12 +64,17 @@
   - type: Clothing
     sprite: _Starlight/Objects/Weapons/Guns/LMGs/DP28.rsi
     quickEquip: false
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/m41_cock.ogg
   - type: Appearance
   - type: ItemSlots
     slots:
       gun_magazine:
         name: Magazine
         startingItem: MagazineLightRifleMaxim
+        insertSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        ejectSound: /Audio/Weapons/Guns/MagIn/rifle_load.ogg
         whitelist:
           tags:
             - MagazineLightRiflePan
