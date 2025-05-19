@@ -387,7 +387,11 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (!userImpulse || !TryComp<PhysicsComponent>(user, out var userPhysics))
             return;
-        if (_gravity.IsWeightless(user, userPhysics) || HasComp<SlidingComponent>(user))
+
+        var shooterEv = new ShooterImpulseEvent();
+        RaiseLocalEvent(user, ref shooterEv);
+
+        if (shooterEv.Push || _gravity.IsWeightless(user, userPhysics)) // TODO: Make IsWeightless Event Based
             CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
     }
 
@@ -628,6 +632,12 @@ public record struct AttemptShootEvent(EntityUid User, string? Message, bool Can
 /// <param name="User">The user that fired this gun.</param>
 [ByRefEvent]
 public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
+
+[ByRefEvent]
+public record struct ShooterImpulseEvent()
+{
+    public bool Push;
+};
 
 public enum EffectLayers : byte
 {

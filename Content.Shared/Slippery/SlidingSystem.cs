@@ -1,5 +1,7 @@
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
+using Content.Shared.Throwing;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -22,6 +24,8 @@ public sealed class SlidingSystem : EntitySystem
         SubscribeLocalEvent<SlidingComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<SlidingComponent, EndCollideEvent>(OnEndCollide);
         SubscribeLocalEvent<SlidingComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionModifiers);
+        SubscribeLocalEvent<SlidingComponent, ThrowerImpulseEvent>(OnThrowPushbackAttempt);
+        SubscribeLocalEvent<SlidingComponent, ShooterImpulseEvent>(OnGunShot);
     }
 
     /// <summary>
@@ -110,5 +114,15 @@ public sealed class SlidingSystem : EntitySystem
     {
         args.ModifyFriction(entity.Comp.FrictionModifier);
         args.ModifyAcceleration(entity.Comp.FrictionModifier);
+    }
+
+    private void OnThrowPushbackAttempt(Entity<SlidingComponent> entity, ref ThrowerImpulseEvent args)
+    {
+        args.Push = true;
+    }
+
+    private void OnGunShot(Entity<SlidingComponent> entity, ref ShooterImpulseEvent args)
+    {
+        args.Push = true;
     }
 }
