@@ -590,7 +590,6 @@
 # Gygax
 - type: entity
   id: MechGygax
-  
   parent: [ BaseMech, CombatMech, BaseSecurityContraband ]
   name: Gygax
   description: While lightly armored, the Gygax has incredible mobility thanks to its ability that lets it smash through walls at high speeds.
