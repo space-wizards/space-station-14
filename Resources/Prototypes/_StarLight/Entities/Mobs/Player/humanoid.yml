@@ -1,3 +1,5 @@
+## NTCC Default Settings
+
 - type: randomHumanoidSettings
   id: EventHumanoidNTCC
   parent: EventHumanoidMindShielded
@@ -7,9 +9,11 @@
     - DeathRattleImplantCentcomm
     - RadioImplanterCentcomm
 
+## NTCC Blueshield
+
 - type: entity
-  name: NTCC Consortium Blueshield
-  id: RandomHumanoidNTCCConsortiumBlueshield
+  name: NT-CC Consortium Blueshield
+  id: RandomHumanoidNTCCConsortiumBlueshieldSpawner
   components:
     - type: Sprite
       sprite: _Starlight/Markers/jobs.rsi
@@ -20,6 +24,7 @@
 - type: randomHumanoidSettings
   id: NTCCConsortiumBlueshield
   parent: EventHumanoidNTCC
+  randomizeName: false
   components:
     - type: GhostRole
       name: ghost-role-information-centcom-official-name
