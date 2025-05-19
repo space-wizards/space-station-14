@@ -863,7 +863,7 @@
 
 - type: entity
   name: cybersun chem-laser
-  parent: [ BaseWeaponPowerCellSmall, BaseGunWieldable, BaseSyndicateContraband ]
+  parent: [ BaseWeaponPowerCell, BaseGunWieldable, BaseSyndicateContraband ]
   id: WeaponChemLaser
   description: #add description
   components:
@@ -876,6 +876,9 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
+    size: Large
+    shape:
+    - 0,0,4,1
     sprite: Objects/Weapons/Guns/Battery/chem_laser.rsi
   - type: MagazineVisuals
     magState: mag
@@ -892,10 +895,16 @@
   - type: HitscanBatteryAmmoProvider
     proto: ChemicalLaser
     fireCost: 25
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/chem_laser.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
 
 - type: entity
   name: cybersun chem-multilaser
-  parent: [ BaseWeaponPowerCellSmall, BaseGunWieldable, BaseSyndicateContraband ]
+  parent: [ BaseWeaponPowerCell, BaseGunWieldable, BaseSyndicateContraband ]
   id: WeaponChemMultilaser
   description: #add description
   components:
@@ -908,6 +917,9 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
+    size: Large
+    shape:
+    - 0,0,2,1
     sprite: Objects/Weapons/Guns/Battery/chem_multilaser.rsi
   - type: MagazineVisuals
     magState: mag
@@ -930,3 +942,10 @@
   - type: HitscanBatteryAmmoProvider
     proto: ChemicalMultilaser
     fireCost: 8
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/chem_laser.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - Belt
+    - suitStorage
