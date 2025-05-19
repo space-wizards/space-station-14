@@ -113,7 +113,7 @@ public abstract partial class SharedStunSystem
             return;
 
         if (!TryComp<KnockedDownComponent>(playerEnt, out var component))
-            TryKnockdown(playerEnt, TimeSpan.FromSeconds(0.5), false, false); // TODO: Unhardcode these numbers
+            TryKnockdown(playerEnt, TimeSpan.FromSeconds(0.5), true, false); // TODO: Unhardcode these numbers
         else
             component.AutoStand = TryStanding(playerEnt, out component.DoAfter); // Have a better way of doing this
     }
@@ -271,7 +271,7 @@ public abstract partial class SharedStunSystem
         if (!Resolve(entity, ref entity.Comp))
             return false;
 
-        var intersecting = _physics.GetEntitiesIntersectingBody(entity, 4, false);
+        var intersecting = _physics.GetEntitiesIntersectingBody(entity, StandingStateSystem.StandingCollisionLayer, false);
 
         if (intersecting.Count == 0)
             return false;
@@ -293,7 +293,7 @@ public abstract partial class SharedStunSystem
 
             foreach (var fixture in fixtures.Fixtures.Values)
             {
-                if (!fixture.Hard || (fixture.CollisionMask & 4) != 4)
+                if (!fixture.Hard || (fixture.CollisionMask & StandingStateSystem.StandingCollisionLayer) != StandingStateSystem.StandingCollisionLayer)
                     continue;
 
                 for (var i = 0; i < fixture.Shape.ChildCount; i++)

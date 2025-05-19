@@ -178,7 +178,7 @@ public abstract partial class SharedStunSystem : EntitySystem
     /// <summary>
     ///     Knocks down the entity, making it fall to the ground.
     /// </summary>
-    public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh, bool autoStand, StatusEffectsComponent? status = null)
+    public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh, bool autoStand = true, StatusEffectsComponent? status = null)
     {
         if (time <= TimeSpan.Zero)
             return false;
@@ -220,12 +220,14 @@ public abstract partial class SharedStunSystem : EntitySystem
         };
         RaiseLocalEvent(uid, ref knockedEv);
 
-        var knockedTime = GameTiming.CurTime + knockedEv.KnockdownTime;
-
-        if (TimeSpan.Compare(knockedTime, component.NextUpdate) == 1)
-            component.NextUpdate = knockedTime;
-
-        component.NextUpdate = GameTiming.CurTime + knockedEv.KnockdownTime;
+        if (refresh)
+        {
+            var knockedTime = GameTiming.CurTime + knockedEv.KnockdownTime;
+            if (TimeSpan.Compare(knockedTime, component.NextUpdate) == 1)
+                component.NextUpdate = knockedTime;
+        }
+        else
+            component.NextUpdate += knockedEv.KnockdownTime;
 
         Dirty(uid, component);
 
