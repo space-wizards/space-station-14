@@ -60,11 +60,11 @@ hail-emag-7 = Viva!!
 hail-emag-8 = Whiskey. Echo. Whiskey!!
 
 #ERT - No low, med, high since I don't think they will have time to mess with their setting
-hail-ERT-1 = By centcom's authority!!
-hail-ERT-2 = Dangerous element sighted!!
-hail-ERT-3 = Don't mess with us, dimwit!!
-hail-ERT-4 = Compliance is mandatory!!
-hail-ERT-5 = You shall obey or you shall die!!
+hail-ERT-0 = By centcom's authority!!
+hail-ERT-1 = Dangerous element sighted!!
+hail-ERT-2 = Don't mess with us, dimwit!!
+hail-ERT-3 = Compliance is mandatory!!
+hail-ERT-4 = You shall obey or you shall die!!
 
 #Special cases
 hail-high-HOS = Tell it to centcom... if you make it that far!!
