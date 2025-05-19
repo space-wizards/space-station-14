@@ -13,10 +13,10 @@
       state: brain
   - type: EntityTargetAction
     whitelist:
-      requireAll: true
       components:
-      - Body
-      - MindContainer
+      - Body # this also allows borgs because that supercode uses Body for no reason
+      - PAI # intended to mindswap pAIs and AIs
+      - StationAiCore
     event: !type:MindSwapSpellEvent
   - type: SpeakOnAction
     sentence: action-speech-spell-mind-swap
