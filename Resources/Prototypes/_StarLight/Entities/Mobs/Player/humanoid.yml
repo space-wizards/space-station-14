@@ -1,3 +1,12 @@
+- type: randomHumanoidSettings
+  id: EventHumanoidNTCC
+  parent: EventHumanoidMindShielded
+  components:
+  - type: AutoImplant
+    implants:
+    - DeathRattleImplantCentcomm
+    - RadioImplanterCentcomm
+
 - type: entity
   name: NTCC Consortium Blueshield
   id: RandomHumanoidNTCCConsortiumBlueshield
@@ -10,7 +19,7 @@
 
 - type: randomHumanoidSettings
   id: NTCCConsortiumBlueshield
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidNTCC
   components:
     - type: GhostRole
       name: ghost-role-information-centcom-official-name
@@ -21,3 +30,8 @@
     - type: Loadout
       prototypes: [ NTCCBlueShieldGear ]
       roleLoadout: [ RoleSurvivalStandard ]
+    - type: RandomMetadata
+      nameSegments:
+        - NamesMilitaryFirstLeader
+        - NamesMilitaryLast
+      nameFormat: name-format-ert
