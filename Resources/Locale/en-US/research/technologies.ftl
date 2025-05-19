@@ -18,7 +18,7 @@ research-technology-advanced-atmospherics = Advanced Atmospherics
 research-technology-advanced-tools = Advanced Tools
 research-technology-super-powercells = Super Powercells
 research-technology-bluespace-storage = Bluespace Storage
-research-technology-maximised-powercells = Maximised Powercells
+research-technology-maximized-powercells = Maximized Powercells
 research-technology-space-scanning = Space Scanning
 research-technology-excavation = Mass Excavation
 

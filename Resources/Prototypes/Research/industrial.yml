@@ -200,8 +200,8 @@
   - ClothingBackpackDuffelHolding
 
 - type: technology
-  id: MaximisedPowercells
-  name: research-technology-maximised-powercells
+  id: MaximizedPowercells
+  name: research-technology-maximized-powercells
   icon:
     sprite: Objects/Power/power_cells.rsi
     state: microreactor
