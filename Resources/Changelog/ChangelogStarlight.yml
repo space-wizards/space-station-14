@@ -5885,4 +5885,11 @@ Entries:
   id: 815
   time: '2025-05-19T12:21:51.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/656
+- author: Cyanogen
+  changes:
+  - message: ability to pick up monkeys and kobolds
+    type: Add
+  id: 816
+  time: '2025-05-19T12:23:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/655
 
