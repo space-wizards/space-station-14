@@ -12,14 +12,13 @@ public sealed class MechAssemblyVisualizerSystem : VisualizerSystem<MechAssembly
     protected override void OnAppearanceChange(EntityUid uid, MechAssemblyVisualsComponent component,
         ref AppearanceChangeEvent args)
     {
-        base.OnAppearanceChange(uid, component, ref args);
+        if (args.Sprite == null)
+            return;
 
         if (!AppearanceSystem.TryGetData<int>(uid, MechAssemblyVisuals.State, out var stage, args.Component))
             return;
 
         var state = component.StatePrefix + stage;
-
-        if (args.Sprite != null)
-            SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, state);
+        SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, state);
     }
 }
