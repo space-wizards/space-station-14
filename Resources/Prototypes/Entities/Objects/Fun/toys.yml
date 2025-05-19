@@ -718,7 +718,7 @@
     sound:
       path: /Audio/Items/Toys/rawr.ogg
   - type: MeleeWeapon
-    wideAnimationRotation: 180
+    wideAnimationRotation: 90
     soundHit:
       path: /Audio/Items/Toys/rawr.ogg
   - type: Item
@@ -829,7 +829,7 @@
     useSound:
       path: /Audio/Effects/bite.ogg
   - type: MeleeWeapon
-    wideAnimationRotation: -90
+    wideAnimationRotation: 90
     soundHit:
       path: /Audio/Effects/bite.ogg
     angle: 0
@@ -947,7 +947,7 @@
     useSound:
       path: /Audio/Items/Toys/rattle.ogg
   - type: MeleeWeapon
-    wideAnimationRotation: 180
+    wideAnimationRotation: 90
     soundHit:
       path: /Audio/Items/Toys/rattle.ogg
   - type: Clothing
