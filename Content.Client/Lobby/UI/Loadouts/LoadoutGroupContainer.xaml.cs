@@ -17,6 +17,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     /// List of all subcontainers and their corresponding subloadout containers.
     /// </summary>
     private Dictionary<BoxContainer, PanelContainer?> _subContainersDict = new();
+    private Dictionary<string, bool> _openedGroups = new();
 
     private readonly LoadoutGroupPrototype _groupProto;
 
@@ -122,8 +123,11 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                 };
                 var subContainer = new SubLoadoutContainer(toggle)
                 {
-                    Visible = false
+                    Visible = _openedGroups.ContainsKey(kvp.Key) ?
+                        _openedGroups[kvp.Key] : false
                 };
+                toggle.Text = subContainer.Visible ? "▼" : "▶";
+
                 var subList = subContainer.Grid;
                 LoadoutsContainer.AddChild(subContainer);
 
@@ -137,6 +141,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                     subContainer.Visible = willOpen;
                     toggle.Text = willOpen ? "▼" : "▶";
                     _subContainersDict[row] = willOpen ? subContainer : null;
+                    _openedGroups[kvp.Key] = willOpen;
                 };
 
                 first.AddChild(toggle);
