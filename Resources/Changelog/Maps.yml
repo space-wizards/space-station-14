@@ -187,4 +187,12 @@
   id: 21
   time: '2025-05-19T08:16:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37602
+- author: Deerstop
+  changes:
+  - message: On Elkridge, the salvage bay has received an overhaul, including the
+      new Job Board Computer
+    type: Tweak
+  id: 22
+  time: '2025-05-19T18:55:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37600
 Order: 1
