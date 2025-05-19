@@ -1,10 +1,10 @@
 - type: entity
   parent: CrateGenericSteel
   id: CrateSoviet
-  name: Soviet Crate
-  description: A sturdy crate adorned with Soviet insignia, built to withstand harsh conditions and securely store valuable supplies. 
+  name: USSP crate
+  description: A sturdy crate adorned with USSP insignia and it's marine forces. Standard use among all agencies.
   components:
   - type: Icon
-    sprite: _Starlight/Structures/Storage/soviet.rsi
+    sprite: _Starlight/Structures/Storage/USSP/soviet-crate.rsi
   - type: Sprite
-    sprite: _Starlight/Structures/Storage/soviet.rsi
+    sprite: _Starlight/Structures/Storage/USSP/soviet-crate.rsi

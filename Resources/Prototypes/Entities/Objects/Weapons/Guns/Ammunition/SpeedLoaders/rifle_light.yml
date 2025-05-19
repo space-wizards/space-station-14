@@ -1,7 +1,7 @@
 - type: entity
   id: SpeedLoaderLightRifle
   name: "speed loader (.45 magnum)" # Starlight
-  parent: [ BaseItem, BaseSecurityContraband ]
+  parent: [ BaseItem, BaseMinorContraband ]
   components:
   - type: Tag
     tags:
@@ -9,6 +9,7 @@
   - type: SpeedLoader
   - type: BallisticAmmoProvider
     mayTransfer: true
+    fillDelay: 0.1 #Starlight
     whitelist:
       tags:
         - CartridgeMagnum # Starlight

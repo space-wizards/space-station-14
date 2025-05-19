@@ -1,3 +1,13 @@
+# 500 crates
+- type: listing
+  id: RevSupplyRiftListing
+  productEntity: RevSupplyRift
+  cost:
+    Conversion: 1
+  categories:
+  - RevUplinkPassive
+
+# Weapons, some modern some discontinued like the PPSH
 - type: listing
   id: SKGBAKMSweapon
   name: akms-weapon-name
@@ -12,27 +22,6 @@
     stockLimit: 2
 
 - type: listing
-  id: RevSupplyRiftListing
-  productEntity: RevSupplyRift
-  cost:
-    Conversion: 1
-  categories:
-  - RevUplinkPassive
-
-- type: listing
-  id: SKGBSovietEVABundle
-  name: soviet-eva-name
-  description: soviet-eva-desc
-  productEntity: ClothingBackpackDuffelSovietEVABundle
-  cost:
-    Telebond: 1
-  categories:
-  - RevUplinkWearables
-  conditions:
-  - !type:StockLimitedListingCondition
-    stockLimit: 4
-
-- type: listing
   id: SKGBDP28
   name: dp-name
   description: dp-desc
@@ -44,3 +33,31 @@
   conditions:
   - !type:StockLimitedListingCondition
     stockLimit: 1
+
+# Wearables
+- type: listing
+  id: SKGBSovietEVABundle
+  name: soviet-eva-name
+  description: soviet-eva-desc
+  icon: { sprite: _Starlight/Clothing/OuterClothing/Suits/soviet_eva.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSovietEVABundle
+  cost:
+    Telebond: 1
+  categories:
+  - RevUplinkWearables
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 4
+
+- type: listing
+  id: SKGBBandolier
+  name: soviet-bandolier-name
+  description: soviet-bandolier-desc
+  productEntity: ClothingSovietBandolier
+  cost:
+    Telebond: 1
+  categories:
+  - RevUplinkWearables
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2

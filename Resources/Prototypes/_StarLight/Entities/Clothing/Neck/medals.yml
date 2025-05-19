@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingSovietMedals
-  name: soviet medals
-  description: A set of medals awarded for exemplary service to the Soviet Union.
+  name: soviet sets of medals
+  description: A collection of medals meant to be replicas of the ones decorated. Wait, I think these actually might be real.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Neck/Medals/SovietMedals.rsi

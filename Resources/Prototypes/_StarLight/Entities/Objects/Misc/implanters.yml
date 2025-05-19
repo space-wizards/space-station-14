@@ -42,10 +42,10 @@
   - type: Implanter
     implant: USSPUplinkImplant
   - type: Item
-    sprite: _Starlight/Objects/Specific/USSP/SNKVD_implanter.rsi
+    sprite: _Starlight/Objects/Specific/USSP/SKGB_implanter.rsi
     heldPrefix: implanter
   - type: Sprite
-    sprite: _Starlight/Objects/Specific/USSP/SNKVD_implanter.rsi
+    sprite: _Starlight/Objects/Specific/USSP/SKGB_implanter.rsi
     state: implanter1
     layers:
       - state: implanter0

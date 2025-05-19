@@ -234,7 +234,7 @@
 - type: entity
   parent: [ClothingBeltStorageBase, BaseSovietContraband]
   id: ClothingSovietBandolier
-  name: rugged regimental bandolier
+  name: marine bandolier
   description: Smells of oil, sweat, and questionable decisions.
   components:
   - type: Sprite

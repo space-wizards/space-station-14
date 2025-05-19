@@ -53,7 +53,7 @@
   parent: BaseWallBanner
   id: BannerWallHammer
   name: glorious revolutionary wall banner
-  description: Gone are the days of oppression and the unfair treatment of contractors!
+  description: Gone are the days of oppression and the unfair treatment of contractors! URAA!
   components:
   - type: Sprite
     state: banner0
@@ -61,8 +61,8 @@
 - type: entity
   parent: BaseWallBanner
   id: BannerWallSoviet
-  name: Soviet Banner
-  description: A red banner reminiscent of a bygone era.
+  name: USSP wall banner
+  description: Banner of the United Soviet Socialist Planets. Hang it up. Obey it. Try not to salute by reflex.
   components:
   - type: Sprite
     state: banner1
@@ -70,8 +70,8 @@
 - type: entity
   id: BannerSovietRegular
   parent: BannerBase
-  name: Soviet regular banner
-  description: A red banner reminiscent of the Soviet era, evoking a sense of history and solidarity.
+  name: USSP banner
+  description: Banner of the United Soviet Socialist Planets. Features the glorious hammer and wrench. Symbols of industry, progress, fraternity and fixing what you broke.
   components:
   - type: Sprite
     sprite: _Starlight/Structures/Decorations/Banners.rsi
@@ -81,18 +81,28 @@
   id: BannerSovietHammer
   parent: BannerBase
   name: glorious revolutionary banner
-  description: Gone are the days of oppression and the unfair treatment of contractors!
+  description: Gone are the days of oppression and the unfair treatment of contractors! URAA!
   components:
   - type: Sprite
     sprite: _Starlight/Structures/Decorations/Banners.rsi
     state: banner3
 
 - type: entity
-  id: BannerSoviet
+  id: BannerSNKVD
   parent: BannerBase
-  name: soviet banner
-  description: A red standing banner adorned with Soviet iconography, evoking a sense of history and solidarity.
+  name: soviet SNKVD banner
+  description: One wrong move and you're dead comrade. For good.
   components:
   - type: Sprite
     sprite: _Starlight/Structures/Decorations/Banners.rsi
     state: banner4
+
+- type: entity
+  id: BannerSGKB
+  parent: BannerBase
+  name: soviet SKGB banner
+  description: Implementing workers rights. Yeah, we do that in your stations. You're welcome.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Decorations/Banners.rsi
+    state: banner5

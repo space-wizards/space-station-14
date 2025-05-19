@@ -29,13 +29,18 @@
 - type: entity
   parent: [ClothingMaskGas, BaseSovietContraband]
   id: ClothingSovietGasMask
-  name: Soviet gas mask
-  description: A rugged gas mask of Soviet design, built to withstand harsh conditions and keep the wearer safe from hazardous environments.
+  name: GP-52 gas mask
+  description: A gas mask in use by modern soviet marine forces.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Mask/sovietgas.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Mask/sovietgas.rsi
+  - type: FlashImmunity
+    blocksSpecialVision: false
+  - type: EyeProtection
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:

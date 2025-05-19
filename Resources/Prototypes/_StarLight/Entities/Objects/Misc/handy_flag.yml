@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
   id: SovietDeskFlag
-  name: Soviet desk flag
+  name: soviet desk flag
   description: Belikov. Have you dug up my mole yet?
   components:
   - type: Sprite
