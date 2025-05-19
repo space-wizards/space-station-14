@@ -36,8 +36,8 @@
   id: USSPUplinkImplanter
   suffix: USSP uplink
   parent: BaseImplantOnlyImplanterSyndi_StarLight
-  name: SNKVD implanter
-  description: A brittle disposable syringe exclusively designed for the injection of old SNKVD subdermal implants. Dissolves on use.
+  name: SKGB implanter
+  description: A brittle disposable syringe exclusively designed for the injection of subdermal implants for SKGB agents. Dissolves on use.
   components:
   - type: Implanter
     implant: USSPUplinkImplant

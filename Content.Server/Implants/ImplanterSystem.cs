@@ -63,7 +63,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
             {
                 Implant(target, target, uid, component);
                 
-                // Check if this is the SNKVD implanter that should dissolve on use
+                // Check if this is the SKGB implanter that should dissolve on use
                 if (TryComp<MetaDataComponent>(uid, out var metadata) && 
                     metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
                 {
@@ -117,7 +117,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     //TODO: Remove when surgery is in
     public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        // If this is self-drawing and it's the SNKVD implanter, handle it immediately
+        // If this is self-drawing and it's the SKGB implanter, handle it immediately
         if (user == target && TryComp<MetaDataComponent>(implanter, out var metadata) && 
             metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
         {
@@ -145,7 +145,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 
         Implant(args.User, args.Target.Value, args.Used.Value, component);
 
-        // Check if this is the SNKVD implanter that should dissolve on use
+        // Check if this is the SKGB implanter that should dissolve on use
         if (TryComp<MetaDataComponent>(args.Used.Value, out var metadata) && 
             metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
         {
@@ -163,7 +163,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 
         Draw(args.Used.Value, args.User, args.Target.Value, component);
 
-        // Check if this is the SNKVD implanter that should dissolve on use
+        // Check if this is the SKGB implanter that should dissolve on use
         if (TryComp<MetaDataComponent>(args.Used.Value, out var metadata) && 
             metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
         {

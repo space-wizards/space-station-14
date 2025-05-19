@@ -518,7 +518,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         // Cuffing Head Revs is not enough - they must be killed.
         if (IsGroupDetainedOrDead(headRevList, false, false, false))
         {
-            // Delete all USSP uplinks and turn supply rifts and SNKVD implanters to ash
+            // Delete all USSP uplinks and turn supply rifts and SKGB implanters to ash
             DeleteUplinksTurnItemsToAsh();
             
             var rev = AllEntityQuery<RevolutionaryComponent, MindContainerComponent>();
@@ -551,7 +551,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     }
     
     /// <summary>
-    /// Deletes all USSP uplinks and turns supply rifts and SNKVD implanters to ash when all head revolutionaries are dead.
+    /// Deletes all USSP uplinks and turns supply rifts and SKGB implanters to ash when all head revolutionaries are dead.
     /// </summary>
     private void DeleteUplinksTurnItemsToAsh()
     {
@@ -604,7 +604,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
         }
         
-        // Find all SNKVD implanters and collect them for deletion
+        // Find all SKGB implanters and collect them for deletion
         var implantersToDelete = new List<(EntityUid Entity, Robust.Shared.Map.EntityCoordinates Coordinates)>();
         var implanterQuery = EntityManager.EntityQuery<MetaDataComponent, TransformComponent>(true);
         
@@ -613,18 +613,18 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             if (metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
             {
                 implantersToDelete.Add((metadata.Owner, transform.Coordinates));
-                Logger.InfoS("rev-rule", $"Found SNKVD implanter to turn to ash: {ToPrettyString(metadata.Owner)}");
+                Logger.InfoS("rev-rule", $"Found SKGB implanter to turn to ash: {ToPrettyString(metadata.Owner)}");
             }
         }
         
-        // Process all SNKVD implanters
+        // Process all SKGB implanters
         foreach (var (entity, coordinates) in implantersToDelete)
         {
             if (EntityManager.EntityExists(entity))
             {
                 // Spawn ash at the implanter's location
                 EntityManager.SpawnEntity("Ash", coordinates);
-                Logger.InfoS("rev-rule", $"Turned SNKVD implanter to ash: {ToPrettyString(entity)}");
+                Logger.InfoS("rev-rule", $"Turned SKGB implanter to ash: {ToPrettyString(entity)}");
                 
                 // Delete the implanter
                 EntityManager.DeleteEntity(entity);

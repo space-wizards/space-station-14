@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: SovietDeskFlag
-  name: Soviet Desk Flag
-  description: A desk flag for when you need to wave the motherland's approval. Cyka blyat! 
+  name: Soviet desk flag
+  description: Belikov. Have you dug up my mole yet?
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Misc/soviet_desk_flag.rsi

@@ -82,7 +82,7 @@
             - CartridgeLightRifle
   - type: ClothingSpeedModifier
     walkModifier: 1
-    sprintModifier: 0.8
+    sprintModifier: 0.85
   - type: HeldSpeedModifier
   - type: Gun
     minAngle: 20

@@ -1,5 +1,5 @@
 - type: listing
-  id: SNKVDAKMSweapon
+  id: SKGBAKMSweapon
   name: akms-weapon-name
   description: akms-weapon-desc
   productEntity: WeaponRifleAk
@@ -20,7 +20,7 @@
   - RevUplinkPassive
 
 - type: listing
-  id: SNKVDSovietEVABundle
+  id: SKGBSovietEVABundle
   name: soviet-eva-name
   description: soviet-eva-desc
   productEntity: ClothingBackpackDuffelSovietEVABundle
@@ -33,7 +33,7 @@
     stockLimit: 4
 
 - type: listing
-  id: SNKVDDP28
+  id: SKGBDP28
   name: dp-name
   description: dp-desc
   productEntity: WeaponLightMachineGunDP28
