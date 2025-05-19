@@ -173,4 +173,18 @@
   id: 20
   time: '2025-05-18T17:43:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37579
+- author: Southbridge
+  changes:
+  - message: On Box, added the Salvage Job Board.
+    type: Add
+  - message: On Box, swapped the devices in the freezer to their freezer variants.
+    type: Tweak
+  - message: On Box, modified the containment area to be a little more intuitive for
+      both singularity and tesla setups.
+    type: Tweak
+  - message: On Box, modified TEG piping to make more sense.
+    type: Tweak
+  id: 21
+  time: '2025-05-19T08:16:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37602
 Order: 1
