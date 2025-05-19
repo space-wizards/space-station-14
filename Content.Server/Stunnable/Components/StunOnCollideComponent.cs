@@ -8,13 +8,21 @@ namespace Content.Server.Stunnable.Components
     {
         // TODO: Can probably predict this.
 
-        // See stunsystem for what these do
+        /// <summary>
+        /// How long we are stunned for
+        /// </summary>
         [DataField]
         public TimeSpan StunAmount;
 
+        /// <summary>
+        /// How long we are knocked down for
+        /// </summary>
         [DataField]
         public TimeSpan KnockdownAmount;
 
+        /// <summary>
+        /// How long we are slowed down for
+        /// </summary>
         [DataField]
         public TimeSpan SlowdownAmount;
 
