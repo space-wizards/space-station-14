@@ -41,9 +41,8 @@
   materials:
     Steel: 600
     Glass: 600
-    Uranium: 100
+    Plasma: 300
     Gold: 200
-    Silver: 100
 
 - type: latheRecipe
   id: PowerCellMicroreactor
