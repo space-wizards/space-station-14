@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: Removed golden pAIs from the trinket loadout menu, per discussion on
-      discord.
-    type: Remove
-  - message: Golden pAIs may now be obtained through the mail as a very very rare
-      package!
-    type: Add
-  id: 1196
-  time: '2025-02-24T22:20:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1775
 - author: AvianMaiden
   changes:
   - message: Burst-fire modes on the WT550 and C-20R SMGs should feel better to use;
@@ -4232,3 +4221,14 @@
   id: 1695
   time: '2025-05-18T08:08:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2514
+- author: widgetbeck
+  changes:
+  - message: Changed Replicator damage numbers for balance.
+    type: Tweak
+  - message: Fixed Tier 2 Replicators being unable to evolve.
+    type: Fix
+  - message: Fixed the grammar on the Replicator Round-End text.
+    type: Fix
+  id: 1696
+  time: '2025-05-19T00:24:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2519
