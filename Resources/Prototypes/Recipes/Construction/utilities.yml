@@ -201,6 +201,15 @@
   canBuildInImpassable: false
 
 - type: construction
+  id: DisposalXJunction
+  graph: DisposalPipe
+  startNode: start
+  targetNode: xJunction
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
   id: DisposalBend
   graph: DisposalPipe
   startNode: start
