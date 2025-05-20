@@ -365,18 +365,11 @@ namespace Content.Server.Construction
                             : HandleResult.False;
                     }
 
-                    if (toolInsertStep.TryElectrocute && EntityManager.TryGetComponent<ElectrifiedComponent>(uid, out var electrified))
-                    {
-                        var currentValue = electrified.Enabled;
-                        electrified.Enabled = true;
+                    var electrocuteEvent = new ConstructionToolElectrocuteEvent(user.Value, true);
+                    RaiseLocalEvent(uid, electrocuteEvent);
 
-                        EntityManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>().TryDoElectrifiedAct(uid, user.Value, electrified: electrified);
-
-                        electrified.Enabled = currentValue;
-
-                        if(EntityManager.HasComponent<StunnedComponent>(user.Value))
-                            return HandleResult.False;
-                    }
+                    if (electrocuteEvent.CancelInteraction)
+                        return HandleResult.False;
 
                     // If we're handling an event after its DoAfter finished...
                     if (doAfterState == DoAfterState.Completed)
@@ -649,5 +642,12 @@ namespace Content.Server.Construction
     public sealed class OnConstructionTemperatureEvent : HandledEntityEventArgs
     {
         public HandleResult? Result;
+    }
+
+    public sealed class ConstructionToolElectrocuteEvent(EntityUid shockReceiver, bool forceEnable) : EntityEventArgs
+    {
+        public readonly EntityUid ShockReceiver = shockReceiver;
+        public readonly bool ForceEnable = forceEnable;
+        public bool CancelInteraction = false;
     }
 }
