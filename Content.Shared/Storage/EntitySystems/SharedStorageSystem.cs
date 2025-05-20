@@ -244,6 +244,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
+        // TODO: This should update all entities in storage as well.
         if (args.ByType.ContainsKey(typeof(ItemSizePrototype))
             || (args.Removed?.ContainsKey(typeof(ItemSizePrototype)) ?? false))
         {
@@ -1376,6 +1377,8 @@ public abstract class SharedStorageSystem : EntitySystem
             if (!storageEnt.Comp.OccupiedGrid.TryGetValue(storageChunkOrigin, out var occupied))
                 continue;
 
+            // This has a lot of redundant tile checks but with the fast path it shouldn't matter for average ss14
+            // use cases.
             for (var y = bottom; y <= top; y++)
             {
                 for (var x = left; x <= right; x++)
