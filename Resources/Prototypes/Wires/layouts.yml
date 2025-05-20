@@ -72,6 +72,10 @@
   dummyWires: 2
 
 - type: wireLayout
+  parent: Turnstile
+  id: TUrnstileGenpop
+
+- type: wireLayout
   id: Vending
   wires:
   - !type:AiInteractWireAction

@@ -144,7 +144,20 @@
   - type: WiresVisuals
   - type: Electrified
     enabled: false
-    usesApcPower: true
+    highVoltageNode: high
+    mediumVoltageNode: medium
+    lowVoltageNode: low
+  - type: NodeContainer
+    nodes:
+      high:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      medium:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+      low:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
   - type: Appearance
   - type: Damageable
     damageContainer: Inorganic
@@ -172,6 +185,7 @@
   - type: Wires
     boardName: wires-board-name-turnstile
     layoutId: Turnstile
+  - type: WiresPanelSecurity
   - type: UserInterface
     interfaces:
       enum.AiUi.Key:
@@ -206,6 +220,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsGenpopEnter ]
+  - type: Wires
+    layoutId: TurnstileGenpop
 
 - type: entity
   id: TurnstileGenpopLeave
@@ -215,3 +231,5 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsGenpopLeave ]
+  - type: Wires
+    layoutId: TurnstileGenpop
