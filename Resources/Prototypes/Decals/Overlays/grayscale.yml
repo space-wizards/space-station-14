@@ -447,6 +447,22 @@
     state: minitile_line_w
 
 - type: decal
+  id: VerticalSlatOverlay
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: verticalslats_overlay
+
+- type: decal
+  id: VerticalSlatSingleRowOverlay
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: verticalslats_singlerow_overlay
+
+- type: decal
   id: OffsetOverlay
   tags: ["station", "overlay"]
   defaultCustomColor: true

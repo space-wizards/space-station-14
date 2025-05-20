@@ -7,7 +7,7 @@
     "y": 32
   },
   "states": [
-	{
+    {
       "name": "fulltile_overlay"
     },
     {
@@ -201,6 +201,12 @@
     },
     {
       "name": "pavement_vertical_checker_b"
+    },
+    {
+      "name": "verticalslats_overlay"
+    },
+    {
+      "name": "verticalslats_singlerow_overlay"
     }
   ]
 }
