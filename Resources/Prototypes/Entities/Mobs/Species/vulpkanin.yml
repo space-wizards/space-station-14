@@ -11,6 +11,7 @@
   - type: Inventory # Allows vulps to wear properly shaped helmets and other clothing. When displacement maps happen this might need to change.
     speciesId: vulpkanin
   - type: Thirst
+  - type: MessyDrinker
   - type: Icon
     sprite: Mobs/Species/Vulpkanin/parts.rsi
     state: full
