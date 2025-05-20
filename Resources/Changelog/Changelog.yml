@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Boaz1111, Ktyria
-  changes:
-  - message: 'Added five new scars for humans and dwarves: Three for the face, two
-      for the chest.'
-    type: Add
-  id: 8039
-  time: '2025-03-05T10:26:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35644
 - author: ScarKy0, MilonPL
   changes:
   - message: Added deliveries! Cargo now has access to mail teleporters, which periodically
@@ -3916,3 +3908,10 @@
   id: 8541
   time: '2025-05-20T23:29:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37654
+- author: spanky-spanky
+  changes:
+  - message: On Omega, the salvage job board has been added.
+    type: Add
+  id: 8542
+  time: '2025-05-20T23:35:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37655
