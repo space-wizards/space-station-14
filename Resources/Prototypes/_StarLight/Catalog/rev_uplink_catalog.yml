@@ -30,6 +30,7 @@
   id: USSPSovietKeyConversion
   name: soviet-encryption-key-name
   description: soviet-encryption-key-conversion-desc
+  icon: { sprite: _Starlight/Objects/Devices/encryption_keys.rsi, state: soviet_label }
   productEntity: EncryptionKeySoviet
   cost:
     Conversion: 30
@@ -302,6 +303,7 @@
   id: USSPSovietKey
   name: soviet-encryption-key-name
   description: soviet-encryption-key-desc
+  icon: { sprite: _Starlight/Objects/Devices/encryption_keys.rsi, state: soviet_label }
   productEntity: EncryptionKeySoviet
   cost:
     Telebond: 4
@@ -347,6 +349,19 @@
   productEntity: ClothingBackpackDuffelZaporozhianBundle
   cost:
     Telebond: 1
+  categories:
+  - RevUplinkPointless
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
+  id: USSPVodkizine
+  name: vodkizine-name
+  description: vodkizine-desc
+  productEntity: DrinkVodkizineBottleFull
+  cost:
+    Telebond: 5
   categories:
   - RevUplinkPointless
   conditions:

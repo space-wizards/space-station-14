@@ -1,8 +1,8 @@
 - type: entity
   parent: [UnsensoredClothingUniformBase, BaseSovietContraband]
   id: ClothingUniformJumpsuitSoviet
-  name: soviet uniform
-  description: Uniform for elite Soviet comrades, completely uncomfortable and cheaply made.
+  name: old war uniform
+  description: Relics of war, many of which have laid the foundation of the USSP. Wearing this may cause unsolicited war stories.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/soviet.rsi

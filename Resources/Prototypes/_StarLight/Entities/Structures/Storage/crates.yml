@@ -1,8 +1,8 @@
 - type: entity
   parent: CrateGenericSteel
   id: CrateSoviet
-  name: USSP crate
-  description: A sturdy crate adorned with the insignia of the USSP and its marine forces, standard issue across all agencies.
+  name: SSF crate
+  description: A sturdy crate adorned with the insignia of the USSP marine forces.
   components:
   - type: Icon
     sprite: _Starlight/Structures/Storage/USSP/soviet-crate.rsi

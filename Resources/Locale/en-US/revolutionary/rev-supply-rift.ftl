@@ -47,7 +47,7 @@ stolen-implanter-desc = The committee is yet to find a way. Can undo brainwashin
 
 # Deception
 soviet-encryption-key-name = Soviet encryption key
-soviet-encryption-key-desc = Alio. PPSH? Please? :D
+soviet-encryption-key-desc = Features exotic woodpeckers. Priyom.
 
 # Shuttle
 stole-remote-signaller-name = Remote signaller
@@ -68,3 +68,5 @@ ushanka-name = Ushanka
 ushanka-desc = Perfect for winter in Siberia, da?
 zapo-name = Zaporozhian sich bundle
 zapo-desc = Cossacks- have gone to space, and have earned respect within the union.
+vodkizine-name = Vodkizine bottle 
+vodkizine-desc = The best cure for and cause of a hangover.
