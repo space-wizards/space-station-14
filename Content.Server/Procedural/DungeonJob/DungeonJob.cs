@@ -285,7 +285,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 dungeons.Add(await GenerateNoiseDunGen(position, noise, reservedTiles, seed, random));
                 break;
             case OreDunGen ore:
-                await PostGen(ore, dungeons[^1], random);
+                await PostGen(ore, dungeons, random);
                 break;
             case PrefabDunGen prefab:
                 dungeons.Add(await GeneratePrefabDunGen(position, prefab, reservedTiles, random));
@@ -312,16 +312,16 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 await GenerateTileReplacementDunGen(replace, dungeons, reservedTiles, random);
                 break;
             case RoomEntranceDunGen rEntrance:
-                await PostGen(rEntrance, dungeons[^1], reservedTiles, random);
+                await PostGen(rEntrance, dungeons, reservedTiles, random);
                 break;
             case SplineDungeonConnectorDunGen spline:
                 dungeons.Add(await PostGen(spline, dungeons, reservedTiles, random));
                 break;
             case WallMountDunGen wall:
-                await PostGen(wall, dungeons[^1], reservedTiles, random);
+                await PostGen(wall, dungeons, reservedTiles, random);
                 break;
             case WormCorridorDunGen worm:
-                await PostGen(worm, dungeons[^1], reservedTiles, random);
+                await PostGen(worm, dungeons, reservedTiles, random);
                 break;
             default:
                 throw new NotImplementedException();

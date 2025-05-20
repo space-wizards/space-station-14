@@ -12,35 +12,38 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="WallMountDunGen"/>
     /// </summary>
-    private async Task PostGen(WallMountDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(WallMountDunGen gen, List<Dungeon> dungeons, HashSet<Vector2i> reservedTiles, Random random)
     {
-        var checkedTiles = new HashSet<Vector2i>();
-        var allExterior = new HashSet<Vector2i>(dungeon.CorridorExteriorTiles);
-        allExterior.UnionWith(dungeon.RoomExteriorTiles);
-        var tileDef = (ContentTileDefinition) _tileDefManager[gen.Tile];
-        var contents = _prototype.Index(gen.Contents);
-
-        foreach (var neighbor in allExterior)
+        foreach (var dungeon in dungeons)
         {
-            // Occupado
-            if (dungeon.RoomTiles.Contains(neighbor) || checkedTiles.Contains(neighbor) || !_anchorable.TileFree(_grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
-                continue;
+            var checkedTiles = new HashSet<Vector2i>();
+            var allExterior = new HashSet<Vector2i>(dungeon.CorridorExteriorTiles);
+            allExterior.UnionWith(dungeon.RoomExteriorTiles);
+            var tileDef = (ContentTileDefinition) _tileDefManager[gen.Tile];
+            var contents = _prototype.Index(gen.Contents);
 
-            if (!random.Prob(gen.Prob) || !checkedTiles.Add(neighbor))
-                continue;
+            foreach (var neighbor in allExterior)
+            {
+                // Occupado
+                if (dungeon.RoomTiles.Contains(neighbor) || checkedTiles.Contains(neighbor) || !_anchorable.TileFree(_grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+                    continue;
 
-            if (reservedTiles.Contains(neighbor))
-                continue;
+                if (!random.Prob(gen.Prob) || !checkedTiles.Add(neighbor))
+                    continue;
 
-            _maps.SetTile(_gridUid, _grid, neighbor, _tile.GetVariantTile(tileDef, random));
-            var gridPos = _maps.GridTileToLocal(_gridUid, _grid, neighbor);
-            var protoNames = _entTable.GetSpawns(contents, random);
+                if (reservedTiles.Contains(neighbor))
+                    continue;
 
-            _entManager.SpawnEntitiesAttachedTo(gridPos, protoNames);
+                _maps.SetTile(_gridUid, _grid, neighbor, _tile.GetVariantTile(tileDef, random));
+                var gridPos = _maps.GridTileToLocal(_gridUid, _grid, neighbor);
+                var protoNames = _entTable.GetSpawns(contents, random);
 
-            await SuspendDungeon();
-            if (!ValidateResume())
-                return;
+                _entManager.SpawnEntitiesAttachedTo(gridPos, protoNames);
+
+                await SuspendDungeon();
+                if (!ValidateResume())
+                    return;
+            }
         }
     }
 }

@@ -12,40 +12,43 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="RoomEntranceDunGen"/>
     /// </summary>
-    private async Task PostGen(RoomEntranceDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(RoomEntranceDunGen gen, List<Dungeon> dungeons, HashSet<Vector2i> reservedTiles, Random random)
     {
-        var setTiles = new List<(Vector2i, Tile)>();
-        var tileDef = _tileDefManager[gen.Tile];
-        var contents = _prototype.Index(gen.Contents);
-
-        foreach (var room in dungeon.Rooms)
+        foreach (var dungeon in dungeons)
         {
-            foreach (var entrance in room.Entrances)
-            {
-                if (reservedTiles.Contains(entrance))
-                    continue;
+            var setTiles = new List<(Vector2i, Tile)>();
+            var tileDef = _tileDefManager[gen.Tile];
+            var contents = _prototype.Index(gen.Contents);
 
-                setTiles.Add((entrance, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
+            foreach (var room in dungeon.Rooms)
+            {
+                foreach (var entrance in room.Entrances)
+                {
+                    if (reservedTiles.Contains(entrance))
+                        continue;
+
+                    setTiles.Add((entrance, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
+                }
             }
-        }
 
-        _maps.SetTiles(_gridUid, _grid, setTiles);
+            _maps.SetTiles(_gridUid, _grid, setTiles);
 
-        foreach (var room in dungeon.Rooms)
-        {
-            foreach (var entrance in room.Entrances)
+            foreach (var room in dungeon.Rooms)
             {
-                if (reservedTiles.Contains(entrance))
-                    continue;
+                foreach (var entrance in room.Entrances)
+                {
+                    if (reservedTiles.Contains(entrance))
+                        continue;
 
-                _entManager.SpawnEntitiesAttachedTo(
-                    _maps.GridTileToLocal(_gridUid, _grid, entrance),
-                    _entTable.GetSpawns(contents, random));
+                    _entManager.SpawnEntitiesAttachedTo(
+                        _maps.GridTileToLocal(_gridUid, _grid, entrance),
+                        _entTable.GetSpawns(contents, random));
 
-                await SuspendDungeon();
+                    await SuspendDungeon();
 
-                if (!ValidateResume())
-                    return;
+                    if (!ValidateResume())
+                        return;
+                }
             }
         }
     }

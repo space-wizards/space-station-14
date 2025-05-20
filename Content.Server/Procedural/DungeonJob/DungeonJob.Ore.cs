@@ -15,7 +15,7 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(
         OreDunGen gen,
-        Dungeon dungeon,
+        List<Dungeon> dungeons,
         Random random)
     {
         // Doesn't use dungeon data because layers and we don't need top-down support at the moment.
@@ -24,48 +24,50 @@ public sealed partial class DungeonJob
         var replaceEntities = new Dictionary<Vector2i, EntityUid>();
         var availableTiles = new List<Vector2i>();
 
-        foreach (var node in dungeon.AllTiles)
+        foreach (var dungeon in dungeons)
         {
-            // Empty tile, skip if relevant.
-            if (!emptyTiles && (!_maps.TryGetTile(_grid, node, out var tile) || tile.IsEmpty))
-                continue;
-
-            // Check if it's a valid spawn, if so then use it.
-            var enumerator = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, node);
-            var found = false;
-
-            // We use existing entities as a mark to spawn in place
-            // OR
-            // We check for any existing entities to see if we can spawn there.
-            while (enumerator.MoveNext(out var uid))
+            foreach (var node in dungeon.AllTiles)
             {
-                // We can't replace so just stop here.
-                if (gen.Replacement == null)
-                    break;
+                // Empty tile, skip if relevant.
+                if (!emptyTiles && (!_maps.TryGetTile(_grid, node, out var tile) || tile.IsEmpty))
+                    continue;
 
-                var prototype = _entManager.GetComponent<MetaDataComponent>(uid.Value).EntityPrototype;
+                // Check if it's a valid spawn, if so then use it.
+                var enumerator = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, node);
+                var found = false;
 
-                if (prototype?.ID == gen.Replacement)
+                // We use existing entities as a mark to spawn in place
+                // OR
+                // We check for any existing entities to see if we can spawn there.
+                while (enumerator.MoveNext(out var uid))
                 {
-                    replaceEntities[node] = uid.Value;
-                    found = true;
-                    break;
+                    // We can't replace so just stop here.
+                    if (gen.Replacement == null)
+                        break;
+
+                    var prototype = _entManager.GetComponent<MetaDataComponent>(uid.Value).EntityPrototype;
+
+                    if (prototype?.ID == gen.Replacement)
+                    {
+                        replaceEntities[node] = uid.Value;
+                        found = true;
+                        break;
+                    }
                 }
+
+                if (!found)
+                    continue;
+
+                // Add it to valid nodes.
+                availableTiles.Add(node);
+
+                await SuspendDungeon();
+
+                if (!ValidateResume())
+                    return;
             }
 
-            if (!found)
-                continue;
-
-            // Add it to valid nodes.
-            availableTiles.Add(node);
-
-            await SuspendDungeon();
-
-            if (!ValidateResume())
-                return;
-        }
-
-        var remapping = new Dictionary<EntProtoId, EntProtoId>();
+            var remapping = new Dictionary<EntProtoId, EntProtoId>();
 
         // TODO: Move this to engine
         if (_prototype.TryIndex(gen.Entity, out var proto) &&
@@ -119,9 +121,10 @@ public sealed partial class DungeonJob
 
                     var prototype = gen.Entity;
 
-                    if (replaceEntities.TryGetValue(node, out var existingEnt))
+                    if (replaceEntities.TryGetValue(node, out var existingEnt) &&
+                        _entManager.TryGetComponent(existingEnt, out MetaDataComponent? metadata))
                     {
-                        var existingProto = _entManager.GetComponent<MetaDataComponent>(existingEnt).EntityPrototype;
+                        var existingProto = metadata.EntityPrototype;
                         _entManager.DeleteEntity(existingEnt);
 
                         if (existingProto != null && remapping.TryGetValue(existingProto.ID, out var remapped))
@@ -141,6 +144,7 @@ public sealed partial class DungeonJob
             {
                 _sawmill.Warning($"Found remaining group size for ore veins of {gen.Replacement ?? "null"}!");
             }
+        }
         }
     }
 }
