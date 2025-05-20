@@ -83,32 +83,10 @@
       "name": "ignis_plush"
     },
     {
-      "name": "mozan_plush"
-    },
-    {
-      "name": "mozanplush-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "mozanplush-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "livvy_plush"
     },
     {
       "name": "mina_plush"
-    },
-    {
-      "name": "panda_plushie"
-    },
-    {
-      "name": "pandaplushie-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "pandaplushie-inhand-right",
-      "directions": 4
     }
   ]
 }
