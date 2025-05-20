@@ -43,3 +43,5 @@ soviet-medals-name = Soviet sets of medals
 soviet-medals-desc = Tovarisch robust. Here you go.
 ushanka-name = Ushanka
 ushanka-desc = Perfect for winter in Siberia, da?
+zapo-name = Zaporozhian sich bundle
+zapo-desc = Cossacks- have gone to space, and have earned respect within the union.

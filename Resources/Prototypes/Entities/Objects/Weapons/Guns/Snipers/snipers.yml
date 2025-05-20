@@ -72,6 +72,8 @@
   - type: Gun
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/mosin.ogg # Starlight
+      params:
+        variation: 0.246
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
 

@@ -32,7 +32,7 @@
     sprite: _Starlight/Clothing/Head/Hats/beret_corpsman.rsi
 
 - type: entity
-  parent: [ClothingHeadBase]
+  parent: [ClothingHeadBase, BaseSovietContraband]
   id: ClothingHeadHatUshankaAlt
   name: SNKVD ushanka
   description: Disappearances are entirely voluntary, tovarisch.

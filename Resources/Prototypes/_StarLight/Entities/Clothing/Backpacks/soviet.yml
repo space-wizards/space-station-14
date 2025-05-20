@@ -1,0 +1,36 @@
+- type: entity
+  id: ClothingBackpackDuffelSovietEVABundle
+  name: soviet EVA bundle
+  parent: [ClothingBackpackDuffel, BaseSovietContraband]
+  description: Contains a soviet EVA suit and helmet, along with emergency oxygen and nitrogen tanks. For the workers of space!
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSovietEVA
+      - id: ClothingHeadHelmetSovietEVA
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+
+- type: entity
+  id: ClothingBackpackDuffelZaporozhianBundle
+  name: Zaporozhian sich bundle
+  parent: [ClothingBackpackDuffel, BaseSovietContraband]
+  description: Cossacks- have gone to space, and have earned respect within the union.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitCossack
+      - id: ClothingUniformJumpsuitCossack
+      - id: ClothingUniformJumpsuitCossack
+      - id: ClothingHeadHatHetmanHat
+      - id: ClothingHeadHatHetmanHat
+      - id: ClothingHeadHatHetmanHat
+      - id: ClothingShoesBootsSalvage
+      - id: ClothingShoesBootsSalvage
+      - id: ClothingShoesBootsSalvage
+      - id: WheatBushel
+      - id: WheatBushel
+      - id: MeatwheatBushel
+      - id: MeatwheatBushel
+      - id: ClothingHeadHatStrawHat
+
