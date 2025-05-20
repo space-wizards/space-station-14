@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Changelings can now eat a lot of different things for varying reward
-      to stave off hunger, but only temporarily...
-    type: Tweak
-  id: 1202
-  time: '2025-02-25T21:12:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1771
 - author: Kandiyaki
   changes:
   - message: ashen passage's sound has a much larger radius.
@@ -4233,3 +4225,10 @@
   id: 1701
   time: '2025-05-20T22:19:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2535
+- author: widgetbeck
+  changes:
+  - message: The Replicator Hive has evolved.
+    type: Tweak
+  id: 1702
+  time: '2025-05-20T23:21:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2530
