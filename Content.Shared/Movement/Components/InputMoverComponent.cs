@@ -29,12 +29,6 @@ namespace Content.Shared.Movement.Components
         //   (well maybe we do but the code is designed such that MoverSystem applies movement speed)
         //   (and I'm not changing that)
 
-        /// <summary>
-        /// Should our velocity be applied to our parent?
-        /// </summary>
-        [DataField]
-        public bool ToParent = false;
-
         public GameTick LastInputTick;
         public ushort LastInputSubTick;
 
