@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Added a guidebook section on Ghostroles. Embrace the wikification of
-      the guidebook.
-    type: Add
-  id: 1199
-  time: '2025-02-25T21:00:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1281
 - author: kipdotnet
   changes:
   - message: The tck'tck now has a unique fire extinguisher and some new art assets.
@@ -4235,3 +4227,11 @@
   id: 1698
   time: '2025-05-20T09:13:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2527
+- author: kipdotnet
+  changes:
+  - message: Completely remade Banana from scratch. She's now bigger, nicer, and has
+      extra space.
+    type: Tweak
+  id: 1699
+  time: '2025-05-20T09:21:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2531
