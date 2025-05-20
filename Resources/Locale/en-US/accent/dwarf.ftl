@@ -364,7 +364,7 @@ accent-dwarf-words-128 = rat
 accent-dwarf-words-replace-128 = raki
 
 accent-dwarf-words-129 = arachnid
-accent-dwarf-words-replace-129 = aranaki
+accent-dwarf-words-replace-129 = longlegs
 
 accent-dwarf-words-130 = spider
 accent-dwarf-words-replace-130 = hisser
@@ -422,3 +422,111 @@ accent-dwarf-words-replace-147 = bobby
 
 accent-dwarf-words-148 = a
 accent-dwarf-words-replace-148 = ae
+
+accent-dwarf-words-149 = fucking
+accent-dwarf-words-replace-149 = sodding
+
+accent-dwarf-words-150 = fucked
+accent-dwarf-words-replace-150 = sodded
+
+accent-dwarf-words-151 = hell
+accent-dwarf-words-replace-151 = ifrinn
+
+accent-dwarf-words-152 = heck
+accent-dwarf-words-replace-152 = 
+
+accent-dwarf-words-153 = leave
+accent-dwarf-words-replace-153 = bolt
+
+accent-dwarf-words-154 = hi
+accent-dwarf-words-replace-154 = haw
+
+accent-dwarf-words-155 = why not
+accent-dwarf-words-replace-155 = how no
+
+accent-dwarf-words-156 = janitor
+accent-dwarf-words-replace-156 = janny
+
+accent-dwarf-words-157 = implant
+accent-dwarf-words-replace-157 = jab
+
+accent-dwarf-words-158 = implanter
+accent-dwarf-words-replace-158 = jabber
+
+accent-dwarf-words-159 = generator
+accent-dwarf-words-replace-159 = jenny
+
+accent-dwarf-words-160 = pacman
+accent-dwarf-words-replace-160 = jenny
+
+accent-dwarf-words-161 = ssd
+accent-dwarf-words-replace-161 = kippy
+
+accent-dwarf-words-162 = arrest
+accent-dwarf-words-replace-162 = lift
+
+accent-dwarf-words-163 = arrested
+accent-dwarf-words-replace-163 = lifted
+
+accent-dwarf-words-164 = said
+accent-dwarf-words-replace-164 = wiz like
+
+accent-dwarf-words-165 = was not
+accent-dwarf-words-replace-165 = wisnae
+
+accent-dwarf-words-166 = old
+accent-dwarf-words-replace-166 = auld
+
+accent-dwarf-words-167 = bullshit
+accent-dwarf-words-replace-167 = banana boat
+
+accent-dwarf-words-168 = grenader
+accent-dwarf-words-replace-168 = banger
+
+accent-dwarf-words-169 = bastard
+accent-dwarf-words-replace-169 = bastart
+
+accent-dwarf-words-170 = hos
+accent-dwarf-words-replace-169 = big yin
+
+accent-dwarf-words-171 = stab
+accent-dwarf-words-replace-171 = chib
+
+accent-dwarf-words-172 = cold
+accent-dwarf-words-replace-172 = cauld
+
+accent-dwarf-words-173 = water
+accent-dwarf-words-replace-173 = cooncil juice
+
+accent-dwarf-words-174 = down
+accent-dwarf-words-replace-174 = doon
+
+accent-dwarf-words-175 = dog
+accent-dwarf-words-replace-175 = dug
+
+accent-dwarf-words-176 = ass
+accent-dwarf-words-replace-176 = erse
+
+accent-dwarf-words-177 = mouth
+accent-dwarf-words-replace-177 = gob
+
+accent-dwarf-words-178 = got
+accent-dwarf-words-replace-178 = goat
+
+accent-dwarf-words-179 = ground
+accent-dwarf-words-replace-179 = groond
+
+accent-dwarf-words-180 = half
+accent-dwarf-words-replace-180 = hauf
+
+accent-dwarf-words-181 = head
+accent-dwarf-words-replace-181 = noggin
+
+accent-dwarf-words-182 = thing
+accent-dwarf-words-replace-182 = hingway
+
+accent-dwarf-words-183 = anybody
+accent-dwarf-words-replace-183 = onybody
+
+accent-dwarf-words-184 = dead
+accent-dwarf-words-replace-184 = panbread
