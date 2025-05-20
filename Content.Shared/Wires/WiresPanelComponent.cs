@@ -1,5 +1,4 @@
 using Content.Shared.Tools;
-using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -41,7 +40,7 @@ public sealed partial class WiresPanelComponent : Component
     /// The tool quality needed to open this panel.
     /// </summary>
     [DataField]
-    public ProtoId<ToolQualityPrototype> OpeningTool = SharedToolSystem.ScrewQuality;
+    public ProtoId<ToolQualityPrototype> OpeningTool = Tools.Systems.SharedToolSystem.ScrewQuality;
 
     /// <summary>
     /// Text showed on examine when the panel is closed.
