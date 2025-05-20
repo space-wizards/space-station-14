@@ -96,9 +96,9 @@
         acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          PinpointerReplicator:
+          SheetPlasteel1:
             min: 1
-            max: 1
+            max: 5
   - type: StatusEffects
     allowed:
     - Stun
@@ -112,7 +112,7 @@
       Dead:
         Base: dead
   - type: MeleeWeapon
-    soundHit: 
+    soundHit:
       path: "/Audio/Items/wirecutter.ogg"
     angle: 0
     wideAnimationRotation: 0
@@ -164,13 +164,16 @@
     prototypes:
     - StartingGearReplicatorT1Weapon
 
-# Tier 1: These guys are mooks. They're vulnerable, bad at dragging, and don't do much damage, but they have the highest stun & a disabler ranged attack. 
-# They also have MovementAlwaysTouching, because they're floaty little guys.
+# Tier 1: These guys are mooks. They're vulnerable, bad at dragging, and don't do much damage, but they have a disabler ranged attack.
 - type: entity
   id: MobReplicator
   parent: BaseMobReplicator
   categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
   components:
+  - type: Replicator
+    upgradeActions:
+    - ActionReplicatorUpgrade2
+    - ActionReplicatorUpgrade2Alt
   - type: CombatMode
   - type: Puller
     needsHands: false
@@ -219,9 +222,14 @@
   - type: Loadout
     prototypes:
     - StartingGearReplicatorT1Weapon
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Replicator
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
 
-# Tier 2: Deconstructors. These guys are a little bit tougher, and have tools to take things apart, but they don't have anywhere near as much stun & their attacks are just as weak as T1s. 
-# They also have MovementAlwaysTouching, because they're still small enough to be affected by the thrusters.
+# Tier 2: Deconstructors. These guys are a little bit tougher, and have tools to take things apart, but they don't have the ability to enter combat mode.
 - type: entity
   id: MobReplicatorTier2
   name: deconstructor
@@ -231,6 +239,9 @@
   components:
   - type: Replicator
     upgradeStage: 1
+    upgradeActions:
+    - ActionReplicatorUpgrade3
+    readyToUpgradeMessage: replicator-upgrade-t2
   - type: Puller
     needsHands: false
   - type: MovementSpeedModifier
@@ -267,12 +278,74 @@
   - type: Loadout
     prototypes:
       - StartingGearReplicatorTools
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Replicator
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
 
-# Tier 3: These guys are tanks. Their job is to tear shit apart and kill things. They're slow, tanky, and have a weapon that does 25 blunt 30 struct. 
-# They *DON'T* have MovementAlwaysTouching, because they're too big and heavy. 
+# Tier 2 ALT: Defender. These guys are our mid-level combatants. They have a slightly better stun laser, and a decent melee attack, but no utility functions.
+- type: entity
+  id: MobReplicatorTier2Alt
+  name: defender
+  parent: BaseMobReplicator
+  categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
+  suffix: Level 2 Alt
+  components:
+  - type: CombatMode
+  - type: Replicator
+    upgradeStage: 1
+    upgradeActions:
+    - ActionReplicatorUpgrade3
+    readyToUpgradeMessage: replicator-upgrade-t2
+  - type: Puller
+    needsHands: false
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2 # same as slime
+    baseSprintSpeed: 4
+    weightlessFriction: 1
+    weightlessFrictionNoInput: 2
+    weightlessAcceleration: 1.2
+  - type: MovementAlwaysTouching
+  - type: Sprite
+    granularLayersRendering: true
+    drawDepth: Mobs
+    sprite: _Impstation/Mobs/Replicator/replicator.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive_level2alt
+    - map: ["enum.ReplicatorVisuals.Combat"]
+      state: combat_level2alt
+      shader: unshaded
+      visible: false
+  - type: NoSlip
+  - type: DamageStateVisuals
+    rotate: false
+    states:
+      Alive:
+        Base: alive_level2alt
+      Dead:
+        Base: dead_level2
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Replicator2
+  - type: Body
+    prototype: Replicator2
+  - type: Loadout
+    prototypes:
+      - StartingGearReplicatorT2Alt
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Replicator
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+
+# Tier 3: These guys are tanks. Their job is to tear shit apart and kill things. They're slow, tanky, and have a weapon that does 25 blunt 30 struct.
 - type: entity
   id: MobReplicatorTier3
-  name: defender
+  name: protector
   parent: BaseMobReplicator
   categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
   description: Oh boy.
@@ -284,6 +357,7 @@
   - type: Puller
     needsHands: false
     applySpeedModifier: false
+  - type: MovementAlwaysTouching
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.5 # these fellas are the tanks, they rely on the smaller guys stunning things for them.
     baseSprintSpeed: 4
@@ -315,3 +389,9 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Replicator3
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Replicator
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon

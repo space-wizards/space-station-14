@@ -15,7 +15,7 @@ public sealed partial class ReplicatorComponent : Component
     /// The duration for which a replicator of this type will be stunned upon recieving an EMP effect.
     /// </summary>
     [DataField]
-    public TimeSpan EmpStunTime = TimeSpan.FromSeconds(5);
+    public TimeSpan EmpStunTime = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// If a replicator is Queen, it will spawn a nest when it spawns.
@@ -30,11 +30,6 @@ public sealed partial class ReplicatorComponent : Component
     public int UpgradeStage;
 
     /// <summary>
-    /// Used in determining what action should be granted on leveling up the nest.
-    /// </summary>
-    public int TargetUpgradeStage;
-
-    /// <summary>
     /// Used to store related replicators on a queen after the nest is destroyed, so they can be transferred to the new nest.
     /// </summary>
     public HashSet<Entity<ReplicatorComponent>> RelatedReplicators = [];
@@ -44,17 +39,18 @@ public sealed partial class ReplicatorComponent : Component
     /// </summary>
     public EntityUid? MyNest = null;
 
+    /// <summary>
+    /// actions granted when this replicator is ready to upgrade
+    /// </summary>
     [DataField]
-    public EntProtoId Level2Id = "MobReplicatorTier2";
+    public HashSet<EntProtoId> UpgradeActions = [];
 
+    /// <summary>
+    /// locid for the message that gets displayed when a replicator is ready to upgrade. -self and -others are automatically appended to it when relevant
+    /// this is a string because this exact locid doesn't actually exist.
+    /// </summary>
     [DataField]
-    public EntProtoId Level3Id = "MobReplicatorTier3";
-
-    [DataField]
-    public EntProtoId Level2Action = "ActionReplicatorUpgrade2";
-
-    [DataField]
-    public EntProtoId Level3Action = "ActionReplicatorUpgrade3";
+    public string ReadyToUpgradeMessage = "replicator-upgrade-t1";
 
     /// <summary>
     /// The action to spawn a new nest.
@@ -66,6 +62,7 @@ public sealed partial class ReplicatorComponent : Component
     public HashSet<EntityUid?> Actions = [];
 
     public bool HasSpawnedNest;
+    public bool HasBeenGivenUpgradeActions;
 }
 
 [Serializable, NetSerializable]

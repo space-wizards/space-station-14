@@ -45,6 +45,6 @@
   - type: ReplicatorNestPointsStorage
   - type: AmbientSound
     volume: +2
-    range: 6
+    range: 2
     sound:
       path: /Audio/_Impstation/Ambience/replicator_ambiance.ogg

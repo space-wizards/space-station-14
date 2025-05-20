@@ -172,7 +172,7 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
 
             livingReplicators.Add((replicator, replicatorComp));
 
-            _popup.PopupEntity(Loc.GetString("replicator-nest-destroyed"), replicator, replicator);
+            _popup.PopupEntity(Loc.GetString("replicator-nest-destroyed"), replicator, replicator, Shared.Popups.PopupType.LargeCaution);
         }
 
         // if there are living replicators, select one and give the action to create a new nest.

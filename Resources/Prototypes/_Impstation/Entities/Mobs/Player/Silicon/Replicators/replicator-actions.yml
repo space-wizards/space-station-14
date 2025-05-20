@@ -11,25 +11,51 @@
     icon: _Impstation/Interface/Actions/spawn_nest.png
     event: !type:ReplicatorSpawnNestActionEvent
     useDelay: 20
+  - type: ConfirmableAction
+    popup: replicator-nest-confirm
+
+- type: entity
+  id: BaseReplicatorLevelupAction
+  categories: [HideSpawnMenu]
+  components:
+  - type: ConfirmableAction
+    popup: replicator-levelup-confirm
 
 - type: entity
   id: ActionReplicatorUpgrade2
-  name: Upgrade (Tier 2)
+  parent: BaseReplicatorLevelupAction
+  name: Upgrade (Deconstructor)
   description: Gather nanites. Gain manipulation.
   components:
   - type: InstantAction
     itemIconStyle: NoItem
     icon: _Impstation/Interface/Actions/replicator_level2.png
-    event: !type:ReplicatorUpgrade2ActionEvent
+    event: !type:ReplicatorUpgradeActionEvent
+      nextStage: MobReplicatorTier2
+    useDelay: 20
+
+- type: entity
+  id: ActionReplicatorUpgrade2Alt
+  parent: BaseReplicatorLevelupAction
+  name: Upgrade (Defender)
+  description: Gather nanites. Gain weaponry.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon: _Impstation/Interface/Actions/replicator_level2alt.png
+    event: !type:ReplicatorUpgradeActionEvent
+      nextStage: MobReplicatorTier2Alt
     useDelay: 20
 
 - type: entity
   id: ActionReplicatorUpgrade3
-  name: Upgrade (Tier 3)
+  parent: BaseReplicatorLevelupAction
+  name: Upgrade (Protector)
   description: Gather nanites. Become stronger.
   components:
   - type: InstantAction
     itemIconStyle: NoItem
     icon: _Impstation/Interface/Actions/replicator_level3.png
-    event: !type:ReplicatorUpgrade3ActionEvent
+    event: !type:ReplicatorUpgradeActionEvent
+      nextStage: MobReplicatorTier3
     useDelay: 20
