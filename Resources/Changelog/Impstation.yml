@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Kandiyaki
-  changes:
-  - message: ashen passage's sound has a much larger radius.
-    type: Tweak
-  - message: ashen passage will heat the user directly upon exiting. sorry, atmos-heads.
-    type: Tweak
-  - message: the flask ritual should accept all water tanks now.
-    type: Fix
-  - message: the madness mask should accept all masks now.
-    type: Fix
-  - message: the codex & knowledge rituals should show their names correctly.
-    type: Fix
-  id: 1203
-  time: '2025-02-25T21:27:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1678
 - author: DinnerCalzone
   changes:
   - message: Convex has been derotated to reduce map maintenance load.
@@ -4232,3 +4217,11 @@
   id: 1702
   time: '2025-05-20T23:21:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2530
+- author: Darkmajia
+  changes:
+  - message: Robotic arms now have a consistent power draw, rather than increasing
+      while moving. This may help alleviate light flickering issues, but no prommies.
+    type: Tweak
+  id: 1703
+  time: '2025-05-20T23:23:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2526
