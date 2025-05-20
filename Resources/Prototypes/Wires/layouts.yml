@@ -72,6 +72,10 @@
   dummyWires: 2
 
 - type: wireLayout
+  parent: Turnstile
+  id: TUrnstileGenpop
+
+- type: wireLayout
   id: Vending
   wires:
   - !type:AiInteractWireAction
@@ -217,7 +221,7 @@
   - !type:PowerWireAction
   - !type:AiInteractWireAction
   - !type:AccessWireAction
-  
+
 - type: wireLayout
   id: WeaponEnergyTurret
   dummyWires: 4
@@ -227,7 +231,7 @@
     pulseTimeout: 15
   - !type:AiInteractWireAction
   - !type:AccessWireAction
-  
+
 - type: wireLayout
   id: TurretControls
   dummyWires: 2
@@ -236,4 +240,4 @@
   - !type:PowerWireAction
     pulseTimeout: 15
   - !type:AiInteractWireAction
-  - !type:AccessWireAction 
+  - !type:AccessWireAction
