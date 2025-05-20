@@ -85,12 +85,12 @@
       - BuzzochloricBees
       - Amatoxin
       - Tazinide
+      - Nollazine
     - quantity: 5
       weight: 2.5
       reagents:
       - Lexorin
       - Lead
-      - Nollazine
 
 - type: entity
   name: strange pill
