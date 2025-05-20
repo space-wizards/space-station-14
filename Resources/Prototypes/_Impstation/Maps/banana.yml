@@ -3,7 +3,7 @@
   mapName: 'Banana'
   mapPath: /Maps/_Impstation/banana.yml
   minPlayers: 0
-  maxPlayers: 18
+  maxPlayers: 22
   stations:
     Banana:
       stationProto: StandardNanotrasenStation
@@ -29,7 +29,7 @@
             HeadOfSecurity: [ 1, 1 ]
             HospitalityDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            # service - 7
+            # service - 8
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 1 ]
             Chef: [ 1, 1 ]
@@ -37,6 +37,7 @@
             Janitor: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
+            Chaplain: [ 1, 1 ]
             # engineering - 2-3
             AtmosphericTechnician: [ 1, 1 ]
             StationEngineer: [ 1, 1 ]
