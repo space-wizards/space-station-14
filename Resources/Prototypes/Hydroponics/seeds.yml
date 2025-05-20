@@ -1270,10 +1270,10 @@
   plantRsi: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
   packetPrototype: AmbrosiaVulgarisSeeds
   productPrototypes:
-    - FoodAmbrosiaVulgaris
+  - FoodAmbrosiaVulgaris
   mutationPrototypes:
-    - ambrosiaDeus
-    - ambrosiaHorribilis
+  - ambrosiaDeus
+  - ambrosiaHorribilis
   lifespan: 25
   maturation: 10
   production: 3
@@ -1345,11 +1345,11 @@
   plantRsi: Objects/Specific/Hydroponics/ambrosia_horribilis.rsi
   packetPrototype: AmbrosiaHorribilisSeeds
   productPrototypes:
-    - FoodAmbrosiaHorribilis
-  lifespan: 5
+  - FoodAmbrosiaHorribilis
+  lifespan: 25
   maturation: 10
   production: 3
-  yield: 4
+  yield: 3
   potency: 10
   growthStages: 4
   waterConsumption: 0.30
