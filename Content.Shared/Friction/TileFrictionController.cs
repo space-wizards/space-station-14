@@ -55,10 +55,8 @@ namespace Content.Shared.Friction
         {
             base.UpdateBeforeMapSolve(prediction, mapComponent, frameTime);
 
-            foreach (var body in mapComponent.AwakeBodies)
+            foreach (var (uid, body) in mapComponent.AwakeBodies)
             {
-                var uid = body.Owner;
-
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
                 // We may want to instead only apply friction to dynamic entities and not mobs ever.
                 if (prediction && !body.Predict || _mover.UseMobMovement(uid))
