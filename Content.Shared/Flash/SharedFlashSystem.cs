@@ -1,25 +1,25 @@
-using Content.Shared.Flash.Components;
-using Content.Shared.StatusEffect;
-using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
-using Content.Shared.Light;
-using System.Linq;
-using Content.Shared.Popups;
-using Content.Shared.Stunnable;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
+using Content.Shared.Examine;
 using Content.Shared.Eye.Blinding.Components;
+using Content.Shared.Flash.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
+using Content.Shared.Light;
+using Content.Shared.Popups;
+using Content.Shared.StatusEffect;
+using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Weapons.Melee.Events;
-using Content.Shared.Examine;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Shared.Flash;
 
