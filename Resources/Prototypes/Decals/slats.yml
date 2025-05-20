@@ -1,0 +1,83 @@
+- type: decal
+  id: SteelVerticalSlatSingleE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/slats.rsi
+    state: single_steel_e
+
+- type: decal
+  id: SteelVerticalSlatSingleW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/slats.rsi
+    state: single_steel_w
+
+- type: decal
+  id: DarkVerticalSlatSingleE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/slats.rsi
+    state: single_dark_e
+
+- type: decal
+  id: DarkVerticalSlatSingleW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/slats.rsi
+    state: single_dark_w
+
+- type: decal
+  id: WhiteVerticalSlatSingleE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/slats.rsi
+    state: single_white_e
+
+- type: decal
+  id: WhiteVerticalSlatSingleW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/slats.rsi
+    state: single_white_w
+
+- type: decal
+  id: SteelVerticalSlatDoubleE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/slats.rsi
+    state: double_steel_e
+
+- type: decal
+  id: SteelVerticalSlatDoubleW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/slats.rsi
+    state: double_steel_w
+
+- type: decal
+  id: DarkVerticalSlatDoubleE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/slats.rsi
+    state: double_dark_e
+
+- type: decal
+  id: DarkVerticalSlatDoubleW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/slats.rsi
+    state: double_dark_w
+
+- type: decal
+  id: WhiteVerticalSlatDoubleE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/slats.rsi
+    state: double_white_e
+
+- type: decal
+  id: WhiteVerticalSlatDoubleW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/slats.rsi
+    state: double_white_w
