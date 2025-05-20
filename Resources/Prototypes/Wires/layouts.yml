@@ -62,14 +62,11 @@
 - type: wireLayout
   id: Turnstile
   wires:
-  - !type:PowerWireAction
-  - !type:PowerWireAction
-    pulseTimeout: 15
   - !type:LogWireAction
   - !type:DoorBoltWireAction
   - !type:DoorBoltLightWireAction
   - !type:AiInteractWireAction
-  dummyWires: 2
+  dummyWires: 4
 
 - type: wireLayout
   parent: Turnstile
