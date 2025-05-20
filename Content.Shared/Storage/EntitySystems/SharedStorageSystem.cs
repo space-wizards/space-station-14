@@ -42,6 +42,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Rounding;
+using Robust.Shared.Collections;
 using Robust.Shared.Map.Enumerators;
 
 namespace Content.Shared.Storage.EntitySystems;
@@ -1327,9 +1328,10 @@ public abstract class SharedStorageSystem : EntitySystem
         // So if we have an item that occupies 0,0 we can assume that the tile itself we're checking
         // is always in its shapes regardless of angle. This matches virtually every item in the game and
         // means we can skip getting the item's rotated shape at all if the tile is occupied.
-        // This mostly makes heavy checks (e.g. area insert) much faster.
+        // This mostly makes heavy checks (e.g. area insert) much, much faster.
         var fastPath = false;
         var itemShape = ItemSystem.GetItemShape(itemEnt);
+        var fastAngles = itemShape.Count == 1;
 
         foreach (var shape in itemShape)
         {
@@ -1341,6 +1343,24 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         var chunkEnumerator = new ChunkIndicesEnumerator(storageBounding, StorageComponent.ChunkSize);
+        var angles = new ValueList<Angle>();
+
+        // TODO: Could also have a variant that only checks 1 angle.
+        if (!fastAngles)
+        {
+            angles.Clear();
+
+            for (var angle = startAngle; angle <= Angle.FromDegrees(360 - startAngle); angle += Math.PI / 2f)
+            {
+                angles.Add(angle);
+            }
+        }
+        else
+        {
+            // Only need to check 2 angles for a rectangle.
+            angles.Add(startAngle);
+            angles.Add(startAngle + Angle.FromDegrees(90));
+        }
 
         while (chunkEnumerator.MoveNext(out var storageChunk))
         {
@@ -1356,10 +1376,11 @@ public abstract class SharedStorageSystem : EntitySystem
             {
                 for (var x = left; x <= right; x++)
                 {
-                    for (var angle = startAngle; angle <= Angle.FromDegrees(360 - startAngle); angle += Math.PI / 2f)
+                    foreach (var angle in angles)
                     {
                         var position = new Vector2i(x, y);
 
+                        // This bit of code is how area inserts go from tanking frames to being negligible.
                         if (fastPath)
                         {
                             var flag = SharedMapSystem.ToBitmask(position, StorageComponent.ChunkSize);
