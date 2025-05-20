@@ -10,6 +10,11 @@ namespace Content.Shared.Starlight.Avali.Events;
 public enum AvaliStasisAnimationType
 {
     /// <summary>
+    /// Animation played when preparing stasis
+    /// </summary>
+    Prepare,
+    
+    /// <summary>
     /// Animation played when entering stasis
     /// </summary>
     Enter,

@@ -26,7 +26,6 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TimedDespawnComponent, ComponentShutdown>(OnTimedDespawnShutdown);
         SubscribeNetworkEvent<AvaliStasisAnimationEvent>(OnStasisAnimation);
     }
 
@@ -41,10 +40,12 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
 
         switch (ev.AnimationType)
         {
-            case AvaliStasisAnimationType.Enter:
+            case AvaliStasisAnimationType.Prepare:
                 _popupSystem.PopupEntity(Loc.GetString("avali-stasis-entering"), entity, PopupType.Medium);
+                StasisPrepareAnimation(entity, comp);
+                break;
+            case AvaliStasisAnimationType.Enter:
                 StasisEnterAnimation(entity, comp);
-                _continuousEffect = entity;
                 break;
             case AvaliStasisAnimationType.Exit:
                 _popupSystem.PopupEntity(Loc.GetString("avali-stasis-exiting"), entity, PopupType.Medium);
@@ -54,31 +55,30 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
         }
     }
 
-    private void OnTimedDespawnShutdown(EntityUid uid, TimedDespawnComponent component, ComponentShutdown args)
-    {
-        if (uid != _enterEffect)
-            return;
-
-        _enterEffect = null;
-        if (_continuousEffect != null && TryComp<AvaliStasisComponent>(_continuousEffect, out var comp))
-        {
-            StartStasisContinuousAnimation(_continuousEffect.Value, comp);
-        }
-    }
-
-    private void StasisEnterAnimation(EntityUid uid, AvaliStasisComponent comp)
+    private void StasisPrepareAnimation(EntityUid uid, AvaliStasisComponent comp)
     {
         EnsureComp<TransformComponent>(uid, out var xform);
         var effectEnt = SpawnAttachedTo(comp.StasisEnterEffect, xform.Coordinates);
         _xformSystem.SetParent(effectEnt, uid);
-        EnsureComp<TimedDespawnComponent>(effectEnt, out var despawnEffectEntComp);
-        despawnEffectEntComp.Lifetime = comp.StasisEnterEffectLifetime;
+        RemComp<TimedDespawnComponent>(effectEnt);
         if (TryComp<SpriteComponent>(effectEnt, out var sprite))
         {
             sprite.DrawDepth = (int) DrawDepth.Effects;
+            sprite.NoRotation = true;
+            sprite.Visible = TryComp<SpriteComponent>(uid, out var parentSprite) && parentSprite.Visible;
         }
         _audioSystem.PlayPvs(comp.StasisEnterSound, effectEnt);
         _enterEffect = effectEnt;
+    }
+    
+    private void StasisEnterAnimation(EntityUid uid, AvaliStasisComponent comp)
+    {
+        if (_enterEffect != null)
+        {
+            QueueDel(_enterEffect.Value);
+            _enterEffect = null;
+        }
+        StartStasisContinuousAnimation(uid, comp);
     }
 
     private void StasisExitAnimation(EntityUid uid, AvaliStasisComponent comp)
@@ -91,8 +91,16 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
         if (TryComp<SpriteComponent>(effectEnt, out var sprite))
         {
             sprite.DrawDepth = (int) DrawDepth.Effects;
+            sprite.NoRotation = true;
+            sprite.Visible = TryComp<SpriteComponent>(uid, out var parentSprite) && parentSprite.Visible;
         }
         _audioSystem.PlayPvs(comp.StasisExitSound, effectEnt);
+
+        // Restore entity visibility
+        if (TryComp<SpriteComponent>(uid, out var entitySprite))
+        {
+            entitySprite.Color = entitySprite.Color.WithAlpha(1f);
+        }
     }
 
     private void StartStasisContinuousAnimation(EntityUid uid, AvaliStasisComponent comp)
@@ -107,6 +115,14 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
         if (TryComp<SpriteComponent>(effectEnt, out var sprite))
         {
             sprite.DrawDepth = (int) DrawDepth.Effects;
+            sprite.NoRotation = true;
+            sprite.Visible = TryComp<SpriteComponent>(uid, out var parentSprite) && parentSprite.Visible;
+        }
+
+        // Make the entity fully transparent
+        if (TryComp<SpriteComponent>(uid, out var entitySprite))
+        {
+            entitySprite.Color = entitySprite.Color.WithAlpha(0f);
         }
 
         _continuousEffect = effectEnt;

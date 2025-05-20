@@ -11,7 +11,7 @@
     icon:
       sprite: _Starlight/Interface/Actions/actions_avali.rsi 
       state: heal
-    event: !type:AvaliEnterStasisActionEvent
+    event: !type:AvaliPrepareStasisActionEvent
     useDelay: 1
 
 - type: entity
