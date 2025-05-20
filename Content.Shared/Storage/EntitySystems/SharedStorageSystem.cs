@@ -1346,7 +1346,6 @@ public abstract class SharedStorageSystem : EntitySystem
         var chunkEnumerator = new ChunkIndicesEnumerator(storageBounding, StorageComponent.ChunkSize);
         var angles = new ValueList<Angle>();
 
-        // TODO: Could also have a variant that only checks 1 angle.
         if (!fastAngles)
         {
             angles.Clear();
@@ -1358,10 +1357,17 @@ public abstract class SharedStorageSystem : EntitySystem
         }
         else
         {
-            // Only need to check 2 angles for a rectangle.
+            var shape = itemShape.First();
+
+            // At least 1 check for a square.
             angles.Add(startAngle);
-            // Idk if there's a preferred facing but + or - 90 pick one.
-            angles.Add(startAngle + Angle.FromDegrees(90));
+
+            // If it's a rectangle make it 2.
+            if (shape.Width != shape.Height)
+            {
+                // Idk if there's a preferred facing but + or - 90 pick one.
+                angles.Add(startAngle + Angle.FromDegrees(90));
+            }
         }
 
         while (chunkEnumerator.MoveNext(out var storageChunk))
