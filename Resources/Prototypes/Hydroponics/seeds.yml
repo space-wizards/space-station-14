@@ -1362,7 +1362,7 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
-    Lipolicide: 
+    Lipolicide:
       Min: 1
       Max: 5
       PotencyDivisor: 10
