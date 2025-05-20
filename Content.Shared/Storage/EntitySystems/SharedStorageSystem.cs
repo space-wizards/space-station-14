@@ -1359,6 +1359,7 @@ public abstract class SharedStorageSystem : EntitySystem
         {
             // Only need to check 2 angles for a rectangle.
             angles.Add(startAngle);
+            // Idk if there's a preferred facing but + or - 90 pick one.
             angles.Add(startAngle + Angle.FromDegrees(90));
         }
 
@@ -1370,7 +1371,10 @@ public abstract class SharedStorageSystem : EntitySystem
             var bottom = Math.Max(storageChunkOrigin.Y, storageBounding.Bottom);
             var top = Math.Min(storageChunkOrigin.Y + StorageComponent.ChunkSize - 1, storageBounding.Top);
             var right = Math.Min(storageChunkOrigin.X + StorageComponent.ChunkSize - 1, storageBounding.Right);
-            var occupied = storageEnt.Comp.OccupiedGrid.GetValueOrDefault(storageChunkOrigin);
+
+            // No data so assume empty.
+            if (!storageEnt.Comp.OccupiedGrid.TryGetValue(storageChunkOrigin, out var occupied))
+                continue;
 
             for (var y = bottom; y <= top; y++)
             {
@@ -1577,7 +1581,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(storageEnt, ref storageEnt.Comp))
             return false;
 
-        var chunkOrigin = SharedMapSystem.GetChunkIndices(location, StorageComponent.ChunkSize);
+        var chunkOrigin = SharedMapSystem.GetChunkIndices(location, StorageComponent.ChunkSize) * StorageComponent.ChunkSize;
 
         // No entry so assume it's occupied.
         if (!storageEnt.Comp.OccupiedGrid.TryGetValue(chunkOrigin, out var occupiedMask))
@@ -1613,7 +1617,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 for (var y = box.Bottom; y <= box.Top; y++)
                 {
                     var index = new Vector2i(x, y);
-                    var chunkOrigin = SharedMapSystem.GetChunkIndices(index, StorageComponent.ChunkSize);
+                    var chunkOrigin = SharedMapSystem.GetChunkIndices(index, StorageComponent.ChunkSize) * StorageComponent.ChunkSize;
                     var chunkRelative = SharedMapSystem.GetChunkRelative(index, StorageComponent.ChunkSize);
 
                     // If we can't find the flag mark the entire thing as occupied
@@ -1697,7 +1701,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 for (var y = box.Bottom; y <= box.Top; y++)
                 {
                     var index = new Vector2i(x, y);
-                    var chunkOrigin = SharedMapSystem.GetChunkIndices(index, StorageComponent.ChunkSize);
+                    var chunkOrigin = SharedMapSystem.GetChunkIndices(index, StorageComponent.ChunkSize) * StorageComponent.ChunkSize;
                     var chunkRelative = SharedMapSystem.GetChunkRelative(index, StorageComponent.ChunkSize);
                     var existing = storageEnt.Comp.OccupiedGrid.GetOrNew(chunkOrigin);
                     var flag = SharedMapSystem.ToBitmask(chunkRelative, StorageComponent.ChunkSize);
