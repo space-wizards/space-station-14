@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Velken
-  changes:
-  - message: Wizards now have their own unique magical pen.
-    type: Add
-  id: 8035
-  time: '2025-03-03T15:54:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35623
 - author: rokudara-sen
   changes:
   - message: Particle decelerators now drain an additional percentage of a singularity's
@@ -3919,3 +3912,11 @@
   id: 8537
   time: '2025-05-20T13:04:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37327
+- author: Kittygyat
+  changes:
+  - message: Added a new, faster way for slimepeople to access their own special inventory,
+      with LMB.
+    type: Add
+  id: 8538
+  time: '2025-05-20T16:55:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37592
