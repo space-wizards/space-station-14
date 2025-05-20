@@ -8,10 +8,8 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Voting;
-using Robust.Server;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Voting
 {
@@ -154,6 +152,7 @@ namespace Content.Server.Voting
     public sealed class VoteCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IVoteManager _voteManager = default!;
+
         public override string Command => "vote";
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
