@@ -202,7 +202,7 @@
     transferName: true
     transferDamage: false
     inventory: None
-    duration: 1
+    duration: 1.25
     forced: true
     revertOnCrit: false
     revertOnDeath: false
