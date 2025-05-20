@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Slime bubble and vox chitter emotes should now use positional audio properly.
-    type: Fix
-  id: 1198
-  time: '2025-02-25T14:25:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1779
 - author: widgetbeck
   changes:
   - message: Added a guidebook section on Ghostroles. Embrace the wikification of
@@ -4235,3 +4228,10 @@
   id: 1697
   time: '2025-05-19T00:32:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2452
+- author: SixValentine
+  changes:
+  - message: Luna science and engineering raves have been removed
+    type: Fix
+  id: 1698
+  time: '2025-05-20T09:13:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2527
