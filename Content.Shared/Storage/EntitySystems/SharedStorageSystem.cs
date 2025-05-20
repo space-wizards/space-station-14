@@ -1609,26 +1609,7 @@ public abstract class SharedStorageSystem : EntitySystem
     protected void UpdateOccupied(Entity<StorageComponent> ent)
     {
         ent.Comp.OccupiedGrid.Clear();
-
-        foreach (var box in ent.Comp.Grid)
-        {
-            for (var x = box.Left; x <= box.Right; x++)
-            {
-                for (var y = box.Bottom; y <= box.Top; y++)
-                {
-                    var index = new Vector2i(x, y);
-                    var chunkOrigin = SharedMapSystem.GetChunkIndices(index, StorageComponent.ChunkSize) * StorageComponent.ChunkSize;
-                    var chunkRelative = SharedMapSystem.GetChunkRelative(index, StorageComponent.ChunkSize);
-
-                    // If we can't find the flag mark the entire thing as occupied
-                    var existing = ent.Comp.OccupiedGrid.GetValueOrDefault(chunkOrigin, ulong.MaxValue);
-
-                    var flag = SharedMapSystem.ToBitmask(chunkRelative, StorageComponent.ChunkSize);
-                    existing &= ~flag;
-                    ent.Comp.OccupiedGrid[chunkOrigin] = existing;
-                }
-            }
-        }
+        RemoveOccupied(ent.Comp.Grid, ent.Comp.OccupiedGrid);
 
         Dirty(ent);
 
@@ -1652,6 +1633,41 @@ public abstract class SharedStorageSystem : EntitySystem
     {
         var adjustedShape = ItemSystem.GetAdjustedItemShape((itemEnt.Owner, itemEnt.Comp), location);
         GetOccupied(adjustedShape, occupied);
+    }
+
+    private void RemoveOccupied(IReadOnlyList<Box2i> adjustedShape, Dictionary<Vector2i, ulong> occupied)
+    {
+        foreach (var box in adjustedShape)
+        {
+            var chunks = new ChunkIndicesEnumerator(box, StorageComponent.ChunkSize);
+
+            while (chunks.MoveNext(out var chunk))
+            {
+                var chunkOrigin = chunk.Value * StorageComponent.ChunkSize;
+
+                var left = Math.Max(box.Left, chunkOrigin.X);
+                var bottom = Math.Max(box.Bottom, chunkOrigin.Y);
+                var right = Math.Min(box.Right, chunkOrigin.X + StorageComponent.ChunkSize - 1);
+                var top = Math.Min(box.Top, chunkOrigin.Y + StorageComponent.ChunkSize - 1);
+                var existing = occupied.GetValueOrDefault(chunkOrigin, ulong.MaxValue);
+
+                // Unmark all of the tiles that we actually have.
+                for (var x = left; x <= right; x++)
+                {
+                    for (var y = bottom; y <= top; y++)
+                    {
+                        var index = new Vector2i(x, y);
+                        var chunkRelative = SharedMapSystem.GetChunkRelative(index, StorageComponent.ChunkSize);
+
+                        var flag = SharedMapSystem.ToBitmask(chunkRelative, StorageComponent.ChunkSize);
+                        existing &= ~flag;
+                    }
+                }
+
+                // My kingdom for collections.marshal
+                occupied[chunkOrigin] = existing;
+            }
+        }
     }
 
     private void GetOccupied(IReadOnlyList<Box2i> adjustedShape, Dictionary<Vector2i, ulong> occupied)
@@ -1694,22 +1710,7 @@ public abstract class SharedStorageSystem : EntitySystem
     {
         var adjustedShape = ItemSystem.GetAdjustedItemShape((itemEnt.Owner, itemEnt.Comp), location);
 
-        foreach (var box in adjustedShape)
-        {
-            for (var x = box.Left; x <= box.Right; x++)
-            {
-                for (var y = box.Bottom; y <= box.Top; y++)
-                {
-                    var index = new Vector2i(x, y);
-                    var chunkOrigin = SharedMapSystem.GetChunkIndices(index, StorageComponent.ChunkSize) * StorageComponent.ChunkSize;
-                    var chunkRelative = SharedMapSystem.GetChunkRelative(index, StorageComponent.ChunkSize);
-                    var existing = storageEnt.Comp.OccupiedGrid.GetOrNew(chunkOrigin);
-                    var flag = SharedMapSystem.ToBitmask(chunkRelative, StorageComponent.ChunkSize);
-                    existing &= ~flag;
-                    storageEnt.Comp.OccupiedGrid[chunkOrigin] = existing;
-                }
-            }
-        }
+        RemoveOccupied(adjustedShape, storageEnt.Comp.OccupiedGrid);
 
         Dirty(storageEnt);
     }
