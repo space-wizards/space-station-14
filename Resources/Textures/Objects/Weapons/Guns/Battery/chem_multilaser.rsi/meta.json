@@ -14,6 +14,9 @@
             "name": "base"
         },
         {
+            "name": "tank"
+        },
+        {
             "name": "mag-unshaded-0"
         },
         {
@@ -29,35 +32,11 @@
             "name": "mag-unshaded-4"
         },
         {
-            "name": "inhand-left-0",
+            "name": "wielded-inhand-left",
             "directions": 4
         },
         {
-            "name": "inhand-right-0",
-            "directions": 4
-        },
-        {
-            "name": "inhand-left-1",
-            "directions": 4
-        },
-        {
-            "name": "inhand-right-1",
-            "directions": 4
-        },
-        {
-            "name": "inhand-left-2",
-            "directions": 4
-        },
-        {
-            "name": "inhand-right-2",
-            "directions": 4
-        },
-        {
-            "name": "inhand-left-3",
-            "directions": 4
-        },
-        {
-            "name": "inhand-right-3",
+            "name": "wielded-inhand-right",
             "directions": 4
         },
         {

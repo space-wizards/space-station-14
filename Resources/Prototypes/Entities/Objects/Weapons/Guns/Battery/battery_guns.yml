@@ -862,7 +862,7 @@
     proto: RedHeavyLaser
 
 - type: entity
-  name: cybersun chem-laser
+  name: gorlex chem-laser
   parent: [ BaseWeaponPowerCell, BaseGunWieldable, BaseSyndicateContraband ]
   id: WeaponChemLaser
   description: #add description
@@ -875,6 +875,12 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+    - state: tank
+      map: [ "tank" ]
+      visible: false
+  - type: PneumaticCannon
+    gasUsage: 0.08
+    throwItems: false
   - type: Item
     size: Large
     shape:
@@ -888,10 +894,9 @@
     fireRate: 2.2
     selectedMode: FullAuto
     availableModes:
-    - SemiAuto
     - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
     proto: ChemicalLaser
     fireCost: 25
@@ -901,9 +906,42 @@
     slots:
     - Back
     - suitStorage
+  - type: ItemMapper
+    containerWhitelist: [gas_tank]
+    mapLayers:
+      tank:
+        whitelist:
+          components:
+          - GasTank
+  - type: ItemSlots
+    slots:
+      gas_tank:
+        startingItem: GorlexPlasmaCellFilled
+        name: pneumatic-cannon-component-itemslot-name
+        whitelist:
+          components:
+          - GasTank
+        insertSound:
+          path: /Audio/Weapons/click.ogg
+          params:
+            volume: -3
+      cell_slot:
+        name: Magazine
+        startingItem: PowerCellSmall
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+            - PowerCell
+            - PowerCellSmall
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      gas_tank: !type:ContainerSlot
 
 - type: entity
-  name: cybersun chem-multilaser
+  name: gorlex chem-multilaser
   parent: [ BaseWeaponPowerCell, BaseGunWieldable, BaseSyndicateContraband ]
   id: WeaponChemMultilaser
   description: #add description
@@ -916,6 +954,12 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+    - state: tank
+      map: [ "tank" ]
+      visible: false
+  - type: PneumaticCannon
+    gasUsage: 0.02
+    throwItems: false
   - type: Item
     size: Large
     shape:
@@ -938,7 +982,9 @@
     availableModes:
     - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      params:
+        volume: -2
   - type: HitscanBatteryAmmoProvider
     proto: ChemicalMultilaser
     fireCost: 8
@@ -949,3 +995,36 @@
     - Back
     - Belt
     - suitStorage
+  - type: ItemMapper
+    containerWhitelist: [gas_tank]
+    mapLayers:
+      tank:
+        whitelist:
+          components:
+          - GasTank
+  - type: ItemSlots
+    slots:
+      gas_tank:
+        startingItem: GorlexPlasmaCellFilled
+        name: pneumatic-cannon-component-itemslot-name
+        whitelist:
+          components:
+          - GasTank
+        insertSound:
+          path: /Audio/Weapons/click.ogg
+          params:
+            volume: -3
+      cell_slot:
+        name: Magazine
+        startingItem: PowerCellSmall
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+            - PowerCell
+            - PowerCellSmall
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      gas_tank: !type:ContainerSlot
