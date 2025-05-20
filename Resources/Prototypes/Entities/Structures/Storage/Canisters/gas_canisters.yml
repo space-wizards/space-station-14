@@ -118,6 +118,8 @@
   id: StorageCanister
   name: storage canister
   components:
+    - type: OverrideSell
+      overrideAccount: Engineering
     - type: Sprite
       layers:
         - state: yellow

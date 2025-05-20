@@ -6,7 +6,7 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 3600 #1 hr
+      time: 18000 #5 hrs
     - !type:RoleTimeRequirement
       role: JobDetective
       time: 3600 #1 hr, knowing how to use the tools is important
@@ -15,7 +15,7 @@
       time: 18000 #5 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hrs
+      time: 54000 # 15 hours
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"
