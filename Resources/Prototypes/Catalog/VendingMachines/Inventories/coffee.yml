@@ -1,12 +1,19 @@
 - type: vendingMachineInventory
   id: HotDrinksMachineInventory
   startingInventory:
-    DrinkHotCoffee: 5
-    DrinkCafeLatte: 5
-    DrinkTeacup: 5
-    DrinkGreenTea: 5
-    DrinkHotCoco: 5
+    - id: DrinkHotCoffee
+      amount: 5
+    - id: DrinkCafeLatte
+      amount: 5
+    - id: DrinkTeacup
+      amount: 5
+    - id: DrinkGreenTea
+      amount: 5
+    - id: DrinkHotCoco
+      amount: 5
   contrabandInventory:
-    DrinkTeapot: 2
+    - id: DrinkTeapot
+      amount: 2
   emaggedInventory:
-    DrinkNothing: 2
+    - id: DrinkNothing
+      amount: 2

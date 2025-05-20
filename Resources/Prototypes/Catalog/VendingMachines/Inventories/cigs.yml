@@ -1,22 +1,39 @@
 - type: vendingMachineInventory
   id: CigaretteMachineInventory
   startingInventory:
-    CigPackGreen: 2
-    CigPackRed: 2
-    CigPackBlue: 2
-    CigPackBlack: 2
-    CigPackMixed: 2
-    CigarCase: 1
-    SmokingPipeFilledTobacco: 1
-    Vape: 1
-    Matchbox: 5
-    PackPaperRollingFilters: 3
-    CheapLighter: 4
-    Lighter: 2
-    FlippoLighter: 2
+    - id: CigPackGreen
+      amount: 2
+    - id: CigPackRed
+      amount: 2
+    - id: CigPackBlue
+      amount: 2
+    - id: CigPackBlack
+      amount: 2
+    - id: CigPackMixed
+      amount: 2
+    - id: CigarCase
+      amount: 1
+    - id: SmokingPipeFilledTobacco
+      amount: 1
+    - id: Vape
+      amount: 1
+    - id: Matchbox
+      amount: 5
+    - id: PackPaperRollingFilters
+      amount: 3
+    - id: CheapLighter
+      amount: 4
+    - id: Lighter
+      amount: 2
+    - id: FlippoLighter
+      amount: 2
   contrabandInventory:
-    GroundTobacco: 3
-    CigarGold: 2
-    Igniter: 1
+    - id: GroundTobacco
+      amount: 3
+    - id: CigarGold
+      amount: 2
+    - id: Igniter
+      amount: 1
   emaggedInventory:
-    CigPackSyndicate: 1
+    - id: CigPackSyndicate
+      amount: 1

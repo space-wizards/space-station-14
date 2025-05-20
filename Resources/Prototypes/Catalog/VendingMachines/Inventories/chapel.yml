@@ -1,35 +1,65 @@
 - type: vendingMachineInventory
   id: PietyVendInventory
   startingInventory:
-    ClothingUniformJumpsuitChaplain: 2
-    ClothingUniformJumpskirtChaplain: 2
-    ClothingUniformJumpsuitMonasticRobeDark: 1
-    ClothingUniformJumpsuitMonasticRobeLight: 1
-    ClothingNeckStoleChaplain: 1
-    ClothingOuterHoodieChaplain: 1
-    ClothingOuterHoodieBlack: 1
-    ClothingHeadHatHoodNunHood: 1
-    ClothingOuterNunRobe: 1
-    ClothingHeadHatFez: 1
-    ClothingHeadHatPlaguedoctor: 1
-    ClothingHeadHatWitch: 1
-    ClothingHeadHatWitch1: 1
-    ClothingOuterPlagueSuit: 1
-    ClothingMaskPlague: 1
-    ClothingHeadsetService: 2
-    BoxCandle: 2
-    BoxCandleSmall: 2
-    Urn: 5
-    Bible: 1
+    - id: ClothingUniformJumpsuitChaplain
+      amount: 2
+    - id: ClothingUniformJumpskirtChaplain
+      amount: 2
+    - id: ClothingUniformJumpsuitMonasticRobeDark
+      amount: 1
+    - id: ClothingUniformJumpsuitMonasticRobeLight
+      amount: 1
+    - id: ClothingNeckStoleChaplain
+      amount: 1
+    - id: ClothingOuterHoodieChaplain
+      amount: 1
+    - id: ClothingOuterHoodieBlack
+      amount: 1
+    - id: ClothingHeadHatHoodNunHood
+      amount: 1
+    - id: ClothingOuterNunRobe
+      amount: 1
+    - id: ClothingHeadHatFez
+      amount: 1
+    - id: ClothingHeadHatPlaguedoctor
+      amount: 1
+    - id: ClothingHeadHatWitch
+      amount: 1
+    - id: ClothingHeadHatWitch1
+      amount: 1
+    - id: ClothingOuterPlagueSuit
+      amount: 1
+    - id: ClothingMaskPlague
+      amount: 1
+    - id: ClothingHeadsetService
+      amount: 2
+    - id: BoxCandle
+      amount: 2
+    - id: BoxCandleSmall
+      amount: 2
+    - id: Urn
+      amount: 5
+    - id: Bible
+      amount: 1
   contrabandInventory:
-    FoodBakedBunHotX: 2
-    DrinkWineBottleFull: 1
-    ToyFigurineChaplain: 1
+    - id: FoodBakedBunHotX
+      amount: 2
+    - id: DrinkWineBottleFull
+      amount: 1
+    - id: ToyFigurineChaplain
+      amount: 1
   emaggedInventory:
-    ClothingOuterArmorCult: 1
-    ClothingHeadHelmetCult: 1
-    ClothingOuterRobesCult: 3
-    ClothingHeadHatHoodCulthood: 3
-    ClothingShoesCult: 4
-    BedsheetCult: 4
-    ClothingNeckScarfStripedBlack: 3
+    - id: ClothingOuterArmorCult
+      amount: 1
+    - id: ClothingHeadHelmetCult
+      amount: 1
+    - id: ClothingOuterRobesCult
+      amount: 3
+    - id: ClothingHeadHatHoodCulthood
+      amount: 3
+    - id: ClothingShoesCult
+      amount: 4
+    - id: BedsheetCult
+      amount: 4
+    - id: ClothingNeckScarfStripedBlack
+      amount: 3
