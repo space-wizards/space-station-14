@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urist McAvali
-  parent: BaseMobSpeciesOrganic
+  parent: [BaseMobSpeciesOrganic, BaseSpeciesPickupable]
   id: BaseMobAvali
   abstract: true
   components:
@@ -108,9 +108,9 @@
     damageOverlayGroups:
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
-        color: "#7a8bf2"
+        color: "#6C3BAA"
   - type: Bloodstream
-    bloodReagent: AmmoniaBlood
+    bloodReagent: AvaliBlood
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Weapons/pierce.ogg
@@ -141,13 +141,13 @@
     stasisPiercingHealPerSecond: 2
     stasisHeatHealPerSecond: 2
     stasisColdHealPerSecond: 2
-    stasisAdditionalDamageResistance: 0.2
+    stasisAdditionalDamageResistance: 1.5
     stasisInCritBluntHealPerSecond: 1
     stasisInCritSlashingHealPerSecond: 1
     stasisInCritPiercingHealPerSecond: 1
     stasisInCritHeatHealPerSecond: 1
     stasisInCritColdHealPerSecond: 1
-    stasisInCritAdditionalDamageResistance: 0.2
+    stasisInCritAdditionalDamageResistance: 1.5
     stasisEnterEffect: EffectNanitesEnter
     stasisEnterEffectLifetime: 2.7
     stasisEnterSound: /Audio/_Starlight/Misc/alien_teleport.ogg
