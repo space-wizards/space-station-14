@@ -76,7 +76,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, PriedEvent>(OnAfterPry);
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
-        SubscribeLocalEvent<DoorComponent, GetPryTimeModifierEvent>(OnPryTimeModifier);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
 
@@ -213,14 +212,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnPryTimeModifier(EntityUid uid, DoorComponent door, ref GetPryTimeModifierEvent args)
-    {
-        args.BaseTime = door.PryTime;
-    }
-
     private void OnBeforePry(EntityUid uid, DoorComponent door, ref BeforePryEvent args)
     {
-        if (door.State == DoorState.Welded || !door.CanPry)
+        if (door.State == DoorState.Welded)
             args.Cancelled = true;
     }
 

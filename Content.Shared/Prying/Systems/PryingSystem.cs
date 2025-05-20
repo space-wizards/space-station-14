@@ -28,12 +28,13 @@ public sealed class PryingSystem : EntitySystem
         base.Initialize();
 
         // Mob prying doors
-        SubscribeLocalEvent<DoorComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
-        SubscribeLocalEvent<DoorComponent, DoorPryDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(TryPryDoor);
+        SubscribeLocalEvent<PryableComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
+        SubscribeLocalEvent<PryableComponent, DoorPryDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<PryableComponent, InteractUsingEvent>(TryPryDoor);
+        SubscribeLocalEvent<PryableComponent, GetPryTimeModifierEvent>(OnGetPryTimeModifier);
     }
 
-    private void TryPryDoor(EntityUid uid, DoorComponent comp, InteractUsingEvent args)
+    private void TryPryDoor(EntityUid uid, PryableComponent comp, InteractUsingEvent args)
     {
         if (args.Handled)
             return;
@@ -41,7 +42,7 @@ public sealed class PryingSystem : EntitySystem
         args.Handled = TryPry(uid, args.User, out _, args.Used);
     }
 
-    private void OnDoorAltVerb(EntityUid uid, DoorComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnDoorAltVerb(EntityUid uid, PryableComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
             return;
@@ -51,7 +52,7 @@ public sealed class PryingSystem : EntitySystem
 
         args.Verbs.Add(new AlternativeVerb()
         {
-            Text = Loc.GetString("door-pry"),
+            Text = Loc.GetString(component.VerbLocStr),
             Impact = LogImpact.Low,
             Act = () => TryPry(uid, args.User, out _, args.User),
         });
@@ -152,7 +153,7 @@ public sealed class PryingSystem : EntitySystem
         return _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
     }
 
-    private void OnDoAfter(EntityUid uid, DoorComponent door, DoorPryDoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, PryableComponent door, DoorPryDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
@@ -175,6 +176,11 @@ public sealed class PryingSystem : EntitySystem
 
         var ev = new PriedEvent(args.User);
         RaiseLocalEvent(uid, ref ev);
+    }
+
+    private void OnGetPryTimeModifier(Entity<PryableComponent> ent, ref GetPryTimeModifierEvent args)
+    {
+        args.BaseTime = ent.Comp.PryTime;
     }
 }
 
