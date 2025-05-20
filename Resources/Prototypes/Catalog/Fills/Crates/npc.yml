@@ -21,6 +21,16 @@
         amount: 5
 
 - type: entity
+  id: CrateNPCCapybara
+  parent: CrateLivestock
+  name: capybara crate
+  description: A crate containing a single capybara.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobCapybara
+
+- type: entity
   id: CrateNPCCat
   parent: CrateLivestock
   name: cat crate

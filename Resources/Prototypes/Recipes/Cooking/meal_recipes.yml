@@ -2395,3 +2395,15 @@
     FoodBreadCottonSlice: 2
     FoodCheeseSlice: 1
     FoodButterSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeEmpanada
+  name: empanada recipe
+  result: FoodBakedEmpanada
+  time: 10
+  solids:
+    FoodMeatCapybaraCutlet: 3
+    FoodDoughSlice: 3
+    FoodCheeseSlice: 1
+    FoodCabbage: 1
+    FoodTomato: 1

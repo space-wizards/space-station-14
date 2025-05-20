@@ -34,6 +34,24 @@
   - node: cooked penguin
     entity: FoodMeatPenguinCooked
 
+# capybara steak
+- type: constructionGraph
+  id: CapybaraSteak
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: cooked capybara
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 345
+
+  - node: cooked capybara
+    entity: FoodMeatCapybaraCooked
+
 # chicken steak
 - type: constructionGraph
   id: ChickenSteak
@@ -236,6 +254,21 @@
       - minTemperature: 345
   - node: bear cutlet
     entity: FoodMeatBearCutletCooked
+
+- type: constructionGraph
+  id: CapybaraCutlet
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: capybara cutlet
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 345
+  - node: capybara cutlet
+    entity: FoodMeatCapybaraCutletCooked
 
 - type: constructionGraph
   id: PenguinCutlet

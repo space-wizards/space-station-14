@@ -129,6 +129,30 @@
     slice: FoodMeatCutlet
 
 - type: entity
+  name: raw capybara meat
+  parent: FoodMeatRawBase
+  id: FoodMeatCapybara
+  description: A slab of raw capybara meat. Try to cook empanada with it.
+  components:
+  - type: Sprite
+    state: plain
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatCapybaraCutlet
+  - type: Construction
+    graph: CapybaraSteak
+    node: start
+    defaultTarget: cooked capybara
+
+- type: entity
   name: raw carp fillet
   parent: FoodMeatBase
   # MeatFish?...
@@ -903,6 +927,35 @@
       Taco: MeatBear
 
 - type: entity
+  name: cooked capybara
+  parent: FoodMeatBase
+  id: FoodMeatCapybaraCooked
+  description: A cooked slab of capybara meat. You’re sad when you see this.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+    - Steak
+  - type: Sprite
+    layers:
+    - state: plain-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatCapybaraCutletCooked
+  - type: Construction
+    graph: CapybaraSteak
+    node: capybara steak
+
+- type: entity
   name: penguin filet
   parent: FoodMeatBase
   id: FoodMeatPenguinCooked
@@ -1395,6 +1448,32 @@
     defaultTarget: bear cutlet
 
 - type: entity
+  name: raw capybara cutlet
+  parent: FoodMeatBase
+  id: FoodMeatCapybaraCutlet
+  description: A cutlet of raw capybara meat.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+    - Cutlet
+    - Meat
+  - type: Sprite
+    state: cutlet
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
+  - type: Construction
+    graph: CapybaraCutlet
+    node: start
+    defaultTarget: capybara cutlet
+
+- type: entity
   name: raw penguin cutlet
   parent: FoodMeatBase
   id: FoodMeatPenguinCutlet
@@ -1686,6 +1765,31 @@
     entries:
       Burger: BearCutletBurger
       Taco: BearCutlet
+
+- type: entity
+  name: capybara cutlet
+  parent: FoodMeatBase
+  id: FoodMeatCapybaraCutletCooked
+  description: A cutlet of cooked capybara meat.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Cutlet
+    - Meat
+  - type: Sprite
+    state: cutlet-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
+  - type: Construction
+    graph: CapybaraCutlet
+    node: capybara cutlet
 
 - type: entity
   name: penguin cutlet

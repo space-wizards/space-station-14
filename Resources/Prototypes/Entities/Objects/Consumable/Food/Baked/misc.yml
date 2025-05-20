@@ -895,6 +895,32 @@
         - ReagentId: Vitamin
           Quantity: 3
 
+- type: entity
+  name: empanada
+  parent: FoodBakedBase
+  id: FoodBakedEmpanada
+  description: You killed the capybara for this dish, monster.
+  components:
+  - type: Sprite
+    state: dumplings
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Protein
+          Quantity: 2
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - dough
+      - tomato
+  - type: Tag
+    tags:
+    - Meat
+
 # Entity Tables
 
 - type: entityTable

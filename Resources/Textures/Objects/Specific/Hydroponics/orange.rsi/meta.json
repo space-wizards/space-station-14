@@ -38,6 +38,10 @@
             "name": "stage-6"
         },
         {
+            "name": "equipped-HELMET-capybara",
+            "directions": 4
+        },
+        {
             "name": "produce-inhand-left",
             "directions": 4
         },
