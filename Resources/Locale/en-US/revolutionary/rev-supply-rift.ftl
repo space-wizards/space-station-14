@@ -3,13 +3,13 @@ rev-supply-rift-sender = Private Soviet Communications
 
 # armaments rift
 rev-supply-rift-charging = A supply rift is already in use! (Charging: {$percentage}% - Placed by comrade {$name} {$location})
-rev-supply-rift-ready = Supply Rift (Ready to Deploy)
+rev-supply-rift-ready = Supply rift (Ready to Deploy)
 rev-supply-rift-destroyed = A rift has been destroyed! We deemed it to be too risky to open another. Good luck to your revolution!
-rev-supply-rift-charged = (!) A shady portal that coughs up Soviet stuff. Occasionally mumbles in Russian. This exposes them! If it's destroyed, commies won't be able to open another! There are currently {$count} active rifts!
+rev-supply-rift-charged = (!) A shady portal that coughs up Soviet stuff. This exposes them! If it's destroyed, commies won't be able to open another! There are currently {$count} active rifts!
 
 # Total Conversion
 banner-name = Revolutionary banner
-banner-desc = Dying has a purpose now, comrade.
+banner-desc = Dying with purpose, comrade.
 
 # Telebonds
 # Weapons
@@ -37,6 +37,24 @@ soviet-gas-mask-name = GP-32 gas mask
 soviet-gas-mask-desc = An old uncomfortable mechanical gas mask. Has eye and flash protection.
 soviet-coat-name = Soviet great coat
 soviet-coat-desc = Offers minor protection from bullets, major protection from fashion.
+glasses-name = cheap sunglasses
+glasses-desc = A downgrade that shows the brainwashing parasite above them.
+
+# Implants
+stolen-implanter-name = Implanter (NT)
+stolen-implanter-desc = The committee is yet to find a way. Can undo brainwashing.
+
+# Shuttle
+stole-remote-signaller-name = Remote signaller
+stole-remote-signaller-desc = Boom! Links devices.
+medium-power-cage-name = Medium-capacity power cage
+medium-power-cage-desc = LSE-1200c's power ammo. Don't lose it.
+lse-400c-name = LSE-400c
+lse-400c-desc = Basic laser emplacement weapon. Requires a power cell, link and a signaleer.
+stolen-ptk800-name = PTK-800 (NT)
+stolen-ptk800-desc = Stolen mining weaponry for breaching. Requires link and a signaleer.
+lse-1200c-name = LSE-1200c
+lse-1200c-desc = A more advanced laser emplacement weapon. Requires a 'power cage', link and a signaleer.
 
 # Pointless
 soviet-medals-name = Soviet sets of medals

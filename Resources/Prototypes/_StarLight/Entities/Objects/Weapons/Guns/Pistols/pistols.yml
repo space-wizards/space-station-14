@@ -208,10 +208,10 @@
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/1suppres.ogg
       
 - type: entity
-  name: stechkin APS pistol
+  name: Stechkin APS
   parent: [WeaponPistolMk58, BaseRestrictedContraband]
   id: WeaponPistolAPS
-  description: The original russian version of a widely used Syndicate sidearm. Uses 9mm ammo.
+  description: A high quality firearm issued to SNKVD elites and high ranking officials. It's half pistol, half closing argument.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/aps.rsi

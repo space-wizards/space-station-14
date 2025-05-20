@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from RU Paradise Station",
+    "copyright": "Taken from RU Paradise Station, modified by JustAdler for https://github.com/ss14Starlight/space-station-14",
     "size": {
         "x": 32,
         "y": 32
@@ -25,6 +25,14 @@
         },
         {
             "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "equipped-BELT",
+            "directions": 4
+        },
+        {
+            "name": "equipped-SUITSTORAGE",
             "directions": 4
         }
     ]

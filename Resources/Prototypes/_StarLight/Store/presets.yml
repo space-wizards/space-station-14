@@ -46,6 +46,8 @@
     - RevUplinkWeaponry
     - RevUplinkPassive
     - RevUplinkWearables
+    - RevUplinkImplants
+    - RevUplinkShuttle
     - RevUplinkPointless
     currencyWhitelist:
     - Telebond

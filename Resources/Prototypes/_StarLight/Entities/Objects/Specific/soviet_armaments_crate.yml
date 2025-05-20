@@ -18,10 +18,20 @@
   - type: SpawnOnOpen
     prototypes:
       - WeaponSniperMosin
-      - Finka
+      - WeaponSniperMosin
+      - WeaponSniperMosin
+      - WeaponSniperMosin
+      - WeaponPistolMakarov
+      - WeaponPistolMakarov
       - WeaponPistolMakarov
       - SpearUranium
-      - ClothingOuterArmorBasic
       - MedkitFilled
+      - MedkitFilled
+      - ClothingOuterSovietCoat
+      - ClothingOuterSovietCoat
+      - ClothingOuterSovietCoat
+      - WeaponPistolAPS
+      - WeaponPistolAPS
+      - WeaponLightMachineGunDP28
     chance: 1.0
     rng: SovietCrateRNG

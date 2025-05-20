@@ -198,7 +198,7 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         if (TryComp<TransformComponent>(uid, out var transform))
         {
             var soundPath = new SoundPathSpecifier("/Audio/_Starlight/Effects/sov_choir.ogg");
-            _audio.PlayPvs(soundPath, uid, AudioParams.Default.WithMaxDistance(5f).WithVolume(5f));
+            _audio.PlayPvs(soundPath, uid, AudioParams.Default.WithMaxDistance(5f).WithVolume(10f));
         }
     }
 
@@ -351,7 +351,7 @@ public sealed class RevSupplyRiftSystem : EntitySystem
                     
                     // Update the description with the charging status and location
                     // Don't use color tags as they're not properly handled in the UI
-                    var chargingText = $"Supply Rift (Charging: {revRift.ChargePercentage}% - Placed by comrade {revRift.PlacedBy ?? "Unknown"} {locationString})";
+                    var chargingText = $"Supply rift (Charging: {revRift.ChargePercentage}% - Placed by comrade {revRift.PlacedBy ?? "Unknown"} {locationString})";
                     
                     listing.Description = chargingText;
                     

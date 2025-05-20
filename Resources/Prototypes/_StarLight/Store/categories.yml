@@ -122,5 +122,13 @@
   name: Wearables
 
 - type: storeCategory
+  id: RevUplinkImplants
+  name: Implants
+
+- type: storeCategory
+  id: RevUplinkShuttle
+  name: Shuttle
+
+- type: storeCategory
   id: RevUplinkPointless
   name: Pointless

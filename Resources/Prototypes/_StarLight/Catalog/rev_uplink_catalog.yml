@@ -1,12 +1,38 @@
 ### Total Conversion category
 
 - type: listing
+  id: SKGBCheapSunglassesConversion
+  name: glasses-name
+  description: glasses-desc
+  productEntity: ClothingEyesGlassesSKGBGlasses
+  cost:
+    Conversion: 20
+  categories:
+  - RevUplinkPassive
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
+  id: StolenImplanterConversion
+  name: stolen-implanter-name
+  description: stolen-implanter-desc
+  productEntity: Implanter
+  cost:
+    Conversion: 25
+  categories:
+  - RevUplinkPassive
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
   id: SKGBBanner
   name: banner-name
   description: banner-desc
   productEntity: RevolutionaryHeldBanner
   cost:
-    Conversion: 1
+    Conversion: 37
   categories:
   - RevUplinkPassive
   conditions:
@@ -18,7 +44,7 @@
   id: RevSupplyRiftListing
   productEntity: RevSupplyRift
   cost:
-    Conversion: 1
+    Conversion: 40
   categories:
   - RevUplinkPassive
 
@@ -45,12 +71,12 @@
   icon: { sprite: _Starlight/Objects/Weapons/Guns/Pistols/makarov.rsi, state: icon }
   productEntity: WeaponPistolMakarov
   cost:
-    Telebond: 2
+    Telebond: 3
   categories:
   - RevUplinkWeaponry
   conditions:
   - !type:StockLimitedListingCondition
-    stockLimit: 4
+    stockLimit: 2
 
 - type: listing
   id: SNKVDFinka
@@ -73,7 +99,7 @@
   icon: { sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi, state: base }
   productEntity: WeaponSniperMosin
   cost:
-    Telebond: 3
+    Telebond: 4
   categories:
   - RevUplinkWeaponry
   conditions:
@@ -142,12 +168,25 @@
   description: soviet-gas-mask-desc
   productEntity: ClothingSovietGasMask
   cost:
-    Telebond: 3
+    Telebond: 2
   categories:
   - RevUplinkWearables
   conditions:
   - !type:StockLimitedListingCondition
     stockLimit: 2
+
+- type: listing
+  id: SKGBCheapSunglasses
+  name: glasses-name
+  description: glasses-desc
+  productEntity: ClothingEyesGlassesSKGBGlasses
+  cost:
+    Telebond: 5
+  categories:
+  - RevUplinkWearables
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
 
 - type: listing
   id: USSPCoat
@@ -161,6 +200,88 @@
   conditions:
   - !type:StockLimitedListingCondition
     stockLimit: 4
+
+# Implants
+
+- type: listing
+  id: StolenImplanter
+  name: stolen-implanter-name
+  description: stolen-implanter-desc
+  productEntity: Implanter
+  cost:
+    Telebond: 5
+  categories:
+  - RevUplinkImplants
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2
+
+# Shuttle
+
+- type: listing
+  id: StolenRemoteSignaller
+  name: stole-remote-signaller-name
+  description: stole-remote-signaller-desc
+  productEntity: RemoteSignaller
+  cost:
+    Telebond: 1
+  categories:
+  - RevUplinkShuttle
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2
+
+- type: listing
+  id: medium-power-cage
+  name: medium-power-cage-name
+  description: medium-power-cage-desc
+  productEntity: PowerCageMedium
+  cost:
+    Telebond: 2
+  categories:
+  - RevUplinkShuttle
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
+  id: LSE-400c
+  name: lse-400c-name
+  description: lse-400c-desc
+  productEntity: ShuttleGunSvalinnMachineGun
+  cost:
+    Telebond: 4
+  categories:
+  - RevUplinkShuttle
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 4
+
+- type: listing
+  id: StolenPTK-800
+  name: stolen-ptk800-name
+  description: stolen-ptk800-desc
+  productEntity: ShuttleGunKinetic
+  cost:
+    Telebond: 6
+  categories:
+  - RevUplinkShuttle
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2
+
+- type: listing
+  id: LSE-1200c
+  name: lse-1200c-name
+  description: lse-1200c-desc
+  productEntity: ShuttleGunPerforator
+  cost:
+    Telebond: 12
+  categories:
+  - RevUplinkShuttle
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
 
 # Pointless
 
