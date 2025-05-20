@@ -45,7 +45,7 @@ namespace Content.MapRenderer.Painters
             var server = pair.Server;
             var client = pair.Client;
 
-            Console.WriteLine($"Loaded client and server in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+            Console.WriteLine($"Loaded client and server in {(int)stopwatch.Elapsed.TotalMilliseconds} ms");
 
             stopwatch.Restart();
 
@@ -56,7 +56,7 @@ namespace Content.MapRenderer.Painters
             {
                 if (cEntityManager.TryGetComponent(cPlayerManager.LocalEntity, out SpriteComponent? sprite))
                 {
-                    sprite.Visible = false;
+                    cEntityManager.System<SpriteSystem>().SetVisible((cPlayerManager.LocalEntity.Value, sprite), false);
                 }
             });
 
