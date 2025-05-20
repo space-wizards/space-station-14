@@ -29,3 +29,5 @@
   storage:
     back:
     - Flash
+    - WeaponPistolMk58
+    - MagazinePistolSP
