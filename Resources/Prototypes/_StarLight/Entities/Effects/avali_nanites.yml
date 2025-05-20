@@ -29,6 +29,11 @@
     scale: 0.9, 0.9
   - type: TimedDespawn
     lifetime: 5.0
+  - type: HideLayerClothing
+    slots:
+    - HeadTop
+    - HeadSide
+    - Head
 
 - type: entity
   id: EffectNanitesExit

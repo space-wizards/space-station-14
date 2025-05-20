@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urist McAvali
-  parent: BaseMobSpeciesOrganic
+  parent: [BaseMobSpeciesOrganic, BaseSpeciesPickupable]
   id: BaseMobAvali
   abstract: true
   components:
@@ -108,9 +108,9 @@
     damageOverlayGroups:
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
-        color: "#7a8bf2"
+        color: "#6C3BAA"
   - type: Bloodstream
-    bloodReagent: AmmoniaBlood
+    bloodReagent: AvaliBlood
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Weapons/pierce.ogg
@@ -122,16 +122,16 @@
   - type: Temperature
     heatDamageThreshold: 310
     coldDamageThreshold: 223
-    currentTemperature: 296.15
+    currentTemperature: 261
     specificHeat: 48
   - type: ThermalRegulator
     metabolismHeat: 400 # icebirb go brrr
     radiatedHeat: 100
-    implicitHeatRegulation: 500
+    implicitHeatRegulation: 1500
     sweatHeatRegulation: 2000
     shiveringHeatRegulation: 2000
-    normalBodyTemperature: 296.15
-    thermalRegulationTemperatureThreshold: 10
+    normalBodyTemperature: 261
+    thermalRegulationTemperatureThreshold: 1
   - type: AvaliStasis
     enterStasisAction: ActionAvaliStasisEnter
     exitStasisAction: ActionAvaliStasisExit
@@ -142,19 +142,19 @@
     stasisHeatHealPerSecond: 2
     stasisColdHealPerSecond: 2
     stasisBleedHealPerSecond: 1.0
-    stasisAdditionalDamageResistance: 0.2
+    stasisAdditionalDamageResistance: 1.5
     stasisInCritBluntHealPerSecond: 1
     stasisInCritSlashingHealPerSecond: 1
     stasisInCritPiercingHealPerSecond: 1
     stasisInCritHeatHealPerSecond: 1
     stasisInCritColdHealPerSecond: 1
     stasisInCritBleedHealPerSecond: 0.5
-    stasisInCritAdditionalDamageResistance: 0.2
+    stasisInCritAdditionalDamageResistance: 1.5
     stasisEnterEffect: EffectNanitesEnter
-    stasisEnterEffectLifetime: 3.0
+    stasisEnterEffectLifetime: 2.7
     stasisEnterSound: /Audio/_Starlight/Misc/alien_teleport.ogg
     stasisExitEffect: EffectNanitesExit
-    stasisExitEffectLifetime: 30
+    stasisExitEffectLifetime: 2.7
     stasisExitSound: /Audio/_Starlight/Misc/alien_teleport.ogg
     stasisContinuousEffect: EffectNanitesCurrent
     
@@ -166,6 +166,8 @@
   components:
   - type: HumanoidAppearance
     species: Avali
+  - type: Inventory
+    speciesId: Avali
     displacements:
       jumpsuit:
         sizeMaps:
