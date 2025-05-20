@@ -1720,8 +1720,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - leafy
-      - terrible
+    - leafy
+    - terrible
   - type: SolutionContainerManager
     solutions:
       food:
