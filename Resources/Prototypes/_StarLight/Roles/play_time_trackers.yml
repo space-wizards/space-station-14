@@ -20,7 +20,7 @@
   id: JobBlueShield
 
 - type: playTimeTracker
-  id: ConsortiumBlueShield
+  id: JobConsortiumBlueShield
 
 - type: playTimeTracker
   id: JobMiningSpecialist
