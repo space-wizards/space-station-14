@@ -13,9 +13,11 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="AutoCablingDunGen"/>
     /// </summary>
-    private async Task PostGen(AutoCablingDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(AutoCablingDunGen gen, List<Dungeon> dungeons, HashSet<Vector2i> reservedTiles, Random random)
     {
-        // There's a lot of ways you could do this.
+        foreach (var dungeon in dungeons)
+        {
+            // There's a lot of ways you could do this.
         // For now we'll just connect every LV cable in the dungeon.
         var cableTiles = new HashSet<Vector2i>();
         var allTiles = new HashSet<Vector2i>(dungeon.CorridorTiles);
@@ -152,6 +154,7 @@ public sealed partial class DungeonJob
                 continue;
 
             _entManager.SpawnEntity(gen.Entity, _maps.GridTileToLocal(_gridUid, _grid, tile));
+        }
         }
     }
 }

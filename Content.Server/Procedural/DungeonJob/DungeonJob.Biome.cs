@@ -14,7 +14,7 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="BiomeDunGen"/>
     /// </summary>
-    private async Task PostGen(BiomeDunGen dunGen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(BiomeDunGen dunGen, List<Dungeon> dungeons, HashSet<Vector2i> reservedTiles, Random random)
     {
         if (!_prototype.TryIndex(dunGen.BiomeTemplate, out var indexedBiome))
             return;
@@ -24,51 +24,53 @@ public sealed partial class DungeonJob
         var seed = random.Next();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
-        var tiles = _maps.GetAllTilesEnumerator(_gridUid, _grid);
-        while (tiles.MoveNext(out var tileRef))
+        foreach (var dungeon in dungeons)
         {
-            var node = tileRef.Value.GridIndices;
-
-            if (reservedTiles.Contains(node))
-                continue;
-
-            if (dunGen.TileMask is not null)
+            foreach (var node in dungeon.AllTiles)
             {
-                if (!dunGen.TileMask.Contains(((ContentTileDefinition) _tileDefManager[tileRef.Value.Tile.TypeId]).ID))
+                if (reservedTiles.Contains(node))
                     continue;
-            }
 
-            // Need to set per-tile to override data.
-            if (biomeSystem.TryGetTile(node, indexedBiome.Layers, seed, _grid, out var tile))
-            {
-                _maps.SetTile(_gridUid, _grid, node, tile.Value);
-            }
+                var tileRef = _maps.GetTileRef((_gridUid, _grid), node);
 
-            if (biomeSystem.TryGetDecals(node, indexedBiome.Layers, seed, _grid, out var decals))
-            {
-                foreach (var decal in decals)
+                if (dunGen.TileMask is not null)
                 {
-                    _decals.TryAddDecal(decal.ID, new EntityCoordinates(_gridUid, decal.Position), out _);
-                }
-            }
-
-            if (biomeSystem.TryGetEntity(node, indexedBiome.Layers, tile ?? tileRef.Value.Tile, seed, _grid, out var entityProto))
-            {
-                var ent = _entManager.SpawnEntity(entityProto, new EntityCoordinates(_gridUid, node + _grid.TileSizeHalfVector));
-                var xform = xformQuery.Get(ent);
-
-                if (!xform.Comp.Anchored)
-                {
-                    _transform.AnchorEntity(ent, xform);
+                    if (!dunGen.TileMask.Contains(((ContentTileDefinition) _tileDefManager[tileRef.Tile.TypeId]).ID))
+                        continue;
                 }
 
-                // TODO: Engine bug with SpawnAtPosition
-                DebugTools.Assert(xform.Comp.Anchored);
-            }
+                // Need to set per-tile to override data.
+                if (biomeSystem.TryGetTile(node, indexedBiome.Layers, seed, _grid, out var tile))
+                {
+                    _maps.SetTile(_gridUid, _grid, node, tile.Value);
+                }
 
-            await SuspendDungeon();
-            if (!ValidateResume())
-                return;
+                if (biomeSystem.TryGetDecals(node, indexedBiome.Layers, seed, _grid, out var decals))
+                {
+                    foreach (var decal in decals)
+                    {
+                        _decals.TryAddDecal(decal.ID, new EntityCoordinates(_gridUid, decal.Position), out _);
+                    }
+                }
+
+                if (biomeSystem.TryGetEntity(node, indexedBiome.Layers, tile ?? tileRef.Tile, seed, _grid, out var entityProto))
+                {
+                    var ent = _entManager.SpawnEntity(entityProto, new EntityCoordinates(_gridUid, node + _grid.TileSizeHalfVector));
+                    var xform = xformQuery.Get(ent);
+
+                    if (!xform.Comp.Anchored)
+                    {
+                        _transform.AnchorEntity(ent, xform);
+                    }
+
+                    // TODO: Engine bug with SpawnAtPosition
+                    DebugTools.Assert(xform.Comp.Anchored);
+                }
+
+                await SuspendDungeon();
+                if (!ValidateResume())
+                    return;
+            }
         }
     }
 }

@@ -12,47 +12,51 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="CorridorClutterDunGen"/>
     /// </summary>
-    private async Task PostGen(CorridorClutterDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(CorridorClutterDunGen gen, List<Dungeon> dungeons, HashSet<Vector2i> reservedTiles, Random random)
     {
         var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
-        var count = (int) Math.Ceiling(dungeon.CorridorTiles.Count * gen.Chance);
-        var contents = _prototype.Index(gen.Contents);
 
-        while (count > 0)
+        foreach (var dungeon in dungeons)
         {
-            var tile = random.Pick(dungeon.CorridorTiles);
+            var count = (int) Math.Ceiling(dungeon.CorridorTiles.Count * gen.Chance);
+            var contents = _prototype.Index(gen.Contents);
 
-            var enumerator = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, tile);
-            var blocked = false;
-
-            while (enumerator.MoveNext(out var ent))
+            while (count > 0)
             {
-                if (!physicsQuery.TryGetComponent(ent, out var physics) ||
-                    !physics.CanCollide ||
-                    !physics.Hard)
+                var tile = random.Pick(dungeon.CorridorTiles);
+
+                var enumerator = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, tile);
+                var blocked = false;
+
+                while (enumerator.MoveNext(out var ent))
                 {
-                    continue;
+                    if (!physicsQuery.TryGetComponent(ent, out var physics) ||
+                        !physics.CanCollide ||
+                        !physics.Hard)
+                    {
+                        continue;
+                    }
+
+                    blocked = true;
+                    break;
                 }
 
-                blocked = true;
-                break;
+                if (blocked)
+                    continue;
+
+                count--;
+
+                if (reservedTiles.Contains(tile))
+                    continue;
+
+                var protos = _entTable.GetSpawns(contents, random);
+                var coords = _maps.ToCenterCoordinates(_gridUid, tile, _grid);
+                _entManager.SpawnEntitiesAttachedTo(coords, protos);
+                await SuspendIfOutOfTime();
+
+                if (!ValidateResume())
+                    return;
             }
-
-            if (blocked)
-                continue;
-
-            count--;
-
-            if (reservedTiles.Contains(tile))
-                continue;
-
-            var protos = _entTable.GetSpawns(contents, random);
-            var coords = _maps.ToCenterCoordinates(_gridUid, tile, _grid);
-            _entManager.SpawnEntitiesAttachedTo(coords, protos);
-            await SuspendIfOutOfTime();
-
-            if (!ValidateResume())
-                return;
         }
     }
 }

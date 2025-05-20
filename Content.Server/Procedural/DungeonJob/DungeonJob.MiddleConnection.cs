@@ -13,9 +13,11 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="MiddleConnectionDunGen"/>
     /// </summary>
-    private async Task PostGen(MiddleConnectionDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(MiddleConnectionDunGen gen, List<Dungeon> dungeons, HashSet<Vector2i> reservedTiles, Random random)
     {
-        // Grab all of the room bounds
+        foreach (var dungeon in dungeons)
+        {
+            // Grab all of the room bounds
         // Then, work out connections between them
         var roomBorders = new Dictionary<DungeonRoom, HashSet<Vector2i>>(dungeon.Rooms.Count);
 
@@ -133,6 +135,7 @@ public sealed partial class DungeonJob
                 if (!ValidateResume())
                     return;
             }
+        }
         }
     }
 }

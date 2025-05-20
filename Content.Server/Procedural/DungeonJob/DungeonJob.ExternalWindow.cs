@@ -24,9 +24,11 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="ExternalWindowDunGen"/>
     /// </summary>
-    private async Task PostGen(ExternalWindowDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(ExternalWindowDunGen gen, List<Dungeon> dungeons, HashSet<Vector2i> reservedTiles, Random random)
     {
-        // Iterate every tile with N chance to spawn windows on that wall per cardinal dir.
+        foreach (var dungeon in dungeons)
+        {
+            // Iterate every tile with N chance to spawn windows on that wall per cardinal dir.
         var chance = 0.25 / 3f;
 
         var allExterior = new HashSet<Vector2i>(dungeon.CorridorExteriorTiles);
@@ -124,6 +126,7 @@ public sealed partial class DungeonJob
 
             if (!ValidateResume())
                 return;
+        }
         }
     }
 }

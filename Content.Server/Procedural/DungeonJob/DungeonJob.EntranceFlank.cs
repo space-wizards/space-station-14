@@ -13,39 +13,42 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="EntranceFlankDunGen"/>
     /// </summary>
-    private async Task PostGen(EntranceFlankDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(EntranceFlankDunGen gen, List<Dungeon> dungeons, HashSet<Vector2i> reservedTiles, Random random)
     {
-        var tiles = new List<(Vector2i Index, Tile)>();
-        var tileDef = _tileDefManager[gen.Tile];
-        var spawnPositions = new ValueList<Vector2i>(dungeon.Rooms.Count);
-        var contents = _prototype.Index(gen.Contents);
-
-        foreach (var room in dungeon.Rooms)
+        foreach (var dungeon in dungeons)
         {
-            foreach (var entrance in room.Entrances)
+            var tiles = new List<(Vector2i Index, Tile)>();
+            var tileDef = _tileDefManager[gen.Tile];
+            var spawnPositions = new ValueList<Vector2i>(dungeon.Rooms.Count);
+            var contents = _prototype.Index(gen.Contents);
+
+            foreach (var room in dungeon.Rooms)
             {
-                for (var i = 0; i < 8; i++)
+                foreach (var entrance in room.Entrances)
                 {
-                    var dir = (Direction) i;
-                    var neighbor = entrance + dir.ToIntVec();
+                    for (var i = 0; i < 8; i++)
+                    {
+                        var dir = (Direction) i;
+                        var neighbor = entrance + dir.ToIntVec();
 
-                    if (!dungeon.RoomExteriorTiles.Contains(neighbor))
-                        continue;
+                        if (!dungeon.RoomExteriorTiles.Contains(neighbor))
+                            continue;
 
-                    if (reservedTiles.Contains(neighbor))
-                        continue;
+                        if (reservedTiles.Contains(neighbor))
+                            continue;
 
-                    tiles.Add((neighbor, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
-                    spawnPositions.Add(neighbor);
+                        tiles.Add((neighbor, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
+                        spawnPositions.Add(neighbor);
+                    }
                 }
             }
-        }
 
-        _maps.SetTiles(_gridUid, _grid, tiles);
+            _maps.SetTiles(_gridUid, _grid, tiles);
 
-        foreach (var entrance in spawnPositions)
-        {
-            _entManager.SpawnEntitiesAttachedTo(_maps.GridTileToLocal(_gridUid, _grid, entrance), _entTable.GetSpawns(contents, random));
+            foreach (var entrance in spawnPositions)
+            {
+                _entManager.SpawnEntitiesAttachedTo(_maps.GridTileToLocal(_gridUid, _grid, entrance), _entTable.GetSpawns(contents, random));
+            }
         }
     }
 }

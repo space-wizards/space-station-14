@@ -12,9 +12,11 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="BoundaryWallDunGen"/>
     /// </summary>
-    private async Task PostGen(BoundaryWallDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(BoundaryWallDunGen gen, List<Dungeon> dungeons, HashSet<Vector2i> reservedTiles, Random random)
     {
-        var tileDef = _tileDefManager[gen.Tile];
+        foreach (var dungeon in dungeons)
+        {
+            var tileDef = _tileDefManager[gen.Tile];
         var tiles = new List<(Vector2i Index, Tile Tile)>(dungeon.RoomExteriorTiles.Count);
 
         var wall = gen.Wall;
@@ -94,6 +96,7 @@ public sealed partial class DungeonJob
                 if (!ValidateResume())
                     return;
             }
+        }
         }
     }
 }

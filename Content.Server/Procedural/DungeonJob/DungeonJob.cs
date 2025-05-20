@@ -225,31 +225,31 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         switch (layer)
         {
             case AutoCablingDunGen cabling:
-                await PostGen(cabling, dungeons[^1], reservedTiles, random);
+                await PostGen(cabling, dungeons, reservedTiles, random);
                 break;
             case BiomeMarkerLayerDunGen markerPost:
-                await PostGen(markerPost, dungeons[^1], reservedTiles, random);
+                await PostGen(markerPost, dungeons, reservedTiles, random);
                 break;
             case BiomeDunGen biome:
-                await PostGen(biome, dungeons[^1], reservedTiles, random);
+                await PostGen(biome, dungeons, reservedTiles, random);
                 break;
             case BoundaryWallDunGen boundary:
-                await PostGen(boundary, dungeons[^1], reservedTiles, random);
+                await PostGen(boundary, dungeons, reservedTiles, random);
                 break;
             case CornerClutterDunGen clutter:
-                await PostGen(clutter, dungeons[^1], reservedTiles, random);
+                await PostGen(clutter, dungeons, reservedTiles, random);
                 break;
             case CorridorClutterDunGen corClutter:
-                await PostGen(corClutter, dungeons[^1], reservedTiles, random);
+                await PostGen(corClutter, dungeons, reservedTiles, random);
                 break;
             case CorridorDunGen cordor:
-                await PostGen(cordor, dungeons[^1], reservedTiles, random);
+                await PostGen(cordor, dungeons, reservedTiles, random);
                 break;
             case CorridorDecalSkirtingDunGen decks:
-                await PostGen(decks, dungeons[^1], reservedTiles, random);
+                await PostGen(decks, dungeons, reservedTiles, random);
                 break;
             case EntranceFlankDunGen flank:
-                await PostGen(flank, dungeons[^1], reservedTiles, random);
+                await PostGen(flank, dungeons, reservedTiles, random);
                 break;
             case ExteriorDunGen exterior:
                 dungeons.AddRange(await GenerateExteriorDungen(position, exterior, reservedTiles, random));
@@ -258,25 +258,25 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 await GenerateFillDunGen(fill, dungeons, reservedTiles);
                 break;
             case JunctionDunGen junc:
-                await PostGen(junc, dungeons[^1], reservedTiles, random);
+                await PostGen(junc, dungeons, reservedTiles, random);
                 break;
             case MiddleConnectionDunGen dordor:
-                await PostGen(dordor, dungeons[^1], reservedTiles, random);
+                await PostGen(dordor, dungeons, reservedTiles, random);
                 break;
             case DungeonEntranceDunGen entrance:
-                await PostGen(entrance, dungeons[^1], reservedTiles, random);
+                await PostGen(entrance, dungeons, reservedTiles, random);
                 break;
             case ExternalWindowDunGen externalWindow:
-                await PostGen(externalWindow, dungeons[^1], reservedTiles, random);
+                await PostGen(externalWindow, dungeons, reservedTiles, random);
                 break;
             case InternalWindowDunGen internalWindow:
-                await PostGen(internalWindow, dungeons[^1], reservedTiles, random);
+                await PostGen(internalWindow, dungeons, reservedTiles, random);
                 break;
             case MobsDunGen mob:
-                await PostGen(mob, dungeons[^1], random);
+                await PostGen(mob, dungeons, random);
                 break;
             case EntityTableDunGen entityTable:
-                await PostGen(entityTable, dungeons[^1], random);
+                await PostGen(entityTable, dungeons, random);
                 break;
             case NoiseDistanceDunGen distance:
                 dungeons.Add(await GenerateNoiseDistanceDunGen(position, distance, reservedTiles, seed, random));

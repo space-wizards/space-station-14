@@ -12,12 +12,14 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="JunctionDunGen"/>
     /// </summary>
-    private async Task PostGen(JunctionDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(JunctionDunGen gen, List<Dungeon> dungeons, HashSet<Vector2i> reservedTiles, Random random)
     {
         var tileDef = _tileDefManager[gen.Tile];
         var contents = _prototype.Index(gen.Contents);
 
-        // N-wide junctions
+        foreach (var dungeon in dungeons)
+        {
+            // N-wide junctions
         foreach (var tile in dungeon.CorridorTiles)
         {
             if (!_anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
@@ -132,6 +134,7 @@ public sealed partial class DungeonJob
 
                 break;
             }
+        }
         }
     }
 }
