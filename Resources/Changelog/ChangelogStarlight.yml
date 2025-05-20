@@ -5906,4 +5906,11 @@ Entries:
   id: 818
   time: '2025-05-19T21:11:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/612
+- author: Floating Spore
+  changes:
+  - message: Emagging a chefvend now gives illegal food ingredients and foods
+    type: Add
+  id: 819
+  time: '2025-05-20T13:01:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/652
 
