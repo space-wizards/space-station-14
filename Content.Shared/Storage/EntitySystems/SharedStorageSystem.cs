@@ -1319,7 +1319,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         if (storageEnt.Comp.StoredItems.TryGetValue(itemEnt.Owner, out var existing))
         {
-            GetOccupied(itemEnt, existing, _ignored);
+            AddOccupied(itemEnt, existing, _ignored);
         }
 
         // This uses a faster path than the typical codepaths
@@ -1567,7 +1567,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         if (storageEnt.Comp.StoredItems.TryGetValue(itemEnt.Owner, out var existing))
         {
-            GetOccupied(itemEnt, existing, _ignored);
+            AddOccupied(itemEnt, existing, _ignored);
         }
 
         return ItemFitsInGridLocation(storageEnt.Comp.OccupiedGrid, itemShape, _ignored);
@@ -1624,15 +1624,15 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void AddOccupiedEntity(Entity<StorageComponent> storageEnt, Entity<ItemComponent?> itemEnt, ItemStorageLocation location)
     {
-        GetOccupied(itemEnt, location, storageEnt.Comp.OccupiedGrid);
+        AddOccupied(itemEnt, location, storageEnt.Comp.OccupiedGrid);
 
         Dirty(storageEnt);
     }
 
-    private void GetOccupied(Entity<ItemComponent?> itemEnt, ItemStorageLocation location, Dictionary<Vector2i, ulong> occupied)
+    private void AddOccupied(Entity<ItemComponent?> itemEnt, ItemStorageLocation location, Dictionary<Vector2i, ulong> occupied)
     {
         var adjustedShape = ItemSystem.GetAdjustedItemShape((itemEnt.Owner, itemEnt.Comp), location);
-        GetOccupied(adjustedShape, occupied);
+        AddOccupied(adjustedShape, occupied);
     }
 
     private void RemoveOccupied(IReadOnlyList<Box2i> adjustedShape, Dictionary<Vector2i, ulong> occupied)
@@ -1670,7 +1670,7 @@ public abstract class SharedStorageSystem : EntitySystem
         }
     }
 
-    private void GetOccupied(IReadOnlyList<Box2i> adjustedShape, Dictionary<Vector2i, ulong> occupied)
+    private void AddOccupied(IReadOnlyList<Box2i> adjustedShape, Dictionary<Vector2i, ulong> occupied)
     {
         foreach (var box in adjustedShape)
         {
