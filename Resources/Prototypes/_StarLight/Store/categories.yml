@@ -111,11 +111,11 @@
 
 - type: storeCategory
   id: RevUplinkWeaponry
-  name: Weaponry
+  name: Armaments
 
 - type: storeCategory
   id: RevUplinkPassive
-  name: Passive
+  name: GLOBAL
 
 - type: storeCategory
   id: RevUplinkWearables
@@ -127,8 +127,12 @@
 
 - type: storeCategory
   id: RevUplinkShuttle
-  name: Shuttle
+  name: Artillery
+
+- type: storeCategory
+  id: RevUplinkDeception
+  name: Deception
 
 - type: storeCategory
   id: RevUplinkPointless
-  name: Pointless
+  name: Glory

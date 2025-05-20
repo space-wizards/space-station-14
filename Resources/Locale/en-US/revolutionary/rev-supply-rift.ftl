@@ -10,6 +10,7 @@ rev-supply-rift-charged = (!) A shady portal that coughs up Soviet stuff. This e
 # Total Conversion
 banner-name = Revolutionary banner
 banner-desc = Dying with purpose, comrade.
+soviet-encryption-key-conversion-desc = Share your status report tovarisch.
 
 # Telebonds
 # Weapons
@@ -43,6 +44,10 @@ glasses-desc = A downgrade that shows the brainwashing parasite above them.
 # Implants
 stolen-implanter-name = Implanter (NT)
 stolen-implanter-desc = The committee is yet to find a way. Can undo brainwashing.
+
+# Deception
+soviet-encryption-key-name = Soviet encryption key
+soviet-encryption-key-desc = Alio. PPSH? Please? :D
 
 # Shuttle
 stole-remote-signaller-name = Remote signaller

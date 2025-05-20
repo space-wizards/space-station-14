@@ -48,6 +48,7 @@
     - RevUplinkWearables
     - RevUplinkImplants
     - RevUplinkShuttle
+    - RevUplinkDeception
     - RevUplinkPointless
     currencyWhitelist:
     - Telebond

@@ -1,7 +1,7 @@
 - type: entity
   parent: [ClothingBackpackDuffel, BaseSovietContraband]
   id: ClothingBackpackDuffelSSF
-  name: soviet SSF duffel bag
+  name: SSF duffel bag
   description: For some- it's cumbersome, for others- it's home.
   components:
   - type: Sprite

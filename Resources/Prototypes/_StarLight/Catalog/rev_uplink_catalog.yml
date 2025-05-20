@@ -27,12 +27,25 @@
     stockLimit: 1
 
 - type: listing
+  id: USSPSovietKeyConversion
+  name: soviet-encryption-key-name
+  description: soviet-encryption-key-conversion-desc
+  productEntity: EncryptionKeySoviet
+  cost:
+    Conversion: 30
+  categories:
+  - RevUplinkPassive
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2
+
+- type: listing
   id: SKGBBanner
   name: banner-name
   description: banner-desc
   productEntity: RevolutionaryHeldBanner
   cost:
-    Conversion: 37
+    Conversion: 39
   categories:
   - RevUplinkPassive
   conditions:
@@ -282,6 +295,21 @@
   conditions:
   - !type:StockLimitedListingCondition
     stockLimit: 1
+
+# Deception
+
+- type: listing
+  id: USSPSovietKey
+  name: soviet-encryption-key-name
+  description: soviet-encryption-key-desc
+  productEntity: EncryptionKeySoviet
+  cost:
+    Telebond: 4
+  categories:
+  - RevUplinkDeception
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 5
 
 # Pointless
 
