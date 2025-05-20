@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Coolsurf6
-  changes:
-  - message: Pain from Burn damage is now calculated when displaying the red damage
-      overlay
-    type: Tweak
-  id: 8034
-  time: '2025-03-03T11:11:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34535
 - author: Velken
   changes:
   - message: Wizards now have their own unique magical pen.
@@ -3918,3 +3910,12 @@
   id: 8536
   time: '2025-05-20T12:36:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37584
+- author: B-Kirill
+  changes:
+  - message: Added new fun meteors variations (Cosmic cow, Honksteroid, Space potato)
+      that drop unique loot upon destruction. Urist McMeteor now shatters into meat
+      when explodes.
+    type: Add
+  id: 8537
+  time: '2025-05-20T13:04:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37327
