@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Pet carriers now only carry pets. preventing various unintended, albeit
-      hilarious, activities.
-    type: Fix
-  id: 8033
-  time: '2025-03-03T10:04:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35587
 - author: Coolsurf6
   changes:
   - message: Pain from Burn damage is now calculated when displaying the red damage
@@ -3919,3 +3911,10 @@
   id: 8535
   time: '2025-05-20T02:47:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37628
+- author: slarticodefast
+  changes:
+  - message: Added a reduced motion version of the seeing rainbows overlay.
+    type: Add
+  id: 8536
+  time: '2025-05-20T12:36:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37584
