@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Toby222
-  changes:
-  - message: Fixed being able to add empty NanoChat contacts
-    type: Fix
-  id: 1201
-  time: '2025-02-25T20:59:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1778
 - author: formlessnameless
   changes:
   - message: Changelings can now eat a lot of different things for varying reward
@@ -4233,3 +4226,10 @@
   id: 1700
   time: '2025-05-20T15:54:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2534
+- author: starlighthowls
+  changes:
+  - message: Remade the cute bartender and chef aprons in loadouts!
+    type: Tweak
+  id: 1701
+  time: '2025-05-20T22:19:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2535
