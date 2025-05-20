@@ -73,12 +73,12 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
     
     private void StasisEnterAnimation(EntityUid uid, AvaliStasisComponent comp)
     {
+        StartStasisContinuousAnimation(uid, comp);
         if (_enterEffect != null)
         {
             QueueDel(_enterEffect.Value);
             _enterEffect = null;
         }
-        StartStasisContinuousAnimation(uid, comp);
     }
 
     private void StasisExitAnimation(EntityUid uid, AvaliStasisComponent comp)
