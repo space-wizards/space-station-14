@@ -218,3 +218,10 @@
   id: SecurityHud
   equipment:
     eyes: ClothingEyesHudSecurity
+
+# Side-Arm Options
+- type: loadout
+  id: SecurityMk58
+  storage:
+    back:
+    - WeaponPistolMk58

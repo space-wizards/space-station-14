@@ -345,7 +345,7 @@
   - HeadofSecurityJumpsuit
   - SecurityBackpack
   - SecurityBelt
-  - SecurityWeapon
+  - SecurityNonLethalWeapon
   - HeadofSecurityOuterClothing
   - SecurityEyewear
   - SecurityShoes
@@ -380,7 +380,8 @@
   - SecurityShoes
   - SecurityPDA
   - SecurityBelt
-  - SecurityWeapon
+  - SecurityNonLethalWeapon
+  - SecuritySidearm
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -397,7 +398,8 @@
   - BrigmedicGloves
   - BrigmedicEyewear
   - SecurityShoes
-  - SecurityWeapon
+  - SecurityNonLethalWeapon
+  - SecuritySidearm
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -423,7 +425,7 @@
   groups:
   - SecurityCadetJumpsuit
   - SecurityBackpack
-  - SecurityWeapon
+  - SecurityNonLethalWeapon
   - SecurityEyewear
   - SurvivalSecurity
   - Trinkets

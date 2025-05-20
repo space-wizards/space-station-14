@@ -954,11 +954,17 @@
 
 # Security
 - type: loadoutGroup
-  id: SecurityWeapon
-  name: loadout-group-security-weapon
+  id: SecurityNonLethalWeapon
+  name: loadout-group-security-non-lethal-weapon
   loadouts:
   - SecurityTaser
   - SecurityDominator
+    
+- type: loadoutGroup
+  id: SecuritySidearm
+  name: loadout-group-security-sidearm
+  loadouts:
+    - SecurityMk58
 
 - type: loadoutGroup
   id: HeadofSecurityHead
