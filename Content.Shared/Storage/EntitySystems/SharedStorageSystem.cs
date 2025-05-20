@@ -1357,7 +1357,7 @@ public abstract class SharedStorageSystem : EntitySystem
         }
         else
         {
-            var shape = itemShape.First();
+            var shape = itemShape[0];
 
             // At least 1 check for a square.
             angles.Add(startAngle);
