@@ -11,7 +11,7 @@ public sealed class DamagedByFlashingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DamagedByFlashingComponent, AfterFlashedEvent>(OnFlashAttempt);
+        SubscribeLocalEvent<DamagedByFlashingComponent, FlashAttemptEvent>(OnFlashAttempt);
     }
 
     // TODO: Attempt events should not be doing state changes. But using AfterFlashedEvent does not work because this entity cannot get the status effect.
