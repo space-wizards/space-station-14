@@ -953,7 +953,7 @@
     slice: FoodMeatCapybaraCutletCooked
   - type: Construction
     graph: CapybaraSteak
-    node: capybara steak
+    node: cooked capybara
 
 - type: entity
   name: penguin filet
