@@ -125,7 +125,7 @@
     containers:
     - entity_storage
   - type: Paintable
-    group: Locker
+    group: Closet
 
 #Wall Closet
 - type: entity

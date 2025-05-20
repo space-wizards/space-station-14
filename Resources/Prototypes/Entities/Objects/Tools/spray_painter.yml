@@ -41,6 +41,14 @@
 
 - type: entity
   parent: SprayPainter
+  id: SprayPainterRecharging
+  suffix: Admeme
+  components:
+  - type: AutoRecharge
+    rechargeDuration: 1
+
+- type: entity
+  parent: SprayPainter
   id: SprayPainterEmpty
   suffix: Empty
   components:

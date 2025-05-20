@@ -21,6 +21,8 @@
     stateBaseClosed: emergency
     stateDoorOpen: emergency_open
     stateDoorClosed: emergency_door
+  - type: Paintable
+    group: WallLockerEmergency
 
 - type: entity
   parent: BaseWallCloset
@@ -33,6 +35,8 @@
     stateBaseClosed: n2
     stateDoorOpen: n2_open
     stateDoorClosed: n2_door
+  - type: Paintable
+    group: WallLockerEmergency
 
 - type: entity
   id: ClosetWallFire
@@ -176,3 +180,5 @@
     stateDoorClosed: med_door
   - type: AccessReader
     access: [["Medical"]]
+  - type: Paintable
+    group: null # Looks bad when repainted

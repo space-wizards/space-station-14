@@ -56,8 +56,10 @@ spray-painter-tab-group-cratesteel = Steel
 spray-painter-tab-group-crateplastic = Plastic
 spray-painter-tab-group-cratesteelsec = Secure
 
-spray-painter-tab-group-locker = Standing
+spray-painter-tab-group-closet = Unlocked
+spray-painter-tab-group-locker = Secure
 spray-painter-tab-group-walllocker = Wallmount
+spray-painter-tab-group-walllockeremergency = Emergency
 
 # Airlocks
 spray-painter-style-airlockstandard-atmospherics = Atmospheric
@@ -114,25 +116,47 @@ spray-painter-style-locker-salvage = Salvage
 spray-painter-style-locker-scientist = Scientist
 spray-painter-style-locker-security = Security
 spray-painter-style-locker-welding = Welding
-spray-painter-style-locker-tool = Tools
-spray-painter-style-locker-radiation = Radiation suit
-spray-painter-style-locker-emergency = Emergency (oxygen)
-spray-painter-style-locker-emergency-nitrogen = Emergency (nitrogen)
-spray-painter-style-locker-fire = Fire-safety
-spray-painter-style-locker-bomb = Bomb suit
-spray-painter-style-locker-bomb-janitor = Janitorial bomb suit
-spray-painter-style-locker-biohazard = Biohazard
-spray-painter-style-locker-biohazard-science = Biohazard (science)
-spray-painter-style-locker-biohazard-virology = Biohazard (virology)
-spray-painter-style-locker-biohazard-security = Biohazard (security)
-spray-painter-style-locker-biohazard-janitor = Biohazard (janitor)
-spray-painter-style-locker-chef = Chef
-spray-painter-style-locker-janitor = Janitor
-spray-painter-style-locker-legal = Lawyer
+
+spray-painter-style-closet-atmospherics = Atmospherics
+spray-painter-style-closet-basic = Basic
+spray-painter-style-closet-botanist = Botanist
+spray-painter-style-closet-brigmedic = Brigmedic
+spray-painter-style-closet-captain = Captain
+spray-painter-style-closet-ce = CE
+spray-painter-style-closet-chemical = Chemical
+spray-painter-style-closet-clown = Clown
+spray-painter-style-closet-cmo = CMO
+spray-painter-style-closet-doctor = Doctor
+spray-painter-style-closet-electrical = Electrical
+spray-painter-style-closet-engineer = Engineer
+spray-painter-style-closet-hop = HOP
+spray-painter-style-closet-hos = HOS
+spray-painter-style-closet-medicine = Medicine
+spray-painter-style-closet-mime = Mime
+spray-painter-style-closet-paramedic = Paramedic
+spray-painter-style-closet-quartermaster = Quartermaster
+spray-painter-style-closet-rd = RD
+spray-painter-style-closet-representative = Representative
+spray-painter-style-closet-salvage = Salvage
+spray-painter-style-closet-scientist = Scientist
+spray-painter-style-closet-security = Security
+spray-painter-style-closet-welding = Welding
+
+spray-painter-style-closet-tool = Tools
+spray-painter-style-closet-radiation = Radiation suit
+spray-painter-style-closet-fire = Fire-safety
+spray-painter-style-closet-bomb = Bomb suit
+spray-painter-style-closet-bomb-janitor = Janitorial bomb suit
+spray-painter-style-closet-biohazard = Biohazard
+spray-painter-style-closet-biohazard-science = Biohazard (science)
+spray-painter-style-closet-biohazard-virology = Biohazard (virology)
+spray-painter-style-closet-biohazard-security = Biohazard (security)
+spray-painter-style-closet-biohazard-janitor = Biohazard (janitor)
+spray-painter-style-closet-chef = Chef
+spray-painter-style-closet-janitor = Janitor
+spray-painter-style-closet-legal = Lawyer
 
 spray-painter-style-walllocker-basic = Basic
-spray-painter-style-walllocker-emergency = Emergency (oxygen)
-spray-painter-style-walllocker-emergency-nitrogen = Emergency (nitrogen)
 spray-painter-style-walllocker-fire = Fire-safety
 spray-painter-style-walllocker-blue = Blue
 spray-painter-style-walllocker-pink = Pink
@@ -145,6 +169,9 @@ spray-painter-style-walllocker-grey = Grey
 spray-painter-style-walllocker-mixed = Mixed
 spray-painter-style-walllocker-atmospherics = Atmospherics
 spray-painter-style-walllocker-medical = Medical
+
+spray-painter-style-walllockeremergency-oxygen = Oxygen
+spray-painter-style-walllockeremergency-nitrogen = Nitrogen
 
 # Crates
 spray-painter-style-cratesteel-basic = Basic
@@ -178,9 +205,6 @@ spray-painter-style-canisters-air = Air
 spray-painter-style-canisters-ammonia = Ammonia
 spray-painter-style-canisters-carbon-dioxide = Carbon dioxide
 spray-painter-style-canisters-frezon = Frezon
-spray-painter-style-canisters-liquid-carbon-dioxide = Liquid carbon dioxide
-spray-painter-style-canisters-liquid-nitrogen = Liquid nitrogen
-spray-painter-style-canisters-liquid-oxygen = Liquid oxygen
 spray-painter-style-canisters-nitrogen = Nitrogen
 spray-painter-style-canisters-nitrous-oxide = Nitrous oxide
 spray-painter-style-canisters-oxygen = Oxygen
