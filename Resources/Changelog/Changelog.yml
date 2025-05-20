@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: rokudara-sen
-  changes:
-  - message: Particle decelerators now drain an additional percentage of a singularity's
-      current energy.
-    type: Tweak
-  id: 8036
-  time: '2025-03-03T16:37:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35643
-- author: DuckManZach
-  changes:
-  - message: Butter is now cheaper to produce!
-    type: Tweak
-  id: 8037
-  time: '2025-03-03T22:04:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35650
 - author: SlamBamActionman
   changes:
   - message: Top and bottom undergarments can now be found in the Markings tab of
@@ -3920,3 +3905,17 @@
   id: 8538
   time: '2025-05-20T16:55:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37592
+- author: spanky-spanky
+  changes:
+  - message: On Fland, the salvage job board has been added.
+    type: Add
+  id: 8539
+  time: '2025-05-20T23:27:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37653
+- author: spanky-spanky
+  changes:
+  - message: On Bagel, the salvage job board has been added.
+    type: Add
+  id: 8540
+  time: '2025-05-20T23:27:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37652
