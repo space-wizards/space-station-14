@@ -12,6 +12,7 @@
       - Pill
       - Crayon
       - Paper
+      - Bone
   - type: SolutionContainerManager
     solutions:
       stomach:
