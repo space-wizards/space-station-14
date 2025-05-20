@@ -2,6 +2,7 @@
                         xmlns:ui="clr-namespace:Content.Client.TurretController"
                         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                        xmlns:access="clr-namespace:Content.Client.Access.UI"
                         SetWidth="550"
                         Resizable="False"
                         MouseFilter="Stop">
@@ -45,7 +46,7 @@
                                 <PanelContainer.PanelOverride>
                                     <gfx:StyleBoxFlat BackgroundColor="#FFFFFF" />
                                 </PanelContainer.PanelOverride>
-                            </PanelContainer>                           
+                            </PanelContainer>
 
                             <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
                                 <Label Name="NoLinkedTurretsText" Text="{Loc 'turret-controls-window-no-turrets'}" StyleClasses="ConsoleText"
@@ -54,7 +55,7 @@
                                 <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
                                     <BoxContainer Name="LinkedTurretsContainer" Orientation="Vertical" Visible="False" ReservesSpace="False">
                                         <!-- Populated with C# code -->
-                                    </BoxContainer>  
+                                    </BoxContainer>
                                 </ScrollContainer>
                             </BoxContainer>
                         </BoxContainer>
@@ -105,26 +106,7 @@
                             </PanelContainer>
 
                             <!-- Access configuration -->
-                            <BoxContainer Orientation="Horizontal" Margin="10 10 10 10" VerticalExpand="True" HorizontalExpand="True" MinHeight="70">
-
-                                <!-- Access groups -->
-                                <BoxContainer Name="AccessGroupList" Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.5" Margin="0 0 10 0">
-                                    <!-- Populated with C# code -->
-                                </BoxContainer>
-
-                                <PanelContainer StyleClasses="LowDivider" VerticalExpand="True" Margin="0 0 0 0" SetWidth="2">
-                                    <PanelContainer.PanelOverride>
-                                        <gfx:StyleBoxFlat BackgroundColor="#FFFFFF" />
-                                    </PanelContainer.PanelOverride>
-                                </PanelContainer>
-
-                                <!-- Access levels -->
-                                <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="10 0 0 0">
-                                    <BoxContainer Name="AccessLevelGrid" Orientation="Vertical" HorizontalAlignment="Left">
-                                        <!-- Populated with C# code -->
-                                    </BoxContainer>
-                                </ScrollContainer>
-                            </BoxContainer>
+                            <access:GroupedAccessLevelChecklist Name="AccessConfiguration"/>
 
                         </BoxContainer>
                     </PanelContainer>
