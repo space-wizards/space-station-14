@@ -15,22 +15,26 @@ public sealed partial class DungeonJob
     private async Task PostGen(
         EntityTableDunGen gen,
         List<Dungeon> dungeons,
+        HashSet<Vector2i> reservedTiles,
         Random random)
     {
+        var count = random.Next(gen.MinCount, gen.MaxCount + 1);
+        var npcs = _entManager.System<NPCSystem>();
+
         foreach (var dungeon in dungeons)
         {
             var availableRooms = new ValueList<DungeonRoom>();
             availableRooms.AddRange(dungeon.Rooms);
             var availableTiles = new ValueList<Vector2i>(dungeon.AllTiles);
 
-            var count = random.Next(gen.MinCount, gen.MaxCount + 1);
-            var npcs = _entManager.System<NPCSystem>();
-
             for (var i = 0; i < count; i++)
             {
                 while (availableTiles.Count > 0)
                 {
                     var tile = availableTiles.RemoveSwap(random.Next(availableTiles.Count));
+
+                    if (reservedTiles.Contains(tile))
+                        continue;
 
                     if (!_anchorable.TileFree(_grid,
                             tile,
@@ -56,6 +60,15 @@ public sealed partial class DungeonJob
 
                 if (!ValidateResume())
                     return;
+            }
+
+            if (gen.PerDungeon)
+            {
+                count = random.Next(gen.MinCount, gen.MaxCount + 1);
+            }
+            else if (count == 0)
+            {
+                return;
             }
         }
     }

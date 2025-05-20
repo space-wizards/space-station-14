@@ -26,6 +26,11 @@ public enum DungeonInheritance : byte
     None,
 
     /// <summary>
+    /// Inherit the first dungeon ran.
+    /// </summary>
+    First,
+
+    /// <summary>
     /// Inherit only the last dungeon ran.
     /// </summary>
     Last,

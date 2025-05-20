@@ -10,6 +10,12 @@ public sealed partial class EntityTableDunGen : IDunGenLayer
 {
     // Counts separate to config to avoid some duplication.
 
+    /// <summary>
+    /// Should we reset the count between dungeons or just continue.
+    /// </summary>
+    [DataField]
+    public bool PerDungeon = false;
+
     [DataField]
     public int MinCount = 1;
 

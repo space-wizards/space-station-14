@@ -276,7 +276,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 await PostGen(mob, dungeons, random);
                 break;
             case EntityTableDunGen entityTable:
-                await PostGen(entityTable, dungeons, random);
+                await PostGen(entityTable, dungeons, reservedTiles, random);
                 break;
             case NoiseDistanceDunGen distance:
                 dungeons.Add(await GenerateNoiseDistanceDunGen(position, distance, reservedTiles, seed, random));
@@ -299,8 +299,11 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                     case DungeonInheritance.All:
                         dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random, existing: dungeons));
                         break;
+                    case DungeonInheritance.First:
+                        dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random, existing: new List<Dungeon>() {dungeons[0]}));
+                        break;
                     case DungeonInheritance.Last:
-                        dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random, existing: dungeons.GetRange(dungeons.Count - 1, 1)));
+                        dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random, existing: new List<Dungeon>() {dungeons[^1]}));
                         break;
                     case DungeonInheritance.None:
                         dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random));
