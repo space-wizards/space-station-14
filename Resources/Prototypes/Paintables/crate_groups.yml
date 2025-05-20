@@ -5,8 +5,8 @@
   styles:
     basic: CrateGenericSteel
     electrical: CrateElectrical
-    radiation: CrateRadiation
     engineering: CrateEngineering
+    radiation: CrateRadiation
     science: CrateScience
     surgery: CrateSurgery
 
@@ -26,13 +26,13 @@
   defaultStyle: basic
   styles:
     basic: CrateSecure
-    secgear: CrateSecgear
-    engineering: CrateEngineeringSecure
-    medical: CrateMedicalSecure
     chemistry: CrateChemistrySecure
+    command: CrateCommandSecure
+    engineering: CrateEngineeringSecure
+    hydroponics: CrateHydroSecure
+    medical: CrateMedicalSecure
+    plasma: CratePlasma
     private: CratePrivateSecure
     science: CrateScienceSecure
-    plasma: CratePlasma
-    hydroponics: CrateHydroSecure
+    secgear: CrateSecgear
     weapon: CrateWeaponSecure
-    command: CrateCommandSecure

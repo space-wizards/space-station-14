@@ -48,8 +48,8 @@
     engineer: LockerEngineer
     hop: LockerHeadOfPersonnel
     hos: LockerHeadOfSecurity
-    mime: LockerMime
     medicine: LockerMedicine
+    mime: LockerMime
     paramedic: LockerParamedic
     quartermaster: LockerQuarterMaster
     rd: LockerResearchDirector
@@ -86,9 +86,9 @@
     green: ClosetWallGreen
     grey: ClosetWallGrey
     medical: LockerWallMedical
+    mixed: ClosetWallMixed
     orange: ClosetWallOrange
     pink: ClosetWallPink
-    mixed: ClosetWallMixed
     white: ClosetWallWhite
     yellow: ClosetWallYellow
 
