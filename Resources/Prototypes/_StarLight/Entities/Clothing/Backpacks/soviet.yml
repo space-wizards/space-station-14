@@ -1,7 +1,21 @@
 - type: entity
+  parent: [ClothingBackpackDuffel, BaseSovietContraband]
+  id: ClothingBackpackDuffelSSF
+  name: soviet SSF duffel bag
+  description: For some- it's cumbersome, for others- it's home.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Duffels/soviet_marine_duffel.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Storage
+    grid:
+    - 0,0,8,4
+
+- type: entity
   id: ClothingBackpackDuffelSovietEVABundle
   name: soviet EVA bundle
-  parent: [ClothingBackpackDuffel, BaseSovietContraband]
+  parent: ClothingBackpackDuffelSSF
   description: Contains a soviet EVA suit and helmet, along with emergency oxygen and nitrogen tanks. For the workers of space!
   components:
   - type: StorageFill
@@ -14,7 +28,7 @@
 - type: entity
   id: ClothingBackpackDuffelZaporozhianBundle
   name: Zaporozhian sich bundle
-  parent: [ClothingBackpackDuffel, BaseSovietContraband]
+  parent: ClothingBackpackDuffelSSF
   description: Cossacks- have gone to space, and have earned respect within the union.
   components:
   - type: StorageFill
