@@ -14,6 +14,8 @@ namespace Content.Shared.StatusEffect
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly RefCountSystem _refCount = default!;
+
         private List<EntityUid> _toRemove = new();
 
         public override void Initialize()
@@ -118,7 +120,7 @@ namespace Content.Shared.StatusEffect
             if (HasComp<T>(uid))
                 return true;
 
-            EntityManager.AddComponent<T>(uid);
+            _refCount.Add<T>(uid);
             status.ActiveEffects[key].RelevantComponent = _componentFactory.GetComponentName<T>();
             return true;
 
@@ -132,13 +134,9 @@ namespace Content.Shared.StatusEffect
 
             if (TryAddStatusEffect(uid, key, time, refresh, status))
             {
-                // If they already have the comp, we just won't bother updating anything.
-                if (!EntityManager.HasComponent(uid, _componentFactory.GetRegistration(component).Type))
-                {
-                    var newComponent = (Component) _componentFactory.GetComponent(component);
-                    EntityManager.AddComponent(uid, newComponent);
-                    status.ActiveEffects[key].RelevantComponent = component;
-                }
+                var type = _componentFactory.GetRegistration(component).Type;
+                _refCount.Add(uid, type);
+                status.ActiveEffects[key].RelevantComponent = component;
                 return true;
             }
 
@@ -182,7 +180,8 @@ namespace Content.Shared.StatusEffect
             var start = startTime ?? _gameTiming.CurTime;
             (TimeSpan, TimeSpan) cooldown = (start, start + time);
 
-            if (HasStatusEffect(uid, key, status))
+            var existing = HasStatusEffect(uid, key, status);
+            if (existing)
             {
                 status.ActiveEffects[key].CooldownRefresh = refresh;
                 if (refresh)
@@ -204,6 +203,8 @@ namespace Content.Shared.StatusEffect
             {
                 status.ActiveEffects.Add(key, new StatusEffectState(cooldown, refresh, null));
                 EnsureComp<ActiveStatusEffectsComponent>(uid);
+                // only raised when it gets added for the first time
+                RaiseLocalEvent(uid, new StatusEffectAddedEvent(uid, key));
             }
 
             if (proto.Alert != null)
@@ -213,8 +214,7 @@ namespace Content.Shared.StatusEffect
             }
 
             Dirty(uid, status);
-            RaiseLocalEvent(uid, new StatusEffectAddedEvent(uid, key));
-            return true;
+            return !existing;
         }
 
         /// <summary>
@@ -273,8 +273,7 @@ namespace Content.Shared.StatusEffect
                 && state.RelevantComponent != null
                 && _componentFactory.TryGetRegistration(state.RelevantComponent, out var registration))
             {
-                var type = registration.Type;
-                EntityManager.RemoveComponent(uid, type);
+                _refCount.Remove(uid, registration.Type);
             }
 
             if (proto.Alert != null)
@@ -475,6 +474,10 @@ namespace Content.Shared.StatusEffect
     [ByRefEvent]
     public record struct BeforeStatusEffectAddedEvent(string Key, bool Cancelled=false);
 
+    /// <summary>
+    /// Raised on an entity after a status effect is added when not previously active.
+    /// Does not get raised when refreshing an existing effect.
+    /// </summary>
     public readonly struct StatusEffectAddedEvent
     {
         public readonly EntityUid Uid;
