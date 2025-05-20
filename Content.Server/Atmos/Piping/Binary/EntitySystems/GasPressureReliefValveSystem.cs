@@ -8,9 +8,9 @@ using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Audio;
-using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 
@@ -26,6 +26,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
 
     public override void Initialize()
@@ -34,7 +35,40 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         SubscribeLocalEvent<GasPressureReliefValveComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<GasPressureReliefValveComponent, AtmosDeviceUpdateEvent>(OnReliefValveUpdated);
-        SubscribeLocalEvent<GasPressureReliefValveComponent, ActivateInWorldEvent>(OnActivated);
+        SubscribeLocalEvent<GasPressureReliefValveComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<GasPressureReliefValveComponent, BoundUIOpenedEvent>(OnUIOpened);
+    }
+
+    private void OnMapInit(Entity<GasPressureReliefValveComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextUiUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<GasPressureReliefValveComponent>();
+
+        while (query.MoveNext(out var ent, out var comp))
+        {
+            if (comp.NextUiUpdate > _timing.CurTime)
+                continue;
+
+            comp.NextUiUpdate += comp.UpdateInterval;
+
+            if (_nodeContainer.TryGetNodes(ent,
+                    comp.InletName,
+                    comp.OutletName,
+                    out PipeNode? inletPipeNode,
+                    out PipeNode? outletPipeNode))
+            {
+                SendUIInfo(inletPipeNode.Air.Pressure,
+                    outletPipeNode.Air.Pressure,
+                    comp.FlowRate,
+                    ent);
+            }
+        }
     }
 
     /// <summary>
@@ -42,7 +76,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
     /// </summary>
     /// <param name="ent"></param>
     /// <param name="args"></param>
-    private void OnActivated(Entity<GasPressureReliefValveComponent> ent, ref ActivateInWorldEvent args)
+    private void OnUIOpened(Entity<GasPressureReliefValveComponent> ent, ref BoundUIOpenedEvent args)
     {
         if (_nodeContainer.TryGetNodes(ent.Owner,
                 ent.Comp.InletName,
@@ -100,7 +134,6 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         if (p1 <= valveEntity.Comp.Threshold || p2 >= p1)
         {
             ChangeStatus(false, valveEntity);
-            SendUIInfo(p1, p2, valveEntity.Comp.FlowRate, valveEntity.Owner);
             return;
         }
 
@@ -138,7 +171,6 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         valveEntity.Comp.FlowRate = MathF.Round(actualVolumeToTransfer * args.dt, 1);
 
         ChangeStatus(true, valveEntity);
-        SendUIInfo(p1, p2, valveEntity.Comp.FlowRate, valveEntity.Owner);
     }
 
     /// <summary>
@@ -173,9 +205,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
             UpdateAppearance(valveEntity);
 
             if (!enabled)
-            {
                 valveEntity.Comp.FlowRate = 0;
-            }
 
             DirtyField(valveEntity!, nameof(valveEntity.Comp.Enabled));
         }
