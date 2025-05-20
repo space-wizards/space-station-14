@@ -17,6 +17,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 /// </summary>
 [Serializable]
 [DataDefinition]
+[Obsolete("This is being depreciated. Use EntityTableSpawnEntitiesBehavior instead!")]
 public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
 {
     /// <summary>
