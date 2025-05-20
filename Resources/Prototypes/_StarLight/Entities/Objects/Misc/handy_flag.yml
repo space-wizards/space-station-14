@@ -42,6 +42,11 @@
         Slash: 2
   - type: StaminaDamageOnHit
     damage: 12
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    - suitStorage
   - type: UseDelay
   - type: ClothingSpeedModifier
     walkModifier: 1
