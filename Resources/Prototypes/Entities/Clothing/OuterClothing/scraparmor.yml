@@ -51,7 +51,7 @@
 
 # The armor itself
 - type: entity
-  parent: [ClothingOuterArmorHeavy, BaseMajorContraband]
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseMajorContraband]
   id: ClothingOuterArmorScrap
   name: scrap armor
   description: A tider's gleaming plate mail. Bail up, or you're a dead man.
@@ -80,8 +80,6 @@
     walkModifier: 0.7
     sprintModifier: 0.7
   - type: GroupExamine
-  - type: ProtectedFromStepTriggers
-    slots: WITHOUT_POCKET
   - type: Construction
     graph: scraparmor
     node: scraparmorfinished
