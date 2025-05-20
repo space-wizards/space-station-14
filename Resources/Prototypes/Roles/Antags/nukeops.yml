@@ -48,7 +48,7 @@
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndie
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsMagSyndie
     id: SyndiPDA
     pocket2: PlushieCarp
     belt: ClothingBeltMilitaryWebbing
