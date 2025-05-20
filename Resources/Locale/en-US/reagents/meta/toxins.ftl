@@ -86,4 +86,4 @@ reagent-name-toxintrash = trash
 reagent-desc-toxintrash = An awful-smelling fluid. Deadly to non-vox.
 
 reagent-name-nollazine = nollazine
-reagent-desc-nollazine = A deeply unsettling "omnitoxin", extremely deadly to all forms of life. Should not be ingested under any circumstances.
+reagent-desc-nollazine = An appalling, tar-like sludge that reacts viciously with anything living. Rumors regarding its origins have discouraged widespread commercial use.

@@ -1347,29 +1347,25 @@
   productPrototypes:
     - FoodAmbrosiaHorribilis
   lifespan: 5
-  maturation: 5
+  maturation: 10
   production: 3
-  yield: 5
+  yield: 4
   potency: 10
   growthStages: 4
   waterConsumption: 0.30
   chemicals:
-    Nutriment:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 10
     Nollazine: # do kill me
-      Min: 2
-      Max: 15
-      PotencyDivisor: 5
+      Min: 1
+      Max: 6
+      PotencyDivisor: 12
     Cryptobiolin:
       Min: 1
-      Max: 5
+      Max: 10
       PotencyDivisor: 10
     Lipolicide: 
       Min: 1
-      Max: 2
-      PotencyDivisor: 20
+      Max: 5
+      PotencyDivisor: 10
 
 - type: seed
   id: galaxythistle

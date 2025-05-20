@@ -737,7 +737,7 @@
   name: reagent-name-nollazine
   group: Toxins
   desc: reagent-desc-nollazine
-  physicalDesc: reagent-physical-desc-unsettling
+  physicalDesc: reagent-physical-desc-appalling
   flavor: horrible
   color: "#1a000c"
   plantMetabolism:
@@ -749,15 +749,16 @@
     amount: -10
   metabolisms:
     Poison:
+      metabolismRate: 1
       effects:
       - !type:ChemVomit
         probability: 0.1
       - !type:Emote
         emote: Scream
-        probability: 0.3
+        probability: 0.2
       - !type:HealthChange
         damage:
-          groups:
+          groups: # 8 damage per unit
             Burn: 2
             Toxin: 2
             Airloss: 2
