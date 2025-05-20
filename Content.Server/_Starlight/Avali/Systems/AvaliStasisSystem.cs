@@ -61,7 +61,8 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         
         _actionsSystem.RemoveAction(uid, comp.EnterStasisActionEntity);
         _actionsSystem.AddAction(uid, ref comp.ExitStasisActionEntity, comp.ExitStasisAction);
-        
+        _actionsSystem.SetCooldown(comp.ExitStasisActionEntity, TimeSpan.FromSeconds(comp.StasisEnterEffectLifetime + 1));
+
         // Send animation event to all clients
         var ev = new AvaliStasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
             AvaliStasisAnimationType.Prepare);
