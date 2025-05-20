@@ -81,23 +81,12 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                          : p.GroupBy)
         .ToDictionary(g => g.Key, g => g.ToList());
 
-        BoxContainer? contentContainer = null;
-
         foreach (var kvp in groups)
         {
-            contentContainer = new BoxContainer
-            {
-                HorizontalExpand = true,
-                VerticalExpand = true
-            };
-            LoadoutsContainer.AddChild(contentContainer);
-
             var protos = kvp.Value;
 
             if (protos.Count > 1)
             {
-                var row = contentContainer;
-
                 var uiElements = protos
                     .Select(proto =>
                     {
@@ -112,48 +101,50 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                 var otherElements = uiElements.Where(e => !ReferenceEquals(e, firstElement)).ToList();
 
                 firstElement.HorizontalExpand = true;
-                var toggle = CreateToggleButton();
-
-                var subContainer = new SubLoadoutContainer(toggle)
+                var subContainer = new SubLoadoutContainer()
                 {
                     Visible = _openedGroups.GetValueOrDefault(kvp.Key, false)
                 };
-                toggle.Text = subContainer.Visible ? OPENED_GROUP_MARK : CLOSED_GROUP_MARK;
+                var toggle = CreateToggleButton(kvp, firstElement, subContainer);
 
+                LoadoutsContainer.AddChild(firstElement);
                 LoadoutsContainer.AddChild(subContainer);
 
-                toggle.OnPressed += _ =>
-                {
-                    var willOpen = !subContainer.Visible;
-                    subContainer.Visible = willOpen;
-                    toggle.Text = willOpen ? OPENED_GROUP_MARK : CLOSED_GROUP_MARK;
-                    _openedGroups[kvp.Key] = willOpen;
-                };
-
                 var subList = subContainer.Grid;
-
-                firstElement.AddChild(toggle);
-                toggle.SetPositionFirst();
-                contentContainer.AddChild(firstElement);
                 foreach (var proto in otherElements)
                     subList.AddChild(proto);
+
                 UpdateToggleColor(toggle, subList);
             }
             else
             {
-                contentContainer.AddChild(
+                LoadoutsContainer.AddChild(
                     CreateLoadoutUI(protos[0], profile, loadout, session, collection, loadoutSystem)
                 );
             }
         }
     }
 
-    private static ToggleLoadoutButton CreateToggleButton()
+    private ToggleLoadoutButton CreateToggleButton(KeyValuePair<string, List<LoadoutPrototype>> kvp, LoadoutContainer firstElement, SubLoadoutContainer subContainer)
     {
-        return new ToggleLoadoutButton
+        var toggle = new ToggleLoadoutButton
         {
             Text = CLOSED_GROUP_MARK
         };
+
+        toggle.Text = subContainer.Visible ? OPENED_GROUP_MARK : CLOSED_GROUP_MARK;
+
+        toggle.OnPressed += _ =>
+        {
+            var willOpen = !subContainer.Visible;
+            subContainer.Visible = willOpen;
+            toggle.Text = willOpen ? OPENED_GROUP_MARK : CLOSED_GROUP_MARK;
+            _openedGroups[kvp.Key] = willOpen;
+        };
+
+        firstElement.AddChild(toggle);
+        toggle.SetPositionFirst();
+        return toggle;
     }
 
     private void UpdateToggleColor(Button toggle, BoxContainer subList)

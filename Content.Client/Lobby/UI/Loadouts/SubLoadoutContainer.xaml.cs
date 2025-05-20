@@ -9,13 +9,4 @@ namespace Content.Client.Lobby.UI.Loadouts;
 public sealed partial class SubLoadoutContainer : PanelContainer
 {
     public BoxContainer Grid => SubGridContainer;
-
-    public Button GroupButton;
-
-    public SubLoadoutContainer(Button groupButton)
-    {
-        GroupButton = groupButton;
-        RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
-    }
 }
