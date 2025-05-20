@@ -77,8 +77,8 @@
   - type: ExplosionResistance
     damageCoefficient: 0.80
   - type: ClothingSpeedModifier #But that protection comes at a price.
-    walkModifier: 0.7
-    sprintModifier: 0.7
+    walkModifier: 0.6
+    sprintModifier: 0.6
   - type: GroupExamine
   - type: Construction
     graph: scraparmor
