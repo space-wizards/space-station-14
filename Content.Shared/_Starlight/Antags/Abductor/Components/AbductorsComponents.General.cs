@@ -32,9 +32,6 @@ public sealed partial class AbductorConsoleComponent : Component
     public NetEntity? Experimentator;
     
     [DataField, AutoNetworkedField]
-    public NetEntity? Dispencer;
-    
-    [DataField, AutoNetworkedField]
     public NetEntity? Armor;
     
     [DataField, AutoNetworkedField]

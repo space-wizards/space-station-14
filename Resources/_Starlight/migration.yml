@@ -3,9 +3,14 @@
 # ItemIdFrom: ItemIdTo - Change item
 # ItemIdFrom: null - Removes item from map
 
+# 2025-05-19
+
+AbductorDispencer: VendingMachineAbductorDispenser
+
 # 2025-04-13
 
 ClothingHeadsetGrey: ClothingHeadsetAssistant
 ToyFigurineGreytider: null
 RubberStampGreytide: null
 PosterContrabandGreyTide: null
+
