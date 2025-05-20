@@ -14,6 +14,7 @@ public abstract class SharedAvaliStasisSystem : EntitySystem
 
         SubscribeLocalEvent<AvaliStasisComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AvaliStasisComponent, ComponentShutdown>(OnCompRemove);
+        SubscribeLocalEvent<AvaliStasisComponent, AvaliPrepareStasisActionEvent>(OnPrepareStasisStart);
         SubscribeLocalEvent<AvaliStasisComponent, AvaliEnterStasisActionEvent>(OnEnterStasisStart);
         SubscribeLocalEvent<AvaliStasisComponent, AvaliExitStasisActionEvent>(OnExitStasisStart);
     }
@@ -32,6 +33,11 @@ public abstract class SharedAvaliStasisSystem : EntitySystem
     {
     }
 
+    protected virtual void OnPrepareStasisStart(EntityUid uid, AvaliStasisComponent comp,
+        AvaliPrepareStasisActionEvent args)
+    {
+    }
+    
     protected virtual void OnEnterStasisStart(EntityUid uid, AvaliStasisComponent comp,
         AvaliEnterStasisActionEvent args)
     {
@@ -44,6 +50,13 @@ public abstract class SharedAvaliStasisSystem : EntitySystem
 
 /// <summary>
 /// Should be relayed upon using the action.
+/// </summary>
+public sealed partial class AvaliPrepareStasisActionEvent : InstantActionEvent
+{
+}
+
+/// <summary>
+/// Should be relayed preparation to stasis being complete.
 /// </summary>
 public sealed partial class AvaliEnterStasisActionEvent : InstantActionEvent
 {

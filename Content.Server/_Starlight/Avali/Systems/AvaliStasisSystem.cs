@@ -52,16 +52,38 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         _actionsSystem.RemoveAction(uid, comp.ExitStasisActionEntity);
     }
 
+    protected override void OnPrepareStasisStart(EntityUid uid, AvaliStasisComponent comp,
+        AvaliPrepareStasisActionEvent args)
+    {
+        Dirty(uid, comp);
+        
+        EnsureComp<AvaliStasisFrozenComponent>(uid);
+        
+        _actionsSystem.RemoveAction(uid, comp.EnterStasisActionEntity);
+        _actionsSystem.AddAction(uid, ref comp.ExitStasisActionEntity, comp.ExitStasisAction);
+        
+        // Send animation event to all clients
+        var ev = new AvaliStasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
+            AvaliStasisAnimationType.Prepare);
+        RaiseNetworkEvent(ev);
+
+        // Schedule the enter stasis event after delay
+        Timer.Spawn(TimeSpan.FromSeconds(comp.StasisEnterEffectLifetime), () =>
+        {
+            if (!TryComp<AvaliStasisComponent>(uid, out var stasisComp))
+                return;
+
+            var enterEv = new AvaliEnterStasisActionEvent();
+            RaiseLocalEvent(uid, enterEv);
+        });
+    }
+    
     protected override void OnEnterStasisStart(EntityUid uid, AvaliStasisComponent comp,
         AvaliEnterStasisActionEvent args)
     {
         comp.IsInStasis = true;
+
         Dirty(uid, comp);
-
-        EnsureComp<AvaliStasisFrozenComponent>(uid);
-
-        _actionsSystem.RemoveAction(uid, comp.EnterStasisActionEntity);
-        _actionsSystem.AddAction(uid, ref comp.ExitStasisActionEntity, comp.ExitStasisAction);
 
         // Remove bleeding when entering stasis
         if (TryComp<BloodstreamComponent>(uid, out var bloodstream))
