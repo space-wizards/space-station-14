@@ -4,7 +4,7 @@
   description: An incomplete wall-mounted assembly for a sentry turret control panel.
   categories: [ HideSpawnMenu ]
   components:
-  
+
   # Sprites and appearance
   - type: Sprite
     noRot: false
@@ -32,7 +32,7 @@
       #  node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  
+
   # General properties
   - type: Transform
     anchored: true
@@ -49,14 +49,14 @@
     mode: SnapgridCenter
     snap:
     - Wallmount
-    
+
 - type: entity
   parent: WeaponEnergyTurretControlPanelFrame
   id: WeaponEnergyTurretStationControlPanel
   name: security turret control panel
   description: A wall-mounted interface for remotely configuring the operational parameters of linked security turrets.
   components:
-  
+
   # Sprites and appearance
   - type: Appearance
   - type: Sprite
@@ -91,7 +91,7 @@
   - type: StationAiWhitelist
   - type: AccessReader
     access: [["Security"]]
-    
+
   # Turret related
   - type: TurretTargetSettings
     exemptAccessLevels:
@@ -142,7 +142,7 @@
     - Security
     - Service
     - Theatre
-    
+
   # Device network
   - type: DeviceList
     isAllowList: true
@@ -156,8 +156,8 @@
   - type: WiredNetworkConnection
 
   # UI
-  - type: ActivatableUI 
-    key: enum.DeployableTurretControllerUiKey.Key  
+  - type: ActivatableUI
+    key: enum.DeployableTurretControllerUiKey.Key
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
@@ -165,7 +165,7 @@
         type: TurretControllerWindowBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
-        
+
   # Wires
   - type: WiresPanel
   - type: WiresVisuals
@@ -176,7 +176,7 @@
     locked: true
     unlockOnClick: false
   - type: LockedWiresPanel
-  
+
   # General properties
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
@@ -185,7 +185,7 @@
     usesApcPower: true
   #- type: ContainerFill - Will be added in a later PR
   #  containers:
-  #    board: 
+  #    board:
   #    - WeaponEnergyTurretStationControlPanelElectronics
   #- type: Construction - Will be added in a later PR
   #  graph: WeaponEnergyTurretControlPanel
@@ -201,7 +201,7 @@
     access: [["StationAi"], ["ResearchDirector"]]
   #- type: ContainerFill - Will be added in a later PR
   #  containers:
-  #    board: 
+  #    board:
   #    - WeaponEnergyTurretAIControlPanelElectronics
   - type: DeviceNetwork
     receiveFrequencyId: TurretAI
