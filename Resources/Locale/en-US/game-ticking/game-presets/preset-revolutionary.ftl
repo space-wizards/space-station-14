@@ -5,9 +5,9 @@ roles-antag-rev-head-objective = Your objective is to take over the station by b
 
 head-rev-role-greeting =
     Comrade {$name}! You are a Head Revolutionary promoting the interests of USSP!
-    You are tasked with removing all of Command from station via conversion, death or imprisonment.
+    You are tasked with removing all of Command from the station via conversion, death or imprisonment.
     The USSP has sponsored you with a flash that brings back the crew to your side.
-    Beware, this won't work on those brainwashed with a 'mindshield' or wearing flash protection, such as sunglasses and welding masks/goggles.
+    Beware, this won't work on those brainwashed with a 'mindshield' or wearing flash protection, such as sunglasses and welding masks or goggles.
     With enough crew, you may attempt to create a supply rift that will aid in your glorious revolution! But beware, it will alert the station of your influence!
     Glory to the USSP!
 
@@ -27,8 +27,8 @@ rev-break-control = {$name} has remembered their true allegiance!
 
 rev-role-greeting =
     Comrade {$name}! You are an USSP revolutionary!
-    You are tasked with taking over the station and to promote the interests your head revolutionaries!
-    Execute or convert the brainwashed corporate command staff scum!
+    You are tasked with taking over the station and to promote the interests of your head revolutionaries!
+    Execute, imprison or convert the brainwashed corporate command staff scum!
     Gone are the days of oppression and the unfair treatment of contractors!
     Glory to the USSP!
 
