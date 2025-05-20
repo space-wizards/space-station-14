@@ -141,12 +141,14 @@
     stasisPiercingHealPerSecond: 2
     stasisHeatHealPerSecond: 2
     stasisColdHealPerSecond: 2
+    stasisBleedHealPerSecond: 1.0
     stasisAdditionalDamageResistance: 0.2
     stasisInCritBluntHealPerSecond: 1
     stasisInCritSlashingHealPerSecond: 1
     stasisInCritPiercingHealPerSecond: 1
     stasisInCritHeatHealPerSecond: 1
     stasisInCritColdHealPerSecond: 1
+    stasisInCritBleedHealPerSecond: 0.5
     stasisInCritAdditionalDamageResistance: 0.2
     stasisEnterEffect: EffectNanitesEnter
     stasisEnterEffectLifetime: 3.0
@@ -155,7 +157,6 @@
     stasisExitEffectLifetime: 30
     stasisExitSound: /Audio/_Starlight/Misc/alien_teleport.ogg
     stasisContinuousEffect: EffectNanitesCurrent
-    bleedHealPerSecond: 1.0
     
 - type: entity
   parent: BaseSpeciesDummy

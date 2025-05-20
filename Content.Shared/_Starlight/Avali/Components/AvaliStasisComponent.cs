@@ -63,6 +63,11 @@ public sealed partial class AvaliStasisComponent : Component
     /// The amount of cold damage the stasis ability will heal, per second.
     /// </summary>
     [DataField] [AutoNetworkedField] public float StasisColdHealPerSecond;
+    
+    /// <summary>
+    /// The amount of bleed the stasis ability will heal, per second.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public float StasisBleedHealPerSecond;
 
     /// <summary>
     /// The amount of additional damage resistance while in stasis (0-1, where 1 is 100% resistance), so 0.1 resistance lowers damage by 10%.
@@ -93,6 +98,11 @@ public sealed partial class AvaliStasisComponent : Component
     /// The amount of cold damage the stasis ability will heal in critical status, per second.
     /// </summary>
     [DataField] [AutoNetworkedField] public float StasisInCritColdHealPerSecond;
+    
+    /// <summary>
+    /// The amount of bleed the stasis ability will heal in critical status, per second.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public float StasisInCritBleedHealPerSecond;
 
     /// <summary>
     /// The amount of additional damage resistance while in stasis in critical status (0-1, where 1 is 100% resistance), so 0.1 resistance lowers damage by 10%.
@@ -138,9 +148,4 @@ public sealed partial class AvaliStasisComponent : Component
     /// The entity reference for the continuous stasis effect.
     /// </summary>
     [DataField] [AutoNetworkedField] public EntityUid? ContinuousEffectEntity;
-
-    /// <summary>
-    /// The amount of bleed the stasis ability will heal, per second.
-    /// </summary>
-    [DataField] [AutoNetworkedField] public float BleedHealPerSecond;
 }

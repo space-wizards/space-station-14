@@ -173,12 +173,14 @@
       stasisPiercingHealPerSecond: 5
       stasisHeatHealPerSecond: 5
       stasisColdHealPerSecond: 5
+      stasisBleedHealPerSecond: 1.0
       stasisAdditionalDamageResistance: 0.1
       stasisInCritBluntHealPerSecond: 1
       stasisInCritSlashingHealPerSecond: 1
       stasisInCritPiercingHealPerSecond: 1
       stasisInCritHeatHealPerSecond: 1
       stasisInCritColdHealPerSecond: 1
+      stasisInCritBleedHealPerSecond: 0.5
       stasisInCritAdditionalDamageResistance: 0.1
       stasisEnterEffect: EffectTeleportationEntity
       stasisEnterEffectLifetime: 3.0
@@ -187,5 +189,4 @@
       stasisExitEffectLifetime: 3.0
       stasisExitSound: /Audio/_Starlight/Misc/alien_teleport.ogg
       stasisContinuousEffect: EffectTeleportation
-      BleedHealPerSecond: 1.0
       

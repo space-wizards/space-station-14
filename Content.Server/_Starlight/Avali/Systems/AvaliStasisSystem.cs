@@ -196,8 +196,8 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
     {
         return state switch
         {
-            MobState.Alive => new AvaliStasisHealingValues(comp.StasisBluntHealPerSecond, comp.StasisSlashingHealPerSecond, comp.StasisPiercingHealPerSecond, comp.StasisHeatHealPerSecond, comp.StasisColdHealPerSecond, comp.BleedHealPerSecond, comp.StasisAdditionalDamageResistance),
-            MobState.Critical => new AvaliStasisHealingValues(comp.StasisInCritBluntHealPerSecond, comp.StasisInCritSlashingHealPerSecond, comp.StasisInCritPiercingHealPerSecond, comp.StasisInCritHeatHealPerSecond, comp.StasisInCritColdHealPerSecond, comp.BleedHealPerSecond, comp.StasisInCritAdditionalDamageResistance),
+            MobState.Alive => new AvaliStasisHealingValues(comp.StasisBluntHealPerSecond, comp.StasisSlashingHealPerSecond, comp.StasisPiercingHealPerSecond, comp.StasisHeatHealPerSecond, comp.StasisColdHealPerSecond, comp.StasisBleedHealPerSecond, comp.StasisAdditionalDamageResistance),
+            MobState.Critical => new AvaliStasisHealingValues(comp.StasisInCritBluntHealPerSecond, comp.StasisInCritSlashingHealPerSecond, comp.StasisInCritPiercingHealPerSecond, comp.StasisInCritHeatHealPerSecond, comp.StasisInCritColdHealPerSecond, comp.StasisInCritBleedHealPerSecond, comp.StasisInCritAdditionalDamageResistance),
             MobState.Invalid =>  new AvaliStasisHealingValues(0, 0, 0, 0, 0, 0, 0),
             MobState.Dead => new AvaliStasisHealingValues(0, 0, 0, 0, 0, 0, 0),
             _ => new AvaliStasisHealingValues(0, 0, 0, 0, 0, 0, 0),
