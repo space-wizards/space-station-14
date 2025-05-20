@@ -5913,4 +5913,13 @@ Entries:
   id: 819
   time: '2025-05-20T13:01:10.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/652
+- author: InanimateIJK
+  changes:
+  - message: The Nanotrasen-Central Command Corporate Consortium officially forms
+      a separate Blueshield Officers corps branch, dedicated to more direct Consortium
+      affairs and protection.
+    type: Add
+  id: 820
+  time: '2025-05-20T13:06:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/659
 
