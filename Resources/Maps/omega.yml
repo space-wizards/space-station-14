@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 259.0.0
+  engineVersion: 260.1.0
   forkId: ""
   forkVersion: ""
-  time: 05/15/2025 19:47:26
-  entityCount: 14185
+  time: 05/20/2025 22:07:43
+  entityCount: 14184
 maps:
 - 473
 grids:
@@ -2172,11 +2172,6 @@ entities:
             1411: -27,3
             1412: -27,4
             1413: -27,5
-            1420: -27,7
-            1421: -27,8
-            1422: -26,8
-            1423: -25,8
-            1424: -24,8
             1425: -24,9
             1428: -18,20
             1429: -17,20
@@ -5055,6 +5050,7 @@ entities:
     - type: SpreaderGrid
     - type: GridPathfinding
     - type: NavMap
+    - type: ImplicitRoof
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 1755
@@ -34047,13 +34043,6 @@ entities:
     - type: Transform
       pos: -5.415262,24.019829
       parent: 4812
-- proto: ClothingNeckCloakMiner
-  entities:
-  - uid: 12989
-    components:
-    - type: Transform
-      pos: 65.5,-25.5
-      parent: 4812
 - proto: ClothingNeckCloakTrans
   entities:
   - uid: 4827
@@ -35000,12 +34989,6 @@ entities:
     - type: Transform
       pos: -8.5,34.5
       parent: 4812
-  - uid: 12672
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 22.5,13.5
-      parent: 4812
   - uid: 12975
     components:
     - type: Transform
@@ -35051,6 +35034,14 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 22.5,16.5
+      parent: 4812
+- proto: ComputerSalvageJobBoard
+  entities:
+  - uid: 12672
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 22.5,13.5
       parent: 4812
 - proto: ComputerShuttleCargo
   entities:
@@ -72795,6 +72786,12 @@ entities:
     - type: Transform
       pos: -35.5,18.5
       parent: 4812
+    - type: TechnologyDatabase
+      supportedDisciplines:
+      - Industrial
+      - Arsenal
+      - Experimental
+      - CivilianServices
 - proto: SeedExtractor
   entities:
   - uid: 1086
@@ -80038,6 +80035,12 @@ entities:
     - type: Transform
       pos: 5.5,24.5
       parent: 4812
+    - type: TechnologyDatabase
+      supportedDisciplines:
+      - Industrial
+      - Arsenal
+      - Experimental
+      - CivilianServices
     - type: MaterialStorage
       materialWhiteList:
       - Cloth
