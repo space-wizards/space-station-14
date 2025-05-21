@@ -1406,13 +1406,6 @@ entities:
     - type: Transform
       pos: 2.5877786,0.864011
       parent: 1
-- proto: ClothingHandsGlovesCombat
-  entities:
-  - uid: 411
-    components:
-    - type: Transform
-      pos: -0.54519194,13.694252
-      parent: 1
 - proto: ClothingHeadHatWitch1
   entities:
   - uid: 508
