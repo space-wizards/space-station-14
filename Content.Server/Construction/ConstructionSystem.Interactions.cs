@@ -362,11 +362,11 @@ namespace Content.Server.Construction
                             : HandleResult.False;
                     }
 
-                    var electrocuteEvent = new ConstructionToolElectrocuteEvent(user.Value, true);
-                    RaiseLocalEvent(uid, electrocuteEvent);
+                    var toolEvent = new ConstructionToolEvent(user.Value);
+                    RaiseLocalEvent(uid, toolEvent);
 
-                    if (electrocuteEvent.CancelInteraction)
-                        return HandleResult.False;
+                    if (toolEvent.Result is not null)
+                        return toolEvent.Result.Value;
 
                     // If we're handling an event after its DoAfter finished...
                     if (doAfterState == DoAfterState.Completed)
@@ -641,10 +641,9 @@ namespace Content.Server.Construction
         public HandleResult? Result;
     }
 
-    public sealed class ConstructionToolElectrocuteEvent(EntityUid shockReceiver, bool forceEnable) : EntityEventArgs
+    public record ConstructionToolEvent(EntityUid User)
     {
-        public readonly EntityUid ShockReceiver = shockReceiver;
-        public readonly bool ForceEnable = forceEnable;
-        public bool CancelInteraction = false;
+        public readonly EntityUid User = User;
+        public HandleResult? Result;
     }
 }

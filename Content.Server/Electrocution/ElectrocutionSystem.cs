@@ -87,7 +87,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         SubscribeLocalEvent<ElectrifiedComponent, AttackedEvent>(OnElectrifiedAttacked);
         SubscribeLocalEvent<ElectrifiedComponent, InteractHandEvent>(OnElectrifiedHandInteract);
         SubscribeLocalEvent<ElectrifiedComponent, InteractUsingEvent>(OnElectrifiedInteractUsing);
-        SubscribeLocalEvent<ElectrifiedComponent, ConstructionToolElectrocuteEvent>(OnConstructionToolElectrocuteEvent);
+        SubscribeLocalEvent<ElectrifiedComponent, ConstructionToolEvent>(OnConstructionToolEvent);
         SubscribeLocalEvent<RandomInsulationComponent, MapInitEvent>(OnRandomInsulationMapInit);
         SubscribeLocalEvent<PoweredLightComponent, AttackedEvent>(OnLightAttacked);
 
@@ -495,16 +495,15 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         _audio.PlayPvs(electrified.ShockNoises, targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
     }
 
-    private void OnConstructionToolElectrocuteEvent(Entity<ElectrifiedComponent> ent,
-        ref ConstructionToolElectrocuteEvent args)
+    private void OnConstructionToolEvent(Entity<ElectrifiedComponent> ent, ref ConstructionToolEvent args)
     {
         var prevEnable = ent.Comp.Enabled;
-        if (args.ForceEnable)
-            ent.Comp.Enabled = true;
 
-        TryDoElectrifiedAct(ent, args.ShockReceiver, electrified: ent.Comp);
-        if(EntityManager.HasComponent<StunnedComponent>(args.ShockReceiver))
-            args.CancelInteraction = true;
+        ent.Comp.Enabled = true;
+
+        TryDoElectrifiedAct(ent, args.User, electrified: ent.Comp);
+        if(EntityManager.HasComponent<StunnedComponent>(args.User))
+            args.Result = HandleResult.False;
 
         ent.Comp.Enabled = prevEnable;
     }
