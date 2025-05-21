@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: momochitters
-  changes:
-  - message: Aroace pins, scarves, and cloaks can now be obtained.
-    type: Add
-  id: 8043
-  time: '2025-03-08T15:21:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35718
 - author: Emisse
   changes:
   - message: Core Station
@@ -3916,3 +3909,10 @@
   id: 8550
   time: '2025-05-21T18:06:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36114
+- author: AsnDen
+  changes:
+  - message: Cyborgs now can scream. 9 new screaming sound were added.
+    type: Tweak
+  id: 8551
+  time: '2025-05-21T19:49:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32329
