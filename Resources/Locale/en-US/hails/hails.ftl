@@ -1,6 +1,7 @@
 #Low aggro
 
-hail-low-0 = You have broken Nanotransen's law!!
+#hail-low-0 = Need to change this audio file too !
+hail-low-0 = You have broken Nanotrasen's law!!
 hail-low-1 = Game over, criminal!!
 hail-low-2 = Attention, citizen!!
 hail-low-3 = You're coming with me!!
