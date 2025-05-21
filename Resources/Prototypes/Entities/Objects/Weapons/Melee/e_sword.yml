@@ -71,7 +71,7 @@
   - type: Reflect
   - type: IgnitionSource
     temperature: 700
-  
+
 - type: entity
   id: BaseMeleeWeaponEnergyWelding
   parent: BaseItem
@@ -88,7 +88,7 @@
     requiresFuel: false
     showFuelInExamine: false
   - type: RequiresEyeProtection
-  
+
 
 - type: entity
   name: energy sword
@@ -411,7 +411,7 @@
     reflectProb: 1.0
     spread: 75
   - type: Tool
-    speedModifier: 2
+    speedModifier: 0.2
 
 # Borgs
 - type: entity
