@@ -139,7 +139,7 @@ public sealed class PullController : VirtualController
 
         // Cap the distance
         var range = 2f;
-        var fromUserCoords = coords.WithEntityId(player, EntityManager);
+        var fromUserCoords = _transformSystem.WithEntityId(coords, player);
         var userCoords = new EntityCoordinates(player, Vector2.Zero);
 
         if (!_transformSystem.InRange(coords, userCoords, range))
@@ -157,7 +157,7 @@ public sealed class PullController : VirtualController
             }
 
             fromUserCoords = new EntityCoordinates(player, direction.Normalized() * (range - 0.01f));
-            coords = fromUserCoords.WithEntityId(coords.EntityId);
+            coords = _transformSystem.WithEntityId(fromUserCoords, coords.EntityId);
         }
 
         var moving = EnsureComp<PullMovingComponent>(pulled!.Value);
@@ -248,7 +248,7 @@ public sealed class PullController : VirtualController
             var pullerXform = _xformQuery.Get(puller);
             var pullerPosition = TransformSystem.GetMapCoordinates(pullerXform);
 
-            var movingTo = mover.MovingTo.ToMap(EntityManager, TransformSystem);
+            var movingTo = TransformSystem.ToMapCoordinates(mover.MovingTo);
 
             if (movingTo.MapId != pullerPosition.MapId)
             {

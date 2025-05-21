@@ -16,6 +16,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
     [Dependency] private readonly ClothingSystem _clothing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -34,7 +35,8 @@ public sealed class JetpackSystem : SharedJetpackSystem
         Appearance.TryGetData<bool>(uid, JetpackVisuals.Enabled, out var enabled, args.Component);
 
         var state = "icon" + (enabled ? "-on" : "");
-        args.Sprite?.LayerSetState(0, state);
+        if (args.Sprite != null)
+            _sprite.LayerSetRsiState((uid, args.Sprite), 0, state);
 
         if (TryComp<ClothingComponent>(uid, out var clothing))
             _clothing.SetEquippedPrefix(uid, enabled ? "on" : null, clothing);
@@ -49,13 +51,17 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
         // TODO: Please don't copy-paste this I beg
         // make a generic particle emitter system / actual particles instead.
-        var query = EntityQueryEnumerator<ActiveJetpackComponent>();
+        var query = EntityQueryEnumerator<ActiveJetpackComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out var uid, out var comp, out var xform))
         {
-            if (_timing.CurTime < comp.TargetTime)
-                continue;
+            if (_transform.InRange(xform.Coordinates, comp.LastCoordinates, comp.MaxDistance))
+            {
+                if (_timing.CurTime < comp.TargetTime)
+                    continue;
+            }
 
+            comp.LastCoordinates = _transform.GetMoverCoordinates(xform.Coordinates);
             comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
 
             CreateParticles(uid);
