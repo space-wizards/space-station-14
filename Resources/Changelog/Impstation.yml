@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls, honeyed_lemons_
-  changes:
-  - message: Tweaks Xenoarch and adds mail to cruise
-    type: Tweak
-  id: 1205
-  time: '2025-02-28T00:38:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1792
 - author: hivehum, crocodilecarousel
   changes:
   - message: You can now see when someone is looking at a handheld map and can't hear
@@ -4230,3 +4223,10 @@
   id: 1704
   time: '2025-05-21T08:01:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2533
+- author: hivehum
+  changes:
+  - message: Chemists no longer start with plasma.
+    type: Remove
+  id: 1705
+  time: '2025-05-21T08:09:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2524
