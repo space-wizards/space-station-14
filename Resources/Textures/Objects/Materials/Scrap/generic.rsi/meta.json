@@ -8,11 +8,51 @@
   },
   "states": [
     {
-      "name": "airlock-inhand-left",
+      "name": "airlock-1-inhand-left",
       "directions": 4
     },
     {
-      "name": "airlock-inhand-right",
+      "name": "airlock-1-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "airlock-3-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "airlock-3-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "bucket-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bucket-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "camera-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "camera-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "canister-1-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "canister-1-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "canister-2-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "canister-2-inhand-right",
       "directions": 4
     },
     {
@@ -21,6 +61,14 @@
     },
     {
       "name": "closet-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "fax-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "fax-inhand-right",
       "directions": 4
     },
     {
@@ -37,6 +85,14 @@
     },
     {
       "name": "firelock-2-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "firelock-3-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "firelock-3-inhand-right",
       "directions": 4
     },
     {
@@ -63,6 +119,14 @@
     },
     {
       "name": "glass-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "intercom-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "intercom-inhand-right",
       "directions": 4
     },
     {

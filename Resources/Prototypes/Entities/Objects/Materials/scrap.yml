@@ -3,7 +3,7 @@
   id: BaseScrap
   abstract: true
   name: scrap
-  description: Worthless junk. You could probably get some materials out of it though.
+  description: Worthless junk. You could probably get some materials out of it, though.
   suffix: Scrap
   components:
   - type: Sprite
@@ -32,7 +32,7 @@
   id: BaseScrapLarge
   abstract: true
   name: scrap
-  description: Worthless junk. You could probably get some materials out of it though.
+  description: Worthless junk. You could probably get some materials out of it, though.
   suffix: Scrap
   components:
   - type: InteractionOutline
@@ -141,7 +141,7 @@
     size: Large
     shape:
     - 0,0,4,4 # 5x5
-    heldPrefix: "airlock"
+    heldPrefix: "airlock-1"
   - type: MultiHandedItem
   - type: PhysicalComposition
     materialComposition:
@@ -160,6 +160,7 @@
     size: Normal
     shape:
     - 0,0,3,0
+    heldPrefix: "airlock-3"
   - type: PhysicalComposition
     materialComposition:
       Steel: 200 # 2 sheets
@@ -174,6 +175,7 @@
   - type: Sprite
     layers:
     - state: junk-bucket
+    heldPrefix: "bucket"
   - type: PhysicalComposition
     materialComposition:
       Plastic: 300 # 3 sheets
@@ -187,6 +189,7 @@
   - type: Sprite
     layers:
     - state: junk-camera
+    heldPrefix: "camera"
   - type: PhysicalComposition
     materialComposition:
       Steel: 500 # 5 sheets
@@ -201,6 +204,7 @@
   - type: Sprite
     layers:
     - state: junk-canister-1
+    heldPrefix: "canister-1"
   - type: PhysicalComposition
     materialComposition:
       Steel: 300 # 3 sheets
@@ -214,6 +218,7 @@
   - type: Sprite
     layers:
     - state: junk-canister-2
+    heldPrefix: "canister-2"
   - type: Item
     size: Small
   - type: PhysicalComposition
@@ -248,12 +253,14 @@
   - type: Sprite
     layers:
     - state: junk-fax
+    heldPrefix: "fax"
   - type: Item
     size: Huge
+  - type: MultiHandedItem
   - type: PhysicalComposition
     materialComposition:
-      Plastic: 800 # 8 sheets
-      Steel: 200 # 2 sheets
+      Plastic: 1000 # 10 sheets
+      Steel: 300 # 3 sheets
 
 - type: entity
   parent: BaseScrap
@@ -314,6 +321,7 @@
   - type: Sprite
     layers:
     - state: junk-firelock-3
+    heldPrefix: "firelock-3"
   - type: Item
     size: Large
   - type: PhysicalComposition
@@ -330,6 +338,7 @@
     layers:
     - state: junk-intercom-1
       map: [ "base" ]
+    heldPrefix: "intercom"
   - type: RandomSprite
     available:
     - base:
@@ -369,6 +378,7 @@
     layers:
     - state: junk-medkit-1
       map: [ "base" ]
+    heldPrefix: "medkit"
   - type: RandomSprite
     available:
     - base:
@@ -437,6 +447,7 @@
     layers:
     - state: tube
       map: [ "base" ]
+    heldPrefix: "airlock-3" # probably similar looking enough, it's just a small tube
   - type: RandomSprite
     available:
     - base:
@@ -457,7 +468,7 @@
   parent: BaseScrapLarge
   id: ScrapGeneratorPlasmaLeaking
   name: leaking P.A.C.M.A.N. generator
-  description: An old looking P.A.C.M.A.N. generator whos plasma tanks started leaking.
+  description: An old-looking P.A.C.M.A.N. generator. Its plasma tank has started to leak.
   components:
   - type: Sprite
     sprite: Objects/Materials/Scrap/generator.rsi
@@ -475,7 +486,7 @@
   parent: BaseScrapLarge
   id: ScrapGeneratorPlasma
   name: old P.A.C.M.A.N. generator
-  description: An old looking P.A.C.M.A.N. generator. It's in very poor condition and non functional.
+  description: An old looking P.A.C.M.A.N. generator. It's in very poor condition and non-functional.
   components:
   - type: Sprite
     sprite: Objects/Materials/Scrap/generator.rsi
@@ -491,7 +502,7 @@
   parent: BaseScrapLarge
   id: ScrapGeneratorUraniumLeaking
   name: leaking S.U.P.E.R.P.A.C.M.A.N. generator
-  description: A S.U.P.E.R.P.A.C.M.A.N. generator that appears to have had some kind of catastrophic failure. Its leaking uranium.
+  description: A S.U.P.E.R.P.A.C.M.A.N. generator that appears to have had some kind of catastrophic failure. It's leaking uranium.
   components:
   - type: Sprite
     sprite: Objects/Materials/Scrap/generator.rsi
@@ -544,7 +555,7 @@
   parent: BaseScrapLarge
   id: ScrapGeneratorFrame
   name: generator frame
-  description: A frame of a P.A.C.M.A.N. or S.U.P.E.R.P.A.C.M.A.N. type generator. Where is the rest of it?
+  description: A frame of a P.A.C.M.A.N. or S.U.P.E.R.P.A.C.M.A.N. type generator. Where's rest of it?
   components:
   - type: Sprite
     sprite: Objects/Materials/Scrap/generator.rsi
@@ -558,7 +569,7 @@
   parent: BaseScrap
   id: ScrapGeneratorFuelTank
   name: fuel tank
-  description: A fuel tank from a S.U.P.E.R.P.A.C.M.A.N. type generator. The gauge indicates its got a little fuel left.
+  description: A fuel tank from a S.U.P.E.R.P.A.C.M.A.N. type generator. The gauge indicates that it's got a little bit fuel left.
   components:
   - type: Sprite
     sprite: Objects/Materials/Scrap/generator.rsi
