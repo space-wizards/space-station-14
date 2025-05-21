@@ -44,7 +44,7 @@ public sealed partial class DungeonJob
                         value = MathHelper.Lerp(value, 1f - distance, fill.DistanceConfig.BlendWeight);
                     }
 
-                    // value *= fill.Invert ? -1 : 1;
+                    value *= (fill.Invert ? -1 : 1);
 
                     if (value < fill.Threshold)
                         continue;

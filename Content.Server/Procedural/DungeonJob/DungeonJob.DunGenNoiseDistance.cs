@@ -101,6 +101,8 @@ public sealed partial class DungeonJob
     {
         switch (distance)
         {
+            case DunGenDistanceSquared:
+                return dx * dx + dy * dy;
             case DunGenEuclideanSquaredDistance:
                 return MathF.Min(1f, (dx * dx + dy * dy) / MathF.Sqrt(2));
             case DunGenSquareBump:

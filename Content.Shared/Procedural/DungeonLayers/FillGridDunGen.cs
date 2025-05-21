@@ -22,6 +22,9 @@ public sealed partial class FillGridDunGen : IDunGenLayer
 
     #region Noise
 
+    [DataField]
+    public bool Invert;
+
     /// <summary>
     /// Optionally don't spawn entities if the noise value matches.
     /// </summary>

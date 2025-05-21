@@ -84,11 +84,6 @@ public sealed partial class DungeonJob
             // Iterate the group counts and pathfind out each group.
             for (var i = 0; i < gen.Count; i++)
             {
-                await SuspendDungeon();
-
-                if (!ValidateResume())
-                    return;
-
                 var groupSize = random.Next(gen.MinGroupSize, gen.MaxGroupSize + 1);
 
                 // While we have remaining tiles keep iterating
@@ -138,12 +133,18 @@ public sealed partial class DungeonJob
                         _entManager.SpawnAtPosition(prototype, _maps.GridTileToLocal(_gridUid, _grid, node));
 
                         groupSize--;
+
+                        await SuspendDungeon();
+
+                        if (!ValidateResume())
+                            return;
                     }
                 }
 
                 if (groupSize > 0)
                 {
-                    _sawmill.Warning($"Found remaining group size for ore veins of {gen.Replacement ?? "null"}!");
+                    // Not super worried depending on the gen it's fine.
+                    _sawmill.Debug($"Found remaining group size for ore veins of {gen.Replacement ?? "null"} / {gen.Entity}!");
                 }
             }
         }
