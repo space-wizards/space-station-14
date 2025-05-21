@@ -8,9 +8,7 @@ using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 using Robust.Shared.Random;
-
 
 namespace Content.Server.Clothing.Systems;
 
