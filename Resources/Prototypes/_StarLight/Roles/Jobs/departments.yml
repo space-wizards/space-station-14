@@ -2,7 +2,7 @@
   id: Law
   name: department-Law
   description: department-Law-description
-  color: "#FF5297"
+  color: "#ff178b"
   weight: -10
   roles:
   - Magistrate
