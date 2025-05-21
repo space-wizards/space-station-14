@@ -34,29 +34,42 @@ public sealed partial class DungeonJob
                 if (!emptyTiles && (!_maps.TryGetTile(_grid, node, out var tile) || tile.IsEmpty))
                     continue;
 
-                var prototype = _entManager.GetComponent<MetaDataComponent>(uid.Value).EntityPrototype;
+                // Check if it's a valid spawn, if so then use it.
+                var enumerator = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, node);
+                var found = false;
 
-                if (prototype?.ID == gen.Replacement)
+                // We use existing entities as a mark to spawn in place
+                // OR
+                // We check for any existing entities to see if we can spawn there.
+                while (enumerator.MoveNext(out var uid))
                 {
-                    replaceEntities[node] = uid.Value;
-                    found = true;
-                    break;
+                    // We can't replace so just stop here.
+                    if (gen.Replacement == null)
+                        break;
+
+                    var prototype = _entManager.GetComponent<MetaDataComponent>(uid.Value).EntityPrototype;
+
+                    if (prototype?.ID == gen.Replacement)
+                    {
+                        replaceEntities[node] = uid.Value;
+                        found = true;
+                        break;
+                    }
                 }
+
+                if (!found)
+                    continue;
+
+                // Add it to valid nodes.
+                availableTiles.Add(node);
+
+                await SuspendDungeon();
+
+                if (!ValidateResume())
+                    return;
             }
 
-            if (!found)
-                continue;
-
-            // Add it to valid nodes.
-            availableTiles.Add(node);
-
-            await SuspendDungeon();
-
-            if (!ValidateResume())
-                return;
-        }
-
-        var remapping = new Dictionary<EntProtoId, EntProtoId>();
+            var remapping = new Dictionary<EntProtoId, EntProtoId>();
 
             // TODO: Move this to engine
             if (_prototype.TryIndex(gen.Entity, out var proto) &&
