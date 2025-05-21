@@ -42,6 +42,8 @@
       - id: ClothingShoesBootsSalvage
       - id: ClothingShoesBootsSalvage
       - id: ClothingShoesBootsSalvage
+      - id: HydroponicsToolHatchet
+      - id: HydroponicsToolHatchet
       - id: WheatBushel
       - id: WheatBushel
       - id: MeatwheatBushel
