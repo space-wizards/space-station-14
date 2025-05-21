@@ -5938,4 +5938,19 @@ Entries:
   id: 822
   time: '2025-05-21T01:11:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/646
+- author: Dot5511 and Lokil93
+  changes:
+  - message: Makes the ChemMaster4000's Pill/Patch Output take the solution from the
+      Beaker instead of from the Buffer.
+    type: Tweak
+  id: 823
+  time: '2025-05-21T01:16:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/586
+- author: Dot5511 and Lokil93
+  changes:
+  - message: New text for when the Beaker is Empty/Low and you're trying to make Pills/Patches
+    type: Add
+  id: 824
+  time: '2025-05-21T01:16:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/586
 
