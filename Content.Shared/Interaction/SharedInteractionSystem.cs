@@ -26,6 +26,7 @@ using Content.Shared.Tag;
 using Content.Shared.Timing;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
+using Content.Shared.Limb;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -70,6 +71,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedPlayerRateLimitManager _rateLimit = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly SharedLimbHealthSystem _limbHealth = default!;
 
         private EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery;
         private EntityQuery<FixturesComponent> _fixtureQuery;
@@ -127,6 +129,8 @@ namespace Content.Shared.Interaction
                     new PointerInputCmdHandler(HandleActivateItemInWorld))
                 .Bind(ContentKeyFunctions.TryPullObject,
                     new PointerInputCmdHandler(HandleTryPullObject))
+                .Bind(ContentKeyFunctions.CheckLimbHealth,
+                    new PointerInputCmdHandler(HandleCheckLimbHealth))
                 .Register<SharedInteractionSystem>();
 
             _rateLimit.Register(RateLimitKey,
@@ -263,6 +267,18 @@ namespace Content.Shared.Interaction
                 return false;
 
             _pullSystem.TogglePull(uid, userEntity.Value);
+            return false;
+        }
+
+        private bool HandleCheckLimbHealth(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            if (!ValidateClientInput(session, coords, uid, out var userEntity))
+            {
+                Log.Info($"CheckLimbHealth input validation failed");
+                return true;
+            }
+
+            _limbHealth.ShowLimbHealth(uid, coords, userEntity.Value);
             return false;
         }
 
