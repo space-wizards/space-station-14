@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: You should now be able to notice something is wrong if you are being
-      irradiated
-    type: Add
-  id: 1207
-  time: '2025-02-28T00:46:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1782
 - author: Sha-Seng
   changes:
   - message: Reduced or removed prestige item requirements per feedback
@@ -4229,3 +4221,13 @@
   id: 1706
   time: '2025-05-21T08:18:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2520
+- author: AvianMaiden
+  changes:
+  - message: Tiny supermatter delam addition.
+    type: Add
+  - message: More obvious insanity from peering into the heart of darkness without
+      protection.
+    type: Add
+  id: 1707
+  time: '2025-05-21T08:30:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2479
