@@ -47,6 +47,12 @@ namespace Content.Shared.Maps
         [DataField]
         public PrototypeFlags<ToolQualityPrototype> DeconstructTools { get; set; } = new();
 
+        /// <summary>
+        /// Effective mass of this tile for grid impacts.
+        /// </summary>
+        [DataField]
+        public float Mass = 800f;
+
         /// <remarks>
         /// Legacy AF but nice to have.
         /// </remarks>
