@@ -5929,4 +5929,13 @@ Entries:
   id: 821
   time: '2025-05-20T13:06:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/658
+- author: Conf
+  changes:
+  - message: Elite Suit - Blunt/Slash Resist reduced to 30%, Pierce Resist reduced
+      to 40%. Use having no slowdown to dodge and avoid melee. If you position yourself
+      badly enough that crew is beating you with bats, you deserve to die.
+    type: Tweak
+  id: 822
+  time: '2025-05-21T01:11:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/646
 
