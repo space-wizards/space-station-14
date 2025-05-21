@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lukasz825700516
-  changes:
-  - message: Text related keybinds can now be changed in Controls.
-    type: Add
-  id: 8041
-  time: '2025-03-08T02:42:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35630
 - author: metalgearsloth
   changes:
   - message: Walls now emit shadows on planets.
@@ -3877,40 +3870,19 @@
   id: 8538
   time: '2025-05-20T16:55:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37592
-- author: spanky-spanky
+- author: FrostWinters
   changes:
-  - message: On Fland, the salvage job board has been added.
-    type: Add
-  id: 8539
-  time: '2025-05-20T23:27:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37653
-- author: spanky-spanky
-  changes:
-  - message: On Bagel, the salvage job board has been added.
-    type: Add
-  id: 8540
-  time: '2025-05-20T23:27:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37652
-- author: spanky-spanky
-  changes:
-  - message: On Marathon, the salvage job board has been added.
-    type: Add
-  - message: On Marathon, the default TEG has been improved.
+  - message: Histamines no longer cause radiation.
     type: Tweak
-  id: 8541
-  time: '2025-05-20T23:29:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37654
-- author: spanky-spanky
+  - message: Epinephrine treats Histamines above OD threshold.
+    type: Tweak
+  id: 8544
+  time: '2025-05-21T01:12:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37460
+- author: Minty642
   changes:
-  - message: On Omega, the salvage job board has been added.
+  - message: Added fungal soil, maintenance version of hydroponics.
     type: Add
-  id: 8542
-  time: '2025-05-20T23:35:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37655
-- author: spanky-spanky
-  changes:
-  - message: On Packed, the salvage job board has been added.
-    type: Add
-  id: 8543
-  time: '2025-05-21T00:12:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37656
+  id: 8545
+  time: '2025-05-21T04:59:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36245
