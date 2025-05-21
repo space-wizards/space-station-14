@@ -88,15 +88,24 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Tries to get the tile, real or otherwise, for the specified indices.
     /// </summary>
-    public bool TryGetBiomeTile(Vector2i indices, List<IBiomeLayer> layers, int seed, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
+    public bool TryGetBiomeTile(Vector2i indices, List<IBiomeLayer> layers, int seed, Entity<MapGridComponent>? grid, [NotNullWhen(true)] out Tile? tile)
     {
-        if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
+        if (grid is { } gridEnt && _map.TryGetTileRef(gridEnt, gridEnt.Comp, indices, out var tileRef) && !tileRef.Tile.IsEmpty)
         {
             tile = tileRef.Tile;
             return true;
         }
 
         return TryGetTile(indices, layers, seed, grid, out tile);
+    }
+
+    /// <summary>
+    /// Tries to get the tile, real or otherwise, for the specified indices.
+    /// </summary>
+    [Obsolete("Use the Entity<MapGridComponent> overload")]
+    public bool TryGetBiomeTile(Vector2i indices, List<IBiomeLayer> layers, int seed, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
+    {
+        return TryGetBiomeTile(indices, layers, seed, grid == null ? null : (grid.Owner, grid), out tile);
     }
 
     /// <summary>
