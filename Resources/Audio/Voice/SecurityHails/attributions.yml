@@ -46,6 +46,16 @@
   license: "CC-BY-4.0"
   copyright: "Voice and audio work by Banedon for SS14."
 - files:
+  - "f_you.ogg"
+  license: "CC-BY-4.0"
+  copyright: "Voice and audio work by Banedon for SS14. Beep and radio sounds taken from https://freesound.org/ and altered by Banedon."
+  source: "https://freesound.org/people/newlocknew/sounds/808016/; https://freesound.org/people/blouhond/sounds/808017/"
+- files:
+  - "can.ogg"
+  license: "CC-BY-4.0"
+  copyright: "Voice and audio work by Banedon for SS14. Chuckle sound taken from https://freesound.org/ and altered by Banedon."
+  source: "https://freesound.org/people/Tiger_v15/sounds/231495/"
+- files:
   - "asshole.ogg"
   - "bash.ogg"
   - "in_the_name.ogg"
@@ -60,5 +70,5 @@
   - "super.ogg"
   - "STFU.ogg"
   license: "CC-BY-4.0"
-  copyright: "Voice and audio work by Banedon for SS14. Some original lines from TGStation are kept but recorded with the new audio."
+  copyright: "Voice and audio work by Banedon for SS14. Original lines from TGStation are kept but recorded with the new audio."
   source: "https://github.com/tgstation/tgstation/pull/22183"

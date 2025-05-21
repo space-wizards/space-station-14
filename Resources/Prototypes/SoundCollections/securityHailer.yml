@@ -6,14 +6,12 @@
     - /Audio/Voice/SecurityHails/citizen.ogg
     - /Audio/Voice/SecurityHails/coming.ogg
     - /Audio/Voice/SecurityHails/compliance.ogg
-    - /Audio/Voice/SecurityHails/imperial.ogg
-    - /Audio/Voice/SecurityHails/scumbag.ogg
     - /Audio/Voice/SecurityHails/freeze.ogg
     - /Audio/Voice/SecurityHails/halt.ogg
     - /Audio/Voice/SecurityHails/in_the_name.ogg
     - /Audio/Voice/SecurityHails/resistance.ogg
     - /Audio/Voice/SecurityHails/running.ogg
-    - /Audio/Voice/SecurityHails/stop.ogg
+    - /Audio/Voice/SecurityHails/justice.ogg
 
 - type: soundCollection
   id: SecHailMedium
@@ -22,15 +20,13 @@
     - /Audio/Voice/SecurityHails/batong.ogg
     - /Audio/Voice/SecurityHails/authoritah.ogg
     - /Audio/Voice/SecurityHails/bash.ogg
-    - /Audio/Voice/SecurityHails/creep.ogg
-    - /Audio/Voice/SecurityHails/robocop.ogg
     - /Audio/Voice/SecurityHails/dredd.ogg
     - /Audio/Voice/SecurityHails/go_ahead.ogg
     - /Audio/Voice/SecurityHails/harry.ogg
-    - /Audio/Voice/SecurityHails/justice.ogg
     - /Audio/Voice/SecurityHails/knees.ogg
-    - /Audio/Voice/SecurityHails/super.ogg
     - /Audio/Voice/SecurityHails/toolbox.ogg
+    - /Audio/Voice/SecurityHails/imperial.ogg
+    - /Audio/Voice/SecurityHails/scumbag.ogg
 
 - type: soundCollection
   id: SecHailHigh
@@ -38,18 +34,14 @@
     - /Audio/Voice/SecurityHails/mald.ogg
     - /Audio/Voice/SecurityHails/STFU.ogg
     - /Audio/Voice/SecurityHails/buried.ogg
-    - /Audio/Voice/SecurityHails/clown.ogg
     - /Audio/Voice/SecurityHails/drop.ogg
-    - /Audio/Voice/SecurityHails/erased.ogg
-    - /Audio/Voice/SecurityHails/good_bad_ugly.ogg
     - /Audio/Voice/SecurityHails/bully.ogg
     - /Audio/Voice/SecurityHails/HOS.ogg
     - /Audio/Voice/SecurityHails/JJE.ogg
-    - /Audio/Voice/SecurityHails/kill_first.ogg
     - /Audio/Voice/SecurityHails/right.ogg
     - /Audio/Voice/SecurityHails/safeword.ogg
     - /Audio/Voice/SecurityHails/shitsec.ogg
-    - /Audio/Voice/SecurityHails/taken.ogg
+    - /Audio/Voice/SecurityHails/robocop.ogg
 
 - type: soundCollection
   id: SecHailEmag
@@ -63,6 +55,8 @@
     - /Audio/Voice/SecurityHails/uniform.ogg
     - /Audio/Voice/SecurityHails/viva.ogg
     - /Audio/Voice/SecurityHails/wew.ogg
+    - /Audio/Voice/SecurityHails/meow.ogg
+    - /Audio/Voice/SecurityHails/f_you.ogg
 
 - type: soundCollection
   id: SecHailERT
