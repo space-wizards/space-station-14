@@ -6016,11 +6016,3 @@ Entries:
   id: 833
   time: '2025-05-21T11:09:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/637
-- author: PubliclyExecutedPig
-  changes:
-  - message: Smart LMG boxes are now 2x2 in the inventory
-    type: Tweak
-  id: 834
-  time: '2025-05-21T12:26:43.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/665
-
