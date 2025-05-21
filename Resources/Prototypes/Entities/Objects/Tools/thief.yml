@@ -9,7 +9,6 @@
       range: 2 # Slightly larger than fulton beacon's random offset
     - type: Item
       size: Normal
-    - type: MultiHandedItem #looks pretty big
     - type: Physics
       bodyType: Dynamic
     - type: Fixtures
