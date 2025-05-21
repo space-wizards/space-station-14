@@ -28,7 +28,7 @@ namespace Content.Shared.Clothing.Components
         /// The name displayed as the speaker when hailing orders
         /// </summary>
         [DataField]
-        public string? ChatName = "Security Hailer";
+        public string? ChatName = "Security hailer";
 
         /// <summary>
         /// Delay when the hailer is screwed to change aggression level
