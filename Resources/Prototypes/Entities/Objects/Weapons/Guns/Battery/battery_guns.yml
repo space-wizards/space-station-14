@@ -14,6 +14,7 @@
     - suitStorage
   - type: AmmoCounter
   - type: Gun
+    cameraRecoilScalar: 0 #Notice: Lasers have 0 recoil, other energy projectile weapons like disabler and eshotgun vary.
     fireRate: 2
     selectedMode: SemiAuto
     availableModes:
@@ -37,6 +38,7 @@
   - type: AmmoCounter
   - type: Gun
     fireRate: 2
+    cameraRecoilScalar: 0 #Notice: Lasers have 0 recoil, other energy projectile weapons like disabler and eshotgun vary.
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -467,6 +469,7 @@
   - type: Gun
     fireRate: 2
     projectileSpeed: 35 # any higher and this causes issues in lag
+    cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
@@ -527,6 +530,7 @@
   - type: Gun
     selectedMode: FullAuto
     fireRate: 4.5
+    cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
     availableModes:
       - SemiAuto
       - FullAuto
@@ -568,6 +572,7 @@
     slots:
     - Belt
   - type: Gun
+    cameraRecoilScalar: .25 #I watched a YouTube video of a taser test fire and it looked like it had a teeny tiny amount of recoil
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: ProjectileBatteryAmmoProvider
@@ -683,6 +688,7 @@
   - type: Gun
     projectileSpeed: 10
     fireRate: 1.5
+    cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
@@ -770,6 +776,7 @@
     sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
   - type: Gun
     fireRate: 2
+    cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: ProjectileBatteryAmmoProvider
@@ -831,6 +838,7 @@
     sprite: Objects/Weapons/Guns/Battery/temp_gun.rsi
   - type: Gun
     fireRate: 1
+    cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
