@@ -165,7 +165,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (HasComp<HumanoidAppearanceComponent>(victimUid))
                 logImpact = LogImpact.Extreme;
 
-            _logger.Add(LogType.Gib, logImpact, $"{ToPrettyString(userUid):user} kitchen spiked {ToPrettyString(victimUid):target}");
+            _logger.Add(LogType.Gib, logImpact, $"{ToPrettyString(userUid):user} kitchen spiked {ToPrettyString(victimUid):target} on {ToPrettyString(uid):spike}.");
 
             // TODO VERY SUS
             component.PrototypesToSpawn = EntitySpawnCollection.GetSpawns(butcherable.SpawnedEntities, _random);
