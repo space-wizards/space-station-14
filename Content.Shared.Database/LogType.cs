@@ -471,7 +471,12 @@ public enum LogType
     ArtifactNode = 101,
 
     /// <summary>
-    ///     For anything relating to bug reports.
+    /// Damaging grid collision has occurred.
     /// </summary>
-    BugReport = 102,
+    ShuttleImpact = 102,
+
+    /// <summary>
+    /// For anything relating to bug reports.
+    /// </summary>
+    BugReport = 103,
 }

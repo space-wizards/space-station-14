@@ -83,6 +83,7 @@
     reflectProb: 1
     reflects:
       - Energy
+    reflectingInHands: false
 
 #Detective's vest
 - type: entity
