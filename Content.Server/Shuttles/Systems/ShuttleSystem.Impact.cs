@@ -122,6 +122,8 @@ public sealed partial class ShuttleSystem
             var jungleDiff = topDiff.Length();
 
             // Get the velocity in relation to the contact normal
+            // If this still causes issues see https://box2d.org/posts/2020/06/ghost-collisions/
+            // This should only be a potential problem on chunk seams.
             var dotProduct = MathF.Abs(Vector2.Dot(topDiff.Normalized(), worldNormal.Normalized()));
             jungleDiff *= dotProduct;
 
