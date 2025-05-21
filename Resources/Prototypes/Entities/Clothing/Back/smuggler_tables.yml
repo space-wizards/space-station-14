@@ -686,8 +686,6 @@
     - !type:NestedSelector
       tableId: RandomSatchelPirateWeaponsTable #1x Small (1x1x1 OR 1x3)
     - !type:NestedSelector
-      tableId: RandomSatchelFreelancerTable #2x Small
-    - !type:NestedSelector
       tableId: RandomSatchelPirateClothingTable #1x Medium
     - !type:NestedSelector
       tableId: RandomSatchelBootyTable #1x Medium
@@ -713,18 +711,6 @@
       weight: 0.5
     - id: EnergyCutlass
       weight: 0.1
-
-- type: entityTable #2x Small
-  id: RandomSatchelFreelancerTable
-  table: !type:GroupSelector
-    children:
-    - id: SpaceCash500
-      weight: 8
-    - id: HandheldGPSBasic
-    - id: HandHeldMassScanner
-    - id: ClothingHeadsetAltFreelancer
-      amount: !type:ConstantNumberSelector
-        value: 2
 
 - type: entityTable #1x Medium
   id: RandomSatchelPirateClothingTable
