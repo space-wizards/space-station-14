@@ -222,6 +222,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 EnsureComp<ForensicsComponent>(piece, out var forensicsPiece);
                 forensicsPiece.DNAs.Add(component.VictimDna);
+                forensicsPiece.CanDnaBeCleaned = false;
             }
 
             if (component.PrototypesToSpawn.Count != 0)
