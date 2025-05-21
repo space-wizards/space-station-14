@@ -2,6 +2,7 @@
   id: DefaultStarlightMapPool
   maps:
   - StarlightBagel
+  - Barratry
   - StarlightBox
   - StarlightCog
   - StarlightFland
