@@ -218,3 +218,46 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadDevilHorns
+  name: devil horns headband
+  description: Little pointy horns for the impish and nefarious!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/devilhorns.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/devilhorns.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadJesterEvilHat
+  name: evil jester hood
+  description: It is I! Your evil, silly doppelgänger!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/jesterevilhat.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/jesterevilhat.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+    
+- type: entity
+  parent: ClothingHeadHatHolyWatermelon
+  id: ClothingHeadHalo
+  name: halo
+  description: An ordinary, theatrical halo! Please do not eat.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/holyhatmelon.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/holyhatmelon.rsi
+  - type: Armor

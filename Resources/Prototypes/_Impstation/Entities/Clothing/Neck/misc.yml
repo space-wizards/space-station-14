@@ -46,3 +46,27 @@
     sprite: _Impstation/Clothing/Neck/Misc/defenseattorneyarmband.rsi
   - type: TypingIndicatorClothing
     proto: lawyerblue
+
+# your angel or your devil
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckAngelWings
+  name: angelwings
+  description: I can be your angle....
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Misc/angelwings.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Misc/angelwings.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckDevilWings
+  name: devil wings
+  description: ...or yuor devil.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Misc/devilwings.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Misc/devilwings.rsi
+  

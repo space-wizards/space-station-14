@@ -1,0 +1,30 @@
+#devil
+- type: startingGear
+  id: DevilJester
+  equipment:
+    jumpsuit: ClothingUniformJesterEvil
+    head: ClothingHeadDevilHorns
+    neck: ClothingNeckDevilWings
+    shoes: ClothingShoesJesterEvilJanglers
+
+- type: startingGear
+  id: DevilSimple
+  equipment:
+    head: ClothingHeadDevilHorns
+    neck: ClothingNeckDevilWings
+
+#angel
+- type: startingGear
+  id: AngelDress
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtAngelDress
+    head: ClothingHeadHalo
+    neck: ClothingNeckAngelWings
+    gloves: ClothingHandsAngelGloves
+    shoes: ClothingShoesAngelSandals
+
+- type: startingGear
+  id: AngelSimple
+  equipment:
+    head: ClothingHeadHalo
+    neck: ClothingNeckAngelWings

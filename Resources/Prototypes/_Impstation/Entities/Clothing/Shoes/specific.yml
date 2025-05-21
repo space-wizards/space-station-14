@@ -52,3 +52,26 @@
         path: /Audio/_Impstation/Effects/Footsteps/jesterstep_on.ogg
       soundDeactivate: 
         path: /Audio/_Impstation/Effects/Footsteps/jesterstep_off.ogg
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesJesterEvilJanglers
+  name: evil jester janglers
+  description: Janglers probably isn't a word.... guess that's what makes it evil?
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Specific/jestereviljanglers.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Specific/jestereviljanglers.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepJester
+      params:
+        variation: 0.07 #copied from the existing jester shoes
+  - type: ItemToggle
+    onUse: false
+    onActivate: false
+    soundActivate: 
+      path: /Audio/_Impstation/Effects/Footsteps/jesterstep_on.ogg
+    soundDeactivate: 
+      path: /Audio/_Impstation/Effects/Footsteps/jesterstep_off.ogg

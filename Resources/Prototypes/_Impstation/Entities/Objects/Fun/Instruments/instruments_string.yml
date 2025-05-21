@@ -1,0 +1,20 @@
+- type: entity
+  parent: BaseHandheldInstrument
+  id: HandheldHarpInstrument
+  name: lyre
+  description: For those descending from the heavens.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/Instruments/handheldharp.rsi
+    state: icon
+  - type: Instrument
+    program: 46
+  - type: Item
+    size: Normal
+    sprite: _Impstation/Objects/Fun/Instruments/handheldharp.rsi
+    inhandVisuals:
+      left:
+        - state: inhand-left
+      right:
+        - state: inhand-right
+        
