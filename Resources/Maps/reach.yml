@@ -4,8 +4,8 @@ meta:
   engineVersion: 260.1.0
   forkId: ""
   forkVersion: ""
-  time: 05/21/2025 03:52:37
-  entityCount: 2627
+  time: 05/21/2025 04:02:01
+  entityCount: 2628
 maps:
 - 1
 grids:
@@ -6799,6 +6799,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: 19.5,-0.5
       parent: 2
+- proto: ComputerFundingAllocation
+  entities:
+  - uid: 943
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 26.5,1.5
+      parent: 2
 - proto: ComputerId
   entities:
   - uid: 942
@@ -6808,11 +6816,10 @@ entities:
       parent: 2
 - proto: ComputerMassMedia
   entities:
-  - uid: 943
+  - uid: 1653
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 26.5,1.5
+      pos: 22.5,4.5
       parent: 2
 - proto: ComputerMedicalRecords
   entities:
@@ -7789,6 +7796,8 @@ entities:
       pos: 7.5,6.5
       parent: 2
     - type: DeviceNetwork
+      configurators:
+      - invalid
       deviceLists:
       - 1753
   - uid: 1099
@@ -7797,6 +7806,8 @@ entities:
       pos: 8.5,6.5
       parent: 2
     - type: DeviceNetwork
+      configurators:
+      - invalid
       deviceLists:
       - 1753
   - uid: 1100
@@ -7805,6 +7816,8 @@ entities:
       pos: 6.5,6.5
       parent: 2
     - type: DeviceNetwork
+      configurators:
+      - invalid
       deviceLists:
       - 1753
   - uid: 1101
@@ -10752,6 +10765,8 @@ entities:
       pos: 5.5,16.5
       parent: 2
     - type: DeviceNetwork
+      configurators:
+      - invalid
       deviceLists:
       - 1753
     - type: AtmosPipeColor
@@ -11156,6 +11171,8 @@ entities:
       pos: 8.5,9.5
       parent: 2
     - type: DeviceNetwork
+      configurators:
+      - invalid
       deviceLists:
       - 1753
     - type: AtmosPipeColor
@@ -12170,10 +12187,10 @@ entities:
       parent: 2
 - proto: LockerHeadOfSecurityFilledHardsuit
   entities:
-  - uid: 1653
+  - uid: 2628
     components:
     - type: Transform
-      pos: 22.5,4.5
+      pos: 21.5,3.5
       parent: 2
 - proto: LockerMedicalFilled
   entities:
