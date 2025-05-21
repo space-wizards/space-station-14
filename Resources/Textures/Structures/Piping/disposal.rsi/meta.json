@@ -52,7 +52,7 @@
             "directions": 4
         },
         {
-            "name": "conpipe-signaler",
+            "name": "conpipe-signaller",
             "directions": 4
         },
         {
@@ -328,7 +328,7 @@
             "directions": 4
         },
         {
-            "name": "pipe-signaler",
+            "name": "pipe-signaller",
             "directions": 4,
             "delays": [
                 [

@@ -14,7 +14,7 @@
       - material: Steel
         amount: 2
         doAfter: 1
-    - to: signaler
+    - to: signaller
       steps:
       - material: Steel
         amount: 2
@@ -116,8 +116,8 @@
       steps:
       - tool: Welding
         doAfter: 1
-  - node: signaler
-    entity: DisposalSignaler
+  - node: signaller
+    entity: DisposalSignaller
     edges:
     - to: start
       completed:
@@ -125,7 +125,7 @@
         prototype: SheetSteel1
         amount: 2
       - !type:SpawnPrototype
-        prototype: CableApcStack1
+        prototype: CableApcStack1 # I have no idea why this does not work
       - !type:DeleteEntity
       steps:
       - tool: Welding
