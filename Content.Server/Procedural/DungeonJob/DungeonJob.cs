@@ -153,7 +153,8 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
             }
         }
 
-        return dungeons;
+        // Only return the new ones.
+        return dungeons[(existing?.Count ?? 0)..];
     }
 
     protected override async Task<List<Dungeon>?> Process()
