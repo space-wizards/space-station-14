@@ -103,6 +103,69 @@
       offset: 0, 1
 
 - type: entity
+  id: ThrusterLarge
+  name: large thruster
+  parent: [ BaseThruster, ConstructibleMachine ]
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1800
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 900
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-1.45,1.45,0.45"
+        density: 1750
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: ApcPowerReceiver
+    powerLoad: 5000
+  - type: Thruster
+    thrust: 500
+    burnShape: ["-0.3,0.5","0.2,1.6","0.8,1.6","1.3,0.5"] # левая нижняя, левая верхняя, правая верхняя, правая нижняя
+    damage:
+      types:
+        Heat: 120
+  - type: Sprite
+    sprite: Structures/Shuttles/thruster_large.rsi
+    offset: 0.5,-0.5
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+      visible: false
+    - state: thrust_burn_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+      shader: unshaded
+      visible: false
+      offset: 0, 2
+  - type: Anchorable
+    flags: None
+
+- type: entity
   id: ThrusterUnanchored
   parent: Thruster
   suffix: Unanchored
