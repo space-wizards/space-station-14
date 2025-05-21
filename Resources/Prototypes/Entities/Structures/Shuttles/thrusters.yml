@@ -105,7 +105,7 @@
 - type: entity
   id: ThrusterLarge
   name: large thruster
-  parent: [ BaseThruster, ConstructibleMachine ]
+  parent: [ BaseThruster]
   placement:
     mode: AlignTileAny
   components:
@@ -126,8 +126,6 @@
         - !type:PlaySoundBehavior
           sound:
             collection: MetalBreak
-        - !type:ChangeConstructionNodeBehavior
-          node: machineFrame
   - type: Fixtures
     fixtures:
       fix1:
