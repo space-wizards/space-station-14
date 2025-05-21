@@ -116,25 +116,56 @@ public sealed partial class StoreSystem
             if (!ListingHasCategory(listing, categories))
                 continue;
 
+            // Reset the unavailable flag before checking conditions
+            listing.Unavailable = false;
+
             if (listing.Conditions != null)
             {
                 var args = new ListingConditionArgs(GetBuyerMind(buyer), storeEntity, listing, EntityManager);
-                var conditionsMet = true;
-
+                bool hasStockLimitedCondition = false;
+                bool allConditionsMet = true;
+                
+                // First pass: check if this listing has a StockLimitedListingCondition
+                foreach (var condition in listing.Conditions)
+                {
+                    if (condition is Content.Shared.Store.Conditions.StockLimitedListingCondition)
+                    {
+                        hasStockLimitedCondition = true;
+                        break;
+                    }
+                }
+                
+                // Second pass: check all conditions
                 foreach (var condition in listing.Conditions)
                 {
                     if (!condition.Condition(args))
                     {
-                        conditionsMet = false;
-                        break;
+                        // If this is a StockLimitedListingCondition, we want to show the item but mark it as unavailable
+                        if (condition is Content.Shared.Store.Conditions.StockLimitedListingCondition)
+                        {
+                            listing.Unavailable = true;
+                        }
+                        else if (!hasStockLimitedCondition)
+                        {
+                            // For other conditions, if they return false and this isn't a stock-limited item,
+                            // we skip this listing entirely
+                            allConditionsMet = false;
+                            break;
+                        }
                     }
                 }
-
-                if (!conditionsMet)
-                    continue;
+                
+                // Skip this listing if conditions aren't met and it's not a stock-limited item
+                if (!allConditionsMet && !hasStockLimitedCondition)
+                {
+                    goto NextListing;
+                }
             }
 
             yield return listing;
+            
+            NextListing:
+            continue;
         }
     }
 

@@ -230,3 +230,26 @@
   - type: Clothing
     sprite: _Starlight/Clothing/Belt/corpsmanbelt.rsi
   - type: Appearance
+
+- type: entity
+  parent: [ClothingBeltStorageBase, BaseSovietContraband]
+  id: ClothingSovietBandolier
+  name: marine bandolier
+  description: Smells of oil, sweat, and questionable decisions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Belt/soviet_bandolier.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Belt/soviet_bandolier.rsi
+  - type: Item
+    size: Normal
+  - type: Storage
+    whitelist:
+      tags:
+        - Radio
+        - Knife
+        - ShellShotgun
+        - Cartridge
+      components:
+        - BallisticAmmoProvider
+        - Ammo

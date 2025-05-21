@@ -1,0 +1,52 @@
+- type: entity
+  parent: [ClothingBackpackDuffel, BaseSovietContraband]
+  id: ClothingBackpackDuffelSSF
+  name: SSF duffel bag
+  description: For some- it's cumbersome, for others- it's home.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Duffels/soviet_marine_duffel.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Storage
+    grid:
+    - 0,0,8,4
+
+- type: entity
+  id: ClothingBackpackDuffelSovietEVABundle
+  name: soviet EVA bundle
+  parent: ClothingBackpackDuffelSSF
+  description: Contains a soviet EVA suit and helmet, along with emergency oxygen and nitrogen tanks. For the workers of space!
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSovietEVA
+      - id: ClothingHeadHelmetSovietEVA
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+
+- type: entity
+  id: ClothingBackpackDuffelZaporozhianBundle
+  name: Zaporozhian sich bundle
+  parent: ClothingBackpackDuffelSSF
+  description: Cossacks- have gone to space, and have earned respect within the union.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitCossack
+      - id: ClothingUniformJumpsuitCossack
+      - id: ClothingUniformJumpsuitCossack
+      - id: ClothingHeadHatHetmanHat
+      - id: ClothingHeadHatHetmanHat
+      - id: ClothingHeadHatHetmanHat
+      - id: ClothingShoesBootsSalvage
+      - id: ClothingShoesBootsSalvage
+      - id: ClothingShoesBootsSalvage
+      - id: HydroponicsToolHatchet
+      - id: HydroponicsToolHatchet
+      - id: WheatBushel
+      - id: WheatBushel
+      - id: MeatwheatBushel
+      - id: MeatwheatBushel
+      - id: ClothingHeadHatStrawHat
+

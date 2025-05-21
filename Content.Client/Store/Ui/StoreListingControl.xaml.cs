@@ -52,6 +52,10 @@ public sealed partial class StoreListingControl : Control
         if (_data.RestockTime > stationTime)
             return false;
 
+        // Check if the listing is marked as unavailable (e.g., when a rift is active or out of stock)
+        if (_data.Unavailable)
+            return false;
+
         return true;
     }
 
@@ -70,17 +74,15 @@ public sealed partial class StoreListingControl : Control
         }
     }
 
-    private void UpdateName()
+    private void UpdateNameAndDescription()
     {
+        // Get the localized name, which will already include stock count or "Out of Stock" text
         var name = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(_data, _prototype);
-
-        var stationTime = _timing.CurTime.Subtract(_ticker.RoundStartTimeSpan);
-        if (_data.RestockTime > stationTime)
-        {
-            name += Loc.GetString("store-ui-button-out-of-stock");
-        }
-
         StoreItemName.Text = name;
+        
+        // Get the localized description, which will include the last purchaser information
+        var description = ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(_data, _prototype);
+        StoreItemDescription.SetMessage(description);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -88,7 +90,7 @@ public sealed partial class StoreListingControl : Control
         base.FrameUpdate(args);
 
         UpdateBuyButtonText();
-        UpdateName();
+        UpdateNameAndDescription();
         StoreItemBuyButton.Disabled = !CanBuy();
     }
 }

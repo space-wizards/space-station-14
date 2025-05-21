@@ -2,17 +2,21 @@ using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
 using Content.Server.PDA.Ringer;
+using Content.Server.Revolutionary;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Implants.Components;
 using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
+using Content.Shared.Store.Conditions;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -30,6 +34,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly RevSupplyRiftSystem _revSupplyRift = default!;
 
     private void InitializeUi()
     {
@@ -76,13 +81,13 @@ public sealed partial class StoreSystem
         _ui.CloseUi(uid, StoreUiKey.Key);
     }
 
-    /// <summary>
-    /// Updates the user interface for a store and refreshes the listings
-    /// </summary>
-    /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
-    /// <param name="store">The store entity itself</param>
-    /// <param name="component">The store component being refreshed.</param>
-    public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent? component = null)
+        /// <summary>
+        /// Updates the user interface for a store and refreshes the listings
+        /// </summary>
+        /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
+        /// <param name="store">The store entity itself</param>
+        /// <param name="component">The store component being refreshed.</param>
+        public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent? component = null)
     {
         if (!Resolve(store, ref component))
             return;
@@ -138,6 +143,47 @@ public sealed partial class StoreSystem
         }
 
         var buyer = msg.Actor;
+        
+        // Special handling for RevSupplyRiftListing to prevent spam-clicking
+        if (listing.ID == "RevSupplyRiftListing")
+        {
+            // Check if there's already an active rift being processed or placed
+            if (_revSupplyRift.IsRiftBeingProcessed())
+            {
+                // A rift is already being processed, so cancel this purchase
+                return;
+            }
+            
+            // Mark that we're processing a rift purchase
+            _revSupplyRift.SetRiftProcessing(true);
+        }
+        
+        // Check if this is a stock-limited listing and prevent spam-clicking
+        if (listing.Conditions != null)
+        {
+            foreach (var condition in listing.Conditions)
+            {
+                if (condition is Content.Shared.Store.Conditions.StockLimitedListingCondition)
+                {
+                    // Get the StockLimitedProcessingComponent
+                    if (!TryComp<StockLimitedProcessingComponent>(uid, out var processingComp))
+                    {
+                        processingComp = EnsureComp<StockLimitedProcessingComponent>(uid);
+                    }
+                    
+                    // Check if this listing is already being processed
+                    if (processingComp.ProcessingListings.TryGetValue(listing.ID, out var isProcessing) && isProcessing)
+                    {
+                        // This listing is already being processed, so cancel this purchase
+                        return;
+                    }
+                    
+                    // Mark that we're processing this listing
+                    processingComp.ProcessingListings[listing.ID] = true;
+                    break;
+                }
+            }
+        }
 
         //verify that we can actually buy this listing and it wasn't added
         if (!ListingHasCategory(listing, component.Categories))
@@ -152,6 +198,11 @@ public sealed partial class StoreSystem
             if (!conditionsMet)
                 return;
         }
+        
+        // Check if the listing is unavailable (e.g., out of stock)
+        // We still want to show the listing in the UI, but prevent purchase
+        if (listing.Unavailable)
+            return;
 
         //check that we have enough money
         var cost = listing.Cost;
@@ -262,21 +313,158 @@ public sealed partial class StoreSystem
         }
 
         //log dat shit.
+        // Get the resolved name without any placeholders
+        var resolvedName = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto);
+        
+        // Remove any stock count or "Out of Stock" text for the log
+        if (resolvedName.Contains(" ("))
+        {
+            resolvedName = resolvedName.Substring(0, resolvedName.IndexOf(" ("));
+        }
+        
         _admin.Add(LogType.StorePurchase,
             LogImpact.Low,
-            $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto)}\" from {ToPrettyString(uid)}");
+            $"{ToPrettyString(buyer):player} purchased listing \"{resolvedName}\" from {ToPrettyString(uid)}");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
 
+        // Check if this listing has a StockLimitedListingCondition
+        if (listing.Conditions != null)
+        {
+            foreach (var condition in listing.Conditions)
+            {
+                if (condition is StockLimitedListingCondition stockCondition)
+                {
+                    // Get the buyer's name
+                    var buyerName = "Unknown";
+                    if (TryComp<MetaDataComponent>(buyer, out var metadata))
+                    {
+                        buyerName = metadata.EntityName;
+                    }
+                    
+                    // Update the stock count and last purchaser
+                    StockLimitedListingCondition.OnItemPurchased(listing.ID, buyerName, stockCondition.StockLimit);
+                    break;
+                }
+            }
+        }
+        
         var buyFinished = new StoreBuyFinishedEvent
         {
             PurchasedItem = listing,
             StoreUid = uid
         };
         RaiseLocalEvent(ref buyFinished);
+        
+        // If this was a supply rift purchase, mark processing as complete
+        if (listing.ID == "RevSupplyRiftListing")
+        {
+            _revSupplyRift.SetRiftProcessing(false);
+        }
+        
+        // If this was a stock-limited listing, mark processing as complete
+        if (listing.Conditions != null && TryComp<StockLimitedProcessingComponent>(uid, out var stockProcessingComp))
+        {
+            foreach (var condition in listing.Conditions)
+            {
+                if (condition is Content.Shared.Store.Conditions.StockLimitedListingCondition)
+                {
+                    // Mark that we're done processing this listing
+                    stockProcessingComp.ProcessingListings[listing.ID] = false;
+                    break;
+                }
+            }
+        }
 
         UpdateUserInterface(buyer, uid, component);
+        
+        // If this was a stock-limited item, update all USSP uplink UIs
+        if (listing.Conditions != null)
+        {
+            foreach (var condition in listing.Conditions)
+            {
+                if (condition is StockLimitedListingCondition)
+                {
+                    UpdateAllUSSPUplinkUIs();
+                    break;
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Updates all USSP uplink UIs to ensure they show the latest stock counts and last purchaser information.
+    /// </summary>
+    public void UpdateAllUSSPUplinkUIs()
+    {
+        // Find all store components that are USSP uplinks
+        var query = EntityManager.EntityQuery<StoreComponent>();
+        foreach (var storeComp in query)
+        {
+            // Skip if this is not a USSP uplink
+            if (!storeComp.CurrencyWhitelist.Contains("Telebond"))
+                continue;
+                
+            // Refresh all listings to ensure they have the latest stock count and last purchaser information
+            RefreshAllListings(storeComp);
+            
+            // Force a refresh of the available listings
+            if (storeComp.AccountOwner != null)
+            {
+                storeComp.LastAvailableListings = GetAvailableListings(storeComp.AccountOwner.Value, storeComp.Owner, storeComp)
+                    .ToHashSet();
+            }
+            
+            // Update the UI to reflect the changes
+            // We'll just update it with a null user to ensure the listings are refreshed
+            // The next time someone opens the UI, they'll see the updated listings
+            UpdateUserInterface(null, storeComp.Owner, storeComp);
+            
+            // Force update the UI for all currently connected sessions
+            ForceUpdateUiForAllSessions(storeComp.Owner, storeComp);
+            
+            Logger.DebugS("store", $"Updated USSP uplink UI for {ToPrettyString(storeComp.Owner)}");
+        }
+    }
+    
+    /// <summary>
+    /// Forces an update of the UI for all sessions currently viewing this store.
+    /// This ensures that when stock counts or last purchaser information changes,
+    /// all open UIs are immediately updated.
+    /// </summary>
+    private void ForceUpdateUiForAllSessions(EntityUid storeUid, StoreComponent storeComp)
+    {
+        // Create the UI state
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> allCurrency = new();
+        foreach (var supported in storeComp.CurrencyWhitelist)
+        {
+            allCurrency.Add(supported, FixedPoint2.Zero);
+
+            if (storeComp.Balance.TryGetValue(supported, out var value))
+                allCurrency[supported] = value;
+        }
+        
+        // Only tell operatives to lock their uplink if it can be locked
+        var showFooter = HasComp<RingerUplinkComponent>(storeUid);
+        
+        var state = new StoreUpdateState(storeComp.LastAvailableListings, allCurrency, showFooter, storeComp.RefundAllowed);
+        
+        // Set the UI state - this will update all connected sessions automatically
+        _ui.SetUiState(storeUid, StoreUiKey.Key, state);
+        
+        // Find all players who might have this uplink open
+        var query = EntityManager.EntityQuery<ActorComponent>();
+        foreach (var actor in query)
+        {
+            // Check if this player has the uplink implanted
+            if (TryComp<SubdermalImplantComponent>(storeUid, out var implant) && 
+                implant.ImplantedEntity == actor.Owner)
+            {
+                // Force update the UI for this player
+                UpdateUserInterface(actor.Owner, storeUid, storeComp);
+            }
+        }
     }
 
     /// <summary>
@@ -317,6 +505,13 @@ public sealed partial class StoreSystem
             if (ents.FirstOrDefault() is {} ent)
                 _hands.PickupOrDrop(buyer, ent);
             amountRemaining -= value * amountToSpawn;
+        }
+
+        // Play sound effect when withdrawing telebonds
+        if (msg.Currency == "Telebond")
+        {
+            var soundPath = new SoundPathSpecifier("/Audio/Machines/diagnoser_printing.ogg");
+            _audio.PlayPvs(soundPath, uid, AudioParams.Default.WithMaxDistance(3f).WithVolume(5f));
         }
 
         component.Balance[msg.Currency] -= msg.Amount;

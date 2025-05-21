@@ -25,3 +25,27 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.95
+
+- type: entity
+  parent: [ClothingMaskGas, BaseSovietContraband]
+  id: ClothingSovietGasMask
+  name: GP-32 gas mask
+  description: An old uncomfortable mechanical gas mask of standard use in USSP. Meant to protect from radioactive fallout.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/sovietgas.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/sovietgas.rsi
+  - type: FlashImmunity
+    blocksSpecialVision: false
+  - type: EyeProtection
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.90
+        Heat: 0.90
+        Radiation: 0.60

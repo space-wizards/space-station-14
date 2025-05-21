@@ -37,6 +37,7 @@
       - StorageImplant
       - FreedomImplant
       - UplinkImplant
+      - USSPUplinkImplanter
       - EmpImplant
       - ScramImplant
       - DnaScramblerImplant

@@ -1,0 +1,12 @@
+- type: entity
+  id: ActionOpenSKGBUplinkImplant
+  name: Open Svyaz-UZL
+  description: Opens the SKGB uplink embedded under your skin
+  components:
+  - type: InstantAction
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: _Starlight/Objects/Devices/ussp-radio.rsi
+      state: ussp-radio
+    event: !type:OpenUplinkImplantEvent

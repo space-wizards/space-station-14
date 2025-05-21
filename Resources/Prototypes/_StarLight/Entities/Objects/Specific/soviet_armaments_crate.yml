@@ -1,0 +1,42 @@
+- type: entity
+  id: CrateSovietArmaments
+  parent: [CrateGeneric, BaseSovietContraband]
+  name: SKGB armaments crate
+  description: The red tide is here.
+  components:
+  - type: Icon
+    sprite: _Starlight/Structures/Storage/USSP/revolutionary.rsi
+  - type: Sprite
+    sprite: _Starlight/Structures/Storage/USSP/revolutionary.rsi
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Effects/teleport_arrival.ogg
+  - type: EntityStorage
+    isCollidable: true
+    showContents: false
+    occludesLight: true
+  - type: SpawnOnOpen
+    prototypes:
+      - WeaponSniperMosin
+      - WeaponSniperMosin
+      - WeaponSniperMosin
+      - WeaponSniperMosin
+      - WeaponSniperMosin
+      - WeaponSniperMosin
+      - WeaponPistolMakarov
+      - WeaponPistolMakarov
+      - WeaponPistolMakarov
+      - WeaponPistolMakarov
+      - SpearUranium
+      - MedkitFilled
+      - MedkitFilled
+      - MedkitFilled
+      - ClothingOuterSovietCoat
+      - ClothingOuterSovietCoat
+      - ClothingOuterSovietCoat
+      - ClothingOuterSovietCoat
+      - WeaponPistolAPS
+      - WeaponPistolAPS
+      - WeaponLightMachineGunDP28
+    chance: 1.0
+    rng: SovietCrateRNG

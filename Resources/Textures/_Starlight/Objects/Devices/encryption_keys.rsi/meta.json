@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by JustAdler for https://github.com/ss14Starlight/space-station-14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {"name": "crypt_soviet"},
+    {"name": "soviet_label"}
+  ]
+}
