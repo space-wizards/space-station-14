@@ -69,7 +69,7 @@ namespace Content.IntegrationTests.Tests
         /// </summary>
         /// <remarks>
         /// It is also possible to whitelist entire directories here. For example, adding
-        /// "/Maps/Shuttles/" will whitelist all shuttle maps.
+        /// "/Maps/Shuttles/**" will whitelist all shuttle maps.
         /// </remarks>
         private static readonly string[] DoNotMapWhitelist =
         {
