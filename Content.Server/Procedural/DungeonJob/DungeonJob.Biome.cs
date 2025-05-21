@@ -39,7 +39,7 @@ public sealed partial class DungeonJob
             }
 
             // Need to set per-tile to override data.
-            if (biomeSystem.TryGetTile(node, indexedBiome.Layers, seed, _grid, out var tile))
+            if (biomeSystem.TryGetTile(node, indexedBiome.Layers, seed, (_gridUid, _grid), out var tile))
             {
                 _maps.SetTile(_gridUid, _grid, node, tile.Value);
             }
