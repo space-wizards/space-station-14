@@ -194,9 +194,9 @@
   productEntity: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 20
+    Telecrystal: 24
   cost:
-    Telecrystal: 25
+    Telecrystal: 30
   categories:
   - UplinkWeaponry
 
@@ -208,9 +208,9 @@
   productEntity: ClothingBackpackDuffelSyndicateFilledLMG
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 24
+    Telecrystal: 20
   cost:
-    Telecrystal: 30
+    Telecrystal: 25
   categories:
   - UplinkWeaponry
 

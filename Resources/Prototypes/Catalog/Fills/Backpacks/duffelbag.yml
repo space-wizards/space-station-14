@@ -83,6 +83,7 @@
     contents:
       - id: WeaponLightMachineGunL6
       - id: MagazineBoxLightRifleSP
+      - id: MagazineBoxLightRifleSP
       - id: MagazineLightRifleBoxSP
 
 - type: entity
