@@ -285,7 +285,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 dungeons.Add(await GenerateNoiseDunGen(position, noise, reservedTiles, seed, random));
                 break;
             case OreDunGen ore:
-                await PostGen(ore, dungeons[^1], random);
+                await PostGen(ore, dungeons, reservedTiles, random);
                 break;
             case PrefabDunGen prefab:
                 dungeons.Add(await GeneratePrefabDunGen(position, prefab, reservedTiles, random));
