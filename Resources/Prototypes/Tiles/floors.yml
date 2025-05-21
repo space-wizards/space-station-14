@@ -227,6 +227,42 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorSteelHorizontalSlats
+  name: tiles-steel-floor-horizontal-slats
+  sprite: /Textures/Tiles/steel_horizontal_slats.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemSteelHorizontalSlats
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorSteelHorizontalSlatsSingleRow
+  name: tiles-steel-floor-horizontal-slats-single-row
+  sprite: /Textures/Tiles/steel_horizontal_slats_single_row.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemSteelHorizontalSlatsSingleRow
+  heatCapacity: 10000
+
+- type: tile
   id: FloorBrassFilled
   name: tiles-brass-floor-filled
   sprite: /Textures/Tiles/Misc/clockwork/clockwork_floor_filled.png
@@ -358,6 +394,42 @@
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemWhiteVerticalSlatsSingleRow
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorWhiteHorizontalSlats
+  name: tiles-white-floor-horizontal-slats
+  sprite: /Textures/Tiles/white_horizontal_slats.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemWhiteHorizontalSlats
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorWhiteHorizontalSlatsSingleRow
+  name: tiles-white-floor-horizontal-slats-single-row
+  sprite: /Textures/Tiles/white_horizontal_slats_single_row.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemWhiteHorizontalSlatsSingleRow
   heatCapacity: 10000
 
 - type: tile
@@ -568,6 +640,42 @@
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemDarkVerticalSlatsSingleRow
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkHorizontalSlats
+  name: tiles-dark-floor-horizontal-slats
+  sprite: /Textures/Tiles/dark_horizontal_slats.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemDarkHorizontalSlats
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkHorizontalSlatsSingleRow
+  name: tiles-dark-floor-horizontal-slats-single-row
+  sprite: /Textures/Tiles/dark_horizontal_slats_single_row.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemDarkHorizontalSlatsSingleRow
   heatCapacity: 10000
 
 - type: tile
