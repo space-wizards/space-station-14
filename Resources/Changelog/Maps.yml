@@ -232,4 +232,11 @@
   id: 27
   time: '2025-05-21T00:12:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37656
+- author: Southbridge
+  changes:
+  - message: On Box, redesigned Security to have GenPop.
+    type: Tweak
+  id: 28
+  time: '2025-05-21T05:00:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37663
 Order: 1
