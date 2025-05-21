@@ -6,7 +6,7 @@ roles-antag-rev-head-objective = Your objective is to take over the station by b
 head-rev-role-greeting =
     Comrade {$name}! You are a recruting agent promoting the interests of USSP!
     You are tasked with taking over the station by removing all of Command via conversion, death or imprisonment.
-    The SKGB has sponsored you with a flash that brings back the crew to your side.
+    The SKGB has sponsored you with a flash that brings contractors to your side.
     Beware, this won't work on those brainwashed with a 'mindshield' or wearing flash protection, such as sunglasses and welding masks or goggles.
     With enough crew, you may attempt to create a supply rift that will aid in your glorious revolution! But beware, it will alert the station of your influence!
     Glory to the USSP!
@@ -21,18 +21,18 @@ head-rev-break-mindshield = The MindShield™ was destroyed!
 ## Rev
 
 roles-antag-rev-name = USSP Revolutionary
-roles-antag-rev-objective = Your objective is to ensure the safety and follow the orders of the Head Revolutionaries as well as getting rid or converting of all Command staff on station.
+roles-antag-rev-objective = Your objective is to ensure the safety of the SKGB agents, to follow their orders, and to get rid or convert of all Command staff on station.
 
 rev-break-control = {$name} has remembered their true allegiance!
 
 rev-role-greeting =
     Comrade {$name}! You are an USSP revolutionary!
-    You are tasked with taking over the station and to promote the interests of your head revolutionaries!
+    You are tasked with taking over the station and to promote the interests of the soviet agent who recruited you!
     Execute, imprison or convert the brainwashed corporate command staff scum!
     Gone are the days of oppression and the unfair treatment of contractors!
     Glory to the USSP!
 
-rev-briefing = Help your commie recruiter get rid of every command member to take over the station.
+rev-briefing = Help your soviet agent get rid of every command member to take over the station.
 
 ## General
 
@@ -45,7 +45,7 @@ rev-no-heads = There were no revolutionary agents to be selected. Can't start a 
 
 rev-won = The SKGB agents survived and seized control of the station!
 
-rev-lost = Command survived and killed all of the SKGB agents.
+rev-lost = Command survived and killed all the SKGB agents.
 
 rev-stalemate = All of the SKGB agents and command have died. It's a draw.
 
@@ -78,7 +78,7 @@ rev-headrev-name = [color=#5e9cff]{$name}[/color] recruited {$count} {$count ->
 
 rev-deconverted-title = Reconverted!
 rev-deconverted-text =
-    As the last commie agent has died, the glorious revolution is now over.
+    As the last soviet agent has died, the glorious revolution is now over.
 
     You are no longer a revolutionary. You now return back as NanoTrasen contractor.
 
