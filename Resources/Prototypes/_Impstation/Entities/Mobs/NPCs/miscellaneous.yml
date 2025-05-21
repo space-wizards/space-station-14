@@ -217,3 +217,6 @@
       types:
         Radiation: 5
         Cellular: 5
+  - type: RadiationSource
+    intensity: 3
+    slope: 0.6

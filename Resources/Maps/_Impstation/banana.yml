@@ -4,8 +4,8 @@ meta:
   engineVersion: 251.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/20/2025 12:52:07
-  entityCount: 3588
+  time: 05/21/2025 02:54:57
+  entityCount: 3589
 maps:
 - 1
 grids:
@@ -7770,6 +7770,11 @@ entities:
     components:
     - type: Transform
       pos: -1.5,0.5
+      parent: 2
+  - uid: 3589
+    components:
+    - type: Transform
+      pos: -33.5,-7.5
       parent: 2
 - proto: CableTerminal
   entities:
