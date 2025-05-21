@@ -405,7 +405,7 @@
         Heat: 0.95
   - type: SecurityHailer #Because the HOS has this one
     distance: 5
-    aggressionLevel: High
+    aggresionLevel: High
     specialCircumtance: HOS
 
 - type: entity
@@ -455,7 +455,7 @@
         Heat: 0.95
   - type: SecurityHailer #For security ERT and because it's fitting really
     distance: 5
-    aggressionLevel: High #This is just for examination purposes
+    aggresionLevel: High #This is just for examination purposes
     specialCircumtance: ERT
     chatName: ERT hailer
 

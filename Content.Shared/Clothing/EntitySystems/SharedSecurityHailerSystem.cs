@@ -254,8 +254,10 @@ namespace Content.Shared.Clothing.EntitySystems
             {
                 if (mask.IsToggled)
                     _actions.RemoveAction(_wearer, ent.Comp.ActionEntity);
-                else
+                else if (ent.Comp.CurrentState == SecMaskState.Functional && _wearer != EntityUid.Invalid)
+                {
                     _actions.AddAction(_wearer, ref ent.Comp.ActionEntity, ent.Comp.Action, ent.Owner);
+                }
             }
         }
     }
