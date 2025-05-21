@@ -47,7 +47,7 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
     }
-    
+
     private void ArrangeAccessControls()
     {
         // Create a list of known access groups with which to populate the UI
@@ -437,10 +437,10 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
             foreach (var line in Lines)
             {
                 var start = PixelPosition +
-                    new Vector2(PixelWidth * line.Item1.X, PixelHeight * line.Item1.Y);
+                            new Vector2(PixelWidth * line.Item1.X, PixelHeight * line.Item1.Y);
 
                 var end = PixelPosition +
-                    new Vector2(PixelWidth * line.Item2.X, PixelHeight * line.Item2.Y);
+                          new Vector2(PixelWidth * line.Item2.X, PixelHeight * line.Item2.Y);
 
                 handle.DrawLine(start, end, ActualModulateSelf);
             }
