@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
+using Content.Server.Forensics;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Chat;
@@ -7,6 +8,7 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
+using Content.Shared.Forensics.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -15,6 +17,7 @@ using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
@@ -39,6 +42,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly SharedSuicideSystem _suicide = default!;
+        [Dependency] private readonly NameModifierSystem _nameModifier = default!;
 
         public override void Initialize()
         {
@@ -47,6 +51,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<KitchenSpikeComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<KitchenSpikeComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<KitchenSpikeComponent, DragDropTargetEvent>(OnDragDrop);
+            SubscribeLocalEvent<KitchenSpikeComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
 
             //DoAfter
             SubscribeLocalEvent<KitchenSpikeComponent, SpikeDoAfterEvent>(OnDoAfter);
@@ -120,6 +125,12 @@ namespace Content.Server.Kitchen.EntitySystems
                 TrySpike(entity, args.User, args.Dragged, entity.Comp);
         }
 
+        private void OnRefreshNameModifiers(Entity<KitchenSpikeComponent> entity, ref RefreshNameModifiersEvent args)
+        {
+            if (entity.Comp.VictimName != null)
+                args.AddModifier("comp-kitchen-spike-meat-name", extraArgs: ("victim", entity.Comp.VictimName));
+        }
+
         private void OnInteractHand(Entity<KitchenSpikeComponent> entity, ref InteractHandEvent args)
         {
             if (args.Handled)
@@ -147,6 +158,9 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable))
                 return;
 
+            var ev = new KitchenSpikedEvent(victimUid, uid, userUid);
+            RaiseLocalEvent(victimUid, ref ev);
+
             var logImpact = LogImpact.Medium;
             if (HasComp<HumanoidAppearanceComponent>(victimUid))
                 logImpact = LogImpact.Extreme;
@@ -159,7 +173,8 @@ namespace Content.Server.Kitchen.EntitySystems
             // This feels not okay, but entity is getting deleted on "Spike", for now...
             component.MeatSource1p = Loc.GetString("comp-kitchen-spike-remove-meat", ("victim", victimUid));
             component.MeatSource0 = Loc.GetString("comp-kitchen-spike-remove-meat-last", ("victim", victimUid));
-            component.Victim = Name(victimUid);
+            if (TryComp<DnaComponent>(victimUid, out var dna))
+                component.VictimDna = dna.DNA;
 
             UpdateAppearance(uid, null, component);
 
@@ -169,13 +184,13 @@ namespace Content.Server.Kitchen.EntitySystems
                                                     ("this", uid)),
                                     uid, PopupType.LargeCaution);
 
+            component.VictimName = Name(victimUid);
+            _nameModifier.RefreshNameModifiers(uid);
+
             _transform.SetCoordinates(victimUid, Transform(uid).Coordinates);
             // THE WHAT?
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
-            var gibs = _bodySystem.GibBody(victimUid);
-            foreach (var gib in gibs) {
-                QueueDel(gib);
-            }
+            _bodySystem.GibBody(victimUid);
 
             _audio.PlayPvs(component.SpikeSound, uid);
         }
@@ -194,9 +209,20 @@ namespace Content.Server.Kitchen.EntitySystems
 
             var item = _random.PickAndTake(component.PrototypesToSpawn);
 
-            var ent = Spawn(item, Transform(uid).Coordinates);
-            _metaData.SetEntityName(ent,
-                Loc.GetString("comp-kitchen-spike-meat-name", ("name", Name(ent)), ("victim", component.Victim)));
+            var piece = Spawn(item, Transform(uid).Coordinates);
+
+            var ev = new KitchenSpikeGetPieceEvent(piece);
+            RaiseLocalEvent(user, ref ev);
+
+            // Apply forensics to knife and meat
+            if (component.VictimDna != null)
+            {
+                EnsureComp<ForensicsComponent>(used, out var forensicsKnife);
+                forensicsKnife.DNAs.Add(component.VictimDna);
+
+                EnsureComp<ForensicsComponent>(piece, out var forensicsPiece);
+                forensicsPiece.DNAs.Add(component.VictimDna);
+            }
 
             if (component.PrototypesToSpawn.Count != 0)
                 _popupSystem.PopupEntity(component.MeatSource1p, uid, user, PopupType.MediumCaution);
@@ -204,6 +230,9 @@ namespace Content.Server.Kitchen.EntitySystems
             {
                 UpdateAppearance(uid, null, component);
                 _popupSystem.PopupEntity(component.MeatSource0, uid, user, PopupType.MediumCaution);
+                component.VictimDna = null;
+                component.VictimName = null;
+                _nameModifier.RefreshNameModifiers(uid);
             }
 
             return true;
