@@ -1239,8 +1239,8 @@
     node: cooked meat patty
   - type: FoodSequenceElement
     entries:
-      Burger: MeatSteak
-      Taco: MeatSteak
+      Burger: MeatPatty
+      Taco: MeatPatty
 
 - type: entity
   name: boiled snail

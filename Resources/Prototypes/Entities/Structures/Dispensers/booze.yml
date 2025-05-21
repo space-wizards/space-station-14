@@ -10,11 +10,25 @@
     sprite: Structures/smalldispensers.rsi
     drawdepth: SmallObjects
     state: booze
-  - type: ReagentDispenser
-    storageWhitelist:
+  - type: Storage
+    openOnActivate: false
+    whitelist:
       tags:
       - DrinkBottle
-    pack: BoozeDispenserInventory
+  - type: StorageFill
+    contents:
+    - id: DrinkAleBottleFullGrowler
+    - id: DrinkBeerGrowler
+    - id: DrinkCoffeeLiqueurBottleFull
+    - id: DrinkCognacBottleFull
+    - id: DrinkGinBottleFull
+    - id: DrinkMeadJug
+    - id: DrinkRumBottleFull
+    - id: DrinkTequilaBottleFull
+    - id: DrinkVermouthBottleFull
+    - id: DrinkVodkaBottleFull
+    - id: DrinkWhiskeyBottleFull
+    - id: DrinkWineBottleFull
   - type: Transform
     noRot: false
   - type: Machine
@@ -31,8 +45,7 @@
   suffix: Empty
   parent: BoozeDispenser
   components:
-  - type: ReagentDispenser
-    storageWhitelist:
+  - type: Storage
+    whitelist:
       tags:
       - DrinkBottle
-    pack: EmptyInventory
