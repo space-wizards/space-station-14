@@ -48,7 +48,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (component.EmpContinuous)
             component.NextEmpChange = _timing.CurTime + TimeSpan.FromSeconds(1f / component.EmpChangeIntensity);
 
-        var pick = GetRandomValidPrototype(component.Slot);
+        var pick = GetRandomValidPrototype(component.Slot, component.RequireTag);
         SetSelectedPrototype(uid, pick, component: component);
 
         args.Affected = true;
@@ -94,9 +94,9 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     /// <summary>
     ///     Get a random prototype for a given slot.
     /// </summary>
-    public string GetRandomValidPrototype(SlotFlags slot)
+    public string GetRandomValidPrototype(SlotFlags slot, string? tag = null)
     {
-        return _random.Pick(GetValidTargets(slot).ToList());
+        return _random.Pick(GetValidTargets(slot, tag).ToList());
     }
 
     public override void Update(float frameTime)
@@ -104,7 +104,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         base.Update(frameTime);
         // Randomize EMP-affected clothing
         var query = EntityQueryEnumerator<EmpDisabledComponent, ChameleonClothingComponent>();
-        while (query.MoveNext(out var uid, out var emp, out var chameleon))
+        while (query.MoveNext(out var uid, out _, out var chameleon))
         {
             if (!chameleon.EmpContinuous)
                 continue;
@@ -113,7 +113,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
                 continue;
 
             // randomly pick cloth element from available and apply it
-            var pick = GetRandomValidPrototype(chameleon.Slot);
+            var pick = GetRandomValidPrototype(chameleon.Slot, chameleon.RequireTag);
             SetSelectedPrototype(uid, pick, component: chameleon);
 
             chameleon.NextEmpChange += TimeSpan.FromSeconds(1f / chameleon.EmpChangeIntensity);

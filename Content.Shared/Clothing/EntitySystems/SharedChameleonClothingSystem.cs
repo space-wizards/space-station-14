@@ -33,7 +33,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     };
     private static readonly SlotFlags[] Slots = Enum.GetValues<SlotFlags>().Except(IgnoredSlots).ToArray();
 
-    private readonly Dictionary<SlotFlags, List<string>> _data = new();
+    private readonly Dictionary<SlotFlags, List<EntProtoId>> _data = new();
 
     public readonly Dictionary<SlotFlags, List<string>> ValidVariants = new();
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
@@ -167,17 +167,23 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     /// <summary>
     ///     Get a list of valid chameleon targets for these slots.
     /// </summary>
-    public IEnumerable<string> GetValidTargets(SlotFlags slot)
+    public IEnumerable<EntProtoId> GetValidTargets(SlotFlags slot, string? tag = null)
     {
-        var set = new HashSet<string>();
-        foreach (var availableSlot in _data.Keys)
+        var validTargets = new List<EntProtoId>();
+        if (tag != null)
         {
-            if (slot.HasFlag(availableSlot))
+            foreach (var proto in _data[slot])
             {
-                set.UnionWith(_data[availableSlot]);
+                if (IsValidTarget(_proto.Index(proto), slot, tag))
+                    validTargets.Add(proto);
             }
         }
-        return set;
+        else
+        {
+            validTargets = _data[slot];
+        }
+
+        return validTargets;
     }
 
     protected void PrepareAllVariants()
@@ -202,7 +208,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
                 if (!_data.ContainsKey(slot))
                 {
-                    _data.Add(slot, new List<string>());
+                    _data.Add(slot, new List<EntProtoId>());
                 }
                 _data[slot].Add(proto.ID);
             }
