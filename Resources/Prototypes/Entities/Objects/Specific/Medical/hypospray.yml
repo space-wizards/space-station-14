@@ -505,18 +505,18 @@
     emptySpriteName: hypovolemic_empty
   - type: Hypospray
     solutionName: pen
-    transferAmount: 30
+    transferAmount: 10 # imp edits - 30 -> 10
     onlyAffectsMobs: false
     injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
-        maxVol: 30
+        maxVol: 10 # 30 -> 10
         reagents:
           - ReagentId: Leporazine
-            Quantity: 10
+            Quantity: 4 # 10 -> 4
           - ReagentId: Barozine
-            Quantity: 20
+            Quantity: 6 #end imp edits - 20 -> 6
   - type: Tag
     tags: []
 

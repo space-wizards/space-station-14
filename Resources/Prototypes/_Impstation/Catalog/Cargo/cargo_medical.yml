@@ -1,0 +1,9 @@
+﻿- type: cargoProduct # imp
+  id: InjectorKit
+  icon:
+    sprite: _Impstation/Objects/Specific/Medical/firstaidkits.rsi # imp
+    state: blackkit
+  product: CrateEmergencyInjectorKit
+  cost: 6500
+  category: cargoproduct-category-name-medical
+  group: market
