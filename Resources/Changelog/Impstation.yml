@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: hivehum, crocodilecarousel
-  changes:
-  - message: You can now see when someone is looking at a handheld map and can't hear
-      you.
-    type: Tweak
-  id: 1206
-  time: '2025-02-28T00:39:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1788
 - author: TheGrimbeeper
   changes:
   - message: You should now be able to notice something is wrong if you are being
@@ -4230,3 +4222,10 @@
   id: 1705
   time: '2025-05-21T08:09:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2524
+- author: animal-collective
+  changes:
+  - message: 2 new humanoid hairstyles, 1 new thaven hairstyle
+    type: Add
+  id: 1706
+  time: '2025-05-21T08:18:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2520
