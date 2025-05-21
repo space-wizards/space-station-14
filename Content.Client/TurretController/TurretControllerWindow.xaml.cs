@@ -34,7 +34,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
     public event Action<TurretArmamentSetting>? OnArmamentSettingChangedEvent;
 
     // Colors
-    private Dictionary<TurretArmamentSetting, Color> _themeColors = new()
+    private static readonly Dictionary<TurretArmamentSetting, Color> ThemeColors = new()
     {
         [TurretArmamentSetting.Safe] = Color.FromHex("#33e633"),
         [TurretArmamentSetting.Stun] = Color.FromHex("#dfb827"),
@@ -110,18 +110,13 @@ public sealed partial class TurretControllerWindow : BaseWindow
 
     private void UpdateTheme(TurretArmamentSetting setting)
     {
-        switch (setting)
+        var setPressedOn = setting switch
         {
-            case TurretArmamentSetting.Safe:
-                SafeButton.Pressed = true;
-                break;
-            case TurretArmamentSetting.Stun:
-                StunButton.Pressed = true;
-                break;
-            case TurretArmamentSetting.Lethal:
-                LethalButton.Pressed = true;
-                break;
-        }
+            TurretArmamentSetting.Safe => SafeButton,
+            TurretArmamentSetting.Stun => StunButton,
+            TurretArmamentSetting.Lethal => LethalButton,
+        };
+        setPressedOn.Pressed = true;
 
         var canInteract = IsLocalPlayerAllowedToInteract();
 
@@ -129,7 +124,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
         StunButton.Disabled = !StunButton.Pressed && !canInteract;
         LethalButton.Disabled = !LethalButton.Pressed && !canInteract;
 
-        ContentsContainer.Modulate = _themeColors[setting];
+        ContentsContainer.Modulate = ThemeColors[setting];
     }
 
     public void UpdateState(DeployableTurretControllerBoundInterfaceState state)
@@ -161,7 +156,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
                 ("status", Loc.GetString(state))
             );
 
-            var label = new Label()
+            var label = new Label
             {
                 Text = text,
                 HorizontalAlignment = HAlignment.Left,
