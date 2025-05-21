@@ -155,8 +155,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 if (_roundEnd.IsRoundEndRequested())
                 {
                     // If the shuttle is already called, we need to recall it
-                    Logger.InfoS("rev-rule", "Emergency shuttle was already called. Recalling it before proceeding with revolutionary victory.");
-                    
                     // Cancel the current shuttle call - force it with false for checkCooldown
                     _roundEnd.CancelRoundEndCountdown(null, false);
                 }
@@ -178,9 +176,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
                         // Remove event schedulers
                         RemoveEventSchedulers();
-                        
-                        // Log that we're scheduling the second announcement
-                        Logger.InfoS("rev-rule", "Scheduling second announcement in 15 seconds");
                     }
                     catch (Exception ex)
                     {
@@ -193,9 +188,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 {
                     try
                     {
-                        // Log that we're about to send the second announcement
-                        Logger.InfoS("rev-rule", "Sending Soviet People's Commissariat announcement");
-                        
                         // Send Soviet People's Commissariat announcement
                         _chatSystem.DispatchGlobalAnnouncement(
                             Loc.GetString("soviet-commissariat-revolution-announcement"),
@@ -204,10 +196,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                             new SoundPathSpecifier("/Audio/_Starlight/Announcements/sov_announce.ogg"),
                             Color.Yellow
                         );
-                        
-                        // Log that the second announcement was sent
-                        Logger.InfoS("rev-rule", "Soviet People's Commissariat announcement sent");
-
+        
                         // Wait a short time to ensure the announcement is heard before ending the round
                         Timer.Spawn(TimeSpan.FromSeconds(4), () =>
                         {
@@ -353,8 +342,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         var alwaysConvertible = HasComp<AlwaysRevolutionaryConvertibleComponent>(ev.Target);
 
-        Logger.Info($"OnPostFlash called: User={ev.User}, Target={ev.Target}, AlwaysConvertible={alwaysConvertible}");
-
         if (!_mind.TryGetMind(ev.Target, out var mindId, out var mind) && !alwaysConvertible)
             return;
 
@@ -365,7 +352,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             !_mobState.IsAlive(ev.Target) ||
             HasComp<ZombieComponent>(ev.Target))
         {
-            Logger.Info("OnPostFlash: Target failed conversion checks");
             return;
         }
 
@@ -377,7 +363,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             var converterComp = EnsureComp<RevolutionaryConverterComponent>(ev.Target);
             converterComp.ConverterUid = ev.User.Value;
-            Logger.Info($"Added RevolutionaryConverterComponent to {ToPrettyString(ev.Target)} with converter {ToPrettyString(ev.User.Value)}");
         }
 
         if (ev.User != null)
@@ -385,8 +370,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             _adminLogManager.Add(LogType.Mind,
                 LogImpact.Medium,
                 $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
-
-            Logger.Info($"OnPostFlash: Granting currency to user {ev.User.Value}");
 
             var storeSystem = EntityManager.System<StoreSystem>();
 
@@ -410,9 +393,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                         // Add a component to the uplink to track which head revolutionary it belongs to
                         var uplinkOwnerComp = EnsureComp<USSPUplinkOwnerComponent>(uplinkImplant);
                         uplinkOwnerComp.OwnerUid = ev.User.Value;
-                        
-                        Logger.Info($"OnPostFlash: Created new uplink {ToPrettyString(uplinkImplant)} for head revolutionary {ToPrettyString(ev.User.Value)}");
-                        Logger.Info($"OnPostFlash: Added USSPUplinkOwnerComponent to uplink {ToPrettyString(uplinkImplant)} with owner {ToPrettyString(ev.User.Value)}");
                     }
                     
                     // Add Telebond to the uplink
@@ -422,23 +402,19 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                         if (TryComp<StoreComponent>(uplinkUid.Value, out var storeComp))
                         {
                             var currentTelebond = storeComp.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
-                            Logger.Info($"OnPostFlash: Current Telebond before adding: {currentTelebond}");
                         }
                         
                         // Ensure the uplink has an owner component that points to this head revolutionary
                         var uplinkOwnerComp = EnsureComp<USSPUplinkOwnerComponent>(uplinkUid.Value);
                         uplinkOwnerComp.OwnerUid = ev.User.Value;
-                        Logger.Info($"OnPostFlash: Ensured uplink {ToPrettyString(uplinkUid.Value)} has owner {ToPrettyString(ev.User.Value)}");
                         
                         var currencyToAdd = new Dictionary<string, FixedPoint2> { { "Telebond", FixedPoint2.New(1) } };
                         var success = storeSystem.TryAddCurrency(currencyToAdd, uplinkUid.Value);
-                        Logger.Info($"OnPostFlash: Added Telebond to uplink {ToPrettyString(uplinkUid.Value)}, success: {success}");
                         
                         // Debug log to see the updated telebond value
                         if (TryComp<StoreComponent>(uplinkUid.Value, out var storeCompAfter))
                         {
                             var updatedTelebond = storeCompAfter.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
-                            Logger.Info($"OnPostFlash: Current Telebond after adding: {updatedTelebond}");
                         }
                         
                         // Make sure the head revolutionary's implant component points to this uplink
@@ -586,14 +562,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// </summary>
     private void RemoveEventSchedulers()
     {
-        Logger.InfoS("rev-rule", "Removing event schedulers due to command loss");
-        
         // Remove BasicStationEventScheduler
         var basicSchedulers = EntityManager.EntityQuery<BasicStationEventSchedulerComponent>();
         foreach (var scheduler in basicSchedulers)
         {
             EntityManager.RemoveComponent<BasicStationEventSchedulerComponent>(scheduler.Owner);
-            Logger.InfoS("rev-rule", $"Removed BasicStationEventSchedulerComponent from {ToPrettyString(scheduler.Owner)}");
         }
         
         // Remove RampingStationEventScheduler
@@ -601,64 +574,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         foreach (var scheduler in rampingSchedulers)
         {
             EntityManager.RemoveComponent<RampingStationEventSchedulerComponent>(scheduler.Owner);
-            Logger.InfoS("rev-rule", $"Removed RampingStationEventSchedulerComponent from {ToPrettyString(scheduler.Owner)}");
         }
-        
-        // For other event schedulers, we'll use a more generic approach
-        // by finding all game rule entities and checking if they have specific components
-        
+
         // Get all game rule entities
-        var gameRuleQuery = EntityManager.EntityQuery<GameRuleComponent>();
-        
-        // Log what we're trying to do
-        Logger.InfoS("rev-rule", "Checking for additional event schedulers on game rule entities");
-        
-        foreach (var gameRule in gameRuleQuery)
-        {
-            // For each game rule entity, check if it has any of the event scheduler components
-            // and remove them if found
-            
-            // Check for MeteorSwarmScheduler
-            try
-            {
-                // We can't directly check for the component type since it might not be loaded
-                // So we'll log that we're checking for it
-                Logger.InfoS("rev-rule", $"Checking for MeteorSwarmSchedulerComponent on {ToPrettyString(gameRule.Owner)}");
-                
-                // In a real implementation, we would use reflection to check if the component exists
-                // and remove it, but for now we'll just log that we would remove it
-                Logger.InfoS("rev-rule", $"Would remove MeteorSwarmSchedulerComponent from {ToPrettyString(gameRule.Owner)} if it exists");
-            }
-            catch (Exception ex)
-            {
-                Logger.ErrorS("rev-rule", $"Error checking for MeteorSwarmSchedulerComponent: {ex}");
-            }
-            
-            // Check for SpaceTrafficControlEventScheduler
-            try
-            {
-                Logger.InfoS("rev-rule", $"Checking for SpaceTrafficControlEventSchedulerComponent on {ToPrettyString(gameRule.Owner)}");
-                Logger.InfoS("rev-rule", $"Would remove SpaceTrafficControlEventSchedulerComponent from {ToPrettyString(gameRule.Owner)} if it exists");
-            }
-            catch (Exception ex)
-            {
-                Logger.ErrorS("rev-rule", $"Error checking for SpaceTrafficControlEventSchedulerComponent: {ex}");
-            }
-            
-            // Check for KesslerSyndromeScheduler
-            try
-            {
-                Logger.InfoS("rev-rule", $"Checking for KesslerSyndromeSchedulerComponent on {ToPrettyString(gameRule.Owner)}");
-                Logger.InfoS("rev-rule", $"Would remove KesslerSyndromeSchedulerComponent from {ToPrettyString(gameRule.Owner)} if it exists");
-            }
-            catch (Exception ex)
-            {
-                Logger.ErrorS("rev-rule", $"Error checking for KesslerSyndromeSchedulerComponent: {ex}");
-            }
-        }
-        
-        // Log that we've completed the operation
-        Logger.InfoS("rev-rule", "Finished checking for additional event schedulers");
+        // var gameRuleQuery = EntityManager.EntityQuery<GameRuleComponent>();
     }
 
     private void OnHeadRevMobStateChanged(EntityUid uid, HeadRevolutionaryComponent comp, MobStateChangedEvent ev)
@@ -722,8 +641,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// </summary>
     private void DeleteUplinksTurnItemsToAsh()
     {
-        Logger.InfoS("rev-rule", "All head revolutionaries are dead. Deleting uplinks and turning items to ash.");
-        
         // Find and delete all USSP uplinks
         var uplinkQuery = EntityManager.EntityQuery<MetaDataComponent>(true);
         var uplinksToDelete = new List<EntityUid>();
@@ -733,7 +650,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             if (metadata.EntityPrototype?.ID == "USSPUplinkImplant")
             {
                 uplinksToDelete.Add(metadata.Owner);
-                Logger.InfoS("rev-rule", $"Found USSP uplink to delete: {ToPrettyString(metadata.Owner)}");
             }
         }
         
@@ -743,7 +659,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             if (EntityManager.EntityExists(uplink))
             {
                 EntityManager.DeleteEntity(uplink);
-                Logger.InfoS("rev-rule", $"Deleted USSP uplink: {ToPrettyString(uplink)}");
             }
         }
         
@@ -754,7 +669,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         foreach (var (rift, transform) in riftQuery)
         {
             riftsToDelete.Add((rift.Owner, transform.Coordinates));
-            Logger.InfoS("rev-rule", $"Found supply rift to turn to ash: {ToPrettyString(rift.Owner)}");
         }
         
         // Process all supply rifts
@@ -764,7 +678,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             {
                 // Spawn ash at the rift's location
                 EntityManager.SpawnEntity("Ash", coordinates);
-                Logger.InfoS("rev-rule", $"Turned supply rift to ash: {ToPrettyString(entity)}");
                 
                 // Delete the rift
                 EntityManager.DeleteEntity(entity);
@@ -780,7 +693,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             if (metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
             {
                 implantersToDelete.Add((metadata.Owner, transform.Coordinates));
-                Logger.InfoS("rev-rule", $"Found SKGB implanter to turn to ash: {ToPrettyString(metadata.Owner)}");
             }
         }
         
@@ -791,7 +703,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             {
                 // Spawn ash at the implanter's location
                 EntityManager.SpawnEntity("Ash", coordinates);
-                Logger.InfoS("rev-rule", $"Turned SKGB implanter to ash: {ToPrettyString(entity)}");
                 
                 // Delete the implanter
                 EntityManager.DeleteEntity(entity);
@@ -868,8 +779,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// </summary>
     private void SynchronizeUplinkCurrencies(EntityUid headRevUid, EntityUid currentUplinkUid)
     {
-        Logger.Info($"Synchronizing uplink currencies for head revolutionary {ToPrettyString(headRevUid)}");
-        
         // Find all uplinks owned by this head revolutionary
         var allUplinks = new List<EntityUid>();
         var uplinkQuery = EntityManager.EntityQuery<USSPUplinkOwnerComponent, StoreComponent>();
@@ -898,13 +807,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 if (telebonds > currentTelebond)
                 {
                     currentTelebond = telebonds;
-                    Logger.Info($"Found higher Telebond value ({telebonds}) in uplink {ToPrettyString(uplinkOwner.Owner)}");
                 }
                 
                 if (conversions > currentConversion)
                 {
                     currentConversion = conversions;
-                    Logger.Info($"Found higher Conversion value ({conversions}) in uplink {ToPrettyString(uplinkOwner.Owner)}");
                 }
             }
         }
@@ -929,13 +836,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 if (store.Balance["Telebond"] < currentTelebond)
                 {
                     store.Balance["Telebond"] = currentTelebond;
-                    Logger.Info($"Updated Telebond currency in uplink {ToPrettyString(uplink)} to {currentTelebond}");
                 }
                 
                 if (store.Balance["Conversion"] < currentConversion)
                 {
                     store.Balance["Conversion"] = currentConversion;
-                    Logger.Info($"Updated Conversion currency in uplink {ToPrettyString(uplink)} to {currentConversion}");
                 }
             }
         }
@@ -946,9 +851,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// This ensures that when a head revolutionary earns telebonds, all uplinks owned by them are updated.
     /// </summary>
     public void SynchronizeAllUplinksByOwner(EntityUid headRevUid)
-    {
-        Logger.Info($"Synchronizing all uplinks owned by head revolutionary {ToPrettyString(headRevUid)}");
-        
+    {        
         // Find all uplinks owned by this head revolutionary
         var allUplinks = new List<EntityUid>();
         var maxTelebond = FixedPoint2.Zero;
@@ -967,8 +870,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             {
                 maxTelebond = headRevStore.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
                 maxConversion = headRevStore.Balance.GetValueOrDefault("Conversion", FixedPoint2.Zero);
-                
-                Logger.Info($"Found head revolutionary's uplink {ToPrettyString(headRevUplinkUid)} with Telebond: {maxTelebond}, Conversion: {maxConversion}");
             }
         }
         
@@ -983,20 +884,16 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 // Get the currency values
                 var telebonds = uplinkStore.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
                 var conversions = uplinkStore.Balance.GetValueOrDefault("Conversion", FixedPoint2.Zero);
-                
-                Logger.Info($"Found uplink {ToPrettyString(uplinkOwner.Owner)} with Telebond: {telebonds}, Conversion: {conversions}");
-                
+                                
                 // Update the maximum values
                 if (telebonds > maxTelebond)
                 {
                     maxTelebond = telebonds;
-                    Logger.Info($"Found higher Telebond value: {telebonds}");
                 }
                 
                 if (conversions > maxConversion)
                 {
                     maxConversion = conversions;
-                    Logger.Info($"Found higher Conversion value: {conversions}");
                 }
             }
         }
@@ -1020,20 +917,16 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     {
                         var telebonds = store.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
                         var conversions = store.Balance.GetValueOrDefault("Conversion", FixedPoint2.Zero);
-                        
-                        Logger.Info($"Found revolutionary's uplink {ToPrettyString(revImplant.ImplantUid.Value)} with Telebond: {telebonds}, Conversion: {conversions}");
-                        
+                                                
                         // Update the maximum values
                         if (telebonds > maxTelebond)
                         {
                             maxTelebond = telebonds;
-                            Logger.Info($"Found higher Telebond value: {telebonds}");
                         }
                         
                         if (conversions > maxConversion)
                         {
                             maxConversion = conversions;
-                            Logger.Info($"Found higher Conversion value: {conversions}");
                         }
                     }
                 }
@@ -1069,20 +962,16 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                         {
                             var telebonds = store.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
                             var conversions = store.Balance.GetValueOrDefault("Conversion", FixedPoint2.Zero);
-                            
-                            Logger.Info($"Found implanted uplink {ToPrettyString(implant)} in revolutionary {ToPrettyString(rev.Owner)} with Telebond: {telebonds}, Conversion: {conversions}");
-                            
+                                                        
                             // Update the maximum values
                             if (telebonds > maxTelebond)
                             {
                                 maxTelebond = telebonds;
-                                Logger.Info($"Found higher Telebond value: {telebonds}");
                             }
                             
                             if (conversions > maxConversion)
                             {
                                 maxConversion = conversions;
-                                Logger.Info($"Found higher Conversion value: {conversions}");
                             }
                         }
                     }
@@ -1153,14 +1042,12 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             if (uplinkStore.Balance["Conversion"] < maxConversion)
             {
                 uplinkStore.Balance["Conversion"] = maxConversion;
-                Logger.Info($"Updated global Conversion currency in uplink {ToPrettyString(metadata.Owner)} to {maxConversion}");
             }
             
             // Check if this uplink has a higher Conversion value
             if (uplinkStore.Balance["Conversion"] > maxConversion)
             {
                 maxConversion = uplinkStore.Balance["Conversion"];
-                Logger.Info($"Found higher global Conversion value: {maxConversion}");
                 
                 // Update all uplinks we've already processed with this higher value
                 foreach (var processedUplink in allUplinks)
@@ -1168,7 +1055,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     if (TryComp<StoreComponent>(processedUplink, out var processedStore))
                     {
                         processedStore.Balance["Conversion"] = maxConversion;
-                        Logger.Info($"Updated Conversion currency in uplink {ToPrettyString(processedUplink)} to {maxConversion}");
                     }
                 }
             }
@@ -1183,9 +1069,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// This is a shared counter that tracks total conversions by all head revolutionaries.
     /// </summary>
     private void AddConversionToAllHeadRevs(StoreSystem storeSystem)
-    {
-        Logger.Info("Adding Conversion to all head revolutionary uplinks");
-        
+    {        
         // Get all USSPUplinkImplant entities in the game
         var query = EntityManager.EntityQuery<MetaDataComponent, StoreComponent>(true);
         var uplinkEntities = new List<EntityUid>();
@@ -1201,7 +1085,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         // If no uplinks were found, log a warning
         if (uplinkEntities.Count == 0)
         {
-            Logger.Warning("No USSP uplink implants found in the game");
             return;
         }
         
@@ -1210,7 +1093,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             var currencyToAdd = new Dictionary<string, FixedPoint2> { { "Conversion", FixedPoint2.New(1) } };
             var success = storeSystem.TryAddCurrency(currencyToAdd, uplinkEntity);
-            Logger.Info($"Added Conversion to uplink {ToPrettyString(uplinkEntity)}, success: {success}");
         }
         
         // Show popup to all head revolutionaries (private)
