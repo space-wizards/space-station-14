@@ -40,6 +40,12 @@
   - CableMVStack
   - CableHVStack
 
+- type: latheRecipePack
+  id: PaperworkStatic
+  recipes:
+  - BoxFolderClipboard
+  - BoxFolderPlasticClipboard
+
 ## Dynamic
 
 # Things you'd expect sci salv and engi to make use of

@@ -223,6 +223,28 @@
         Blunt: 6
 
 - type: entity
+  id: BoxFolderPlasticClipboard
+  parent: BoxFolderClipboard
+  name: plastic clipboard
+  description: A cheap clipboard made of blue plastic. For those who aren't yet ready to wield the bureaucratic might of a proper wooden clipboard.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/plastic-clipboard.rsi
+    layers:
+    - state: clipboard
+    - state: clipboard_paper
+      map: ["clipboard_paper"]
+      visible: false
+    - state: clipboard_pen
+      map: ["clipboard_pen"]
+      visible: false
+    - state: clipboard_over
+  - type: Item
+    sprite: Objects/Misc/plastic-clipboard.rsi
+  - type: Clothing
+    sprite: Objects/Misc/plastic-clipboard.rsi
+
+- type: entity
   id: BoxFolderCentComClipboard
   parent: BoxFolderClipboard
   name: CentComm clipboard
