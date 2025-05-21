@@ -16,6 +16,7 @@ using Content.Shared.Store.Components;
 using Content.Shared.Store.Conditions;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -504,6 +505,13 @@ public sealed partial class StoreSystem
             if (ents.FirstOrDefault() is {} ent)
                 _hands.PickupOrDrop(buyer, ent);
             amountRemaining -= value * amountToSpawn;
+        }
+
+        // Play sound effect when withdrawing telebonds
+        if (msg.Currency == "Telebond")
+        {
+            var soundPath = new SoundPathSpecifier("/Audio/Machines/diagnoser_printing.ogg");
+            _audio.PlayPvs(soundPath, uid, AudioParams.Default.WithMaxDistance(3f).WithVolume(5f));
         }
 
         component.Balance[msg.Currency] -= msg.Amount;
