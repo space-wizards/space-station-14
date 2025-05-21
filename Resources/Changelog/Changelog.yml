@@ -3870,43 +3870,6 @@
   id: 8538
   time: '2025-05-20T16:55:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37592
-- author: spanky-spanky
-  changes:
-  - message: On Fland, the salvage job board has been added.
-    type: Add
-  id: 8539
-  time: '2025-05-20T23:27:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37653
-- author: spanky-spanky
-  changes:
-  - message: On Bagel, the salvage job board has been added.
-    type: Add
-  id: 8540
-  time: '2025-05-20T23:27:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37652
-- author: spanky-spanky
-  changes:
-  - message: On Marathon, the salvage job board has been added.
-    type: Add
-  - message: On Marathon, the default TEG has been improved.
-    type: Tweak
-  id: 8541
-  time: '2025-05-20T23:29:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37654
-- author: spanky-spanky
-  changes:
-  - message: On Omega, the salvage job board has been added.
-    type: Add
-  id: 8542
-  time: '2025-05-20T23:35:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37655
-- author: spanky-spanky
-  changes:
-  - message: On Packed, the salvage job board has been added.
-    type: Add
-  id: 8543
-  time: '2025-05-21T00:12:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37656
 - author: FrostWinters
   changes:
   - message: Histamines no longer cause radiation.
