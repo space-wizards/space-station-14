@@ -47,9 +47,9 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/paws.rsi
+    sprite: _Starlight/Clothing/Hands/Gloves/paws.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/paws.rsi
+    sprite: _Starlight/Clothing/Hands/Gloves/paws.rsi
 
 - type: entity
   parent: ClothingHandsCatPaws
