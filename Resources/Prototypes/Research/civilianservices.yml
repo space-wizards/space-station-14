@@ -141,6 +141,7 @@
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
+  - TrashBagHolding
   - BorgModuleAdvancedCleaning
 
 - type: technology
