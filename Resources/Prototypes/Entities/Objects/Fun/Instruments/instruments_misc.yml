@@ -190,3 +190,5 @@
     - Common
     toggleOnInteract: false
     enabled: true
+  - type: ActiveListener 
+  - type: ActiveRadio
