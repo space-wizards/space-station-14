@@ -3886,3 +3886,11 @@
   id: 8545
   time: '2025-05-21T04:59:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36245
+- author: metalgearsloth
+  changes:
+  - message: Picking up items with area pickups (e.g. trash bags) no longer lags the
+      game.
+    type: Fix
+  id: 8546
+  time: '2025-05-21T06:16:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37638
