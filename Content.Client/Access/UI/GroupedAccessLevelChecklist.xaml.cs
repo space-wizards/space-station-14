@@ -99,145 +99,143 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
         }
     }
 
-    private bool TryRebuildAccessControls()
+    private bool TryRebuildAccessGroupControls()
     {
+        AccessGroupList.DisposeAllChildren();
+        AccessLevelChecklist.DisposeAllChildren();
+
         // No access level prototypes were assigned to any of the access level groups.
         // Either the the turret controller has no assigned access levels or their names were invalid.
         if (_groupedAccessLevels.Count == 0)
-        {
-            AccessGroupList.DisposeAllChildren();
-            AccessLevelChecklist.DisposeAllChildren();
-
             return false;
-        }
-
-        // Adjust the current tab index so it remains in range
-        if (_accessGroupTabIndex >= _groupedAccessLevels.Count)
-            _accessGroupTabIndex = _groupedAccessLevels.Count - 1;
-
-        // Remove excess group access buttons from the UI
-        while (AccessGroupList.ChildCount > _groupedAccessLevels.Count)
-            AccessGroupList.RemoveChild(_groupedAccessLevels.Count - 1);
-
-        // Add missing group access buttons to the UI
-        while (AccessGroupList.ChildCount < _groupedAccessLevels.Count)
-        {
-            var button = CreateAccessGroupButton();
-
-            if (_groupedAccessLevels.Count > 1)
-            {
-                if (AccessGroupList.ChildCount == 0)
-                    button.AddStyleClass(StyleBase.ButtonOpenLeft);
-                else if (_groupedAccessLevels.Count > 1 && AccessGroupList.ChildCount == (_groupedAccessLevels.Count - 1))
-                    button.AddStyleClass(StyleBase.ButtonOpenRight);
-                else
-                    button.AddStyleClass(StyleBase.ButtonOpenBoth);
-            }
-
-            // Add button events
-            button.OnPressed += _ =>
-            {
-                OnAccessGroupChangedEvent?.Invoke(button.GetPositionInParent());
-            };
-
-            AccessGroupList.AddChild(button);
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    /// Refreshes the names and states of all the UI elements
-    /// </summary>
-    public void RefreshAccessControls()
-    {
-        if (_groupedAccessLevels.Count == 0)
-            return;
 
         // Reorder the access groups alphabetically
         var orderedAccessGroups = _groupedAccessLevels.Keys.OrderBy(x => x.GetAccessGroupName()).ToList();
 
-        // Update the group access buttons
-        for (int i = 0; i < orderedAccessGroups.Count; i++)
+        // Add group access buttons to the UI
+        foreach (var accessGroup in orderedAccessGroups)
         {
-            if (AccessGroupList.GetChild(i) is not Button { } accessGroupButton)
-                continue;
+            var accessGroupButton = CreateAccessGroupButton();
 
-            var accessGroup = orderedAccessGroups[i];
+            // Button styling
+            if (_groupedAccessLevels.Count > 1)
+            {
+                if (AccessGroupList.ChildCount == 0)
+                    accessGroupButton.AddStyleClass(StyleBase.ButtonOpenLeft);
+                else if (_groupedAccessLevels.Count > 1 && AccessGroupList.ChildCount == (_groupedAccessLevels.Count - 1))
+                    accessGroupButton.AddStyleClass(StyleBase.ButtonOpenRight);
+                else
+                    accessGroupButton.AddStyleClass(StyleBase.ButtonOpenBoth);
+            }
+
+            accessGroupButton.Pressed = _accessGroupTabIndex == orderedAccessGroups.IndexOf(accessGroup);
+
+            // Label text and styling
+            if (_labelStyleClass != null)
+                accessGroupButton.Label.SetOnlyStyleClass(_labelStyleClass);
+
             var prefix = _groupedAccessLevels[accessGroup].All(x => _activeAccessLevels.Contains(x)) ? "»" :
                 (_groupedAccessLevels[accessGroup].Any(x => _activeAccessLevels.Contains(x)) ? "›" : " ");
+
             var text = Loc.GetString(
                 "turret-controls-window-access-group-label",
                 ("prefix", prefix),
                 ("label", accessGroup.GetAccessGroupName())
             );
 
-            if (_labelStyleClass != null)
-                accessGroupButton.Label.SetOnlyStyleClass(_labelStyleClass);
-
             accessGroupButton.Text = text;
-            accessGroupButton.Pressed = _accessGroupTabIndex == orderedAccessGroups.IndexOf(accessGroup);
+
+            // Button events
+            accessGroupButton.OnPressed += _ =>
+            {
+                OnAccessGroupChangedEvent?.Invoke(accessGroupButton.GetPositionInParent());
+            };
+
+            AccessGroupList.AddChild(accessGroupButton);
         }
+
+        // Adjust the current tab index so it remains in range
+        if (_accessGroupTabIndex >= _groupedAccessLevels.Count)
+            _accessGroupTabIndex = _groupedAccessLevels.Count - 1;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Rebuilds the checkbox list for the access level controls.
+    /// </summary>
+    public void RebuildAccessLevelsControls()
+    {
+        AccessLevelChecklist.DisposeAllChildren();
+        _accessLevelEntries.Clear();
+
+        // No access level prototypes were assigned to any of the access level groups
+        // Either the the turret controller has no assigned access levels or their names were invalid
+        if (_groupedAccessLevels.Count == 0)
+            return;
+
+        // Reorder the access groups alphabetically
+        var orderedAccessGroups = _groupedAccessLevels.Keys.OrderBy(x => x.GetAccessGroupName()).ToList();
 
         // Get the access levels associated with the current tab
         _accessLevelsForTab = _groupedAccessLevels[orderedAccessGroups[_accessGroupTabIndex]];
         _accessLevelsForTab = _accessLevelsForTab.OrderBy(x => x.GetAccessLevelName()).ToList();
 
-        // Remove excess access level buttons from the UI
-        // Note: if _accessLevelsForTab is length 'n', AccessLevelChecklist should have 'n + 1' children at the end
-        while (AccessLevelChecklist.ChildCount > (_accessLevelsForTab.Count + 1))
-        {
-            var index = AccessLevelChecklist.ChildCount - 1;
-
-            if (AccessLevelChecklist.GetChild(AccessLevelChecklist.ChildCount - 1) is AccessLevelEntry { } accessLevelEntry)
-                _accessLevelEntries.Remove(accessLevelEntry);
-
-            AccessLevelChecklist.RemoveChild(index);
-        }
-
-        // Add an 'all' checkbox as the first child of the list if it hasn't been initalized yet
+        // Add an 'all' checkbox as the first child of the list if it has more than one access level
         // Toggling this checkbox on will mark all other boxes below it on/off
-        if (AccessLevelChecklist.ChildCount == 0)
+        var allCheckBox = CreateAccessLevelCheckbox();
+        allCheckBox.Text = Loc.GetString("turret-controls-window-all-checkbox");
+
+        if (_labelStyleClass != null)
+            allCheckBox.Label.SetOnlyStyleClass(_labelStyleClass);
+
+        // Add the 'al'l checkbox events
+        allCheckBox.OnPressed += args =>
         {
-            var checkBox = CreateAccessLevelCheckbox();
-            checkBox.Text = Loc.GetString("turret-controls-window-all-checkbox");
+            SetCheckBoxPressedState(_checkBoxes, allCheckBox.Pressed);
 
-            if (_labelStyleClass != null)
-                checkBox.Label.SetOnlyStyleClass(_labelStyleClass);
+            var accessLevels = new HashSet<ProtoId<AccessLevelPrototype>>();
 
-            // Add checkbox events
-            checkBox.OnPressed += args =>
-            {
-                SetCheckBoxPressedState(_checkBoxes, checkBox.Pressed);
+            foreach (var accessLevel in _accessLevelsForTab)
+                accessLevels.Add(accessLevel);
 
-                var accessLevels = new HashSet<ProtoId<AccessLevelPrototype>>();
+            OnAccessLevelsChangedEvent?.Invoke(accessLevels, allCheckBox.Pressed);
+        };
 
-                foreach (var accessLevel in _accessLevelsForTab)
-                    accessLevels.Add(accessLevel);
-
-                OnAccessLevelsChangedEvent?.Invoke(accessLevels, checkBox.Pressed);
-            };
-
-            AccessLevelChecklist.AddChild(checkBox);
-        }
+        AccessLevelChecklist.AddChild(allCheckBox);
 
         // Hide the 'all' checkbox if the tab has only one access level
         var allCheckBoxVisible = _accessLevelsForTab.Count > 1;
-
-        // The first element in the list is expected to be a checkbox
-        if (AccessLevelChecklist.GetChild(0) is not CheckBox { } allCheckBox)
-            return;
 
         allCheckBox.Visible = allCheckBoxVisible;
         allCheckBox.Disabled = !_canInteract;
 
         // Add any remaining missing access level buttons to the UI
-        while (AccessLevelChecklist.ChildCount < (_accessLevelsForTab.Count + 1))
+        foreach (var accessLevel in _accessLevelsForTab)
         {
+            // Create the entry
             var accessLevelEntry = new AccessLevelEntry(_isMonotone);
+
+            accessLevelEntry.AccessLevel = accessLevel;
+            accessLevelEntry.CheckBox.Text = accessLevel.GetAccessLevelName();
+            accessLevelEntry.CheckBox.Pressed = _activeAccessLevels.Contains(accessLevel);
+            accessLevelEntry.CheckBox.Disabled = !_canInteract;
 
             if (_labelStyleClass != null)
                 accessLevelEntry.CheckBox.Label.SetOnlyStyleClass(_labelStyleClass);
+
+            // Set the checkbox linkage lines
+            var isEndOfList = (_accessLevelsForTab.IndexOf(accessLevel) == (_accessLevelsForTab.Count - 1));
+
+            var lines = new List<(Vector2, Vector2)>()
+            {
+                (new Vector2(0.5f, 0f), new Vector2(0.5f, isEndOfList ? 0.5f : 1f)),
+                (new Vector2(0.5f, 0.5f), new Vector2(1f, 0.5f)),
+            };
+
+            accessLevelEntry.UpdateCheckBoxLink(lines);
+            accessLevelEntry.CheckBoxLink.Visible = allCheckBoxVisible;
+            accessLevelEntry.CheckBoxLink.Modulate = !_canInteract ? Color.Gray : Color.White;
 
             // Add checkbox events
             accessLevelEntry.CheckBox.OnPressed += args =>
@@ -252,31 +250,6 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
 
             AccessLevelChecklist.AddChild(accessLevelEntry);
             _accessLevelEntries.Add(accessLevelEntry);
-        }
-
-        // Update the access levels buttons' appearance
-        for (int i = 0; i < _accessLevelEntries.Count; i++)
-        {
-            var accessLevel = _accessLevelsForTab[i];
-            var accessLevelEntry = _accessLevelEntries[i];
-
-            accessLevelEntry.AccessLevel = accessLevel;
-            accessLevelEntry.CheckBox.Text = accessLevel.GetAccessLevelName();
-            accessLevelEntry.CheckBox.Pressed = _activeAccessLevels.Contains(accessLevel);
-
-            var isEndOfList = i == (_accessLevelEntries.Count - 1);
-
-            var lines = new List<(Vector2, Vector2)>()
-            {
-                (new Vector2(0.5f, 0f), new Vector2(0.5f, isEndOfList ? 0.5f : 1f)),
-                (new Vector2(0.5f, 0.5f), new Vector2(1f, 0.5f)),
-            };
-
-            accessLevelEntry.UpdateCheckBoxLink(lines);
-            accessLevelEntry.CheckBoxLink.Visible = allCheckBoxVisible;
-            accessLevelEntry.CheckBoxLink.Modulate = !_canInteract ? Color.Gray : Color.White;
-
-            accessLevelEntry.CheckBox.Disabled = !_canInteract;
         }
 
         // Press the 'all' checkbox if all others are pressed
@@ -310,8 +283,8 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
 
         ArrangeAccessControls();
 
-        if (TryRebuildAccessControls())
-            RefreshAccessControls();
+        if (TryRebuildAccessGroupControls())
+            RebuildAccessLevelsControls();
     }
 
     /// <summary>
@@ -324,8 +297,8 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
 
         ArrangeAccessControls();
 
-        if (TryRebuildAccessControls())
-            RefreshAccessControls();
+        if (TryRebuildAccessGroupControls())
+            RebuildAccessLevelsControls();
     }
 
     /// <summary>
@@ -335,7 +308,8 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
     {
         _activeAccessLevels = activeAccessLevels;
 
-        RefreshAccessControls();
+        if (TryRebuildAccessGroupControls())
+            RebuildAccessLevelsControls();
     }
 
     /// <summary>
@@ -345,7 +319,8 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
     {
         _canInteract = canInteract;
 
-        RefreshAccessControls();
+        if (TryRebuildAccessGroupControls())
+            RebuildAccessLevelsControls();
     }
 
     /// <summary>
@@ -355,8 +330,8 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
     {
         _isMonotone = monotone;
 
-        if (TryRebuildAccessControls())
-            RefreshAccessControls();
+        if (TryRebuildAccessGroupControls())
+            RebuildAccessLevelsControls();
     }
 
     /// <summary>
@@ -366,7 +341,8 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
     {
         _labelStyleClass = styleClass;
 
-        RefreshAccessControls();
+        if (TryRebuildAccessGroupControls())
+            RebuildAccessLevelsControls();
     }
 
     private void OnAccessGroupChanged(int newTabIndex)
@@ -376,7 +352,8 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
 
         _accessGroupTabIndex = newTabIndex;
 
-        RefreshAccessControls();
+        if (TryRebuildAccessGroupControls())
+            RebuildAccessLevelsControls();
     }
 
     private Button CreateAccessGroupButton()
