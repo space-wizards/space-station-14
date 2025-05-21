@@ -134,7 +134,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
             foreach (var layer in layers)
             {
-                await RunLayer(dungeons, position, layer, reservedTiles, seed, random);
+                await RunLayer(i, count, config, dungeons, position, layer, reservedTiles, seed, random);
 
                 if (config.ReserveTiles)
                 {
@@ -206,6 +206,9 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
     }
 
     private async Task RunLayer(
+        int runCount,
+        int maxRuns,
+        DungeonConfig config,
         List<Dungeon> dungeons,
         Vector2i position,
         IDunGenLayer layer,
@@ -252,7 +255,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 await PostGen(flank, dungeons[^1], reservedTiles, random);
                 break;
             case ExteriorDunGen exterior:
-                dungeons.AddRange(await GenerateExteriorDungen(position, exterior, reservedTiles, random));
+                dungeons.AddRange(await GenerateExteriorDungen(runCount, maxRuns, position, exterior, reservedTiles, random));
                 break;
             case FillGridDunGen fill:
                 await GenerateFillDunGen(fill, dungeons, reservedTiles);

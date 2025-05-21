@@ -28,7 +28,7 @@ public sealed partial class DungeonJob
         Random random)
     {
         var tiles = new List<(Vector2i, Tile)>();
-        var matrix = Matrix3Helpers.CreateTranslation(position);
+        var matrix = Matrix3Helpers.CreateTranslation(_position + position);
 
         foreach (var layer in dungen.Layers)
         {

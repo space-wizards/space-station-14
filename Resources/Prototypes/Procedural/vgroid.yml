@@ -151,6 +151,7 @@
   maxCount: 3
   layers:
   - !type:ExteriorDunGen
+    penetration: 5,15
     proto: Experiment
   - !type:EntityTableDunGen
     minCount: 25
