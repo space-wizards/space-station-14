@@ -1,6 +1,7 @@
 using System;
 using Content.Shared.Popups;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Limb;
