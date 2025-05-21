@@ -224,6 +224,14 @@
       "directions": 4
     },
     {
+      "name": "medkit-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "medkit-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "tube"
     },
     {
