@@ -11,6 +11,7 @@
       - state: icon
         map: ["base"]
     - type: Item
+
       sprite: Objects/Specific/Hydroponics/potato.rsi
       heldPrefix: produce
       size: Small
