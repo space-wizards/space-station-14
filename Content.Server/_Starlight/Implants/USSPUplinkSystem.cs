@@ -51,7 +51,6 @@ namespace Content.Server.Implants
     {
         // Reset all stock-limited listings in the uplink catalog
         ResetUplinkStocks();
-        Logger.InfoS("ussp-uplink", "Reset all uplink stocks for new round");
     }
     
     /// <summary>
@@ -90,7 +89,6 @@ namespace Content.Server.Implants
             if (stockCounts != null)
             {
                 stockCounts.Clear();
-                Logger.InfoS("ussp-uplink", "Reset stock counts dictionary");
             }
         }
         
@@ -100,7 +98,6 @@ namespace Content.Server.Implants
             if (stockLimits != null)
             {
                 stockLimits.Clear();
-                Logger.InfoS("ussp-uplink", "Reset stock limits dictionary");
             }
         }
         
@@ -110,7 +107,6 @@ namespace Content.Server.Implants
             if (lastPurchasers != null)
             {
                 lastPurchasers.Clear();
-                Logger.InfoS("ussp-uplink", "Reset last purchasers dictionary");
             }
         }
         
@@ -120,7 +116,6 @@ namespace Content.Server.Implants
             if (outOfStock != null)
             {
                 outOfStock.Clear();
-                Logger.InfoS("ussp-uplink", "Reset out of stock dictionary");
             }
         }
         
@@ -130,7 +125,6 @@ namespace Content.Server.Implants
             if (modifiedListings != null)
             {
                 modifiedListings.Clear();
-                Logger.InfoS("ussp-uplink", "Reset modified listings dictionary");
             }
         }
         
@@ -144,9 +138,7 @@ namespace Content.Server.Implants
     /// This is called periodically to ensure that uplinks are always in sync.
     /// </summary>
     public void SynchronizeAllUplinks()
-    {
-        Logger.InfoS("ussp-uplink", "Synchronizing all uplinks in the game");
-        
+    {        
         // Get all head revolutionaries
         var headRevs = EntityManager.EntityQuery<HeadRevolutionaryComponent>();
         foreach (var headRev in headRevs)
@@ -210,7 +202,6 @@ namespace Content.Server.Implants
             var newOwnerComp = EnsureComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(targetUplinkUid);
             newOwnerComp.OwnerUid = sourceOwner;
             sameOwner = true;
-            Logger.InfoS("ussp-uplink", $"Set owner of uplink {ToPrettyString(targetUplinkUid)} to {ToPrettyString(sourceOwner.Value)}");
         }
         // If source doesn't have an owner but target does, set source's owner to match target
         else if (sourceOwner == null && targetOwner != null)
@@ -218,21 +209,18 @@ namespace Content.Server.Implants
             var newOwnerComp = EnsureComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(sourceUplinkUid);
             newOwnerComp.OwnerUid = targetOwner;
             sameOwner = true;
-            Logger.InfoS("ussp-uplink", $"Set owner of uplink {ToPrettyString(sourceUplinkUid)} to {ToPrettyString(targetOwner.Value)}");
         }
         
         // Update the target uplink with the source telebond value if they're higher AND they have the same owner
         if (sameOwner && targetStore.Balance["Telebond"] < sourceTelebond)
         {
             targetStore.Balance["Telebond"] = sourceTelebond;
-            Logger.InfoS("ussp-uplink", $"Updated Telebond currency in uplink {ToPrettyString(targetUplinkUid)} to {sourceTelebond}");
         }
         
         // Always update Conversion as it's a global counter
         if (targetStore.Balance["Conversion"] < sourceConversion)
         {
             targetStore.Balance["Conversion"] = sourceConversion;
-            Logger.InfoS("ussp-uplink", $"Updated Conversion currency in uplink {ToPrettyString(targetUplinkUid)} to {sourceConversion}");
         }
     }
         
@@ -251,14 +239,11 @@ namespace Content.Server.Implants
                 if (TryComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(uid, out var existingOwnerComp) && existingOwnerComp.OwnerUid != null)
             {
                 originalOwner = existingOwnerComp.OwnerUid;
-                Logger.InfoS("ussp-uplink", $"Uplink {ToPrettyString(uid)} already has an owner: {ToPrettyString(originalOwner.Value)}");
             }
                 
                 // Check if the implanted entity is a head revolutionary
             if (HasComp<HeadRevolutionaryComponent>(args.Implanted.Value))
-            {
-                Logger.InfoS("ussp-uplink", $"USSP uplink implant {ToPrettyString(uid)} implanted in head revolutionary {ToPrettyString(args.Implanted.Value)}");
-                
+            {                
                 // Update the head revolutionary's implant component to point to this implant
                 var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(args.Implanted.Value);
                 implantComponent.ImplantUid = uid;
@@ -269,8 +254,6 @@ namespace Content.Server.Implants
                     var uplinkOwnerComp = EnsureComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(uid);
                     uplinkOwnerComp.OwnerUid = args.Implanted.Value;
                     originalOwner = args.Implanted.Value;
-                    
-                    Logger.InfoS("ussp-uplink", $"Added USSPUplinkOwnerComponent to uplink {ToPrettyString(uid)} with owner {ToPrettyString(args.Implanted.Value)}");
                 }
                 
                 // Ensure the store component has both currencies initialized
@@ -310,15 +293,8 @@ namespace Content.Server.Implants
                             
                             // Add a telebond
                             storeComp.Balance["Telebond"] += FixedPoint2.New(1);
-                            Logger.InfoS("ussp-uplink", $"Added Telebond for previously converted revolutionary to uplink {ToPrettyString(uid)}");
                         }
                     }
-                }
-                
-                // Log the number of converted revolutionaries found
-                if (convertedCount > 0)
-                {
-                    Logger.InfoS("ussp-uplink", $"Added {convertedCount} Telebonds for previously converted revolutionaries to uplink {ToPrettyString(uid)}");
                 }
                 
                 // Synchronize all uplinks to ensure this one has the correct values
@@ -342,9 +318,7 @@ namespace Content.Server.Implants
                     // Only change ownership if the implanted entity is a head revolutionary
                     var uplinkOwnerComp = EnsureComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(uid);
                     uplinkOwnerComp.OwnerUid = args.Implanted.Value;
-                    
-                    Logger.InfoS("ussp-uplink", $"Changed ownership of uplink {ToPrettyString(uid)} from {ToPrettyString(originalOwner.Value)} to {ToPrettyString(args.Implanted.Value)}");
-                    
+                                        
                     // Notify the original owner that their uplink has been claimed by another head revolutionary
                     _popup.PopupEntity(Loc.GetString($"Your uplink has been claimed by {Identity.Name(args.Implanted.Value, EntityManager)}"), 
                         originalOwner.Value, originalOwner.Value, PopupType.Medium);
@@ -352,15 +326,11 @@ namespace Content.Server.Implants
             }
             // Check if the implanted entity is a regular revolutionary
             else if (HasComp<RevolutionaryComponent>(args.Implanted.Value))
-            {
-                Logger.InfoS("ussp-uplink", $"USSP uplink implant {ToPrettyString(uid)} implanted in revolutionary {ToPrettyString(args.Implanted.Value)}");
-                
+            {                
                 // If the uplink doesn't have an owner component yet, try to find its owner
                 if (originalOwner == null)
                 {
-                    var ownerComp = EnsureComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(uid);
-                    Logger.InfoS("ussp-uplink", $"Added missing USSPUplinkOwnerComponent to uplink {ToPrettyString(uid)}");
-                    
+                    var ownerComp = EnsureComp<Content.Shared.Implants.Components.USSPUplinkOwnerComponent>(uid);                    
                     // Try to find a head revolutionary who might own this uplink
                     var headRevs = EntityManager.EntityQuery<HeadRevolutionaryComponent, HeadRevolutionaryImplantComponent>();
                     foreach (var (_, headRevImplant) in headRevs)
@@ -368,7 +338,6 @@ namespace Content.Server.Implants
                         if (headRevImplant.ImplantUid == uid)
                         {
                             ownerComp.OwnerUid = headRevImplant.Owner;
-                            Logger.InfoS("ussp-uplink", $"Found owner for uplink: {ToPrettyString(headRevImplant.Owner)}");
                             originalOwner = headRevImplant.Owner;
                             break;
                         }
@@ -391,13 +360,10 @@ namespace Content.Server.Implants
                                     {
                                         ownerComp.OwnerUid = headRev.Owner;
                                         originalOwner = headRev.Owner;
-                                        Logger.InfoS("ussp-uplink", $"Found owner for uplink by checking implants: {ToPrettyString(headRev.Owner)}");
                                         
                                         // Also update the head revolutionary's implant component
                                         var headRevImplantComp = EnsureComp<HeadRevolutionaryImplantComponent>(headRev.Owner);
-                                        headRevImplantComp.ImplantUid = uid;
-                                        Logger.InfoS("ussp-uplink", $"Updated head revolutionary implant component to point to {ToPrettyString(uid)}");
-                                        
+                                        headRevImplantComp.ImplantUid = uid;                                        
                                         break;
                                     }
                                 }
@@ -420,11 +386,9 @@ namespace Content.Server.Implants
                                 // Set this head revolutionary as the owner of the uplink
                                 ownerComp.OwnerUid = headRevImplant.Owner;
                                 originalOwner = headRevImplant.Owner;
-                                Logger.InfoS("ussp-uplink", $"Set owner of uplink to head revolutionary {ToPrettyString(headRevImplant.Owner)}");
                                 
                                 // Directly sync with this head revolutionary's uplink
                                 SyncUplinkCurrencies(headRevImplant.ImplantUid.Value, uid);
-                                Logger.InfoS("ussp-uplink", $"Synced uplink {ToPrettyString(uid)} with head revolutionary's uplink {ToPrettyString(headRevImplant.ImplantUid.Value)}");
                                 break;
                             }
                         }
@@ -434,10 +398,8 @@ namespace Content.Server.Implants
                 // Add HeadRevolutionaryImplantComponent to the revolutionary to track the implant
                 var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(args.Implanted.Value);
                 implantComponent.ImplantUid = uid;
-                
-                Logger.InfoS("ussp-uplink", $"Added HeadRevolutionaryImplantComponent to revolutionary {ToPrettyString(args.Implanted.Value)}");
-                
-                    // Ensure the store component has the correct currencies
+                                
+                // Ensure the store component has the correct currencies
                 if (TryComp<StoreComponent>(uid, out var store))
                 {
                     // Make sure the store has both currencies initialized
@@ -470,20 +432,16 @@ namespace Content.Server.Implants
                                 // Get the currency values
                                 var otherTelebonds = uplinkStore.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
                                 var otherConversions = uplinkStore.Balance.GetValueOrDefault("Conversion", FixedPoint2.Zero);
-                                
-                                Logger.InfoS("ussp-uplink", $"Found uplink {ToPrettyString(uplinkOwner.Owner)} with same owner, Telebond: {otherTelebonds}, Conversion: {otherConversions}");
-                                
+                                                                
                                 // Update the maximum values
                                 if (otherTelebonds > maxTelebond)
                                 {
                                     maxTelebond = otherTelebonds;
-                                    Logger.InfoS("ussp-uplink", $"Found higher Telebond value: {otherTelebonds}");
                                 }
                                 
                                 if (otherConversions > maxConversion)
                                 {
                                     maxConversion = otherConversions;
-                                    Logger.InfoS("ussp-uplink", $"Found higher Conversion value: {otherConversions}");
                                 }
                             }
                         }
@@ -500,19 +458,15 @@ namespace Content.Server.Implants
                             {
                                 var ownerTelebonds = ownerStore.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
                                 var ownerConversions = ownerStore.Balance.GetValueOrDefault("Conversion", FixedPoint2.Zero);
-                                
-                                Logger.InfoS("ussp-uplink", $"Found owner's uplink {ToPrettyString(ownerUplinkUid)} with Telebond: {ownerTelebonds}, Conversion: {ownerConversions}");
-                                
+                                                                
                                 if (ownerTelebonds > maxTelebond)
                                 {
                                     maxTelebond = ownerTelebonds;
-                                    Logger.InfoS("ussp-uplink", $"Found higher Telebond value in owner's uplink: {ownerTelebonds}");
                                 }
                                 
                                 if (ownerConversions > maxConversion)
                                 {
                                     maxConversion = ownerConversions;
-                                    Logger.InfoS("ussp-uplink", $"Found higher Conversion value in owner's uplink: {ownerConversions}");
                                 }
                             }
                         }
@@ -530,7 +484,6 @@ namespace Content.Server.Implants
                             if (uplinkStore.Balance.TryGetValue("Conversion", out var conversion) && conversion > maxConversion)
                             {
                                 maxConversion = conversion;
-                                Logger.InfoS("ussp-uplink", $"Found higher global Conversion value: {conversion}");
                             }
                         }
                     }
@@ -539,13 +492,11 @@ namespace Content.Server.Implants
                     if (maxTelebond > store.Balance["Telebond"])
                     {
                         store.Balance["Telebond"] = maxTelebond;
-                        Logger.InfoS("ussp-uplink", $"Updated current uplink Telebond to {maxTelebond}");
                     }
                     
                     if (maxConversion > store.Balance["Conversion"])
                     {
                         store.Balance["Conversion"] = maxConversion;
-                        Logger.InfoS("ussp-uplink", $"Updated current uplink Conversion to {maxConversion}");
                     }
                     
                     // Synchronize all uplinks to ensure this one has the correct values
@@ -663,9 +614,7 @@ namespace Content.Server.Implants
         /// This is a shared counter that tracks total conversions by all head revolutionaries.
         /// </summary>
         public void AddConversionToAllHeadRevs(StoreSystem storeSystem)
-    {
-        Logger.InfoS("ussp-uplink", "Adding Conversion to all head revolutionary uplinks");
-        
+    {        
         // Get all USSPUplinkImplant entities in the game
         var query = EntityManager.EntityQuery<MetaDataComponent, StoreComponent>(true);
         var uplinkEntities = new List<EntityUid>();
@@ -678,19 +627,11 @@ namespace Content.Server.Implants
             }
         }
         
-        // If no uplinks were found, log a warning
-        if (uplinkEntities.Count == 0)
-        {
-            Logger.WarningS("ussp-uplink", "No USSP uplink implants found in the game");
-            return;
-        }
-        
         // Add Conversion to all uplinks
         foreach (var uplinkEntity in uplinkEntities)
         {
             var currencyToAdd = new Dictionary<string, FixedPoint2> { { "Conversion", FixedPoint2.New(1) } };
             var success = storeSystem.TryAddCurrency(currencyToAdd, uplinkEntity);
-            Logger.InfoS("ussp-uplink", $"Added Conversion to uplink {ToPrettyString(uplinkEntity)}, success: {success}");
         }
         
         // Show popup to all head revolutionaries (private)
@@ -730,9 +671,7 @@ namespace Content.Server.Implants
         /// Updates all USSP uplink listings with the current stock count and last purchaser information.
         /// </summary>
         public void UpdateAllUplinkListings()
-        {
-            Logger.InfoS("ussp-uplink", "Updating all USSP uplink listings with current stock and last purchaser information");
-            
+        {            
             // Use the StoreSystem's method to update all USSP uplink UIs
             _storeSystem.UpdateAllUSSPUplinkUIs();
             
@@ -760,7 +699,6 @@ namespace Content.Server.Implants
 
             // Open the USSP uplink UI (StoreBoundUserInterface)
             _storeSystem.ToggleUi(user, store.Owner, store);
-            Logger.DebugS("ussp-uplink", $"Opened USSP uplink UI for {ToPrettyString(user)}");
         }
     }
 }
