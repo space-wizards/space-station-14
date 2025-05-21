@@ -162,6 +162,8 @@
       offset: 0, 2
   - type: Anchorable
     flags: None
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   id: ThrusterUnanchored
