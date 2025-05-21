@@ -345,7 +345,7 @@
   - HeadofSecurityJumpsuit
   - SecurityBackpack
   - SecurityBelt
-  - SecurityNonLethalWeapon
+  - SecurityNonLethalWeapon #Starlight
   - HeadofSecurityOuterClothing
   - SecurityEyewear
   - SecurityShoes
@@ -380,8 +380,8 @@
   - SecurityShoes
   - SecurityPDA
   - SecurityBelt
-  - SecurityNonLethalWeapon #Starlight
-  - SecuritySidearm # Starlight
+  - SecurityNonLethalWeapon
+  - SecuritySidearm
   - SurvivalSecurity
   - Trinkets
   - SecurityStar

@@ -163,8 +163,6 @@ loadout-group-security-shoes = Security shoes
 loadout-group-security-id = Security ID
 loadout-group-security-weapon = Security Weapon
 loadout-group-security-eyewear = Security eyewear
-loadout-group-security-non-lethal-weapon = Security Non-Lethal Weapon
-loadout-group-security-sidearm = Security Sidearm
 
 loadout-group-brigmedic-head = Brigmedic head
 loadout-group-brigmedic-jumpsuit = Brigmedic jumpsuit
