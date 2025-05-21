@@ -5953,4 +5953,18 @@ Entries:
   id: 824
   time: '2025-05-21T01:16:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/586
+- author: Happyrobot33
+  changes:
+  - message: Fixed missing cavity slots on species.
+    type: Fix
+  id: 825
+  time: '2025-05-21T11:10:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/642
+- author: Happyrobot33
+  changes:
+  - message: FIxed missing tongue and eye implant slot on resomi.
+    type: Fix
+  id: 826
+  time: '2025-05-21T11:10:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/642
 
