@@ -116,6 +116,7 @@
       - id: RCD
       - id: RCDAmmo
       - id: AirGrenade
+      - id: SprayPainter
 
 - type: entity
   id: LockerAtmosphericsFilled
@@ -133,6 +134,7 @@
       - id: RCD
       - id: RCDAmmo
       - id: AirGrenade
+      - id: SprayPainter
 
 - type: entity
   id: LockerEngineerFilledHardsuit
