@@ -25,10 +25,8 @@ public abstract class SharedRingerSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedPdaSystem _pda = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
 
