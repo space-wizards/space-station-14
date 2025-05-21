@@ -109,7 +109,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             if (biome.Template == null || !reloads.Modified.TryGetValue(biome.Template, out var proto))
                 continue;
 
-            SetTemplate(uid, biome, (BiomeTemplatePrototype) proto);
+            SetTemplate(uid, biome, (BiomeTemplatePrototype)proto);
         }
     }
 
@@ -283,7 +283,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             {
                 for (var y = Math.Floor(aabb.Bottom); y <= Math.Ceiling(aabb.Top); y++)
                 {
-                    var index = new Vector2i((int) x, (int) y);
+                    var index = new Vector2i((int)x, (int)y);
                     var chunk = SharedMapSystem.GetChunkIndices(index, ChunkSize);
 
                     var mod = biome.ModifiedTiles.GetOrNew(chunk * ChunkSize);
@@ -493,9 +493,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 var layerProto = ProtoManager.Index<BiomeMarkerLayerPrototype>(layer);
                 var markerSeed = seed + chunk.X * ChunkSize + chunk.Y + localIdx;
                 var rand = new Random(markerSeed);
-                var buffer = (int) (layerProto.Radius / 2f);
+                var buffer = (int)(layerProto.Radius / 2f);
                 var bounds = new Box2i(chunk + buffer, chunk + layerProto.Size - buffer);
-                var count = (int) (bounds.Area / (layerProto.Radius * layerProto.Radius));
+                var count = (int)(bounds.Area / (layerProto.Radius * layerProto.Radius));
                 count = Math.Min(count, layerProto.MaxCount);
 
                 GetMarkerNodes(gridUid, component, grid, layerProto, forced, bounds, count, rand,
@@ -1040,8 +1040,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         EnsureComp<SunShadowCycleComponent>(mapUid);
 
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
-        moles[(int) Gas.Oxygen] = 21.824779f;
-        moles[(int) Gas.Nitrogen] = 82.10312f;
+        moles[(int)Gas.Oxygen] = 21.824779f;
+        moles[(int)Gas.Nitrogen] = 82.10312f;
 
         var mixture = new GasMixture(moles, Atmospherics.T20C);
 

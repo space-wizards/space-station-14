@@ -179,7 +179,7 @@ public abstract class SharedBiomeSystem : EntitySystem
         if (variantCount > 1)
         {
             var variantValue = (noise.GetNoise(indices.X * 8, indices.Y * 8, variantCount) + 1f) * 100;
-            variant = _tile.PickVariant(tileDef, (int) variantValue);
+            variant = _tile.PickVariant(tileDef, (int)variantValue);
         }
 
         tile = new Tile(tileDef.TileId, variant);
