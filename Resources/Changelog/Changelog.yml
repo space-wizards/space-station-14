@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lukasz825700516
-  changes:
-  - message: Text related keybinds can now be changed in Controls.
-    type: Add
-  id: 8041
-  time: '2025-03-08T02:42:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35630
 - author: metalgearsloth
   changes:
   - message: Walls now emit shadows on planets.
@@ -3914,3 +3907,12 @@
   id: 8543
   time: '2025-05-21T00:12:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37656
+- author: FrostWinters
+  changes:
+  - message: Histamines no longer cause radiation.
+    type: Tweak
+  - message: Epinephrine treats Histamines above OD threshold.
+    type: Tweak
+  id: 8544
+  time: '2025-05-21T01:12:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37460
