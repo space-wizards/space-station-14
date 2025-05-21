@@ -281,7 +281,7 @@
     - Hair
     - HeadTop
     - HeadSide
-    - FacialHair 
+    - FacialHair
 
 - type: entity
   parent: ClothingHeadBase
