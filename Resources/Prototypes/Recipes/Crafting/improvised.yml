@@ -1,255 +1,159 @@
 - type: construction
-  name: baseball bat
   id: bat
   graph: WoodenBat
   startNode: start
   targetNode: bat
   category: construction-category-weapons
-  description: A robust baseball bat.
-  icon:
-    sprite: Objects/Weapons/Melee/baseball_bat.rsi
-    state: icon
   objectType: Item
 
 - type: construction
-  name: ghost sheet
   id: ghost_sheet
   graph: GhostSheet
   startNode: start
   targetNode: ghost_sheet
   category: construction-category-clothing
-  description: Become a spooky ghost. Boo!
-  icon:
-    sprite: Clothing/OuterClothing/Misc/ghostsheet.rsi
-    state: icon
   objectType: Item
 
 - type: construction
-  name: makeshift handcuffs
   id: makeshifthandcuffs
   graph: makeshifthandcuffs
   startNode: start
   targetNode: cuffscable
   category: construction-category-tools
-  description: "Homemade handcuffs crafted from spare cables."
-  icon: { sprite: Objects/Misc/cablecuffs.rsi, state: cuff }
   objectType: Item
 
 - type: construction
-  name: makeshift stunprod
   id: makeshiftstunprod
   graph: makeshiftstunprod
   startNode: start
   targetNode: msstunprod
   category: construction-category-weapons
-  description: "Homemade stunprod."
-  icon: { sprite: Objects/Weapons/Melee/stunprod.rsi, state: stunprod_off }
   objectType: Item
 
 - type: construction
-  name: muzzle
   id: muzzle
   graph: Muzzle
   startNode: start
   targetNode: muzzle
   category: construction-category-tools
   objectType: Item
-  description: "A muzzle to shut your victim up."
-  icon:
-    sprite: Clothing/Mask/muzzle.rsi
-    state: icon
 
 - type: construction
-  name: improvised pneumatic cannon
   id: pneumaticcannon
   graph: PneumaticCannon
   startNode: start
   targetNode: cannon
   category: construction-category-weapons
   objectType: Item
-  description: This son of a gun can fire anything that fits in it using just a little gas.
-  icon:
-    sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
-    state: icon
 
 - type: construction
-  name: gauze
   id: gauze
   graph: Gauze
   startNode: start
   targetNode: gauze
   category: construction-category-tools
   objectType: Item
-  description: When you've really got nothing left.
-  icon:
-    sprite: Objects/Specific/Medical/medical.rsi
-    state: gauze
 
 - type: construction
-  name: blindfold
   id: blindfold
   graph: Blindfold
   startNode: start
   targetNode: blindfold
   category: construction-category-tools
   objectType: Item
-  description: Better hope everyone turns a blind eye to you crafting this sussy item...
-  icon:
-    sprite: Clothing/Eyes/Misc/blindfold.rsi
-    state: icon
 
 - type: construction
-  name: flower wreath
   id: flowerwreath
   graph: flowerwreath
   startNode: start
   targetNode: flowerwreath
   category: construction-category-clothing
-  description: A wreath of colourful flowers. Can be worn both on head and neck.
-  icon:
-    sprite: Clothing/Head/Misc/flower-wreath.rsi
-    state: icon
   objectType: Item
 
 - type: construction
-  name: damp rag
   id: rag
   graph: Rag
   startNode: start
   targetNode: rag
   category: construction-category-tools
   objectType: Item
-  description: A damp rag to clean up the ground. Better than slipping around all day.
-  icon:
-    sprite: Objects/Specific/Janitorial/rag.rsi
-    state: rag
 
 - type: construction
-  name: improvised shotgun
   id: improvisedshotgun
   graph: ImprovisedShotgunGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: A shitty, single-shot shotgun made from salvaged and hand-crafted gun parts. Ammo not included.
-  icon:
-    sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
-    state: icon
 
 - type: construction
-  name: improvised shotgun shell
   id: ShellShotgunImprovised
   graph: ImprovisedShotgunShellGraph
   startNode: start
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: improvised
 
 - type: construction
-  name: rifle stock
   id: riflestock
   graph: RifleStockGraph
   startNode: start
   targetNode: riflestock
   category: construction-category-weapons
   objectType: Item
-  description: A stock carved out of wood, vital for improvised firearms.
-  icon:
-    sprite: Objects/Misc/rifle_stock.rsi
-    state: icon
 
 - type: construction
-  name: fire bomb
   id: firebomb
   graph: FireBomb
   startNode: start
   targetNode: firebomb
   category: construction-category-weapons
   objectType: Item
-  description: A weak, improvised incendiary device.
-  icon:
-    sprite: Objects/Weapons/Bombs/ied.rsi
-    state: icon
 
 - type: construction
-  name: cotton woven cloth
   id: CottonWovenCloth
   graph: CottonObjects
   startNode: start
   targetNode: cottoncloth
   category: construction-category-misc
-  description: "A homemade piece of cotton cloth, it feels coarse."
-  icon:
-    sprite: Objects/Materials/materials.rsi
-    state: cloth_3
   objectType: Item
 
 - type: construction
-  name: straw hat
   id: strawHat
   graph: StrawHat
   startNode: start
   targetNode: strawhat
   category: construction-category-clothing
-  description: A fancy hat for hot days! Not recommended to wear near fires.
-  icon:
-    sprite: Clothing/Head/Hats/straw_hat.rsi
-    state: icon
   objectType: Item
 
 - type: construction
-  name: pipe bomb
   id: pipebomb
   graph: PipeBomb
   startNode: start
   targetNode: pipebomb
   category: construction-category-weapons
   objectType: Item
-  description: An improvised explosive made from pipes and wire.
-  icon:
-    sprite: Objects/Weapons/Bombs/pipebomb.rsi
-    state: icon
 
 - type: construction
-  name: rolling pin
   id: rollingpin
   graph: WoodenRollingPin
   startNode: start
   targetNode: rollingpin
   category: construction-category-tools
   objectType: Item
-  description: A rolling pin, used for cooking and defending the kitchen.
-  icon:
-    sprite: Objects/Tools/rolling_pin.rsi
-    state: icon
 
 - type: construction
-  name: pet carrier
   id: PetCarrier
   graph: PetCarrier
   startNode: start
   targetNode: petCarrier
   category: construction-category-misc
   objectType: Item
-  description: Allows large animals to be carried comfortably.
-  icon:
-    sprite: Objects/Storage/petcarrier.rsi
-    state: icon
 
 - type: construction
-  name: goliath hardsuit
   id: HardsuitGoliath
   graph: HardsuitGoliath
   startNode: start
   targetNode: hardsuitGoliath
   category: construction-category-clothing
   objectType: Item
-  description: A lightweight hardsuit, adorned with a patchwork of thick, chitinous goliath hide.
-  icon:
-    sprite: Clothing/OuterClothing/Hardsuits/goliath.rsi
-    state: icon

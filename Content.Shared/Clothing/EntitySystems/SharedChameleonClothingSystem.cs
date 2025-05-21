@@ -16,7 +16,6 @@ namespace Content.Shared.Clothing.EntitySystems;
 
 public abstract class SharedChameleonClothingSystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
     [Dependency] private readonly ContrabandSystem _contraband = default!;
@@ -34,8 +33,12 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     };
     private static readonly SlotFlags[] Slots = Enum.GetValues<SlotFlags>().Except(IgnoredSlots).ToArray();
 
+    private readonly Dictionary<SlotFlags, List<string>> _data = new();
+
     public readonly Dictionary<SlotFlags, List<string>> ValidVariants = new();
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
+
+    private static readonly ProtoId<TagPrototype> WhitelistChameleonTag = "WhitelistChameleon";
 
     public override void Initialize()
     {
@@ -86,7 +89,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
         // item sprite logic
         if (TryComp(uid, out ItemComponent? item) &&
-            proto.TryGetComponent(out ItemComponent? otherItem, _factory))
+            proto.TryGetComponent(out ItemComponent? otherItem, Factory))
         {
             _itemSystem.CopyVisuals(uid, otherItem, item);
         }
@@ -146,7 +149,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             return false;
 
         // check if it is marked as valid chameleon target
-        if (!proto.TryGetComponent(out TagComponent? tag, _factory) || !_tag.HasTag(tag, "WhitelistChameleon"))
+        if (!proto.TryGetComponent(out TagComponent? tag, Factory) || !_tag.HasTag(tag, WhitelistChameleonTag))
             return false;
 
         if (requiredTag != null && !_tag.HasTag(tag, requiredTag))
@@ -167,19 +170,19 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     public IEnumerable<string> GetValidTargets(SlotFlags slot)
     {
         var set = new HashSet<string>();
-        foreach (var availableSlot in ValidVariants.Keys)
+        foreach (var availableSlot in _data.Keys)
         {
             if (slot.HasFlag(availableSlot))
             {
-                set.UnionWith(ValidVariants[availableSlot]);
+                set.UnionWith(_data[availableSlot]);
             }
         }
         return set;
     }
 
-    public void PrepareAllVariants()
+    private void PrepareAllVariants()
     {
-        ValidVariants.Clear();
+        _data.Clear();
         var prototypes = _proto.EnumeratePrototypes<EntityPrototype>();
 
         foreach (var proto in prototypes)
@@ -187,7 +190,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             // check if this is valid clothing
             if (!IsValidTarget(proto))
                 continue;
-            if (!proto.TryGetComponent(out ClothingComponent? item, _factory))
+            if (!proto.TryGetComponent(out ClothingComponent? item, Factory))
                 continue;
 
             // sort item by their slot flags
@@ -197,11 +200,11 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
                 if (!item.Slots.HasFlag(slot))
                     continue;
 
-                if (!ValidVariants.ContainsKey(slot))
+                if (!_data.ContainsKey(slot))
                 {
-                    ValidVariants.Add(slot, new List<string>());
+                    _data.Add(slot, new List<string>());
                 }
-                ValidVariants[slot].Add(proto.ID);
+                _data[slot].Add(proto.ID);
             }
         }
     }

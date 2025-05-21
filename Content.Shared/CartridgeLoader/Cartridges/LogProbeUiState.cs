@@ -6,12 +6,18 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 public sealed class LogProbeUiState : BoundUserInterfaceState
 {
     /// <summary>
+    /// The name of the scanned entity.
+    /// </summary>
+    public string EntityName;
+
+    /// <summary>
     /// The list of probed network devices
     /// </summary>
     public List<PulledAccessLog> PulledLogs;
 
-    public LogProbeUiState(List<PulledAccessLog> pulledLogs)
+    public LogProbeUiState(string entityName, List<PulledAccessLog> pulledLogs)
     {
+        EntityName = entityName;
         PulledLogs = pulledLogs;
     }
 }

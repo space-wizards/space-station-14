@@ -1,30 +1,16 @@
 - type: entity
   parent: BaseItem
-  id: MonkeyCube
-  name: monkey cube
-  description: Just add water!
+  id: RehydratableItem
+  abstract: true
   components:
   - type: Item
     size: Tiny
   - type: SolutionContainerManager
     solutions:
       cube:
-        maxVol: 11 # needs room for water
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-  - type: Food
-    solution: cube
-  - type: FlavorProfile
-    flavors:
-    - chewy
-    - horrible
-    - compressed-meat
+        maxVol: 1 # needs room for water
   - type: RefillableSolution
     solution: cube
-  - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
-    state: cube
   - type: Reactive
     reactions:
     - reagents: [Water]
@@ -33,8 +19,6 @@
       - !type:AddToSolutionReaction
         solution: cube
   - type: Rehydratable
-    possibleSpawns:
-    - MobMonkey
   - type: CollisionWake
     enabled: false
   - type: Fixtures
@@ -46,7 +30,7 @@
         density: 5
         mask:
         - ItemMask
-      rehydrate:
+      rehydrate: # needed to react to fire extinguishers
         shape:
           !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
@@ -55,7 +39,49 @@
         - LowImpassable
 
 - type: entity
-  parent: MonkeyCube
+  parent: RehydratableItem
+  id: RehydratableAnimalCube
+  description: Just add water!
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: SolutionContainerManager
+    solutions:
+      cube:
+        maxVol: 19 # needs 1u room for water
+        reagents: # equals one piece of raw meat, ideally should vary depending on the animal type, but idk how to link this to biomass costs
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
+  - type: Food
+    solution: cube
+  - type: FlavorProfile
+    flavors:
+    - chewy
+    - horrible
+    - compressed-meat
+  - type: Tag
+    tags:
+    - Meat
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: MonkeyCube
+  name: monkey cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobMonkey
+  - type: Tag
+    tags:
+    - Meat
+    - MonkeyCube
+
+- type: entity
+  parent: RehydratableAnimalCube
   id: KoboldCube
   name: kobold cube
   components:
@@ -64,7 +90,7 @@
     - MobKobold
 
 - type: entity
-  parent: MonkeyCube
+  parent: RehydratableAnimalCube
   id: CowCube
   name: cow cube
   components:
@@ -73,7 +99,7 @@
     - MobCow
 
 - type: entity
-  parent: MonkeyCube
+  parent: RehydratableAnimalCube
   id: GoatCube
   name: goat cube
   components:
@@ -82,7 +108,7 @@
     - MobGoat
 
 - type: entity
-  parent: MonkeyCube
+  parent: RehydratableAnimalCube
   id: MothroachCube
   name: mothroach cube
   components:
@@ -91,7 +117,7 @@
     - MobMothroach
 
 - type: entity
-  parent: MonkeyCube
+  parent: RehydratableAnimalCube
   id: MouseCube
   name: mouse cube
   components:
@@ -100,7 +126,7 @@
     - MobMouse
 
 - type: entity
-  parent: MonkeyCube
+  parent: RehydratableAnimalCube
   id: CockroachCube
   name: cockroach cube
   description: Just add wa- OH GOD!
@@ -110,17 +136,28 @@
     - MobCockroach
 
 - type: entity
-  parent: MonkeyCube
+  parent: RehydratableAnimalCube
   id: SpaceCarpCube
   name: carp cube
   description: Just add water! At your own risk.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      cube:
+        maxVol: 24 # needs 1u room for water
+        reagents: # equals one piece of raw meat - plus a deadly toxin!
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
+        - ReagentId: CarpoToxin
+          Quantity: 5
   - type: Rehydratable
     possibleSpawns:
     - MobCarp
 
 - type: entity
-  parent: MonkeyCube
+  parent: RehydratableAnimalCube
   id: SpaceTickCube
   name: tick cube
   description: Just add water! At your own risk.
@@ -130,18 +167,11 @@
     - MobTick
 
 - type: entity
-  parent: MonkeyCube
+  parent: RehydratableAnimalCube
   id: AbominationCube
   name: abomination cube
   description: Just add blood!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      cube:
-        maxVol: 10 # needs room for more blood
-        reagents:
-        - ReagentId: Blood
-          Quantity: 9
   - type: Reactive
     reactions:
     - reagents: [Blood]
@@ -151,49 +181,31 @@
         solution: cube
   - type: Rehydratable
     catalyst: Blood # blood is fuel
-    catalystMinimum: 10
     possibleSpawns:
     - MobAbomination
 
+# It inherits FoodComponent from PlushieCarp, but is de-facto inedible
+# PlushieCarp has requiresSpecialDigestion:true, and this one is not whitelisted anywhere, so it behaves like it's not edible
 - type: entity
-  parent: [PlushieCarp, BaseSyndicateContraband]
+  parent: [PlushieCarp, RehydratableItem, BaseSyndicateContraband]
   id: DehydratedSpaceCarp
   name: dehydrated space carp
   description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
   components:
   - type: SolutionContainerManager
     solutions:
-      plushie:
-        maxVol: 11 # needs room for water
-        reagents:
-        - ReagentId: Nutriment #contains nutriment like other dehydrated animals, but isn't edible? Who is grinding dehydrated carp to eat them??
-          Quantity: 10
-  - type: RefillableSolution
-    solution: plushie
-  - type: Reactive
-    reactions:
-    - reagents: [Water]
-      methods: [Touch, Ingestion, Injection]
-      effects:
-      - !type:AddToSolutionReaction
-        solution: plushie
-  - type: Rehydratable
-    possibleSpawns:
-    - MobCarp
-  - type: CollisionWake
-    enabled: false
-  - type: Physics
-    bodyType: KinematicController
-  - type: Fixtures
+      cube:
+        maxVol: 1 # needs room for water
+  - type: Fixtures # BaseItem from PlushieCarp overrides fixtures, making carp not react to extinguishers
     fixtures:
       fix1:
         shape:
           !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
-        density: 15
+        density: 5
         mask:
         - ItemMask
-      rehydrate:
+      rehydrate: # needed to react to fire extinguishers
         shape:
           !type:PhysShapeAabb
           bounds: "-0.3,-0.3,0.3,0.3"
@@ -206,45 +218,19 @@
     successString: petting-success-dehydrated-carp
     failureString: petting-failure-dehydrated-carp
   - type: EmitSoundOnUse
-    handle: false
-    sound:
-      path: /Audio/Effects/bite.ogg
+    handle: false # have to make it inedible because this causes petting and chewing trigger together
+  - type: Rehydratable
+    possibleSpawns:
+    - MobCarp
+  - type: Tag # overwriting PlushieCarp tags to remove ClothMade and Payload
+    tags:
+    - PlushieCarp
 
-- type: entity #why is this all redefined down here as a parent of base object instead of just being parented to monkeycube?? TODO: Fix this shit
-  parent: BaseItem
+- type: entity
+  parent: MonkeyCube
   id: SyndicateSponge
-  name: monkey cube
   suffix: Syndicate
-  description: Just add water!
   components:
-  - type: Item
-    size: Tiny
-  - type: SolutionContainerManager
-    solutions:
-      cube:
-        maxVol: 11 # needs room for water
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-  - type: Food
-    solution: cube
-  - type: FlavorProfile
-    flavors:
-    - chewy
-    - horrible
-    - compressed-meat
-  - type: RefillableSolution
-    solution: cube
-  - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
-    state: cube
-  - type: Reactive
-    reactions:
-    - reagents: [Water]
-      methods: [Touch, Ingestion, Injection]
-      effects:
-      - !type:AddToSolutionReaction
-        solution: cube
   - type: Rehydratable
     possibleSpawns:
     - MobCarpHolo
@@ -256,21 +242,16 @@
     - MobPurpleSnake
     - MobKangarooSpace
     - MobTick
-  - type: CollisionWake
-    enabled: false
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-        density: 5
-        mask:
-        - ItemMask
-      rehydrate:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-        hard: false
-        layer:
-        - LowImpassable
+
+- type: entity
+  parent: RehydratableItem
+  id: MopBucketCube
+  name: mop bucket cube
+  description: Just add water! And then more water!
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: mopbucket_cube
+  - type: Rehydratable
+    possibleSpawns:
+    - MopBucket
