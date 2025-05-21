@@ -80,5 +80,5 @@ public sealed partial class TegGeneratorComponent : Component
     /// Smoothing factor used to smooth out power generation.
     /// </summary>
     [DataField]
-    public float PowerSmoothingFactor = 0.1f;
+    public float PowerSmoothingFactor = 0.2f;
 }
