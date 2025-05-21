@@ -833,16 +833,19 @@ namespace Content.Shared.Chemistry.Components
                 }
                 Color reagentColor = proto.SubstanceColor;
 
+                List<ReagentData> reagentData = reagent.EnsureReagentData();
+                BloodColorData? bloodData = reagentData.OfType<BloodColorData>().FirstOrDefault();
+                reagentColor = bloodData?.SubstanceColor ?? reagentColor;
                 if (first)
                 {
                     first = false;
+                    mixColor = reagentColor;
                 }
-                List<ReagentData> reagentData = reagent.EnsureReagentData();
-                BloodColorData? bloodData = reagentData.OfType<BloodColorData>().FirstOrDefault();
-                if (null != bloodData)
-                    reagentColor = bloodData.SubstanceColor;
-                var interpolateValue = quantity.Float() / runningTotalQuantity.Float();
-                mixColor = Color.InterpolateBetween(mixColor, reagentColor, interpolateValue);
+                else
+                {
+                    var interpolateValue = quantity.Float() / runningTotalQuantity.Float();
+                    mixColor = Color.InterpolateBetween(mixColor, reagentColor, interpolateValue);
+                }
             }
             return mixColor;
         }
@@ -876,16 +879,21 @@ namespace Content.Shared.Chemistry.Components
                 {
                     continue;
                 }
+                Color reagentColor = proto.SubstanceColor;
 
+                List<ReagentData> reagentData = reagent.EnsureReagentData();
+                BloodColorData? bloodData = reagentData.OfType<BloodColorData>().FirstOrDefault();
+                reagentColor = bloodData?.SubstanceColor ?? reagentColor;
                 if (first)
                 {
                     first = false;
-                    mixColor = proto.SubstanceColor;
-                    continue;
+                    mixColor = reagentColor;
                 }
-
-                var interpolateValue = quantity.Float() / runningTotalQuantity.Float();
-                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
+                else
+                {
+                    var interpolateValue = quantity.Float() / runningTotalQuantity.Float();
+                    mixColor = Color.InterpolateBetween(mixColor, reagentColor, interpolateValue);
+                }
             }
             return mixColor;
         }
