@@ -237,9 +237,9 @@ public abstract class SharedDeliverySystem : EntitySystem
     {
         _appearance.SetData(uid, DeliveryVisuals.IsLocked, isLocked);
 
-        // If we're trying to unlock, always remove the priority tape
-        if (!isLocked)
-            _appearance.SetData(uid, DeliveryVisuals.PriorityState, DeliveryPriorityState.Off);
+        // If we're trying to unlock, mark priority as inactive
+        if (HasComp<DeliveryPriorityComponent>(uid))
+            _appearance.SetData(uid, DeliveryVisuals.PriorityState, DeliveryPriorityState.Inactive);
     }
 
     public void UpdatePriorityVisuals(Entity<DeliveryPriorityComponent> ent)
@@ -257,6 +257,13 @@ public abstract class SharedDeliverySystem : EntitySystem
     {
         _appearance.SetData(ent, DeliveryVisuals.IsBroken, ent.Comp.Broken);
         _appearance.SetData(ent, DeliveryVisuals.IsFragile, isFragile);
+    }
+
+    public void UpdateBombVisuals(Entity<DeliveryBombComponent> ent)
+    {
+        var isPrimed = HasComp<PrimedDeliveryBombComponent>(ent);
+
+        _appearance.SetData(ent, DeliveryVisuals.IsBomb, isPrimed ? DeliveryBombState.Primed : DeliveryBombState.Inactive);
     }
 
     protected void UpdateDeliverySpawnerVisuals(EntityUid uid, int contents)

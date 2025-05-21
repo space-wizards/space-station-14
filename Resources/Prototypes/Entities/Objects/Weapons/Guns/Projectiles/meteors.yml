@@ -43,6 +43,8 @@
     maxIntensity: 100
     maxTileBreak: 1
     tileBreakScale: 2
+  - type: TileFrictionModifier
+    modifier: 0
 
 
 - type: entity
