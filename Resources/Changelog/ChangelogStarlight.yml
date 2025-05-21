@@ -5967,4 +5967,18 @@ Entries:
   id: 826
   time: '2025-05-21T11:10:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/642
+- author: Puddleboat/Polaris
+  changes:
+  - message: Added panda plushie to the hug dispenser
+    type: Add
+  id: 827
+  time: '2025-05-21T11:10:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/615
+- author: Puddleboat/Polaris
+  changes:
+  - message: Inhand sprites for Mozan plushie
+    type: Add
+  id: 828
+  time: '2025-05-21T11:10:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/615
 
