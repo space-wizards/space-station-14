@@ -31,10 +31,15 @@ public sealed partial class TurretControllerWindow : BaseWindow
 
     // Events
     public event Action<HashSet<ProtoId<AccessLevelPrototype>>, bool>? OnAccessLevelsChangedEvent;
-    public event Action<int>? OnArmamentSettingChangedEvent;
+    public event Action<TurretArmamentSetting>? OnArmamentSettingChangedEvent;
 
     // Colors
-    private Color[] _themeColors = [Color.FromHex("#33e633"), Color.FromHex("#dfb827"), Color.FromHex("#da2a2a")];
+    private Dictionary<TurretArmamentSetting, Color> _themeColors = new()
+    {
+        [TurretArmamentSetting.Safe] = Color.FromHex("#33e633"),
+        [TurretArmamentSetting.Stun] = Color.FromHex("#dfb827"),
+        [TurretArmamentSetting.Lethal] = Color.FromHex("#da2a2a")
+    };
 
     public TurretControllerWindow()
     {
@@ -45,21 +50,10 @@ public sealed partial class TurretControllerWindow : BaseWindow
 
         CloseButton.OnPressed += _ => Close();
 
-        AccessConfiguration.SetMonotone(true);
-
-        var smallFont = _cache.NotoStack(size: 8);
-        Footer.FontOverride = smallFont;
-    }
-
-    private void Initialize()
-    {
-        if (_owner == null)
-            return;
-
         // Set up armament buttons
-        SafeButton.OnToggled += args => OnArmamentButtonPressed(SafeButton, -1);
-        StunButton.OnToggled += args => OnArmamentButtonPressed(StunButton, 0);
-        LethalButton.OnToggled += args => OnArmamentButtonPressed(LethalButton, 1);
+        SafeButton.OnToggled += args => OnArmamentButtonPressed(SafeButton, TurretArmamentSetting.Safe);
+        StunButton.OnToggled += args => OnArmamentButtonPressed(StunButton, TurretArmamentSetting.Stun);
+        LethalButton.OnToggled += args => OnArmamentButtonPressed(LethalButton, TurretArmamentSetting.Lethal);
 
         SafeButton.Group = _armamentButtons;
         StunButton.Group = _armamentButtons;
@@ -69,33 +63,62 @@ public sealed partial class TurretControllerWindow : BaseWindow
         StunButton.Label.AddStyleClass("ConsoleText");
         LethalButton.Label.AddStyleClass("ConsoleText");
 
-        // Refresh UI
+        // Set up access configuration buttons
+        AccessConfiguration.SetMonotone(true);
+        AccessConfiguration.SetLabelStyleClass("ConsoleText");
+        AccessConfiguration.OnAccessLevelsChangedEvent += OnAccessLevelsChanged;
+
+        // Override footer font
+        var smallFont = _cache.NotoStack(size: 8);
+        Footer.FontOverride = smallFont;
+    }
+
+    private void OnAccessLevelsChanged(HashSet<ProtoId<AccessLevelPrototype>> accessLevels, bool isPressed)
+    {
+        OnAccessLevelsChangedEvent?.Invoke(accessLevels, isPressed);
+    }
+
+    private void OnArmamentButtonPressed(MonotoneButton pressedButton, TurretArmamentSetting setting)
+    {
+        UpdateTheme(setting);
+        OnArmamentSettingChangedEvent?.Invoke(setting);
+    }
+
+    private void Initialize()
+    {
         RefreshLinkedTurrets(new());
 
         if (_entManager.TryGetComponent<DeployableTurretControllerComponent>(_owner, out var turretController))
-            UpdateTheme(turretController.ArmamentState);
+        {
+            AccessConfiguration.SetAccessGroups(turretController.AccessGroups);
+            AccessConfiguration.SetAccessLevels(turretController.AccessLevels);
+            UpdateTheme((TurretArmamentSetting)turretController.ArmamentState);
+        }
 
         if (_entManager.TryGetComponent<TurretTargetSettingsComponent>(_owner, out var turretTargetSettings))
-            RefreshAccessControls(turretTargetSettings.ExemptAccessLevels);
-    }
-
-    private void OnArmamentButtonPressed(MonotoneButton pressedButton, int index)
-    {
-        UpdateTheme(index);
-        OnArmamentSettingChangedEvent?.Invoke(index);
-    }
-
-    private void UpdateTheme(int index)
-    {
-        switch (index)
         {
-            case -1:
+            RefreshAccessControls(turretTargetSettings.ExemptAccessLevels);
+        }
+    }
+
+    public void SetOwner(EntityUid owner)
+    {
+        _owner = owner;
+
+        Initialize();
+    }
+
+    private void UpdateTheme(TurretArmamentSetting setting)
+    {
+        switch (setting)
+        {
+            case TurretArmamentSetting.Safe:
                 SafeButton.Pressed = true;
                 break;
-            case 0:
+            case TurretArmamentSetting.Stun:
                 StunButton.Pressed = true;
                 break;
-            case 1:
+            case TurretArmamentSetting.Lethal:
                 LethalButton.Pressed = true;
                 break;
         }
@@ -106,23 +129,13 @@ public sealed partial class TurretControllerWindow : BaseWindow
         StunButton.Disabled = !StunButton.Pressed && !canInteract;
         LethalButton.Disabled = !LethalButton.Pressed && !canInteract;
 
-        var shiftedIndex = index + 1;
-
-        if (shiftedIndex >= 0 && shiftedIndex < _themeColors.Length)
-            ContentsContainer.Modulate = _themeColors[shiftedIndex];
-    }
-
-    public void SetOwner(EntityUid owner)
-    {
-        _owner = owner;
-
-        Initialize();
+        ContentsContainer.Modulate = _themeColors[setting];
     }
 
     public void UpdateState(DeployableTurretControllerBoundInterfaceState state)
     {
         if (_entManager.TryGetComponent<DeployableTurretControllerComponent>(_owner, out var turretController))
-            UpdateTheme(turretController.ArmamentState);
+            UpdateTheme((TurretArmamentSetting)turretController.ArmamentState);
 
         if (_entManager.TryGetComponent<TurretTargetSettingsComponent>(_owner, out var turretTargetSettings))
             RefreshAccessControls(turretTargetSettings.ExemptAccessLevels);
@@ -167,15 +180,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
 
     public void RefreshAccessControls(HashSet<ProtoId<AccessLevelPrototype>> exemptAccessLevels)
     {
-        if (_owner == null)
-            return;
-
-        if (!_entManager.TryGetComponent<DeployableTurretControllerComponent>(_owner, out var turretControls))
-            return;
-
-        AccessConfiguration.SetAccessGroups(turretControls.AccessGroups);
-        AccessConfiguration.SetAccessLevels(turretControls.AccessLevels);
-        AccessConfiguration.SetAccessExemptions(exemptAccessLevels);
+        AccessConfiguration.SetActiveAccessLevels(exemptAccessLevels);
         AccessConfiguration.SetLocalPlayerAccessibility(IsLocalPlayerAllowedToInteract());
     }
 
@@ -190,5 +195,12 @@ public sealed partial class TurretControllerWindow : BaseWindow
             return false;
 
         return _accessReaderSystem.IsAllowed(_playerManager.LocalSession.AttachedEntity.Value, _owner.Value);
+    }
+
+    public enum TurretArmamentSetting
+    {
+        Safe = -1,
+        Stun = 0,
+        Lethal = 1,
     }
 }

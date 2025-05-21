@@ -18,11 +18,12 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     private bool _isMonotone;
+    private string? _labelStyleClass;
 
     // Access data
     private HashSet<ProtoId<AccessGroupPrototype>> _accessGroups = new();
     private HashSet<ProtoId<AccessLevelPrototype>> _accessLevels = new();
-    private HashSet<ProtoId<AccessLevelPrototype>> _exemptAccessLevels = new();
+    private HashSet<ProtoId<AccessLevelPrototype>> _activeAccessLevels = new();
 
     // Button groups
     private readonly ButtonGroup _accessGroupsButtons = new();
@@ -114,7 +115,6 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
         if (_accessGroupTabIndex >= _groupedAccessLevels.Count)
             _accessGroupTabIndex = _groupedAccessLevels.Count - 1;
 
-
         // Remove excess group access buttons from the UI
         while (AccessGroupList.ChildCount > _groupedAccessLevels.Count)
             AccessGroupList.RemoveChild(_groupedAccessLevels.Count - 1);
@@ -122,7 +122,7 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
         // Add missing group access buttons to the UI
         while (AccessGroupList.ChildCount < _groupedAccessLevels.Count)
         {
-            var button = _isMonotone ? CreateAccessGroupButton<MonotoneButton>() : CreateAccessGroupButton<Button>();
+            var button = CreateAccessGroupButton();
 
             if (_groupedAccessLevels.Count > 1)
             {
@@ -164,12 +164,16 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
                 continue;
 
             var accessGroup = orderedAccessGroups[i];
-            var prefix = _groupedAccessLevels[accessGroup].Any(x => _exemptAccessLevels.Contains(x)) ? "»" : " ";
+            var prefix = _groupedAccessLevels[accessGroup].All(x => _activeAccessLevels.Contains(x)) ? "»" :
+                (_groupedAccessLevels[accessGroup].Any(x => _activeAccessLevels.Contains(x)) ? "›" : " ");
             var text = Loc.GetString(
                 "turret-controls-window-access-group-label",
                 ("prefix", prefix),
                 ("label", accessGroup.GetAccessGroupName())
             );
+
+            if (_labelStyleClass != null)
+                accessGroupButton.Label.SetOnlyStyleClass(_labelStyleClass);
 
             accessGroupButton.Text = text;
             accessGroupButton.Pressed = _accessGroupTabIndex == orderedAccessGroups.IndexOf(accessGroup);
@@ -195,8 +199,11 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
         // Toggling this checkbox on will mark all other boxes below it on/off
         if (AccessLevelChecklist.ChildCount == 0)
         {
-            var checkBox = _isMonotone ? CreateAccessLevelCheckbox<MonotoneCheckBox>() : CreateAccessLevelCheckbox<CheckBox>();
+            var checkBox = CreateAccessLevelCheckbox();
             checkBox.Text = Loc.GetString("turret-controls-window-all-checkbox");
+
+            if (_labelStyleClass != null)
+                checkBox.Label.SetOnlyStyleClass(_labelStyleClass);
 
             // Add checkbox events
             checkBox.OnPressed += args =>
@@ -228,9 +235,9 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
         while (AccessLevelChecklist.ChildCount < (_accessLevelsForTab.Count + 1))
         {
             var accessLevelEntry = new AccessLevelEntry(_isMonotone);
-            AccessLevelChecklist.AddChild(accessLevelEntry);
 
-            _accessLevelEntries.Add(accessLevelEntry);
+            if (_labelStyleClass != null)
+                accessLevelEntry.CheckBox.Label.SetOnlyStyleClass(_labelStyleClass);
 
             // Add checkbox events
             accessLevelEntry.CheckBox.OnPressed += args =>
@@ -239,8 +246,12 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
                 allCheckBox.Pressed = AreAllCheckBoxesPressed(_accessLevelEntries.Select(x => x.CheckBox));
 
                 OnAccessLevelsChangedEvent?.Invoke
-                    (new HashSet<ProtoId<AccessLevelPrototype>>() { accessLevelEntry.AccessLevel }, accessLevelEntry.CheckBox.Pressed);
+                    (new HashSet<ProtoId<AccessLevelPrototype>>() { accessLevelEntry.AccessLevel },
+                    accessLevelEntry.CheckBox.Pressed);
             };
+
+            AccessLevelChecklist.AddChild(accessLevelEntry);
+            _accessLevelEntries.Add(accessLevelEntry);
         }
 
         // Update the access levels buttons' appearance
@@ -251,7 +262,7 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
 
             accessLevelEntry.AccessLevel = accessLevel;
             accessLevelEntry.CheckBox.Text = accessLevel.GetAccessLevelName();
-            accessLevelEntry.CheckBox.Pressed = _exemptAccessLevels.Contains(accessLevel);
+            accessLevelEntry.CheckBox.Pressed = _activeAccessLevels.Contains(accessLevel);
 
             var isEndOfList = i == (_accessLevelEntries.Count - 1);
 
@@ -290,7 +301,7 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
     }
 
     /// <summary>
-    /// Provides the UI with a list of access groups with which to poplate its list of tabs
+    /// Provides the UI with a list of access groups with which to poplate its list of tabs.
     /// </summary>
     /// <param name="accessGroups"></param>
     public void SetAccessGroups(HashSet<ProtoId<AccessGroupPrototype>> accessGroups)
@@ -304,7 +315,7 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
     }
 
     /// <summary>
-    /// Provides the UI with a list of access levels with which it can populate the currently selected tab
+    /// Provides the UI with a list of access levels with which it can populate the currently selected tab.
     /// </summary>
     /// <param name="accessLevels"></param>
     public void SetAccessLevels(HashSet<ProtoId<AccessLevelPrototype>> accessLevels)
@@ -318,11 +329,11 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
     }
 
     /// <summary>
-    /// Sets which checkboxes on the UI should be marked.
+    /// Sets which access level checkboxes should be marked on the UI.
     /// </summary>
-    public void SetAccessExemptions(HashSet<ProtoId<AccessLevelPrototype>> exemptAccessLevels)
+    public void SetActiveAccessLevels(HashSet<ProtoId<AccessLevelPrototype>> activeAccessLevels)
     {
-        _exemptAccessLevels = exemptAccessLevels;
+        _activeAccessLevels = activeAccessLevels;
 
         RefreshAccessControls();
     }
@@ -348,6 +359,16 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
             RefreshAccessControls();
     }
 
+    /// <summary>
+    /// Applies the specified style to the labels on the UI buttons and checkboxes.
+    /// </summary>
+    public void SetLabelStyleClass(string? styleClass)
+    {
+        _labelStyleClass = styleClass;
+
+        RefreshAccessControls();
+    }
+
     private void OnAccessGroupChanged(int newTabIndex)
     {
         if (newTabIndex == _accessGroupTabIndex)
@@ -358,27 +379,24 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
         RefreshAccessControls();
     }
 
-    private Button CreateAccessGroupButton<T>() where T : Button, new()
+    private Button CreateAccessGroupButton()
     {
-        var button = new T
-        {
-            ToggleMode = true,
-            Group = _accessGroupsButtons,
-        };
+        var button = _isMonotone ? new MonotoneButton() : new Button();
 
+        button.ToggleMode = true;
+        button.Group = _accessGroupsButtons;
         button.Label.HorizontalAlignment = HAlignment.Left;
 
         return button;
     }
 
-    private CheckBox CreateAccessLevelCheckbox<T>() where T : CheckBox, new()
+    private CheckBox CreateAccessLevelCheckbox()
     {
-        var checkbox = new T
-        {
-            Margin = new Thickness(0, 0, 0, 3),
-            ToggleMode = true,
-            ReservesSpace = false,
-        };
+        var checkbox = _isMonotone ? new MonotoneCheckBox() : new CheckBox();
+
+        checkbox.Margin = new Thickness(0, 0, 0, 3);
+        checkbox.ToggleMode = true;
+        checkbox.ReservesSpace = false;
 
         return checkbox;
     }

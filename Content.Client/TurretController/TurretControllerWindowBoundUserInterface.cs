@@ -39,8 +39,8 @@ public sealed class TurretControllerWindowBoundUserInterface : BoundUserInterfac
         SendPredictedMessage(new DeployableTurretExemptAccessLevelChangedMessage(accessLevels, enabled));
     }
 
-    private void OnArmamentSettingChanged(int setting)
+    private void OnArmamentSettingChanged(TurretControllerWindow.TurretArmamentSetting setting)
     {
-        SendPredictedMessage(new DeployableTurretArmamentSettingChangedMessage(setting));
+        SendPredictedMessage(new DeployableTurretArmamentSettingChangedMessage((int)setting));
     }
 }
