@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
@@ -29,7 +28,7 @@ public sealed class PryingSystem : EntitySystem
 
         // Mob prying doors
         SubscribeLocalEvent<PryableComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
-        SubscribeLocalEvent<PryableComponent, DoorPryDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<PryableComponent, PryDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<PryableComponent, InteractUsingEvent>(TryPryDoor);
         SubscribeLocalEvent<PryableComponent, GetPryTimeModifierEvent>(OnGetPryTimeModifier);
     }
@@ -135,7 +134,7 @@ public sealed class PryingSystem : EntitySystem
         var modEv = new GetPryTimeModifierEvent(user);
 
         RaiseLocalEvent(target, ref modEv);
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(modEv.BaseTime * modEv.PryTimeModifier / toolModifier), new DoorPryDoAfterEvent(), target, target, tool)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(modEv.BaseTime * modEv.PryTimeModifier / toolModifier), new PryDoAfterEvent(), target, target, tool)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -153,7 +152,7 @@ public sealed class PryingSystem : EntitySystem
         return _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
     }
 
-    private void OnDoAfter(EntityUid uid, PryableComponent door, DoorPryDoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, PryableComponent door, PryDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
@@ -185,4 +184,4 @@ public sealed class PryingSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public sealed partial class DoorPryDoAfterEvent : SimpleDoAfterEvent;
+public sealed partial class PryDoAfterEvent : SimpleDoAfterEvent;
