@@ -257,7 +257,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     private void OnFTLStarted(ref FTLStartedEvent ev)
     {
         var targetMap = _transform.ToMapCoordinates(ev.TargetCoordinates);
-        var targetMapUid = _mapManager.GetMapEntityId(targetMap.MapId);
+        var targetMapUid = _mapSystem.GetMapOrInvalid(targetMap.MapId);
 
         if (!TryComp<BiomeComponent>(targetMapUid, out var biome))
             return;
@@ -966,7 +966,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     continue;
 
                 // Don't mess with anything that's potentially anchored.
-                var anchored = grid.GetAnchoredEntitiesEnumerator(indices);
+                var anchored = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, indices);
 
                 if (anchored.MoveNext(out _))
                 {
