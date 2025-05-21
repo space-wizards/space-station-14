@@ -192,6 +192,26 @@ public sealed class PryingSystem : EntitySystem
         var ev = new PriedEvent(args.User);
         RaiseLocalEvent(ent, ref ev);
     }
+
+    public static void SetPryingEnabled(Entity<PryingComponent> ent, bool value)
+    {
+        ent.Comp.Enabled = value;
+    }
+
+    public static void SetPryingSpeedModifier(Entity<PryingComponent> ent, float value)
+    {
+        ent.Comp.SpeedModifier = value;
+    }
+
+    public static void SetPryingCanPryPowered(Entity<PryingComponent> ent, bool value)
+    {
+        ent.Comp.PryPowered = value;
+    }
+
+    public static void SetPryingForcedMode(Entity<PryingComponent> ent, bool value)
+    {
+        ent.Comp.Force = value;
+    }
 }
 
 [Serializable, NetSerializable]

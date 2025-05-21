@@ -1,9 +1,11 @@
+using Content.Shared.Prying.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Prying.Components;
 
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(PryingSystem))]
 public sealed partial class PryingComponent : Component
 {
     /// <summary>
