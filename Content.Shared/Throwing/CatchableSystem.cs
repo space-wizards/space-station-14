@@ -33,7 +33,7 @@ public sealed partial class CatchableSystem : EntitySystem
 
     private void OnDoHit(Entity<CatchableComponent> ent, ref ThrowDoHitEvent args)
     {
-        if (_handsQuery.TryGetComponent(args.Target, out var handsComp))
+        if (!_handsQuery.TryGetComponent(args.Target, out var handsComp))
             return; // don't do anything for walls etc
 
         if (_random.ProbPredicted(_timing, ent.Comp.CatchChance, seed: GetNetEntity(ent).Id)
@@ -43,7 +43,7 @@ public sealed partial class CatchableSystem : EntitySystem
             // otherwise it will raise the events for that later while still in your hand
             _thrown.StopThrow(ent.Owner, args.Component);
 
-            // collisions don't work correctly work properly with PopupPredicted or PlayPredicted
+            // collisions don't work properly with PopupPredicted or PlayPredicted
             // so we make this server only
             if (_net.IsClient)
                 return;
