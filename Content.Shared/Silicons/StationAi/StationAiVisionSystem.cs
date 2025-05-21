@@ -56,6 +56,7 @@ public sealed class StationAiVisionSystem : EntitySystem
             EntManager = EntityManager,
             Maps = _maps,
             System = this,
+            VisibleTiles = _singleTiles,
         };
     }
 
@@ -278,7 +279,7 @@ public sealed class StationAiVisionSystem : EntitySystem
     /// </summary>
     private record struct SeedJob() : IRobustJob
     {
-        public StationAiVisionSystem System;
+        public required StationAiVisionSystem System;
 
         public Entity<MapGridComponent> Grid;
         public Box2 ExpandedBounds;
@@ -293,14 +294,14 @@ public sealed class StationAiVisionSystem : EntitySystem
     {
         public int BatchSize => 1;
 
-        public IEntityManager EntManager;
-        public SharedMapSystem Maps;
-        public StationAiVisionSystem System;
+        public required IEntityManager EntManager;
+        public required SharedMapSystem Maps;
+        public required StationAiVisionSystem System;
 
         public Entity<MapGridComponent> Grid;
         public List<Entity<StationAiVisionComponent>> Data = new();
 
-        public HashSet<Vector2i> VisibleTiles;
+        public required HashSet<Vector2i> VisibleTiles;
 
         public readonly List<Dictionary<Vector2i, int>> Vis1 = new();
         public readonly List<Dictionary<Vector2i, int>> Vis2 = new();

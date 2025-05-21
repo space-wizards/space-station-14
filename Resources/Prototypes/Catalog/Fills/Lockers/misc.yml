@@ -77,6 +77,22 @@
       entity_storage: !type:NestedSelector
         tableId: FillLockerEmergencyStandard
 
+- type: entityTable
+  id: FillLockerEmergencyN2Standard
+  table: !type:AllSelector
+    children:
+    - id: ClothingMaskBreath
+    - id: ClothingOuterSuitEmergency
+    - id: BoxMRE
+      prob: 0.1
+    - id: ToolboxEmergencyFilled
+      prob: 0.05
+    - !type:GroupSelector
+      children:
+      - id: EmergencyNitrogenTankFilled
+        weight: 4
+      - id: NitrogenTankFilled
+
 - type: entity
   id: ClosetEmergencyN2FilledRandom
   parent: ClosetEmergencyN2
@@ -84,14 +100,18 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: ClothingOuterSuitEmergency
-        - !type:GroupSelector
-          children:
-          - id: EmergencyNitrogenTankFilled
-          - id: NitrogenTankFilled
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEmergencyN2Standard
+
+- type: entity
+  parent: ClosetWallEmergencyN2
+  id: ClosetWallEmergencyN2FilledRandom
+  suffix: Filled, Random
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEmergencyN2Standard
 
 - type: entityTable
   id: FillLockerFireStandard
@@ -150,6 +170,7 @@
     - id: BalloonSyn
     - id: WeaponSniperMosin
       weight: 2
+    - id: ClothingHandsKnuckleDustersSyndicate
 
 - type: entityTable
   id: MaintenanceLockerLoot
@@ -182,6 +203,9 @@
     - !type:NestedSelector
       tableId: SyndieMaintLoot
       prob: 0.05
+    # Recursive
+    - id: ClosetMaintenanceFilledRandom
+      prob: 0.01
 
 - type: entity
   id: ClosetMaintenanceFilledRandom

@@ -11,3 +11,23 @@
       damageRecovery:
         types:
           Asphyxiation: -1.0
+
+- type: entity
+  name: gingerbread man
+  id: MobGingerbreadAI
+  parent: [ MobGingerbread, MobCombat]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-gingerbread-name
+    description: ghost-role-information-gingerbread-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: NPCRetaliation
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  

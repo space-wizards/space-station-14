@@ -13,4 +13,4 @@ jobs:
     steps:
     - uses: actions-ecosystem/action-add-labels@v1
       with:
-        labels: "Branch: stable"
+        labels: "Branch: Stable"

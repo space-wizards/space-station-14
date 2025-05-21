@@ -7,26 +7,69 @@
   - type: Sprite
     sprite: Objects/Decoration/ashtray.rsi
     layers:
-      - state: icon-0
-        map: ["enum.StorageFillLayers.Fill"]
+      - state: icon
+      - state: ashtray1
+        map: ["ashtray1"]
+        visible: false
+      - state: ashtray2
+        map: ["ashtray2"]
+        visible: false
+      - state: ashtray3
+        map: ["ashtray3"]
+        visible: false
+      - state: ashtray4
+        map: ["ashtray4"]
+        visible: false
+      - state: ashtray5
+        map: ["ashtray5"]
+        visible: false
+      - state: ashtray6
+        map: ["ashtray6"]
+        visible: false
+      - state: ashtray7
+        map: ["ashtray7"]
+        visible: false
+      - state: ashtray8
+        map: ["ashtray8"]
+        visible: false
+      - state: ashtray9
+        map: ["ashtray9"]
+        visible: false
+      - state: ashtray10
+        map: ["ashtray10"]
+        visible: false
   - type: Item
     size: Small
-  - type: StaticPrice
-    price: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 10
   - type: Storage
     whitelist:
       tags:
       - Burnt
       - Cigarette
       - Cigar
+    hideStackVisualsWhenClosed: false
     maxItemSize: Tiny
     grid:
     - 0,0,9,0
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
-  - type: StorageFillVisualizer
-    fillBaseName: icon
-    maxFillLevels: 10
+  - type: ItemCounter
+    count:
+      tags: [ Cigarette, Cigar, Burnt ]
+    composite: true
+    layerStates:
+    - ashtray1
+    - ashtray2
+    - ashtray3
+    - ashtray4
+    - ashtray5
+    - ashtray6
+    - ashtray7
+    - ashtray8
+    - ashtray9
+    - ashtray10
   - type: Appearance
   - type: Dumpable

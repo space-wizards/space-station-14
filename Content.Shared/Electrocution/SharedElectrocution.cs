@@ -5,11 +5,13 @@ namespace Content.Shared.Electrocution;
 [Serializable, NetSerializable]
 public enum ElectrifiedLayers : byte
 {
-    Powered
+    Sparks,
+    HUD,
 }
 
 [Serializable, NetSerializable]
 public enum ElectrifiedVisuals : byte
 {
-    IsPowered
+    ShowSparks, // only shown when zapping someone, deactivated after a short time
+    IsElectrified, // if the entity is electrified or not, used for the AI HUD
 }

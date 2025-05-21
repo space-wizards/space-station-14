@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by chromiumboy (github) for SS14, based on the digital valve from /tg/, taken from https://github.com/tgstation/tgstation at commit 57cd1d59ca019dd0e7811ac451f295f818e573da.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+	{
+            "name": "base"
+        },
+	{
+            "name": "blank"
+        },
+        {
+            "name": "lights",
+            "delays": [
+                [
+                    1.0,
+                    0.25
+                ]
+            ]
+        }
+    ]
+}

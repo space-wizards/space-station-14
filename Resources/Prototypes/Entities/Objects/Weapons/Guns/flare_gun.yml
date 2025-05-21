@@ -27,7 +27,7 @@
       gun_chamber: !type:ContainerSlot
   - type: ChamberMagazineAmmoProvider
     autoCycle: false
-    boltClosed: true
+    boltClosed: false
     canRack: false
     soundBoltClosed: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
     soundBoltOpened: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
