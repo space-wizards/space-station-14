@@ -37,10 +37,22 @@ namespace Content.Shared.Clothing.Components
         public float ScrewingDoAfterDelay = 1f;
 
         /// <summary>
+        /// Delay when the hailer is screwed to change aggression level by someone else than the wearer
+        /// </summary>
+        [DataField]
+        public float ScrewingOtherUserDoAfterDelay = 3f;
+
+        /// <summary>
         /// Delay when the hailer has its wires cut
         /// </summary>
         [DataField]
-        public float CuttingDoAfterDelay = 1f;
+        public float CuttingDoAfterDelay = 3f;
+
+        /// <summary>
+        /// Delay when the hailer has its wires cut by someone else than the wearer
+        /// </summary>
+        [DataField]
+        public float CuttingOtherUserDoAfterDelay = 5f;
 
         public enum SpecialUseCase : byte
         {

@@ -78,6 +78,20 @@ sec-gas-mask-screwed = Changed to {$level} aggression
 sec-gas-mask-emagged = Changed to ERROR aggression
 ert-gas-mask-impossible = It seems impervious to external change.
 
+-sec-gas-mask-alert-quality =
+    { $quality ->
+        [cutting] cutting off your mask
+        *[screwing] using a screwdriver on your mask
+    }
+
+sec-gas-mask-alert-owner = {CAPITALIZE(THE($user))} is { $quality ->
+    [cutting] { -sec-gas-mask-alert-quality(quality: "cutting") }[/color]
+    *[screwing] { -sec-gas-mask-alert-quality(quality: "screwing") }
+} !
+#sec-gas-mask-alert-owner = {CAPITALIZE(THE($user))} is cutting off your mask!
+#sec-gas-mask-alert-owner = {CAPITALIZE(THE($user))} is using a screwdriver on your mask!
+sec-gas-mask-alert-owner-post-emag = {CAPITALIZE(THE($user))} has emagged your mask!
+
 # Examine description
 -sec-gas-mask-aggresion-level =
     { $level ->
