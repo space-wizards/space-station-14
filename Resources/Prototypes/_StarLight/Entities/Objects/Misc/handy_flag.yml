@@ -28,7 +28,7 @@
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 5
+        Blunt: 1
     animation: WeaponArcSlash
     soundHit:
       path: /Audio/_Starlight/Effects/flag_hit.ogg
@@ -39,7 +39,7 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Slash: 2
+        Blunt: 14
   - type: StaminaDamageOnHit
     damage: 12
   - type: Clothing

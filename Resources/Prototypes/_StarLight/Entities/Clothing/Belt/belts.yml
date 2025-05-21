@@ -248,6 +248,8 @@
       tags:
         - Radio
         - Knife
+        - ShellShotgun
+        - Cartridge
       components:
         - BallisticAmmoProvider
         - Ammo

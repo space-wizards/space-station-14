@@ -1,4 +1,4 @@
-- files: ["abductor","alien_teleport","atm","atm_in","bluealert","notice1","redalert"]
+- files: ["abductor","alien_teleport","atm","atm_in","bluealert","notice1","redalert","rev_end"]
   license: "CC-BY-4.0"
   copyright: 'Darkrell, JustAdler'
   source: "https://github.com/ss14Starlight/space-station-14"
