@@ -41,14 +41,18 @@ public sealed partial class AbductorAttractDoAfterEvent : SimpleDoAfterEvent
     [DataField("victim", required: true)]
     public NetEntity Victim;
     
+    [DataField("dispencer", required: true)]
+    public NetEntity Dispencer;
+    
     private AbductorAttractDoAfterEvent()
     {
     }
 
-    public AbductorAttractDoAfterEvent(NetCoordinates coords, NetEntity target)
+    public AbductorAttractDoAfterEvent(NetCoordinates coords, NetEntity target, NetEntity dispencer)
     {
         TargetCoordinates = coords;
         Victim = target;
+        Dispencer = dispencer;
     }
 
     public override DoAfterEvent Clone() => this;

@@ -1,13 +1,14 @@
 - type: vendingMachineInventory
   id: AbductorGlandInventory
   startingInventory:
+    RandomOrganDubious: 5
     OrganDubiousPlasma: 2
-    OrganDubiousGravity: 2
+    OrganDubiousHealth: 2
     OrganDubiousEgg: 2
     OrganDubiousSpider: 2
     OrganDubiousVent: 3
   contrabandInventory:
-    OrganDubiousHealth: 2
+    OrganDubiousGravity: 2
     StrangePill: 3
   emaggedInventory:
     ChemistryBottleNocturine: 1

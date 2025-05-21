@@ -209,8 +209,12 @@
       normalState: icon
       denyState: icon
       ejectDelay: 2
+      forceRandom: RandomOrganDubious
     - type: Sprite
       sprite: _Starlight/Structures/abductor_dispencer.rsi
       layers:
       - state: icon
         map: ["base"]
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: AbductorDispencer

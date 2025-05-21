@@ -2,7 +2,7 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockAbductorDispenser
   name: alien dispenser restock
-  description: A box filled with wierd organs. Load it into a alient dispenser to begin.
+  description: A box filled with weird organs. Load it into a alien dispenser to begin.
   components:
     - type: VendingMachineRestock
       canRestock:

@@ -50,7 +50,33 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             subs.Event<VendingMachineEjectMessage>(OnInventoryEjectMessage);
         });
     }
+    
+    public void RestockRandom(EntityUid uid, VendingMachineComponent component)
+    {
+        string? item = null;
+        if (component.RandomRestockTarget != null)
+        {
+            item = component.RandomRestockTarget.ToString();
+        }
+        else
+        {
+            if (!PrototypeManager.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
+                return;
+            var startingInventory = packPrototype.StartingInventory;
+            var next = Randomizer.Next(0, startingInventory.Count);
+            var target = packPrototype.StartingInventory.ElementAt(next);
+            item = target.Key;
+        }
 
+        if (item == null)
+            return;
+        var theItem = new Dictionary<string, uint>();
+        theItem.Add(item, 1);
+        
+        AddInventoryFromPrototype(uid, theItem, InventoryType.Regular, component);
+        Dirty(uid, component);
+    }
+    
     private void OnVendingGetState(Entity<VendingMachineComponent> entity, ref ComponentGetState args)
     {
         var component = entity.Comp;
