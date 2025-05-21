@@ -75,4 +75,10 @@ public sealed partial class TegGeneratorComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("volumeMax")]
     public float VolumeMax = -4;
+
+    /// <summary>
+    /// Smoothing factor used to smooth out power generation.
+    /// </summary>
+    [DataField]
+    public float PowerSmoothingFactor = 0.2f;
 }
