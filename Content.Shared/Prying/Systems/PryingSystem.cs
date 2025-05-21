@@ -27,12 +27,12 @@ public sealed class PryingSystem : EntitySystem
         base.Initialize();
 
         // Mob prying doors
-        SubscribeLocalEvent<PryableComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
+        SubscribeLocalEvent<PryableComponent, GetVerbsEvent<AlternativeVerb>>(OnPryableAltVerb);
         SubscribeLocalEvent<PryableComponent, PryDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<PryableComponent, InteractUsingEvent>(TryPryDoor);
+        SubscribeLocalEvent<PryableComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
-    private void TryPryDoor(EntityUid uid, PryableComponent comp, InteractUsingEvent args)
+    private void OnInteractUsing(EntityUid uid, PryableComponent comp, InteractUsingEvent args)
     {
         if (args.Handled)
             return;
@@ -40,7 +40,7 @@ public sealed class PryingSystem : EntitySystem
         args.Handled = TryPry(uid, args.User, out _, args.Used);
     }
 
-    private void OnDoorAltVerb(Entity<PryableComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnPryableAltVerb(Entity<PryableComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
             return;
