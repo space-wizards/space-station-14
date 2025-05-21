@@ -9,5 +9,17 @@ namespace Content.Shared.Clothing.Event
     [Serializable, NetSerializable]
     public sealed partial class SecHailerToolDoAfterEvent : SimpleDoAfterEvent
     {
+        public enum ToolQuality
+        {
+            Screwing,
+            Cutting
+        }
+
+        public ToolQuality UsedTool { get; private set; }
+
+        public SecHailerToolDoAfterEvent(ToolQuality tool)
+        {
+            UsedTool = tool;
+        }
     }
 }

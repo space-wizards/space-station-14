@@ -13,13 +13,13 @@ namespace Content.Shared.Clothing.Components
     public sealed partial class SecurityHailerComponent : Component
     {
         /// <summary>
-        /// 
+        /// State of the sec mask to check if it can hail
         /// </summary>
         [DataField]
         public SecMaskState CurrentState = SecMaskState.Functional;
 
         /// <summary>
-        /// Range value
+        /// Range value for the exclamation effect on humanoids
         /// </summary>
         [DataField]
         public float Distance = 0;
@@ -35,6 +35,12 @@ namespace Content.Shared.Clothing.Components
         /// </summary>
         [DataField]
         public float ScrewingDoAfterDelay = 1f;
+
+        /// <summary>
+        /// Delay when the hailer has its wires cut
+        /// </summary>
+        [DataField]
+        public float CuttingDoAfterDelay = 1f;
 
         public enum SpecialUseCase : byte
         {
@@ -80,13 +86,13 @@ namespace Content.Shared.Clothing.Components
         public SoundSpecifier CutSounds = new SoundCollectionSpecifier("Wirecutter"); //From the soundcollection of tools
 
         /// <summary>
-        ///     The action that gets displayed when the gas mask is equipped.
+        /// The action that gets displayed when the gas mask is equipped.
         /// </summary>
         [DataField]
         public EntProtoId Action = "ActionSecHailer";
 
         /// <summary>
-        ///     Reference to the action.
+        /// Reference to the action.
         /// </summary>
         [DataField]
         public EntityUid? ActionEntity;

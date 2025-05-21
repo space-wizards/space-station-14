@@ -36,12 +36,11 @@ namespace Content.Shared.Clothing.EntitySystems
             SubscribeLocalEvent<SecurityHailerComponent, ClothingGotEquippedEvent>(OnEquip);
             SubscribeLocalEvent<SecurityHailerComponent, ClothingGotUnequippedEvent>(OnUnequip);
             SubscribeLocalEvent<SecurityHailerComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<SecurityHailerComponent, SecHailerToolDoAfterEvent>(OnScrewingDoAfter);
+            SubscribeLocalEvent<SecurityHailerComponent, SecHailerToolDoAfterEvent>(OnToolDoAfter);
             SubscribeLocalEvent<SecurityHailerComponent, GotEmaggedEvent>(OnEmagging);
             SubscribeLocalEvent<SecurityHailerComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<SecurityHailerComponent, ToggleMaskEvent>(OnToggleMask);
         }
-
 
         private void OnEquip(Entity<SecurityHailerComponent> ent, ref ClothingGotEquippedEvent args)
         {
@@ -129,6 +128,50 @@ namespace Content.Shared.Clothing.EntitySystems
         }
         private void OnInteractCutting(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
         {
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, ent.Comp.ScrewingDoAfterDelay, new SecHailerToolDoAfterEvent(SecHailerToolDoAfterEvent.ToolQuality.Cutting), ent.Owner, target: args.Target, used: args.Used)
+            {
+                Broadcast = true,
+                BreakOnMove = true,
+                NeedHand = true,
+            });
+
+            args.Handled = true;
+        }
+
+        private void OnInteractScrewing(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
+        {
+            //If it's emagged we don't change it
+            if (HasComp<EmaggedComponent>(ent) || ent.Comp.CurrentState != SecMaskState.Functional)
+                return;
+
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, ent.Comp.ScrewingDoAfterDelay, new SecHailerToolDoAfterEvent(SecHailerToolDoAfterEvent.ToolQuality.Screwing), ent.Owner, target: args.Target, used: args.Used)
+            {
+                Broadcast = true,
+                BreakOnMove = true,
+                NeedHand = true,
+            });
+
+            args.Handled = true;
+        }
+
+        private void OnToolDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+        {
+            if (args.Cancelled || args.Handled)
+                return;
+
+            switch (args.UsedTool)
+            {
+                case SecHailerToolDoAfterEvent.ToolQuality.Cutting:
+                    OnCuttingDoAfter(ent, ref args);
+                    break;
+                case SecHailerToolDoAfterEvent.ToolQuality.Screwing:
+                    OnScrewingDoAfter(ent, ref args);
+                    break;
+            }
+        }
+
+        private void OnCuttingDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+        {
             // Snip, snip !
             _sharedAudio.PlayPvs(ent.Comp.CutSounds, ent.Owner);
 
@@ -149,22 +192,6 @@ namespace Content.Shared.Clothing.EntitySystems
                 }
             }
             _appearance.SetData(ent, SecMaskVisuals.State, comp.CurrentState);
-            args.Handled = true;
-        }
-
-        private void OnInteractScrewing(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
-        {
-            //If it's emagged we don't change it
-            if (HasComp<EmaggedComponent>(ent))
-                return;
-
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, ent.Comp.ScrewingDoAfterDelay, new SecHailerToolDoAfterEvent(), ent.Owner, target: args.Target, used: args.Used)
-            {
-                Broadcast = true,
-                BreakOnMove = true,
-                NeedHand = true,
-            });
-
             args.Handled = true;
         }
 
