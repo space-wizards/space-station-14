@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: PowerSink
   parent: [BaseMachine, BaseSyndicateContraband]
   name: power sink
