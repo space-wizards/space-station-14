@@ -25,6 +25,12 @@ public sealed partial class DoorBoltComponent : Component
     public SoundSpecifier BoltDownSound = new SoundPathSpecifier("/Audio/Machines/boltsdown.ogg");
 
     /// <summary>
+    /// If false, the bolts and the bolt light indicators will function without power
+    /// </summary>
+    [DataField]
+    public bool BoltsRequirePower = true;
+
+    /// <summary>
     /// Whether the door bolts are currently deployed.
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -47,4 +53,11 @@ public sealed partial class DoorBoltComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Powered;
+}
+
+[ByRefEvent]
+public record BeforeBoltEvent(EntityUid Target)
+{
+    public EntityUid Target = Target;
+    public bool Cancelled = false;
 }

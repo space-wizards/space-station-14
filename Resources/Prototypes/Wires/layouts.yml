@@ -66,11 +66,12 @@
   - !type:DoorBoltWireAction
   - !type:DoorBoltLightWireAction
   - !type:AiInteractWireAction
-  dummyWires: 4
+  - !type:TurnstileSolenoidWireAction
+  dummyWires: 3
 
 - type: wireLayout
   parent: Turnstile
-  id: TUrnstileGenpop
+  id: TurnstileGenpop
 
 - type: wireLayout
   id: Vending

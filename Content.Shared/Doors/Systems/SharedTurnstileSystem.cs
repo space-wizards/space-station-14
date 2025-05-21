@@ -1,12 +1,14 @@
+using System.Linq;
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Power;
+using Content.Shared.Prying.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Doors.Systems;
@@ -14,7 +16,7 @@ namespace Content.Shared.Doors.Systems;
 /// <summary>
 /// This handles logic and interactions related to <see cref="TurnstileComponent"/>
 /// </summary>
-public abstract partial class SharedTurnstileSystem : EntitySystem
+public abstract class SharedTurnstileSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
@@ -24,6 +26,8 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly SharedBoltSystem _bolt = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -32,6 +36,10 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         SubscribeLocalEvent<TurnstileComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<TurnstileComponent, EndCollideEvent>(OnEndCollide);
         SubscribeLocalEvent<TurnstileComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<TurnstileComponent, BeforePryEvent>(OnBeforePry);
+        SubscribeLocalEvent<TurnstileComponent, GetPryTimeModifierEvent>(OnGetPryMod);
+        SubscribeLocalEvent<TurnstileComponent, PriedEvent>(OnAfterPry);
+        SubscribeLocalEvent<TurnstileComponent, BeforeBoltEvent>(OnBeforeBolt);
     }
 
     private void OnPreventCollide(Entity<TurnstileComponent> ent, ref PreventCollideEvent args)
@@ -61,7 +69,19 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
             return;
         }
 
-        if (!_doorSystem.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
+        if (ent.Comp.PriedExceptions.ContainsKey(args.OtherEntity))
+        {
+            ent.Comp.CollideExceptions.Add(args.OtherEntity);
+            if (_pulling.GetPulling(args.OtherEntity) is { } uid)
+                ent.Comp.CollideExceptions.Add(uid);
+
+            ent.Comp.PriedExceptions.Remove(args.OtherEntity);
+            args.Cancelled = true;
+            Dirty(ent);
+            return;
+        }
+
+        if (!_bolt.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
         {
             if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 return;
@@ -77,7 +97,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         {
             if (_timing.CurTime >= ent.Comp.NextResistTime)
             {
-                _popup.PopupClient(Loc.GetString("turnstile-component-popup-resist", ("turnstile", ent.Owner)), ent, args.OtherEntity);
+                _popup.PopupClient(Loc.GetString("turnstile-component-popup-resist"), ent, args.OtherEntity);
                 ent.Comp.NextResistTime = _timing.CurTime + TimeSpan.FromSeconds(0.1);
                 Dirty(ent);
             }
@@ -88,7 +108,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
     {
         if (!ent.Comp.CollideExceptions.Contains(args.OtherEntity))
         {
-            if (!_doorSystem.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
+            if (!_bolt.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
             {
                 if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 {
@@ -114,7 +134,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         }
     }
 
-    protected bool CanPassDirection(Entity<TurnstileComponent> ent, EntityUid other)
+    private bool CanPassDirection(Entity<TurnstileComponent> ent, EntityUid other)
     {
         var xform = Transform(ent);
         var otherXform = Transform(other);
@@ -148,5 +168,70 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         args.Repeatable = true;
         ent.Comp.Flipped = !ent.Comp.Flipped;
         Dirty(ent);
+    }
+
+    public void SetSolenoidBypassed(Entity<TurnstileComponent> ent, bool value)
+    {
+        ent.Comp.SolenoidBypassed = value;
+        Dirty(ent);
+    }
+
+    private void OnBeforePry(Entity<TurnstileComponent> ent, ref BeforePryEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (ent.Comp.SolenoidBypassed || args.PryPowered)
+            return;
+
+        args.Message = "turnstile-component-popup-resist";
+
+        args.Cancelled = true;
+    }
+
+    private void OnGetPryMod(Entity<TurnstileComponent> ent, ref GetPryTimeModifierEvent args)
+    {
+        if (!ent.Comp.SolenoidBypassed)
+            args.PryTimeModifier *= ent.Comp.PoweredPryModifier;
+
+        if (_bolt.IsBolted(ent))
+            args.PryTimeModifier *= ent.Comp.BoltedPryModifier;
+
+        if (!CanPassDirection(ent, args.User))
+            args.PryTimeModifier *= ent.Comp.WrongDirectionPryModifier;
+    }
+
+    private void OnAfterPry(Entity<TurnstileComponent> ent, ref PriedEvent args)
+    {
+        ent.Comp.PriedExceptions.Remove(args.User);
+        ent.Comp.PriedExceptions.Add(args.User, _timing.CurTime + ent.Comp.PryExpirationTime);
+        Dirty(ent);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<TurnstileComponent>();
+        while (query.MoveNext(out var uid, out var turnstile))
+        {
+            var curTime = _timing.CurTime;
+            var expired = turnstile.PriedExceptions.Where(pair => curTime > pair.Value);
+            foreach (var (expiredUid, _) in expired)
+            {
+                turnstile.PriedExceptions.Remove(expiredUid);
+                if(expiredUid == _playerManager.LocalEntity)
+                    _popup.PopupClient(Loc.GetString("turnstile-component-popup-force-expired"), uid, expiredUid);
+            }
+        }
+    }
+
+    private void OnBeforeBolt(Entity<TurnstileComponent> ent, ref BeforeBoltEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (ent.Comp.SolenoidBypassed)
+            args.Cancelled = true;
     }
 }

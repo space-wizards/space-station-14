@@ -87,9 +87,15 @@ public abstract partial class SharedDoorSystem
         bool predicted = false
     )
     {
-        if (!_powerReceiver.IsPowered(ent.Owner))
-            return false;
         if (ent.Comp.BoltsDown == value)
+            return false;
+
+        if (ent.Comp.BoltsRequirePower && !_powerReceiver.IsPowered(ent.Owner))
+            return false;
+
+        var args = new BeforeBoltEvent(ent);
+        RaiseLocalEvent(ent, ref args);
+        if (args.Cancelled)
             return false;
 
         ent.Comp.BoltsDown = value;
