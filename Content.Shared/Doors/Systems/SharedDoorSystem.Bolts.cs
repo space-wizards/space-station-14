@@ -24,7 +24,7 @@ public abstract partial class SharedDoorSystem
         if (!component.BoltsDown || args.Force)
             return;
 
-        args.Message = "airlock-component-cannot-pry-is-bolted-message";
+        args.Message = Loc.GetString("airlock-component-cannot-pry-is-bolted-message");
 
         args.Cancelled = true;
     }

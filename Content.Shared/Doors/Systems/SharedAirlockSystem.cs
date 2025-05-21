@@ -132,7 +132,7 @@ public abstract class SharedAirlockSystem : EntitySystem
         if (!component.Powered || args.PryPowered)
             return;
 
-        args.Message = "airlock-component-cannot-pry-is-powered-message";
+        args.Message = Loc.GetString("airlock-component-cannot-pry-is-powered-message");
 
         args.Cancelled = true;
     }

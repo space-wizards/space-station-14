@@ -30,7 +30,6 @@ public sealed class PryingSystem : EntitySystem
         SubscribeLocalEvent<PryableComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
         SubscribeLocalEvent<PryableComponent, PryDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<PryableComponent, InteractUsingEvent>(TryPryDoor);
-        SubscribeLocalEvent<PryableComponent, GetPryTimeModifierEvent>(OnGetPryTimeModifier);
     }
 
     private void TryPryDoor(EntityUid uid, PryableComponent comp, InteractUsingEvent args)
@@ -41,46 +40,46 @@ public sealed class PryingSystem : EntitySystem
         args.Handled = TryPry(uid, args.User, out _, args.Used);
     }
 
-    private void OnDoorAltVerb(EntityUid uid, PryableComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnDoorAltVerb(Entity<PryableComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        if (!TryComp<PryingComponent>(args.User, out _))
+        if (!TryComp<PryingComponent>(args.User, out var prying))
             return;
 
+        var user = args.User;
         args.Verbs.Add(new AlternativeVerb()
         {
-            Text = Loc.GetString(component.VerbLocStr),
+            Text = Loc.GetString(ent.Comp.VerbLocStr),
             Impact = LogImpact.Low,
-            Act = () => TryPry(uid, args.User, out _, args.User),
+            Act = () => TryPry(ent, user, out _, user, ent.Comp, prying),
         });
     }
 
     /// <summary>
     /// Attempt to pry an entity.
     /// </summary>
-    public bool TryPry(EntityUid target, EntityUid user, out DoAfterId? id, EntityUid tool)
+    public bool TryPry(EntityUid target, EntityUid user, out DoAfterId? id, EntityUid tool, PryableComponent? pryable = null, PryingComponent? prying = null)
     {
         id = null;
 
-        PryingComponent? comp = null;
-        if (!Resolve(tool, ref comp, false))
+        if (!Resolve(target, ref pryable, ref prying, logMissing: false))
             return false;
 
-        if (!comp.Enabled)
+        if (!prying.Enabled)
             return false;
 
-        if (!CanPry(target, user, out var message, comp))
+        if (!CanPry(target, user, out var message, prying, pryable))
         {
             if (!string.IsNullOrWhiteSpace(message))
-                _popup.PopupClient(Loc.GetString(message), target, user);
+                _popup.PopupClient(message, target, user);
             // If we have reached this point we want the event that caused this
             // to be marked as handled.
             return true;
         }
 
-        StartPry(target, user, tool, comp.SpeedModifier, out id);
+        StartPry((target, pryable), user, tool, prying.SpeedModifier, out id);
 
         return true;
     }
@@ -88,37 +87,47 @@ public sealed class PryingSystem : EntitySystem
     /// <summary>
     /// Try to pry an entity.
     /// </summary>
-    public bool TryPry(EntityUid target, EntityUid user, out DoAfterId? id)
+    public bool TryPry(EntityUid target, EntityUid user, out DoAfterId? id, PryUnpoweredComponent? unpoweredComp = null, PryableComponent? pryable = null)
     {
         id = null;
 
+        if (!Resolve(target, ref pryable, logMissing: false))
+            return false;
+
         // We don't care about displaying a message if no tool was used.
-        if (!TryComp<PryUnpoweredComponent>(target, out var unpoweredComp) || !CanPry(target, user, out _, unpoweredComp: unpoweredComp))
+        if (!Resolve(target, ref unpoweredComp, logMissing: false)
+            || !CanPry(target, user, out _, pryable: pryable, unpoweredComp: unpoweredComp))
             // If we have reached this point we want the event that caused this
             // to be marked as handled.
             return true;
 
         // hand-prying is much slower
         var modifier = CompOrNull<PryingComponent>(user)?.SpeedModifier ?? unpoweredComp.PryModifier;
-        return StartPry(target, user, null, modifier, out id);
+        return StartPry((target, pryable), user, null, modifier, out id);
     }
 
-    private bool CanPry(EntityUid target, EntityUid user, out string? message, PryingComponent? comp = null, PryUnpoweredComponent? unpoweredComp = null)
+    private bool CanPry(EntityUid target, EntityUid user, out string? message, PryingComponent? prying = null, PryableComponent? pryable = null, PryUnpoweredComponent? unpoweredComp = null)
     {
         BeforePryEvent canev;
 
-        if (comp != null || Resolve(user, ref comp, false))
+        message = null;
+
+        if (!Resolve(target, ref pryable, logMissing: false))
+            return false;
+
+        // Are we prying with a tool?
+        if (Resolve(user, ref prying, false))
         {
-            canev = new BeforePryEvent(user, comp.PryPowered, comp.Force, true);
+            // Check if we can pry this entity with this tool
+            canev = new BeforePryEvent(user, prying.PryPowered, prying.Force, true);
         }
         else
         {
+            // Can this entity be pried without tools?
             if (!Resolve(target, ref unpoweredComp))
-            {
-                message = null;
                 return false;
-            }
 
+            // Check if we can pry this entity without tools in it's current state
             canev = new BeforePryEvent(user, false, false, false);
         }
 
@@ -129,9 +138,9 @@ public sealed class PryingSystem : EntitySystem
         return !canev.Cancelled;
     }
 
-    private bool StartPry(EntityUid target, EntityUid user, EntityUid? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id)
+    private bool StartPry(Entity<PryableComponent> target, EntityUid user, EntityUid? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id)
     {
-        var modEv = new GetPryTimeModifierEvent(user);
+        var modEv = new GetPryTimeModifierEvent(user, target.Comp.PryTime);
 
         RaiseLocalEvent(target, ref modEv);
         var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(modEv.BaseTime * modEv.PryTimeModifier / toolModifier), new PryDoAfterEvent(), target, target, tool)
@@ -152,34 +161,29 @@ public sealed class PryingSystem : EntitySystem
         return _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
     }
 
-    private void OnDoAfter(EntityUid uid, PryableComponent door, PryDoAfterEvent args)
+    private void OnDoAfter(Entity<PryableComponent> ent, ref PryDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
         if (args.Target is null)
             return;
 
-        TryComp<PryingComponent>(args.Used, out var comp);
+        TryComp<PryingComponent>(args.Used, out var prying);
 
-        if (!CanPry(uid, args.User, out var message, comp))
+        if (!CanPry(ent, args.User, out var message, prying: prying, pryable: ent.Comp))
         {
             if (!string.IsNullOrWhiteSpace(message))
-                _popup.PopupClient(Loc.GetString(message), uid, args.User);
+                _popup.PopupClient(message, ent, args.User);
             return;
         }
 
-        if (args.Used != null && comp != null)
+        if (args.Used != null && prying != null)
         {
-            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User);
+            _audioSystem.PlayPredicted(prying.UseSound, args.Used.Value, args.User);
         }
 
         var ev = new PriedEvent(args.User);
-        RaiseLocalEvent(uid, ref ev);
-    }
-
-    private void OnGetPryTimeModifier(Entity<PryableComponent> ent, ref GetPryTimeModifierEvent args)
-    {
-        args.BaseTime = ent.Comp.PryTime;
+        RaiseLocalEvent(ent, ref ev);
     }
 }
 
