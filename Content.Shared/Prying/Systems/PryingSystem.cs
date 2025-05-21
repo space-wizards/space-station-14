@@ -64,13 +64,16 @@ public sealed class PryingSystem : EntitySystem
     {
         id = null;
 
-        if (!Resolve(target, ref pryable, ref prying, logMissing: false))
+        if (!Resolve(target, ref pryable, logMissing: false))
+            return false;
+
+        if (!Resolve(tool, ref prying, logMissing: false))
             return false;
 
         if (!prying.Enabled)
             return false;
 
-        if (!CanPry(target, user, out var message, prying, pryable))
+        if (!CanPry(target, tool, out var message, prying, pryable))
         {
             if (!string.IsNullOrWhiteSpace(message))
                 _popup.PopupClient(message, target, user);
@@ -79,7 +82,7 @@ public sealed class PryingSystem : EntitySystem
             return true;
         }
 
-        StartPry((target, pryable), user, tool, prying.SpeedModifier, out id);
+        StartPry((target, pryable), user, (tool, prying), prying.SpeedModifier, out id);
 
         return true;
     }
@@ -138,19 +141,21 @@ public sealed class PryingSystem : EntitySystem
         return !canev.Cancelled;
     }
 
-    private bool StartPry(Entity<PryableComponent> target, EntityUid user, EntityUid? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id)
+    private bool StartPry(Entity<PryableComponent> target, EntityUid user, Entity<PryingComponent>? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id)
     {
         var modEv = new GetPryTimeModifierEvent(user, target.Comp.PryTime);
 
+        var toolIsUser = tool?.Owner == user;
+
         RaiseLocalEvent(target, ref modEv);
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(modEv.BaseTime * modEv.PryTimeModifier / toolModifier), new PryDoAfterEvent(), target, target, tool)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(modEv.BaseTime * modEv.PryTimeModifier / toolModifier), new PryDoAfterEvent(), target, target, tool?.Owner)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
-            NeedHand = tool != user,
+            NeedHand = !toolIsUser,
         };
 
-        if (tool != user && tool != null)
+        if (!toolIsUser && tool != null)
         {
             _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is using {ToPrettyString(tool.Value)} to pry {ToPrettyString(target)}");
         }
@@ -168,9 +173,11 @@ public sealed class PryingSystem : EntitySystem
         if (args.Target is null)
             return;
 
-        TryComp<PryingComponent>(args.Used, out var prying);
+        var pryUser = args.User;
+        if (TryComp<PryingComponent>(args.Used, out var prying))
+            pryUser = args.Used.Value;
 
-        if (!CanPry(ent, args.User, out var message, prying: prying, pryable: ent.Comp))
+        if (!CanPry(ent, pryUser, out var message, prying: prying, pryable: ent.Comp))
         {
             if (!string.IsNullOrWhiteSpace(message))
                 _popup.PopupClient(message, ent, args.User);
