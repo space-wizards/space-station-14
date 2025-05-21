@@ -4,7 +4,7 @@
         "x": 32,
         "y": 32
     },
-    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/05ec94e46349c35e29ca91e5e97d0c88ae26ad44/icons/mob/species/human/human_face.dmi, resprited by Alekshhh, a modified by potato1234x, uneven and tailed is drawn by Ubaser, doublebun_long by Emisse, longbundled and bob5 sprited by github:DreamlyJack(624946166152298517), fit to thaven by Sha-Seng (github), halfup styles, midpart styles, mullet styles, undercut_curly and sideshave_curly sprited by argentsunshine (github), headcovers, floral, and messyponytail by crocodilecarousel (github), spikyponytaillong edited from spikyponytail by mhachimagus (github), thavenshaggy and thavenshaggylonger by animal-collective(github)",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/05ec94e46349c35e29ca91e5e97d0c88ae26ad44/icons/mob/species/human/human_face.dmi, resprited by Alekshhh, a modified by potato1234x, uneven and tailed is drawn by Ubaser, doublebun_long by Emisse, longbundled and bob5 sprited by github:DreamlyJack(624946166152298517), fit to thaven by Sha-Seng (github), halfup styles, midpart styles, mullet styles, undercut_curly and sideshave_curly sprited by argentsunshine (github), headcovers, floral, and messyponytail by crocodilecarousel (github), spikyponytaillong edited from spikyponytail by mhachimagus (github), (thavenshaggy, thavenshaggylonger, susiethaven) by @animal_collective/animal-collective (github)",
     "license": "CC-BY-SA-3.0",
     "states": [
         {
@@ -845,6 +845,10 @@
         },
         {
             "name": "thavenshaggylonger",
+            "directions": 4
+        },
+        {
+            "name": "susiethaven",
             "directions": 4
         }
     ]

@@ -2414,6 +2414,15 @@
   - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
     state: thavenshaggylonger
 
+- type: marking
+  id: SusieThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: susiethaven
+
 # HeadSide
 
 - type: marking
