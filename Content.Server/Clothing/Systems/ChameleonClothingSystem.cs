@@ -55,15 +55,6 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         args.Disabled = true;
     }
 
-    private void TryOpenUi(EntityUid uid, EntityUid user, ChameleonClothingComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-        if (!TryComp(user, out ActorComponent? actor))
-            return;
-        _uiSystem.TryToggleUi(uid, ChameleonUiKey.Key, actor.PlayerSession);
-    }
-
     private void UpdateUi(EntityUid uid, ChameleonClothingComponent? component = null)
     {
         if (!Resolve(uid, ref component))

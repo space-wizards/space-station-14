@@ -45,6 +45,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ChameleonClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ChameleonClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
 
         SubscribeLocalEvent<ChameleonClothingComponent, PrototypesReloadedEventArgs>(OnPrototypeReload);
         PrepareAllVariants();
@@ -52,7 +53,6 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
     private void OnPrototypeReload(EntityUid uid, ChameleonClothingComponent component, PrototypesReloadedEventArgs args)
     {
-        SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         PrepareAllVariants();
     }
 
@@ -180,7 +180,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         return set;
     }
 
-    private void PrepareAllVariants()
+    protected void PrepareAllVariants()
     {
         _data.Clear();
         var prototypes = _proto.EnumeratePrototypes<EntityPrototype>();
