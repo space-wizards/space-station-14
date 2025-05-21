@@ -5981,4 +5981,38 @@ Entries:
   id: 828
   time: '2025-05-21T11:10:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/615
-
+- author: Happyrobot33
+  changes:
+  - message: Ghost Role Requirements added to all ERT Roles.
+    type: Tweak
+  id: 829
+  time: '2025-05-21T11:09:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/634
+- author: Happyrobot33
+  changes:
+  - message: Gave resomi access to Hiss, Purr, Growl Emotes
+    type: Add
+  id: 830
+  time: '2025-05-21T11:09:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/635
+- author: Happyrobot33
+  changes:
+  - message: Fixed Use Swing Spamming of boxcutter.
+    type: Fix
+  id: 831
+  time: '2025-05-21T11:09:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/636
+- author: Happyrobot33
+  changes:
+  - message: Added Departments to stats window.
+    type: Add
+  id: 832
+  time: '2025-05-21T11:09:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/637
+- author: Happyrobot33
+  changes:
+  - message: Tweaked the colors of Department time trackers.
+    type: Tweak
+  id: 833
+  time: '2025-05-21T11:09:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/637
