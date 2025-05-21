@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Reduced or removed prestige item requirements per feedback
-    type: Tweak
-  id: 1208
-  time: '2025-02-28T01:00:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1781
 - author: mqole
   changes:
   - message: The overall changeling population has been lightly culled.
@@ -4231,3 +4224,18 @@
   id: 1707
   time: '2025-05-21T08:30:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2479
+- author: ArtisticRoomba
+  changes:
+  - message: Tesla coils can now hold a max capacity of 5 MJ, and receive 5 MJ of
+      energy when struck by lightning.
+    type: Tweak
+  - message: Tesla coils can now only output a maximum of 350 kW to the grid. This
+      was done to make power flow smoother (it was triggering epilepsy in extreme
+      circumstances).
+    type: Tweak
+  - message: The TEG now outputs smoother power when pressure across the circulators
+      flutter. (This was causing epilepsy in extreme circumstances).
+    type: Fix
+  id: 1708
+  time: '2025-05-21T08:38:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2540
