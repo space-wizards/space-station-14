@@ -210,7 +210,7 @@ namespace Content.Shared.Clothing.EntitySystems
             else if (ent.Comp.CurrentState == SecMaskState.WiresCut)
                 args.PushMarkup(Loc.GetString("sec-gas-mask-examined-wires-cut"));
             else
-                args.PushMarkup(Loc.GetString($"sec-gas-mask-examined-{ent.Comp.AggresionLevel.ToString().ToLower()}"));
+                args.PushMarkup(Loc.GetString($"sec-gas-mask-examined", ("level", ent.Comp.AggresionLevel)));
         }
 
         private void OnToggleMask(Entity<SecurityHailerComponent> ent, ref ToggleMaskEvent args)

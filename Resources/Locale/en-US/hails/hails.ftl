@@ -79,9 +79,21 @@ sec-gas-mask-emagged = Changed to ERROR aggression
 ert-gas-mask-impossible = It seems impervious to external change.
 
 # Examine description
-sec-gas-mask-examined-low = The aggression setting is set to [color=green]Low[/color].
-sec-gas-mask-examined-medium = The aggression setting is set to [color=yellow]Medium[/color].
-sec-gas-mask-examined-high = The aggression setting is set to [color=red]High[/color].
+-sec-gas-mask-aggresion-level =
+    { $level ->
+        [low] Low
+        [medium] Medium
+        [high] High
+       *[other] Unknown
+    }
+
+sec-gas-mask-examined = The aggression setting is set to { $level ->
+    [low] [color=green]{ -sec-gas-mask-aggresion-level(level: "low") }[/color]
+    [medium] [color=yellow]{ -sec-gas-mask-aggresion-level(level: "medium") }[/color]
+    [high] [color=red]{ -sec-gas-mask-aggresion-level(level: "high") }[/color]
+   *[other] [color=purple]{ -sec-gas-mask-aggresion-level(level: "other") }[/color]
+}.
+
 sec-gas-mask-examined-ert = The aggression setting is set to [color=red]High[/color] and doesn't seem capable of being switched.
 sec-gas-mask-examined-emagged = The aggression setting is set to [color=red]ERROR[/color]. Weird.
 sec-gas-mask-examined-wires-cut = The hailer seems to have its wires cut off.
