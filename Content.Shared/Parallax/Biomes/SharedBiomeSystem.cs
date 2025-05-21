@@ -17,6 +17,7 @@ public abstract class SharedBiomeSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] protected readonly ITileDefinitionManager TileDefManager = default!;
     [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     protected const byte ChunkSize = 8;
 
@@ -69,7 +70,7 @@ public abstract class SharedBiomeSystem : EntitySystem
 
     public bool TryGetBiomeTile(EntityUid uid, MapGridComponent grid, Vector2i indices, [NotNullWhen(true)] out Tile? tile)
     {
-        if (grid.TryGetTileRef(indices, out var tileRef) && !tileRef.Tile.IsEmpty)
+        if (_map.TryGetTileRef(uid, grid, indices, out var tileRef) && !tileRef.Tile.IsEmpty)
         {
             tile = tileRef.Tile;
             return true;
