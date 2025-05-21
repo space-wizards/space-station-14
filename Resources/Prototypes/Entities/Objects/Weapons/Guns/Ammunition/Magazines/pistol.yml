@@ -152,7 +152,7 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-      - state: stripe
+    - state: stripe
       color: "#9b0000"
   - type: Item
     inhandVisuals:
@@ -206,10 +206,12 @@
     proto: CartridgePistolPractice
   - type: Sprite
     layers:
-    - state: practice
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+    - state: stripe
+      color: "#ea5800"
   - type: Item
     inhandVisuals:
       left:
@@ -231,10 +233,12 @@
     proto: CartridgePistolUranium
   - type: Sprite
     layers:
-    - state: uranium
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+    - state: stripe
+      color: "#00cd42"
   - type: Item
     inhandVisuals:
       left:
@@ -276,10 +280,12 @@
     proto: CartridgePistol
   - type: Sprite
     layers:
-    - state: red
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+    - state: stripe
+      color: "#9b0000"
   - type: Item
     inhandVisuals:
       left:
@@ -300,10 +306,12 @@
     proto: CartridgePistol
   - type: Sprite
     layers:
-    - state: practice
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+    - state: stripe
+      color: "#ea5800"
   - type: Item
     inhandVisuals:
       left:
@@ -330,10 +338,12 @@
       path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
   - type: Sprite
     layers:
-    - state: red
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+    - state: stripe
+      color: "#9b0000"
   - type: Item
     inhandVisuals:
       left:
@@ -377,10 +387,12 @@
     proto: CartridgePistolPractice
   - type: Sprite
     layers:
-    - state: practice
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+    - state: stripe
+      color: "#ea5800"
   - type: Item
     inhandVisuals:
       left:
@@ -402,10 +414,12 @@
     proto: CartridgePistolUranium
   - type: Sprite
     layers:
-    - state: uranium
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+    - state: stripe
+      color: "#00cd42"
   - type: Item
     inhandVisuals:
       left:
