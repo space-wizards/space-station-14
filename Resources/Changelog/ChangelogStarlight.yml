@@ -5929,4 +5929,98 @@ Entries:
   id: 821
   time: '2025-05-20T13:06:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/658
+- author: Conf
+  changes:
+  - message: Elite Suit - Blunt/Slash Resist reduced to 30%, Pierce Resist reduced
+      to 40%. Use having no slowdown to dodge and avoid melee. If you position yourself
+      badly enough that crew is beating you with bats, you deserve to die.
+    type: Tweak
+  id: 822
+  time: '2025-05-21T01:11:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/646
+- author: Dot5511 and Lokil93
+  changes:
+  - message: Makes the ChemMaster4000's Pill/Patch Output take the solution from the
+      Beaker instead of from the Buffer.
+    type: Tweak
+  id: 823
+  time: '2025-05-21T01:16:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/586
+- author: Dot5511 and Lokil93
+  changes:
+  - message: New text for when the Beaker is Empty/Low and you're trying to make Pills/Patches
+    type: Add
+  id: 824
+  time: '2025-05-21T01:16:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/586
+- author: Happyrobot33
+  changes:
+  - message: Fixed missing cavity slots on species.
+    type: Fix
+  id: 825
+  time: '2025-05-21T11:10:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/642
+- author: Happyrobot33
+  changes:
+  - message: FIxed missing tongue and eye implant slot on resomi.
+    type: Fix
+  id: 826
+  time: '2025-05-21T11:10:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/642
+- author: Puddleboat/Polaris
+  changes:
+  - message: Added panda plushie to the hug dispenser
+    type: Add
+  id: 827
+  time: '2025-05-21T11:10:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/615
+- author: Puddleboat/Polaris
+  changes:
+  - message: Inhand sprites for Mozan plushie
+    type: Add
+  id: 828
+  time: '2025-05-21T11:10:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/615
+- author: Happyrobot33
+  changes:
+  - message: Ghost Role Requirements added to all ERT Roles.
+    type: Tweak
+  id: 829
+  time: '2025-05-21T11:09:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/634
+- author: Happyrobot33
+  changes:
+  - message: Gave resomi access to Hiss, Purr, Growl Emotes
+    type: Add
+  id: 830
+  time: '2025-05-21T11:09:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/635
+- author: Happyrobot33
+  changes:
+  - message: Fixed Use Swing Spamming of boxcutter.
+    type: Fix
+  id: 831
+  time: '2025-05-21T11:09:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/636
+- author: Happyrobot33
+  changes:
+  - message: Added Departments to stats window.
+    type: Add
+  id: 832
+  time: '2025-05-21T11:09:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/637
+- author: Happyrobot33
+  changes:
+  - message: Tweaked the colors of Department time trackers.
+    type: Tweak
+  id: 833
+  time: '2025-05-21T11:09:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/637
+- author: PubliclyExecutedPig
+  changes:
+  - message: Smart LMG boxes are now 2x2 in the inventory
+    type: Tweak
+  id: 834
+  time: '2025-05-21T12:26:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/665
 
