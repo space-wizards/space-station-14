@@ -117,7 +117,7 @@ public abstract partial class SharedToolSystem
 
         if (args.Target is not { Valid: true } target || !args.CanReach)
             return;
-        
+
         if (!entity.Comp.RequiresFuel)
         {
             args.Handled = true;
@@ -165,7 +165,7 @@ public abstract partial class SharedToolSystem
         if (entity.Comp.RequiresFuel)
         {
             var (currentFuel, _) = GetWelderFuelAndCapacity(entity);
-            
+
             if (requiredFuel > currentFuel)
             {
                 if (entity.Comp.LogUsage)
