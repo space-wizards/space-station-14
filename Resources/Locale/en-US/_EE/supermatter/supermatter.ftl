@@ -52,3 +52,6 @@ supermatter-collide-insert-unremoveable =
     {CAPITALIZE(THE($target))} touches {THE($sm)} with {THE($item)} and flashes into dust!
 supermatter-collide-insert-unremoveable-user =
     You touch {THE($sm)} with {THE($item)} and flash into dust!
+
+supermatter-paracusia-player-message =
+    You feel your head throb with otherworldly visions...

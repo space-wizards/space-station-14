@@ -2,6 +2,8 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using Content.Server.Chat.Systems;
+using Content.Server.Ghost;
+using Content.Server.Light.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared._EE.CCVar;
 using Content.Shared._EE.Supermatter.Components;
@@ -14,6 +16,7 @@ using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Speech;
@@ -689,6 +692,16 @@ public sealed partial class SupermatterSystem
         // Scramble the thaven shared mood
         _moods.NewSharedMoods();
 
+        // Flickers all powered lights on the map
+        var lightLookup = new HashSet<Entity<PoweredLightComponent>>();
+        _entityLookup.GetEntitiesOnMap<PoweredLightComponent>(mapId, lightLookup);
+        foreach (var light in lightLookup)
+        {
+            if (!_rand.Prob(sm.LightFlickerChance))
+                continue;
+            _ghost.DoGhostBooEvent(light);
+        }
+
         // Add post-delamination event scheduler
         var gamerule = _gameTicker.AddGameRule(sm.DelamGamerulePrototype);
         _gameTicker.StartGameRule(gamerule);
@@ -797,6 +810,9 @@ public sealed partial class SupermatterSystem
 
             if (!EnsureComp<ParacusiaComponent>(mob, out var paracusia))
             {
+                _popup.PopupEntity(Loc.GetString("supermatter-paracusia-player-message"), mob, mob, PopupType.LargeCaution);
+                _audio.PlayEntity(sm.GainParacusiaSound, mob, mob);
+                _audio.PlayEntity(sm.GiveParacusiaSound, mob, uid);
                 _paracusia.SetSounds(mob, paracusiaSounds, paracusia);
                 _paracusia.SetTime(mob, paracusiaMinTime, paracusiaMaxTime, paracusia);
                 _paracusia.SetDistance(mob, paracusiaDistance, paracusia);
