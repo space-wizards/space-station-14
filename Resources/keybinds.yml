@@ -228,6 +228,10 @@ binds:
   canFocus: true
   key: MouseLeft
   mod1: Control
+- function: CheckLimbHealth
+  type: State
+  key: MouseLeft
+  mod1: Control
 - function: MovePulledObject
   type: State
   key: MouseRight
