@@ -121,6 +121,10 @@
       components:
       - MobState # no mobs
       - Pullable # no dragging things in
+  - type: Pryable
+    verbLocStr: turnstile-pry
+  - type: DoorBolt
+    boltsRequirePower: false
   - type: GenericVisualizer
     visuals:
       enum.ElectrifiedVisuals.ShowSparks:

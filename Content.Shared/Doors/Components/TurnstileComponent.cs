@@ -34,6 +34,13 @@ public sealed partial class TurnstileComponent : Component
     public HashSet<EntityUid> CollideExceptions = new();
 
     /// <summary>
+    /// Maintained dictionary of entities that can enter due to a successful prying DoAfter
+    /// The values represent the game time at which the entry will expire.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<EntityUid, TimeSpan> PriedExceptions = new();
+
+    /// <summary>
     /// default state of the turnstile sprite.
     /// </summary>
     [DataField]
@@ -74,6 +81,34 @@ public sealed partial class TurnstileComponent : Component
             Volume = -7,
         },
     };
+
+    /// <summary>
+    /// This is similar to the POWER wire on traditional airlocks
+    /// While this is true, the turnstile may be bypassed by prying and the bolts will not actuate.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool SolenoidBypassed;
+
+    /// <summary>
+    /// Pry modifier for a turnstile without bypassing the solenoid.
+    /// Most anything that can pry powered has a pry speed bonus,
+    /// so this default is closer to 6 effectively on e.g. jaws (9 seconds when applied to other default.)
+    /// </summary>
+    [DataField]
+    public float PoweredPryModifier = 9f;
+
+    /// <summary>
+    /// Pry modifier for a prying a turnstile from the wrong direction.
+    /// </summary>
+    [DataField]
+    public float WrongDirectionPryModifier = 2f;
+
+    /// <summary>
+    /// The amount of time it takes for a successful pry DoAfter to expire
+    /// You must enter the turnstile within this amount of time after the DoAfter finishes
+    /// </summary>
+    [DataField]
+    public TimeSpan PryExpirationTime = TimeSpan.FromSeconds(3);
 }
 
 [Serializable, NetSerializable]

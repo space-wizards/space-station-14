@@ -63,7 +63,8 @@
   id: Turnstile
   wires:
   - !type:LogWireAction
-  dummyWires: 7
+  - !type:TurnstileSolenoidWireAction
+  dummyWires: 6
 
 - type: wireLayout
   parent: Turnstile
