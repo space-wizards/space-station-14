@@ -734,10 +734,10 @@
         Blunt: 0.70 #SL EDIT
         Slash: 0.70 #SL EDIT
         Piercing: 0.60 #SL EDIT
-        Heat: 0.2 #SL EDIT
+        Heat: 0.2
         Radiation: 0.01
         Caustic: 0.5
-    staminaModifier: 0.2 #SL EDIT
+    staminaModifier: 0.2
     ingoreKnockdown: true
   - type: Item
     size: Huge
