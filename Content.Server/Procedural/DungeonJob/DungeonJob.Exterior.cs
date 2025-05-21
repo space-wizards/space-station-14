@@ -26,7 +26,7 @@ public sealed partial class DungeonJob
         // Offset each dungeon so they don't generate on top of each other.
         for (var i = 0; i < runCount; i++)
         {
-            angle += (random.NextFloat(0.25f, 1.75f)) * divisors;
+            angle += (random.NextFloat(0.6f, 1.4f)) * divisors;
         }
 
         var distance = Math.Max(aabb.Width / 2f + 1f, aabb.Height / 2f + 1f);
