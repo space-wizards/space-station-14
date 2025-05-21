@@ -52,17 +52,17 @@ public abstract partial class SharedDeployableTurretControllerSystem : EntitySys
         ent.Comp.ArmamentState = armamentState;
         Dirty(ent);
 
-        if (TryComp<AppearanceComponent>(ent, out var appearance))
-            _appearance.SetData(ent, TurretControllerVisuals.ControlPanel, armamentState);
+        _appearance.SetData(ent, TurretControllerVisuals.ControlPanel, armamentState);
 
         // Linked turrets are updated on the server side
     }
 
-    protected virtual void ChangeExemptAccessLevels
-        (Entity<DeployableTurretControllerComponent> ent,
+    protected virtual void ChangeExemptAccessLevels(
+        Entity<DeployableTurretControllerComponent> ent,
         HashSet<ProtoId<AccessLevelPrototype>> exemptions,
         bool enabled,
-        EntityUid? user = null)
+        EntityUid? user = null
+    )
     {
         // Update the controller
         if (!TryComp<TurretTargetSettingsComponent>(ent, out var targetSettings))

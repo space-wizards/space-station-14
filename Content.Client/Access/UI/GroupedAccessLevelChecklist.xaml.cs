@@ -31,13 +31,11 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
     // Temp values
     private int _accessGroupTabIndex = 0;
     private bool _canInteract = false;
-    private List<CheckBox> _checkBoxes = new();
     private List<AccessLevelPrototype> _accessLevelsForTab = new();
-    private List<AccessLevelEntry> _accessLevelEntries = new();
-    private Dictionary<AccessGroupPrototype, List<AccessLevelPrototype>> _groupedAccessLevels = new();
+    private readonly List<AccessLevelEntry> _accessLevelEntries = new();
+    private readonly Dictionary<AccessGroupPrototype, List<AccessLevelPrototype>> _groupedAccessLevels = new();
 
     // Events
-    private event Action<int>? OnAccessGroupChangedEvent;
     public event Action<HashSet<ProtoId<AccessLevelPrototype>>, bool>? OnAccessLevelsChangedEvent;
 
     /// <summary>
@@ -48,10 +46,8 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-
-        OnAccessGroupChangedEvent += OnAccessGroupChanged;
     }
-
+    
     private void ArrangeAccessControls()
     {
         // Create a list of known access groups with which to populate the UI
@@ -105,7 +101,7 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
         AccessLevelChecklist.DisposeAllChildren();
 
         // No access level prototypes were assigned to any of the access level groups.
-        // Either the the turret controller has no assigned access levels or their names were invalid.
+        // Either the turret controller has no assigned access levels or their names were invalid.
         if (_groupedAccessLevels.Count == 0)
             return false;
 
@@ -134,8 +130,12 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
             if (_labelStyleClass != null)
                 accessGroupButton.Label.SetOnlyStyleClass(_labelStyleClass);
 
-            var prefix = _groupedAccessLevels[accessGroup].All(x => _activeAccessLevels.Contains(x)) ? "»" :
-                (_groupedAccessLevels[accessGroup].Any(x => _activeAccessLevels.Contains(x)) ? "›" : " ");
+            var accessLevelPrototypes = _groupedAccessLevels[accessGroup];
+            var prefix = accessLevelPrototypes.All(x => _activeAccessLevels.Contains(x))
+                ? "»"
+                : accessLevelPrototypes.Any(x => _activeAccessLevels.Contains(x))
+                    ? "›"
+                    : " ";
 
             var text = Loc.GetString(
                 "turret-controls-window-access-group-label",
@@ -146,10 +146,7 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
             accessGroupButton.Text = text;
 
             // Button events
-            accessGroupButton.OnPressed += _ =>
-            {
-                OnAccessGroupChangedEvent?.Invoke(accessGroupButton.GetPositionInParent());
-            };
+            accessGroupButton.OnPressed += _ => OnAccessGroupChanged(accessGroupButton.GetPositionInParent());
 
             AccessGroupList.AddChild(accessGroupButton);
         }
@@ -170,7 +167,7 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
         _accessLevelEntries.Clear();
 
         // No access level prototypes were assigned to any of the access level groups
-        // Either the the turret controller has no assigned access levels or their names were invalid
+        // Either turret controller has no assigned access levels, or their names were invalid
         if (_groupedAccessLevels.Count == 0)
             return;
 
@@ -178,7 +175,8 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
         var orderedAccessGroups = _groupedAccessLevels.Keys.OrderBy(x => x.GetAccessGroupName()).ToList();
 
         // Get the access levels associated with the current tab
-        _accessLevelsForTab = _groupedAccessLevels[orderedAccessGroups[_accessGroupTabIndex]];
+        var selectedAccessGroupTabProto = orderedAccessGroups[_accessGroupTabIndex];
+        _accessLevelsForTab = _groupedAccessLevels[selectedAccessGroupTabProto];
         _accessLevelsForTab = _accessLevelsForTab.OrderBy(x => x.GetAccessLevelName()).ToList();
 
         // Add an 'all' checkbox as the first child of the list if it has more than one access level
@@ -189,15 +187,17 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
         if (_labelStyleClass != null)
             allCheckBox.Label.SetOnlyStyleClass(_labelStyleClass);
 
-        // Add the 'al'l checkbox events
+        // Add the 'all' checkbox events
         allCheckBox.OnPressed += args =>
         {
-            SetCheckBoxPressedState(_checkBoxes, allCheckBox.Pressed);
+            SetCheckBoxPressedState(_accessLevelEntries, allCheckBox.Pressed);
 
             var accessLevels = new HashSet<ProtoId<AccessLevelPrototype>>();
 
             foreach (var accessLevel in _accessLevelsForTab)
+            {
                 accessLevels.Add(accessLevel);
+            }
 
             OnAccessLevelsChangedEvent?.Invoke(accessLevels, allCheckBox.Pressed);
         };
@@ -225,9 +225,9 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
                 accessLevelEntry.CheckBox.Label.SetOnlyStyleClass(_labelStyleClass);
 
             // Set the checkbox linkage lines
-            var isEndOfList = (_accessLevelsForTab.IndexOf(accessLevel) == (_accessLevelsForTab.Count - 1));
+            var isEndOfList = _accessLevelsForTab.IndexOf(accessLevel) == (_accessLevelsForTab.Count - 1);
 
-            var lines = new List<(Vector2, Vector2)>()
+            var lines = new List<(Vector2, Vector2)>
             {
                 (new Vector2(0.5f, 0f), new Vector2(0.5f, isEndOfList ? 0.5f : 1f)),
                 (new Vector2(0.5f, 0.5f), new Vector2(1f, 0.5f)),
@@ -243,9 +243,7 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
                 // If the checkbox and its siblings are checked, check the 'all' checkbox too
                 allCheckBox.Pressed = AreAllCheckBoxesPressed(_accessLevelEntries.Select(x => x.CheckBox));
 
-                OnAccessLevelsChangedEvent?.Invoke
-                    (new HashSet<ProtoId<AccessLevelPrototype>>() { accessLevelEntry.AccessLevel },
-                    accessLevelEntry.CheckBox.Pressed);
+                OnAccessLevelsChangedEvent?.Invoke([accessLevelEntry.AccessLevel], accessLevelEntry.CheckBox.Pressed);
             };
 
             AccessLevelChecklist.AddChild(accessLevelEntry);
@@ -267,16 +265,18 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
         return true;
     }
 
-    private void SetCheckBoxPressedState(IEnumerable<CheckBox> checkBoxes, bool pressed)
+    private void SetCheckBoxPressedState(List<AccessLevelEntry> accessLevelEntries, bool pressed)
     {
-        foreach (var checkBox in checkBoxes)
-            checkBox.Pressed = pressed;
+        foreach (var accessLevelEntry in accessLevelEntries)
+        {
+            accessLevelEntry.CheckBox.Pressed = pressed;
+        }
     }
 
+
     /// <summary>
-    /// Provides the UI with a list of access groups with which to poplate its list of tabs.
+    /// Provides the UI with a list of access groups using which list of tabs should be populated.
     /// </summary>
-    /// <param name="accessGroups"></param>
     public void SetAccessGroups(HashSet<ProtoId<AccessGroupPrototype>> accessGroups)
     {
         _accessGroups = accessGroups;
@@ -290,7 +290,6 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
     /// <summary>
     /// Provides the UI with a list of access levels with which it can populate the currently selected tab.
     /// </summary>
-    /// <param name="accessLevels"></param>
     public void SetAccessLevels(HashSet<ProtoId<AccessLevelPrototype>> accessLevels)
     {
         _accessLevels = accessLevels;
@@ -380,15 +379,15 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
 
     private sealed class AccessLevelEntry : BoxContainer
     {
-        public ProtoId<AccessLevelPrototype> AccessLevel = default!;
-        public CheckBox CheckBox;
-        public LineRenderer CheckBoxLink;
+        public ProtoId<AccessLevelPrototype> AccessLevel;
+        public readonly CheckBox CheckBox;
+        public readonly LineRenderer CheckBoxLink;
 
         public AccessLevelEntry(bool monotone)
         {
             HorizontalExpand = true;
 
-            CheckBoxLink = new LineRenderer(new())
+            CheckBoxLink = new LineRenderer
             {
                 SetWidth = 22,
                 VerticalExpand = true,
@@ -421,9 +420,14 @@ public sealed partial class GroupedAccessLevelChecklist : BoxContainer
         /// <remarks>
         /// The color of the lines is inherited from the control.
         /// </remarks>
-        public List<(Vector2, Vector2)> Lines = new List<(Vector2, Vector2)>();
+        public List<(Vector2, Vector2)> Lines;
 
-        public LineRenderer(List<(Vector2, Vector2)> lines = default!)
+        public LineRenderer()
+        {
+            Lines = new List<(Vector2, Vector2)>();
+        }
+
+        public LineRenderer(List<(Vector2, Vector2)> lines)
         {
             Lines = lines;
         }

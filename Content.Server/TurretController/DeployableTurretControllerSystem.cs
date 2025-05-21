@@ -112,11 +112,12 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
         _deviceNetwork.QueuePacket(ent, null, payload, device: device);
     }
 
-    protected override void ChangeExemptAccessLevels
-        (Entity<DeployableTurretControllerComponent> ent,
+    protected override void ChangeExemptAccessLevels(
+        Entity<DeployableTurretControllerComponent> ent,
         HashSet<ProtoId<AccessLevelPrototype>> exemptions,
         bool enabled,
-        EntityUid? user = null)
+        EntityUid? user = null
+    )
     {
         base.ChangeExemptAccessLevels(ent, exemptions, enabled, user);
 
