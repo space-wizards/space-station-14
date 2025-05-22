@@ -1,20 +1,13 @@
 - type: entity
-  parent: BaseStructureComputer
-  id: BaseComputer
+  id: BaseComputerInteractable
+  abstract: true
   name: computer
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Animateable
   - type: MeleeSound
     soundGroups:
       Brute:
         collection: GlassSmash
-  - type: Construction
-    graph: Computer
-    node: computer
-    containers:
-      - board
   - type: Computer
   - type: ApcPowerReceiver
     powerLoad: 200
@@ -76,17 +69,30 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
+
+- type: entity
+  parent: [ BaseComputerInteractable, BaseStructureComputer ]
+  id: BaseComputer
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Construction
+    graph: Computer
+    node: computer
+    containers:
+    - board
   - type: WiresPanel
   - type: WiresVisuals
   - type: Wires
     boardName: wires-board-name-computer
     layoutId: Computer
-#
-#     This is overwritten by children, so needs to be defined there
-#  - type: UserInterface
-#    interfaces:
-#      enum.WiresUiKey.Key:
-#        type: WiresBoundUserInterface
+
+- type: entity
+  parent: [ BaseComputerInteractable, BaseStructureComputerIndestructible ]
+  id: BaseComputerIndestructible
+  abstract: true
+  placement:
+    mode: SnapgridCenter
 
 - type: entity
   parent: BaseComputer

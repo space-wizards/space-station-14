@@ -1375,7 +1375,7 @@
 
 - type: entity
   id: ComputerPalletConsole
-  parent: BaseComputerAiAccess
+  parent: BaseComputerIndestructible
   name: cargo sale computer
   description: Used to sell goods loaded onto cargo pallets.
   components:
@@ -1412,6 +1412,7 @@
   - type: GuideHelp
     guides:
     - Cargo
+  - type: StationAiWhitelist
 
 - type: entity
   parent: BaseComputerAiAccess
