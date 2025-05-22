@@ -14,7 +14,7 @@ public sealed partial class DungeonData
     public Dictionary<uint, Vector2> Decals = new();
 
     [DataField]
-    public Dictionary<EntityUid, Vector2> Entities = new();
+    public Dictionary<EntityUid, Vector2i> Entities = new();
 
     [DataField]
     public Dictionary<Vector2i, Tile> Tiles = new();

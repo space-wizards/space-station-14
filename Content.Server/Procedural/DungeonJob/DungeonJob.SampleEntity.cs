@@ -33,7 +33,8 @@ public sealed partial class DungeonJob
                 if (value < gen.Threshold)
                     continue;
 
-                var uid = _entManager.SpawnAttachedTo(random.Pick(gen.Entities), _maps.GridTileToLocal(_gridUid, _grid, tile));
+                var gridTile = _maps.GridTileToLocal(_gridUid, _grid, tile);
+                var uid = _entManager.SpawnAttachedTo(random.Pick(gen.Entities), gridTile);
                 AddLoadedEntity(tile, uid);
 
                 if (gen.ReserveTiles)

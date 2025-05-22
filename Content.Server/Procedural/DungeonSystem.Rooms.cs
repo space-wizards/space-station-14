@@ -188,7 +188,7 @@ public sealed partial class DungeonSystem
 
             // TODO: Copy the templated entity as is with serv
             var ent = Spawn(protoId, new EntityCoordinates(gridUid, childPos));
-            data.Entities.Add(ent, childPos);
+            data.Entities.Add(ent, childPos.Floored());
 
             var childXform = _xformQuery.GetComponent(ent);
             var anchored = templateXform.Anchored;

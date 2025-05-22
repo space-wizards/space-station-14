@@ -195,11 +195,11 @@ public sealed partial class NewBiomeSystem : EntitySystem
     /// </summary>
     private Box2i GetFullBounds(NewBiomeComponent component, Box2i bounds)
     {
-        var baseBounds = bounds;
+        var result = bounds;
 
         foreach (var layer in component.Layers.Values)
         {
-            var layerBounds = baseBounds;
+            var layerBounds = GetLayerBounds(layer, result);
 
             if (layer.DependsOn != null)
             {
@@ -211,10 +211,10 @@ public sealed partial class NewBiomeSystem : EntitySystem
                 }
             }
 
-            bounds = bounds.Union(layerBounds);
+            result = result.Union(layerBounds);
         }
 
-        return bounds;
+        return result;
     }
 
     /// <summary>
@@ -236,7 +236,8 @@ public sealed partial class NewBiomeSystem : EntitySystem
 
         var bounds = new Box2i((center - new Vector2(_loadRange, _loadRange)).Floored(), (center + new Vector2(_loadRange, _loadRange)).Floored());
 
-        biome.LoadedBounds.Add(bounds);
+        var adjustedBounds = GetFullBounds(biome, bounds);
+        biome.LoadedBounds.Add(adjustedBounds);
     }
 
     public Box2i GetLayerBounds(NewBiomeMetaLayer layer, Box2i layerBounds)
@@ -314,11 +315,12 @@ public sealed partial class NewBiomeSystem : EntitySystem
 
         while (chunkEnumerator.MoveNext(out var chunk))
         {
+            var chunkOrigin = chunk.Value * layer.Size;
             var layerLoaded = Biome.LoadedData.GetOrNew(layerId);
 
             // Layer already loaded for this chunk.
             // This can potentially happen if we're moving and the player's bounds changed but some existing chunks remain.
-            if (layerLoaded.ContainsKey(chunk.Value))
+            if (layerLoaded.ContainsKey(chunkOrigin))
             {
                 continue;
             }
@@ -326,12 +328,12 @@ public sealed partial class NewBiomeSystem : EntitySystem
             // Load dungeon here async await and all that jaz.
             var (_, data) = await WaitAsyncTask(_entManager
                 .System<DungeonSystem>()
-                .GenerateDungeonAsync(_protoManager.Index(layer.Dungeon), Grid.Owner, Grid.Comp, chunk.Value * layer.Size, Biome.Seed));
+                .GenerateDungeonAsync(_protoManager.Index(layer.Dungeon), Grid.Owner, Grid.Comp, chunkOrigin, Biome.Seed, reservedTiles: Biome.ModifiedTiles));
 
             // If we can unload it then store the data to check for later.
             if (layer.CanUnload)
             {
-                layerLoaded.Add(chunk.Value, data);
+                layerLoaded.Add(chunkOrigin, data);
             }
         }
     }
@@ -364,6 +366,7 @@ public sealed class BiomeUnloadJob : Job<bool>
             var decals = _entManager.System<DecalSystem>();
             var lookup = _entManager.System<EntityLookupSystem>();
             _entManager.TryGetComponent(Biome.Owner, out DecalGridComponent? decalGrid);
+            var forceUnload = _entManager.GetEntityQuery<BiomeForceUnloadComponent>();
             var entities = new HashSet<EntityUid>();
             var tiles = new List<(Vector2i, Tile)>();
 
@@ -380,7 +383,7 @@ public sealed class BiomeUnloadJob : Job<bool>
                 foreach (var chunk in chunkOrigins)
                 {
                     // Not loaded anymore?
-                    if (!data.TryGetValue(chunk, out var loaded))
+                    if (!data.Remove(chunk, out var loaded))
                         continue;
 
                     tiles.Clear();
@@ -389,10 +392,22 @@ public sealed class BiomeUnloadJob : Job<bool>
                     {
                         // IsDefault is actually super expensive so really need to run this check in the loop.
                         await SuspendIfOutOfTime();
-                        var xform = _entManager.TransformQuery.Comp(ent);
+
+                        if (forceUnload.HasComp(ent))
+                        {
+                            _entManager.DeleteEntity(ent);
+                            continue;
+                        }
+
+                        // Deleted so counts as modified.
+                        if (!_entManager.TransformQuery.TryComp(ent, out var xform))
+                        {
+                            biome.ModifiedTiles.Add(pos);
+                            continue;
+                        }
 
                         // If it stayed still and had no data change then keep it.
-                        if (pos == xform.LocalPosition && xform.GridUid == Biome.Owner && _entManager.IsDefault(ent))
+                        if (pos == xform.LocalPosition.Floored() && xform.GridUid == Biome.Owner && _entManager.IsDefault(ent))
                         {
                             _entManager.DeleteEntity(ent);
                             continue;
@@ -429,7 +444,7 @@ public sealed class BiomeUnloadJob : Job<bool>
                         }
 
                         entities.Clear();
-                        var tileBounds = lookup.GetLocalBounds(index, Biome.Comp1.TileSize);
+                        var tileBounds = lookup.GetLocalBounds(index, Biome.Comp1.TileSize).Enlarged(-0.01f);
 
                         lookup.GetEntitiesIntersecting(Biome.Owner,
                             tileBounds,

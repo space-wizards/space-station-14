@@ -58,6 +58,8 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
 
     private DungeonData _data = new();
 
+    private HashSet<Vector2i>? _reservedTiles;
+
     public DungeonJob(
         ISawmill sawmill,
         double maxTime,
@@ -76,12 +78,14 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         int seed,
         Vector2i position,
         EntityCoordinates? targetCoordinates = null,
-        CancellationToken cancellation = default) : base(maxTime, cancellation)
+        CancellationToken cancellation = default,
+        HashSet<Vector2i>? reservedTiles = null) : base(maxTime, cancellation)
     {
         _sawmill = sawmill;
         _entManager = entManager;
         _prototype = prototype;
         _tileDefManager = tileDefManager;
+        _reservedTiles = reservedTiles;
 
         _anchorable = anchorable;
         _decals = decals;
@@ -118,7 +122,7 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         List<Dungeon>? existing = null)
     {
         var dungeons = new List<Dungeon>();
-        var reservedTiles = new HashSet<Vector2i>();
+        var reservedTiles = _reservedTiles == null ? new HashSet<Vector2i>() : new HashSet<Vector2i>(_reservedTiles);
 
         if (reserved != null)
         {
@@ -373,7 +377,7 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         await SuspendIfOutOfTime();
     }
 
-    private void AddLoadedEntity(Vector2 tile, EntityUid ent)
+    private void AddLoadedEntity(Vector2i tile, EntityUid ent)
     {
         _data.Entities[ent] = tile;
     }
