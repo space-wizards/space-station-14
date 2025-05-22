@@ -13,6 +13,9 @@ using Content.Shared.Popups;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Emag.Components;
 using Content.Shared.Examine;
+using Content.Shared.Temperature.Components;
+using Content.Shared.Verbs;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems
 {
@@ -27,8 +30,6 @@ namespace Content.Shared.Clothing.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-        private EntityUid _wearer;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -40,6 +41,7 @@ namespace Content.Shared.Clothing.EntitySystems
             SubscribeLocalEvent<SecurityHailerComponent, GotEmaggedEvent>(OnEmagging);
             SubscribeLocalEvent<SecurityHailerComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<SecurityHailerComponent, ToggleMaskEvent>(OnToggleMask);
+            SubscribeLocalEvent<SecurityHailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         }
 
         private void OnEquip(Entity<SecurityHailerComponent> ent, ref ClothingGotEquippedEvent args)
@@ -49,7 +51,7 @@ namespace Content.Shared.Clothing.EntitySystems
             if (comp.CurrentState != SecMaskState.Functional)
                 return;
 
-            _wearer = args.Wearer;
+            ent.Comp.User = args.Wearer;
             _actions.AddAction(args.Wearer, ref comp.ActionEntity, comp.Action, uid);
         }
 
@@ -59,8 +61,8 @@ namespace Content.Shared.Clothing.EntitySystems
 
             if (comp.CurrentState != SecMaskState.Functional)
                 return;
-            _actions.RemoveAction(_wearer, comp.ActionEntity);
-            _wearer = EntityUid.Invalid;
+            _actions.RemoveAction(ent.Comp.User, comp.ActionEntity);
+            ent.Comp.User = EntityUid.Invalid;
         }
 
         //In case someone spawns with it ?
@@ -96,8 +98,8 @@ namespace Content.Shared.Clothing.EntitySystems
                 if (TryComp(iterator, out stealth) && stealth.Enabled)
                     continue;
 
-                //We don't want to ping user of whistle
-                if (iterator.Owner == _wearer)
+                //We don't want to ping user of the mask
+                if (iterator.Owner == ent.Comp.User)
                     continue;
 
                 SpawnAttachedTo(comp.ExclamationEffect, iterator.Owner.ToCoordinates());
@@ -112,7 +114,7 @@ namespace Content.Shared.Clothing.EntitySystems
                 return;
 
             //If someone else is wearing it and someone use a tool on it, ignore it
-            if (_wearer != EntityUid.Invalid && _wearer != args.User)
+            if (ent.Comp.User != EntityUid.Invalid && ent.Comp.User != args.User)
                 return;
 
             if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
@@ -200,18 +202,18 @@ namespace Content.Shared.Clothing.EntitySystems
             if (comp.CurrentState == SecMaskState.Functional)
             {
                 comp.CurrentState = SecMaskState.WiresCut;
-                if (_wearer != EntityUid.Invalid)
+                if (ent.Comp.User != EntityUid.Invalid)
                 {
-                    _actions.RemoveAction(_wearer, comp.ActionEntity);
+                    _actions.RemoveAction(ent.Comp.User, comp.ActionEntity);
                 }
                 Dirty(ent);
             }
             else if (comp.CurrentState == SecMaskState.WiresCut)
             {
                 comp.CurrentState = SecMaskState.Functional;
-                if (_wearer != EntityUid.Invalid)
+                if (ent.Comp.User != EntityUid.Invalid)
                 {
-                    _actions.AddAction(_wearer, ref comp.ActionEntity, comp.Action, uid);
+                    _actions.AddAction(ent.Comp.User, ref comp.ActionEntity, comp.Action, uid);
                     Dirty(ent);
                 }
             }
@@ -221,22 +223,26 @@ namespace Content.Shared.Clothing.EntitySystems
 
         private void OnScrewingDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
         {
-            //Play a click sound just like the headset
-            _sharedAudio.PlayPvs(ent.Comp.ScrewedSounds, ent.Owner);
-
             if (args.Cancelled || args.Handled || !TryComp<SecurityHailerComponent>(args.Args.Target, out var plant))
                 return;
 
             var comp = ent.Comp;
+            IncreaseAggressionLevel(ent);
+            args.Handled = true;
+        }
+
+        private void IncreaseAggressionLevel(Entity<SecurityHailerComponent> ent)
+        {
+            //Play a click sound just like the headset
+            _sharedAudio.PlayPvs(ent.Comp.ScrewedSounds, ent.Owner);
 
             //Up the aggression level by one or back to one
-            if (comp.AggresionLevel == SecurityHailerComponent.AggresionState.High)
-                comp.AggresionLevel = SecurityHailerComponent.AggresionState.Low;
+            if (ent.Comp.AggresionLevel == SecurityHailerComponent.AggresionState.High)
+                ent.Comp.AggresionLevel = SecurityHailerComponent.AggresionState.Low;
             else
-                comp.AggresionLevel++;
+                ent.Comp.AggresionLevel++;
 
             _popup.PopupEntity(Loc.GetString("sec-gas-mask-screwed", ("level", ent.Comp.AggresionLevel.ToString().ToLower())), ent.Owner);
-            args.Handled = true;
         }
 
         private void OnEmagging(Entity<SecurityHailerComponent> ent, ref GotEmaggedEvent args)
@@ -244,7 +250,7 @@ namespace Content.Shared.Clothing.EntitySystems
             if (args.Handled || HasComp<EmaggedComponent>(ent))
                 return;
 
-            if (_wearer != EntityUid.Invalid && _wearer != args.UserUid)
+            if (ent.Comp.User != EntityUid.Invalid && ent.Comp.User != args.UserUid)
                 return;
 
             _popup.PopupEntity(Loc.GetString("sec-gas-mask-emagged"), ent.Owner);
@@ -277,13 +283,29 @@ namespace Content.Shared.Clothing.EntitySystems
                 && mask != null)
             {
                 if (mask.IsToggled)
-                    _actions.RemoveAction(_wearer, ent.Comp.ActionEntity);
-                else if (ent.Comp.CurrentState == SecMaskState.Functional && _wearer != EntityUid.Invalid)
+                    _actions.RemoveAction(ent.Comp.User, ent.Comp.ActionEntity);
+                else if (ent.Comp.CurrentState == SecMaskState.Functional && ent.Comp.User != EntityUid.Invalid)
                 {
-                    _actions.AddAction(_wearer, ref ent.Comp.ActionEntity, ent.Comp.Action, ent.Owner);
+                    _actions.AddAction(ent.Comp.User, ref ent.Comp.ActionEntity, ent.Comp.Action, ent.Owner);
                 }
                 Dirty(ent);
             }
+        }
+
+        private void OnGetVerbs(Entity<SecurityHailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+        {
+            if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
+                return;
+
+            // Can't pass args from a ref event inside of lambdas
+            var user = args.User;
+
+            args.Verbs.Add(new AlternativeVerb()
+            {
+                Text = Loc.GetString("sec-gas-mask-verb"),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
+                Act = () => IncreaseAggressionLevel(ent)
+            });
         }
     }
 }

@@ -74,6 +74,7 @@ hail-high-HOS = Tell it to centcom... if you make it that far!!
 
 # Tools interaction
 
+sec-gas-mask-verb = Change level
 sec-gas-mask-screwed = Changed to {$level} aggression
 sec-gas-mask-emagged = Changed to ERROR aggression
 ert-gas-mask-impossible = It seems impervious to external change.

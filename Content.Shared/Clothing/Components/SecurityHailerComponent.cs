@@ -13,6 +13,11 @@ namespace Content.Shared.Clothing.Components
     public sealed partial class SecurityHailerComponent : Component
     {
         /// <summary>
+        /// The person wearing the mask
+        /// </summary>
+        public EntityUid User = EntityUid.Invalid;
+
+        /// <summary>
         /// State of the sec mask to check if it can hail
         /// </summary>
         [DataField]
