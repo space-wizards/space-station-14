@@ -54,7 +54,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly DungeonSystem _dungeon = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FixtureSystem _fixtures = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
