@@ -2,7 +2,7 @@
   id: ClothingUniformJumpskirtGothic
   productEntity: ClothingUniformJumpskirtGothic
   cost:
-    NTCredit: 3633
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -13,7 +13,7 @@
   id: ClothingUniformJumpskirtMaid
   productEntity: ClothingUniformJumpskirtMaid
   cost:
-    NTCredit: 7960
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -24,7 +24,7 @@
   id: ClothingUniformJumpskirtDressRed
   productEntity: ClothingUniformJumpskirtDressRed
   cost:
-    NTCredit: 6871
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -35,7 +35,7 @@
   id: ClothingUniformJumpskirtTango
   productEntity: ClothingUniformJumpskirtTango
   cost:
-    NTCredit: 9466
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -46,7 +46,7 @@
   id: ClothingUniformJumpskirtVictorianBlack
   productEntity: ClothingUniformJumpskirtVictorianBlack
   cost:
-    NTCredit: 2602
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -57,7 +57,7 @@
   id: ClothingUniformJumpskirtReporter
   productEntity: ClothingUniformJumpskirtReporter
   cost:
-    NTCredit: 3295
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -68,7 +68,7 @@
   id: ClothingUniformJumpskirtJournalist
   productEntity: ClothingUniformJumpskirtJournalist
   cost:
-    NTCredit: 5820
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -79,7 +79,7 @@
   id: ClothingUniformJumpskirtVictorianrRed
   productEntity: ClothingUniformJumpskirtVictorianrRed
   cost:
-    NTCredit: 7184
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -90,7 +90,7 @@
   id: ClothingUniformJumpskirtSuitNurse
   productEntity: ClothingUniformJumpskirtSuitNurse
   cost:
-    NTCredit: 4051
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -101,7 +101,7 @@
   id: ClothingUniformJumpskirtPencilTan
   productEntity: ClothingUniformJumpskirtPencilTan
   cost:
-    NTCredit: 8894
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -112,7 +112,7 @@
   id: ClothingUniformJumpskirtPencilCentcomOfficial
   productEntity: ClothingUniformJumpskirtPencilCentcomOfficial
   cost:
-    NTCredit: 3430
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -123,7 +123,7 @@
   id: ClothingUniformJumpskirtPencilSpecialOperationsOfficer
   productEntity: ClothingUniformJumpskirtPencilSpecialOperationsOfficer
   cost:
-    NTCredit: 4402
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -134,7 +134,7 @@
   id: ClothingUniformJumpskirtCargoSalvage
   productEntity: ClothingUniformJumpskirtCargoSalvage
   cost:
-    NTCredit: 2256
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -145,7 +145,7 @@
   id: ClothingUniformJumpskirtCargoSalvageFormal
   productEntity: ClothingUniformJumpskirtCargoSalvageFormal
   cost:
-    NTCredit: 1819
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -156,7 +156,7 @@
   id: ClothingUniformJumpskirtCargoFormal
   productEntity: ClothingUniformJumpskirtCargoFormal
   cost:
-    NTCredit: 1870
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -167,7 +167,7 @@
   id: ClothingUniformJumpskirtScientistFormal
   productEntity: ClothingUniformJumpskirtScientistFormal
   cost:
-    NTCredit: 1732
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -178,7 +178,7 @@
   id: ClothingUniformJumpskirtCoroner
   productEntity: ClothingUniformJumpskirtCoroner
   cost:
-    NTCredit: 2816
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -189,7 +189,7 @@
   id: ClothingUniformJumpskirtCentcomOfficial
   productEntity: ClothingUniformJumpskirtCentcomOfficial
   cost:
-    NTCredit: 7855
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -200,7 +200,7 @@
   id: ClothingUniformJumpskirtCentcomOfficer
   productEntity: ClothingUniformJumpskirtCentcomOfficer
   cost:
-    NTCredit: 7044
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -211,7 +211,7 @@
   id: ClothingUniformJumpskirtElegantMaid
   productEntity: ClothingUniformJumpskirtElegantMaid
   cost:
-    NTCredit: 9935
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -222,7 +222,7 @@
   id: ClothingUniformColorJumpskirtRainbow
   productEntity: ClothingUniformColorJumpskirtRainbow
   cost:
-    NTCredit: 4786
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -233,7 +233,7 @@
   id: ClothingUniformJumpskirtSchool
   productEntity: ClothingUniformJumpskirtSchool
   cost:
-    NTCredit: 7123
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -244,7 +244,7 @@
   id: ClothingUniformJumpskirtCapTurtleneck
   productEntity: ClothingUniformJumpskirtCapTurtleneck
   cost:
-    NTCredit: 2529
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -255,7 +255,7 @@
   id: ClothingUniformJumpskirtHoPTurtleneck
   productEntity: ClothingUniformJumpskirtHoPTurtleneck
   cost:
-    NTCredit: 4340
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -266,7 +266,7 @@
   id: ClothingUniformJumpskirtHoSBlack
   productEntity: ClothingUniformJumpskirtHoSBlack
   cost:
-    NTCredit: 5302
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -277,7 +277,7 @@
   id: ClothingUniformJumpskirtRDClassical
   productEntity: ClothingUniformJumpskirtRDClassical
   cost:
-    NTCredit: 5345
+    NTCredit: 300
   categories:
   - SLFahsionSkirt
   conditions:
@@ -288,7 +288,7 @@
   id: ClothingUniformJumpsuitSuitCheckered
   productEntity: ClothingUniformJumpsuitSuitCheckered
   cost:
-    NTCredit: 8831
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -299,7 +299,7 @@
   id: ClothingUniformJumpsuitSuitTan
   productEntity: ClothingUniformJumpsuitSuitTan
   cost:
-    NTCredit: 9048
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -310,7 +310,7 @@
   id: ClothingUniformJumpsuitSuitWaiter
   productEntity: ClothingUniformJumpsuitSuitWaiter
   cost:
-    NTCredit: 9053
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -321,7 +321,7 @@
   id: ClothingUniformJumpsuitMimeSexyWhite
   productEntity: ClothingUniformJumpsuitMimeSexyWhite
   cost:
-    NTCredit: 5797
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -332,7 +332,7 @@
   id: ClothingUniformJumpsuitMimeSexyBlack
   productEntity: ClothingUniformJumpsuitMimeSexyBlack
   cost:
-    NTCredit: 2320
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -343,7 +343,7 @@
   id: ClothingUniformJumpsuitCargoAlt
   productEntity: ClothingUniformJumpsuitCargoAlt
   cost:
-    NTCredit: 5766
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -354,7 +354,7 @@
   id: ClothingUniformJumpsuitCargoFormal
   productEntity: ClothingUniformJumpsuitCargoFormal
   cost:
-    NTCredit: 6410
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -365,7 +365,7 @@
   id: ClothingUniformJumpsuitSalvageFormal
   productEntity: ClothingUniformJumpsuitSalvageFormal
   cost:
-    NTCredit: 5119
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -376,7 +376,7 @@
   id: ClothingUniformJumpsuitCoroner
   productEntity: ClothingUniformJumpsuitCoroner
   cost:
-    NTCredit: 4644
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -387,7 +387,7 @@
   id: ClothingUniformJumpsuitCoronerAlt
   productEntity: ClothingUniformJumpsuitCoronerAlt
   cost:
-    NTCredit: 8783
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -398,7 +398,7 @@
   id: ClothingUniformJumpsuitSuperstarCop
   productEntity: ClothingUniformJumpsuitSuperstarCop
   cost:
-    NTCredit: 4387
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -409,7 +409,7 @@
   id: ClothingUniformJumpsuitAerostatic
   productEntity: ClothingUniformJumpsuitAerostatic
   cost:
-    NTCredit: 3934
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -420,7 +420,7 @@
   id: ClothingUniformJumpsuitCentcomOfficerBlack
   productEntity: ClothingUniformJumpsuitCentcomOfficerBlack
   cost:
-    NTCredit: 1838
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -431,7 +431,7 @@
   id: ClothingUniformJumpsuitCentcomAdmiral
   productEntity: ClothingUniformJumpsuitCentcomAdmiral
   cost:
-    NTCredit: 7781
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -442,7 +442,7 @@
   id: ClothingUniformJumpsuitCapTurtleneck
   productEntity: ClothingUniformJumpsuitCapTurtleneck
   cost:
-    NTCredit: 2980
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -453,7 +453,7 @@
   id: ClothingUniformJumpsuitHoPTurtleneck
   productEntity: ClothingUniformJumpsuitHoPTurtleneck
   cost:
-    NTCredit: 3847
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -464,7 +464,7 @@
   id: ClothingUniformJumpsuitHoSBlack
   productEntity: ClothingUniformJumpsuitHoSBlack
   cost:
-    NTCredit: 8993
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -475,7 +475,7 @@
   id: ClothingUniformJumpsuitRDClassical
   productEntity: ClothingUniformJumpsuitRDClassical
   cost:
-    NTCredit: 1517
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -486,7 +486,7 @@
   id: ClothingUniformJumpsuitFormalBlueShield
   productEntity: ClothingUniformJumpsuitFormalBlueShield
   cost:
-    NTCredit: 2345
+    NTCredit: 300
   categories:
   - SLFahsionSuit
   conditions:
@@ -497,7 +497,7 @@
   id: ClothingNeckCloakCentcomBlack
   productEntity: ClothingNeckCloakCentcomBlack
   cost:
-    NTCredit: 2939
+    NTCredit: 300
   categories:
   - SLFahsionOther
   conditions:
@@ -508,7 +508,7 @@
   id: ClothingNeckCloakCentcomAdmiral
   productEntity: ClothingNeckCloakCentcomAdmiral
   cost:
-    NTCredit: 4740
+    NTCredit: 300
   categories:
   - SLFahsionOther
   conditions:
@@ -519,7 +519,7 @@
   id: ClothingNeckMantleERTLeader
   productEntity: ClothingNeckMantleERTLeader
   cost:
-    NTCredit: 5661
+    NTCredit: 300
   categories:
   - SLFahsionOther
   conditions:
@@ -530,7 +530,7 @@
   id: ClothingNeckHorrific
   productEntity: ClothingNeckHorrific
   cost:
-    NTCredit: 3822
+    NTCredit: 1000
   categories:
   - SLFahsionOther
   conditions:
