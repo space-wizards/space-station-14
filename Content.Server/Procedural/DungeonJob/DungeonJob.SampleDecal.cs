@@ -33,6 +33,10 @@ public sealed partial class DungeonJob
                 if (value < gen.Threshold)
                     continue;
 
+                // Occupied?
+                if (!_anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+                    continue;
+
                 _decals.TryAddDecal(random.Pick(gen.Decals), new EntityCoordinates(_gridUid, tile), out var did);
                 AddLoadedDecal(tile, did);
 
@@ -40,6 +44,11 @@ public sealed partial class DungeonJob
                 {
                     reservedTiles.Add(tile);
                 }
+
+                await SuspendDungeon();
+
+                if (!ValidateResume())
+                    return;
             }
         }
 

@@ -17,6 +17,7 @@
     drawdepth: BelowFloor
     layers:
       - state: shoreline_water
+  - type: BiomeForceUnload
   #- type: ContainerContainer
   #  containers:
   #    solution@pool: !type:ContainerSlot

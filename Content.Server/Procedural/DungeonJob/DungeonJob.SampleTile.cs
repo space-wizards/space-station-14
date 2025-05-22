@@ -39,6 +39,11 @@ public sealed partial class DungeonJob
                 var tileVariant = new Tile(tileDef.TileId);
                 tiles.Add((tile, tileVariant));
                 AddLoadedTile(tile, tileVariant);
+
+                await SuspendDungeon();
+
+                if (!ValidateResume())
+                    return;
             }
         }
 
@@ -51,8 +56,6 @@ public sealed partial class DungeonJob
             {
                 reservedTiles.Add(tile.Index);
             }
-
-            AddLoadedTile(tile.Index, tile.Tile);
         }
     }
 }

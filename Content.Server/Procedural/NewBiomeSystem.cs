@@ -37,8 +37,6 @@ public sealed partial class NewBiomeSystem : EntitySystem
     /// </summary>
     private JobQueue _biomeQueue = default!;
 
-    private float _checkUnloadAccumulator;
-    private float _checkUnloadTime;
     private float _loadRange = 1f;
     private float _loadTime;
 
@@ -53,12 +51,6 @@ public sealed partial class NewBiomeSystem : EntitySystem
 
         Subs.CVar(_cfgManager, CCVars.BiomeLoadRange, OnLoadRange, true);
         Subs.CVar(_cfgManager, CCVars.BiomeLoadTime, OnLoadTime, true);
-        Subs.CVar(_cfgManager, CCVars.BiomeCheckUnloadTime, OnCheckUnload, true);
-    }
-
-    private void OnCheckUnload(float obj)
-    {
-        _checkUnloadTime = obj;
     }
 
     private void OnLoadTime(float obj)
@@ -102,15 +94,7 @@ public sealed partial class NewBiomeSystem : EntitySystem
         }
 
         // Unload first in case we can't catch up.
-        _checkUnloadAccumulator += frameTime;
-
-        if (_checkUnloadAccumulator > _checkUnloadTime)
-        {
-            // Work out chunks not in range and unload.
-            UnloadChunks();
-
-            _checkUnloadAccumulator -= _checkUnloadTime;
-        }
+        UnloadChunks();
 
         var loadQuery = AllEntityQuery<NewBiomeComponent, MapGridComponent>();
 
@@ -440,6 +424,11 @@ public sealed class BiomeUnloadJob : Job<bool>
                     foreach (var (index, tile) in loaded.Tiles)
                     {
                         await SuspendIfOutOfTime();
+
+                        if (Biome.Comp2.ModifiedTiles.Contains(index))
+                        {
+                            continue;
+                        }
 
                         if (!maps.TryGetTileRef(Biome.Owner, Biome.Comp1, index, out var tileRef) ||
                             tileRef.Tile != tile)

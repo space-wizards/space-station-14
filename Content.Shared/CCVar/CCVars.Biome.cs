@@ -15,10 +15,4 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> BiomeLoadTime =
         CVarDef.Create("biome.load_time", 0.05f, CVar.SERVERONLY);
-
-    /// <summary>
-    /// How long to wait (s) before checking for biome unloading.
-    /// </summary>
-    public static readonly CVarDef<float> BiomeCheckUnloadTime =
-        CVarDef.Create("biome.check_unload_time", 0.5f, CVar.SERVERONLY);
 }

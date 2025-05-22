@@ -122,12 +122,7 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         List<Dungeon>? existing = null)
     {
         var dungeons = new List<Dungeon>();
-        var reservedTiles = _reservedTiles == null ? new HashSet<Vector2i>() : new HashSet<Vector2i>(_reservedTiles);
-
-        if (reserved != null)
-        {
-            reservedTiles.UnionWith(reserved);
-        }
+        var reservedTiles = reserved == null ? new HashSet<Vector2i>() : new HashSet<Vector2i>(reserved);
 
         // Don't pass dungeons back up the "stack". They are ref types though it's a caller problem if they start trying to mutate it.
         if (existing != null)
@@ -173,7 +168,7 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         var random = new Random(_seed);
         var position = (_position + random.NextPolarVector2(_gen.MinOffset, _gen.MaxOffset)).Floored();
 
-        var dungeons = await GetDungeons(position, _gen, _gen.Layers, _seed, random);
+        var dungeons = await GetDungeons(position, _gen, _gen.Layers, _seed, random, reserved: _reservedTiles);
         // To make it slightly more deterministic treat this RNG as separate ig.
 
         // Post-processing after finishing loading.

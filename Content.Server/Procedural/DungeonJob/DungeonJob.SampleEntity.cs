@@ -41,6 +41,11 @@ public sealed partial class DungeonJob
                 {
                     reservedTiles.Add(tile);
                 }
+
+                await SuspendDungeon();
+
+                if (!ValidateResume())
+                    return;
             }
         }
 

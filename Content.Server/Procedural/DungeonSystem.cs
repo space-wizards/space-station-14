@@ -255,7 +255,8 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             seed,
             position,
             null,
-            cancelToken.Token);
+            cancelToken.Token,
+            reservedTiles);
 
         _dungeonJobs.Add(job, cancelToken);
         _dungeonJobQueue.EnqueueJob(job);
