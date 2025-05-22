@@ -164,3 +164,11 @@
   # cause they are hostile to them
   - SimpleHostile 
   - AllHostile
+
+- type: npcFaction
+  id: Meteor
+
+- type: npcFaction
+  id: AntiMeteor
+  hostile:
+  - Meteor

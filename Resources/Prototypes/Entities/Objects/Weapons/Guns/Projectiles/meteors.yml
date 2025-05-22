@@ -14,8 +14,8 @@
     damageTypes:
       types:
         Blunt: 1
-  - type: TimedDespawn
-    lifetime: 120
+  - type: TimedDespawn # so meteors dont last forever eating up perf
+    lifetime: 600
   - type: Clickable
   - type: Physics
     bodyType: Dynamic
@@ -45,7 +45,13 @@
     tileBreakScale: 2
   - type: TileFrictionModifier
     modifier: 0
-
+  - type: MobState # for HTN targetting logic.
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+  - type: NpcFactionMember # look, it makes the AI do some john wick shit, just, accept.
+    factions:
+    - Meteor
 
 - type: entity
   parent: BaseMeteor
@@ -119,6 +125,7 @@
       - !type:ExplodeBehavior
       - !type:WeightedSpawnEntityBehavior
         weightedEntityTable: "MeteorSpawnAsteroidWallTable"
+        enforceOnGrid: true
         minSpawn: 2
         maxSpawn: 4
         spawnAfter: 0.5
@@ -159,6 +166,7 @@
       - !type:ExplodeBehavior
       - !type:WeightedSpawnEntityBehavior
         weightedEntityTable: "MeteorSpawnAsteroidWallTable"
+        enforceOnGrid: true
         spawnOffset: 2
         minSpawn: 3
         maxSpawn: 6
@@ -187,6 +195,7 @@
       - !type:ExplodeBehavior
       - !type:WeightedSpawnEntityBehavior
         weightedEntityTable: "MeteorSpawnAsteroidWallTable"
+        enforceOnGrid: true
         spawnOffset: 3
         minSpawn: 5
         maxSpawn: 8
