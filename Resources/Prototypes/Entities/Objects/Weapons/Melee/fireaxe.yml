@@ -38,6 +38,7 @@
     quickEquip: false
     slots:
     - back
+    - suitStorage
   - type: Tool
     qualities:
       - Prying
@@ -57,7 +58,8 @@
   description: Why fight fire with an axe when you can fight with fire and axe? Now featuring rugged rubberized handle!
   components:
   - type: MeleeWeapon
-    wideAnimationRotation: 90
+    wideAnimationRotation: 135
+    swingLeft: true
   - type: IgniteOnMeleeHit
     fireStacks: 1
   - type: Sprite
@@ -68,3 +70,4 @@
     quickEquip: false
     slots:
     - back
+    - suitStorage
