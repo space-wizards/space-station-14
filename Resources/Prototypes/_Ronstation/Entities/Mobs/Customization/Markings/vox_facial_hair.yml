@@ -1,0 +1,9 @@
+- type: marking
+  id: VoxFacialHairSideburns
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  canBeDisplaced: false
+  speciesRestriction: [Vox]
+  sprites:
+    - sprite: _Ronstation/Mobs/Customization/vox_facial_hair.rsi
+      state: voxsideburns

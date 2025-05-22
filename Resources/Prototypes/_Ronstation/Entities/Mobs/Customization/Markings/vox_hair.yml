@@ -1,0 +1,9 @@
+- type: marking
+  id: VoxHairFlowingBraids
+  bodyPart: Hair
+  markingCategory: Hair
+  canBeDisplaced: false
+  speciesRestriction: [Vox]
+  sprites:
+    - sprite: _Ronstation/Mobs/Customization/vox_hair.rsi
+      state: flowingbraids
