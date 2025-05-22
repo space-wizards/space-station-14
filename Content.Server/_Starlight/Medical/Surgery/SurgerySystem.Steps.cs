@@ -9,10 +9,11 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Humanoid;
+using Content.Shared.Traits.Assorted;
 using Microsoft.CodeAnalysis;
 using Content.Server._Starlight.Medical.Limbs;
 using Content.Server.Administration.Systems;
-using Content.Shared.Traits.Assorted;
+
 
 namespace Content.Server.Starlight.Medical.Surgery;
 // Based on the RMC14.
