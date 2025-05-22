@@ -345,7 +345,7 @@
   - HeadofSecurityJumpsuit
   - SecurityBackpack
   - SecurityBelt
-  - SecurityWeapon
+  - SecurityNonLethalWeapon #Starlight
   - HeadofSecurityOuterClothing
   - SecurityEyewear
   - SecurityShoes
@@ -380,24 +380,8 @@
   - SecurityShoes
   - SecurityPDA
   - SecurityBelt
-  - SecurityWeapon
-  - SurvivalSecurity
-  - Trinkets
-  - SecurityStar
-  - GroupSpeciesBreathToolSecurity
-
-- type: roleLoadout
-  id: JobBrigmedic
-  groups:
-  - BrigmedicHead
-  - BrigmedicJumpsuit
-  - BrigmedicBackpack
-  - BrigmedicOuterClothing
-  - BrigmedicBelt
-  - BrigmedicGloves
-  - BrigmedicEyewear
-  - SecurityShoes
-  - SecurityWeapon
+  - SecurityNonLethalWeapon #Starlight
+  - SecuritySidearm #Starlight
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -423,7 +407,7 @@
   groups:
   - SecurityCadetJumpsuit
   - SecurityBackpack
-  - SecurityWeapon
+  - SecurityNonLethalWeapon
   - SecurityEyewear
   - SurvivalSecurity
   - Trinkets

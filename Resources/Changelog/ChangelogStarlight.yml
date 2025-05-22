@@ -6023,4 +6023,55 @@ Entries:
   id: 834
   time: '2025-05-21T12:26:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/665
-
+- author: Floating Spore
+  changes:
+  - message: Numb people no longer scream when in surgery
+    type: Tweak
+  id: 835
+  time: '2025-05-22T20:19:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/677
+- author: PubliclyExecutedPig
+  changes:
+  - message: Due to over-confidence among Syndicate investors, the China-Lake and
+      L6 Saw have swapped prices for "Entertainment value"
+    type: Tweak
+  id: 836
+  time: '2025-05-22T20:32:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/671
+- author: KarmaKitsuna
+  changes:
+  - message: Sidearm loadout for Security Officer and Brigmedic.  Mk58 is the default
+      but senior officers have the option of picking the Due Process. Both loadouts
+      come with one magazine of SP ammo.
+    type: Add
+  id: 837
+  time: '2025-05-22T20:34:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/664
+- author: Cyanogen
+  changes:
+  - message: Multiplied clothing prices by 0.05x
+    type: Tweak
+  id: 838
+  time: '2025-05-22T20:54:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/678
+- author: Western, Cyanogen
+  changes:
+  - message: Commander PDA
+    type: Add
+  id: 839
+  time: '2025-05-22T21:00:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/657
+- author: Western, Cyanogen
+  changes:
+  - message: Changed syndicate PDA and Agent PDA
+    type: Tweak
+  id: 840
+  time: '2025-05-22T21:00:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/657
+- author: Western, Cyanogen
+  changes:
+  - message: Made Syndicate, Agent and commander ID's and made them AgentID's
+    type: Add
+  id: 841
+  time: '2025-05-22T21:00:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/657
