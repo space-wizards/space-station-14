@@ -131,6 +131,7 @@
   components:
     - type: AlertLevel
       alertLevelPrototype: stationAlerts
+      currentLevel: green
 
 - type: entity
   id: BaseStationExpeditions
