@@ -59,6 +59,7 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         var tile = _map.TileIndicesFor((xform.GridUid.Value, grid), xform.Coordinates);
         foreach (var neighbour in connected)
         {
+            // TODO z-levels, pipes across grids - we shouldn't assume that the neighboring tile's transform is on the same grid
             var otherTile = _map.TileIndicesFor((xform.GridUid.Value, grid), Transform(neighbour).Coordinates);
 
             netConnectedDirections |= (otherTile - tile) switch
