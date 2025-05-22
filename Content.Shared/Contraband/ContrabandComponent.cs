@@ -33,4 +33,13 @@ public sealed partial class ContrabandComponent : Component
     [DataField]
     [AutoNetworkedField]
     public HashSet<ProtoId<JobPrototype>> AllowedJobs = new();
+
+    /// <summary>
+    ///     Which alert levels are considered safe for this item?
+    ///     If not on a safe alert level, will show "unsafe" examine text.
+    ///     If this set is empty, all alert levels will be considered safe.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public HashSet<string> AllowedAlertLevels = new();
 }

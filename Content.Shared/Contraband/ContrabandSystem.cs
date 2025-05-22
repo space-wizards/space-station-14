@@ -3,11 +3,14 @@ using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.Localizations;
 using Content.Shared.Roles;
+using Content.Shared.Station;
 using Content.Shared.Verbs;
+using Content.Shared.AlertLevel;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Station.Components;
 
 namespace Content.Shared.Contraband;
 
@@ -20,6 +23,7 @@ public sealed class ContrabandSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedIdCardSystem _id = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private readonly SharedStationSystem _station = default!;
 
     private bool _contrabandExamineEnabled;
     private bool _contrabandExamineOnlyInHudEnabled;
@@ -101,8 +105,27 @@ public sealed class ContrabandSystem : EntitySystem
         if (departments.Intersect(component.AllowedDepartments).Any()
             || jobs.Contains(jobId))
         {
-            carryingMessage = Loc.GetString("contraband-examine-text-in-the-clear");
             iconTexture = "/Textures/Interface/VerbIcons/unlock-green.svg.192dpi.png";
+
+            if (!component.AllowedAlertLevels.Any())
+            {
+                carryingMessage = Loc.GetString("contraband-examine-text-in-the-clear");
+            }
+            else
+            {
+                EnsureComp<StationTrackerComponent>(args.User);
+                var currentStation = _station.GetLastStation(args.User);
+
+                if (TryComp<AlertLevelComponent>(currentStation, out var alertLevelComponent) &&
+                    !component.AllowedAlertLevels.Contains(alertLevelComponent.CurrentLevel))
+                {
+                    carryingMessage = Loc.GetString("contraband-examine-text-unsafe");
+                }
+                else
+                {
+                    carryingMessage = Loc.GetString("contraband-examine-text-in-the-clear");
+                }
+            }
         }
         var examineMarkup = GetContrabandExamine(departmentExamineMessage, carryingMessage);
         _examine.AddHoverExamineVerb(args,
