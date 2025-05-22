@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Fix sun shadows not rendering when ANGLE is used.
-    type: Fix
-  id: 8046
-  time: '2025-03-10T04:17:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35757
-- author: metalgearsloth
-  changes:
   - message: Fix sun shadow rotations not always being accurate.
     type: Fix
   id: 8047
@@ -3920,3 +3913,15 @@
   id: 8553
   time: '2025-05-22T01:22:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37180
+- author: ArtisticRoomba
+  changes:
+  - message: Tesla coils can now hold a max capacity of 5 MJ, and receive 5 MJ of
+      energy when struck by lightning.
+    type: Tweak
+  - message: Tesla coils can now only output a maximum of 350 kW to the grid. This
+      was done to make power flow smoother (it was triggering epilepsy in extreme
+      circumstances).
+    type: Tweak
+  id: 8554
+  time: '2025-05-22T01:39:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37626
