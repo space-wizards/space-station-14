@@ -1,12 +1,13 @@
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
-namespace Content.Server.AlertLevel;
+namespace Content.Shared.AlertLevel;
 
 /// <summary>
 /// Alert level component. This is the component given to a station to
 /// signify its alert level state.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class AlertLevelComponent : Component
 {
     /// <summary>
@@ -16,18 +17,22 @@ public sealed partial class AlertLevelComponent : Component
     public AlertLevelPrototype? AlertLevels;
 
     // Once stations are a prototype, this should be used.
-    [DataField("alertLevelPrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<AlertLevelPrototype>))]
-    public string AlertLevelPrototype = default!;
+    [DataField]
+    [AutoNetworkedField]
+    public ProtoId<AlertLevelPrototype> AlertLevelPrototype;
 
     /// <summary>
     /// The current level on the station.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public string CurrentLevel = string.Empty;
+    [ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public string CurrentLevel = string.Empty;
 
     /// <summary>
-    /// Is current station level can be changed by crew.
+    /// If the current station level can be changed by crew.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public bool IsLevelLocked = false;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool IsLevelLocked = false;
 
     [ViewVariables] public float CurrentDelay = 0;
     [ViewVariables] public bool ActiveDelay;
