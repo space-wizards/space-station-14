@@ -6038,4 +6038,13 @@ Entries:
   id: 836
   time: '2025-05-22T20:32:55.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/671
+- author: KarmaKitsuna
+  changes:
+  - message: Sidearm loadout for Security Officer and Brigmedic.  Mk58 is the default
+      but senior officers have the option of picking the Due Process. Both loadouts
+      come with one magazine of SP ammo.
+    type: Add
+  id: 837
+  time: '2025-05-22T20:34:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/664
 
