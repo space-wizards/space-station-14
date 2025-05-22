@@ -41,7 +41,7 @@
     event: !type:CellularSmiteSpellEvent
       smiteDamage:
         types:
-          Cellular: 100
+          Cellular: 125
   - type: SpeakOnAction
     sentence: action-speech-spell-smite
   - type: Magic
