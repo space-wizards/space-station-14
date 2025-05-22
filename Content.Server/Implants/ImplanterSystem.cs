@@ -63,7 +63,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
             {
                 Implant(target, target, uid, component);
                 
-                // Check if this is the SKGB implanter that should dissolve on use
+                // STARLIGHT: Check if this is the SKGB implanter that should dissolve on use
                 if (TryComp<MetaDataComponent>(uid, out var metadata) && 
                     metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
                 {
@@ -87,7 +87,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     /// <param name="implanter">The implanter being used</param>
     public void TryImplant(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        // Check if the implantation is allowed before starting the doafter
+        // STARLIGHT: Check if the implantation is allowed before starting the doafter
         if (!CanImplant(user, target, implanter, component, out var implant, out _))
             return;
             
@@ -117,7 +117,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     //TODO: Remove when surgery is in
     public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        // If this is self-drawing and it's the SKGB implanter, handle it immediately
+        // STARLIGHT: If this is self-drawing and it's the SKGB implanter, handle it immediately
         if (user == target && TryComp<MetaDataComponent>(implanter, out var metadata) && 
             metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
         {
@@ -145,7 +145,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 
         Implant(args.User, args.Target.Value, args.Used.Value, component);
 
-        // Check if this is the SKGB implanter that should dissolve on use
+        // STARLIGHT: Check if this is the SKGB implanter that should dissolve on use
         if (TryComp<MetaDataComponent>(args.Used.Value, out var metadata) && 
             metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
         {
@@ -163,7 +163,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 
         Draw(args.Used.Value, args.User, args.Target.Value, component);
 
-        // Check if this is the SKGB implanter that should dissolve on use
+        // STARLIGHT: Check if this is the SKGB implanter that should dissolve on use
         if (TryComp<MetaDataComponent>(args.Used.Value, out var metadata) && 
             metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
         {

@@ -39,7 +39,7 @@ public sealed class DragonSystem : EntitySystem
                 }
                 break;
             case DragonRiftState.AlmostFinished:
-                // For RevSupplyRift, use a brighter red color instead of purple
+                // Starlight: For RevSupplyRift, use a brighter red color instead of purple
                 if (HasComp<RevolutionaryRiftComponent>(uid))
                 {
                     sprite?.LayerSetColor(0, Color.FromHex("#ff3333"));
@@ -57,7 +57,7 @@ public sealed class DragonSystem : EntitySystem
                     if (light != null)
                     {
                         _lights.SetColor(uid, Color.FromHex("#9e2fc1"), light);
-                    }
+                    } // Starlight End
                 }
                 break;
             case DragonRiftState.Finished:

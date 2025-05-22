@@ -16,7 +16,7 @@ public static class ListingLocalisationHelpers
 
         if (listingData.Name != null)
         {
-            // Check if this is a localized name that needs stock count
+            // STARLIGHT START: Check if this is a localized name that needs stock count
             if (listingData.Name.Contains("-name"))
             {
                 // Check if we have stock count in metadata
@@ -75,6 +75,8 @@ public static class ListingLocalisationHelpers
             
             name = Loc.GetString(listingData.Name);
         }
+        // STARLIGHT END
+
         else if (listingData.ProductEntity != null)
             name = prototypeManager.Index(listingData.ProductEntity.Value).Name;
 
@@ -92,7 +94,7 @@ public static class ListingLocalisationHelpers
 
         if (listingData.Description != null)
         {
-            // Check if this is a localized description that needs last purchaser info
+            // STARLIGHT START: Check if this is a localized description that needs last purchaser info
             if (listingData.Description.Contains("-desc"))
             {
                 // Check if we have stock count and last purchaser in metadata
@@ -172,7 +174,7 @@ public static class ListingLocalisationHelpers
             }
             
             desc = Loc.GetString(listingData.Description);
-        }
+        } // STARLIGHT END
         else if (listingData.ProductEntity != null)
             desc = prototypeManager.Index(listingData.ProductEntity.Value).Description;
 

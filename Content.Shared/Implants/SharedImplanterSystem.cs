@@ -171,7 +171,7 @@ public abstract class SharedImplanterSystem : EntitySystem
             return false;
         }
 
-        // Check if the implant is a USSP uplink implant (revolutionary implant)
+        // STARLIGHT START: Check if the implant is a USSP uplink implant (revolutionary implant)
         var isUSSPImplant = false;
         if (TryComp<MetaDataComponent>(implant.Value, out var metadata) && 
             metadata.EntityPrototype?.ID == "USSPUplinkImplant")
@@ -351,6 +351,7 @@ public abstract class SharedImplanterSystem : EntitySystem
                 }
             }
         }
+        // STARLIGHT END
 
         var ev = new AddImplantAttemptEvent(user, target, implant.Value, implanter);
         RaiseLocalEvent(target, ev);

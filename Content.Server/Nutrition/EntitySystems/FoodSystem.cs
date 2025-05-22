@@ -386,7 +386,7 @@ public sealed class FoodSystem : EntitySystem
             !ev.CanInteract ||
             !ev.CanAccess ||
             !TryComp<BodyComponent>(ev.User, out var body) ||
-            !_body.TryGetBodyOrganEntityComps<StomachComponent>((ev.User, body), out var stomachs))
+            !_body.TryGetBodyOrganEntityComps<StomachComponent>((ev.User, body), out var stomachs)) // Starlight
             return;
 
         // have to kill mouse before eating it

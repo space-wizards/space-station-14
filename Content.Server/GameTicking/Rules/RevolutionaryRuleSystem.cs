@@ -6,7 +6,7 @@ using Content.Server.EUI;
 using Content.Server.Flash;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Implants;
-using Content.Server.Inventory; // Added this line for InventorySystem
+using Content.Server.Inventory;
 using Content.Shared.Inventory;
 using Content.Shared.Store.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -70,9 +70,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ShuttleBuildingUplinkSystem _shuttleUplink = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly ShuttleBuildingUplinkSystem _shuttleUplink = default!; // Starlight
+    [Dependency] private readonly ChatSystem _chatSystem = default!; // Starlight
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!; // Starlight
 
     //Used in OnPostFlash, no reference to the rule component is available
     public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";
@@ -87,44 +87,17 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<HeadRevolutionaryComponent, MobStateChangedEvent>(OnHeadRevMobStateChanged);
 
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
-        SubscribeLocalEvent<RevolutionaryRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntitySelected);
+        SubscribeLocalEvent<RevolutionaryRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntitySelected); // Starlight
     }
 
+    // Starlight Start
     private void OnAfterAntagEntitySelected(EntityUid uid, RevolutionaryRuleComponent comp, ref AfterAntagEntitySelectedEvent args)
     {
-        // Check if this is a head revolutionary
-        // if (!HasComp<HeadRevolutionaryComponent>(args.EntityUid) || args.Session == null)
-        //     return;
-
-        // // Create a USSP uplink implant for this head revolutionary
-        // var uplinkImplant = EntityManager.SpawnEntity("USSPUplinkImplant", Transform(args.EntityUid).Coordinates);
-        
-        // // Store this uplink for future use
-        // var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(args.EntityUid);
-        // implantComponent.ImplantUid = uplinkImplant;
-        
-        // // Add a component to the uplink to track which head revolutionary it belongs to
-        // var uplinkOwnerComp = EnsureComp<USSPUplinkOwnerComponent>(uplinkImplant);
-        // uplinkOwnerComp.OwnerUid = args.EntityUid;
-        
-        // // Initialize the uplink with zero currencies
-        // if (TryComp<StoreComponent>(uplinkImplant, out var store))
-        // {
-        //     var storeSystem = EntitySystem.Get<StoreSystem>();
-        //     var currencyToAdd = new Dictionary<string, FixedPoint2> 
-        //     { 
-        //         { "Telebond", FixedPoint2.Zero },
-        //         { "Conversion", FixedPoint2.Zero }
-        //     };
-        //     storeSystem.TryAddCurrency(currencyToAdd, uplinkImplant);
-        //     Logger.InfoS("rev-rule", $"Created new uplink {ToPrettyString(uplinkImplant)} for head revolutionary {ToPrettyString(args.EntityUid)}");
-        //     Logger.InfoS("rev-rule", $"Added USSPUplinkOwnerComponent to uplink {ToPrettyString(uplinkImplant)} with owner {ToPrettyString(args.EntityUid)}");
-        // }
-
         // Send a custom briefing with the character's name
         var name = Identity.Name(args.EntityUid, EntityManager);
         _antag.SendBriefing(args.Session, Loc.GetString("head-rev-role-greeting", ("name", name)), Color.LightYellow, new SoundPathSpecifier("/Audio/Ambience/Antag/headrev_start.ogg"));
     }
+    // Starlight End
 
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -141,16 +114,17 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
             if (CheckCommandLose())
             {
+                // Starlight Start
 
                 _roundEnd.CancelRoundEndCountdown(null, false);
-                
+
                 // Play the revolutionary end sound globally
                 var filter = Filter.Broadcast();
                 _audioSystem.PlayGlobal("/Audio/_Starlight/Effects/sov_choir_global.ogg", filter, false);
 
                 // First, end the game rule
                 GameTicker.EndGameRule(uid, gameRule);
-                
+
                 // Check if the emergency shuttle is already called (not just arrived)
                 if (_roundEnd.IsRoundEndRequested())
                 {
@@ -158,7 +132,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     // Cancel the current shuttle call - force it with false for checkCooldown
                     _roundEnd.CancelRoundEndCountdown(null, false);
                 }
-                
+
                 // Use a safer approach for scheduling the announcements
                 // Schedule the first announcement after 7 seconds
                 Timer.Spawn(TimeSpan.FromSeconds(7), () =>
@@ -182,7 +156,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                         Logger.ErrorS("rev-rule", $"Error during first announcement: {ex}");
                     }
                 });
-                
+
                 // Schedule the second announcement separately after 22 seconds (7 + 15)
                 Timer.Spawn(TimeSpan.FromSeconds(32), () =>
                 {
@@ -196,7 +170,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                             new SoundPathSpecifier("/Audio/_Starlight/Announcements/sov_announce.ogg"),
                             Color.Yellow
                         );
-        
+
                         // Wait a short time to ensure the announcement is heard before ending the round
                         Timer.Spawn(TimeSpan.FromSeconds(4), () =>
                         {
@@ -212,6 +186,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                         _roundEnd.EndRound();
                     }
                 });
+                // Starlight End
             }
         }
     }
@@ -253,8 +228,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         args.Append(Loc.GetString(head ? "head-rev-briefing" : "rev-briefing"));
     }
 
+
     /// <summary>
-    /// Called when a Head Rev uses a flash in melee to convert somebody else.
+    /// STARLIGHT: Called when a Head Rev uses a flash in melee to convert somebody else.
     /// </summary>
     private EntityUid? FindUSSPUplink(EntityUid user)
     {
@@ -266,7 +242,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (TryComp<HeadRevolutionaryImplantComponent>(user, out var implantComp) && implantComp.ImplantUid != null)
         {
             // Verify the implant still exists and is valid
-            if (EntityManager.EntityExists(implantComp.ImplantUid.Value) && 
+            if (EntityManager.EntityExists(implantComp.ImplantUid.Value) &&
                 EntityManager.HasComponent<StoreComponent>(implantComp.ImplantUid.Value))
             {
                 return implantComp.ImplantUid.Value;
@@ -287,7 +263,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                         var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(user);
                         implantComponent.ImplantUid = implant;
                     }
-                    
+
                     return implant;
                 }
             }
@@ -311,7 +287,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                         var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(user);
                         implantComponent.ImplantUid = contained;
                     }
-                    
+
                     return contained;
                 }
             }
@@ -330,13 +306,14 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(user);
                     implantComponent.ImplantUid = held;
                 }
-                
+
                 return held;
             }
         }
 
         return null;
     }
+    // STARLIGHT END
 
     private void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, ref AfterFlashedEvent ev)
     {
@@ -357,13 +334,14 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         _npcFaction.AddFaction(ev.Target, RevolutionaryNpcFaction);
         var revComp = EnsureComp<RevolutionaryComponent>(ev.Target);
-        
-        // Add a component to track which head revolutionary converted this revolutionary
+
+        // Starlight: Add a component to track which head revolutionary converted this revolutionary
         if (ev.User != null && HasComp<HeadRevolutionaryComponent>(ev.User.Value))
         {
             var converterComp = EnsureComp<RevolutionaryConverterComponent>(ev.Target);
             converterComp.ConverterUid = ev.User.Value;
         }
+        // Starlight End
 
         if (ev.User != null)
         {
@@ -371,151 +349,154 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 LogImpact.Medium,
                 $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
 
+            // STARLIGHT START
             var storeSystem = EntityManager.System<StoreSystem>();
 
-                // Add Telebond to the converter's uplink
-                if (HasComp<HeadRevolutionaryComponent>(ev.User.Value))
+            // Add Telebond to the converter's uplink
+            if (HasComp<HeadRevolutionaryComponent>(ev.User.Value))
+            {
+                // Find the head revolutionary's uplink
+                var uplinkUid = FindUSSPUplink(ev.User.Value);
+
+                // If no uplink was found, create one
+                if (uplinkUid == null)
                 {
-                    // Find the head revolutionary's uplink
-                    var uplinkUid = FindUSSPUplink(ev.User.Value);
-                    
-                    // If no uplink was found, create one
-                    if (uplinkUid == null)
+                    // Create a new USSP uplink implant for this head revolutionary
+                    var uplinkImplant = EntityManager.SpawnEntity("USSPUplinkImplant", Transform(ev.User.Value).Coordinates);
+                    uplinkUid = uplinkImplant;
+
+                    // Store this uplink for future use
+                    var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(ev.User.Value);
+                    implantComponent.ImplantUid = uplinkImplant;
+
+                    // Add a component to the uplink to track which head revolutionary it belongs to
+                    var uplinkOwnerComp = EnsureComp<USSPUplinkOwnerComponent>(uplinkImplant);
+                    uplinkOwnerComp.OwnerUid = ev.User.Value;
+                }
+
+                // Add Telebond to the uplink
+                if (uplinkUid != null)
+                {
+                    // Debug log to see the current telebond value
+                    if (TryComp<StoreComponent>(uplinkUid.Value, out var storeComp))
                     {
-                        // Create a new USSP uplink implant for this head revolutionary
-                        var uplinkImplant = EntityManager.SpawnEntity("USSPUplinkImplant", Transform(ev.User.Value).Coordinates);
-                        uplinkUid = uplinkImplant;
-                        
-                        // Store this uplink for future use
-                        var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(ev.User.Value);
-                        implantComponent.ImplantUid = uplinkImplant;
-                        
-                        // Add a component to the uplink to track which head revolutionary it belongs to
-                        var uplinkOwnerComp = EnsureComp<USSPUplinkOwnerComponent>(uplinkImplant);
-                        uplinkOwnerComp.OwnerUid = ev.User.Value;
+                        var currentTelebond = storeComp.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
                     }
-                    
-                    // Add Telebond to the uplink
-                    if (uplinkUid != null)
+
+                    // Ensure the uplink has an owner component that points to this head revolutionary
+                    var uplinkOwnerComp = EnsureComp<USSPUplinkOwnerComponent>(uplinkUid.Value);
+                    uplinkOwnerComp.OwnerUid = ev.User.Value;
+
+                    var currencyToAdd = new Dictionary<string, FixedPoint2> { { "Telebond", FixedPoint2.New(1) } };
+                    var success = storeSystem.TryAddCurrency(currencyToAdd, uplinkUid.Value);
+
+                    // Debug log to see the updated telebond value
+                    if (TryComp<StoreComponent>(uplinkUid.Value, out var storeCompAfter))
                     {
-                        // Debug log to see the current telebond value
-                        if (TryComp<StoreComponent>(uplinkUid.Value, out var storeComp))
+                        var updatedTelebond = storeCompAfter.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
+                    }
+
+                    // Make sure the head revolutionary's implant component points to this uplink
+                    var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(ev.User.Value);
+                    implantComponent.ImplantUid = uplinkUid;
+
+                    // Synchronize this currency with all other uplinks owned by this head revolutionary
+                    SynchronizeUplinkCurrencies(ev.User.Value, uplinkUid.Value);
+
+                    // Also synchronize all uplinks that have this head revolutionary as their owner
+                    SynchronizeAllUplinksByOwner(ev.User.Value);
+
+                    // Also directly synchronize all revolutionaries' uplinks with this head revolutionary's uplink
+                    var ussplinkSystem = EntitySystem.Get<USSPUplinkSystem>();
+                    var revQuery2 = EntityManager.EntityQuery<RevolutionaryComponent, HeadRevolutionaryImplantComponent>();
+                    foreach (var (_, revImplantComp) in revQuery2)
+                    {
+                        if (revImplantComp.ImplantUid != null &&
+                            EntityManager.EntityExists(revImplantComp.ImplantUid.Value) &&
+                            revImplantComp.ImplantUid.Value != uplinkUid.Value)
                         {
-                            var currentTelebond = storeComp.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
+                            // Use the USSPUplinkSystem's SyncUplinkCurrencies method to directly sync the currencies
+                            ussplinkSystem.SyncUplinkCurrencies(uplinkUid.Value, revImplantComp.ImplantUid.Value);
                         }
-                        
-                        // Ensure the uplink has an owner component that points to this head revolutionary
-                        var uplinkOwnerComp = EnsureComp<USSPUplinkOwnerComponent>(uplinkUid.Value);
-                        uplinkOwnerComp.OwnerUid = ev.User.Value;
-                        
-                        var currencyToAdd = new Dictionary<string, FixedPoint2> { { "Telebond", FixedPoint2.New(1) } };
-                        var success = storeSystem.TryAddCurrency(currencyToAdd, uplinkUid.Value);
-                        
-                        // Debug log to see the updated telebond value
-                        if (TryComp<StoreComponent>(uplinkUid.Value, out var storeCompAfter))
+                    }
+
+                    // Get the final telebond value after synchronization
+                    var finalTelebond = FixedPoint2.Zero;
+                    if (TryComp<StoreComponent>(uplinkUid.Value, out var finalStoreComp))
+                    {
+                        finalTelebond = finalStoreComp.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
+                    }
+
+                    // Show popup to the head revolutionary (private)
+                    _popup.PopupEntity(Loc.GetString($"+1 Telebond (Total: {finalTelebond})"), ev.User.Value, ev.User.Value, PopupType.Medium);
+
+                    // If the uplink is implanted in someone else, show them a popup too
+                    if (TryComp<SubdermalImplantComponent>(uplinkUid.Value, out var implant) &&
+                        implant.ImplantedEntity != null &&
+                        implant.ImplantedEntity.Value != ev.User.Value)
+                    {
+                        _popup.PopupEntity(Loc.GetString($"+1 Telebond (Total: {finalTelebond}) (for {Identity.Name(ev.User.Value, EntityManager)})"),
+                            implant.ImplantedEntity.Value, implant.ImplantedEntity.Value, PopupType.Large);
+                    }
+
+                    // Also show a popup to any revolutionary who has this uplink's entity UID stored in their HeadRevolutionaryImplantComponent
+                    var revQuery = EntityManager.EntityQuery<RevolutionaryComponent, HeadRevolutionaryImplantComponent>();
+                    foreach (var (_, revImplantComp) in revQuery)
+                    {
+                        if (revImplantComp.ImplantUid == uplinkUid &&
+                            revImplantComp.Owner != ev.User.Value &&
+                            (implant == null || implant.ImplantedEntity == null || revImplantComp.Owner != implant.ImplantedEntity.Value))
                         {
-                            var updatedTelebond = storeCompAfter.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
+                            _popup.PopupEntity(Loc.GetString($"+1 Telebond (for {Identity.Name(ev.User.Value, EntityManager)})"),
+                                revImplantComp.Owner, revImplantComp.Owner, PopupType.Large);
                         }
-                        
-                        // Make sure the head revolutionary's implant component points to this uplink
-                        var implantComponent = EnsureComp<HeadRevolutionaryImplantComponent>(ev.User.Value);
-                        implantComponent.ImplantUid = uplinkUid;
-                        
-                        // Synchronize this currency with all other uplinks owned by this head revolutionary
-                        SynchronizeUplinkCurrencies(ev.User.Value, uplinkUid.Value);
-                        
-                        // Also synchronize all uplinks that have this head revolutionary as their owner
-                        SynchronizeAllUplinksByOwner(ev.User.Value);
-                        
-                        // Also directly synchronize all revolutionaries' uplinks with this head revolutionary's uplink
-                        var ussplinkSystem = EntitySystem.Get<USSPUplinkSystem>();
-                        var revQuery2 = EntityManager.EntityQuery<RevolutionaryComponent, HeadRevolutionaryImplantComponent>();
-                        foreach (var (_, revImplantComp) in revQuery2)
+                    }
+
+                    // Also check for any revolutionaries who have an implant with this uplink
+                    var allRevs = EntityManager.EntityQuery<RevolutionaryComponent>();
+                    foreach (var rev in allRevs)
+                    {
+                        // Skip the head revolutionary who did the conversion
+                        if (rev.Owner == ev.User.Value)
+                            continue;
+
+                        // Skip the implanted entity if we already showed them a popup
+                        if (implant != null && implant.ImplantedEntity != null && rev.Owner == implant.ImplantedEntity.Value)
+                            continue;
+
+                        // Check if this revolutionary has an implant
+                        var implantSystem = EntitySystem.Get<SubdermalImplantSystem>();
+                        if (implantSystem.TryGetImplants(rev.Owner, out var implants))
                         {
-                            if (revImplantComp.ImplantUid != null && 
-                                EntityManager.EntityExists(revImplantComp.ImplantUid.Value) &&
-                                revImplantComp.ImplantUid.Value != uplinkUid.Value)
+                            foreach (var revImplant in implants)
                             {
-                                // Use the USSPUplinkSystem's SyncUplinkCurrencies method to directly sync the currencies
-                                ussplinkSystem.SyncUplinkCurrencies(uplinkUid.Value, revImplantComp.ImplantUid.Value);
-                            }
-                        }
-                        
-                        // Get the final telebond value after synchronization
-                        var finalTelebond = FixedPoint2.Zero;
-                        if (TryComp<StoreComponent>(uplinkUid.Value, out var finalStoreComp))
-                        {
-                            finalTelebond = finalStoreComp.Balance.GetValueOrDefault("Telebond", FixedPoint2.Zero);
-                        }
-                        
-                        // Show popup to the head revolutionary (private)
-                        _popup.PopupEntity(Loc.GetString($"+1 Telebond (Total: {finalTelebond})"), ev.User.Value, ev.User.Value, PopupType.Medium);
-                        
-                        // If the uplink is implanted in someone else, show them a popup too
-                        if (TryComp<SubdermalImplantComponent>(uplinkUid.Value, out var implant) && 
-                            implant.ImplantedEntity != null && 
-                            implant.ImplantedEntity.Value != ev.User.Value)
-                        {
-                            _popup.PopupEntity(Loc.GetString($"+1 Telebond (Total: {finalTelebond}) (for {Identity.Name(ev.User.Value, EntityManager)})"), 
-                                implant.ImplantedEntity.Value, implant.ImplantedEntity.Value, PopupType.Large);
-                        }
-                        
-                        // Also show a popup to any revolutionary who has this uplink's entity UID stored in their HeadRevolutionaryImplantComponent
-                        var revQuery = EntityManager.EntityQuery<RevolutionaryComponent, HeadRevolutionaryImplantComponent>();
-                        foreach (var (_, revImplantComp) in revQuery)
-                        {
-                            if (revImplantComp.ImplantUid == uplinkUid && 
-                                revImplantComp.Owner != ev.User.Value && 
-                                (implant == null || implant.ImplantedEntity == null || revImplantComp.Owner != implant.ImplantedEntity.Value))
-                            {
-                                _popup.PopupEntity(Loc.GetString($"+1 Telebond (for {Identity.Name(ev.User.Value, EntityManager)})"), 
-                                    revImplantComp.Owner, revImplantComp.Owner, PopupType.Large);
-                            }
-                        }
-                        
-                        // Also check for any revolutionaries who have an implant with this uplink
-                        var allRevs = EntityManager.EntityQuery<RevolutionaryComponent>();
-                        foreach (var rev in allRevs)
-                        {
-                            // Skip the head revolutionary who did the conversion
-                            if (rev.Owner == ev.User.Value)
-                                continue;
-                                
-                            // Skip the implanted entity if we already showed them a popup
-                            if (implant != null && implant.ImplantedEntity != null && rev.Owner == implant.ImplantedEntity.Value)
-                                continue;
-                                
-                            // Check if this revolutionary has an implant
-                            var implantSystem = EntitySystem.Get<SubdermalImplantSystem>();
-                            if (implantSystem.TryGetImplants(rev.Owner, out var implants))
-                            {
-                                foreach (var revImplant in implants)
+                                // Check if this implant is the same as the uplink or has the same owner
+                                if (revImplant == uplinkUid ||
+                                    (TryComp<USSPUplinkOwnerComponent>(revImplant, out var ownerComp) &&
+                                     ownerComp.OwnerUid == ev.User.Value))
                                 {
-                                    // Check if this implant is the same as the uplink or has the same owner
-                                    if (revImplant == uplinkUid || 
-                                        (TryComp<USSPUplinkOwnerComponent>(revImplant, out var ownerComp) && 
-                                         ownerComp.OwnerUid == ev.User.Value))
-                                    {
-                                        _popup.PopupEntity(Loc.GetString($"+1 Telebond (for {Identity.Name(ev.User.Value, EntityManager)})"), 
-                                            rev.Owner, rev.Owner, PopupType.Medium);
-                                        break;
-                                    }
+                                    _popup.PopupEntity(Loc.GetString($"+1 Telebond (for {Identity.Name(ev.User.Value, EntityManager)})"),
+                                        rev.Owner, rev.Owner, PopupType.Medium);
+                                    break;
                                 }
                             }
                         }
                     }
                 }
-            
+            }
+
             // Add Conversion to ALL head revolutionary uplinks with a 1-second delay
             // This prevents the Conversion popup from appearing at the same time as the Telebond popup
             var uplinkSystem = EntitySystem.Get<USSPUplinkSystem>();
-            Timer.Spawn(TimeSpan.FromSeconds(1), () => 
+            Timer.Spawn(TimeSpan.FromSeconds(1), () =>
             {
                 uplinkSystem.AddConversionToAllHeadRevs(storeSystem);
-                
+
                 // Synchronize all uplinks again to ensure the conversion value is updated everywhere
                 uplinkSystem.SynchronizeAllUplinks();
             });
+
+            // STARLIGHT END
 
             if (_mind.TryGetMind(ev.User.Value, out var revMindId, out _))
             {
@@ -530,7 +511,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         if (mind?.Session != null)
-            _antag.SendBriefing(mind.Session, Loc.GetString("rev-role-greeting", ("name", Identity.Name(ev.Target, EntityManager))), Color.LightYellow, revComp.RevStartSound);
+            _antag.SendBriefing(mind.Session, Loc.GetString("rev-role-greeting", ("name", Identity.Name(ev.Target, EntityManager))), Color.LightYellow, revComp.RevStartSound); // STARLIGHT
     }
 
     //TODO: Enemies of the revolution
@@ -552,11 +533,12 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             commandList.Add(id);
         }
-
+    
+    // STARLIGHT START
         var allCommandDead = IsGroupDetainedOrDead(commandList, true, true, true);
         return allCommandDead;
     }
-    
+
     /// <summary>
     /// Removes various event schedulers from the game rules.
     /// </summary>
@@ -568,7 +550,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             EntityManager.RemoveComponent<BasicStationEventSchedulerComponent>(scheduler.Owner);
         }
-        
+
         // Remove RampingStationEventScheduler
         var rampingSchedulers = EntityManager.EntityQuery<RampingStationEventSchedulerComponent>();
         foreach (var scheduler in rampingSchedulers)
@@ -578,6 +560,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         // Get all game rule entities
         // var gameRuleQuery = EntityManager.EntityQuery<GameRuleComponent>();
+        // STARLIGHT END
     }
 
     private void OnHeadRevMobStateChanged(EntityUid uid, HeadRevolutionaryComponent comp, MobStateChangedEvent ev)
@@ -604,7 +587,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         // Cuffing Head Revs is not enough - they must be killed.
         if (IsGroupDetainedOrDead(headRevList, false, false, false))
         {
-            // Delete all USSP uplinks and turn supply rifts and SKGB implanters to ash
+            // STARLIGHT: Delete all USSP uplinks and turn supply rifts and SKGB implanters to ash
             DeleteUplinksTurnItemsToAsh();
             
             var rev = AllEntityQuery<RevolutionaryComponent, MindContainerComponent>();
@@ -616,7 +599,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 _npcFaction.RemoveFaction(uid, RevolutionaryNpcFaction);
                 _stun.TryParalyze(uid, stunTime, true);
                 RemCompDeferred<RevolutionaryComponent>(uid);
-                _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", Identity.Name(uid, EntityManager))), uid);
+                _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", Identity.Name(uid, EntityManager))), uid); //STARLIGHT
                 _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to all Head Revolutionaries dying.");
 
                 if (!_mind.TryGetMind(uid, out var mindId, out _, mc))
@@ -637,7 +620,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     }
     
     /// <summary>
-    /// Deletes all USSP uplinks and turns supply rifts and SKGB implanters to ash when all head revolutionaries are dead.
+    /// STARLIGHT: Deletes all USSP uplinks and turns supply rifts and SKGB implanters to ash when all head revolutionaries are dead.
     /// </summary>
     private void DeleteUplinksTurnItemsToAsh()
     {
@@ -774,7 +757,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     };
     
     /// <summary>
-    /// Synchronizes currencies between all uplinks owned by the same head revolutionary.
+    /// STARLIGHT: Synchronizes currencies between all uplinks owned by the same head revolutionary.
     /// This ensures that all uplinks have the same amount of telebonds and conversions.
     /// </summary>
     private void SynchronizeUplinkCurrencies(EntityUid headRevUid, EntityUid currentUplinkUid)
@@ -978,46 +961,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 }
             }
         }
-        
-        // // Now update all uplinks with the maximum values
-        // foreach (var uplink in allUplinks)
-        // {
-        //     if (TryComp<StoreComponent>(uplink, out var store))
-        //     {
-        //         // Make sure the store has both currencies initialized
-        //         if (!store.Balance.ContainsKey("Telebond"))
-        //         {
-        //             store.Balance["Telebond"] = FixedPoint2.Zero;
-        //         }
-                
-        //         if (!store.Balance.ContainsKey("Conversion"))
-        //         {
-        //             store.Balance["Conversion"] = FixedPoint2.Zero;
-        //         }
-                
-        //         // Update the currencies if they're lower than the maximum
-        //         if (store.Balance["Telebond"] < maxTelebond)
-        //         {
-        //             store.Balance["Telebond"] = maxTelebond;
-        //             Logger.Info($"Updated Telebond currency in uplink {ToPrettyString(uplink)} to {maxTelebond}");
-                    
-        //             // Show popup to the implanted entity
-        //             if (TryComp<SubdermalImplantComponent>(uplink, out var implant) && 
-        //                 implant.ImplantedEntity != null && 
-        //                 implant.ImplantedEntity.Value != headRevUid)
-        //             {
-        //                 _popup.PopupEntity(Loc.GetString($"Telebond updated to {maxTelebond} (from {Identity.Name(headRevUid, EntityManager)})"), 
-        //                     implant.ImplantedEntity.Value, implant.ImplantedEntity.Value, PopupType.Medium);
-        //             }
-        //         }
-                
-        //         if (store.Balance["Conversion"] < maxConversion)
-        //         {
-        //             store.Balance["Conversion"] = maxConversion;
-        //             Logger.Info($"Updated Conversion currency in uplink {ToPrettyString(uplink)} to {maxConversion}");
-        //         }
-        //     }
-        // }
         
         // Also update the global conversion value for all USSP uplinks in the game
         // This ensures that all uplinks have the same conversion value, regardless of owner

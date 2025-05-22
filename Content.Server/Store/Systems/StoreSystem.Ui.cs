@@ -34,7 +34,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly RevSupplyRiftSystem _revSupplyRift = default!;
+    [Dependency] private readonly RevSupplyRiftSystem _revSupplyRift = default!; // Starlight
 
     private void InitializeUi()
     {
@@ -82,7 +82,7 @@ public sealed partial class StoreSystem
     }
 
         /// <summary>
-        /// Updates the user interface for a store and refreshes the listings
+        /// STARLIGHT: Updates the user interface for a store and refreshes the listings
         /// </summary>
         /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
         /// <param name="store">The store entity itself</param>
@@ -144,7 +144,7 @@ public sealed partial class StoreSystem
 
         var buyer = msg.Actor;
         
-        // Special handling for RevSupplyRiftListing to prevent spam-clicking
+        // STARLIGHT START: Special handling for RevSupplyRiftListing to prevent spam-clicking
         if (listing.ID == "RevSupplyRiftListing")
         {
             // Check if there's already an active rift being processed or placed
@@ -184,6 +184,7 @@ public sealed partial class StoreSystem
                 }
             }
         }
+        // STARLIGHT END
 
         //verify that we can actually buy this listing and it wasn't added
         if (!ListingHasCategory(listing, component.Categories))
@@ -199,7 +200,7 @@ public sealed partial class StoreSystem
                 return;
         }
         
-        // Check if the listing is unavailable (e.g., out of stock)
+        // Starlight: Check if the listing is unavailable (e.g., out of stock)
         // We still want to show the listing in the UI, but prevent purchase
         if (listing.Unavailable)
             return;
@@ -313,7 +314,7 @@ public sealed partial class StoreSystem
         }
 
         //log dat shit.
-        // Get the resolved name without any placeholders
+        // Starlight: Get the resolved name without any placeholders
         var resolvedName = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto);
         
         // Remove any stock count or "Out of Stock" text for the log
@@ -324,12 +325,12 @@ public sealed partial class StoreSystem
         
         _admin.Add(LogType.StorePurchase,
             LogImpact.Low,
-            $"{ToPrettyString(buyer):player} purchased listing \"{resolvedName}\" from {ToPrettyString(uid)}");
+            $"{ToPrettyString(buyer):player} purchased listing \"{resolvedName}\" from {ToPrettyString(uid)}"); // Starlight
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
 
-        // Check if this listing has a StockLimitedListingCondition
+        // STARTLIGHT START: Check if this listing has a StockLimitedListingCondition
         if (listing.Conditions != null)
         {
             foreach (var condition in listing.Conditions)
@@ -349,6 +350,8 @@ public sealed partial class StoreSystem
                 }
             }
         }
+
+        // STARLIGHT END
         
         var buyFinished = new StoreBuyFinishedEvent
         {
@@ -357,7 +360,7 @@ public sealed partial class StoreSystem
         };
         RaiseLocalEvent(ref buyFinished);
         
-        // If this was a supply rift purchase, mark processing as complete
+        // STARLIGHT START: If this was a supply rift purchase, mark processing as complete
         if (listing.ID == "RevSupplyRiftListing")
         {
             _revSupplyRift.SetRiftProcessing(false);
@@ -377,9 +380,11 @@ public sealed partial class StoreSystem
             }
         }
 
+        // STARLIGHT END
+
         UpdateUserInterface(buyer, uid, component);
         
-        // If this was a stock-limited item, update all USSP uplink UIs
+        // STARLIGHT START: If this was a stock-limited item, update all USSP uplink UIs
         if (listing.Conditions != null)
         {
             foreach (var condition in listing.Conditions)
@@ -427,7 +432,7 @@ public sealed partial class StoreSystem
             Logger.DebugS("store", $"Updated USSP uplink UI for {ToPrettyString(storeComp.Owner)}");
         }
     }
-    
+
     /// <summary>
     /// Forces an update of the UI for all sessions currently viewing this store.
     /// This ensures that when stock counts or last purchaser information changes,
@@ -444,27 +449,28 @@ public sealed partial class StoreSystem
             if (storeComp.Balance.TryGetValue(supported, out var value))
                 allCurrency[supported] = value;
         }
-        
+
         // Only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(storeUid);
-        
+
         var state = new StoreUpdateState(storeComp.LastAvailableListings, allCurrency, showFooter, storeComp.RefundAllowed);
-        
+
         // Set the UI state - this will update all connected sessions automatically
         _ui.SetUiState(storeUid, StoreUiKey.Key, state);
-        
+
         // Find all players who might have this uplink open
         var query = EntityManager.EntityQuery<ActorComponent>();
         foreach (var actor in query)
         {
             // Check if this player has the uplink implanted
-            if (TryComp<SubdermalImplantComponent>(storeUid, out var implant) && 
+            if (TryComp<SubdermalImplantComponent>(storeUid, out var implant) &&
                 implant.ImplantedEntity == actor.Owner)
             {
                 // Force update the UI for this player
                 UpdateUserInterface(actor.Owner, storeUid, storeComp);
             }
         }
+        // STARLIGHT END
     }
 
     /// <summary>
@@ -507,7 +513,7 @@ public sealed partial class StoreSystem
             amountRemaining -= value * amountToSpawn;
         }
 
-        // Play sound effect when withdrawing telebonds
+        // STARLIGHT: Play sound effect when withdrawing telebonds
         if (msg.Currency == "Telebond")
         {
             var soundPath = new SoundPathSpecifier("/Audio/Machines/diagnoser_printing.ogg");

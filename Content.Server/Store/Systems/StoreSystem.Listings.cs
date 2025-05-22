@@ -116,7 +116,7 @@ public sealed partial class StoreSystem
             if (!ListingHasCategory(listing, categories))
                 continue;
 
-            // Reset the unavailable flag before checking conditions
+            // Starlight Start: Reset the unavailable flag before checking conditions
             listing.Unavailable = false;
 
             if (listing.Conditions != null)
@@ -166,6 +166,7 @@ public sealed partial class StoreSystem
             
             NextListing:
             continue;
+            // Starlight End
         }
     }
 
