@@ -37,21 +37,4 @@ public sealed partial class AlertLevelComponent : Component
     [ViewVariables] public float CurrentDelay = 0;
     [ViewVariables] public bool ActiveDelay;
 
-    /// <summary>
-    /// If the level can be selected on the station.
-    /// </summary>
-    [ViewVariables]
-    public bool IsSelectable
-    {
-        get
-        {
-            if (AlertLevels == null
-                || !AlertLevels.Levels.TryGetValue(CurrentLevel, out var level))
-            {
-                return false;
-            }
-
-            return level.Selectable && !level.DisableSelection && !IsLevelLocked;
-        }
-    }
 }

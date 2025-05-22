@@ -107,6 +107,21 @@ public sealed class AlertLevelSystem : EntitySystem
         return alert.CurrentLevel;
     }
 
+    /// <summary>
+    /// If the current level can be selected on station
+    /// </summary>
+    public bool IsSelectable(AlertLevelComponent? alert = null)
+    {
+
+        if (alert == null || alert.AlertLevels == null ||
+            !alert.AlertLevels.Levels.TryGetValue(alert.CurrentLevel, out var level))
+        {
+            return false;
+        }
+
+        return level.Selectable && !level.DisableSelection && !alert.IsLevelLocked;
+    }
+
     public float GetAlertLevelDelay(EntityUid station, AlertLevelComponent? alert = null)
     {
         if (!Resolve(station, ref alert))

@@ -142,7 +142,7 @@ namespace Content.Server.Communications
                 if (TryComp(stationUid.Value, out AlertLevelComponent? alertComp) &&
                     alertComp.AlertLevels != null)
                 {
-                    if (alertComp.IsSelectable)
+                    if (_alertLevelSystem.IsSelectable(alertComp))
                     {
                         levels = new();
                         foreach (var (id, detail) in alertComp.AlertLevels.Levels)
