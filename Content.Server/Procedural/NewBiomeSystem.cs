@@ -346,6 +346,11 @@ public sealed class BiomeUnloadJob : Job<bool>
     public Entity<MapGridComponent, NewBiomeComponent> Biome;
     public Dictionary<string, List<Vector2i>> ToUnload = default!;
 
+    private static readonly List<string> _ignoredComponents = new()
+    {
+        "RandomSprite",
+    };
+
     public BiomeUnloadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         IoCManager.InjectDependencies(this);
@@ -407,7 +412,7 @@ public sealed class BiomeUnloadJob : Job<bool>
                         }
 
                         // If it stayed still and had no data change then keep it.
-                        if (pos == xform.LocalPosition.Floored() && xform.GridUid == Biome.Owner && _entManager.IsDefault(ent))
+                        if (pos == xform.LocalPosition.Floored() && xform.GridUid == Biome.Owner && _entManager.IsDefault(ent, _ignoredComponents))
                         {
                             _entManager.DeleteEntity(ent);
                             continue;
@@ -444,7 +449,7 @@ public sealed class BiomeUnloadJob : Job<bool>
                         }
 
                         entities.Clear();
-                        var tileBounds = lookup.GetLocalBounds(index, Biome.Comp1.TileSize).Enlarged(-0.01f);
+                        var tileBounds = lookup.GetLocalBounds(index, Biome.Comp1.TileSize).Enlarged(-0.05f);
 
                         lookup.GetEntitiesIntersecting(Biome.Owner,
                             tileBounds,
