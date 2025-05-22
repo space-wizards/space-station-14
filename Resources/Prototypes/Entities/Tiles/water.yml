@@ -17,9 +17,9 @@
     drawdepth: BelowFloor
     layers:
       - state: shoreline_water
-  - type: ContainerContainer
-    containers:
-      solution@pool: !type:ContainerSlot
+  #- type: ContainerContainer
+  #  containers:
+  #    solution@pool: !type:ContainerSlot
   - type: SolutionContainerManager
     solutions:
       pool:
