@@ -13,6 +13,9 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
 
     private ISawmill _log = default!;
 
+    // Just an array to initialize the pixels of a new OwnedTexture
+    private static readonly Rgba32[] EmptyTexture = new Rgba32[32*32];
+
     public override void Initialize()
     {
         base.Initialize();
@@ -34,7 +37,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
         // Allocate the OwnedTexture
         ent.Comp.ScreenTexture ??= _clyde.CreateBlankTexture<Rgba32>((32, 32));
         // Initialize the texture
-        ent.Comp.ScreenTexture.SetSubImage((0, 0), (32, 32), new ReadOnlySpan<Rgba32>(new Rgba32[32*32]));
+        ent.Comp.ScreenTexture.SetSubImage((0, 0), (32, 32), new ReadOnlySpan<Rgba32>(EmptyTexture));
 
         // Initialize bar drawing buffer
         ent.Comp.BarBuf ??= new Rgba32[ent.Comp.Size.X * ent.Comp.Size.Y];
