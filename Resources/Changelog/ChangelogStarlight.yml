@@ -6030,4 +6030,12 @@ Entries:
   id: 835
   time: '2025-05-22T20:19:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/677
+- author: PubliclyExecutedPig
+  changes:
+  - message: Due to over-confidence among Syndicate investors, the China-Lake and
+      L6 Saw have swapped prices for "Entertainment value"
+    type: Tweak
+  id: 836
+  time: '2025-05-22T20:32:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/671
 
