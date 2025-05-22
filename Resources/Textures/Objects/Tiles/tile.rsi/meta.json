@@ -29,6 +29,9 @@
       "name": "dark-vertical-slats"
     },
     {
+      "name": "dark-horizontal-slats"
+    },
+    {
       "name": "dark-pavement"
     },
     {
@@ -244,6 +247,9 @@
       "name": "steel-vertical-slats"
     },
     {
+      "name": "steel-horizontal-slats"
+    },
+    {
       "name": "silver"
     },
     {
@@ -272,6 +278,9 @@
     },
     {
       "name": "white-vertical-slats"
+    },
+    {
+      "name": "white-horizontal-slats"
     },
     {
       "name": "white-pavement"
