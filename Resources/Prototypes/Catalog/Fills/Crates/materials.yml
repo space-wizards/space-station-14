@@ -85,6 +85,26 @@
       - id: SheetPlasma
 
 - type: entity
+  id: CrateMaterialGold
+  parent: CrateGenericSteel
+  name: gold crate
+  description: 30 bars of gold.
+  components:
+  - type: StorageFill
+    contents:
+    - id: IngotGold
+
+- type: entity
+  id: CrateMaterialSilver
+  parent: CrateGenericSteel
+  name: silver crate
+  description: 30 bars of silver.
+  components:
+  - type: StorageFill
+    contents:
+    - id: IngotSilver
+
+- type: entity
   id: CrateMaterialCardboard
   parent: CrateGenericSteel
   name: cardboard crate
