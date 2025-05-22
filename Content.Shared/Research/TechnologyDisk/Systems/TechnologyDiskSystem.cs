@@ -60,7 +60,7 @@ public sealed class System : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to pick and set a random recipe as a chosen one.
+    /// Attempts to pick and set a random recipe as the chosen one.
     /// If the disk already has recipes, does nothing.
     /// </summary>
     private void TryPickAndSetRecipe(Entity<TechnologyDiskComponent> ent)
@@ -117,7 +117,7 @@ public sealed class System : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to pick and set a random tier as a chosen one.
+    /// Attempts to pick and set a random tier as the chosen one.
     /// </summary>
     private int? TryPickAndSetTier(Entity<TechnologyDiskComponent> ent)
     {
@@ -133,7 +133,7 @@ public sealed class System : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to pick and set a random discipline as a chosen one.
+    /// Attempts to pick and set a random discipline as the chosen one.
     /// </summary>
     private ProtoId<TechDisciplinePrototype>? TryPickAndSetDiscipline(Entity<TechnologyDiskComponent> ent)
     {

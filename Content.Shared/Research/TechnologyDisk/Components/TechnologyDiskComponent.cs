@@ -30,7 +30,7 @@ public sealed partial class TechnologyDiskComponent : Component
     public List<ProtoId<LatheRecipePrototype>>? Recipes;
 
     /// <summary>
-    /// A weighted random prototype for how rare each disk's tier should be.
+    /// A weighted random prototype for how rare each tier should be.
     /// </summary>
     [DataField]
     public ProtoId<WeightedRandomPrototype> TierWeightPrototype = "TechDiskTierWeights";

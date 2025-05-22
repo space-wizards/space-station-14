@@ -51,7 +51,7 @@ public sealed class DiskConsoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Spawns a tech disk using the given tech console and a position.
+    /// Spawns a random tech disk using the given tech console and a position.
     /// </summary>
     /// <param name="console">Tech console.</param>
     /// <param name="coordinates">Position.</param>

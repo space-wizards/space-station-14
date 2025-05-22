@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Server.Research.TechnologyDisk.Components;
@@ -15,10 +16,10 @@ public sealed partial class DiskConsoleComponent : Component
     public int PricePerDisk = 1000;
 
     /// <summary>
-    /// A prototype for the tech disk entity.
+    /// The prototype of what's being printed
     /// </summary>
-    [DataField]
-    public EntProtoId DiskPrototype = "TechnologyDisk";
+    [DataField("diskPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public string DiskPrototype = "TechnologyDisk";
 
     /// <summary>
     /// How long it takes to print <see cref="DiskPrototype"/>
