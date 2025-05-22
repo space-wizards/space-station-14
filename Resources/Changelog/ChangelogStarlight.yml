@@ -6023,4 +6023,11 @@ Entries:
   id: 834
   time: '2025-05-21T12:26:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/665
+- author: Floating Spore
+  changes:
+  - message: Numb people no longer scream when in surgery
+    type: Tweak
+  id: 835
+  time: '2025-05-22T20:19:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/677
 
