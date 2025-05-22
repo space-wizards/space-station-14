@@ -99,8 +99,37 @@
   - type: StealTarget
     stealGroup: TechnologyDisk
   - type: TechnologyDisk
+  - type: StaticPrice # varies based on tier - see TechnologyDiskT<N> protos that hold the pricing
+
+- type: entity
+  parent: TechnologyDisk
+  id: TechnologyDiskT1
+  suffix: Tier 1
+  components:
+  - type: TechnologyDisk
+    tier: 1
   - type: StaticPrice
-    price: 100  # will vary depending on tier
+    price: 100 # used for pricing all disks of this tier
+
+- type: entity
+  parent: TechnologyDisk
+  id: TechnologyDiskT2
+  suffix: Tier 2
+  components:
+  - type: TechnologyDisk
+    tier: 2
+  - type: StaticPrice
+    price: 500 # used for pricing all disks of this tier
+
+- type: entity
+  parent: TechnologyDisk
+  id: TechnologyDiskT3
+  suffix: Tier 3
+  components:
+  - type: TechnologyDisk
+    tier: 3
+  - type: StaticPrice
+    price: 3000 # used for pricing all disks of this tier
 
 - type: entity
   parent: TechnologyDisk
