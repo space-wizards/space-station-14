@@ -37,6 +37,8 @@
     - id: GameRuleCowSwarm
     - id: GameRulePotatoSwarm
     - id: GameRuleFunSwarm
+    - id: GameRuleMeteorFleshSwarm
+    - id: GameRuleMeteorKudzuSwarm
     - id: ImmovableRodSpawn
 
 - type: weightedRandomEntity
@@ -52,6 +54,29 @@
     MeteorRockDiamond: 2
     MeteorRockUranium: 0.5
     MeteorRockBananium: 0.5
+
+- type: weightedRandomEntity
+  id: MeteorSpawnFleshMonstersTable
+  weights:
+    MobFleshGolemSalvage: 1
+    MobFleshClampSalvage: 1
+    MobFleshLoverSalvage: 1
+    MobFleshJaredSalvage: 1
+
+- type: weightedRandomEntity
+  id: MeteorSpawnFleshTendonsTable
+  weights:
+    FleshKudzuSpace: 1
+
+- type: weightedRandomEntity
+  id: MeteorSpawnFleshFleshBlockerTable
+  weights:
+    FleshBlocker: 1
+
+- type: weightedRandomEntity
+  id: MeteorSpawnKudzuTable
+  weights:
+    Kudzu: 1
 
 # Event Schedulers
 
@@ -316,3 +341,39 @@
     meteorsPerWave:
       min: 8
       max: 12
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleMeteorFleshSwarm
+  components:
+  - type: StationEvent
+    weight: 4
+  - type: MeteorSwarm
+    announcement: station-event-bio-swarm-start-announcement
+    announcementSound: /Audio/Announcements/attention.ogg
+    meteors:
+      MeteorFlesh: 1
+    waves:
+      min: 2
+      max: 3
+    meteorsPerWave:
+      min: 6
+      max: 10
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleMeteorKudzuSwarm
+  components:
+  - type: StationEvent
+    weight: 5
+  - type: MeteorSwarm
+    announcement: station-event-bio-swarm-start-announcement
+    announcementSound: /Audio/Announcements/attention.ogg
+    meteors:
+      MeteorKudzu: 1
+    waves:
+      min: 2
+      max: 3
+    meteorsPerWave:
+      min: 6
+      max: 10

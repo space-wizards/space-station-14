@@ -7,3 +7,4 @@ station-event-meteor-cow-start-announcement = The station is colliding with an u
 station-event-meteor-clown-start-announcement = The station is colliding with an unidentified swarm of debris. HONK! Evacuate laughing gas storage immediately.
 station-event-meteor-potato-start-announcement = The station is colliding with an unidentified swarm of debris. High starch content detected.
 station-event-fun-swarm-start-announcement = The station is colliding with an unidentified swarm of debris. Please panic appropriately.
+station-event-bio-swarm-start-announcement = Meteors have been detected on collision course with the station. Biological activity detected.
