@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: RedBookcase
-  changes:
-  - message: Added about a dozen new cocktails for the Bartender to mix up, and polished
-      some of the sprites for older drinks.
-    type: Add
-  id: 8048
-  time: '2025-03-10T23:08:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33570
-- author: Velken
-  changes:
-  - message: Performers can now find that their clothing set is more complete!
-    type: Add
-  id: 8049
-  time: '2025-03-10T23:17:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35764
 - author: ScarKy0
   changes:
   - message: Mindshield implants can now be removed using an empty implanter.
@@ -3926,3 +3911,21 @@
   id: 8555
   time: '2025-05-22T02:18:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37535
+- author: ScarKy0
+  changes:
+  - message: The "Escape alive and unrestrained" objective now counts as partially
+      complete if you show up handcuffed. Being dead still has it count as a total
+      fail!
+    type: Tweak
+  id: 8556
+  time: '2025-05-22T03:25:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37680
+- author: EmoGarbage404
+  changes:
+  - message: Added cargo orders for gold and silver ingots.
+    type: Add
+  - message: Reduced prices of cardboard and paper material crate.
+    type: Tweak
+  id: 8557
+  time: '2025-05-22T08:42:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37713
