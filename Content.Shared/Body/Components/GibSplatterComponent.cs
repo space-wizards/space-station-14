@@ -1,4 +1,4 @@
-namespace Content.Server.Body.Components;
+namespace Content.Shared.Body.Components;
 
 /// <summary>
 /// If attached to an entity if it's a part in a BeingGibbedEvent,

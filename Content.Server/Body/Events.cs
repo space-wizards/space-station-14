@@ -1,4 +1,3 @@
-
 namespace Content.Server.Body;
 /// <summary>
 /// Subscribe to this event and set the

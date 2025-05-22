@@ -1,3 +1,4 @@
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Server.Body.Systems;
 using Robust.Client.GameObjects;
@@ -7,19 +8,19 @@ using Content.Shared.Hands;
 namespace Content.Client.Body.Systems;
 
 /// <summary>
-/// Ensures entities with <see cref="OrganComponent"/> have the correct color.
+/// Ensures entities with <see cref="GibSplatterComponent"/> have the correct color.
 /// </summary>
-public sealed class GibVisualizerSystem : VisualizerSystem<OrganComponent>
+public sealed class GibVisualizerSystem : VisualizerSystem<GibSplatterComponent>
 {
     [Dependency] private readonly SpriteSystem _spriteSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<OrganComponent, HeldVisualsUpdatedEvent>(OnHeldVisualsUpdated);
+        SubscribeLocalEvent<GibSplatterComponent, HeldVisualsUpdatedEvent>(OnHeldVisualsUpdated);
     }
 
-    private void OnHeldVisualsUpdated(EntityUid uid, OrganComponent component, HeldVisualsUpdatedEvent args)
+    private void OnHeldVisualsUpdated(EntityUid uid, GibSplatterComponent component, HeldVisualsUpdatedEvent args)
     {
         if (!TryComp<SpriteComponent>(args.User, out var sprite) || !AppearanceSystem.TryGetData<Color>(uid, GoreVisuals.ColorTint, out var color))
             return;
@@ -31,7 +32,7 @@ public sealed class GibVisualizerSystem : VisualizerSystem<OrganComponent>
         }
     }
 
-    protected override void OnAppearanceChange(EntityUid uid, OrganComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, GibSplatterComponent comp, ref AppearanceChangeEvent args)
     {
         if (!AppearanceSystem.TryGetData<Color>(uid, GoreVisuals.ColorTint, out var color))
             return;
