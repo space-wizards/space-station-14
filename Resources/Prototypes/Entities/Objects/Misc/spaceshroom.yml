@@ -93,6 +93,9 @@
     thickness: 0.02
     area: 0.02
     conductivity: 0.43
+  - type: Tag
+    tags:
+    - Mushroom
 
 - type: weightedRandomFillSolution
   id: RandomFillSpaceshroom

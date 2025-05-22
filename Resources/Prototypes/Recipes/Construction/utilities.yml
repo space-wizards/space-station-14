@@ -120,6 +120,15 @@
   canBuildInImpassable: false
 
 - type: construction
+  id: DisposalSignaller
+  graph: DisposalPipe
+  startNode: start
+  targetNode: signaller
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
   id: DisposalTrunk
   graph: DisposalPipe
   startNode: start

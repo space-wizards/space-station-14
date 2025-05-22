@@ -10,4 +10,10 @@ public sealed partial class ExteriorDunGen : IDunGenLayer
 {
     [DataField(required: true)]
     public ProtoId<DungeonConfigPrototype> Proto;
+
+    /// <summary>
+    /// Minimum and maximum penetration.
+    /// </summary>
+    [DataField]
+    public Vector2i Penetration = new Vector2i(5, 15);
 }

@@ -143,27 +143,15 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
             foreach (var layer in layers)
             {
-                await RunLayer(dungeons, position, layer, reservedTiles, seed, random);
+            	var dungCount = dungeons.Count;
+                await RunLayer(i, count, config, dungeons, position, layer, reservedTiles, seed, random);
 
                 if (config.ReserveTiles)
                 {
-                    // Remove any dungeons passed in so we don't interfere with them
-                    // This is kinda goofy but okay for now.
-                    if (existing != null)
+                    // Reserve tiles on any new dungeons.
+                    for (var d = dungCount; d < dungeons.Count; d++)
                     {
-                        for (var j = 0; j < dungeons.Count; j++)
-                        {
-                            var dung = dungeons[j];
-
-                            if (existing.Contains(dung))
-                            {
-                                dungeons.RemoveSwap(j);
-                            }
-                        }
-                    }
-
-                    foreach (var dungeon in dungeons)
-                    {
+                        var dungeon = dungeons[d];
                         reservedTiles.UnionWith(dungeon.AllTiles);
                     }
                 }
@@ -174,7 +162,8 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
             }
         }
 
-        return dungeons;
+        // Only return the new ones.
+        return dungeons[(existing?.Count ?? 0)..];
     }
 
     protected override async Task<List<Dungeon>?> Process()
@@ -208,10 +197,14 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
             npcSystem.WakeNPC(npc.Owner, npc.Comp);
         }
 
+        _sawmill.Info($"Finished generating dungeon {_gen} with seed {_seed}");
         return dungeons;
     }
 
     private async Task RunLayer(
+        int runCount,
+        int maxRuns,
+        DungeonConfig config,
         List<Dungeon> dungeons,
         Vector2i position,
         IDunGenLayer layer,
@@ -261,7 +254,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 await PostGen(flank, dungeons[^1], reservedTiles, random);
                 break;
             case ExteriorDunGen exterior:
-                dungeons.AddRange(await GenerateExteriorDungen(position, exterior, reservedTiles, random));
+                dungeons.AddRange(await GenerateExteriorDungen(runCount, maxRuns, position, exterior, reservedTiles, random));
                 break;
             case FillGridDunGen fill:
                 await GenerateFillDunGen(fill, dungeons, reservedTiles);
@@ -285,7 +278,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 await PostGen(mob, dungeons[^1], random);
                 break;
             case EntityTableDunGen entityTable:
-                await PostGen(entityTable, dungeons[^1], random);
+                await PostGen(entityTable, dungeons, reservedTiles, random);
                 break;
             case NoiseDistanceDunGen distance:
                 dungeons.Add(await GenerateNoiseDistanceDunGen(position, distance, reservedTiles, seed, random));
@@ -294,7 +287,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 dungeons.Add(await GenerateNoiseDunGen(position, noise, reservedTiles, seed, random));
                 break;
             case OreDunGen ore:
-                await PostGen(ore, dungeons[^1], random);
+                await PostGen(ore, dungeons, reservedTiles, random);
                 break;
             case PrefabDunGen prefab:
                 dungeons.Add(await GeneratePrefabDunGen(position, prefab, reservedTiles, random));
