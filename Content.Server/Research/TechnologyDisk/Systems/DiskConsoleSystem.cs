@@ -1,12 +1,8 @@
-using System.Linq;
 using Content.Server.Research.Systems;
 using Content.Server.Research.TechnologyDisk.Components;
-using Content.Shared.Prototypes;
-using Content.Shared.Random.Helpers;
 using Content.Shared.UserInterface;
 using Content.Shared.Research;
 using Content.Shared.Research.Components;
-using Content.Shared.Research.TechnologyDisk.Components;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -25,6 +21,8 @@ public sealed class DiskConsoleSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IComponentFactory _compFactory = default!;
+
+    private ISawmill _sawmill = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -59,25 +57,11 @@ public sealed class DiskConsoleSystem : EntitySystem
     /// <param name="coordinates">Position.</param>
     private void SpawnDisk(DiskConsoleComponent console, EntityCoordinates coordinates)
     {
-        var tierWeights = _protoMan.Index(console.DiskTierWeightPrototype);
-        var tier = int.Parse(tierWeights.Pick());
-
-        var diskProtos = _protoMan.EnumeratePrototypes<EntityPrototype>()
-            .Where(proto =>
-            {
-                if (!proto.HasComponent<TechnologyDiskComponent>())
-                    return false;
-
-                proto.TryGetComponent<TechnologyDiskComponent>(out var comp, _compFactory);
-                return comp != null && comp.Tier == tier;
-            })
-            .ToArray();
-
-        if(diskProtos.Length == 0)
+        if (!_protoMan.TryIndex(console.DiskPrototype, out var diskProto))
+        {
+            _sawmill.Error($"Failed to spawn a tech disk: disk entity prototype '{console.DiskPrototype}' not found");
             return;
-
-        var diskProtosIndex = _robustRandom.Next(diskProtos.Length);
-        var diskProto = diskProtos[diskProtosIndex];
+        }
 
         Spawn(diskProto.ID, coordinates);
     }

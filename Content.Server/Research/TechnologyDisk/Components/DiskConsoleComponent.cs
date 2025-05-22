@@ -15,10 +15,10 @@ public sealed partial class DiskConsoleComponent : Component
     public int PricePerDisk = 1000;
 
     /// <summary>
-    /// A weighted random prototype for how rare each disk's tier should be.
+    /// A prototype for the tech disk entity.
     /// </summary>
     [DataField]
-    public ProtoId<WeightedRandomPrototype> DiskTierWeightPrototype = "TechDiskTierWeights";
+    public EntProtoId DiskPrototype = "TechnologyDisk";
 
     /// <summary>
     /// How long it takes to print <see cref="DiskPrototype"/>

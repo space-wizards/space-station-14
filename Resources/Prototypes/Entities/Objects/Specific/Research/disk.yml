@@ -44,261 +44,63 @@
 - type: entity
   parent: BaseItem
   id: TechnologyDisk
-  abstract: true
   name: technology disk
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
+    layers:
+    - state: datadisk_base
+      map: [ "base" ]
+    - state: datadisk_label
+    - state: datadisk_t2_marks
+      shader: unshaded
+      map: [ "t2_marks" ]
+      visible: false
+    - state: datadisk_t2_border
+      map: [ "t2_border" ]
+      visible: false
+    - state: datadisk_t3_marks
+      map: [ "t3_marks" ]
+      shader: unshaded
+      visible: false
+    - state: datadisk_t3_border
+      map: [ "t3_border" ]
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TechDiskDisciplineVisuals.Industrial:
+        base:
+          True: { color: "#eeac34" }
+      enum.TechDiskDisciplineVisuals.Arsenal:
+        base:
+          True: { color: "#dc373b" }
+      enum.TechDiskDisciplineVisuals.Experimental:
+        base:
+          True: { color: "#9a6ef0" }
+      enum.TechDiskDisciplineVisuals.CivilianServices:
+        base:
+          True: { color: "#7ecd48" }
+
+      enum.TechDiskTierVisuals.T2:
+        t2_marks:
+          True: { visible: true }
+          False: { visible: false }
+        t2_border:
+          True: { visible: true }
+          False: { visible: false }
+      enum.TechDiskTierVisuals.T3:
+        t3_marks:
+          True: { visible: true }
+          False: { visible: false }
+        t3_border:
+          True: { visible: true }
+          False: { visible: false }
   - type: StealTarget
     stealGroup: TechnologyDisk
-
-- type: entity
-  parent: TechnologyDisk
-  id: TechnologyDiskT1
-  abstract: true
-  components:
+  - type: TechnologyDisk
   - type: StaticPrice
-    price: 100
-
-- type: entity
-  parent: TechnologyDisk
-  id: TechnologyDiskT2
-  abstract: true
-  components:
-  - type: StaticPrice
-    price: 500
-
-- type: entity
-  parent: TechnologyDisk
-  id: TechnologyDiskT3
-  abstract: true
-  components:
-  - type: StaticPrice
-    price: 3000
-
-- type: entity
-  parent: TechnologyDisk
-  id: TechnologyDiskIndustrial
-  abstract: true
-  components:
-  - type: TechnologyDisk
-    discipline: Industrial
-
-- type: entity
-  parent: TechnologyDisk
-  id: TechnologyDiskArsenal
-  abstract: true
-  components:
-  - type: TechnologyDisk
-    discipline: Arsenal
-
-- type: entity
-  parent: TechnologyDisk
-  id: TechnologyDiskExperimental
-  abstract: true
-  components:
-  - type: TechnologyDisk
-    discipline: Experimental
-
-- type: entity
-  parent: TechnologyDisk
-  id: TechnologyDiskCivilianServices
-  abstract: true
-  components:
-  - type: TechnologyDisk
-    discipline: CivilianServices
-
-- type: entity
-  parent: [ TechnologyDiskIndustrial, TechnologyDiskT1 ]
-  id: TechnologyDiskIndustrialT1
-  suffix: T1, Industrial
-  description: A disk for the R&D server containing a Tier 1 Industrial branch research technology.
-  components:
-  - type: Sprite
-    layers:
-    - state: datadisk_base
-      color: "#eeac34"
-    - state: datadisk_label
-  - type: TechnologyDisk
-    tier: 1
-
-- type: entity
-  parent: [ TechnologyDiskIndustrial, TechnologyDiskT2 ]
-  id: TechnologyDiskIndustrialT2
-  suffix: T2, Industrial
-  description: A disk for the R&D server containing a Tier 2 Industrial branch research technology.
-  components:
-  - type: Sprite
-    layers:
-    - state: datadisk_base
-      color: "#eeac34"
-    - state: datadisk_label
-    - state: datadisk_t2_marks
-      shader: unshaded
-    - state: datadisk_t2_border
-  - type: TechnologyDisk
-    tier: 2
-
-- type: entity
-  parent: [ TechnologyDiskIndustrial, TechnologyDiskT3 ]
-  id: TechnologyDiskIndustrialT3
-  suffix: T3, Industrial
-  description: A disk for the R&D server containing a Tier 3 Industrial branch research technology.
-  components:
-  - type: Sprite
-    layers:
-    - state: datadisk_base
-      color: "#eeac34"
-    - state: datadisk_label
-    - state: datadisk_t3_marks
-      shader: unshaded
-    - state: datadisk_t3_border
-  - type: TechnologyDisk
-    tier: 3
-
-- type: entity
-  parent: [ TechnologyDiskArsenal, TechnologyDiskT1 ]
-  id: TechnologyDiskArsenalT1
-  suffix: T1, Arsenal
-  description: A disk for the R&D server containing a Tier 1 Arsenal branch research technology.
-  components:
-  - type: Sprite
-    layers:
-    - state: datadisk_base
-      color: "#dc373b"
-    - state: datadisk_label
-  - type: TechnologyDisk
-    tier: 1
-
-- type: entity
-  parent: [ TechnologyDiskArsenal, TechnologyDiskT2 ]
-  id: TechnologyDiskArsenalT2
-  suffix: T2, Arsenal
-  description: A disk for the R&D server containing a Tier 2 Arsenal branch research technology.
-  components:
-  - type: Sprite
-    layers:
-    - state: datadisk_base
-      color: "#dc373b"
-    - state: datadisk_label
-    - state: datadisk_t2_marks
-      shader: unshaded
-    - state: datadisk_t2_border
-  - type: TechnologyDisk
-    tier: 2
-
-- type: entity
-  parent: [ TechnologyDiskArsenal, TechnologyDiskT3 ]
-  id: TechnologyDiskArsenalT3
-  suffix: T3, Arsenal
-  description: A disk for the R&D server containing a Tier 3 Arsenal branch research technology.
-  components:
-  - type: Sprite
-    layers:
-    - state: datadisk_base
-      color: "#dc373b"
-    - state: datadisk_label
-    - state: datadisk_t3_marks
-      shader: unshaded
-    - state: datadisk_t3_border
-  - type: TechnologyDisk
-    tier: 3
-
-- type: entity
-  parent: [ TechnologyDiskExperimental, TechnologyDiskT1 ]
-  id: TechnologyDiskExperimentalT1
-  suffix: T1, Experimental
-  description: A disk for the R&D server containing a Tier 1 Experimental branch research technology.
-  components:
-  - type: Sprite
-    layers:
-    - state: datadisk_base
-      color: "#9a6ef0"
-    - state: datadisk_label
-  - type: TechnologyDisk
-    tier: 1
-
-- type: entity
-  parent: [ TechnologyDiskExperimental, TechnologyDiskT2 ]
-  id: TechnologyDiskExperimentalT2
-  suffix: T2, Experimental
-  description: A disk for the R&D server containing a Tier 2 Experimental branch research technology.
-  components:
-  - type: Sprite
-    layers:
-    - state: datadisk_base
-      color: "#9a6ef0"
-    - state: datadisk_label
-    - state: datadisk_t2_marks
-      shader: unshaded
-    - state: datadisk_t2_border
-  - type: TechnologyDisk
-    tier: 2
-
-- type: entity
-  parent: [ TechnologyDiskExperimental, TechnologyDiskT3 ]
-  id: TechnologyDiskExperimentalT3
-  suffix: T3, Experimental
-  description: A disk for the R&D server containing a Tier 3 Experimental branch research technology.
-  components:
-  - type: Sprite
-    layers:
-    - state: datadisk_base
-      color: "#9a6ef0"
-    - state: datadisk_label
-    - state: datadisk_t3_marks
-      shader: unshaded
-    - state: datadisk_t3_border
-  - type: TechnologyDisk
-    tier: 3
-
-- type: entity
-  parent: [ TechnologyDiskCivilianServices, TechnologyDiskT1 ]
-  id: TechnologyDiskCivilianServicesT1
-  suffix: T1, Civilian Services
-  description: A disk for the R&D server containing a Tier 1 Civilian Services branch research technology.
-  components:
-  - type: Sprite
-    layers:
-    - state: datadisk_base
-      color: "#7ecd48"
-    - state: datadisk_label
-  - type: TechnologyDisk
-    tier: 1
-
-- type: entity
-  parent: [ TechnologyDiskCivilianServices, TechnologyDiskT2 ]
-  id: TechnologyDiskCivilianServicesT2
-  suffix: T2, Civilian Services
-  description: A disk for the R&D server containing a Tier 2 Civilian Services branch research technology.
-  components:
-  - type: Sprite
-    layers:
-    - state: datadisk_base
-      color: "#7ecd48"
-    - state: datadisk_label
-    - state: datadisk_t2_marks
-      shader: unshaded
-    - state: datadisk_t2_border
-  - type: TechnologyDisk
-    tier: 2
-
-- type: entity
-  parent: [ TechnologyDiskCivilianServices, TechnologyDiskT3 ]
-  id: TechnologyDiskCivilianServicesT3
-  suffix: T3, Civilian Services
-  description: A disk for the R&D server containing a Tier 3 Civilian Services branch research technology.
-  components:
-  - type: Sprite
-    layers:
-    - state: datadisk_base
-      color: "#7ecd48"
-    - state: datadisk_label
-    - state: datadisk_t3_marks
-      shader: unshaded
-    - state: datadisk_t3_border
-  - type: TechnologyDisk
-    tier: 3
+    price: 100  # will vary depending on tier
 
 - type: entity
   parent: TechnologyDisk
