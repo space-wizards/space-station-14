@@ -7,6 +7,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.Localizations;
 using Content.Shared.NameIdentifier;
 using Content.Shared.PDA;
 using Content.Shared.StationRecords;
@@ -52,47 +53,36 @@ public sealed class AccessReaderSystem : EntitySystem
         if (!GetMainAccessReader(ent, out var mainAccessReader))
             return;
 
-        var sb = new StringBuilder();
-        var accessSubgroupCount = mainAccessReader.Value.Comp.AccessLists.Count;
+        var localizedNames = new List<string>();
 
-        for (int i = 0; i < accessSubgroupCount; i++)
+        foreach (var accessHashSet in mainAccessReader.Value.Comp.AccessLists)
         {
-            var accessList = mainAccessReader.Value.Comp.AccessLists[i];
+            var sb = new StringBuilder();
+            var accessList = accessHashSet.ToList();
 
-            // Add the names of all access levels in the subgroup
-            for (int j = 0; j < accessList.Count; j++)
+            // Combine the names of all access levels in the subgroup into a single string
+            foreach (var access in accessList)
             {
-                var accessLevel = accessList.ElementAt(j);
                 var accessName = Loc.GetString("access-reader-unknown-id");
 
-                if (_prototype.TryIndex(accessLevel, out var accessProto) && !string.IsNullOrWhiteSpace(accessProto.Name))
+                if (_prototype.TryIndex(access, out var accessProto) && !string.IsNullOrWhiteSpace(accessProto.Name))
                     accessName = Loc.GetString(accessProto.Name);
 
                 sb.Append(Loc.GetString("access-reader-access-label", ("access", accessName)));
 
-                if (j < (accessList.Count - 1))
+                if (accessList.IndexOf(access) < accessList.Count - 1)
                     sb.Append(" & ");
             }
 
-            if (i < (accessSubgroupCount - 1))
-            {
-                // Add a comma if the list will consist of more than two elements
-                if (accessSubgroupCount > 2)
-                    sb.Append(", ");
-                else
-                    sb.Append(" ");
-            }
-
-            // Add a conjunction if there is only one more element left to add
-            if (i == (accessSubgroupCount - 2))
-                sb.AppendFormat("{0} ", Loc.GetString("access-reader-list-conjunction"));
+            // Add this string to the list
+            localizedNames.Add(sb.ToString());
         }
 
-        // String is invalid - either there were no access restrictions or their names are invalid
-        if (string.IsNullOrWhiteSpace(sb.ToString()))
+        // The string list is empty - either there were no access restrictions or the localized names were invalid
+        if (localizedNames.Count == 0)
             return;
 
-        var accessMessage = Loc.GetString(mainAccessReader.Value.Comp.ExaminationText, ("access", sb));
+        var accessMessage = Loc.GetString(mainAccessReader.Value.Comp.ExaminationText, ("access", ContentLocalizationManager.FormatListToOr(localizedNames)));
         args.PushMarkup(accessMessage);
     }
 
