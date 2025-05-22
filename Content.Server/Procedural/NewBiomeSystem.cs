@@ -7,6 +7,7 @@ using Content.Shared.Decals;
 using Content.Shared.Ghost;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Components;
+using Content.Shared.Sprite;
 using Robust.Server.Player;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
@@ -33,6 +34,11 @@ public sealed partial class NewBiomeSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
 
     /// <summary>
+    /// Ignored components for default checks
+    /// </summary>
+    public static readonly List<string> IgnoredComponents = new();
+
+    /// <summary>
     /// Jobs for biomes to load.
     /// </summary>
     private JobQueue _biomeQueue = default!;
@@ -48,6 +54,8 @@ public sealed partial class NewBiomeSystem : EntitySystem
         base.Initialize();
         _ghostQuery = GetEntityQuery<GhostComponent>();
         _biomeQuery = GetEntityQuery<NewBiomeComponent>();
+
+        IgnoredComponents.Add(Factory.GetComponentName<RandomSpriteComponent>());
 
         Subs.CVar(_cfgManager, CCVars.BiomeLoadRange, OnLoadRange, true);
         Subs.CVar(_cfgManager, CCVars.BiomeLoadTime, OnLoadTime, true);
@@ -330,11 +338,6 @@ public sealed class BiomeUnloadJob : Job<bool>
     public Entity<MapGridComponent, NewBiomeComponent> Biome;
     public Dictionary<string, List<Vector2i>> ToUnload = default!;
 
-    private static readonly List<string> _ignoredComponents = new()
-    {
-        "RandomSprite",
-    };
-
     public BiomeUnloadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         IoCManager.InjectDependencies(this);
@@ -396,7 +399,7 @@ public sealed class BiomeUnloadJob : Job<bool>
                         }
 
                         // If it stayed still and had no data change then keep it.
-                        if (pos == xform.LocalPosition.Floored() && xform.GridUid == Biome.Owner && _entManager.IsDefault(ent, _ignoredComponents))
+                        if (pos == xform.LocalPosition.Floored() && xform.GridUid == Biome.Owner && _entManager.IsDefault(ent, NewBiomeSystem.IgnoredComponents))
                         {
                             _entManager.DeleteEntity(ent);
                             continue;
