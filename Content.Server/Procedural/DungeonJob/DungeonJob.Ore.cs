@@ -119,9 +119,10 @@ public sealed partial class DungeonJob
 
                     var prototype = gen.Entity;
 
-                    if (replaceEntities.TryGetValue(node, out var existingEnt))
+                    // May have been deleted while iteration was suspended.
+                    if (replaceEntities.TryGetValue(node, out var existingEnt) && _entManager.TryGetComponent(existingEnt, out MetaDataComponent? metadata))
                     {
-                        var existingProto = _entManager.GetComponent<MetaDataComponent>(existingEnt).EntityPrototype;
+                        var existingProto = metadata.EntityPrototype;
                         _entManager.DeleteEntity(existingEnt);
 
                         if (existingProto != null && remapping.TryGetValue(existingProto.ID, out var remapped))
@@ -142,10 +143,7 @@ public sealed partial class DungeonJob
                 }
             }
 
-            var frontier = new ValueList<Vector2i>(32);
-
-            // Iterate the group counts and pathfind out each group.
-            for (var i = 0; i < gen.Count; i++)
+            if (groupSize > 0)
             {
                 // Not super worried depending on the gen it's fine.
                 _sawmill.Debug($"Found remaining group size for ore veins of {gen.Replacement ?? "null"} / {gen.Entity}!");
