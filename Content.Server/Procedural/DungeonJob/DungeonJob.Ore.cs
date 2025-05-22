@@ -142,7 +142,10 @@ public sealed partial class DungeonJob
                 }
             }
 
-            if (groupSize > 0)
+            var frontier = new ValueList<Vector2i>(32);
+
+            // Iterate the group counts and pathfind out each group.
+            for (var i = 0; i < gen.Count; i++)
             {
                 // Not super worried depending on the gen it's fine.
                 _sawmill.Debug($"Found remaining group size for ore veins of {gen.Replacement ?? "null"} / {gen.Entity}!");
