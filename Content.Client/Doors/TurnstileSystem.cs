@@ -15,7 +15,7 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
     [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
-    private static EntProtoId _examineArrow = "TurnstileArrow";
+    private static readonly EntProtoId ExamineArrow = "TurnstileArrow";
 
     public override void Initialize()
     {
@@ -39,7 +39,7 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
 
     private void OnExamined(Entity<TurnstileComponent> ent, ref ExaminedEvent args)
     {
-        Spawn(_examineArrow, new EntityCoordinates(ent, 0, 0));
+        Spawn(ExamineArrow, new EntityCoordinates(ent, 0, 0));
     }
 
     protected override void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
