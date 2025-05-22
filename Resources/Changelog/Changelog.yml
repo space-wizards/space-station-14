@@ -1,49 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Added a mail stealing objective for thieves.
-    type: Add
-  id: 8045
-  time: '2025-03-09T19:41:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35746
-- author: metalgearsloth
-  changes:
-  - message: Fix sun shadows not rendering when ANGLE is used.
-    type: Fix
-  id: 8046
-  time: '2025-03-10T04:17:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35757
-- author: metalgearsloth
-  changes:
-  - message: Fix sun shadow rotations not always being accurate.
-    type: Fix
-  id: 8047
-  time: '2025-03-10T04:38:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35758
-- author: RedBookcase
-  changes:
-  - message: Added about a dozen new cocktails for the Bartender to mix up, and polished
-      some of the sprites for older drinks.
-    type: Add
-  id: 8048
-  time: '2025-03-10T23:08:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33570
-- author: Velken
-  changes:
-  - message: Performers can now find that their clothing set is more complete!
-    type: Add
-  id: 8049
-  time: '2025-03-10T23:17:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35764
-- author: ScarKy0
-  changes:
-  - message: Mindshield implants can now be removed using an empty implanter.
-    type: Tweak
-  - message: Revolutionaries can now win by converting all command members.
-    type: Add
-  id: 8050
-  time: '2025-03-11T09:41:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35769
 - author: SlamBamActionman
   changes:
   - message: Chameleon PDAs no longer change your name in the station records.
@@ -3920,3 +3875,57 @@
   id: 8552
   time: '2025-05-21T20:45:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37679
+- author: PJB3005
+  changes:
+  - message: Significantly reduced video memory usage of the parallax system.
+    type: Tweak
+  id: 8553
+  time: '2025-05-22T01:22:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37180
+- author: ArtisticRoomba
+  changes:
+  - message: Tesla coils can now hold a max capacity of 5 MJ, and receive 5 MJ of
+      energy when struck by lightning.
+    type: Tweak
+  - message: Tesla coils can now only output a maximum of 350 kW to the grid. This
+      was done to make power flow smoother (it was triggering epilepsy in extreme
+      circumstances).
+    type: Tweak
+  id: 8554
+  time: '2025-05-22T01:39:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37626
+- author: Wolfkey-SomeoneElseTookMyUsername
+  changes:
+  - message: You can now construct disposal signalers, which trigger a signal every
+      time an item passes through them.
+    type: Add
+  id: 8555
+  time: '2025-05-22T02:18:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37535
+- author: ScarKy0
+  changes:
+  - message: The "Escape alive and unrestrained" objective now counts as partially
+      complete if you show up handcuffed. Being dead still has it count as a total
+      fail!
+    type: Tweak
+  id: 8556
+  time: '2025-05-22T03:25:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37680
+- author: EmoGarbage404
+  changes:
+  - message: Added cargo orders for gold and silver ingots.
+    type: Add
+  - message: Reduced prices of cardboard and paper material crate.
+    type: Tweak
+  id: 8557
+  time: '2025-05-22T08:42:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37713
+- author: ArtisticRoomba
+  changes:
+  - message: The volume of large gas canisters have been increased to 1500L to encourage
+      their usage in resolving pressure problems in spaced rooms. The gas that starts
+      inside of the tanks and the price of them has increased to compensate.
+    type: Tweak
+  id: 8558
+  time: '2025-05-22T18:12:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37564
