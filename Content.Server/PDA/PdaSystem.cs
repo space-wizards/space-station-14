@@ -8,6 +8,7 @@ using Content.Server.Station.Systems;
 using Content.Server.Store.Systems;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.Access.Components;
+using Content.Shared.AlertLevel;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Chat;
 using Content.Shared.DeviceNetwork.Components;
@@ -292,7 +293,7 @@ namespace Content.Server.PDA
         private void UpdateAlertLevel(EntityUid uid, PdaComponent pda)
         {
             var station = _station.GetOwningStation(uid);
-            if (!TryComp(station, out Shared.AlertLevel.AlertLevelComponent? alertComp) ||
+            if (!TryComp(station, out AlertLevelComponent? alertComp) ||
                 alertComp.AlertLevels == null)
                 return;
             pda.StationAlertLevel = alertComp.CurrentLevel;

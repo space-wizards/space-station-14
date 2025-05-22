@@ -2,6 +2,7 @@
 using Content.Server.Administration;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
+using Content.Shared.AlertLevel;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
 
@@ -81,7 +82,7 @@ namespace Content.Server.AlertLevel.Commands
         private string[] GetStationLevelNames(EntityUid station)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            if (!entityManager.TryGetComponent<Shared.AlertLevel.AlertLevelComponent>(station, out var alertLevelComp))
+            if (!entityManager.TryGetComponent<AlertLevelComponent>(station, out var alertLevelComp))
                 return new string[]{};
 
             if (alertLevelComp.AlertLevels == null)

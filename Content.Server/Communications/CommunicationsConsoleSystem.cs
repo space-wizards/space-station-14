@@ -9,6 +9,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.AlertLevel;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Communications;
@@ -138,7 +139,7 @@ namespace Content.Server.Communications
 
             if (stationUid != null)
             {
-                if (TryComp(stationUid.Value, out Shared.AlertLevel.AlertLevelComponent? alertComp) &&
+                if (TryComp(stationUid.Value, out AlertLevelComponent? alertComp) &&
                     alertComp.AlertLevels != null)
                 {
                     if (alertComp.IsSelectable)
