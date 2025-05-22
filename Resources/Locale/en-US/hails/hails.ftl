@@ -39,7 +39,7 @@ hail-high-4 = Stop hitting yourself! Stop hitting yourself!!
 hail-high-5 = Tell it to the HOS... if you make it that far!!
 hail-high-6 = Judge, jury, executioner!!
 hail-high-7 = You have the right to get beat down!!
-hail-high-8 = The safe word is "police brutality"!!
+hail-high-8 = The safeword is "police brutality"!!
 hail-high-9 = Let me show you shitsec!!
 hail-high-10 = Dead or alive, you're coming with me!!
 

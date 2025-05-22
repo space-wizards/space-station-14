@@ -12,7 +12,7 @@ namespace Content.Server.Clothing.Systems
     {
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
-        private readonly (string, string) _replaceLineHos = ("hail-high-8", "hail-high-HOS"); //the line to replace if a HOS gas mask hails
+        private readonly (string, string) _replaceLineHos = ("hail-high-5", "hail-high-HOS"); //the line to replace if a HOS gas mask hails
 
         public override void Initialize()
         {

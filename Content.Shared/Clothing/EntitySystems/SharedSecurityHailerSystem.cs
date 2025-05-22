@@ -300,6 +300,7 @@ namespace Content.Shared.Clothing.EntitySystems
         private void OnGetVerbs(Entity<SecurityHailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
         {
             //Cooldown to prevent spamming
+            //Probably should put a cooldown effect on the mask to show the player, but no idea how to do that !
             if (_gameTiming.CurTime < ent.Comp.TimeVerbReady)
                 return;
 
