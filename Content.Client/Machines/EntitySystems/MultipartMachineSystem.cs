@@ -71,7 +71,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     {
         foreach (var part in ent.Comp.Parts.Values)
         {
-            part.Entity = part.NetEntity.HasValue ? GetEntity(part.NetEntity.Value) : null;
+            part.Entity = part.NetEntity.HasValue ? EnsureEntity<MultipartMachinePartComponent>(part.NetEntity.Value, ent) : null;
         }
     }
 
