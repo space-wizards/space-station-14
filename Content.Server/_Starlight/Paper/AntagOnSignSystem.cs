@@ -2,6 +2,7 @@ using Content.Server.Antag;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking.Components;
 using Content.Shared._Starlight.Paper;
 using Content.Shared.Paper;
 using Robust.Shared.Player;
@@ -28,26 +29,30 @@ public sealed class AntagOnSignSystem : EntitySystem
 
     private void OnPaperSigned(EntityUid uid, AntagOnSignComponent component, PaperSignedEvent args)
     {
-        if (!TryComp(args.Signer, out ActorComponent? actor))
+        if (component.Used)
             return;
 
-        if (_random.NextFloat() < component.Chance)
+        if (!TryComp(args.Signer, out ActorComponent? actor))
+                return;
+
+        if (_random.NextFloat() > component.Chance)
         {
-            RemComp(uid, component);
+            component.Used = true;
             return;
         }
         
         var session = actor.PlayerSession;
         foreach (var antag in component.Antags)
         {
-            _antag.ForceMakeAntag<Component>(session, antag.Id);
+            _antag.ForceMakeAntag<GameRuleComponent>(session, antag.Id);
         }
 
-        if (!component.ParadoxClone)
+        if (component.ParadoxClone)
         {
             var ruleEnt = _gameTicker.AddGameRule(_paradoxCloneRuleId);
 
             if (!TryComp<ParadoxCloneRuleComponent>(ruleEnt, out var paradoxCloneRuleComp))
+                component.Used = true;
                 return;
 
             paradoxCloneRuleComp.OriginalBody = args.Signer; // override the target player
@@ -55,6 +60,6 @@ public sealed class AntagOnSignSystem : EntitySystem
             _gameTicker.StartGameRule(ruleEnt);
         }
         
-        RemComp(uid, component);
+        component.Used = true;
     }
 }

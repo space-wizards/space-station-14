@@ -29,6 +29,10 @@
   components:
   - type: Paper
     content: delivery-spam-reasons-to-choose-syndicate
+  - type: AntagOnSign
+    antags: 
+      - Traitor
+    spawnParadoxClone: true
 
 - type: entity
   id: MailAlternativeDimensionSpam
