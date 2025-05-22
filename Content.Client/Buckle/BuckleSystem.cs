@@ -86,6 +86,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         }
     }
 
+    // need to support entities which are "created" buckled
     private void OnBuckleStartup(Entity<BuckleComponent> ent, ref ComponentStartup args)
     {
         if (!ent.Comp.Buckled)
@@ -97,6 +98,8 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         var strap = ent.Comp.BuckledTo!;
         if (!TryComp<StrapComponent>(strap, out var strapComp))
             return;
+
+        _sprite.SetOffset((ent.Owner, buckledSprite), buckledSprite.Offset + strapComp.BuckleOffset);
 
         if (strapComp.Overlay is { } overlay)
         {
