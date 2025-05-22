@@ -60,7 +60,7 @@
             - material: Cable
               amount: 2
               doAfter: 1
-            - material: Capacitor
+            - material: Manipulator
               amount: 2
     - node: potatoaichip
       entity: PotatoAIChip
