@@ -1,134 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Pet carriers now only carry pets. preventing various unintended, albeit
-      hilarious, activities.
-    type: Fix
-  id: 8033
-  time: '2025-03-03T10:04:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35587
-- author: Coolsurf6
-  changes:
-  - message: Pain from Burn damage is now calculated when displaying the red damage
-      overlay
-    type: Tweak
-  id: 8034
-  time: '2025-03-03T11:11:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34535
-- author: Velken
-  changes:
-  - message: Wizards now have their own unique magical pen.
-    type: Add
-  id: 8035
-  time: '2025-03-03T15:54:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35623
-- author: rokudara-sen
-  changes:
-  - message: Particle decelerators now drain an additional percentage of a singularity's
-      current energy.
-    type: Tweak
-  id: 8036
-  time: '2025-03-03T16:37:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35643
-- author: DuckManZach
-  changes:
-  - message: Butter is now cheaper to produce!
-    type: Tweak
-  id: 8037
-  time: '2025-03-03T22:04:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35650
-- author: SlamBamActionman
-  changes:
-  - message: Top and bottom undergarments can now be found in the Markings tab of
-      the character creator.
-    type: Add
-  - message: The Accessibility tab of Options now has a Censor Nudity Toggle, which
-      adds undergarments to all characters on your client. Undergarments selected
-      in the character creator take priority.
-    type: Add
-  id: 8038
-  time: '2025-03-05T09:14:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33185
-- author: Boaz1111, Ktyria
-  changes:
-  - message: 'Added five new scars for humans and dwarves: Three for the face, two
-      for the chest.'
-    type: Add
-  id: 8039
-  time: '2025-03-05T10:26:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35644
-- author: ScarKy0, MilonPL
-  changes:
-  - message: Added deliveries! Cargo now has access to mail teleporters, which periodically
-      spawn mail. Deliver it to the correct recipients for bonus spesos!
-    type: Add
-  id: 8040
-  time: '2025-03-07T13:51:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35429
-- author: Lukasz825700516
-  changes:
-  - message: Text related keybinds can now be changed in Controls.
-    type: Add
-  id: 8041
-  time: '2025-03-08T02:42:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35630
-- author: metalgearsloth
-  changes:
-  - message: Walls now emit shadows on planets.
-    type: Add
-  id: 8042
-  time: '2025-03-08T05:07:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35145
-- author: momochitters
-  changes:
-  - message: Aroace pins, scarves, and cloaks can now be obtained.
-    type: Add
-  id: 8043
-  time: '2025-03-08T15:21:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35718
-- author: Emisse
-  changes:
-  - message: Core Station
-    type: Remove
-  id: 8044
-  time: '2025-03-09T08:48:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35740
-- author: slarticodefast
-  changes:
-  - message: Added a mail stealing objective for thieves.
-    type: Add
-  id: 8045
-  time: '2025-03-09T19:41:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35746
-- author: metalgearsloth
-  changes:
-  - message: Fix sun shadows not rendering when ANGLE is used.
-    type: Fix
-  id: 8046
-  time: '2025-03-10T04:17:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35757
-- author: metalgearsloth
-  changes:
-  - message: Fix sun shadow rotations not always being accurate.
-    type: Fix
-  id: 8047
-  time: '2025-03-10T04:38:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35758
-- author: RedBookcase
-  changes:
-  - message: Added about a dozen new cocktails for the Bartender to mix up, and polished
-      some of the sprites for older drinks.
-    type: Add
-  id: 8048
-  time: '2025-03-10T23:08:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33570
-- author: Velken
-  changes:
-  - message: Performers can now find that their clothing set is more complete!
-    type: Add
-  id: 8049
-  time: '2025-03-10T23:17:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35764
 - author: ScarKy0
   changes:
   - message: Mindshield implants can now be removed using an empty implanter.
@@ -3919,3 +3789,143 @@
   id: 8535
   time: '2025-05-20T02:47:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37628
+- author: slarticodefast
+  changes:
+  - message: Added a reduced motion version of the seeing rainbows overlay.
+    type: Add
+  id: 8536
+  time: '2025-05-20T12:36:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37584
+- author: B-Kirill
+  changes:
+  - message: Added new fun meteors variations (Cosmic cow, Honksteroid, Space potato)
+      that drop unique loot upon destruction. Urist McMeteor now shatters into meat
+      when explodes.
+    type: Add
+  id: 8537
+  time: '2025-05-20T13:04:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37327
+- author: Kittygyat
+  changes:
+  - message: Added a new, faster way for slimepeople to access their own special inventory,
+      with LMB.
+    type: Add
+  id: 8538
+  time: '2025-05-20T16:55:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37592
+- author: FrostWinters
+  changes:
+  - message: Histamines no longer cause radiation.
+    type: Tweak
+  - message: Epinephrine treats Histamines above OD threshold.
+    type: Tweak
+  id: 8544
+  time: '2025-05-21T01:12:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37460
+- author: Minty642
+  changes:
+  - message: Added fungal soil, maintenance version of hydroponics.
+    type: Add
+  id: 8545
+  time: '2025-05-21T04:59:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36245
+- author: metalgearsloth
+  changes:
+  - message: Picking up items with area pickups (e.g. trash bags) no longer lags the
+      game.
+    type: Fix
+  id: 8546
+  time: '2025-05-21T06:16:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37638
+- author: Errant
+  changes:
+  - message: High-energy shuttle impacts now deal much less damage.
+    type: Tweak
+  id: 8547
+  time: '2025-05-21T10:37:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37578
+- author: metalgearsloth
+  changes:
+  - message: Shuttle impact force is now proportional to direction of impact.
+    type: Tweak
+  id: 8548
+  time: '2025-05-21T13:32:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37667
+- author: muburu
+  changes:
+  - message: Singularity beacons and powersinks now require two free hands to hold.
+    type: Tweak
+  id: 8549
+  time: '2025-05-21T17:11:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37683
+- author: ElectroJr
+  changes:
+  - message: Microwaving the nuke disk will now slightly randomize the nuke countdown
+      timer.
+    type: Add
+  id: 8550
+  time: '2025-05-21T18:06:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36114
+- author: AsnDen
+  changes:
+  - message: Cyborgs now can scream. 9 new screaming sound were added.
+    type: Tweak
+  id: 8551
+  time: '2025-05-21T19:49:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32329
+- author: ScarKy0
+  changes:
+  - message: The "Help another traitor" objective now requires you help them complete
+      all of their objectives.
+    type: Tweak
+  - message: The "Help another traitor" objective now updates it's progress according
+      to the progress of who you're supposed to help, allowing for partial completion.
+    type: Tweak
+  id: 8552
+  time: '2025-05-21T20:45:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37679
+- author: PJB3005
+  changes:
+  - message: Significantly reduced video memory usage of the parallax system.
+    type: Tweak
+  id: 8553
+  time: '2025-05-22T01:22:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37180
+- author: ArtisticRoomba
+  changes:
+  - message: Tesla coils can now hold a max capacity of 5 MJ, and receive 5 MJ of
+      energy when struck by lightning.
+    type: Tweak
+  - message: Tesla coils can now only output a maximum of 350 kW to the grid. This
+      was done to make power flow smoother (it was triggering epilepsy in extreme
+      circumstances).
+    type: Tweak
+  id: 8554
+  time: '2025-05-22T01:39:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37626
+- author: Wolfkey-SomeoneElseTookMyUsername
+  changes:
+  - message: You can now construct disposal signalers, which trigger a signal every
+      time an item passes through them.
+    type: Add
+  id: 8555
+  time: '2025-05-22T02:18:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37535
+- author: ScarKy0
+  changes:
+  - message: The "Escape alive and unrestrained" objective now counts as partially
+      complete if you show up handcuffed. Being dead still has it count as a total
+      fail!
+    type: Tweak
+  id: 8556
+  time: '2025-05-22T03:25:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37680
+- author: EmoGarbage404
+  changes:
+  - message: Added cargo orders for gold and silver ingots.
+    type: Add
+  - message: Reduced prices of cardboard and paper material crate.
+    type: Tweak
+  id: 8557
+  time: '2025-05-22T08:42:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37713
