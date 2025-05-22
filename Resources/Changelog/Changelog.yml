@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix sun shadow rotations not always being accurate.
-    type: Fix
-  id: 8047
-  time: '2025-03-10T04:38:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35758
 - author: RedBookcase
   changes:
   - message: Added about a dozen new cocktails for the Bartender to mix up, and polished
@@ -3925,3 +3918,11 @@
   id: 8554
   time: '2025-05-22T01:39:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37626
+- author: Wolfkey-SomeoneElseTookMyUsername
+  changes:
+  - message: You can now construct disposal signalers, which trigger a signal every
+      time an item passes through them.
+    type: Add
+  id: 8555
+  time: '2025-05-22T02:18:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37535
