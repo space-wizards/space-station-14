@@ -16,6 +16,24 @@
   - node: meat steak
     entity: FoodMeatCooked
 
+# rat steak
+- type: constructionGraph
+  id: RatSteak
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: rat steak
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 335
+
+  - node: rat steak
+    entity: FoodMeatRatCooked
+
 # penguin steak
 - type: constructionGraph
   id: PenguinSteak
