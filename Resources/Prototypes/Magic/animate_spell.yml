@@ -18,6 +18,7 @@
       - TegGenerator
       - TegCirculator
       - XenoArtifact
+      - ResistLocker
     canTargetSelf: false
     interactOnMiss: false
     sound: !type:SoundPathSpecifier
