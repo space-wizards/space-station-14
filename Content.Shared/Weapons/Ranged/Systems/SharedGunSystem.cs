@@ -300,7 +300,8 @@ public abstract partial class SharedGunSystem : EntitySystem
                 default:
                     throw new ArgumentOutOfRangeException($"No implemented shooting behavior for {gun.SelectedMode}!");
             }
-        } else
+        }
+        else
         {
             shots = Math.Min(shots, gun.ShotsPerBurstModified - gun.ShotCounter);
         }
@@ -387,7 +388,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (userImpulse && TryComp<PhysicsComponent>(user, out var userPhysics))
         {
             if (_gravity.IsWeightless(user, userPhysics))
-                CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
+                CauseImpulse((gunUid, gun), fromCoordinates, toCoordinates.Value, user, userPhysics);
         }
     }
 
@@ -511,14 +512,13 @@ public abstract partial class SharedGunSystem : EntitySystem
         CreateEffect(gun, ev, user);
     }
 
-    public void CauseImpulse(EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid user, PhysicsComponent userPhysics)
+    public void CauseImpulse(Entity<GunComponent> gun, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid user, PhysicsComponent userPhysics)
     {
         var fromMap = TransformSystem.ToMapCoordinates(fromCoordinates).Position;
         var toMap = TransformSystem.ToMapCoordinates(toCoordinates).Position;
         var shotDirection = (toMap - fromMap).Normalized();
 
-        const float impulseStrength = 25.0f;
-        var impulseVector =  shotDirection * impulseStrength;
+        var impulseVector =  shotDirection * gun.Comp.ImpulseStrength;
         Physics.ApplyLinearImpulse(user, -impulseVector, body: userPhysics);
     }
 
@@ -532,6 +532,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             (gun, comp),
             comp.SoundGunshot,
             comp.CameraRecoilScalar,
+            comp.ImpulseStrength,
             comp.AngleIncrease,
             comp.AngleDecay,
             comp.MaxAngle,
@@ -553,6 +554,12 @@ public abstract partial class SharedGunSystem : EntitySystem
         {
             comp.CameraRecoilScalarModified = ev.CameraRecoilScalar;
             DirtyField(gun, nameof(GunComponent.CameraRecoilScalarModified));
+        }
+
+        if (!MathHelper.CloseTo(comp.ImpulseStrengthModified, ev.ImpulseStrength))
+        {
+            comp.ImpulseStrengthModified = ev.ImpulseStrength;
+            DirtyField(gun, nameof(GunComponent.ImpulseStrengthModified));
         }
 
         if (!comp.AngleIncreaseModified.EqualsApprox(ev.AngleIncrease))
