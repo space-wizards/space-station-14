@@ -25,9 +25,8 @@ public abstract class SharedTurnstileSystem : EntitySystem
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
-    [Dependency] private readonly SharedBoltSystem _bolt = default!;
+    [Dependency] protected readonly SharedBoltSystem Bolt = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -81,7 +80,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
             return;
         }
 
-        if (!_bolt.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
+        if (!Bolt.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
         {
             if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 return;
@@ -97,7 +96,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
         {
             if (_timing.CurTime >= ent.Comp.NextResistTime)
             {
-                _popup.PopupClient(Loc.GetString("turnstile-component-popup-resist"), ent, args.OtherEntity);
+                _popup.PopupClient(Loc.GetString("turnstile-component-popup-resist", ("turnstile", ent.Owner)), ent, args.OtherEntity);
                 ent.Comp.NextResistTime = _timing.CurTime + TimeSpan.FromSeconds(0.1);
                 Dirty(ent);
             }
@@ -108,7 +107,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
     {
         if (!ent.Comp.CollideExceptions.Contains(args.OtherEntity))
         {
-            if (!_bolt.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
+            if (!Bolt.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
             {
                 if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 {
@@ -170,7 +169,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
         Dirty(ent);
     }
 
-    public void SetSolenoidBypassed(Entity<TurnstileComponent> ent, bool value)
+    public virtual void SetSolenoidBypassed(Entity<TurnstileComponent> ent, bool value)
     {
         ent.Comp.SolenoidBypassed = value;
         Dirty(ent);
@@ -178,15 +177,14 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
     private void OnBeforePry(Entity<TurnstileComponent> ent, ref BeforePryEvent args)
     {
-        if (args.Cancelled)
+        if (!args.CanPry)
             return;
 
-        if (ent.Comp.SolenoidBypassed || args.PryPowered)
+        if (ent.Comp.SolenoidBypassed || args.Strength >= PryStrength.Powered)
             return;
 
-        args.Message = "turnstile-component-popup-resist";
-
-        args.Cancelled = true;
+        args.Message = Loc.GetString("turnstile-component-popup-resist", ("turnstile", ent.Owner));
+        args.CanPry = false;
     }
 
     private void OnGetPryMod(Entity<TurnstileComponent> ent, ref GetPryTimeModifierEvent args)
@@ -194,7 +192,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
         if (!ent.Comp.SolenoidBypassed)
             args.PryTimeModifier *= ent.Comp.PoweredPryModifier;
 
-        if (_bolt.IsBolted(ent))
+        if (Bolt.IsBolted(ent))
             args.PryTimeModifier *= ent.Comp.BoltedPryModifier;
 
         if (!CanPassDirection(ent, args.User))
@@ -205,6 +203,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
     {
         ent.Comp.PriedExceptions.Remove(args.User);
         ent.Comp.PriedExceptions.Add(args.User, _timing.CurTime + ent.Comp.PryExpirationTime);
+        _popup.PopupClient(Loc.GetString("turnstile-component-popup-forced", ("turnstile", ent.Owner)), ent.Owner, args.User);
         Dirty(ent);
     }
 
@@ -221,7 +220,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
             {
                 turnstile.PriedExceptions.Remove(expiredUid);
                 if(expiredUid == _playerManager.LocalEntity)
-                    _popup.PopupClient(Loc.GetString("turnstile-component-popup-force-expired"), uid, expiredUid);
+                    _popup.PopupClient(Loc.GetString("turnstile-component-popup-force-expired", ("turnstile", uid)), uid, expiredUid);
             }
         }
     }
