@@ -12,6 +12,7 @@ using Content.Shared.Humanoid;
 using Microsoft.CodeAnalysis;
 using Content.Server._Starlight.Medical.Limbs;
 using Content.Server.Administration.Systems;
+using Content.Shared.Traits.Assorted;
 
 namespace Content.Server.Starlight.Medical.Surgery;
 // Based on the RMC14.
