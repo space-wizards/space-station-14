@@ -1420,8 +1420,8 @@
 
 - type: entity
   parent: BasePDA
-  id: SeniorTeamsterPDA
-  name: senior teamster PDA
+  id: SeniorCourierPDA
+  name: senior courier PDA
   description: PDA for the guys that order the crucial station supplies.
   components:
   - type: Pda
@@ -1430,12 +1430,12 @@
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
-       pda-seniorteamster
+       pda-seniorcourier
   - type: PdaBorderColor
     borderColor: "#e39751"
     accentVColor: "#DFDFDF"
   - type: Icon
-    state: pda-seniorteamster
+    state: pda-seniorcourier
 
 - type: entity
   parent: [ BaseMajorContraband, SyndiPDA ]
