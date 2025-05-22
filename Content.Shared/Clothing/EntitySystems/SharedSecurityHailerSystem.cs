@@ -1,22 +1,24 @@
+using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.Event;
 using Content.Shared.Coordinates;
-using Content.Shared.Stealth.Components;
+using Content.Shared.DoAfter;
+using Content.Shared.Emag.Components;
+using Content.Shared.Emag.Systems;
+using Content.Shared.Examine;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
-using Content.Shared.Tools.Systems;
-using Content.Shared.DoAfter;
-using Content.Shared.Swab;
-using Content.Shared.Clothing.Event;
-using Robust.Shared.Audio.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Emag.Systems;
-using Content.Shared.Emag.Components;
-using Content.Shared.Examine;
+using Content.Shared.Stealth.Components;
+using Content.Shared.Swab;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Access.Systems;
 
 namespace Content.Shared.Clothing.EntitySystems
 {
@@ -31,6 +33,7 @@ namespace Content.Shared.Clothing.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly AccessReaderSystem _access = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
@@ -296,7 +299,9 @@ namespace Content.Shared.Clothing.EntitySystems
 
         private void OnGetVerbs(Entity<SecurityHailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
         {
-            //TODO: Put some type of cooldown in here !
+            //Cooldown to prevent spamming
+            if (_gameTiming.CurTime < ent.Comp.TimeVerbReady)
+                return;
 
             if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
                 return;
@@ -323,13 +328,14 @@ namespace Content.Shared.Clothing.EntitySystems
         {
             if (!_access.IsAllowed(userActed, ent.Owner))
             {
-                _sharedAudio.PlayPvs(ent.Comp.SettingError, ent.Owner);
+                _sharedAudio.PlayPvs(ent.Comp.SettingError, ent.Owner, AudioParams.Default.WithVariation(0.15f));
                 _popup.PopupEntity(Loc.GetString("sec-gas-mask-wrong_access"), userActed);
                 return;
             }
 
-            _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner);
+            _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner, AudioParams.Default.WithVariation(0.15f));
             IncreaseAggressionLevel(ent);
+            ent.Comp.TimeVerbReady = _gameTiming.CurTime + ent.Comp.VerbCooldown;
             Dirty(ent);
         }
     }

@@ -47,6 +47,17 @@ namespace Content.Shared.Clothing.Components
         [DataField]
         public float CuttingDoAfterDelay = 5f;
 
+        /// <summary>
+        /// How long until you can use the verb again to change aggression level
+        /// </summary>
+        [DataField]
+        public TimeSpan VerbCooldown = TimeSpan.FromSeconds(2);
+
+        /// <summary>
+        /// Time where the verb will be ready to be used again
+        /// </summary>
+        public TimeSpan TimeVerbReady = TimeSpan.Zero;
+
         public enum SpecialUseCase : byte
         {
             None = 0,
