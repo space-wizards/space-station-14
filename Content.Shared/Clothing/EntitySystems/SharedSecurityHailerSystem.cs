@@ -301,6 +301,10 @@ namespace Content.Shared.Clothing.EntitySystems
             if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
                 return;
 
+            //If ERT, they don't switch aggression level
+            if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+                return;
+
             // Can't pass args from a ref event inside of lambdas
             var user = args.User;
 
@@ -326,6 +330,7 @@ namespace Content.Shared.Clothing.EntitySystems
 
             _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner);
             IncreaseAggressionLevel(ent);
+            Dirty(ent);
         }
     }
 }

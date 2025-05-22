@@ -411,6 +411,9 @@
     distance: 5
     aggresionLevel: High
     specialCircumtance: HOS
+    access: [["HeadOfSecurity"]]
+    loggingDisabled: true
+    breakOnAccessBreaker: false
 
 - type: entity
   parent: [ ClothingMaskGas, BaseSecurityCargoContraband ]
