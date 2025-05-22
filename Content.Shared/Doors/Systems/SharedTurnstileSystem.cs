@@ -173,6 +173,15 @@ public abstract class SharedTurnstileSystem : EntitySystem
     {
         ent.Comp.SolenoidBypassed = value;
         Dirty(ent);
+
+        if (value)
+            return;
+
+        if (!TryComp<DoorBoltComponent>(ent, out var doorBolt))
+            return;
+
+        if (doorBolt.BoltWireCut)
+            Bolt.TrySetBoltsDown((ent, doorBolt), true);
     }
 
     private void OnBeforePry(Entity<TurnstileComponent> ent, ref BeforePryEvent args)
