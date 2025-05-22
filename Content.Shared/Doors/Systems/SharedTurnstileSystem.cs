@@ -153,7 +153,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
     }
 
-    public virtual void SetSolenoidBypassed(Entity<TurnstileComponent> ent, bool value)
+    public void SetSolenoidBypassed(Entity<TurnstileComponent> ent, bool value)
     {
         ent.Comp.SolenoidBypassed = value;
         Dirty(ent);
