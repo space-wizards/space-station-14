@@ -85,3 +85,6 @@ public sealed partial class PaperComponent : Component
         Written
     }
 }
+
+[ByRefEvent]
+public record struct PaperSignedEvent(EntityUid Signer);

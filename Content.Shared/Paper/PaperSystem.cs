@@ -326,6 +326,9 @@ public sealed class PaperSystem : EntitySystem
                 $"{ToPrettyString(signer):player} has signed {ToPrettyString(paper):paper}.");
 
             UpdateUserInterface(paper);
+            
+            var eve = new PaperSignedEvent(signer);
+            RaiseLocalEvent(paper, ref eve);
 
             return true;
         }
