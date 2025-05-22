@@ -5,7 +5,6 @@
   description: A little bit of nature contained in a pot.
   abstract: true
   components:
-  - type: SpriteFade
   - type: Transform
     noRot: true
   - type: InteractionOutline
@@ -35,6 +34,10 @@
     containers:
       stash: !type:ContainerSlot {}
   - type: Pullable
+  - type: MultiHandedItem
+  - type: Item
+    sprite: Structures/Furniture/potted_plants.rsi
+    size: Huge
   - type: Damageable
     damageContainer: StructuralInorganic # The pot. Not the plant. Or is it plastic?
   - type: Destructible
