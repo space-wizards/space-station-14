@@ -11,6 +11,8 @@
   - FloorTileItemDarkMono
   - FloorTileItemDarkVerticalSlats
   - FloorTileItemDarkVerticalSlatsSingleRow
+  - FloorTileItemDarkHorizontalSlats
+  - FloorTileItemDarkHorizontalSlatsSingleRow
   - FloorTileItemDarkPavement
   - FloorTileItemDarkPavementVertical
   - FloorTileItemDarkOffset
@@ -23,6 +25,8 @@
   - FloorTileItemSteelMini
   - FloorTileItemSteelVerticalSlats
   - FloorTileItemSteelVerticalSlatsSingleRow
+  - FloorTileItemSteelHorizontalSlats
+  - FloorTileItemSteelHorizontalSlatsSingleRow
   - FloorTileItemSteelMono
   - FloorTileItemSteelPavement
   - FloorTileItemSteelPavementVertical
@@ -35,6 +39,8 @@
   - FloorTileItemWhiteMono
   - FloorTileItemWhiteVerticalSlats
   - FloorTileItemWhiteVerticalSlatsSingleRow
+  - FloorTileItemWhiteHorizontalSlats
+  - FloorTileItemWhiteHorizontalSlatsSingleRow
   - FloorTileItemWhitePavement
   - FloorTileItemWhitePavementVertical
   - FloorTileItemSteelCheckerLight
