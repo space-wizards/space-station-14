@@ -455,6 +455,12 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: DeathGasp
+    Hisses:
+      collection: FelionoidHisses
+    Purr:
+      collection: FelionoidPurrs
+    Growl:
+      collection: FelionoidGrowls
 
 # body emotes
 - type: emoteSounds
