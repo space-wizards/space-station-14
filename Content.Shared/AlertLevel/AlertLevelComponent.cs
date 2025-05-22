@@ -24,14 +24,14 @@ public sealed partial class AlertLevelComponent : Component
     /// <summary>
     /// The current level on the station.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     [AutoNetworkedField]
     public string CurrentLevel = string.Empty;
 
     /// <summary>
     /// If the current station level can be changed by crew.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool IsLevelLocked = false;
 
     [ViewVariables] public float CurrentDelay = 0;
