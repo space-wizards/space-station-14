@@ -136,15 +136,19 @@ SalvagePartsT4Spawner: SalvageLootSpawner
 SalvagePartsT3Spawner: SalvageLootSpawner
 SalvagePartsT3T4Spawner: SalvageLootSpawner
 SalvagePartsT2Spawner: SalvageLootSpawner
+
 AdvancedCapacitorStockPart: MicroManipulatorStockPart
 SuperCapacitorStockPart: MicroManipulatorStockPart
 QuadraticCapacitorStockPart: MicroManipulatorStockPart
+
 NanoManipulatorStockPart: MicroManipulatorStockPart
 PicoManipulatorStockPart: MicroManipulatorStockPart
 FemtoManipulatorStockPart: MicroManipulatorStockPart
+
 AdvancedMatterBinStockPart: MicroManipulatorStockPart
 SuperMatterBinStockPart: MicroManipulatorStockPart
 BluespaceMatterBinStockPart: MicroManipulatorStockPart
+
 AnsibleSubspaceStockPart: null
 FilterSubspaceStockPart: null
 AmplifierSubspaceStockPart: null

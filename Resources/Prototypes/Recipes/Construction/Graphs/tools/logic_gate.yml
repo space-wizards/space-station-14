@@ -51,7 +51,7 @@
           sprite: Objects/Misc/stock_parts.rsi
           state: micro_mani
         name: construction-graph-tag-manipulator
-      - material: MicroManipulatorStockPart
+      - material: Manipulator
         amount: 1
       - material: Cable
         amount: 2
