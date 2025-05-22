@@ -15,11 +15,8 @@ public sealed class BoltSystem : SharedBoltSystem
 
     private void OnBoltPowerChanged(Entity<DoorBoltComponent> ent, ref PowerChangedEvent args)
     {
-        if (args.Powered)
-        {
-            if (ent.Comp.BoltWireCut)
-                TrySetBoltsDown(ent, true);
-        }
+        if (args.Powered && ent.Comp.BoltWireCut)
+            TrySetBoltsDown(ent, true);
 
         ent.Comp.Powered = args.Powered;
         UpdateBoltLightStatus(ent);

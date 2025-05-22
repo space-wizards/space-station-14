@@ -21,7 +21,6 @@ public abstract class SharedBoltSystem : EntitySystem
         SubscribeLocalEvent<DoorBoltComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
         SubscribeLocalEvent<DoorBoltComponent, BeforePryEvent>(OnDoorPry);
         SubscribeLocalEvent<DoorBoltComponent, DoorStateChangedEvent>(OnStateChanged);
-        SubscribeLocalEvent<DoorBoltComponent, PowerChangedEvent>(OnBoltPowerChanged);
     }
 
     private void OnDoorPry(Entity<DoorBoltComponent> ent, ref BeforePryEvent args)
@@ -129,16 +128,6 @@ public abstract class SharedBoltSystem : EntitySystem
         }
 
         return component.BoltsDown;
-    }
-
-    private void OnBoltPowerChanged(Entity<DoorBoltComponent> ent, ref PowerChangedEvent args)
-    {
-        if (args.Powered && ent.Comp.BoltWireCut)
-            TrySetBoltsDown(ent, true);
-
-        ent.Comp.Powered = args.Powered;
-        Dirty(ent, ent.Comp);
-        UpdateBoltLightStatus(ent);
     }
 
     public bool TrySetBoltsToggle(Entity<DoorBoltComponent> ent, EntityUid? user = null, bool predicted = false)
