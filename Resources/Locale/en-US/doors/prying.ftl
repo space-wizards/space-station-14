@@ -1,1 +1,2 @@
-﻿door-pry = Pry door
+door-pry = Pry door
+turnstile-pry = Pry turnstile
