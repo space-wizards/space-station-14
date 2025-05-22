@@ -62,10 +62,7 @@ public sealed partial class GunComponent : Component
     [DataField, AutoNetworkedField]
     public float ImpulseStrength = 25f;
 
-    /// <summary>
-    /// Modified version of ImpulseStrength for posterity(?).
-    /// </summary>
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public float ImpulseStrengthModified;
 
     /// <summary>
