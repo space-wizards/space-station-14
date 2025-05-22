@@ -195,4 +195,55 @@
   id: 22
   time: '2025-05-19T18:55:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37600
+- author: spanky-spanky
+  changes:
+  - message: On Fland, the salvage job board has been added.
+    type: Add
+  id: 23
+  time: '2025-05-20T23:27:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37653
+- author: spanky-spanky
+  changes:
+  - message: On Bagel, the salvage job board has been added.
+    type: Add
+  id: 24
+  time: '2025-05-20T23:27:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37652
+- author: spanky-spanky
+  changes:
+  - message: On Marathon, the salvage job board has been added.
+    type: Add
+  - message: On Marathon, the default TEG has been improved.
+    type: Tweak
+  id: 25
+  time: '2025-05-20T23:29:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37654
+- author: spanky-spanky
+  changes:
+  - message: On Omega, the salvage job board has been added.
+    type: Add
+  id: 26
+  time: '2025-05-20T23:35:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37655
+- author: spanky-spanky
+  changes:
+  - message: On Packed, the salvage job board has been added.
+    type: Add
+  id: 27
+  time: '2025-05-21T00:12:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37656
+- author: Southbridge
+  changes:
+  - message: On Box, redesigned Security to have GenPop.
+    type: Tweak
+  id: 28
+  time: '2025-05-21T05:00:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37663
+- author: spanky-spanky
+  changes:
+  - message: On Reach, all recent content additions have been added.
+    type: Add
+  id: 29
+  time: '2025-05-21T07:51:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37669
 Order: 1
