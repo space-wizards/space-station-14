@@ -27,6 +27,7 @@ namespace Content.Client.Construction
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly SpriteSystem _sprite = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         private readonly Dictionary<int, EntityUid> _ghosts = new();
@@ -293,14 +294,14 @@ namespace Content.Client.Construction
             _ghosts.Add(comp.GhostId, ghost.Value);
 
             var sprite = EntityManager.GetComponent<SpriteComponent>(ghost.Value);
-            sprite.Color = new Color(48, 255, 48, 128);
+            _sprite.SetColor((ghost.Value, sprite), new Color(48, 255, 48, 128));
 
             if (targetProto.TryGetComponent(out IconComponent? icon, EntityManager.ComponentFactory))
             {
-                sprite.AddBlankLayer(0);
-                sprite.LayerSetSprite(0, icon.Icon);
+                _sprite.AddBlankLayer((ghost.Value, sprite), 0);
+                _sprite.LayerSetSprite((ghost.Value, sprite), 0, icon.Icon);
                 sprite.LayerSetShader(0, "unshaded");
-                sprite.LayerSetVisible(0, true);
+                _sprite.LayerSetVisible((ghost.Value, sprite), 0, true);
             }
             else if (targetProto.Components.TryGetValue("Sprite", out _))
             {
@@ -318,10 +319,10 @@ namespace Content.Client.Construction
                         state.StateId.Name is null)
                         continue;
 
-                    sprite.AddBlankLayer(i);
-                    sprite.LayerSetSprite(i, new SpriteSpecifier.Rsi(rsi.Path, state.StateId.Name));
+                    _sprite.AddBlankLayer((ghost.Value, sprite), i);
+                    _sprite.LayerSetSprite((ghost.Value, sprite), i, new SpriteSpecifier.Rsi(rsi.Path, state.StateId.Name));
                     sprite.LayerSetShader(i, "unshaded");
-                    sprite.LayerSetVisible(i, true);
+                    _sprite.LayerSetVisible((ghost.Value, sprite), i, true);
                 }
 
                 EntityManager.DeleteEntity(dummy);
