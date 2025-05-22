@@ -121,6 +121,7 @@ chat-speech-verb-name-canine = Canine
 chat-speech-verb-canine-1 = barks
 chat-speech-verb-canine-2 = woofs
 chat-speech-verb-canine-3 = howls
+chat-speech-verb-canine-4 = yips #starlight
 
 chat-speech-verb-name-goat = Goat
 chat-speech-verb-goat-1 = bleats
