@@ -271,7 +271,7 @@
     - WizardSurviveObjective
     - WizardDemonstrateObjective
   - type: LoadMapRule
-    gridPath: /Maps/Nonstations/wizardsden.yml
+    mapPath: /Maps/Nonstations/wizardsden.yml
   - type: RuleGrids
   - type: AntagSelection
   - type: AntagLoadProfileRule

@@ -4,7 +4,7 @@ meta:
   engineVersion: 260.2.0
   forkId: ""
   forkVersion: ""
-  time: 05/22/2025 01:51:51
+  time: 05/22/2025 01:53:23
   entityCount: 622
 maps:
 - 411
@@ -510,53 +510,53 @@ entities:
       parent: 1
 - proto: BasaltFive
   entities:
-  - uid: 415
+  - uid: 414
     components:
     - type: Transform
       pos: 3.5,-7.5
       parent: 1
-  - uid: 417
+  - uid: 416
     components:
     - type: Transform
       pos: 3.5,2.5
       parent: 1
-  - uid: 419
+  - uid: 418
     components:
     - type: Transform
       pos: -4.5,-11.5
       parent: 1
 - proto: BasaltFour
   entities:
-  - uid: 424
+  - uid: 419
     components:
     - type: Transform
       pos: 2.5,-5.5
       parent: 1
-  - uid: 446
+  - uid: 424
     components:
     - type: Transform
       pos: -1.5,-13.5
       parent: 1
 - proto: BasaltThree
   entities:
-  - uid: 416
+  - uid: 415
     components:
     - type: Transform
       pos: -2.5,0.5
       parent: 1
-  - uid: 482
+  - uid: 481
     components:
     - type: Transform
       pos: 2.5,-13.5
       parent: 1
 - proto: BasaltTwo
   entities:
-  - uid: 414
+  - uid: 410
     components:
     - type: Transform
       pos: -2.5,-5.5
       parent: 1
-  - uid: 418
+  - uid: 417
     components:
     - type: Transform
       pos: -1.5,-10.5
@@ -1083,32 +1083,32 @@ entities:
     - type: Transform
       pos: -5.5,5.5
       parent: 1
-  - uid: 527
+  - uid: 526
     components:
     - type: Transform
       pos: -0.5,13.5
       parent: 1
-  - uid: 528
+  - uid: 527
     components:
     - type: Transform
       pos: -0.5,12.5
       parent: 1
-  - uid: 529
+  - uid: 528
     components:
     - type: Transform
       pos: 0.5,13.5
       parent: 1
-  - uid: 530
+  - uid: 529
     components:
     - type: Transform
       pos: 0.5,12.5
       parent: 1
-  - uid: 531
+  - uid: 530
     components:
     - type: Transform
       pos: 1.5,13.5
       parent: 1
-  - uid: 532
+  - uid: 531
     components:
     - type: Transform
       pos: 1.5,12.5
@@ -1236,7 +1236,7 @@ entities:
       parent: 1
 - proto: CrystalOrange
   entities:
-  - uid: 525
+  - uid: 524
     components:
     - type: Transform
       pos: -3.5,-13.5
@@ -1255,7 +1255,7 @@ entities:
       parent: 1
 - proto: CrystalYellow
   entities:
-  - uid: 526
+  - uid: 525
     components:
     - type: Transform
       pos: 4.5,-12.5
@@ -1507,7 +1507,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 6.5,-1.5
       parent: 1
-  - uid: 481
+  - uid: 446
     components:
     - type: Transform
       pos: -5.1672845,-9.665474
@@ -2018,17 +2018,17 @@ entities:
   - uid: 204
     components:
     - type: Transform
-      pos: 3.5,-12.5
+      pos: 1.5,-12.5
       parent: 1
   - uid: 409
     components:
     - type: Transform
       pos: -3.5,-9.5
       parent: 1
-  - uid: 410
+  - uid: 532
     components:
     - type: Transform
-      pos: -0.5,-12.5
+      pos: -1.5,-11.5
       parent: 1
 - proto: SpawnMobLizard
   entities:
@@ -3567,47 +3567,47 @@ entities:
     - type: Transform
       pos: -9.5,6.5
       parent: 1
-  - uid: 483
+  - uid: 482
     components:
     - type: Transform
       pos: 2.5,-18.5
       parent: 1
-  - uid: 484
+  - uid: 483
     components:
     - type: Transform
       pos: -11.5,-0.5
       parent: 1
-  - uid: 487
+  - uid: 484
     components:
     - type: Transform
       pos: -11.5,-1.5
       parent: 1
-  - uid: 519
+  - uid: 487
     components:
     - type: Transform
       pos: -11.5,-2.5
       parent: 1
-  - uid: 520
+  - uid: 519
     components:
     - type: Transform
       pos: -11.5,-3.5
       parent: 1
-  - uid: 521
+  - uid: 520
     components:
     - type: Transform
       pos: 11.5,-3.5
       parent: 1
-  - uid: 522
+  - uid: 521
     components:
     - type: Transform
       pos: 11.5,-4.5
       parent: 1
-  - uid: 523
+  - uid: 522
     components:
     - type: Transform
       pos: 11.5,-5.5
       parent: 1
-  - uid: 524
+  - uid: 523
     components:
     - type: Transform
       pos: 11.5,2.5
