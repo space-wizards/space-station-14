@@ -16,6 +16,7 @@ using Content.Shared.Examine;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
+using Content.Shared.Access.Systems;
 
 namespace Content.Shared.Clothing.EntitySystems
 {
@@ -29,6 +30,7 @@ namespace Content.Shared.Clothing.EntitySystems
         [Dependency] private readonly SharedAudioSystem _sharedAudio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly AccessReaderSystem _access = default!;
 
         public override void Initialize()
         {
@@ -295,6 +297,9 @@ namespace Content.Shared.Clothing.EntitySystems
         private void OnGetVerbs(Entity<SecurityHailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
+                return;
+
+            if (!_access.IsAllowed(ent.Comp.User, ent.Owner))
                 return;
 
             // Can't pass args from a ref event inside of lambdas
