@@ -132,8 +132,14 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     }
 
     private void OnStepEmoteEffectComplete(Entity<SurgeryStepEmoteEffectComponent> ent, ref SurgeryStepEvent args)
-        => _chat.TryEmoteWithChat(args.Body, ent.Comp.Emote);
+    {
         
+        if (!HasComp(args.Body, typeof(PainNumbnessComponent)))
+        {
+             _chat.TryEmoteWithChat(args.Body, ent.Comp.Emote);
+        }
+    }
+
     private void OnStepSpawnComplete(Entity<SurgeryStepSpawnEffectComponent> ent, ref SurgeryStepEvent args)
     {
         if (TryComp(args.Body, out TransformComponent? xform))
