@@ -112,14 +112,24 @@ public sealed partial class DungeonJob
 
                     if (flankContents != null && nodeDistances.Count - i <= 2)
                     {
-                        _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(flankContents, random));
+                        var uids = _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(flankContents, random));
+
+                        foreach (var uid in uids)
+                        {
+                            AddLoadedEntity(node, uid);
+                        }
                     }
                     else
                     {
                         // Iterate neighbors and check for blockers, if so bulldoze
                         ClearDoor(dungeon, _grid, node);
 
-                        _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(contents, random));
+                        var uids = _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(contents, random));
+
+                        foreach (var uid in uids)
+                        {
+                            AddLoadedEntity(node, uid);
+                        }
                     }
 
                     if (width == 0)

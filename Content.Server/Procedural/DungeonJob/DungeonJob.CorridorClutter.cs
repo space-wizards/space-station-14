@@ -48,7 +48,13 @@ public sealed partial class DungeonJob
 
             var protos = _entTable.GetSpawns(contents, random);
             var coords = _maps.ToCenterCoordinates(_gridUid, tile, _grid);
-            _entManager.SpawnEntitiesAttachedTo(coords, protos);
+            var uids = _entManager.SpawnEntitiesAttachedTo(coords, protos);
+
+            foreach (var uid in uids)
+            {
+                AddLoadedEntity(tile, uid);
+            }
+
             await SuspendIfOutOfTime();
 
             if (!ValidateResume())

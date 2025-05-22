@@ -54,7 +54,9 @@ public sealed partial class DungeonJob
                     continue;
 
                 var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile);
-                _entManager.SpawnEntity(fill.Entity, gridPos);
+                var uid = _entManager.SpawnEntity(fill.Entity, gridPos);
+
+                AddLoadedEntity(tile, uid);
             }
         }
     }

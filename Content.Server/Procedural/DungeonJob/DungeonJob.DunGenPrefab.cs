@@ -230,7 +230,14 @@ public sealed partial class DungeonJob
                 var dungeonMatty = Matrix3x2.Multiply(matty, dungeonTransform);
 
                 // The expensive bit yippy.
-                _dungeon.SpawnRoom(_gridUid, _grid, dungeonMatty, room, reservedTiles);
+                var data = _dungeon.SpawnRoom(_gridUid, _grid, dungeonMatty, room, reservedTiles);
+
+                _data.Merge(data);
+
+                await SuspendDungeon();
+
+                if (!ValidateResume())
+                    return dungeon;
 
                 var roomCenter = (room.Offset + room.Size / 2f) * _grid.TileSize;
                 var roomTiles = new HashSet<Vector2i>(room.Size.X * room.Size.Y);

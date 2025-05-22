@@ -1,9 +1,7 @@
-using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Decals;
-using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Shuttles.Systems;
@@ -23,12 +21,10 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
-using IDunGenLayer = Content.Shared.Procedural.IDunGenLayer;
 
 namespace Content.Server.Procedural.DungeonJob;
 
-public sealed partial class DungeonJob : Job<List<Dungeon>>
+public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
 {
     public bool TimeSlice = true;
 
@@ -166,7 +162,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         return dungeons[(existing?.Count ?? 0)..];
     }
 
-    protected override async Task<List<Dungeon>?> Process()
+    protected override async Task<(List<Dungeon>, DungeonData)> Process()
     {
         _sawmill.Info($"Generating dungeon {_gen} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
         _grid.CanSplit = false;
@@ -198,7 +194,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         }
 
         _sawmill.Info($"Finished generating dungeon {_gen} with seed {_seed}");
-        return dungeons;
+        return (dungeons, _data);
     }
 
     private async Task RunLayer(
@@ -379,28 +375,16 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
     private void AddLoadedEntity(Vector2 tile, EntityUid ent)
     {
-        _data.Entities[tile] = ent;
+        _data.Entities[ent] = tile;
     }
 
     private void AddLoadedDecal(Vector2 tile, uint decal)
     {
-        _data.Decals[tile] = decal;
+        _data.Decals[decal] = tile;
     }
 
     private void AddLoadedTile(Vector2i index, Tile tile)
     {
         _data.Tiles[index] = tile;
     }
-}
-
-/// <summary>
-/// Contains the loaded data for a dungeon.
-/// </summary>
-public sealed class DungeonData
-{
-    public Dictionary<Vector2, uint> Decals = new();
-
-    public Dictionary<Vector2, EntityUid> Entities = new();
-
-    public Dictionary<Vector2i, Tile> Tiles = new();
 }

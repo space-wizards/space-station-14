@@ -3,12 +3,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Decals;
 using Content.Shared.CCVar;
+using Content.Shared.Decals;
 using Content.Shared.Ghost;
+using Content.Shared.Procedural;
 using Content.Shared.Procedural.Components;
 using Robust.Server.Player;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Map.Enumerators;
 using Robust.Shared.Prototypes;
@@ -131,9 +135,9 @@ public sealed partial class NewBiomeSystem : EntitySystem
 
     private void UnloadChunks()
     {
-        var query = AllEntityQuery<NewBiomeComponent>();
+        var query = AllEntityQuery<NewBiomeComponent, MapGridComponent>();
 
-        while (query.MoveNext(out var uid, out var biome))
+        while (query.MoveNext(out var uid, out var biome, out var grid))
         {
             // Only start unloading if it's currently not loading anything.
             if (biome.Loading)
@@ -179,7 +183,7 @@ public sealed partial class NewBiomeSystem : EntitySystem
             biome.Loading = true;
             var job = new BiomeUnloadJob(_loadTime)
             {
-                Biome = (uid, biome),
+                Biome = (uid, grid, biome),
                 ToUnload = toUnload,
             };
             _biomeQueue.EnqueueJob(job);
@@ -316,34 +320,29 @@ public sealed partial class NewBiomeSystem : EntitySystem
             // Start loading here.
             // TODO: Port dungeonloadeddata.
             // Add dungeon method to dump it into dungeonloadeddata
-            var loadedData = new BiomeLoadedData()
-            {
-
-            };
 
             // Load dungeon here async await and all that jaz.
-            var dungeons = await WaitAsyncTask(_entManager
+            var (_, data) = await WaitAsyncTask(_entManager
                 .System<DungeonSystem>()
                 .GenerateDungeonAsync(_protoManager.Index(layer.Dungeon), Grid.Owner, Grid.Comp, chunk.Value * layer.Size, Biome.Seed));
 
             // If we can unload it then store the data to check for later.
             if (layer.CanUnload)
             {
-                foreach (var dungeon in dungeons)
-                {
-                    // TODO: Add dungeon loaded data structure to it.
-                }
+                layerLoaded.Add(chunk.Value, data);
             }
-
-            // Cleanup loading
-            layerLoaded.Add(chunk.Value, loadedData);
+            else
+            {
+                // No need to waste memory keeping the data around just flag it.
+                layerLoaded.Add(chunk.Value, DungeonData.Empty);
+            }
         }
     }
 }
 
 public sealed class BiomeUnloadJob : Job<bool>
 {
-    private EntityManager _entManager;
+    private EntityManager _entManager = default!;
 
     public List<Vector2i> Chunks = new();
     public Entity<MapGridComponent, NewBiomeComponent> Biome;
@@ -364,6 +363,10 @@ public sealed class BiomeUnloadJob : Job<bool>
         DebugTools.Assert(biome.Loading);
         var maps = _entManager.System<SharedMapSystem>();
         var decals = _entManager.System<DecalSystem>();
+        var lookup = _entManager.System<EntityLookupSystem>();
+        _entManager.TryGetComponent(Biome.Owner, out DecalGridComponent? decalGrid);
+        var entities = new HashSet<EntityUid>();
+        var tiles = new List<(Vector2i, Tile)>();
 
         foreach (var (layer, chunkOrigins) in ToUnload)
         {
@@ -381,51 +384,80 @@ public sealed class BiomeUnloadJob : Job<bool>
                 if (!data.TryGetValue(chunk, out var loaded))
                     continue;
 
-                if (loaded.LoadedEntities != null)
+                tiles.Clear();
+
+                foreach (var (pos, ent) in loaded.Entities)
                 {
-                    foreach (var ent in loaded.LoadedEntities)
+                    // IsDefault is actually super expensive so really need to run this check in the loop.
+                    await SuspendIfOutOfTime();
+                    var xform = _entManager.TransformQuery.Comp(ent);
+
+                    // If it stayed still and had no data change then keep it.
+                    if (pos == xform.LocalPosition && xform.GridUid == Biome.Owner && _entManager.IsDefault(ent))
                     {
-                        var xform = _entManager.TransformQuery.Comp(ent);
+                        _entManager.DeleteEntity(ent);
+                        continue;
+                    }
 
-                        // TODO: Position check
-                        if (_entManager.IsDefault(ent))
-                        {
-                            _entManager.DeleteEntity(ent);
-                            continue;
-                        }
-
+                    // Need the entity's current tile to be flagged for unloading.
+                    if (Biome.Owner == xform.GridUid)
+                    {
                         var entTile = maps.LocalToTile(Biome.Owner, grid, xform.Coordinates);
                         biome.ModifiedTiles.Add(entTile);
                     }
                 }
 
-                await SuspendIfOutOfTime();
-
-                if (loaded.LoadedDecals != null)
+                foreach (var (pos, decal) in loaded.Decals)
                 {
-                    foreach (var decal in loaded.LoadedDecals)
+                    // Should just be able to remove them as you can't actually edit a decal.
+                    if (!decals.RemoveDecal(Biome.Owner, decal, decalGrid))
                     {
-                        if (!decals.RemoveDecal(Biome.Owner, decal))
-                        {
-                            // TODO: Need the tile.
-                            biome.ModifiedTiles.Add(de);
-                        }
+                        biome.ModifiedTiles.Add(pos.Floored());
                     }
                 }
 
                 await SuspendIfOutOfTime();
 
-                // TODO: Need to store loaded tiles.
-                if (loaded.LoadedTiles)
+                foreach (var (index, tile) in loaded.Tiles)
                 {
+                    await SuspendIfOutOfTime();
 
+                    if (!maps.TryGetTileRef(Biome.Owner, Biome.Comp1, index, out var tileRef) ||
+                        tileRef.Tile != tile)
+                    {
+                        Biome.Comp2.ModifiedTiles.Add(index);
+                        continue;
+                    }
+
+                    entities.Clear();
+                    var tileBounds = lookup.GetLocalBounds(index, Biome.Comp1.TileSize);
+
+                    lookup.GetEntitiesIntersecting(Biome.Owner,
+                        tileBounds,
+                        entities);
+
+                    // Still entities remaining so just leave the tile.
+                    if (entities.Count > 0)
+                    {
+                        Biome.Comp2.ModifiedTiles.Add(index);
+                        continue;
+                    }
+
+                    if (decals.GetDecalsIntersecting(Biome.Owner, tileBounds, component: decalGrid).Count > 0)
+                    {
+                        Biome.Comp2.ModifiedTiles.Add(index);
+                        continue;
+                    }
+
+                    // Clear it
+                    tiles.Add((index, Tile.Empty));
                 }
 
-                await SuspendIfOutOfTime();
+                maps.SetTiles(Biome.Owner, Biome.Comp1, tiles);
             }
         }
 
-        Biome.Comp.Loading = false;
+        Biome.Comp2.Loading = false;
         return true;
     }
 }

@@ -226,7 +226,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
         _dungeonJobQueue.EnqueueJob(job);
     }
 
-    public async Task<List<Dungeon>> GenerateDungeonAsync(
+    public async Task<(List<Dungeon>, DungeonData)> GenerateDungeonAsync(
         DungeonConfig gen,
         EntityUid gridUid,
         MapGridComponent grid,

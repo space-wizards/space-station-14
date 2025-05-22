@@ -78,7 +78,8 @@ public sealed partial class DungeonJob
 
                     foreach (var ent in _entTable.GetSpawns(contents, random))
                     {
-                        _entManager.SpawnAtPosition(ent, gridCoords);
+                        var uid = _entManager.SpawnAtPosition(ent, gridCoords);
+                        AddLoadedEntity(tile, uid);
                     }
 
                     // Clear out any biome tiles nearby to avoid blocking it

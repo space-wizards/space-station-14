@@ -116,7 +116,12 @@ public sealed partial class DungeonJob
                         _maps.SetTile(_gridUid, _grid, weh, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
 
                         var coords = _maps.GridTileToLocal(_gridUid, _grid, weh);
-                        _entManager.SpawnEntitiesAttachedTo(coords, _entTable.GetSpawns(contents, random));
+                        var uids = _entManager.SpawnEntitiesAttachedTo(coords, _entTable.GetSpawns(contents, random));
+
+                        foreach (var uid in uids)
+                        {
+                            AddLoadedEntity(weh, uid);
+                        }
                     }
 
                     break;

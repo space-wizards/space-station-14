@@ -1,4 +1,5 @@
 using System.Numerics;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural.Components;
@@ -53,7 +54,7 @@ public sealed partial class NewBiomeComponent : Component
     /// Data that is currently loaded.
     /// </summary>
     [DataField]
-    public Dictionary<string, Dictionary<Vector2i, BiomeLoadedData>> LoadedData = new();
+    public Dictionary<string, Dictionary<Vector2i, DungeonData>> LoadedData = new();
 
     // Wanted to use a bitmask originally but some stuff like mobs may have massive chunk sizes.
     /// <summary>
@@ -66,19 +67,4 @@ public sealed partial class NewBiomeComponent : Component
     /// Bounds loaded by players for this tick.
     /// </summary>
     public List<Box2i> LoadedBounds = new();
-}
-
-[DataDefinition]
-public sealed partial class BiomeLoadedData
-{
-    public static readonly BiomeLoadedData Empty = new();
-
-    [DataField]
-    public HashSet<EntityUid>? LoadedEntities;
-
-    [DataField]
-    public List<uint>? LoadedDecals;
-
-    [DataField]
-    public bool LoadedTiles;
 }
