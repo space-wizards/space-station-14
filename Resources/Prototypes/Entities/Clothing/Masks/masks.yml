@@ -411,6 +411,7 @@
     distance: 5
     aggresionLevel: High
     specialCircumtance: HOS
+  - type: AccessReader
     access: [["HeadOfSecurity"]]
     loggingDisabled: true
     breakOnAccessBreaker: false

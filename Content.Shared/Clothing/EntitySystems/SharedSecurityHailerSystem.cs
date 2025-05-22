@@ -335,7 +335,7 @@ namespace Content.Shared.Clothing.EntitySystems
                 return;
             }
 
-            _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner, AudioParams.Default.WithVariation(0.15f));
+            _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
             IncreaseAggressionLevel(ent);
             Dirty(ent);
         }
