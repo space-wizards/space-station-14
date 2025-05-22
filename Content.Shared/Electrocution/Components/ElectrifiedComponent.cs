@@ -128,4 +128,7 @@ public sealed partial class ElectrifiedComponent : Component
 
     [DataField, AutoNetworkedField]
     public bool IsWireCut = false;
+
+    [DataField, AutoNetworkedField]
+    public bool IsAiControlled = true;
 }

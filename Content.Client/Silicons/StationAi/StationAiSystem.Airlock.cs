@@ -60,6 +60,9 @@ public sealed partial class StationAiSystem
 
     private void OnDoorElectrifiedGetRadial(Entity<ElectrifiedComponent> ent, ref GetStationAiRadialEvent args)
     {
+        if (!ent.Comp.IsAiControlled)
+            return;
+
         args.Actions.Add(
             new StationAiRadial
             {
