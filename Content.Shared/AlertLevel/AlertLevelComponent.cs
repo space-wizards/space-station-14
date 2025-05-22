@@ -13,7 +13,7 @@ public sealed partial class AlertLevelComponent : Component
     /// <summary>
     /// The current set of alert levels on the station.
     /// </summary>
-    [ViewVariables]
+    [DataField, AutoNetworkedField]
     public AlertLevelPrototype? AlertLevels;
 
     // Once stations are a prototype, this should be used.
