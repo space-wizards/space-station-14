@@ -78,7 +78,6 @@ public sealed partial class MachinePart
     /// locally.
     /// Use the Entity attribute if you wish to get which entity is actually bound to this part.
     /// </summary>
-    [DataField]
     public NetEntity? NetEntity = null;
 
     /// <summary>
