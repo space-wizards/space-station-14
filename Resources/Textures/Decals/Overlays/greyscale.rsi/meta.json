@@ -207,6 +207,12 @@
     },
     {
       "name": "verticalslats_singlerow_overlay"
+    },
+    {
+      "name": "horizontalslats_overlay"
+    },
+    {
+      "name": "horizontalslats_singlerow_overlay"
     }
   ]
 }

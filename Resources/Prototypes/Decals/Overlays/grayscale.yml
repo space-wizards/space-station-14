@@ -463,6 +463,22 @@
     state: verticalslats_singlerow_overlay
 
 - type: decal
+  id: HorizontalSlatOverlay
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: horizontalslats_overlay
+
+- type: decal
+  id: HorizontalSlatSingleRowOverlay
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: horizontalslats_singlerow_overlay
+
+- type: decal
   id: OffsetOverlay
   tags: ["station", "overlay"]
   defaultCustomColor: true
