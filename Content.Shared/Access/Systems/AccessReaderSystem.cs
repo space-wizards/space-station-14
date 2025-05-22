@@ -1,8 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.NameIdentifier;
@@ -37,11 +39,61 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<AccessReaderComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<AccessReaderComponent, LinkAttemptEvent>(OnLinkAttempt);
 
         SubscribeLocalEvent<AccessReaderComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<AccessReaderComponent, ComponentHandleState>(OnHandleState);
+    }
+
+    private void OnExamined(Entity<AccessReaderComponent> ent, ref ExaminedEvent args)
+    {
+        if (!GetMainAccessReader(ent, out var mainAccessReader))
+            return;
+
+        var sb = new StringBuilder();
+        var accessSubgroupCount = mainAccessReader.Value.Comp.AccessLists.Count;
+
+        for (int i = 0; i < accessSubgroupCount; i++)
+        {
+            var accessList = mainAccessReader.Value.Comp.AccessLists[i];
+
+            // Add the names of all access levels in the subgroup
+            for (int j = 0; j < accessList.Count; j++)
+            {
+                var accessLevel = accessList.ElementAt(j);
+                var accessName = Loc.GetString("access-reader-unknown-id");
+
+                if (_prototype.TryIndex(accessLevel, out var accessProto) && !string.IsNullOrWhiteSpace(accessProto.Name))
+                    accessName = Loc.GetString(accessProto.Name);
+
+                sb.Append(Loc.GetString("access-reader-access-label", ("access", accessName)));
+
+                if (j < (accessList.Count - 1))
+                    sb.Append(" & ");
+            }
+
+            if (i < (accessSubgroupCount - 1))
+            {
+                // Add a comma if the list will consist of more than two elements
+                if (accessSubgroupCount > 2)
+                    sb.Append(", ");
+                else
+                    sb.Append(" ");
+            }
+
+            // Add a conjunction if there is only one more element left to add
+            if (i == (accessSubgroupCount - 2))
+                sb.AppendFormat("{0} ", Loc.GetString("access-reader-list-conjunction"));
+        }
+
+        // String is invalid - either there were no access restrictions or their names are invalid
+        if (string.IsNullOrWhiteSpace(sb.ToString()))
+            return;
+
+        var accessMessage = Loc.GetString(mainAccessReader.Value.Comp.ExaminationText, ("access", sb));
+        args.PushMarkup(accessMessage);
     }
 
     private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)

@@ -77,6 +77,16 @@ public sealed partial class AccessReaderComponent : Component
     /// </summary>
     [DataField]
     public bool BreakOnAccessBreaker = true;
+
+    /// <summary>
+    /// The examination text associated with this component.
+    /// </summary>
+    /// <remarks>
+    /// The text can be supplied with the 'access' variable to populate it
+    /// with a comma separated list of the access levels contained in <see cref="AccessLists"/>
+    /// </remarks>
+    [DataField]
+    public LocId ExaminationText = "access-reader-examination";
 }
 
 [DataDefinition, Serializable, NetSerializable]
