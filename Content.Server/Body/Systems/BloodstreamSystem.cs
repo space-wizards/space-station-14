@@ -485,7 +485,7 @@ public sealed class BloodstreamSystem : EntitySystem
         {
             foreach (var reagent in bloodSolution.Contents)
             {
-                List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
+                var reagentData = reagent.Reagent.EnsureReagentData();
                 reagentData.Clear();
                 reagentData.AddRange(GetEntityBloodData(entity.Owner));
             }

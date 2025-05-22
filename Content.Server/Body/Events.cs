@@ -20,3 +20,9 @@ public record struct ColorGibsEvent()
 {
     public HashSet<EntityUid>? Gibs;
 }
+
+[ByRefEvent]
+public record struct ColorGibPartEvent()
+{
+    public Color GibColor;
+}
