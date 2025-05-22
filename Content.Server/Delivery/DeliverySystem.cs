@@ -43,7 +43,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         base.Initialize();
 
         SubscribeLocalEvent<DeliveryComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<DeliveryComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<DeliverySpawnerComponent, AfterInteractUsingEvent>(OnAfterInteract);
 
         InitializeSpawning();
     }
@@ -74,22 +74,21 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         Dirty(ent);
     }
 
-    private void OnAfterInteract(Entity<DeliveryComponent> ent, ref AfterInteractEvent args)
+    private void OnAfterInteract(Entity<DeliverySpawnerComponent> ent, ref AfterInteractUsingEvent args)
     {
-        if (!args.CanReach || args.Handled || args.Target == null)
-            return;
-
-        if (!TryComp<DeliverySpawnerComponent>(args.Target, out var deliverySpawner) || !TryComp<FingerprintReaderComponent>(args.Used, out var fingerprintReaderComp))
+        if (args.Handled || !args.CanReach
+            || !TryComp<DeliveryComponent>(args.Used, out var deliveryComp)
+            || !TryComp<FingerprintReaderComponent>(args.Used, out var fingerprintReaderComp))
             return;
 
         args.Handled = true;
 
-        var station = _station.GetOwningStation(args.Target);
+        var station = _station.GetOwningStation(ent);
         if (!TryComp<StationRecordsComponent>(station, out var stationRecords))
         {
             string messageNoStation = Loc.GetString("delivery-insert-no-station");
-            _chat.TrySendInGameICMessage(args.Target.Value, messageNoStation, InGameICChatType.Speak, hideChat: true);
-            _audio.PlayPvs(deliverySpawner.InsertDenySound, args.Target.Value);
+            _chat.TrySendInGameICMessage(ent, messageNoStation, InGameICChatType.Speak, hideChat: true);
+            _audio.PlayPvs(ent.Comp.InsertDenySound, ent);
             return;
         }
 
@@ -114,14 +113,14 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (isReceivable)
         {
             string messageDenied = Loc.GetString("delivery-insert-denied", ("mail", args.Used));
-            _chat.TrySendInGameICMessage(args.Target.Value, messageDenied, InGameICChatType.Speak, hideChat: true);
-            _audio.PlayPvs(deliverySpawner.InsertDenySound, args.Target.Value);
+            _chat.TrySendInGameICMessage(ent, messageDenied, InGameICChatType.Speak, hideChat: true);
+            _audio.PlayPvs(ent.Comp.InsertDenySound, ent);
             return;
         }
 
         string messageApproved = Loc.GetString("delivery-insert-approved", ("mail", args.Used));
-        _chat.TrySendInGameICMessage(args.Target.Value, messageApproved, InGameICChatType.Speak, hideChat: true);
-        _audio.PlayPvs(deliverySpawner.InsertAppoveSound, args.Target.Value);
+        _chat.TrySendInGameICMessage(ent, messageApproved, InGameICChatType.Speak, hideChat: true);
+        _audio.PlayPvs(ent.Comp.InsertAppoveSound, ent  );
         Del(args.Used);
     }
 
