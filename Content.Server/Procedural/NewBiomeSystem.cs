@@ -274,17 +274,23 @@ public sealed partial class NewBiomeSystem : EntitySystem
 
     protected override async Task<bool> Process()
     {
-        foreach (var bound in Biome.LoadedBounds)
+        try
         {
-            foreach (var (layerId, layer) in Biome.Layers)
+            foreach (var bound in Biome.LoadedBounds)
             {
-                await LoadLayer(layerId, layer, bound);
+                foreach (var (layerId, layer) in Biome.Layers)
+                {
+                    await LoadLayer(layerId, layer, bound);
+                }
             }
         }
+        finally
+        {
+            // Finished
+            DebugTools.Assert(Biome.Loading);
+            Biome.Loading = false;
+        }
 
-        // Finished
-        DebugTools.Assert(Biome.Loading);
-        Biome.Loading = false;
         return true;
     }
 
@@ -317,10 +323,6 @@ public sealed partial class NewBiomeSystem : EntitySystem
                 continue;
             }
 
-            // Start loading here.
-            // TODO: Port dungeonloadeddata.
-            // Add dungeon method to dump it into dungeonloadeddata
-
             // Load dungeon here async await and all that jaz.
             var (_, data) = await WaitAsyncTask(_entManager
                 .System<DungeonSystem>()
@@ -331,25 +333,20 @@ public sealed partial class NewBiomeSystem : EntitySystem
             {
                 layerLoaded.Add(chunk.Value, data);
             }
-            else
-            {
-                // No need to waste memory keeping the data around just flag it.
-                layerLoaded.Add(chunk.Value, DungeonData.Empty);
-            }
         }
     }
 }
 
 public sealed class BiomeUnloadJob : Job<bool>
 {
-    private EntityManager _entManager = default!;
+    [Dependency] private EntityManager _entManager = default!;
 
-    public List<Vector2i> Chunks = new();
     public Entity<MapGridComponent, NewBiomeComponent> Biome;
     public Dictionary<string, List<Vector2i>> ToUnload = default!;
 
     public BiomeUnloadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
+        IoCManager.InjectDependencies(this);
     }
 
     public BiomeUnloadJob(double maxTime, IStopwatch stopwatch, CancellationToken cancellation = default) : base(maxTime, stopwatch, cancellation)
@@ -358,106 +355,112 @@ public sealed class BiomeUnloadJob : Job<bool>
 
     protected override async Task<bool> Process()
     {
-        var grid = Biome.Comp1;
-        var biome = Biome.Comp2;
-        DebugTools.Assert(biome.Loading);
-        var maps = _entManager.System<SharedMapSystem>();
-        var decals = _entManager.System<DecalSystem>();
-        var lookup = _entManager.System<EntityLookupSystem>();
-        _entManager.TryGetComponent(Biome.Owner, out DecalGridComponent? decalGrid);
-        var entities = new HashSet<EntityUid>();
-        var tiles = new List<(Vector2i, Tile)>();
-
-        foreach (var (layer, chunkOrigins) in ToUnload)
+        try
         {
-            if (!biome.Layers.TryGetValue(layer, out var meta))
-                continue;
+            var grid = Biome.Comp1;
+            var biome = Biome.Comp2;
+            DebugTools.Assert(biome.Loading);
+            var maps = _entManager.System<SharedMapSystem>();
+            var decals = _entManager.System<DecalSystem>();
+            var lookup = _entManager.System<EntityLookupSystem>();
+            _entManager.TryGetComponent(Biome.Owner, out DecalGridComponent? decalGrid);
+            var entities = new HashSet<EntityUid>();
+            var tiles = new List<(Vector2i, Tile)>();
 
-            DebugTools.Assert(meta.CanUnload);
-
-            if (!biome.LoadedData.TryGetValue(layer, out var data))
-                continue;
-
-            foreach (var chunk in chunkOrigins)
+            foreach (var (layer, chunkOrigins) in ToUnload)
             {
-                // Not loaded anymore?
-                if (!data.TryGetValue(chunk, out var loaded))
+                if (!biome.Layers.TryGetValue(layer, out var meta))
                     continue;
 
-                tiles.Clear();
+                if (!biome.LoadedData.TryGetValue(layer, out var data))
+                    continue;
 
-                foreach (var (pos, ent) in loaded.Entities)
+                DebugTools.Assert(meta.CanUnload);
+
+                foreach (var chunk in chunkOrigins)
                 {
-                    // IsDefault is actually super expensive so really need to run this check in the loop.
+                    // Not loaded anymore?
+                    if (!data.TryGetValue(chunk, out var loaded))
+                        continue;
+
+                    tiles.Clear();
+
+                    foreach (var (ent, pos) in loaded.Entities)
+                    {
+                        // IsDefault is actually super expensive so really need to run this check in the loop.
+                        await SuspendIfOutOfTime();
+                        var xform = _entManager.TransformQuery.Comp(ent);
+
+                        // If it stayed still and had no data change then keep it.
+                        if (pos == xform.LocalPosition && xform.GridUid == Biome.Owner && _entManager.IsDefault(ent))
+                        {
+                            _entManager.DeleteEntity(ent);
+                            continue;
+                        }
+
+                        // Need the entity's current tile to be flagged for unloading.
+                        if (Biome.Owner == xform.GridUid)
+                        {
+                            var entTile = maps.LocalToTile(Biome.Owner, grid, xform.Coordinates);
+                            biome.ModifiedTiles.Add(entTile);
+                        }
+                    }
+
+                    foreach (var (decal, pos) in loaded.Decals)
+                    {
+                        // Should just be able to remove them as you can't actually edit a decal.
+                        if (!decals.RemoveDecal(Biome.Owner, decal, decalGrid))
+                        {
+                            biome.ModifiedTiles.Add(pos.Floored());
+                        }
+                    }
+
                     await SuspendIfOutOfTime();
-                    var xform = _entManager.TransformQuery.Comp(ent);
 
-                    // If it stayed still and had no data change then keep it.
-                    if (pos == xform.LocalPosition && xform.GridUid == Biome.Owner && _entManager.IsDefault(ent))
+                    foreach (var (index, tile) in loaded.Tiles)
                     {
-                        _entManager.DeleteEntity(ent);
-                        continue;
+                        await SuspendIfOutOfTime();
+
+                        if (!maps.TryGetTileRef(Biome.Owner, Biome.Comp1, index, out var tileRef) ||
+                            tileRef.Tile != tile)
+                        {
+                            Biome.Comp2.ModifiedTiles.Add(index);
+                            continue;
+                        }
+
+                        entities.Clear();
+                        var tileBounds = lookup.GetLocalBounds(index, Biome.Comp1.TileSize);
+
+                        lookup.GetEntitiesIntersecting(Biome.Owner,
+                            tileBounds,
+                            entities);
+
+                        // Still entities remaining so just leave the tile.
+                        if (entities.Count > 0)
+                        {
+                            Biome.Comp2.ModifiedTiles.Add(index);
+                            continue;
+                        }
+
+                        if (decals.GetDecalsIntersecting(Biome.Owner, tileBounds, component: decalGrid).Count > 0)
+                        {
+                            Biome.Comp2.ModifiedTiles.Add(index);
+                            continue;
+                        }
+
+                        // Clear it
+                        tiles.Add((index, Tile.Empty));
                     }
 
-                    // Need the entity's current tile to be flagged for unloading.
-                    if (Biome.Owner == xform.GridUid)
-                    {
-                        var entTile = maps.LocalToTile(Biome.Owner, grid, xform.Coordinates);
-                        biome.ModifiedTiles.Add(entTile);
-                    }
+                    maps.SetTiles(Biome.Owner, Biome.Comp1, tiles);
                 }
-
-                foreach (var (pos, decal) in loaded.Decals)
-                {
-                    // Should just be able to remove them as you can't actually edit a decal.
-                    if (!decals.RemoveDecal(Biome.Owner, decal, decalGrid))
-                    {
-                        biome.ModifiedTiles.Add(pos.Floored());
-                    }
-                }
-
-                await SuspendIfOutOfTime();
-
-                foreach (var (index, tile) in loaded.Tiles)
-                {
-                    await SuspendIfOutOfTime();
-
-                    if (!maps.TryGetTileRef(Biome.Owner, Biome.Comp1, index, out var tileRef) ||
-                        tileRef.Tile != tile)
-                    {
-                        Biome.Comp2.ModifiedTiles.Add(index);
-                        continue;
-                    }
-
-                    entities.Clear();
-                    var tileBounds = lookup.GetLocalBounds(index, Biome.Comp1.TileSize);
-
-                    lookup.GetEntitiesIntersecting(Biome.Owner,
-                        tileBounds,
-                        entities);
-
-                    // Still entities remaining so just leave the tile.
-                    if (entities.Count > 0)
-                    {
-                        Biome.Comp2.ModifiedTiles.Add(index);
-                        continue;
-                    }
-
-                    if (decals.GetDecalsIntersecting(Biome.Owner, tileBounds, component: decalGrid).Count > 0)
-                    {
-                        Biome.Comp2.ModifiedTiles.Add(index);
-                        continue;
-                    }
-
-                    // Clear it
-                    tiles.Add((index, Tile.Empty));
-                }
-
-                maps.SetTiles(Biome.Owner, Biome.Comp1, tiles);
             }
         }
+        finally
+        {
+            Biome.Comp2.Loading = false;
+        }
 
-        Biome.Comp2.Loading = false;
         return true;
     }
 }

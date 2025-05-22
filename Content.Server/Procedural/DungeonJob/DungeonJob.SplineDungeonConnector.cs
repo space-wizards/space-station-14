@@ -110,6 +110,7 @@ public sealed partial class DungeonJob
                 }
 
                 tiles.Add((node, tile));
+                AddLoadedTile(node, tile);
             }
 
             _maps.SetTiles(_gridUid, _grid, tiles);
@@ -123,6 +124,7 @@ public sealed partial class DungeonJob
 
                 allTiles.Add(node);
                 tiles.Add((node, pathTile));
+                AddLoadedTile(node, pathTile);
             }
 
             _maps.SetTiles(_gridUid, _grid, tiles);

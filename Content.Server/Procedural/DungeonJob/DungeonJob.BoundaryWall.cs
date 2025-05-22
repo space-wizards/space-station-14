@@ -43,7 +43,9 @@ public sealed partial class DungeonJob
             if (!_anchorable.TileFree(_grid, index, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
-            tiles.Add((index, _tile.GetVariantTile((ContentTileDefinition)tileDef, random)));
+            var tile = _tile.GetVariantTile((ContentTileDefinition)tileDef, random);
+            tiles.Add((index, tile));
+            AddLoadedTile(index, tile);
         }
 
         _maps.SetTiles(_gridUid, _grid, tiles);

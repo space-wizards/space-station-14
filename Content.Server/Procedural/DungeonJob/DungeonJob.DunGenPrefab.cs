@@ -196,7 +196,9 @@ public sealed partial class DungeonJob
                                     if (reservedTiles.Contains(index))
                                         continue;
 
-                                    tiles.Add((index, new Tile(_tileDefManager[fallbackTile.Value].TileId)));
+                                    var tile = new Tile(_tileDefManager[fallbackTile.Value].TileId);
+                                    tiles.Add((index, tile));
+                                    AddLoadedTile(index, tile);
                                 }
                             }
 

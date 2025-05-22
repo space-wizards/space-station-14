@@ -35,7 +35,9 @@ public sealed partial class DungeonJob
                     if (reservedTiles.Contains(neighbor))
                         continue;
 
-                    tiles.Add((neighbor, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
+                    var tile = _tile.GetVariantTile((ContentTileDefinition)tileDef, random);
+                    tiles.Add((neighbor, tile));
+                    AddLoadedTile(neighbor, tile);
                     spawnPositions.Add(neighbor);
                 }
             }

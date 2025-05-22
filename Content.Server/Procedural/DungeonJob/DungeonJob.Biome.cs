@@ -42,6 +42,7 @@ public sealed partial class DungeonJob
             if (biomeSystem.TryGetTile(node, indexedBiome.Layers, seed, (_gridUid, _grid), out var tile))
             {
                 _maps.SetTile(_gridUid, _grid, node, tile.Value);
+                AddLoadedTile(node, tile.Value);
             }
 
             if (biomeSystem.TryGetDecals(node, indexedBiome.Layers, seed, (_gridUid, _grid), out var decals))

@@ -76,7 +76,9 @@ public sealed partial class DungeonJob
                         break;
                     }
 
-                    tiles.Add((adjusted, new Tile(tileDef.TileId, variant: variant)));
+                    var tile = new Tile(tileDef.TileId, variant: variant);
+                    tiles.Add((adjusted, tile));
+                    AddLoadedTile(adjusted, tile);
                     roomTiles.Add(adjusted);
                     break;
                 }

@@ -36,7 +36,9 @@ public sealed partial class DungeonJob
                 if (value < gen.Threshold)
                     continue;
 
-                tiles.Add((tile, new Tile(tileDef.TileId)));
+                var tileVariant = new Tile(tileDef.TileId);
+                tiles.Add((tile, tileVariant));
+                AddLoadedTile(tile, tileVariant);
             }
         }
 
