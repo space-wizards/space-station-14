@@ -89,6 +89,8 @@ namespace Content.Shared.Clothing.Components
         public SoundSpecifier HOSReplaceSounds = new SoundCollectionSpecifier("SecHailHOS");
         public SoundSpecifier ScrewedSounds = new SoundCollectionSpecifier("Screwdriver"); //From the soundcollection of tools
         public SoundSpecifier CutSounds = new SoundCollectionSpecifier("Wirecutter"); //From the soundcollection of tools
+        public SoundSpecifier SettingBeep = new SoundCollectionSpecifier("CargoToggleLimit"); //Beep when hailer is used with verb. In machines.yml
+        public SoundSpecifier SettingError = new SoundCollectionSpecifier("CargoError"); //Beep when hailer is used with verb  and it FAILS !! In machines.yml
 
         /// <summary>
         /// The action that gets displayed when the gas mask is equipped.

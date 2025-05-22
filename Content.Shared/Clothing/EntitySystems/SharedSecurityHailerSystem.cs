@@ -229,15 +229,15 @@ namespace Content.Shared.Clothing.EntitySystems
                 return;
 
             var comp = ent.Comp;
+            //Play a click sound just like the headset
+            _sharedAudio.PlayPvs(ent.Comp.ScrewedSounds, ent.Owner);
+
             IncreaseAggressionLevel(ent);
             args.Handled = true;
         }
 
         private void IncreaseAggressionLevel(Entity<SecurityHailerComponent> ent)
         {
-            //Play a click sound just like the headset
-            _sharedAudio.PlayPvs(ent.Comp.ScrewedSounds, ent.Owner);
-
             //Up the aggression level by one or back to one
             if (ent.Comp.AggresionLevel == SecurityHailerComponent.AggresionState.High)
                 ent.Comp.AggresionLevel = SecurityHailerComponent.AggresionState.Low;
@@ -296,10 +296,9 @@ namespace Content.Shared.Clothing.EntitySystems
 
         private void OnGetVerbs(Entity<SecurityHailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
-                return;
+            //TODO: Put some type of cooldown in here !
 
-            if (!_access.IsAllowed(ent.Comp.User, ent.Owner))
+            if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
                 return;
 
             // Can't pass args from a ref event inside of lambdas
@@ -309,8 +308,24 @@ namespace Content.Shared.Clothing.EntitySystems
             {
                 Text = Loc.GetString("sec-gas-mask-verb"),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
-                Act = () => IncreaseAggressionLevel(ent)
+                Act = () =>
+                {
+                    UseVerbSwitchAggression(ent, user);
+                }
             });
+        }
+
+        private void UseVerbSwitchAggression(Entity<SecurityHailerComponent> ent, EntityUid userActed)
+        {
+            if (!_access.IsAllowed(userActed, ent.Owner))
+            {
+                _sharedAudio.PlayPvs(ent.Comp.SettingError, ent.Owner);
+                _popup.PopupEntity(Loc.GetString("sec-gas-mask-wrong_access"), userActed);
+                return;
+            }
+
+            _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner);
+            IncreaseAggressionLevel(ent);
         }
     }
 }

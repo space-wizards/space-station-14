@@ -48,6 +48,10 @@
         Heat: 0.95
   - type: SecurityHailer
     distance: 5
+  - type: AccessReader
+    access: [["Security"]]
+    loggingDisabled: true
+    breakOnAccessBreaker: false
 
 - type: entity
   parent: [ClothingMaskGas, BaseSyndicateContraband]

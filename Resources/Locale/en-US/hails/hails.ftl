@@ -77,7 +77,9 @@ hail-high-HOS = Tell it to centcom... if you make it that far!!
 sec-gas-mask-verb = Change level
 sec-gas-mask-screwed = Changed to {$level} aggression
 sec-gas-mask-emagged = Changed to ERROR aggression
+sec-gas-mask-wrong_access = You don't have succifient access.
 ert-gas-mask-impossible = It seems impervious to external change.
+
 
 sec-gas-mask-alert-owner = {CAPITALIZE(THE($user))} is { $quality ->
     [cutting] cutting the wires of your mask
