@@ -50,6 +50,15 @@
     sprite: _Starlight/Clothing/Hands/Gloves/paws.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Hands/Gloves/paws.rsi
+  - type: MeleeWeapon #Taken from the felionoid attack information :)
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    attackRate: 2
+    damage:
+      types:
+        Slash: 3
 
 - type: entity
   parent: ClothingHandsCatPaws
