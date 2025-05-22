@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Lathe;
@@ -27,6 +28,13 @@ public sealed class System : EntitySystem
 
     private ISawmill _sawmill = default!;
 
+    private Dictionary<int, int> diskTierToSellPrice = new()
+    {
+        [1] = 100,
+        [2] = 500,
+        [3] = 3000
+    };
+
     public override void Initialize()
     {
         base.Initialize();
@@ -41,6 +49,7 @@ public sealed class System : EntitySystem
     private void OnMapInit(Entity<TechnologyDiskComponent> ent, ref MapInitEvent args)
     {
         TryPickAndSetRecipe(ent);
+        TryPickAndSetSellPrice(ent);
         TrySetVisuals(ent);
     }
 
@@ -79,6 +88,15 @@ public sealed class System : EntitySystem
 
         ent.Comp.Recipes = [];
         ent.Comp.Recipes.Add(_random.Pick(recipes));
+    }
+
+    private void TryPickAndSetSellPrice(Entity<TechnologyDiskComponent> ent)
+    {
+        if(!ent.Comp.Tier.HasValue)
+            return;
+
+        var priceComp = EnsureComp<StaticPriceComponent>(ent);
+        priceComp.Price = diskTierToSellPrice[ent.Comp.Tier.Value];
     }
 
     /// <summary>
