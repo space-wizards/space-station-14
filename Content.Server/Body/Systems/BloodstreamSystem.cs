@@ -5,7 +5,6 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Body;
-using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
@@ -276,27 +275,11 @@ public sealed class BloodstreamSystem : EntitySystem
         }
     }
 
-    private void ColorGibbedParts(EntityUid ent, HashSet<EntityUid> gibbedParts)
-    {
-        var bloodData = GetEntityBloodData(ent);
-        var bloodColorData = bloodData.OfType<BloodColorData>().FirstOrDefault();
-        if (null == bloodColorData)
-            return;
-        foreach (var part in gibbedParts)
-        {
-            // TODO: It's only organs we want to tint for now, but perhaps we
-            // could put blood tint/decal/overlay on all items here?
-            if (HasComp<OrganComponent>(part))
-            {
-                _appearanceSystem.SetData(part, GoreVisuals.ColorTint, bloodColorData.SubstanceColor);
-            }
-        }
-    }
-
     private void OnBeingGibbed(Entity<BloodstreamComponent> ent, ref BeingGibbedEvent args)
     {
+        var ev = new ColorGibsEvent { Gibs = args.GibbedParts };
+        RaiseLocalEvent(ent.Owner, ref ev);
         SpillAllSolutions(ent, ent);
-        ColorGibbedParts(ent, args.GibbedParts);
     }
 
     private void OnApplyMetabolicMultiplier(
@@ -529,7 +512,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
         var ev = new BloodColorOverrideEvent { OverrideColor = null };
         RaiseLocalEvent(uid, ref ev);
-        if (null != ev.OverrideColor)
+        if (ev.OverrideColor != null)
         {
             var bloodColorData = new BloodColorData
             {

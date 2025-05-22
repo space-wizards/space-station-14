@@ -15,3 +15,8 @@ public record struct BloodColorOverrideEvent()
 public record struct RefreshBloodEvent()
 {
 }
+[ByRefEvent]
+public record struct ColorGibsEvent()
+{
+    public HashSet<EntityUid>? Gibs;
+}

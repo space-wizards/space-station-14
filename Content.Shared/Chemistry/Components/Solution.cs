@@ -831,10 +831,9 @@ namespace Content.Shared.Chemistry.Components
                 {
                     continue;
                 }
-                Color reagentColor = proto.SubstanceColor;
-
-                List<ReagentData> reagentData = reagent.EnsureReagentData();
-                BloodColorData? bloodData = reagentData.OfType<BloodColorData>().FirstOrDefault();
+                var reagentColor = proto.SubstanceColor;
+                var reagentData = reagent.EnsureReagentData();
+                var bloodData = reagentData.OfType<BloodColorData>().FirstOrDefault();
                 reagentColor = bloodData?.SubstanceColor ?? reagentColor;
                 if (first)
                 {
@@ -879,10 +878,9 @@ namespace Content.Shared.Chemistry.Components
                 {
                     continue;
                 }
-                Color reagentColor = proto.SubstanceColor;
-
-                List<ReagentData> reagentData = reagent.EnsureReagentData();
-                BloodColorData? bloodData = reagentData.OfType<BloodColorData>().FirstOrDefault();
+                var reagentColor = proto.SubstanceColor;
+                var reagentData = reagent.EnsureReagentData();
+                var bloodData = reagentData.OfType<BloodColorData>().FirstOrDefault();
                 reagentColor = bloodData?.SubstanceColor ?? reagentColor;
                 if (first)
                 {

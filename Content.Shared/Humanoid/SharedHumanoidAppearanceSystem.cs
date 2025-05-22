@@ -199,7 +199,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         ref bool dirty)
     {
 #if DEBUG
-        if (source is {} s)
+        if (source is { } s)
         {
             DebugTools.AssertNotEqual(s, SlotFlags.NONE);
             // Check that only a single bit in the bitflag is set
@@ -210,7 +210,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         if (visible)
         {
-            if (source is not {} slot)
+            if (source is not { } slot)
             {
                 dirty |= ent.Comp.PermanentlyHidden.Remove(layer);
             }
@@ -448,8 +448,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.Age = profile.Age;
 
         Dirty(uid, humanoid);
-        var ev = new LoadedHumanoidAppearanceEvent { Owner = uid, AppearanceComp = humanoid };
-        RaiseLocalEvent(ref ev);
     }
 
     /// <summary>
