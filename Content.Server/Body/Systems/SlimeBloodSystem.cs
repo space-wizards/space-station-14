@@ -13,7 +13,6 @@ public sealed class SlimeBloodSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SlimeBloodComponent, BloodColorOverrideEvent>(OnBloodColorOverride);
-        SubscribeLocalEvent<SlimeBloodComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SlimeBloodComponent, LoadedHumanoidAppearanceEvent>(OnAppearanceLoaded);
     }
 
@@ -21,12 +20,6 @@ public sealed class SlimeBloodSystem : EntitySystem
     {
         TryComp<HumanoidAppearanceComponent>(ent.Owner, out var appearanceComp);
         args.OverrideColor = ent.Comp.ManualOverrideColor ?? appearanceComp?.SkinColor;
-    }
-
-    private void OnMapInit(Entity<SlimeBloodComponent> ent, ref MapInitEvent args)
-    {
-        var ev = new RefreshBloodEvent { };
-        RaiseLocalEvent(ent.Owner, ref ev);
     }
 
     private void OnAppearanceLoaded(Entity<SlimeBloodComponent> entity, ref LoadedHumanoidAppearanceEvent ev)
