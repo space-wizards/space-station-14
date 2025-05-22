@@ -134,7 +134,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     private void OnStepEmoteEffectComplete(Entity<SurgeryStepEmoteEffectComponent> ent, ref SurgeryStepEvent args)
     {
         
-        if (!HasComp(args.Body, typeof(PainNumbnessComponent)))
+        if (!HasComp<PainNumbnessComponent>(args.Body))
         {
              _chat.TryEmoteWithChat(args.Body, ent.Comp.Emote);
         }
