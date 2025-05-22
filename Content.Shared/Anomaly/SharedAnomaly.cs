@@ -85,6 +85,7 @@ public enum AnomalyScannerVisuals : byte
     AnomalyNextPulse,
     AnomalyIsSupercritical,
 }
+
 [Serializable, NetSerializable]
 public enum AnomalyScannerVisualLayers : byte
 {
