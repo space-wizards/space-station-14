@@ -5,7 +5,7 @@ namespace Content.Server.Anomaly.Components;
 /// <summary>
 /// Hides some information about the anomaly when scanning it
 /// </summary>
-[RegisterComponent, Access(typeof(SecretDataAnomalySystem), typeof(AnomalySystem))]
+[RegisterComponent, Access(typeof(SecretDataAnomalySystem), typeof(AnomalySystem), typeof(AnomalyScannerSystem))]
 public sealed partial class SecretDataAnomalyComponent : Component
 {
     /// <summary>

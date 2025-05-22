@@ -23,8 +23,6 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         SubscribeLocalEvent<AnomalyComponent, AnimationCompletedEvent>(OnAnimationComplete);
 
         SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentShutdown>(OnShutdown);
-
-        InitializeScanner();
     }
 
     private void OnStartup(EntityUid uid, AnomalyComponent component, ComponentStartup args)
