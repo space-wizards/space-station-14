@@ -21,12 +21,15 @@ public sealed class DiskConsoleSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IComponentFactory _compFactory = default!;
+    [Dependency] private readonly ILogManager _log = default!;
 
     private ISawmill _sawmill = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        _sawmill = _log.GetSawmill("DiskConsoleSystem");
+
         SubscribeLocalEvent<DiskConsoleComponent, DiskConsolePrintDiskMessage>(OnPrintDisk);
         SubscribeLocalEvent<DiskConsoleComponent, ResearchServerPointsChangedEvent>(OnPointsChanged);
         SubscribeLocalEvent<DiskConsoleComponent, ResearchRegistrationChangedEvent>(OnRegistrationChanged);
@@ -53,8 +56,6 @@ public sealed class DiskConsoleSystem : EntitySystem
     /// <summary>
     /// Spawns a random tech disk using the given tech console and a position.
     /// </summary>
-    /// <param name="console">Tech console.</param>
-    /// <param name="coordinates">Position.</param>
     private void SpawnDisk(DiskConsoleComponent console, EntityCoordinates coordinates)
     {
         if (!_protoMan.TryIndex(console.DiskPrototype, out var diskProto))

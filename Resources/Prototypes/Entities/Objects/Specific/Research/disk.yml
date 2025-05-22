@@ -99,7 +99,6 @@
   - type: StealTarget
     stealGroup: TechnologyDisk
   - type: TechnologyDisk
-  - type: StaticPrice # varies based on tier - see TechnologyDiskT<N> protos that hold the pricing
 
 - type: entity
   parent: TechnologyDisk
