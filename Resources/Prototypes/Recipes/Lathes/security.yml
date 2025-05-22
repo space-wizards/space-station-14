@@ -277,7 +277,7 @@
   id: WeaponLaserSvalinn
   result: WeaponLaserSvalinn
   materials:
-    Steel: 2000
+    Steel: 1500
     Gold: 500
 
 - type: latheRecipe

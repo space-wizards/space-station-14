@@ -191,6 +191,18 @@
   technologyPrerequisites:
   - SalvageWeapons
 
+- type: technology
+  id: ExpermentalBatteryAmmo
+  name: research-technology-experimental-battery-ammo
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - WeaponLaserSvalinn
+
 # Tier 3
 
 - type: technology
