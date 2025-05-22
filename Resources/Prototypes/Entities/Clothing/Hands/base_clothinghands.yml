@@ -38,6 +38,14 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
+  - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
+    materialComposition:
+      Cloth: 50
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
 
 # gloves that cover the fingertips and have synthetic fibers
 - type: entity

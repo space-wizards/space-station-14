@@ -78,7 +78,13 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// All of the <see cref="CargoProductPrototype.Group"/>s that are supported.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<string> AllowedGroups = new() { "market" };
+    public List<ProtoId<CargoMarketPrototype>> AllowedGroups = new()
+    {
+        "market",
+        "SalvageJobReward2",
+        "SalvageJobReward3",
+        "SalvageJobRewardMAX",
+    };
 
     /// <summary>
     /// Access needed to toggle the limit on this console.
