@@ -6054,4 +6054,25 @@ Entries:
   id: 838
   time: '2025-05-22T20:54:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/678
+- author: Western, Cyanogen
+  changes:
+  - message: Commander PDA
+    type: Add
+  id: 839
+  time: '2025-05-22T21:00:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/657
+- author: Western, Cyanogen
+  changes:
+  - message: Changed syndicate PDA and Agent PDA
+    type: Tweak
+  id: 840
+  time: '2025-05-22T21:00:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/657
+- author: Western, Cyanogen
+  changes:
+  - message: Made Syndicate, Agent and commander ID's and made them AgentID's
+    type: Add
+  id: 841
+  time: '2025-05-22T21:00:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/657
 
