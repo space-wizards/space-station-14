@@ -22,7 +22,7 @@ namespace Content.Shared.Clothing.Components
         /// Range value for the exclamation effect on humanoids
         /// </summary>
         [DataField]
-        public float Distance = 0;
+        public float Distance = 0f;
 
         /// <summary>
         /// The name displayed as the speaker when hailing orders
@@ -34,25 +34,13 @@ namespace Content.Shared.Clothing.Components
         /// Delay when the hailer is screwed to change aggression level
         /// </summary>
         [DataField]
-        public float ScrewingDoAfterDelay = 1f;
-
-        /// <summary>
-        /// Delay when the hailer is screwed to change aggression level by someone else than the wearer
-        /// </summary>
-        [DataField]
-        public float ScrewingOtherUserDoAfterDelay = 3f;
+        public float ScrewingDoAfterDelay = 3f;
 
         /// <summary>
         /// Delay when the hailer has its wires cut
         /// </summary>
         [DataField]
-        public float CuttingDoAfterDelay = 3f;
-
-        /// <summary>
-        /// Delay when the hailer has its wires cut by someone else than the wearer
-        /// </summary>
-        [DataField]
-        public float CuttingOtherUserDoAfterDelay = 5f;
+        public float CuttingDoAfterDelay = 5f;
 
         public enum SpecialUseCase : byte
         {

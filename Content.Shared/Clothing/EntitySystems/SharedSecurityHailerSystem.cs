@@ -111,6 +111,10 @@ namespace Content.Shared.Clothing.EntitySystems
             if (args.Handled)
                 return;
 
+            //If someone else is wearing it and someone use a tool on it, ignore it
+            if (_wearer != EntityUid.Invalid && _wearer != args.User)
+                return;
+
             if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
             {
                 _popup.PopupEntity(Loc.GetString("ert-gas-mask-impossible"), ent.Owner);
@@ -141,17 +145,30 @@ namespace Content.Shared.Clothing.EntitySystems
 
         private void StartADoAfter(Entity<SecurityHailerComponent> ent, InteractUsingEvent args, SecHailerToolDoAfterEvent.ToolQuality quality)
         {
-            _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, ent.Comp.ScrewingDoAfterDelay, new SecHailerToolDoAfterEvent(quality), ent.Owner, target: args.Target, used: args.Used)
+            float? time = null;
+
+            //What delay to use ?
+            if (quality == SecHailerToolDoAfterEvent.ToolQuality.Screwing)
+            {
+                time = ent.Comp.ScrewingDoAfterDelay;
+            }
+            else if (quality == SecHailerToolDoAfterEvent.ToolQuality.Cutting)
+            {
+                time = ent.Comp.CuttingDoAfterDelay;
+            }
+
+            if (!time.HasValue)
+            {
+                Log.Error("Security hailer system couldn't get a time for a tool doAfter !");
+                return;
+            }
+
+            _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, time.Value, new SecHailerToolDoAfterEvent(quality), ent.Owner, target: args.Target, used: args.Used)
             {
                 Broadcast = true,
                 BreakOnMove = true,
                 NeedHand = true,
             });
-
-            if (_wearer != EntityUid.Invalid)
-            {
-                _popup.PopupEntity(Loc.GetString("sec-gas-mask-alert-owner", ("user", args.User), ("quality", quality)), _wearer, _wearer, PopupType.LargeCaution);
-            }
 
             args.Handled = true;
         }
@@ -170,6 +187,8 @@ namespace Content.Shared.Clothing.EntitySystems
                     OnScrewingDoAfter(ent, ref args);
                     break;
             }
+
+            Dirty(ent);
         }
 
         private void OnCuttingDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
@@ -181,7 +200,10 @@ namespace Content.Shared.Clothing.EntitySystems
             if (comp.CurrentState == SecMaskState.Functional)
             {
                 comp.CurrentState = SecMaskState.WiresCut;
-                _actions.RemoveAction(_wearer, comp.ActionEntity);
+                if (_wearer != EntityUid.Invalid)
+                {
+                    _actions.RemoveAction(_wearer, comp.ActionEntity);
+                }
                 Dirty(ent);
             }
             else if (comp.CurrentState == SecMaskState.WiresCut)
@@ -222,12 +244,14 @@ namespace Content.Shared.Clothing.EntitySystems
             if (args.Handled || HasComp<EmaggedComponent>(ent))
                 return;
 
-            if (_wearer != EntityUid.Invalid && args.UserUid != _wearer)
-                _popup.PopupEntity(Loc.GetString("sec-gas-mask-alert-owner-post-emag", ("user", args.UserUid)), _wearer, _wearer, PopupType.LargeCaution);
+            if (_wearer != EntityUid.Invalid && _wearer != args.UserUid)
+                return;
 
             _popup.PopupEntity(Loc.GetString("sec-gas-mask-emagged"), ent.Owner);
 
             args.Type = EmagType.Interaction;
+
+            Dirty(ent);
             args.Handled = true;
 
         }
@@ -258,6 +282,7 @@ namespace Content.Shared.Clothing.EntitySystems
                 {
                     _actions.AddAction(_wearer, ref ent.Comp.ActionEntity, ent.Comp.Action, ent.Owner);
                 }
+                Dirty(ent);
             }
         }
     }
