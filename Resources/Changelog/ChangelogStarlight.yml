@@ -6047,4 +6047,11 @@ Entries:
   id: 837
   time: '2025-05-22T20:34:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/664
+- author: Cyanogen
+  changes:
+  - message: Multiplied clothing prices by 0.05x
+    type: Tweak
+  id: 838
+  time: '2025-05-22T20:54:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/678
 
