@@ -56,10 +56,10 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
 
         // find the cardinal directions of any connected entities
         var netConnectedDirections = PipeDirection.None;
-        var tile = _map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
+        var tile = _map.TileIndicesFor((xform.GridUid.Value, grid), xform.Coordinates);
         foreach (var neighbour in connected)
         {
-            var otherTile = _map.TileIndicesFor(xform.GridUid.Value, grid, Transform(neighbour).Coordinates);
+            var otherTile = _map.TileIndicesFor((xform.GridUid.Value, grid), Transform(neighbour).Coordinates);
 
             netConnectedDirections |= (otherTile - tile) switch
             {
