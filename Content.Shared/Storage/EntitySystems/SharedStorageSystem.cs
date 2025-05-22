@@ -1396,7 +1396,7 @@ public abstract class SharedStorageSystem : EntitySystem
                         // This bit of code is how area inserts go from tanking frames to being negligible.
                         if (fastPath)
                         {
-                            var flag = SharedMapSystem.ToBitmask(position, StorageComponent.ChunkSize);
+                            var flag = SharedMapSystem.ToBitmask(SharedMapSystem.GetChunkRelative(position, StorageComponent.ChunkSize), StorageComponent.ChunkSize);
 
                             // Occupied so skip.
                             if ((occupied & flag) == flag)
