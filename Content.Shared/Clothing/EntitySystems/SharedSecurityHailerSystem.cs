@@ -326,6 +326,8 @@ namespace Content.Shared.Clothing.EntitySystems
 
         private void UseVerbSwitchAggression(Entity<SecurityHailerComponent> ent, EntityUid userActed)
         {
+            ent.Comp.TimeVerbReady = _gameTiming.CurTime + ent.Comp.VerbCooldown;
+
             if (!_access.IsAllowed(userActed, ent.Owner))
             {
                 _sharedAudio.PlayPvs(ent.Comp.SettingError, ent.Owner, AudioParams.Default.WithVariation(0.15f));
@@ -335,7 +337,6 @@ namespace Content.Shared.Clothing.EntitySystems
 
             _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner, AudioParams.Default.WithVariation(0.15f));
             IncreaseAggressionLevel(ent);
-            ent.Comp.TimeVerbReady = _gameTiming.CurTime + ent.Comp.VerbCooldown;
             Dirty(ent);
         }
     }
