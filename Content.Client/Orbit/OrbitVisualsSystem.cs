@@ -13,6 +13,7 @@ public sealed class OrbitVisualsSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly AnimationPlayerSystem _animations = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private readonly string _orbitStopKey = "orbiting_stop";
 
@@ -63,14 +64,15 @@ public sealed class OrbitVisualsSystem : EntitySystem
     {
         base.FrameUpdate(frameTime);
 
-        foreach (var (orbit, sprite) in EntityManager.EntityQuery<OrbitVisualsComponent, SpriteComponent>())
+        var query = EntityManager.EntityQueryEnumerator<OrbitVisualsComponent, SpriteComponent>();
+        while (query.MoveNext(out var uid, out var orbit, out var sprite))
         {
             var progress = (float)(_timing.CurTime.TotalSeconds / orbit.OrbitLength) % 1;
             var angle = new Angle(Math.PI * 2 * progress);
             var vec = angle.RotateVec(new Vector2(orbit.OrbitDistance, 0));
 
-            sprite.Rotation = angle;
-            sprite.Offset = vec;
+            _sprite.SetRotation((uid, sprite), angle);
+            _sprite.SetOffset((uid, sprite), vec);
         }
     }
 

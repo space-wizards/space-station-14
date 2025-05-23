@@ -444,7 +444,7 @@ public abstract class SharedAnomalySystem : EntitySystem
 }
 
 [DataRecord]
-public record struct AnomalySpawnSettings()
+public partial record struct AnomalySpawnSettings()
 {
     /// <summary>
     /// should entities block spawning?
