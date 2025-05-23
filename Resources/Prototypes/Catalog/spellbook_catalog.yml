@@ -305,6 +305,7 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   disableRefund: true
+  restockTime: 1800
 
 - type: listing
   id: SpellbookEventSummonMagic
@@ -319,6 +320,7 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   disableRefund: true
+  restockTime: 1800
 
 # Upgrades
 - type: listing
