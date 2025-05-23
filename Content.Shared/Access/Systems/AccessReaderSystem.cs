@@ -44,6 +44,7 @@ public sealed class AccessReaderSystem : EntitySystem
         SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<AccessReaderComponent, LinkAttemptEvent>(OnLinkAttempt);
 
+        SubscribeLocalEvent<AccessReaderComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<AccessReaderComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<AccessReaderComponent, ComponentHandleState>(OnHandleState);
     }
@@ -53,37 +54,70 @@ public sealed class AccessReaderSystem : EntitySystem
         if (!GetMainAccessReader(ent, out var mainAccessReader))
             return;
 
-        var localizedNames = new List<string>();
-
-        foreach (var accessHashSet in mainAccessReader.Value.Comp.AccessLists)
-        {
-            var sb = new StringBuilder();
-            var accessList = accessHashSet.ToList();
-
-            // Combine the names of all access levels in the subgroup into a single string
-            foreach (var access in accessList)
-            {
-                var accessName = Loc.GetString("access-reader-unknown-id");
-
-                if (_prototype.TryIndex(access, out var accessProto) && !string.IsNullOrWhiteSpace(accessProto.Name))
-                    accessName = Loc.GetString(accessProto.Name);
-
-                sb.Append(Loc.GetString("access-reader-access-label", ("access", accessName)));
-
-                if (accessList.IndexOf(access) < accessList.Count - 1)
-                    sb.Append(" & ");
-            }
-
-            // Add this string to the list
-            localizedNames.Add(sb.ToString());
-        }
-
-        // The string list is empty - either there were no access restrictions or the localized names were invalid
-        if (localizedNames.Count == 0)
+        // If this list is null the component failed to initialize correctly
+        if (mainAccessReader.Value.Comp.AccessListsOriginal == null)
             return;
 
-        var accessMessage = Loc.GetString(mainAccessReader.Value.Comp.ExaminationText, ("access", ContentLocalizationManager.FormatListToOr(localizedNames)));
-        args.PushMarkup(accessMessage);
+        var accessHasBeenModified = mainAccessReader.Value.Comp.AccessLists.Count != mainAccessReader.Value.Comp.AccessListsOriginal.Count;
+
+        if (!accessHasBeenModified)
+        {
+            foreach (var accessSubgroup in mainAccessReader.Value.Comp.AccessLists)
+            {
+                if (!mainAccessReader.Value.Comp.AccessListsOriginal.Any(y => y.SetEquals(accessSubgroup)))
+                {
+                    accessHasBeenModified = true;
+                    break;
+                }
+            }
+        }
+
+        var canSeeAccessModification = accessHasBeenModified &&
+            (HasComp<ShowAccessReaderSettingsComponent>(ent) || _inventorySystem.TryGetInventoryEntity<ShowAccessReaderSettingsComponent>(args.Examiner, out _));
+
+        if (canSeeAccessModification)
+        {
+            var localizedCurrentNames = GetLocalizedAccessNames(mainAccessReader.Value.Comp.AccessLists);
+
+            var currentSettingsMessage = localizedCurrentNames.Count > 0 ?
+                Loc.GetString("access-reader-access-settings-modified-message", ("access", ContentLocalizationManager.FormatListToOr(localizedCurrentNames))) :
+                Loc.GetString("access-reader-access-settings-removed-message");
+
+            args.PushMarkup(currentSettingsMessage);
+
+            return;
+        }
+
+        var localizedOriginalNames = GetLocalizedAccessNames(mainAccessReader.Value.Comp.AccessListsOriginal);
+
+        // If the string list is empty either there were no access restrictions or the localized names were invalid
+        if (localizedOriginalNames.Count == 0)
+            return;
+
+        var originalSettingsMessage = Loc.GetString(mainAccessReader.Value.Comp.ExaminationText, ("access", ContentLocalizationManager.FormatListToOr(localizedOriginalNames)));
+        args.PushMarkup(originalSettingsMessage);
+    }
+
+    private void OnInit(Entity<AccessReaderComponent> ent, ref ComponentInit args)
+    {
+        // Clones AccessLists into AccessListsOriginal so we always retain
+        // an unmodified copy of the original access settings.
+        if (ent.Comp.AccessListsOriginal != null)
+            return;
+
+        ent.Comp.AccessListsOriginal = new();
+
+        foreach (var accessHashSet in ent.Comp.AccessLists)
+        {
+            var accessSubset = new HashSet<ProtoId<AccessLevelPrototype>>();
+
+            foreach (var access in accessHashSet)
+            {
+                accessSubset.Add(access);
+            }
+
+            ent.Comp.AccessListsOriginal.Add(accessSubset);
+        }
     }
 
     private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)
@@ -484,5 +518,35 @@ public sealed class AccessReaderSystem : EntitySystem
 
         var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
         ent.Comp.AccessLog.Enqueue(new AccessRecord(stationTime, name));
+    }
+
+    private List<string> GetLocalizedAccessNames(List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists)
+    {
+        var localizedNames = new List<string>();
+
+        foreach (var accessHashSet in accessLists)
+        {
+            var sb = new StringBuilder();
+            var accessSubset = accessHashSet.ToList();
+
+            // Combine the names of all access levels in the subset into a single string
+            foreach (var access in accessSubset)
+            {
+                var accessName = Loc.GetString("access-reader-unknown-id");
+
+                if (_prototype.TryIndex(access, out var accessProto) && !string.IsNullOrWhiteSpace(accessProto.Name))
+                    accessName = Loc.GetString(accessProto.Name);
+
+                sb.Append(Loc.GetString("access-reader-access-label", ("access", accessName)));
+
+                if (accessSubset.IndexOf(access) < accessSubset.Count - 1)
+                    sb.Append(" & ");
+            }
+
+            // Add this string to the list
+            localizedNames.Add(sb.ToString());
+        }
+
+        return localizedNames;
     }
 }
