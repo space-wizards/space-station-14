@@ -9,11 +9,51 @@
   group: market
 
 - type: cargoProduct
+  id: cargoJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/blue.rsi
+    state: icon
+  product: CrateEngineeringJetpack
+  cost: 1000
+  category: cargoproduct-category-name-cargo
+  group: market
+
+- type: cargoProduct
+  id: CargoMiniJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/mini.rsi
+    state: icon
+  product: CrateEngineeringMiniJetpack
+  cost: 750
+  category: cargoproduct-category-name-cargo
+  group: market
+
+- type: cargoProduct
+  id: cargoSpationautHardsuit
+  icon:
+    sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
+    state: icon
+  product: SuitStorageSalv
+  cost: 7500
+  category: cargoproduct-category-name-cargo
+  group: market
+
+- type: cargoProduct
+  id: CargoMiningHardsuit
+  icon:
+    sprite: Clothing/Head/Hardsuits/salvage.rsi
+    state: icon
+  product: SuitStorageMining
+  cost: 10000
+  category: cargoproduct-category-name-cargo
+  group: market
+
+- type: cargoProduct
   id: CargoLuxuryHardsuit
   icon:
     sprite: Clothing/Head/Hardsuits/luxury.rsi
     state: icon
-  product: CrateCargoLuxuryHardsuit
+  product: SuitStorageLuxury
   cost: 15000
   category: cargoproduct-category-name-cargo
   group: market
