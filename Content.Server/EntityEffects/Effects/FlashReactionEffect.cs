@@ -1,5 +1,5 @@
 using Content.Shared.EntityEffects;
-using Content.Server.Flash;
+using Content.Shared.Flash;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -28,11 +28,11 @@ public sealed partial class FlashReactionEffect : EntityEffect
     public float SlowTo = 0.5f;
 
     /// <summary>
-    ///     The time entities will be flashed in seconds.
+    ///     The time entities will be flashed.
     ///     The default is chosen to be better than the hand flash so it is worth using it for grenades etc.
     /// </summary>
     [DataField]
-    public float Duration = 4f;
+    public TimeSpan Duration = TimeSpan.FromSeconds(4);
 
     /// <summary>
     ///     The prototype ID used for the visual effect.
@@ -59,11 +59,11 @@ public sealed partial class FlashReactionEffect : EntityEffect
         if (args is EntityEffectReagentArgs reagentArgs)
             range = MathF.Min((float)(reagentArgs.Quantity * RangePerUnit), MaxRange);
 
-        args.EntityManager.System<FlashSystem>().FlashArea(
+        args.EntityManager.System<SharedFlashSystem>().FlashArea(
             args.TargetEntity,
             null,
             range,
-            Duration * 1000,
+            Duration,
             slowTo: SlowTo,
             sound: Sound);
 
