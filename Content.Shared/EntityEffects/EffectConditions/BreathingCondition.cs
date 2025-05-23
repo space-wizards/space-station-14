@@ -1,14 +1,11 @@
-using Content.Server.Body.Components;
-using Content.Server.Body.Systems;
-using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.EntityEffects.EffectConditions;
+namespace Content.Shared.EntityEffects.EffectConditions;
 
 /// <summary>
 ///     Condition for if the entity is successfully breathing.
 /// </summary>
-public sealed partial class Breathing : EntityEffectCondition
+public sealed partial class Breathing : EventEntityEffectCondition<Breathing>
 {
     /// <summary>
     ///     If true, the entity must not have trouble breathing to pass.

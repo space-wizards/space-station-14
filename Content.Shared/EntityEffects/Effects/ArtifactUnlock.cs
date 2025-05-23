@@ -5,7 +5,7 @@ using Content.Shared.Xenoarchaeology.Artifact.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.EntityEffects.Effects;
+namespace Content.Shared.EntityEffects.Effects;
 
 /// <summary>
 /// Sets an artifact into the unlocking state and marks the artifexium effect as true.

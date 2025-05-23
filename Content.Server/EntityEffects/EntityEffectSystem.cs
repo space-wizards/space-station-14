@@ -80,6 +80,7 @@ public sealed class EntityEffectSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<CheckEntityEffectConditionEvent<TemperatureCondition>>(OnCheckTemperature);
+        SubscribeLocalEvent<CheckEntityEffectConditionEvent<Breathing>>(OnCheckBreathing);
         SubscribeLocalEvent<CheckEntityEffectConditionEvent<OrganType>>(OnCheckOrganType);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAdjustHealth>>(OnExecutePlantAdjustHealth);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAdjustMutationLevel>>(OnExecutePlantAdjustMutationLevel);
@@ -132,6 +133,18 @@ public sealed class EntityEffectSystem : EntitySystem
             if (temp.CurrentTemperature > args.Condition.Min && temp.CurrentTemperature < args.Condition.Max)
                 args.Result = true;
         }
+    }
+
+    private void OnCheckBreathing(ref CheckEntityEffectConditionEvent<Breathing> args)
+    {
+        if (!TryComp(args.Args.TargetEntity, out RespiratorComponent? respiratorComp))
+        {
+            args.Result = !args.Condition.IsBreathing;
+            return;
+        }
+
+        var breathingState = _respirator.IsBreathing((args.Args.TargetEntity, respiratorComp));
+        args.Result = args.Condition.IsBreathing == breathingState;
     }
 
     private void OnCheckOrganType(ref CheckEntityEffectConditionEvent<OrganType> args)
