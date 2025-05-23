@@ -50,9 +50,9 @@ public sealed partial class DungeonJob
         gen.Noise.SetSeed(oldSeed);
         _maps.SetTiles(_gridUid, _grid, tiles);
 
-        foreach (var tile in tiles)
+        if (gen.ReserveTiles)
         {
-            if (gen.ReserveTiles)
+            foreach (var tile in tiles)
             {
                 reservedTiles.Add(tile.Index);
             }

@@ -11,7 +11,8 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="SampleEntityDunGen"/>
     /// </summary>
-    private async Task PostGen(SampleEntityDunGen gen,
+    private async Task PostGen(
+        SampleEntityDunGen gen,
         List<Dungeon> dungeons,
         HashSet<Vector2i> reservedTiles,
         Random random)

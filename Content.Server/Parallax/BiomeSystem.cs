@@ -1019,9 +1019,11 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             return;
         }
 
-        var biome = EntityManager.ComponentFactory.GetComponent(typeof(NewBiomeComponent));
-        _serManager.CopyTo(template, ref biome, notNullableOverride: true);
+        var biome = Factory.GetComponent<NewBiomeComponent>();
+        var biomeObj = (object)biome;
+        _serManager.CopyTo(template, ref biomeObj, notNullableOverride: true);
         seed ??= _random.Next();
+        biome.Seed = seed.Value;
         //SetSeed(mapUid, biome, seed.Value, false);
         //SetTemplate(mapUid, biome, biomeTemplate, false);
         AddComp(mapUid, biome, true);

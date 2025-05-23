@@ -62,7 +62,7 @@
 
 - type: dungeonConfig
   id: LowDesertEntities
-  returnReserved: false
+  reserveTiles: true
   layers:
   - !type:SampleEntityDunGen
     threshold: 0.95
@@ -159,7 +159,7 @@
 
 - type: dungeonConfig
   id: GrasslandsEntities
-  returnReserved: false
+  reserveTiles: true
   layers:
   # Water
   - !type:SampleEntityDunGen
@@ -297,18 +297,8 @@
 
 - type: dungeonConfig
   id: LavaEntities
-  returnReserved: false
+  reserveTiles: true
   layers:
-  - !type:SampleEntityDunGen
-    threshold: 0.95
-    noise:
-      seed: 0
-      noiseType: OpenSimplex2
-      frequency: 1
-    allowedTiles:
-      - FloorBasalt
-    entities:
-      - FloraRockSolid
   - !type:SampleEntityDunGen
     threshold: 0.2
     noise:
@@ -319,9 +309,9 @@
       lacunarity: 2
       gain: 0.4
     allowedTiles:
-      - FloorBasalt
+    - FloorBasalt
     entities:
-      - FloorLavaEntity
+    - FloorLavaEntity
   # Rock formations
   - !type:SampleEntityDunGen
     allowedTiles:
@@ -338,6 +328,16 @@
       cellularReturnType: Distance2
     entities:
       - WallRockBasalt
+  - !type:SampleEntityDunGen
+    threshold: 0.95
+    noise:
+      seed: 0
+      noiseType: OpenSimplex2
+      frequency: 1
+    allowedTiles:
+    - FloorBasalt
+    entities:
+    - FloraRockSolid
 
 - type: dungeonConfig
   id: LavaDecals
