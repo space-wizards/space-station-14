@@ -20,8 +20,6 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
     {
         base.Initialize();
 
-        _log = _logManager.GetSawmill("AnomalyScannerSystem");
-
         SubscribeLocalEvent<AnomalyScannerComponent, ComponentInit>(OnScannerInit);
         SubscribeLocalEvent<AnomalyScannerScreenComponent, ComponentInit>(OnScannerScreenInit);
         SubscribeLocalEvent<AnomalyScannerScreenComponent, AppearanceChangeEvent>(OnScannerAppearanceChanged);
@@ -93,7 +91,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
         }
         catch (IndexOutOfRangeException)
         {
-            _log.Warning("Bar dimensions out of bounds with the texture");
+            Log.Warning("Bar dimensions out of bounds with the texture");
         }
     }
 
