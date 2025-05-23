@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: The warden locker no longer has a brigmedic hardsuit.
-    type: Remove
-  id: 1217
-  time: '2025-03-01T23:59:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1812
 - author: AftrLite
   changes:
   - message: Cosmic Cult Patch 1.02 (Experimental)
@@ -4227,3 +4220,10 @@
   id: 1716
   time: '2025-05-23T15:34:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2551
+- author: DinnerCalzone
+  changes:
+  - message: Janitorial toolboxes can now be found as maintenance loot!
+    type: Add
+  id: 1717
+  time: '2025-05-23T15:35:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2550
