@@ -12,7 +12,7 @@
   name: Shout for compliance
   description: Verbally order the criminal to stop.
   components:
-  - type: InstantAction 
+  - type: InstantAction
     icon:
       sprite: Clothing/Mask/gassecurity.rsi
       state: sec-hail
