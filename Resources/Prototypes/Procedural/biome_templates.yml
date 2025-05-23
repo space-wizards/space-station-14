@@ -551,10 +551,30 @@
     - bushsnowb3
 
 # Shadow -> Derived from lava
-- type: biomeTemplate
-  id: Shadow
+- type: entity
+  id: BiomeShadow
+  components:
+  - type: NewBiome
+    layers:
+      terrain:
+        dungeon: ShadowTerrain
+
+- type: dungeonConfig
+  id: ShadowTerrain
   layers:
-    - !type:BiomeEntityLayer
+  - !type:ChunkDunGen
+  - !type:PrototypeDunGen
+    proto: ShadowTiles
+    inheritDungeons: All
+  - !type:PrototypeDunGen
+    proto: ShadowEntities
+    inheritDungeons: All
+
+- type: dungeonConfig
+  id: ShadowEntities
+  reserveTiles: true
+  layers:
+    - !type:SampleEntityDunGen
       threshold: 0.70
       noise:
         frequency: 1
@@ -567,7 +587,7 @@
         - ShadowBasaltThree
         - ShadowBasaltFour
         - ShadowBasaltFive
-    - !type:BiomeEntityLayer
+    - !type:SampleEntityDunGen
       threshold: 0.97
       noise:
         frequency: 1
@@ -576,7 +596,7 @@
         - FloorChromite
       entities:
         - CrystalPink
-    - !type:BiomeEntityLayer
+    - !type:SampleEntityDunGen
       threshold: 0.97
       noise:
         seed: 1
@@ -587,7 +607,7 @@
       entities:
         - ShadowTree
     # Rock formations
-    - !type:BiomeEntityLayer
+    - !type:SampleEntityDunGen
       threshold: -0.2
       invert: true
       noise:
@@ -602,7 +622,7 @@
       entities:
         - WallRockChromite
     # chasm time
-    - !type:BiomeEntityLayer
+    - !type:SampleEntityDunGen
       allowedTiles:
       - FloorChromite
       threshold: 0.2
@@ -615,12 +635,15 @@
         gain: 0.4
       entities:
       - FloorChromiteChasm
-    - !type:BiomeDummyLayer
-      id: Loot
-    # Fill chromite
-    - !type:BiomeTileLayer
-      threshold: -1
-      tile: FloorChromite
+
+- type: dungeonConfig
+  id: ShadowTiles
+  returnReserved: false
+  layers:
+  # Fill chromite
+  - !type:SampleTileDunGen
+    threshold: -1
+    tile: FloorChromite
 
 # Caves
 - type: biomeTemplate
