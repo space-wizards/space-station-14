@@ -85,6 +85,9 @@
     {
       "name": "uranium-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "generic_materials"
     }
   ]
 }

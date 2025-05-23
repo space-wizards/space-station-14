@@ -15,8 +15,10 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using System.Linq;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -29,6 +31,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedItemSystem _items = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -38,26 +41,28 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private float _timer;
 
-        /// <summary>
-        ///     We keep a list of active smokables, because iterating all existing smokables would be dumb.
-        /// </summary>
-        private readonly HashSet<EntityUid> _active = new();
-
         public override void Initialize()
         {
             SubscribeLocalEvent<SmokableComponent, IsHotEvent>(OnSmokableIsHotEvent);
             SubscribeLocalEvent<SmokableComponent, ComponentShutdown>(OnSmokableShutdownEvent);
             SubscribeLocalEvent<SmokableComponent, GotEquippedEvent>(OnSmokeableEquipEvent);
+            Subs.SubscribeWithRelay<SmokableComponent, ExtinguishEvent>(OnExtinguishEvent);
 
             InitializeCigars();
             InitializePipes();
             InitializeVapes();
         }
 
+        private void OnExtinguishEvent(Entity<SmokableComponent> ent, ref ExtinguishEvent args)
+        {
+            if (ent.Comp.State == SmokableState.Lit)
+                SetSmokableState(ent, SmokableState.Burnt, ent);
+        }
+
         public void SetSmokableState(EntityUid uid, SmokableState state, SmokableComponent? smokable = null,
             AppearanceComponent? appearance = null, ClothingComponent? clothing = null)
         {
-            if (!Resolve(uid, ref smokable, ref appearance, ref clothing))
+            if (!Resolve(uid, ref smokable, ref appearance, ref clothing) || smokable.State == state)
                 return;
 
             smokable.State = state;
@@ -74,9 +79,19 @@ namespace Content.Server.Nutrition.EntitySystems
             _items.SetHeldPrefix(uid, newState);
 
             if (state == SmokableState.Lit)
-                _active.Add(uid);
+            {
+                EnsureComp<BurningComponent>(uid);
+                _audio.PlayPvs(smokable.LightSound, uid);
+                var igniteEvent = new IgnitedEvent();
+                RaiseLocalEvent(uid, ref igniteEvent);
+            }
             else
-                _active.Remove(uid);
+            {
+                RemComp<BurningComponent>(uid);
+                _audio.PlayPvs(smokable.SnuffSound, uid);
+                var extinguishEvent = new ExtinguishedEvent();
+                RaiseLocalEvent(uid, ref extinguishEvent);
+            }
         }
 
         private void OnSmokableIsHotEvent(Entity<SmokableComponent> entity, ref IsHotEvent args)
@@ -86,7 +101,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnSmokableShutdownEvent(Entity<SmokableComponent> entity, ref ComponentShutdown args)
         {
-            _active.Remove(entity);
+            RemComp<BurningComponent>(entity);
         }
 
         private void OnSmokeableEquipEvent(Entity<SmokableComponent> entity, ref GotEquippedEvent args)
@@ -104,18 +119,12 @@ namespace Content.Server.Nutrition.EntitySystems
             if (_timer < UpdateTimer)
                 return;
 
-            // TODO Use an "active smoke" component instead, EntityQuery over that.
-            foreach (var uid in _active.ToArray())
+            var query = EntityQueryEnumerator<BurningComponent, SmokableComponent>();
+            while (query.MoveNext(out var uid, out _, out var smokable))
             {
-                if (!TryComp(uid, out SmokableComponent? smokable))
-                {
-                    _active.Remove(uid);
-                    continue;
-                }
-
                 if (!_solutionContainerSystem.TryGetSolution(uid, smokable.Solution, out var soln, out var solution))
                 {
-                    _active.Remove(uid);
+                    SetSmokableState(uid, SmokableState.Unlit, smokable);
                     continue;
                 }
 

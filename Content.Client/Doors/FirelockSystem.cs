@@ -1,5 +1,6 @@
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Doors;
@@ -7,11 +8,36 @@ namespace Content.Client.Doors;
 public sealed class FirelockSystem : SharedFirelockSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<FirelockComponent, AppearanceChangeEvent>(OnAppearanceChange);
+    }
+
+    protected override void OnComponentStartup(Entity<FirelockComponent> ent, ref ComponentStartup args)
+    {
+        base.OnComponentStartup(ent, ref args);
+        if (!TryComp<DoorComponent>(ent.Owner, out var door))
+            return;
+
+        door.ClosedSpriteStates.Add((DoorVisualLayers.BaseUnlit, ent.Comp.WarningLightSpriteState));
+        door.OpenSpriteStates.Add((DoorVisualLayers.BaseUnlit, ent.Comp.WarningLightSpriteState));
+
+        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
+            {
+                LayerKey = DoorVisualLayers.BaseUnlit,
+                KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.OpeningLightSpriteState, 0f) },
+            }
+        );
+
+        ((Animation)door.ClosingAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
+            {
+                LayerKey = DoorVisualLayers.BaseUnlit,
+                KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.ClosingLightSpriteState, 0f) },
+            }
+        );
     }
 
     private void OnAppearanceChange(EntityUid uid, FirelockComponent comp, ref AppearanceChangeEvent args)
@@ -32,7 +58,7 @@ public sealed class FirelockSystem : SharedFirelockSystem
             ||  state == DoorState.Denying
             || (_appearanceSystem.TryGetData<bool>(uid, DoorVisuals.ClosedLights, out var closedLights, args.Component) && closedLights);
 
-        args.Sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && !boltedVisible);
-        args.Sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, boltedVisible);
+        _sprite.LayerSetVisible((uid, args.Sprite), DoorVisualLayers.BaseUnlit, unlitVisible && !boltedVisible);
+        _sprite.LayerSetVisible((uid, args.Sprite), DoorVisualLayers.BaseBolted, boltedVisible);
     }
 }

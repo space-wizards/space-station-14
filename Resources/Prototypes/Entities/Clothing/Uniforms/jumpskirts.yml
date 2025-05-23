@@ -133,7 +133,7 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtDetective
-  name: hard-worn suit
+  name: hard-worn suitskirt
   description: Someone who wears this means business.
   components:
     - type: Sprite
@@ -144,7 +144,7 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtDetectiveGrey
-  name: noir suit
+  name: noir suitskirt
   description: A hard-boiled private investigator's grey suit, complete with tie clip.
   components:
     - type: Sprite
@@ -220,6 +220,17 @@
     sprite: Clothing/Uniforms/Jumpskirt/hos_parade.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/hos_parade.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtCommandGeneric
+  name: command jumpskirt
+  description: A generic Command-colored jumpsuit not associated with any particular department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/commandgeneric.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/commandgeneric.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -323,6 +334,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - Recyclable
     - PrisonUniform
     - WhitelistChameleon
 
@@ -614,7 +626,7 @@
       sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ ClothingUniformSkirtBase, BaseSyndicateContraband ]
   id: ClothingUniformJumpskirtSyndieFormalDress
   name: syndicate formal dress
   description: "The syndicate's uniform is made in an elegant style, it's even a pity to do dirty tricks in this."
