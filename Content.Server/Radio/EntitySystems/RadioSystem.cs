@@ -177,7 +177,7 @@ public sealed class RadioSystem : EntitySystem
             ChatChannel.Radio,
             message,
             wrappedMessage,
-            GetNetEntity(messageSource),
+            GetNetEntity(messageSource), // Starlight
             null);
         var chatMsg = new MsgChatMessage { Message = chat };
         var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg, []);
