@@ -3,7 +3,6 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
-using Content.Shared._Impstation.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Roles.Jobs;
@@ -39,7 +38,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
     private float GetProgress(EntityUid target, bool requireDead)
     {
         // deleted or gibbed or something, counts as dead
-        if (!TryComp<MindComponent>(target, out var mind) || mind.OwnedEntity == null || TryComp<GhostBarPatronComponent>(mind.OwnedEntity, out _))
+        if (!TryComp<MindComponent>(target, out var mind) || mind.OwnedEntity == null)
             return 1f;
 
         // dead is success

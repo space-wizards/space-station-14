@@ -205,9 +205,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             if (!_mobState.IsAlive(uid, mob))
                 continue;
 
-            if (TryComp<GhostBarPatronComponent>(uid, out _))
-                continue;
-
             if (zombers.HasComponent(uid))
                 continue;
 

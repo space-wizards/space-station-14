@@ -384,8 +384,7 @@ namespace Content.Server.Ghost
                 TryComp<MindContainerComponent>(attached, out var mind);
 
                 var jobName = _jobs.MindTryGetJobName(mind?.Mind);
-                var isGhostBarPatron = TryComp<GhostBarPatronComponent>(player.AttachedEntity, out _);
-                var playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName} ({(isGhostBarPatron ? "At Ghost Bar" : jobName)})";
+                var playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName}";
 
                 if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
                     yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);

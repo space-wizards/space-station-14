@@ -42,9 +42,7 @@ namespace Content.Client.Ghost
         }
 
         public GhostComponent? Player => CompOrNull<GhostComponent>(_playerManager.LocalEntity);
-        public GhostBarPatronComponent? PlayerGhostPatron => CompOrNull<GhostBarPatronComponent>(_playerManager.LocalEntity); // this feels kind of fucking scuffed but I'm DOING IT ANYWAY
         public bool IsGhost => Player != null;
-        public bool IsGhostBarPatron => PlayerGhostPatron != null;
 
         public event Action<GhostComponent>? PlayerRemoved;
         public event Action<MediumComponent>? MediumRemoved;
@@ -242,10 +240,6 @@ namespace Content.Client.Ghost
             _console.RemoteExecuteCommand(null, "ghostroles");
         }
 
-        public void GhostBarSpawn() // Goobstation - Ghost Bar
-        {
-            RaiseNetworkEvent(new GhostBarSpawnEvent());
-        }
 
         public void ToggleGhostVisibility(bool? visibility = null)
         {
