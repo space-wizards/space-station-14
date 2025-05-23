@@ -42,13 +42,14 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Rounding;
+using Robust.Shared.Collections;
+using Robust.Shared.Map.Enumerators;
 
 namespace Content.Shared.Storage.EntitySystems;
 
 public abstract class SharedStorageSystem : EntitySystem
 {
     [Dependency] private   readonly IConfigurationManager _cfg = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private   readonly IPrototypeManager _prototype = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] private   readonly ISharedAdminLogManager _adminLog = default!;
@@ -114,6 +115,10 @@ public abstract class SharedStorageSystem : EntitySystem
     private int _openStorageLimit = -1;
 
     protected readonly List<string> CantFillReasons = [];
+
+    // Caching for various checks
+    private readonly Dictionary<Vector2i, ulong> _ignored = new();
+    private List<Box2i> _itemShape = new();
 
     /// <inheritdoc />
     public override void Initialize()
@@ -183,6 +188,8 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
         }
 
+        UpdateOccupied((container.Owner, storage));
+
         if (!ItemFitsInGridLocation((itemEnt.Owner, itemEnt.Comp), (container.Owner, storage), loc))
         {
             ContainerSystem.Remove(itemEnt.Owner, container, force: true);
@@ -237,6 +244,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
+        // TODO: This should update all entities in storage as well.
         if (args.ByType.ContainsKey(typeof(ItemSizePrototype))
             || (args.Removed?.ContainsKey(typeof(ItemSizePrototype)) ?? false))
         {
@@ -266,6 +274,9 @@ public abstract class SharedStorageSystem : EntitySystem
     {
         storageComp.Container = ContainerSystem.EnsureContainer<Container>(uid, StorageComponent.ContainerId);
         UpdateAppearance((uid, storageComp, null));
+
+        // Make sure the initial starting grid is okay.
+        UpdateOccupied((uid, storageComp));
     }
 
     /// <summary>
@@ -341,12 +352,12 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <summary>
     /// Tries to get the storage location of an item.
     /// </summary>
-    public bool TryGetStorageLocation(Entity<ItemComponent?> itemEnt, [NotNullWhen(true)] out BaseContainer? container, out StorageComponent? storage, out ItemStorageLocation loc)
+    public bool TryGetStorageLocation(Entity<ItemComponent?> itemEnt, [NotNullWhen(true)] out BaseContainer? container, [NotNullWhen(true)] out StorageComponent? storage, out ItemStorageLocation loc)
     {
         loc = default;
         storage = null;
 
-        if (!ContainerSystem.TryGetContainingContainer(itemEnt, out container) ||
+        if (!ContainerSystem.TryGetContainingContainer(itemEnt.Owner, out container) ||
             container.ID != StorageComponent.ContainerId ||
             !TryComp(container.Owner, out storage) ||
             !_itemQuery.Resolve(itemEnt, ref itemEnt.Comp, false))
@@ -862,7 +873,7 @@ public abstract class SharedStorageSystem : EntitySystem
             }
 
             entity.Comp.StoredItems[args.Entity] = location.Value;
-            Dirty(entity, entity.Comp);
+            AddOccupiedEntity(entity, args.Entity, location.Value);
         }
 
         UpdateAppearance((entity, entity.Comp, null));
@@ -878,7 +889,11 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Container.ID != StorageComponent.ContainerId)
             return;
 
-        entity.Comp.StoredItems.Remove(args.Entity);
+        if (entity.Comp.StoredItems.Remove(args.Entity, out var loc))
+        {
+            RemoveOccupiedEntity(entity, args.Entity, loc);
+        }
+
         Dirty(entity, entity.Comp);
 
         UpdateAppearance((entity, entity.Comp, null));
@@ -1071,7 +1086,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
 
         uid.Comp.StoredItems[insertEnt] = location;
-        Dirty(uid, uid.Comp);
+        AddOccupiedEntity((uid.Owner, uid.Comp), insertEnt, location);
 
         if (Insert(uid,
                 insertEnt,
@@ -1085,6 +1100,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return true;
         }
 
+        RemoveOccupiedEntity((uid.Owner, uid.Comp), insertEnt, location);
         uid.Comp.StoredItems.Remove(insertEnt);
         return false;
     }
@@ -1247,9 +1263,14 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!ItemFitsInGridLocation(itemEnt, storageEnt, location.Position, location.Rotation))
             return false;
 
-        storageEnt.Comp.StoredItems[itemEnt] = location;
+        if (storageEnt.Comp.StoredItems.Remove(itemEnt, out var existing))
+        {
+            RemoveOccupiedEntity((storageEnt.Owner, storageEnt.Comp), itemEnt, existing);
+        }
+
+        storageEnt.Comp.StoredItems.Add(itemEnt, location);
+        AddOccupiedEntity((storageEnt.Owner, storageEnt.Comp), itemEnt, location);
         UpdateUI(storageEnt);
-        Dirty(storageEnt, storageEnt.Comp);
         return true;
     }
 
@@ -1294,17 +1315,102 @@ public abstract class SharedStorageSystem : EntitySystem
             }
         }
 
-        for (var y = storageBounding.Bottom; y <= storageBounding.Top; y++)
+        // Ignore the item's existing location for fitting purposes.
+        _ignored.Clear();
+
+        if (storageEnt.Comp.StoredItems.TryGetValue(itemEnt.Owner, out var existing))
         {
-            for (var x = storageBounding.Left; x <= storageBounding.Right; x++)
+            AddOccupied(itemEnt, existing, _ignored);
+        }
+
+        // This uses a faster path than the typical codepaths
+        // as we can cache a bunch more data and re-use it to avoid a bunch of component overhead.
+
+        // So if we have an item that occupies 0,0 we can assume that the tile itself we're checking
+        // is always in its shapes regardless of angle. This matches virtually every item in the game and
+        // means we can skip getting the item's rotated shape at all if the tile is occupied.
+        // This mostly makes heavy checks (e.g. area insert) much, much faster.
+        var fastPath = false;
+        var itemShape = ItemSystem.GetItemShape(itemEnt);
+        var fastAngles = itemShape.Count == 1;
+
+        foreach (var shape in itemShape)
+        {
+            if (shape.Contains(Vector2i.Zero))
             {
-                for (var angle = startAngle; angle <= Angle.FromDegrees(360 - startAngle); angle += Math.PI / 2f)
+                fastPath = true;
+                break;
+            }
+        }
+
+        var chunkEnumerator = new ChunkIndicesEnumerator(storageBounding, StorageComponent.ChunkSize);
+        var angles = new ValueList<Angle>();
+
+        if (!fastAngles)
+        {
+            angles.Clear();
+
+            for (var angle = startAngle; angle <= Angle.FromDegrees(360 - startAngle); angle += Math.PI / 2f)
+            {
+                angles.Add(angle);
+            }
+        }
+        else
+        {
+            var shape = itemShape[0];
+
+            // At least 1 check for a square.
+            angles.Add(startAngle);
+
+            // If it's a rectangle make it 2.
+            if (shape.Width != shape.Height)
+            {
+                // Idk if there's a preferred facing but + or - 90 pick one.
+                angles.Add(startAngle + Angle.FromDegrees(90));
+            }
+        }
+
+        while (chunkEnumerator.MoveNext(out var storageChunk))
+        {
+            var storageChunkOrigin = storageChunk.Value * StorageComponent.ChunkSize;
+
+            var left = Math.Max(storageChunkOrigin.X, storageBounding.Left);
+            var bottom = Math.Max(storageChunkOrigin.Y, storageBounding.Bottom);
+            var top = Math.Min(storageChunkOrigin.Y + StorageComponent.ChunkSize - 1, storageBounding.Top);
+            var right = Math.Min(storageChunkOrigin.X + StorageComponent.ChunkSize - 1, storageBounding.Right);
+
+            // No data so assume empty.
+            if (!storageEnt.Comp.OccupiedGrid.TryGetValue(storageChunkOrigin, out var occupied))
+                continue;
+
+            // This has a lot of redundant tile checks but with the fast path it shouldn't matter for average ss14
+            // use cases.
+            for (var y = bottom; y <= top; y++)
+            {
+                for (var x = left; x <= right; x++)
                 {
-                    var location = new ItemStorageLocation(angle, (x, y));
-                    if (ItemFitsInGridLocation(itemEnt, storageEnt, location))
+                    foreach (var angle in angles)
                     {
-                        storageLocation = location;
-                        return true;
+                        var position = new Vector2i(x, y);
+
+                        // This bit of code is how area inserts go from tanking frames to being negligible.
+                        if (fastPath)
+                        {
+                            var flag = SharedMapSystem.ToBitmask(SharedMapSystem.GetChunkRelative(position, StorageComponent.ChunkSize), StorageComponent.ChunkSize);
+
+                            // Occupied so skip.
+                            if ((occupied & flag) == flag)
+                                continue;
+                        }
+
+                        _itemShape.Clear();
+                        ItemSystem.GetAdjustedItemShape(_itemShape, itemEnt, angle, position);
+
+                        if (ItemFitsInGridLocation(storageEnt.Comp.OccupiedGrid, _itemShape, _ignored))
+                        {
+                            storageLocation = new ItemStorageLocation(angle, position);
+                            return true;
+                        }
                     }
                 }
             }
@@ -1395,6 +1501,59 @@ public abstract class SharedStorageSystem : EntitySystem
         return ItemFitsInGridLocation(itemEnt, storageEnt, location.Position, location.Rotation);
     }
 
+    private bool ItemFitsInGridLocation(
+        Dictionary<Vector2i, ulong> occupied,
+        IReadOnlyList<Box2i> itemShape,
+        Dictionary<Vector2i, ulong> ignored)
+    {
+        // We pre-cache the occupied / ignored tiles upfront and then can just check each tile 1-by-1.
+        // We do it by chunk so we can avoid dictionary overhead.
+        foreach (var box in itemShape)
+        {
+            var chunkEnumerator = new ChunkIndicesEnumerator(box, StorageComponent.ChunkSize);
+
+            while (chunkEnumerator.MoveNext(out var chunk))
+            {
+                var chunkOrigin = chunk.Value * StorageComponent.ChunkSize;
+
+                // Box may not necessarily be in 1 chunk so clamp it.
+                var left = Math.Max(chunkOrigin.X, box.Left);
+                var bottom = Math.Max(chunkOrigin.Y, box.Bottom);
+                var right = Math.Min(chunkOrigin.X + StorageComponent.ChunkSize - 1, box.Right);
+                var top = Math.Min(chunkOrigin.Y + StorageComponent.ChunkSize - 1, box.Top);
+
+                // Assume it's occupied if no data.
+                if (!occupied.TryGetValue(chunkOrigin, out var occupiedMask))
+                {
+                    return false;
+                }
+
+                var ignoredMask = ignored.GetValueOrDefault(chunkOrigin);
+
+                for (var x = left; x <= right; x++)
+                {
+                    for (var y = bottom; y <= top; y++)
+                    {
+                        var index = new Vector2i(x, y);
+                        var chunkRelative = SharedMapSystem.GetChunkRelative(index, StorageComponent.ChunkSize);
+                        var flag = SharedMapSystem.ToBitmask(chunkRelative, StorageComponent.ChunkSize);
+
+                        // Ignore it
+                        if ((ignoredMask & flag) == flag)
+                            continue;
+
+                        if ((occupiedMask & flag) == flag)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
     /// <summary>
     /// Checks if an item fits into a specific spot on a storage grid.
     /// </summary>
@@ -1412,62 +1571,157 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
 
         var itemShape = ItemSystem.GetAdjustedItemShape(itemEnt, rotation, position);
+        // Ignore the item's existing location for fitting purposes.
+        _ignored.Clear();
 
-        foreach (var box in itemShape)
+        if (storageEnt.Comp.StoredItems.TryGetValue(itemEnt.Owner, out var existing))
         {
-            for (var offsetY = box.Bottom; offsetY <= box.Top; offsetY++)
-            {
-                for (var offsetX = box.Left; offsetX <= box.Right; offsetX++)
-                {
-                    var pos = (offsetX, offsetY);
+            AddOccupied(itemEnt, existing, _ignored);
+        }
 
-                    if (!IsGridSpaceEmpty(itemEnt, storageEnt, pos))
-                        return false;
-                }
-            }
+        return ItemFitsInGridLocation(storageEnt.Comp.OccupiedGrid, itemShape, _ignored);
+    }
+
+    /// <summary>
+    /// Checks if a space on a grid is valid and not occupied by any other pieces.
+    /// </summary>
+    public bool IsGridSpaceEmpty(Entity<StorageComponent?> storageEnt, Vector2i location, Dictionary<Vector2i, ulong>? ignored = null)
+    {
+        if (!Resolve(storageEnt, ref storageEnt.Comp))
+            return false;
+
+        var chunkOrigin = SharedMapSystem.GetChunkIndices(location, StorageComponent.ChunkSize) * StorageComponent.ChunkSize;
+
+        // No entry so assume it's occupied.
+        if (!storageEnt.Comp.OccupiedGrid.TryGetValue(chunkOrigin, out var occupiedMask))
+            return false;
+
+        var chunkRelative = SharedMapSystem.GetChunkRelative(location, StorageComponent.ChunkSize);
+        var occupiedIndex = SharedMapSystem.ToBitmask(chunkRelative);
+
+        if (ignored?.TryGetValue(chunkOrigin, out var ignoredMask) == true && (ignoredMask & occupiedIndex) == occupiedIndex)
+        {
+            return true;
+        }
+
+        if ((occupiedMask & occupiedIndex) != 0x0)
+        {
+            return false;
         }
 
         return true;
     }
 
     /// <summary>
-    /// Checks if a space on a grid is valid and not occupied by any other pieces.
+    /// Updates the occupied grid mask for the entity.
     /// </summary>
-    public bool IsGridSpaceEmpty(Entity<ItemComponent?> itemEnt, Entity<StorageComponent?> storageEnt, Vector2i location)
+    protected void UpdateOccupied(Entity<StorageComponent> ent)
     {
-        if (!Resolve(storageEnt, ref storageEnt.Comp))
-            return false;
+        ent.Comp.OccupiedGrid.Clear();
+        RemoveOccupied(ent.Comp.Grid, ent.Comp.OccupiedGrid);
 
-        var validGrid = false;
-        foreach (var grid in storageEnt.Comp.Grid)
+        Dirty(ent);
+
+        foreach (var (stent, storedItem) in ent.Comp.StoredItems)
         {
-            if (grid.Contains(location))
-            {
-                validGrid = true;
-                break;
-            }
-        }
-
-        if (!validGrid)
-            return false;
-
-        foreach (var (ent, storedItem) in storageEnt.Comp.StoredItems)
-        {
-            if (ent == itemEnt.Owner)
+            if (!_itemQuery.TryGetComponent(stent, out var itemComp))
                 continue;
 
-            if (!_itemQuery.TryGetComponent(ent, out var itemComp))
-                continue;
+            AddOccupiedEntity(ent, (stent, itemComp), storedItem);
+        }
+    }
 
-            var adjustedShape = ItemSystem.GetAdjustedItemShape((ent, itemComp), storedItem);
-            foreach (var box in adjustedShape)
+    private void AddOccupiedEntity(Entity<StorageComponent> storageEnt, Entity<ItemComponent?> itemEnt, ItemStorageLocation location)
+    {
+        AddOccupied(itemEnt, location, storageEnt.Comp.OccupiedGrid);
+
+        Dirty(storageEnt);
+    }
+
+    private void AddOccupied(Entity<ItemComponent?> itemEnt, ItemStorageLocation location, Dictionary<Vector2i, ulong> occupied)
+    {
+        var adjustedShape = ItemSystem.GetAdjustedItemShape((itemEnt.Owner, itemEnt.Comp), location);
+        AddOccupied(adjustedShape, occupied);
+    }
+
+    private void RemoveOccupied(IReadOnlyList<Box2i> adjustedShape, Dictionary<Vector2i, ulong> occupied)
+    {
+        foreach (var box in adjustedShape)
+        {
+            var chunks = new ChunkIndicesEnumerator(box, StorageComponent.ChunkSize);
+
+            while (chunks.MoveNext(out var chunk))
             {
-                if (box.Contains(location))
-                    return false;
+                var chunkOrigin = chunk.Value * StorageComponent.ChunkSize;
+
+                var left = Math.Max(box.Left, chunkOrigin.X);
+                var bottom = Math.Max(box.Bottom, chunkOrigin.Y);
+                var right = Math.Min(box.Right, chunkOrigin.X + StorageComponent.ChunkSize - 1);
+                var top = Math.Min(box.Top, chunkOrigin.Y + StorageComponent.ChunkSize - 1);
+                var existing = occupied.GetValueOrDefault(chunkOrigin, ulong.MaxValue);
+
+                // Unmark all of the tiles that we actually have.
+                for (var x = left; x <= right; x++)
+                {
+                    for (var y = bottom; y <= top; y++)
+                    {
+                        var index = new Vector2i(x, y);
+                        var chunkRelative = SharedMapSystem.GetChunkRelative(index, StorageComponent.ChunkSize);
+
+                        var flag = SharedMapSystem.ToBitmask(chunkRelative, StorageComponent.ChunkSize);
+                        existing &= ~flag;
+                    }
+                }
+
+                // My kingdom for collections.marshal
+                occupied[chunkOrigin] = existing;
             }
         }
+    }
 
-        return true;
+    private void AddOccupied(IReadOnlyList<Box2i> adjustedShape, Dictionary<Vector2i, ulong> occupied)
+    {
+        foreach (var box in adjustedShape)
+        {
+            // Reduce dictionary access from every tile to just once per chunk.
+            // Makes this more complicated but dictionaries are slow af.
+            // This is how we get savings over IsGridSpaceEmpty.
+            var chunkEnumerator = new ChunkIndicesEnumerator(box, StorageComponent.ChunkSize);
+
+            while (chunkEnumerator.MoveNext(out var chunk))
+            {
+                var chunkOrigin = chunk.Value * StorageComponent.ChunkSize;
+                var existing = occupied.GetOrNew(chunkOrigin);
+
+                // Box may not necessarily be in 1 chunk so clamp it.
+                var left = Math.Max(chunkOrigin.X, box.Left);
+                var bottom = Math.Max(chunkOrigin.Y, box.Bottom);
+                var right = Math.Min(chunkOrigin.X + StorageComponent.ChunkSize - 1, box.Right);
+                var top = Math.Min(chunkOrigin.Y + StorageComponent.ChunkSize - 1, box.Top);
+
+                for (var x = left; x <= right; x++)
+                {
+                    for (var y = bottom; y <= top; y++)
+                    {
+                        var index = new Vector2i(x, y);
+                        var chunkRelative = SharedMapSystem.GetChunkRelative(index, StorageComponent.ChunkSize);
+                        var flag = SharedMapSystem.ToBitmask(chunkRelative, StorageComponent.ChunkSize);
+                        existing |= flag;
+                    }
+                }
+
+                occupied[chunkOrigin] = existing;
+            }
+        }
+    }
+
+    private void RemoveOccupiedEntity(Entity<StorageComponent> storageEnt, Entity<ItemComponent?> itemEnt, ItemStorageLocation location)
+    {
+        var adjustedShape = ItemSystem.GetAdjustedItemShape((itemEnt.Owner, itemEnt.Comp), location);
+
+        RemoveOccupied(adjustedShape, storageEnt.Comp.OccupiedGrid);
+
+        Dirty(storageEnt);
     }
 
     /// <summary>
