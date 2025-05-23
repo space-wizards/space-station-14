@@ -42,14 +42,31 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
         Spawn(ExamineArrow, new EntityCoordinates(ent, 0, 0));
     }
 
+    protected override void StopAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
+    {
+        StopAnimation(uid, layer, stateId, null);
+    }
+
+    private void StopAnimation(EntityUid uid,
+        TurnstileVisualLayers layer,
+        string stateId,
+        AnimationPlayerComponent? player = null)
+    {
+        if (!Resolve(uid, ref player, logMissing: false))
+            return;
+
+        var ent = (uid, player);
+
+        if (_animationPlayer.HasRunningAnimation(player, layer.ToString()))
+            _animationPlayer.Stop(ent, layer.ToString());
+    }
+
     protected override void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
     {
         if (!TryComp<AnimationPlayerComponent>(uid, out var animation) || !TryComp<SpriteComponent>(uid, out var sprite))
             return;
-        var ent = (uid, animation);
 
-        if (_animationPlayer.HasRunningAnimation(animation, layer.ToString()))
-            _animationPlayer.Stop(ent, layer.ToString());
+        StopAnimation(uid, layer, stateId, animation);
 
         if (sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(stateId, out var state))
             return;
@@ -72,6 +89,6 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
         };
 
         _spriteSystem.LayerSetVisible(uid, layer, true);
-        _animationPlayer.Play(ent, anim, layer.ToString());
+        _animationPlayer.Play(uid, anim, layer.ToString());
     }
 }

@@ -83,6 +83,8 @@
       map: [ "enum.TurnstileVisualLayers.Spinner" ]
     - map: [ "enum.TurnstileVisualLayers.Indicators" ]
       shader: unshaded
+    - map: [ "enum.TurnstileVisualLayers.BoltIndicators" ]
+      shader: unshaded
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
     - state: electrified
@@ -133,12 +135,16 @@
           True: { visible: True }
           False: { visible: False }
       enum.DoorVisuals.BoltLights:
-        enum.TurnstileVisualLayers.Indicators:
+        enum.TurnstileVisualLayers.BoltIndicators:
           True:
             visible: True
             state: bolted
           False:
             visible: False
+      enum.TurnstileVisuals.AccessBroken:
+        enum.TurnstileVisualLayers.Spinner:
+          True: { state: operate }
+          False: { state: turnstile_idle }
   - type: WiresVisuals
   - type: Electrified
     enabled: false

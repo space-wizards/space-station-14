@@ -26,7 +26,8 @@ public abstract class SharedTurnstileSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
-    [Dependency] protected readonly SharedBoltSystem Bolt = default!;
+    [Dependency] private readonly SharedBoltSystem _bolt = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -39,6 +40,21 @@ public abstract class SharedTurnstileSystem : EntitySystem
         SubscribeLocalEvent<TurnstileComponent, GetPryTimeModifierEvent>(OnGetPryMod);
         SubscribeLocalEvent<TurnstileComponent, PriedEvent>(OnAfterPry);
         SubscribeLocalEvent<TurnstileComponent, BeforeBoltEvent>(OnBeforeBolt);
+        SubscribeLocalEvent<TurnstileComponent, DoorBoltsChangedEvent>(OnBoltsChanged);
+    }
+
+    private void OnBoltsChanged(Entity<TurnstileComponent> ent, ref DoorBoltsChangedEvent args)
+    {
+        if (args.BoltsDown)
+        {
+            StopAnimation(ent, TurnstileVisualLayers.Spinner, ent.Comp.SpinState);
+            _appearance.SetData(ent, TurnstileVisuals.AccessBroken, false);
+        }
+        else if (ent.Comp.AccessBroken)
+        {
+            StopAnimation(ent, TurnstileVisualLayers.Spinner, ent.Comp.SpinState);
+            _appearance.SetData(ent, TurnstileVisuals.AccessBroken, true);
+        }
     }
 
     private void OnPreventCollide(Entity<TurnstileComponent> ent, ref PreventCollideEvent args)
@@ -46,16 +62,19 @@ public abstract class SharedTurnstileSystem : EntitySystem
         if (args.Cancelled || !args.OurFixture.Hard || !args.OtherFixture.Hard)
             return;
 
-        if (ent.Comp.CollideExceptions.Contains(args.OtherEntity))
+        if (ent.Comp.CollideExceptions.ContainsKey(args.OtherEntity))
         {
             args.Cancelled = true;
             return;
         }
 
         // We need to add this in here too for chain pulls
-        if (_pulling.GetPuller(args.OtherEntity) is { } puller && ent.Comp.CollideExceptions.Contains(puller))
+        if (_pulling.GetPuller(args.OtherEntity) is { } puller
+            && ent.Comp.CollideExceptions.TryGetValue(puller, out var pullerMethod))
         {
-            ent.Comp.CollideExceptions.Add(args.OtherEntity);
+            var pullerPulled = pullerMethod is EntranceMethod.Pulled or EntranceMethod.ChainPulled;
+            var method = pullerPulled ? EntranceMethod.ChainPulled : EntranceMethod.Pulled;
+            ent.Comp.CollideExceptions.Add(args.OtherEntity, method);
             Dirty(ent);
             args.Cancelled = true;
             return;
@@ -70,9 +89,9 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
         if (ent.Comp.PriedExceptions.ContainsKey(args.OtherEntity))
         {
-            ent.Comp.CollideExceptions.Add(args.OtherEntity);
+            ent.Comp.CollideExceptions.Add(args.OtherEntity, EntranceMethod.Forced);
             if (_pulling.GetPulling(args.OtherEntity) is { } uid)
-                ent.Comp.CollideExceptions.Add(uid);
+                ent.Comp.CollideExceptions.Add(uid, EntranceMethod.Pulled);
 
             ent.Comp.PriedExceptions.Remove(args.OtherEntity);
             args.Cancelled = true;
@@ -80,14 +99,15 @@ public abstract class SharedTurnstileSystem : EntitySystem
             return;
         }
 
-        if (!Bolt.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
+        if (!_bolt.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
         {
             if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 return;
 
-            ent.Comp.CollideExceptions.Add(args.OtherEntity);
+            var method = ent.Comp.AccessBroken ? EntranceMethod.AccessBroken : EntranceMethod.Access;
+            ent.Comp.CollideExceptions.Add(args.OtherEntity, method);
             if (_pulling.GetPulling(args.OtherEntity) is { } uid)
-                ent.Comp.CollideExceptions.Add(uid);
+                ent.Comp.CollideExceptions.Add(uid, EntranceMethod.Pulled);
 
             args.Cancelled = true;
             Dirty(ent);
@@ -105,9 +125,9 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
     private void OnStartCollide(Entity<TurnstileComponent> ent, ref StartCollideEvent args)
     {
-        if (!ent.Comp.CollideExceptions.Contains(args.OtherEntity))
+        if (!ent.Comp.CollideExceptions.TryGetValue(args.OtherEntity, out var method))
         {
-            if (!Bolt.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
+            if (!_bolt.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
             {
                 if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 {
@@ -119,8 +139,10 @@ public abstract class SharedTurnstileSystem : EntitySystem
             return;
         }
         // if they passed through:
-        PlayAnimation(ent, TurnstileVisualLayers.Spinner, ent.Comp.SpinState);
-        PlayAnimation(ent, TurnstileVisualLayers.Indicators, ent.Comp.GrantedState);
+        if(!ent.Comp.AccessBroken || _bolt.IsBolted(ent)) // it's already spinnin'!
+            PlayAnimation(ent, TurnstileVisualLayers.Spinner, ent.Comp.SpinState);
+        if(method == EntranceMethod.Access)
+            PlayAnimation(ent, TurnstileVisualLayers.Indicators, ent.Comp.GrantedState);
         _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity);
     }
 
@@ -154,18 +176,31 @@ public abstract class SharedTurnstileSystem : EntitySystem
         return diff < Math.PI / 4;
     }
 
-    protected virtual void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
-    {
+    protected virtual void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId) { }
 
-    }
+    protected virtual void StopAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId) { }
 
     private void OnEmagged(Entity<TurnstileComponent> ent, ref GotEmaggedEvent args)
     {
-        if (args.Type != EmagType.Interaction)
-            return;
+        switch (args.Type)
+        {
+            case EmagType.Interaction:
+                ent.Comp.Flipped = !ent.Comp.Flipped;
+                break;
+            case EmagType.Access:
+                ent.Comp.AccessBroken = true;
+                if(!_bolt.IsBolted(ent))
+                {
+                    StopAnimation(ent, TurnstileVisualLayers.Spinner, ent.Comp.SpinState);
+                    _appearance.SetData(ent, TurnstileVisuals.AccessBroken, true);
+                }
+                break;
+            case EmagType.None:
+            default:
+                return;
+        }
         args.Handled = true;
         args.Repeatable = true;
-        ent.Comp.Flipped = !ent.Comp.Flipped;
         Dirty(ent);
     }
 
@@ -181,7 +216,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
             return;
 
         if (doorBolt.BoltWireCut)
-            Bolt.TrySetBoltsDown((ent, doorBolt), true);
+            _bolt.TrySetBoltsDown((ent, doorBolt), true);
     }
 
     private void OnBeforePry(Entity<TurnstileComponent> ent, ref BeforePryEvent args)
@@ -201,7 +236,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
         if (!ent.Comp.SolenoidBypassed)
             args.PryTimeModifier *= ent.Comp.PoweredPryModifier;
 
-        if (Bolt.IsBolted(ent))
+        if (_bolt.IsBolted(ent))
             args.PryTimeModifier *= ent.Comp.BoltedPryModifier;
 
         if (!CanPassDirection(ent, args.User))
