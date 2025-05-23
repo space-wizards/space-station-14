@@ -13,6 +13,7 @@ namespace Content.Client.Anomaly;
 /// just draw a bar or other basic drawn element that will show up on a texture layer.
 /// </remarks>
 [RegisterComponent]
+[Access(typeof(AnomalyScannerSystem))]
 public sealed partial class AnomalyScannerScreenComponent : Component
 {
     /// <summary>
