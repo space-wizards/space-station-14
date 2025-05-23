@@ -183,6 +183,3 @@
   - type: TelecomExempt
   - type: RadioMicrophone
     broadcastChannel: Common
-  - type: RadioSpeaker
-    channels:
-    - Common
