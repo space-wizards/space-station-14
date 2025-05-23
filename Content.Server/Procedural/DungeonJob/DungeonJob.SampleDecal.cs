@@ -33,6 +33,13 @@ public sealed partial class DungeonJob
                 if (value < gen.Threshold)
                     continue;
 
+                // Not allowed
+                if (!_maps.TryGetTileRef(_gridUid, _grid, tile, out var tileRef) ||
+                    !gen.AllowedTiles.Contains(_tileDefManager[tileRef.Tile.TypeId].ID))
+                {
+                    continue;
+                }
+
                 // Occupied?
                 if (!_anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                     continue;

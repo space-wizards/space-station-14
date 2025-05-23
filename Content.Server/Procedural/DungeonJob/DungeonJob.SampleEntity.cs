@@ -34,6 +34,13 @@ public sealed partial class DungeonJob
                 if (value < gen.Threshold)
                     continue;
 
+                // Not allowed
+                if (!_maps.TryGetTileRef(_gridUid, _grid, tile, out var tileRef) ||
+                    !gen.AllowedTiles.Contains(_tileDefManager[tileRef.Tile.TypeId].ID))
+                {
+                    continue;
+                }
+
                 var gridTile = _maps.GridTileToLocal(_gridUid, _grid, tile);
                 var uid = _entManager.SpawnAttachedTo(random.Pick(gen.Entities), gridTile);
                 AddLoadedEntity(tile, uid);

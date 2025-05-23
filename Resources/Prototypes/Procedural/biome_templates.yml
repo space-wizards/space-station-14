@@ -381,143 +381,174 @@
     - BasaltFive
 
 # Snow
-- type: biomeTemplate
-  id: Snow # Similar to Grasslands... but snow
+- type: entity
+  id: BiomeSnow
+  components:
+  - type: NewBiome
+    layers:
+      terrain:
+        dungeon: SnowTerrain
+
+- type: dungeonConfig
+  id: SnowTerrain
   layers:
-    # Sparse vegetation
-    - !type:BiomeDecalLayer
-      allowedTiles:
-        - FloorSnow
-      divisions: 2
-      threshold: -0.50
-      noise:
-        seed: 0
-        noiseType: Cellular
-        frequency: 1
-      decals:
-        - grasssnowa1
-        - grasssnowa2
-        - grasssnowa3
-        - grasssnowb1
-        - grasssnowb2
-        - grasssnowb3
-        - grasssnowc1
-        - grasssnowc2
-        - grasssnowc3
-    # Dense, bland grass
-    - !type:BiomeDecalLayer
-      allowedTiles:
-        - FloorSnow
-      divisions: 1
-      threshold: -0.35
-      noise:
-        seed: 0
-        noiseType: Cellular
-        frequency: 0.2
-        fractalType: FBm
-        octaves: 5
-        lacunarity: 2
-        cellularDistanceFunction: Euclidean
-        cellularReturnType: Distance2
-      decals:
-        - grasssnow
-        - grasssnow01
-        - grasssnow02
-        - grasssnow03
-        - grasssnow04
-        - grasssnow05
-        - grasssnow06
-        - grasssnow07
-        - grasssnow08
-        - grasssnow09
-        - grasssnow10
-        - grasssnow11
-        - grasssnow12
-        - grasssnow13
-    # Little bit of coloured grass
-    - !type:BiomeDecalLayer
-      allowedTiles:
-        - FloorSnow
-      divisions: 1
-      threshold: -0.0
-      noise:
-        seed: 0
-        noiseType: Cellular
-        frequency: 1
-        fractalType: None
-        cellularDistanceFunction: Euclidean
-        cellularReturnType: Distance2
-      decals:
-        - bushsnowa1
-        - bushsnowa2
-        - bushsnowa3
-        - bushsnowb3
-        - bushsnowb2
-        - bushsnowb3
-    - !type:BiomeEntityLayer
-      threshold: 0.5
-      noise:
-        seed: 0
-        noiseType: OpenSimplex2
-        fractalType: FBm
-        frequency: 2
-      allowedTiles:
-        - FloorSnow
-      entities:
-        - FloraTreeSnow
-    # Rock formations
-    - !type:BiomeEntityLayer
-      allowedTiles:
-        - FloorSnow
-      threshold: -0.30
-      noise:
-        seed: 0
-        noiseType: Cellular
-        frequency: 0.05
-        lacunarity: 2
-        fractalType: FBm
-        octaves: 5
-        cellularDistanceFunction: Euclidean
-        cellularReturnType: Distance2
-      entities:
-        - WallRockSnow
-    # Ice tiles
-    - !type:BiomeTileLayer
-      tile: FloorIce
-      threshold: -0.9
-      noise:
-        seed: 0
-        noiseType: Cellular
-        frequency: 0.03
-        lacunarity: 2
-        fractalType: FBm
-        octaves: 5
-        cellularDistanceFunction: Euclidean
-        cellularReturnType: Distance2
-    # Liquid plasma rivers. Ice moon baby
-    - !type:BiomeEntityLayer
-      allowedTiles:
-      - FloorSnow
-      - FloorIce
-      threshold: 0.95
-      noise:
-        seed: 3
-        noiseType: OpenSimplex2
-        frequency: 0.003
-        lacunarity: 1.50
-        fractalType: Ridged
-        octaves: 1
-      entities:
-      - FloorLiquidPlasmaEntity
-    - !type:BiomeDummyLayer
-      id: Loot
-    - !type:BiomeTileLayer
-      threshold: -0.7
-      tile: FloorSnow
-      noise:
-        seed: 0
-        frequency: 0.02
-        fractalType: None
+  - !type:ChunkDunGen
+  - !type:PrototypeDunGen
+    proto: SnowTiles
+    inheritDungeons: All
+  - !type:PrototypeDunGen
+    proto: SnowEntities
+    inheritDungeons: All
+  - !type:PrototypeDunGen
+    proto: SnowDecals
+    inheritDungeons: All
+
+- type: dungeonConfig
+  id: SnowTiles
+  returnReserved: false
+  layers:
+  - !type:SampleTileDunGen
+    threshold: -0.7
+    tile: FloorSnow
+    noise:
+      seed: 0
+      frequency: 0.02
+      fractalType: None
+  - !type:SampleTileDunGen
+    tile: FloorIce
+    threshold: -0.9
+    noise:
+      seed: 0
+      noiseType: Cellular
+      frequency: 0.03
+      lacunarity: 2
+      fractalType: FBm
+      octaves: 5
+      cellularDistanceFunction: Euclidean
+      cellularReturnType: Distance2
+
+
+- type: dungeonConfig
+  id: SnowEntities
+  reserveTiles: true
+  layers:
+  # Liquid plasma rivers. Ice moon baby
+  - !type:SampleEntityDunGen
+    allowedTiles:
+    - FloorSnow
+    - FloorIce
+    threshold: 0.95
+    noise:
+      seed: 3
+      noiseType: OpenSimplex2
+      frequency: 0.003
+      lacunarity: 1.50
+      fractalType: Ridged
+      octaves: 1
+    entities:
+    - FloorLiquidPlasmaEntity
+  # Rock formations
+  - !type:SampleEntityDunGen
+    allowedTiles:
+    - FloorSnow
+    threshold: -0.30
+    noise:
+      seed: 0
+      noiseType: Cellular
+      frequency: 0.05
+      lacunarity: 2
+      fractalType: FBm
+      octaves: 5
+      cellularDistanceFunction: Euclidean
+      cellularReturnType: Distance2
+    entities:
+    - WallRockSnow
+  - !type:SampleEntityDunGen
+    threshold: 0.5
+    noise:
+      seed: 0
+      noiseType: OpenSimplex2
+      fractalType: FBm
+      frequency: 2
+    allowedTiles:
+    - FloorSnow
+    entities:
+    - FloraTreeSnow
+
+- type: dungeonConfig
+  id: SnowDecals
+  returnReserved: false
+  layers:
+  # Sparse vegetation
+  - !type:SampleDecalDunGen
+    allowedTiles:
+    - FloorSnow
+    divisions: 2
+    threshold: -0.50
+    noise:
+      seed: 0
+      noiseType: Cellular
+      frequency: 1
+    decals:
+    - grasssnowa1
+    - grasssnowa2
+    - grasssnowa3
+    - grasssnowb1
+    - grasssnowb2
+    - grasssnowb3
+    - grasssnowc1
+    - grasssnowc2
+    - grasssnowc3
+  # Dense, bland grass
+  - !type:SampleDecalDunGen
+    allowedTiles:
+    - FloorSnow
+    divisions: 1
+    threshold: -0.35
+    noise:
+      seed: 0
+      noiseType: Cellular
+      frequency: 0.2
+      fractalType: FBm
+      octaves: 5
+      lacunarity: 2
+      cellularDistanceFunction: Euclidean
+      cellularReturnType: Distance2
+    decals:
+    - grasssnow
+    - grasssnow01
+    - grasssnow02
+    - grasssnow03
+    - grasssnow04
+    - grasssnow05
+    - grasssnow06
+    - grasssnow07
+    - grasssnow08
+    - grasssnow09
+    - grasssnow10
+    - grasssnow11
+    - grasssnow12
+    - grasssnow13
+  # Little bit of coloured grass
+  - !type:SampleDecalDunGen
+    allowedTiles:
+    - FloorSnow
+    divisions: 1
+    threshold: -0.0
+    noise:
+      seed: 0
+      noiseType: Cellular
+      frequency: 1
+      fractalType: None
+      cellularDistanceFunction: Euclidean
+      cellularReturnType: Distance2
+    decals:
+    - bushsnowa1
+    - bushsnowa2
+    - bushsnowa3
+    - bushsnowb3
+    - bushsnowb2
+    - bushsnowb3
 
 # Shadow -> Derived from lava
 - type: biomeTemplate
