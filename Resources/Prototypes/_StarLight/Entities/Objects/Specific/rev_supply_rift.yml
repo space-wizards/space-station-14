@@ -1,6 +1,6 @@
 - type: entity
   id: RevSupplyRift
-  name: SKGB armaments rift
+  name: SKB armaments rift
   description: (!) A shady rift that coughs up Soviet stuff. This exposes them! If it's destroyed, commies won't be able to open another!
   placement:
     mode: SnapgridCenter

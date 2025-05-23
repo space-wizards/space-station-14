@@ -6,7 +6,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
-      implantAction: ActionOpenSKGBUplinkImplant
+      implantAction: ActionOpenSKBUplinkImplant
       whitelist:
         components:
           - Hands

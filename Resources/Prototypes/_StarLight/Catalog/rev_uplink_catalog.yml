@@ -1,10 +1,10 @@
 ### Total Conversion category
 
 - type: listing
-  id: SKGBCheapSunglassesConversion
+  id: SKBCheapSunglassesConversion
   name: glasses-name
   description: glasses-desc
-  productEntity: ClothingEyesGlassesSKGBGlasses
+  productEntity: ClothingEyesGlassesSKBGlasses
   cost:
     Conversion: 20
   categories:
@@ -41,7 +41,7 @@
     stockLimit: 2
 
 - type: listing
-  id: SKGBBanner
+  id: SKBBanner
   name: banner-name
   description: banner-desc
   productEntity: RevolutionaryHeldBanner
@@ -66,7 +66,7 @@
 # Weapons, some modern some discontinued like the PPSH
 # The AKMS is candidate of discontinued weapons, but it's just a better DP28 right now.
 # - type: listing
-#   id: SKGBAKMSweapon
+#   id: SKBAKMSweapon
 #   name: akms-weapon-name
 #   description: akms-weapon-desc
 #   productEntity: WeaponRifleAk
@@ -79,7 +79,7 @@
 #     stockLimit: 2
 
 - type: listing
-  id: SKGBMakarov
+  id: SKBMakarov
   name: makarov-name
   description: makarov-desc
   icon: { sprite: _Starlight/Objects/Weapons/Guns/Pistols/makarov.rsi, state: icon }
@@ -107,7 +107,7 @@
     stockLimit: 2
 
 - type: listing
-  id: SKGBMosin
+  id: SKBMosin
   name: mosin-name
   description: mosin-desc
   icon: { sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi, state: base }
@@ -121,7 +121,7 @@
     stockLimit: 6
 
 - type: listing
-  id: SKGBDP28
+  id: SKBDP28
   name: dp-name
   description: dp-desc
   icon: { sprite: _Starlight/Objects/Weapons/Guns/LMGs/DP28.rsi, state: icon }
@@ -135,7 +135,7 @@
     stockLimit: 1
 
 - type: listing
-  id: SKGBPPSH
+  id: SKBPPSH
   name: ppsh-name
   description: ppsh-desc
   icon: { sprite: _Starlight/Objects/Weapons/Guns/SMGs/PPSh59.rsi, state: icon }
@@ -150,7 +150,7 @@
 
 # Wearables
 - type: listing
-  id: SKGBSovietEVABundle
+  id: SKBSovietEVABundle
   name: soviet-eva-name
   description: soviet-eva-desc
   icon: { sprite: _Starlight/Clothing/OuterClothing/Suits/soviet_eva.rsi, state: icon }
@@ -164,7 +164,7 @@
     stockLimit: 4
 
 - type: listing
-  id: SKGBBandolier
+  id: SKBBandolier
   name: soviet-bandolier-name
   description: soviet-bandolier-desc
   productEntity: ClothingSovietBandolier
@@ -177,7 +177,7 @@
     stockLimit: 3
 
 - type: listing
-  id: SKGBGasMask
+  id: SKBGasMask
   name: soviet-gas-mask-name
   description: soviet-gas-mask-desc
   productEntity: ClothingSovietGasMask
@@ -190,10 +190,10 @@
     stockLimit: 2
 
 - type: listing
-  id: SKGBCheapSunglasses
+  id: SKBCheapSunglasses
   name: glasses-name
   description: glasses-desc
-  productEntity: ClothingEyesGlassesSKGBGlasses
+  productEntity: ClothingEyesGlassesSKBGlasses
   cost:
     Telebond: 5
   categories:

@@ -1,12 +1,12 @@
 ## Rev Head
 
-roles-antag-rev-head-name = USSP SKGB agent
+roles-antag-rev-head-name = USSP SKB agent
 roles-antag-rev-head-objective = Your objective is to take over the station by bringing back people to your cause, setting up supply rifts, killing, converting or imprisoning all of Command staff on station.
 
 head-rev-role-greeting =
     Comrade {$name}! You are a recruting agent promoting the interests of USSP!
     You are tasked with taking over the station by removing all of Command via conversion, death or imprisonment.
-    The SKGB has sponsored you with a flash that brings contractors to your side.
+    The SKB has sponsored you with a flash that brings contractors to your side.
     Beware, this won't work on those brainwashed with a 'mindshield' or wearing flash protection, such as sunglasses and welding masks or goggles.
     With enough crew, you may attempt to create a supply rift that will aid in your glorious revolution! But beware, it will alert the station of your influence!
     Glory to the USSP!
@@ -21,7 +21,7 @@ head-rev-break-mindshield = The MindShield™ was destroyed!
 ## Rev
 
 roles-antag-rev-name = USSP Revolutionary
-roles-antag-rev-objective = Your objective is to ensure the safety of the SKGB agents, to follow their orders, and to get rid or convert of all Command staff on station.
+roles-antag-rev-objective = Your objective is to ensure the safety of the SKB agents, to follow their orders, and to get rid or convert of all Command staff on station.
 
 rev-break-control = {$name} has remembered their true allegiance!
 
@@ -43,13 +43,13 @@ rev-not-enough-ready-players = Not enough players readied up for the game. There
 rev-no-one-ready = No players readied up! Can't start a glorious revolution!
 rev-no-heads = There were no revolutionary agents to be selected. Can't start a glorious revolution!
 
-rev-won = The SKGB agents survived and seized control of the station!
+rev-won = The SKB agents survived and seized control of the station!
 
-rev-lost = Command survived and killed all the SKGB agents.
+rev-lost = Command survived and killed all the SKB agents.
 
-rev-stalemate = All of the SKGB agents and command have died. It's a draw.
+rev-stalemate = All of the SKB agents and command have died. It's a draw.
 
-rev-reverse-stalemate = Both Command and SKGB agents survived.
+rev-reverse-stalemate = Both Command and SKB agents survived.
 
 central-command-revolution-announcement = Based on our scans from our long-range sensors, we believe the station has fallen under the control of hostile revolutionary forces. All heads of staff have been confirmed deceased or missing. All remaining crew members are to stand by for further instructions.
 

@@ -1,7 +1,7 @@
 - type: entity
   id: CrateSovietArmaments
   parent: [CrateGeneric, BaseSovietContraband]
-  name: SKGB armaments crate
+  name: SKB armaments crate
   description: The red tide is here.
   components:
   - type: Icon
