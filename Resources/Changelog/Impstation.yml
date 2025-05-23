@@ -1,23 +1,4 @@
 ﻿Entries:
-- author: AftrLite and the team at Impstation
-  changes:
-  - message: 'NEW MAJOR ANTAGONIST: THE COSMIC CULT. The Vast Nameless Unknown wants
-      you to uninstall reality. As a treat.'
-    type: Add
-  - message: The Silvered Rosary is now available as a Null Rod Transformation for
-      the Chaplain.
-    type: Add
-  - message: The religious supplies crate is now available from cargo.
-    type: Add
-  - message: The Entro-pop lollipop is now craftable.. Somehow.
-    type: Add
-  - message: The price of mindshield crates has been increased.
-    type: Tweak
-  - message: Bibles have been removed from mail.
-    type: Tweak
-  id: 1212
-  time: '2025-02-28T21:27:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1802
 - author: AftrLite
   changes:
   - message: Various tweaks to Cosmic Cult based on player feedback. Check out the
@@ -4239,3 +4220,11 @@
   id: 1711
   time: '2025-05-22T05:52:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2548
+- author: hivehum
+  changes:
+  - message: If you loved them so much, why don't you smoke them? You can now make
+      blunts and joints out of ashes.
+    type: Add
+  id: 1712
+  time: '2025-05-23T04:32:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2558
