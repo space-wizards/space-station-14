@@ -506,6 +506,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: Item
     size: Huge
+    shape:
+    - 0,0,4,4
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: PressureProtection
@@ -588,6 +590,8 @@
         Caustic: 0.5
   - type: Item
     size: Huge
+    shape:
+    - 0,0,4,4
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 0.9

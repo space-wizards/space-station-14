@@ -50,6 +50,10 @@
     sprite: Clothing/OuterClothing/Suits/fire.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/fire.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,4
   - type: PressureProtection
     highPressureMultiplier: 0.04
   - type: TemperatureProtection
@@ -81,6 +85,10 @@
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,4
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000

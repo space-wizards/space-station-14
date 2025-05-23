@@ -9,6 +9,10 @@
     sprite: Clothing/OuterClothing/Suits/eva.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,3
   - type: Tag
     tags:
     - SuitEVA
@@ -68,6 +72,10 @@
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,3
   - type: Tag
     tags:
     - SuitEVA
@@ -85,6 +93,10 @@
     sprite: Clothing/OuterClothing/Suits/ancient_voidsuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/ancient_voidsuit.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,3
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
@@ -104,6 +116,10 @@
   - type: Appearance
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,4
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
