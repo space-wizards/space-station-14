@@ -300,7 +300,7 @@ public sealed partial class ExplosionSystem
     /// <summary>
     ///     Same as <see cref="ExplodeTile"/>, but for SPAAAAAAACE.
     /// </summary>
-    internal void ExplodeSpace(BroadphaseComponent lookup,
+    internal void ExplodeSpace(Entity<BroadphaseComponent> lookup,
         Matrix3x2 spaceMatrix,
         Matrix3x2 invSpaceMatrix,
         Vector2i tile,
@@ -318,10 +318,10 @@ public sealed partial class ExplosionSystem
         var state = (list, processed, invSpaceMatrix, lookup.Owner, EntityManager.TransformQuery, gridBox, _transformSystem);
 
         // get entities:
-        lookup.DynamicTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
-        lookup.StaticTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
-        lookup.SundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
-        lookup.StaticSundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+        lookup.Comp.DynamicTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+        lookup.Comp.StaticTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+        lookup.Comp.SundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+        lookup.Comp.StaticSundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
 
         foreach (var (uid, xform) in state.Item1)
         {
@@ -335,8 +335,8 @@ public sealed partial class ExplosionSystem
         // Also, throw any entities that were spawned as shrapnel. Compared to entity spawning & destruction, this extra
         // lookup is relatively minor computational cost, and throwing is disabled for nukes anyways.
         list.Clear();
-        lookup.DynamicTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
-        lookup.SundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+        lookup.Comp.DynamicTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+        lookup.Comp.SundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
 
         foreach (var (uid, xform) in list)
         {
@@ -625,7 +625,7 @@ sealed class Explosion
 #if DEBUG
     private DamageSpecifier? _expectedDamage;
 #endif
-    private BroadphaseComponent _currentLookup = default!;
+    private Entity<BroadphaseComponent> _currentLookup = default!;
     private MapGridComponent? _currentGrid;
     private float _currentIntensity;
     private float _currentThrowForce;
@@ -784,7 +784,7 @@ sealed class Explosion
                 _currentDataIndex++;
 
                 // sanity checks, in case something changed while the explosion was being processed over several ticks.
-                if (_currentLookup.Deleted || _currentGrid != null && !_entMan.EntityExists(_currentGrid.Owner))
+                if (_currentLookup.Comp.Deleted || _currentGrid != null && !_entMan.EntityExists(_currentGrid.Owner))
                     continue;
 
                 return true;
