@@ -30,17 +30,19 @@ public sealed class AntagOnSignSystem : EntitySystem
 
     private void OnPaperSigned(EntityUid uid, AntagOnSignComponent component, PaperSignedEvent args)
     {
-        if (component.Used)
+        if (component.Charges <= 0)
             return;
-
-        if (!TryComp(args.Signer, out ActorComponent? actor))
-                return;
+        var signer = args.Signer;
+        if (!TryComp(signer, out ActorComponent? actor))
+            return;
+        if (component.SignedEntityUids.Contains(signer))
+            return;
+        component.Charges--;
+        component.SignedEntityUids.Add(signer);
 
         if (_random.NextFloat() > component.Chance)
-        {
-            component.Used = true;
             return;
-        }
+        
         
         var session = actor.PlayerSession;
         foreach (var antag in component.Antags)
@@ -64,17 +66,12 @@ public sealed class AntagOnSignSystem : EntitySystem
             var ruleEnt = _gameTicker.AddGameRule(_paradoxCloneRuleId);
 
             if (!TryComp<ParadoxCloneRuleComponent>(ruleEnt, out var paradoxCloneRuleComp))
-            {
-                component.Used = true;
                 return;
-            }
 
             paradoxCloneRuleComp.OriginalBody = args.Signer; // override the target player
 
             _gameTicker.StartGameRule(ruleEnt);
         }
-        
-        component.Used = true;
     }
 
     private void GetGameruleEntPrototyped(string prototype)

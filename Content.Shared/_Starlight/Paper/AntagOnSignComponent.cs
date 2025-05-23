@@ -9,10 +9,15 @@ namespace Content.Shared._Starlight.Paper;
 public sealed partial class AntagOnSignComponent : Component
 {
     /// <summary>
-    /// has this AntagOnSignComponent been used and either made them a antag or failed to activate due to luck
+    /// how many people are able to sign this paper in a attempt to roll for antag.
     /// </summary>
-    [ViewVariables] public bool Used = false;
+    [DataField] public int Charges = 1;
 
+    /// <summary>
+    /// A list of every entity that has signed this paper to prevent spam signing from using all the charges
+    /// </summary>
+    [ViewVariables] public List<EntityUid> SignedEntityUids = [];
+    
     /// <summary>
     /// What is the chance of this signature procing and making them a antag with 1 being always and 0 being never
     /// </summary>
