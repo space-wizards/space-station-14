@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Drones now spawn with a lighting RCD, a garbage bag, and a space cleaner
-      bottle.
-    type: Add
-  - message: Drones now have fewer hands - instead, their satchel and T-Ray scanner
-      spawn in their back and pocket slots respectively.
-    type: Tweak
-  - message: Drones can now use machines, and have Engineering access.
-    type: Tweak
-  - message: Drones now require 5 hours of Silicon time.
-    type: Tweak
-  id: 1219
-  time: '2025-03-02T04:57:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1720
 - author: ruddygreat
   changes:
   - message: The Monument can now be used by multiple cultists at the same time(!)
@@ -4227,3 +4212,15 @@
   id: 1718
   time: '2025-05-23T15:38:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2517
+- author: widgetbeck
+  changes:
+  - message: Decapoids no longer have an inbuilt speed debuff.
+    type: Remove
+  - message: The Decapoid claw shield has been buffed to 40% block while raised.
+    type: Tweak
+  - message: Shields can no longer bodyblock - instead, raising your shield just slows
+      you down considerably.
+    type: Tweak
+  id: 1719
+  time: '2025-05-23T19:52:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2463
