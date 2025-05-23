@@ -66,6 +66,7 @@
     - /Audio/Voice/SecurityHails/ERT/dimwit.ogg
     - /Audio/Voice/SecurityHails/ERT/mandatory.ogg
     - /Audio/Voice/SecurityHails/ERT/obey.ogg
+    - /Audio/Voice/SecurityHails/ERT/fucked_up.ogg
 
 - type: soundCollection
   id: SecHailHOS
