@@ -35,27 +35,27 @@
   maxCount: 30
 
 - type: stack
-  id: FloorTileDarkVerticalSlats
-  name: stack-dark-steel-vertical-slats-tile
-  spawn: FloorTileItemDarkVerticalSlats
+  id: FloorTileDarkVerticalSlatsContinuous
+  name: stack-dark-steel-vertical-slats-tile-continuous
+  spawn: FloorTileItemDarkVerticalSlatsContinuous
   maxCount: 30
 
 - type: stack
-  id: FloorTileDarkVerticalSlatsSingleRow
-  name: stack-dark-steel-vertical-slats-single-row-tile
-  spawn: FloorTileItemDarkVerticalSlatsSingleRow
+  id: FloorTileDarkVerticalSlatsBordered
+  name: stack-dark-steel-vertical-slats-tile-bordered
+  spawn: FloorTileItemDarkVerticalSlatsBordered
   maxCount: 30
 
 - type: stack
-  id: FloorTileDarkHorizontalSlats
-  name: stack-dark-steel-horizontal-slats-tile
-  spawn: FloorTileItemDarkHorizontalSlats
+  id: FloorTileDarkHorizontalSlatsContinuous
+  name: stack-dark-steel-horizontal-slats-tile-continuous
+  spawn: FloorTileItemDarkHorizontalSlatsContinuous
   maxCount: 30
 
 - type: stack
-  id: FloorTileDarkHorizontalSlatsSingleRow
-  name: stack-dark-steel-horizontal-slats-single-row-tile
-  spawn: FloorTileItemDarkHorizontalSlatsSingleRow
+  id: FloorTileDarkHorizontalSlatsBordered
+  name: stack-dark-steel-horizontal-slats-tile-bordered
+  spawn: FloorTileItemDarkHorizontalSlatsBordered
   maxCount: 30
 
 - type: stack
@@ -113,27 +113,27 @@
   maxCount: 30
 
 - type: stack
-  id: FloorTileSteelVerticalSlats
-  name: stack-steel-vertical-slats-tile
-  spawn: FloorTileItemSteelVerticalSlats
+  id: FloorTileSteelVerticalSlatsContinuous
+  name: stack-steel-vertical-slats-tile-continuous
+  spawn: FloorTileItemSteelVerticalSlatsContinuous
   maxCount: 30
 
 - type: stack
-  id: FloorTileSteelVerticalSlatsSingleRow
-  name: stack-steel-vertical-slats-single-row-tile
-  spawn: FloorTileItemSteelVerticalSlatsSingleRow
+  id: FloorTileSteelVerticalSlatsBordered
+  name: stack-steel-vertical-slats-tile-bordered
+  spawn: FloorTileItemSteelVerticalSlatsBordered
   maxCount: 30
 
 - type: stack
-  id: FloorTileSteelHorizontalSlats
-  name: stack-steel-horizontal-slats-tile
-  spawn: FloorTileItemSteelHorizontalSlats
+  id: FloorTileSteelHorizontalSlatsContinuous
+  name: stack-steel-horizontal-slats-tile-continuous
+  spawn: FloorTileItemSteelHorizontalSlatsContinuous
   maxCount: 30
 
 - type: stack
-  id: FloorTileSteelHorizontalSlatsSingleRow
-  name: stack-steel-horizontal-slats-single-row-tile
-  spawn: FloorTileItemSteelHorizontalSlatsSingleRow
+  id: FloorTileSteelHorizontalSlatsBordered
+  name: stack-steel-horizontal-slats-tile-bordered
+  spawn: FloorTileItemSteelHorizontalSlatsBordered
   maxCount: 30
 
 - type: stack
@@ -197,27 +197,27 @@
   maxCount: 30
 
 - type: stack
-  id: FloorTileWhiteVerticalSlats
-  name: stack-white-steel-vertical-slats-tile
-  spawn: FloorTileItemWhiteVerticalSlats
+  id: FloorTileWhiteVerticalSlatsContinuous
+  name: stack-white-steel-vertical-slats-tile-continuous
+  spawn: FloorTileItemWhiteVerticalSlatsContinuous
   maxCount: 30
 
 - type: stack
-  id: FloorTileWhiteVerticalSlatsSingleRow
-  name: stack-white-steel-vertical-slats-single-row-tile
-  spawn: FloorTileItemWhiteVerticalSlatsSingleRow
+  id: FloorTileWhiteVerticalSlatsBordered
+  name: stack-white-steel-vertical-slats-tile-bordered
+  spawn: FloorTileItemWhiteVerticalSlatsBordered
   maxCount: 30
 
 - type: stack
-  id: FloorTileWhiteHorizontalSlats
-  name: stack-white-steel-horizontal-slats-tile
-  spawn: FloorTileItemWhiteHorizontalSlats
+  id: FloorTileWhiteHorizontalSlatsContinuous
+  name: stack-white-steel-horizontal-slats-tile-continuous
+  spawn: FloorTileItemWhiteHorizontalSlatsContinuous
   maxCount: 30
 
 - type: stack
-  id: FloorTileWhiteHorizontalSlatsSingleRow
-  name: stack-white-steel-horizontal-slats-single-row-tile
-  spawn: FloorTileItemWhiteHorizontalSlatsSingleRow
+  id: FloorTileWhiteHorizontalSlatsBordered
+  name: stack-white-steel-horizontal-slats-tile-bordered
+  spawn: FloorTileItemWhiteHorizontalSlatsBordered
   maxCount: 30
 
 - type: stack

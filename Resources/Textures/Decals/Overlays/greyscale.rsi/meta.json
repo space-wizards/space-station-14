@@ -203,16 +203,16 @@
       "name": "pavement_vertical_checker_b"
     },
     {
-      "name": "verticalslats_overlay"
+      "name": "verticalslats_continuous_full"
     },
     {
-      "name": "verticalslats_singlerow_overlay"
+      "name": "verticalslats_bordered_full"
     },
     {
-      "name": "horizontalslats_overlay"
+      "name": "horizontalslats_continuous_full"
     },
     {
-      "name": "horizontalslats_singlerow_overlay"
+      "name": "horizontalslats_bordered_full"
     }
   ]
 }

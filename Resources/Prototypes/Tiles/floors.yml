@@ -191,9 +191,9 @@
   heatCapacity: 10000
 
 - type: tile
-  id: FloorSteelVerticalSlats
-  name: tiles-steel-floor-vertical-slats
-  sprite: /Textures/Tiles/steel_vertical_slats.png
+  id: FloorSteelVerticalSlatsContinuous
+  name: tiles-steel-floor-vertical-slats-continuous
+  sprite: /Textures/Tiles/steel_vertical_slats_continuous.png
   variants: 4
   placementVariants:
   - 1.0
@@ -205,13 +205,13 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemSteelVerticalSlats
+  itemDrop: FloorTileItemSteelVerticalSlatsContinuous
   heatCapacity: 10000
 
 - type: tile
-  id: FloorSteelVerticalSlatsSingleRow
-  name: tiles-steel-floor-vertical-slats-single-row
-  sprite: /Textures/Tiles/steel_vertical_slats_single_row.png
+  id: FloorSteelVerticalSlatsBordered
+  name: tiles-steel-floor-vertical-slats-bordered
+  sprite: /Textures/Tiles/steel_vertical_slats_bordered.png
   variants: 4
   placementVariants:
   - 1.0
@@ -223,13 +223,13 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemSteelVerticalSlatsSingleRow
+  itemDrop: FloorTileItemSteelVerticalSlatsBordered
   heatCapacity: 10000
 
 - type: tile
-  id: FloorSteelHorizontalSlats
-  name: tiles-steel-floor-horizontal-slats
-  sprite: /Textures/Tiles/steel_horizontal_slats.png
+  id: FloorSteelHorizontalSlatsContinuous
+  name: tiles-steel-floor-horizontal-slats-continuous
+  sprite: /Textures/Tiles/steel_horizontal_slats_continuous.png
   variants: 4
   placementVariants:
   - 1.0
@@ -241,13 +241,13 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemSteelHorizontalSlats
+  itemDrop: FloorTileItemSteelHorizontalSlatsContinuous
   heatCapacity: 10000
 
 - type: tile
-  id: FloorSteelHorizontalSlatsSingleRow
-  name: tiles-steel-floor-horizontal-slats-single-row
-  sprite: /Textures/Tiles/steel_horizontal_slats_single_row.png
+  id: FloorSteelHorizontalSlatsBordered
+  name: tiles-steel-floor-horizontal-slats-bordered
+  sprite: /Textures/Tiles/steel_horizontal_slats_bordered.png
   variants: 4
   placementVariants:
   - 1.0
@@ -259,7 +259,7 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemSteelHorizontalSlatsSingleRow
+  itemDrop: FloorTileItemSteelHorizontalSlatsBordered
   heatCapacity: 10000
 
 - type: tile
@@ -361,9 +361,9 @@
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWhiteVerticalSlats
-  name: tiles-white-floor-vertical-slats
-  sprite: /Textures/Tiles/white_vertical_slats.png
+  id: FloorWhiteVerticalSlatsContinuous
+  name: tiles-white-floor-vertical-slats-continuous
+  sprite: /Textures/Tiles/white_vertical_slats_continuous.png
   variants: 4
   placementVariants:
   - 1.0
@@ -375,13 +375,13 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemWhiteVerticalSlats
+  itemDrop: FloorTileItemWhiteVerticalSlatsContinuous
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWhiteVerticalSlatsSingleRow
-  name: tiles-white-floor-vertical-slats-single-row
-  sprite: /Textures/Tiles/white_vertical_slats_single_row.png
+  id: FloorWhiteVerticalSlatsBordered
+  name: tiles-white-floor-vertical-slats-bordered
+  sprite: /Textures/Tiles/white_vertical_slats_bordered.png
   variants: 4
   placementVariants:
   - 1.0
@@ -393,13 +393,13 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemWhiteVerticalSlatsSingleRow
+  itemDrop: FloorTileItemWhiteVerticalSlatsBordered
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWhiteHorizontalSlats
-  name: tiles-white-floor-horizontal-slats
-  sprite: /Textures/Tiles/white_horizontal_slats.png
+  id: FloorWhiteHorizontalSlatsContinuous
+  name: tiles-white-floor-horizontal-slats-continuous
+  sprite: /Textures/Tiles/white_horizontal_slats_continuous.png
   variants: 4
   placementVariants:
   - 1.0
@@ -411,13 +411,13 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemWhiteHorizontalSlats
+  itemDrop: FloorTileItemWhiteHorizontalSlatsContinuous
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWhiteHorizontalSlatsSingleRow
-  name: tiles-white-floor-horizontal-slats-single-row
-  sprite: /Textures/Tiles/white_horizontal_slats_single_row.png
+  id: FloorWhiteHorizontalSlatsBordered
+  name: tiles-white-floor-horizontal-slats-bordered
+  sprite: /Textures/Tiles/white_horizontal_slats_bordered.png
   variants: 4
   placementVariants:
   - 1.0
@@ -429,7 +429,7 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemWhiteHorizontalSlatsSingleRow
+  itemDrop: FloorTileItemWhiteHorizontalSlatsBordered
   heatCapacity: 10000
 
 - type: tile
@@ -607,9 +607,9 @@
   heatCapacity: 10000
 
 - type: tile
-  id: FloorDarkVerticalSlats
-  name: tiles-dark-floor-vertical-slats
-  sprite: /Textures/Tiles/dark_vertical_slats.png
+  id: FloorDarkVerticalSlatsContinuous
+  name: tiles-dark-floor-vertical-slats-continuous
+  sprite: /Textures/Tiles/dark_vertical_slats_continuous.png
   variants: 4
   placementVariants:
   - 1.0
@@ -621,13 +621,13 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemDarkVerticalSlats
+  itemDrop: FloorTileItemDarkVerticalSlatsContinuous
   heatCapacity: 10000
 
 - type: tile
-  id: FloorDarkVerticalSlatsSingleRow
-  name: tiles-dark-floor-vertical-slats-single-row
-  sprite: /Textures/Tiles/dark_vertical_slats_single_row.png
+  id: FloorDarkVerticalSlatsBordered
+  name: tiles-dark-floor-vertical-slats-bordered
+  sprite: /Textures/Tiles/dark_vertical_slats_bordered.png
   variants: 4
   placementVariants:
   - 1.0
@@ -639,13 +639,13 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemDarkVerticalSlatsSingleRow
+  itemDrop: FloorTileItemDarkVerticalSlatsBordered
   heatCapacity: 10000
 
 - type: tile
-  id: FloorDarkHorizontalSlats
-  name: tiles-dark-floor-horizontal-slats
-  sprite: /Textures/Tiles/dark_horizontal_slats.png
+  id: FloorDarkHorizontalSlatsContinuous
+  name: tiles-dark-floor-horizontal-slats-continuous
+  sprite: /Textures/Tiles/dark_horizontal_slats_continuous.png
   variants: 4
   placementVariants:
   - 1.0
@@ -657,13 +657,13 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemDarkHorizontalSlats
+  itemDrop: FloorTileItemDarkHorizontalSlatsContinuous
   heatCapacity: 10000
 
 - type: tile
-  id: FloorDarkHorizontalSlatsSingleRow
-  name: tiles-dark-floor-horizontal-slats-single-row
-  sprite: /Textures/Tiles/dark_horizontal_slats_single_row.png
+  id: FloorDarkHorizontalSlatsBordered
+  name: tiles-dark-floor-horizontal-slats-bordered
+  sprite: /Textures/Tiles/dark_horizontal_slats_bordered.png
   variants: 4
   placementVariants:
   - 1.0
@@ -675,7 +675,7 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemDarkHorizontalSlatsSingleRow
+  itemDrop: FloorTileItemDarkHorizontalSlatsBordered
   heatCapacity: 10000
 
 - type: tile

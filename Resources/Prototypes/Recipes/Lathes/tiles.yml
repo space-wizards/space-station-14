@@ -57,23 +57,23 @@
 
 - type: latheRecipe
   parent: BaseTileRecipe
-  id: FloorTileItemDarkVerticalSlats
-  result: FloorTileItemDarkVerticalSlats
+  id: FloorTileItemDarkVerticalSlatsContinuous
+  result: FloorTileItemDarkVerticalSlatsContinuous
 
 - type: latheRecipe
   parent: BaseTileRecipe
-  id: FloorTileItemDarkVerticalSlatsSingleRow
-  result: FloorTileItemDarkVerticalSlatsSingleRow
+  id: FloorTileItemDarkVerticalSlatsBordered
+  result: FloorTileItemDarkVerticalSlatsBordered
 
 - type: latheRecipe
   parent: BaseTileRecipe
-  id: FloorTileItemDarkHorizontalSlats
-  result: FloorTileItemDarkHorizontalSlats
+  id: FloorTileItemDarkHorizontalSlatsContinuous
+  result: FloorTileItemDarkHorizontalSlatsContinuous
 
 - type: latheRecipe
   parent: BaseTileRecipe
-  id: FloorTileItemDarkHorizontalSlatsSingleRow
-  result: FloorTileItemDarkHorizontalSlatsSingleRow
+  id: FloorTileItemDarkHorizontalSlatsBordered
+  result: FloorTileItemDarkHorizontalSlatsBordered
 
 - type: latheRecipe
   parent: BaseTileRecipe
@@ -127,23 +127,23 @@
 
 - type: latheRecipe
   parent: BaseTileRecipe
-  id: FloorTileItemSteelVerticalSlats
-  result: FloorTileItemSteelVerticalSlats
+  id: FloorTileItemSteelVerticalSlatsContinuous
+  result: FloorTileItemSteelVerticalSlatsContinuous
 
 - type: latheRecipe
   parent: BaseTileRecipe
-  id: FloorTileItemSteelVerticalSlatsSingleRow
-  result: FloorTileItemSteelVerticalSlatsSingleRow
+  id: FloorTileItemSteelVerticalSlatsBordered
+  result: FloorTileItemSteelVerticalSlatsBordered
 
 - type: latheRecipe
   parent: BaseTileRecipe
-  id: FloorTileItemSteelHorizontalSlats
-  result: FloorTileItemSteelHorizontalSlats
+  id: FloorTileItemSteelHorizontalSlatsContinuous
+  result: FloorTileItemSteelHorizontalSlatsContinuous
 
 - type: latheRecipe
   parent: BaseTileRecipe
-  id: FloorTileItemSteelHorizontalSlatsSingleRow
-  result: FloorTileItemSteelHorizontalSlatsSingleRow
+  id: FloorTileItemSteelHorizontalSlatsBordered
+  result: FloorTileItemSteelHorizontalSlatsBordered
 
 - type: latheRecipe
   parent: BaseTileRecipe
@@ -197,23 +197,23 @@
 
 - type: latheRecipe
   parent: BaseTileRecipe
-  id: FloorTileItemWhiteVerticalSlats
-  result: FloorTileItemWhiteVerticalSlats
+  id: FloorTileItemWhiteVerticalSlatsContinuous
+  result: FloorTileItemWhiteVerticalSlatsContinuous
 
 - type: latheRecipe
   parent: BaseTileRecipe
-  id: FloorTileItemWhiteVerticalSlatsSingleRow
-  result: FloorTileItemWhiteVerticalSlatsSingleRow
+  id: FloorTileItemWhiteVerticalSlatsBordered
+  result: FloorTileItemWhiteVerticalSlatsBordered
 
 - type: latheRecipe
   parent: BaseTileRecipe
-  id: FloorTileItemWhiteHorizontalSlats
-  result: FloorTileItemWhiteHorizontalSlats
+  id: FloorTileItemWhiteHorizontalSlatsContinuous
+  result: FloorTileItemWhiteHorizontalSlatsContinuous
 
 - type: latheRecipe
   parent: BaseTileRecipe
-  id: FloorTileItemWhiteHorizontalSlatsSingleRow
-  result: FloorTileItemWhiteHorizontalSlatsSingleRow
+  id: FloorTileItemWhiteHorizontalSlatsBordered
+  result: FloorTileItemWhiteHorizontalSlatsBordered
 
 - type: latheRecipe
   parent: BaseTileRecipe

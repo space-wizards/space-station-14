@@ -447,36 +447,36 @@
     state: minitile_line_w
 
 - type: decal
-  id: VerticalSlatOverlay
+  id: VerticalSlatContinuousOverlayFull
   tags: ["station", "overlay"]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
-    state: verticalslats_overlay
+    state: verticalslats_continuous_full
 
 - type: decal
-  id: VerticalSlatSingleRowOverlay
+  id: VerticalSlatBorderedOverlayFull
   tags: ["station", "overlay"]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
-    state: verticalslats_singlerow_overlay
+    state: verticalslats_bordered_full
 
 - type: decal
-  id: HorizontalSlatOverlay
+  id: HorizontalSlatContinuousOverlayFull
   tags: ["station", "overlay"]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
-    state: horizontalslats_overlay
+    state: horizontalslats_continuous_full
 
 - type: decal
-  id: HorizontalSlatSingleRowOverlay
+  id: HorizontalSlatBorderedOverlayFull
   tags: ["station", "overlay"]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
-    state: horizontalslats_singlerow_overlay
+    state: horizontalslats_bordered_full
 
 - type: decal
   id: OffsetOverlay

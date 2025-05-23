@@ -9,10 +9,10 @@
   - FloorTileItemDarkHerringbone
   - FloorTileItemDarkMini
   - FloorTileItemDarkMono
-  - FloorTileItemDarkVerticalSlats
-  - FloorTileItemDarkVerticalSlatsSingleRow
-  - FloorTileItemDarkHorizontalSlats
-  - FloorTileItemDarkHorizontalSlatsSingleRow
+  - FloorTileItemDarkVerticalSlatsContinuous
+  - FloorTileItemDarkVerticalSlatsBordered
+  - FloorTileItemDarkHorizontalSlatsContinuous
+  - FloorTileItemDarkHorizontalSlatsBordered
   - FloorTileItemDarkPavement
   - FloorTileItemDarkPavementVertical
   - FloorTileItemDarkOffset
@@ -23,10 +23,10 @@
   - FloorTileItemSteelDiagonal
   - FloorTileItemSteelHerringbone
   - FloorTileItemSteelMini
-  - FloorTileItemSteelVerticalSlats
-  - FloorTileItemSteelVerticalSlatsSingleRow
-  - FloorTileItemSteelHorizontalSlats
-  - FloorTileItemSteelHorizontalSlatsSingleRow
+  - FloorTileItemSteelVerticalSlatsContinuous
+  - FloorTileItemSteelVerticalSlatsBordered
+  - FloorTileItemSteelHorizontalSlatsContinuous
+  - FloorTileItemSteelHorizontalSlatsBordered
   - FloorTileItemSteelMono
   - FloorTileItemSteelPavement
   - FloorTileItemSteelPavementVertical
@@ -37,10 +37,10 @@
   - FloorTileItemWhiteHerringbone
   - FloorTileItemWhiteMini
   - FloorTileItemWhiteMono
-  - FloorTileItemWhiteVerticalSlats
-  - FloorTileItemWhiteVerticalSlatsSingleRow
-  - FloorTileItemWhiteHorizontalSlats
-  - FloorTileItemWhiteHorizontalSlatsSingleRow
+  - FloorTileItemWhiteVerticalSlatsContinuous
+  - FloorTileItemWhiteVerticalSlatsBordered
+  - FloorTileItemWhiteHorizontalSlatsContinuous
+  - FloorTileItemWhiteHorizontalSlatsBordered
   - FloorTileItemWhitePavement
   - FloorTileItemWhitePavementVertical
   - FloorTileItemSteelCheckerLight
