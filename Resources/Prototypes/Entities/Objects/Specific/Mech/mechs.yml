@@ -321,6 +321,10 @@
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
+    equipmentWhitelist:
+      tags:
+      - CombatMech
+      - IndustrialMech
     baseState: paddy
     openState: paddy-open
     brokenState: paddy-broken
