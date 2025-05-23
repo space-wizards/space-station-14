@@ -40,6 +40,8 @@ namespace Content.Client.Cargo.UI
         private readonly List<string> _categoryStrings = new();
         private string? _category;
 
+        public List<ProtoId<CargoProductPrototype>> ProductCatalogue = new();
+
         public CargoConsoleMenu(EntityUid owner, IEntityManager entMan, IPrototypeManager protoManager, SpriteSystem spriteSystem)
         {
             RobustXamlLoader.Load(this);
@@ -113,14 +115,16 @@ namespace Content.Client.Cargo.UI
             Categories.SelectId(id);
         }
 
-        public IEnumerable<CargoProductPrototype> ProductPrototypes
+        private IEnumerable<CargoProductPrototype> ProductPrototypes
         {
             get
             {
                 var allowedGroups = _entityManager.GetComponentOrNull<CargoOrderConsoleComponent>(_owner)?.AllowedGroups;
 
-                foreach (var cargoPrototype in _protoManager.EnumeratePrototypes<CargoProductPrototype>())
+                foreach (var cargoPrototypeId in ProductCatalogue)
                 {
+                    var cargoPrototype = _protoManager.Index(cargoPrototypeId);
+
                     if (!allowedGroups?.Contains(cargoPrototype.Group) ?? false)
                         continue;
 
