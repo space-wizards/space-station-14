@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Various tweaks to Cosmic Cult based on player feedback. Check out the
-      pull request on GitHub for full details!
-    type: Tweak
-  id: 1213
-  time: '2025-03-01T04:06:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1804
 - author: hivehum
   changes:
   - message: Workplace relationships are unethical and all romance has been removed
@@ -4228,3 +4220,10 @@
   id: 1712
   time: '2025-05-23T04:32:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2558
+- author: Mousetrinity
+  changes:
+  - message: the devil's pitchfork is a normal pitchfork now
+    type: Fix
+  id: 1713
+  time: '2025-05-23T10:21:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2542
