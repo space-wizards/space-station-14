@@ -48,8 +48,10 @@ public abstract class SharedAnomalyScannerSystem : EntitySystem
     {
         if (args.Target is not { } target)
             return;
+
         if (!HasComp<AnomalyComponent>(target))
             return;
+
         if (!args.CanReach)
             return;
 
