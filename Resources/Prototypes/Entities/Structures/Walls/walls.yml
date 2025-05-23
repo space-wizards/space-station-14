@@ -1363,6 +1363,7 @@
 - type: entity
   id: WallInvisible
   name: invisible wall
+  suffix: mime
   components:
   - type: TimedDespawn
     lifetime: 15

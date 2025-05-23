@@ -1,0 +1,31 @@
+﻿- type: entity
+  id: WallInvisibleMapping
+  name: invisible wall
+  suffix: mapping
+  placement:
+    mode: AlignTileAny
+  components:
+  # Basic wall stuff
+  - type: Tag
+    tags:
+    - Wall
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: Airtight
+
+  # Visibility stuff for mapping tools.
+  - type: MapInvisible
+  - type: Sprite
+    sprite: Mapping/invisible_wall.rsi
+    state: wall
+  - type: Clickable
