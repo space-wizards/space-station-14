@@ -1,5 +1,5 @@
 - type: typingIndicator
-  id: default
+  id: default8
   typingState: default0
   idleState: default3
 
@@ -20,7 +20,7 @@
 
 - type: typingIndicator
   id: guardian
-  typingState: guardian0
+  typingState: guardian0 
   idleState: guardian3
 
 - type: typingIndicator
@@ -68,13 +68,13 @@
 - type: typingIndicator
   id: gingerbread
   typingState: gingerbread0
-  idleState: gingerbread0
+  idleState: gingerbread3
   offset: 0, 0.125
 
 - type: typingIndicator
   id: diona
   typingState: diona0
-  idleState: diona0
+  idleState: diona3
   offset: 0, 0.125
 
 - type: typingIndicator
