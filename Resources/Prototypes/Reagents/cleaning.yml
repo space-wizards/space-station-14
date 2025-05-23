@@ -48,6 +48,10 @@
   recognizable: true
   boilingPoint: 100.0
   meltingPoint: 60.0
+  # Copying SlipData and Friction from water (base_drink) for now, but this should probably be a bit slipperier than that
+  slipData:
+    requiredSlipSpeed: 3.5
+  friction: 0.4
   metabolisms:
     Food:
       effects:
