@@ -11,19 +11,18 @@ namespace Content.Client.Atmos.EntitySystems;
 public sealed class GasCanisterAppearanceSystem : VisualizerSystem<GasCanisterComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, GasCanisterComponent component, ref AppearanceChangeEvent args)
     {
         if (!AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var protoName, args.Component) || args.Sprite is not { } old)
             return;
 
-        if (!_prototypeManager.TryIndex(protoName, out var proto))
+        if (!_prototypeManager.HasIndex(protoName))
             return;
 
-        if (!proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
-            return;
-
-        old.LayerSetState(0, sprite.LayerGetState(0));
+        // Create the given prototype and get its first layer.
+        var tempUid = Spawn(protoName);
+        SpriteSystem.LayerSetRsiState(uid, 0, SpriteSystem.LayerGetRsiState(tempUid, 0));
+        QueueDel(tempUid);
     }
 }

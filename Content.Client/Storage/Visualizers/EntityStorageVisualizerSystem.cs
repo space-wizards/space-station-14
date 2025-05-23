@@ -9,7 +9,6 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -47,7 +46,7 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
             {
                 if (proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
                 {
-                    _sprite.SetBaseRsi((uid, args.Sprite), sprite.BaseRSI);
+                    SpriteSystem.SetBaseRsi((uid, args.Sprite), sprite.BaseRSI);
                 }
                 if (proto.TryGetComponent(out EntityStorageVisualsComponent? visuals, _componentFactory))
                 {
