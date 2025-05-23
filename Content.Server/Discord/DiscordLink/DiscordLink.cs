@@ -13,7 +13,7 @@ namespace Content.Server.Discord.DiscordLink;
 /// <summary>
 /// Represents the arguments for the <see cref="DiscordLink.OnCommandReceived"/> event.
 /// </summary>
-public record CommandReceivedEventArgs
+public sealed class CommandReceivedEventArgs
 {
     /// <summary>
     /// The command that was received. This is the first word in the message, after the bot prefix.
@@ -46,12 +46,10 @@ public sealed class DiscordLink : IPostInjectInit
     /// </remarks>
     private DiscordSocketClient? _client;
     private ISawmill _sawmill = default!;
-    private ISawmill _sawmillNet = default!;
+    private ISawmill _sawmillLog = default!;
 
     private ulong _guildId;
     private string _botToken = string.Empty;
-
-    private bool _registeredLinks = false;
 
     public string BotPrefix = default!;
     /// <summary>
@@ -92,14 +90,6 @@ public sealed class DiscordLink : IPostInjectInit
             return;
         }
 
-        _client = new DiscordSocketClient(new DiscordSocketConfig()
-        {
-            GatewayIntents = GatewayIntents.All
-        });
-        _client.Log += Log;
-        _client.MessageReceived += OnCommandReceivedInternal;
-        _client.MessageReceived += OnMessageReceivedInternal;
-
         // If the Guild ID is empty OR the prefix is empty, we don't want to connect to Discord.
         if (_guildId == 0 || BotPrefix == string.Empty)
         {
@@ -110,6 +100,14 @@ public sealed class DiscordLink : IPostInjectInit
             _client = null;
             return;
         }
+
+        _client = new DiscordSocketClient(new DiscordSocketConfig()
+        {
+            GatewayIntents = GatewayIntents.All
+        });
+        _client.Log += Log;
+        _client.MessageReceived += OnCommandReceivedInternal;
+        _client.MessageReceived += OnMessageReceivedInternal;
 
         _botToken = token;
         // Since you cannot change the token while the server is running / the DiscordLink is initialized,
@@ -157,7 +155,7 @@ public sealed class DiscordLink : IPostInjectInit
     void IPostInjectInit.PostInject()
     {
         _sawmill = _logManager.GetSawmill("discord.link");
-        _sawmillNet = _logManager.GetSawmill("discord.link.log");
+        _sawmillLog = _logManager.GetSawmill("discord.link.log");
     }
 
     private void OnGuildIdChanged(string guildId)
@@ -199,15 +197,15 @@ public sealed class DiscordLink : IPostInjectInit
             _ => LogLevel.Debug
         };
 
-        _sawmillNet.Log(logLevel, FormatLog(msg));
+        _sawmillLog.Log(logLevel, FormatLog(msg));
         return Task.CompletedTask;
     }
 
     private Task OnCommandReceivedInternal(SocketMessage message)
     {
         var content = message.Content;
-        // If the message is too short to be a command, or doesn't start with the bot prefix, ignore it.
-        if (content.Length <= BotPrefix.Length || !content.StartsWith(BotPrefix))
+        // If the message doesn't start with the bot prefix, ignore it.
+        if (!content.StartsWith(BotPrefix))
             return Task.CompletedTask;
 
         // Split the message into the command and the arguments.
@@ -246,7 +244,7 @@ public sealed class DiscordLink : IPostInjectInit
         var channel = _client.GetChannel(channelId) as IMessageChannel;
         if (channel == null)
         {
-            _sawmill.Error("Tried to send a message to Discord but the channel was not found.");
+            _sawmill.Error("Tried to send a message to Discord but the channel {Channel} was not found.", channel);
             return;
         }
 

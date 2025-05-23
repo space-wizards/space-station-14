@@ -10,8 +10,8 @@ namespace Content.Server.Discord.DiscordLink;
 
 public sealed class DiscordChatLink
 {
-    [Dependency] private DiscordLink _discordLink = default!;
-    [Dependency] private IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly DiscordLink _discordLink = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly ITaskManager _taskManager = default!;
 
@@ -61,13 +61,15 @@ public sealed class DiscordChatLink
         if (message.Author.IsBot)
             return;
 
+        var contents = message.Content.ReplaceLineEndings(" ");
+
         if (message.Channel.Id == _oocChannelId)
         {
-            _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(message.Author.Username, message.Content));
+            _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(message.Author.Username, contents));
         }
         else if (message.Channel.Id == _adminChannelId)
         {
-            _taskManager.RunOnMainThread(() => _chatManager.SendHookAdmin(message.Author.Username, message.Content));
+            _taskManager.RunOnMainThread(() => _chatManager.SendHookAdmin(message.Author.Username, contents));
         }
     }
 
