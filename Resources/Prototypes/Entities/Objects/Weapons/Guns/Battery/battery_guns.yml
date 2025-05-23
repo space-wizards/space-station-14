@@ -16,7 +16,7 @@
   - type: Gun
     fireRate: 2
     impulseStrength: 0
-    cameraRecoilScalar: 0 #Notice: Lasers have 0 recoil, other energy projectile weapons like disabler and eshotgun vary.
+    cameraRecoilScalar: 0.25 #Notice: Hitscan lasers have lower recoil, other energy projectile weapons like disabler and eshotgun vary.
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -40,7 +40,7 @@
   - type: Gun
     fireRate: 2
     impulseStrength: 0
-    cameraRecoilScalar: 0 #Notice: Lasers have 0 recoil, other energy projectile weapons like disabler and eshotgun vary.
+    cameraRecoilScalar: 0.25 #Notice: Hitscan lasers have lower recoil, other energy projectile weapons like disabler and eshotgun vary.
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -580,8 +580,8 @@
     slots:
     - Belt
   - type: Gun
-    impulseStrength: 25
-    cameraRecoilScalar: .25 #I watched a YouTube video of a taser test fire and it looked like it had a teeny tiny amount of recoil
+    impulseStrength: 0
+    cameraRecoilScalar: 0.25 #I watched a YouTube video of a taser test fire and it looked like it had a teeny tiny amount of recoil
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: ProjectileBatteryAmmoProvider
