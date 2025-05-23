@@ -1,7 +1,7 @@
 # Low aggro
 # These should be very formal order to comply. Don't mention "arrest" or put any hard insult/swear in it.
 
-hail-low-0 = You are in violation of Nanotrasen's law!!
+hail-low-0 = You are in violation of Nanotrasen's laws!!
 hail-low-1 = Game over, criminal!!
 hail-low-2 = Attention, citizen!!
 hail-low-3 = You're coming with me!!
