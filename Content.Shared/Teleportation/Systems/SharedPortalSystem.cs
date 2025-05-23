@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.Ghost;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
@@ -6,7 +6,6 @@ using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -66,16 +65,11 @@ public abstract class SharedPortalSystem : EntitySystem
                 if (link == null || disabled)
                     return;
 
-                var destination = link.LinkedEntities.First();
+                // check prediction
+                if (_netMan.IsClient && !CanPredictTeleport((ent, link)))
+                    return;
 
-                // client can't predict outside of simple portal-to-portal
-                // --also can't predict if the target doesn't exist on the client / is outside of PVS
-                if (_netMan.IsClient)
-                {
-                    var exists = Exists(destination);
-                    if (!exists || (exists && Transform(destination).MapID == MapId.Nullspace))
-                        return;
-                }
+                var destination = link.LinkedEntities.First();
 
                 TeleportEntity(ent, subject, Transform(destination).Coordinates, destination, false);
             },
@@ -122,15 +116,9 @@ public abstract class SharedPortalSystem : EntitySystem
             if (link.LinkedEntities.Count == 0)
                 return;
 
-            // client can't predict outside of simple portal-to-portal interactions due to randomness involved
-            // --also can't predict if the target doesn't exist on the client / is outside of PVS
-            if (_netMan.IsClient)
-            {
-                var first = link.LinkedEntities.First();
-                var exists = Exists(first);
-                if (link.LinkedEntities.Count != 1 || !exists || (exists && Transform(first).MapID == MapId.Nullspace))
-                    return;
-            }
+            // check prediction
+            if (_netMan.IsClient && !CanPredictTeleport((ent, link)))
+                return;
 
             // pick a target and teleport there
             var target = _random.Pick(link.LinkedEntities);
@@ -179,6 +167,27 @@ public abstract class SharedPortalSystem : EntitySystem
     private bool ShouldCollide(string ourId, string otherId, Fixture our, Fixture other)
     {
         return ourId == PortalFixture && (other.Hard || otherId == ProjectileFixture);
+    }
+
+    /// <summary>
+    /// Checks if the the client is able to predict the teleport.
+    /// Client can't predict outside of 1-to-1 portal-to-portal interactions due to randomness involved.
+    /// </summary>
+    /// <returns>
+    /// False if the linked entity count isn't 1.
+    /// False if the linked entity doesn't exist on the client / is outside of PVS.
+    /// </returns>
+    private bool CanPredictTeleport(Entity<LinkedEntityComponent> portal)
+    {
+        var first = portal.Comp.LinkedEntities.First();
+        var exists = Exists(first);
+
+        if (!exists ||
+            portal.Comp.LinkedEntities.Count != 1 || // 0 and >1 use RNG
+            exists && Transform(first).MapID == MapId.Nullspace) // The linked entity is most likely outside PVS
+            return false;
+
+        return true;
     }
 
     /// <summary>
@@ -241,7 +250,7 @@ public abstract class SharedPortalSystem : EntitySystem
 
     /// <summary>
     /// Finds a random coordinate within the portal's radius and teleports the subject there.
-    /// Makes <see cref="MaxRandomTeleportAttempts"> attempts to not put the subject inside a static entity (e.g. wall).
+    /// Attempts to not put the subject inside a static entity (e.g. wall).
     /// </summary>
     /// <param name="ent"> The portal being collided with. </param>
     /// <param name="subject"> The entity getting teleported. </param>
