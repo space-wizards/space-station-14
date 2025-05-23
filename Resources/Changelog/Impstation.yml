@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ruddygreat
-  changes:
-  - message: The Monument can now be used by multiple cultists at the same time(!)
-    type: Tweak
-  id: 1220
-  time: '2025-03-02T21:27:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1816
 - author: Piras314, hivehum, Darkmajia
   changes:
   - message: Lobby art is credited at the bottom of the lobby screen.
@@ -4224,3 +4217,10 @@
   id: 1719
   time: '2025-05-23T19:52:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2463
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Fixed ghost role menu not showing job names.
+    type: Fix
+  id: 1720
+  time: '2025-05-23T20:10:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2569
