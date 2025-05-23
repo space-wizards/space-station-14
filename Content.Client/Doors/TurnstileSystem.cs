@@ -13,7 +13,7 @@ namespace Content.Client.Doors;
 public sealed class TurnstileSystem : SharedTurnstileSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
     private static readonly EntProtoId ExamineArrow = "TurnstileArrow";
 
@@ -29,11 +29,11 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
     {
         if (args.Key == nameof(TurnstileVisualLayers.Indicators))
         {
-            _sprite.LayerSetVisible(ent.Owner, TurnstileVisualLayers.Indicators, false);
+            _spriteSystem.LayerSetVisible(ent.Owner, TurnstileVisualLayers.Indicators, false);
         }
         else if (args.Key != nameof(TurnstileVisualLayers.Spinner))
         {
-            _sprite.LayerSetRsiState(ent.Owner, TurnstileVisualLayers.Spinner, new RSI.StateId(ent.Comp.DefaultState));
+            _spriteSystem.LayerSetRsiState(ent.Owner, TurnstileVisualLayers.Spinner, new RSI.StateId(ent.Comp.DefaultState));
         }
     }
 
@@ -42,14 +42,31 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
         Spawn(ExamineArrow, new EntityCoordinates(ent, 0, 0));
     }
 
+    protected override void StopAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
+    {
+        StopAnimation(uid, layer, stateId, null);
+    }
+
+    private void StopAnimation(EntityUid uid,
+        TurnstileVisualLayers layer,
+        string stateId,
+        AnimationPlayerComponent? player = null)
+    {
+        if (!Resolve(uid, ref player, logMissing: false))
+            return;
+
+        var ent = (uid, player);
+
+        if (_animationPlayer.HasRunningAnimation(player, layer.ToString()))
+            _animationPlayer.Stop(ent, layer.ToString());
+    }
+
     protected override void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
     {
         if (!TryComp<AnimationPlayerComponent>(uid, out var animation) || !TryComp<SpriteComponent>(uid, out var sprite))
             return;
-        var ent = (uid, animation);
 
-        if (_animationPlayer.HasRunningAnimation(animation, layer.ToString()))
-            _animationPlayer.Stop(ent, layer.ToString());
+        StopAnimation(uid, layer, stateId, animation);
 
         if (sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(stateId, out var state))
             return;
@@ -71,7 +88,7 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
             Length = TimeSpan.FromSeconds(animLength),
         };
 
-        _sprite.LayerSetVisible(uid, layer, true);
-        _animationPlayer.Play(ent, anim, layer.ToString());
+        _spriteSystem.LayerSetVisible(uid, layer, true);
+        _animationPlayer.Play(uid, anim, layer.ToString());
     }
 }

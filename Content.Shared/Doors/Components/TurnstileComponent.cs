@@ -31,7 +31,7 @@ public sealed partial class TurnstileComponent : Component
     /// Maintained hashset of entities currently passing through the turnstile.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<EntityUid> CollideExceptions = new();
+    public Dictionary<EntityUid, EntranceMethod> CollideExceptions = new();
 
     /// <summary>
     /// Maintained dictionary of entities that can enter due to a successful prying DoAfter
@@ -109,6 +109,15 @@ public sealed partial class TurnstileComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan PryExpirationTime = TimeSpan.FromSeconds(3);
+
+    [DataField, AutoNetworkedField]
+    public bool AccessBroken;
+}
+
+[Serializable, NetSerializable]
+public enum TurnstileVisuals : byte
+{
+    AccessBroken,
 }
 
 [Serializable, NetSerializable]
@@ -117,4 +126,15 @@ public enum TurnstileVisualLayers : byte
     Base,
     Spinner,
     Indicators,
+    BoltIndicators,
+}
+
+[Serializable, NetSerializable]
+public enum EntranceMethod : byte
+{
+    Access = 0,
+    Pulled,
+    ChainPulled,
+    Forced,
+    AccessBroken,
 }

@@ -25,6 +25,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -42,16 +43,19 @@ public abstract class SharedTurnstileSystem : EntitySystem
         if (args.Cancelled || !args.OurFixture.Hard || !args.OtherFixture.Hard)
             return;
 
-        if (ent.Comp.CollideExceptions.Contains(args.OtherEntity))
+        if (ent.Comp.CollideExceptions.ContainsKey(args.OtherEntity))
         {
             args.Cancelled = true;
             return;
         }
 
         // We need to add this in here too for chain pulls
-        if (_pulling.GetPuller(args.OtherEntity) is { } puller && ent.Comp.CollideExceptions.Contains(puller))
+        if (_pulling.GetPuller(args.OtherEntity) is { } puller
+            && ent.Comp.CollideExceptions.TryGetValue(puller, out var pullerMethod))
         {
-            ent.Comp.CollideExceptions.Add(args.OtherEntity);
+            var pullerPulled = pullerMethod is EntranceMethod.Pulled or EntranceMethod.ChainPulled;
+            var method = pullerPulled ? EntranceMethod.ChainPulled : EntranceMethod.Pulled;
+            ent.Comp.CollideExceptions.Add(args.OtherEntity, method);
             Dirty(ent);
             args.Cancelled = true;
             return;
@@ -66,9 +70,9 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
         if (ent.Comp.PriedExceptions.ContainsKey(args.OtherEntity))
         {
-            ent.Comp.CollideExceptions.Add(args.OtherEntity);
+            ent.Comp.CollideExceptions.Add(args.OtherEntity, EntranceMethod.Forced);
             if (_pulling.GetPulling(args.OtherEntity) is { } uid)
-                ent.Comp.CollideExceptions.Add(uid);
+                ent.Comp.CollideExceptions.Add(uid, EntranceMethod.Pulled);
 
             ent.Comp.PriedExceptions.Remove(args.OtherEntity);
             args.Cancelled = true;
@@ -81,9 +85,9 @@ public abstract class SharedTurnstileSystem : EntitySystem
             if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 return;
 
-            ent.Comp.CollideExceptions.Add(args.OtherEntity);
+            ent.Comp.CollideExceptions.Add(args.OtherEntity, EntranceMethod.Access);
             if (_pulling.GetPulling(args.OtherEntity) is { } uid)
-                ent.Comp.CollideExceptions.Add(uid);
+                ent.Comp.CollideExceptions.Add(uid, EntranceMethod.Pulled);
 
             args.Cancelled = true;
             Dirty(ent);
@@ -101,7 +105,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
     private void OnStartCollide(Entity<TurnstileComponent> ent, ref StartCollideEvent args)
     {
-        if (!ent.Comp.CollideExceptions.Contains(args.OtherEntity))
+        if (!ent.Comp.CollideExceptions.TryGetValue(args.OtherEntity, out var method))
         {
             if (CanPassDirection(ent, args.OtherEntity))
             {
@@ -116,7 +120,8 @@ public abstract class SharedTurnstileSystem : EntitySystem
         }
         // if they passed through:
         PlayAnimation(ent, TurnstileVisualLayers.Spinner, ent.Comp.SpinState);
-        PlayAnimation(ent, TurnstileVisualLayers.Indicators, ent.Comp.GrantedState);
+        if(method == EntranceMethod.Access)
+            PlayAnimation(ent, TurnstileVisualLayers.Indicators, ent.Comp.GrantedState);
         _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity);
     }
 
@@ -148,10 +153,9 @@ public abstract class SharedTurnstileSystem : EntitySystem
         return diff < Math.PI / 4;
     }
 
-    protected virtual void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
-    {
+    protected virtual void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId) { }
 
-    }
+    protected virtual void StopAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId) { }
 
     public void SetSolenoidBypassed(Entity<TurnstileComponent> ent, bool value)
     {
