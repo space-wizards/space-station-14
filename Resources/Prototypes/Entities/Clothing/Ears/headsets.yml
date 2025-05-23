@@ -104,6 +104,9 @@
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/centcom.rsi
+  - type: RadioChime #Starlight
+    chimeSound:
+      path: /Audio/_Starlight/Effects/Radio/marauder.ogg
 
 - type: entity
   parent: [ClothingHeadset, BaseCommandContraband]
