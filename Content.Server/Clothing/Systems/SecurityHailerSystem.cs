@@ -77,7 +77,7 @@ namespace Content.Server.Clothing.Systems
                 collectionResolver = (ResolvedCollectionSpecifier)_audio.ResolveSound(comp.HOSReplaceSounds); //add a check ? What to do if multiple in future ?
             }
 
-            _audio.PlayPvs(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
+            base.PlayVoiceLine(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
 
             return collectionResolver.Index;
         }

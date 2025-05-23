@@ -11,8 +11,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stealth.Components;
-using Content.Shared.Swab;
-using Content.Shared.Temperature.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -339,6 +337,12 @@ namespace Content.Shared.Clothing.EntitySystems
             _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
             IncreaseAggressionLevel(ent);
             Dirty(ent);
+        }
+
+        //Move to shared for predictions purposes. Is this good ?
+        public void PlayVoiceLine(ResolvedSoundSpecifier resolver, EntityUid owner, AudioParams audioParams)
+        {
+            _sharedAudio.PlayPvs(resolver, owner, audioParams);
         }
     }
 }
