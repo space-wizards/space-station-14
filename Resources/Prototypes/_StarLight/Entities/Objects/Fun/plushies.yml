@@ -25,12 +25,6 @@
       maximumWait: 1
     - type: TextToSpeech
 
-- type: localizedDataset
-  id: PlushiesMatthew
-  values:
-    prefix: advertisement-smartfridge-
-    count: 8
-
 - type: entity
   parent: BaseResomiPlushie
   id: PlushieEmmie
@@ -51,7 +45,7 @@
   parent: BaseResomiPlushie
   id: PlushieMorgana
   name: morgana plushie
-  description: TODO
+  description: A bird flies to a mountain made of diamond every thousands years to sharpen its beak. When that mountain is, but a heap. That is when a single moment of eternity passes. Many say; that is a hell of a long time. I say; that is one hell of bird.
   components:
   - type: Item
     size: Small
@@ -60,6 +54,18 @@
     sprite: _Starlight/Objects/Fun/Plushies/morgana_plushie.rsi
     layers: 
       - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: Advertise
+      pack: PlushiesMorgana
+      minimumWait: 1
+      maximumWait: 1
+    - type: TextToSpeech
+      voice: bettylabomba
 
 - type: entity
   parent: BaseResomiPlushie
@@ -93,7 +99,7 @@
   parent: BaseVulpkaninPlushie
   id: PlushieLance
   name: lance plushie
-  description: TODO
+  description: Turning the QM into a marketable plushie was not as profitable a venture as many in the cargo department had hoped
   components:
   - type: Item
     size: Small
@@ -102,12 +108,24 @@
     sprite: _Starlight/Objects/Fun/Plushies/lance_plushie.rsi
     layers: 
       - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: Advertise
+      pack: PlushiesLance
+      minimumWait: 1
+      maximumWait: 1
+    - type: TextToSpeech
+      voice: barneycalhoun
 
 - type: entity
   parent: BaseVulpkaninPlushie
   id: PlushieKiller
   name: killer plushie
-  description: TODO
+  description: The Corpsman that lives up to his name, being the first or the last thing you see depending on which side of the fence you stand on. The volume setting appears to be stuck on max..
   components:
   - type: Item
     size: Small
@@ -116,6 +134,18 @@
     sprite: _Starlight/Objects/Fun/Plushies/killer_plushie.rsi
     layers: 
       - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: Advertise
+      pack: PlushiesKiller
+      minimumWait: 1
+      maximumWait: 1
+    - type: TextToSpeech
+      voice: heavy
 
 - type: entity
   parent: PlushieHuman
