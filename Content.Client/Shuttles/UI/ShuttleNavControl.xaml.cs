@@ -40,6 +40,8 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
     private List<Vector2> _meteors = new();
 
+    private List<Vector2> _pdShots = new();
+
     public bool ShowIFF { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
     public bool ShowMeteors { get; set; } = true;
@@ -127,6 +129,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
         _docks = state.Docks;
         _meteors = state.Meteors;
+        _pdShots = state.PDShots;
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -159,6 +162,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         var shuttleToWorld = Matrix3x2.Multiply(posMatrix, ourEntMatrix);
         Matrix3x2.Invert(shuttleToWorld, out var worldToShuttle);
         var shuttleToView = Matrix3x2.CreateScale(new Vector2(MinimapScale, -MinimapScale)) * Matrix3x2.CreateTranslation(MidPointVector);
+        var worldToView = Matrix3x2.Multiply(worldToShuttle, shuttleToView);
 
         // Draw our grid in detail
         var ourGridId = xform.GridUid;
@@ -281,7 +285,8 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
             DrawDocks(handle, gUid, curGridToView);
         }
 
-        DrawMeteors(handle, worldToShuttle, shuttleToView);
+        DrawMeteors(handle, worldToView);
+        DrawPDShots(handle, worldToView);
 
         // If we've set the controlling console, and it's on a different grid
         // to the shuttle itself, then draw an additional marker to help the
@@ -291,14 +296,14 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
             if (consoleXform.ParentUid != _coordinates.Value.EntityId)
             {
                 var consolePositionWorld = _transform.GetWorldPosition((EntityUid)_consoleEntity);
-                var p = Vector2.Transform(consolePositionWorld, worldToShuttle * shuttleToView);
+                var p = Vector2.Transform(consolePositionWorld, worldToView);
                 handle.DrawCircle(p, 5, Color.ToSrgb(Color.Cyan), true);
             }
         }
 
     }
 
-    private void DrawMeteors(DrawingHandleScreen handle, Matrix3x2 worldToShuttle, Matrix3x2 shuttleToView)
+    private void DrawMeteors(DrawingHandleScreen handle, Matrix3x2 worldToView)
     {
         if (!ShowMeteors)
             return;
@@ -306,17 +311,8 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         const float meteorDiamondScalar = 1f;
         var color = Color.ToSrgb(Color.Red);
 
-        // Worst-case bounds used to cull an entity from viewport:
-        Box2 viewBounds = new Box2(
-            -meteorDiamondScalar * UIScale,
-            -meteorDiamondScalar * UIScale,
-            (Size.X + meteorDiamondScalar) * UIScale,
-            (Size.Y + meteorDiamondScalar) * UIScale);
-
         foreach (var meteor in _meteors)
         {
-            var worldToView = worldToShuttle * shuttleToView;
-
             var verts = new[]
                 {
                     Vector2.Transform(meteor + new Vector2(0f, -meteorDiamondScalar), worldToView),
@@ -327,6 +323,22 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
             handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, color.WithAlpha(0.8f));
             handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, color);
+        }
+
+    }
+
+    private void DrawPDShots(DrawingHandleScreen handle, Matrix3x2 worldToView)
+    {
+        if (!ShowMeteors)
+            return;
+
+        const float pdShotsScalar = 2f;
+        var color = Color.ToSrgb(Color.LightBlue);
+
+        foreach (var pdShots in _pdShots)
+        {
+            var pd = Vector2.Transform(pdShots, worldToView);
+            handle.DrawCircle(pd, pdShotsScalar, color.WithAlpha(0.8f), true);
         }
 
     }

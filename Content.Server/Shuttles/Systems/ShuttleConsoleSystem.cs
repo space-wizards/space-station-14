@@ -249,7 +249,20 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     public List<Vector2> GetMeteors()
     {
         var result = new List<Vector2>();
-        var query = AllEntityQuery<MeteorComponent, TransformComponent>();
+        var query = AllEntityQuery<RadarTrackedHostileComponent, TransformComponent>();
+
+        while (query.MoveNext(out var uid, out var comp, out var xform))
+        {
+            result.Add(_transform.ToMapCoordinates(uid.ToCoordinates()).Position);
+        }
+
+        return result;
+    }
+
+    public List<Vector2> GetPointDefenseShots()
+    {
+        var result = new List<Vector2>();
+        var query = AllEntityQuery<RadarTrackedFriendlyComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out var comp, out var xform))
         {
@@ -278,15 +291,16 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         ShuttleMapInterfaceState mapState;
         dockState ??= GetDockState();
         var meteors = GetMeteors();
+        var pdShots = GetPointDefenseShots();
 
         if (shuttleGridUid != null && entity != null)
         {
-            navState = GetNavState(entity.Value, dockState.Docks, meteors);
+            navState = GetNavState(entity.Value, dockState.Docks, meteors, pdShots);
             mapState = GetMapState(shuttleGridUid.Value);
         }
         else
         {
-            navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>(), new List<Vector2>());
+            navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>(), new List<Vector2>(), new List<Vector2>());
             mapState = new ShuttleMapInterfaceState(
                 FTLState.Invalid,
                 default,
@@ -403,16 +417,18 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     public NavInterfaceState GetNavState(Entity<RadarConsoleComponent?,
                                          TransformComponent?> entity,
                                          Dictionary<NetEntity, List<DockingPortState>> docks,
-                                         List<Vector2> meteors
+                                         List<Vector2> meteors,
+                                         List<Vector2> pdShots
                                          )
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
-            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, null, null, docks, meteors);
+            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, null, null, docks, meteors, pdShots);
 
         return GetNavState(
             entity,
             docks,
             meteors,
+            pdShots,
             entity.Comp2.Coordinates,
             entity.Comp2.LocalRotation);
     }
@@ -421,18 +437,20 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         Entity<RadarConsoleComponent?, TransformComponent?> entity,
         Dictionary<NetEntity, List<DockingPortState>> docks,
         List<Vector2> meteors,
+        List<Vector2> pdShots,
         EntityCoordinates coordinates,
         Angle angle)
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
-            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, GetNetCoordinates(coordinates), angle, docks, meteors);
+            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, GetNetCoordinates(coordinates), angle, docks, meteors, pdShots);
 
         return new NavInterfaceState(
             entity.Comp1.MaxRange,
             GetNetCoordinates(coordinates),
             angle,
             docks,
-            meteors);
+            meteors,
+            pdShots);
     }
 
     /// <summary>

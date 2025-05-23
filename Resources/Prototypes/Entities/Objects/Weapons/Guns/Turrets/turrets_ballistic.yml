@@ -93,8 +93,6 @@
       task: TurretCompoundLongRange
     blackboard:
       VisionRadius: !type:Single
-        20
-      AggroVisionRadius: !type:Single
         25
       RotateSpeed: !type:Single
         9.423
@@ -104,6 +102,14 @@
     angleTolerance: 5
     rotationSpeed: 180
     simple4DirMode: false
+  - type: Gun
+    minAngle: 15
+    maxAngle: 35
+    angleIncrease: 1
+    fireRate: 8
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRiflePointDefense
+    capacity: 500
   - type: NpcFactionMember
     factions:
     - AntiMeteor

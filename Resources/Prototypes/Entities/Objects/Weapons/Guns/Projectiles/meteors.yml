@@ -52,6 +52,7 @@
   - type: NpcFactionMember # look, it makes the AI do some john wick shit, just, accept.
     factions:
     - Meteor
+  - type: RadarTrackedHostile
 
 - type: entity
   parent: BaseMeteor

@@ -23,6 +23,8 @@ public sealed class NavInterfaceState
 
     public List<Vector2> Meteors;
 
+    public List<Vector2> PDShots;
+
     public bool RotateWithEntity = true;
 
     public NavInterfaceState(
@@ -30,13 +32,15 @@ public sealed class NavInterfaceState
         NetCoordinates? coordinates,
         Angle? angle,
         Dictionary<NetEntity, List<DockingPortState>> docks,
-        List<Vector2> meteors)
+        List<Vector2> meteors,
+        List<Vector2> pdShots)
     {
         MaxRange = maxRange;
         Coordinates = coordinates;
         Angle = angle;
         Docks = docks;
         Meteors = meteors;
+        PDShots = pdShots;
     }
 }
 

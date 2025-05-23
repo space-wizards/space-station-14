@@ -45,6 +45,19 @@
       sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
       state: heavylaser_flash
 
+- type: entity
+  id: RadarTrackedProjectile
+  abstract: true
+  components:
+  - type: MobState # for HTN targetting logic.
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+  - type: NpcFactionMember
+    factions:
+    - Meteor # for point-defense
+  - type: RadarTrackedHostile
+
 # One bullet to bring them all into the darkness and bind them
 - type: entity
   id: BaseBullet
@@ -738,7 +751,7 @@
 - type: entity
   id: BulletRocket
   name: rocket
-  parent: BaseBulletTrigger
+  parent: [ BaseBulletTrigger, RadarTrackedProjectile]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -760,7 +773,7 @@
 - type: entity
   id: BulletWeakRocket
   name: weak rocket
-  parent: BaseBulletTrigger
+  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -782,7 +795,7 @@
 - type: entity
   id: BulletGrenadeBaton
   name: baton grenade
-  parent: BaseBullet
+  parent: [ BaseBullet, RadarTrackedProjectile ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -802,7 +815,7 @@
 - type: entity
   id: BulletGrenadeBlast
   name: blast grenade
-  parent: BaseBulletTrigger
+  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -819,7 +832,7 @@
 - type: entity
   id: BulletGrenadeFlash
   name: flash grenade
-  parent: BaseBulletTrigger
+  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -832,13 +845,12 @@
     proto: GrenadeFlashEffect
   - type: ActiveTimerTrigger
     timeRemaining: 0.3
-  - type: DeleteOnTrigger
 
 # This is supposed to spawn shrapnel and stuff so uhh... TODO?
 - type: entity
   id: BulletGrenadeFrag
   name: frag grenade
-  parent: BaseBulletTrigger
+  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -854,7 +866,7 @@
 
 - type: entity
   parent: BaseBulletTrigger
-  id: BulletGrenadeCleanade
+  id: [ BulletGrenadeCleanade, RadarTrackedProjectile ]
   name: cleanade grenade round
   categories: [ HideSpawnMenu ]
   components:
@@ -885,7 +897,7 @@
 - type: entity
   id: BulletGrenadeEMP
   name: EMP rocket
-  parent: BaseBulletTrigger
+  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -993,7 +1005,7 @@
 - type: entity
   id: BulletCannonBall
   name: cannonball
-  parent: BaseBulletTrigger
+  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
