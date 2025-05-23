@@ -222,8 +222,6 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     /// <summary>
     /// Get a formatted message with a summary of all anomaly information for putting on a UI.
     /// </summary>
-    /// <param name="component"></param>
-    /// <returns></returns>
     public FormattedMessage GetScannerMessage(AnomalyScannerComponent component)
     {
         var msg = new FormattedMessage();

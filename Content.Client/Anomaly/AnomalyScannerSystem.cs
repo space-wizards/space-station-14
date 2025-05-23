@@ -1,18 +1,15 @@
-﻿using Content.Shared.Anomaly;
-using Content.Shared.Anomaly.Components;
+using Content.Shared.Anomaly;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Anomaly;
 
+/// <inheritdoc cref="SharedAnomalyScannerSystem"/>
 public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
 {
     [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
-
-    private ISawmill _log = default!;
 
     // Just an array to initialize the pixels of a new OwnedTexture
     private static readonly Rgba32[] EmptyTexture = new Rgba32[32*32];
@@ -83,14 +80,15 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
         // Copy the buffer to the texture
         try
         {
-            ent.Comp.ScreenTexture.SetSubImage(ent.Comp.Offset,
+            ent.Comp.ScreenTexture.SetSubImage(
+                ent.Comp.Offset,
                 ent.Comp.Size,
-                new ReadOnlySpan<Rgba32>(ent.Comp.BarBuf));
+                new ReadOnlySpan<Rgba32>(ent.Comp.BarBuf)
+            );
         }
         catch (IndexOutOfRangeException)
-        {
-            Log.Warning("Bar dimensions out of bounds with the texture");
+        {   
+            Log.Warning($"Bar dimensions out of bounds with the texture on entity {ent.Owner}");
         }
     }
-
 }

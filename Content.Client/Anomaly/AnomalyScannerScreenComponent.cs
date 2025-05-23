@@ -1,4 +1,4 @@
-﻿using Robust.Client.Graphics;
+using Robust.Client.Graphics;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Anomaly;
@@ -17,23 +17,23 @@ namespace Content.Client.Anomaly;
 public sealed partial class AnomalyScannerScreenComponent : Component
 {
     /// <summary>
-    /// This is the texture drawn as a layer on the Anomaly Scanner
+    /// This is the texture drawn as a layer on the Anomaly Scanner device.
     /// </summary>
     public OwnedTexture? ScreenTexture;
 
     /// <summary>
-    /// A small buffer that we can reuse to draw the severity bar
+    /// A small buffer that we can reuse to draw the severity bar.
     /// </summary>
     public Rgba32[]? BarBuf;
 
     /// <summary>
-    /// The position of the top-left of the severity bar in pixels
+    /// The position of the top-left of the severity bar in pixels.
     /// </summary>
     [DataField(readOnly: true)]
     public Vector2i Offset =  new Vector2i(12, 17);
 
     /// <summary>
-    /// The width and height of the severity bar in pixels
+    /// The width and height of the severity bar in pixels.
     /// </summary>
     [DataField(readOnly: true)]
     public Vector2i Size = new Vector2i(10, 3);
