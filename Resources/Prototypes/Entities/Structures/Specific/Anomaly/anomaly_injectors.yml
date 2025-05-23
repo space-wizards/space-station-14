@@ -207,8 +207,6 @@
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreBluespace
         coreInertPrototype: AnomalyCoreBluespaceInert
-        supercriticalSound:
-          collection: AnomalyBluespaceExplosion
         supercriticalSoundAtAnimationStart:
           collection: AnomalyBluespaceSupercritical
       - type: InnerBodyAnomaly
@@ -275,6 +273,7 @@
         coreInertPrototype: AnomalyCoreGravityInert
         supercriticalSoundAtAnimationStart:
           collection: AnomalyGravitySupercritical
+        supercriticalDuration: 15
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionGravity
         startMessage: inner-anomaly-start-message-grav
