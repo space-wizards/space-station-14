@@ -310,11 +310,11 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/paddy.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
-      state: paddy
-    - state: paddy_sirens
+      state: base
+    - state: base_sirens
       map: [ "enum.MechVisualLayers.Siren" ]
       shader: unshaded
   - type: FootstepModifier
@@ -325,9 +325,9 @@
       tags:
       - CombatMech
       - IndustrialMech
-    baseState: paddy
-    openState: paddy-open
-    brokenState: paddy-broken
+    baseState: base
+    openState: base-open
+    brokenState: base-broken
     mechToPilotDamageMultiplier: 0.60
     airtight: true
     pilotWhitelist:

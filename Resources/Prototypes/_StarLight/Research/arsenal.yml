@@ -3,7 +3,7 @@
   id: Paddy
   name: research-technology-paddy
   icon:
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/paddy.rsi
     state: base
   discipline: Arsenal
   tier: 2
