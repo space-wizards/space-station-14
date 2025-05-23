@@ -269,6 +269,7 @@
       - id: WeaponFlareGun
       - id: BarberScissors
       - id: MagazineZipper
+      - id: ToolboxJanitorialFilled # imp
       - !type:GroupSelector
         children:
         - id: DrinkSpaceGlue
