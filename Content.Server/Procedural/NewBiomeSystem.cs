@@ -16,6 +16,7 @@ using Robust.Shared.CPUJob.JobQueues.Queues;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Map.Enumerators;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -153,8 +154,11 @@ public sealed partial class NewBiomeSystem : EntitySystem
 
                     foreach (var playerView in biome.LoadedBounds)
                     {
+                        // Give a buffer range so we don't immediately unload if we wiggle, we'll just double the load area.
+                        var enlarged = playerView.Enlarged((int) _loadRange);
+
                         // Still relevant
-                        if (chunkBounds.Intersects(playerView))
+                        if (chunkBounds.Intersects(enlarged))
                         {
                             canUnload = false;
                             break;
@@ -227,6 +231,12 @@ public sealed partial class NewBiomeSystem : EntitySystem
         var center = _xforms.GetWorldPosition(uid);
 
         var bounds = new Box2i((center - new Vector2(_loadRange, _loadRange)).Floored(), (center + new Vector2(_loadRange, _loadRange)).Floored());
+
+        // If it's moving then preload in that direction
+        if (TryComp(uid, out PhysicsComponent? physics))
+        {
+            bounds = bounds.Union(bounds.Translated((physics.LinearVelocity * 2f).Floored()));
+        }
 
         var adjustedBounds = GetFullBounds(biome, bounds);
         biome.LoadedBounds.Add(adjustedBounds);
@@ -303,11 +313,11 @@ public sealed partial class NewBiomeSystem : EntitySystem
         }
 
         // Okay all of our dependencies loaded so we can send it.
-        var chunkEnumerator = new ChunkIndicesEnumerator(loadBounds, layer.Size);
+        var chunkEnumerator = new NearestChunkEnumerator(loadBounds, layer.Size);
 
         while (chunkEnumerator.MoveNext(out var chunk))
         {
-            var chunkOrigin = chunk.Value * layer.Size;
+            var chunkOrigin = chunk.Value;
             var layerLoaded = Biome.LoadedData.GetOrNew(layerId);
 
             // Layer already loaded for this chunk.
