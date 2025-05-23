@@ -40,7 +40,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         targetHumanoid.Species = sourceHumanoid.Species;
         targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
         targetHumanoid.EyeColor = sourceHumanoid.EyeColor;
-        targetHumanoid.EyeGlowing = sourceHumanoid.EyeGlowing;
+        targetHumanoid.EyeGlowing = sourceHumanoid.EyeGlowing; //starlight
         targetHumanoid.Age = sourceHumanoid.Age;
         SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);

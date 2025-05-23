@@ -146,11 +146,12 @@ public sealed partial class MarkingPicker : Control
         CMarkingRankDown.OnPressed += _ => SwapMarkingDown();
 
         CMarkingSearch.OnTextChanged += args => Populate(args.Text);
-        
+
+        //starlight start
         Glowing.OnToggled += args =>
         {
             if (_selectedMarking is null) return;
-            var markingPrototype = (MarkingPrototype) _selectedMarking.Metadata!;
+            var markingPrototype = (MarkingPrototype)_selectedMarking.Metadata!;
             int markingIndex = _currentMarkings.FindIndexOf(_selectedMarkingCategory, markingPrototype.ID);
 
             if (markingIndex < 0) return;
@@ -161,6 +162,7 @@ public sealed partial class MarkingPicker : Control
 
             OnMarkingColorChange?.Invoke(_currentMarkings);
         };
+        //starlight end
     }
 
     private void SetupCategoryButtons()
@@ -459,16 +461,17 @@ public sealed partial class MarkingPicker : Control
 
         CMarkingColors.Visible = true;
 
+        //starlight start
         if (_selectedMarking is null) return;
-        var markingPrototype = (MarkingPrototype) _selectedMarking.Metadata!;
+        var markingPrototype = (MarkingPrototype)_selectedMarking.Metadata!;
         int markingIndex = _currentMarkings.FindIndexOf(_selectedMarkingCategory, markingPrototype.ID);
 
         if (markingIndex < 0) return;
 
         var marking = _currentMarkings.Markings[_selectedMarkingCategory][markingIndex];
 
-        Logger.Info($"Marking {marking.MarkingId} is glowing: {marking.IsGlowing}");
         Glowing.Pressed = marking.IsGlowing;
+        //starlight end
     }
 
     private void ColorChanged(int colorIndex)

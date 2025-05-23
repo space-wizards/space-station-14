@@ -6,16 +6,19 @@ namespace Content.Client.Humanoid;
 public sealed class EyeColorPicker : Control
 {
     public event Action<Color>? OnEyeColorPicked;
-    public Action<bool>? OnGlowingChanged;
+    public Action<bool>? OnGlowingChanged; //starlight
 
     private readonly ColorSelectorSliders _colorSelectors;
-    private readonly CheckBox _glowCheckBox = new CheckBox(){
+    //starlight start
+    private readonly CheckBox _glowCheckBox = new CheckBox()
+    {
         Text = Loc.GetString("marking-glowing")
     };
+    //starlight end
 
-    public void SetData(Color color, bool isGlowing)
+    public void SetData(Color color, bool isGlowing) //starlight edited function signature
     {
-        _glowCheckBox.Pressed = isGlowing;
+        _glowCheckBox.Pressed = isGlowing; //starlight
         _colorSelectors.Color = color;
     }
 
@@ -27,15 +30,17 @@ public sealed class EyeColorPicker : Control
         };
         AddChild(vBox);
 
-        vBox.AddChild(_glowCheckBox);
         vBox.AddChild(_colorSelectors = new ColorSelectorSliders());
+        _colorSelectors.OnColorChanged += ColorValueChanged;
+
+        //starlight start
+        vBox.AddChild(_glowCheckBox);
 
         _glowCheckBox.OnToggled += args =>
         {
             OnGlowingChanged?.Invoke(args.Pressed);
         };
-
-        _colorSelectors.OnColorChanged += ColorValueChanged;
+        //starlight end
     }
 
     private void ColorValueChanged(Color newColor)
