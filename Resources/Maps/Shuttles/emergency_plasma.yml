@@ -1,16 +1,16 @@
 meta:
   format: 7
-  category: Map
+  category: Grid
   engineVersion: 260.2.0
   forkId: ""
   forkVersion: ""
-  time: 05/23/2025 09:00:17
-  entityCount: 1169
-maps:
-- 1166
+  time: 05/23/2025 23:49:56
+  entityCount: 1168
+maps: []
 grids:
 - 2
-orphans: []
+orphans:
+- 2
 nullspace: []
 tilemap:
   0: Space
@@ -34,7 +34,7 @@ entities:
       name: NT Evac Plasma
     - type: Transform
       pos: -4.652828,1.09375
-      parent: 1166
+      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -559,18 +559,6 @@ entities:
       deviceLists: []
       transmitFrequencyId: ShuttleTimer
     - type: ImplicitRoof
-  - uid: 1166
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
 - proto: AirAlarm
   entities:
   - uid: 218
