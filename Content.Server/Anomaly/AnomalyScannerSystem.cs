@@ -11,8 +11,6 @@ namespace Content.Server.Anomaly;
 public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
 {
 
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SecretDataAnomalySystem _secretData = default!;
     [Dependency] private readonly AnomalySystem _anomaly = default!;
@@ -20,7 +18,6 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<AnomalyScannerComponent, AfterInteractEvent>(OnScannerAfterInteract);
         SubscribeLocalEvent<AnomalyScannerComponent, ScannerDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<AnomalyShutdownEvent>(OnScannerAnomalyShutdown);
         SubscribeLocalEvent<AnomalySeverityChangedEvent>(OnScannerAnomalySeverityChanged);
@@ -40,21 +37,6 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
         UpdateScannerUi(uid, component);
     }
 
-    private void OnScannerAfterInteract(EntityUid uid, AnomalyScannerComponent component, AfterInteractEvent args)
-    {
-        if (args.Target is not { } target)
-            return;
-        if (!HasComp<AnomalyComponent>(target))
-            return;
-        if (!args.CanReach)
-            return;
-
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.ScanDoAfterDuration, new ScannerDoAfterEvent(), uid, target: target, used: uid)
-        {
-            DistanceThreshold = 2f
-        });
-    }
-
     public void UpdateScannerWithNewAnomaly(EntityUid scanner, EntityUid anomaly, AnomalyScannerComponent? scannerComp = null, AnomalyComponent? anomalyComp = null)
     {
         if (!Resolve(scanner, ref scannerComp) || !Resolve(anomaly, ref anomalyComp))
@@ -72,19 +54,14 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
         _appearance.SetData(scanner, AnomalyScannerVisuals.AnomalySeverity, severity, appearanceComp);
     }
 
-    private void OnDoAfter(EntityUid uid, AnomalyScannerComponent component, DoAfterEvent args)
+    protected override void OnDoAfter(EntityUid uid, AnomalyScannerComponent component, DoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
+        base.OnDoAfter(uid, component, args);
 
-        Audio.PlayPvs(component.CompleteSound, uid);
-        Popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid);
         UpdateScannerWithNewAnomaly(uid, args.Args.Target.Value, component);
-
-        _ui.OpenUi(uid, AnomalyScannerUiKey.Key, args.User);
-
-        args.Handled = true;
     }
 
     public void UpdateScannerUi(EntityUid uid, AnomalyScannerComponent? component = null)
@@ -97,7 +74,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
             nextPulse = anomalyComponent.NextPulseTime;
 
         var state = new AnomalyScannerUserInterfaceState(_anomaly.GetScannerMessage(component), nextPulse);
-        _ui.SetUiState(uid, AnomalyScannerUiKey.Key, state);
+        UI.SetUiState(uid, AnomalyScannerUiKey.Key, state);
     }
 
     private void OnScannerAnomalyShutdown(ref AnomalyShutdownEvent args)
@@ -108,7 +85,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
 
-            _ui.CloseUi(uid, AnomalyScannerUiKey.Key);
+            UI.CloseUi(uid, AnomalyScannerUiKey.Key);
             // Anomaly over, reset all the appearance data
             _appearance.SetData(uid, AnomalyScannerVisuals.HasAnomaly, false);
             _appearance.SetData(uid, AnomalyScannerVisuals.AnomalyIsSupercritical, false);
