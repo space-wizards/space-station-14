@@ -748,7 +748,7 @@
         offset: "0, 0.06"
 
 - type: entity
-  parent: FoamCutlass
+  parent: BaseItem
   id: DevilPitchfork
   name: devil's pitchfork
   description: Perfect for prodding and poking sinners!
@@ -759,18 +759,18 @@
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1.5
+    angle: 0
     range: 2.0
     damage:
       types:
         Blunt: 0
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
-  - type: Item
-    inhandVisuals:
-      left:
-        - state: inhand-left
-      right:
-        - state: inhand-right
+  - type: ThrowingAngle 
+    angle: 225
+  - type: PacifismAllowedGun
 
 - type: entity
   parent: BasePlushie
