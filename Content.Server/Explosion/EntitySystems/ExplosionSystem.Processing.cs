@@ -840,7 +840,7 @@ sealed class Explosion
 
             // Is the current tile on a grid (instead of in space)?
             if (_currentGrid is { } currentGrid &&
-                currentGrid.Comp.TryGetTileRef(_currentEnumerator.Current, out var tileRef) &&
+                _mapSystem.TryGetTileRef(currentGrid, currentGrid.Comp, _currentEnumerator.Current, out var tileRef) &&
                 !tileRef.Tile.IsEmpty)
             {
                 if (!_tileUpdateDict.TryGetValue(currentGrid, out var tileUpdateList))
