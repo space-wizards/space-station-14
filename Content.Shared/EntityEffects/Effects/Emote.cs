@@ -1,5 +1,4 @@
 using Content.Shared.Chat.Prototypes;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -8,7 +7,6 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <summary>
 ///     Tries to force someone to emote (scream, laugh, etc). Still respects whitelists/blacklists and other limits unless specially forced.
 /// </summary>
-[UsedImplicitly]
 public sealed partial class Emote : EventEntityEffect<Emote>
 {
     /// <summary>

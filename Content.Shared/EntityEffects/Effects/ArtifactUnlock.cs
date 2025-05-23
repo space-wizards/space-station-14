@@ -2,7 +2,6 @@ using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.EntityEffects;
 using Content.Shared.Popups;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
@@ -11,7 +10,6 @@ namespace Content.Shared.EntityEffects.Effects;
 /// Sets an artifact into the unlocking state and marks the artifexium effect as true.
 /// This is a very specific behavior intended for a specific chem.
 /// </summary>
-[UsedImplicitly]
 public sealed partial class ArtifactUnlock : EntityEffect
 {
     public override void Effect(EntityEffectBaseArgs args)

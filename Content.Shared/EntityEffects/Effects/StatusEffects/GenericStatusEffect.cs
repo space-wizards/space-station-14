@@ -1,6 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.StatusEffect;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
@@ -14,7 +13,6 @@ namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 /// <remarks>
 ///     Can be used for things like adding accents or something. I don't know. Go wild.
 /// </remarks>
-[UsedImplicitly]
 public sealed partial class GenericStatusEffect : EntityEffect
 {
     [DataField(required: true)]

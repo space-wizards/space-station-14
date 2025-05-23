@@ -1,5 +1,4 @@
 using Content.Shared.Eye.Blinding.Systems;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
@@ -7,7 +6,6 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <summary>
 /// Heal or apply eye damage
 /// </summary>
-[UsedImplicitly]
 public sealed partial class ChemHealEyeDamage : EntityEffect
 {
     /// <summary>

@@ -3,7 +3,6 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Localizations;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -12,7 +11,6 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <summary>
 /// Version of <see cref="HealthChange"/> that distributes the healing to groups
 /// </summary>
-[UsedImplicitly]
 public sealed partial class EvenHealthChange : EntityEffect
 {
     /// <summary>

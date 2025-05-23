@@ -1,11 +1,8 @@
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.EntityEffects.Effects.PlantMetabolism;
 
-[UsedImplicitly]
-[DataDefinition]
 public sealed partial class RobustHarvest : EventEntityEffect<RobustHarvest>
 {
     [DataField]

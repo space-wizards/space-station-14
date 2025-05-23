@@ -3,7 +3,6 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Localizations;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -13,7 +12,6 @@ namespace Content.Shared.EntityEffects.Effects
     /// <summary>
     /// Default metabolism used for medicine reagents.
     /// </summary>
-    [UsedImplicitly]
     public sealed partial class HealthChange : EntityEffect
     {
         /// <summary>

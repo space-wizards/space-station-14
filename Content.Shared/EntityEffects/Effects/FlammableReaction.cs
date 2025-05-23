@@ -1,10 +1,8 @@
 using Content.Shared.Database;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
-[UsedImplicitly]
 public sealed partial class FlammableReaction : EventEntityEffect<FlammableReaction>
 {
     [DataField]

@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
@@ -6,7 +5,6 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <summary>
 /// Basically smoke and foam reactions.
 /// </summary>
-[UsedImplicitly]
 public sealed partial class ChemCleanBloodstream : EventEntityEffect<ChemCleanBloodstream>
 {
     [DataField]

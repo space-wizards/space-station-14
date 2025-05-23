@@ -1,5 +1,4 @@
 using Content.Shared.Chemistry.Reagent;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
@@ -7,7 +6,6 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <summary>
 /// Reset narcolepsy timer
 /// </summary>
-[UsedImplicitly]
 public sealed partial class ResetNarcolepsy : EventEntityEffect<ResetNarcolepsy>
 {
     /// <summary>

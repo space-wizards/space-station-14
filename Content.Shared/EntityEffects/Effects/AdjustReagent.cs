@@ -1,13 +1,11 @@
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.EntityEffects.Effects
 {
-    [UsedImplicitly]
     public sealed partial class AdjustReagent : EntityEffect
     {
         /// <summary>

@@ -1,6 +1,5 @@
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -10,8 +9,6 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <summary>
 /// Basically smoke and foam reactions.
 /// </summary>
-[UsedImplicitly]
-[DataDefinition]
 public sealed partial class AreaReactionEffect : EventEntityEffect<AreaReactionEffect>
 {
     /// <summary>
