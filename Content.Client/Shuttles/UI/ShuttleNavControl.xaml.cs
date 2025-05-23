@@ -38,8 +38,11 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
     private Dictionary<NetEntity, List<DockingPortState>> _docks = new();
 
+    private List<Vector2> _meteors = new();
+
     public bool ShowIFF { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
+    public bool ShowMeteors { get; set; } = true;
     public bool RotateWithEntity { get; set; } = true;
 
     /// <summary>
@@ -123,6 +126,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         RotateWithEntity = state.RotateWithEntity;
 
         _docks = state.Docks;
+        _meteors = state.Meteors;
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -277,6 +281,8 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
             DrawDocks(handle, gUid, curGridToView);
         }
 
+        DrawMeteors(handle, worldToShuttle, shuttleToView);
+
         // If we've set the controlling console, and it's on a different grid
         // to the shuttle itself, then draw an additional marker to help the
         // player determine where they are relative to the shuttle.
@@ -288,6 +294,39 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 var p = Vector2.Transform(consolePositionWorld, worldToShuttle * shuttleToView);
                 handle.DrawCircle(p, 5, Color.ToSrgb(Color.Cyan), true);
             }
+        }
+
+    }
+
+    private void DrawMeteors(DrawingHandleScreen handle, Matrix3x2 worldToShuttle, Matrix3x2 shuttleToView)
+    {
+        if (!ShowMeteors)
+            return;
+
+        const float meteorDiamondScalar = 1f;
+        var color = Color.ToSrgb(Color.Red);
+
+        // Worst-case bounds used to cull an entity from viewport:
+        Box2 viewBounds = new Box2(
+            -meteorDiamondScalar * UIScale,
+            -meteorDiamondScalar * UIScale,
+            (Size.X + meteorDiamondScalar) * UIScale,
+            (Size.Y + meteorDiamondScalar) * UIScale);
+
+        foreach (var meteor in _meteors)
+        {
+            var worldToView = worldToShuttle * shuttleToView;
+
+            var verts = new[]
+                {
+                    Vector2.Transform(meteor + new Vector2(0f, -meteorDiamondScalar), worldToView),
+                    Vector2.Transform(meteor + new Vector2(meteorDiamondScalar, 0f), worldToView),
+                    Vector2.Transform(meteor + new Vector2(0f, meteorDiamondScalar), worldToView),
+                    Vector2.Transform(meteor + new Vector2(-meteorDiamondScalar, 0f), worldToView),
+                };
+
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, color.WithAlpha(0.8f));
+            handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, color);
         }
 
     }
