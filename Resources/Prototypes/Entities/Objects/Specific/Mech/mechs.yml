@@ -254,6 +254,10 @@
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
+    equipmentWhitelist:
+      tags:
+      - IndustrialMech
+      - PaddyUpgradeKit
     baseState: base
     openState: base-open
     brokenState: base-broken
@@ -279,6 +283,10 @@
     radius: 3
     energy: 5
     enabled: false
+  - type: Construction
+    graph: PaddyUpgrade
+    node: start
+    defaultTarget: paddy
 
 - type: entity
   id: MechRipley2Battery
