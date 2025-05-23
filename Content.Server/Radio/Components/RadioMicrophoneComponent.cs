@@ -40,4 +40,11 @@ public sealed partial class RadioMicrophoneComponent : Component
     /// </summary>
     [DataField("unobstructedRequired")]
     public bool UnobstructedRequired = false;
+
+    /// <summary>
+    /// Used in window title and context menu
+    /// </summary>
+    [DataField("verb")]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public string Verb = "handheld-radio-verb";
 }
