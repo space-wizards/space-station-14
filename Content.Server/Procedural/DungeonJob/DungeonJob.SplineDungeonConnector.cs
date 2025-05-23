@@ -2,6 +2,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Procedural;
+using Content.Shared.Procedural.DungeonLayers;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -11,10 +12,10 @@ namespace Content.Server.Procedural.DungeonJob;
 public sealed partial class DungeonJob
 {
     /// <summary>
-    /// <see cref="SplineDungeonConnectorDunGen"/>
+    /// <see cref="Shared.Procedural.DungeonLayers.SplineDungeonConnectorDunGen"/>
     /// </summary>
     private async Task<Dungeon> PostGen(
-        SplineDungeonConnectorDunGen gen,
+        Shared.Procedural.DungeonLayers.SplineDungeonConnectorDunGen gen,
         List<Dungeon> dungeons,
         HashSet<Vector2i> reservedTiles,
         Random random)

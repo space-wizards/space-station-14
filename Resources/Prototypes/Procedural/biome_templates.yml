@@ -33,42 +33,64 @@
         lacunarity: 2
 
 # Desert
-# TODO: Water in desert
-- type: biomeTemplate
-  id: LowDesert
+- type: entity
+  id: BiomeLowDesert
+  components:
+  - type: NewBiome
+    layers:
+      terrain:
+        dungeon: LowDesertTerrain
+
+- type: dungeonConfig
+  id: LowDesertTerrain
   layers:
-    - !type:BiomeEntityLayer
-      threshold: 0.95
-      noise:
-        seed: 0
-        frequency: 2
-        noiseType: OpenSimplex2
-      allowedTiles:
-        - FloorAsteroidSand
-      entities:
-        - FloraRockSolid
-    # Large rock areas
-    - !type:BiomeEntityLayer
-      threshold: -0.20
-      noise:
-        seed: 0
-        frequency: 0.04
-        noiseType: Cellular
-        fractalType: FBm
-        octaves: 5
-        lacunarity: 2
-        cellularDistanceFunction: Euclidean
-        cellularReturnType: Distance2
-      allowedTiles:
-        - FloorAsteroidSand
-      entities:
-        - WallRockSand
-    - !type:BiomeDummyLayer
-      id: Loot
-    # Fill layer
-    - !type:BiomeTileLayer
-      threshold: -1
-      tile: FloorAsteroidSand
+  - !type:ChunkDunGen
+  - !type:PrototypeDunGen
+    proto: LowDesertTiles
+    inheritDungeons: All
+  - !type:PrototypeDunGen
+    proto: LowDesertEntities
+    inheritDungeons: All
+
+- type: dungeonConfig
+  id: LowDesertTiles
+  returnReserved: false
+  layers:
+  - !type:SampleTileDunGen
+    threshold: -1
+    tile: FloorAsteroidSand
+
+- type: dungeonConfig
+  id: LowDesertEntities
+  returnReserved: false
+  layers:
+  - !type:SampleEntityDunGen
+    threshold: 0.95
+    noise:
+      seed: 0
+      frequency: 2
+      noiseType: OpenSimplex2
+    allowedTiles:
+    - FloorAsteroidSand
+    entities:
+    - FloraRockSolid
+  # Large rock areas
+  - !type:SampleEntityDunGen
+    threshold: -0.20
+    noise:
+      seed: 0
+      frequency: 0.04
+      noiseType: Cellular
+      fractalType: FBm
+      octaves: 5
+      lacunarity: 2
+      cellularDistanceFunction: Euclidean
+      cellularReturnType: Distance2
+    allowedTiles:
+    - FloorAsteroidSand
+    entities:
+    - WallRockSand
+
 
 - type: entity
   id: BiomeGrasslands
@@ -77,9 +99,6 @@
     layers:
       terrain:
         dungeon: GrasslandsTerrain
-
-# TODO: Delete entprotoid and just use dungeon directly
-# TODO: Use random for the samplers probably
 
 - type: dungeonConfig
   id: GrasslandsTerrain
@@ -97,6 +116,7 @@
 
 - type: dungeonConfig
   id: GrasslandsTiles
+  returnReserved: false
   layers:
   # Water sand
   - !type:SampleTileDunGen
@@ -123,7 +143,7 @@
       cellularDistanceFunction: Euclidean
       cellularReturnType: Distance2
   - !type:SampleTileDunGen
-    threshold: -0.90
+    threshold: -0.80
     tile: FloorPlanetGrass
     noise:
       seed: 0
@@ -139,6 +159,7 @@
 
 - type: dungeonConfig
   id: GrasslandsEntities
+  returnReserved: false
   layers:
   # Water
   - !type:SampleEntityDunGen
@@ -187,6 +208,7 @@
 
 - type: dungeonConfig
   id: GrasslandsDecals
+  returnReserved: false
   layers:
   # Dense vegetation
   - !type:SampleDecalDunGen

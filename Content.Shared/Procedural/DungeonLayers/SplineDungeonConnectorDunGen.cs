@@ -1,7 +1,7 @@
 using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Procedural.PostGeneration;
+namespace Content.Shared.Procedural.DungeonLayers;
 
 /// <summary>
 /// Connects dungeons via points that get subdivided.

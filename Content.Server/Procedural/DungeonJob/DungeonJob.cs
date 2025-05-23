@@ -296,7 +296,7 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
                 switch (prototypo.InheritReserved)
                 {
                     case ReservedInheritance.All:
-                        inheritedReserved = reservedTiles;
+                        inheritedReserved = new HashSet<Vector2i>(reservedTiles);
                         break;
                     case ReservedInheritance.None:
                         break;
@@ -326,7 +326,11 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
                     reserved: inheritedReserved,
                     existing: inheritedDungeons);
                 dungeons.AddRange(newDungeons);
-                reservedTiles.UnionWith(newReserved);
+
+                if (groupConfig.ReturnReserved)
+                {
+                    reservedTiles.UnionWith(newReserved);
+                }
 
                 break;
             case ReplaceTileDunGen replace:
