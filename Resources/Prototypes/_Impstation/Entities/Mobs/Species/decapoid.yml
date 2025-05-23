@@ -9,8 +9,6 @@
     damage:
       types:
         blunt: 0 # immune to space
-  - type: SnailSpeed
-    snailSlowdownModifier: 0.8
   - type: Absorbable
   - type: Hunger # removed thirst
   - type: Icon
