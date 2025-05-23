@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Starlight, IAA/Magistrate Icons by Chim | CentComm Icon by Happyrobot33 | MailTech Icon by Happyrobot33",
+    "copyright": "Starlight, IAA/Magistrate Icons by Chim | CentComm Icon by Happyrobot33 | MailTech Icon by Happyrobot33 | HeadRevolutionary and Revolutionary by JustAdler",
 
     "size": {
         "x": 8,
@@ -37,6 +37,12 @@
         },
         {
             "name": "Operative"
+        },
+        {
+            "name": "HeadRevolutionary"
+        },
+        {
+            "name": "Revolutionary"
         }
     ]
 }
