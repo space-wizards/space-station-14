@@ -626,7 +626,7 @@ sealed class Explosion
     private DamageSpecifier? _expectedDamage;
 #endif
     private Entity<BroadphaseComponent> _currentLookup = default!;
-    private MapGridComponent? _currentGrid;
+    private Entity<MapGridComponent>? _currentGrid;
     private float _currentIntensity;
     private float _currentThrowForce;
     private List<Vector2i>.Enumerator _currentEnumerator;
@@ -784,7 +784,7 @@ sealed class Explosion
                 _currentDataIndex++;
 
                 // sanity checks, in case something changed while the explosion was being processed over several ticks.
-                if (_currentLookup.Comp.Deleted || _currentGrid != null && !_entMan.EntityExists(_currentGrid.Owner))
+                if (_currentLookup.Comp.Deleted || _currentGrid != null && !_entMan.EntityExists(_currentGrid.Value))
                     continue;
 
                 return true;
@@ -839,20 +839,20 @@ sealed class Explosion
             }
 
             // Is the current tile on a grid (instead of in space)?
-            if (_currentGrid != null &&
-                _currentGrid.TryGetTileRef(_currentEnumerator.Current, out var tileRef) &&
+            if (_currentGrid is { } currentGrid &&
+                currentGrid.Comp.TryGetTileRef(_currentEnumerator.Current, out var tileRef) &&
                 !tileRef.Tile.IsEmpty)
             {
-                if (!_tileUpdateDict.TryGetValue(_currentGrid, out var tileUpdateList))
+                if (!_tileUpdateDict.TryGetValue(currentGrid, out var tileUpdateList))
                 {
                     tileUpdateList = new();
-                    _tileUpdateDict[_currentGrid] = tileUpdateList;
+                    _tileUpdateDict[currentGrid] = tileUpdateList;
                 }
 
                 // damage entities on the tile. Also figures out whether there are any solid entities blocking the floor
                 // from being destroyed.
                 var canDamageFloor = _system.ExplodeTile(_currentLookup,
-                    (_currentGrid.Owner, _currentGrid),
+                    currentGrid,
                     _currentEnumerator.Current,
                     _currentThrowForce,
                     _currentDamage,
