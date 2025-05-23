@@ -10,7 +10,20 @@
         collection: GlassSmash
   - type: WallMount
     arc: 360
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,1.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
   - type: Sprite
+    offset: 0.5,0
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/barsign.rsi
     state: empty
