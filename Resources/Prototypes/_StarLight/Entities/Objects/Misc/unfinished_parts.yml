@@ -1,0 +1,146 @@
+- type: entity
+  parent: BaseItem
+  id: UnfinishedImprovisedCrowbar
+  name: crowbar parts
+  description: Needs welding to hold it together.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_crowbar.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: CrowbarImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ImprovisedCrowbarGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedImprovisedScrewdriver
+  name: screwdriver parts
+  description: Needs welding to hold it together.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_screwdriver.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: ScrewdriverImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ImprovisedScrewdriverGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedImprovisedWirecutter
+  name: wirecutter parts
+  description: Needs welding to hold it together.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_wirecutters.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: WirecutterImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ImprovisedWirecutterGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedImprovisedWrench
+  name: wrench parts
+  description: Needs welding to hold it together.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_wrench.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: WrenchImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ImprovisedWrenchGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedImprovisedMultitool
+  name: multitool parts
+  description: Needs welding and some patience to put it all together.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_multitool.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: MultitoolImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ImprovisedMultitoolGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedImprovisedOmnitool
+  name: improvised omnitool parts
+  description: What are you doing..? Needs.. to be welded.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_omnitool.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: OmnitoolImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ImprovisedOmnitoolGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedForgedOmnitool
+  name: forged omnitool parts
+  description: You are either crazy, or a psychopath. Likely both, needs to be welded.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: OmnitoolForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedOmnitoolGraph
+    node: tool

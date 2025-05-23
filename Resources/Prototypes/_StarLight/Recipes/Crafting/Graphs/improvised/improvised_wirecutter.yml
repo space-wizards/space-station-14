@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: ImprovisedWirecutterGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tool
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 10
+      - material: Cloth
+        amount: 2
+        doAfter: 5
+  - node: tool
+    entity: UnfinishedImprovisedWirecutter

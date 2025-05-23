@@ -1,0 +1,43 @@
+- type: constructionGraph
+  id: ImprovisedOmnitoolGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tool
+      steps:
+      - tag: ImprovisedMultitool
+        icon:
+          sprite: _Starlight/Objects/Tools/improvised_multitool.rsi
+          state: icon
+        name: improvised multitool
+      - tag: ImprovisedWrench
+        icon:
+          sprite: _Starlight/Objects/Tools/improvised_wrench.rsi
+          state: icon
+        name: improvised wrench
+      - tag: ImprovisedWirecutter
+        icon:
+          sprite: _Starlight/Objects/Tools/improvised_wirecutters.rsi
+          state: cutters
+        name: improvised wirecutter
+      - tag: ImprovisedScrewdriver
+        icon:
+          sprite: _Starlight/Objects/Tools/improvised_screwdriver.rsi
+          state: screwdriver
+        name: improvised screwdriver
+      - tag: ImprovisedCrowbar
+        icon:
+          sprite: _Starlight/Objects/Tools/improvised_screwdriver.rsi
+          state: icon
+        name: crowbar
+      - tag: EmergencyWelder
+        icon:
+          sprite: Objects/Tools/welder_mini.rsi
+          state: icon
+        name: emergency welder
+      - material: Steel
+        amount: 5
+        doAfter: 35
+  - node: tool
+    entity: UnfinishedImprovisedOmnitool

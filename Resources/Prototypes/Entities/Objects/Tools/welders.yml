@@ -200,3 +200,6 @@
     enabled: false
     radius: 1.0
     color: orange
+  - type: Tag
+    tags:
+      - EmergencyWelder #Starlight, distinction needed for use in crafting recipies.

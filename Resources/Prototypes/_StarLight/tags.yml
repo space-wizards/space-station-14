@@ -32,7 +32,25 @@
   
 - type: Tag
   id: ElderArena
-  
+
+- type: Tag
+  id: EmergencyWelder
+
+- type: Tag
+  id: ImprovisedMultitool
+
+- type: Tag
+  id: ImprovisedWrench
+
+- type: Tag
+  id: ImprovisedWirecutter
+
+- type: Tag
+  id: ImprovisedScrewdriver
+
+- type: Tag
+  id: ImprovisedCrowbar
+
 - type: Tag
   id: LightRifleHeavy
 

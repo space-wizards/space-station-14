@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: ImprovisedScrewdriverGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tool
+      steps:
+      - material: Steel
+        amount: 3
+        doAfter: 10
+      - material: Cloth
+        amount: 1
+        doAfter: 5
+  - node: tool
+    entity: UnfinishedImprovisedScrewdriver

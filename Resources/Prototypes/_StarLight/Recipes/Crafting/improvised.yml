@@ -283,3 +283,107 @@
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Boxes/improvised.rsi
     state: base
+
+- type: construction
+  name: makeshift crowbar
+  id: CrowbarMakeshift
+  graph: MakeshiftCrowbarGraph
+  startNode: start
+  targetNode: tool
+  category: construction-category-tools
+  objectType: Item
+  description: You must be REALLY desperate..
+  icon:
+    sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+    state: base
+
+- type: construction
+  name: improvised crowbar
+  id: CrowbarImprovised
+  graph: ImprovisedCrowbarGraph
+  startNode: start
+  targetNode: tool
+  category: construction-category-tools
+  objectType: Item
+  description: Not the best, not the worst. Needs welding supplies to finish.
+  icon:
+    sprite: _Starlight/Objects/Tools/improvised_crowbar.rsi
+    state: icon
+
+- type: construction
+  name: improvised screwdriver
+  id: ScrewdriverImprovised
+  graph: ImprovisedScrewdriverGraph
+  startNode: start
+  targetNode: tool
+  category: construction-category-tools
+  objectType: Item
+  description: Not the best, not the worst. Needs welding supplies to finish.
+  icon:
+    sprite: _Starlight/Objects/Tools/improvised_screwdriver.rsi
+    state: screwdriver
+
+- type: construction
+  name: improvised wirecutter
+  id: WirecutterImprovised
+  graph: ImprovisedWirecutterGraph
+  startNode: start
+  targetNode: tool
+  category: construction-category-tools
+  objectType: Item
+  description: Not the best, not the worst. Needs welding supplies to finish.
+  icon:
+    sprite: _Starlight/Objects/Tools/improvised_wirecutters.rsi
+    state: cutters
+
+- type: construction
+  name: improvised wrench
+  id: WrenchImprovised
+  graph: ImprovisedWrenchGraph
+  startNode: start
+  targetNode: tool
+  category: construction-category-tools
+  objectType: Item
+  description: Not the best, not the worst. Needs welding supplies to finish.
+  icon:
+    sprite: _Starlight/Objects/Tools/improvised_wrench.rsi
+    state: icon
+
+- type: construction
+  name: improvised multitool
+  id: MultitoolImprovised
+  graph: ImprovisedMultitoolGraph
+  startNode: start
+  targetNode: tool
+  category: construction-category-tools
+  objectType: Item
+  description: The best you're gonna get. Needs welding supplies to finish.
+  icon:
+    sprite: _Starlight/Objects/Tools/improvised_multitool.rsi
+    state: icon
+
+- type: construction
+  name: improvised omnitool
+  id: OmnitoolImprovised
+  graph: ImprovisedOmnitoolGraph
+  startNode: start
+  targetNode: tool
+  category: construction-category-tools
+  objectType: Item
+  description: The fact that this abomination of tiderkind actually works is nothing short of a miracle.
+  icon:
+    sprite: _Starlight/Objects/Tools/improvised_omnitool.rsi
+    state: icon
+
+- type: construction
+  name: forged omnitool
+  id: OmnitoolForged
+  graph: ForgedOmnitoolGraph
+  startNode: start
+  targetNode: tool
+  category: construction-category-tools
+  objectType: Item
+  description: The better, but more psychopathic omnitool.
+  icon:
+    sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
+    state: icon
