@@ -150,7 +150,7 @@
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/slats.rsi
-    state: double_white_w
+    state: double_white_s
 
 - type: decal
   id: WhiteSlatDoubleE
