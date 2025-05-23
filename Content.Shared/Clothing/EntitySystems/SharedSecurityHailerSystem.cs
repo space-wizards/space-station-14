@@ -51,10 +51,11 @@ namespace Content.Shared.Clothing.EntitySystems
         {
             var (uid, comp) = ent;
 
+            ent.Comp.User = args.Wearer;
+
             if (comp.CurrentState != SecMaskState.Functional)
                 return;
 
-            ent.Comp.User = args.Wearer;
             _actions.AddAction(args.Wearer, ref comp.ActionEntity, comp.Action, uid);
         }
 
@@ -369,7 +370,7 @@ namespace Content.Shared.Clothing.EntitySystems
 
             if (GetVoiceReplacement(ent, collectionResolver.Index) != null)
             {
-                collectionResolver = (ResolvedCollectionSpecifier)_sharedAudio.ResolveSound(comp.HOSReplaceSounds);
+                resolver = (ResolvedCollectionSpecifier)_sharedAudio.ResolveSound(comp.HOSReplaceSounds);
             }
 
             _sharedAudio.PlayPvs(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));

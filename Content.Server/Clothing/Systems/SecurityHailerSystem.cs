@@ -8,7 +8,6 @@ namespace Content.Server.Clothing.Systems
     public sealed class SecurityHailerSystem : SharedSecurityHailerSystem
     {
         [Dependency] private readonly ChatSystem _chat = default!;
-        //private readonly (string, string) _replaceLineHos = ("hail-high-5", "hail-high-HOS"); //the line to replace if a HOS gas mask hails
 
         public override void Initialize()
         {
