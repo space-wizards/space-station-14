@@ -71,6 +71,8 @@ delivery-spam-reasons-to-choose-syndicate = {-delivery-header-syndicate}
 
                                             {"[bold]NUMBER THREE[/bold]"}
                                             THEIR MURDER METHODS ARE UNINSPIRED! IT'S JUST GUN! THERE'S NO THROWING PEOPLE INTO DEEP SPACE, NO FEEDING PEOPLE INTO RECYCLERS WITH SAFETY MODE DISENGAGED, NO SLIPPING BOMBS INTO POCKETS! SO BORING!
+                                            
+                                            If you agree with us. SIGN THIS PAPER.
 
 delivery-spam-tired-of-science = [head=3]Science will LOVE you for this!!
 

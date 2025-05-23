@@ -8,6 +8,9 @@ using Content.Shared.Paper;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Starlight.Paper;
@@ -18,12 +21,15 @@ public sealed class AntagOnSignSystem : EntitySystem
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    private ISawmill _sawmill = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     
     private readonly EntProtoId _paradoxCloneRuleId = "ParadoxCloneSpawn";
     
     public override void Initialize()
     {
         base.Initialize();
+        _sawmill = Logger.GetSawmill("AntagOnSign");
         SubscribeLocalEvent<AntagOnSignComponent,PaperSignedEvent>(OnPaperSigned);
     }
 
@@ -44,7 +50,18 @@ public sealed class AntagOnSignSystem : EntitySystem
         var session = actor.PlayerSession;
         foreach (var antag in component.Antags)
         {
-            _antag.ForceMakeAntag<GameRuleComponent>(session, antag.Id);
+            var targetComp = _componentFactory.GetComponent(antag.TargetComponent);
+
+            var fmakeantag = typeof(AntagSelectionSystem).GetMethod(nameof(AntagSelectionSystem.ForceMakeAntag));
+            if (fmakeantag == null)
+            {
+                _sawmill.Error("Failed to reflect \"ForceMakeAntag\" method from AntagSelectionSystem for genericization");
+                continue;   
+            }
+            var generic = fmakeantag.MakeGenericMethod(targetComp.GetType());
+            generic.Invoke(_antag, [session, antag.Antag.Id]);
+            
+            //_antag.ForceMakeAntag<GameRuleComponent>(session, antag.Id);
         }
 
         if (component.ParadoxClone)
@@ -52,8 +69,10 @@ public sealed class AntagOnSignSystem : EntitySystem
             var ruleEnt = _gameTicker.AddGameRule(_paradoxCloneRuleId);
 
             if (!TryComp<ParadoxCloneRuleComponent>(ruleEnt, out var paradoxCloneRuleComp))
+            {
                 component.Used = true;
                 return;
+            }
 
             paradoxCloneRuleComp.OriginalBody = args.Signer; // override the target player
 
@@ -61,5 +80,14 @@ public sealed class AntagOnSignSystem : EntitySystem
         }
         
         component.Used = true;
+    }
+
+    private void GetGameruleEntPrototyped(string prototype)
+    {
+        var query = EntityQueryEnumerator<AntagSelectionComponent>();
+        while (query.MoveNext(out var euid, out var antagSelection))
+        {
+            
+        }
     }
 }

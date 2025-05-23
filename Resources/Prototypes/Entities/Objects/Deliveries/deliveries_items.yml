@@ -30,9 +30,10 @@
   - type: Paper
     content: delivery-spam-reasons-to-choose-syndicate
   - type: AntagOnSign
+    chance: 0.25
     antags: 
-      - Traitor
-    spawnParadoxClone: true
+      - antag: Traitor
+        targetComponent: TraitorRule
 
 - type: entity
   id: MailAlternativeDimensionSpam
