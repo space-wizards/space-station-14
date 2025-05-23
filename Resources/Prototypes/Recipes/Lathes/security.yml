@@ -84,6 +84,46 @@
     Plasma: 500
     Glass: 500
 
+- type: latheRecipe
+  id: ClothingHeadHelmetRiot
+  result: ClothingHeadHelmetRiot
+  categories:
+  - Clothing
+  completetime: 4
+  materials:
+    Steel: 200
+    Plastic: 300
+
+- type: latheRecipe
+  id: ClothingOuterArmorRiot
+  result: ClothingOuterArmorRiot
+  categories:
+  - Clothing
+  completetime: 6
+  materials:
+    Steel: 500
+    Plastic: 350
+
+- type: latheRecipe
+  id: ClothingOuterArmorBulletproof
+  result: ClothingOuterArmorBulletproof
+  categories:
+  - Clothing
+  completetime: 6
+  materials:
+    Steel: 700
+    Plastic: 200
+
+- type: latheRecipe
+  id: ClothingOuterArmorReflective
+  result: ClothingOuterArmorReflective
+  categories:
+  - Clothing
+  materials:
+    Steel: 400
+    Plastic: 200
+    Glass: 400
+
 # Shields
 - type: latheRecipe
   parent: BaseShieldRecipe
