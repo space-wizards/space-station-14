@@ -46,11 +46,9 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!; //🌟Starlight🌟
     [Dependency] private readonly ClothingSystem _clothingSystem = default!; //🌟Starlight🌟
     [Dependency] private readonly InventorySystem _inventorySystem = default!; //🌟Starlight🌟
     [Dependency] private readonly InventorySystem _inventory = default!; //🌟Starlight🌟
-    [Dependency] private readonly RadioChimeMuteSystem _radioChimeMuteSystem = default!; //🌟Starlight🌟
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -122,11 +120,10 @@ public sealed class RadioSystem : EntitySystem
             ? FormattedMessage.EscapeText(message)
             : message;
 
-        // start 🌟Starlight🌟
+        // 🌟Starlight🌟 - Get job icon and name for the message
 
         var iconId = "JobIconNoId";
         var jobName = "";
-        SoundSpecifier? soundPath = null;
 
         if (_accessReader.FindAccessItemsInventory(messageSource, out var items))
         {
@@ -164,89 +161,6 @@ public sealed class RadioSystem : EntitySystem
             jobName = Loc.GetString("job-name-station-ai");
         }
 
-        // Play chime sound if player is wearing a headset with a RadioChimeComponent
-        Filter filter = Filter.Empty();
-
-        var aiChimeSound = new SoundPathSpecifier("/Audio/_Starlight/Effects/Radio/ai.ogg");
-
-        // Gaslight AI by playing chime sound locally to itself
-        if (HasComp<StationAiHeldComponent>(messageSource))
-        {
-            if (TryComp<ActorComponent>(messageSource, out var aiActor))
-            {
-                var aiFilter = Filter.Empty().AddPlayer(aiActor.PlayerSession);
-                _audio.PlayGlobal(aiChimeSound, aiFilter, true, AudioParams.Default.WithVolume(-10f));
-            }
-        }
-
-        // Gaslight AI into hearing other chimes
-        if (!HasComp<StationAiHeldComponent>(messageSource))
-        {
-            SoundSpecifier? senderChimeSound = null;
-            if (_inventorySystem.TryGetSlotEntity(messageSource, "ears", out var senderHeadsetEntity))
-            {
-                if (TryComp<RadioChimeComponent>(senderHeadsetEntity.Value, out var senderRadioChime) && senderRadioChime.ChimeSound != null)
-                {
-                    senderChimeSound = senderRadioChime.ChimeSound;
-                }
-            }
-            if (senderChimeSound != null)
-            {
-                var radioQueryChime = EntityQueryEnumerator<StationAiHeldComponent, ActorComponent>();
-                while (radioQueryChime.MoveNext(out var aiEntity, out var _, out var aiActorComp))
-                {
-                    var aiFilter = Filter.Empty().AddPlayer(aiActorComp.PlayerSession);
-                    _audio.PlayGlobal(senderChimeSound, aiFilter, true, AudioParams.Default.WithVolume(-10f));
-                }
-            }
-        }
-
-        // Play normal global chime sound for all listeners (headset conversations)
-        if (_inventorySystem.TryGetSlotEntity(messageSource, "ears", out var headsetEntity))
-        {
-            if (TryComp<RadioChimeComponent>(headsetEntity.Value, out var radioChime) && radioChime.ChimeSound != null)
-            {
-                soundPath = radioChime.ChimeSound;
-            }
-            if (soundPath != null)
-            {
-                // Build filter of players who are actively listening on the radio channel
-                var filterBuilder = Filter.Empty();
-                int count = 0;
-                var sourceMapIdChime = Transform(radioSource).MapID;
-
-                var radioQueryChime = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
-                while (radioQueryChime.MoveNext(out var entity, out var activeRadio, out var transform))
-                {
-                    if (!activeRadio.ReceiveAllChannels)
-                    {
-                        if (!activeRadio.Channels.Contains(channel.ID))
-                            continue;
-                    }
-
-                    if (!channel.LongRange && transform.MapID != sourceMapIdChime && !activeRadio.GlobalReceive)
-                        continue;
-
-                    var parent = transform.ParentUid;
-                    if (parent == null || !TryComp<ActorComponent>(parent, out var actor))
-                        continue;
-                        
-                    // Skip players who have muted radio chimes
-                    if (_radioChimeMuteSystem.IsPlayerMuted(actor.PlayerSession))
-                        continue;
-
-                    filterBuilder = filterBuilder.AddPlayer(actor.PlayerSession);
-                    count++;
-                }
-                
-                // Only play the sound if there are players who haven't muted it
-                if (count > 0)
-                {
-                    _audio.PlayGlobal(soundPath, filterBuilder, true, AudioParams.Default.WithVolume(-10f));
-                }
-            }
-        }
-
         // End Starlight
 
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
@@ -263,7 +177,7 @@ public sealed class RadioSystem : EntitySystem
             ChatChannel.Radio,
             message,
             wrappedMessage,
-            NetEntity.Invalid,
+            GetNetEntity(messageSource),
             null);
         var chatMsg = new MsgChatMessage { Message = chat };
         var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg, []);
@@ -305,26 +219,6 @@ public sealed class RadioSystem : EntitySystem
             // send the message
             RaiseLocalEvent(receiver, ref ev);
 
-            // Starlight: if sender is AI and receiver is normal player, gaslight the player
-            if (HasComp<StationAiHeldComponent>(messageSource) && !HasComp<StationAiHeldComponent>(receiver))
-            {
-                ActorComponent? receiverActor = null;
-                if (!TryComp<ActorComponent>(receiver, out receiverActor))
-                {
-                    // Try to get ActorComponent from parent entity if receiver itself doesn't have it
-                    var parent = Transform(receiver).ParentUid;
-                    if (parent != null)
-                        TryComp<ActorComponent>(parent, out receiverActor);
-                }
-
-                if (receiverActor != null && !_radioChimeMuteSystem.IsPlayerMuted(receiverActor.PlayerSession))
-                {
-                    var receiverFilter = Filter.Empty().AddPlayer(receiverActor.PlayerSession);
-                    _audio.PlayGlobal(aiChimeSound, receiverFilter, true, AudioParams.Default.WithVolume(-10f));
-                }
-            }
-
-            // Starlight End
         }
         RaiseLocalEvent(new RadioSpokeEvent
         {

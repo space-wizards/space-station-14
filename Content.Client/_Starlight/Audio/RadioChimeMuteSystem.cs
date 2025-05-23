@@ -1,11 +1,9 @@
-using Content.Shared.Radio;
 using Content.Shared.Starlight.CCVar;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Network;
 
-namespace Content.Client.Audio;
+namespace Content.Client._Starlight.Audio;
 
 /// <summary>
 /// This system handles muting radio chimes based on the user's settings.
@@ -14,7 +12,11 @@ public sealed class RadioChimeMuteSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
+
+    /// <summary>
+    /// Whether radio chimes are currently muted.
+    /// </summary>
+    public bool IsMuted => _radioChimeMuted;
 
     private bool _radioChimeMuted = false;
 
@@ -29,8 +31,5 @@ public sealed class RadioChimeMuteSystem : EntitySystem
     private void ToggleRadioChimeMuted(bool muted)
     {
         _radioChimeMuted = muted;
-        
-        // Send the preference to the server
-        RaiseNetworkEvent(new RadioChimeMuteEvent(muted));
     }
 }

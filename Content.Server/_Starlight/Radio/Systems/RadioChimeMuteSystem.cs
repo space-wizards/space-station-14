@@ -1,41 +1,29 @@
-using Content.Shared.Radio;
+// This file is intentionally left empty as the radio chime system has been moved to the client side.
+// The file is kept to maintain compatibility with existing code references.
+// The actual implementation is now in Content.Client.Audio.RadioChimeMuteSystem.
+
 using Robust.Server.Player;
 using Robust.Shared.Player;
 
 namespace Content.Server.Radio.Systems;
 
 /// <summary>
-/// This system handles tracking which players have muted radio chimes.
+/// This system is a placeholder for the client-side RadioChimeMuteSystem.
+/// Radio chimes are now handled entirely on the client side.
 /// </summary>
 public sealed class RadioChimeMuteSystem : EntitySystem
 {
-    // Track which players have muted radio chimes
-    private readonly HashSet<ICommonSession> _mutedPlayers = new();
-
     public override void Initialize()
     {
         base.Initialize();
-        
-        // Subscribe to the RadioChimeMuteEvent from clients
-        SubscribeNetworkEvent<RadioChimeMuteEvent>(OnRadioChimeMuteEvent);
-    }
-
-    private void OnRadioChimeMuteEvent(RadioChimeMuteEvent ev, EntitySessionEventArgs args)
-    {
-        if (args.SenderSession is not ICommonSession playerSession)
-            return;
-
-        if (ev.Muted)
-            _mutedPlayers.Add(playerSession);
-        else
-            _mutedPlayers.Remove(playerSession);
     }
 
     /// <summary>
-    /// Check if a player has muted radio chimes.
+    /// This method is kept for compatibility but no longer does anything.
+    /// Radio chime muting is now handled client-side.
     /// </summary>
     public bool IsPlayerMuted(ICommonSession session)
     {
-        return _mutedPlayers.Contains(session);
+        return false;
     }
 }
