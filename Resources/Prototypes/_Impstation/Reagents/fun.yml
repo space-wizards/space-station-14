@@ -185,3 +185,24 @@
       # its just a weaker tranex with no od
       - !type:ModifyBleedAmount
         amount: -0.5
+
+- type: reagent
+  id: Sadness
+  name: reagent-name-sadness
+  desc: reagent-desc-sadness
+  physicalDesc: reagent-physical-desc-sad
+  flavor: sadness
+  color: "#465375"
+  metabolisms:
+    Food:
+      effects:
+      - !type:Emote
+        emote: Crying
+        probability: 0.7
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:Emote
+        emote: Crying
+        force: true

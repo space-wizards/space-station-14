@@ -1,0 +1,21 @@
+﻿- type: construction
+  name: memorial joint
+  id: memorialJoint
+  graph: memorialJoint
+  startNode: start
+  targetNode: memorialjoint
+  category: construction-category-misc
+  description: "Light one up and smoke your homie."
+  icon: { sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi, state: unlit-icon }
+  objectType: Item
+
+- type: construction
+  name: memorial blunt
+  id: memorialBlunt
+  graph: memorialBlunt
+  startNode: start
+  targetNode: memorialblunt
+  category: construction-category-misc
+  description: "Light one up and smoke your homie."
+  icon: { sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi, state: unlit-icon }
+  objectType: Item

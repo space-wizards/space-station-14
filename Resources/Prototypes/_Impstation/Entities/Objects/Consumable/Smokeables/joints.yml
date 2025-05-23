@@ -1,0 +1,59 @@
+﻿- type: entity
+  id: MemorialJoint
+  parent: Joint
+  name: memorial joint
+  description: It's what they would have wanted.
+  components:
+  - type: Construction
+    graph: memorialJoint
+    node: memorialjoint
+  - type: RandomMetadata
+    nameSegments: [NamesRollie]
+    nameFormat: sad-blunt
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 50
+        reagents:
+        - ReagentId: THC
+          Quantity: 20
+        - ReagentId: Sadness
+          Quantity: 20
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: THC
+          Quantity: 20
+        - ReagentId: Sadness
+          Quantity: 20
+
+
+- type: entity
+  id: MemorialBlunt
+  parent: Blunt
+  name: memorial blunt
+  description: It's what they would have wanted.
+  components:
+  - type: Construction
+    graph: memorialBlunt
+    node: memorialblunt
+  - type: RandomMetadata
+    nameSegments: [NamesRollie]
+    nameFormat: sad-blunt
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 50
+        reagents:
+        - ReagentId: THC
+          Quantity: 20
+        - ReagentId: Sadness
+          Quantity: 20
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: THC
+          Quantity: 20
+        - ReagentId: Sadness
+          Quantity: 20
+

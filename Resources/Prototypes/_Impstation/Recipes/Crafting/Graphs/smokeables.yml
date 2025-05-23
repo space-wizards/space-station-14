@@ -1,0 +1,37 @@
+﻿- type: constructionGraph
+  id: memorialJoint
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: memorialjoint
+      steps:
+      - tag: Ash
+        icon:
+          sprite: Objects/Materials/materials.rsi
+          state: ash
+        name: your vaporized loved one
+      - material: PaperRolling
+      - material: GroundCannabis
+        doAfter: 2
+  - node: memorialjoint
+    entity: MemorialJoint
+
+- type: constructionGraph
+  id: memorialBlunt
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: memorialblunt
+      steps:
+      - tag: Ash
+        icon:
+          sprite: Objects/Materials/materials.rsi
+          state: ash
+        name: your vaporized loved one
+      - material: LeavesTobaccoDried
+      - material: GroundCannabis
+        doAfter: 2
+  - node: memorialblunt
+    entity: MemorialBlunt
