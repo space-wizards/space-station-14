@@ -363,7 +363,7 @@
   parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
   id: ClothingOuterHardsuitMedical
   name: chief medical officer's hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement.
+  description: A lightweight void-capable suit issued to the CMO, Built with advanced fabrics with laceration and chemical protection, that feel soft and don't slow you down!
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
@@ -375,6 +375,10 @@
   - type: Armor
     modifiers:
       coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Heat: 0.5
+        Radiation: 0.45
         Caustic: 0.1
   - type: ZombificationResistance
     zombificationResistanceCoefficient: 0.4
