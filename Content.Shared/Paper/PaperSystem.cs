@@ -122,7 +122,7 @@ public sealed class PaperSystem : EntitySystem
                 if (entity.Comp.EditingDisabled)
                 {
                     var paperEditingDisabledMessage = Loc.GetString("paper-tamper-proof-modified-message");
-                    _popupSystem.PopupEntity(paperEditingDisabledMessage, entity, args.User);
+                    _popupSystem.PopupClient(paperEditingDisabledMessage, entity, args.User);
 
                     args.Handled = true;
                     return;
@@ -281,6 +281,12 @@ public sealed class PaperSystem : EntitySystem
         }
     }
 
+    public void SetContent(EntityUid entity, string content)
+    {
+        if (!TryComp<PaperComponent>(entity, out var paper))
+            return;
+        SetContent((entity, paper), content);
+    }
 
     public void SetContent(Entity<PaperComponent> entity, string content)
     {

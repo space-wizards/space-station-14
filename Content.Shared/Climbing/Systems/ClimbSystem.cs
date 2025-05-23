@@ -149,7 +149,7 @@ public sealed partial class ClimbSystem : VirtualController
 
     private void OnCanDragDropOn(EntityUid uid, ClimbableComponent component, ref CanDropTargetEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !component.Vaultable)
             return;
 
         // If already climbing then don't show outlines.
@@ -261,7 +261,7 @@ public sealed partial class ClimbSystem : VirtualController
         args.Handled = true;
     }
 
-    private void Climb(EntityUid uid, EntityUid user, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
+    public void Climb(EntityUid uid, EntityUid user, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
         PhysicsComponent? physics = null, FixturesComponent? fixtures = null, ClimbableComponent? comp = null)
     {
         if (!Resolve(uid, ref climbing, ref physics, ref fixtures, false))
@@ -456,6 +456,12 @@ public sealed partial class ClimbSystem : VirtualController
     /// <param name="reason">The reason why it cant be dropped</param>
     public bool CanVault(ClimbableComponent component, EntityUid user, EntityUid target, out string reason)
     {
+        if (!component.Vaultable)
+        {
+            reason = string.Empty;
+            return false;
+        }
+
         if (!_actionBlockerSystem.CanInteract(user, target))
         {
             reason = Loc.GetString("comp-climbable-cant-interact");

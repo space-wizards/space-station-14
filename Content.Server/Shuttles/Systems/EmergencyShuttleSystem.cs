@@ -6,7 +6,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking.Events;
 using Content.Server.Pinpointer;
@@ -37,6 +36,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -648,18 +648,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         if (!EmergencyShuttleArrived)
             return false;
 
-        // check each emergency shuttle
+        // check if target is on an emergency shuttle
         var xform = Transform(target);
-        foreach (var stationData in EntityQuery<StationEmergencyShuttleComponent>())
-        {
-            if (stationData.EmergencyShuttle == null)
-                continue;
 
-            if (IsOnGrid(xform, stationData.EmergencyShuttle.Value))
-            {
-                return true;
-            }
-        }
+        if (HasComp<EmergencyShuttleComponent>(xform.GridUid))
+            return true;
 
         return false;
     }

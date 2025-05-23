@@ -21,7 +21,7 @@ public sealed partial class RandomHumanoidSettingsPrototype : IPrototype, IInher
     /// <summary>
     ///     Whether the humanoid's name should take from the randomized profile or not.
     /// </summary>
-    [DataField("randomizeName")]
+    [DataField]
     public bool RandomizeName { get; private set; } = true;
 
     /// <summary>
