@@ -18,18 +18,11 @@ public sealed class DiskConsoleSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly ResearchSystem _research = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IComponentFactory _compFactory = default!;
-    [Dependency] private readonly ILogManager _log = default!;
-
-    private ISawmill _sawmill = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        _sawmill = _log.GetSawmill("DiskConsoleSystem");
-
         SubscribeLocalEvent<DiskConsoleComponent, DiskConsolePrintDiskMessage>(OnPrintDisk);
         SubscribeLocalEvent<DiskConsoleComponent, ResearchServerPointsChangedEvent>(OnPointsChanged);
         SubscribeLocalEvent<DiskConsoleComponent, ResearchRegistrationChangedEvent>(OnRegistrationChanged);
@@ -60,7 +53,7 @@ public sealed class DiskConsoleSystem : EntitySystem
     {
         if (!_protoMan.TryIndex(console.DiskPrototype, out var diskProto))
         {
-            _sawmill.Error($"Failed to spawn a tech disk: disk entity prototype '{console.DiskPrototype}' not found");
+            Log.Error($"Failed to spawn a tech disk: disk entity prototype '{console.DiskPrototype}' not found");
             return;
         }
 

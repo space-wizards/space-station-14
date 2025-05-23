@@ -24,10 +24,6 @@ public sealed class TechnologyDiskSystem : EntitySystem
     [Dependency] private readonly SharedResearchSystem _research = default!;
     [Dependency] private readonly SharedLatheSystem _lathe = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IComponentFactory _compFactory = default!;
-    [Dependency] private readonly ILogManager _log = default!;
-
-    private ISawmill _sawmill = default!;
 
     /// <summary>
     /// Maps disk tiers to tech disk entity prototypes that hold StaticPrice for each tier.
@@ -42,8 +38,6 @@ public sealed class TechnologyDiskSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        _sawmill = _log.GetSawmill("TechnologyDiskSystem");
 
         SubscribeLocalEvent<TechnologyDiskComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TechnologyDiskComponent, AfterInteractEvent>(OnAfterInteract);
@@ -88,7 +82,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
 
         if (recipes.Count == 0)
         {
-            _sawmill.Error($"Failed to pick recipe for a tech disk: no suitable recipes were found");
+            Log.Error($"Failed to pick recipe for a tech disk: no suitable recipes were found");
             return;
         }
 
@@ -109,7 +103,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
             return;
 
         var priceHolderProto = _protoMan.Index(priceHolderProtoId);
-        if (!priceHolderProto.TryGetComponent<StaticPriceComponent>(out var targetPriceComp, _compFactory)
+        if (!priceHolderProto.TryGetComponent<StaticPriceComponent>(out var targetPriceComp, Factory)
             || targetPriceComp.Price == 0)
             return;
 
@@ -123,7 +117,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
     {
         if (!_protoMan.TryIndex(ent.Comp.TierWeightPrototype, out var tierWeights))
         {
-            _sawmill.Error($"Failed to pick tier for a tech disk: disk tier weights prototype '{ent.Comp.TierWeightPrototype}' not found");
+            Log.Error($"Failed to pick tier for a tech disk: disk tier weights prototype '{ent.Comp.TierWeightPrototype}' not found");
             return null;
         }
 
@@ -140,7 +134,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
         var disciplinePool = _protoMan.EnumeratePrototypes<TechDisciplinePrototype>().ToArray();
         if (disciplinePool.Length == 0)
         {
-            _sawmill.Error("Failed to pick discipline for a tech disk: no discipline prototypes were found");
+            Log.Error("Failed to pick discipline for a tech disk: no discipline prototypes were found");
             return null;
         }
 
@@ -169,7 +163,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
             var tierVisualsEnumKey = "T" + tier;
             if(!Enum.IsDefined(typeof(TechDiskTierVisuals), tierVisualsEnumKey))
             {
-                _sawmill.Error($"Failed to set tech disk tier visuals: no matching tier visuals found to picked tier '{tier}'");
+                Log.Error($"Failed to set tech disk tier visuals: no matching tier visuals found to picked tier '{tier}'");
                 return;
             }
 
@@ -189,7 +183,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
         {
             if (!Enum.IsDefined(typeof(TechDiskDisciplineVisuals), discipline.ID))
             {
-                _sawmill.Error(
+                Log.Error(
                     $"Failed to set tech disk discipline visuals: no matching discipline visuals found to picked discipline '{discipline}'");
                 return;
             }
