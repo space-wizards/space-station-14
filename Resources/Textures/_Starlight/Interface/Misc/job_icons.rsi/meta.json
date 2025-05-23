@@ -28,6 +28,15 @@
          },
         {
             "name": "CentComm"
+        },
+        {
+            "name": "Commander"
+        },
+        {
+            "name": "SyndicateAgent"
+        },
+        {
+            "name": "Operative"
         }
     ]
 }

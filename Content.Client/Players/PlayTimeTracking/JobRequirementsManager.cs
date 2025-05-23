@@ -158,7 +158,8 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         return _roles.TryGetValue("Overall", out var overallPlaytime) ? overallPlaytime : TimeSpan.Zero;
     }
 
-    public IEnumerable<KeyValuePair<string, TimeSpan>> FetchPlaytimeByRoles()
+    //starlight edit, string changed to JobPrototype
+    public IEnumerable<KeyValuePair<JobPrototype, TimeSpan>> FetchPlaytimeByRoles()
     {
         var jobsToMap = _prototypes.EnumeratePrototypes<JobPrototype>();
 
@@ -166,10 +167,41 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         {
             if (_roles.TryGetValue(job.PlayTimeTracker, out var locJobName))
             {
-                yield return new KeyValuePair<string, TimeSpan>(job.Name, locJobName);
+                yield return new KeyValuePair<JobPrototype, TimeSpan>(job, locJobName);
             }
         }
     }
+
+    //Starlight
+    public IEnumerable<KeyValuePair<DepartmentPrototype, TimeSpan>> FetchPlaytimeByDepartments()
+    {
+        var departmentsToMap = _prototypes.EnumeratePrototypes<DepartmentPrototype>();
+
+        foreach (var department in departmentsToMap)
+        {
+            //bulk up time
+            var departmentTime = TimeSpan.Zero;
+
+            foreach (var job in department.Roles)
+            {
+                //get it as the actual type
+                if (!_prototypes.TryIndex(job, out JobPrototype? jobProto))
+                    continue;
+                
+                if (_roles.TryGetValue(jobProto.PlayTimeTracker, out var time))
+                {
+                    departmentTime += time;
+                }
+            }
+
+            //if the timer is 0, skip
+            if (departmentTime == TimeSpan.Zero)
+                continue;
+
+            yield return new KeyValuePair<DepartmentPrototype, TimeSpan>(department, departmentTime);
+        }
+    }
+    //starlight end
 
     public IReadOnlyDictionary<string, TimeSpan> GetPlayTimes(ICommonSession session)
     {
