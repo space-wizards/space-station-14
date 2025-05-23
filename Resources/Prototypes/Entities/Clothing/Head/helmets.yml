@@ -508,7 +508,8 @@
     action: ActionToggleJusticeHelm
     mustEquip: false
   - type: ItemTogglePointLight
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
+    spriteLayer: light
     clothingVisuals:
       head:
       - state: on-equipped-HELMET
