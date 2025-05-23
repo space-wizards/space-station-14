@@ -2,16 +2,11 @@ using Content.Server.Antag;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Shared.GameTicking.Components;
 using Content.Shared._Starlight.Paper;
 using Content.Shared.Paper;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager;
-using Robust.Shared.Serialization.Markdown.Mapping;
-using Robust.Shared.Timing;
 
 namespace Content.Server._Starlight.Paper;
 
