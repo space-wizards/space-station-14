@@ -10,6 +10,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
 {
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private ISawmill _log = default!;
 
@@ -21,7 +22,8 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
         base.Initialize();
 
         SubscribeLocalEvent<AnomalyScannerComponent, ComponentInit>(OnScannerInit);
-        SubscribeLocalEvent<AnomalyScannerScreenComponent, ComponentInit>(OnScannerScreenInit);
+        SubscribeLocalEvent<AnomalyScannerScreenComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<AnomalyScannerScreenComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<AnomalyScannerScreenComponent, AppearanceChangeEvent>(OnScannerAppearanceChanged);
     }
 
@@ -30,7 +32,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
         EnsureComp<AnomalyScannerScreenComponent>(ent);
     }
 
-    private void OnScannerScreenInit(Entity<AnomalyScannerScreenComponent> ent, ref ComponentInit args)
+    private void OnComponentInit(Entity<AnomalyScannerScreenComponent> ent, ref ComponentInit args)
     {
         // Allocate the OwnedTexture
         ent.Comp.ScreenTexture ??= _clyde.CreateBlankTexture<Rgba32>((32, 32));
@@ -39,12 +41,14 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
 
         // Initialize bar drawing buffer
         ent.Comp.BarBuf ??= new Rgba32[ent.Comp.Size.X * ent.Comp.Size.Y];
+    }
 
+    private void OnComponentStartup(Entity<AnomalyScannerScreenComponent> ent, ref ComponentStartup args)
+    {
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
-        var spriteSystem = EntityManager.System<SpriteSystem>();
-        spriteSystem.LayerSetTexture((ent, sprite), AnomalyScannerVisualLayers.Screen, ent.Comp.ScreenTexture);
+        _sprite.LayerSetTexture((ent, sprite), AnomalyScannerVisualLayers.Screen, ent.Comp.ScreenTexture);
     }
 
     private void OnScannerAppearanceChanged(Entity<AnomalyScannerScreenComponent> ent, ref AppearanceChangeEvent args)
@@ -53,7 +57,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
         if (severityObj is not float severity)
             severity = 0;
 
-        if (!HasComp<SpriteComponent>(ent))
+        if (args.Sprite is null)
             return;
 
         ent.Comp.ScreenTexture ??= _clyde.CreateBlankTexture<Rgba32>((32, 32));
