@@ -20,7 +20,7 @@
 
 - type: typingIndicator
   id: guardian
-  typingState: guardian0 
+  typingState: guardian0
   idleState: guardian3
 
 - type: typingIndicator
