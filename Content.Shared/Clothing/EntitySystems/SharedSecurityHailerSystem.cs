@@ -339,10 +339,69 @@ namespace Content.Shared.Clothing.EntitySystems
             Dirty(ent);
         }
 
-        //Move to shared for predictions purposes. Is this good ?
-        public void PlayVoiceLine(ResolvedSoundSpecifier resolver, EntityUid owner, AudioParams audioParams)
+        /// <summary>
+        /// Play the compliance voice line  of the hailer
+        /// </summary>
+        /// <param name="ent"></param>
+        /// <returns>Index of the chosen line from the SoundCollection</returns>
+        protected int PlayVoiceLine(Entity<SecurityHailerComponent> ent)
         {
-            _sharedAudio.PlayPvs(resolver, owner, audioParams);
+            //Move to shared for predictions purposes. Is this good ?
+            var (uid, comp) = ent;
+
+            SoundSpecifier currentSpecifier;
+            if (comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+                currentSpecifier = comp.ERTAggressionSounds;
+            else if (HasComp<EmaggedComponent>(ent))
+                currentSpecifier = ent.Comp.EmagAggressionSounds;
+            else
+            {
+                currentSpecifier = comp.AggresionLevel switch
+                {
+                    SecurityHailerComponent.AggresionState.Medium => comp.MediumAggressionSounds,
+                    SecurityHailerComponent.AggresionState.High => comp.HighAggressionSounds,
+                    _ => comp.LowAggressionSounds,
+                };
+            }
+            var resolver = _sharedAudio.ResolveSound(currentSpecifier);
+            if (resolver is not ResolvedCollectionSpecifier collectionResolver)
+                return -1;
+
+            if (GetVoiceReplacement(ent, collectionResolver.Index) != null)
+            {
+                collectionResolver = (ResolvedCollectionSpecifier)_sharedAudio.ResolveSound(comp.HOSReplaceSounds);
+            }
+
+            _sharedAudio.PlayPvs(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
+
+            return collectionResolver.Index;
+        }
+
+        protected string? GetVoiceReplacement(Entity<SecurityHailerComponent> ent, int index)
+        {
+            var linesToReplace = ent.Comp.ReplaceVoicelinesSpecial;
+            if (linesToReplace.ContainsKey(ent.Comp.SpecialCircumtance))
+            {
+                var line = GetLineFormat(ent, index);
+                string? replacedLine;
+                linesToReplace[ent.Comp.SpecialCircumtance].TryGetValue(line, out replacedLine);
+                return replacedLine;
+            }
+
+            return null;
+        }
+
+        protected string GetLineFormat(Entity<SecurityHailerComponent> ent, int index)
+        {
+            string finalLine = String.Empty;
+            if (HasComp<EmaggedComponent>(ent))
+                finalLine = $"hail-emag-{index}";
+            else if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+                finalLine = $"hail-ERT-{index}";
+            else
+                finalLine = $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}";
+
+            return finalLine;
         }
     }
 }

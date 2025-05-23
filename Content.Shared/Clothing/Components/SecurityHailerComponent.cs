@@ -74,9 +74,14 @@ namespace Content.Shared.Clothing.Components
         /// <summary>
         /// What ftl line to replace in special circumstances
         /// </summary>
-        public Dictionary<SpecialUseCase, (string[], string[])> ReplaceVoicelinesSpecial = new() //List of Tuples
+        public Dictionary<SpecialUseCase, Dictionary<string, string>> ReplaceVoicelinesSpecial = new()
         {
-            { SpecialUseCase.HOS, (["hail-high-5"], ["hail-high-HOS"]) }//"Take it to the HOS voice" line, make no sense if HOS
+            {
+                SpecialUseCase.HOS, new()
+                {
+                    { "hail-high-5", "hail-high-HOS"} //"Take it to the HOS voice" line, make no sense if HOS using it
+                }
+            }
         };
 
         /// <summary>
