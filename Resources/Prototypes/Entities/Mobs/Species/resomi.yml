@@ -139,6 +139,11 @@
         sizeMaps:
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
+            state: outerClothing
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
             state: suitStorage
       belt:
         sizeMaps:
@@ -195,6 +200,11 @@
         sizeMaps:
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
+            state: outerClothing
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
             state: suitStorage
       belt:
         sizeMaps:
@@ -208,7 +218,7 @@
       Unsexed: UnisexResomi
   - type: Speech
     speechVerb: Resomi
-    allowedEmotes: ['Chirp']
+    allowedEmotes: ['Chirp', 'Hisses', 'Purr', 'Growl']
   - type: Tag
     tags:
     - CanPilot
@@ -276,6 +286,11 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: mask
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
+            state: outerClothing
       suitstorage:
         sizeMaps:
           32:
@@ -332,6 +347,11 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: mask
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
+            state: outerClothing
       suitstorage:
         sizeMaps:
           32:

@@ -73,6 +73,7 @@
     neck: SyndicateWhistle
     ears: ClothingHeadsetAltSyndicateCommander #Starlight
     outerClothing: ClothingOuterHardsuitSyndieCommander
+    id: CommanderPDA
   inhand:
   - NukeOpsDeclarationOfWar
 

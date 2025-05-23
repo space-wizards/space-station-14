@@ -37,7 +37,7 @@
   name: china lake
   parent: [BaseWeaponLauncher, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponLauncherChinaLake
-  description: PLOOP.
+  description: A pump-action grenade launcher commonly used by the infamous Nuclear Operatives. PLOOP!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -51,7 +51,8 @@
     - suitStorage
   - type: AmmoCounter
   - type: Gun
-    fireRate: 1
+    pump: true
+    fireRate: 0.8
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
