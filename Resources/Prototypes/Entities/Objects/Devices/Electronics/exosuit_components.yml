@@ -70,6 +70,23 @@
       - Robotics
 
 - type: entity
+  id: PaddyUpgradeKit
+  parent: BaseExosuitParts
+  name: paddy conversion kit
+  description: This kit allows you to turn a Ripley MK-II into a Paddy.
+  components:
+    - type: Item
+      storedRotation: 0
+    - type: Sprite
+      state: paddyupgrade
+    - type: Tag
+      tags:
+      - PaddyUpgradeKit
+    - type: GuideHelp
+      guides:
+      - Robotics
+
+- type: entity
   id: MechAirTank
   parent: BaseExosuitParts
   name: exosuit air tank
