@@ -574,7 +574,7 @@ sealed class Explosion
         /// <summary>
         ///     The actual grid that this corresponds to. If null, this implies space.
         /// </summary>
-        public MapGridComponent? MapGrid;
+        public Entity<MapGridComponent>? MapGrid;
     }
 
     private readonly List<ExplosionData> _explosionData = new();
