@@ -6104,4 +6104,11 @@ Entries:
   id: 845
   time: '2025-05-23T15:55:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/672
+- author: Zippy/Zip0r1
+  changes:
+  - message: Commander, Agent and syndicate ID sprite updated
+    type: Tweak
+  id: 846
+  time: '2025-05-23T20:29:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/684
 
