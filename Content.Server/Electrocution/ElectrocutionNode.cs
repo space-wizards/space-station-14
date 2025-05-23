@@ -17,7 +17,7 @@ namespace Content.Server.Electrocution
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            MapGridComponent? grid,
+            Entity<MapGridComponent>? grid,
             IEntityManager entMan)
         {
             if (CableEntity == null || NodeName == null)

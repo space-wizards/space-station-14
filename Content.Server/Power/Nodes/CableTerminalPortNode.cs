@@ -1,7 +1,5 @@
-using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.NodeContainer;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Power.Nodes
@@ -12,15 +10,16 @@ namespace Content.Server.Power.Nodes
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            MapGridComponent? grid,
+            Entity<MapGridComponent>? grid,
             IEntityManager entMan)
         {
-            if (!xform.Anchored || grid == null)
+            if (!xform.Anchored || grid is not { } gridEnt)
                 yield break;
 
-            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
+            var mapSystem = entMan.System<SharedMapSystem>();
+            var gridIndex = mapSystem.TileIndicesFor(gridEnt, xform.Coordinates);
 
-            var nodes = NodeHelpers.GetCardinalNeighborNodes(nodeQuery, grid, gridIndex, includeSameTile: false);
+            var nodes = NodeHelpers.GetCardinalNeighborNodes(nodeQuery, gridEnt, gridIndex, mapSystem, includeSameTile: false);
             foreach (var (_, node) in nodes)
             {
                 if (node is CableTerminalNode)

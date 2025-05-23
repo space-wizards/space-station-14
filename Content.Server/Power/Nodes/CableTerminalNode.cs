@@ -12,18 +12,19 @@ namespace Content.Server.Power.Nodes
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            MapGridComponent? grid,
+            Entity<MapGridComponent>? grid,
             IEntityManager entMan)
         {
-            if (!xform.Anchored || grid == null)
+            if (!xform.Anchored || grid is not { } gridEnt)
                 yield break;
 
-            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
+            var mapSystem = entMan.System<SharedMapSystem>();
+            var gridIndex = mapSystem.TileIndicesFor(gridEnt, xform.Coordinates);
 
             var dir = xform.LocalRotation.GetDir();
             var targetIdx = gridIndex.Offset(dir);
 
-            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, targetIdx))
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, gridEnt, targetIdx, mapSystem))
             {
                 if (node is CableTerminalPortNode)
                     yield return node;
