@@ -865,8 +865,8 @@
     maxIntensity: 10
 
 - type: entity
-  parent: BaseBulletTrigger
-  id: [ BulletGrenadeCleanade, RadarTrackedProjectile ]
+  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
+  id: BulletGrenadeCleanade
   name: cleanade grenade round
   categories: [ HideSpawnMenu ]
   components:
