@@ -282,6 +282,25 @@
   - type: Wires
     layoutId: AirlockCargo
 
+# External Airlocks
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalMaintenanceLocked
+  suffix: External, Maintenance, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMaintenance ]
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassMaintenanceLocked
+  suffix: External, Glass, Maintenance, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMaintenance ]
+
 # Vault
 - type: entity
   parent: VaultDoor
