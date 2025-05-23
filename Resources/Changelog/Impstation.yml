@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: dayn-e
-  changes:
-  - message: New lobby art by Six-Valentine!
-    type: Add
-  id: 1215
-  time: '2025-03-01T21:52:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1809
 - author: ruddygreat
   changes:
   - message: The Monument's UI should be nicer to use!
@@ -4226,3 +4219,11 @@
   id: 1714
   time: '2025-05-23T15:29:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2564
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: After a shuttle accident between Yum Yum and a local wizard, the afterlife
+      has died. The ghost bar has been removed.
+    type: Remove
+  id: 1715
+  time: '2025-05-23T15:33:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2528
