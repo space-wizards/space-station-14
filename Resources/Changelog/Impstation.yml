@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Cosmic Cult Patch 1.02 (Experimental)
-    type: Tweak
-  id: 1218
-  time: '2025-03-02T00:33:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1813
 - author: widgetbeck
   changes:
   - message: Drones now spawn with a lighting RCD, a garbage bag, and a space cleaner
@@ -4227,3 +4220,10 @@
   id: 1717
   time: '2025-05-23T15:35:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2550
+- author: TuttlePants
+  changes:
+  - message: Bounty Hunters now target command members when they can't target an antagonist.
+    type: Tweak
+  id: 1718
+  time: '2025-05-23T15:38:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2517
