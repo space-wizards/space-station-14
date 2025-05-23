@@ -569,7 +569,7 @@ sealed class Explosion
         /// <summary>
         ///     Lookup component for this grid (or space/map).
         /// </summary>
-        public BroadphaseComponent Lookup;
+        public Entity<BroadphaseComponent> Lookup;
 
         /// <summary>
         ///     The actual grid that this corresponds to. If null, this implies space.
@@ -720,7 +720,7 @@ sealed class Explosion
             _explosionData.Add(new()
             {
                 TileLists = spaceData.TileLists,
-                Lookup = entMan.GetComponent<BroadphaseComponent>(mapUid),
+                Lookup = (mapUid, entMan.GetComponent<BroadphaseComponent>(mapUid)),
                 MapGrid = null
             });
 
@@ -733,7 +733,7 @@ sealed class Explosion
             _explosionData.Add(new ExplosionData
             {
                 TileLists = grid.TileLists,
-                Lookup = entMan.GetComponent<BroadphaseComponent>(grid.Grid.Owner),
+                Lookup = (grid.Grid, entMan.GetComponent<BroadphaseComponent>(grid.Grid)),
                 MapGrid = grid.Grid,
             });
         }
