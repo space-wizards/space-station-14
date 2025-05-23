@@ -12,7 +12,6 @@
   id: AnomalyTechSupercritical
   files:
   - /Audio/Items/Anomaly/tech_crit.ogg
-  - /Audio/Items/Anomaly/tech_crit2.ogg
 
 - type: soundCollection
   id: AnomalyPresentSupercritical
@@ -38,11 +37,6 @@
   id: AnomalyBluespaceSupercritical
   files:
   - /Audio/Items/Anomaly/bluespace_crit.ogg
-
-- type: soundCollection
-  id: AnomalyBluespaceExplosion
-  files:
-  - /Audio/Items/Anomaly/bluespace_explosion.ogg
 
 - type: soundCollection
   id: AnomalyIceSupercritical

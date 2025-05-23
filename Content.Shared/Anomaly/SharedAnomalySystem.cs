@@ -133,7 +133,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         Audio.PlayPvs(ent.Comp.SupercriticalSoundAtAnimationStart, ent);
 
         var super = AddComp<AnomalySupercriticalComponent>(ent);
-        super.EndTime = Timing.CurTime + super.SupercriticalDuration;
+        super.EndTime = Timing.CurTime + TimeSpan.FromSeconds(ent.Comp.SupercriticalDuration);
         Appearance.SetData(ent, AnomalyVisuals.Supercritical, true);
         Dirty(ent, super);
     }

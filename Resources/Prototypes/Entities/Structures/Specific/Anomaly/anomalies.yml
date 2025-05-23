@@ -128,6 +128,7 @@
     coreInertPrototype: AnomalyCoreGravityInert
     supercriticalSoundAtAnimationStart:
       collection: AnomalyGravitySupercritical
+    supercriticalDuration: 15
   - type: Sprite
     layers:
     - state: anom2
@@ -314,8 +315,6 @@
   - type: Anomaly
     corePrototype: AnomalyCoreBluespace
     coreInertPrototype: AnomalyCoreBluespaceInert
-    supercriticalSound:
-      collection: AnomalyBluespaceExplosion
     supercriticalSoundAtAnimationStart:
       collection: AnomalyBluespaceSupercritical
     pulseSound:
