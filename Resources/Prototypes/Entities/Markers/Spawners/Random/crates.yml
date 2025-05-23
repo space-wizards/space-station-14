@@ -248,6 +248,26 @@
     chance: 0.9
     offset: 0.0
 
+- type: entity
+  name: random air crate spawner
+  id: LootSpawnerRandomCrateAir
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Storage/Crates/o2.rsi
+        state: icon
+  - type: RandomSpawner
+    rarePrototypes:
+      - CrateEVASuitsBasic
+    rareChance: 0.2
+    prototypes:
+    - CrateEmergencyInternals
+    - CrateEmergencyInternalsLarge
+    - CrateNitrogenInternals
+    chance: 0.9
+
 - type: entityTable
   id: LockboxTable
   table: !type:GroupSelector
