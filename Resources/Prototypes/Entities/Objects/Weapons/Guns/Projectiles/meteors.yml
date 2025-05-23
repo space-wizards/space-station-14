@@ -225,4 +225,131 @@
             volume: 10
       - !type:SpillBehavior
         solution: blood
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodMeatHuman:
+            min: 1
+            max: 2
+      - !type:ExplodeBehavior
+
+# Cow Meteor
+- type: entity
+  parent: BaseMeteor
+  id: MeteorCow
+  name: Cosmic cow
+  description: Moo-ving at relativistic speeds!
+  suffix: Meteor
+  components:
+  - type: Sprite
+    state: cow_pixel
+  - type: Explosive
+    totalIntensity: 25
+  - type: SolutionContainerManager
+    solutions:
+      milk:
+        maxVol: 500
+        reagents:
+        - ReagentId: Milk
+          Quantity: 500
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 3000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Animals/cow_moo.ogg
+      - !type:SpillBehavior
+        solution: milk
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodMeat:
+            min: 1
+            max: 2
+          FoodCheeseSlice:
+            min: 1
+            max: 2
+      - !type:ExplodeBehavior
+
+# Clown Meteor
+- type: entity
+  parent: BaseMeteor
+  id: MeteorClown
+  name: Honksteroid
+  description: The final honkening!
+  suffix: Meteor
+  components:
+  - type: Sprite
+    state: clown_pixel
+  - type: Explosive
+    totalIntensity: 25
+  - type: SolutionContainerManager
+    solutions:
+      laughter:
+        maxVol: 500
+        reagents:
+        - ReagentId: Laughter
+          Quantity: 500
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 3000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Items/bikehorn.ogg
+      - !type:SpillBehavior
+        solution: laughter
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodMeatClown:
+            min: 1
+            max: 2
+          TrashBananaPeel:
+            min: 1
+            max: 4
+          RubberChicken:
+            min: 0
+            max: 1
+      - !type:ExplodeBehavior
+
+# Potato Meteor
+- type: entity
+  parent: BaseMeteor
+  id: MeteorPotato
+  name: Space potato
+  description: A starchy threat from the depths of the space. Contains 200% of your daily sodium intake!
+  components:
+  - type: Sprite
+    state: potato
+  - type: Explosive
+    totalIntensity: 25
+  - type: SolutionContainerManager
+    solutions:
+      ketchup:
+        maxVol: 100
+        reagents:
+        - ReagentId: Ketchup
+          Quantity: 100
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 3000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpillBehavior
+        solution: ketchup
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodMealFries:
+            min: 1
+            max: 5
       - !type:ExplodeBehavior

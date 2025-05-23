@@ -258,6 +258,12 @@ reagent-effect-guidebook-electrocute =
         *[other] electrocute
     } the metabolizer for {NATURALFIXED($time, 3)} {MANY("second", $time)}
 
+reagent-effect-guidebook-emote =
+    { $chance ->
+        [1] Will force
+        *[other] force
+    } the metabolizer to [bold][color=white]{$emote}[/color][/bold]
+
 reagent-effect-guidebook-extinguish-reaction =
     { $chance ->
         [1] Extinguishes

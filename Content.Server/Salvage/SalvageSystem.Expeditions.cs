@@ -128,7 +128,7 @@ public sealed partial class SalvageSystem
     {
         var component = expedition.Comp;
         component.NextOffer = _timing.CurTime + TimeSpan.FromSeconds(_cooldown);
-        Announce(uid, Loc.GetString("salvage-expedition-mission-completed"));
+        Announce(uid, Loc.GetString("salvage-expedition-completed"));
         component.ActiveMission = 0;
         component.Cooldown = true;
         UpdateConsoles(expedition);
