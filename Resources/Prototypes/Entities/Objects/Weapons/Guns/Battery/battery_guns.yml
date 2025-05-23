@@ -193,6 +193,8 @@
         shader: unshaded
   - type: Gun
     projectileSpeed: 10
+    impulseStrength: 25 #25 is default value for knockback
+    cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
     soundGunshot:
       path: /Audio/Effects/Lightning/lightningshock.ogg
       params:
@@ -251,7 +253,7 @@
 
 - type: entity
   name: pulse pistol
-  parent: BaseWeaponBatterySmall
+  parent: [BaseWeaponBatterySmall, BaseCentcommContraband]
   id: WeaponPulsePistol
   description: A state of the art energy pistol favoured as a sidearm by the NT operatives.
   components:
@@ -321,7 +323,7 @@
 
 - type: entity
   name: pulse rifle
-  parent: [BaseWeaponBattery, BaseGunWieldable]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
   id: WeaponPulseRifle
   description: A weapon that is almost as infamous as its users.
   components:
@@ -402,6 +404,8 @@
         - state: base
           map: ["enum.GunVisualLayers.Base"]
     - type: Gun
+      impulseStrength: 25 #25 is default value for knockback
+      cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
       fireRate: 0.5
       soundGunshot:
         path: /Audio/Weapons/emitter.ogg
