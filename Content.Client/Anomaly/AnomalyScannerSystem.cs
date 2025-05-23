@@ -87,7 +87,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
             );
         }
         catch (IndexOutOfRangeException)
-        {   
+        {
             Log.Warning($"Bar dimensions out of bounds with the texture on entity {ent.Owner}");
         }
     }
