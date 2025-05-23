@@ -8,7 +8,7 @@ namespace Content.Server.EntityEffects.Effects;
 public sealed partial class Oxygenate : EntityEffect
 {
     [DataField]
-    public float Factor = 1f;
+    public float Factor = 500f;
 
     // JUSTIFICATION: This is internal magic that players never directly interact with.
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
