@@ -27,7 +27,7 @@ cmd-banpanel-player-err = The specified player could not be found
 cmd-banlist-desc = Lists a user's active bans.
 cmd-banlist-help = Usage: banlist <name or user ID>
 cmd-banlist-empty = No active bans found for {$user}
-cmd-banlistF-hint = <name/user ID>
+cmd-banlist-hint = <name/user ID>
 
 cmd-ban_exemption_update-desc = Set an exemption to a type of ban on a player.
 cmd-ban_exemption_update-help = Usage: ban_exemption_update <player> <flag> [<flag> [...]]
