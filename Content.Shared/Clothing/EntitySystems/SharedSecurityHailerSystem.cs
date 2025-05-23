@@ -72,11 +72,7 @@ namespace Content.Shared.Clothing.EntitySystems
         //In case someone spawns with it ?
         private void OnMapInit(Entity<SecurityHailerComponent> ent, ref MapInitEvent args)
         {
-            //COPY PASTED, IS THIS GOOD ?
             var (uid, comp) = ent;
-            // test funny
-            if (string.IsNullOrEmpty(comp.Action))
-                return;
 
             if (comp.CurrentState == SecMaskState.Functional)
                 _actions.AddAction(uid, ref comp.ActionEntity, comp.Action);
@@ -87,7 +83,7 @@ namespace Content.Shared.Clothing.EntitySystems
         /// Put an exclamation mark around humanoid standing at the distance specified in the component.
         /// </summary>
         /// <param name="ent"></param>
-        /// <returns></returns>
+        /// <returns>Is it handled succesfully ?</returns>
         protected bool ExclamateHumanoidsAround(Entity<SecurityHailerComponent> ent) //Put in shared for predictions purposes
         {
             var (uid, comp) = ent;
@@ -118,9 +114,11 @@ namespace Content.Shared.Clothing.EntitySystems
                 return;
 
             //If someone else is wearing it and someone use a tool on it, ignore it
+            //Strip system takes over
             if (ent.Comp.User != EntityUid.Invalid && ent.Comp.User != args.User)
                 return;
 
+            //If ERT, can't be messed with
             if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
             {
                 _popup.PopupEntity(Loc.GetString("ert-gas-mask-impossible"), ent.Owner);
@@ -230,8 +228,6 @@ namespace Content.Shared.Clothing.EntitySystems
             if (args.Cancelled || args.Handled || !TryComp<SecurityHailerComponent>(args.Args.Target, out var plant))
                 return;
 
-            var comp = ent.Comp;
-            //Play a click sound just like the headset
             _sharedAudio.PlayPvs(ent.Comp.ScrewedSounds, ent.Owner);
 
             IncreaseAggressionLevel(ent);
@@ -310,7 +306,6 @@ namespace Content.Shared.Clothing.EntitySystems
             if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
                 return;
 
-            // Can't pass args from a ref event inside of lambdas
             var user = args.User;
 
             args.Verbs.Add(new AlternativeVerb()
@@ -345,7 +340,7 @@ namespace Content.Shared.Clothing.EntitySystems
         /// </summary>
         /// <param name="ent"></param>
         /// <returns>Index of the chosen line from the SoundCollection</returns>
-        protected int PlayVoiceLine(Entity<SecurityHailerComponent> ent)
+        protected int PlayVoiceLineSound(Entity<SecurityHailerComponent> ent)
         {
             //Move to shared for predictions purposes. Is this good ?
             var (uid, comp) = ent;
@@ -378,6 +373,12 @@ namespace Content.Shared.Clothing.EntitySystems
             return collectionResolver.Index;
         }
 
+        /// <summary>
+        /// Get the locale string which replaces the one given as specified in the component
+        /// </summary>
+        /// <param name="ent"></param>
+        /// <param name="index"></param>
+        /// <returns>If null, nothing replaces. Otherwise, the locale string which replaces it.</returns>
         protected string? GetVoiceReplacement(Entity<SecurityHailerComponent> ent, int index)
         {
             var linesToReplace = ent.Comp.ReplaceVoicelinesSpecial;
@@ -392,6 +393,12 @@ namespace Content.Shared.Clothing.EntitySystems
             return null;
         }
 
+        /// <summary>
+        /// Get the locale string format of the index given based on the context of the hailer
+        /// </summary>
+        /// <param name="ent"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         protected string GetLineFormat(Entity<SecurityHailerComponent> ent, int index)
         {
             string finalLine = String.Empty;
