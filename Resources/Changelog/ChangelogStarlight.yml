@@ -6089,4 +6089,19 @@ Entries:
   id: 843
   time: '2025-05-22T21:18:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/676
+- author: walksanatora
+  changes:
+  - message: Syndicate pAI in the syndicate thieving kit
+    type: Add
+  id: 844
+  time: '2025-05-23T15:55:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/672
+- author: walksanatora
+  changes:
+  - message: Syndicate pAI is not allowed to share nuclear operative communications
+      with non nuclear operatives.
+    type: Tweak
+  id: 845
+  time: '2025-05-23T15:55:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/672
 
