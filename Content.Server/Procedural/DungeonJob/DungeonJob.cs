@@ -112,7 +112,7 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
     /// Gets the relevant dungeon, running recursively as relevant.
     /// </summary>
     /// <param name="reservedTiles">Should we reserve tiles even if the config doesn't specify.</param>
-    private async Task<List<Dungeon>> GetDungeons(
+    private async Task<(List<Dungeon>, HashSet<Vector2i>)> GetDungeons(
         Vector2i position,
         DungeonConfig config,
         List<IDunGenLayer> layers,
@@ -153,12 +153,12 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
 
                 await SuspendDungeon();
                 if (!ValidateResume())
-                    return new List<Dungeon>();
+                    return (new List<Dungeon>(), new HashSet<Vector2i>());
             }
         }
 
-        // Only return the new ones.
-        return dungeons[(existing?.Count ?? 0)..];
+        // Only return the new dungeons and applicable reserved tiles.
+        return (dungeons[(existing?.Count ?? 0)..], config.ReturnReserved ? reservedTiles : new HashSet<Vector2i>());
     }
 
     protected override async Task<(List<Dungeon>, DungeonData)> Process()
@@ -168,7 +168,7 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         var random = new Random(_seed);
         var position = (_position + random.NextPolarVector2(_gen.MinOffset, _gen.MaxOffset)).Floored();
 
-        var dungeons = await GetDungeons(position, _gen, _gen.Layers, _seed, random, reserved: _reservedTiles);
+        var (dungeons, _) = await GetDungeons(position, _gen, _gen.Layers, _seed, random, reserved: _reservedTiles);
         // To make it slightly more deterministic treat this RNG as separate ig.
 
         // Post-processing after finishing loading.
@@ -318,7 +318,15 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
                         throw new NotImplementedException();
                 }
 
-                dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, seed, random, reserved: inheritedReserved, existing: inheritedDungeons));
+                var (newDungeons, newReserved) = await GetDungeons(position,
+                    groupConfig,
+                    groupConfig.Layers,
+                    seed,
+                    random,
+                    reserved: inheritedReserved,
+                    existing: inheritedDungeons);
+                dungeons.AddRange(newDungeons);
+                reservedTiles.UnionWith(newReserved);
 
                 break;
             case ReplaceTileDunGen replace:

@@ -14,8 +14,11 @@ public sealed partial class PrototypeDunGen : IDunGenLayer
     [DataField]
     public DungeonInheritance InheritDungeons = DungeonInheritance.None;
 
+    /// <summary>
+    /// Should we pass in the current level's reserved tiles to the prototype.
+    /// </summary>
     [DataField]
-    public ReservedInheritance InheritReserved = ReservedInheritance.None;
+    public ReservedInheritance InheritReserved = ReservedInheritance.All;
 
     [DataField(required: true)]
     public ProtoId<DungeonConfigPrototype> Proto;

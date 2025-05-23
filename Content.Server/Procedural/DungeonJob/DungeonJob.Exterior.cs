@@ -66,7 +66,8 @@ public sealed partial class DungeonJob
 
         var subConfig = _prototype.Index(dungen.Proto);
         var nextSeed = random.Next();
-        var dungeons = await GetDungeons(dungeonSpawn.Value, subConfig, subConfig.Layers, nextSeed, new Random(nextSeed), reserved: reservedTiles);
+        var (dungeons, newReserved) = await GetDungeons(dungeonSpawn.Value, subConfig, subConfig.Layers, nextSeed, new Random(nextSeed), reserved: reservedTiles);
+        reservedTiles.UnionWith(newReserved);
 
         return dungeons;
     }

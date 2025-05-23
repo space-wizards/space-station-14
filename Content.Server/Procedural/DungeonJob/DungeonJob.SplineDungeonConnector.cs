@@ -59,6 +59,7 @@ public sealed partial class DungeonJob
                 {
                     Start = pair.Start,
                     End = pair.End,
+                    Diagonals = false,
                     TileCost = node =>
                     {
                         // We want these to get prioritised internally and into space if it's a space dungeon.
