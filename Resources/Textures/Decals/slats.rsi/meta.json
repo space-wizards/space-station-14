@@ -8,10 +8,22 @@
   },
   "states": [
 	{
+		"name": "double_dark_n"
+	},
+	{
+		"name": "double_dark_s"
+	},
+	{
 		"name": "double_dark_e"
 	},
 	{
 		"name": "double_dark_w"
+	},
+	{
+		"name": "double_steel_n"
+	},
+	{
+		"name": "double_steel_s"
 	},
 	{
 		"name": "double_steel_e"
@@ -20,10 +32,22 @@
 		"name": "double_steel_w"
 	},
 	{
+		"name": "double_white_n"
+	},
+	{
+		"name": "double_white_s"
+	},
+	{
 		"name": "double_white_e"
 	},
 	{
 		"name": "double_white_w"
+	},
+	{
+		"name": "single_dark_n"
+	},
+	{
+		"name": "single_dark_s"
 	},
 	{
 		"name": "single_dark_e"
@@ -32,10 +56,22 @@
 		"name": "single_dark_w"
 	},
 	{
+		"name": "single_steel_n"
+	},
+	{
+		"name": "single_steel_s"
+	},
+	{
 		"name": "single_steel_e"
 	},
 	{
 		"name": "single_steel_w"
+	},
+	{
+		"name": "single_white_n"
+	},
+	{
+		"name": "single_white_s"
 	},
 	{
 		"name": "single_white_e"
