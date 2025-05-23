@@ -222,3 +222,18 @@
     polymorphSound: /Audio/Magic/ethereal_enter.ogg
     exitPolymorphSound: /Audio/Magic/ethereal_exit.ogg
     duration: 3
+
+# Desynchronized / Void Pocket status
+- type: polymorph
+  id: VoidPocket
+  configuration:
+    entity: DesynchronizedPocket
+    transferName: false
+    inventory: None
+    forced: false
+    revertOnDeath: true
+    allowRepeatedMorphs: false
+    polymorphSound: /Audio/Magic/ethereal_enter.ogg
+    exitPolymorphSound: /Audio/Magic/ethereal_exit.ogg
+    duration: 120
+    effectProto: EffectDesynchronizer
