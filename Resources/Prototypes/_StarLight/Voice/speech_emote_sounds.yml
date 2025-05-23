@@ -14,6 +14,8 @@
       path: /Audio/_Starlight/Effects/howl.ogg
     Bark:
       collection: Bark
+    Yip:
+      path: /Audio/_Starlight/Effects/yip.ogg
     Sneeze:
       collection: MaleSneezes
     Cough:
@@ -50,6 +52,8 @@
       path: /Audio/_Starlight/Effects/howl.ogg
     Bark:
       collection: Bark
+    Yip:
+      path: /Audio/_Starlight/Effects/yip.ogg
     Sneeze:
       collection: FemaleSneezes
     Cough:
