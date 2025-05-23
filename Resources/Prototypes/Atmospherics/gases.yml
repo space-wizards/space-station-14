@@ -100,3 +100,6 @@
   color: 3a758c
   reagent: Frezon
   pricePerMole: 1
+
+- type: gas
+  id: weh
