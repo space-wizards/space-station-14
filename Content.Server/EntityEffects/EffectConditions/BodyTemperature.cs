@@ -15,12 +15,13 @@ public sealed partial class Temperature : EntityEffectCondition
 
     [DataField]
     public float Max = float.PositiveInfinity;
+
     public override bool Condition(EntityEffectBaseArgs args)
     {
         if (args.EntityManager.TryGetComponent(args.TargetEntity, out TemperatureComponent? temp))
         {
-            if (temp.CurrentTemperature > Min && temp.CurrentTemperature < Max)
-                return true;
+            var curTemp = temp.CurrentTemperature;
+            return curTemp >= Min && curTemp <= Max;
         }
 
         return false;
