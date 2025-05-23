@@ -131,7 +131,7 @@
   - type: PointLight
     radius: 7
     energy: 3
-    color: #FFFF90
+    color: "#FFFF90"
 
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
@@ -381,7 +381,7 @@
   - type: PointLight
     radius: 10
     energy: 4
-    color: #FFFF20
+    color: "#FFFF20"
 
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
