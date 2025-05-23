@@ -21,15 +21,9 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AnomalyScannerComponent, ComponentInit>(OnScannerInit);
         SubscribeLocalEvent<AnomalyScannerScreenComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<AnomalyScannerScreenComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<AnomalyScannerScreenComponent, AppearanceChangeEvent>(OnScannerAppearanceChanged);
-    }
-
-    private void OnScannerInit(Entity<AnomalyScannerComponent> ent, ref ComponentInit args)
-    {
-        EnsureComp<AnomalyScannerScreenComponent>(ent);
     }
 
     private void OnComponentInit(Entity<AnomalyScannerScreenComponent> ent, ref ComponentInit args)

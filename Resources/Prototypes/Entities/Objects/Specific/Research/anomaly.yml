@@ -61,6 +61,7 @@
           True: { visible: true }
           False: { visible: false }
   - type: AnomalyScanner
+  - type: AnomalyScannerScreen
   - type: GuideHelp
     guides:
     - ScannersAndVessels
