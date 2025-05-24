@@ -50,7 +50,13 @@
 
   - node: rolled
     entity: FoodDoughCottonRope
+    edges:
+    - to: cookedCottonBagel
+      steps:
+      - minTemperature: 330
+
   - node: cookedCottonBun
     entity: FoodCottonBun
+
   - node: cookedCottonBagel
     entity: FoodCottonBagel

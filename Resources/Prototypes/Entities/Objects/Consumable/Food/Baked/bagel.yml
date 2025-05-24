@@ -53,7 +53,7 @@
           Quantity: 5
 
 - type: entity
-  id: FoodBagelCotton
+  id: FoodCottonBagel
   parent: FoodBagelBase
   name: cotton bagel
   description: A delicious bagel made with cotton dough.
