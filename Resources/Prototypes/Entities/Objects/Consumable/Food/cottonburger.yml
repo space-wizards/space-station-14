@@ -6,6 +6,9 @@
   name: cotton bun
   description: A cotton hamburger bun. Soft, round and convenient to hold.
   components:
+  - type: Construction
+    graph: CookingCottonDough
+    node: CookedCottonBun
   - type: Food
     requiresSpecialDigestion: true
   - type: Sprite
