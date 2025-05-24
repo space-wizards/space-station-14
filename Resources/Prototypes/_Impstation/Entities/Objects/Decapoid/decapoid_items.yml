@@ -41,7 +41,7 @@
         Slash: 1
         Piercing: 1
     passiveBlockFraction: 0.0
-    activeBlockFraction: 0.4
+    activeBlockFraction: 0.2
   - type: Damageable
     damageContainer: Shield
   - type: ToolTileCompatible

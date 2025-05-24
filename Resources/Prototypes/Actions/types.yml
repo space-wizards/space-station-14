@@ -237,7 +237,6 @@
     icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
     iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
     event: !type:ToggleActionEvent
-    useDelay: 5 # imp
 
 - type: entity
   id: ActionClearNetworkLinkOverlays

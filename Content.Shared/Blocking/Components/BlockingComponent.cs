@@ -26,6 +26,17 @@ public sealed partial class BlockingComponent : Component
     public bool IsBlocking;
 
     /// <summary>
+    /// The ID for the fixture that's dynamically created when blocking
+    /// </summary>
+    public const string BlockFixtureID = "blocking-active";
+
+    /// <summary>
+    /// The shape of the blocking fixture that will be dynamically spawned
+    /// </summary>
+    [DataField("shape"), ViewVariables(VVAccess.ReadWrite)]
+    public IPhysShape Shape = new PhysShapeCircle(0.5f);
+
+    /// <summary>
     /// The damage modifer to use while passively blocking
     /// </summary>
     [DataField("passiveBlockModifier", required: true)]
@@ -65,10 +76,4 @@ public sealed partial class BlockingComponent : Component
     /// </summary>
     [DataField("activeBlockFraction"), ViewVariables(VVAccess.ReadWrite)]
     public float ActiveBlockFraction = 1.0f;
-
-    /// <summary>
-    /// Imp. Multiplier applied to MovementSpeed upon blocking.
-    /// </summary>
-    [DataField]
-    public float SlowdownModifier = 0.3f;
 }
