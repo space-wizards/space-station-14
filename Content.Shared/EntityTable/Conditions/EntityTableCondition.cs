@@ -16,13 +16,13 @@ public abstract partial class EntityTableCondition
     [DataField]
     public bool Invert;
 
-    public bool Evaluate(IEntityManager entMan, IPrototypeManager proto)
+    public bool Evaluate(EntityTableSelector root, IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
-        var res = EvaluateImplementation(entMan, proto);
+        var res = EvaluateImplementation(root, entMan, proto, ctx);
 
         // XOR eval to invert the result.
         return res ^ Invert;
     }
 
-    public abstract bool EvaluateImplementation(IEntityManager entMan, IPrototypeManager proto);
+    protected abstract bool EvaluateImplementation(EntityTableSelector root, IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx);
 }
