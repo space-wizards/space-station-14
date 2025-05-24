@@ -65,7 +65,6 @@ internal sealed class BuckleSystem : SharedBuckleSystem
 
             if (!TryComp<SpriteComponent>(buckledEntity, out var buckledSprite))
                 continue;
-            Entity<SpriteComponent> buckleSprite = (buckledEntity, buckledSprite);
 
             if (isNorth)
             {
@@ -92,7 +91,6 @@ internal sealed class BuckleSystem : SharedBuckleSystem
 
         if (!TryComp<SpriteComponent>(ent.Owner, out var buckledSprite))
             return;
-        Entity<SpriteComponent> buckleSprite = (ent.Owner, buckledSprite);
 
         var angle = _xformSystem.GetWorldRotation(args.Strap) + _eye.CurrentEye.Rotation; // Get true screen position, or close enough
 
@@ -110,7 +108,6 @@ internal sealed class BuckleSystem : SharedBuckleSystem
     {
         if (!TryComp<SpriteComponent>(ent.Owner, out var buckledSprite))
             return;
-        Entity<SpriteComponent> buckleSprite = (ent.Owner, buckledSprite);
 
         if (!ent.Comp.OriginalDrawDepth.HasValue)
             return;
