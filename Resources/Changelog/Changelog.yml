@@ -1,35 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Mindshield implants can now be removed using an empty implanter.
-    type: Tweak
-  - message: Revolutionaries can now win by converting all command members.
-    type: Add
-  id: 8050
-  time: '2025-03-11T09:41:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35769
-- author: SlamBamActionman
-  changes:
-  - message: Chameleon PDAs no longer change your name in the station records.
-    type: Fix
-  id: 8051
-  time: '2025-03-11T13:52:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35782
-- author: Reisama
-  changes:
-  - message: Borgs will no longer get laws to prevent the shuttle from being called
-      when Ion Stormed, and may get laws to call the shuttle instead.
-    type: Fix
-  id: 8052
-  time: '2025-03-12T01:21:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35751
-- author: Winkarst-cpu
-  changes:
-  - message: The warden job now rolls before security officer/cadet/detective.
-    type: Tweak
-  id: 8053
-  time: '2025-03-12T22:36:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35313
 - author: Firewars763
   changes:
   - message: Added gold and coal rock anomalies and ore crab enemies.
@@ -3929,3 +3898,34 @@
   id: 8557
   time: '2025-05-22T08:42:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37713
+- author: ArtisticRoomba
+  changes:
+  - message: The volume of large gas canisters have been increased to 1500L to encourage
+      their usage in resolving pressure problems in spaced rooms. The gas that starts
+      inside of the tanks and the price of them has increased to compensate.
+    type: Tweak
+  id: 8558
+  time: '2025-05-22T18:12:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37564
+- author: Hitlinemoss
+  changes:
+  - message: Liquid soap is now slippery.
+    type: Fix
+  id: 8559
+  time: '2025-05-23T21:57:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37747
+- author: CoconutThunder
+  changes:
+  - message: The Chief Medical Officer should now appear with the correct precedence
+      in the crew manifest.
+    type: Fix
+  id: 8560
+  time: '2025-05-24T05:10:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37774
+- author: TiniestShark
+  changes:
+  - message: Added inhand sprites for the bartender utensils and mugs.
+    type: Add
+  id: 8561
+  time: '2025-05-24T17:32:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37771
