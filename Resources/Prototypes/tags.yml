@@ -1185,6 +1185,9 @@
   id: SalvageExperiment
 
 - type: Tag
+  id: SalvageSyndicateBase
+
+- type: Tag
   id: SalvageScrap
 
 - type: Tag
