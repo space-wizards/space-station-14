@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Cargo;
 
 /// <summary>
-/// A directed by-ref event fired on an entity when something needs to know it's price. This value is not cached.
+/// A directed by-ref event fired on an entity when something needs to know its price. This value is not cached.
 /// </summary>
 [ByRefEvent]
 public record struct PriceCalculationEvent()
