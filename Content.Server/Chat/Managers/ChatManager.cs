@@ -201,7 +201,6 @@ internal sealed partial class ChatManager : IChatManager
 
     public void SendHookAdmin(string sender, string message)
     {
-        // fuck this class
         var clients = _adminManager.ActiveAdmins.Select(p => p.Channel);
 
         var wrappedMessage = Loc.GetString("chat-manager-send-hook-admin-wrap-message", ("senderName", sender), ("message", FormattedMessage.EscapeText(message)));
