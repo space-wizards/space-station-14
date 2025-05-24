@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Made by welladooom for the Ronstation fork.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "longbangs",
+            "directions": 4
+        },
+        {
+            "name": "ponytailwithbows",
+            "directions": 4
+        },
+        {
+            "name": "zebra",
+            "directions": 4
+        }
+    ]
+}
