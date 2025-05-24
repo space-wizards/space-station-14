@@ -193,7 +193,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
                 // In range
 #pragma warning disable NUnit2045 // Interdependent asserts.
-                Assert.That(buckleSystem.TryBuckle(human, human, chair));
+                Assert.That(buckleSystem.TryBuckle((human, buckle), human, chair));
                 Assert.That(buckle.Buckled);
                 Assert.That(buckleSystem.TryUnbuckle((human, buckle), human), Is.False);
                 Assert.That(buckle.Buckled);
@@ -210,7 +210,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 });
 
                 // Re-buckle
-                Assert.That(buckleSystem.TryBuckle(human, human, chair));
+                Assert.That(buckleSystem.TryBuckle((human, buckle), human, chair));
 
                 // Move away from the chair
                 oldWorldPosition = xformSystem.GetWorldPosition(chair);
@@ -269,7 +269,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 });
 
                 // Buckle
-                Assert.That(buckleSystem.TryBuckle(human, human, chair));
+                Assert.That(buckleSystem.TryBuckle((human, buckle), human, chair));
                 Assert.Multiple(() =>
                 {
                     Assert.That(buckle.BuckledTo, Is.Not.Null);
@@ -357,7 +357,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 });
 
                 // Buckle
-                Assert.That(buckleSystem.TryBuckle(human, human, chair));
+                Assert.That(buckleSystem.TryBuckle((human, buckle), human, chair));
                 Assert.Multiple(() =>
                 {
                     Assert.That(buckle.BuckledTo, Is.Not.Null);
@@ -380,7 +380,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 xformSystem.SetWorldPosition(human, oldWorldPosition);
 
                 // Buckle
-                Assert.That(buckleSystem.TryBuckle(human, human, chair));
+                Assert.That(buckleSystem.TryBuckle((human, buckle), human, chair));
                 Assert.Multiple(() =>
                 {
                     Assert.That(buckle.BuckledTo, Is.Not.Null);
