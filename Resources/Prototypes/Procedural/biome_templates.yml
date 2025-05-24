@@ -646,10 +646,31 @@
     tile: FloorChromite
 
 # Caves
-- type: biomeTemplate
-  id: Caves
+- type: entity
+  id: BiomeCaves
+  components:
+  - type: NewBiome
+    layers:
+      terrain:
+        dungeon: CavesTerrain
+
+- type: dungeonConfig
+  id: CavesTerrain
   layers:
-    - !type:BiomeEntityLayer
+  - !type:ChunkDunGen
+  - !type:PrototypeDunGen
+    proto: CavesTiles
+    inheritDungeons: All
+  - !type:RoofDunGen
+  - !type:PrototypeDunGen
+    proto: CavesEntities
+    inheritDungeons: All
+
+- type: dungeonConfig
+  id: CavesEntities
+  reserveTiles: true
+  layers:
+    - !type:SampleEntityDunGen
       threshold: 0.85
       noise:
         seed: 2
@@ -665,7 +686,7 @@
         - CrystalBlue
         - CrystalYellow
         - CrystalCyan
-    - !type:BiomeEntityLayer
+    - !type:SampleEntityDunGen
       threshold: 0.95
       noise:
         seed: 1
@@ -675,7 +696,7 @@
       - FloorAsteroidSand
       entities:
       - FloraStalagmite
-    - !type:BiomeEntityLayer
+    - !type:SampleEntityDunGen
       threshold: -0.5
       invert: true
       noise:
@@ -689,11 +710,14 @@
         - FloorAsteroidSand
       entities:
         - WallRock
-    - !type:BiomeDummyLayer
-      id: Loot
-    - !type:BiomeTileLayer
-      threshold: -1.0
-      tile: FloorAsteroidSand
+
+- type: dungeonConfig
+  id: CavesTiles
+  returnReserved: false
+  layers:
+  - !type:SampleTileDunGen
+    threshold: -1.0
+    tile: FloorAsteroidSand
 
 # Asteroid
 - type: biomeTemplate

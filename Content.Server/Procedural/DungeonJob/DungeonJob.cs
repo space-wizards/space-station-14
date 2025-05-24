@@ -336,6 +336,9 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
             case ReplaceTileDunGen replace:
                 await GenerateTileReplacementDunGen(replace, dungeons, reservedTiles, random);
                 break;
+            case RoofDunGen roof:
+                await RoofGen(roof, dungeons, reservedTiles, random);
+                break;
             case RoomEntranceDunGen rEntrance:
                 await PostGen(rEntrance, dungeons[^1], reservedTiles, random);
                 break;

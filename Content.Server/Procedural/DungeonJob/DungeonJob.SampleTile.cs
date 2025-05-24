@@ -17,10 +17,12 @@ public sealed partial class DungeonJob
         HashSet<Vector2i> reservedTiles,
         Random random)
     {
-        var oldSeed = gen.Noise.GetSeed();
-        gen.Noise.SetSeed(_seed + oldSeed);
+        var noise = gen.Noise;
+        var oldSeed = noise.GetSeed();
+        noise.SetSeed(_seed + oldSeed);
         var tiles = new List<(Vector2i Index, Tile Tile)>();
         var tileDef = _prototype.Index(gen.Tile);
+        var variants = tileDef.PlacementVariants.Length;
 
         foreach (var dungeon in dungeons)
         {
@@ -30,13 +32,16 @@ public sealed partial class DungeonJob
                     continue;
 
                 var invert = gen.Invert;
-                var value = gen.Noise.GetNoise(tile.X, tile.Y);
+                var value = noise.GetNoise(tile.X, tile.Y);
                 value = invert ? value * -1 : value;
 
                 if (value < gen.Threshold)
                     continue;
 
-                var tileVariant = new Tile(tileDef.TileId);
+                var variantValue = (noise.GetNoise(tile.X * 8, tile.Y * 8, variants) + 1f) * 100;
+                var variant = _tile.PickVariant(tileDef, (int)variantValue);
+                var tileVariant = new Tile(tileDef.TileId, variant: variant);
+
                 tiles.Add((tile, tileVariant));
                 AddLoadedTile(tile, tileVariant);
 
