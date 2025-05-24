@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/dc89ef0239830774bd3d9d7d6c8da2856da2b869",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/dc89ef0239830774bd3d9d7d6c8da2856da2b869 defib.png by arenaconspiracy (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -45,6 +45,9 @@
     },
     {
       "name": "cutters_yellow"
+    },
+    {
+      "name": "defib"
     },
     {
       "name": "drill"

@@ -66,7 +66,7 @@
   suffix: One-Handed, Always Powered
 
 - type: entity
-  id: DefibrillatorCompact # This should be a research item at some point
+  id: DefibrillatorCompact
   parent: [ BaseDefibrillator, PowerCellSlotMediumItem ]
   name: compact defibrillator
   description: Now in fun size!
@@ -94,6 +94,16 @@
     doAfterDuration: 6
   - type: DoAfter
   - type: UseDelay
+
+- type: entity
+  parent: DefibrillatorCompact
+  id: DefibrillatorCompactEmpty
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
 
 - type: entity
   id: DefibrillatorSyndicate

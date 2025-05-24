@@ -66,6 +66,7 @@ research-technology-audio-visual-communication = A/V Communication
 research-technology-faux-astro-tiles = Faux Astro-Tiles
 research-technology-biochemical-stasis = Biochemical Stasis
 research-technology-mechanized-treatment = Mechanized Treatment
+research-technology-portable-resuscitation = Portable Resuscitation
 research-technology-robotic-cleanliness = Robotic Cleanliness
 research-technology-advanced-cleaning = Advanced Cleaning
 research-technology-meat-manipulation = Meat Manipulation
