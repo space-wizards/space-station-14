@@ -6118,4 +6118,11 @@ Entries:
   id: 847
   time: '2025-05-24T16:26:56.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/641
+- author: Happyrobot33
+  changes:
+  - message: Fixed baber scissors breaking when it comes to adding/removing glowing.
+    type: Fix
+  id: 848
+  time: '2025-05-24T17:55:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/688
 
