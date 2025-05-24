@@ -10,6 +10,7 @@ using Content.Server.Hands.Systems;
 using Content.Server.Stack;
 using Content.Server.Tools;
 using Content.Shared.Body.Part;
+using Content.Shared.DeviceLinking;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
@@ -110,6 +111,7 @@ public abstract partial class InteractionTest
     protected SharedMapSystem MapSystem = default!;
     protected ISawmill SLogger = default!;
     protected SharedUserInterfaceSystem SUiSys = default!;
+    protected SharedDeviceLinkSystem SDevLink = default!;
 
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
@@ -174,6 +176,7 @@ public abstract partial class InteractionTest
         Stack = SEntMan.System<StackSystem>();
         SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
         SUiSys = Client.System<SharedUserInterfaceSystem>();
+        SDevLink = Server.System<SharedDeviceLinkSystem>();
 
         // client dependencies
         CEntMan = Client.ResolveDependency<IEntityManager>();
