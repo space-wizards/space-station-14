@@ -977,6 +977,19 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
+  - type: ExplosionResistance #sl Change
+    damageCoefficient: 0.2 #sl Change
+  - type: Armor #sl Change
+    modifiers: #sl Change
+      coefficients: #sl Change
+        Blunt: 0.4 #sl Change
+        Slash: 0.4 #sl Change
+        Piercing: 0.3 #sl Change
+        Heat: 0.2 #sl Change
+        Radiation: 0.01 #sl Change
+        Caustic: 0.4 #sl Change
+    staminaModifier: 0.1
+    ingoreKnockdown: true
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
 
@@ -1024,7 +1037,7 @@
 
 #ERT Security Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndie ]
+  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieElite ] #sl Change
   id: ClothingOuterHardsuitERTSecurity
   name: ERT security's hardsuit
   description: A protective hardsuit worn by the security officers of an emergency response team.
