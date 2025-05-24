@@ -153,4 +153,21 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
 
         Dirty(uid, humanoid);
     }
+
+    //starlight start
+    public void SetMarkingGlowing(EntityUid uid, MarkingCategories category, int index, bool glowing,
+        HumanoidAppearanceComponent? humanoid = null)
+    {
+        if (index < 0
+            || !Resolve(uid, ref humanoid)
+            || !humanoid.MarkingSet.TryGetCategory(category, out var markings)
+            || index >= markings.Count)
+        {
+            return;
+        }
+
+        markings[index].IsGlowing = glowing;
+        Dirty(uid, humanoid);
+    }
+    //starlight end
 }

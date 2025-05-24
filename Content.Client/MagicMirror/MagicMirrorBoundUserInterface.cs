@@ -30,6 +30,10 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
             args => ChangeColor(MagicMirrorCategory.FacialHair, args.marking, args.slot);
         _window.OnFacialHairSlotAdded += delegate () { AddSlot(MagicMirrorCategory.FacialHair); };
         _window.OnFacialHairSlotRemoved += args => RemoveSlot(MagicMirrorCategory.FacialHair, args);
+
+        //starlight
+        _window.OnHairGlowingChanged += args => ChangeColor(MagicMirrorCategory.Hair, args.marking, args.slot);
+        _window.OnFacialHairGlowingChanged += args => ChangeColor(MagicMirrorCategory.FacialHair, args.marking, args.slot);
     }
 
     private void SelectHair(MagicMirrorCategory category, string marking, int slot)
@@ -39,7 +43,7 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
 
     private void ChangeColor(MagicMirrorCategory category, Marking marking, int slot)
     {
-        SendMessage(new MagicMirrorChangeColorMessage(category, new(marking.MarkingColors), slot));
+        SendMessage(new MagicMirrorChangeColorMessage(category, new(marking.MarkingColors), marking.IsGlowing, slot)); //starlight edit
     }
 
     private void RemoveSlot(MagicMirrorCategory category, int slot)

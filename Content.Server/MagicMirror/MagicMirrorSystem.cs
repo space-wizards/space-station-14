@@ -162,6 +162,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             Category = message.Category,
             Slot = message.Slot,
             Colors = message.Colors,
+            IsGlowing = message.IsGlowing, //starlight
         };
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Actor, doafterTime, doAfter, uid, target: target, used: uid)
@@ -205,6 +206,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         }
 
         _humanoid.SetMarkingColor(component.Target.Value, category, args.Slot, args.Colors);
+        _humanoid.SetMarkingGlowing(component.Target.Value, category, args.Slot, args.IsGlowing); //starlight
 
         // using this makes the UI feel like total ass
         // que
