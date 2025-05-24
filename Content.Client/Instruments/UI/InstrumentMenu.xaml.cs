@@ -128,7 +128,7 @@ namespace Content.Client.Instruments.UI
             // or focus the previously-opened window.
             _isMidiFileDialogueWindowOpen = true;
 
-            await using var file = await _dialogs.OpenFile(filters);
+            await using var file = await _dialogs.OpenFile(filters, FileAccess.Read);
 
             _isMidiFileDialogueWindowOpen = false;
 
