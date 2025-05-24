@@ -416,7 +416,7 @@ public abstract partial class SharedMoverController : VirtualController
 
     public void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref float velocity)
     {
-        if (velocity < minimumFrictionSpeed)
+        if (Math.Abs(velocity) < minimumFrictionSpeed)
             return;
 
         // This equation is lifted from the Physics Island solver.
