@@ -314,7 +314,7 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: base
-    - state: base_sirens
+    - state: base-sirens
       map: [ "enum.MechVisualLayers.Siren" ]
       shader: unshaded
   - type: FootstepModifier
