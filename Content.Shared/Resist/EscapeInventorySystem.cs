@@ -1,24 +1,28 @@
-using Content.Server.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Movement.Events;
-using Content.Shared.Resist;
+using Content.Shared.Popups;
 using Content.Shared.Storage;
+using Robust.Shared.Timing;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Resist;
+namespace Content.Shared.Resist;
 
 public sealed class EscapeInventorySystem : EntitySystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+
 
     public override void Initialize()
     {
@@ -27,8 +31,16 @@ public sealed class EscapeInventorySystem : EntitySystem
         SubscribeLocalEvent<CanEscapeInventoryComponent, MoveInputEvent>(OnRelayMovement);
         SubscribeLocalEvent<CanEscapeInventoryComponent, EscapeInventoryEvent>(OnEscape);
         SubscribeLocalEvent<CanEscapeInventoryComponent, DroppedEvent>(OnDropped);
+        SubscribeLocalEvent<CanEscapeInventoryComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
     }
 
+    private void OnPickupAttempt(EntityUid uid,
+        CanEscapeInventoryComponent component,
+        ref GettingPickedUpAttemptEvent args)
+    {
+        if (_timing.CurTime < component.PenaltyTimer)
+            args.Cancel();
+    }
     private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, ref MoveInputEvent args)
     {
         if (!args.HasDirectionalMovement)
@@ -84,11 +96,14 @@ public sealed class EscapeInventorySystem : EntitySystem
 
         _containerSystem.AttachParentToContainerOrGrid((uid, Transform(uid)));
         args.Handled = true;
+        component.PenaltyTimer = _timing.CurTime + TimeSpan.FromSeconds(component.BasePenaltyTime);
     }
 
     private void OnDropped(EntityUid uid, CanEscapeInventoryComponent component, DroppedEvent args)
     {
-        if (component.DoAfter != null)
-            _doAfterSystem.Cancel(component.DoAfter);
+        if (component.DoAfter == null)
+            return;
+        _doAfterSystem.Cancel(component.DoAfter);
+        component.PenaltyTimer = _timing.CurTime + TimeSpan.FromSeconds(component.BasePenaltyTime);
     }
 }
