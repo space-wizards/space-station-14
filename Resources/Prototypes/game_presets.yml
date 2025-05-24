@@ -97,12 +97,23 @@
   - BasicRoundstartVariation
 
 - type: gamePreset
+  id: Dynamic
+  alias:
+  - dynamic
+  - multiantag
+  name: dynamic-title
+  showInVote: true
+  description: dynamic-description
+  rules:
+  - DynamicRule
+
+- type: gamePreset
   id: Secret
   alias:
     - secret
     - sekrit
   name: secret-title
-  showInVote: true
+  showInVote: false
   description: secret-description
   rules:
     - Secret
