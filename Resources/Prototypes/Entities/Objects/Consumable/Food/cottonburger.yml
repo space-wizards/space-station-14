@@ -8,7 +8,7 @@
   components:
   - type: Construction
     graph: CookingCottonDough
-    node: CookedCottonBun
+    node: cookedCottonBun
   - type: Food
     requiresSpecialDigestion: true
   - type: Sprite
