@@ -181,7 +181,7 @@
     - id: MaterialSiloMachineCircuitboard
     - id: SheetSteel1
       amount: 5
-    - id: MatterBinStockPart
+    - id: MicroManipulatorStockPart
       amount: 4
     - id: CableApcStack1
       amount: 2
