@@ -135,6 +135,10 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
+  - type: SpawnItemsOnUse
+    items:
+    - id: ClothingOuterHardsuitEVAPrisoner
+
 
 #NTSRA Voidsuit / Ancient Voidsuit
 - type: entity
