@@ -68,6 +68,8 @@ construction-graph-tag-match-stick = match stick
 construction-graph-tag-potato = a potato
 construction-graph-tag-wheat-bushel = wheat bushel
 construction-graph-tag-corgi-hide = corgi hide
+construction-graph-tag-apron = an apron
+construction-graph-tag-utility-belt = a utility belt
 soil-construction-graph-any-mushroom = any mushroom
 
 # toys

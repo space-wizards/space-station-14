@@ -157,3 +157,19 @@
   targetNode: hardsuitGoliath
   category: construction-category-clothing
   objectType: Item
+
+- type: construction
+  id: scraparmor
+  graph: scraparmor
+  startNode: start
+  targetNode: scraparmorfinished
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: scraphelmet
+  graph: scraphelmet
+  startNode: start
+  targetNode: scraphelmet
+  category: construction-category-clothing
+  objectType: Item
