@@ -10,6 +10,8 @@
       organs:
         brain: OrganHumanBrain
         eyes: OrganResomiEyes
+        tongue: OrganHumanTongue
+        eye_implant: null
     torso:
       part: TorsoResomi
       connections:
@@ -23,6 +25,7 @@
         stomach: OrganHumanStomach
         liver: OrganHumanLiver
         kidneys: OrganHumanKidneys
+        cavity: null
     right arm:
       part: RightArmResomi
       connections:

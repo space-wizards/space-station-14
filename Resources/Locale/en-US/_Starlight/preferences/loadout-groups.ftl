@@ -17,3 +17,6 @@ loadout-group-blueshield-eyewear = Blueshield eyewear
 # Security
 
 loadout-group-brigmedic-gloves = Brigmedic gloves
+loadout-group-security-non-lethal-weapon = Security Non-Lethal Weapon
+loadout-group-security-sidearm = Security Sidearm
+
