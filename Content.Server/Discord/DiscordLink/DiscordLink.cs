@@ -103,7 +103,11 @@ public sealed class DiscordLink : IPostInjectInit
 
         _client = new DiscordSocketClient(new DiscordSocketConfig()
         {
-            GatewayIntents = GatewayIntents.All
+            GatewayIntents = GatewayIntents.Guilds
+                             | GatewayIntents.GuildMembers
+                             | GatewayIntents.GuildMessages
+                             | GatewayIntents.MessageContent
+                             | GatewayIntents.DirectMessages,
         });
         _client.Log += Log;
         _client.MessageReceived += OnCommandReceivedInternal;
