@@ -18,4 +18,5 @@
       sprite: Mobs/Species/Human/organs.rsi
       state: brain
     event: !type:MindSwapSpellEvent
-      speech: action-speech-spell-mind-swap
+  - type: SpeakOnAction
+    sentence: action-speech-spell-mind-swap

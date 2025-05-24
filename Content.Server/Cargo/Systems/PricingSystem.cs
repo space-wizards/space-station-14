@@ -25,7 +25,6 @@ namespace Content.Server.Cargo.Systems;
 /// </summary>
 public sealed class PricingSystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
@@ -278,13 +277,13 @@ public sealed class PricingSystem : EntitySystem
     {
         double price = 0;
 
-        if (prototype.Components.ContainsKey(_factory.GetComponentName(typeof(MaterialComponent))) &&
-            prototype.Components.TryGetValue(_factory.GetComponentName(typeof(PhysicalCompositionComponent)), out var composition))
+        if (prototype.Components.ContainsKey(Factory.GetComponentName<MaterialComponent>()) &&
+            prototype.Components.TryGetValue(Factory.GetComponentName<PhysicalCompositionComponent>(), out var composition))
         {
             var compositionComp = (PhysicalCompositionComponent) composition.Component;
             var matPrice = GetMaterialPrice(compositionComp);
 
-            if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StackComponent)), out var stackProto))
+            if (prototype.Components.TryGetValue(Factory.GetComponentName<StackComponent>(), out var stackProto))
             {
                 matPrice *= ((StackComponent) stackProto.Component).Count;
             }
@@ -311,7 +310,7 @@ public sealed class PricingSystem : EntitySystem
     {
         var price = 0.0;
 
-        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(SolutionContainerManagerComponent)), out var solManager))
+        if (prototype.Components.TryGetValue(Factory.GetComponentName<SolutionContainerManagerComponent>(), out var solManager))
         {
             var solComp = (SolutionContainerManagerComponent) solManager.Component;
             price += GetSolutionPrice(solComp);
@@ -338,9 +337,9 @@ public sealed class PricingSystem : EntitySystem
     {
         var price = 0.0;
 
-        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StackPriceComponent)), out var stackpriceProto) &&
-            prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StackComponent)), out var stackProto) &&
-            !prototype.Components.ContainsKey(_factory.GetComponentName(typeof(MaterialComponent))))
+        if (prototype.Components.TryGetValue(Factory.GetComponentName<StackPriceComponent>(), out var stackpriceProto) &&
+            prototype.Components.TryGetValue(Factory.GetComponentName<StackComponent>(), out var stackProto) &&
+            !prototype.Components.ContainsKey(Factory.GetComponentName<MaterialComponent>()))
         {
             var stackPrice = (StackPriceComponent) stackpriceProto.Component;
             var stack = (StackComponent) stackProto.Component;
@@ -366,7 +365,7 @@ public sealed class PricingSystem : EntitySystem
     {
         var price = 0.0;
 
-        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StaticPriceComponent)), out var staticProto))
+        if (prototype.Components.TryGetValue(Factory.GetComponentName<StaticPriceComponent>(), out var staticProto))
         {
             var staticPrice = (StaticPriceComponent) staticProto.Component;
             price += staticPrice.Price;

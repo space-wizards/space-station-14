@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by brainfood1183 (github) for ss14. Vox states by Flareguy for Space Station 14. Flashlight state sprites by RedBookcase on github.",
+  "copyright": "Made by brainfood1183 (github) for ss14. Vox states by Flareguy for Space Station 14. Flashlight state sprites by TiniestShark (github).",
   "size": {
     "x": 32,
     "y": 32
@@ -14,19 +14,27 @@
       "name": "icon-flash"
     },
     {
-      "name": "off-equipped-HELMET",
+      "name": "equipped-HELMET",
       "directions": 4
     },
     {
-      "name": "on-equipped-HELMET",
+      "name": "equipped-HELMET-light",
       "directions": 4
     },
     {
-      "name": "off-equipped-HELMET-vox",
+      "name": "equipped-HELMET-unshaded",
       "directions": 4
     },
     {
-      "name": "on-equipped-HELMET-vox",
+      "name": "equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-light-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-unshaded-vox",
       "directions": 4
     }
   ]

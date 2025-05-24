@@ -10,7 +10,7 @@ public sealed class StasisBedSystem : VisualizerSystem<StasisBedVisualsComponent
         if (args.Sprite != null
             && AppearanceSystem.TryGetData<bool>(uid, StasisBedVisuals.IsOn, out var isOn, args.Component))
         {
-            args.Sprite.LayerSetVisible(StasisBedVisualLayers.IsOn, isOn);
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), StasisBedVisualLayers.IsOn, isOn);
         }
     }
 }

@@ -33,9 +33,6 @@
   - type: Appearance
   - type: PowerCellVisuals
   - type: Riggable
-  - type: HitscanBatteryAmmoProvider
-    proto: RedLightLaser
-    fireCost: 50
 
 - type: entity
   name: potato battery
@@ -93,6 +90,18 @@
   - type: Battery
     maxCharge: 360
     startingCharge: 0
+
+- type: entity
+  parent: PowerCellSmall
+  id: PowerCellSmallNuclear
+  name: small-capacity nuclear power cell
+  description: A self rechargeable power cell, designed for fast recharge rate at the expense of capacity.
+  components:
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 36 # 10 seconds to recharge
+    autoRechargePause: true
+    autoRechargePauseTime: 30
 
 - type: entity
   name: medium-capacity power cell
@@ -166,7 +175,7 @@
 
 - type: entity
   name: hyper-capacity power cell
-  description: A rechargeable standardized power cell. This one looks like a rare and powerful prototype.
+  description: A rechargeable standardized power cell. This iteration pushes the upper limits of portable power storage, boasting 66% more capacity than its predecessor.
   id: PowerCellHyper
   suffix: Full
   parent: BasePowerCell
@@ -278,9 +287,6 @@
   - type: Tag
     tags:
       - PowerCage
-  - type: HitscanBatteryAmmoProvider
-    proto: RedShuttleLaser
-    fireCost: 150
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
