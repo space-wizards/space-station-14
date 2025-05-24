@@ -1,103 +1,107 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/11402f6ae62facc2e8bcfa1f8ef5353b26663278, meat.png is CC0-1.0 by EmoGarbage404 (github) for Space Station 14. chair.png and its derrivatives taken from shiptest at commit https://github.com/shiptest-ss13/Shiptest/commit/f761c784812e827960a66cd10aac17ebc6edfac3, palette for chair.png, steel-bench.png and chair-greyscale.png taken from paradise equivalent chairs at commit https://github.com/ParadiseSS13/Paradise/commit/5ce5a66c814c4a60118d24885389357fd0240002, steel by SonicHDC, brass chair.png taken from tgstation at https://github.com/tgstation/tgstation/blob/b7e7779c19b76449c290aaf2150fb93545b1a79a/icons/obj/chairs.dmi, wooden bench by Ko4erga (discord)",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "bar",
-      "directions": 4
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/11402f6ae62facc2e8bcfa1f8ef5353b26663278, meat.png is CC0-1.0 by EmoGarbage404 (github) for Space Station 14. chair.png and its derrivatives taken from shiptest at commit https://github.com/shiptest-ss13/Shiptest/commit/f761c784812e827960a66cd10aac17ebc6edfac3, palette for chair.png, steel-bench.png and chair-greyscale.png taken from paradise equivalent chairs at commit https://github.com/ParadiseSS13/Paradise/commit/5ce5a66c814c4a60118d24885389357fd0240002, steel by SonicHDC, brass chair.png taken from tgstation at https://github.com/tgstation/tgstation/blob/b7e7779c19b76449c290aaf2150fb93545b1a79a/icons/obj/chairs.dmi, wooden bench by Ko4erga (discord), xeno-chair by juneszalkowska (discord)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "bar-knocked",
-      "directions": 4
-    },
-    {
-      "name": "chair",
-      "directions": 4
-    },
-    {
-      "name": "chair-knocked",
-      "directions": 4
-    },
-    {
-      "name": "chair-greyscale",
-      "directions": 4
-    },
-    {
-      "name": "chair-greyscale-knocked",
-      "directions": 4
-    },
-    {
-      "name": "comfy",
-      "directions": 4
-    },
-    {
-      "name": "comfy-overlay",
-      "directions": 4
-    },
-    {
-      "name": "meat",
-      "directions": 4
-    },
-    {
-      "name": "office-dark",
-      "directions": 4
-    },
-    {
-      "name": "office-white",
-      "directions": 4
-    },
-    {
-      "name": "shuttle",
-      "directions": 4
-    },
-    {
-      "name": "shuttle-overlay",
-      "directions": 4
-    },
-    {
-      "name": "stool",
-      "directions": 4
-    },
-    {
-      "name": "stool-knocked",
-      "directions": 4
-    },
-    {
-      "name": "wooden",
-      "directions": 4
-    },
-    {
-      "name": "wooden-bench",
-      "directions": 4
-    },
-    {
-      "name": "wooden-wings",
-      "directions": 4
-    },
-    {
-      "name": "wooden-wings-knocked",
-      "directions": 4
-    },
-    {
-      "name": "ritual",
-      "directions": 4
-    },
-    {
-      "name": "cursed",
-      "directions": 4
-    },
-    {
-      "name": "steel-bench",
-      "directions": 4
-    },
-	{
-		"name": "brass_chair",
-		"directions": 4
-	}
-  ]
+    "states": [
+        {
+            "name": "bar",
+            "directions": 4
+        },
+        {
+            "name": "bar-knocked",
+            "directions": 4
+        },
+        {
+            "name": "chair",
+            "directions": 4
+        },
+        {
+            "name": "chair-knocked",
+            "directions": 4
+        },
+        {
+            "name": "chair-greyscale",
+            "directions": 4
+        },
+        {
+            "name": "chair-greyscale-knocked",
+            "directions": 4
+        },
+        {
+            "name": "comfy",
+            "directions": 4
+        },
+        {
+            "name": "comfy-overlay",
+            "directions": 4
+        },
+        {
+            "name": "meat",
+            "directions": 4
+        },
+        {
+            "name": "office-dark",
+            "directions": 4
+        },
+        {
+            "name": "office-white",
+            "directions": 4
+        },
+        {
+            "name": "shuttle",
+            "directions": 4
+        },
+        {
+            "name": "shuttle-overlay",
+            "directions": 4
+        },
+        {
+            "name": "stool",
+            "directions": 4
+        },
+        {
+            "name": "stool-knocked",
+            "directions": 4
+        },
+        {
+            "name": "wooden",
+            "directions": 4
+        },
+        {
+            "name": "wooden-bench",
+            "directions": 4
+        },
+        {
+            "name": "wooden-wings",
+            "directions": 4
+        },
+        {
+            "name": "wooden-wings-knocked",
+            "directions": 4
+        },
+        {
+            "name": "ritual",
+            "directions": 4
+        },
+        {
+            "name": "cursed",
+            "directions": 4
+        },
+        {
+            "name": "steel-bench",
+            "directions": 4
+        },
+        {
+            "name": "brass_chair",
+            "directions": 4
+        },
+        {
+            "name": "xeno-chair",
+            "directions": 4
+        }
+    ]
 }
