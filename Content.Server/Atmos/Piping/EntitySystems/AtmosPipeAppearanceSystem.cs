@@ -11,7 +11,6 @@ namespace Content.Server.Atmos.Piping.EntitySystems;
 public sealed class AtmosPipeAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override void Initialize()
     {
@@ -56,11 +55,10 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
 
         // find the cardinal directions of any connected entities
         var netConnectedDirections = PipeDirection.None;
-        var tile = _map.TileIndicesFor((xform.GridUid.Value, grid), xform.Coordinates);
+        var tile = grid.TileIndicesFor(xform.Coordinates);
         foreach (var neighbour in connected)
         {
-            // TODO z-levels, pipes across grids - we shouldn't assume that the neighboring tile's transform is on the same grid
-            var otherTile = _map.TileIndicesFor((xform.GridUid.Value, grid), Transform(neighbour).Coordinates);
+            var otherTile = grid.TileIndicesFor(Transform(neighbour).Coordinates);
 
             netConnectedDirections |= (otherTile - tile) switch
             {

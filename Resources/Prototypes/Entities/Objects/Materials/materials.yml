@@ -389,10 +389,6 @@
   - type: PhysicalComposition
     materialComposition:
       Diamond: 100
-  - type: Tag
-    tags:
-    - RawMaterial
-    - Diamond
 
 - type: entity
   parent: MaterialDiamond

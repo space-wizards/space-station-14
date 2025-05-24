@@ -20,6 +20,7 @@ public sealed class RandomGiftSystem : EntitySystem
 {
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -92,9 +93,9 @@ public sealed class RandomGiftSystem : EntitySystem
     {
         _possibleGiftsSafe.Clear();
         _possibleGiftsUnsafe.Clear();
-        var itemCompName = Factory.GetComponentName<ItemComponent>();
-        var mapGridCompName = Factory.GetComponentName<MapGridComponent>();
-        var physicsCompName = Factory.GetComponentName<PhysicsComponent>();
+        var itemCompName = _componentFactory.GetComponentName(typeof(ItemComponent));
+        var mapGridCompName = _componentFactory.GetComponentName(typeof(MapGridComponent));
+        var physicsCompName = _componentFactory.GetComponentName(typeof(PhysicsComponent));
 
         foreach (var proto in _prototype.EnumeratePrototypes<EntityPrototype>())
         {

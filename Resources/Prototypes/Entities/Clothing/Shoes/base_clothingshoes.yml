@@ -22,7 +22,6 @@
   - type: Tag
     tags:
     - ClothMade
-    - Recyclable
     - WhitelistChameleon
   - type: ProtectedFromStepTriggers
 
@@ -36,9 +35,6 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
-  - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
-    materialComposition:
-      Cloth: 50
 
 # stuff common to all military boots
 - type: entity

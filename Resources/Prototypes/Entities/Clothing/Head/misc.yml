@@ -32,11 +32,6 @@
     sprite: Clothing/Head/Misc/chickenhead.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - HeadTop
-    - HeadSide
 
 - type: entity
   parent: ClothingHeadBase
@@ -79,12 +74,6 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - HeadTop
-    - HeadSide
-    - FacialHair
 
 - type: entity
   parent: ClothingHeadBase
@@ -96,9 +85,6 @@
     sprite: Clothing/Head/Misc/pwig.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/pwig.rsi
-  - type: HideLayerClothing
-    slots:
-    - HeadTop
 
 - type: entity
   parent: ClothingHeadBase
@@ -123,12 +109,6 @@
     sprite: Clothing/Head/Misc/richard.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - HeadTop
-    - HeadSide
-    - FacialHair
 
 - type: entity
   parent: ClothingHeadBase
@@ -142,11 +122,6 @@
     sprite: Clothing/Head/Misc/skubhead.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - HeadTop
-    - HeadSide
 
 - type: entity
   parent: ClothingHeadBase
@@ -162,11 +137,6 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - HeadTop
-    - HeadSide
 
 - type: entity
   parent: ClothingHeadBase
@@ -196,8 +166,6 @@
     sprite: Clothing/Head/Misc/fancycrown.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/fancycrown.rsi
-  - type: TypingIndicatorClothing
-    proto: regal
   - type: MobPrice
     price: 3000
   - type: AddAccentClothing
@@ -276,12 +244,6 @@
     sprite: Clothing/Head/Misc/squiddy.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - HeadTop
-    - HeadSide
-    - FacialHair
 
 - type: entity
   parent: ClothingHeadBase
@@ -293,12 +255,6 @@
     sprite: Clothing/Head/Misc/red_racoon.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/red_racoon.rsi
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - HeadTop
-    - HeadSide
-    - FacialHair
 
 - type: entity
   parent: Clothing
@@ -382,5 +338,3 @@
   - type: HideLayerClothing
     slots:
     - Hair
-    - HeadTop
-    - HeadSide

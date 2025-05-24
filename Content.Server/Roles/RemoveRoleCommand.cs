@@ -45,7 +45,7 @@ namespace Content.Server.Roles
             var roles = _entityManager.System<SharedRoleSystem>();
             var jobs = _entityManager.System<SharedJobSystem>();
             if (jobs.MindHasJobWithId(mind, args[1]))
-                roles.MindRemoveRole<JobRoleComponent>(mind.Value);
+                roles.MindTryRemoveRole<JobRoleComponent>(mind.Value);
         }
     }
 }

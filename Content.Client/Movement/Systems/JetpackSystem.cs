@@ -16,7 +16,6 @@ public sealed class JetpackSystem : SharedJetpackSystem
     [Dependency] private readonly ClothingSystem _clothing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -35,8 +34,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
         Appearance.TryGetData<bool>(uid, JetpackVisuals.Enabled, out var enabled, args.Component);
 
         var state = "icon" + (enabled ? "-on" : "");
-        if (args.Sprite != null)
-            _sprite.LayerSetRsiState((uid, args.Sprite), 0, state);
+        args.Sprite?.LayerSetState(0, state);
 
         if (TryComp<ClothingComponent>(uid, out var clothing))
             _clothing.SetEquippedPrefix(uid, enabled ? "on" : null, clothing);

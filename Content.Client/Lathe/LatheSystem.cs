@@ -9,7 +9,6 @@ namespace Content.Client.Lathe;
 public sealed class LatheSystem : SharedLatheSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -26,25 +25,25 @@ public sealed class LatheSystem : SharedLatheSystem
         // Lathe specific stuff
         if (_appearance.TryGetData<bool>(uid, LatheVisuals.IsRunning, out var isRunning, args.Component))
         {
-            if (_sprite.LayerMapTryGet((uid, args.Sprite), LatheVisualLayers.IsRunning, out var runningLayer, false) &&
+            if (args.Sprite.LayerMapTryGet(LatheVisualLayers.IsRunning, out var runningLayer) &&
                 component.RunningState != null &&
                 component.IdleState != null)
             {
                 var state = isRunning ? component.RunningState : component.IdleState;
-                _sprite.LayerSetRsiState((uid, args.Sprite), runningLayer, state);
+                args.Sprite.LayerSetState(runningLayer, state);
             }
         }
 
         if (_appearance.TryGetData<bool>(uid, PowerDeviceVisuals.Powered, out var powered, args.Component) &&
-            _sprite.LayerMapTryGet((uid, args.Sprite), PowerDeviceVisualLayers.Powered, out var powerLayer, false))
+            args.Sprite.LayerMapTryGet(PowerDeviceVisualLayers.Powered, out var powerLayer))
         {
-            _sprite.LayerSetVisible((uid, args.Sprite), powerLayer, powered);
+            args.Sprite.LayerSetVisible(powerLayer, powered);
 
             if (component.UnlitIdleState != null &&
                 component.UnlitRunningState != null)
             {
                 var state = isRunning ? component.UnlitRunningState : component.UnlitIdleState;
-                _sprite.LayerSetRsiState((uid, args.Sprite), powerLayer, state);
+                args.Sprite.LayerSetState(powerLayer, state);
             }
         }
     }

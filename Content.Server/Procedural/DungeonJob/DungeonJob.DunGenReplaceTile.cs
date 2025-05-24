@@ -12,43 +12,49 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="ReplaceTileDunGen"/>
     /// </summary>
-    private async Task GenerateTileReplacementDunGen(ReplaceTileDunGen gen, List<Dungeon> dungeons, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task<Dungeon> GenerateTileReplacementDunGen(ReplaceTileDunGen gen, DungeonData data, HashSet<Vector2i> reservedTiles, Random random)
     {
+        var tiles = _maps.GetAllTilesEnumerator(_gridUid, _grid);
         var replacements = new List<(Vector2i Index, Tile Tile)>();
+        var reserved = new HashSet<Vector2i>();
 
-        foreach (var dungeon in dungeons)
+        while (tiles.MoveNext(out var tileRef))
         {
-            foreach (var node in dungeon.AllTiles)
+            var node = tileRef.Value.GridIndices;
+
+            if (reservedTiles.Contains(node))
+                continue;
+
+            foreach (var layer in gen.Layers)
             {
-                if (reservedTiles.Contains(node))
+                var value = layer.Noise.GetNoise(node.X, node.Y);
+
+                if (value < layer.Threshold)
                     continue;
 
-                foreach (var layer in gen.Layers)
+                Tile tile;
+
+                if (random.Prob(gen.VariantWeight))
                 {
-                    var value = layer.Noise.GetNoise(node.X, node.Y);
-
-                    if (value < layer.Threshold)
-                        continue;
-
-                    Tile tile;
-
-                    if (random.Prob(gen.VariantWeight))
-                    {
-                        tile = _tileDefManager.GetVariantTile(_prototype.Index(layer.Tile), random);
-                    }
-                    else
-                    {
-                        tile = new Tile(_prototype.Index(layer.Tile).TileId);
-                    }
-
-                    replacements.Add((node, tile));
-                    break;
+                    tile = _tileDefManager.GetVariantTile(_prototype.Index(layer.Tile), random);
+                }
+                else
+                {
+                    tile = new Tile(_prototype.Index(layer.Tile).TileId);
                 }
 
-                await SuspendDungeon();
+                replacements.Add((node, tile));
+                reserved.Add(node);
+                break;
             }
 
-            _maps.SetTiles(_gridUid, _grid, replacements);
+            await SuspendDungeon();
         }
+
+        _maps.SetTiles(_gridUid, _grid, replacements);
+        return new Dungeon(new List<DungeonRoom>()
+        {
+            new DungeonRoom(reserved, _position, Box2i.Empty, new HashSet<Vector2i>()),
+        });
     }
 }

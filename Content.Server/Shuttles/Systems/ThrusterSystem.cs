@@ -94,45 +94,41 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void OnShuttleTileChange(EntityUid uid, ShuttleComponent component, ref TileChangedEvent args)
     {
-        foreach (var change in args.Changes)
+        // If the old tile was space but the new one isn't then disable all adjacent thrusters
+        if (args.NewTile.IsSpace(_tileDefManager) || !args.OldTile.IsSpace(_tileDefManager))
+            return;
+
+        var tilePos = args.NewTile.GridIndices;
+        var grid = Comp<MapGridComponent>(uid);
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var thrusterQuery = GetEntityQuery<ThrusterComponent>();
+
+        for (var x = -1; x <= 1; x++)
         {
-            // If the old tile was space but the new one isn't then disable all adjacent thrusters
-            if (change.NewTile.IsSpace(_tileDefManager) || !change.OldTile.IsSpace(_tileDefManager))
-                continue;
-
-            var tilePos = change.GridIndices;
-            var grid = Comp<MapGridComponent>(uid);
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var thrusterQuery = GetEntityQuery<ThrusterComponent>();
-
-            for (var x = -1; x <= 1; x++)
+            for (var y = -1; y <= 1; y++)
             {
-                for (var y = -1; y <= 1; y++)
+                if (x != 0 && y != 0)
+                    continue;
+
+                var checkPos = tilePos + new Vector2i(x, y);
+                var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(uid, grid, checkPos);
+
+                while (enumerator.MoveNext(out var ent))
                 {
-                    if (x != 0 && y != 0)
+                    if (!thrusterQuery.TryGetComponent(ent.Value, out var thruster) || !thruster.RequireSpace)
                         continue;
 
-                    var checkPos = tilePos + new Vector2i(x, y);
-                    var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(uid, grid, checkPos);
+                    // Work out if the thruster is facing this direction
+                    var xform = xformQuery.GetComponent(ent.Value);
+                    var direction = xform.LocalRotation.ToWorldVec();
 
-                    while (enumerator.MoveNext(out var ent))
-                    {
-                        if (!thrusterQuery.TryGetComponent(ent.Value, out var thruster) || !thruster.RequireSpace)
-                            continue;
+                    if (new Vector2i((int)direction.X, (int)direction.Y) != new Vector2i(x, y))
+                        continue;
 
-                        // Work out if the thruster is facing this direction
-                        var xform = xformQuery.GetComponent(ent.Value);
-                        var direction = xform.LocalRotation.ToWorldVec();
-
-                        if (new Vector2i((int)direction.X, (int)direction.Y) != new Vector2i(x, y))
-                            continue;
-
-                        DisableThruster(ent.Value, thruster, xform.GridUid);
-                    }
+                    DisableThruster(ent.Value, thruster, xform.GridUid);
                 }
             }
         }
-
     }
 
     private void OnActivateThruster(EntityUid uid, ThrusterComponent component, ActivateInWorldEvent args)

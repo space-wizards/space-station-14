@@ -9,7 +9,6 @@ namespace Content.Client.Storage.Systems;
 public sealed class ItemMapperSystem : SharedItemMapperSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -49,9 +48,9 @@ public sealed class ItemMapperSystem : SharedItemMapperSystem
 
         foreach (var sprite in component.SpriteLayers)
         {
-            _sprite.LayerMapReserve((owner, spriteComponent), sprite);
-            _sprite.LayerSetSprite((owner, spriteComponent), sprite, new SpriteSpecifier.Rsi(component.RSIPath!.Value, sprite));
-            _sprite.LayerSetVisible((owner, spriteComponent), sprite, false);
+            spriteComponent.LayerMapReserveBlank(sprite);
+            spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(component.RSIPath!.Value, sprite));
+            spriteComponent.LayerSetVisible(sprite, false);
         }
     }
 
@@ -64,7 +63,7 @@ public sealed class ItemMapperSystem : SharedItemMapperSystem
         foreach (var layerName in component.SpriteLayers)
         {
             var show = wrapper.QueuedEntities.Contains(layerName);
-            _sprite.LayerSetVisible((owner, spriteComponent), layerName, show);
+            spriteComponent.LayerSetVisible(layerName, show);
         }
     }
 }

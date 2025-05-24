@@ -131,14 +131,14 @@ public sealed partial class CargoSystem
 
     #region Station
 
-    private bool SellPallets(EntityUid gridUid, EntityUid station, out HashSet<(EntityUid, OverrideSellComponent?, double)> goods)
+    private bool SellPallets(EntityUid gridUid, out HashSet<(EntityUid, OverrideSellComponent?, double)> goods)
     {
         GetPalletGoods(gridUid, out var toSell, out goods);
 
         if (toSell.Count == 0)
             return false;
 
-        var ev = new EntitySoldEvent(toSell, station);
+        var ev = new EntitySoldEvent(toSell);
         RaiseLocalEvent(ref ev);
 
         foreach (var ent in toSell)
@@ -230,7 +230,7 @@ public sealed partial class CargoSystem
             return;
         }
 
-        if (!SellPallets(gridUid, station, out var goods))
+        if (!SellPallets(gridUid, out var goods))
             return;
 
         var baseDistribution = CreateAccountDistribution((station, bankAccount));
@@ -267,4 +267,4 @@ public sealed partial class CargoSystem
 /// deleted but after the price has been calculated.
 /// </summary>
 [ByRefEvent]
-public readonly record struct EntitySoldEvent(HashSet<EntityUid> Sold, EntityUid Station);
+public readonly record struct EntitySoldEvent(HashSet<EntityUid> Sold);

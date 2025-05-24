@@ -7,8 +7,6 @@ namespace Content.Client.Anomaly.Effects;
 
 public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-
     public override void Initialize()
     {
         SubscribeLocalEvent<InnerBodyAnomalyComponent, AfterAutoHandleStateEvent>(OnAfterHandleState);
@@ -23,20 +21,21 @@ public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         if (ent.Comp.FallbackSprite is null)
             return;
 
-        var index = _sprite.LayerMapReserve((ent.Owner, sprite), ent.Comp.LayerMap);
+        if (!sprite.LayerMapTryGet(ent.Comp.LayerMap, out var index))
+            index = sprite.LayerMapReserveBlank(ent.Comp.LayerMap);
 
         if (TryComp<BodyComponent>(ent, out var body) &&
             body.Prototype is not null &&
             ent.Comp.SpeciesSprites.TryGetValue(body.Prototype.Value, out var speciesSprite))
         {
-            _sprite.LayerSetSprite((ent.Owner, sprite), index, speciesSprite);
+            sprite.LayerSetSprite(index, speciesSprite);
         }
         else
         {
-            _sprite.LayerSetSprite((ent.Owner, sprite), index, ent.Comp.FallbackSprite);
+            sprite.LayerSetSprite(index, ent.Comp.FallbackSprite);
         }
 
-        _sprite.LayerSetVisible((ent.Owner, sprite), index, true);
+        sprite.LayerSetVisible(index, true);
         sprite.LayerSetShader(index, "unshaded");
     }
 
@@ -45,7 +44,7 @@ public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
-        var index = _sprite.LayerMapGet((ent.Owner, sprite), ent.Comp.LayerMap);
-        _sprite.LayerSetVisible((ent.Owner, sprite), index, false);
+        var index = sprite.LayerMapGet(ent.Comp.LayerMap);
+        sprite.LayerSetVisible(index, false);
     }
 }

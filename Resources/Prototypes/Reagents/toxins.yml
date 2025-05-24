@@ -371,9 +371,8 @@
         damage:
           groups:
             Brute: 2
+            Toxin: 2
             Airloss: 2
-          types:
-            Poison: 2
       - !type:PopupMessage
         type: Local
         messages: [ "histamine-effect-light-itchiness" ]
@@ -571,7 +570,6 @@
       - !type:Emote
         emote: Honk
         showInChat: true
-        showInGuidebook: true
         force: true
         probability: 0.2
       - !type:HealthChange

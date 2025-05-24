@@ -138,9 +138,9 @@
     price: 1000
   - type: PointLight
     radius: 1.2
-    energy: 2.2
+    energy: 1
     castShadows: false
-    color: "#ffca1b"
+    color: "#eef066"
 
 - type: entity
   parent: BikeHorn

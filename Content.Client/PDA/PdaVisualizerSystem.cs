@@ -12,13 +12,13 @@ public sealed class PdaVisualizerSystem : VisualizerSystem<PdaVisualsComponent>
             return;
 
         if (AppearanceSystem.TryGetData<string>(uid, PdaVisuals.PdaType, out var pdaType, args.Component))
-            SpriteSystem.LayerSetRsiState((uid, args.Sprite), PdaVisualLayers.Base, pdaType);
+            args.Sprite.LayerSetState(PdaVisualLayers.Base, pdaType);
 
         if (AppearanceSystem.TryGetData<bool>(uid, UnpoweredFlashlightVisuals.LightOn, out var isFlashlightOn, args.Component))
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), PdaVisualLayers.Flashlight, isFlashlightOn);
+            args.Sprite.LayerSetVisible(PdaVisualLayers.Flashlight, isFlashlightOn);
 
         if (AppearanceSystem.TryGetData<bool>(uid, PdaVisuals.IdCardInserted, out var isCardInserted, args.Component))
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), PdaVisualLayers.IdLight, isCardInserted);
+            args.Sprite.LayerSetVisible(PdaVisualLayers.IdLight, isCardInserted);
     }
 
     public enum PdaVisualLayers : byte

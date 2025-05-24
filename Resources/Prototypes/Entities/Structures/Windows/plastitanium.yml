@@ -34,17 +34,6 @@
   - type: StaticPrice
     price: 100
   - type: BlockWeather
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        mask:
-        - FullTileMask
-        layer:
-        - WallLayer
-        density: 4000
 
 - type: entity
   id: PlastitaniumWindowSquareBase
@@ -155,7 +144,6 @@
         - FullTileMask
         layer:
         - GlassLayer
-        density: 4000
   - type: Airtight
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:

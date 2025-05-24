@@ -101,36 +101,30 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
     private void OnTileChanged(ref TileChangedEvent ev)
     {
-        if (!_navQuery.TryComp(ev.Entity, out var navMap))
+        if (!ev.EmptyChanged || !_navQuery.TryComp(ev.NewTile.GridUid, out var navMap))
             return;
 
-        foreach (var change in ev.Changes)
+        var tile = ev.NewTile.GridIndices;
+        var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
+
+        var chunk = EnsureChunk(navMap, chunkOrigin);
+
+        // This could be easily replaced in the future to accommodate diagonal tiles
+        var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
+        ref var tileData = ref chunk.TileData[GetTileIndex(relative)];
+
+        if (ev.NewTile.IsSpace(_tileDefManager))
         {
-            if (!change.EmptyChanged)
-                continue;
-
-            var tile = change.GridIndices;
-            var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
-
-            var chunk = EnsureChunk(navMap, chunkOrigin);
-
-            // This could be easily replaced in the future to accommodate diagonal tiles
-            var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
-            ref var tileData = ref chunk.TileData[GetTileIndex(relative)];
-
-            if (change.NewTile.IsSpace(_tileDefManager))
-            {
-                tileData = 0;
-                if (PruneEmpty((ev.Entity, navMap), chunk))
-                    continue;
-            }
-            else
-            {
-                tileData = FloorMask;
-            }
-
-            DirtyChunk((ev.Entity, navMap), chunk);
+            tileData = 0;
+            if (PruneEmpty((ev.NewTile.GridUid, navMap), chunk))
+                return;
         }
+        else
+        {
+            tileData = FloorMask;
+        }
+
+        DirtyChunk((ev.NewTile.GridUid, navMap), chunk);
     }
 
     private void DirtyChunk(Entity<NavMapComponent> entity, NavMapChunk chunk)

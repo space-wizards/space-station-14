@@ -57,7 +57,7 @@
     sprite: Structures/Power/Generation/Singularity/collector.rsi
     state: static
   - type: RadiationCollector
-    chargeModifier: 15000
+    chargeModifier: 7500
     radiationReactiveGases:
       - reactantPrototype: Plasma
         powerGenerationEfficiency: 1

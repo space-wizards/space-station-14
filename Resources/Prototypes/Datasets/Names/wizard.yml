@@ -2,10 +2,10 @@
   id: NamesWizardFirst
   values:
     prefix: names-wizard-first-dataset-
-    count: 44
+    count: 30
 
 - type: localizedDataset
   id: NamesWizardLast
   values:
     prefix: names-wizard-last-dataset-
-    count: 69 #nice
+    count: 46

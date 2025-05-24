@@ -20,10 +20,3 @@ public abstract partial class EntityEffectCondition
     public abstract string GuidebookExplanation(IPrototypeManager prototype);
 }
 
-[ByRefEvent]
-public struct CheckEntityEffectConditionEvent<T> where T : EntityEffectCondition
-{
-    public T Condition;
-    public EntityEffectBaseArgs Args;
-    public bool Result;
-}

@@ -5,6 +5,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -15,8 +16,8 @@ namespace Content.Shared.Tabletop
         [Dependency] protected readonly ActionBlockerSystem ActionBlockerSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         [Dependency] protected readonly SharedTransformSystem Transforms = default!;
+        [Dependency] private readonly IMapManager _mapMan = default!;
 
         public override void Initialize()
         {
@@ -40,7 +41,7 @@ namespace Content.Shared.Tabletop
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
             var transform = EntityManager.GetComponent<TransformComponent>(moved);
-            Transforms.SetParent(moved, transform, _mapSystem.GetMapOrInvalid(transform.MapID));
+            Transforms.SetParent(moved, transform, _mapMan.GetMapEntityId(transform.MapID));
             Transforms.SetLocalPositionNoLerp(moved, msg.Coordinates.Position, transform);
         }
 

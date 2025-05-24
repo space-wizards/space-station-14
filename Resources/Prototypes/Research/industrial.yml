@@ -27,7 +27,7 @@
   recipeUnlocks:
   - RadarConsoleCircuitboard
   - HandHeldMassScanner
-
+  
 - type: technology
   id: AdvancedPowercells
   name: research-technology-advanced-powercells
@@ -200,8 +200,8 @@
   - ClothingBackpackDuffelHolding
 
 - type: technology
-  id: OptimizedMicrogalvanism
-  name: research-technology-optimized-microgalvanism
+  id: PortableFission
+  name: research-technology-portable-fission
   icon:
     sprite: Objects/Power/power_cells.rsi
     state: microreactor
@@ -210,6 +210,5 @@
   cost: 10000
   recipeUnlocks:
   - PowerCellMicroreactor
-  - PowerCellHyper
   technologyPrerequisites:
   - AdvancedPowercells

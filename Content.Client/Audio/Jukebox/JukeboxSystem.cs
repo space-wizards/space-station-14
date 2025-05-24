@@ -12,7 +12,6 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -65,7 +64,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             visualState = JukeboxVisualState.On;
         }
 
-        UpdateAppearance((uid, sprite), visualState, component);
+        UpdateAppearance(uid, visualState, component, sprite);
     }
 
     private void OnAppearanceChange(EntityUid uid, JukeboxComponent component, ref AppearanceChangeEvent args)
@@ -79,25 +78,25 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             visualState = JukeboxVisualState.On;
         }
 
-        UpdateAppearance((uid, args.Sprite), visualState, component);
+        UpdateAppearance(uid, visualState, component, args.Sprite);
     }
 
-    private void UpdateAppearance(Entity<SpriteComponent> entity, JukeboxVisualState visualState, JukeboxComponent component)
+    private void UpdateAppearance(EntityUid uid, JukeboxVisualState visualState, JukeboxComponent component, SpriteComponent sprite)
     {
-        SetLayerState(JukeboxVisualLayers.Base, component.OffState, entity);
+        SetLayerState(JukeboxVisualLayers.Base, component.OffState, sprite);
 
         switch (visualState)
         {
             case JukeboxVisualState.On:
-                SetLayerState(JukeboxVisualLayers.Base, component.OnState, entity);
+                SetLayerState(JukeboxVisualLayers.Base, component.OnState, sprite);
                 break;
 
             case JukeboxVisualState.Off:
-                SetLayerState(JukeboxVisualLayers.Base, component.OffState, entity);
+                SetLayerState(JukeboxVisualLayers.Base, component.OffState, sprite);
                 break;
 
             case JukeboxVisualState.Select:
-                PlayAnimation(entity.Owner, JukeboxVisualLayers.Base, component.SelectState, 1.0f, entity);
+                PlayAnimation(uid, JukeboxVisualLayers.Base, component.SelectState, 1.0f, sprite);
                 break;
         }
     }
@@ -110,7 +109,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         if (!_animationPlayer.HasRunningAnimation(uid, state))
         {
             var animation = GetAnimation(layer, state, animationTime);
-            _sprite.LayerSetVisible((uid, sprite), layer, true);
+            sprite.LayerSetVisible(layer, true);
             _animationPlayer.Play(uid, animation, state);
         }
     }
@@ -134,13 +133,13 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         };
     }
 
-    private void SetLayerState(JukeboxVisualLayers layer, string? state, Entity<SpriteComponent> sprite)
+    private void SetLayerState(JukeboxVisualLayers layer, string? state, SpriteComponent sprite)
     {
         if (string.IsNullOrEmpty(state))
             return;
 
-        _sprite.LayerSetVisible(sprite.AsNullable(), layer, true);
-        _sprite.LayerSetAutoAnimated(sprite.AsNullable(), layer, true);
-        _sprite.LayerSetRsiState(sprite.AsNullable(), layer, state);
+        sprite.LayerSetVisible(layer, true);
+        sprite.LayerSetAutoAnimated(layer, true);
+        sprite.LayerSetState(layer, state);
     }
 }

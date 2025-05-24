@@ -43,6 +43,7 @@ namespace Content.Shared.Magic;
 public abstract class SharedMagicSystem : EntitySystem
 {
     [Dependency] private readonly ISerializationManager _seriMan = default!;
+    [Dependency] private readonly IComponentFactory _compFact = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -275,9 +276,13 @@ public abstract class SharedMagicSystem : EntitySystem
 
         // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
         var fromMap = _transform.ToMapCoordinates(fromCoords);
-        var ent = Spawn(ev.Prototype, fromMap);
+        var spawnCoords = _mapManager.TryFindGridAt(fromMap, out var gridUid, out _)
+            ? _transform.WithEntityId(fromCoords, gridUid)
+            : new(_mapManager.GetMapEntityId(fromMap.MapId), fromMap.Position);
+
+        var ent = Spawn(ev.Prototype, spawnCoords);
         var direction = _transform.ToMapCoordinates(toCoords).Position -
-                         fromMap.Position;
+                         _transform.ToMapCoordinates(spawnCoords).Position;
         _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer);
     }
     // End Projectile Spells
@@ -355,7 +360,7 @@ public abstract class SharedMagicSystem : EntitySystem
             if (HasComp(target, data.Component.GetType()))
                 continue;
 
-            var component = (Component)Factory.GetComponent(name);
+            var component = (Component)_compFact.GetComponent(name);
             var temp = (object)component;
             _seriMan.CopyTo(data.Component, ref temp);
             EntityManager.AddComponent(target, (Component)temp!);
@@ -366,7 +371,7 @@ public abstract class SharedMagicSystem : EntitySystem
     {
         foreach (var toRemove in comps)
         {
-            if (Factory.TryGetRegistration(toRemove, out var registration))
+            if (_compFact.TryGetRegistration(toRemove, out var registration))
                 RemComp(target, registration.Type);
         }
     }

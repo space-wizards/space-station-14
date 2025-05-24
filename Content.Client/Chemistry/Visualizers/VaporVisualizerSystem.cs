@@ -52,7 +52,7 @@ public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsCompone
     {
         if (AppearanceSystem.TryGetData<Color>(uid, VaporVisuals.Color, out var color, args.Component) && args.Sprite != null)
         {
-            SpriteSystem.SetColor((uid, args.Sprite), color);
+            args.Sprite.Color = color;
         }
     }
 }

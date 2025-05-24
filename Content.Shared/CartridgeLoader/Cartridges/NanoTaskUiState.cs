@@ -17,7 +17,7 @@ public enum NanoTaskPriority : byte
 ///     The data relating to a single NanoTask item, but not its identifier
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public sealed partial class NanoTaskItem
+public sealed class NanoTaskItem
 {
     /// <summary>
     ///     The maximum length of the Description and TaskIsFor fields
@@ -61,7 +61,7 @@ public sealed partial class NanoTaskItem
 ///     Pairs a NanoTask item and its identifier
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public sealed partial class NanoTaskItemAndId
+public sealed class NanoTaskItemAndId
 {
     public readonly int Id;
     public readonly NanoTaskItem Data;

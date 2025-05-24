@@ -19,11 +19,11 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     public string ID { get; private set; } = default!;
 
     [ParentDataField(typeof(PrototypeIdArraySerializer<CloningSettingsPrototype>))]
-    public string[]? Parents { get; private set; }
+    public string[]? Parents { get; }
 
     [AbstractDataField]
     [NeverPushInheritance]
-    public bool Abstract { get; private set; }
+    public bool Abstract { get; }
 
     /// <summary>
     ///     Determines if cloning can be prevented by traits etc.

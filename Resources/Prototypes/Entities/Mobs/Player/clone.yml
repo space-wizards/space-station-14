@@ -17,13 +17,11 @@
   # traits
   # - LegsParalyzed (you get healed)
   - LightweightDrunk
-  - Muted
   - Narcolepsy
   - Pacified
   - PainNumbness
   - Paracusia
   - PermanentBlindness
-  - Snoring
   - Unrevivable
   # job specific
   - BibleUser
@@ -39,7 +37,6 @@
   - BleatingAccent
   - DamagedSiliconAccent
   - FrenchAccent
-  - FrontalLisp
   - GermanAccent
   - LizardAccent
   - MobsterAccent

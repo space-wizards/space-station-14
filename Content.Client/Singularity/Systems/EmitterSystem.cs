@@ -7,7 +7,6 @@ namespace Content.Client.Singularity.Systems;
 public sealed class EmitterSystem : SharedEmitterSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -23,7 +22,7 @@ public sealed class EmitterSystem : SharedEmitterSystem
         if (!_appearance.TryGetData<EmitterVisualState>(uid, EmitterVisuals.VisualState, out var state, args.Component))
             state = EmitterVisualState.Off;
 
-        if (!_sprite.LayerMapTryGet((uid, args.Sprite), EmitterVisualLayers.Lights, out var layer, false))
+        if (!args.Sprite.LayerMapTryGet(EmitterVisualLayers.Lights, out var layer))
             return;
 
         switch (state)
@@ -31,17 +30,17 @@ public sealed class EmitterSystem : SharedEmitterSystem
             case EmitterVisualState.On:
                 if (component.OnState == null)
                     break;
-                _sprite.LayerSetVisible((uid, args.Sprite), layer, true);
-                _sprite.LayerSetRsiState((uid, args.Sprite), layer, component.OnState);
+                args.Sprite.LayerSetVisible(layer, true);
+                args.Sprite.LayerSetState(layer, component.OnState);
                 break;
             case EmitterVisualState.Underpowered:
                 if (component.UnderpoweredState == null)
                     break;
-                _sprite.LayerSetVisible((uid, args.Sprite), layer, true);
-                _sprite.LayerSetRsiState((uid, args.Sprite), layer, component.UnderpoweredState);
+                args.Sprite.LayerSetVisible(layer, true);
+                args.Sprite.LayerSetState(layer, component.UnderpoweredState);
                 break;
             case EmitterVisualState.Off:
-                _sprite.LayerSetVisible((uid, args.Sprite), layer, false);
+                args.Sprite.LayerSetVisible(layer, false);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

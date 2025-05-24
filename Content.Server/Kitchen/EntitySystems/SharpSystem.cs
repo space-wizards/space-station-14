@@ -12,7 +12,6 @@ using Content.Shared.Verbs;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Kitchen;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -125,7 +124,7 @@ public sealed class SharpSystem : EntitySystem
         if (hasBody)
             popupType = PopupType.LargeCaution;
 
-        _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", args.Args.Target.Value), ("knife", Identity.Entity(uid, EntityManager))),
+        _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", args.Args.Target.Value), ("knife", uid)),
             popupEnt, args.Args.User, popupType);
 
         if (hasBody)
@@ -153,10 +152,10 @@ public sealed class SharpSystem : EntitySystem
         var disabled = false;
         string? message = null;
 
-        // if the held item doesn't have SharpComponent
-        // and the user doesn't have SharpComponent
+        // if the user has hands
+        // and the item they're holding doesn't have the SharpComponent
         // disable the verb
-        if (!TryComp<SharpComponent>(args.Using, out var usingSharpComp) && userSharpComp == null)
+        if (!TryComp<SharpComponent>(args.Using, out var usingSharpComp) && args.Hands != null)
         {
             disabled = true;
             message = Loc.GetString("butcherable-need-knife",

@@ -16,7 +16,6 @@ strippable-component-alert-owner-interact = {CAPITALIZE(THE($user))} is fumbling
 
 # StripVerb
 strip-verb-get-data-text = Strip
-strip-all-verb-get-data-text = Strip All
 
 ## UI
 

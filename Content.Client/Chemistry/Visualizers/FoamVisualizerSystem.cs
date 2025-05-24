@@ -71,7 +71,7 @@ public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent
             return;
 
         if (TryComp<SpriteComponent>(uid, out var sprite))
-            SpriteSystem.SetVisible((uid, sprite), false);
+            sprite.Visible = false;
     }
 }
 

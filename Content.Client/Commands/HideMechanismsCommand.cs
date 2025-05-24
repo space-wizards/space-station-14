@@ -18,19 +18,23 @@ public sealed class HideMechanismsCommand : LocalizedCommands
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var containerSys = _entityManager.System<SharedContainerSystem>();
-        var spriteSys = _entityManager.System<SpriteSystem>();
-        var query = _entityManager.AllEntityQueryEnumerator<OrganComponent, SpriteComponent>();
+        var query = _entityManager.AllEntityQueryEnumerator<OrganComponent>();
 
-        while (query.MoveNext(out var uid, out _, out var sprite))
+        while (query.MoveNext(out var uid, out _))
         {
-            spriteSys.SetContainerOccluded((uid, sprite), false);
+            if (!_entityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+            {
+                continue;
+            }
+
+            sprite.ContainerOccluded = false;
 
             var tempParent = uid;
             while (containerSys.TryGetContainingContainer((tempParent, null, null), out var container))
             {
                 if (!container.ShowContents)
                 {
-                    spriteSys.SetContainerOccluded((uid, sprite), true);
+                    sprite.ContainerOccluded = true;
                     break;
                 }
 

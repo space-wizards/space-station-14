@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Content.Client.Weapons.Ranged.Components;
+using Content.Shared.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -14,11 +16,10 @@ public sealed class MagazineVisualsSpriteTest
     [Test]
     public async Task MagazineVisualsSpritesExist()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        await using var pair = await PoolManager.GetServerClient();
         var client = pair.Client;
         var toTest = new List<(int, string)>();
         var protos = pair.GetPrototypesWithComponent<MagazineVisualsComponent>();
-        var spriteSys = client.System<SpriteSystem>();
 
         await client.WaitAssertion(() =>
         {
@@ -35,9 +36,9 @@ public sealed class MagazineVisualsSpriteTest
                         @$"{proto.ID} has MagazineVisualsComponent but no AppearanceComponent.");
 
                     toTest.Clear();
-                    if (spriteSys.LayerMapTryGet((uid, sprite), GunVisualLayers.Mag, out var magLayerId, false))
+                    if (sprite.LayerMapTryGet(GunVisualLayers.Mag, out var magLayerId))
                         toTest.Add((magLayerId, ""));
-                    if (spriteSys.LayerMapTryGet((uid, sprite), GunVisualLayers.MagUnshaded, out var magUnshadedLayerId, false))
+                    if (sprite.LayerMapTryGet(GunVisualLayers.MagUnshaded, out var magUnshadedLayerId))
                         toTest.Add((magUnshadedLayerId, "-unshaded"));
 
                     Assert.That(
@@ -48,7 +49,7 @@ public sealed class MagazineVisualsSpriteTest
                     var start = visuals.ZeroVisible ? 0 : 1;
                     foreach (var (id, midfix) in toTest)
                     {
-                        Assert.That(spriteSys.TryGetLayer((uid, sprite), id, out var layer, false));
+                        Assert.That(sprite.TryGetLayer(id, out var layer));
                         var rsi = layer.ActualRsi;
                         for (var i = start; i < visuals.MagSteps; i++)
                         {

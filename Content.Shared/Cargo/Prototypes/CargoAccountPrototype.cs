@@ -11,7 +11,7 @@ public sealed partial class CargoAccountPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; private set; } = default!;
+    public string ID { get; } = default!;
 
     /// <summary>
     /// Full IC name of the account.

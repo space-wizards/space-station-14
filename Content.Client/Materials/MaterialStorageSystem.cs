@@ -7,7 +7,6 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -21,7 +20,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         if (args.Sprite == null)
             return;
 
-        if (!_sprite.LayerMapTryGet((uid, args.Sprite), MaterialStorageVisualLayers.Inserting, out var layer, false))
+        if (!args.Sprite.LayerMapTryGet(MaterialStorageVisualLayers.Inserting, out var layer))
             return;
 
         if (!_appearance.TryGetData<bool>(uid, MaterialStorageVisuals.Inserting, out var inserting, args.Component))
@@ -29,15 +28,15 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
 
         if (inserting && TryComp<InsertingMaterialStorageComponent>(uid, out var insertingComp))
         {
-            _sprite.LayerSetAnimationTime((uid, args.Sprite), layer, 0f);
+            args.Sprite.LayerSetAnimationTime(layer, 0f);
 
-            _sprite.LayerSetVisible((uid, args.Sprite), layer, true);
+            args.Sprite.LayerSetVisible(layer, true);
             if (insertingComp.MaterialColor != null)
-                _sprite.LayerSetColor((uid, args.Sprite), layer, insertingComp.MaterialColor.Value);
+                args.Sprite.LayerSetColor(layer, insertingComp.MaterialColor.Value);
         }
         else
         {
-            _sprite.LayerSetVisible((uid, args.Sprite), layer, false);
+            args.Sprite.LayerSetVisible(layer, false);
         }
     }
 

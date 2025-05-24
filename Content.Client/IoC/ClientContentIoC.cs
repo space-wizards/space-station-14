@@ -34,7 +34,6 @@ namespace Content.Client.IoC
             var collection = IoCManager.Instance!;
 
             collection.Register<IParallaxManager, ParallaxManager>();
-            collection.Register<GeneratedParallaxCache>();
             collection.Register<IChatManager, ChatManager>();
             collection.Register<ISharedChatManager, ChatManager>();
             collection.Register<IClientPreferencesManager, ClientPreferencesManager>();

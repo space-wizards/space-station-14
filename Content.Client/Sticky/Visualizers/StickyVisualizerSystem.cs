@@ -33,6 +33,6 @@ public sealed class StickyVisualizerSystem : VisualizerSystem<StickyVisualizerCo
             return;
 
         var drawDepth = isStuck ? comp.StuckDrawDepth : comp.OriginalDrawDepth;
-        SpriteSystem.SetDrawDepth((uid, args.Sprite), drawDepth);
+        args.Sprite.DrawDepth = drawDepth;
     }
 }

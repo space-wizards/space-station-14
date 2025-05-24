@@ -26,17 +26,16 @@ public sealed class RequiresTileSystem : EntitySystem
         if (!TryComp<MapGridComponent>(ev.Entity, out var grid))
             return;
 
-        foreach (var change in ev.Changes)
+        var anchored = _maps.GetAnchoredEntitiesEnumerator(ev.Entity, grid, ev.NewTile.GridIndices);
+        if (anchored.Equals(AnchoredEntitiesEnumerator.Empty))
+            return;
+
+        while (anchored.MoveNext(out var ent))
         {
-            var anchored = _maps.GetAnchoredEntitiesEnumerator(ev.Entity, grid, change.GridIndices);
+            if (!_tilesQuery.HasComponent(ent.Value))
+                continue;
 
-            while (anchored.MoveNext(out var ent))
-            {
-                if (!_tilesQuery.HasComponent(ent.Value))
-                    continue;
-
-                QueueDel(ent.Value);
-            }
+            QueueDel(ent.Value);
         }
     }
 }

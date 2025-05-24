@@ -81,10 +81,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 
     private void OnTileChanged(ref TileChangedEvent ev)
     {
-        foreach (var change in ev.Changes)
-        {
-            InvalidateTile(ev.Entity.Owner, change.GridIndices);
-        }
+        InvalidateTile(ev.NewTile.GridUid, ev.NewTile.GridIndices);
     }
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)

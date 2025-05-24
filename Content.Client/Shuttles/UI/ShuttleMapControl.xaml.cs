@@ -24,7 +24,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IInputManager _inputs = default!;
-    private readonly SharedMapSystem _mapSystem;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     private readonly ShuttleSystem _shuttles;
     private readonly SharedTransformSystem _xformSystem;
 
@@ -73,7 +73,6 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     public ShuttleMapControl() : base(256f, 512f, 512f)
     {
         RobustXamlLoader.Load(this);
-        _mapSystem = EntManager.System<SharedMapSystem>();
         _shuttles = EntManager.System<ShuttleSystem>();
         _xformSystem = EntManager.System<SharedTransformSystem>();
         var cache = IoCManager.Resolve<IResourceCache>();
@@ -110,7 +109,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         {
             if (args.Function == EngineKeyFunctions.UIClick)
             {
-                var mapUid = _mapSystem.GetMapOrInvalid(ViewingMap);
+                var mapUid = _mapManager.GetMapEntityId(ViewingMap);
 
                 var beaconsOnly = EntManager.TryGetComponent(mapUid, out FTLDestinationComponent? destComp) &&
                                   destComp.BeaconsOnly;
@@ -250,7 +249,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
         DrawParallax(handle);
 
-        var viewedMapUid = _mapSystem.GetMapOrInvalid(ViewingMap);
+        var viewedMapUid = _mapManager.GetMapEntityId(ViewingMap);
         var matty = Matrix3Helpers.CreateInverseTransform(Offset, Angle.Zero);
         var realTime = _timing.RealTime;
         var viewBox = new Box2(Offset - WorldRangeVector, Offset + WorldRangeVector);

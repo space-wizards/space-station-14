@@ -7,8 +7,6 @@ namespace Content.Client.Beam;
 
 public sealed class BeamSystem : SharedBeamSystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -23,11 +21,11 @@ public sealed class BeamSystem : SharedBeamSystem
 
         if (TryComp<SpriteComponent>(beam, out var sprites))
         {
-            _sprite.SetRotation((beam, sprites), args.UserAngle);
+            sprites.Rotation = args.UserAngle;
 
             if (args.BodyState != null)
             {
-                _sprite.LayerSetRsiState((beam, sprites), 0, args.BodyState);
+                sprites.LayerSetState(0, args.BodyState);
                 sprites.LayerSetShader(0, args.Shader);
             }
         }

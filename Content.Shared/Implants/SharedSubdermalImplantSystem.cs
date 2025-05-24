@@ -14,6 +14,7 @@ namespace Content.Shared.Implants;
 
 public abstract class SharedSubdermalImplantSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TagSystem _tag = default!;
@@ -37,7 +38,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
     private void OnInsert(EntityUid uid, SubdermalImplantComponent component, EntGotInsertedIntoContainerMessage args)
     {
-        if (component.ImplantedEntity == null)
+        if (component.ImplantedEntity == null || _net.IsClient)
             return;
 
         if (!string.IsNullOrWhiteSpace(component.ImplantAction))
@@ -53,7 +54,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
                 if (_tag.HasTag(implant, MicroBombTag))
                 {
                     _container.Remove(implant, implantContainer);
-                    PredictedQueueDel(implant);
+                    QueueDel(implant);
                 }
             }
         }

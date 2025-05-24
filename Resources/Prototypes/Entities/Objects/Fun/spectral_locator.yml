@@ -3,7 +3,7 @@
   parent: BaseItem
   name: spectral locator
   description: Appears to be a modified anomaly locator. Seems very old.
-  suffix: Always Powered
+  suffix: Unpowered
   components:
   - type: Sprite
     sprite: Objects/Fun/spectrallocator.rsi
@@ -39,7 +39,7 @@
 - type: entity
   id: SpectralLocator
   parent: [ SpectralLocatorUnpowered, PowerCellSlotSmallItem ]
-  suffix: ""
+  suffix: Powered
   components:
   - type: PowerCellDraw
     drawRate: 1

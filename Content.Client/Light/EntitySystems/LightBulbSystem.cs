@@ -16,13 +16,13 @@ public sealed class LightBulbSystem : VisualizerSystem<LightBulbComponent>
             switch (state)
             {
                 case LightBulbState.Normal:
-                    SpriteSystem.LayerSetRsiState((uid, args.Sprite), LightBulbVisualLayers.Base, comp.NormalSpriteState);
+                    args.Sprite.LayerSetState(LightBulbVisualLayers.Base, comp.NormalSpriteState);
                     break;
                 case LightBulbState.Broken:
-                    SpriteSystem.LayerSetRsiState((uid, args.Sprite), LightBulbVisualLayers.Base, comp.BrokenSpriteState);
+                    args.Sprite.LayerSetState(LightBulbVisualLayers.Base, comp.BrokenSpriteState);
                     break;
                 case LightBulbState.Burned:
-                    SpriteSystem.LayerSetRsiState((uid, args.Sprite), LightBulbVisualLayers.Base, comp.BurnedSpriteState);
+                    args.Sprite.LayerSetState(LightBulbVisualLayers.Base, comp.BurnedSpriteState);
                     break;
             }
         }
@@ -30,7 +30,7 @@ public sealed class LightBulbSystem : VisualizerSystem<LightBulbComponent>
         // also update sprites color
         if (AppearanceSystem.TryGetData<Color>(uid, LightBulbVisuals.Color, out var color, args.Component))
         {
-            SpriteSystem.SetColor((uid, args.Sprite), color);
+            args.Sprite.Color = color;
         }
     }
 }

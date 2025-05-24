@@ -31,7 +31,6 @@
     tags:
     - Bandana
     - ClothMade
-    - Recyclable
   - type: HideLayerClothing
     slots:
     - Snout
@@ -73,7 +72,6 @@
     tags:
     - WhitelistChameleon
     - ClothMade
-    - Recyclable
 
 - type: entity
   parent: ClothingMaskBandanaBase

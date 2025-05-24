@@ -1,7 +1,6 @@
 using Content.Client.Botany.Components;
 using Content.Shared.Botany;
 using Robust.Client.GameObjects;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Botany;
 
@@ -18,8 +17,8 @@ public sealed class PlantHolderVisualizerSystem : VisualizerSystem<PlantHolderVi
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        SpriteSystem.LayerMapReserve((uid, sprite), PlantHolderLayers.Plant);
-        SpriteSystem.LayerSetVisible((uid, sprite), PlantHolderLayers.Plant, false);
+        sprite.LayerMapReserveBlank(PlantHolderLayers.Plant);
+        sprite.LayerSetVisible(PlantHolderLayers.Plant, false);
     }
 
     protected override void OnAppearanceChange(EntityUid uid, PlantHolderVisualsComponent component, ref AppearanceChangeEvent args)
@@ -32,12 +31,12 @@ public sealed class PlantHolderVisualizerSystem : VisualizerSystem<PlantHolderVi
         {
             var valid = !string.IsNullOrWhiteSpace(state);
 
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), PlantHolderLayers.Plant, valid);
+            args.Sprite.LayerSetVisible(PlantHolderLayers.Plant, valid);
 
             if (valid)
             {
-                SpriteSystem.LayerSetRsi((uid, args.Sprite), PlantHolderLayers.Plant, new ResPath(rsi));
-                SpriteSystem.LayerSetRsiState((uid, args.Sprite), PlantHolderLayers.Plant, state);
+                args.Sprite.LayerSetRSI(PlantHolderLayers.Plant, rsi);
+                args.Sprite.LayerSetState(PlantHolderLayers.Plant, state);
             }
         }
     }

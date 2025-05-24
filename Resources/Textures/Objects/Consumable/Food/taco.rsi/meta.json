@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Added by Phunny, dragon taco modified from beef taco by MisterImp (GitHub)",
+  "copyright": "Added by Phunny",
   "size": {
     "x": 32,
     "y": 32
@@ -24,9 +24,6 @@
     },
     {
       "name": "rattaco"
-    },
-    {
-      "name": "dragontaco"
     }
   ]
 }

@@ -13,7 +13,6 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     /// <summary>
     /// It's a little on the long side but given we use multiple colours denoting what happened it makes it easier to register.
@@ -45,7 +44,7 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
 
         if (TryComp<SpriteComponent>(uid, out var sprite))
         {
-            _sprite.SetColor((uid, sprite), component.Color);
+            sprite.Color = component.Color;
         }
     }
 

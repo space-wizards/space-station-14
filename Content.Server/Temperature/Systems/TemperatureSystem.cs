@@ -45,7 +45,8 @@ public sealed class TemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
         SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
-        Subs.SubscribeWithRelay<TemperatureProtectionComponent, ModifyChangedTemperatureEvent>(OnTemperatureChangeAttempt, held: false);
+        SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(
+            OnTemperatureChangeAttempt);
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
 
@@ -295,16 +296,17 @@ public sealed class TemperatureSystem : EntitySystem
         }
     }
 
-    private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component, ModifyChangedTemperatureEvent args)
+    private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component,
+        InventoryRelayedEvent<ModifyChangedTemperatureEvent> args)
     {
-        var coefficient = args.TemperatureDelta < 0
+        var coefficient = args.Args.TemperatureDelta < 0
             ? component.CoolingCoefficient
             : component.HeatingCoefficient;
 
         var ev = new GetTemperatureProtectionEvent(coefficient);
         RaiseLocalEvent(uid, ref ev);
 
-        args.TemperatureDelta *= ev.Coefficient;
+        args.Args.TemperatureDelta *= ev.Coefficient;
     }
 
     private void ChangeTemperatureOnCollide(Entity<ChangeTemperatureOnCollideComponent> ent, ref ProjectileHitEvent args)

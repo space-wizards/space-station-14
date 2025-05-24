@@ -234,7 +234,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     continue;
 
                 // remove their antag role
-                _role.MindRemoveRole<RevolutionaryRoleComponent>(mindId);
+                _role.MindTryRemoveRole<RevolutionaryRoleComponent>(mindId);
 
                 // make it very obvious to the rev they've been deconverted since
                 // they may not see the popup due to antag and/or new player tunnel vision

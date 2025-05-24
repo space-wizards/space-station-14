@@ -11,7 +11,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
     {
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled = true;
+        public bool Enabled { get; set; } = true;
 
         /// <summary>
         ///     Target volume to transfer. If <see cref="WideNet"/> is enabled, actual transfer rate will be much higher.
@@ -25,14 +25,15 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         private float _transferRate = 50;
 
-        [DataField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("maxTransferRate")]
         public float MaxTransferRate = Atmospherics.MaxTransferRate;
 
-        [DataField]
+        [DataField("maxPressure")]
         [GuidebookData]
-        public float MaxPressure = GasVolumePumpComponent.DefaultHigherThreshold;
+        public float MaxPressure { get; set; } = GasVolumePumpComponent.DefaultHigherThreshold;
 
         [DataField("inlet")]
-        public string InletName = "pipe";
+        public string InletName { get; set; } = "pipe";
     }
 }

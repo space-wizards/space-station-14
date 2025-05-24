@@ -467,10 +467,5 @@ public enum LogType
     /// <summary>
     /// Artifact node got activated.
     /// </summary>
-    ArtifactNode = 101,
-
-    /// <summary>
-    /// Damaging grid collision has occurred.
-    /// </summary>
-    ShuttleImpact = 102
+    ArtifactNode = 101
 }

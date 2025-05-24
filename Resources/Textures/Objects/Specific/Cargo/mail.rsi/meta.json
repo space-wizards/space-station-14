@@ -43,7 +43,7 @@
             "name": "bomb"
         },
         {
-            "name": "bomb_unshaded",
+            "name": "bomb-unshaded",
             "delays": [
                 [
                     0.2,

@@ -30,9 +30,8 @@ public sealed class EscapeShuttleConditionSystem : EntitySystem
             return 0f;
 
         // You're not escaping if you're restrained!
-        // Granting 50% as to allow for partial completion of the objective.
         if (TryComp<CuffableComponent>(mind.OwnedEntity, out var cuffed) && cuffed.CuffedHandCount > 0)
-            return _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value) ? 0.5f : 0f;
+            return 0f;
 
         // Any emergency shuttle counts for this objective, but not pods.
         return _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value) ? 1f : 0f;

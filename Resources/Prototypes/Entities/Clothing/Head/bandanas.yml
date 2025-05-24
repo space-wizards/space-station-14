@@ -28,7 +28,6 @@
     tags:
     - Bandana
     - ClothMade
-    - Recyclable
 
 - type: entity
   parent: [ClothingHeadBandBase, ClothingMaskBandBlack]

@@ -1,6 +1,4 @@
-using Content.Shared.EntityTable;
 using Content.Shared.Storage;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural.DungeonLayers;
 
@@ -19,5 +17,5 @@ public sealed partial class MobsDunGen : IDunGenLayer
     public int MaxCount = 1;
 
     [DataField(required: true)]
-    public ProtoId<EntityTablePrototype> Contents;
+    public List<EntitySpawnEntry> Groups = new();
 }

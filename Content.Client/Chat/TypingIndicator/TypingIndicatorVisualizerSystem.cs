@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Chat.TypingIndicator;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
 using Content.Shared.Inventory;
 
@@ -9,6 +10,7 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+
 
     protected override void OnAppearanceChange(EntityUid uid, TypingIndicatorComponent component, ref AppearanceChangeEvent args)
     {
@@ -33,24 +35,24 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
             return;
         }
 
-        var layerExists = SpriteSystem.LayerMapTryGet((uid, args.Sprite), TypingIndicatorLayers.Base, out var layer, false);
+        var layerExists = args.Sprite.LayerMapTryGet(TypingIndicatorLayers.Base, out var layer);
         if (!layerExists)
-            layer = SpriteSystem.LayerMapReserve((uid, args.Sprite), TypingIndicatorLayers.Base);
+            layer = args.Sprite.LayerMapReserveBlank(TypingIndicatorLayers.Base);
 
-        SpriteSystem.LayerSetRsi((uid, args.Sprite), layer, proto.SpritePath);
-        SpriteSystem.LayerSetRsiState((uid, args.Sprite), layer, proto.TypingState);
+        args.Sprite.LayerSetRSI(layer, proto.SpritePath);
+        args.Sprite.LayerSetState(layer, proto.TypingState);
         args.Sprite.LayerSetShader(layer, proto.Shader);
-        SpriteSystem.LayerSetOffset((uid, args.Sprite), layer, proto.Offset);
+        args.Sprite.LayerSetOffset(layer, proto.Offset);
 
         AppearanceSystem.TryGetData<TypingIndicatorState>(uid, TypingIndicatorVisuals.State, out var state);
-        SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, state != TypingIndicatorState.None);
+        args.Sprite.LayerSetVisible(layer, state != TypingIndicatorState.None);
         switch (state)
         {
             case TypingIndicatorState.Idle:
-                SpriteSystem.LayerSetRsiState((uid, args.Sprite), layer, proto.IdleState);
+                args.Sprite.LayerSetState(layer, proto.IdleState);
                 break;
             case TypingIndicatorState.Typing:
-                SpriteSystem.LayerSetRsiState((uid, args.Sprite), layer, proto.TypingState);
+                args.Sprite.LayerSetState(layer, proto.TypingState);
                 break;
         }
     }

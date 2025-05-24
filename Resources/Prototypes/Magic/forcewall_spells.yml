@@ -4,7 +4,7 @@
   description: Creates a magical barrier.
   components:
   - type: InstantAction
-    useDelay: 15
+    useDelay: 10
     itemIconStyle: BigAction
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/forcewall.ogg

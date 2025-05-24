@@ -21,34 +21,34 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
         }
 
         // Brain no worky rn so this was just easier.
-        foreach (var key in new[] { DamageStateVisualLayers.Base, DamageStateVisualLayers.BaseUnshaded })
+        foreach (var key in new []{ DamageStateVisualLayers.Base, DamageStateVisualLayers.BaseUnshaded })
         {
-            if (!SpriteSystem.LayerMapTryGet((uid, sprite), key, out _, false)) continue;
+            if (!sprite.LayerMapTryGet(key, out _)) continue;
 
-            SpriteSystem.LayerSetVisible((uid, sprite), key, false);
+            sprite.LayerSetVisible(key, false);
         }
 
         foreach (var (key, state) in layers)
         {
             // Inheritance moment.
-            if (!SpriteSystem.LayerMapTryGet((uid, sprite), key, out _, false)) continue;
+            if (!sprite.LayerMapTryGet(key, out _)) continue;
 
-            SpriteSystem.LayerSetVisible((uid, sprite), key, true);
-            SpriteSystem.LayerSetRsiState((uid, sprite), key, state);
+            sprite.LayerSetVisible(key, true);
+            sprite.LayerSetState(key, state);
         }
 
         // So they don't draw over mobs anymore
         if (data == MobState.Dead)
         {
-            if (sprite.DrawDepth > (int)DrawDepth.DeadMobs)
+            if (sprite.DrawDepth > (int) DrawDepth.DeadMobs)
             {
                 component.OriginalDrawDepth = sprite.DrawDepth;
-                SpriteSystem.SetDrawDepth((uid, sprite), (int)DrawDepth.DeadMobs);
+                sprite.DrawDepth = (int) DrawDepth.DeadMobs;
             }
         }
         else if (component.OriginalDrawDepth != null)
         {
-            SpriteSystem.SetDrawDepth((uid, sprite), component.OriginalDrawDepth.Value);
+            sprite.DrawDepth = component.OriginalDrawDepth.Value;
             component.OriginalDrawDepth = null;
         }
     }

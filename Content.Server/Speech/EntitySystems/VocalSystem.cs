@@ -49,7 +49,7 @@ public sealed class VocalSystem : EntitySystem
 
     private void OnSexChanged(EntityUid uid, VocalComponent component, SexChangedEvent args)
     {
-        LoadSounds(uid, component, args.NewSex);
+        LoadSounds(uid, component);
     }
 
     private void OnEmote(EntityUid uid, VocalComponent component, ref EmoteEvent args)

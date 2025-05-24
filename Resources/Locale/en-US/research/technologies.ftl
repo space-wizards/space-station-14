@@ -18,7 +18,7 @@ research-technology-advanced-atmospherics = Advanced Atmospherics
 research-technology-advanced-tools = Advanced Tools
 research-technology-super-powercells = Super Powercells
 research-technology-bluespace-storage = Bluespace Storage
-research-technology-optimized-microgalvanism = Optimized Microgalvanism
+research-technology-portable-fission = Portable Fission
 research-technology-space-scanning = Space Scanning
 research-technology-excavation = Mass Excavation
 

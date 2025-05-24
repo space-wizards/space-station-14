@@ -8,8 +8,6 @@ namespace Content.Client.AlertLevel;
 
 public sealed class AlertLevelDisplaySystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -23,26 +21,26 @@ public sealed class AlertLevelDisplaySystem : EntitySystem
         {
             return;
         }
-        var layer = _sprite.LayerMapReserve((uid, args.Sprite), AlertLevelDisplay.Layer);
+        var layer = args.Sprite.LayerMapReserveBlank(AlertLevelDisplay.Layer);
 
         if (args.AppearanceData.TryGetValue(AlertLevelDisplay.Powered, out var poweredObject))
         {
-            _sprite.LayerSetVisible((uid, args.Sprite), layer, poweredObject is true);
+            args.Sprite.LayerSetVisible(layer, poweredObject is true);
         }
 
         if (!args.AppearanceData.TryGetValue(AlertLevelDisplay.CurrentLevel, out var level))
         {
-            _sprite.LayerSetRsiState((uid, args.Sprite), layer, alertLevelDisplay.AlertVisuals.Values.First());
+            args.Sprite.LayerSetState(layer, alertLevelDisplay.AlertVisuals.Values.First());
             return;
         }
 
-        if (alertLevelDisplay.AlertVisuals.TryGetValue((string)level, out var visual))
+        if (alertLevelDisplay.AlertVisuals.TryGetValue((string) level, out var visual))
         {
-            _sprite.LayerSetRsiState((uid, args.Sprite), layer, visual);
+            args.Sprite.LayerSetState(layer, visual);
         }
         else
         {
-            _sprite.LayerSetRsiState((uid, args.Sprite), layer, alertLevelDisplay.AlertVisuals.Values.First());
+            args.Sprite.LayerSetState(layer, alertLevelDisplay.AlertVisuals.Values.First());
         }
     }
 }

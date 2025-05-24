@@ -20,11 +20,11 @@
     tags:
     - WhitelistChameleon
   - type: HideLayerClothing
-    layers:
-      Hair: HEAD
-      Snout: HEAD
-      HeadTop: HEAD
-      HeadSide: HEAD
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral

@@ -243,7 +243,8 @@
         - id: FoodMeatFish
           amount: 4
         - id: MaterialToothSharkminnow1
-          amount: 3
+          amount: 1
+          maxAmount: 3
     - type: MeleeWeapon
       damage:
         types:
