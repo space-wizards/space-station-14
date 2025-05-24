@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Clothing;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
@@ -7,12 +6,21 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Client.Lobby.UI.Loadouts;
 
 [GenerateTypedNameReferences]
 public sealed partial class LoadoutGroupContainer : BoxContainer
 {
+    private const string CLOSED_GROUP_MARK = "▶";
+    private const string OPENED_GROUP_MARK = "▼";
+
+    /// <summary>
+    /// A dictionary that stores open groups
+    /// </summary>
+    private Dictionary<string, bool> _openedGroups = new();
+
     private readonly LoadoutGroupPrototype _groupProto;
 
     public event Action<ProtoId<LoadoutPrototype>>? OnLoadoutPressed;
@@ -21,6 +29,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     public LoadoutGroupContainer(HumanoidCharacterProfile profile, RoleLoadout loadout, LoadoutGroupPrototype groupProto, ICommonSession session, IDependencyCollection collection)
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
         _groupProto = groupProto;
 
         RefreshLoadouts(profile, loadout, session, collection);
@@ -63,32 +72,114 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
         }
 
         LoadoutsContainer.DisposeAllChildren();
-        // Didn't use options because this is more robust in future.
 
+        var validProtos = _groupProto.Loadouts.Select(id => protoMan.Index(id));
+
+        var groups = validProtos
+        .GroupBy(p => string.IsNullOrEmpty(p.GroupBy)
+                         ? p.ID
+                         : p.GroupBy)
+        .ToDictionary(g => g.Key, g => g.ToList());
+
+        foreach (var kvp in groups)
+        {
+            var protos = kvp.Value;
+
+            if (protos.Count > 1)
+            {
+                var uiElements = protos
+                    .Select(proto =>
+                    {
+                        var elem = CreateLoadoutUI(proto, profile, loadout, session, collection, loadoutSystem);
+                        elem.HorizontalExpand = true;
+                        return elem;
+                    })
+                    .ToList();
+
+                var firstElement = uiElements.FirstOrDefault(e => e.Select.Pressed) ?? uiElements[0];
+
+                var otherElements = uiElements.Where(e => !ReferenceEquals(e, firstElement)).ToList();
+
+                firstElement.HorizontalExpand = true;
+                var subContainer = new SubLoadoutContainer()
+                {
+                    Visible = _openedGroups.GetValueOrDefault(kvp.Key, false)
+                };
+                var toggle = CreateToggleButton(kvp, firstElement, subContainer);
+
+                LoadoutsContainer.AddChild(firstElement);
+                LoadoutsContainer.AddChild(subContainer);
+
+                var subList = subContainer.Grid;
+                foreach (var proto in otherElements)
+                    subList.AddChild(proto);
+
+                UpdateToggleColor(toggle, subList);
+            }
+            else
+            {
+                LoadoutsContainer.AddChild(
+                    CreateLoadoutUI(protos[0], profile, loadout, session, collection, loadoutSystem)
+                );
+            }
+        }
+    }
+
+    private ToggleLoadoutButton CreateToggleButton(KeyValuePair<string, List<LoadoutPrototype>> kvp, LoadoutContainer firstElement, SubLoadoutContainer subContainer)
+    {
+        var toggle = new ToggleLoadoutButton
+        {
+            Text = CLOSED_GROUP_MARK
+        };
+
+        toggle.Text = subContainer.Visible ? OPENED_GROUP_MARK : CLOSED_GROUP_MARK;
+
+        toggle.OnPressed += _ =>
+        {
+            var willOpen = !subContainer.Visible;
+            subContainer.Visible = willOpen;
+            toggle.Text = willOpen ? OPENED_GROUP_MARK : CLOSED_GROUP_MARK;
+            _openedGroups[kvp.Key] = willOpen;
+        };
+
+        firstElement.AddChild(toggle);
+        toggle.SetPositionFirst();
+        return toggle;
+    }
+
+    private void UpdateToggleColor(Button toggle, BoxContainer subList)
+    {
+        var anyActive = subList.Children
+            .OfType<LoadoutContainer>()
+            .Any(c => c.Select.Pressed);
+
+        toggle.Modulate = anyActive
+            ? Color.Green
+            : Color.White;
+    }
+
+    private LoadoutContainer CreateLoadoutUI(LoadoutPrototype proto, HumanoidCharacterProfile profile, RoleLoadout loadout, ICommonSession session, IDependencyCollection collection, LoadoutSystem loadoutSystem)
+    {
         var selected = loadout.SelectedLoadouts[_groupProto.ID];
 
-        foreach (var loadoutProto in _groupProto.Loadouts)
+        var pressed = selected.Any(e => e.Prototype == proto.ID);
+
+        var enabled = loadout.IsValid(profile, session, proto.ID, collection, out var reason);
+
+        var cont = new LoadoutContainer(proto, !enabled, reason);
+
+        cont.Text = loadoutSystem.GetName(proto);
+
+        cont.Select.Pressed = pressed;
+
+        cont.Select.OnPressed += args =>
         {
-            if (!protoMan.TryIndex(loadoutProto, out var loadProto))
-                continue;
+            if (args.Button.Pressed)
+                OnLoadoutPressed?.Invoke(proto.ID);
+            else
+                OnLoadoutUnpressed?.Invoke(proto.ID);
+        };
 
-            var matchingLoadout = selected.FirstOrDefault(e => e.Prototype == loadoutProto);
-            var pressed = matchingLoadout != null;
-
-            var enabled = loadout.IsValid(profile, session, loadoutProto, collection, out var reason);
-            var loadoutContainer = new LoadoutContainer(loadoutProto, !enabled, reason);
-            loadoutContainer.Select.Pressed = pressed;
-            loadoutContainer.Text = loadoutSystem.GetName(loadProto);
-
-            loadoutContainer.Select.OnPressed += args =>
-            {
-                if (args.Button.Pressed)
-                    OnLoadoutPressed?.Invoke(loadoutProto);
-                else
-                    OnLoadoutUnpressed?.Invoke(loadoutProto);
-            };
-
-            LoadoutsContainer.AddChild(loadoutContainer);
-        }
+        return cont;
     }
 }
