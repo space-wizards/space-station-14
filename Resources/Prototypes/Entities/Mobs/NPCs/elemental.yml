@@ -229,6 +229,62 @@
 
 - type: entity
   parent: MobOreCrab
+  id: MobBananiumCrab
+  description: An ore crab made from bananium.
+  suffix: Bananium
+  components:
+  - type: Sprite
+    state: bananium_crab
+  - type: FactionException
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: NpcFactionMember
+    factions:
+      - SimpleNeutral
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BananiumOre1:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Slippery
+    slipData:
+      launchForwardsMultiplier: 2
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        hard: false
+        layer:
+          - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 20
+        mask:
+        - MobMask
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 3
+
+- type: entity
+  parent: MobOreCrab
   id: MobSilverCrab
   description: An ore crab made from silver.
   suffix: Silver

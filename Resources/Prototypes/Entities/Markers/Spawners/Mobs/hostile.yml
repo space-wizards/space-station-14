@@ -144,6 +144,9 @@
     - MobSpawnCrabIron
     - MobSpawnCrabQuartz
     - MobSpawnCrabSilver
+    - MobSpawnCrabCoal
+    - MobSpawnCrabGold
+    - MobSpawnCrabBananium
 
 - type: entity
   parent: MarkerBase
