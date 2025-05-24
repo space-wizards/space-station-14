@@ -13,7 +13,7 @@ public sealed partial class ActiveJetpackComponent : Component
 
     public float MaxDistance = 0.7f;
 
-    public EntityCoordinates LastCoordinates;
+    public EntityCoordinates? LastCoordinates = null;
 
     public TimeSpan TargetTime = TimeSpan.Zero;
 }
