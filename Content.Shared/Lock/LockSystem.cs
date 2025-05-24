@@ -158,7 +158,7 @@ public sealed class LockSystem : EntitySystem
         _appearanceSystem.SetData(uid, LockVisuals.Locked, true);
         Dirty(uid, lockComp);
 
-        var ev = new LockToggledEvent(true);
+        var ev = new LockToggledEvent(true, user);
         RaiseLocalEvent(uid, ref ev, true);
     }
 
@@ -191,7 +191,7 @@ public sealed class LockSystem : EntitySystem
         _appearanceSystem.SetData(uid, LockVisuals.Locked, false);
         Dirty(uid, lockComp);
 
-        var ev = new LockToggledEvent(false);
+        var ev = new LockToggledEvent(false, user);
         RaiseLocalEvent(uid, ref ev, true);
     }
 
