@@ -14,6 +14,7 @@ using Content.Shared.Radio;
 using Content.Shared.Chat;
 using Content.Shared.Radio.Components;
 using Robust.Shared.Prototypes;
+using Content.Shared.Verbs;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -41,6 +42,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         SubscribeLocalEvent<RadioMicrophoneComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<RadioMicrophoneComponent, ListenAttemptEvent>(OnAttemptListen);
         SubscribeLocalEvent<RadioMicrophoneComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<RadioMicrophoneComponent, GetVerbsEvent<ActivationVerb>>(AddVerb);
 
         SubscribeLocalEvent<RadioSpeakerComponent, ComponentInit>(OnSpeakerInit);
         SubscribeLocalEvent<RadioSpeakerComponent, ActivateInWorldEvent>(OnActivateSpeaker);
@@ -219,6 +221,22 @@ public sealed class RadioDeviceSystem : EntitySystem
 
         // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
         _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Whisper, ChatTransmitRange.GhostRangeLimit, nameOverride: name, checkRadioPrefix: false);
+    }
+    private void AddVerb(EntityUid uid, RadioMicrophoneComponent comp, GetVerbsEvent<ActivationVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        var verb = new ActivationVerb
+        {
+            Text = Loc.GetString(comp.Verb),
+            Act = () =>
+            {
+                SetMicrophoneEnabled(uid, args.User, !comp.Enabled);
+            }
+
+        };
+        args.Verbs.Add(verb);
     }
 
     private void OnIntercomEncryptionChannelsChanged(Entity<IntercomComponent> ent, ref EncryptionChannelsChangedEvent args)
