@@ -16,6 +16,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Cargo;
 using Content.Shared.Research.Prototypes;
 
 namespace Content.Server.Cargo.Systems;
@@ -398,40 +399,4 @@ public sealed class PricingSystem : EntitySystem
 
         return price;
     }
-}
-
-/// <summary>
-/// A directed by-ref event fired on an entity when something needs to know it's price. This value is not cached.
-/// </summary>
-[ByRefEvent]
-public record struct PriceCalculationEvent()
-{
-    /// <summary>
-    /// The total price of the entity.
-    /// </summary>
-    public double Price = 0;
-
-    /// <summary>
-    /// Whether this event was already handled.
-    /// </summary>
-    public bool Handled = false;
-}
-
-/// <summary>
-/// Raised broadcast for an entity prototype to determine its estimated price.
-/// </summary>
-[ByRefEvent]
-public record struct EstimatedPriceCalculationEvent()
-{
-    public required EntityPrototype Prototype;
-
-    /// <summary>
-    /// The total price of the entity.
-    /// </summary>
-    public double Price = 0;
-
-    /// <summary>
-    /// Whether this event was already handled.
-    /// </summary>
-    public bool Handled = false;
 }
