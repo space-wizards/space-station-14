@@ -2,7 +2,7 @@
   id: Meta
   mapName: 'Meta Station'
   mapPath: /Maps/meta.yml
-  minPlayers: 50
+  minPlayers: 45
   maxPlayers: 80
   stations:
     Meta:
@@ -16,8 +16,8 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_meta.yml
         - type: StationJobs
-          availableJobs: # 68 jobs total w/o latejoins & interns, 95 jobs total w/ latejoins & interns
-            #command (7)
+          availableJobs: # 63 jobs total roundstart, 81 jobs total w/ latejoins, 97 jobs w/ latejoins and interns.
+            # Command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
@@ -25,7 +25,7 @@
             ChiefEngineer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            #service (14 - 16)
+            # Service (13 - 16)
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 3 ]
             Chef: [ 2, 2 ]
@@ -33,33 +33,34 @@
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
-            Reporter: [ 2, 2 ]
-            #engineering (8 - 10)
+            Reporter: [ 1, 2 ]
+            # Engineering (7 - 10)
             AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 5, 7 ]
+            StationEngineer: [ 4, 7 ]
             TechnicalAssistant: [ 4, 4 ] #intern, not counted
-            #medical (7 - 10)
+            # Medical (8 - 11)
             Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 4, 6 ]
+            MedicalDoctor: [ 4, 5 ]
             MedicalIntern: [ 4, 4 ] #intern, not counted
             Paramedic: [ 1, 2 ]
-            #science (6 - 8)
-            Scientist: [ 6, 8 ]
+            Psychologist: [ 1, 1 ]
+            # Science (5 - 7)
+            Scientist: [ 5, 7 ]
             ResearchAssistant: [ 4, 4 ] #intern, not counted
-            #security (11)
+            # Security (8 - 11)
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 7, 7 ]
+            SecurityOfficer: [ 5, 7 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ] #intern, not counted
-            Lawyer: [ 2, 2 ]
-            #supply (7 - 9)
+            Lawyer: [ 1, 2 ]
+            # Supply (7 - 9)
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 4, 6 ]
-            #civilian (3+)
+            # Civilian (3+)
             Passenger: [ -1, -1 ] #infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            #silicon (5)
+            # Silicon (5 - 7)
             StationAi: [ 1, 1 ]
-            Borg: [ 4, 4 ]
+            Borg: [ 4, 6 ]
