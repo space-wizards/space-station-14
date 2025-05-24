@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
@@ -276,8 +275,6 @@ public sealed class BloodstreamSystem : EntitySystem
 
     private void OnBeingGibbed(Entity<BloodstreamComponent> ent, ref BeingGibbedEvent args)
     {
-        var ev = new ColorGibsEvent { Gibs = args.GibbedParts };
-        RaiseLocalEvent(ent.Owner, ref ev);
         SpillAllSolutions(ent, ent);
     }
 

@@ -5,6 +5,6 @@ namespace Content.Shared.Body.Components;
 /// this component will make sure the giblet will get tinted/splattered with blood.
 /// </summary>
 [RegisterComponent]
-public sealed partial class GibSplatterComponent : Component
+public sealed partial class SlimeGibSplatterComponent : Component
 {
 }

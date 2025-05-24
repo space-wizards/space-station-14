@@ -38,7 +38,7 @@
     - type: Item
       size: Small
       heldPrefix: brain
-    - type: GibSplatter
+    - type: SlimeGibSplatter
 
 
 - type: entity
@@ -79,4 +79,4 @@
   - type: Item
     size: Small
     heldPrefix: lungs
-  - type: GibSplatter
+  - type: SlimeGibSplatter

@@ -14,24 +14,35 @@ public sealed class GibsColorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<BloodstreamComponent, ColorGibsEvent>(OnColorGibs);
-        SubscribeLocalEvent<GibSplatterComponent, ColorGibPartEvent>(OnColorGibPart);
+
+        // This needs to run before OnBeingGibbed() in BloodstreamSystem
+        // because OnBeingGibbed() in BloodstreamSystem spills all the blood on
+        // the floor, which prevents THIS function from getting the blood color
+        // (since it's all spilled on the floor).
+        // If you want to create more entities with custom colored gibs,
+        // create more of these subscriptions to BeingGibbedEvent with their own solutions + components.
+        SubscribeLocalEvent<SlimeBloodComponent, BeingGibbedEvent>(OnBeingGibbed, before:[typeof(BloodstreamSystem)]);
+
+        SubscribeLocalEvent<SlimeGibSplatterComponent, ColorGibPartEvent>(OnColorGibPart);
     }
 
-    private void OnColorGibs(Entity<BloodstreamComponent> ent, ref ColorGibsEvent ev)
+    private void OnBeingGibbed(Entity<SlimeBloodComponent> ent, ref BeingGibbedEvent ev)
     {
-        if (ev.Gibs == null || !_solutionContainerSystem.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
+        if (!TryComp<BloodstreamComponent>(ent, out var bloodstream))
+            return;
+
+        if (!_solutionContainerSystem.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
             return;
 
         var bloodColor = bloodSolution.GetColor(_prototype);
-        foreach (var part in ev.Gibs)
+        foreach (var part in ev.GibbedParts)
         {
             var colorGibPartEvent = new ColorGibPartEvent { GibColor = bloodColor };
             RaiseLocalEvent(part, ref colorGibPartEvent);
         }
     }
 
-    private void OnColorGibPart(Entity<GibSplatterComponent> ent, ref ColorGibPartEvent ev)
+    private void OnColorGibPart(Entity<SlimeGibSplatterComponent> ent, ref ColorGibPartEvent ev)
     {
         _appearanceSystem.SetData(ent.Owner, GoreVisuals.ColorTint, ev.GibColor);
     }

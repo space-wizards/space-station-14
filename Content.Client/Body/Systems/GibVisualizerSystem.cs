@@ -8,19 +8,19 @@ using Content.Shared.Hands;
 namespace Content.Client.Body.Systems;
 
 /// <summary>
-/// Ensures entities with <see cref="GibSplatterComponent"/> have the correct color.
+/// Ensures entities with <see cref="SlimeGibSplatterComponent"/> have the correct color.
 /// </summary>
-public sealed class GibVisualizerSystem : VisualizerSystem<GibSplatterComponent>
+public sealed class GibVisualizerSystem : VisualizerSystem<SlimeGibSplatterComponent>
 {
     [Dependency] private readonly SpriteSystem _spriteSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GibSplatterComponent, HeldVisualsUpdatedEvent>(OnHeldVisualsUpdated);
+        SubscribeLocalEvent<SlimeGibSplatterComponent, HeldVisualsUpdatedEvent>(OnHeldVisualsUpdated);
     }
 
-    private void OnHeldVisualsUpdated(EntityUid uid, GibSplatterComponent component, HeldVisualsUpdatedEvent args)
+    private void OnHeldVisualsUpdated(EntityUid uid, SlimeGibSplatterComponent component, HeldVisualsUpdatedEvent args)
     {
         if (!TryComp<SpriteComponent>(args.User, out var sprite) || !AppearanceSystem.TryGetData<Color>(uid, GoreVisuals.ColorTint, out var color))
             return;
@@ -32,7 +32,7 @@ public sealed class GibVisualizerSystem : VisualizerSystem<GibSplatterComponent>
         }
     }
 
-    protected override void OnAppearanceChange(EntityUid uid, GibSplatterComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, SlimeGibSplatterComponent comp, ref AppearanceChangeEvent args)
     {
         if (!AppearanceSystem.TryGetData<Color>(uid, GoreVisuals.ColorTint, out var color))
             return;

@@ -26,7 +26,7 @@
       solutions:
         stomach:
           maxVol: 30.0
-    - type: GibSplatter
+    - type: SlimeGibSplatter
 
 - type: entity
   id: OrganSlimesLungs
@@ -60,4 +60,4 @@
         Lung:
           maxVol: 100.0
           canReact: false
-    - type: GibSplatter
+    - type: SlimeGibSplatter
