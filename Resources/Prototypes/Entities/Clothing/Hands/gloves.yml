@@ -156,7 +156,7 @@
   - type: Fiber
     fiberMaterial: fibers-nitrile
   - type: FingerprintMask
-####
+
 - type: entity
   parent: ClothingHandsButcherable
   id: ClothingHandsGlovesLeather
