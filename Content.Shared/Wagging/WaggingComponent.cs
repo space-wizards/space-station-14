@@ -20,7 +20,7 @@ public sealed partial class WaggingComponent : Component
     /// <summary>
     /// Suffix to add to get the animated marking.
     /// </summary>
-    public string[] Suffixes = ["Wag", "Animated"];
+    public string[] Suffixes = ["Wag", "Animated"]; //starlight
     //public string Suffix = "Animated";
 
     /// <summary>

@@ -67,6 +67,7 @@ public sealed class WaggingSystem : EntitySystem
 
         for (var idx = 0; idx < markings.Count; idx++) // Animate all possible tails
         {
+            //starlight for loop
             foreach (var possibleSuffix in wagging.Suffixes)
             {
                 var currentMarkingId = markings[idx].MarkingId;
@@ -74,13 +75,13 @@ public sealed class WaggingSystem : EntitySystem
 
                 if (wagging.Wagging)
                 {
-                    newMarkingId = $"{currentMarkingId}{possibleSuffix}";
+                    newMarkingId = $"{currentMarkingId}{possibleSuffix}"; //starlight edit
                 }
                 else
                 {
-                    if (currentMarkingId.EndsWith(possibleSuffix))
+                    if (currentMarkingId.EndsWith(possibleSuffix)) //starlight edit
                     {
-                        newMarkingId = currentMarkingId[..^possibleSuffix.Length];
+                        newMarkingId = currentMarkingId[..^possibleSuffix.Length]; //starlight edit
                     }
                     else
                     {
