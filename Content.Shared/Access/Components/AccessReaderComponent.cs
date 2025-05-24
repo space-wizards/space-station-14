@@ -35,6 +35,13 @@ public sealed partial class AccessReaderComponent : Component
     public List<HashSet<ProtoId<AccessLevelPrototype>>> AccessLists = new();
 
     /// <summary>
+    /// An unmodified copy of the original list of the access groups that grant access to this reader.
+    /// </summary>
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public List<HashSet<ProtoId<AccessLevelPrototype>>>? AccessListsOriginal = null;
+
+    /// <summary>
     /// A list of <see cref="StationRecordKey"/>s that grant access. Only a single matching key is required to gain
     /// access.
     /// </summary>
@@ -77,6 +84,16 @@ public sealed partial class AccessReaderComponent : Component
     /// </summary>
     [DataField]
     public bool BreakOnAccessBreaker = true;
+
+    /// <summary>
+    /// The examination text associated with this component.
+    /// </summary>
+    /// <remarks>
+    /// The text can be supplied with the 'access' variable to populate it
+    /// with a comma separated list of the access levels contained in <see cref="AccessLists"/>
+    /// </remarks>
+    [DataField]
+    public LocId ExaminationText = "access-reader-examination";
 }
 
 [DataDefinition, Serializable, NetSerializable]
