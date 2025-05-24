@@ -1,6 +1,5 @@
 # TODO: Kill ore veins
 # Split it into 2 components, 1 for "spawn XYZ on destruction" and 1 for "randomly select one of these for spawn on destruction"
-
 # High yields
 - type: ore
   id: OreSteel
@@ -114,3 +113,4 @@
     OreIronCrab: 5
     OreUraniumCrab: 2
     OreSilverCrab: 3
+
