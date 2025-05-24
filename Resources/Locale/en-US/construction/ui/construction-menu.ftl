@@ -7,3 +7,5 @@ construction-menu-eraser-mode = Eraser Mode
 construction-menu-craft = Craft
 construction-menu-search = Search
 construction-menu-grid-view = Grid View
+construction-menu-previous-recipe = ◄ Previous recipe
+construction-menu-next-recipe = Next recipe ►
