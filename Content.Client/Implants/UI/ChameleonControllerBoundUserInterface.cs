@@ -13,6 +13,7 @@ namespace Content.Client.Implants.UI;
 public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ChameleonControllerSystem _chamController = default!;
 
     private readonly UseDelaySystem _delay;
 
@@ -45,7 +46,7 @@ public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
         // Only add stuff that actually has clothing! We don't want stuff like AI or borgs.
         foreach (var job in jobProtos)
         {
-            if (job.StartingGear == null || !_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
+            if (!_chamController.IsValidJob(job))
                 continue;
 
             validList.Add(job);

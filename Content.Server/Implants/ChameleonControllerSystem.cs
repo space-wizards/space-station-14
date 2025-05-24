@@ -16,7 +16,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Implants;
 
-public sealed class ChameleonControllerSystem : EntitySystem
+public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -27,6 +27,8 @@ public sealed class ChameleonControllerSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<SubdermalImplantComponent, ChameleonControllerSelectedJobMessage>(OnSelected);
     }
 
@@ -43,7 +45,7 @@ public sealed class ChameleonControllerSystem : EntitySystem
     /// </summary>
     private void ChangeChameleonClothingToJob(EntityUid user, ProtoId<JobPrototype> job)
     {
-        if (!_proto.TryIndex(job, out var jobPrototype))
+        if (!IsValidJob(job, out var jobPrototype))
             return;
 
         if (!_proto.TryIndex(jobPrototype.StartingGear, out var startingGearPrototype))
@@ -59,10 +61,7 @@ public sealed class ChameleonControllerSystem : EntitySystem
         if (prefs.SelectedCharacter is not HumanoidCharacterProfile profile)
             return;
 
-        // Does the job even exist?
         var jobProtoId = LoadoutSystem.GetJobPrototype(job.Id);
-        if (!_proto.HasIndex<RoleLoadoutPrototype>(jobProtoId))
-            return;
 
         profile.Loadouts.TryGetValue(jobProtoId, out var loadout);
         loadout ??= new RoleLoadout(jobProtoId);
