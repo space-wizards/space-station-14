@@ -15,6 +15,7 @@
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 36000 #10 hrs
+  weight: 10
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
   supervisors: job-supervisors-captain

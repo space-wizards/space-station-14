@@ -31,7 +31,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-        _sawmill = Logger.GetSawmill("Guidebook");
+        _sawmill = Logger.GetSawmill("guidebook");
 
         Tree.OnSelectedItemChanged += OnSelectionChanged;
 
@@ -225,7 +225,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
         {
             // TODO GUIDEBOOK Maybe allow duplicate entries?
             // E.g., for adding medicine under both chemicals & the chemist job
-            Logger.Error($"Adding duplicate guide entry: {id}");
+            _sawmill.Error($"Adding duplicate guide entry: {id}");
             return null;
         }
 
