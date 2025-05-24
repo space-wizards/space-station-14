@@ -293,11 +293,12 @@
             Slash: 12
             Heat: 12
             Structural: 15
-  - type: ItemToggleActiveSound
-    activeSound:
-      path: /Audio/Weapons/ebladehum.ogg
-      params:
-        volume: 3
+  # Disabled until the wield active sfx no longer stacks
+  #- type: ItemToggleActiveSound
+  #  activeSound:
+  #    path: /Audio/Weapons/ebladehum.ogg
+  #    params:
+  #      volume: 3
   - type: ComponentToggler
     components:
     - type: Sharp
