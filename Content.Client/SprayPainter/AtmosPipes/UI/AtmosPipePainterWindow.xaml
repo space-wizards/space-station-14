@@ -1,0 +1,14 @@
+<Control xmlns="https://spacestation14.io"
+         HorizontalExpand="True">
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True"
+                  VerticalExpand="True"
+                  SeparationOverride="4"
+                  MinWidth="200">
+        <Label Name="SelectedColorLabel"
+               Text="{Loc 'spray-painter-selected-color'}" />
+        <ItemList Name="ColorList"
+                  SizeFlagsStretchRatio="8"
+                  VerticalExpand="True" />
+    </BoxContainer>
+</Control>

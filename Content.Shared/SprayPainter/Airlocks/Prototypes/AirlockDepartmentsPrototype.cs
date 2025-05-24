@@ -1,7 +1,7 @@
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.SprayPainter.Prototypes;
+namespace Content.Shared.SprayPainter.Airlocks.Prototypes;
 
 /// <summary>
 /// Maps airlock style names to department ids.
