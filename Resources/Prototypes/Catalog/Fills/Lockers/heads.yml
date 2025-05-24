@@ -142,6 +142,7 @@
     - id: RubberStampHop
     - id: WeaponDisabler
     - id: ClothingEyesHudCommand
+    - id: ReadytoneCartridge
 
 - type: entity
   id: LockerHeadOfPersonnelFilled

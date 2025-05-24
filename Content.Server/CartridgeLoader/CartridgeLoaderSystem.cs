@@ -251,7 +251,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     /// <summary>
     /// Activates a program or cartridge and displays its ui fragment. Deactivates any previously active program.
     /// </summary>
-    public void ActivateProgram(EntityUid loaderUid, EntityUid programUid, CartridgeLoaderComponent? loader = default!)
+    public void ActivateProgram(EntityUid loaderUid, EntityUid programUid, EntityUid actorUid, CartridgeLoaderComponent? loader = default!)
     {
         if (!Resolve(loaderUid, ref loader))
             return;
@@ -263,7 +263,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
             DeactivateProgram(loaderUid, programUid, loader);
 
         if (!loader.BackgroundPrograms.Contains(programUid))
-            RaiseLocalEvent(programUid, new CartridgeActivatedEvent(loaderUid));
+            RaiseLocalEvent(programUid, new CartridgeActivatedEvent(loaderUid, actorUid));
 
         loader.ActiveProgram = programUid;
         UpdateUserInterfaceState(loaderUid, loader);
@@ -293,7 +293,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     /// <remarks>
     /// Programs wanting to use this functionality will have to provide a way to register and unregister themselves as background programs through their ui fragment.
     /// </remarks>
-    public void RegisterBackgroundProgram(EntityUid loaderUid, EntityUid cartridgeUid, CartridgeLoaderComponent? loader = default!)
+    public void RegisterBackgroundProgram(EntityUid loaderUid, EntityUid cartridgeUid, EntityUid actorUid, CartridgeLoaderComponent? loader = default!)
     {
         if (!Resolve(loaderUid, ref loader))
             return;
@@ -302,7 +302,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
             return;
 
         if (loader.ActiveProgram != cartridgeUid)
-            RaiseLocalEvent(cartridgeUid, new CartridgeActivatedEvent(loaderUid));
+            RaiseLocalEvent(cartridgeUid, new CartridgeActivatedEvent(loaderUid, actorUid));
 
         loader.BackgroundPrograms.Add(cartridgeUid);
     }
@@ -402,7 +402,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         switch (message.Action)
         {
             case CartridgeUiMessageAction.Activate:
-                ActivateProgram(loaderUid, cartridge, component);
+                ActivateProgram(loaderUid, cartridge, message.Actor, component);
                 break;
             case CartridgeUiMessageAction.Deactivate:
                 DeactivateProgram(loaderUid, cartridge, component);
