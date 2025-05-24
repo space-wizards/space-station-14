@@ -116,12 +116,12 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
+    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
   - type: Gun
     minAngle: 1
     maxAngle: 20
     angleIncrease: 2.2
     angleDecay: 4
-    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
     fireRate: 2 
     burstFireRate: 8
     availableModes:
