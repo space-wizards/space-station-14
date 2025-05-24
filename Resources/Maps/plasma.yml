@@ -4,7 +4,7 @@ meta:
   engineVersion: 260.2.0
   forkId: ""
   forkVersion: ""
-  time: 05/24/2025 20:02:17
+  time: 05/24/2025 22:47:38
   entityCount: 26230
 maps:
 - 1
@@ -64096,6 +64096,11 @@ entities:
     - type: Transform
       pos: -135.5,-35.5
       parent: 2
+  - uid: 15019
+    components:
+    - type: Transform
+      pos: -96.5,-9.5
+      parent: 2
   - uid: 15339
     components:
     - type: Transform
@@ -64135,6 +64140,11 @@ entities:
     components:
     - type: Transform
       pos: -77.5,-9.5
+      parent: 2
+  - uid: 24502
+    components:
+    - type: Transform
+      pos: -87.5,-61.5
       parent: 2
   - uid: 24615
     components:
@@ -64456,20 +64466,6 @@ entities:
     components:
     - type: Transform
       pos: -119.5,36.5
-      parent: 2
-- proto: ClosetWallFireFilledRandom
-  entities:
-  - uid: 15019
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -95.5,-10.5
-      parent: 2
-  - uid: 24502
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -86.5,-61.5
       parent: 2
 - proto: ClothingBackpackDuffelSurgeryFilled
   entities:
@@ -167129,7 +167125,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -200284.06
+      secondsUntilStateChange: -200363.27
       state: Opening
     - type: Airlock
       autoClose: False
