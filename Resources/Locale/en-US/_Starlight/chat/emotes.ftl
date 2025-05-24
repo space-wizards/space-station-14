@@ -19,4 +19,5 @@ chat-emote-msg-trill = trills
 chat-emote-msg-howl = howls
 chat-emote-msg-growl = growls
 chat-emote-msg-bark = barks
+chat-emote-msg-yip = yips
 chat-emote-msg-whine = whines
