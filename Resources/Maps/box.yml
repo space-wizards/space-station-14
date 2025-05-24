@@ -11072,49 +11072,6 @@ entities:
     - type: Transform
       pos: -1.4590547,-61.356407
       parent: 8364
-- proto: ActionToggleInternals
-  entities:
-  - uid: 25167
-    components:
-    - type: Transform
-      parent: 21419
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 21419
-  - uid: 25181
-    components:
-    - type: Transform
-      parent: 20121
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 20121
-- proto: ActionToggleLight
-  entities:
-  - uid: 8712
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 7337
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 7337
-  - uid: 8904
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 5070
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 5070
-  - uid: 16587
-    components:
-    - type: Transform
-      parent: 11756
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 11756
 - proto: AirAlarm
   entities:
   - uid: 2
@@ -90250,24 +90207,6 @@ entities:
     - type: Transform
       pos: 49.481064,16.680466
       parent: 8364
-    - type: HandheldLight
-      toggleActionEntity: 16587
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 16587
-    - type: ActionsContainer
   - uid: 11760
     components:
     - type: Transform
@@ -90445,20 +90384,6 @@ entities:
     - type: Transform
       pos: 8.604933,42.85379
       parent: 8364
-    - type: HandheldLight
-      toggleActionEntity: 8712
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 8712
-    - type: ActionsContainer
 - proto: FlippoLighter
   entities:
   - uid: 5114
@@ -130806,22 +130731,8 @@ entities:
     - type: Transform
       pos: 5.3890724,53.889565
       parent: 8364
-    - type: HandheldLight
-      toggleActionEntity: 8904
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 8904
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 5679
     components:
     - type: Transform
@@ -133985,14 +133896,6 @@ entities:
     - type: Transform
       pos: 79.485985,-43.45112
       parent: 8364
-    - type: GasTank
-      toggleActionEntity: 25167
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 25167
 - proto: OxygenTankFilled
   entities:
   - uid: 5466
@@ -134005,14 +133908,6 @@ entities:
     - type: Transform
       pos: 78.58031,-56.4234
       parent: 8364
-    - type: GasTank
-      toggleActionEntity: 25181
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 25181
   - uid: 27619
     components:
     - type: Transform
