@@ -17,6 +17,7 @@
             <ItemList Name="MarkingList" VerticalExpand="True" />
         </ScrollContainer>
 
+        <CheckBox Name="Glowing" Text="{Loc 'marking-glowing'}" /> <!-- Starlight -->
         <!-- Color sliders -->
         <ScrollContainer MinHeight="200" HorizontalExpand="True">
             <BoxContainer Name="ColorSelectorContainer" HorizontalExpand="True" />

@@ -130,7 +130,7 @@ public sealed partial class MarkingPicker : Control
 
         _sprite = _entityManager.System<SpriteSystem>();
 
-        CMarkingCategoryButton.OnItemSelected +=  OnCategoryChange;
+        CMarkingCategoryButton.OnItemSelected += OnCategoryChange;
         CMarkingsUnused.OnItemSelected += item =>
             _selectedUnusedMarking = CMarkingsUnused[item.ItemIndex];
 
@@ -146,6 +146,23 @@ public sealed partial class MarkingPicker : Control
         CMarkingRankDown.OnPressed += _ => SwapMarkingDown();
 
         CMarkingSearch.OnTextChanged += args => Populate(args.Text);
+
+        //starlight start
+        Glowing.OnToggled += args =>
+        {
+            if (_selectedMarking is null) return;
+            var markingPrototype = (MarkingPrototype)_selectedMarking.Metadata!;
+            int markingIndex = _currentMarkings.FindIndexOf(_selectedMarkingCategory, markingPrototype.ID);
+
+            if (markingIndex < 0) return;
+
+            var marking = new Marking(_currentMarkings.Markings[_selectedMarkingCategory][markingIndex]);
+            marking.IsGlowing = args.Pressed;
+            _currentMarkings.Replace(_selectedMarkingCategory, markingIndex, marking);
+
+            OnMarkingColorChange?.Invoke(_currentMarkings);
+        };
+        //starlight end
     }
 
     private void SetupCategoryButtons()
@@ -393,7 +410,7 @@ public sealed partial class MarkingPicker : Control
     private void OnUsedMarkingSelected(ItemList.ItemListSelectedEventArgs item)
     {
         _selectedMarking = CMarkingsUsed[item.ItemIndex];
-        var prototype = (MarkingPrototype) _selectedMarking.Metadata!;
+        var prototype = (MarkingPrototype)_selectedMarking.Metadata!;
 
         if (prototype.ForcedColoring)
         {
@@ -443,6 +460,18 @@ public sealed partial class MarkingPicker : Control
         }
 
         CMarkingColors.Visible = true;
+
+        //starlight start
+        if (_selectedMarking is null) return;
+        var markingPrototype = (MarkingPrototype)_selectedMarking.Metadata!;
+        int markingIndex = _currentMarkings.FindIndexOf(_selectedMarkingCategory, markingPrototype.ID);
+
+        if (markingIndex < 0) return;
+
+        var marking = _currentMarkings.Markings[_selectedMarkingCategory][markingIndex];
+
+        Glowing.Pressed = marking.IsGlowing;
+        //starlight end
     }
 
     private void ColorChanged(int colorIndex)
@@ -471,7 +500,7 @@ public sealed partial class MarkingPicker : Control
             return;
         }
 
-        var marking = (MarkingPrototype) _selectedUnusedMarking.Metadata!;
+        var marking = (MarkingPrototype)_selectedUnusedMarking.Metadata!;
         var markingObject = marking.AsMarking();
 
         // We need add hair markings in cloned set manually because _currentMarkings doesn't have it

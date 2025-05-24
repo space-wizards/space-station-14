@@ -410,9 +410,12 @@ namespace Content.Server.Database
         [Column(TypeName = "jsonb")] public JsonDocument? Markings { get; set; } = null!;
         public string HairName { get; set; } = null!;
         public string HairColor { get; set; } = null!;
+        public bool HairGlowing { get; set; } = false; //starlight
         public string FacialHairName { get; set; } = null!;
         public string FacialHairColor { get; set; } = null!;
+        public bool FacialHairGlowing { get; set; } = false; //starlight
         public string EyeColor { get; set; } = null!;
+        public bool EyeGlowing { get; set;} = false; //starlight
         public string SkinColor { get; set; } = null!;
         public int SpawnPriority { get; set; } = 0;
         public List<Job> Jobs { get; } = new();
