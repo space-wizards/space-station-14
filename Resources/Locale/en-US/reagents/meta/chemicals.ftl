@@ -30,3 +30,6 @@ reagent-desc-cellulose = A crystaline polydextrose polymer, plants swear by this
 
 reagent-name-rororium = rororium
 reagent-desc-rororium = A strange substance which fills the cores of the hivelords that roam the mining asteroid. Thought to be the source of their regenerative powers.
+
+reagent-name-spectra-fade = Spectra-Fade
+reagent-desc-spectra-fade = A miraculous solution that dissolves your flesh and bones. Only visually, thank God.
