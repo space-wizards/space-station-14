@@ -24,7 +24,8 @@
         - CrateHydroponicsSeedsMedicinal
         - CrateEmergencyInternals
         - CrateFoodMRE
-        - CrateMaterialTextiles
+        - CrateMaterialCloth
+        - CrateMaterialDurathread
         - CrateMedicalSupplies
         - CrateEngineeringCableBulk
         - CrateMaterialCardboard
