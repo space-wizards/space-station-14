@@ -1,10 +1,8 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Singularity.Components;
@@ -24,21 +22,6 @@ public sealed partial class EmitterComponent : Component
     /// </summary>
     [ViewVariables]
     public int FireShotCounter;
-
-    /// <summary>
-    /// The entity that is spawned when the emitter fires.
-    /// </summary>
-    [DataField("boltType", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string BoltType = "EmitterBolt";
-
-    [DataField("selectableTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> SelectableTypes = new();
-
-    /// <summary>
-    /// The current amount of power being used.
-    /// </summary>
-    [DataField("powerUseActive")]
-    public int PowerUseActive = 600;
 
     /// <summary>
     /// The amount of shots that are fired in a single "burst"
@@ -95,10 +78,10 @@ public sealed partial class EmitterComponent : Component
     public string TogglePort = "Toggle";
 
     /// <summary>
-    /// Map of signal ports to entity prototype IDs of the entity that will be fired.
+    /// Map of signal ports to index of fire mode of the entity that will be fired.
     /// </summary>
-    [DataField("setTypePorts", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<string, SinkPortPrototype>))]
-    public Dictionary<string, string> SetTypePorts = new();
+    [DataField("setTypePorts", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, SinkPortPrototype>))]
+    public Dictionary<string, int> SetTypePorts = new();
 }
 
 [NetSerializable, Serializable]
