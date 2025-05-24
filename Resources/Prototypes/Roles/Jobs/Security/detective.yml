@@ -35,3 +35,12 @@
     - Flash
     - ForensicPad
     - ForensicScanner
+
+- type: chameleonOutfit
+  id: DetectiveGearChameleon
+  job: Detective
+  equipment:
+    eyes: ClothingEyesGlassesSecurity
+    id: DetectivePDA
+    ears: ClothingHeadsetSecurity
+    belt: ClothingBeltHolsterFilled
