@@ -1,4 +1,4 @@
-- type: AirlockGroup
+- type: airlockGroup
   id: Standard
   iconPriority: 100
   stylePaths:
@@ -17,7 +17,7 @@
     security:    Structures/Doors/Airlocks/Standard/security.rsi
     virology:    Structures/Doors/Airlocks/Standard/virology.rsi
 
-- type: AirlockGroup
+- type: airlockGroup
   id: Glass
   iconPriority: 90
   stylePaths:
@@ -36,31 +36,31 @@
     security:    Structures/Doors/Airlocks/Glass/security.rsi
     virology:    Structures/Doors/Airlocks/Glass/virology.rsi
 
-- type: AirlockGroup
+- type: airlockGroup
   id: Windoor
   iconPriority: 80
   stylePaths:
     basic:       Structures/Doors/Airlocks/Glass/glass.rsi
 
-- type: AirlockGroup
+- type: airlockGroup
   id: External
   iconPriority: 70
   stylePaths:
     external:    Structures/Doors/Airlocks/Standard/external.rsi
 
-- type: AirlockGroup
+- type: airlockGroup
   id: ExternalGlass
   iconPriority: 60
   stylePaths:
     external:    Structures/Doors/Airlocks/Glass/external.rsi
 
-- type: AirlockGroup
+- type: airlockGroup
   id: Shuttle
   iconPriority: 50
   stylePaths:
     shuttle:     Structures/Doors/Airlocks/Standard/shuttle.rsi
 
-- type: AirlockGroup
+- type: airlockGroup
   id: ShuttleGlass
   iconPriority: 40
   stylePaths:

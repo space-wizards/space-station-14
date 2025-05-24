@@ -34,7 +34,8 @@
         - WeldingMask
       components:
         - StationMap
-        - SprayPainter
+        - AirlockPainter
+        - AtmosPipePainter
         - NetworkConfigurator
         - RCD
         - RCDAmmo
@@ -114,7 +115,8 @@
         - AppraisalTool
       components:
         - StationMap
-        - SprayPainter
+        - AirlockPainter
+        - AtmosPipePainter
         - NetworkConfigurator
         - RCD
         - RCDAmmo

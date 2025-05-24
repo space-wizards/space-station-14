@@ -2,33 +2,10 @@
                MinSize="500 300"
                SetSize="500 500"
                Title="{Loc 'spray-painter-window-title'}">
-    <BoxContainer Orientation="Horizontal"
+    <BoxContainer Name="Content"
+                  Orientation="Horizontal"
                   HorizontalExpand="True"
                   VerticalExpand="True"
                   SeparationOverride="4"
-                  MinWidth="450">
-        <BoxContainer Orientation="Vertical"
-                      HorizontalExpand="True"
-                      VerticalExpand="True"
-                      SeparationOverride="4"
-                      MinWidth="200">
-            <Label Name="SelectedSpriteLabel"
-                   Text="{Loc 'spray-painter-selected-style'}">
-            </Label>
-            <ItemList Name="SpriteList"
-                      SizeFlagsStretchRatio="8"
-                      VerticalExpand="True"/>
-        </BoxContainer>
-        <BoxContainer Orientation="Vertical"
-                      HorizontalExpand="True"
-                      VerticalExpand="True"
-                      SeparationOverride="4"
-                      MinWidth="200">
-            <Label Name="SelectedColorLabel"
-                   Text="{Loc 'spray-painter-selected-color'}"/>
-            <ItemList Name="ColorList"
-                      SizeFlagsStretchRatio="8"
-                      VerticalExpand="True"/>
-        </BoxContainer>
-    </BoxContainer>
+                  MinWidth="450" />
 </DefaultWindow>

@@ -1,9 +1,9 @@
 using Content.Shared.Roles;
-using Content.Shared.SprayPainter.Prototypes;
+using Content.Shared.SprayPainter.Airlocks.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.SprayPainter.Components;
+namespace Content.Shared.SprayPainter.Airlocks.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PaintableAirlockComponent : Component
@@ -12,7 +12,7 @@ public sealed partial class PaintableAirlockComponent : Component
     /// Group of styles this airlock can be painted with, e.g. glass, standard or external.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public ProtoId<AirlockGroupPrototype> Group = string.Empty;
+    public ProtoId<AirlockGroupPrototype> Group;
 
     /// <summary>
     /// Department this airlock is painted as, or none.

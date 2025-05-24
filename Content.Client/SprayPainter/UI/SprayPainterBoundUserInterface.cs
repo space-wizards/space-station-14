@@ -1,42 +1,42 @@
-using Content.Shared.SprayPainter;
-using Content.Shared.SprayPainter.Components;
+using Content.Client.SprayPainter.Airlocks;
+using Content.Client.SprayPainter.Airlocks.UI;
+using Content.Client.SprayPainter.AtmosPipes.UI;
+using Content.Shared.SprayPainter.Airlocks;
+using Content.Shared.SprayPainter.Airlocks.Components;
+using Content.Shared.SprayPainter.AtmosPipes;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.SprayPainter.UI;
 
-public sealed class SprayPainterBoundUserInterface : BoundUserInterface
+[UsedImplicitly]
+public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    [ViewVariables]
-    private SprayPainterWindow? _window;
-
-    public SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
-
     protected override void Open()
     {
         base.Open();
 
-        _window = this.CreateWindow<SprayPainterWindow>();
+        var window = this.CreateWindow<SprayPainterWindow>();
 
-        _window.OnSpritePicked = OnSpritePicked;
-        _window.OnColorPicked = OnColorPicked;
-
-        if (EntMan.TryGetComponent(Owner, out SprayPainterComponent? comp))
+        if (EntMan.TryGetComponent(Owner, out AirlockPainterComponent? airlockPainter))
         {
-            _window.Populate(EntMan.System<SprayPainterSystem>().Entries, comp.Index, comp.PickedColor, comp.ColorPalette);
+            window.AddContent(
+                new AirlockPainterWindow(
+                    EntMan.System<AirlockPainterSystem>().Entries,
+                    airlockPainter,
+                    styleIndex => SendMessage(new AirlockPainterSpritePickedMessage(styleIndex))
+                )
+            );
         }
-    }
 
-    private void OnSpritePicked(ItemList.ItemListSelectedEventArgs args)
-    {
-        SendMessage(new SprayPainterSpritePickedMessage(args.ItemIndex));
-    }
-
-    private void OnColorPicked(ItemList.ItemListSelectedEventArgs args)
-    {
-        var key = _window?.IndexToColorKey(args.ItemIndex);
-        SendMessage(new SprayPainterColorPickedMessage(key));
+        if (EntMan.TryGetComponent(Owner, out AtmosPipePainterComponent? pipePainter))
+        {
+            window.AddContent(
+                new AtmosPipePainterWindow(
+                    pipePainter,
+                    colorKey => SendMessage(new AtmosPipePainterColorPickedMessage(colorKey))
+                )
+            );
+        }
     }
 }
