@@ -477,6 +477,12 @@ public sealed class BloodstreamSystem : EntitySystem
 
     private void OnRefreshBlood(Entity<BloodstreamComponent> entity, ref RefreshBloodEvent args)
     {
+        // TODO: this can fail due to component initialization order.
+        // As an example, the SlimeBloodSystem raises this event
+        // when a slime's appearance gets loaded.
+        // However, appearance could be loaded before a blood solution
+        // exists so this check could fail and not refresh the blood data
+        // even though we want it to.
         if (_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
         {
             foreach (var reagent in bloodSolution.Contents)
@@ -486,8 +492,6 @@ public sealed class BloodstreamSystem : EntitySystem
                 reagentData.AddRange(GetEntityBloodData(entity.Owner));
             }
         }
-        else
-            Log.Error("Unable to refresh blood data, solution entity could not be resolved");
     }
 
     /// <summary>
