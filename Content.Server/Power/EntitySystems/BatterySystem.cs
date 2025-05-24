@@ -1,6 +1,6 @@
-using Content.Server.Cargo.Systems;
 using Content.Server.Emp;
 using Content.Server.Power.Components;
+using Content.Shared.Cargo.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Timing;
