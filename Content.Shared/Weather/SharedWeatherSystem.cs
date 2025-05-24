@@ -142,9 +142,9 @@ public abstract class SharedWeatherSystem : EntitySystem
                     var elapsed = Timing.CurTime - startTime;
 
                     if (elapsed < WeatherComponent.StartupTime)
-                    {
                         SetState(uid, WeatherState.Starting, comp, weather, weatherProto);
-                    }
+                    else
+                        SetState(uid, WeatherState.Running, comp, weather, weatherProto);
                 }
 
                 // Run whatever code we need.
@@ -214,15 +214,15 @@ public abstract class SharedWeatherSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    protected virtual void EndWeather(EntityUid uid, WeatherComponent component, string proto)
+    protected virtual WeatherData? EndWeather(EntityUid uid, WeatherComponent component, ProtoId<WeatherPrototype> proto)
     {
         if (!component.Weather.TryGetValue(proto, out var data))
-            return;
+            return null;
 
         component.Weather.Remove(proto);
-        _audio.SetState(data.Stream, Robust.Shared.Audio.Components.AudioState.Stopped, true); // _audio.Stop(); is cooked here and doesn't work
-        data.Stream = null;
         Dirty(uid, component);
+
+        return data;
     }
 
     protected virtual bool SetState(EntityUid uid, WeatherState state, WeatherComponent component, WeatherData weather, WeatherPrototype weatherProto)
