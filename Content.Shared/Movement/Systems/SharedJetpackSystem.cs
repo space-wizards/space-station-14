@@ -45,8 +45,10 @@ public abstract class SharedJetpackSystem : EntitySystem
         args.WeightlessFrictionNoInput = ent.Comp.WeightlessFrictionNoInput;
     }
 
-    private void OnMapInit(EntityUid uid, JetpackComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<JetpackComponent> jetpack, ref MapInitEvent args)
     {
+        var (uid, component) = jetpack;
+
         _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
         Dirty(uid, component);
     }
@@ -59,88 +61,112 @@ public abstract class SharedJetpackSystem : EntitySystem
         var query = EntityQueryEnumerator<JetpackUserComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var user, out var transform))
         {
-            if (transform.GridUid == gridUid && ev.HasGravity &&
-                jetpackQuery.TryGetComponent(user.Jetpack, out var jetpack))
+            var jetpackUid = user.Jetpack;
+            if (transform.GridUid == gridUid && jetpackQuery.TryGetComponent(jetpackUid, out var jetpackComponent))
             {
-                _popup.PopupClient(Loc.GetString("jetpack-to-grid"), uid, uid);
+                var jetpack = new Entity<JetpackComponent>(jetpackUid, jetpackComponent);
 
-                SetEnabled(user.Jetpack, jetpack, false, uid);
+                var canFly = CanFlyOnGrid(gridUid);
+                SetEnabled(jetpack, jetpackComponent.Enabled, flyIfEnabled: canFly, user: uid);
+
+                if (!canFly)
+                    _popup.PopupClient(Loc.GetString("jetpack-to-grid"), uid, uid);
             }
         }
     }
 
-    private void OnJetpackDropped(EntityUid uid, JetpackComponent component, DroppedEvent args)
+    private void OnJetpackDropped(Entity<JetpackComponent> jetpack, ref DroppedEvent args)
     {
-        SetEnabled(uid, component, false, args.User);
+        SetEnabled(jetpack, false, flyIfEnabled: false, user: args.User);
     }
 
-    private void OnJetpackMoved(Entity<JetpackComponent> ent, ref EntGotInsertedIntoContainerMessage args)
+    private void OnJetpackMoved(Entity<JetpackComponent> jetpack, ref EntGotInsertedIntoContainerMessage args)
     {
-        if (args.Container.Owner != ent.Comp.JetpackUser)
-            SetEnabled(ent, ent.Comp, false, ent.Comp.JetpackUser);
+        var jetpackUser = jetpack.Comp.JetpackUser;
+        if (args.Container.Owner != jetpackUser)
+            SetEnabled(jetpack, false, flyIfEnabled: false, user: jetpackUser);
     }
 
-    private void OnJetpackUserCanWeightless(EntityUid uid, JetpackUserComponent component, ref CanWeightlessMoveEvent args)
+    private void OnJetpackUserCanWeightless(Entity<JetpackUserComponent> ent, ref CanWeightlessMoveEvent args)
     {
         args.CanMove = true;
     }
 
-    private void OnJetpackUserEntParentChanged(EntityUid uid, JetpackUserComponent component, ref EntParentChangedMessage args)
+    private void OnJetpackUserEntParentChanged(Entity<JetpackUserComponent> ent, ref EntParentChangedMessage args)
     {
-        if (TryComp<JetpackComponent>(component.Jetpack, out var jetpack) &&
-            !CanEnableOnGrid(args.Transform.GridUid))
-        {
-            SetEnabled(component.Jetpack, jetpack, false, uid);
+        var (uid, component) = ent;
+        var jetpackUid = component.Jetpack;
 
+        if (!TryComp<JetpackComponent>(jetpackUid, out var jetpackComponent))
+            return;
+
+        var canFly = CanFlyOnGrid(args.Transform.GridUid);
+        if (!canFly && jetpackComponent.Enabled)
             _popup.PopupClient(Loc.GetString("jetpack-to-grid"), uid, uid);
-        }
+
+        var jetpack = new Entity<JetpackComponent>(jetpackUid, jetpackComponent);
+        SetEnabled(jetpack, jetpackComponent.Enabled, flyIfEnabled: canFly, user: uid);
     }
 
-    private void SetupUser(EntityUid user, EntityUid jetpackUid, JetpackComponent component)
+
+    private JetpackUserComponent SetupUser(EntityUid user, Entity<JetpackComponent> jetpack)
     {
         EnsureComp<JetpackUserComponent>(user, out var userComp);
-        component.JetpackUser = user;
+        jetpack.Comp.JetpackUser = user;
+        userComp.Jetpack = jetpack.Owner;
 
+        return userComp;
+    }
+
+    private void RemoveUser(EntityUid user, JetpackComponent component)
+    {
+        if (!RemComp<JetpackUserComponent>(user))
+            return;
+
+        component.JetpackUser = null;
+    }
+
+    private void StartUserFlying(EntityUid user, Entity<JetpackComponent> jetpack, JetpackUserComponent userComp)
+    {
+        var (jetpackUid, jetpackComp) = jetpack;
+        EnsureComp<ActiveJetpackComponent>(jetpackUid);
         if (TryComp<PhysicsComponent>(user, out var physics))
             _physics.SetBodyStatus(user, physics, BodyStatus.InAir);
 
         userComp.Jetpack = jetpackUid;
-        userComp.WeightlessAcceleration = component.Acceleration;
-        userComp.WeightlessModifier = component.WeightlessModifier;
-        userComp.WeightlessFriction = component.Friction;
-        userComp.WeightlessFrictionNoInput = component.Friction;
+        userComp.WeightlessAcceleration = jetpackComp.Acceleration;
+        userComp.WeightlessModifier = jetpackComp.WeightlessModifier;
+        userComp.WeightlessFriction = jetpackComp.Friction;
+        userComp.WeightlessFrictionNoInput = jetpackComp.Friction;
         _movementSpeedModifier.RefreshWeightlessModifiers(user);
     }
 
-    private void RemoveUser(EntityUid uid, JetpackComponent component)
+    private void EndUserFlying(EntityUid user, Entity<JetpackComponent> jetpack)
     {
-        if (!RemComp<JetpackUserComponent>(uid))
-            return;
+        RemComp<ActiveJetpackComponent>(jetpack.Owner);
+        if (TryComp<PhysicsComponent>(user, out var physics))
+            _physics.SetBodyStatus(user, physics, BodyStatus.OnGround);
 
-        component.JetpackUser = null;
-
-        if (TryComp<PhysicsComponent>(uid, out var physics))
-            _physics.SetBodyStatus(uid, physics, BodyStatus.OnGround);
-
-        _movementSpeedModifier.RefreshWeightlessModifiers(uid);
+        _movementSpeedModifier.RefreshWeightlessModifiers(user);
     }
 
-    private void OnJetpackToggle(EntityUid uid, JetpackComponent component, ToggleJetpackEvent args)
+    private void OnJetpackToggle(Entity<JetpackComponent> jetpack, ref ToggleJetpackEvent args)
     {
         if (args.Handled)
             return;
 
-        if (TryComp(uid, out TransformComponent? xform) && !CanEnableOnGrid(xform.GridUid))
-        {
-            _popup.PopupClient(Loc.GetString("jetpack-no-station"), uid, args.Performer);
+        var (uid, component) = jetpack;
 
-            return;
-        }
-
-        SetEnabled(uid, component, !IsEnabled(uid));
+        // You can still turn the jetpack on/off when on a grid that doesn't permit flying; you just won't be able to fly!
+        var canFly = TryComp(uid, out TransformComponent? xform) && CanFlyOnGrid(xform.GridUid);
+        SetEnabled(jetpack, !component.Enabled, null, canFly);
     }
 
-    private bool CanEnableOnGrid(EntityUid? gridUid)
+    /// <remarks>
+    /// This should return only whether you can <i>fly</i> with the jetpack, assuming it's turned on etc.
+    /// Should be regardless of <c>SharedJetpackSystem.CanEnable()</c>.
+    /// </remarks>
+    private bool CanFlyOnGrid(EntityUid? gridUid)
     {
         // No and no again! Do not attempt to activate the jetpack on a grid with gravity disabled. You will not be the first or the last to try this.
         // https://discord.com/channels/310555209753690112/310555209753690112/1270067921682694234
@@ -153,15 +179,22 @@ public abstract class SharedJetpackSystem : EntitySystem
         args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
     }
 
-    private bool IsEnabled(EntityUid uid)
+    private bool IsFlying(EntityUid uid)
     {
         return HasComp<ActiveJetpackComponent>(uid);
     }
 
-    public void SetEnabled(EntityUid uid, JetpackComponent component, bool enabled, EntityUid? user = null)
+    /// <summary>
+    /// Sets the provided jetpack to whether it is enabled, and if so, whether it can fly.
+    /// <paramref name="enabled"/> is only whether the jetpack should appear active, but
+    /// <paramref name="flyIfEnabled"/> is whether the user should actually be able to fly with it.
+    /// </summary>
+    /// <param name="enabled">Whether the jetpack should appear active, but not necessarily let the user fly.</param>
+    /// <param name="flyIfEnabled">Whether the jetpack should let the user fly, if <paramref name="enabled"/> is true. If null, defaults to whether the user is already flying.</param>
+    public void SetEnabled(Entity<JetpackComponent> jetpack, bool enabled, EntityUid? user = null, bool? flyIfEnabled = false)
     {
-        if (IsEnabled(uid) == enabled ||
-            enabled && !CanEnable(uid, component))
+        var (uid, component) = jetpack;
+        if (enabled == component.Enabled && flyIfEnabled == IsFlying(uid))
             return;
 
         if (user == null)
@@ -171,17 +204,25 @@ public abstract class SharedJetpackSystem : EntitySystem
             user = container.Owner;
         }
 
+        component.Enabled = enabled;
+
+        // flyIfEnabled defaults to false, but if null it will be just whether the user is already flying.
+        // That logic only works in this scenario because we use it with `enabled`, as it is whether we are already able to fly.
+        flyIfEnabled ??= IsUserFlying(user.Value);
         if (enabled)
         {
-            SetupUser(user.Value, uid, component);
-            EnsureComp<ActiveJetpackComponent>(uid);
+            var userComp = SetupUser(user.Value, jetpack);
+            if (flyIfEnabled.Value)
+                StartUserFlying(user.Value, jetpack, userComp);
+            else
+                EndUserFlying(user.Value, jetpack);
         }
         else
         {
             RemoveUser(user.Value, component);
-            RemComp<ActiveJetpackComponent>(uid);
+            if (IsFlying(uid))
+                EndUserFlying(user.Value, jetpack);
         }
-
 
         Appearance.SetData(uid, JetpackVisuals.Enabled, enabled);
         Dirty(uid, component);
@@ -192,6 +233,10 @@ public abstract class SharedJetpackSystem : EntitySystem
         return HasComp<JetpackUserComponent>(uid);
     }
 
+    /// <remarks>
+    /// This should return only whether you can <i>turn the jetpack on/off</i>, not necessarily be able to fly with it.
+    /// Should be regardless of <c>SharedJetpackSystem.CanFlyOnGrid()</c>.
+    /// </remarks>
     protected virtual bool CanEnable(EntityUid uid, JetpackComponent component)
     {
         return true;

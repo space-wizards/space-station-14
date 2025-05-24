@@ -40,7 +40,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
                 continue;
 
             var usedEnoughAir =
-                MathHelper.CloseTo(usedAir.TotalMoles, comp.MoleUsage, comp.MoleUsage/100);
+                MathHelper.CloseTo(usedAir.TotalMoles, comp.MoleUsage, comp.MoleUsage / 100);
 
             if (!usedEnoughAir)
             {
@@ -50,9 +50,9 @@ public sealed class JetpackSystem : SharedJetpackSystem
             _gasTank.UpdateUserInterface(gasTank);
         }
 
-        foreach (var (uid, comp) in toDisable)
+        foreach (var jetpack in toDisable)
         {
-            SetEnabled(uid, comp, false);
+            SetEnabled(jetpack, false);
         }
     }
 }
