@@ -231,8 +231,8 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Objects/Specific/Mech/mecha.rsi
-        state: paddy
+      - sprite: Objects/Specific/Mech/Mechs/Basic/paddy.rsi
+        state: base
       - state: mechicon
   - type: ConditionalSpawner
     prototypes:
