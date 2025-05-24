@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Piras314, hivehum, Darkmajia
-  changes:
-  - message: Lobby art is credited at the bottom of the lobby screen.
-    type: Add
-  id: 1221
-  time: '2025-03-02T21:32:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1817
 - author: AftrLite
   changes:
   - message: Cosmic Cult 1.03 (Experimental)
@@ -4224,3 +4217,10 @@
   id: 1720
   time: '2025-05-23T20:10:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2569
+- author: widgetbeck
+  changes:
+  - message: Shields now *properly* slow you down instead of bodyblocking.
+    type: Tweak
+  id: 1721
+  time: '2025-05-24T22:09:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2574
