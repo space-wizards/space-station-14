@@ -93,7 +93,7 @@ public abstract partial class SharedBuckleSystem
     {
         if (args.Handled)
             return;
-        args.Handled = TryUnbuckle(ent, ent, ent);
+        args.Handled = TryUnbuckle(ent, ent, true);
     }
 
     #endregion
@@ -146,45 +146,45 @@ public abstract partial class SharedBuckleSystem
 
     #endregion
 
-    private void OnBuckleInsertIntoEntityStorageAttempt(EntityUid uid, BuckleComponent component, ref InsertIntoEntityStorageAttemptEvent args)
+    private void OnBuckleInsertIntoEntityStorageAttempt(Entity<BuckleComponent> buckle, ref InsertIntoEntityStorageAttemptEvent args)
     {
-        if (component.Buckled)
+        if (buckle.Comp.Buckled)
             args.Cancelled = true;
     }
 
-    private void OnBucklePreventCollide(EntityUid uid, BuckleComponent component, ref PreventCollideEvent args)
+    private void OnBucklePreventCollide(Entity<BuckleComponent> buckle, ref PreventCollideEvent args)
     {
-        if (args.OtherEntity == component.BuckledTo && component.DontCollide)
+        if (args.OtherEntity == buckle.Comp.BuckledTo && buckle.Comp.DontCollide)
             args.Cancelled = true;
     }
 
-    private void OnBuckleDownAttempt(EntityUid uid, BuckleComponent component, DownAttemptEvent args)
+    private void OnBuckleDownAttempt(Entity<BuckleComponent> buckle, ref DownAttemptEvent args)
     {
-        if (component.Buckled)
+        if (buckle.Comp.Buckled)
             args.Cancel();
     }
 
-    private void OnBuckleStandAttempt(EntityUid uid, BuckleComponent component, StandAttemptEvent args)
+    private void OnBuckleStandAttempt(Entity<BuckleComponent> buckle, ref StandAttemptEvent args)
     {
-        if (component.Buckled)
+        if (buckle.Comp.Buckled)
             args.Cancel();
     }
 
-    private void OnBuckleThrowPushbackAttempt(EntityUid uid, BuckleComponent component, ThrowPushbackAttemptEvent args)
+    private void OnBuckleThrowPushbackAttempt(Entity<BuckleComponent> buckle, ref ThrowPushbackAttemptEvent args)
     {
-        if (component.Buckled)
+        if (buckle.Comp.Buckled)
             args.Cancel();
     }
 
-    private void OnBuckleUpdateCanMove(EntityUid uid, BuckleComponent component, UpdateCanMoveEvent args)
+    private void OnBuckleUpdateCanMove(Entity<BuckleComponent> buckle, ref UpdateCanMoveEvent args)
     {
-        if (component.Buckled)
+        if (buckle.Comp.Buckled)
             args.Cancel();
     }
 
-    public bool IsBuckled(EntityUid uid, BuckleComponent? component = null)
+    public bool IsBuckled(Entity<BuckleComponent?> buckle)
     {
-        return Resolve(uid, ref component, false) && component.Buckled;
+        return Resolve(buckle.Owner, ref buckle.Comp, false) && buckle.Comp.Buckled;
     }
 
     protected void SetBuckledTo(Entity<BuckleComponent> buckle, Entity<StrapComponent?>? strap)
@@ -221,6 +221,9 @@ public abstract partial class SharedBuckleSystem
     ///     i.e, the uid of someone else you are dragging to a chair.
     ///     Can equal buckleUid sometimes
     /// </param>
+    /// <returns>
+    ///     true if userUid can perform buckling
+    /// </returns> 
     private bool CanBuckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? userUid, bool popup)
     {
         // Does it pass the Whitelist
@@ -326,29 +329,26 @@ public abstract partial class SharedBuckleSystem
     }
 
     /// <summary>
-    /// Attempts to buckle an entity to a strapUid
+    /// Attempts to buckle an entity to a strap
     /// </summary>
-    /// <param name="buckleUid"> Uid of the owner of BuckleComponent </param>
-    /// <param name="userUid">
-    /// Uid of a third party entity,
-    /// i.e, the uid of someone else you are dragging to a chair.
-    /// Can equal buckleUid sometimes
-    /// </param>
-    /// <param name="strapUid"> Uid of the owner of strapUid component </param>
-    public bool TryBuckle(EntityUid buckleUid, EntityUid? userUid, EntityUid strapUid, BuckleComponent? buckleComp = null, bool popup = true)
+    /// <param name="buckle">The entity to buckle.</param>
+    /// <param name="userUid">The entity doing the buckling.</param>
+    /// <param name="popup">Should there be popup.</param>
+    ///  <returns>
+    ///     true if the owner was buckled
+    /// </returns>
+    public bool TryBuckle(Entity<BuckleComponent?> buckle, EntityUid? userUid, Entity<StrapComponent?> strap, bool popup = true)
     {
-        if (!Resolve(buckleUid, ref buckleComp, false))
-            return false;
-        var buckle = (buckleUid, buckleComp);
-
-        if (!TryComp<StrapComponent>(strapUid, out var strapComp))
-            return false;
-        var strap = (strapUid, strapComp);
-
-        if (!CanBuckle(buckle, strap, userUid, popup))
+        if (!Resolve(buckle.Owner, ref buckle.Comp, false))
             return false;
 
-        Buckle(buckle, strap, userUid);
+        if (!Resolve(strap.Owner, ref strap.Comp, false))
+            return false;
+
+        if (!CanBuckle(buckle!, strap!, userUid, popup))
+            return false;
+
+        Buckle(buckle!, strap!, userUid);
         return true;
     }
 
@@ -408,33 +408,84 @@ public abstract partial class SharedBuckleSystem
     /// <summary>
     /// Tries to unbuckle the Owner of this component from its current strap.
     /// </summary>
-    /// <param name="buckleUid">The entity to unbuckle.</param>
-    /// <param name="user">The entity doing the unbuckling.</param>
-    /// <param name="buckleComp">The buckle component of the entity to unbuckle.</param>
+    /// <param name="buckle">The entity to unbuckle.</param>
+    /// <param name="userUid">The entity doing the unbuckling.</param>
+    /// <param name="popup">Should there be popup.</param>
     /// <returns>
     ///     true if the owner was unbuckled, otherwise false even if the owner
     ///     was previously already unbuckled.
     /// </returns>
-    public bool TryUnbuckle(EntityUid buckleUid,
-        EntityUid? user,
-        BuckleComponent? buckleComp = null,
-        bool popup = true)
-    {
-        return TryUnbuckle((buckleUid, buckleComp), user, popup);
-    }
-
-    public bool TryUnbuckle(Entity<BuckleComponent?> buckle, EntityUid? user, bool popup)
+    public bool TryUnbuckle(Entity<BuckleComponent?> buckle, EntityUid? userUid, bool popup = true)
     {
         if (!Resolve(buckle.Owner, ref buckle.Comp, false))
             return false;
 
-        if (!CanUnbuckle(buckle, user, popup, out var strap))
+        if (userUid is null)
             return false;
+
+        return TryUnbuckle(buckle!, userUid!, popup);
+    }
+
+    /// <summary>
+    /// Tries to unbuckle the Owner of this component from its current strap.
+    /// </summary>
+    /// <param name="buckle">The entity to unbuckle.</param>
+    /// <param name="user">The entity doing the unbuckling.</param>
+    /// <param name="popup">Should there be popup.</param>
+    /// <returns>
+    ///     true if the owner was unbuckled, otherwise false even if the owner
+    ///     was previously already unbuckled.
+    /// </returns>
+    private bool TryUnbuckle(Entity<BuckleComponent> buckle, EntityUid user, bool popup = true)
+    {
+        Entity<StrapComponent> strap;
+
+        if (!GetStrapfromBuckle(buckle, out strap))
+        {
+            SetBuckledTo(buckle!, null);
+            return false;
+        }
+
+        if (!CanUnbuckle(buckle, strap, user, popup))
+        {
+            var unbuckleAttempt = new UnbuckleAttemptEvent(strap, buckle!, user, popup);
+            RaiseLocalEvent(buckle, ref unbuckleAttempt);
+            if (unbuckleAttempt.Cancelled)
+                return false;
+
+            var unstrapAttempt = new UnstrapAttemptEvent(strap, buckle!, user, popup);
+            RaiseLocalEvent(strap, ref unstrapAttempt);
+            return !unstrapAttempt.Cancelled;
+        }
 
         Unbuckle(buckle!, strap, user);
         return true;
     }
 
+    private bool GetStrapfromBuckle(Entity<BuckleComponent> buckle, out Entity<StrapComponent> strap)
+    {
+        strap = default;
+
+        if (buckle.Comp.BuckledTo is not { } strapUid)
+            return false;
+
+        if (!TryComp(strapUid, out StrapComponent? strapComp))
+        {
+            Log.Error($"Encountered buckle {ToPrettyString(buckle.Owner)} with invalid strap entity {ToPrettyString(strap)}");
+            SetBuckledTo(buckle!, null);
+            return false;
+        }
+        strap = (strapUid, strapComp);
+        return true;
+    }
+
+    /// <summary>
+    /// Force unbuckle performed by user.
+    /// Use Try TryUnbuckle if you want check is user actually can unbuckle 
+    /// </summary>
+    /// <param name="buckle">The entity to unbuckle.</param>
+    /// <param name="user">The entity doing the unbuckling.</param>
+    /// <summary>
     public void Unbuckle(Entity<BuckleComponent?> buckle, EntityUid? user)
     {
         if (!Resolve(buckle.Owner, ref buckle.Comp, false))
@@ -453,6 +504,13 @@ public abstract partial class SharedBuckleSystem
         Unbuckle(buckle!, (strap, strapComp), user);
     }
 
+    /// <summary>
+    /// Force unbuckle performed by user.
+    /// Use Try TryUnbuckle if you want check is user actually can unbuckle 
+    /// </summary>
+    /// <param name="buckle">The entity to unbuckle.</param>
+    /// <param name="user">The entity doing the unbuckling.</param>
+    /// <summary>
     private void Unbuckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? user)
     {
         if (user == buckle.Owner)
@@ -500,76 +558,80 @@ public abstract partial class SharedBuckleSystem
         RaiseLocalEvent(strap, ref strapEv);
     }
 
+    /// <summary>
+    /// Can user perform unbuckle.
+    /// </summary>
+    /// <param name="buckle">buckled entity to unbuckle.</param>
+    /// <param name="user">The entity doing the unbuckling.</param>
+    /// <param name="popup">Should there be popup.</param>
+    /// <returns>
+    ///     true if user can unbuckled the buckled entity
+    /// </returns>
     public bool CanUnbuckle(Entity<BuckleComponent?> buckle, EntityUid? user, bool popup)
     {
-        return CanUnbuckle(buckle, user, popup, out _);
+        if (user is null)
+            return false;
+
+        if (!Resolve(buckle.Owner, ref buckle.Comp, false))
+            return false;
+
+        Entity<StrapComponent> strap;
+        if (!GetStrapfromBuckle(buckle!, out strap))
+            return false;
+
+        return CanUnbuckle(buckle!, strap!, user.Value, popup);
     }
 
-    private bool CanUnbuckle(Entity<BuckleComponent?> buckle, EntityUid? user, bool popup, out Entity<StrapComponent> strap)
+    /// <summary>
+    /// Can user perform unbuckle.
+    /// </summary>
+    /// <param name="buckle">buckled entity to unbuckle.</param>
+    /// <param name="user">The entity doing the unbuckling.</param>
+    /// <param name="popup">Should there be popup.</param>
+    /// <returns>
+    ///     true if user can unbuckled the buckled entity
+    /// </returns>
+    private bool CanUnbuckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid user, bool popup)
     {
-        strap = default;
-        if (!Resolve(buckle.Owner, ref buckle.Comp))
-            return false;
-
-        if (buckle.Comp.BuckledTo is not { } strapUid)
-            return false;
-
-        if (!TryComp(strapUid, out StrapComponent? strapComp))
-        {
-            Log.Error($"Encountered buckle {ToPrettyString(buckle.Owner)} with invalid strap entity {ToPrettyString(strap)}");
-            SetBuckledTo(buckle!, null);
-            return false;
-        }
-
-        strap = (strapUid, strapComp);
         if (_gameTiming.CurTime < buckle.Comp.BuckleTime + buckle.Comp.Delay)
             return false;
 
-        if (user != null && !_interaction.InRangeUnobstructed(user.Value, strap.Owner, buckle.Comp.Range, popup: popup))
+        if (!_interaction.InRangeUnobstructed(user, strap.Owner, buckle.Comp.Range, popup: popup))
             return false;
-
-        var unbuckleAttempt = new UnbuckleAttemptEvent(strap, buckle!, user, popup);
-        RaiseLocalEvent(buckle, ref unbuckleAttempt);
-        if (unbuckleAttempt.Cancelled)
-            return false;
-
-        var unstrapAttempt = new UnstrapAttemptEvent(strap, buckle!, user, popup);
-        RaiseLocalEvent(strap, ref unstrapAttempt);
-        return !unstrapAttempt.Cancelled;
+        return true;
     }
 
     /// <summary>
     /// Once the do-after is complete, try to buckle target to chair/bed
     /// </summary>
-    /// <param name="args.Target"> The person being put in the chair/bed</param>
-    /// <param name="args.User"> The person putting a person in a chair/bed</param>
-    /// <param name="args.Used"> The chair/bed </param>
-
-    private void OnBuckleDoafter(Entity<BuckleComponent> entity, ref BuckleDoAfterEvent args)
+    /// <param name="buckle"> Entity being buckled to strap</param>
+    /// <param name="args.User"> The person buckling a person to a strap</param>
+    /// <param name="args.Used"> strap entity </param>
+    private void OnBuckleDoafter(Entity<BuckleComponent> buckle, ref BuckleDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Target == null || args.Used == null)
             return;
 
-        args.Handled = TryBuckle(args.Target.Value, args.User, args.Used.Value, popup: false);
+        args.Handled = TryBuckle(buckle.AsNullable(), args.User, args.Used.Value, popup: false);
     }
 
     /// <summary>
     /// If the target being buckled to a chair/bed goes crit or is cuffed
     /// Cancel the do-after time and try to buckle the target immediately
     /// </summary>
-    /// <param name="args.Target"> The person being put in the chair/bed</param>
+    /// <param name="buckle"> The person being put in the chair/bed</param>
     /// <param name="args.User"> The person putting a person in a chair/bed</param>
     /// <param name="args.Used"> The chair/bed </param>
-    private void BuckleDoafterEarly(Entity<BuckleComponent> entity, BuckleDoAfterEvent args, CancellableEntityEventArgs ev)
+    private void BuckleDoafterEarly(Entity<BuckleComponent> buckle, BuckleDoAfterEvent args, CancellableEntityEventArgs ev)
     {
-        if (args.Target == null || args.Used == null)
+        if (args.Used == null)
             return;
 
-        if (TryComp<CuffableComponent>(args.Target, out var targetCuffableComp) && targetCuffableComp.CuffedHandCount > 0
-            || _mobState.IsIncapacitated(args.Target.Value))
+        if (TryComp<CuffableComponent>(buckle, out var targetCuffableComp) && targetCuffableComp.CuffedHandCount > 0
+            || _mobState.IsIncapacitated(buckle))
         {
             ev.Cancel();
-            TryBuckle(args.Target.Value, args.User, args.Used.Value, popup: false);
+            TryBuckle(buckle.AsNullable(), args.User, args.Used.Value, popup: false);
         }
     }
 }

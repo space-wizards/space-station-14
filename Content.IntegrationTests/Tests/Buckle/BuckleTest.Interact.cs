@@ -1,4 +1,4 @@
-﻿using Content.Shared.Buckle;
+using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
@@ -38,7 +38,7 @@ public sealed partial class BuckleTest
 #pragma warning restore RA0002
 
             // Buckle victim to chair
-            Assert.That(buckleSystem.TryBuckle(victim, user, chair, buckle));
+            Assert.That(buckleSystem.TryBuckle((victim, buckle), user, chair));
             Assert.Multiple(() =>
             {
                 Assert.That(buckle.BuckledTo, Is.EqualTo(chair), "Victim did not get buckled to the chair.");

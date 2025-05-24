@@ -36,10 +36,7 @@ public abstract partial class SharedBuckleSystem
 
         if (args.Dragged == args.User)
         {
-            if (!TryComp(args.User, out BuckleComponent? buckle))
-                return;
-
-            args.Handled = TryBuckle(args.User, args.User, uid, buckle);
+            args.Handled = TryBuckle(args.User, args.User, uid);
         }
         else
         {
@@ -73,35 +70,41 @@ public abstract partial class SharedBuckleSystem
         return _interaction.InRangeUnobstructed(targetUid, buckleUid, buckleComp.Range, predicate: Ignored);
     }
 
-    private void OnStrapInteractHand(EntityUid uid, StrapComponent component, InteractHandEvent args)
+    private void OnStrapInteractHand(Entity<StrapComponent> strap, ref InteractHandEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!component.Enabled)
+        if (!strap.Comp.Enabled)
             return;
 
-        if (!TryComp(args.User, out BuckleComponent? buckle))
+        if (!TryComp(args.User, out BuckleComponent? buckleComponent))
             return;
+        Entity<BuckleComponent> buckle = (args.User, buckleComponent);
 
         // Buckle self
-        if (buckle.BuckledTo == null && component.BuckleOnInteractHand && StrapHasSpace(uid, buckle, component))
+        if (buckle.Comp.BuckledTo == null && strap.Comp.BuckleOnInteractHand && StrapHasSpace(strap.Owner, buckle, strap.Comp))
         {
-            TryBuckle(args.User, args.User, uid, buckle, popup: true);
+            TryBuckle(args.User, args.User, strap.Owner, true);
             args.Handled = true;
             return;
         }
 
         // Unbuckle self
-        if (buckle.BuckledTo == uid && TryUnbuckle(args.User, args.User, buckle, popup: true))
+        if (buckle.Comp.BuckledTo == strap.Owner && TryUnbuckle(buckle, args.User, true))
         {
             args.Handled = true;
             return;
         }
 
         // Unbuckle others
-        if (component.BuckledEntities.TryFirstOrNull(out var buckled) && TryUnbuckle(buckled.Value, args.User))
+        if (strap.Comp.BuckledEntities.TryFirstOrNull(out var otherBuckledUid))
         {
+            if (!TryComp(otherBuckledUid, out BuckleComponent? otherBuckledComponent))
+                return;
+            Entity<BuckleComponent> otherBuckle = (otherBuckledUid.Value, otherBuckledComponent);
+
+            TryUnbuckle(otherBuckle, args.User);
             args.Handled = true;
             return;
         }
@@ -109,13 +112,13 @@ public abstract partial class SharedBuckleSystem
         // TODO BUCKLE add out bool for whether a pop-up was generated or not.
     }
 
-    private void OnBuckleInteractHand(Entity<BuckleComponent> ent, ref InteractHandEvent args)
+    private void OnBuckleInteractHand(Entity<BuckleComponent> buckle, ref InteractHandEvent args)
     {
         if (args.Handled)
             return;
 
-        if (ent.Comp.BuckledTo != null)
-            args.Handled = TryUnbuckle(ent!, args.User, popup: true);
+        if (buckle.Comp.BuckledTo != null)
+            args.Handled = TryUnbuckle(buckle, args.User, popup: true);
 
         // TODO BUCKLE add out bool for whether a pop-up was generated or not.
     }
@@ -125,8 +128,8 @@ public abstract partial class SharedBuckleSystem
         if (args.Hands == null || !args.CanAccess || !args.CanInteract || !component.Enabled)
             return;
 
-        // Note that for whatever bloody reason, buckle component has its own interaction range. Additionally, this
-        // range can be set per-component, so we have to check a modified InRangeUnobstructed for every verb.
+        // Note that for whatever bloody reason, buckle strapComponent has its own interaction range. Additionally, this
+        // range can be set per-strapComponent, so we have to check a modified InRangeUnobstructed for every verb.
 
         // Add unstrap verbs for every strapped entity.
         foreach (var entity in component.BuckledEntities)
@@ -138,7 +141,7 @@ public abstract partial class SharedBuckleSystem
 
             var verb = new InteractionVerb()
             {
-                Act = () => TryUnbuckle(entity, args.User, buckleComp: buckledComp),
+                Act = () => TryUnbuckle((entity, buckledComp), args.User),
                 Category = VerbCategory.Unbuckle,
                 Text = entity == args.User
                     ? Loc.GetString("verb-self-target-pronoun")
@@ -162,7 +165,7 @@ public abstract partial class SharedBuckleSystem
         {
             InteractionVerb verb = new()
             {
-                Act = () => TryBuckle(args.User, args.User, args.Target, buckle),
+                Act = () => TryBuckle((args.User, buckle), args.User, args.Target),
                 Category = VerbCategory.Buckle,
                 Text = Loc.GetString("verb-self-target-pronoun")
             };
@@ -183,7 +186,7 @@ public abstract partial class SharedBuckleSystem
             var isPlayer = _playerManager.TryGetSessionByEntity(@using, out var _);
             InteractionVerb verb = new()
             {
-                Act = () => TryBuckle(@using, args.User, args.Target, usingBuckle),
+                Act = () => TryBuckle((@using, usingBuckle), args.User, args.Target),
                 Category = VerbCategory.Buckle,
                 Text = Identity.Name(@using, EntityManager),
                 // just a held object, the user is probably just trying to sit down.
@@ -202,7 +205,7 @@ public abstract partial class SharedBuckleSystem
 
         InteractionVerb verb = new()
         {
-            Act = () => TryUnbuckle(uid, args.User, buckleComp: component),
+            Act = () => TryUnbuckle((uid, component), args.User),
             Text = Loc.GetString("verb-categories-unbuckle"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png"))
         };
