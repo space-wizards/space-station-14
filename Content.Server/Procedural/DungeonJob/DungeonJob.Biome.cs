@@ -42,19 +42,22 @@ public sealed partial class DungeonJob
             if (biomeSystem.TryGetTile(node, indexedBiome.Layers, seed, (_gridUid, _grid), out var tile))
             {
                 _maps.SetTile(_gridUid, _grid, node, tile.Value);
+                AddLoadedTile(node, tile.Value);
             }
 
             if (biomeSystem.TryGetDecals(node, indexedBiome.Layers, seed, (_gridUid, _grid), out var decals))
             {
                 foreach (var decal in decals)
                 {
-                    _decals.TryAddDecal(decal.ID, new EntityCoordinates(_gridUid, decal.Position), out _);
+                    _decals.TryAddDecal(decal.ID, new EntityCoordinates(_gridUid, decal.Position), out var did);
+                    AddLoadedDecal(decal.Position, did);
                 }
             }
 
             if (biomeSystem.TryGetEntity(node, indexedBiome.Layers, tile ?? tileRef.Value.Tile, seed, (_gridUid, _grid), out var entityProto))
             {
                 var ent = _entManager.SpawnEntity(entityProto, new EntityCoordinates(_gridUid, node + _grid.TileSizeHalfVector));
+                AddLoadedEntity(node, ent);
                 var xform = xformQuery.Get(ent);
 
                 if (!xform.Comp.Anchored)

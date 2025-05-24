@@ -53,7 +53,7 @@ public sealed class PlanetCommand : IConsoleCommand
             return;
         }
 
-        if (!_protoManager.TryIndex<BiomeTemplatePrototype>(args[1], out var biomeTemplate))
+        if (!_protoManager.TryIndex<EntityPrototype>(args[1], out var biomeTemplate))
         {
             shell.WriteError(Loc.GetString("cmd-planet-map-prototype", ("prototype", args[1])));
             return;
@@ -73,7 +73,8 @@ public sealed class PlanetCommand : IConsoleCommand
 
         if (args.Length == 2)
         {
-            var options = _protoManager.EnumeratePrototypes<BiomeTemplatePrototype>()
+            var options = _protoManager.EnumeratePrototypes<EntityPrototype>()
+                .Where(o => o.Components.ContainsKey("NewBiome"))
                 .Select(o => new CompletionOption(o.ID, "Biome"));
             return CompletionResult.FromOptions(options);
         }

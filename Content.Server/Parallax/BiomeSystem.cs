@@ -16,6 +16,7 @@ using Content.Shared.Light.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
+using Content.Shared.Procedural.Components;
 using Content.Shared.Tag;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
@@ -30,6 +31,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Threading;
 using Robust.Shared.Utility;
 using ChunkIndicesEnumerator = Robust.Shared.Map.Enumerators.ChunkIndicesEnumerator;
@@ -45,6 +47,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
@@ -1005,29 +1008,31 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     /// <summary>
     /// Creates a simple planet setup for a map.
     /// </summary>
-    public void EnsurePlanet(EntityUid mapUid, BiomeTemplatePrototype biomeTemplate, int? seed = null, MetaDataComponent? metadata = null, Color? mapLight = null)
+    public void EnsurePlanet(EntityUid mapUid, EntProtoId biomeTemplate, int? seed = null, MetaDataComponent? metadata = null, Color? mapLight = null)
     {
         if (!Resolve(mapUid, ref metadata))
             return;
 
         EnsureComp<MapGridComponent>(mapUid);
-        var biome = EntityManager.ComponentFactory.GetComponent<BiomeComponent>();
+        if (!_proto.Index(biomeTemplate).Components.TryGetComponent("NewBiome", out var template))
+        {
+            return;
+        }
+
+        var biome = Factory.GetComponent<NewBiomeComponent>();
+        var biomeObj = (object)biome;
+        _serManager.CopyTo(template, ref biomeObj, notNullableOverride: true);
         seed ??= _random.Next();
-        SetSeed(mapUid, biome, seed.Value, false);
-        SetTemplate(mapUid, biome, biomeTemplate, false);
+        biome.Seed = seed.Value;
+        //SetSeed(mapUid, biome, seed.Value, false);
+        //SetTemplate(mapUid, biome, biomeTemplate, false);
         AddComp(mapUid, biome, true);
-        Dirty(mapUid, biome, metadata);
 
         var gravity = EnsureComp<GravityComponent>(mapUid);
         gravity.Enabled = true;
         gravity.Inherent = true;
         Dirty(mapUid, gravity, metadata);
 
-        // Day lighting
-        // Daylight: #D8B059
-        // Midday: #E6CB8B
-        // Moonlight: #2b3143
-        // Lava: #A34931
         var light = EnsureComp<MapLightComponent>(mapUid);
         light.AmbientLightColor = mapLight ?? Color.FromHex("#D8B059");
         Dirty(mapUid, light, metadata);

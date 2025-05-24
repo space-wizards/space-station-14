@@ -82,11 +82,11 @@ public sealed class ArrivalsSystem : EntitySystem
     /// </summary>
     private const float RoundStartFTLDuration = 10f;
 
-    private readonly List<ProtoId<BiomeTemplatePrototype>> _arrivalsBiomeOptions = new()
+    private readonly List<EntProtoId> _arrivalsBiomeOptions = new()
     {
-        "Grasslands",
-        "LowDesert",
-        "Snow",
+        "BiomeGrasslands",
+        "BiomeLowDesert",
+        "BiomeSnow",
     };
 
     public override void Initialize()

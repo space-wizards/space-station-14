@@ -43,7 +43,9 @@ public sealed partial class DungeonJob
             if (!_anchorable.TileFree(_grid, index, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
-            tiles.Add((index, _tile.GetVariantTile((ContentTileDefinition)tileDef, random)));
+            var tile = _tile.GetVariantTile((ContentTileDefinition)tileDef, random);
+            tiles.Add((index, tile));
+            AddLoadedTile(index, tile);
         }
 
         _maps.SetTiles(_gridUid, _grid, tiles);
@@ -82,18 +84,21 @@ public sealed partial class DungeonJob
             }
 
             if (isCorner)
-                _entManager.SpawnEntity(cornerWall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
+            {
+                var uid = _entManager.SpawnEntity(cornerWall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
+                AddLoadedEntity(index.Index, uid);
+            }
 
             if (!isCorner)
-                _entManager.SpawnEntity(wall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
-
-            if (i % 20 == 0)
             {
-                await SuspendDungeon();
-
-                if (!ValidateResume())
-                    return;
+                var uid = _entManager.SpawnEntity(wall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
+                AddLoadedEntity(index.Index, uid);
             }
+
+            await SuspendDungeon();
+
+            if (!ValidateResume())
+                return;
         }
     }
 }

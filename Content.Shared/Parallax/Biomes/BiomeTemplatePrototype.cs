@@ -11,6 +11,6 @@ public sealed partial class BiomeTemplatePrototype : IPrototype
 {
     [IdDataField] public string ID { get; private set; } = default!;
 
-    [DataField("layers")]
+    [DataField]
     public List<IBiomeLayer> Layers = new();
 }

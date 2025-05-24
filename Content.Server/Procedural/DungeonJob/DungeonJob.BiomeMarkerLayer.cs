@@ -91,6 +91,7 @@ public sealed partial class DungeonJob
                 }
 
                 var ent = _entManager.SpawnAtPosition(proto, new EntityCoordinates(_gridUid, node + _grid.TileSizeHalfVector));
+                AddLoadedEntity(node, ent);
                 var xform = xformQuery.Get(ent);
 
                 if (!xform.Comp.Anchored)
