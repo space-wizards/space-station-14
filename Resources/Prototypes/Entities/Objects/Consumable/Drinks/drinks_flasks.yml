@@ -3,13 +3,45 @@
   id: FlaskBase
   abstract: true
   components:
-  - type: Drink
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: Sprite
+    state: icon
+    sprite: Objects/Consumable/Drinks/flask.rsi
   - type: PhysicalComposition
     materialComposition:
       Steel: 300
   - type: FitsInDispenser
     solution: drink
 
+- type: entity
+  id: DrinkFlaskVisualsOpenable
+  abstract: true
+  components:
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
+  - type: Appearance
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
+  - type: Openable
+    sound:
+      collection: bottleOpenSounds
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
+  - type: Shakeable
+  - type: PressurizedSolution
+    solution: drink
+
+# Flasks
 - type: entity
   parent: FlaskBase
   id: DrinkShinyFlask
@@ -22,6 +54,7 @@
 - type: entity
   parent: FlaskBase
   id: DrinkMREFlask
+  suffix: Full
   name: MRE flask
   description: An old military flask, filled with the finest contents for soldiers.
   components:
@@ -75,8 +108,8 @@
 - type: entity
   parent: FlaskBase
   id: DrinkFlaskOld
-  name: flask
-  description: ''
+  name: old flask
+  description: A decrepit old flask, its lid seems to be missing.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/flask_old.rsi
@@ -98,28 +131,3 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vacuumflask.rsi
-
-- type: entity
-  parent: FlaskBase
-  id: Pitcher
-  name: metal pitcher
-  description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 60
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/pitcher.rsi
-    layers:
-      - state: icon
-        map: ["enum.SolutionContainerLayers.Base"]
-      - state: fill-6
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 6
-    fillBaseName: fill-
-    inHandsMaxFillLevels: 2
-    inHandsFillBaseName: -fill-
