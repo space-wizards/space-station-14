@@ -122,7 +122,7 @@
     maxAngle: 20
     angleIncrease: 2.2
     angleDecay: 4
-    fireRate: 2 
+    fireRate: 2
     burstFireRate: 8
     availableModes:
     - Burst
