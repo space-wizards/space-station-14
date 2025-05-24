@@ -67,34 +67,37 @@ public sealed class WaggingSystem : EntitySystem
 
         for (var idx = 0; idx < markings.Count; idx++) // Animate all possible tails
         {
-            var currentMarkingId = markings[idx].MarkingId;
-            string newMarkingId;
+            foreach (var possibleSuffix in wagging.Suffixes)
+            {
+                var currentMarkingId = markings[idx].MarkingId;
+                string newMarkingId;
 
-            if (wagging.Wagging)
-            {
-                newMarkingId = $"{currentMarkingId}{wagging.Suffix}";
-            }
-            else
-            {
-                if (currentMarkingId.EndsWith(wagging.Suffix))
+                if (wagging.Wagging)
                 {
-                    newMarkingId = currentMarkingId[..^wagging.Suffix.Length];
+                    newMarkingId = $"{currentMarkingId}{possibleSuffix}";
                 }
                 else
                 {
-                    newMarkingId = currentMarkingId;
-                    Log.Warning($"Unable to revert wagging for {currentMarkingId}");
+                    if (currentMarkingId.EndsWith(possibleSuffix))
+                    {
+                        newMarkingId = currentMarkingId[..^possibleSuffix.Length];
+                    }
+                    else
+                    {
+                        newMarkingId = currentMarkingId;
+                        Log.Warning($"Unable to revert wagging for {currentMarkingId}");
+                    }
                 }
-            }
 
-            if (!_prototype.HasIndex<MarkingPrototype>(newMarkingId))
-            {
-                Log.Warning($"{ToPrettyString(uid)} tried toggling wagging but {newMarkingId} marking doesn't exist");
-                continue;
-            }
+                if (!_prototype.HasIndex<MarkingPrototype>(newMarkingId))
+                {
+                    Log.Warning($"{ToPrettyString(uid)} tried toggling wagging but {newMarkingId} marking doesn't exist");
+                    continue;
+                }
 
-            _humanoidAppearance.SetMarkingId(uid, MarkingCategories.Tail, idx, newMarkingId,
-                humanoid: humanoid);
+                _humanoidAppearance.SetMarkingId(uid, MarkingCategories.Tail, idx, newMarkingId,
+                    humanoid: humanoid);
+            }
         }
 
         return true;
