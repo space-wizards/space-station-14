@@ -115,6 +115,8 @@
       - state: CAP-inhand-left
       right:
       - state: CAP-inhand-right
+    shape:
+    - 0,0,1,2
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
     clothingVisuals:
@@ -694,6 +696,8 @@
       - state: SEC-inhand-left
       right:
       - state: SEC-inhand-right
+    shape:
+    - 0,0,1,2
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
     clothingVisuals:
