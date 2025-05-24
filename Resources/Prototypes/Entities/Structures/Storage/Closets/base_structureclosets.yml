@@ -124,6 +124,8 @@
     node: done
     containers:
     - entity_storage
+  - type: Paintable
+    group: Closet
 
 #Wall Closet
 - type: entity
@@ -200,6 +202,8 @@
     node: done
     containers:
     - entity_storage
+  - type: Paintable
+    group: WallLocker
 
 #Wall locker
 - type: entity
