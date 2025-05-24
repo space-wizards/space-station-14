@@ -46,6 +46,7 @@
     - AnomalyRockGold
     - AnomalyRockQuartz
     - AnomalyRockUranium
+    - AnomalyRockBananium
     chance: 1
     offset: 0.15
 
