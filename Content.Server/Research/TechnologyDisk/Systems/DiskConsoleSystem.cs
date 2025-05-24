@@ -5,9 +5,7 @@ using Content.Shared.Research;
 using Content.Shared.Research.Components;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Research.TechnologyDisk.Systems;
@@ -18,7 +16,6 @@ public sealed class DiskConsoleSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly ResearchSystem _research = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -42,22 +39,8 @@ public sealed class DiskConsoleSystem : EntitySystem
                 continue;
 
             RemComp(uid, printing);
-            SpawnDisk(console, xform.Coordinates);
+            Spawn(console.DiskPrototype, xform.Coordinates);
         }
-    }
-
-    /// <summary>
-    /// Spawns a random tech disk using the given tech console and a position.
-    /// </summary>
-    private void SpawnDisk(DiskConsoleComponent console, EntityCoordinates coordinates)
-    {
-        if (!_protoMan.TryIndex(console.DiskPrototype, out var diskProto))
-        {
-            Log.Error($"Failed to spawn a tech disk: disk entity prototype '{console.DiskPrototype}' not found");
-            return;
-        }
-
-        Spawn(diskProto.ID, coordinates);
     }
 
     private void OnPrintDisk(EntityUid uid, DiskConsoleComponent component, DiskConsolePrintDiskMessage args)

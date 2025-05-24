@@ -107,8 +107,6 @@
   components:
   - type: TechnologyDisk
     tier: 1
-  - type: StaticPrice
-    price: 100 # used for pricing all disks of this tier
 
 - type: entity
   parent: TechnologyDisk
@@ -117,8 +115,6 @@
   components:
   - type: TechnologyDisk
     tier: 2
-  - type: StaticPrice
-    price: 500 # used for pricing all disks of this tier
 
 - type: entity
   parent: TechnologyDisk
@@ -127,8 +123,6 @@
   components:
   - type: TechnologyDisk
     tier: 3
-  - type: StaticPrice
-    price: 1500 # used for pricing all disks of this tier
 
 - type: entity
   parent: TechnologyDisk

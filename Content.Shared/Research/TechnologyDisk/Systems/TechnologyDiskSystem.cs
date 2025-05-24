@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Shared.Cargo.Components;
+using Content.Shared.Cargo.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Lathe;
@@ -9,7 +9,6 @@ using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Research.Systems;
 using Content.Shared.Research.TechnologyDisk.Components;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -26,13 +25,13 @@ public sealed class TechnologyDiskSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     /// <summary>
-    /// Maps disk tiers to tech disk entity prototypes that hold StaticPrice for each tier.
+    /// Mapping of disk tiers to disk prices.
     /// </summary>
-    private readonly Dictionary<int, EntProtoId<StaticPriceComponent>> _diskTierToDiskProtoWithSellPrice = new()
+    private readonly Dictionary<int, int> _diskPricePerTier = new()
     {
-        [1] = "TechnologyDiskT1",
-        [2] = "TechnologyDiskT2",
-        [3] = "TechnologyDiskT3"
+        [1] = 100,
+        [2] = 500,
+        [3] = 1500
     };
 
     public override void Initialize()
@@ -42,6 +41,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
         SubscribeLocalEvent<TechnologyDiskComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TechnologyDiskComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<TechnologyDiskComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<TechnologyDiskComponent, PriceCalculationEvent>(OnPriceCalculation);
     }
 
     private void OnMapInit(Entity<TechnologyDiskComponent> ent, ref MapInitEvent args)
@@ -49,7 +49,6 @@ public sealed class TechnologyDiskSystem : EntitySystem
         var uid = (EntityUid)ent;
 
         TryPickAndSetRecipe(ent);
-        TryPickAndSetSellPrice(ent, uid);
         TrySetVisuals(ent, uid);
     }
 
@@ -88,26 +87,6 @@ public sealed class TechnologyDiskSystem : EntitySystem
 
         ent.Comp.Recipes = [];
         ent.Comp.Recipes.Add(_random.Pick(recipes));
-    }
-
-    /// <summary>
-    /// Attempts to pick and set a price for the disk based on chosen tier.
-    /// </summary>
-    private void TryPickAndSetSellPrice(Entity<TechnologyDiskComponent> ent, EntityUid uid)
-    {
-        if(!ent.Comp.Tier.HasValue)
-            return;
-
-        var tier = ent.Comp.Tier.Value;
-        if (!_diskTierToDiskProtoWithSellPrice.TryGetValue(tier, out var priceHolderProtoId))
-            return;
-
-        var priceHolderProto = _protoMan.Index(priceHolderProtoId);
-        if (!priceHolderProto.TryGetComponent<StaticPriceComponent>(out var targetPriceComp, Factory)
-            || targetPriceComp.Price == 0)
-            return;
-
-        EnsureComp<StaticPriceComponent>(ent).Price = targetPriceComp.Price;
     }
 
     /// <summary>
@@ -243,6 +222,20 @@ public sealed class TechnologyDiskSystem : EntitySystem
                 message += " " + Loc.GetString("tech-disk-examine-more");
         }
         args.PushMarkup(message);
+    }
+
+    private void OnPriceCalculation(Entity<TechnologyDiskComponent> ent, ref PriceCalculationEvent args)
+    {
+        if(!ent.Comp.Tier.HasValue)
+            return;
+
+        var tier = ent.Comp.Tier.Value;
+
+        if (!_diskPricePerTier.TryGetValue(tier, out var price))
+            return;
+
+        args.Price = price;
+        args.Handled = true;
     }
 }
 
