@@ -1,9 +1,10 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Spawners;
 
-namespace Content.Shared.TimedDespawnExamine;
+namespace Content.Shared.TimedDespawn;
 
 /// <summary>
 ///     Component that show examiner message if entity has <see cref="TimedDespawnComponent"/>.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ShowTimedDespawnComponent : Component;

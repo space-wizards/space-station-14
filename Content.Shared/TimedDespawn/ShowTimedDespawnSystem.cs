@@ -1,9 +1,7 @@
-using Content.Shared.TimedDespawnExamine;
 using Content.Shared.Examine;
-
 using Robust.Shared.Spawners;
 
-namespace Content.Server.TimedDespawnExamine;
+namespace Content.Shared.TimedDespawn;
 
 /// <summary>
 ///     This handles logic relating to <see cref="ShowTimedDespawnComponent"/>.
