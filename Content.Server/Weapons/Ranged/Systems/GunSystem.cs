@@ -23,7 +23,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Robust.Shared.Containers;
 using Content.Server.PowerCell;
-using Content.Shared.Cargo.Systems;
+using Content.Shared.Cargo;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 

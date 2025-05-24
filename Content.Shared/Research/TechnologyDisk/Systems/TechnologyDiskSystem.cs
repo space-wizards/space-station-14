@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Shared.Cargo.Systems;
+using Content.Shared.Cargo;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Lathe;
@@ -137,20 +137,10 @@ public sealed class TechnologyDiskSystem : EntitySystem
     private void TrySetTierVisuals(Entity<TechnologyDiskComponent> ent, EntityUid uid)
     {
         var tier = ent.Comp.Tier;
-        if (tier != null)
-        {
-            var tierVisualsEnumKey = "T" + tier;
-            if(!Enum.IsDefined(typeof(TechDiskTierVisuals), tierVisualsEnumKey))
-            {
-                Log.Error($"Failed to set tech disk tier visuals: no matching tier visuals found to picked tier '{tier}'");
-                return;
-            }
+        if (!tier.HasValue)
+            return;
 
-            var tierVisualsIndex = Array.IndexOf(Enum.GetNames(typeof(TechDiskTierVisuals)), tierVisualsEnumKey);
-            var tierVisual = Enum.GetValues(typeof(TechDiskTierVisuals)).GetValue(tierVisualsIndex)!;
-
-            _appearance.SetData(uid, (TechDiskTierVisuals)tierVisual, true);
-        }
+        _appearance.SetData(uid, TechDiskVisuals.Tier, tier.Value);
     }
 
     /// <summary>
@@ -158,20 +148,10 @@ public sealed class TechnologyDiskSystem : EntitySystem
     /// </summary>
     private void TrySetDisciplineVisuals(Entity<TechnologyDiskComponent> ent, EntityUid uid)
     {
-        if (_protoMan.TryIndex(ent.Comp.Discipline, out var discipline))
-        {
-            if (!Enum.IsDefined(typeof(TechDiskDisciplineVisuals), discipline.ID))
-            {
-                Log.Error(
-                    $"Failed to set tech disk discipline visuals: no matching discipline visuals found to picked discipline '{discipline}'");
-                return;
-            }
+        if (!_protoMan.TryIndex(ent.Comp.Discipline, out var discipline))
+            return;
 
-            var disciplineVisualsIndex = Array.IndexOf(Enum.GetNames(typeof(TechDiskDisciplineVisuals)), discipline.ID);
-            var disciplineVisual = Enum.GetValues(typeof(TechDiskDisciplineVisuals)).GetValue(disciplineVisualsIndex)!;
-
-            _appearance.SetData(uid, (TechDiskDisciplineVisuals)disciplineVisual, true);
-        }
+        _appearance.SetData(uid, TechDiskVisuals.Discipline, discipline.ID);
     }
 
     private void OnAfterInteract(Entity<TechnologyDiskComponent> ent, ref AfterInteractEvent args)
@@ -240,18 +220,8 @@ public sealed class TechnologyDiskSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public enum TechDiskDisciplineVisuals : byte
+public enum TechDiskVisuals : byte
 {
-    Industrial,
-    Arsenal,
-    Experimental,
-    CivilianServices
-}
-
-[Serializable, NetSerializable]
-public enum TechDiskTierVisuals : byte
-{
-    T1,
-    T2,
-    T3
+    Tier,
+    Discipline
 }

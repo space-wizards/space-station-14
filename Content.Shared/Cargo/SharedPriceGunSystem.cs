@@ -3,7 +3,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 
-namespace Content.Shared.Cargo.Systems;
+namespace Content.Shared.Cargo;
 
 /// <summary>
 ///     The price gun system! If this component is on an entity, you can scan objects (Click or use verb) to see their price.

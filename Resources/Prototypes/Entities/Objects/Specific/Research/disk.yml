@@ -69,33 +69,22 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.TechDiskDisciplineVisuals.Industrial:
+      enum.TechDiskVisuals.Discipline:
         base:
-          True: { color: "#eeac34" }
-      enum.TechDiskDisciplineVisuals.Arsenal:
-        base:
-          True: { color: "#dc373b" }
-      enum.TechDiskDisciplineVisuals.Experimental:
-        base:
-          True: { color: "#9a6ef0" }
-      enum.TechDiskDisciplineVisuals.CivilianServices:
-        base:
-          True: { color: "#7ecd48" }
+          Industrial: { color: "#eeac34" }
+          Arsenal: { color: "#dc373b" }
+          Experimental: { color: "#9a6ef0" }
+          CivilianServices: { color: "#7ecd48" }
 
-      enum.TechDiskTierVisuals.T2:
+      enum.TechDiskVisuals.Tier:
         t2_marks:
-          True: { visible: true }
-          False: { visible: false }
+          2: { visible: true }
         t2_border:
-          True: { visible: true }
-          False: { visible: false }
-      enum.TechDiskTierVisuals.T3:
+          2: { visible: true }
         t3_marks:
-          True: { visible: true }
-          False: { visible: false }
+          3: { visible: true }
         t3_border:
-          True: { visible: true }
-          False: { visible: false }
+          3: { visible: true }
   - type: StealTarget
     stealGroup: TechnologyDisk
   - type: TechnologyDisk
