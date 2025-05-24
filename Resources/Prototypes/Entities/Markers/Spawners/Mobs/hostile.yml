@@ -6,7 +6,7 @@
   - type: Sprite
     layers:
     - state: green
-    - state: clown
+    - state: clownspider
       sprite: Mobs/Animals/clownspider.rsi
   - type: ConditionalSpawner
     prototypes:
@@ -21,7 +21,7 @@
     layers:
     - state: green
     - state: bear
-      sprite: Mobs/Animals/bear.rsi
+      sprite: Mobs/Space/bear.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobBearSpace
@@ -80,8 +80,8 @@
   - type: Sprite
     layers:
     - state: green
-    - state: kangaroo-space
-      sprite: Mobs/Animals/kangaroo.rsi
+    - state: kangaroo
+      sprite: Mobs/Space/kangaroo.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobKangarooSpace
@@ -181,8 +181,8 @@
   - type: Sprite
     layers:
     - state: green
-    - state: spacecobra
-      sprite: Mobs/Animals/spacecobra.rsi
+    - state: cobra
+      sprite: Mobs/Space/cobra.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobCobraSpace
@@ -195,8 +195,8 @@
   - type: Sprite
     layers:
     - state: green
-    - state: spacespider
-      sprite: Mobs/Animals/spacespider.rsi
+    - state: spider
+      sprite: Mobs/Space/spider.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobSpiderSpace
