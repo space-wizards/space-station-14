@@ -56,6 +56,9 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+  - type: Tag
+    tags:
+    - MonkeyWearable
 
 #Prisoner EVA
 - type: entity
