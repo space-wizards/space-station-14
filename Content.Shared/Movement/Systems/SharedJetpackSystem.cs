@@ -209,7 +209,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     public void SetEnabled(Entity<JetpackComponent> jetpack, bool enabled, EntityUid? user = null, bool? flyIfEnabled = false)
     {
         var (uid, component) = jetpack;
-        if (enabled && flyIfEnabled == IsFlying(uid))
+        if (enabled == component.Enabled && flyIfEnabled == IsFlying(uid))
             return;
 
         if (user == null)
