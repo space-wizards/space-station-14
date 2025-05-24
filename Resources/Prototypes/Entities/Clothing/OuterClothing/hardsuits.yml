@@ -266,7 +266,7 @@
   parent: [ClothingOuterHardsuitBase, BaseSecurityContraband]
   id: ClothingOuterHardsuitWarden
   name: warden's hardsuit
-  description: A specialized riot suit geared to combat low pressure environments.
+  description: Generations of designs originally tracing from "void cabable riot gear" have produced a frightening hardsuit that lets you REALLY put your foot down and hold your ground.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
@@ -276,18 +276,17 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.4
+    damageCoefficient: 0.3
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.4
-        Slash: 0.5
-        Piercing: 0.6
-        Heat: 0.8
-        Caustic: 0.7
+        Blunt: 0.35
+        Slash: 0.35
+        Piercing: 0.3
+        Heat: 0.6
   - type: ClothingSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.7
+    walkModifier: 0.6
+    sprintModifier: 0.6
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWarden

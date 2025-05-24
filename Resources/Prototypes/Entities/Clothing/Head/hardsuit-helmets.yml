@@ -252,7 +252,7 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitWarden
   name: warden's hardsuit helmet
-  description: A modified riot helmet. Oddly comfortable.
+  description: A heavily modified riot helmet. Oddly comfortable for a wearable brick wall.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/security-warden.rsi

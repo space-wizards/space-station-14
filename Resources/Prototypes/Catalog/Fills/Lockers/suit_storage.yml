@@ -204,7 +204,7 @@
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitWarden
-        - id: ClothingMaskBreath
+        - id: ClothingMaskGasSecurity
   - type: AccessReader
     access: [["Armory"]]
 
