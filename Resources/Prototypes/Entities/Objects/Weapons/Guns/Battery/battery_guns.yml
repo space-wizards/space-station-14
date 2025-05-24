@@ -15,6 +15,8 @@
   - type: AmmoCounter
   - type: Gun
     fireRate: 2
+    impulseStrength: 0
+    cameraRecoilScalar: 0.25 #Notice: Hitscan lasers have lower recoil, other energy projectile weapons like disabler and eshotgun vary.
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -37,6 +39,8 @@
   - type: AmmoCounter
   - type: Gun
     fireRate: 2
+    impulseStrength: 0
+    cameraRecoilScalar: 0.25 #Notice: Hitscan lasers have lower recoil, other energy projectile weapons like disabler and eshotgun vary.
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -189,6 +193,8 @@
         shader: unshaded
   - type: Gun
     projectileSpeed: 10
+    impulseStrength: 25 #25 is default value for knockback
+    cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
     soundGunshot:
       path: /Audio/Effects/Lightning/lightningshock.ogg
       params:
@@ -247,7 +253,7 @@
 
 - type: entity
   name: pulse pistol
-  parent: BaseWeaponBatterySmall
+  parent: [BaseWeaponBatterySmall, BaseCentcommContraband]
   id: WeaponPulsePistol
   description: A state of the art energy pistol favoured as a sidearm by the NT operatives.
   components:
@@ -317,7 +323,7 @@
 
 - type: entity
   name: pulse rifle
-  parent: [BaseWeaponBattery, BaseGunWieldable]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
   id: WeaponPulseRifle
   description: A weapon that is almost as infamous as its users.
   components:
@@ -398,6 +404,8 @@
         - state: base
           map: ["enum.GunVisualLayers.Base"]
     - type: Gun
+      impulseStrength: 25 #25 is default value for knockback
+      cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
       fireRate: 0.5
       soundGunshot:
         path: /Audio/Weapons/emitter.ogg
@@ -467,6 +475,8 @@
   - type: Gun
     fireRate: 2
     projectileSpeed: 35 # any higher and this causes issues in lag
+    impulseStrength: 25 #25 is default value for knockback
+    cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
@@ -527,6 +537,8 @@
   - type: Gun
     selectedMode: FullAuto
     fireRate: 4.5
+    impulseStrength: 25
+    cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
     availableModes:
       - SemiAuto
       - FullAuto
@@ -568,6 +580,8 @@
     slots:
     - Belt
   - type: Gun
+    impulseStrength: 0
+    cameraRecoilScalar: 0.25 #I watched a YouTube video of a taser test fire and it looked like it had a teeny tiny amount of recoil
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: ProjectileBatteryAmmoProvider
@@ -683,6 +697,8 @@
   - type: Gun
     projectileSpeed: 10
     fireRate: 1.5
+    impulseStrength: 25
+    cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
@@ -770,6 +786,8 @@
     sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
   - type: Gun
     fireRate: 2
+    impulseStrength: 25
+    cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: ProjectileBatteryAmmoProvider
@@ -831,6 +849,8 @@
     sprite: Objects/Weapons/Guns/Battery/temp_gun.rsi
   - type: Gun
     fireRate: 1
+    impulseStrength: 25
+    cameraRecoilScalar: 1 #Placeholder - it fires a projectile, not a hitscan beam.
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider

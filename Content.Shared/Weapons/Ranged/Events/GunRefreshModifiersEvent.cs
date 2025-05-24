@@ -13,6 +13,7 @@ public record struct GunRefreshModifiersEvent(
     Entity<GunComponent> Gun,
     SoundSpecifier? SoundGunshot,
     float CameraRecoilScalar,
+    float ImpulseStrength,
     Angle AngleIncrease,
     Angle AngleDecay,
     Angle MaxAngle,
