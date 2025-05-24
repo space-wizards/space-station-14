@@ -8,12 +8,15 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.Discord.DiscordLink;
 
-public sealed class DiscordChatLink
+public sealed class DiscordChatLink : IPostInjectInit
 {
     [Dependency] private readonly DiscordLink _discordLink = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly ITaskManager _taskManager = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+
+    private ISawmill _sawmill = default!;
 
     private ulong? _oocChannelId;
     private ulong? _adminChannelId;
@@ -73,7 +76,7 @@ public sealed class DiscordChatLink
         }
     }
 
-    public async Task SendMessage(string message, string author, ChatChannel channel)
+    public async void SendMessage(string message, string author, ChatChannel channel)
     {
         var channelId = channel switch
         {
@@ -91,6 +94,18 @@ public sealed class DiscordChatLink
         // @ and < are both problematic for discord due to pinging. / is sanitized solely to kneecap links to murder embeds via blunt force
         message = message.Replace("@", "\\@").Replace("<", "\\<").Replace("/", "\\/");
 
-        await _discordLink.SendMessageAsync(channelId.Value, $"**{channel.GetString()}**: `{author}`: {message}");
+        try
+        {
+            await _discordLink.SendMessageAsync(channelId.Value, $"**{channel.GetString()}**: `{author}`: {message}");
+        }
+        catch (Exception e)
+        {
+            _sawmill.Error($"Error while sending Discord message: {e}");
+        }
+    }
+
+    void IPostInjectInit.PostInject()
+    {
+        _sawmill = _logManager.GetSawmill("discord.chat");
     }
 }
