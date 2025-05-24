@@ -19,10 +19,11 @@ public sealed class CommandReceivedEventArgs
     /// The command that was received. This is the first word in the message, after the bot prefix.
     /// </summary>
     public string Command { get; init; } = string.Empty;
+
     /// <summary>
-    /// The arguments to the command. This is everything after the command, split by spaces.
+    /// The arguments to the command. This is everything after the command
     /// </summary>
-    public string[] Arguments { get; init; } = Array.Empty<string>();
+    public string Arguments { get; init; } = string.Empty;
     /// <summary>
     /// Information about the message that the command was received from. This includes the message content, author, etc.
     /// Use this to reply to the message, delete it, etc.
@@ -97,7 +98,6 @@ public sealed class DiscordLink : IPostInjectInit
             // It is valid to not have a Discord token set which is why the above check is an info.
             // But if you have a token set, you should also have a guild ID and prefix set.
             _sawmill.Warning("No Discord guild ID or prefix specified, not connecting.");
-            _client = null;
             return;
         }
 
@@ -209,15 +209,27 @@ public sealed class DiscordLink : IPostInjectInit
             return Task.CompletedTask;
 
         // Split the message into the command and the arguments.
-        var split = content[BotPrefix.Length..].Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        if (split.Length == 0)
-            return Task.CompletedTask;  // No command.
+        var trimmedInput = content[BotPrefix.Length..].Trim();
+        var firstSpaceIndex = trimmedInput.IndexOf(' ');
+
+        string command, arguments;
+
+        if (firstSpaceIndex == -1)
+        {
+            command = trimmedInput;
+            arguments = string.Empty;
+        }
+        else
+        {
+            command = trimmedInput[..firstSpaceIndex];
+            arguments = trimmedInput[(firstSpaceIndex + 1)..].Trim();
+        }
 
         // Raise the event!
         OnCommandReceived?.Invoke(new CommandReceivedEventArgs
         {
-            Command = split[0],
-            Arguments = split[1..],
+            Command = command,
+            Arguments = arguments,
             Message = message,
         });
         return Task.CompletedTask;
