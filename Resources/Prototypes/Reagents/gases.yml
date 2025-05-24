@@ -325,7 +325,6 @@
           type: Slime
           shouldHave: false
         emote: Laugh
-        showInChat: true
         probability: 0.1
       - !type:Emote
         conditions:

@@ -634,9 +634,9 @@ public sealed class EntityEffectSystem : EntitySystem
             return;
 
         if (args.Effect.ShowInChat)
-            _chat.TryEmoteWithChat(args.Args.TargetEntity, args.Effect.EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: args.Effect.Force);
+            _chat.TryEmoteWithChat(args.Args.TargetEntity, args.Effect.EmoteId, forceEmote: args.Effect.Force);
         else
-            _chat.TryEmoteWithoutChat(args.Args.TargetEntity, args.Effect.EmoteId);
+            _chat.TryEmoteWithoutChat(args.Args.TargetEntity, args.Effect.EmoteId, ChatTransmitRange.HideChat, forceEmote: args.Effect.Force);
     }
 
     private void OnExecuteEmpReactionEffect(ref ExecuteEntityEffectEvent<EmpReactionEffect> args)
