@@ -2,6 +2,7 @@
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Polymorph;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Traits.Assorted;
@@ -17,8 +18,16 @@ public sealed class PermanentBlindnessSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<PermanentBlindnessComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<PermanentBlindnessComponent, PolymorphedEvent>(OnPolymorphed);
         SubscribeLocalEvent<PermanentBlindnessComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<PermanentBlindnessComponent, ExaminedEvent>(OnExamined);
+    }
+
+    private void OnPolymorphed(Entity<PermanentBlindnessComponent> ent, ref PolymorphedEvent args)
+    {
+        if (args.Configuration is { TransferStatusEffects: false })
+            return;
+        CopyComp(ent, args.NewEntity, ent.Comp);
     }
 
     private void OnExamined(Entity<PermanentBlindnessComponent> blindness, ref ExaminedEvent args)

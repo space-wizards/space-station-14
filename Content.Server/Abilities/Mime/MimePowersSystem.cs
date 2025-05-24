@@ -7,6 +7,7 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Paper;
 using Content.Shared.Physics;
+using Content.Shared.Polymorph;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -32,6 +33,25 @@ namespace Content.Server.Abilities.Mime
 
             SubscribeLocalEvent<MimePowersComponent, BreakVowAlertEvent>(OnBreakVowAlert);
             SubscribeLocalEvent<MimePowersComponent, RetakeVowAlertEvent>(OnRetakeVowAlert);
+
+            SubscribeLocalEvent<MimePowersComponent, PolymorphedEvent>(OnPolymorphed);
+        }
+
+        private void OnPolymorphed(Entity<MimePowersComponent> ent, ref PolymorphedEvent args)
+        {
+            RemComp<MimePowersComponent>(args.NewEntity);
+            var newComp = CopyComp(ent, args.NewEntity, ent.Comp);
+
+            if (ent.Comp.VowBroken)
+            {
+                BreakVow(args.NewEntity);
+                newComp.VowRepentTime = ent.Comp.VowRepentTime;
+            }
+            else
+            {
+                RetakeVow(args.NewEntity);
+                newComp.InvisibleWallActionEntity = _actionsSystem.AddAction(args.NewEntity, ent.Comp.InvisibleWallAction);
+            }
         }
 
         public override void Update(float frameTime)
