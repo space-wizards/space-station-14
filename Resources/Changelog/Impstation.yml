@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Allie
-  changes:
-  - message: Add a few cosmetic bible flavours for chaplains to choose from, ranging
-      from real to generic to silly.
-    type: Add
-  - message: Chaplains may now select their preferred flavour of holy text as part
-      of their loadout.
-    type: Tweak
-  id: 1231
-  time: '2025-03-05T13:42:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1823
 - author: Darkmajia
   changes:
   - message: The proto-kinetic accelerator makes a clicking sound if it's not ready
@@ -4227,3 +4216,10 @@
   id: 1730
   time: '2025-05-25T19:04:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2556
+- author: SixValentine
+  changes:
+  - message: 'Welcome to Sobriety: Hash Station is Real'
+    type: Add
+  id: 1731
+  time: '2025-05-25T21:46:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2580
