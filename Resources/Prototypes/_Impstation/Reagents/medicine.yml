@@ -109,6 +109,20 @@
       methods: [ Touch ]
       effects:
       - !type:ExtinguishReaction
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+            Blunt: -0.1
+#            Poison: -0.2
+            Heat: -0.1
+            Shock: -0.1
+            Cold: -0.1
   tileReactions:
   - !type:ExtinguishTileReaction { }
 

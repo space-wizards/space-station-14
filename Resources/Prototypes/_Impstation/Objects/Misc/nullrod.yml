@@ -112,6 +112,12 @@
     - Gildgrail #mix changed to make half holy water and half aquam divinos
     - Shake
     mixMessage: "null-grail-mix-success"
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
 
 - type: entity
   name: divine grasp
