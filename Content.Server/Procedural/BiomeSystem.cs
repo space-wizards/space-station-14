@@ -1,13 +1,16 @@
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Decals;
+using Content.Server.Shuttles.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Decals;
 using Content.Shared.Ghost;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Components;
 using Content.Shared.Sprite;
+using Content.Shared.Tag;
 using Robust.Server.Player;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
@@ -18,12 +21,14 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Map.Enumerators;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
 
-public sealed partial class NewBiomeSystem : EntitySystem
+public sealed partial class BiomeSystem : EntitySystem
 {
     /*
      * Handles loading in biomes around players.
@@ -32,6 +37,12 @@ public sealed partial class NewBiomeSystem : EntitySystem
 
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IPrototypeManager _protomanager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISerializationManager _serManager = default!;
+    [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly SharedMapSystem _maps = default!;
+    [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
 
     /// <summary>
@@ -50,6 +61,8 @@ public sealed partial class NewBiomeSystem : EntitySystem
     private EntityQuery<GhostComponent> _ghostQuery;
     private EntityQuery<NewBiomeComponent> _biomeQuery;
 
+    private static readonly ProtoId<TagPrototype> AllowBiomeLoadingTag = "AllowBiomeLoading";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -60,6 +73,8 @@ public sealed partial class NewBiomeSystem : EntitySystem
 
         Subs.CVar(_cfgManager, CCVars.BiomeLoadRange, OnLoadRange, true);
         Subs.CVar(_cfgManager, CCVars.BiomeLoadTime, OnLoadTime, true);
+
+        SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
     }
 
     private void OnLoadTime(float obj)
@@ -71,6 +86,32 @@ public sealed partial class NewBiomeSystem : EntitySystem
     private void OnLoadRange(float obj)
     {
         _loadRange = obj;
+    }
+
+    private void OnFTLStarted(ref FTLStartedEvent ev)
+    {
+        var targetMap = _xforms.ToMapCoordinates(ev.TargetCoordinates);
+        var targetMapUid = _maps.GetMapOrInvalid(targetMap.MapId);
+
+        if (!TryComp<NewBiomeComponent>(targetMapUid, out var biome))
+            return;
+
+        var preloadArea = new Vector2(32f, 32f);
+        var targetArea = new Box2(targetMap.Position - preloadArea, targetMap.Position + preloadArea);
+        Preload(targetMapUid, biome, targetArea);
+    }
+
+    /// <summary>
+    /// Preloads biome for the specified area.
+    /// </summary>
+    public void Preload(EntityUid uid, NewBiomeComponent component, Box2 area)
+    {
+        component.PreloadAreas.Add(area);
+    }
+
+    private bool CanLoad(EntityUid uid)
+    {
+        return !_ghostQuery.HasComp(uid) || _tags.HasTag(uid, AllowBiomeLoadingTag);
     }
 
     public override void Update(float frameTime)
@@ -218,6 +259,9 @@ public sealed partial class NewBiomeSystem : EntitySystem
     /// </summary>
     private void TryAddBiomeBounds(EntityUid uid)
     {
+        if (!CanLoad(uid))
+            return;
+
         var xform = Transform(uid);
 
         // No biome to load
@@ -260,7 +304,7 @@ public sealed partial class NewBiomeSystem : EntitySystem
  {
      [Dependency] private IEntityManager _entManager = default!;
      [Dependency] private IPrototypeManager _protoManager = default!;
-     private NewBiomeSystem System = default!;
+     private BiomeSystem System = default!;
 
     public Entity<MapGridComponent> Grid;
 
@@ -272,7 +316,7 @@ public sealed partial class NewBiomeSystem : EntitySystem
     public BiomeLoadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         IoCManager.InjectDependencies(this);
-        System = _entManager.System<NewBiomeSystem>();
+        System = _entManager.System<BiomeSystem>();
     }
 
     protected override async Task<bool> Process()
@@ -409,7 +453,7 @@ public sealed class BiomeUnloadJob : Job<bool>
                         }
 
                         // If it stayed still and had no data change then keep it.
-                        if (pos == xform.LocalPosition.Floored() && xform.GridUid == Biome.Owner && _entManager.IsDefault(ent, NewBiomeSystem.IgnoredComponents))
+                        if (pos == xform.LocalPosition.Floored() && xform.GridUid == Biome.Owner && _entManager.IsDefault(ent, BiomeSystem.IgnoredComponents))
                         {
                             _entManager.DeleteEntity(ent);
                             continue;

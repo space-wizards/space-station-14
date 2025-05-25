@@ -15,6 +15,8 @@ public sealed partial class DungeonJob
         var dungeon = new Dungeon();
         var tiles = new HashSet<Vector2i>();
         var tr = _position + new Vector2i(dunGen.Size, dunGen.Size);
+        var oldSeed = dunGen.Noise?.GetSeed() ?? 0;
+        dunGen.Noise?.SetSeed(_seed + oldSeed);
 
         for (var x = 0; x < dunGen.Size; x++)
         {
@@ -25,10 +27,14 @@ public sealed partial class DungeonJob
                 if (reservedTiles.Contains(index))
                     continue;
 
+                if (dunGen.Noise?.GetNoise(x, y) < dunGen.Threshold)
+                    continue;
+
                 tiles.Add(index);
             }
         }
 
+        dunGen.Noise?.SetSeed(oldSeed);
         var room = new DungeonRoom(tiles, (tr - _position) / 2 + _position, new Box2i(_position, tr), new HashSet<Vector2i>());
         dungeon.AddRoom(room);
         return dungeon;

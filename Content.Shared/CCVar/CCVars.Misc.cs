@@ -83,9 +83,6 @@ public sealed partial class CCVars
     public static readonly CVarDef<int> GCMaximumTimeMs =
         CVarDef.Create("entgc.maximum_time_ms", 5, CVar.SERVERONLY);
 
-    public static readonly CVarDef<bool> GatewayGeneratorEnabled =
-        CVarDef.Create("gateway.generator_enabled", true);
-
     public static readonly CVarDef<string> TippyEntity =
         CVarDef.Create("tippy.entity", "Tippy", CVar.SERVER | CVar.REPLICATED);
 

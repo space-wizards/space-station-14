@@ -13,8 +13,8 @@ public sealed partial class DungeonJob
         var roofComp = _entManager.EnsureComponent<RoofComponent>(_gridUid);
 
         var noise = roof.Noise;
-        var oldSeed = noise?.GetSeed();
-        noise?.SetSeed(random.Next());
+        var oldSeed = noise?.GetSeed() ?? 0;
+        noise?.SetSeed(_seed + oldSeed);
         var rooves = _entManager.System<RoofSystem>();
 
         foreach (var dungeon in dungeons)
@@ -33,6 +33,6 @@ public sealed partial class DungeonJob
             }
         }
 
-        noise?.SetSeed(oldSeed ?? 0);
+        noise?.SetSeed(oldSeed);
     }
 }

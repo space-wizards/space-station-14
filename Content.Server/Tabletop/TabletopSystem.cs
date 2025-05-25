@@ -194,7 +194,7 @@ namespace Content.Server.Tabletop
                 if (!TryComp(uid, out ActorComponent? actor))
                 {
                     EntityManager.RemoveComponent<TabletopGamerComponent>(uid);
-                    return;
+                    continue;
                 }
 
                 if (actor.PlayerSession.Status != SessionStatus.InGame || !CanSeeTable(uid, gamer.Tabletop))

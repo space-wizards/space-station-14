@@ -1,5 +1,3 @@
-using System.Numerics;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural.Components;
@@ -37,6 +35,12 @@ public sealed record NewBiomeMetaLayer
 public sealed partial class NewBiomeComponent : Component
 {
     /// <summary>
+    /// Areas queued for preloading. Will add these during <see cref="BiomeLoadJob"/> and then flag as modified so they retain.
+    /// </summary>
+    [DataField]
+    public List<Box2> PreloadAreas = new();
+
+    /// <summary>
     /// Is there currently a job that's loading.
     /// </summary>
     public bool Loading = false;
@@ -56,7 +60,8 @@ public sealed partial class NewBiomeComponent : Component
     [DataField]
     public Dictionary<string, Dictionary<Vector2i, DungeonData>> LoadedData = new();
 
-    // Wanted to use a bitmask originally but some stuff like mobs may have massive chunk sizes.
+    public const byte ModifiedTileChunkSize = 8;
+
     /// <summary>
     /// Flag modified tiles so we don't try and unload / reload them.
     /// </summary>

@@ -1,5 +1,4 @@
 using Content.Server.Station.Systems;
-using Content.Shared.Parallax.Biomes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Station.Components;

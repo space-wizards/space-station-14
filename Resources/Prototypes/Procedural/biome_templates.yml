@@ -1,37 +1,3 @@
-# Contains several biomes
-- type: biomeTemplate
-  id: Continental
-  layers:
-    - !type:BiomeMetaLayer
-      template: Lava
-    - !type:BiomeMetaLayer
-      template: Caves
-      threshold: -0.5
-      noise:
-        frequency: 0.001
-        noiseType: OpenSimplex2
-        fractalType: FBm
-        octaves: 2
-        lacunarity: 2
-    - !type:BiomeMetaLayer
-      template: Grasslands
-      threshold: 0
-      noise:
-        frequency: 0.001
-        noiseType: OpenSimplex2
-        fractalType: FBm
-        octaves: 2
-        lacunarity: 2
-    - !type:BiomeMetaLayer
-      template: Snow
-      threshold: 0.5
-      noise:
-        frequency: 0.001
-        noiseType: OpenSimplex2
-        fractalType: FBm
-        octaves: 2
-        lacunarity: 2
-
 # Desert
 - type: entity
   id: BiomeLowDesert
@@ -720,10 +686,13 @@
     tile: FloorAsteroidSand
 
 # Asteroid
-- type: biomeTemplate
+- type: dungeonConfig
   id: Asteroid
   layers:
-    - !type:BiomeEntityLayer
+    - !type:SampleTileDunGen
+      threshold: -1.0
+      tile: FloorAsteroidSand
+    - !type:SampleEntityDunGen
       threshold: 0.85
       noise:
         seed: 2
@@ -739,7 +708,7 @@
         - CrystalBlue
         - CrystalYellow
         - CrystalCyan
-    - !type:BiomeEntityLayer
+    - !type:SampleEntityDunGen
       threshold: 0.95
       noise:
         seed: 1
@@ -749,7 +718,7 @@
         - FloorAsteroidSand
       entities:
         - FloraStalagmite
-    - !type:BiomeEntityLayer
+    - !type:SampleEntityDunGen
       threshold: -0.6
       invert: true
       noise:
@@ -763,6 +732,3 @@
         - FloorAsteroidSand
       entities:
         - AsteroidRock
-    - !type:BiomeTileLayer
-      threshold: -1.0
-      tile: FloorAsteroidSand

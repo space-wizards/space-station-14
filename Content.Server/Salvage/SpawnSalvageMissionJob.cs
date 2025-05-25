@@ -123,10 +123,10 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         if (missionBiome.BiomePrototype != null)
         {
-            var biome = _entManager.AddComponent<BiomeComponent>(mapUid);
+            var biome = _entManager.AddComponent<NewBiomeComponent>(mapUid);
             var biomeSystem = _entManager.System<BiomeSystem>();
-            biomeSystem.SetTemplate(mapUid, biome, _prototypeManager.Index<BiomeTemplatePrototype>(missionBiome.BiomePrototype));
-            biomeSystem.SetSeed(mapUid, biome, mission.Seed);
+
+            biomeSystem.AddBiome(mapUid, missionBiome.BiomePrototype.Value, mission.Seed);
             _entManager.Dirty(mapUid, biome);
 
             // Gravity
@@ -184,16 +184,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         }
 
         expedition.DungeonLocation = dungeonOffset;
-
-        List<Vector2i> reservedTiles = new();
-
-        foreach (var tile in _map.GetTilesIntersecting(mapUid, grid, new Circle(Vector2.Zero, landingPadRadius), false))
-        {
-            if (!_biome.TryGetBiomeTile(mapUid, grid, tile.GridIndices, out _))
-                continue;
-
-            reservedTiles.Add(tile.GridIndices);
-        }
 
         var budgetEntries = new List<IBudgetEntry>();
 
