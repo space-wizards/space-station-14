@@ -5063,55 +5063,6 @@ entities:
     - type: Transform
       pos: -49.383278,-8.450993
       parent: 4812
-- proto: ActionStethoscope
-  entities:
-  - uid: 917
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 7580
-    - type: EntityTargetAction
-      originalIconColor: '#FFFFFFFF'
-      container: 7580
-- proto: ActionToggleLight
-  entities:
-  - uid: 6594
-    components:
-    - type: Transform
-      parent: 12120
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 12120
-  - uid: 7927
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 7926
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 7926
-  - uid: 8328
-    components:
-    - type: Transform
-      parent: 6409
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 6409
-  - uid: 8638
-    components:
-    - type: Transform
-      parent: 1481
-    - type: InstantAction
-      container: 1481
-  - uid: 9825
-    components:
-    - type: Transform
-      parent: 10704
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 10704
 - proto: AirAlarm
   entities:
   - uid: 729
@@ -33823,20 +33774,6 @@ entities:
     - type: Transform
       pos: -42.855858,-7.1805997
       parent: 4812
-    - type: HandheldLight
-      toggleActionEntity: 6594
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 6594
-    - type: ActionsContainer
 - proto: ClothingHeadHatOutlawHat
   entities:
   - uid: 9510
@@ -34123,14 +34060,6 @@ entities:
     - type: Transform
       pos: -18.519077,-23.380693
       parent: 4812
-    - type: Stethoscope
-      actionEntity: 917
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 917
 - proto: ClothingNeckTieRed
   entities:
   - uid: 10922
@@ -42162,20 +42091,6 @@ entities:
     - type: Transform
       pos: -30.505053,10.627045
       parent: 4812
-    - type: HandheldLight
-      toggleActionEntity: 7927
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7927
-    - type: ActionsContainer
 - proto: Floodlight
   entities:
   - uid: 11744
@@ -63470,22 +63385,8 @@ entities:
     - type: Transform
       pos: 24.580408,-19.166311
       parent: 4812
-    - type: HandheldLight
-      toggleActionEntity: 8638
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 8638
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 1520
     components:
     - type: Transform
@@ -63587,26 +63488,8 @@ entities:
     - type: Transform
       pos: -4.4936132,-15.203495
       parent: 4812
-    - type: HandheldLight
-      toggleActionEntity: 8328
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 8328
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 7077
     components:
     - type: Transform
@@ -63642,26 +63525,8 @@ entities:
     - type: Transform
       pos: -28.458933,-5.183518
       parent: 4812
-    - type: HandheldLight
-      toggleActionEntity: 9825
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 9825
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 10811
     components:
     - type: Transform
