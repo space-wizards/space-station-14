@@ -9,9 +9,10 @@ using Robust.Shared.Map;
 namespace Content.Server.Atmos.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class AddMapAtmosCommand : LocalizedCommands
+public sealed class AddMapAtmosCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     private const string _cmd = "cmd-set-map-atmos";
     public override string Command => "setmapatmos";
@@ -26,9 +27,8 @@ public sealed class AddMapAtmosCommand : LocalizedCommands
             return;
         }
 
-        var mapSys = _entities.System<SharedMapSystem>();
         int.TryParse(args[0], out var id);
-        var map = mapSys.GetMapOrInvalid(new MapId(id));
+        var map = _map.GetMapOrInvalid(new MapId(id));
         if (!map.IsValid())
         {
             shell.WriteError(Loc.GetString("cmd-parse-failure-mapid", ("arg", args[0])));
