@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Crude Oil
-  changes:
-  - message: You can now pet the mail teleporter
-    type: Add
-  id: 8058
-  time: '2025-03-13T12:49:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35819
 - author: ScarKy0
   changes:
   - message: Singularity and Whitehole grenades are now in the Disruption category
@@ -3927,3 +3920,12 @@
   id: 8565
   time: '2025-05-25T18:11:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37800
+- author: AsnDen
+  changes:
+  - message: Tile-aligned bar sign version was added.
+    type: Add
+  - message: Bar signs now have proper collision.
+    type: Fix
+  id: 8566
+  time: '2025-05-25T18:36:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37756
