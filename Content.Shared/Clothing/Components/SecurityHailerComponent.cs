@@ -2,6 +2,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 
 namespace Content.Shared.Clothing.Components;
@@ -56,14 +57,10 @@ public sealed partial class SecurityHailerComponent : Component
     /// <summary>
     /// Time where the verb will be ready to be used again
     /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan TimeVerbReady = TimeSpan.Zero;
 
-    public enum SpecialUseCase : byte
-    {
-        None = 0,
-        HOS = 1,
-        ERT = 2
-    }
+    
 
     /// <summary>
     /// Special use cases where some voicelines shouldn't play or we want to play some other voicelines, ex: HOS or ERT
@@ -83,16 +80,6 @@ public sealed partial class SecurityHailerComponent : Component
             }
         }
     };
-
-    /// <summary>
-    /// How aggresive are the orders coming from the hailer ? Higher means more aggressive / shitsec
-    /// </summary>
-    public enum AggresionState : byte
-    {
-        Low = 0,
-        Medium = 1,
-        High = 2
-    }
 
     [DataField, AutoNetworkedField]
     public AggresionState AggresionLevel = AggresionState.Low;
@@ -138,4 +125,26 @@ public enum SecMaskState : byte
 {
     Functional,
     WiresCut
+}
+
+/// <summary>
+/// Special use cases for the hailer, like HOS or ERT.
+/// </summary>
+[Serializable, NetSerializable]
+public enum SpecialUseCase : byte
+{
+    None = 0,
+    HOS = 1,
+    ERT = 2
+}
+
+/// <summary>
+/// How aggresive are the orders coming from the hailer ? Higher means more aggressive / shitsec
+/// </summary>
+[Serializable, NetSerializable]
+public enum AggresionState : byte
+{
+    Low = 0,
+    Medium = 1,
+    High = 2
 }
