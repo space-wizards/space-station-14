@@ -514,7 +514,7 @@ public sealed class BloodstreamSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
         if (ev.OverrideColor != null)
         {
-            var bloodColorData = new BloodColorData
+            var bloodColorData = new ReagentColorData
             {
                 SubstanceColor = ev.OverrideColor.Value
             };

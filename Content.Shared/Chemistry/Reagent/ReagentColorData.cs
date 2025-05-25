@@ -15,7 +15,7 @@ namespace Content.Shared.Chemistry.Reagent;
 /// object with EnsureReagentData().
 /// </summary>
 [ImplicitDataDefinitionForInheritors, Serializable, NetSerializable]
-public sealed partial class BloodColorData : ReagentData
+public sealed partial class ReagentColorData : ReagentData
 {
     [DataField]
     public Color SubstanceColor = Color.White;
@@ -29,7 +29,7 @@ public sealed partial class BloodColorData : ReagentData
             return false;
         }
 
-        return ((BloodColorData)other).SubstanceColor == SubstanceColor;
+        return ((ReagentColorData)other).SubstanceColor == SubstanceColor;
     }
 
     public override int GetHashCode()

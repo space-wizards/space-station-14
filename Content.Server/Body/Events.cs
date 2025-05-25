@@ -1,19 +1,18 @@
 namespace Content.Server.Body;
+
 /// <summary>
 /// Subscribe to this event and set the
 /// BloodOverrideColor to override blood
 /// reagent color
 /// </summary>
 [ByRefEvent]
-public record struct BloodColorOverrideEvent()
-{
-    public Color? OverrideColor;
-}
+public record struct BloodColorOverrideEvent(Color? OverrideColor);
 
 [ByRefEvent]
 public record struct RefreshBloodEvent()
 {
 }
+
 [ByRefEvent]
 public record struct ColorGibsEvent()
 {
@@ -21,7 +20,4 @@ public record struct ColorGibsEvent()
 }
 
 [ByRefEvent]
-public record struct ColorGibPartEvent()
-{
-    public Color GibColor;
-}
+public record struct ColorGibPartEvent(Color GibColor);
