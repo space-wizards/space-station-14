@@ -1,4 +1,5 @@
 ﻿using Content.Shared.StatusIcon;
+using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -19,4 +20,10 @@ public sealed partial class FakeMindShieldComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<SecurityIconPrototype> MindShieldStatusIcon = "MindShieldIcon";
+
+    /// <summary>
+    /// This tag should be placed on the fake mindshield action so there is a way to easily identify it.
+    /// </summary>
+    [DataField]
+    public ProtoId<TagPrototype> MindShieldActionTag = "FakeMindShieldImplant";
 }

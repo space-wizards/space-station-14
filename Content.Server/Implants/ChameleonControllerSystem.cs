@@ -52,35 +52,7 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
         _proto.TryIndex(outfitPrototype.Job, out var jobPrototype);
         _proto.TryIndex(outfitPrototype.StartingGear, out var startingGearPrototype);
 
-        RoleLoadout? customRoleLoadout = null;
-        RoleLoadout? defaultRoleLoadout = null;
-        StartingGearPrototype? jobStartingGearPrototype = null;
-
-        if (jobPrototype != null)
-        {
-            _proto.TryIndex(jobPrototype.StartingGear, out jobStartingGearPrototype);
-
-            if (!TryComp<ActorComponent>(user, out var actorComponent))
-                goto slotIterator;
-
-            var userId = actorComponent.PlayerSession.UserId;
-            var prefs = _preferences.GetPreferences(userId);
-
-            if (prefs.SelectedCharacter is not HumanoidCharacterProfile profile)
-                goto slotIterator;
-
-            var jobProtoId = LoadoutSystem.GetJobPrototype(jobPrototype.ID);
-
-            profile.Loadouts.TryGetValue(jobProtoId, out customRoleLoadout);
-
-            if (!_proto.HasIndex<RoleLoadoutPrototype>(jobProtoId))
-                goto slotIterator;
-
-            defaultRoleLoadout = new RoleLoadout(jobProtoId);
-            defaultRoleLoadout.SetDefault(profile, null, _proto); // only sets the default if the player has no loadout
-        }
-
-        slotIterator:
+        GetJobEquipmentInformation(jobPrototype, user, out var customRoleLoadout, out var defaultRoleLoadout, out var jobStartingGearPrototype);
 
         var ev = new ChameleonControllerOutfitSelectedEvent(
             outfitPrototype,
@@ -91,6 +63,44 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
             );
 
         RaiseLocalEvent(user, ref ev);
+    }
+
+    // This gets as much information from the job as it can.
+    // E.g. the players profile, the default equipment for that job etc...
+    private void GetJobEquipmentInformation(
+        JobPrototype? jobPrototype,
+        EntityUid? user,
+        out RoleLoadout? customRoleLoadout,
+        out RoleLoadout? defaultRoleLoadout,
+        out StartingGearPrototype? jobStartingGearPrototype)
+    {
+        customRoleLoadout = null;
+        defaultRoleLoadout = null;
+        jobStartingGearPrototype = null;
+
+        if (jobPrototype == null)
+            return;
+
+        _proto.TryIndex(jobPrototype.StartingGear, out jobStartingGearPrototype);
+
+        if (!TryComp<ActorComponent>(user, out var actorComponent))
+            return;
+
+        var userId = actorComponent.PlayerSession.UserId;
+        var prefs = _preferences.GetPreferences(userId);
+
+        if (prefs.SelectedCharacter is not HumanoidCharacterProfile profile)
+            return;
+
+        var jobProtoId = LoadoutSystem.GetJobPrototype(jobPrototype.ID);
+
+        profile.Loadouts.TryGetValue(jobProtoId, out customRoleLoadout);
+
+        if (!_proto.HasIndex<RoleLoadoutPrototype>(jobProtoId))
+            return;
+
+        defaultRoleLoadout = new RoleLoadout(jobProtoId);
+        defaultRoleLoadout.SetDefault(profile, null, _proto); // only sets the default if the player has no loadout
     }
 
     private void ChameleonControllerOutfitItemSelected(Entity<ChameleonClothingComponent> ent, ref InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent> args)
@@ -106,6 +116,15 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
         return GetGearForSlot(ev.Args.ChameleonOutfit, ev.Args.CustomRoleLoadout, ev.Args.DefaultRoleLoadout, ev.Args.JobStartingGearPrototype, ev.Args.StartingGearPrototype, slotName);
     }
 
+    /// <summary>
+    /// Get the gear for the given slot. The priority is:
+    /// <br/>1.) Custom loadout from the player for the slot.
+    /// <br/>2.) Chameleon outfit slot equipment.
+    /// <br/>3.) Chameleon outfit starting gear equipment.
+    /// <br/>4.) Default job equipment.
+    /// <br/>5.) Staring equipment for that job.
+    /// </summary>
+    /// <returns>The entity (as a protoid) if there is gear for that slot, null if there isn't.</returns>
     public string? GetGearForSlot(ChameleonOutfitPrototype? chameleonOutfitPrototype, RoleLoadout? customRoleLoadout, RoleLoadout? defaultRoleLoadout, StartingGearPrototype? jobStartingGearPrototype, StartingGearPrototype? startingGearPrototype, string slotName)
     {
         // Priority is:

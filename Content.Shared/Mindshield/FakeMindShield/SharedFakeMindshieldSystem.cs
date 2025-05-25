@@ -38,7 +38,7 @@ public sealed class SharedFakeMindShieldSystem : EntitySystem
 
         foreach (var action in actionsComp.Actions)
         {
-            if (!_tag.HasTag(action, new ProtoId<TagPrototype>("FakeMindShieldImplant")))
+            if (!_tag.HasTag(action, component.MindShieldActionTag))
                 continue;
 
             if (!TryComp<InstantActionComponent>(action, out var instantActionComp))
