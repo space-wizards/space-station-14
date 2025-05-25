@@ -7,7 +7,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Systems;
-using Content.Shared.Cargo.Systems;
+using Content.Shared.Cargo;
 using Content.Shared.Database;
 using Content.Shared.NodeContainer;
 using GasCanisterComponent = Content.Shared.Atmos.Piping.Unary.Components.GasCanisterComponent;

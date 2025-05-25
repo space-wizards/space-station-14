@@ -6,7 +6,6 @@ using Content.Shared.Access.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.Cargo.Systems;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Labels.EntitySystems;
