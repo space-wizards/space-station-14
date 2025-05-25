@@ -182,7 +182,7 @@
     tags: [ ]
 
 - type: entity
-  parent: [ClothingShoesBootsMoon, BaseJetpack, BaseSyndicateContraband]
+  parent: [ClothingShoesBootsMoon, BaseJetpack, BaseSyndicateContraband, BaseToggleClothing]
   id: ClothingShoesBootsMoonSyndie
   name: blood-red moonboots
   description: Reverse-engineered anti-gravity boots using a lunar gel and integrated thrusters.
@@ -216,3 +216,4 @@
         enum.ToggleVisuals.Layer:
           True: {state: icon-on}
           False: {state: icon}
+
