@@ -187,8 +187,7 @@ public sealed partial class BiomeSystem : EntitySystem
             biome.Loading = true;
             var job = new BiomeLoadJob(_loadTime)
             {
-                Grid = (uid, grid),
-                Biome = biome,
+                Grid = (uid, biome, grid),
             };
             _biomeQueue.EnqueueJob(job);
         }
@@ -336,12 +335,7 @@ public sealed partial class BiomeSystem : EntitySystem
      [Dependency] private IPrototypeManager _protoManager = default!;
      private BiomeSystem System = default!;
 
-    public Entity<MapGridComponent> Grid;
-
-    /// <summary>
-    /// Biome that is getting loaded.
-    /// </summary>
-    public BiomeComponent Biome = default!;
+    public Entity<BiomeComponent, MapGridComponent> Grid;
 
     public BiomeLoadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
@@ -353,9 +347,9 @@ public sealed partial class BiomeSystem : EntitySystem
     {
         try
         {
-            foreach (var bound in Biome.LoadedBounds)
+            foreach (var bound in Grid.Comp1.LoadedBounds)
             {
-                foreach (var (layerId, layer) in Biome.Layers)
+                foreach (var (layerId, layer) in Grid.Comp1.Layers)
                 {
                     await LoadLayer(layerId, layer, bound);
                 }
@@ -364,9 +358,26 @@ public sealed partial class BiomeSystem : EntitySystem
         finally
         {
             // Finished
-            DebugTools.Assert(Biome.Loading);
-            Biome.Loading = false;
+            DebugTools.Assert(Grid.Comp1.Loading);
+            Grid.Comp1.Loading = false;
         }
+
+        // If we have any preloads then mark those as modified so they persist.
+        foreach (var preload in Grid.Comp1.PreloadAreas)
+        {
+            for (var x = preload.Left; x <= preload.Right; x++)
+            {
+                for (var y = preload.Bottom; y <= preload.Top; y++)
+                {
+                    var index = new Vector2i(x, y);
+                    Grid.Comp1.ModifiedTiles.Add(index);
+                }
+            }
+
+            await SuspendIfOutOfTime();
+        }
+
+        Grid.Comp1.PreloadAreas.Clear();
 
         return true;
     }
@@ -380,7 +391,7 @@ public sealed partial class BiomeSystem : EntitySystem
         {
             foreach (var sub in layer.DependsOn)
             {
-                var actualLayer = Biome.Layers[sub];
+                var actualLayer = Grid.Comp1.Layers[sub];
 
                 await LoadLayer(sub, actualLayer, loadBounds);
             }
@@ -392,7 +403,7 @@ public sealed partial class BiomeSystem : EntitySystem
         while (chunkEnumerator.MoveNext(out var chunk))
         {
             var chunkOrigin = chunk.Value;
-            var layerLoaded = Biome.LoadedData.GetOrNew(layerId);
+            var layerLoaded = Grid.Comp1.LoadedData.GetOrNew(layerId);
 
             // Layer already loaded for this chunk.
             // This can potentially happen if we're moving and the player's bounds changed but some existing chunks remain.
@@ -404,7 +415,7 @@ public sealed partial class BiomeSystem : EntitySystem
             // Load dungeon here async await and all that jaz.
             var (_, data) = await WaitAsyncTask(_entManager
                 .System<DungeonSystem>()
-                .GenerateDungeonAsync(_protoManager.Index(layer.Dungeon), Grid.Owner, Grid.Comp, chunkOrigin, Biome.Seed, reservedTiles: Biome.ModifiedTiles));
+                .GenerateDungeonAsync(_protoManager.Index(layer.Dungeon), Grid.Owner, Grid.Comp2, chunkOrigin, Grid.Comp1.Seed, reservedTiles: Grid.Comp1.ModifiedTiles));
 
             // If we can unload it then store the data to check for later.
             if (layer.CanUnload)
@@ -555,21 +566,6 @@ public sealed class BiomeUnloadJob : Job<bool>
         finally
         {
             Biome.Comp2.Loading = false;
-        }
-
-        // If we have any preloads then mark those as modified so they persist.
-        foreach (var preload in Biome.Comp2.PreloadAreas)
-        {
-            for (var x = preload.Left; x <= preload.Right; x++)
-            {
-                for (var y = preload.Bottom; y <= preload.Top; y++)
-                {
-                    var index = new Vector2i(x, y);
-                    Biome.Comp2.ModifiedTiles.Add(index);
-                }
-            }
-
-            await SuspendIfOutOfTime();
         }
 
         return true;

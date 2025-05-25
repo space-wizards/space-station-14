@@ -1,12 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Server.Decals;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.Decals;
 using Content.Shared.Ghost;
 using Content.Shared.Maps;
 using Content.Shared.Parallax;
@@ -956,6 +958,7 @@ public sealed partial class ShuttleSystem
         var transform = _physics.GetRelativePhysicsTransform((uid, xform), xform.MapUid.Value);
         var aabbs = new List<Box2>(manager.Fixtures.Count);
         var tileSet = new List<(Vector2i, Tile)>();
+        TryComp(xform.MapUid.Value, out DecalGridComponent? decalGrid);
 
         foreach (var fixture in manager.Fixtures.Values)
         {
@@ -968,6 +971,14 @@ public sealed partial class ShuttleSystem
             // Create a small border around it.
             aabb = aabb.Enlarged(0.2f);
             aabbs.Add(aabb);
+
+            if (decalGrid != null)
+            {
+                foreach (var decal in _decals.GetDecalsIntersecting(xform.MapUid.Value, aabb))
+                {
+                    _decals.RemoveDecal(xform.MapUid.Value, decal.Index, decalGrid);
+                }
+            }
 
             tileSet.Clear();
             _lookupEnts.Clear();
