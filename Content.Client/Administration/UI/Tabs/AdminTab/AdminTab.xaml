@@ -9,7 +9,7 @@
         <GridContainer Columns="3">
             <cc:UICommandButton Command="kick" Text="{Loc admin-player-actions-window-title}" WindowType="{x:Type at:PlayerActionsWindow}" />
             <cc:CommandButton Command="banpanel" Text="{Loc admin-player-actions-window-ban}" />
-            <cc:CommandButton Command="aghost" Text="{Loc admin-player-actions-window-admin-ghost}" />
+            <cc:CommandButton Command="aghost" ConfirmationPrompt="{Loc confirm-command-aghost}" Text="{Loc admin-player-actions-window-admin-ghost}" />
             <cc:UICommandButton Command="tpto" Text="{Loc admin-player-actions-window-teleport}" WindowType="{x:Type at:TeleportWindow}" />
             <cc:CommandButton Command="permissions" Text="{Loc admin-player-actions-window-permissions}" />
             <cc:CommandButton Command="announceui" Text="{Loc admin-player-actions-window-announce}"/>
