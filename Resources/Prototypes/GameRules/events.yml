@@ -569,6 +569,8 @@
         - Syndicate
       mindRoles:
       - MindRoleNukeops
+  - type: DynamicRuleCost
+    cost: 75
 
 - type: entity
   parent: BaseTraitorRule
