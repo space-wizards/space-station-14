@@ -17,6 +17,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Collections.Generic;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -121,7 +122,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
             return;
 
         //If ERT, can't be messed with
-        if (ent.Comp.SpecialCircumtance == SpecialUseCase.ERT)
+        if (ent.Comp.IsERT)
         {
             _popup.PopupEntity(Loc.GetString("ert-gas-mask-impossible"), ent.Owner);
             args.Handled = true;
@@ -266,7 +267,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
 
     private void OnExamine(Entity<SecurityHailerComponent> ent, ref ExaminedEvent args)
     {
-        if (ent.Comp.SpecialCircumtance == SpecialUseCase.ERT)
+        if (ent.Comp.IsERT)
             args.PushMarkup(Loc.GetString("sec-gas-mask-examined-ert"));
         else if (HasComp<EmaggedComponent>(ent))
             args.PushMarkup(Loc.GetString("sec-gas-mask-examined-emagged"));
@@ -306,7 +307,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
             return;
 
         //If ERT, they don't switch aggression level
-        if (ent.Comp.SpecialCircumtance == SpecialUseCase.ERT)
+        if (ent.Comp.IsERT)
             return;
 
         var user = args.User;
@@ -349,7 +350,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         var (uid, comp) = ent;
 
         SoundSpecifier currentSpecifier;
-        if (comp.SpecialCircumtance == SpecialUseCase.ERT)
+        if (comp.IsERT)
             currentSpecifier = comp.ERTAggressionSounds;
         else if (HasComp<EmaggedComponent>(ent))
             currentSpecifier = ent.Comp.EmagAggressionSounds;
@@ -366,10 +367,10 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         if (resolver is not ResolvedCollectionSpecifier collectionResolver)
             return -1;
 
-        if (GetVoiceReplacement(ent, collectionResolver.Index) != null)
-        {
-            resolver = (ResolvedCollectionSpecifier)_sharedAudio.ResolveSound(comp.HOSReplaceSounds);
-        }
+        //if (GetVoiceReplacement(ent, collectionResolver.Index) != null)
+        //{
+        //    resolver = (ResolvedCollectionSpecifier)_sharedAudio.ResolveSound(comp.HOSReplaceSounds);
+        //}
 
         _sharedAudio.PlayPvs(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
 
@@ -384,14 +385,14 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
     /// <returns>If null, nothing replaces. Otherwise, the locale string which replaces it.</returns>
     protected string? GetVoiceReplacement(Entity<SecurityHailerComponent> ent, int index)
     {
-        var linesToReplace = ent.Comp.ReplaceVoicelinesSpecial;
-        if (linesToReplace.ContainsKey(ent.Comp.SpecialCircumtance))
-        {
-            var line = GetLineFormat(ent, index);
-            string? replacedLine;
-            linesToReplace[ent.Comp.SpecialCircumtance].TryGetValue(line, out replacedLine);
-            return replacedLine;
-        }
+        //var linesToReplace = ent.Comp.ReplaceVoicelinesSpecial;
+        //if (linesToReplace.Count > 0) //If we need to replace lines
+        //{
+        //    var line = GetLineFormat(ent, index);
+        //    string? replacedLine;
+        //    linesToReplace[ent.Comp.SpecialCircumtance].TryGetValue(line, out replacedLine);
+        //    return replacedLine;
+        //}
 
         return null;
     }
@@ -407,7 +408,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         string finalLine = String.Empty;
         if (HasComp<EmaggedComponent>(ent))
             finalLine = $"hail-emag-{index}";
-        else if (ent.Comp.SpecialCircumtance == SpecialUseCase.ERT)
+        else if (ent.Comp.IsERT)
             finalLine = $"hail-ERT-{index}";
         else
             finalLine = $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}";

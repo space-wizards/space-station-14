@@ -61,23 +61,20 @@ public sealed partial class SecurityHailerComponent : Component
     public TimeSpan TimeVerbReady = TimeSpan.Zero;
 
     /// <summary>
-    /// Special use cases where some voicelines shouldn't play or we want to play some other voicelines, ex: HOS or ERT
+    /// Is the gas mask an ERT one ?
+    /// Then needs special voicelines and behavior
     /// </summary>
     [DataField]
-    public SpecialUseCase SpecialCircumtance = SpecialUseCase.None;
+    public bool IsERT = false;
 
     /// <summary>
-    /// What ftl line to replace in special circumstances
+    /// What localized line to replace in special circumstances
     /// </summary>
-    public Dictionary<SpecialUseCase, Dictionary<string, string>> ReplaceVoicelinesSpecial = new()
-    {
-        {
-            SpecialUseCase.HOS, new()
-            {
-                { "hail-high-5", "hail-high-HOS"} //"Take it to the HOS voice" line, make no sense if HOS using it
-            }
-        }
-    };
+    [DataField]
+    public Dictionary<string, string> ReplaceVoicelinesLocalize = new();
+
+    [DataField]
+    public Dictionary<string, int> ReplaceVoiceSoundCollection = new();
 
     [DataField, AutoNetworkedField]
     public AggresionState AggresionLevel = AggresionState.Low;
@@ -123,17 +120,6 @@ public enum SecMaskState : byte
 {
     Functional,
     WiresCut
-}
-
-/// <summary>
-/// Special use cases for the hailer, like HOS or ERT.
-/// </summary>
-[Serializable, NetSerializable]
-public enum SpecialUseCase : byte
-{
-    None = 0,
-    HOS = 1,
-    ERT = 2
 }
 
 /// <summary>
