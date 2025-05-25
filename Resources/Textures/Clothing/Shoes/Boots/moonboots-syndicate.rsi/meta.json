@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Tau Ceti Station at commit https://github.com/TauCetiStation/TauCetiClassic/blob/HEAD/icons/obj/clothing/shoes.dmi. Image edited to ",
+  "copyright": "Sprites created by 2DSiggy on Github based off of the Moon Boots sprite added at https://github.com/space-wizards/space-station-14/pull/29009/files.",
   "size": {
     "x": 32,
     "y": 32

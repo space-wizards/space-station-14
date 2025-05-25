@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Tau Ceti Station at commit https://github.com/TauCetiStation/TauCetiClassic/blob/HEAD/icons/obj/clothing/shoes.dmi. Base sprite edited.",
+  "copyright": "Taken from Tau Ceti Station at commit https://github.com/TauCetiStation/TauCetiClassic/blob/HEAD/icons/obj/clothing/shoes.dmi.",
   "size": {
     "x": 32,
     "y": 32
