@@ -63,10 +63,10 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
     {
         var (uid, comp) = ent;
 
-        if (comp.CurrentState != SecMaskState.Functional)
+        if (comp.CurrentState != SecMaskState.Functional || !ent.Comp.User.HasValue)
             return;
-        _actions.RemoveAction(ent.Comp.User, comp.ActionEntity);
-        ent.Comp.User = EntityUid.Invalid;
+        _actions.RemoveAction(ent.Comp.User.Value, comp.ActionEntity);
+        ent.Comp.User = null;
     }
 
     //In case someone spawns with it ?
@@ -115,7 +115,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
 
         //If someone else is wearing it and someone use a tool on it, ignore it
         //Strip system takes over
-        if (ent.Comp.User != EntityUid.Invalid && ent.Comp.User != args.User)
+        if (ent.Comp.User.HasValue && ent.Comp.User != args.User)
             return;
 
         //If ERT, can't be messed with
@@ -204,18 +204,18 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         if (comp.CurrentState == SecMaskState.Functional)
         {
             comp.CurrentState = SecMaskState.WiresCut;
-            if (ent.Comp.User != EntityUid.Invalid)
+            if (ent.Comp.User.HasValue)
             {
-                _actions.RemoveAction(ent.Comp.User, comp.ActionEntity);
+                _actions.RemoveAction(ent.Comp.User.Value, comp.ActionEntity);
+                Dirty(ent);
             }
-            Dirty(ent);
         }
         else if (comp.CurrentState == SecMaskState.WiresCut)
         {
             comp.CurrentState = SecMaskState.Functional;
-            if (ent.Comp.User != EntityUid.Invalid)
+            if (ent.Comp.User.HasValue)
             {
-                _actions.AddAction(ent.Comp.User, ref comp.ActionEntity, comp.Action, uid);
+                _actions.AddAction(ent.Comp.User.Value, ref comp.ActionEntity, comp.Action, uid);
                 Dirty(ent);
             }
         }
@@ -250,7 +250,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         if (args.Handled || HasComp<EmaggedComponent>(ent))
             return;
 
-        if (ent.Comp.User != EntityUid.Invalid && ent.Comp.User != args.UserUid)
+        if (ent.Comp.User.HasValue && ent.Comp.User != args.UserUid)
             return;
 
         _popup.PopupEntity(Loc.GetString("sec-gas-mask-emagged"), ent.Owner);
@@ -280,13 +280,14 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
             return;
 
         if (TryComp(ent.Owner, out MaskComponent? mask)
-            && mask != null)
+            && mask != null
+            && ent.Comp.User.HasValue)
         {
             if (mask.IsToggled)
-                _actions.RemoveAction(ent.Comp.User, ent.Comp.ActionEntity);
-            else if (ent.Comp.CurrentState == SecMaskState.Functional && ent.Comp.User != EntityUid.Invalid)
+                _actions.RemoveAction(ent.Comp.User.Value, ent.Comp.ActionEntity);
+            else if (ent.Comp.CurrentState == SecMaskState.Functional && ent.Comp.User.HasValue)
             {
-                _actions.AddAction(ent.Comp.User, ref ent.Comp.ActionEntity, ent.Comp.Action, ent.Owner);
+                _actions.AddAction(ent.Comp.User.Value, ref ent.Comp.ActionEntity, ent.Comp.Action, ent.Owner);
             }
             Dirty(ent);
         }
