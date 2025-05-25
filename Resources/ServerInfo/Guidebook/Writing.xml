@@ -11,6 +11,8 @@ You can use the following sigils:
 - [color=tan]\[head=n\]\[\/head\][/color] — where [italic]n[/italic] is the heading level (1 – 3)
 - [color=tan]\[bullet\/\][/color] — to insert a bullet point (useful for lists)
 - [color=tan][bold]\[bold\]\[\/bold\][/bold][/color], [color=tan][italic]\[italic\]\[\/italic\][/italic][/color] — for emphasis
+- [color=tan]\[small=n\]\[\/head\][/color] — to add small text, where [italic]n[/italic] is the smallness level (1 – 3)
+- [color=tan][mono]\[mono\]\[\/mono\][/mono][/color] — to create monospaced text, useful for things that must be aligned.
 
 You can combine [bold][italic]bold and italic[/italic][/bold] tags, or use the shortcut [color=tan][bolditalic]\[bolditalic\][/bolditalic][/color].
 
