@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: BusinessCard
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: businessCard
+      steps:
+      - material: Paper
+        amount: 1
+        doAfter: 1
+  - node: businessCard
+    entity: BusinessCard
