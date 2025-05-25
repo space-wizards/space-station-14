@@ -114,6 +114,31 @@ public sealed partial class BiomeSystem : EntitySystem
         return !_ghostQuery.HasComp(uid) || _tags.HasTag(uid, AllowBiomeLoadingTag);
     }
 
+    public void AddLayer(Entity<NewBiomeComponent?> biome, string label, NewBiomeMetaLayer layer)
+    {
+        if (!Resolve(biome.Owner, ref biome.Comp))
+            return;
+
+        if (!biome.Comp.Layers.TryAdd(label, layer))
+        {
+            Log.Warning($"Tried to add layer {label} to biome {ToPrettyString(biome)} that already has it?");
+            return;
+        }
+    }
+
+    public void AddLayer(Entity<NewBiomeComponent?> biome, string label, ProtoId<DungeonConfigPrototype> layer)
+    {
+        if (!Resolve(biome.Owner, ref biome.Comp))
+            return;
+
+        var metaLayer = new NewBiomeMetaLayer()
+        {
+            Dungeon = layer,
+        };
+
+        AddLayer(biome, label, metaLayer);
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
