@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: AftrLite
   changes:
-  - message: Cosmic Cult 1.04 (Provisional)
-    type: Tweak
-  id: 1228
-  time: '2025-03-04T02:01:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1829
-- author: AftrLite
-  changes:
   - message: Cosmic Cult Patch 1.05 (Provisional)
     type: Tweak
   id: 1229
@@ -4225,3 +4218,11 @@
   id: 1727
   time: '2025-05-25T07:48:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2557
+- author: MintyTheBinty
+  changes:
+  - message: 'New Dan''s Soaked Smokes: Rejects, dangerously fun cigs! Available in
+      uplinks, emag''d Discount Dan''s, and select maints lockers station wide.'
+    type: Add
+  id: 1728
+  time: '2025-05-25T10:21:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2578
