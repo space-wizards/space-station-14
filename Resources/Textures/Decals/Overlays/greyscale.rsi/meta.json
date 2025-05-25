@@ -206,13 +206,61 @@
       "name": "verticalslats_continuous_full"
     },
     {
+       "name": "verticalslats_continuous_inner_w"
+    },
+    {
+       "name": "verticalslats_continuous_inner_e"
+    },
+    {
+       "name": "verticalslats_continuous_outer_w"
+    },
+    {
+       "name": "verticalslats_continuous_outer_e"
+    },
+    {
       "name": "verticalslats_bordered_full"
+    },
+    {
+       "name": "verticalslats_bordered_inner_w"
+    },
+    {
+       "name": "verticalslats_bordered_inner_e"
+    },
+    {
+       "name": "verticalslats_bordered_outer_w"
+    },
+    {
+       "name": "verticalslats_bordered_outer_e"
     },
     {
       "name": "horizontalslats_continuous_full"
     },
     {
+      "name": "horizontalslats_continuous_inner_n"
+    },
+    {
+      "name": "horizontalslats_continuous_inner_s"
+    },
+    {
+      "name": "horizontalslats_continuous_outer_n"
+    },
+    {
+      "name": "horizontalslats_continuous_outer_s"
+    },
+    {
       "name": "horizontalslats_bordered_full"
+    },
+    {
+      "name": "horizontalslats_bordered_inner_n"
+    },
+    {
+      "name": "horizontalslats_bordered_inner_s"
+    },
+    {
+      "name": "horizontalslats_bordered_outer_n"
+    },
+    {
+      "name": "horizontalslats_bordered_outer_s"
     }
   ]
 }

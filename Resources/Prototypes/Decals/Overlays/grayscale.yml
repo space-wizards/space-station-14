@@ -447,7 +447,7 @@
     state: minitile_line_w
 
 - type: decal
-  id: VerticalSlatContinuousOverlayFull
+  id: VerticalSlatContinuousFullOverlay
   tags: ["station", "overlay"]
   defaultCustomColor: true
   sprite:
@@ -455,7 +455,39 @@
     state: verticalslats_continuous_full
 
 - type: decal
-  id: VerticalSlatBorderedOverlayFull
+  id: VerticalSlatContinuousInnerOverlayW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: verticalslats_continuous_inner_w
+
+- type: decal
+  id: VerticalSlatContinuousInnerOverlayE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: verticalslats_continuous_inner_e
+
+- type: decal
+  id: VerticalSlatContinuousOuterOverlayW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: verticalslats_continuous_outer_w
+
+- type: decal
+  id: VerticalSlatContinuousOuterOverlayE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: verticalslats_continuous_outer_e
+
+- type: decal
+  id: VerticalSlatBorderedFullOverlay
   tags: ["station", "overlay"]
   defaultCustomColor: true
   sprite:
@@ -463,7 +495,39 @@
     state: verticalslats_bordered_full
 
 - type: decal
-  id: HorizontalSlatContinuousOverlayFull
+  id: VerticalSlatBorderedInnerOverlayW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: verticalslats_bordered_inner_w
+
+- type: decal
+  id: VerticalSlatBorderedInnerOverlayE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: verticalslats_bordered_inner_e
+
+- type: decal
+  id: VerticalSlatBorderedOuterOverlayW
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: verticalslats_bordered_outer_w
+
+- type: decal
+  id: VerticalSlatBorderedOuterOverlayE
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: verticalslats_bordered_outer_e
+
+- type: decal
+  id: HorizontalSlatContinuousFullOverlay
   tags: ["station", "overlay"]
   defaultCustomColor: true
   sprite:
@@ -471,12 +535,76 @@
     state: horizontalslats_continuous_full
 
 - type: decal
-  id: HorizontalSlatBorderedOverlayFull
+  id: HorizontalSlatContinuousOuterOverlayN
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: horizontalslats_continuous_outer_n
+
+- type: decal
+  id: HorizontalSlatContinuousOuterOverlayS
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: horizontalslats_continuous_outer_s
+
+- type: decal
+  id: HorizontalSlatContinuousInnerOverlayN
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: horizontalslats_continuous_inner_n
+
+- type: decal
+  id: HorizontalSlatContinuousInnerOverlayS
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: horizontalslats_continuous_inner_s
+
+- type: decal
+  id: HorizontalSlatBorderedFullOverlay
   tags: ["station", "overlay"]
   defaultCustomColor: true
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
     state: horizontalslats_bordered_full
+
+- type: decal
+  id: HorizontalSlatBorderedOuterOverlayN
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: horizontalslats_bordered_outer_n
+
+- type: decal
+  id: HorizontalSlatBorderedOuterOverlayS
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: horizontalslats_bordered_outer_s
+
+- type: decal
+  id: HorizontalSlatBorderedInnerOverlayN
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: horizontalslats_bordered_inner_n
+
+- type: decal
+  id: HorizontalSlatBorderedInnerOverlayS
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: horizontalslats_bordered_inner_s
 
 - type: decal
   id: OffsetOverlay
