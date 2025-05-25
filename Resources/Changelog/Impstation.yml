@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Drones can weld now. Oops.
-    type: Fix
-  id: 1225
-  time: '2025-03-03T08:43:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1822
 - author: Sha-Seng
   changes:
   - message: Greatcoat logos touched up to match the style of departmental bomber
@@ -4220,3 +4213,13 @@
   id: 1724
   time: '2025-05-25T06:56:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2576
+- author: Stonylogray
+  changes:
+  - message: Aquam divinos and aqua avari now have small effects on contact.
+    type: Tweak
+  - message: Gildgrail can new be used to splash liquids on heathens and the faithful
+      alike.
+    type: Tweak
+  id: 1725
+  time: '2025-05-25T07:08:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2532
