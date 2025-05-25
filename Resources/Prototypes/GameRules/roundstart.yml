@@ -483,7 +483,7 @@
       - !type:NestedSelector
         tableId: BasicAntagEventsTable
       - !type:NestedSelector
-        tabledId: ModerateAntagEventsTable
+        tableId: ModerateAntagEventsTable
       - !type:NestedSelector
         tableId: CargoGiftsTable
       - !type:NestedSelector
