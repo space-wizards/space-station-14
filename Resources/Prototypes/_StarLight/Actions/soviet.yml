@@ -1,7 +1,7 @@
 - type: entity
-  id: ActionOpenSKGBUplinkImplant
+  id: ActionOpenSKBUplinkImplant
   name: Open Svyaz-UZL
-  description: Opens the SKGB uplink embedded under your skin
+  description: Opens the SKB uplink embedded under your skin
   components:
   - type: InstantAction
     itemIconStyle: BigAction

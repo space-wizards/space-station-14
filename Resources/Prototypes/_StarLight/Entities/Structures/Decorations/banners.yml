@@ -100,7 +100,7 @@
 - type: entity
   id: BannerSGKB
   parent: BannerBase
-  name: soviet SKGB banner
+  name: soviet SKB banner
   description: Implementing workers rights. Yeah, we do that in your stations. You're welcome.
   components:
   - type: Sprite

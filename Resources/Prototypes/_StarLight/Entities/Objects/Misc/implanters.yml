@@ -36,16 +36,16 @@
   id: USSPUplinkImplanter
   suffix: USSP uplink
   parent: BaseImplantOnlyImplanterSyndi_StarLight
-  name: SKGB implanter
-  description: A brittle disposable syringe exclusively designed for the injection of subdermal implants for SKGB agents. Dissolves on use.
+  name: SKB implanter
+  description: A brittle disposable syringe exclusively designed for the injection of subdermal implants for SKB agents. Dissolves on use.
   components:
   - type: Implanter
     implant: USSPUplinkImplant
   - type: Item
-    sprite: _Starlight/Objects/Specific/USSP/SKGB_implanter.rsi
+    sprite: _Starlight/Objects/Specific/USSP/SKB_implanter.rsi
     heldPrefix: implanter
   - type: Sprite
-    sprite: _Starlight/Objects/Specific/USSP/SKGB_implanter.rsi
+    sprite: _Starlight/Objects/Specific/USSP/SKB_implanter.rsi
     state: implanter1
     layers:
       - state: implanter0

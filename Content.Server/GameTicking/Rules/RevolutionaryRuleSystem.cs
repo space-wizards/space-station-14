@@ -592,7 +592,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         // Cuffing Head Revs is not enough - they must be killed.
         if (IsGroupDetainedOrDead(headRevList, false, false, false))
         {
-            // STARLIGHT: Delete all USSP uplinks and turn supply rifts and SKGB implanters to ash
+            // STARLIGHT: Delete all USSP uplinks and turn supply rifts and SKB implanters to ash
             DeleteUplinksTurnItemsToAsh();
             
             var rev = AllEntityQuery<RevolutionaryComponent, MindContainerComponent>();
@@ -625,7 +625,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     }
     
     /// <summary>
-    /// STARLIGHT: Deletes all USSP uplinks and turns supply rifts and SKGB implanters to ash when all head revolutionaries are dead.
+    /// STARLIGHT: Deletes all USSP uplinks and turns supply rifts and SKB implanters to ash when all head revolutionaries are dead.
     /// </summary>
     private void DeleteUplinksTurnItemsToAsh()
     {
@@ -672,7 +672,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
         }
         
-        // Find all SKGB implanters and collect them for deletion
+        // Find all SKB implanters and collect them for deletion
         var implantersToDelete = new List<(EntityUid Entity, Robust.Shared.Map.EntityCoordinates Coordinates)>();
         var implanterQuery = EntityManager.EntityQuery<MetaDataComponent, TransformComponent>(true);
         
@@ -684,7 +684,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
         }
         
-        // Process all SKGB implanters
+        // Process all SKB implanters
         foreach (var (entity, coordinates) in implantersToDelete)
         {
             if (EntityManager.EntityExists(entity))

@@ -95,7 +95,7 @@
 
 - type: entity
   parent: ClothingEyesBase
-  id: ClothingEyesGlassesSKGBGlasses
+  id: ClothingEyesGlassesSKBGlasses
   name: cheap sunglasses
   description: A pair of black sunglasses. Doesn't block light well, more of an accessory than something useful.
   components:
