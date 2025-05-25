@@ -18,8 +18,8 @@
           lacunarity: 2
 
   # Generate biome
-  - !type:BiomeDunGen
-    biomeTemplate: Asteroid
+  - !type:PrototypeDunGen
+    proto: Asteroid
   - !type:OreDunGen
     replacement: AsteroidRock
     entity: AsteroidRockGibtonite
@@ -47,8 +47,8 @@
           lacunarity: 2
 
   # Generate biome
-  - !type:BiomeDunGen
-    biomeTemplate: Asteroid
+  - !type:PrototypeDunGen
+    proto: Asteroid
   - !type:OreDunGen
     replacement: AsteroidRock
     entity: AsteroidRockGibtonite
@@ -76,8 +76,8 @@
           cellularDistanceFunction: Euclidean
 
   # Generate biome
-  - !type:BiomeDunGen
-    biomeTemplate: Asteroid
+  - !type:PrototypeDunGen
+    proto: Asteroid
   - !type:OreDunGen
     replacement: AsteroidRock
     entity: AsteroidRockGibtonite
@@ -104,8 +104,8 @@
           lacunarity: 2
 
   # Generate biome
-  - !type:BiomeDunGen
-    biomeTemplate: Asteroid
+  - !type:PrototypeDunGen
+    proto: Asteroid
   - !type:OreDunGen
     replacement: AsteroidRock
     entity: AsteroidRockGibtonite

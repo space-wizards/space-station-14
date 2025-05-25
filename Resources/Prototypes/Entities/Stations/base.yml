@@ -40,6 +40,12 @@
     - type: StationArrivals
 
 - type: entity
+  id: BaseStationGateway
+  abstract: true
+  components:
+    - type: GatewayGenerator
+
+- type: entity
   id: BaseStationShuttles
   abstract: true
   components:

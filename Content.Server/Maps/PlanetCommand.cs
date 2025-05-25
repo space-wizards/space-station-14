@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Procedural;
 using Content.Shared.Administration;
+using Content.Shared.Procedural.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -61,10 +62,12 @@ public sealed class PlanetCommand : IConsoleCommand
         if (args.Length == 1)
             return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entManager), "Map Id");
 
+        var biomeName = _entManager.ComponentFactory.GetComponentName<BiomeComponent>();
+
         if (args.Length == 2)
         {
             var options = _protoManager.EnumeratePrototypes<EntityPrototype>()
-                .Where(o => o.Components.ContainsKey("NewBiome"))
+                .Where(o => o.Components.ContainsKey(biomeName))
                 .Select(o => new CompletionOption(o.ID, "Biome"));
             return CompletionResult.FromOptions(options);
         }

@@ -4,7 +4,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockIron
     count: 30
@@ -16,7 +16,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockQuartz
     count: 30
@@ -28,7 +28,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockCoal
     count: 30
@@ -40,7 +40,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockSalt
     count: 30
@@ -54,7 +54,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockGold
     count: 20
@@ -67,7 +67,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockSilver
     count: 20
@@ -81,7 +81,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockPlasma
     count: 12
@@ -94,7 +94,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockUranium
     count: 15
@@ -106,7 +106,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockDiamond
     count: 6
@@ -119,7 +119,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockArtifactFragment
     count: 6

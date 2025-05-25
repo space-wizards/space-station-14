@@ -4,7 +4,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockIron
     count: 20
@@ -16,7 +16,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockQuartz
     count: 20
@@ -28,7 +28,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockCoal
     count: 20
@@ -40,7 +40,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockSalt
     count: 15
@@ -54,7 +54,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockGold
     count: 12
@@ -67,7 +67,7 @@
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockSilver
     count: 12
@@ -77,11 +77,11 @@
 # High value
 # Plasma
 - type: dungeonConfig
-  id: OrePlasma
+  id: OrePlasmaLow
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockPlasma
     count: 6
@@ -90,11 +90,11 @@
 
 # Uranium
 - type: dungeonConfig
-  id: OreUranium
+  id: OreUraniumLow
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockUranium
     count: 7
@@ -102,11 +102,11 @@
     maxGroupSize: 4
 
 - type: dungeonConfig
-  id: OreDiamond
+  id: OreDiamondLow
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockDiamond
     count: 3
@@ -115,11 +115,11 @@
 
 # Artifact Fragment
 - type: dungeonConfig
-  id: OreArtifactFragment
+  id: OreArtifactFragmentLow
   layers:
   - !type:ChunkDunGen
     size: 128
-  - !type:OreDungen
+  - !type:OreDunGen
     replacement: WallRock
     entity: WallRockArtifactFragment
     count: 3

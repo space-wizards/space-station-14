@@ -152,6 +152,7 @@ public sealed partial class BiomeSystem : EntitySystem
 
             biome.LoadedBounds.Clear();
 
+            // Make sure preloads go in.
             foreach (var preload in biome.PreloadAreas)
             {
                 biome.LoadedBounds.Add(preload);
@@ -554,6 +555,21 @@ public sealed class BiomeUnloadJob : Job<bool>
         finally
         {
             Biome.Comp2.Loading = false;
+        }
+
+        // If we have any preloads then mark those as modified so they persist.
+        foreach (var preload in Biome.Comp2.PreloadAreas)
+        {
+            for (var x = preload.Left; x <= preload.Right; x++)
+            {
+                for (var y = preload.Bottom; y <= preload.Top; y++)
+                {
+                    var index = new Vector2i(x, y);
+                    Biome.Comp2.ModifiedTiles.Add(index);
+                }
+            }
+
+            await SuspendIfOutOfTime();
         }
 
         return true;
