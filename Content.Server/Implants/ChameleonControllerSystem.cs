@@ -19,7 +19,7 @@ namespace Content.Server.Implants;
 public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedStationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly ChameleonClothingSystem _chameleonClothingSystem = default!;
     [Dependency] private readonly IServerPreferencesManager _preferences = default!;
@@ -29,64 +29,111 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SubdermalImplantComponent, ChameleonControllerSelectedJobMessage>(OnSelected);
+        SubscribeLocalEvent<SubdermalImplantComponent, ChameleonControllerSelectedOutfitMessage>(OnSelected);
+
+        SubscribeLocalEvent<ChameleonClothingComponent, InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent>>(ChameleonControllerOutfitItemSelected);
     }
 
-    private void OnSelected(Entity<SubdermalImplantComponent> ent, ref ChameleonControllerSelectedJobMessage args)
+    private void OnSelected(Entity<SubdermalImplantComponent> ent, ref ChameleonControllerSelectedOutfitMessage args)
     {
         if (!_delay.TryResetDelay(ent.Owner, true) || ent.Comp.ImplantedEntity == null || !HasComp<ChameleonControllerImplantComponent>(ent))
             return;
 
-        ChangeChameleonClothingToJob(ent.Comp.ImplantedEntity.Value, args.SelectedJob);
+        ChangeChameleonClothingToJob(ent.Comp.ImplantedEntity.Value, args.SelectedChameleonOutfit);
     }
 
     /// <summary>
     ///     Switches all the chameleon clothing that the implant user is wearing to look like the selected job.
     /// </summary>
-    private void ChangeChameleonClothingToJob(EntityUid user, ProtoId<JobPrototype> job)
+    private void ChangeChameleonClothingToJob(EntityUid user, ProtoId<ChameleonOutfitPrototype> outfit)
     {
-        if (!IsValidJob(job, out var jobPrototype))
-            return;
+        var outfitPrototype = _proto.Index(outfit);
 
-        if (!_proto.TryIndex(jobPrototype.StartingGear, out var startingGearPrototype))
-            return;
+        _proto.TryIndex(outfitPrototype.Job, out var jobPrototype);
+        _proto.TryIndex(outfitPrototype.StartingGear, out var startingGearPrototype);
 
-        if (!TryComp<ActorComponent>(user, out var actorComponent))
-            return;
+        RoleLoadout? customRoleLoadout = null;
+        RoleLoadout? defaultRoleLoadout = null;
+        StartingGearPrototype? jobStartingGearPrototype = null;
 
-        var session = actorComponent.PlayerSession;
-        var userId = actorComponent.PlayerSession.UserId;
-        var prefs = _preferences.GetPreferences(userId);
-
-        if (prefs.SelectedCharacter is not HumanoidCharacterProfile profile)
-            return;
-
-        var jobProtoId = LoadoutSystem.GetJobPrototype(job.Id);
-
-        profile.Loadouts.TryGetValue(jobProtoId, out var loadout);
-        loadout ??= new RoleLoadout(jobProtoId);
-        loadout.SetDefault(profile, session, _proto); // only sets the default if the player has no loadout
-
-        if (!_proto.HasIndex(loadout.Role))
-            return;
-
-        if (!_inventorySystem.TryGetSlots(user, out var slots))
-            return;
-
-        // Go through all the slots on the player
-        foreach (var slot in slots)
+        if (jobPrototype != null)
         {
-            _inventorySystem.TryGetSlotEntity(user, slot.Name, out var containedUid);
-            // If there isn't anything there, or it isn't chameleon clothing.
-            if (containedUid == null || !TryComp<ChameleonClothingComponent>(containedUid, out var chameleonClothingComponent))
-                continue;
+            _proto.TryIndex(jobPrototype.StartingGear, out jobStartingGearPrototype);
 
-            // Either get the gear from the loadout, or the starting gear.
-            var proto = _stationSpawningSystem.GetGearForSlot(loadout, slot.Name) ?? ((IEquipmentLoadout) startingGearPrototype).GetGear(slot.Name);
-            if (proto == string.Empty)
-                continue;
+            if (!TryComp<ActorComponent>(user, out var actorComponent))
+                goto slotIterator;
 
-            _chameleonClothingSystem.SetSelectedPrototype(containedUid.Value, proto, true, chameleonClothingComponent);
+            var userId = actorComponent.PlayerSession.UserId;
+            var prefs = _preferences.GetPreferences(userId);
+
+            if (prefs.SelectedCharacter is not HumanoidCharacterProfile profile)
+                goto slotIterator;
+
+            var jobProtoId = LoadoutSystem.GetJobPrototype(jobPrototype.ID);
+
+            profile.Loadouts.TryGetValue(jobProtoId, out customRoleLoadout);
+
+            if (!_proto.HasIndex<RoleLoadoutPrototype>(jobProtoId))
+                goto slotIterator;
+
+            defaultRoleLoadout = new RoleLoadout(jobProtoId);
+            defaultRoleLoadout.SetDefault(profile, null, _proto); // only sets the default if the player has no loadout
         }
+
+        slotIterator:
+
+        var ev = new ChameleonControllerOutfitSelectedEvent(
+            outfitPrototype,
+            customRoleLoadout,
+            defaultRoleLoadout,
+            jobStartingGearPrototype,
+            startingGearPrototype
+            );
+
+        RaiseLocalEvent(user, ref ev);
+    }
+
+    private void ChameleonControllerOutfitItemSelected(Entity<ChameleonClothingComponent> ent, ref InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent> args)
+    {
+        if (!_inventory.TryGetContainingSlot(ent.Owner, out var slot))
+            return;
+
+        _chameleonClothingSystem.SetSelectedPrototype(ent, GetGearForSlot(args, slot.Name), component: ent.Comp);
+    }
+
+    public string? GetGearForSlot(InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent> ev, string slotName)
+    {
+        return GetGearForSlot(ev.Args.ChameleonOutfit, ev.Args.CustomRoleLoadout, ev.Args.DefaultRoleLoadout, ev.Args.JobStartingGearPrototype, ev.Args.StartingGearPrototype, slotName);
+    }
+
+    public string? GetGearForSlot(ChameleonOutfitPrototype? chameleonOutfitPrototype, RoleLoadout? customRoleLoadout, RoleLoadout? defaultRoleLoadout, StartingGearPrototype? jobStartingGearPrototype, StartingGearPrototype? startingGearPrototype, string slotName)
+    {
+        // Priority is:
+        // 1.) Custom loadout from the player for the slot.
+        // 2.) Chameleon outfit slot equipment.
+        // 3.) Chameleon outfit starting gear equipment.
+        // 4.) Default job equipment.
+        // 5.) Staring equipment for that job.
+
+        var customLoadoutGear = _stationSpawningSystem.GetGearForSlot(customRoleLoadout, slotName);
+        if (customLoadoutGear != null)
+            return customLoadoutGear;
+
+        if (chameleonOutfitPrototype != null && chameleonOutfitPrototype.Equipment.TryGetValue(slotName, out var forSlot))
+            return forSlot;
+
+        var startingGear = startingGearPrototype != null ? ((IEquipmentLoadout)startingGearPrototype).GetGear(slotName) : "";
+        if (startingGear != "")
+            return startingGear;
+
+        var defaultLoadoutGear = _stationSpawningSystem.GetGearForSlot(defaultRoleLoadout, slotName);
+        if (defaultLoadoutGear != null)
+            return defaultLoadoutGear;
+
+        var jobStartingGear = jobStartingGearPrototype != null ? ((IEquipmentLoadout)jobStartingGearPrototype).GetGear(slotName) : "";
+        if (jobStartingGear != "")
+            return jobStartingGear;
+
+        return null;
     }
 }

@@ -189,8 +189,11 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     ///     If there is a value for the given slot, it will return the proto id for that slot.
     ///     If nothing was found, will return null
     /// </returns>
-    public string? GetGearForSlot(RoleLoadout loadout, string slot)
+    public string? GetGearForSlot(RoleLoadout? loadout, string slot)
     {
+        if (loadout == null)
+            return null;
+
         foreach (var group in loadout.SelectedLoadouts)
         {
             foreach (var items in group.Value)

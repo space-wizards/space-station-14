@@ -1,15 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Clothing;
-using Content.Shared.Preferences.Loadouts;
-using Content.Shared.Roles;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Implants;
 
 public abstract partial class SharedChameleonControllerSystem : EntitySystem
 {
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
@@ -29,23 +24,5 @@ public abstract partial class SharedChameleonControllerSystem : EntitySystem
             return;
 
         _uiSystem.OpenUi(implant.Value, ChameleonControllerKey.Key, ev.Performer);
-        _uiSystem.SetUiState(implant.Value, ChameleonControllerKey.Key, new ChameleonControllerBuiState());
-    }
-
-    /// <inheritdoc cref="IsValidJob(JobPrototype)"/>
-    public bool IsValidJob(ProtoId<JobPrototype> job, out JobPrototype jobProto)
-    {
-        jobProto = _proto.Index(job);
-        return IsValidJob(jobProto);
-    }
-
-    /// <summary>
-    /// Make sure the job is "valid" to display in the chameleon controller.
-    /// It should basically be just round start jobs.
-    /// </summary>
-    /// <returns>True if the job is displayable by the chameleon implant.</returns>
-    public bool IsValidJob(JobPrototype job)
-    {
-        return job.StartingGear != null && _proto.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID));
     }
 }

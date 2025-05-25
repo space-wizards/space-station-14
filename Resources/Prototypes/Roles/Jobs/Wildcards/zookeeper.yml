@@ -25,3 +25,7 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: ZookeeperChameleonOutfit
+  job: Zookeeper

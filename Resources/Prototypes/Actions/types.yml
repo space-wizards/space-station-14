@@ -334,6 +334,9 @@
     itemIconStyle: NoItem
     useDelay: 1
     event: !type:FakeMindShieldToggleEvent
+  - type: Tag
+    tags:
+    - FakeMindShieldImplant
 
 - type: entity
   id: ActionToggleParamedicSiren

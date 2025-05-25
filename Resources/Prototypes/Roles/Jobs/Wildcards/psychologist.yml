@@ -21,3 +21,7 @@
   storage:
     back:
     - RubberStampPsychologist
+
+- type: chameleonOutfit
+  id: PsychologistChameleonOutfit
+  job: Psychologist

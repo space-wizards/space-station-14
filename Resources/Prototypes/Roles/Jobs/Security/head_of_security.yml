@@ -53,28 +53,5 @@
     - MagazinePistol
 
 - type: chameleonOutfit
-  id: HOSGearChameleon
+  id: HeadOfSecurityChameleonOutfit
   job: HeadOfSecurity
-  equipment:
-    eyes: ClothingEyesGlassesSecurity
-    id: DetectivePDA
-    ears: ClothingHeadsetSecurity
-    belt: ClothingBeltHolsterFilled
-
-- type: chameleonOutfit
-  id: HOSGearChameleonone
-  job: HeadOfSecurity
-  equipment:
-    eyes: ClothingEyesGlassesSecurity
-    id: DetectivePDA
-    ears: ClothingHeadsetSecurity
-    belt: ClothingBeltHolsterFilled
-
-- type: chameleonOutfit
-  id: HOSGearChameleonrfsfssfsf
-  job: HeadOfSecurity
-  equipment:
-    eyes: ClothingEyesGlassesSecurity
-    id: DetectivePDA
-    ears: ClothingHeadsetSecurity
-    belt: ClothingBeltHolsterFilled

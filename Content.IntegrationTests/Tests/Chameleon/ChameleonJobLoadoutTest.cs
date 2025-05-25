@@ -2,65 +2,61 @@ using System.Collections.Generic;
 using System.Text;
 using Content.Client.Implants;
 using Content.IntegrationTests.Tests.Interaction;
+using Content.Shared.Clothing;
 using Content.Shared.Implants;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Chameleon;
 
-// Ensures all round start jobs have an associated chameleon loadout.
+/// <summary>
+/// Ensures all round <see cref="IsProbablyRoundStartJob">"round start jobs"</see> have an associated chameleon loadout.
+/// </summary>
 public sealed class ChameleonJobLoadoutTest : InteractionTest
 {
+    private readonly List<ProtoId<JobPrototype>> JobBlacklist =
+    [
 
-    // Ensure all jobs have a chameleon clothing prototype
+    ];
+
     [Test]
     public async Task CheckAllJobs()
     {
-        var chamSystem = Pair.Client.EntMan.System<ChameleonControllerSystem>();
-
         var alljobs = ProtoMan.EnumeratePrototypes<JobPrototype>();
 
-        // Job, references
-        Dictionary<ProtoId<JobPrototype>, List<ProtoId<ChameleonOutfitPrototype>>> validJobs = new();
+        // Job -> number of references
+        Dictionary<ProtoId<JobPrototype>, int> validJobs = new();
 
         // Only add stuff that actually has clothing! We don't want stuff like AI or borgs.
         foreach (var job in alljobs)
         {
-            if (!chamSystem.IsValidJob(job))
+            if (!IsProbablyRoundStartJob(job) || JobBlacklist.Contains(job.ID))
                 continue;
 
-            validJobs.Add(job.ID, new());
+            validJobs.Add(job.ID, 0);
         }
 
         var chameleons = ProtoMan.EnumeratePrototypes<ChameleonOutfitPrototype>();
 
         foreach (var chameleon in chameleons)
         {
-            if (chameleon.Job == null)
+            if (chameleon.Job == null || !validJobs.ContainsKey(chameleon.Job.Value))
                 continue;
 
-            // The job must exist
-            Assert.That(validJobs.TryGetValue(chameleon.Job.Value, out _));
-
-            validJobs[chameleon.Job.Value].Add(chameleon.ID);
+            validJobs[chameleon.Job.Value] += 1;
         }
 
         var errorMessage = new StringBuilder();
-        errorMessage.AppendLine("The following jobs have issues with their chameleonOutfit prototype(s):");
+        errorMessage.AppendLine("The following job(s) have no chameleon prototype(s):");
         var invalid = false;
 
         // All round start jobs have a chameleon loadout
         foreach (var job in validJobs)
         {
-            if (job.Value.Count == 1)
-                continue;
+            if (job.Value == 0)
+                errorMessage.AppendLine(job.Key + " has no chameleonOutfit prototype.");
 
-            // string builder but also + at the same time its pro trust
-            errorMessage.AppendLine(job.Key + " has " + (job.Value.Count == 0 ? "no chameleonOutfit prototype." : $"too many chameleonOutfit references ({job.Value.Count}):"));
-            foreach (var chameleon in job.Value)
-            {
-                errorMessage.AppendLine("   " + chameleon);
-            }
             invalid = true;
         }
 
@@ -68,6 +64,14 @@ public sealed class ChameleonJobLoadoutTest : InteractionTest
             return;
 
         Assert.Fail(errorMessage.ToString());
+    }
+
+    /// <summary>
+    /// Best guess at what a "round start" job is.
+    /// </summary>
+    private bool IsProbablyRoundStartJob(JobPrototype job)
+    {
+        return job.StartingGear != null && ProtoMan.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID));
     }
 
 }

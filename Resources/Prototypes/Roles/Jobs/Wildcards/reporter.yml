@@ -19,3 +19,7 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: ReporterChameleonOutfit
+  job: Reporter

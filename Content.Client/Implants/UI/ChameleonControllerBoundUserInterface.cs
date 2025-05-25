@@ -12,9 +12,6 @@ namespace Content.Client.Implants.UI;
 [UsedImplicitly]
 public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ChameleonControllerSystem _chamController = default!;
-
     private readonly UseDelaySystem _delay;
 
     [ViewVariables]
@@ -33,29 +30,7 @@ public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
         _menu.OnJobSelected += OnJobSelected;
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
-    {
-        base.UpdateState(state);
-
-        if (state is not ChameleonControllerBuiState)
-            return;
-
-        var jobProtos = _prototypeManager.EnumeratePrototypes<JobPrototype>();
-        var validList = new List<JobPrototype>();
-
-        // Only add stuff that actually has clothing! We don't want stuff like AI or borgs.
-        foreach (var job in jobProtos)
-        {
-            if (!_chamController.IsValidJob(job))
-                continue;
-
-            validList.Add(job);
-        }
-
-        _menu?.UpdateState(validList);
-    }
-
-    private void OnJobSelected(ProtoId<JobPrototype> selectedJob)
+    private void OnJobSelected(ProtoId<ChameleonOutfitPrototype> outfit)
     {
         if (!EntMan.TryGetComponent<UseDelayComponent>(Owner, out var useDelayComp))
             return;
@@ -63,7 +38,7 @@ public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
         if (!_delay.TryResetDelay((Owner, useDelayComp), true))
             return;
 
-        SendMessage(new ChameleonControllerSelectedJobMessage(selectedJob));
+        SendMessage(new ChameleonControllerSelectedOutfitMessage(outfit));
 
         if (!_delay.TryGetDelayInfo((Owner, useDelayComp), out var delay) || _menu == null)
             return;

@@ -14,3 +14,7 @@
   equipment:
     pocket1: BikeHorn
 
+- type: chameleonOutfit
+  id: CluwneChameleonOutfit
+  name: Cluwne
+  startingGear: CluwneGear

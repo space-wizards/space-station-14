@@ -37,10 +37,19 @@
     - ForensicScanner
 
 - type: chameleonOutfit
-  id: DetectiveGearChameleon
+  id: DetectiveChameleonOutfit
   job: Detective
+  hasMindShield: true
   equipment:
+    head: ClothingHeadHatFedoraBrown
     eyes: ClothingEyesGlassesSecurity
-    id: DetectivePDA
     ears: ClothingHeadsetSecurity
-    belt: ClothingBeltHolsterFilled
+    mask: ClothingMaskGasSecurity
+    outerClothing: ClothingOuterVestDetective
+    jumpsuit: ClothingUniformJumpsuitDetective
+    neck: ClothingNeckTieDet
+    back: ClothingBackpackSecurity
+    belt: ClothingBeltHolster
+    gloves: ClothingHandsGlovesForensic
+    shoes: ClothingShoesBootsJack
+    id: DetectivePDA

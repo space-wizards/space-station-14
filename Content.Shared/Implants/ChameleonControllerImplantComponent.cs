@@ -1,4 +1,6 @@
 ﻿using Content.Shared.Actions;
+using Content.Shared.Inventory;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -30,12 +32,27 @@ public sealed class ChameleonControllerBuiState : BoundUserInterfaceState;
 ///     Triggered when the user clicks on a job in the menu.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ChameleonControllerSelectedJobMessage : BoundUserInterfaceMessage
+public sealed class ChameleonControllerSelectedOutfitMessage(ProtoId<ChameleonOutfitPrototype> selectedOutfit) : BoundUserInterfaceMessage
 {
-    public readonly ProtoId<JobPrototype> SelectedJob;
+    public readonly ProtoId<ChameleonOutfitPrototype> SelectedChameleonOutfit = selectedOutfit;
+}
 
-    public ChameleonControllerSelectedJobMessage(ProtoId<JobPrototype> selectedJob)
-    {
-        SelectedJob = selectedJob;
-    }
+/// <summary>
+///     This event is raised on clothing when the chameleon controller wants it to change sprite based off selecting an
+///      outfit.
+/// </summary>
+/// <param name="ChameleonOutfit">The outfit being switched to.</param>
+/// <param name="CustomRoleLoadout">The users custom loadout for the chameleon outfits job.</param>
+/// <param name="DefaultRoleLoadout">The default loadout for the chameleon outfits job.</param>
+/// <param name="JobStartingGearPrototype">The starting gear of the chameleon outfits job.</param>
+[ByRefEvent]
+public record struct ChameleonControllerOutfitSelectedEvent(
+    ChameleonOutfitPrototype ChameleonOutfit,
+    RoleLoadout? CustomRoleLoadout,
+    RoleLoadout? DefaultRoleLoadout,
+    StartingGearPrototype? JobStartingGearPrototype,
+    StartingGearPrototype? StartingGearPrototype
+) : IInventoryRelayEvent
+{
+    SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.WITHOUT_POCKET;
 }
