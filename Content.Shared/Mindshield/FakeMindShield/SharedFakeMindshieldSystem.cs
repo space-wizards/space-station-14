@@ -13,6 +13,9 @@ public sealed class SharedFakeMindShieldSystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
+    // This tag should be placed on the fake mindshield action so there is a way to easily identify it.
+    private static readonly ProtoId<TagPrototype> FakeMindShieldImplantTag = "FakeMindShieldImplant";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -38,7 +41,7 @@ public sealed class SharedFakeMindShieldSystem : EntitySystem
 
         foreach (var action in actionsComp.Actions)
         {
-            if (!_tag.HasTag(action, component.MindShieldActionTag))
+            if (!_tag.HasTag(action, FakeMindShieldImplantTag))
                 continue;
 
             if (!TryComp<InstantActionComponent>(action, out var instantActionComp))
