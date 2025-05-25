@@ -11,20 +11,23 @@ namespace Content.Server.Medical.Components
     [RegisterComponent]
     public sealed partial class HealingComponent : Component
     {
-        [DataField(required: true)]
+        [DataField("damage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
 
         /// <remarks>
         ///     This should generally be negative,
         ///     since you're, like, trying to heal damage.
         /// </remarks>
-        [DataField]
+        [DataField("bloodlossModifier")]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float BloodlossModifier = 0.0f;
 
         /// <summary>
         ///     Restore missing blood.
         /// </summary>
         [DataField("ModifyBloodLevel")]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float ModifyBloodLevel = 0.0f;
 
         /// <remarks>
@@ -32,31 +35,32 @@ namespace Content.Server.Medical.Components
         ///     HealingComponent this filters what damage container type this component should work on. If null,
         ///     all damage container types are supported.
         /// </remarks>
-        [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<DamageContainerPrototype>))]
+        [DataField("damageContainers", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageContainerPrototype>))]
         public List<string>? DamageContainers;
 
         /// <summary>
         /// How long it takes to apply the damage.
         /// </summary>
-        [DataField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("delay")]
         public float Delay = 3f;
 
         /// <summary>
         /// Delay multiplier when healing yourself.
         /// </summary>
-        [DataField]
+        [DataField("selfHealPenaltyMultiplier")]
         public float SelfHealPenaltyMultiplier = 3f;
 
         /// <summary>
         ///     Sound played on healing begin
         /// </summary>
-        [DataField]
+        [DataField("healingBeginSound")]
         public SoundSpecifier? HealingBeginSound = null;
 
         /// <summary>
         ///     Sound played on healing end
         /// </summary>
-        [DataField]
+        [DataField("healingEndSound")]
         public SoundSpecifier? HealingEndSound = null;
     }
 }
