@@ -121,7 +121,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
             return;
 
         //If ERT, can't be messed with
-        if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+        if (ent.Comp.SpecialCircumtance == SpecialUseCase.ERT)
         {
             _popup.PopupEntity(Loc.GetString("ert-gas-mask-impossible"), ent.Owner);
             args.Handled = true;
@@ -239,8 +239,8 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
     private void IncreaseAggressionLevel(Entity<SecurityHailerComponent> ent)
     {
         //Up the aggression level by one or back to one
-        if (ent.Comp.AggresionLevel == SecurityHailerComponent.AggresionState.High)
-            ent.Comp.AggresionLevel = SecurityHailerComponent.AggresionState.Low;
+        if (ent.Comp.AggresionLevel == AggresionState.High)
+            ent.Comp.AggresionLevel = AggresionState.Low;
         else
             ent.Comp.AggresionLevel++;
 
@@ -266,7 +266,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
 
     private void OnExamine(Entity<SecurityHailerComponent> ent, ref ExaminedEvent args)
     {
-        if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+        if (ent.Comp.SpecialCircumtance == SpecialUseCase.ERT)
             args.PushMarkup(Loc.GetString("sec-gas-mask-examined-ert"));
         else if (HasComp<EmaggedComponent>(ent))
             args.PushMarkup(Loc.GetString("sec-gas-mask-examined-emagged"));
@@ -306,7 +306,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
             return;
 
         //If ERT, they don't switch aggression level
-        if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+        if (ent.Comp.SpecialCircumtance == SpecialUseCase.ERT)
             return;
 
         var user = args.User;
@@ -349,7 +349,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         var (uid, comp) = ent;
 
         SoundSpecifier currentSpecifier;
-        if (comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+        if (comp.SpecialCircumtance == SpecialUseCase.ERT)
             currentSpecifier = comp.ERTAggressionSounds;
         else if (HasComp<EmaggedComponent>(ent))
             currentSpecifier = ent.Comp.EmagAggressionSounds;
@@ -357,8 +357,8 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         {
             currentSpecifier = comp.AggresionLevel switch
             {
-                SecurityHailerComponent.AggresionState.Medium => comp.MediumAggressionSounds,
-                SecurityHailerComponent.AggresionState.High => comp.HighAggressionSounds,
+                AggresionState.Medium => comp.MediumAggressionSounds,
+                AggresionState.High => comp.HighAggressionSounds,
                 _ => comp.LowAggressionSounds,
             };
         }
@@ -407,7 +407,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         string finalLine = String.Empty;
         if (HasComp<EmaggedComponent>(ent))
             finalLine = $"hail-emag-{index}";
-        else if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+        else if (ent.Comp.SpecialCircumtance == SpecialUseCase.ERT)
             finalLine = $"hail-ERT-{index}";
         else
             finalLine = $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}";

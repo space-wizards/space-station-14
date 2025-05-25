@@ -10,7 +10,7 @@ namespace Content.Shared.Clothing.Components;
 /// <summary>
 /// Handle the hails (audible orders to stop) coming from a security gas mask / swat mask
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class SecurityHailerComponent : Component
 {
     /// <summary>
@@ -59,8 +59,6 @@ public sealed partial class SecurityHailerComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan TimeVerbReady = TimeSpan.Zero;
-
-    
 
     /// <summary>
     /// Special use cases where some voicelines shouldn't play or we want to play some other voicelines, ex: HOS or ERT
