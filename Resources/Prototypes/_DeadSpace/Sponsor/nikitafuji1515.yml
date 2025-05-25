@@ -87,7 +87,7 @@
 
 - type: entity
   name: гипоспрей медицинской службы
-  parent: [BaseItem, BaseGrandTheftContraband]
+  parent: BaseItem
   description: Специально разработанный гипоспрей для полевых медиков.
   categories: [ HideSpawnMenu ]
   id: Hypospraynikitafuji1515
@@ -285,7 +285,7 @@
 # HardSuit
 
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseEngineeringContraband]
+  parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitnikitafuji1515
   name: скафандр медицинской службы
   description: Этот скафандр используется полевыми медиками, на пластинах также нанесена эмблема Красного Креста, а наплечные пластины и задняя часть шлема имеют маркировку ODE 27 и литеру А в круге, нанесенную через трафарет.

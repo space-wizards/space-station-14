@@ -1,0 +1,534 @@
+- type: sponsorLoadout
+  id: pvrsifvl
+  entity: ClothingBackpackpvrsifvl
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: ProtoKineticpvrsifvl
+  entity: WeaponCrusherpvrsifvl
+  sponsorOnly: true
+  whitelistJobs: [SalvageSpecialist, SeniorSalvageSpecialist, Quartermaster]
+
+- type: sponsorLoadout
+  id: pvrsifvlHypospray
+  entity: Hypospraypvrsifvl
+  sponsorOnly: true
+  whitelistJobs: [ChiefMedicalOfficer, MedicalDoctor, Chemist, Paramedic, ResearchDirector, SeniorResearcher, Scientist]
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackpvrsifvl
+  name: надёжный компаньон Фелспринг
+  description: В каждом взаимодействии между ними читается взаимное недоверие, но желание выжить превыше личных убеждений. Послана генеральным директором спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/backpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ex1stence/backpack.rsi
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK
+        scale: 0.5, 0.5
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+    - id: ClothingNeckCloakpvrsifvl
+    - id: ClothingMaskpvrsifvl
+    - id: ClothingHandsGlovespvrsifvl
+    - id: ClothingBeltpvrsifvl
+    - id: ClothingOuterHardsuitpvrsifvl
+    - id: ClothingEyesHudMedicalpvrsifvl
+    - id: JetpackVoidFilleddpvrsifvl
+    - id: ClothingUniformJumpsuitpvrsifvl
+    - id: PDApvrsifvl
+    - id: ClothingShoesBootsMagpvrsifvl
+    - id: ClothingHeadsetpvrsifvl
+    - id: PaperLawpvrsifvl
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+
+# Belt
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltpvrsifvl
+  name: блюспейс хранилище Warmind
+  description: Всегда хранит в себе что-то, что может спасти жизнь. Разработано по чертежам спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Storage
+    grid:
+    - 0,0,9,1
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ex1stence/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrillpvrsifvl
+      - id: WelderExperimentalpvrsifvl
+      - id: Multitoolpvrsifvl
+      - id: SyndicateJawsOfLifepvrsifvl
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Cloack
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakpvrsifvl
+  name: мантия железного лорда
+  description: В её тёплых объятиях невыносимый холод бескрайнего космоса кажется уже и не столь пугающим, а одиночество не тревожит душу так сильно. Сшита по заказу спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/cloak.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Crusher
+- type: entity
+  parent: [BaseWeaponCrusher, BaseSecurityCargoContraband]
+  id: WeaponCrusherpvrsifvl
+  name: кроваво-красная катана Warmind
+  categories: [ HideSpawnMenu ]
+  description: Длинные поясные ножны всегда под бдительным контролем мечника. Манящее кроваво-красное длинное лезвие катаны взывает к аналогии с реками крови. Обычно убивает фауну, чуть реже людей. Разработана по чертежам спонсорской организации Warmind.
+  components:
+  - type: Tag
+    tags:
+      - Pickaxe
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/crusher.rsi
+    state: icon
+  - type: AmmoCounter
+  - type: UseDelayOnShoot
+  - type: UseDelay
+    delay: 0.9
+  - type: LeechOnMarker
+    leech:
+      groups:
+        Brute: -7
+  - type: Gun
+    soundGunshot: /Audio/Weapons/plasma_cutter.ogg
+    fireRate: 1
+    useKey: false
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.5
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: BasicEntityAmmoProvider
+    proto: BulletCharge
+    capacity: 1
+    count: 1
+  - type: MeleeWeapon
+    attackRate: 1.5
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 10
+        Slash: 5
+    soundHit:
+      collection: MetalThud
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 2.5
+        Slash: 2.5
+        Structural: 30
+  - type: GunRequiresWield
+  - type: Item
+    size: Huge
+    sprite: _DeadSpace/Sponsor/ex1stence/crusher-inhands.rsi
+  - type: DisarmMalus
+  - type: Prying
+  - type: PointLight
+    color: "#db313f"
+    enabled: false
+    radius: 5
+  - type: Clothing # DS14
+    sprite: _DeadSpace/Sponsor/ex1stence/crusher.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+
+#Gasmask
+- type: entity
+  parent: ClothingMaskGasSyndicate
+  id: ClothingMaskpvrsifvl
+  name: боевая маска железного лорда
+  description: Душно. Разработана по чертежам спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/gasmask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ex1stence/gasmask.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovespvrsifvl
+  name: боевые перчатки железного лорда
+  description: Не позволят владельцу вновь лишний раз обжечься. Сшиты по заказу спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ex1stence/gloves.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitpvrsifvl
+  name: скафандр железного лорда
+  description: Необычайно красивой наружности, напоминающий рыцарские латы. Глядя на него Вы ощущаете, что доспех пропитан ненавистью и ложью. Разработан по чертежам спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ex1stence/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitpvrsifvl
+  - type: Item
+    size: Huge
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+        Stun: 0.65
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitpvrsifvl
+  name: шлем скафандра железного лорда
+  description: Дивной формы шлем Вас подозрительно отпугивает. Прикрытый защитными элементами визор шлема полностью затемнён со стороны, совершенно пуст на вид, словно в доспех никто не облачён. Разработан по чертежам спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ex1stence/helmet.rsi
+  - type: PointLight
+    color: "#73caec"
+    radius: 7
+    energy: 3
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Рога-кастомизация
+- type: marking
+  id: Hornpvrsifvl
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  sponsorOnly: true
+  sprites:
+    - sprite: _DeadSpace/Sponsor/ex1stence/horns_marking.rsi
+      state: horn
+
+#Hud
+- type: entity
+  parent: ClothingEyesHudMultiversal
+  id: ClothingEyesHudMedicalpvrsifvl
+  name: продвинутый визор железного лорда
+  description: В отличие от машин людям свойственна ложь. Всегда важно анализировать наперёд того, кто находится перед тобой. Разработан по чертежам спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/hud.rsi
+  - type: EyeProtection
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Hypo
+- type: entity
+  name: гипоспрей Warmind
+  parent: BaseItem
+  description: Летать со мной, я боюсь, тебя не хватит, дорогой. Разработан по чертежам спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  id: Hypospraypvrsifvl
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/hypo.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/ex1stence/hypo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 5
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyAffectsMobs: false
+  - type: UseDelay
+    delay: 0.5
+  - type: StaticPrice
+    price: 750
+  - type: StealTarget
+    stealGroup: Hypospray
+
+#Jetpack
+- type: entity
+  parent: JetpackVoidFilled
+  id: JetpackVoidFilleddpvrsifvl
+  name: пустотный джетпак железного лорда
+  description:  Всегда простит тебе допущенную ошибку. Разработан по чертежам спонсорской организации Warmind.
+  suffix: Filled
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/ex1stence/jetpack.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/jetpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ex1stence/jetpack.rsi
+    slots:
+      - Back
+      - suitStorage
+      - Belt
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitpvrsifvl
+  name: китель железного лорда
+  description: По внешнему состоянию заметно, что почти не носилась владельцем. Сшит по заказу спонсорской организации Warmind.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/ex1stence/jumpsuit.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagpvrsifvl
+  name: боевые магнитные сапоги железного лорда
+  description: Всегда готовы поддержать и не дать упасть лицом в кровь. Разработаны по чертежам спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/ex1stence/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/ex1stence/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+
+#PDA
+- type: entity
+  parent: BaseMedicalPDA
+  id: PDApvrsifvl
+  name: оболочка военного разума
+  description: Напоминание о прошлом всегда рядом с тобой, даже если ты сам этого не желаешь. Разработана по чертежам спонсорской организации Warmind..
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Sponsor/ex1stence/pda.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/pda.rsi
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - NewsReaderCartridge
+      - MedTekCartridge
+      - AstroNavCartridge
+
+#instruments
+#drill
+- type: entity
+  parent: BaseItem
+  id: PowerDrillpvrsifvl
+  name: электродрель железного лорда
+  description: Выглядит устаревшей и местами сильно потёртой, но не собирается прекращать работу. Идеальна для разборов технических помещений. Разработана по чертежам спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/tools_powerdrill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: _DeadSpace/Sponsor/ex1stence/tools_powerdrill.rsi
+    size: Small
+  - type: Tool
+    qualities:
+      - Screwing
+    speedModifier: 1.5
+    useSound: /Audio/Items/drill_use.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Screwing
+        sprite:
+          sprite: _DeadSpace/Sponsor/ex1stence/tools_powerdrill.rsi
+          state: drill_screw
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Anchoring
+        sprite:
+          sprite: _DeadSpace/Sponsor/ex1stence/tools_powerdrill.rsi
+          state: drill_bolt
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
+      Plastic: 100
+  - type: StaticPrice
+    price: 100
+  - type: MeleeWeapon
+    wideAnimationRotation: -90
+    attackRate: 1.5
+    damage:
+      types:
+        Piercing: 10
+    soundHit:
+      path: "/Audio/Items/drill_hit.ogg"
+
+#JawsOfLife
+- type: entity
+  parent: SyndicateJawsOfLife
+  id: SyndicateJawsOfLifepvrsifvl
+  name: челюсти жизни железного лорда
+  description: Выглядят устаревшими и местами сильно потёртыми, но не уступают в эффективности стандартным. Всегда окажутся под рукой. Разработаны по чертежам спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/tools_jawsoflife.rsi
+    state: syn_jaws_pry
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+    size: Normal
+  - type: MultipleTool
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: _DeadSpace/Sponsor/ex1stence/tools_jawsoflife.rsi
+          state: syn_jaws_pry
+        useSound: /Audio/Items/jaws_pry.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: _DeadSpace/Sponsor/ex1stence/tools_jawsoflife.rsi
+          state: syn_jaws_cutter
+        useSound: /Audio/Items/jaws_cut.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
+
+#WelderExperimental
+- type: entity
+  parent: WelderExperimental
+  id: WelderExperimentalpvrsifvl
+  name: экспериментальный сварочный аппарат железного лорда
+  description: Выглядит устаревшим и местами сильно потёртым, но всё ещё выполняет свою основную функцию. Пригодится в переработке и ремонте. Разработан по чертежам спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/tools_welder.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/ex1stence/tools_welder.rsi
+
+#multitool
+- type: entity
+  parent: Multitool
+  id: Multitoolpvrsifvl
+  name: мультитул железного лорда
+  description: Выглядит устаревшим и местами сильно потёртым, но древняя модификация ещё не списана в утиль. Верный инструмент взломщика. Модифицирован по чертежам спонсорской организации Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/tools_multitool.rsi
+
+#Гарнитура
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetpvrsifvl
+  name: полноразмерная гарнитура Warmind
+  description: полноразмерная гарнитура Warmind | К сожалению, не заглушает бесполезный вопль, а только заставляет его слушать. Модифицирована по чертежам Warmind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/ex1stence/headset.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Документ
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawpvrsifvl
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-ex1stence
