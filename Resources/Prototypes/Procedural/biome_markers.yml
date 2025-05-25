@@ -97,3 +97,26 @@
       id: MobGoat
       amount: !type:RangeNumberSelector
         range: 1, 1
+
+- type: dungeonConfig
+  id: Carps
+  layers:
+  - !type:ChunkDunGen
+    size: 128
+  - !type:EntityTableDunGen
+    table: !type:EntSelector
+      id: MobCarp
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+
+- type: dungeonConfig
+  id: Xenos
+  layers:
+  - !type:ChunkDunGen
+    size: 128
+  - !type:EntityTableDunGen
+    table: !type:EntSelector
+      id: MobXeno
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+
