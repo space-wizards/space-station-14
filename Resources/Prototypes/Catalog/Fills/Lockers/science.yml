@@ -6,10 +6,10 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
-        tableId: FillScientistLocker
+        tableId: FillLockerScientist
 
 - type: entityTable
-  id: FillScientistLocker
+  id: FillLockerScientist
   table: !type:AllSelector
     children:
     - id: ClothingHandsGlovesLatex

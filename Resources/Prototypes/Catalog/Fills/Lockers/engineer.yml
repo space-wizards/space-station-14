@@ -6,10 +6,10 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
-        tableId: FillToolCloset
+        tableId: FillClosetTool
 
 - type: entityTable
-  id: FillToolCloset
+  id: FillClosetTool
   table: !type:AllSelector
     children:
     - id: ClothingOuterVestHazard
@@ -132,7 +132,7 @@
       entity_storage: !type:AllSelector
         children:
         - !type:NestedSelector
-          tableId: FillAtmosphericsLocker
+          tableId: FillLockerAtmospherics
         - !type:NestedSelector
           tableId: FillAtmosphericsHardsuit
 
@@ -144,10 +144,10 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
-        tableId: FillAtmosphericsLocker
+        tableId: FillLockerAtmospherics
 
 - type: entityTable
-  id: FillAtmosphericsLocker
+  id: FillLockerAtmospherics
   table: !type:AllSelector
     children:
     - id: ClothingMaskGasAtmos
@@ -178,7 +178,7 @@
       entity_storage: !type:AllSelector
         children:
         - !type:NestedSelector
-          tableId: FillEngineerLocker
+          tableId: FillLockerEngineer
         - !type:NestedSelector
           tableId: FillEngineerHardsuit
 
@@ -190,10 +190,10 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
-        tableId: FillEngineerLocker
+        tableId: FillLockerEngineer
 
 - type: entityTable
-  id: FillEngineerLocker
+  id: FillLockerEngineer
   table: !type:AllSelector
     children:
     - id: ClothingHandsGlovesColorYellow
