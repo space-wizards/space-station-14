@@ -11978,15 +11978,6 @@ entities:
     - type: Transform
       pos: -0.019477844,-27.376728
       parent: 2
-- proto: ActionToggleLight
-  entities:
-  - uid: 15419
-    components:
-    - type: Transform
-      parent: 1478
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 1478
 - proto: AirAlarm
   entities:
   - uid: 755
@@ -104116,20 +104107,6 @@ entities:
     - type: Transform
       pos: -36.532166,7.5278516
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 15419
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 15419
-    - type: ActionsContainer
   - uid: 5896
     components:
     - type: Transform

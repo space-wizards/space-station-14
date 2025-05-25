@@ -1,41 +1,4 @@
 ﻿Entries:
-- author: Firewars763
-  changes:
-  - message: Added gold and coal rock anomalies and ore crab enemies.
-    type: Add
-  - message: Added yellow and black crystals, crystal shards, and light tubes.
-    type: Add
-  id: 8054
-  time: '2025-03-12T22:45:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34809
-- author: onesch
-  changes:
-  - message: Added handheld sprites to some items
-    type: Add
-  id: 8055
-  time: '2025-03-12T22:46:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33689
-- author: K-Dynamic
-  changes:
-  - message: Nitrous oxide canisters now begin locked like other dangerous gas canisters.
-    type: Fix
-  id: 8056
-  time: '2025-03-13T00:30:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35785
-- author: Plykiya
-  changes:
-  - message: A message now pops up when attempting to fire a gun with no ammo.
-    type: Add
-  id: 8057
-  time: '2025-03-13T07:21:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34816
-- author: Crude Oil
-  changes:
-  - message: You can now pet the mail teleporter
-    type: Add
-  id: 8058
-  time: '2025-03-13T12:49:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35819
 - author: ScarKy0
   changes:
   - message: Singularity and Whitehole grenades are now in the Disruption category
@@ -3929,3 +3892,40 @@
   id: 8561
   time: '2025-05-24T17:32:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37771
+- author: K-Dynamic
+  changes:
+  - message: Shutters and blast doors now appear welded when welded.
+    type: Fix
+  id: 8562
+  time: '2025-05-25T15:57:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37807
+- author: Stop-Signs
+  changes:
+  - message: Meals now better reflect the amount of ingredients put into them.
+    type: Tweak
+  id: 8563
+  time: '2025-05-25T18:02:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34138
+- author: brainfood1183
+  changes:
+  - message: Kangaroos can now be equipped with northstars and knuckle dusters.
+    type: Tweak
+  id: 8564
+  time: '2025-05-25T18:03:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37789
+- author: Moomoobeef
+  changes:
+  - message: Added new variants to dirty tiles.
+    type: Tweak
+  id: 8565
+  time: '2025-05-25T18:11:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37800
+- author: AsnDen
+  changes:
+  - message: Tile-aligned bar sign version was added.
+    type: Add
+  - message: Bar signs now have proper collision.
+    type: Fix
+  id: 8566
+  time: '2025-05-25T18:36:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37756
