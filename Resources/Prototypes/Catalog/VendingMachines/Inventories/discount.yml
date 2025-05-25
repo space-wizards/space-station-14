@@ -11,3 +11,5 @@
   contrabandInventory:
     FoodSnackDanDanNoodles: 3
     FoodBakedBunHoney: 3
+  emaggedInventory: # imp
+    CigPackMixedRejects: 1 # imp

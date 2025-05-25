@@ -34,3 +34,43 @@
     contents:
     - id: CigaretteVoid
       amount: 10
+
+- type: entity
+  id: CigPackMixedRejects
+  parent: [CigPackMixedBase, Tier2Contraband]
+  name: Dan's soaked smokes rejects
+  description: Dan worked with Interdyne chemistry to dispose of excess chemicals, ENJOY CAUTIOUSLY.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Smokeables/Cigarettes/Packs/mixedrejects.rsi
+  - type: Item
+    sprite: _Impstation/Objects/Consumable/Smokeables/Cigarettes/Packs/mixedrejects.rsi
+  - type: Storage
+    grid:
+    - 0,0,5,1
+  - type: StorageFill
+    contents:
+    - id: CigaretteFresiumChloral
+      prob: 0.75
+    - id: CigaretteHonkRazorium
+      prob: 0.75
+    - id: CigarettePhlogCLF3
+      prob: 0.75
+    - id: CigaretteMute
+      prob: 0.75
+    - id: CigaretteFresiumStimulant
+      prob: 0.75
+    - id: CigarettePotassiumWater
+      prob: 0.75
+    - id: CigaretteLead
+      prob: 0.75
+    - id: CigaretteFlash
+      prob: 0.75
+    - id: CigaretteWehHew
+      prob: 0.75
+    - id: CigaretteEMP
+      prob: 0.75
+    - id: CigarettePlasmaGas
+      prob: 0.75
+    - id: CigaretteTazinide
+      prob: 0.75

@@ -153,3 +153,29 @@
     Telecrystal: 2
   categories:
   - UplinkAmmo
+
+- type: listing
+  id: UplinkMixedRejects
+  name: uplink-mixed-rejects-name
+  description: uplink-mixed-rejects-desc
+  productEntity: CigPackMixedRejects
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 1
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkChemicals
+  
+- type: listing
+  id: UplinkMixedRejectsCarton
+  name: uplink-mixed-rejects-carton-name
+  description: uplink-mixed-rejects-carton-desc
+  productEntity: CigCartonMixedRejects
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkChemicals
