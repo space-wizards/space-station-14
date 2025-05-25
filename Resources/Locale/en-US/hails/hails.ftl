@@ -107,3 +107,7 @@ sec-gas-mask-examined = The aggression setting is set to { $level ->
 sec-gas-mask-examined-ert = The aggression setting is set to [color=red]High[/color] and doesn't seem capable of being switched.
 sec-gas-mask-examined-emagged = The aggression setting is set to [color=red]ERROR[/color]. Weird.
 sec-gas-mask-examined-wires-cut = The hailer seems to have its wires cut off.
+
+# Misc
+
+sec-hailer-default-chat-name = Security hailer

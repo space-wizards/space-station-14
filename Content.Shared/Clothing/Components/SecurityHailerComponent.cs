@@ -33,7 +33,7 @@ public sealed partial class SecurityHailerComponent : Component
     /// The name displayed as the speaker when hailing orders
     /// </summary>
     [DataField]
-    public string? ChatName = "Security hailer";
+    public string? ChatName;
 
     /// <summary>
     /// Delay when the hailer is screwed to change aggression level

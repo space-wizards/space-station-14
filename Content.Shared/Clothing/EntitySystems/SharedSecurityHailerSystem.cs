@@ -76,6 +76,8 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
 
         if (comp.CurrentState == SecMaskState.Functional)
             _actions.AddAction(uid, ref comp.ActionEntity, comp.Action);
+
+        ent.Comp.ChatName ??= Loc.GetString("sec-hailer-default-chat-name");
         Dirty(uid, comp);
     }
 
