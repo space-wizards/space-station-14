@@ -96,6 +96,15 @@
           min: 20
         - !type:RoundDurationCondition
           min: 60 # do not use this variant round-start
+      - id: LoneOpsSpawn
+        weight: 5
+        conditions:
+        - !type:HasBudgetCondition
+        - !type:MaxRuleOccurenceCondition
+        - !type:PlayerCountCondition
+          min: 20
+        - !type:RoundDurationCondition
+          min: 2100 # 35 minutes
 
 - type: entity
   parent: BaseGameRule

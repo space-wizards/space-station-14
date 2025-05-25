@@ -32,8 +32,6 @@
     - id: ClosetSkeleton
     - id: KingRatMigration
     - id: RevenantSpawn
-    - id: SleeperAgents
-    - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
 
 - type: entity
