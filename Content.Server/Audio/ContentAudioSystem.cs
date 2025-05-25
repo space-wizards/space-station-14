@@ -14,7 +14,7 @@ namespace Content.Server.Audio;
 public sealed class ContentAudioSystem : SharedContentAudioSystem
 {
     /// <summary>
-    /// Path to the cosmonaut lobby music track used for revolutionary victory
+    /// STARLIGHT: Path to the cosmonaut lobby music track used for revolutionary victory
     /// </summary>
     public const string RevVictoryMusic = "/Audio/_Starlight/Music/Lobby/sov_win.ogg";
     
@@ -28,7 +28,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
     private SoundCollectionPrototype _lobbyMusicCollection = default!;
     private string[]? _lobbyPlaylist;
     
-    // Flag to indicate if we should use a custom playlist for the next round end
+    // STARLIGHT: Flag to indicate if we should use a custom playlist for the next round end
     private bool _useCustomPlaylist;
     private string? _customFirstTrack;
 
@@ -80,7 +80,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
         // at the end of a round, and this needs to be set before RestartRound
         // in order for the lobby song status display to be accurate.
         
-        // Check if we should use a custom playlist
+        // STARLIGHT: Check if we should use a custom playlist
         if (_useCustomPlaylist && _customFirstTrack != null)
         {
             _lobbyPlaylist = CreatePlaylistWithFirstTrack(_customFirstTrack);
@@ -107,7 +107,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
     }
     
     /// <summary>
-    /// Creates a playlist with a specific track as the first item, followed by the rest of the tracks shuffled.
+    /// STARLIGHT: Creates a playlist with a specific track as the first item, followed by the rest of the tracks shuffled.
     /// </summary>
     /// <param name="firstTrack">The track to place at the beginning of the playlist</param>
     /// <returns>A playlist array with the specified track first</returns>
