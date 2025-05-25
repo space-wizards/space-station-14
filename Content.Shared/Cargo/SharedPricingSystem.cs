@@ -1,6 +1,11 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Cargo;
+namespace Content.Shared.Cargo.Systems;
+
+public sealed class SharedPricingSystem : EntitySystem
+{
+
+}
 
 /// <summary>
 /// A directed by-ref event fired on an entity when something needs to know its price. This value is not cached.

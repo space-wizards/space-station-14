@@ -17,7 +17,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Shared.Cargo;
+using Content.Shared.Cargo.Systems;
 using Content.Shared.Research.Prototypes;
 
 namespace Content.Server.Cargo.Systems;

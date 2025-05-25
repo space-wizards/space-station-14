@@ -1,5 +1,5 @@
 using Content.Shared.Anomaly.Components;
-using Content.Shared.Cargo;
+using Content.Shared.Cargo.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Anomaly.Effects;
