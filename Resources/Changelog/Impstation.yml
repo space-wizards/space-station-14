@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Greatcoat logos touched up to match the style of departmental bomber
-      logos
-    type: Tweak
-  - message: Emergency gas tanks are now properly labeled so that they fit into tank
-      harnesses
-    type: Fix
-  id: 1226
-  time: '2025-03-03T08:46:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1780
 - author: mqole
   changes:
   - message: more pages blagh thusd Cosmic Cult Guidebook. Read Them
@@ -4223,3 +4212,16 @@
   id: 1725
   time: '2025-05-25T07:08:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2532
+- author: Cutinup99
+  changes:
+  - message: Armory crate purchase for the the Drozd, Lecter, and Kammerer
+    type: Add
+  - message: AKMS is now obtainable via cargo.
+    type: Add
+  - message: renamed the SMG and shotgun crates to reflect whats actually within them
+    type: Tweak
+  - message: daitos are now marginally cheaper
+    type: Tweak
+  id: 1726
+  time: '2025-05-25T07:25:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2566
