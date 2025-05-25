@@ -34,6 +34,18 @@
     - id: RevenantSpawn
     - id: DerelictCyborgSpawn
 
+- type: entityTable
+  id: ModerateAntagEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: DragonSpawn
+    - id: NinjaSpawn
+    - id: ParadoxCloneSpawn
+    - id: SleeperAgents
+    - id: ZombieOutbreak
+    - id: LoneOpsSpawn
+    - id: WizardSpawn
+
 - type: entity
   id: BaseStationEvent
   parent: BaseGameRule

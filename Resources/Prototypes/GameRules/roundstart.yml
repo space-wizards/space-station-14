@@ -483,11 +483,28 @@
       - !type:NestedSelector
         tableId: BasicAntagEventsTable
       - !type:NestedSelector
+        tabledId: ModerateAntagEventsTable
+      - !type:NestedSelector
         tableId: CargoGiftsTable
       - !type:NestedSelector
         tableId: CalmPestEventsTable
       - !type:NestedSelector
         tableId: SpicyPestEventsTable
+
+- type: entityTable
+  id: DynamicGameRulesTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - !type:NestedSelector
+      tableId: BasicCalmEventsTable
+    - !type:NestedSelector
+      tableId: BasicAntagEventsTable
+    - !type:NestedSelector
+      tableId: CargoGiftsTable
+    - !type:NestedSelector
+      tableId: CalmPestEventsTable
+    - !type:NestedSelector
+      tableId: SpicyPestEventsTable
 
 - type: entityTable
   id: SpaceTrafficControlTable
@@ -507,6 +524,14 @@
   - type: BasicStationEventScheduler
     scheduledGameRules: !type:NestedSelector
       tableId: BasicGameRulesTable
+
+  - type: entity
+    id: DynamicStationEventScheduler # this isn't the dynamic mode, but rather the station event scheduler used for dynamic
+    parent: BaseGameRule
+    components:
+    - type: BasicStationEventScheduler
+      scheduledGameRules: !type:NestedSelector
+        tableId: DynamicGameRulesTable
 
 - type: entity
   id: RampingStationEventScheduler

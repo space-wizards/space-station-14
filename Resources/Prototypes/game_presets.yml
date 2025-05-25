@@ -106,7 +106,7 @@
   description: dynamic-description
   rules:
   - DynamicRule
-  - BasicStationEventScheduler
+  - DynamicStationEventScheduler
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
