@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Delta-V
-  changes:
-  - message: 'A shipment from Delta-V Sector: tons of new clothes!'
-    type: Add
-  id: 1230
-  time: '2025-03-04T13:32:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1786
 - author: Allie
   changes:
   - message: Add a few cosmetic bible flavours for chaplains to choose from, ranging
@@ -4226,3 +4219,11 @@
   id: 1729
   time: '2025-05-25T15:40:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2470
+- author: MintyTheBinty
+  changes:
+  - message: Lethal poison auto-injectors now available in select syndicate and nuclear
+      operative uplinks, get jabbin' agent!
+    type: Add
+  id: 1730
+  time: '2025-05-25T19:04:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2556
