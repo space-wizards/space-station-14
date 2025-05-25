@@ -1,5 +1,5 @@
 # Cotton Bun
-
+# think about changing naming convention here to ensure things are found properly
 - type: entity
   parent: FoodBreadSliceBase
   id: FoodCottonBun
