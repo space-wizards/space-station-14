@@ -510,7 +510,7 @@ public sealed class BloodstreamSystem : EntitySystem
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
         bloodData.Add(dnaData);
 
-        var ev = new BloodColorOverrideEvent { OverrideColor = null };
+        var ev = new BloodColorOverrideEvent(null);
         RaiseLocalEvent(uid, ref ev);
         if (ev.OverrideColor != null)
         {
