@@ -1199,6 +1199,21 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavInteract: !type:Bool
+        true
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 1.5
+    useSound:
+      path: /Audio/Items/crowbar.ogg
 
 - type: entity
   name: kangaroo
