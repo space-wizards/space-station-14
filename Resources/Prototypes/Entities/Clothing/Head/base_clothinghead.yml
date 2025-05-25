@@ -147,7 +147,7 @@
   name: base hardsuit helmet
   categories: [ HideSpawnMenu ]
   components:
- # SlotBlocker blocked until UI change
+# SlotBlocker blocked until UI change
 #  - type: SlotBlock
 #    slots: [ears, eyes, mask]
   - type: BreathMask
