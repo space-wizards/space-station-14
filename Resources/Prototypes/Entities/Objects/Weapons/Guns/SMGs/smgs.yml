@@ -173,7 +173,7 @@
               - CartridgePistol
     - type: MagazineVisuals
       magState: mag
-      steps: 1
+      steps: 5
       zeroVisible: true
     - type: Appearance
 

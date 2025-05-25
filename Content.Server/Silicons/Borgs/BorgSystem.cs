@@ -27,6 +27,7 @@ using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -41,6 +42,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IBanManager _banManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
@@ -49,7 +51,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly TriggerSystem _trigger = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;

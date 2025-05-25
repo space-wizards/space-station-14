@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
 using Content.Server.Storage.Components;
+using Content.Shared.Cargo;
 using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;

@@ -46,6 +46,7 @@
   recipes:
   - PowerCellMicroreactor
   - PowerCellHigh
+  - PowerCellHyper
 
 - type: latheRecipePack
   id: ScienceWeapons

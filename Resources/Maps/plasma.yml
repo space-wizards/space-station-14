@@ -9829,24 +9829,6 @@ entities:
     - type: Transform
       pos: -131.49832,-18.377594
       parent: 2
-- proto: ActionSleep
-  entities:
-  - uid: 2905
-    components:
-    - type: Transform
-      parent: 2904
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 2904
-- proto: ActionToggleLight
-  entities:
-  - uid: 17811
-    components:
-    - type: Transform
-      parent: 17810
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 17810
 - proto: AirAlarm
   entities:
   - uid: 346
@@ -76523,14 +76505,6 @@ entities:
     - type: Transform
       pos: -46.5,-9.5
       parent: 2
-    - type: HealOnBuckle
-      sleepAction: 2905
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 2905
   - uid: 2953
     components:
     - type: Transform
@@ -81375,20 +81349,6 @@ entities:
     - type: Transform
       pos: -93.54334,-31.573391
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 17811
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 17811
-    - type: ActionsContainer
 - proto: FleshBlocker
   entities:
   - uid: 23372
@@ -148880,26 +148840,6 @@ entities:
       parent: 2
     - type: PointLight
       color: '#FF3300FF'
-- proto: TelecomServer
-  entities:
-  - uid: 15019
-    components:
-    - type: MetaData
-      desc: An old server, stuck compiling an unknown program...
-      name: Computron
-    - type: Transform
-      pos: -57.5,-78.5
-      parent: 2
-    - type: ApcPowerReceiver
-      powerLoad: 500
-    missingComponents:
-    - Destructible
-    - Machine
-    - WiresPanel
-    - EncryptionKeyHolder
-    - TelecomServer
-    - ContainerContainer
-    - Construction
 - proto: TelecomServerCircuitboard
   entities:
   - uid: 4499
