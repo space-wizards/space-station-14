@@ -880,8 +880,8 @@ namespace Content.Shared.Chemistry.Components
                 }
                 var reagentColor = proto.SubstanceColor;
                 var reagentData = reagent.EnsureReagentData();
-                var bloodData = reagentData.OfType<ReagentColorData>().FirstOrDefault();
-                reagentColor = bloodData?.SubstanceColor ?? reagentColor;
+                var fetchedReagentColorData = reagentData.OfType<ReagentColorData>().FirstOrDefault();
+                reagentColor = fetchedReagentColorData?.SubstanceColor ?? reagentColor;
                 if (first)
                 {
                     first = false;
