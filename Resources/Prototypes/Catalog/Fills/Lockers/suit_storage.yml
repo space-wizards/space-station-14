@@ -97,10 +97,8 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - !type:NestedSelector
-          tableId: FillEngineerHardsuit
+      entity_storage: !type:NestedSelector
+        tableId: FillEngineerHardsuit
   - type: AccessReader
     access: [["Engineering"]]
 
@@ -112,10 +110,8 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - !type:NestedSelector
-          tableId: FillAtmosphericsHardsuit
+      entity_storage: !type:NestedSelector
+        tableId: FillAtmosphericsHardsuit
   - type: AccessReader
     access: [["Atmospherics"]]
 
