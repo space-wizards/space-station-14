@@ -1611,6 +1611,19 @@
   - UplinkWearables
 
 - type: listing
+  id: UplinkClothingShoesBootsMoonSyndie
+  name: uplink-clothing-shoes-boots-moon-syndie-name
+  description: uplink-clothing-shoes-boots-moon-syndie-desc
+  productEntity: ClothingShoesBootsMoonSyndie
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 2
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkWearables
+
+- type: listing
   id: UplinkClothingShoesBootsMagSyndie
   name: uplink-clothing-shoes-boots-mag-syndie-name
   description: uplink-clothing-shoes-boots-mag-syndie-desc

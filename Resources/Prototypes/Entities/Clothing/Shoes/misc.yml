@@ -180,3 +180,39 @@
     price: 75
   - type: Tag
     tags: [ ]
+
+- type: entity
+  parent: [ClothingShoesBootsMoon, BaseJetpack, BaseSyndicateContraband]
+  id: ClothingShoesBootsMoonSyndie
+  name: blood-red moonboots
+  description: Reverse-engineered anti-gravity boots using a lunar gel and integrated thrusters.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/moonboots-syndicate.rsi
+    layers:
+    - state: icon
+      map: ["enum.ToggleVisuals.Layer"]
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/moonboots-syndicate.rsi
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 2 minutes of thrust
+      volume: 0.75
+      temperature: 293.15
+      moles:
+      - 0.153853429 # oxygen
+      - 0.153853429 # nitrogen
+  - type: Item
+    sprite: null
+    size: Normal
+  - type: ItemTogglePrefix
+    prefixOn: on
+  - type: ToggleClothingPrefix
+    prefixOn: on
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: icon-on}
+          False: {state: icon}
