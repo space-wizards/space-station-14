@@ -525,13 +525,13 @@
     scheduledGameRules: !type:NestedSelector
       tableId: BasicGameRulesTable
 
-  - type: entity
-    id: DynamicStationEventScheduler # this isn't the dynamic mode, but rather the station event scheduler used for dynamic
-    parent: BaseGameRule
-    components:
-    - type: BasicStationEventScheduler
-      scheduledGameRules: !type:NestedSelector
-        tableId: DynamicGameRulesTable
+- type: entity
+  id: DynamicStationEventScheduler # this isn't the dynamic mode, but rather the station event scheduler used for dynamic
+  parent: BaseGameRule
+  components:
+  - type: BasicStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: DynamicGameRulesTable
 
 - type: entity
   id: RampingStationEventScheduler
