@@ -384,6 +384,17 @@
     reflectProb: 1.0
     spread: 75
 
+# Nukie variant, reduced reflection rate.
+- type: entity
+  parent: HyperEutacticBlade
+  id: HyperEutaticBlade
+  name: hypereutatic-blade
+  description: Often mistaken for the HyperEutactic Blade. This mass produced, off-brand, knockoff gets the same job done but with less reflection.
+  components:
+  - type: Reflect
+    reflectProb: 0.75
+    spread: 75
+
 # Borgs
 - type: entity
   suffix: One-Handed, For Borgs
