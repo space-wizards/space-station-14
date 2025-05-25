@@ -1,23 +1,4 @@
 ﻿Entries:
-- author: Cutinup99
-  changes:
-  - message: Warden's hardsuit has been changed, the armor is better but its slower
-    type: Tweak
-  id: 1223
-  time: '2025-03-03T01:52:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1819
-- author: Darkmajia
-  changes:
-  - message: The goliath hardsuit is no longer craftable.
-    type: Remove
-  - message: The goliath hardsuit can be found rarely on salvage.
-    type: Tweak
-  - message: The goliath and maxim hardsuits can be found rarely in grand lottery
-      crates.
-    type: Tweak
-  id: 1224
-  time: '2025-03-03T03:13:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1820
 - author: widgetbeck
   changes:
   - message: Drones can weld now. Oops.
@@ -4225,3 +4206,17 @@
   id: 1722
   time: '2025-05-25T06:49:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2579
+- author: astral_amy
+  changes:
+  - message: Bedlam Station, a lowpop map adapted from a reclaimed starship
+    type: Add
+  id: 1723
+  time: '2025-05-25T06:57:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2567
+- author: Faeling, Sha-Seng
+  changes:
+  - message: Lily Mantle for senior botanists (has a toggleable collar)
+    type: Add
+  id: 1724
+  time: '2025-05-25T06:56:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2576
