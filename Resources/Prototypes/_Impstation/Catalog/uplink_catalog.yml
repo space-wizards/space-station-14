@@ -179,3 +179,44 @@
     Telecrystal: 5
   categories:
   - UplinkChemicals
+
+- type: listing
+  id: UplinkPoisonAuto-Injector
+  name: uplink-poison-injector-name
+  description: uplink-poison-injector-desc
+  productEntity: PoisonAutoInjector
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 6
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkChemicals
+  conditions:
+  - !type:StoreWhitelistCondition
+     blacklist:
+       tags:
+       - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+
+- type: listing
+  id: UplinkNukiePoisonAuto-Injector
+  name: uplink-poison-injector-name
+  description: uplink-poison-injector-desc
+  productEntity: PoisonAutoInjector
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 10
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkChemicals
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+        - SurplusBundle

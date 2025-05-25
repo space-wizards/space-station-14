@@ -1,0 +1,56 @@
+- type: entity
+  name: lethal poison auto-injector
+  parent: [BaseItem, Tier3Contraband]
+  description: A single dose of a lethal toxin mix, induces gradual organ failure and esophagus inflammation which eliminates a subject within one to two minutes of injection. Small print on it says "Non-Recyclable. Please return to Gorlex Customer Satisfaction for reuse and rebate."
+  id: PoisonAutoInjector
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Medical/poisonpen.rsi
+    layers:
+    - state: poisonpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Item
+    sprite: Objects/Specific/Medical/medipen.rsi
+    inhandVisuals:
+      left:
+      - state: base-needle-inhand-left
+      - state: base-colorA-inhand-left
+        color: "#232226"
+      - state: base-colorB-inhand-left
+        color: "#3e3d3f"
+      right:
+      - state: base-needle-inhand-right
+      - state: base-colorA-inhand-right
+        color: "#232226"
+      - state: base-colorB-inhand-right
+        color: "#3e3d3f"
+    size: Tiny
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 30
+        reagents:
+        - ReagentId: Bungotoxin
+          Quantity: 20.7
+        - ReagentId: Toxin
+          Quantity: 1.5
+        - ReagentId: Blackpepper
+          Quantity: 4.8
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 2
+        - ReagentId: Impedrezene
+          Quantity: 1
+  - type: ExaminableSolution
+    solution: pen
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 30
+    onlyAffectsMobs: false
+    injectOnly: true
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: poisonpen_empty
+  - type: Tag
+    tags: []

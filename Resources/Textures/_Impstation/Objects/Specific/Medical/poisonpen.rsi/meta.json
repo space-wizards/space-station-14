@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "resprite by MintyTheBinty (github) for Impstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "poisonpen"
+    },
+    {
+      "name": "poisonpen_empty"
+    }
+  ]
+}
