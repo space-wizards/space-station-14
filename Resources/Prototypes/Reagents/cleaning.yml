@@ -48,6 +48,9 @@
   recognizable: true
   boilingPoint: 100.0
   meltingPoint: 60.0
+  slipData:
+    requiredSlipSpeed: 3.5
+  friction: 0.3 # Slightly less friction than water, but not as bad as space lube
   metabolisms:
     Food:
       effects:
