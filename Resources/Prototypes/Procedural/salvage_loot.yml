@@ -117,8 +117,10 @@
   id: OreIron
   guaranteed: true
   loots:
-    - !type:BiomeMarkerLoot
+    - !type:BiomeLoot
       proto: OreIron
+
+
 
 - type: salvageLoot
   id: OreCoal

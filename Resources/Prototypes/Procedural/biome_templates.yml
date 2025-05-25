@@ -2,7 +2,7 @@
 - type: entity
   id: BiomeLowDesert
   components:
-  - type: NewBiome
+  - type: Biome
     layers:
       terrain:
         dungeon: LowDesertTerrain
@@ -61,7 +61,7 @@
 - type: entity
   id: BiomeGrasslands
   components:
-  - type: NewBiome
+  - type: Biome
     layers:
       terrain:
         dungeon: GrasslandsTerrain
@@ -230,7 +230,7 @@
 - type: entity
   id: BiomeLava
   components:
-  - type: NewBiome
+  - type: Biome
     layers:
       terrain:
         dungeon: LavaTerrain
@@ -350,7 +350,7 @@
 - type: entity
   id: BiomeSnow
   components:
-  - type: NewBiome
+  - type: Biome
     layers:
       terrain:
         dungeon: SnowTerrain
@@ -520,7 +520,7 @@
 - type: entity
   id: BiomeShadow
   components:
-  - type: NewBiome
+  - type: Biome
     layers:
       terrain:
         dungeon: ShadowTerrain
@@ -615,7 +615,7 @@
 - type: entity
   id: BiomeCaves
   components:
-  - type: NewBiome
+  - type: Biome
     layers:
       terrain:
         dungeon: CavesTerrain

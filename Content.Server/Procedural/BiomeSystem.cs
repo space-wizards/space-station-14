@@ -12,7 +12,6 @@ using Content.Shared.Procedural.Components;
 using Content.Shared.Sprite;
 using Content.Shared.Tag;
 using Robust.Server.Player;
-using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
@@ -59,7 +58,7 @@ public sealed partial class BiomeSystem : EntitySystem
     private float _loadTime;
 
     private EntityQuery<GhostComponent> _ghostQuery;
-    private EntityQuery<NewBiomeComponent> _biomeQuery;
+    private EntityQuery<BiomeComponent> _biomeQuery;
 
     private static readonly ProtoId<TagPrototype> AllowBiomeLoadingTag = "AllowBiomeLoading";
 
@@ -67,7 +66,7 @@ public sealed partial class BiomeSystem : EntitySystem
     {
         base.Initialize();
         _ghostQuery = GetEntityQuery<GhostComponent>();
-        _biomeQuery = GetEntityQuery<NewBiomeComponent>();
+        _biomeQuery = GetEntityQuery<BiomeComponent>();
 
         IgnoredComponents.Add(Factory.GetComponentName<RandomSpriteComponent>());
 
@@ -93,18 +92,18 @@ public sealed partial class BiomeSystem : EntitySystem
         var targetMap = _xforms.ToMapCoordinates(ev.TargetCoordinates);
         var targetMapUid = _maps.GetMapOrInvalid(targetMap.MapId);
 
-        if (!TryComp<NewBiomeComponent>(targetMapUid, out var biome))
+        if (!TryComp<BiomeComponent>(targetMapUid, out var biome))
             return;
 
         var preloadArea = new Vector2(32f, 32f);
         var targetArea = new Box2(targetMap.Position - preloadArea, targetMap.Position + preloadArea);
-        Preload(targetMapUid, biome, targetArea);
+        Preload(targetMapUid, biome, (Box2i) targetArea);
     }
 
     /// <summary>
     /// Preloads biome for the specified area.
     /// </summary>
-    public void Preload(EntityUid uid, NewBiomeComponent component, Box2 area)
+    public void Preload(EntityUid uid, BiomeComponent component, Box2i area)
     {
         component.PreloadAreas.Add(area);
     }
@@ -114,7 +113,7 @@ public sealed partial class BiomeSystem : EntitySystem
         return !_ghostQuery.HasComp(uid) || _tags.HasTag(uid, AllowBiomeLoadingTag);
     }
 
-    public void AddLayer(Entity<NewBiomeComponent?> biome, string label, NewBiomeMetaLayer layer)
+    public void AddLayer(Entity<BiomeComponent?> biome, string label, BiomeMetaLayer layer)
     {
         if (!Resolve(biome.Owner, ref biome.Comp))
             return;
@@ -126,12 +125,12 @@ public sealed partial class BiomeSystem : EntitySystem
         }
     }
 
-    public void AddLayer(Entity<NewBiomeComponent?> biome, string label, ProtoId<DungeonConfigPrototype> layer)
+    public void AddLayer(Entity<BiomeComponent?> biome, string label, ProtoId<DungeonConfigPrototype> layer)
     {
         if (!Resolve(biome.Owner, ref biome.Comp))
             return;
 
-        var metaLayer = new NewBiomeMetaLayer()
+        var metaLayer = new BiomeMetaLayer()
         {
             Dungeon = layer,
         };
@@ -143,7 +142,7 @@ public sealed partial class BiomeSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = AllEntityQuery<NewBiomeComponent>();
+        var query = AllEntityQuery<BiomeComponent>();
 
         while (query.MoveNext(out var biome))
         {
@@ -152,6 +151,11 @@ public sealed partial class BiomeSystem : EntitySystem
                 continue;
 
             biome.LoadedBounds.Clear();
+
+            foreach (var preload in biome.PreloadAreas)
+            {
+                biome.LoadedBounds.Add(preload);
+            }
         }
 
         // Get all relevant players.
@@ -171,7 +175,7 @@ public sealed partial class BiomeSystem : EntitySystem
         // Unload first in case we can't catch up.
         UnloadChunks();
 
-        var loadQuery = AllEntityQuery<NewBiomeComponent, MapGridComponent>();
+        var loadQuery = AllEntityQuery<BiomeComponent, MapGridComponent>();
 
         // Check if any biomes are intersected and queue up loads.
         while (loadQuery.MoveNext(out var uid, out var biome, out var grid))
@@ -194,7 +198,7 @@ public sealed partial class BiomeSystem : EntitySystem
 
     private void UnloadChunks()
     {
-        var query = AllEntityQuery<NewBiomeComponent, MapGridComponent>();
+        var query = AllEntityQuery<BiomeComponent, MapGridComponent>();
 
         while (query.MoveNext(out var uid, out var biome, out var grid))
         {
@@ -255,7 +259,7 @@ public sealed partial class BiomeSystem : EntitySystem
     /// <summary>
     /// Gets the full bounds to be loaded. Considers layer dependencies where they may have different chunk sizes.
     /// </summary>
-    private Box2i GetFullBounds(NewBiomeComponent component, Box2i bounds)
+    private Box2i GetFullBounds(BiomeComponent component, Box2i bounds)
     {
         var result = bounds;
 
@@ -311,7 +315,7 @@ public sealed partial class BiomeSystem : EntitySystem
         biome.LoadedBounds.Add(adjustedBounds);
     }
 
-    public Box2i GetLayerBounds(NewBiomeMetaLayer layer, Box2i layerBounds)
+    public Box2i GetLayerBounds(BiomeMetaLayer layer, Box2i layerBounds)
     {
         var chunkSize = new Vector2(layer.Size, layer.Size);
 
@@ -336,7 +340,7 @@ public sealed partial class BiomeSystem : EntitySystem
     /// <summary>
     /// Biome that is getting loaded.
     /// </summary>
-    public NewBiomeComponent Biome = default!;
+    public BiomeComponent Biome = default!;
 
     public BiomeLoadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
@@ -366,7 +370,7 @@ public sealed partial class BiomeSystem : EntitySystem
         return true;
     }
 
-    private async Task LoadLayer(string layerId, NewBiomeMetaLayer layer, Box2i parentBounds)
+    private async Task LoadLayer(string layerId, BiomeMetaLayer layer, Box2i parentBounds)
     {
         var loadBounds = System.GetLayerBounds(layer, parentBounds);
 
@@ -414,7 +418,7 @@ public sealed class BiomeUnloadJob : Job<bool>
 {
     [Dependency] private EntityManager _entManager = default!;
 
-    public Entity<MapGridComponent, NewBiomeComponent> Biome;
+    public Entity<MapGridComponent, BiomeComponent> Biome;
     public Dictionary<string, List<Vector2i>> ToUnload = default!;
 
     public BiomeUnloadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)

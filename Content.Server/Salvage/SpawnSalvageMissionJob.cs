@@ -1,22 +1,17 @@
-using System.Collections;
 using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
-using Content.Server.Salvage.Expeditions.Structure;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Dataset;
 using Content.Shared.Gravity;
-using Content.Shared.Parallax.Biomes;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Loot;
@@ -25,15 +20,14 @@ using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
 using Content.Shared.Shuttles.Components;
-using Content.Shared.Storage;
 using Robust.Shared.Collections;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Components;
+using Content.Shared.Procedural.Components;
 
 namespace Content.Server.Salvage;
 
@@ -123,7 +117,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         if (missionBiome.BiomePrototype != null)
         {
-            var biome = _entManager.AddComponent<NewBiomeComponent>(mapUid);
+            var biome = _entManager.AddComponent<BiomeComponent>(mapUid);
             var biomeSystem = _entManager.System<BiomeSystem>();
 
             biomeSystem.AddBiome(mapUid, missionBiome.BiomePrototype.Value, mission.Seed);
@@ -198,13 +192,14 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             if (!lootProto.Guaranteed)
                 continue;
 
-            try
+            foreach (var rule in lootProto.LootRules)
             {
-                await SpawnDungeonLoot(lootProto, mapUid);
-            }
-            catch (Exception e)
-            {
-                _sawmill.Error($"Failed to spawn guaranteed loot {lootProto.ID}: {e}");
+                switch (rule)
+                {
+                    case BiomeLoot biome:
+                        _biome.AddLayer(mapUid, $"{rule}", biome.Proto);
+                        break;
+                }
             }
         }
 
@@ -312,33 +307,5 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         }
 
         // oh noooooooooooo
-    }
-
-    private async Task SpawnDungeonLoot(SalvageLootPrototype loot, EntityUid gridUid)
-    {
-        for (var i = 0; i < loot.LootRules.Count; i++)
-        {
-            var rule = loot.LootRules[i];
-
-            switch (rule)
-            {
-                case BiomeMarkerLoot biomeLoot:
-                    {
-                        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
-                        {
-                            _biome.AddMarkerLayer(gridUid, biome, biomeLoot.Prototype);
-                        }
-                    }
-                    break;
-                case BiomeTemplateLoot biomeLoot:
-                    {
-                        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
-                        {
-                            _biome.AddTemplate(gridUid, biome, "Loot", _prototypeManager.Index<BiomeTemplatePrototype>(biomeLoot.Prototype), i);
-                        }
-                    }
-                    break;
-            }
-        }
     }
 }

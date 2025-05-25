@@ -22,6 +22,15 @@ public sealed partial class DungeonJob
         var emptyTiles = false;
         var replaceEntities = new Dictionary<Vector2i, EntityUid>();
         var availableTiles = new List<Vector2i>();
+        var remapName = _entManager.ComponentFactory.GetComponentName<EntityRemapComponent>();
+        var replacementRemapping = new Dictionary<EntProtoId, EntProtoId>();
+
+        if (_prototype.TryIndex(gen.Replacement, out var replacementProto) &&
+            replacementProto.Components.TryGetComponent(remapName, out var replacementComps))
+        {
+            var remappingComp = (EntityRemapComponent) replacementComps;
+            replacementRemapping = remappingComp.Mask;
+        }
 
         foreach (var dungeon in dungeons)
         {
@@ -48,7 +57,11 @@ public sealed partial class DungeonJob
                     {
                         var prototype = _entManager.GetComponent<MetaDataComponent>(uid.Value).EntityPrototype;
 
-                        if (prototype?.ID == gen.Replacement)
+                        if (string.IsNullOrEmpty(prototype?.ID))
+                            continue;
+
+                        // It has a valid remapping so take it over.
+                        if (replacementRemapping.ContainsKey(prototype.ID))
                         {
                             replaceEntities[node] = uid.Value;
                             found = true;
@@ -74,7 +87,7 @@ public sealed partial class DungeonJob
 
         // TODO: Move this to engine
         if (_prototype.TryIndex(gen.Entity, out var proto) &&
-            proto.Components.TryGetComponent("EntityRemap", out var comps))
+            proto.Components.TryGetComponent(remapName, out var comps))
         {
             var remappingComp = (EntityRemapComponent) comps;
             remapping = remappingComp.Mask;

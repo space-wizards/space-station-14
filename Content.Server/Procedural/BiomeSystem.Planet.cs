@@ -14,9 +14,9 @@ public sealed partial class BiomeSystem
     /// </summary>
     public void AddBiome(EntityUid mapUid, EntProtoId biomeTemplate, int? seed = null)
     {
-        var biome = Factory.GetComponent<NewBiomeComponent>();
+        var biome = Factory.GetComponent<BiomeComponent>();
 
-        if (!_protomanager.Index(biomeTemplate).Components.TryGetComponent(Factory.GetComponentName<NewBiomeComponent>(), out var template))
+        if (!_protomanager.Index(biomeTemplate).Components.TryGetComponent(Factory.GetComponentName<BiomeComponent>(), out var template))
         {
             return;
         }

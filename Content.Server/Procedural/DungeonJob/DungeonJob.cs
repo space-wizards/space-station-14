@@ -221,12 +221,6 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
             case AutoCablingDunGen cabling:
                 await PostGen(cabling, dungeons[^1], reservedTiles, random);
                 break;
-            case BiomeMarkerLayerDunGen markerPost:
-                await PostGen(markerPost, dungeons[^1], reservedTiles, random);
-                break;
-            case BiomeDunGen biome:
-                await PostGen(biome, dungeons[^1], reservedTiles, random);
-                break;
             case BoundaryWallDunGen boundary:
                 await PostGen(boundary, dungeons[^1], reservedTiles, random);
                 break;

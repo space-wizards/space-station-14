@@ -3,10 +3,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Procedural.Components;
 
 /// <summary>
-/// A layer inside of <see cref="NewBiomeComponent"/>
+/// A layer inside of <see cref="BiomeComponent"/>
 /// </summary>
 [DataRecord]
-public sealed record NewBiomeMetaLayer
+public sealed record BiomeMetaLayer
 {
     /// <summary>
     /// Chunk dimensions for this meta layer.
@@ -32,13 +32,13 @@ public sealed record NewBiomeMetaLayer
 }
 
 [RegisterComponent]
-public sealed partial class NewBiomeComponent : Component
+public sealed partial class BiomeComponent : Component
 {
     /// <summary>
     /// Areas queued for preloading. Will add these during <see cref="BiomeLoadJob"/> and then flag as modified so they retain.
     /// </summary>
     [DataField]
-    public List<Box2> PreloadAreas = new();
+    public List<Box2i> PreloadAreas = new();
 
     /// <summary>
     /// Is there currently a job that's loading.
@@ -52,7 +52,7 @@ public sealed partial class NewBiomeComponent : Component
     /// Layer key and associated data.
     /// </summary>
     [DataField(required: true)]
-    public Dictionary<string, NewBiomeMetaLayer> Layers = new();
+    public Dictionary<string, BiomeMetaLayer> Layers = new();
 
     /// <summary>
     /// Data that is currently loaded.
