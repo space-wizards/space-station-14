@@ -4,7 +4,8 @@ implanter-component-implanting-target = {$user} is trying to implant you with so
 implanter-component-implant-failed = The {$implant} cannot be given to {$target}!
 implanter-draw-failed-permanent = The {$implant} in {$target} is fused with { OBJECT($target) } and cannot be removed!
 implanter-draw-failed = You tried to remove an implant but found nothing.
-implanter-draw-failed-catastrophically = The implanter finds nothing and catastrophically fails, shunting genetic material into {$user}'s hand!
+## IMP
+implanter-draw-failed-catastrophically = The implanter fails to find the selected signature!
 implanter-component-implant-already = {$target} already has the {$implant}!
 
 ## UI
