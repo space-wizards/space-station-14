@@ -1,8 +1,7 @@
 using Content.Shared.Actions;
 
-namespace Content.Shared.Clothing.ActionEvent
+namespace Content.Shared.Clothing.ActionEvent;
+
+public sealed partial class ActionSecHailerActionEvent : InstantActionEvent
 {
-    public sealed partial class ActionSecHailerActionEvent : InstantActionEvent
-    {
-    }
 }

@@ -18,398 +18,397 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Clothing.EntitySystems
+namespace Content.Shared.Clothing.EntitySystems;
+
+public abstract class SharedSecurityHailerSystem : EntitySystem
 {
-    public abstract class SharedSecurityHailerSystem : EntitySystem
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedAudioSystem _sharedAudio = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly AccessReaderSystem _access = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly SharedActionsSystem _actions = default!;
-        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly SharedToolSystem _tool = default!;
-        [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-        [Dependency] private readonly SharedAudioSystem _sharedAudio = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly AccessReaderSystem _access = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        base.Initialize();
+        SubscribeLocalEvent<SecurityHailerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SecurityHailerComponent, ClothingGotEquippedEvent>(OnEquip);
+        SubscribeLocalEvent<SecurityHailerComponent, ClothingGotUnequippedEvent>(OnUnequip);
+        SubscribeLocalEvent<SecurityHailerComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<SecurityHailerComponent, SecHailerToolDoAfterEvent>(OnToolDoAfter);
+        SubscribeLocalEvent<SecurityHailerComponent, GotEmaggedEvent>(OnEmagging);
+        SubscribeLocalEvent<SecurityHailerComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<SecurityHailerComponent, ToggleMaskEvent>(OnToggleMask);
+        SubscribeLocalEvent<SecurityHailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+    }
 
-        public override void Initialize()
+    private void OnEquip(Entity<SecurityHailerComponent> ent, ref ClothingGotEquippedEvent args)
+    {
+        var (uid, comp) = ent;
+
+        ent.Comp.User = args.Wearer;
+
+        if (comp.CurrentState != SecMaskState.Functional)
+            return;
+
+        _actions.AddAction(args.Wearer, ref comp.ActionEntity, comp.Action, uid);
+    }
+
+    private void OnUnequip(Entity<SecurityHailerComponent> ent, ref ClothingGotUnequippedEvent args)
+    {
+        var (uid, comp) = ent;
+
+        if (comp.CurrentState != SecMaskState.Functional)
+            return;
+        _actions.RemoveAction(ent.Comp.User, comp.ActionEntity);
+        ent.Comp.User = EntityUid.Invalid;
+    }
+
+    //In case someone spawns with it ?
+    private void OnMapInit(Entity<SecurityHailerComponent> ent, ref MapInitEvent args)
+    {
+        var (uid, comp) = ent;
+
+        if (comp.CurrentState == SecMaskState.Functional)
+            _actions.AddAction(uid, ref comp.ActionEntity, comp.Action);
+        Dirty(uid, comp);
+    }
+
+    /// <summary>
+    /// Put an exclamation mark around humanoid standing at the distance specified in the component.
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <returns>Is it handled succesfully ?</returns>
+    protected bool ExclamateHumanoidsAround(Entity<SecurityHailerComponent> ent) //Put in shared for predictions purposes
+    {
+        var (uid, comp) = ent;
+        if (!Resolve(uid, ref comp, false) || comp.Distance <= 0)
+            return false;
+
+        StealthComponent? stealth = null;
+        foreach (var iterator in
+            _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), comp.Distance))
         {
-            base.Initialize();
-            SubscribeLocalEvent<SecurityHailerComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<SecurityHailerComponent, ClothingGotEquippedEvent>(OnEquip);
-            SubscribeLocalEvent<SecurityHailerComponent, ClothingGotUnequippedEvent>(OnUnequip);
-            SubscribeLocalEvent<SecurityHailerComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<SecurityHailerComponent, SecHailerToolDoAfterEvent>(OnToolDoAfter);
-            SubscribeLocalEvent<SecurityHailerComponent, GotEmaggedEvent>(OnEmagging);
-            SubscribeLocalEvent<SecurityHailerComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<SecurityHailerComponent, ToggleMaskEvent>(OnToggleMask);
-            SubscribeLocalEvent<SecurityHailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+            //Avoid pinging invisible entities
+            if (TryComp(iterator, out stealth) && stealth.Enabled)
+                continue;
+
+            //We don't want to ping user of the mask
+            if (iterator.Owner == ent.Comp.User)
+                continue;
+
+            SpawnAttachedTo(comp.ExclamationEffect, iterator.Owner.ToCoordinates());
         }
 
-        private void OnEquip(Entity<SecurityHailerComponent> ent, ref ClothingGotEquippedEvent args)
+        return true;
+    }
+
+    private void OnInteractUsing(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        //If someone else is wearing it and someone use a tool on it, ignore it
+        //Strip system takes over
+        if (ent.Comp.User != EntityUid.Invalid && ent.Comp.User != args.User)
+            return;
+
+        //If ERT, can't be messed with
+        if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
         {
-            var (uid, comp) = ent;
-
-            ent.Comp.User = args.Wearer;
-
-            if (comp.CurrentState != SecMaskState.Functional)
-                return;
-
-            _actions.AddAction(args.Wearer, ref comp.ActionEntity, comp.Action, uid);
-        }
-
-        private void OnUnequip(Entity<SecurityHailerComponent> ent, ref ClothingGotUnequippedEvent args)
-        {
-            var (uid, comp) = ent;
-
-            if (comp.CurrentState != SecMaskState.Functional)
-                return;
-            _actions.RemoveAction(ent.Comp.User, comp.ActionEntity);
-            ent.Comp.User = EntityUid.Invalid;
-        }
-
-        //In case someone spawns with it ?
-        private void OnMapInit(Entity<SecurityHailerComponent> ent, ref MapInitEvent args)
-        {
-            var (uid, comp) = ent;
-
-            if (comp.CurrentState == SecMaskState.Functional)
-                _actions.AddAction(uid, ref comp.ActionEntity, comp.Action);
-            Dirty(uid, comp);
-        }
-
-        /// <summary>
-        /// Put an exclamation mark around humanoid standing at the distance specified in the component.
-        /// </summary>
-        /// <param name="ent"></param>
-        /// <returns>Is it handled succesfully ?</returns>
-        protected bool ExclamateHumanoidsAround(Entity<SecurityHailerComponent> ent) //Put in shared for predictions purposes
-        {
-            var (uid, comp) = ent;
-            if (!Resolve(uid, ref comp, false) || comp.Distance <= 0)
-                return false;
-
-            StealthComponent? stealth = null;
-            foreach (var iterator in
-                _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), comp.Distance))
-            {
-                //Avoid pinging invisible entities
-                if (TryComp(iterator, out stealth) && stealth.Enabled)
-                    continue;
-
-                //We don't want to ping user of the mask
-                if (iterator.Owner == ent.Comp.User)
-                    continue;
-
-                SpawnAttachedTo(comp.ExclamationEffect, iterator.Owner.ToCoordinates());
-            }
-
-            return true;
-        }
-
-        private void OnInteractUsing(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            //If someone else is wearing it and someone use a tool on it, ignore it
-            //Strip system takes over
-            if (ent.Comp.User != EntityUid.Invalid && ent.Comp.User != args.User)
-                return;
-
-            //If ERT, can't be messed with
-            if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
-            {
-                _popup.PopupEntity(Loc.GetString("ert-gas-mask-impossible"), ent.Owner);
-                args.Handled = true;
-                return;
-            }
-
-            //Is it a wirecutter, a screwdriver or an EMAG ?
-            if (_tool.HasQuality(args.Used, SharedToolSystem.CutQuality))
-                OnInteractCutting(ent, ref args);
-            else if (_tool.HasQuality(args.Used, SharedToolSystem.ScrewQuality))
-                OnInteractScrewing(ent, ref args);
-            else
-                return;
-        }
-        private void OnInteractCutting(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
-        {
-            StartADoAfter(ent, args, SecHailerToolDoAfterEvent.ToolQuality.Cutting);
-        }
-
-        private void OnInteractScrewing(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
-        {
-            //If it's emagged we don't change it
-            if (HasComp<EmaggedComponent>(ent) || ent.Comp.CurrentState != SecMaskState.Functional)
-                return;
-            StartADoAfter(ent, args, SecHailerToolDoAfterEvent.ToolQuality.Screwing);
-        }
-
-        private void StartADoAfter(Entity<SecurityHailerComponent> ent, InteractUsingEvent args, SecHailerToolDoAfterEvent.ToolQuality quality)
-        {
-            float? time = null;
-
-            //What delay to use ?
-            if (quality == SecHailerToolDoAfterEvent.ToolQuality.Screwing)
-            {
-                time = ent.Comp.ScrewingDoAfterDelay;
-            }
-            else if (quality == SecHailerToolDoAfterEvent.ToolQuality.Cutting)
-            {
-                time = ent.Comp.CuttingDoAfterDelay;
-            }
-
-            if (!time.HasValue)
-            {
-                Log.Error("Security hailer system couldn't get a time for a tool doAfter !");
-                return;
-            }
-
-            _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, time.Value, new SecHailerToolDoAfterEvent(quality), ent.Owner, target: args.Target, used: args.Used)
-            {
-                Broadcast = true,
-                BreakOnMove = true,
-                NeedHand = true,
-            });
-
+            _popup.PopupEntity(Loc.GetString("ert-gas-mask-impossible"), ent.Owner);
             args.Handled = true;
+            return;
         }
 
-        private void OnToolDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+        //Is it a wirecutter, a screwdriver or an EMAG ?
+        if (_tool.HasQuality(args.Used, SharedToolSystem.CutQuality))
+            OnInteractCutting(ent, ref args);
+        else if (_tool.HasQuality(args.Used, SharedToolSystem.ScrewQuality))
+            OnInteractScrewing(ent, ref args);
+        else
+            return;
+    }
+    private void OnInteractCutting(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
+    {
+        StartADoAfter(ent, args, SecHailerToolDoAfterEvent.ToolQuality.Cutting);
+    }
+
+    private void OnInteractScrewing(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
+    {
+        //If it's emagged we don't change it
+        if (HasComp<EmaggedComponent>(ent) || ent.Comp.CurrentState != SecMaskState.Functional)
+            return;
+        StartADoAfter(ent, args, SecHailerToolDoAfterEvent.ToolQuality.Screwing);
+    }
+
+    private void StartADoAfter(Entity<SecurityHailerComponent> ent, InteractUsingEvent args, SecHailerToolDoAfterEvent.ToolQuality quality)
+    {
+        float? time = null;
+
+        //What delay to use ?
+        if (quality == SecHailerToolDoAfterEvent.ToolQuality.Screwing)
         {
-            if (args.Cancelled || args.Handled)
-                return;
+            time = ent.Comp.ScrewingDoAfterDelay;
+        }
+        else if (quality == SecHailerToolDoAfterEvent.ToolQuality.Cutting)
+        {
+            time = ent.Comp.CuttingDoAfterDelay;
+        }
 
-            switch (args.UsedTool)
+        if (!time.HasValue)
+        {
+            Log.Error("Security hailer system couldn't get a time for a tool doAfter !");
+            return;
+        }
+
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, time.Value, new SecHailerToolDoAfterEvent(quality), ent.Owner, target: args.Target, used: args.Used)
+        {
+            Broadcast = true,
+            BreakOnMove = true,
+            NeedHand = true,
+        });
+
+        args.Handled = true;
+    }
+
+    private void OnToolDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled)
+            return;
+
+        switch (args.UsedTool)
+        {
+            case SecHailerToolDoAfterEvent.ToolQuality.Cutting:
+                OnCuttingDoAfter(ent, ref args);
+                break;
+            case SecHailerToolDoAfterEvent.ToolQuality.Screwing:
+                OnScrewingDoAfter(ent, ref args);
+                break;
+        }
+
+        Dirty(ent);
+    }
+
+    private void OnCuttingDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+    {
+        // Snip, snip !
+        _sharedAudio.PlayPvs(ent.Comp.CutSounds, ent.Owner);
+
+        var (uid, comp) = ent;
+        if (comp.CurrentState == SecMaskState.Functional)
+        {
+            comp.CurrentState = SecMaskState.WiresCut;
+            if (ent.Comp.User != EntityUid.Invalid)
             {
-                case SecHailerToolDoAfterEvent.ToolQuality.Cutting:
-                    OnCuttingDoAfter(ent, ref args);
-                    break;
-                case SecHailerToolDoAfterEvent.ToolQuality.Screwing:
-                    OnScrewingDoAfter(ent, ref args);
-                    break;
+                _actions.RemoveAction(ent.Comp.User, comp.ActionEntity);
             }
-
             Dirty(ent);
         }
-
-        private void OnCuttingDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+        else if (comp.CurrentState == SecMaskState.WiresCut)
         {
-            // Snip, snip !
-            _sharedAudio.PlayPvs(ent.Comp.CutSounds, ent.Owner);
-
-            var (uid, comp) = ent;
-            if (comp.CurrentState == SecMaskState.Functional)
+            comp.CurrentState = SecMaskState.Functional;
+            if (ent.Comp.User != EntityUid.Invalid)
             {
-                comp.CurrentState = SecMaskState.WiresCut;
-                if (ent.Comp.User != EntityUid.Invalid)
-                {
-                    _actions.RemoveAction(ent.Comp.User, comp.ActionEntity);
-                }
-                Dirty(ent);
-            }
-            else if (comp.CurrentState == SecMaskState.WiresCut)
-            {
-                comp.CurrentState = SecMaskState.Functional;
-                if (ent.Comp.User != EntityUid.Invalid)
-                {
-                    _actions.AddAction(ent.Comp.User, ref comp.ActionEntity, comp.Action, uid);
-                    Dirty(ent);
-                }
-            }
-            _appearance.SetData(ent, SecMaskVisuals.State, comp.CurrentState);
-            args.Handled = true;
-        }
-
-        private void OnScrewingDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
-        {
-            if (args.Cancelled || args.Handled || !TryComp<SecurityHailerComponent>(args.Args.Target, out var plant))
-                return;
-
-            _sharedAudio.PlayPvs(ent.Comp.ScrewedSounds, ent.Owner);
-
-            IncreaseAggressionLevel(ent);
-            args.Handled = true;
-        }
-
-        private void IncreaseAggressionLevel(Entity<SecurityHailerComponent> ent)
-        {
-            //Up the aggression level by one or back to one
-            if (ent.Comp.AggresionLevel == SecurityHailerComponent.AggresionState.High)
-                ent.Comp.AggresionLevel = SecurityHailerComponent.AggresionState.Low;
-            else
-                ent.Comp.AggresionLevel++;
-
-            _popup.PopupEntity(Loc.GetString("sec-gas-mask-screwed", ("level", ent.Comp.AggresionLevel.ToString().ToLower())), ent.Owner);
-        }
-
-        private void OnEmagging(Entity<SecurityHailerComponent> ent, ref GotEmaggedEvent args)
-        {
-            if (args.Handled || HasComp<EmaggedComponent>(ent))
-                return;
-
-            if (ent.Comp.User != EntityUid.Invalid && ent.Comp.User != args.UserUid)
-                return;
-
-            _popup.PopupEntity(Loc.GetString("sec-gas-mask-emagged"), ent.Owner);
-
-            args.Type = EmagType.Interaction;
-
-            Dirty(ent);
-            args.Handled = true;
-
-        }
-
-        private void OnExamine(Entity<SecurityHailerComponent> ent, ref ExaminedEvent args)
-        {
-            if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
-                args.PushMarkup(Loc.GetString("sec-gas-mask-examined-ert"));
-            else if (HasComp<EmaggedComponent>(ent))
-                args.PushMarkup(Loc.GetString("sec-gas-mask-examined-emagged"));
-            else if (ent.Comp.CurrentState == SecMaskState.WiresCut)
-                args.PushMarkup(Loc.GetString("sec-gas-mask-examined-wires-cut"));
-            else
-                args.PushMarkup(Loc.GetString($"sec-gas-mask-examined", ("level", ent.Comp.AggresionLevel)));
-        }
-
-        private void OnToggleMask(Entity<SecurityHailerComponent> ent, ref ToggleMaskEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            if (TryComp(ent.Owner, out MaskComponent? mask)
-                && mask != null)
-            {
-                if (mask.IsToggled)
-                    _actions.RemoveAction(ent.Comp.User, ent.Comp.ActionEntity);
-                else if (ent.Comp.CurrentState == SecMaskState.Functional && ent.Comp.User != EntityUid.Invalid)
-                {
-                    _actions.AddAction(ent.Comp.User, ref ent.Comp.ActionEntity, ent.Comp.Action, ent.Owner);
-                }
+                _actions.AddAction(ent.Comp.User, ref comp.ActionEntity, comp.Action, uid);
                 Dirty(ent);
             }
         }
+        _appearance.SetData(ent, SecMaskVisuals.State, comp.CurrentState);
+        args.Handled = true;
+    }
 
-        private void OnGetVerbs(Entity<SecurityHailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnScrewingDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled || !TryComp<SecurityHailerComponent>(args.Args.Target, out var plant))
+            return;
+
+        _sharedAudio.PlayPvs(ent.Comp.ScrewedSounds, ent.Owner);
+
+        IncreaseAggressionLevel(ent);
+        args.Handled = true;
+    }
+
+    private void IncreaseAggressionLevel(Entity<SecurityHailerComponent> ent)
+    {
+        //Up the aggression level by one or back to one
+        if (ent.Comp.AggresionLevel == SecurityHailerComponent.AggresionState.High)
+            ent.Comp.AggresionLevel = SecurityHailerComponent.AggresionState.Low;
+        else
+            ent.Comp.AggresionLevel++;
+
+        _popup.PopupEntity(Loc.GetString("sec-gas-mask-screwed", ("level", ent.Comp.AggresionLevel.ToString().ToLower())), ent.Owner);
+    }
+
+    private void OnEmagging(Entity<SecurityHailerComponent> ent, ref GotEmaggedEvent args)
+    {
+        if (args.Handled || HasComp<EmaggedComponent>(ent))
+            return;
+
+        if (ent.Comp.User != EntityUid.Invalid && ent.Comp.User != args.UserUid)
+            return;
+
+        _popup.PopupEntity(Loc.GetString("sec-gas-mask-emagged"), ent.Owner);
+
+        args.Type = EmagType.Interaction;
+
+        Dirty(ent);
+        args.Handled = true;
+
+    }
+
+    private void OnExamine(Entity<SecurityHailerComponent> ent, ref ExaminedEvent args)
+    {
+        if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+            args.PushMarkup(Loc.GetString("sec-gas-mask-examined-ert"));
+        else if (HasComp<EmaggedComponent>(ent))
+            args.PushMarkup(Loc.GetString("sec-gas-mask-examined-emagged"));
+        else if (ent.Comp.CurrentState == SecMaskState.WiresCut)
+            args.PushMarkup(Loc.GetString("sec-gas-mask-examined-wires-cut"));
+        else
+            args.PushMarkup(Loc.GetString($"sec-gas-mask-examined", ("level", ent.Comp.AggresionLevel)));
+    }
+
+    private void OnToggleMask(Entity<SecurityHailerComponent> ent, ref ToggleMaskEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (TryComp(ent.Owner, out MaskComponent? mask)
+            && mask != null)
         {
-            //Cooldown to prevent spamming
-            //Probably should put a cooldown effect on the mask to show the player, but no idea how to do that !
-            if (_gameTiming.CurTime < ent.Comp.TimeVerbReady)
-                return;
-
-            if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
-                return;
-
-            //If ERT, they don't switch aggression level
-            if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
-                return;
-
-            var user = args.User;
-
-            args.Verbs.Add(new AlternativeVerb()
+            if (mask.IsToggled)
+                _actions.RemoveAction(ent.Comp.User, ent.Comp.ActionEntity);
+            else if (ent.Comp.CurrentState == SecMaskState.Functional && ent.Comp.User != EntityUid.Invalid)
             {
-                Text = Loc.GetString("sec-gas-mask-verb"),
-                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
-                Act = () =>
-                {
-                    UseVerbSwitchAggression(ent, user);
-                }
-            });
-        }
-
-        private void UseVerbSwitchAggression(Entity<SecurityHailerComponent> ent, EntityUid userActed)
-        {
-            ent.Comp.TimeVerbReady = _gameTiming.CurTime + ent.Comp.VerbCooldown;
-
-            if (!_access.IsAllowed(userActed, ent.Owner))
-            {
-                _sharedAudio.PlayPvs(ent.Comp.SettingError, ent.Owner, AudioParams.Default.WithVariation(0.15f));
-                _popup.PopupEntity(Loc.GetString("sec-gas-mask-wrong_access"), userActed);
-                return;
+                _actions.AddAction(ent.Comp.User, ref ent.Comp.ActionEntity, ent.Comp.Action, ent.Owner);
             }
-
-            _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
-            IncreaseAggressionLevel(ent);
             Dirty(ent);
         }
+    }
 
-        /// <summary>
-        /// Play the compliance voice line  of the hailer
-        /// </summary>
-        /// <param name="ent"></param>
-        /// <returns>Index of the chosen line from the SoundCollection</returns>
-        protected int PlayVoiceLineSound(Entity<SecurityHailerComponent> ent)
+    private void OnGetVerbs(Entity<SecurityHailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        //Cooldown to prevent spamming
+        //Probably should put a cooldown effect on the mask to show the player, but no idea how to do that !
+        if (_gameTiming.CurTime < ent.Comp.TimeVerbReady)
+            return;
+
+        if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
+            return;
+
+        //If ERT, they don't switch aggression level
+        if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+            return;
+
+        var user = args.User;
+
+        args.Verbs.Add(new AlternativeVerb()
         {
-            //Move to shared for predictions purposes. Is this good ?
-            var (uid, comp) = ent;
-
-            SoundSpecifier currentSpecifier;
-            if (comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
-                currentSpecifier = comp.ERTAggressionSounds;
-            else if (HasComp<EmaggedComponent>(ent))
-                currentSpecifier = ent.Comp.EmagAggressionSounds;
-            else
+            Text = Loc.GetString("sec-gas-mask-verb"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
+            Act = () =>
             {
-                currentSpecifier = comp.AggresionLevel switch
-                {
-                    SecurityHailerComponent.AggresionState.Medium => comp.MediumAggressionSounds,
-                    SecurityHailerComponent.AggresionState.High => comp.HighAggressionSounds,
-                    _ => comp.LowAggressionSounds,
-                };
+                UseVerbSwitchAggression(ent, user);
             }
-            var resolver = _sharedAudio.ResolveSound(currentSpecifier);
-            if (resolver is not ResolvedCollectionSpecifier collectionResolver)
-                return -1;
+        });
+    }
 
-            if (GetVoiceReplacement(ent, collectionResolver.Index) != null)
-            {
-                resolver = (ResolvedCollectionSpecifier)_sharedAudio.ResolveSound(comp.HOSReplaceSounds);
-            }
+    private void UseVerbSwitchAggression(Entity<SecurityHailerComponent> ent, EntityUid userActed)
+    {
+        ent.Comp.TimeVerbReady = _gameTiming.CurTime + ent.Comp.VerbCooldown;
 
-            _sharedAudio.PlayPvs(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
-
-            return collectionResolver.Index;
+        if (!_access.IsAllowed(userActed, ent.Owner))
+        {
+            _sharedAudio.PlayPvs(ent.Comp.SettingError, ent.Owner, AudioParams.Default.WithVariation(0.15f));
+            _popup.PopupEntity(Loc.GetString("sec-gas-mask-wrong_access"), userActed);
+            return;
         }
 
-        /// <summary>
-        /// Get the locale string which replaces the one given as specified in the component
-        /// </summary>
-        /// <param name="ent"></param>
-        /// <param name="index"></param>
-        /// <returns>If null, nothing replaces. Otherwise, the locale string which replaces it.</returns>
-        protected string? GetVoiceReplacement(Entity<SecurityHailerComponent> ent, int index)
+        _sharedAudio.PlayPvs(ent.Comp.SettingBeep, ent.Owner, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
+        IncreaseAggressionLevel(ent);
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Play the compliance voice line  of the hailer
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <returns>Index of the chosen line from the SoundCollection</returns>
+    protected int PlayVoiceLineSound(Entity<SecurityHailerComponent> ent)
+    {
+        //Move to shared for predictions purposes. Is this good ?
+        var (uid, comp) = ent;
+
+        SoundSpecifier currentSpecifier;
+        if (comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+            currentSpecifier = comp.ERTAggressionSounds;
+        else if (HasComp<EmaggedComponent>(ent))
+            currentSpecifier = ent.Comp.EmagAggressionSounds;
+        else
         {
-            var linesToReplace = ent.Comp.ReplaceVoicelinesSpecial;
-            if (linesToReplace.ContainsKey(ent.Comp.SpecialCircumtance))
+            currentSpecifier = comp.AggresionLevel switch
             {
-                var line = GetLineFormat(ent, index);
-                string? replacedLine;
-                linesToReplace[ent.Comp.SpecialCircumtance].TryGetValue(line, out replacedLine);
-                return replacedLine;
-            }
-
-            return null;
+                SecurityHailerComponent.AggresionState.Medium => comp.MediumAggressionSounds,
+                SecurityHailerComponent.AggresionState.High => comp.HighAggressionSounds,
+                _ => comp.LowAggressionSounds,
+            };
         }
+        var resolver = _sharedAudio.ResolveSound(currentSpecifier);
+        if (resolver is not ResolvedCollectionSpecifier collectionResolver)
+            return -1;
 
-        /// <summary>
-        /// Get the locale string format of the index given based on the context of the hailer
-        /// </summary>
-        /// <param name="ent"></param>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        protected string GetLineFormat(Entity<SecurityHailerComponent> ent, int index)
+        if (GetVoiceReplacement(ent, collectionResolver.Index) != null)
         {
-            string finalLine = String.Empty;
-            if (HasComp<EmaggedComponent>(ent))
-                finalLine = $"hail-emag-{index}";
-            else if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
-                finalLine = $"hail-ERT-{index}";
-            else
-                finalLine = $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}";
-
-            return finalLine;
+            resolver = (ResolvedCollectionSpecifier)_sharedAudio.ResolveSound(comp.HOSReplaceSounds);
         }
+
+        _sharedAudio.PlayPvs(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
+
+        return collectionResolver.Index;
+    }
+
+    /// <summary>
+    /// Get the locale string which replaces the one given as specified in the component
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="index"></param>
+    /// <returns>If null, nothing replaces. Otherwise, the locale string which replaces it.</returns>
+    protected string? GetVoiceReplacement(Entity<SecurityHailerComponent> ent, int index)
+    {
+        var linesToReplace = ent.Comp.ReplaceVoicelinesSpecial;
+        if (linesToReplace.ContainsKey(ent.Comp.SpecialCircumtance))
+        {
+            var line = GetLineFormat(ent, index);
+            string? replacedLine;
+            linesToReplace[ent.Comp.SpecialCircumtance].TryGetValue(line, out replacedLine);
+            return replacedLine;
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Get the locale string format of the index given based on the context of the hailer
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    protected string GetLineFormat(Entity<SecurityHailerComponent> ent, int index)
+    {
+        string finalLine = String.Empty;
+        if (HasComp<EmaggedComponent>(ent))
+            finalLine = $"hail-emag-{index}";
+        else if (ent.Comp.SpecialCircumtance == SecurityHailerComponent.SpecialUseCase.ERT)
+            finalLine = $"hail-ERT-{index}";
+        else
+            finalLine = $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}";
+
+        return finalLine;
     }
 }
