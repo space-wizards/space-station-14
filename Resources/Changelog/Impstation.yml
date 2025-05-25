@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Cosmic Cult 1.03 (Experimental)
-    type: Tweak
-  id: 1222
-  time: '2025-03-02T22:05:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1818
 - author: Cutinup99
   changes:
   - message: Warden's hardsuit has been changed, the armor is better but its slower
@@ -4224,3 +4217,11 @@
   id: 1721
   time: '2025-05-24T22:09:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2574
+- author: DinnerCalzone
+  changes:
+  - message: Banana's cargo shuttle should be less likely to start clipped inside
+      of other grids.
+    type: Fix
+  id: 1722
+  time: '2025-05-25T06:49:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2579
