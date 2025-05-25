@@ -70,6 +70,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: fill
+    inHandsMaxFillLevels: 1
+    inHandsFillBaseName: -fill-
 
 - type: entity
   parent: DrinkGlassBase
@@ -142,6 +144,10 @@
     solutions:
       drink:
         maxVol: 20
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+    minTransferAmount: 1
+    maxTransferAmount: 20
   - type: MixableSolution
     solution: drink
   - type: FitsInDispenser
