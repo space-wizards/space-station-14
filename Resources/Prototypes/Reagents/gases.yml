@@ -382,11 +382,44 @@
     Poison:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Slime
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison:
+              0.8
+      - !type:HealthChange
         damage:
           types:
             Poison: 2
     Gas:
       effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Slime
+        # Don't want people to get toxin damage from the gas they just
+        # exhaled, right?
+        - !type:ReagentThreshold
+          min: 0.5
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison:
+              0.8
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+      - !type:Oxygenate # nitrous oxide displaces nitrogen from the slime bloodstream, causing asphyxiation
+        conditions:
+        - !type:OrganType
+          type: Slime
+        factor: -4
       - !type:Emote
         conditions:
         - !type:ReagentThreshold
