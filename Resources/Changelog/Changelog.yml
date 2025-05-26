@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Centronias
-  changes:
-  - message: Moths can once again eat lizard plushies
-    type: Fix
-  - message: Lizard plushes can once again be inserted as payloads into modular grenades
-      and mines
-    type: Fix
-  id: 8064
-  time: '2025-03-14T20:22:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35835
 - author: K-Dynamic
   changes:
   - message: Electrocution stun duration decreased overall; LV or hacking from 8 seconds
@@ -3924,3 +3914,12 @@
   id: 8571
   time: '2025-05-26T12:07:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37658
+- author: chromiumboy
+  changes:
+  - message: Sentry turret control panels can now be found adjacent to rooms containing
+      sentry turrets. Authorized personnel can use these panels to remotely monitor
+      and alter the settings of any linked sentry turrets.
+    type: Add
+  id: 8572
+  time: '2025-05-26T13:00:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35235
