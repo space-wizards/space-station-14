@@ -452,9 +452,6 @@
         maxRange: 5
       spawns:
       - MobSpawnCrabUranium
-  - type: RadiationSource
-    intensity: 0.2
-    slope: 0.1
 
 - type: entity
   id: AnomalyRockQuartz
@@ -557,6 +554,56 @@
       - MobSpawnCrabSilver
 
 - type: entity
+  id: AnomalyRockGold
+  parent: AnomalyRockBase
+  suffix: Rock, Gold
+  components:
+  - type: Sprite
+    color: "#e3ba70"
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#e3ba70"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 8
+        maxAmount: 15
+        minRange: 4.5
+        maxRange: 7.5
+      spawns:
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidGold
+      - WallSpawnAsteroidGoldCrab
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2.5
+        maxRange: 4.5
+      spawns:
+      - CrystalYellow
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - CrystalYellow
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidGoldCrab
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 6
+        maxAmount: 10
+        maxRange: 5
+      spawns:
+      - MobSpawnCrabGold
+
+- type: entity
   id: AnomalyRockIron
   parent: AnomalyRockBase
   suffix: Rock, Iron
@@ -605,6 +652,56 @@
         maxRange: 5
       spawns:
       - MobSpawnCrabIron
+
+- type: entity
+  id: AnomalyRockCoal
+  parent: AnomalyRockBase
+  suffix: Rock, Coal
+  components:
+  - type: Sprite
+    color: "#484848"
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#484848"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 8
+        maxAmount: 15
+        minRange: 4.5
+        maxRange: 7.5
+      spawns:
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidCoal
+      - WallSpawnAsteroidCoalCrab
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2.5
+        maxRange: 4.5
+      spawns:
+      - CrystalBlack
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - CrystalBlack
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidCoalCrab
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 6
+        maxAmount: 10
+        maxRange: 5
+      spawns:
+      - MobSpawnCrabCoal
 
 - type: entity
   id: AnomalyFlora

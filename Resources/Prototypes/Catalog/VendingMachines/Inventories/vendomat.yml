@@ -3,7 +3,8 @@
   startingInventory:
     RemoteSignaller: 1
     Igniter: 2
-    Wirecutter: 1
+    Wirecutter: 2
+    Screwdriver: 2
     CableApcStack: 2
     FlashlightLantern: 2
     PowerCellSmallPrinted: 3

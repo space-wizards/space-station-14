@@ -1,0 +1,11 @@
+### Spam Mail
+
+- type: entity
+  id: MailSpamLetter
+  name: spam letter
+  description: Even space isn't safe from junk mail.
+  parent: Paper
+  components:
+  - type: Paper
+  - type: RandomPaperContent
+    dataset: DeliverySpamLetters

@@ -1,25 +1,25 @@
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
-using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
-using System.Linq;
+using Robust.Shared.EntitySerialization.Systems;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Server)]
-public sealed class PersistenceSave : IConsoleCommand
+public sealed class PersistenceSave : LocalizedEntityCommands
 {
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IEntitySystemManager _system = default!;
-    [Dependency] private readonly IMapManager _map = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
-    public string Command => "persistencesave";
-    public string Description => "Saves server data to a persistence file to be loaded later.";
-    public string Help => "persistencesave [mapId] [filePath - default: game.map (CCVar) ]";
+    public override string Command => "persistencesave";
+    public override string Description => "Saves server data to a persistence file to be loaded later.";
+    public override string Help => "persistencesave [mapId] [filePath - default: game.map (CCVar) ]";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length < 1 || args.Length > 2)
         {
@@ -48,7 +48,7 @@ public sealed class PersistenceSave : IConsoleCommand
         }
 
         var mapLoader = _system.GetEntitySystem<MapLoaderSystem>();
-        mapLoader.SaveMap(mapId, saveFilePath);
+        mapLoader.TrySaveMap(mapId, new ResPath(saveFilePath));
         shell.WriteLine(Loc.GetString("cmd-savemap-success"));
     }
 }

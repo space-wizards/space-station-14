@@ -10,16 +10,16 @@
     <GuideEntityEmbed Entity="Multitool"/>
   </Box>
 
-  From here, you can use wirecutters and a multitool to interact with the wiring. Note that interacting with the wiring often requires insulated gloves, as if the wire is live, you can get shocked.
+  From here you can use wirecutters and a multitool to interact with the wiring. Note that interacting with the wiring often requires insulated gloves, as if the wire is live, you can get shocked.
 
   <Box>
     <GuideEntityEmbed Entity="ClothingHandsGlovesColorYellow"/>
   </Box>
 
-  You can cut and mend wires using the wirecutters, and pulse wires using the multitool.
+  You can cut and mend wires using the wirecutters and pulse wires using the multitool.
 
   Cutting wires often completely disables or restores functionality to a device.
-  It may also trigger unintended functionality, like shocking people, dropping door bolts, or exploding.
+  It may also trigger unintended functionality like shocking people, dropping door bolts, or exploding.
 
   Pulsing wires can have a variety of effects, but oftentimes it either temporarily disables or enables functionality.
 

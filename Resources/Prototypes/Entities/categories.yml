@@ -22,3 +22,8 @@
 - type: entityCategory
   id: Mapping
   name: entity-category-name-mapping
+
+- type: entityCategory
+  id: DoNotMap
+  name: entity-category-name-donotmap
+  suffix: entity-category-suffix-donotmap
