@@ -36,6 +36,25 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag
     private void GenerateControl(SiliconLawsetPrototype lawset)
     {
         LawsetName.SetMarkup($"[bold]{Loc.GetString(lawset.Name ?? lawset.ID)}[/bold]");
+        int i = 1;
+        foreach (string lawID in lawset.Laws)
+        {
+            string locLawString = string.Empty;
+            if (!_prototype.TryIndex(lawID, out SiliconLawPrototype? lawPrototype))
+            {
+                _logging.Error($"Specified SiliconLawPrototype \"{lawID}\" is not a valid Law prototype");
+            }
+            else
+            {
+                // This should never be null, I'm assuming there's a better way of doing this that will
+                // be brought up in review
+                locLawString = Loc.GetString(lawPrototype?.LawString ?? string.Empty);
+                RichTextLabel lawN = new();
+                lawN.SetMarkup($"Law {i}: {"locLawString"}\n");
+                LawsetContainer.AddChild(lawN);
+            }
+            i++;
+        }
     }
 
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
@@ -47,9 +66,9 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag
             return false;
         }
 
-        if (!_prototype.TryIndex<SiliconLawsetPrototype>(id, out SiliconLawsetPrototype? lawset))
+        if (!_prototype.TryIndex(id, out SiliconLawsetPrototype? lawset))
         {
-            _logging.Error($"Specified SiliconLawsetPrototype \"{id}\" is not a valid technology prototype");
+            _logging.Error($"Specified SiliconLawsetPrototype \"{id}\" is not a valid Lawset prototype");
             return false;
         }
 
