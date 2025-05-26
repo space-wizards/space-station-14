@@ -15,7 +15,7 @@ public partial class SharedGunSystem
     private void OnClothingTakeAmmo(EntityUid uid, ClothingSlotAmmoProviderComponent component, TakeAmmoEvent args)
     {
         var getConnectedContainerEvent = new GetConnectedContainerEvent();
-        RaiseLocalEvent(uid, getConnectedContainerEvent);
+        RaiseLocalEvent(uid, ref getConnectedContainerEvent);
         if(!getConnectedContainerEvent.ContainerEntity.HasValue)
             return;
 
@@ -25,7 +25,7 @@ public partial class SharedGunSystem
     private void OnClothingAmmoCount(EntityUid uid, ClothingSlotAmmoProviderComponent component, ref GetAmmoCountEvent args)
     {
         var getConnectedContainerEvent = new GetConnectedContainerEvent();
-        RaiseLocalEvent(uid, getConnectedContainerEvent);
+        RaiseLocalEvent(uid, ref getConnectedContainerEvent);
         if (!getConnectedContainerEvent.ContainerEntity.HasValue)
             return;
 

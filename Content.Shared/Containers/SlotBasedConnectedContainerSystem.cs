@@ -76,7 +76,8 @@ public sealed class SlotBasedConnectedContainerSystem : EntitySystem
 /// Event for an attempt of getting container, connected to entity on which event was raised.
 /// Fills <see cref="ContainerEntity"/> if connected container exists.
 /// </summary>
-public sealed class GetConnectedContainerEvent
+[ByRefEvent]
+public struct GetConnectedContainerEvent
 {
     /// <summary>
     /// Container entity, if it exists, or null.

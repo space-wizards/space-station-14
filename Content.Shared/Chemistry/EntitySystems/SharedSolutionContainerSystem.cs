@@ -165,7 +165,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     {
         // use connected container instead of entity from arguments, if it exists.
         var ev = new GetConnectedContainerEvent();
-        RaiseLocalEvent(container, ev);
+        RaiseLocalEvent(container, ref ev);
         if (ev.ContainerEntity.HasValue)
             container = ev.ContainerEntity.Value;
 
