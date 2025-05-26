@@ -28,13 +28,13 @@ public sealed partial class ChameleonOutfitPrototype : IPrototype
     /// name.
     /// </summary>
     [DataField]
-    public string? Name;
+    public LocId? Name;
 
     /// <summary>
     /// This name is only used in the chameleon controller UI.
     /// </summary>
     [DataField]
-    public string? LoadoutName;
+    public LocId? LoadoutName;
 
     /// <summary>
     /// Generic staring gear. Sometimes outfits don't have jobs but do have starting gear (E.g. Cluwne).

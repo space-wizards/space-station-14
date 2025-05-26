@@ -46,13 +46,13 @@ namespace Content.Server.Access.Systems
             _prototypeManager.TryIndex(args.Args.ChameleonOutfit.Job, out var jobProto);
 
             var jobIcon = args.Args.ChameleonOutfit.Icon ?? jobProto?.Icon;
-            var jobName = args.Args.ChameleonOutfit.Name ?? jobProto?.LocalizedName;
+            var jobName = args.Args.ChameleonOutfit.Name ?? jobProto?.Name ?? "";
 
             if (jobIcon != null)
                 _cardSystem.TryChangeJobIcon(ent, _prototypeManager.Index(jobIcon.Value), idCardComp);
 
-            if (jobName != null)
-                _cardSystem.TryChangeJobTitle(ent, jobName, idCardComp);
+            if (jobName != "")
+                _cardSystem.TryChangeJobTitle(ent, Loc.GetString(jobName), idCardComp);
 
             // If you have forced departments use those over the jobs actual departments.
             if (args.Args.ChameleonOutfit?.Departments?.Count > 0)
