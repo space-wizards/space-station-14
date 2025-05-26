@@ -20,4 +20,4 @@ reagent-name-fluorosurfactant = fluorosurfactant
 reagent-desc-fluorosurfactant = A perfluoronated sulfonic acid that forms a foam when mixed with water.
 
 reagent-name-clastine = clastine
-reagent-desc-clastine = An otherwise inert chemical that explodes violently when in contact with Chlorine, ironically that's what it metabolises into. Mix with care.
+reagent-desc-clastine = An otherwise inert chemical that explodes violently when in contact with Chlorine, ironically that's what it metabolizes into. Mix with care.

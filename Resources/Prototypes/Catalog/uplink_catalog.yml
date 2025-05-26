@@ -648,9 +648,9 @@
   productEntity: ChemistryBottleClastine
   discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 4
+    Telecrystal: 3
   cost:
-    Telecrystal: 8
+    Telecrystal: 6
   categories:
   - UplinkChemicals
 
