@@ -31,7 +31,7 @@ namespace Content.Server.StationEvents.Events
             var query = AllEntityQuery<ApcComponent, TransformComponent>();
             while (query.MoveNext(out var apcUid ,out var apc, out var transform))
             {
-                if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation)
+                if (apc.MainBreakerEnabled && ApcCanBeAffected((uid, component), (apcUid, apc)))
                     component.Powered.Add(apcUid);
             }
 
@@ -95,9 +95,20 @@ namespace Content.Server.StationEvents.Events
             }
         }
 
-        public bool ContainsUnpoweredApc(Entity<PowerGridCheckRuleComponent> ent, Entity<ApcComponent> apc)
+        public bool ApcCanBeAffected(Entity<PowerGridCheckRuleComponent> ent, Entity<ApcComponent> apc, TransformComponent? apcXform = null)
         {
             if (!_gameTicker.IsGameRuleActive(ent.Owner))
+                return false;
+
+            if (!Resolve(apc.Owner, ref apcXform))
+                return false;
+
+            return CompOrNull<StationMemberComponent>(apcXform.GridUid)?.Station == ent.Comp.AffectedStation;
+        }
+
+        public bool ContainsUnpoweredApc(Entity<PowerGridCheckRuleComponent> ent, Entity<ApcComponent> apc)
+        {
+            if (!ApcCanBeAffected(ent, apc))
                 return false;
 
             return ent.Comp.Unpowered.Contains(apc.Owner);
@@ -105,7 +116,7 @@ namespace Content.Server.StationEvents.Events
 
         public bool TryAddUnpoweredApc(Entity<PowerGridCheckRuleComponent> ent, Entity<ApcComponent> apc)
         {
-            if (!_gameTicker.IsGameRuleActive(ent.Owner))
+            if (!ApcCanBeAffected(ent, apc))
                 return false;
 
             if (ent.Comp.Powered.Contains(apc.Owner) ||
