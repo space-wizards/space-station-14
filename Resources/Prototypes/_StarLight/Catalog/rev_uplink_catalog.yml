@@ -246,10 +246,10 @@
     stockLimit: 2
 
 - type: listing
-  id: medium-power-cage
-  name: medium-power-cage-name
-  description: medium-power-cage-desc
-  productEntity: PowerCageMedium
+  id: high-power-cage
+  name: high-power-cage-name
+  description: high-power-cage-desc
+  productEntity: PowerCageHigh
   cost:
     Telebond: 2
   categories:

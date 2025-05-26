@@ -203,17 +203,17 @@
 
 - type: entity
   parent: [BaseItem, ClothingNeckBase, ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSovietContraband]
-  id: ClothingNeckCloakKommissar
-  name: Kommissar overcoat
-  description: Rumor has it entire regiments of aides exist solely to press seams, polish buttons, and remind the Kommissar which coat goes over which.
+  id: ClothingNeckCloakCommissar
+  name: Commissar overcoat
+  description: Rumor has it entire regiments of aides exist solely to press seams, polish buttons, and remind the Commissar which coat goes over which.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/Neck/Cloaks/kommissar.rsi
+    sprite: _Starlight/Clothing/Neck/Cloaks/commissar.rsi
   - type: Clothing
     slots:
     - outerClothing
     - neck
-    sprite: _Starlight/Clothing/Neck/Cloaks/kommissar.rsi
+    sprite: _Starlight/Clothing/Neck/Cloaks/commissar.rsi
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0

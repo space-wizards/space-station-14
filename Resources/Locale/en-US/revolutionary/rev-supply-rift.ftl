@@ -52,8 +52,8 @@ soviet-encryption-key-desc = Features exotic woodpeckers. Priyom.
 # Shuttle
 stole-remote-signaller-name = Remote signaller
 stole-remote-signaller-desc = Boom! Links devices.
-medium-power-cage-name = Medium-capacity power cage
-medium-power-cage-desc = LSE-1200c's power ammo. Don't lose it.
+high-power-cage-name = High-capacity power cage
+high-power-cage-desc = LSE-1200c's power ammo. Don't lose it.
 lse-400c-name = LSE-400c
 lse-400c-desc = Basic laser emplacement weapon. Requires a power cell, link and a signaleer.
 stolen-ptk800-name = PTK-800 (NT)
