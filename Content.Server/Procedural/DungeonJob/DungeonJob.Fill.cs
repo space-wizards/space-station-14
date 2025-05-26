@@ -50,7 +50,7 @@ public sealed partial class DungeonJob
                         continue;
                 }
 
-                if (!_anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+                if (!_anchorable.TileFree((_gridUid, _grid), tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                     continue;
 
                 var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile);
