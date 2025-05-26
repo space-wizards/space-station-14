@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
+using Content.Server.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
@@ -16,6 +17,7 @@ namespace Content.Server.StationEvents.Events
     public sealed class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleComponent>
     {
         [Dependency] private readonly ApcSystem _apcSystem = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
 
         protected override void Started(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
         {
@@ -95,11 +97,17 @@ namespace Content.Server.StationEvents.Events
 
         public bool ContainsUnpoweredApc(Entity<PowerGridCheckRuleComponent> ent, Entity<ApcComponent> apc)
         {
+            if (!_gameTicker.IsGameRuleActive(ent.Owner))
+                return false;
+
             return ent.Comp.Unpowered.Contains(apc.Owner);
         }
 
         public bool TryAddUnpoweredApc(Entity<PowerGridCheckRuleComponent> ent, Entity<ApcComponent> apc)
         {
+            if (!_gameTicker.IsGameRuleActive(ent.Owner))
+                return false;
+
             if (ent.Comp.Powered.Contains(apc.Owner) ||
                 ent.Comp.Unpowered.Contains(apc.Owner))
                 return false;
