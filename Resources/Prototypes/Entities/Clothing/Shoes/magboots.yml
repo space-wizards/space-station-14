@@ -113,6 +113,8 @@
   - type: Item
     sprite: null
     size: Normal
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   id: ActionToggleMagboots

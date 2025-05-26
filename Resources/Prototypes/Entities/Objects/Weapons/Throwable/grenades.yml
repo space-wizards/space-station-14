@@ -59,6 +59,8 @@
         volume: 5
     initialBeepDelay: 0
     beepInterval: 2 # 2 beeps total (at 0 and 2)
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   name: flashbang
@@ -88,6 +90,8 @@
     tags:
     - HandGrenade
     - GrenadeFlashBang
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   id: GrenadeFlashEffect
@@ -143,6 +147,8 @@
       path: /Audio/Effects/minibombcountdown.ogg
       params:
         volume: 12
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   name: self destruct
@@ -225,6 +231,8 @@
           params:
             volume: 5
       - type: DeleteOnTrigger
+  - type: StaticPrice
+    price: 1000
 
 - type: entity
   name: whitehole grenade
@@ -272,6 +280,8 @@
           params:
             volume: 15
       - type: DeleteOnTrigger
+  - type: StaticPrice
+    price: 1000
 
 - type: entity
   name: the nuclear option
@@ -367,6 +377,8 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+  - type: StaticPrice
+    price: 666 # 2000 for 3, I love fractions
 
 - type: entity
   name: holy hand grenade
@@ -410,6 +422,8 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Items/smoke_grenade_prime.ogg
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: [ BaseCivilianContraband, SmokeGrenade ]
@@ -533,3 +547,5 @@
       path: /Audio/Effects/minibombcountdown.ogg
       params:
         volume: 12
+  - type: StaticPrice
+    price: 1000
