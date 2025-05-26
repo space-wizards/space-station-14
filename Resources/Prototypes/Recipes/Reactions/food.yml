@@ -113,7 +113,7 @@
   conserveEnergy: false
   reactants:
     Milk:
-      amount: 30
+      amount: 15
     TableSalt:
       amount: 5
       catalyst: true

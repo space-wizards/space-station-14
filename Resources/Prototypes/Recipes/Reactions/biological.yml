@@ -14,6 +14,21 @@
     Protein: 4
 
 - type: reaction
+  id: InsectBloodBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    InsectBlood:
+      amount: 30
+  products:
+    Water: 14
+    Sodium: 3
+    Chlorine: 1.5
+    CarbonDioxide: 5.5
+    Protein: 6
+
+- type: reaction
   id: SlimeBloodBreakdown
   source: true
   requiredMixerCategories:
@@ -52,6 +67,20 @@
     Sugar: 2
     CarbonDioxide: 3
     Protein: 4
+
+- type: reaction
+  id: AmmoniaBloodBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    AmmoniaBlood:
+      amount: 30
+  products:
+    Water: 17
+    Nitrogen: 4.5
+    Chlorine: 2.5
+    Protein: 6
 
 - type: reaction
   id: ZombieBloodBreakdown

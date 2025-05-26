@@ -6,7 +6,7 @@ namespace Content.Shared.Thief;
 /// <summary>
 /// A prototype that defines a set of items and visuals in a specific starter set for the antagonist thief
 /// </summary>
-[Prototype("thiefBackpackSet")]
+[Prototype]
 public sealed partial class ThiefBackpackSetPrototype : IPrototype
 {
     [IdDataField] public string ID { get; private set; } = default!;

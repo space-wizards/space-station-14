@@ -115,6 +115,7 @@
   components:
   - type: Microwave
     cookTimeMultiplier: 0.5
+    baseHeatMultiplier: 200
     capacity: 10
     canMicrowaveIdsSafely: false
     explosionChance: 0.3
