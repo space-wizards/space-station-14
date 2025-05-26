@@ -1,0 +1,67 @@
+- type: entity
+  name: FG13 flamethrower
+  parent: BaseItem
+  id: WeaponFlamethrowerBase
+  abstract: true
+  description: A rooty tooty point and shooty.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/syndie-flamer.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Basic/syndie-flamer.rsi
+    quickEquip: false
+    slots:
+      - suitStorage
+      - Belt
+  - type: Appearance
+  - type: AmmoCounter
+  - type: Item
+    sprite: Objects/Weapons/Guns/Basic/syndie-flamer.rsi
+    size: Ginormous
+  - type: Gun
+    projectileSpeed: 5
+    cameraRecoilScalar: 0
+    fireRate: 8
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/flamethrower.ogg
+  - type: SolutionContainerManager
+    solutions:
+      chamber:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 400
+        maxVol: 400 #10 seconds of flaming
+  - type: SolutionAmmoProvider
+    solutionId: chamber
+    proto: BulletFlamethrower
+    fireCost: 5
+  - type: Welder
+    fuelSolutionName: chamber
+    fuelReagent: WeldingFuel
+  - type: StaticPrice
+    price: 100
+    
+- type: entity
+  name: FG13 flamethrower
+  parent: [ WeaponFlamethrowerBase, BaseGunWieldable, BaseSyndicateContraband ]
+  id: WeaponFlamethrowerFG
+  description: Simple as it is deadly, the Xiuhcoatl fulfills a long-standing craving of the Gorlex Marauders for Nanotrasen Barbeque. Uses welding fuel.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/syndie-flamer.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Basic/syndie-flamer.rsi
+  - type: GunRequiresWield
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true

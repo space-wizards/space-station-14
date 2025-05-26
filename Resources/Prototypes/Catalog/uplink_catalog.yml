@@ -227,6 +227,19 @@
     Telecrystal: 30
   categories:
   - UplinkWeaponry
+  
+- type: listing
+  id: uplinkFlamethrower
+  name: uplink-flamethrower-name
+  description: uplink-flamethrower-desc
+  productEntity: WeaponFlamethrowerFG
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 12
+  cost:
+    Telecrystal: 15
+  categories:
+    - UplinkWeaponry
 
 # Explosives
 
