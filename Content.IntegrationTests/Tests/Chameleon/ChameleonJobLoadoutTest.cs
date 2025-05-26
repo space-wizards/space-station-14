@@ -54,9 +54,10 @@ public sealed class ChameleonJobLoadoutTest : InteractionTest
         // All round start jobs have a chameleon loadout
         foreach (var job in validJobs)
         {
-            if (job.Value == 0)
-                errorMessage.AppendLine(job.Key + " has no chameleonOutfit prototype.");
+            if (job.Value != 0)
+                continue;
 
+            errorMessage.AppendLine(job.Key + " has no chameleonOutfit prototype.");
             invalid = true;
         }
 
