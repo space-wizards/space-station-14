@@ -363,38 +363,21 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
                 _ => comp.LowAggressionSounds,
             };
         }
+
         var resolver = _sharedAudio.ResolveSound(currentSpecifier);
         if (resolver is not ResolvedCollectionSpecifier collectionResolver)
             return -1;
 
-        //if (GetVoiceReplacement(ent, collectionResolver.Index) != null)
-        //{
-        //    resolver = (ResolvedCollectionSpecifier)_sharedAudio.ResolveSound(comp.HOSReplaceSounds);
-        //}
+        //Replace voice line
+        if (comp.IsHOS && comp.AggresionLevel == AggresionState.High && collectionResolver.Index == comp.SecHailHighIndexForHOS) // MAGIC NUMBER !!!
+        {
+            //There is only one sound replacement at the moment, no need to check indexes
+            resolver = (ResolvedCollectionSpecifier)_sharedAudio.ResolveSound(comp.HOSReplaceSounds);
+        }
 
         _sharedAudio.PlayPvs(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
 
         return collectionResolver.Index;
-    }
-
-    /// <summary>
-    /// Get the locale string which replaces the one given as specified in the component
-    /// </summary>
-    /// <param name="ent"></param>
-    /// <param name="index"></param>
-    /// <returns>If null, nothing replaces. Otherwise, the locale string which replaces it.</returns>
-    protected string? GetVoiceReplacement(Entity<SecurityHailerComponent> ent, int index)
-    {
-        //var linesToReplace = ent.Comp.ReplaceVoicelinesSpecial;
-        //if (linesToReplace.Count > 0) //If we need to replace lines
-        //{
-        //    var line = GetLineFormat(ent, index);
-        //    string? replacedLine;
-        //    linesToReplace[ent.Comp.SpecialCircumtance].TryGetValue(line, out replacedLine);
-        //    return replacedLine;
-        //}
-
-        return null;
     }
 
     /// <summary>
@@ -412,6 +395,10 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
             finalLine = $"hail-ERT-{index}";
         else
             finalLine = $"hail-{ent.Comp.AggresionLevel.ToString().ToLower()}-{index}";
+
+        //In case of replacement for HOS
+        if (ent.Comp.IsHOS && ent.Comp.ReplaceVoicelinesLocalizeForHOS.ContainsKey(finalLine))
+            finalLine = ent.Comp.ReplaceVoicelinesLocalizeForHOS[finalLine];
 
         return finalLine;
     }

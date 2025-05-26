@@ -68,13 +68,20 @@ public sealed partial class SecurityHailerComponent : Component
     public bool IsERT = false;
 
     /// <summary>
+    /// Is the gas mask an SWAT one ?
+    /// We need to replace a voiceline in that case
+    /// </summary>
+    [DataField]
+    public bool IsHOS = false;
+
+    /// <summary>
     /// What localized line to replace in special circumstances
     /// </summary>
     [DataField]
-    public Dictionary<string, string> ReplaceVoicelinesLocalize = new();
+    public Dictionary<string, string> ReplaceVoicelinesLocalizeForHOS = new();
 
     [DataField]
-    public Dictionary<string, int> ReplaceVoiceSoundCollection = new();
+    public int SecHailHighIndexForHOS;
 
     [DataField, AutoNetworkedField]
     public AggresionState AggresionLevel = AggresionState.Low;

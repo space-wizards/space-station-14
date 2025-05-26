@@ -417,11 +417,10 @@
   - type: SecurityHailer #Because the HOS has this one
     distance: 5
     aggresionLevel: High
-    replaceVoicelinesLocalize:
+    isHOS: true
+    replaceVoicelinesLocalizeForHOS:
       hail-high-5: hail-high-HOS
-    replaceVoiceSoundCollection:
-      SecHailHigh: 5
-      SecHailHOS: 0
+    secHailHighIndexForHOS: 5
   - type: AccessReader
     access: [["HeadOfSecurity"]]
     loggingDisabled: true

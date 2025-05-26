@@ -34,11 +34,9 @@ public sealed class SecurityHailerSystem : SharedSecurityHailerSystem
     private bool SayChatMessage(Entity<SecurityHailerComponent> ent, ActionSecHailerActionEvent ev, int index)
     {
         string ftlLine = GetLineFormat(ent, index);
-        var replacedLine = GetVoiceReplacement(ent, index);
-        replacedLine ??= ftlLine;
 
         //Make a chat line with the sec hailer as speaker, in bold and UPPERCASE for added impact
-        _chat.TrySendInGameICMessage(ev.Performer, Loc.GetString(replacedLine).ToUpper(), InGameICChatType.Speak, hideChat: true, hideLog: true, nameOverride: ent.Comp.ChatName,
+        _chat.TrySendInGameICMessage(ev.Performer, Loc.GetString(ftlLine).ToUpper(), InGameICChatType.Speak, hideChat: true, hideLog: true, nameOverride: ent.Comp.ChatName,
         checkRadioPrefix: false, ignoreActionBlocker: true, skipTransform: true);
         return true;
     }

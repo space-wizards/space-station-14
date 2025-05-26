@@ -16,6 +16,6 @@
     icon:
       sprite: Clothing/Mask/gassecurity.rsi
       state: sec-hail
-    useDelay: 10 # Just like screaming
+    useDelay: 0 # Just like screaming
     itemIconStyle: BigAction
     event: !type:HailerActionEvent
