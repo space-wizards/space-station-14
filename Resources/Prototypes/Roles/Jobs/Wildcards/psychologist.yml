@@ -25,3 +25,10 @@
 - type: chameleonOutfit
   id: PsychologistChameleonOutfit
   job: Psychologist
+  equipment:
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskSterile
+    outerClothing: ClothingOuterCoatLab
+    neck: ClothingNeckScarfStripedLightBlue
+    belt: ClothingBeltMedical
+    gloves: ClothingHandsGlovesLatex

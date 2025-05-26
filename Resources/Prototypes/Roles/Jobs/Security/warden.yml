@@ -44,3 +44,13 @@
   id: WardenChameleonOutfit
   job: Warden
   hasMindShield: true
+  equipment:
+    head: ClothingHeadHatBeretWarden
+    mask: ClothingMaskGasSecurity
+    outerClothing: ClothingOuterCoatWarden
+    jumpsuit: ClothingUniformJumpsuitWarden
+    neck: ClothingNeckScarfStripedBlack
+    back: ClothingBackpackSecurity
+    belt: ClothingBeltSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    shoes: ClothingShoesBootsJack

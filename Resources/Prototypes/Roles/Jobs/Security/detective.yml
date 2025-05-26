@@ -41,15 +41,6 @@
   job: Detective
   hasMindShield: true
   equipment:
-    head: ClothingHeadHatFedoraBrown
-    eyes: ClothingEyesGlassesSecurity
-    ears: ClothingHeadsetSecurity
     mask: ClothingMaskGasSecurity
-    outerClothing: ClothingOuterVestDetective
-    jumpsuit: ClothingUniformJumpsuitDetective
     neck: ClothingNeckTieDet
-    back: ClothingBackpackSecurity
-    belt: ClothingBeltHolster
     gloves: ClothingHandsGlovesForensic
-    shoes: ClothingShoesBootsJack
-    id: DetectivePDA

@@ -23,3 +23,10 @@
 - type: chameleonOutfit
   id: ReporterChameleonOutfit
   job: Reporter
+  equipment:
+    head: ClothingHeadHatFedoraGrey
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    outerClothing: ClothingOuterCoatTrench
+    neck: ClothingNeckScarfStripedBlack
+    gloves: ClothingHandsGlovesFingerless

@@ -29,3 +29,11 @@
 - type: chameleonOutfit
   id: ZookeeperChameleonOutfit
   job: Zookeeper
+  equipment:
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    outerClothing: ClothingOuterWinterColorOrange
+    neck: ClothingNeckScarfStripedBrown
+    belt: ClothingBeltStorageWaistbag
+    gloves: ClothingHandsGlovesColorBrown
+

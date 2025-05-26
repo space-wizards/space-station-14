@@ -36,3 +36,8 @@
 - type: chameleonOutfit
   id: SecurityOfficerChameleonOutfit
   job: SecurityOfficer
+  hasMindShield: true
+  equipment:
+    mask: ClothingMaskGasSecurity
+    neck: ClothingNeckScarfStripedRed
+    gloves: ClothingHandsGlovesColorBlack
