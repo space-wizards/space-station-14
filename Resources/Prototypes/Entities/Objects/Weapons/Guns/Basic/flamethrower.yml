@@ -49,7 +49,7 @@
     fuelReagent: WeldingFuel
   - type: StaticPrice
     price: 100
-    
+
 - type: entity
   name: FG13 flamethrower
   parent: [ WeaponFlamethrowerBase, BaseGunWieldable, BaseSyndicateContraband ]

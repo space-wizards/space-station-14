@@ -227,7 +227,7 @@
     Telecrystal: 30
   categories:
   - UplinkWeaponry
-  
+
 - type: listing
   id: uplinkFlamethrower
   name: uplink-flamethrower-name
