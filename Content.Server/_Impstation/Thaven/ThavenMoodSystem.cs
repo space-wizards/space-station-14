@@ -356,6 +356,11 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         return _moodProtos;
     }
 
+    public void SetFollowsSharedmood(Entity<ThavenMoodsComponent> ent, bool value)
+    {
+        ent.Comp.FollowsSharedMoods = value;
+    }
+
     /// <summary>
     /// Return a list of the moods that are affecting this entity.
     /// </summary>

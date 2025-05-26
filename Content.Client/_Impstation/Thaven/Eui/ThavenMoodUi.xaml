@@ -9,6 +9,7 @@
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal" Align="End">
             <Button Name="NewMoodButton" Text="{Loc thaven-moods-admin-ui-new-mood}" MaxSize="256 64" StyleClasses="OpenRight"/>
+            <Button Name="ToggleSharedMoodButton" Text="{Loc thaven-moods-admin-ui-toggle-shared}" MaxSize="256 64" StyleClasses="OpenBoth" ToggleMode="True"/>
             <Button Name="SaveButton" Text="{Loc thaven-moods-admin-ui-save}" MaxSize="256 64" StyleClasses="OpenLeft"/>
         </BoxContainer>
     </BoxContainer>

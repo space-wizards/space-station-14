@@ -806,7 +806,12 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     if (!EnsureComp<ThavenMoodsComponent>(args.Target, out moods))
-                        _moods.NotifyMoodChange((args.Target, moods));
+                    {
+                        //if we're adding moods to something that doesn't already have them (e.g. isn't a thaven), make them ignore the shared mood
+                        var targ = (args.Target, moods);
+                        _moods.SetMoods(targ, []);
+                        _moods.SetFollowsSharedmood(targ, false);
+                    }
                 },
                 Impact = LogImpact.High,
                 Message = Loc.GetString("admin-trick-give-moods-description"),

@@ -5,6 +5,7 @@ thaven-moods-update-notify = You feel a shift in your moods!
 thaven-moods-ui-verb = Edit Moods
 thaven-moods-admin-ui-title = Edit Moods
 thaven-moods-admin-ui-new-mood = New Mood
+thaven-moods-admin-ui-toggle-shared = Follows Shared Mood
 thaven-moods-admin-ui-save = Save
 thaven-mood-admin-ui-move-up = Move Up
 thaven-mood-admin-ui-move-down = Move Down
