@@ -45,6 +45,7 @@
     - Wallmount
 
 - type: entity
+  abstract: true
   parent: WeaponEnergyTurretControlPanelFrame
   id: WeaponEnergyTurretStationControlPanelBase
   name: turret control panel
@@ -79,8 +80,6 @@
           0: { state: stun }
           1: { state: lethal }
   - type: StationAiWhitelist
-  - type: AccessReader
-    access: [["StationAI", "ResearchDirector"]]
   - type: DeployableTurretController
     accessGroups:
     - Cargo
@@ -202,9 +201,6 @@
   #  containers:
   #    board:
   #    - WeaponEnergyTurretSecurityControlPanelElectronics
-  - type: DeviceNetwork
-    receiveFrequencyId: Turret
-    transmitFrequencyId: TurretControl
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Security
@@ -231,9 +227,6 @@
   #  containers:
   #    board:
   #    - WeaponEnergyTurretCommandControlPanelElectronics
-  - type: DeviceNetwork
-    receiveFrequencyId: Turret
-    transmitFrequencyId: TurretControl
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Command

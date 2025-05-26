@@ -160,7 +160,7 @@
   suffix: Security
   components:
   - type: AccessReader
-    access: [["StationAI"], ["Security"]]
+    access: [["StationAi"], ["Security"]]
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Security
@@ -178,7 +178,7 @@
   suffix: Command
   components:
   - type: AccessReader
-    access: [["StationAI"], ["Command"]]
+    access: [["StationAi"], ["Command"]]
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Command
