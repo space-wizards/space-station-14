@@ -1,7 +1,6 @@
 using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
@@ -17,56 +16,6 @@ namespace Content.Server.StationEvents.Events
     public sealed class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleComponent>
     {
         [Dependency] private readonly ApcSystem _apcSystem = default!;
-        [Dependency] private readonly StationSystem _stationSystem = default!;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<ApcComponent, ApcStartupCheckMainBreakerEvent>(OnApcStartupCheckMainBreaker);
-            SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerAttemptEvent>(OnApcToggleMainBreaker);
-        }
-
-        private void OnApcStartupCheckMainBreaker(Entity<ApcComponent> ent, ref ApcStartupCheckMainBreakerEvent args)
-        {
-            var apcStation = _stationSystem.GetOwningStation(ent);
-
-            if (apcStation == null)
-                return;
-
-            foreach (var powerGridCheckRule in EntityQuery<PowerGridCheckRuleComponent>(true))
-            {
-                if (powerGridCheckRule.AffectedStation == apcStation)
-                {
-                    if (!powerGridCheckRule.Powered.Contains(ent.Owner) &&
-                        !powerGridCheckRule.Unpowered.Contains(ent.Owner))
-                        powerGridCheckRule.Unpowered.Add(ent.Owner);
-
-                    args.Cancelled = true;
-                }
-            }
-        }
-
-        private void OnApcToggleMainBreaker(Entity<ApcComponent> ent, ref ApcToggleMainBreakerAttemptEvent args)
-        {
-            if (CheckApcWasUnpowered(ent))
-                args.Cancelled = true;
-        }
-
-        public bool CheckApcWasUnpowered(Entity<ApcComponent> ent)
-        {
-            var apcStation = _stationSystem.GetOwningStation(ent);
-
-            if (apcStation == null)
-                return false;
-
-            foreach (var powerGridCheckRule in EntityQuery<PowerGridCheckRuleComponent>(true))
-                if (powerGridCheckRule.AffectedStation == apcStation &&
-                    powerGridCheckRule.Unpowered.Contains(ent.Owner))
-                    return true;
-
-            return false;
-        }
 
         protected override void Started(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
         {
@@ -142,6 +91,22 @@ namespace Content.Server.StationEvents.Events
                 }
                 component.Unpowered.Add(selected);
             }
+        }
+
+        public bool ContainsUnpoweredApc(Entity<PowerGridCheckRuleComponent> ent, Entity<ApcComponent> apc)
+        {
+            return ent.Comp.Unpowered.Contains(apc.Owner);
+        }
+
+        public bool TryAddUnpoweredApc(Entity<PowerGridCheckRuleComponent> ent, Entity<ApcComponent> apc)
+        {
+            if (ent.Comp.Powered.Contains(apc.Owner) ||
+                ent.Comp.Unpowered.Contains(apc.Owner))
+                return false;
+
+            ent.Comp.Unpowered.Add(apc.Owner);
+
+            return true;
         }
     }
 }
