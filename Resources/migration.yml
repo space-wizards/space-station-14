@@ -640,6 +640,6 @@ SuitStorageBasic: SuitStorageEVA
 ClothingNeckCloakMiner: null
 
 # 2025-05-26 Turrets
-WeaponEnergyTurretStaion: WeaponEnergyTurretSecurity
+WeaponEnergyTurretStation: WeaponEnergyTurretSecurity
 WeaponEnergyTurretStationControlPanel: WeaponEnergyTurretSecurityControlPanel
 WeaponEnergyTurretStationMachineCircuitboard: WeaponEnergyTurretSecurityMachineCircuitboard
