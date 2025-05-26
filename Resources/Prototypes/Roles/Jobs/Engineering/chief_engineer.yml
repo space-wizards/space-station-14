@@ -44,3 +44,14 @@
   storage:
     back:
     - Flash
+
+- type: chameleonOutfit
+  id: ChiefEngineerChameleonOutfit
+  job: ChiefEngineer
+  equipment:
+    head: ClothingHeadHatBeretEngineering
+    mask: ClothingMaskBreath
+    neck: ClothingNeckCloakCe
+    outerClothing: ClothingOuterWinterCE
+    gloves: ClothingHandsGlovesColorYellow
+    shoes: ClothingShoesBootsMagAdv

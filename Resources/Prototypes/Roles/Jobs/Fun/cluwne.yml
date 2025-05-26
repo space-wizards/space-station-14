@@ -16,7 +16,7 @@
 
 - type: chameleonOutfit
   id: CluwneChameleonOutfit
-  name: Cluwne
+  name: job-title-cluwne
   startingGear: CluwneGear
   icon: "JobIconClown"
   equipment:
