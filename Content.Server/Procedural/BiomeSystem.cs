@@ -477,6 +477,12 @@ public sealed class BiomeUnloadJob : Job<bool>
 
                     foreach (var (ent, pos) in loaded.Entities)
                     {
+                        // Already flagged as modified so go next.
+                        if (biome.ModifiedTiles.Contains(pos))
+                        {
+                            continue;
+                        }
+
                         // IsDefault is actually super expensive so really need to run this check in the loop.
                         await SuspendIfOutOfTime();
 
@@ -510,6 +516,10 @@ public sealed class BiomeUnloadJob : Job<bool>
 
                     foreach (var (decal, pos) in loaded.Decals)
                     {
+                        // Modified go NEXT
+                        if (biome.ModifiedTiles.Contains(pos.Floored()))
+                            continue;
+
                         // Should just be able to remove them as you can't actually edit a decal.
                         if (!decals.RemoveDecal(Biome.Owner, decal, decalGrid))
                         {
