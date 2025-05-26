@@ -21,7 +21,7 @@ public sealed partial class SecurityHailerComponent : Component
     /// <summary>
     /// State of the sec mask to check if it can hail
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SecMaskState CurrentState = SecMaskState.Functional;
 
     /// <summary>
@@ -80,21 +80,76 @@ public sealed partial class SecurityHailerComponent : Component
     [DataField]
     public Dictionary<string, string> ReplaceVoicelinesLocalizeForHOS = new();
 
+    /// <summary>
+    /// Index of the sound that need replacing for the HOS
+    /// </summary>
     [DataField]
     public int SecHailHighIndexForHOS;
 
+    /// <summary>
+    /// Aggression level of the hailer, how aggressive is it ?
+    /// </summary>
     [DataField, AutoNetworkedField]
     public AggresionState AggresionLevel = AggresionState.Low;
 
+    /// <summary>
+    /// Soundcollection of AggresionState.Low
+    /// </summary>
+    [DataField]
     public SoundSpecifier LowAggressionSounds = new SoundCollectionSpecifier("SecHailLow");
+
+    /// <summary>
+    /// Soundcollection of AggresionState.Medium
+    /// </summary>
+    [DataField]
     public SoundSpecifier MediumAggressionSounds = new SoundCollectionSpecifier("SecHailMedium");
+
+    /// <summary>
+    /// Soundcollection of AggresionState.High
+    /// </summary>
+    [DataField]
     public SoundSpecifier HighAggressionSounds = new SoundCollectionSpecifier("SecHailHigh");
+
+    /// <summary>
+    /// Soundcollection when Emagged
+    /// </summary>
+    [DataField]
     public SoundSpecifier EmagAggressionSounds = new SoundCollectionSpecifier("SecHailEmag");
+
+    /// <summary>
+    /// Soundcollection of when the mask is the ERT one
+    /// </summary>
+    [DataField]
     public SoundSpecifier ERTAggressionSounds = new SoundCollectionSpecifier("SecHailERT");
+
+    /// <summary>
+    /// Soundcollection for replacing one voiceline when it's the SWAT mask
+    /// </summary>
+    [DataField]
     public SoundSpecifier HOSReplaceSounds = new SoundCollectionSpecifier("SecHailHOS");
-    public SoundSpecifier ScrewedSounds = new SoundCollectionSpecifier("Screwdriver"); //From the soundcollection of tools
-    public SoundSpecifier CutSounds = new SoundCollectionSpecifier("Wirecutter"); //From the soundcollection of tools
-    public SoundSpecifier SettingBeep = new SoundCollectionSpecifier("CargoToggleLimit"); //Beep when hailer is used with verb. In machines.yml
+
+    /// <summary>
+    /// Soundcollection of screwing sounds.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier ScrewedSounds = new SoundCollectionSpecifier("Screwdriver");
+
+    /// <summary>
+    /// Soundcollection of cutting sounds.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier CutSounds = new SoundCollectionSpecifier("Wirecutter");
+
+    /// <summary>
+    /// Soundcollection when interacting with the verb to increase aggression level
+    /// </summary>
+    [DataField]
+    public SoundSpecifier SettingBeep = new SoundCollectionSpecifier("CargoToggleLimit");
+
+    /// <summary>
+    /// Soundcollection when interacting with the verb to increase aggression level and it fails
+    /// </summary>
+    [DataField]
     public SoundSpecifier SettingError = new SoundCollectionSpecifier("CargoError"); //Beep when hailer is used with verb  and it FAILS !! In machines.yml
 
     /// <summary>
