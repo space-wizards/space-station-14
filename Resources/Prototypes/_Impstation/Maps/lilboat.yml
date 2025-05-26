@@ -2,7 +2,7 @@
   id: Lilboat
   mapName: 'NTAS Dolphin'
   mapPath: /Maps/_Impstation/lilboat.yml
-  minPlayers: 5
+  minPlayers: 8
   maxPlayers: 35
   randomRotation: true
   stations:
@@ -30,7 +30,7 @@
             Quartermaster: [ 1, 1 ]
             AdministrativeAssistant: [ 1, 1 ]
             HospitalityDirector: [ 1, 1 ]
-            # service - 11 incl. service worker
+            # service - 10 
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 1 ]
             Chaplain: [ 1, 1 ]
@@ -41,7 +41,6 @@
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
             Reporter: [ 1, 1 ]
-            #ServiceWorker: [ 1, 1 ]
             # engineering - 3-4
             AtmosphericTechnician: [ 1, 1 ]
             StationEngineer: [ 2, 2 ]
