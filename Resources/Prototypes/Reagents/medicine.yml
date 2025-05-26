@@ -174,7 +174,6 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: medicine
   color: "#0091ff"
-  worksOnTheDead: true
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: -5
@@ -184,8 +183,6 @@
   metabolisms:
     Medicine:
       effects:
-        - !type:ModifyBloodLevel
-          amount: 4
         - !type:HealthChange
           conditions:
           - !type:Temperature
@@ -194,7 +191,10 @@
           damage:
           # todo scale with temp like SS13
             groups:
-              Airloss: -10
+              Airloss: -6
+              Brute: -4
+              Burn: -6
+              Toxin: -4
 
 - type: reagent
   id: Doxarubixadone
