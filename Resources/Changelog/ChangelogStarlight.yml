@@ -6174,4 +6174,35 @@ Entries:
   id: 855
   time: '2025-05-26T17:55:21.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/699
+- author: RoadTrain
+  changes:
+  - message: Added the Paddy Conversion Kit (20 plasteel) to the exosuit fab.
+    type: Add
+  id: 856
+  time: '2025-05-26T18:10:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/681
+- author: RoadTrain
+  changes:
+  - message: Added a T2 arsenal research (8500, requires MK-II to be unlocked) to
+      research Paddy (for now you HAVE to use the kit to upgrade it, cannot make it
+      from scratch).
+    type: Add
+  id: 857
+  time: '2025-05-26T18:10:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/681
+- author: RoadTrain
+  changes:
+  - message: Changed the prereq for Gygax research to be Paddy rather than Ripley2.
+    type: Tweak
+  id: 858
+  time: '2025-05-26T18:10:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/681
+- author: RoadTrain
+  changes:
+  - message: Paddy is now classed as an Industrial Mech and can use Industrial mech
+      equipment.
+    type: Tweak
+  id: 859
+  time: '2025-05-26T18:10:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/681
 
