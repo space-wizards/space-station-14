@@ -1147,7 +1147,7 @@
   name: uplink-holopara-kit-name
   description: uplink-holopara-kit-desc
   icon: { sprite: /Textures/Objects/Misc/guardian_info.rsi, state: icon }
-  productEntity: BoxHoloparasite
+  productEntity: HoloparasiteKit
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 8
@@ -2061,23 +2061,23 @@
     whitelist:
     - Clown
 
-- type: listing
-  id: UplinkHoloclownKit
-  name: uplink-holoclown-kit-name
-  description: uplink-holoclown-kit-desc
-  icon: { sprite: /Textures/Objects/Fun/figurines.rsi, state: holoclown }
-  productEntity: BoxHoloclown
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 6
-  cost:
-    Telecrystal: 12
-  categories:
-  - UplinkJob
-  conditions:
-  - !type:BuyerJobCondition
-    whitelist:
-    - Clown
+# - type: listing
+#   id: UplinkHoloclownKit
+#   name: uplink-holoclown-kit-name
+#   description: uplink-holoclown-kit-desc
+#   icon: { sprite: /Textures/Objects/Fun/figurines.rsi, state: holoclown }
+#   productEntity: BoxHoloclown
+#   discountCategory: rareDiscounts
+#   discountDownTo:
+#     Telecrystal: 6
+#   cost:
+#     Telecrystal: 12
+#   categories:
+#   - UplinkJob
+#   conditions:
+#   - !type:BuyerJobCondition
+#     whitelist:
+#     - Clown
 
 - type: listing
   id: uplinkHotPotato

@@ -8,6 +8,7 @@ using Content.Shared.Guardian;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Implants;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
@@ -37,10 +38,8 @@ namespace Content.Server.Guardian
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<GuardianCreatorComponent, UseInHandEvent>(OnCreatorUse);
-            SubscribeLocalEvent<GuardianCreatorComponent, AfterInteractEvent>(OnCreatorInteract);
+            SubscribeLocalEvent<GuardianCreatorComponent, ImplantImplantedEvent>(OnImplantImplanted);
             SubscribeLocalEvent<GuardianCreatorComponent, ExaminedEvent>(OnCreatorExamine);
-            SubscribeLocalEvent<GuardianCreatorComponent, GuardianCreatorDoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<GuardianComponent, ComponentShutdown>(OnGuardianShutdown);
             SubscribeLocalEvent<GuardianComponent, MoveEvent>(OnGuardianMove);
@@ -155,79 +154,39 @@ namespace Content.Server.Guardian
                 ReleaseGuardian(user, hostComponent, hostComponent.HostedGuardian.Value, guardianComponent);
         }
 
-        /// <summary>
-        /// Adds the guardian host component to the user and spawns the guardian inside said component
-        /// </summary>
-        private void OnCreatorUse(EntityUid uid, GuardianCreatorComponent component, UseInHandEvent args)
+        private void OnImplantImplanted(Entity<GuardianCreatorComponent> ent, ref ImplantImplantedEvent args)
         {
-            if (args.Handled)
+            // If the implantation process is interrupted, don't exhaust the implant
+            if (args.Implanted == null)
                 return;
 
-            args.Handled = true;
-            UseCreator(args.User, args.User, uid, component);
-        }
-
-        private void OnCreatorInteract(EntityUid uid, GuardianCreatorComponent component, AfterInteractEvent args)
-        {
-            if (args.Handled || args.Target == null || !args.CanReach)
-                return;
-
-            args.Handled = true;
-            UseCreator(args.User, args.Target.Value, uid, component);
-        }
-        private void UseCreator(EntityUid user, EntityUid target, EntityUid injector, GuardianCreatorComponent component)
-        {
-            if (component.Used)
+            // If user is already a host don't duplicate the guardian, OR exhaust the implant
+            if (HasComp<GuardianHostComponent>(args.Implanted.Value))
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-activator-empty-invalid-creation"), user, user);
+                _popupSystem.PopupEntity(Loc.GetString("guardian-already-present-invalid-creation"), args.Implanted.Value, args.Implanted.Value);
                 return;
             }
 
-            // Can only inject things with the component...
-            if (!HasComp<CanHostGuardianComponent>(target))
-            {
-                var msg = Loc.GetString("guardian-activator-invalid-target", ("entity", Identity.Entity(target, EntityManager, user)));
-
-                _popupSystem.PopupEntity(msg, user, user);
-                return;
-            }
-
-            // If user is already a host don't duplicate.
-            if (HasComp<GuardianHostComponent>(target))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-already-present-invalid-creation"), user, user);
-                return;
-            }
-
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector)
-            {
-                BreakOnMove = true,
-                NeedHand = true,
-                BreakOnHandChange = true
-            });
+            CreateGuardian(args.Implanted.Value, ent);
         }
 
-        private void OnDoAfter(EntityUid uid, GuardianCreatorComponent component, DoAfterEvent args)
+
+        public void CreateGuardian(EntityUid target, GuardianCreatorComponent component)
         {
-            if (args.Handled || args.Args.Target == null)
-                return;
 
-            if (args.Cancelled || component.Deleted || component.Used || !_handsSystem.IsHolding(args.Args.User, uid, out _) || HasComp<GuardianHostComponent>(args.Args.Target))
-                return;
-
-            var hostXform = Transform(args.Args.Target.Value);
-            var host = EnsureComp<GuardianHostComponent>(args.Args.Target.Value);
+            var hostXform = Transform(target);
+            var host = EnsureComp<GuardianHostComponent>(target);
             // Use map position so it's not inadvertantly parented to the host + if it's in a container it spawns outside I guess.
-            var guardian = Spawn(component.GuardianProto, _transform.GetMapCoordinates(args.Args.Target.Value, xform: hostXform));
+            var guardian = Spawn(component.GuardianProto, _transform.GetMapCoordinates(target, xform: hostXform));
 
             _container.Insert(guardian, host.GuardianContainer);
             host.HostedGuardian = guardian;
 
             if (TryComp<GuardianComponent>(guardian, out var guardianComp))
             {
-                guardianComp.Host = args.Args.Target.Value;
-                _audio.PlayPvs(guardianComp.InjectSound, args.Args.Target.Value);
-                _popupSystem.PopupEntity(Loc.GetString("guardian-created"), args.Args.Target.Value, args.Args.Target.Value);
+                guardianComp.Host = target;
+                _audio.PlayPvs(guardianComp.InjectSound, target);
+                _popupSystem.PopupEntity(Loc.GetString("guardian-created"), target, target);
                 // Exhaust the activator
                 component.Used = true;
             }
@@ -236,8 +195,6 @@ namespace Content.Server.Guardian
                 Log.Error($"Tried to spawn a guardian that doesn't have {nameof(GuardianComponent)}");
                 QueueDel(guardian);
             }
-
-            args.Handled = true;
         }
 
         /// <summary>
@@ -287,8 +244,8 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnCreatorExamine(EntityUid uid, GuardianCreatorComponent component, ExaminedEvent args)
         {
-           if (component.Used)
-               args.PushMarkup(Loc.GetString("guardian-activator-empty-examine"));
+            if (component.Used)
+                args.PushMarkup(Loc.GetString("guardian-activator-empty-examine"));
         }
 
         /// <summary>

@@ -70,6 +70,9 @@ spellbook-hammer-singularity-description = Ever wonder what it'd be like to be t
 spellbook-staff-animation-name = Staff of Animation
 spellbook-staff-animation-description = Bring inanimate objects to life!
 
+spellbook-ifrit-implanter-name = Magical Lamp
+spellbook-ifrit-implanter-description = This magical lamp will summon a magical ifrit to act as your personal metaphysical bodyguard! Be warned, any damage done to the guardian gets partially transferred to you! Disables refunds when bought!
+
 # Events
 
 spellbook-event-summon-ghosts-name = Summon Ghosts

@@ -2,7 +2,7 @@
   parent: [BaseItem, BaseSyndicateContraband]
   id: ChameleonProjector
   name: chameleon projector
-  description: Holoparasite technology used to create a hard-light replica of any object around you. Disguise is destroyed when picked up or deactivated.
+  description: Hard-light technology used to create a hard-light replica of any object around you. Disguise is destroyed when picked up or deactivated.
   components:
   - type: Sprite
     sprite: /Textures/Objects/Devices/chameleon_projector.rsi
