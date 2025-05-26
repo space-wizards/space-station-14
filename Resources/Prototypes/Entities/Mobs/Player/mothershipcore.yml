@@ -183,6 +183,10 @@
     whitelist:
       components:
       - BorgChassis
+  - type: XenoborgFactory
+    recipe: XenoborgEngiRecipe
+  - type: CollideXenoborgFactory
+  - type: Conveyor
   - type: IntrinsicUI
     uis:
       enum.PowerMonitoringConsoleUiKey.Key:
