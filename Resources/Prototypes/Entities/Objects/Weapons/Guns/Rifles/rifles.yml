@@ -234,3 +234,14 @@
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     clumsyProof: true
   - type: PacifismAllowedGun
+
+- type: entity
+  name: ForceableFollow AKMS
+  parent: [ WeaponRifleAk, BaseSecurityContraband ]
+  id: WeaponRifleAkAdmeme
+  suffix: Admeme
+  description: An iconic weapon of war. Uses .30 rifle ammo.
+  components:
+  - type: Tag
+    tags:
+    - ForceableFollow

@@ -43,7 +43,7 @@ rev-not-enough-ready-players = Not enough players readied up for the game. There
 rev-no-one-ready = No players readied up! Can't start a glorious revolution!
 rev-no-heads = There were no revolutionary agents to be selected. Can't start a glorious revolution!
 
-rev-won = The SKB agents survived and seized control of the station!
+rev-won = [color=red]The SKB agents survived and seized control of the station![/color]
 
 rev-lost = Command survived and killed all the SKB agents.
 
@@ -60,7 +60,7 @@ central-command-sender = Central Command
 soviet-commissariat-sender = Soviet People's Commissariat
 
 rev-headrev-count = {$initialCount ->
-    [one] There was one agent of USSP:
+    [one] There was one agent of [color=Yellow]USSP[/color]:
     *[other] There were {$initialCount} agents of USSP:
 }
 
