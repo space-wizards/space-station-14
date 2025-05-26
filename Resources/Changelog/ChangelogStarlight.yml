@@ -6146,4 +6146,18 @@ Entries:
   id: 851
   time: '2025-05-26T16:55:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/663
+- author: choccy
+  changes:
+  - message: ID to the nukie outpost for admins
+    type: Add
+  id: 852
+  time: '2025-05-26T17:02:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/689
+- author: choccy
+  changes:
+  - message: Warp point to nukie outpost for ghosts
+    type: Add
+  id: 853
+  time: '2025-05-26T17:02:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/689
 
