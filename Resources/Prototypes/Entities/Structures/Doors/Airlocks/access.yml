@@ -1207,7 +1207,7 @@
 - type: entity
   parent: AirlockGlassShuttle
   id: AirlockExternalGlassShuttleEscapeRaft
-  suffix: External, Escape 5x5, Glass, Docking
+  suffix: External, Escape 5x6, Glass, Docking
   components:
   - type: GridFill
     addComponents:
