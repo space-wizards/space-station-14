@@ -6089,4 +6089,82 @@ Entries:
   id: 843
   time: '2025-05-22T21:18:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/676
+- author: walksanatora
+  changes:
+  - message: Syndicate pAI in the syndicate thieving kit
+    type: Add
+  id: 844
+  time: '2025-05-23T15:55:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/672
+- author: walksanatora
+  changes:
+  - message: Syndicate pAI is not allowed to share nuclear operative communications
+      with non nuclear operatives.
+    type: Tweak
+  id: 845
+  time: '2025-05-23T15:55:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/672
+- author: Zippy/Zip0r1
+  changes:
+  - message: Commander, Agent and syndicate ID sprite updated
+    type: Tweak
+  id: 846
+  time: '2025-05-23T20:29:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/684
+- author: Happyrobot33
+  changes:
+  - message: Added ability to make parts of your character glow!
+    type: Add
+  id: 847
+  time: '2025-05-24T16:26:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/641
+- author: Happyrobot33
+  changes:
+  - message: Fixed baber scissors breaking when it comes to adding/removing glowing.
+    type: Fix
+  id: 848
+  time: '2025-05-24T17:55:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/688
+- author: Cyanogen
+  changes:
+  - message: BSO gun description
+    type: Tweak
+  id: 849
+  time: '2025-05-26T16:41:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/697
+- author: Cyanogen
+  changes:
+  - message: vulp whine emote
+    type: Add
+  id: 850
+  time: '2025-05-26T16:48:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/683
+- author: walksanatora
+  changes:
+  - message: Abductors can now pick their glands
+    type: Tweak
+  id: 851
+  time: '2025-05-26T16:55:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/663
+- author: choccy
+  changes:
+  - message: ID to the nukie outpost for admins
+    type: Add
+  id: 852
+  time: '2025-05-26T17:02:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/689
+- author: choccy
+  changes:
+  - message: Warp point to nukie outpost for ghosts
+    type: Add
+  id: 853
+  time: '2025-05-26T17:02:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/689
+- author: BORT
+  changes:
+  - message: Added Access Breaker variants.
+    type: Add
+  id: 854
+  time: '2025-05-26T17:17:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/686
 
