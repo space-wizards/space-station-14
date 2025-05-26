@@ -6160,4 +6160,11 @@ Entries:
   id: 853
   time: '2025-05-26T17:02:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/689
+- author: BORT
+  changes:
+  - message: Added Access Breaker variants.
+    type: Add
+  id: 854
+  time: '2025-05-26T17:17:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/686
 
