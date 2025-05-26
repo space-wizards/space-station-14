@@ -129,8 +129,8 @@
     isAllowList: true
   - type: DeviceNetwork
     deviceNetId: Wired
-    receiveFrequencyId: TurretAI
-    transmitFrequencyId: TurretControlAI
+    receiveFrequencyId: Turret
+    transmitFrequencyId: TurretControl
     sendBroadcastAttemptEvent: true
     prefix: device-address-prefix-console
   - type: DeviceNetworkRequiresPower
@@ -203,8 +203,8 @@
   #    board:
   #    - WeaponEnergyTurretSecurityControlPanelElectronics
   - type: DeviceNetwork
-    receiveFrequencyId: TurretSecurity
-    transmitFrequencyId: TurretControlSecurity
+    receiveFrequencyId: Turret
+    transmitFrequencyId: TurretControl
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Security
@@ -232,8 +232,8 @@
   #    board:
   #    - WeaponEnergyTurretCommandControlPanelElectronics
   - type: DeviceNetwork
-    receiveFrequencyId: TurretCommand
-    transmitFrequencyId: TurretControlCommand
+    receiveFrequencyId: Turret
+    transmitFrequencyId: TurretControl
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Command

@@ -169,8 +169,8 @@
   - type: Machine
     board: WeaponEnergyTurretSecurityMachineCircuitboard
   - type: DeviceNetwork
-    receiveFrequencyId: TurretControlSecurity
-    transmitFrequencyId: TurretSecurity
+    receiveFrequencyId: TurretControl
+    transmitFrequencyId: Turret
 
 - type: entity
   parent: WeaponEnergyTurretStationBase
@@ -187,5 +187,5 @@
   - type: Machine
     board: WeaponEnergyTurretCommandMachineCircuitboard
   - type: DeviceNetwork
-    receiveFrequencyId: TurretControlCommand
-    transmitFrequencyId: TurretCommand
+    receiveFrequencyId: TurretControl
+    transmitFrequencyId: Turret
