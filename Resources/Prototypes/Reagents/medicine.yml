@@ -316,6 +316,13 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Histamine
+          min: 45
+        reagent: Histamine
+        amount: -5
       - !type:HealthChange
         conditions:
           # they gotta be in crit first
@@ -1085,6 +1092,7 @@
   name: reagent-name-holywater
   group: Medicine
   desc: reagent-desc-holywater
+  evaporationSpeed: 0.3
   physicalDesc: reagent-physical-desc-holy
   flavor: holy
   color: "#91C3F7"
