@@ -114,14 +114,13 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             .GetMission(difficultyProto, _missionParams.Seed);
 
         var missionBiome = _prototypeManager.Index<SalvageBiomeModPrototype>(mission.Biome);
+        BiomeComponent? biome = null;
 
         if (missionBiome.BiomePrototype != null)
         {
-            var biome = _entManager.AddComponent<BiomeComponent>(mapUid);
             var biomeSystem = _entManager.System<BiomeSystem>();
 
-            biomeSystem.AddBiome(mapUid, missionBiome.BiomePrototype.Value, mission.Seed);
-            _entManager.Dirty(mapUid, biome);
+            biome = biomeSystem.AddBiome(mapUid, missionBiome.BiomePrototype.Value, mission.Seed);
 
             // Gravity
             var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
@@ -166,7 +165,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         dungeonOffset = dungeonRotation.RotateVec(dungeonOffset);
         var dungeonMod = _prototypeManager.Index<SalvageDungeonModPrototype>(mission.Dungeon);
         var dungeonConfig = _prototypeManager.Index(dungeonMod.Proto);
-        var (dungeons, _) = await WaitAsyncTask(_dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, (Vector2i)dungeonOffset,
+        var (dungeons, data) = await WaitAsyncTask(_dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, (Vector2i)dungeonOffset,
             _missionParams.Seed));
 
         var dungeon = dungeons.First();
@@ -175,6 +174,18 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         if (dungeon.Rooms.Count == 0)
         {
             return false;
+        }
+
+        // Don't modify any dungeon tiles with chunk gen.
+        // Have to defer biome loading until the primo dungen is generated.
+        if (biome != null)
+        {
+            foreach (var tile in dungeon.AllTiles)
+            {
+                biome.ModifiedTiles.Add(tile);
+            }
+
+            biome.Enabled = true;
         }
 
         expedition.DungeonLocation = dungeonOffset;
@@ -196,8 +207,8 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             {
                 switch (rule)
                 {
-                    case BiomeLoot biome:
-                        _biome.AddLayer(mapUid, $"{rule}", biome.Proto);
+                    case BiomeLoot biomeLoot:
+                        _biome.AddLayer(mapUid, $"{rule}", biomeLoot.Proto);
                         break;
                 }
             }

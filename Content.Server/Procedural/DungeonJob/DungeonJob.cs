@@ -21,6 +21,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural.DungeonJob;
 
@@ -166,6 +167,7 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         _sawmill.Info($"Generating dungeon {_gen} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
         _grid.CanSplit = false;
         var random = new Random(_seed);
+        var oldTileCount = _reservedTiles?.Count ?? 0;
         var position = (_position + random.NextPolarVector2(_gen.MinOffset, _gen.MaxOffset)).Floored();
 
         var (dungeons, _) = await GetDungeons(position, _gen, _gen.Layers, _seed, random, reserved: _reservedTiles);
@@ -180,6 +182,7 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         }
 
         // Defer splitting so they don't get spammed and so we don't have to worry about tracking the grid along the way.
+        DebugTools.Assert(oldTileCount == (_reservedTiles?.Count ?? 0));
         _grid.CanSplit = true;
         _entManager.System<GridFixtureSystem>().CheckSplits(_gridUid);
         var npcSystem = _entManager.System<NPCSystem>();
@@ -207,7 +210,7 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         int seed,
         Random random)
     {
-        _sawmill.Debug($"Doing postgen {layer.GetType()} for {_gen} with seed {_seed}");
+        // _sawmill.Debug($"Doing postgen {layer.GetType()} for {_gen} with seed {_seed}");
 
         // If there's a way to just call the methods directly for the love of god tell me.
         // Some of these don't care about reservedtiles because they only operate on dungeon tiles (which should

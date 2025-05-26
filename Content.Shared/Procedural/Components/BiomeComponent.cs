@@ -36,6 +36,12 @@ public sealed record BiomeMetaLayer
 public sealed partial class BiomeComponent : Component
 {
     /// <summary>
+    /// Can we load / unload chunks.
+    /// </summary>
+    [DataField]
+    public bool Enabled = true;
+
+    /// <summary>
     /// Areas queued for preloading. Will add these during <see cref="BiomeLoadJob"/> and then flag as modified so they retain.
     /// </summary>
     [DataField]
@@ -66,8 +72,6 @@ public sealed partial class BiomeComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<string, Dictionary<Vector2i, DungeonData>> LoadedData = new();
-
-    public const byte ModifiedTileChunkSize = 8;
 
     /// <summary>
     /// Flag modified tiles so we don't try and unload / reload them.

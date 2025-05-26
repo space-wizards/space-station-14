@@ -12,20 +12,20 @@ public sealed partial class BiomeSystem
     /// <summary>
     /// Copies the biomecomponent to the specified map.
     /// </summary>
-    public void AddBiome(EntityUid mapUid, EntProtoId biomeTemplate, int? seed = null)
+    public BiomeComponent? AddBiome(Entity<BiomeComponent?> mapUid, EntProtoId biomeTemplate, int? seed = null)
     {
-        var biome = Factory.GetComponent<BiomeComponent>();
-
         if (!_protomanager.Index(biomeTemplate).Components.TryGetComponent(Factory.GetComponentName<BiomeComponent>(), out var template))
         {
-            return;
+            return null;
         }
 
+        var biome = Factory.GetComponent<BiomeComponent>();
         var biomeObj = (object)biome;
         _serManager.CopyTo(template, ref biomeObj, notNullableOverride: true);
         seed ??= _random.Next();
         biome.Seed = seed.Value;
         AddComp(mapUid, biome, true);
+        return biome;
     }
 
     /// <summary>
