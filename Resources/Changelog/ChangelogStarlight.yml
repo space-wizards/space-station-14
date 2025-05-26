@@ -6139,4 +6139,11 @@ Entries:
   id: 850
   time: '2025-05-26T16:48:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/683
+- author: walksanatora
+  changes:
+  - message: Abductors can now pick their glands
+    type: Tweak
+  id: 851
+  time: '2025-05-26T16:55:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/663
 
