@@ -1,6 +1,7 @@
 using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
 using Content.Server.GameTicking;
 using Content.Shared.GameTicking.Components;
@@ -101,6 +102,9 @@ namespace Content.Server.StationEvents.Events
                 return false;
 
             if (!Resolve(apc.Owner, ref apcXform))
+                return false;
+
+            if (!HasComp<BecomesStationComponent>(apcXform.GridUid))
                 return false;
 
             return CompOrNull<StationMemberComponent>(apcXform.GridUid)?.Station == ent.Comp.AffectedStation;
