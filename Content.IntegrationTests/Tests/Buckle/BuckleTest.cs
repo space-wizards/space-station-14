@@ -119,7 +119,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // Trying to unbuckle too quickly fails
                 Assert.That(buckleSystem.TryUnbuckle((human, buckle), human), Is.False);
                 Assert.That(buckle.Buckled);
-                Assert.That(buckleSystem.TryUnbuckle((human, buckle), human), Is.False);
+                Assert.That(buckleSystem.TryUnbuckle(human, human), Is.False);
                 Assert.That(buckle.Buckled);
 #pragma warning restore NUnit2045
             });
@@ -150,7 +150,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
 #pragma warning disable NUnit2045 // Interdependent asserts.
                 // Re-buckling has no cooldown
-                Assert.That(buckleSystem.TryBuckle(human, human, chair));
+                Assert.That(buckleSystem.TryBuckle((human, buckle), human, chair));
                 Assert.That(buckle.Buckled);
 
                 // On cooldown
@@ -183,7 +183,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
                 // Out of range
 #pragma warning disable NUnit2045 // Interdependent asserts.
-                Assert.That(buckleSystem.TryBuckle(human, human, chair), Is.False);
+                Assert.That(buckleSystem.TryBuckle((human, buckle), human, chair), Is.False);
                 Assert.That(buckleSystem.TryUnbuckle((human, buckle), human), Is.False);
 #pragma warning restore NUnit2045
 

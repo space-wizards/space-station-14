@@ -93,7 +93,7 @@ public abstract partial class SharedBuckleSystem
     {
         if (args.Handled)
             return;
-        args.Handled = TryUnbuckle(ent, ent, true);
+        args.Handled = TryUnbuckle(ent, ent);
     }
 
     #endregion
@@ -224,7 +224,7 @@ public abstract partial class SharedBuckleSystem
     /// <returns>
     ///     true if userUid can perform buckling
     /// </returns> 
-    private bool CanBuckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? userUid, bool popup)
+    private bool CanBuckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid userUid, bool popup)
     {
         // Does it pass the Whitelist
         if (_whitelistSystem.IsWhitelistFail(strap.Comp.Whitelist, buckle.Owner) ||
@@ -248,7 +248,7 @@ public abstract partial class SharedBuckleSystem
         if (!_container.IsInSameOrNoContainer((buckle.Owner, null, null), (strap.Owner, null, null)))
             return false;
 
-        if (userUid != null && !HasComp<HandsComponent>(userUid))
+        if (!HasComp<HandsComponent>(userUid))
         {
             if (popup)
                 _popup.PopupClient(Loc.GetString("buckle-component-no-hands-message"), userUid);
@@ -345,7 +345,10 @@ public abstract partial class SharedBuckleSystem
         if (!Resolve(strap.Owner, ref strap.Comp, false))
             return false;
 
-        if (!CanBuckle(buckle!, strap!, userUid, popup))
+        if (userUid is null)
+            return false;
+
+        if (!CanBuckle(buckle!, strap!, userUid.Value, popup))
             return false;
 
         Buckle(buckle!, strap!, userUid);
