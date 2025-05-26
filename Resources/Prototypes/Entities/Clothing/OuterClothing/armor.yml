@@ -210,6 +210,17 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
+# ERT web vest
+- type: entity
+  parent: [BaseCentcommContraband, ClothingOuterVestWeb]
+  id: ClothingOuterVestWebERT
+  name: ERT web vest
+  description: A synthetic armor vest. This one has added webbing and ballistic plates. Used by Nanotrasen's Emergency Response Teams.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/webvest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/webvest.rsi
 
 # Armor covering multiple body parts including limbs
 - type: entity
