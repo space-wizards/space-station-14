@@ -768,7 +768,7 @@
       path: /Audio/Weapons/bladeslice.ogg
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
-  - type: ThrowingAngle 
+  - type: ThrowingAngle
     angle: 225
   - type: PacifismAllowedGun
 
@@ -801,3 +801,49 @@
       params:
         variation: .125
 
+- type: entity
+  parent: BasePlushie
+  id: PlushieIba
+  name: pie-stained doll
+  description: A plush toy of a jovial slime, it smells faintly of bananas. 
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: plushie_iba
+  - type: Item
+    inhandVisuals:
+      left:
+        - state: plushie_iba-inhand-left
+      right:
+        - state: plushie_iba-inhand-right
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Impstation/Voice/Slime/s_womanlaugh.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Human/femalescream_3.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Impstation/Voice/Slime/s_womanlaugh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Impstation/Effects/Emotes/wetblink.ogg
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Laughter
+          Quantity: 5
+        - ReagentId: Radium
+          Quantity: 5
+  - type: Clothing
+    quickEquip: false
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    equippedPrefix: iba
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: iba-equipped-HELMET
+        offset: "0, 0.06"
