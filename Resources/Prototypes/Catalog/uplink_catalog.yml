@@ -642,6 +642,19 @@
   - UplinkChemicals
 
 - type: listing
+  id: UplinkClastineChemistryBottle
+  name: uplink-clastine-chemistry-bottle-name
+  description: uplink-clastine-chemistry-bottle-desc
+  productEntity: ChemistryBottleClastine
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 4
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkChemicals
+
+- type: listing
   id: UplinkCombatMedkit
   name: uplink-combat-medkit-name
   description: uplink-combat-medkit-desc

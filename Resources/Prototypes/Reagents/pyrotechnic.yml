@@ -191,3 +191,18 @@
   color: "#9e6b38"
   boilingPoint: 190.0 # Perfluorooctanoic Acid.
   meltingPoint: 45.0
+
+- type: reagent
+  id: Clastine
+  name: reagent-name-clastine
+  parent: BasePyrotechnic
+  desc: reagent-desc-clastine
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: bitter
+  color: "#ffb869"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:AdjustReagent
+        reagent: Chlorine
+        amount: 1.5

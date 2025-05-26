@@ -387,6 +387,9 @@ uplink-combat-medipen-desc = A single-use medipen containing chemicals that rege
 uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
 uplink-nocturine-chemistry-bottle-desc = A chemical that puts your target straight to sleep.
 
+uplink-clastine-chemistry-bottle-name = Clastine Bottle
+uplink-clastine-chemistry-bottle-desc = A medium power explosive that autoignites when metabolised, use with care.
+
 uplink-stimpack-name = Hyperzine Injector
 uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 30 seconds.
 
