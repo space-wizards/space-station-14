@@ -218,9 +218,9 @@
   description: A synthetic armor vest. This one has added webbing and ballistic plates. Used by Nanotrasen's Emergency Response Teams.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Vests/webvest.rsi
+    sprite: Clothing/OuterClothing/Vests/ertwebvest.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/webvest.rsi
+    sprite: Clothing/OuterClothing/Vests/ertwebvest.rsi
 
 # Armor covering multiple body parts including limbs
 - type: entity

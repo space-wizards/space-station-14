@@ -121,12 +121,9 @@
   description: Upgraded magnetic boots utilized by Nanotrasen's Emergency Response Teams, they have a heavy magnetic pull and integrated thrusters. It can hold 0.75 L of gas.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/Boots/magboots-science.rsi # Todo: Add sprite
+    sprite: Clothing/Shoes/Boots/magboots-ert.rsi
   - type: Clothing
-    sprite: Clothing/Shoes/Boots/magboots-science.rsi # Todo: Add sprite
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    sprite: Clothing/Shoes/Boots/magboots-ert.rsi
 
 - type: entity
   id: ActionToggleMagboots
