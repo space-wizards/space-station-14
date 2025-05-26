@@ -8,6 +8,7 @@ using Content.Shared.Toggleable;
 using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Item.ItemToggle.Components;
 
 namespace Content.Client.Toggleable;
 
@@ -15,12 +16,14 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
 {
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<ToggleableLightVisualsComponent, GetInhandVisualsEvent>(OnGetHeldVisuals, after: new[] { typeof(ItemSystem) });
         SubscribeLocalEvent<ToggleableLightVisualsComponent, GetEquipmentVisualsEvent>(OnGetEquipmentVisuals, after: new[] { typeof(ClientClothingSystem) });
+        SubscribeLocalEvent<ToggleableLightVisualsComponent, ItemToggledEvent>(OnItemToggled);
     }
 
     protected override void OnAppearanceChange(EntityUid uid, ToggleableLightVisualsComponent component, ref AppearanceChangeEvent args)
@@ -51,6 +54,14 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
 
         // update clothing & in-hand visuals.
         _itemSys.VisualsChanged(uid);
+    }
+
+    /// <summary>
+    ///     Toggle the visuals of the item when the ItemToggledEvent is raised.
+    /// </summary>
+    private void OnItemToggled(EntityUid uid, ToggleableLightVisualsComponent component, ItemToggledEvent args)
+    {
+        _appearance.SetData(uid, ToggleableLightVisuals.Enabled, args.Activated);
     }
 
     /// <summary>
