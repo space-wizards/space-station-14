@@ -1577,7 +1577,7 @@
     tags:
     - Balloon
   - type: StaticPrice
-    price: 10000 # Entertainment.
+    price: 5000 # Entertainment.
 
 - type: entity
   parent: BaseItem

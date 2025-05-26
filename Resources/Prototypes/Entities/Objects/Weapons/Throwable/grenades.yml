@@ -400,6 +400,8 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/hallelujah.ogg
+  - type: StaticPrice
+    price: 10000
 
 - type: entity
   parent: [ GrenadeBase, BaseSecurityContraband ]
