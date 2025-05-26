@@ -2,6 +2,7 @@ using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.Pow3r;
+using Content.Server.StationEvents.Events;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
 using Content.Shared.Emag.Systems;
@@ -23,6 +24,7 @@ public sealed class ApcSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly PowerGridCheckRule _powerGridCheckRule = default!;
 
     public override void Initialize()
     {
@@ -63,11 +65,17 @@ public sealed class ApcSystem : EntitySystem
         UpdateApcState(uid, component);
     }
 
-    private static void OnApcStartup(EntityUid uid, ApcComponent component, ComponentStartup args)
+    private void OnApcStartup(EntityUid uid, ApcComponent component, ComponentStartup args)
     {
         // We cannot update immediately, as various network/battery state is not valid yet.
         // Defer until the next tick.
         component.NeedStateUpdate = true;
+
+        var ev = new ApcStartupCheckMainBreakerEvent();
+        RaiseLocalEvent(uid, ref ev);
+
+        if (ev.Cancelled)
+            component.MainBreakerEnabled = false;
     }
 
     private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
@@ -126,6 +134,9 @@ public sealed class ApcSystem : EntitySystem
     {
         if (!Resolve(uid, ref apc, ref battery, false))
             return;
+
+        // May have been disabled at startup, but we had to wait to react
+        battery.CanDischarge = apc.MainBreakerEnabled;
 
         if (apc.LastChargeStateTime == null || apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
         {
@@ -213,6 +224,12 @@ public sealed class ApcSystem : EntitySystem
         }
     }
 }
+
+/// <summary>
+/// Raised during component startup. Cancel this to have the Apc start unpowered.
+/// </summary>
+[ByRefEvent]
+public record struct ApcStartupCheckMainBreakerEvent(bool Cancelled);
 
 [ByRefEvent]
 public record struct ApcToggleMainBreakerAttemptEvent(bool Cancelled);
