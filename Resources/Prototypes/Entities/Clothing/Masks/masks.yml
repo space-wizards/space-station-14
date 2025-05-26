@@ -659,6 +659,7 @@
   name: ninja mask
   description: A close-fitting nano-enhanced mask that acts both as an air filter and a post-modern fashion statement.
   components:
+  - type: VoiceMask
   - type: Sprite
     sprite: Clothing/Mask/ninja.rsi
   - type: Clothing
@@ -668,6 +669,10 @@
   - type: EyeProtection
   - type: BreathMask
   - type: IdentityBlocker
+  - type: UserInterface
+    interfaces:
+      enum.VoiceMaskUIKey.Key:
+        type: VoiceMaskBoundUserInterface
 
 - type: entity
   parent: ClothingMaskGas
