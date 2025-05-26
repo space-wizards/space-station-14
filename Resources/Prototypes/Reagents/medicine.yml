@@ -1428,27 +1428,3 @@
       - !type:AdjustReagent
         reagent: MindbreakerToxin
         amount: -3.0
-
-- type: reagent
-  id: Stelloxadone
-  name: reagent-name-stelloxadone
-  group: Medicine
-  desc: reagent-desc-stelloxadone
-  physicalDesc: reagent-physical-desc-murky
-  flavor: medicine
-  color: "#FFC683"
-  worksOnTheDead: true
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        conditions:
-        - !type:Temperature
-          max: 213.0
-        damage:
-          groups:
-            Brute: 3
-            Genetic: 1
-          types:
-            Poison: -6
-            Radiation: -3
