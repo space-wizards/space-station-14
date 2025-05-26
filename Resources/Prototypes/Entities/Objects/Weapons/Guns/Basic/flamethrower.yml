@@ -18,7 +18,6 @@
     quickEquip: false
     slots:
       - suitStorage
-      - Belt
   - type: Appearance
   - type: AmmoCounter
   - type: Item
