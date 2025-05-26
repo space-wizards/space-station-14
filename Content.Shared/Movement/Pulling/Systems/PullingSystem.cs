@@ -351,7 +351,7 @@ public sealed class PullingSystem : EntitySystem
 
         pullable.Comp.PullJointId = null;
         pullable.Comp.Puller = null;
-        Dirty(pullable.Owner, pullable.Comp);
+        Dirty(pullable);
 
         // No more joints with puller -> force stop pull.
         if (TryComp<PullerComponent>(oldPuller, out var pullerComp))
