@@ -642,3 +642,4 @@ ClothingNeckCloakMiner: null
 # 2025-05-26 Turrets
 WeaponEnergyTurretStaion: WeaponEnergyTurretSecurity
 WeaponEnergyTurretStationControlPanel: WeaponEnergyTurretSecurityControlPanel
+WeaponEnergyTurretStationMachineCircuitboard: WeaponEnergyTurretSecurityMachineCircuitboard
