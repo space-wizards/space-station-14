@@ -14,8 +14,11 @@ public sealed partial class SecHailerToolDoAfterEvent : SimpleDoAfterEvent
         Screwing,
         Cutting
     }
+
+    public ToolQuality UsedTool { get; set; }
+
     public SecHailerToolDoAfterEvent(ToolQuality tool)
     {
-        public ToolQuality UsedTool { get; private set; } = tool;
+        UsedTool = tool;
     }
 }
