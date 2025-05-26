@@ -1,4 +1,6 @@
+using System.Linq;
 using System.Numerics;
+using Content.Client.Roles;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Implants;
@@ -18,6 +20,7 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     private readonly SpriteSystem _sprite;
+    private readonly JobSystem _job;
 
     // List of all the job protos that you can select!
     private IEnumerable<ChameleonOutfitPrototype> _outfits;
@@ -26,6 +29,7 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
     public DateTime? _lockedUntil;
 
     private static readonly ProtoId<JobIconPrototype> UnknownIcon = "JobIconUnknown";
+    private static readonly LocId UnknownDepartment = "department-Unknown";
 
     public event Action<ProtoId<ChameleonOutfitPrototype>>? OnJobSelected;
 
@@ -34,6 +38,7 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         _sprite = _entityManager.System<SpriteSystem>();
+        _job = _entityManager.System<JobSystem>();
 
         _outfits = _prototypeManager.EnumeratePrototypes<ChameleonOutfitPrototype>();
 
@@ -48,6 +53,13 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
     {
         Grid.RemoveAllChildren();
 
+        // Dictionary to easily put outfits in departments.
+        // Department name -> UI element holding that department.
+        var departments = new Dictionary<string, BoxContainer>();
+
+        departments.Add(UnknownDepartment, CreateDepartment(UnknownDepartment));
+
+        // Go through every outfit and add them to the correct department.
         foreach (var outfit in _outfits)
         {
             _prototypeManager.TryIndex(outfit.Job, out var jobProto);
@@ -57,33 +69,74 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
             var jobIconId = outfit.Icon ?? jobProto?.Icon ?? UnknownIcon;
             var jobIconProto = _prototypeManager.Index(jobIconId);
 
-            var boxContainer = new BoxContainer();
+            var outfitButton = CreateOutfitButton(disabled, name, jobIconProto, outfit.ID);
 
-            var button = new Button
+            if (outfit.Job != null && _job.TryGetLowestWeightDepartment(outfit.Job, out var departmentPrototype))
             {
-                HorizontalExpand = true,
-                StyleClasses = {StyleBase.ButtonSquare},
-                ToolTip = Loc.GetString(name),
-                Text = Loc.GetString(name),
-                Margin = new Thickness(0, 0, 15, 0),
-                Disabled = disabled,
-            };
+                if (!departments.ContainsKey(departmentPrototype.Name))
+                    departments.Add(departmentPrototype.Name, CreateDepartment(departmentPrototype.Name));
 
-            var jobIconTexture = new TextureRect
+                departments[departmentPrototype.Name].AddChild(outfitButton);
+            }
+            else
             {
-                Texture = _sprite.Frame0(jobIconProto.Icon),
-                TextureScale = new Vector2(2.5f, 2.5f),
-                Stretch = TextureRect.StretchMode.KeepCentered,
-                Margin = new Thickness(0, 0, 5, 0),
-            };
-
-            boxContainer.AddChild(jobIconTexture);
-            boxContainer.AddChild(button);
-
-            button.OnPressed += _ => JobButtonPressed(outfit.ID);
-
-            Grid.AddChild(boxContainer);
+                departments[UnknownDepartment].AddChild(outfitButton);
+            }
         }
+
+        // Sort the departments by their weight.
+        var departmentList = departments.ToList();
+        departmentList.Sort((a, b) => a.Value.ChildCount.CompareTo(b.Value.ChildCount));
+
+        // Actually add the departments to the window.
+        foreach (var department in departmentList)
+        {
+            Grid.AddChild(department.Value);
+        }
+    }
+
+    private BoxContainer CreateDepartment(string name)
+    {
+        var departmentContainer = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
+        };
+        departmentContainer.AddChild(new Label
+        {
+            Text = Loc.GetString(name),
+        });
+
+        return departmentContainer;
+    }
+
+    private BoxContainer CreateOutfitButton(bool disabled, string name, JobIconPrototype jobIconProto, ProtoId<ChameleonOutfitPrototype> outfitProto)
+    {
+        var outfitButton = new BoxContainer();
+
+        var button = new Button
+        {
+            HorizontalExpand = true,
+            StyleClasses = {StyleBase.ButtonSquare},
+            ToolTip = Loc.GetString(name),
+            Text = Loc.GetString(name),
+            Margin = new Thickness(0, 0, 15, 0),
+            Disabled = disabled,
+        };
+
+        var jobIconTexture = new TextureRect
+        {
+            Texture = _sprite.Frame0(jobIconProto.Icon),
+            TextureScale = new Vector2(2.5f, 2.5f),
+            Stretch = TextureRect.StretchMode.KeepCentered,
+            Margin = new Thickness(0, 0, 5, 0),
+        };
+
+        outfitButton.AddChild(jobIconTexture);
+        outfitButton.AddChild(button);
+
+        button.OnPressed += _ => JobButtonPressed(outfitProto);
+
+        return outfitButton;
     }
 
     private void JobButtonPressed(ProtoId<ChameleonOutfitPrototype> outfit)
