@@ -30,7 +30,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-        
+
   - node: board
     entity: WeaponEnergyTurretControlPanelFrame
     edges:
@@ -38,7 +38,7 @@
       steps:
       - material: Glass
         amount: 1
-        
+
     - to: frame
       completed:
       - !type:EmptyContainer
@@ -54,7 +54,7 @@
       steps:
       - tool: Screwing
         doAfter: 2
-        
+
     - to: board
       completed:
       - !type:GivePrototype
@@ -63,7 +63,7 @@
       steps:
       - tool: Prying
         doAfter: 2
-  
+
   - node: finish
     entity: !type:BoardNodeEntity { container: board }
     actions:
