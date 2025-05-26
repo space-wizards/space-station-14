@@ -204,8 +204,8 @@
 - type: entity
   parent: [BaseItem, ClothingNeckBase, ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSovietContraband]
   id: ClothingNeckCloakKommissar
-  name: kommissar coat-cloak
-  description: An USSP official's superiority here comes down to how many coats can he drape over his other coats.
+  name: Kommissar overcoat
+  description: Rumor has it entire regiments of aides exist solely to press seams, polish buttons, and remind the Kommissar which coat goes over which.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Neck/Cloaks/kommissar.rsi
