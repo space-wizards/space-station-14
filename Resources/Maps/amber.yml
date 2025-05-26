@@ -4,8 +4,8 @@ meta:
   engineVersion: 260.2.0
   forkId: ""
   forkVersion: ""
-  time: 05/21/2025 22:05:57
-  entityCount: 24827
+  time: 05/26/2025 05:39:00
+  entityCount: 24811
 maps:
 - 1
 grids:
@@ -138897,6 +138897,18 @@ entities:
     - type: Transform
       pos: -55.5,2.5
       parent: 2
+- proto: SuitStorageEVAPrisoner
+  entities:
+  - uid: 121
+    components:
+    - type: Transform
+      pos: -21.5,2.5
+      parent: 2
+  - uid: 3732
+    components:
+    - type: Transform
+      pos: -21.5,1.5
+      parent: 2
 - proto: SuitStorageHOS
   entities:
   - uid: 11293
@@ -138982,9 +138994,9 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 106
           - 20667
           - 20666
+          - 106
     - type: Label
       currentLabel: 3
     - type: NameModifier
@@ -159406,6 +159418,21 @@ entities:
       parent: 2
 - proto: WardrobePrisonFilled
   entities:
+  - uid: 3807
+    components:
+    - type: Transform
+      pos: -32.5,8.5
+      parent: 2
+  - uid: 4147
+    components:
+    - type: Transform
+      pos: -32.5,9.5
+      parent: 2
+  - uid: 5704
+    components:
+    - type: Transform
+      pos: -27.5,8.5
+      parent: 2
   - uid: 11417
     components:
     - type: Transform
@@ -159425,16 +159452,6 @@ entities:
     components:
     - type: Transform
       pos: -40.5,8.5
-      parent: 2
-  - uid: 24595
-    components:
-    - type: Transform
-      pos: -21.5,2.5
-      parent: 2
-  - uid: 24596
-    components:
-    - type: Transform
-      pos: -21.5,1.5
       parent: 2
 - proto: WardrobeRoboticsFilled
   entities:
