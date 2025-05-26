@@ -8,7 +8,7 @@
     func: NotEqual
   params:
     displacementSize: 127
-    
+
 - type: shader
   id: DisplacedStencilDrawUnshaded
   kind: source
