@@ -6125,4 +6125,11 @@ Entries:
   id: 848
   time: '2025-05-24T17:55:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/688
+- author: Cyanogen
+  changes:
+  - message: BSO gun description
+    type: Tweak
+  id: 849
+  time: '2025-05-26T16:41:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/697
 
