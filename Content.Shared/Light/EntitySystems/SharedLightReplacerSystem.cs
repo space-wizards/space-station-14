@@ -3,7 +3,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Light.Components;
 using Content.Shared.Popups;
 using Content.Shared.Examine;
-using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
