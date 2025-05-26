@@ -6132,4 +6132,11 @@ Entries:
   id: 849
   time: '2025-05-26T16:41:10.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/697
+- author: Cyanogen
+  changes:
+  - message: vulp whine emote
+    type: Add
+  id: 850
+  time: '2025-05-26T16:48:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/683
 
