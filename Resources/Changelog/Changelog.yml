@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Coolsurf6
-  changes:
-  - message: Added a new and powerful drink called Bacchus' Blessing for all bartenders
-      to struggle with.
-    type: Add
-  id: 8062
-  time: '2025-03-14T06:49:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35306
 - author: Quantum-cross
   changes:
   - message: Corrupt borg speech if they are damaged or low power
@@ -3922,3 +3914,12 @@
   id: 8569
   time: '2025-05-26T10:49:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37822
+- author: ArtisticRoomba
+  changes:
+  - message: The TEG's efficiency in extracting power from gasses has been tweaked
+      to promote dual-loop designs that recycle the waste heat of gasses, and punish
+      "meta" single loop designs.
+    type: Tweak
+  id: 8570
+  time: '2025-05-26T11:53:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37728
