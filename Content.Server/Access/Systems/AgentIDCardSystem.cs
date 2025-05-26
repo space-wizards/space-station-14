@@ -56,13 +56,9 @@ namespace Content.Server.Access.Systems
 
             // If you have forced departments use those over the jobs actual departments.
             if (args.Args.ChameleonOutfit?.Departments?.Count > 0)
-            {
                 _cardSystem.TryChangeJobDepartment(ent, args.Args.ChameleonOutfit.Departments, idCardComp);
-            }
             else if (jobProto != null)
-            {
                 _cardSystem.TryChangeJobDepartment(ent, jobProto, idCardComp);
-            }
 
             // Ensure that you chameleon IDs in PDAs correctly. Yes this is sus...
 
