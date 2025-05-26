@@ -1,8 +1,8 @@
 - type: entity
   id: WeaponEnergyTurretStationControlPanelElectronics
   parent: BaseElectronics
-  name: sentry turret control panel electronics
-  description: An electronics board used in a sentry turret control panel.
+  name: security turret control panel electronics
+  description: An electronics board used in a security turret control panel.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
