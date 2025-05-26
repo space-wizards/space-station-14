@@ -79,6 +79,7 @@
     noRot: true
     drawdepth: Mobs
     layers:
+      - map: [ "enum.HumanoidVisualLayers.TailBehind" ] # Floof
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
       - map: [ "enum.HumanoidVisualLayers.Head" ]
       # snout was here in case i need to move it back
@@ -110,6 +111,7 @@
       - map: [ "enum.HumanoidVisualLayers.Snout" ] #imp
       - map: [ "enum.HumanoidVisualLayers.HeadSide" ] #imp
       - map: [ "back" ]
+      - map: [ "enum.HumanoidVisualLayers.TailOversuit" ] # Floof
       - map: [ "neck" ]
       - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
       - map: [ "enum.HumanoidVisualLayers.Hair" ]

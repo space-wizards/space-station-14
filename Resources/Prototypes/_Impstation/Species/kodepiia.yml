@@ -16,6 +16,8 @@
 - type: speciesBaseSprites
   id: MobKodepiiaSprites
   sprites:
+    TailBehind: MobHumanoidAnyMarking # floof
+    TailOversuit: MobHumanoidAnyMarking # floof
     Head: MobKodepiiaHead
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking

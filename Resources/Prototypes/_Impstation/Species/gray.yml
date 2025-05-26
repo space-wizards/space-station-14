@@ -21,6 +21,8 @@
 - type: speciesBaseSprites
   id: MobGraySprites
   sprites:
+    TailBehind: MobHumanoidAnyMarking # floof
+    TailOversuit: MobHumanoidAnyMarking # floof
     Head: MobGrayHead
     Chest: MobGrayTorso
     Eyes: MobGrayEyes

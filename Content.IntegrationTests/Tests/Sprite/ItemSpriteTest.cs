@@ -28,7 +28,11 @@ public sealed class PrototypeSaveTest
     {
         // The only prototypes that should get ignored are those that REQUIRE setup to get a sprite. At that point it is
         // the responsibility of the spawner to ensure that a valid sprite is set.
-        "VirtualItem"
+        "VirtualItem",
+        "MobGoblin", // imp edits - these four prototypes are species and do not receive their sprite data from ItemComponent, causing a false positive
+        "MobGoblinStowaway",
+        "MobGoblinKnight",
+        "MobGoblinCastaway",
     };
 
     [Test]

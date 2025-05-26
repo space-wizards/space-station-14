@@ -19,6 +19,8 @@
 - type: speciesBaseSprites
   id: MobArachnidSprites
   sprites:
+    TailBehind: MobHumanoidAnyMarking # floof
+    TailOversuit: MobHumanoidAnyMarking # floof
     Head: MobArachnidHead
     Snout: MobHumanoidAnyMarking
     Hair: MobHumanoidAnyMarking # imp, arachnid hair arachnid hair!
