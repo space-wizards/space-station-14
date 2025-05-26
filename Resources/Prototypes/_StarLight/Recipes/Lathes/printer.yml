@@ -284,6 +284,16 @@
   materials:
     SheetPrinter: 100
     
+- type: latheRecipe
+  id: PrintedDocumentRequestERTRecipe
+  result: PrintedDocumentRequestERT
+  categories:
+  - InquiriesAndAppeals
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
 # Complaintst
 
 - type: latheRecipe
