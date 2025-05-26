@@ -128,6 +128,13 @@
     Steel: 300
 
 - type: latheRecipe
+  id: CompactDefibrillator
+  result: DefibrillatorCompactEmpty # reversed naming conventions. kill me.
+  completetime: 2
+  materials:
+    Steel: 250
+
+- type: latheRecipe
   id: Medkit
   result: Medkit
   name: lathe-recipe-Medkit-name
