@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Quantum-cross
-  changes:
-  - message: Corrupt borg speech if they are damaged or low power
-    type: Add
-  id: 8063
-  time: '2025-03-14T15:31:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35318
 - author: Centronias
   changes:
   - message: Moths can once again eat lizard plushies
@@ -3923,3 +3916,11 @@
   id: 8570
   time: '2025-05-26T11:53:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37728
+- author: ArtisticRoomba
+  changes:
+  - message: The TEG now outputs smoother power when pressure across the circulators
+      flutter. (This was causing epilepsy in extreme circumstances).
+    type: Fix
+  id: 8571
+  time: '2025-05-26T12:07:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37658
