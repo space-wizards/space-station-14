@@ -635,3 +635,6 @@ CigaretteBread: CigaretteBbqSauce
 ClothingOuterHardsuitBasic: ClothingOuterHardsuitEVA
 ClothingHeadHelmetHardsuitBasic: null
 SuitStorageBasic: SuitStorageEVA
+
+# 2025-05-18
+ClothingNeckCloakMiner: null

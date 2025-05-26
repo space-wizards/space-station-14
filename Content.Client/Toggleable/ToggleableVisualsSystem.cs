@@ -23,7 +23,6 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
 {
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -46,11 +45,11 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
 
         // Update the item's sprite
         if (args.Sprite != null && component.SpriteLayer != null &&
-            _sprite.LayerMapTryGet((uid, args.Sprite), component.SpriteLayer, out var layer, false))
+            SpriteSystem.LayerMapTryGet((uid, args.Sprite), component.SpriteLayer, out var layer, false))
         {
-            _sprite.LayerSetVisible((uid, args.Sprite), layer, enabled);
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, enabled);
             if (modulateColor)
-                _sprite.LayerSetColor((uid, args.Sprite), component.SpriteLayer, color);
+                SpriteSystem.LayerSetColor((uid, args.Sprite), component.SpriteLayer, color);
         }
 
         // If there's a `ItemTogglePointLightComponent` that says to apply the color to attached lights, do so.

@@ -11,6 +11,7 @@ using Content.Server.Stunnable;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
+using Content.Shared.Light.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
@@ -39,7 +40,6 @@ namespace Content.Server.Shuttles.Systems;
 public sealed partial class ShuttleSystem : SharedShuttleSystem
 {
     [Dependency] private readonly IAdminLogManager _logger = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -54,7 +54,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly DungeonSystem _dungeon = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FixtureSystem _fixtures = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
@@ -121,7 +120,8 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         if (HasComp<MapComponent>(ev.EntityUid))
             return;
 
-        EntityManager.EnsureComponent<ShuttleComponent>(ev.EntityUid);
+        EnsureComp<ShuttleComponent>(ev.EntityUid);
+        EnsureComp<ImplicitRoofComponent>(ev.EntityUid);
     }
 
     private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)

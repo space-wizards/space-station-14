@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 257.0.2
+  engineVersion: 260.2.0
   forkId: ""
   forkVersion: ""
-  time: 05/13/2025 22:56:20
-  entityCount: 24808
+  time: 05/26/2025 05:39:00
+  entityCount: 24811
 maps:
 - 1
 grids:
@@ -16421,6 +16421,7 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: NavMap
+    - type: ImplicitRoof
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 10313
@@ -16428,159 +16429,6 @@ entities:
     - type: Transform
       pos: -9.451197,-24.49092
       parent: 2
-- proto: ActionToggleBlock
-  entities:
-  - uid: 20688
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 20687
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 20687
-  - uid: 20690
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 20689
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 20689
-  - uid: 20692
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 20691
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 20691
-  - uid: 20702
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 20698
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 20698
-- proto: ActionToggleInternals
-  entities:
-  - uid: 20609
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 20607
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 20607
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 20608
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 20607
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 20607
-- proto: ActionToggleLight
-  entities:
-  - uid: 121
-    components:
-    - type: Transform
-      parent: 88
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 88
-  - uid: 3732
-    components:
-    - type: Transform
-      parent: 3731
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 3731
-  - uid: 3807
-    components:
-    - type: Transform
-      parent: 5765
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 5765
-  - uid: 4147
-    components:
-    - type: Transform
-      parent: 4105
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 4105
-  - uid: 5704
-    components:
-    - type: Transform
-      parent: 16762
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 16762
-  - uid: 5978
-    components:
-    - type: Transform
-      parent: 5977
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 5977
-  - uid: 6113
-    components:
-    - type: Transform
-      parent: 6098
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 6098
-  - uid: 7271
-    components:
-    - type: Transform
-      parent: 1259
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 1259
-  - uid: 9205
-    components:
-    - type: Transform
-      parent: 212
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 212
-  - uid: 10092
-    components:
-    - type: Transform
-      parent: 10091
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 10091
-  - uid: 13295
-    components:
-    - type: Transform
-      parent: 15782
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 15782
-  - uid: 19899
-    components:
-    - type: Transform
-      parent: 19898
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 19898
-  - uid: 20759
-    components:
-    - type: Transform
-      parent: 15576
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 15576
 - proto: AirAlarm
   entities:
   - uid: 29
@@ -16686,6 +16534,8 @@ entities:
       - 810
       - 2208
       - 23806
+      - 24826
+      - 24827
   - uid: 2237
     components:
     - type: Transform
@@ -18007,6 +17857,8 @@ entities:
       - 19008
       - 19006
       - 959
+      - 24826
+      - 24827
   - uid: 24059
     components:
     - type: MetaData
@@ -46652,6 +46504,11 @@ entities:
     - type: Transform
       pos: -26.5,20.5
       parent: 2
+  - uid: 1210
+    components:
+    - type: Transform
+      pos: -4.5,-9.5
+      parent: 2
   - uid: 1230
     components:
     - type: Transform
@@ -46856,6 +46713,11 @@ entities:
     components:
     - type: Transform
       pos: 7.5,-23.5
+      parent: 2
+  - uid: 2179
+    components:
+    - type: Transform
+      pos: -4.5,-10.5
       parent: 2
   - uid: 2184
     components:
@@ -69830,6 +69692,13 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 17.5,23.5
       parent: 2
+- proto: ComputerSalvageJobBoard
+  entities:
+  - uid: 17659
+    components:
+    - type: Transform
+      pos: 15.5,25.5
+      parent: 2
 - proto: ComputerShuttleCargo
   entities:
   - uid: 5376
@@ -71353,6 +71222,13 @@ entities:
     - type: Transform
       pos: -17.5,-54.5
       parent: 2
+- proto: DefaultStationBeaconBrigMed
+  entities:
+  - uid: 24809
+    components:
+    - type: Transform
+      pos: -44.5,-7.5
+      parent: 2
 - proto: DefaultStationBeaconCaptainsQuarters
   entities:
   - uid: 15722
@@ -71484,6 +71360,13 @@ entities:
     - type: Transform
       pos: -14.5,-47.5
       parent: 2
+- proto: DefaultStationBeaconHOSRoom
+  entities:
+  - uid: 24810
+    components:
+    - type: Transform
+      pos: -44.5,2.5
+      parent: 2
 - proto: DefaultStationBeaconJanitorsCloset
   entities:
   - uid: 21809
@@ -71532,6 +71415,13 @@ entities:
     components:
     - type: Transform
       pos: -47.5,-44.5
+      parent: 2
+- proto: DefaultStationBeaconPermaBrig
+  entities:
+  - uid: 24811
+    components:
+    - type: Transform
+      pos: -31.5,13.5
       parent: 2
 - proto: DefaultStationBeaconPowerBank
   entities:
@@ -71588,6 +71478,13 @@ entities:
     components:
     - type: Transform
       pos: 32.5,-30.5
+      parent: 2
+- proto: DefaultStationBeaconSecurity
+  entities:
+  - uid: 24813
+    components:
+    - type: Transform
+      pos: -34.5,-2.5
       parent: 2
 - proto: DefaultStationBeaconServerRoom
   entities:
@@ -71655,6 +71552,13 @@ entities:
     - type: Transform
       pos: -29.5,-61.5
       parent: 2
+- proto: DefaultStationBeaconWardensOffice
+  entities:
+  - uid: 24812
+    components:
+    - type: Transform
+      pos: -26.5,-6.5
+      parent: 2
 - proto: DefibrillatorCabinetFilled
   entities:
   - uid: 5482
@@ -71707,6 +71611,18 @@ entities:
     - type: Transform
       pos: 3.5,-46.5
       parent: 2
+- proto: DeployableBarrier
+  entities:
+  - uid: 24815
+    components:
+    - type: Transform
+      pos: -31.5,-5.5
+      parent: 2
+  - uid: 24816
+    components:
+    - type: Transform
+      pos: -31.5,-4.5
+      parent: 2
 - proto: DeskBell
   entities:
   - uid: 1746
@@ -71743,6 +71659,11 @@ entities:
     components:
     - type: Transform
       pos: -14.384096,-14.383596
+      parent: 2
+  - uid: 24825
+    components:
+    - type: Transform
+      pos: -14.417165,-2.3140416
       parent: 2
 - proto: DiceBag
   entities:
@@ -79428,6 +79349,12 @@ entities:
     - type: Transform
       pos: -25.5,-0.5
       parent: 2
+  - uid: 24824
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -14.5,-0.5
+      parent: 2
 - proto: FaxMachineBase
   entities:
   - uid: 36
@@ -82184,6 +82111,26 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 24601
+  - uid: 24826
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -14.5,-3.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 24035
+      - 2196
+  - uid: 24827
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -14.5,-2.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 24035
+      - 2196
 - proto: Fireplace
   entities:
   - uid: 6141
@@ -82223,39 +82170,11 @@ entities:
     - type: Transform
       pos: -11.40432,-23.46709
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 5704
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 5704
-    - type: ActionsContainer
   - uid: 19898
     components:
     - type: Transform
       pos: 45.4472,-50.26539
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 19899
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 19899
-    - type: ActionsContainer
 - proto: FlashlightSeclite
   entities:
   - uid: 15576
@@ -82263,20 +82182,6 @@ entities:
     - type: Transform
       pos: 64.553955,-73.50326
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 20759
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 20759
-    - type: ActionsContainer
   - uid: 23317
     components:
     - type: Transform
@@ -82296,20 +82201,6 @@ entities:
     - type: Transform
       pos: -9.483673,-93.49975
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 121
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 121
-    - type: ActionsContainer
 - proto: FloorDrain
   entities:
   - uid: 1143
@@ -116251,6 +116142,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -11.5,1.5
       parent: 2
+  - uid: 24823
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -14.5,-4.5
+      parent: 2
 - proto: IntercomMedical
   entities:
   - uid: 21749
@@ -116360,17 +116257,6 @@ entities:
       parent: 20657
     - type: Physics
       canCollide: False
-    - type: GasTank
-      toggleActionEntity: 20609
-    - type: Jetpack
-      toggleActionEntity: 20608
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 20608
-          - 20609
     - type: InsideEntityStorage
 - proto: Jug
   entities:
@@ -116490,22 +116376,6 @@ entities:
     - type: Transform
       pos: 19.631758,-58.97455
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 13295
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 13295
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
 - proto: LampBanana
   entities:
   - uid: 5214
@@ -116520,106 +116390,26 @@ entities:
     - type: Transform
       pos: 46.70643,-33.07726
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 9205
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 9205
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
   - uid: 3731
     components:
     - type: Transform
       pos: 20.4856,-35.072044
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 3732
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 3732
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
   - uid: 4105
     components:
     - type: Transform
       pos: 21.482328,-44.174335
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 4147
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 4147
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
   - uid: 6098
     components:
     - type: Transform
       pos: -36.48969,-53.059856
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 6113
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 6113
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
   - uid: 10091
     components:
     - type: Transform
       pos: 28.348837,11.900307
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 10092
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 10092
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
 - proto: LampInterrogator
   entities:
   - uid: 11635
@@ -116634,20 +116424,6 @@ entities:
     - type: Transform
       pos: -25.306932,23.640022
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 7271
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7271
-    - type: ActionsContainer
   - uid: 3105
     components:
     - type: Transform
@@ -116658,39 +116434,11 @@ entities:
     - type: Transform
       pos: 36.56211,-3.2625933
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 3807
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 3807
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-    - type: ActionsContainer
   - uid: 5977
     components:
     - type: Transform
       pos: 18.047396,-41.177155
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 5978
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 5978
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-    - type: ActionsContainer
 - proto: LauncherCreamPie
   entities:
   - uid: 14215
@@ -116808,6 +116556,24 @@ entities:
         - - Pressed
           - Toggle
         2243:
+        - - Pressed
+          - Toggle
+        24817:
+        - - Pressed
+          - Toggle
+        24818:
+        - - Pressed
+          - Toggle
+        24821:
+        - - Pressed
+          - Toggle
+        24819:
+        - - Pressed
+          - Toggle
+        24820:
+        - - Pressed
+          - Toggle
+        24822:
         - - Pressed
           - Toggle
   - uid: 12054
@@ -120377,11 +120143,6 @@ entities:
     components:
     - type: Transform
       pos: 14.5,21.5
-      parent: 2
-  - uid: 22474
-    components:
-    - type: Transform
-      pos: 14.5,22.5
       parent: 2
 - proto: OreProcessor
   entities:
@@ -127357,16 +127118,6 @@ entities:
     - type: Transform
       pos: -76.5,-54.5
       parent: 2
-  - uid: 20565
-    components:
-    - type: Transform
-      pos: -4.5,-9.5
-      parent: 2
-  - uid: 20568
-    components:
-    - type: Transform
-      pos: -4.5,-10.5
-      parent: 2
   - uid: 20749
     components:
     - type: Transform
@@ -133177,27 +132928,11 @@ entities:
     - type: Transform
       pos: -38.67536,1.5551949
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 20688
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 20688
   - uid: 20689
     components:
     - type: Transform
       pos: -38.435658,1.4718037
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 20690
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 20690
 - proto: RiotLaserShield
   entities:
   - uid: 3
@@ -133217,27 +132952,11 @@ entities:
     - type: Transform
       pos: -40.515644,1.5179176
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 20692
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 20692
   - uid: 20698
     components:
     - type: Transform
       pos: -40.59902,1.5179176
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 20702
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 20702
 - proto: RobocopCircuitBoard
   entities:
   - uid: 16792
@@ -133571,6 +133290,12 @@ entities:
     - type: Transform
       pos: -38.5,3.5
       parent: 2
+    - type: TechnologyDatabase
+      supportedDisciplines:
+      - Industrial
+      - Arsenal
+      - Experimental
+      - CivilianServices
 - proto: SeedExtractor
   entities:
   - uid: 298
@@ -134606,6 +134331,42 @@ entities:
     components:
     - type: Transform
       pos: -25.5,8.5
+      parent: 2
+  - uid: 24817
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -24.5,-4.5
+      parent: 2
+  - uid: 24818
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -25.5,-4.5
+      parent: 2
+  - uid: 24819
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -28.5,-4.5
+      parent: 2
+  - uid: 24820
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -29.5,-4.5
+      parent: 2
+  - uid: 24821
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -27.5,-4.5
+      parent: 2
+  - uid: 24822
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -30.5,-5.5
       parent: 2
 - proto: ShuttersWindowOpen
   entities:
@@ -139136,6 +138897,18 @@ entities:
     - type: Transform
       pos: -55.5,2.5
       parent: 2
+- proto: SuitStorageEVAPrisoner
+  entities:
+  - uid: 121
+    components:
+    - type: Transform
+      pos: -21.5,2.5
+      parent: 2
+  - uid: 3732
+    components:
+    - type: Transform
+      pos: -21.5,1.5
+      parent: 2
 - proto: SuitStorageHOS
   entities:
   - uid: 11293
@@ -139221,9 +138994,9 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 106
           - 20667
           - 20666
+          - 106
     - type: Label
       currentLabel: 3
     - type: NameModifier
@@ -143037,6 +142810,11 @@ entities:
     - type: Transform
       pos: 93.54507,-19.615318
       parent: 2
+  - uid: 24814
+    components:
+    - type: Transform
+      pos: -35.453438,1.7514868
+      parent: 2
 - proto: Tourniquet
   entities:
   - uid: 11574
@@ -143619,6 +143397,12 @@ entities:
     - type: Transform
       pos: -17.5,-48.5
       parent: 2
+    - type: TechnologyDatabase
+      supportedDisciplines:
+      - Industrial
+      - Arsenal
+      - Experimental
+      - CivilianServices
 - proto: UniformShortsRed
   entities:
   - uid: 24494
@@ -144021,6 +143805,11 @@ entities:
       parent: 2
 - proto: VendingMachineTankDispenserEVA
   entities:
+  - uid: 79
+    components:
+    - type: Transform
+      pos: 14.5,22.5
+      parent: 2
   - uid: 2055
     components:
     - type: Transform
@@ -144035,11 +143824,6 @@ entities:
     components:
     - type: Transform
       pos: -41.5,5.5
-      parent: 2
-  - uid: 21410
-    components:
-    - type: Transform
-      pos: 15.5,25.5
       parent: 2
 - proto: VendingMachineTheater
   entities:
@@ -159634,6 +159418,21 @@ entities:
       parent: 2
 - proto: WardrobePrisonFilled
   entities:
+  - uid: 3807
+    components:
+    - type: Transform
+      pos: -32.5,8.5
+      parent: 2
+  - uid: 4147
+    components:
+    - type: Transform
+      pos: -32.5,9.5
+      parent: 2
+  - uid: 5704
+    components:
+    - type: Transform
+      pos: -27.5,8.5
+      parent: 2
   - uid: 11417
     components:
     - type: Transform
@@ -159653,16 +159452,6 @@ entities:
     components:
     - type: Transform
       pos: -40.5,8.5
-      parent: 2
-  - uid: 24595
-    components:
-    - type: Transform
-      pos: -21.5,2.5
-      parent: 2
-  - uid: 24596
-    components:
-    - type: Transform
-      pos: -21.5,1.5
       parent: 2
 - proto: WardrobeRoboticsFilled
   entities:
@@ -160105,6 +159894,30 @@ entities:
         11782:
         - - DoorStatus
           - Close
+  - uid: 20565
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -14.5,-15.5
+      parent: 2
+  - uid: 20568
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -14.5,-3.5
+      parent: 2
+  - uid: 21410
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -14.5,-2.5
+      parent: 2
+  - uid: 22474
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -14.5,-14.5
+      parent: 2
 - proto: WindoorChapelLocked
   entities:
   - uid: 5903
@@ -160143,24 +159956,6 @@ entities:
       parent: 2
 - proto: WindoorSecure
   entities:
-  - uid: 79
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -14.5,-15.5
-      parent: 2
-  - uid: 1210
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -14.5,-2.5
-      parent: 2
-  - uid: 2179
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -14.5,-3.5
-      parent: 2
   - uid: 3235
     components:
     - type: Transform
@@ -160239,12 +160034,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 18.5,17.5
-      parent: 2
-  - uid: 17659
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -14.5,-14.5
       parent: 2
   - uid: 18592
     components:
