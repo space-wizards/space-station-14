@@ -240,8 +240,8 @@
   #- type: StaminaResistance
   #  damageCoefficient: 0.45
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 1.0
+    sprintModifier: 1.0
   #Shoulder mounted flashlight
   - type: ToggleableLightVisuals
     spriteLayer: light
