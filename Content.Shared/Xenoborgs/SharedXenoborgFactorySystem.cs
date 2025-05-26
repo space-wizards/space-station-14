@@ -3,6 +3,7 @@ using Content.Shared.Database;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Whitelist;
@@ -27,13 +28,14 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
     [Dependency] protected readonly IPrototypeManager Proto = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<CollideXenoborgFactoryComponent, StartCollideEvent>(OnCollide);
     }
 
-    public void OnCollide(EntityUid uid, CollideXenoborgFactoryComponent component, ref StartCollideEvent args)
+    private void OnCollide(EntityUid uid, CollideXenoborgFactoryComponent component, ref StartCollideEvent args)
     {
         // if (args.OurFixtureId != component.FixtureId)
         //     return;
@@ -45,7 +47,7 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
     /// <summary>
     /// Tries to start processing an item via a <see cref="XenoborgFactoryComponent"/>.
     /// </summary>
-    private void TryStartProcessItem(EntityUid uid,
+    protected void TryStartProcessItem(EntityUid uid,
         EntityUid item,
         XenoborgFactoryComponent? component = null,
         EntityUid? user = null)
@@ -53,10 +55,10 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (false) //todo: check if alive
+        if (_mobState.IsIncapacitated(uid))
             return;
 
-        if (!HasComp<MobStateComponent>(item)) // todo: check if victim is borgable
+        if (!HasComp<MobStateComponent>(item))
             return;
 
         if (!CanProduce(uid, component))
@@ -96,7 +98,7 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
     /// Spawns the materials and chemicals associated
     /// with an entity. Also deletes the item.
     /// </summary>
-    public virtual void Reclaim(EntityUid uid, EntityUid item, XenoborgFactoryComponent? component = null)
+    protected virtual void Reclaim(EntityUid uid, EntityUid item, XenoborgFactoryComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -105,6 +107,14 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
         if (component.CutOffSound)
         {
             _audio.Stop(component.Stream);
+        }
+
+        if (Proto.TryIndex(component.Recipe, out LatheRecipePrototype? recipe))
+        {
+            foreach (var (material, needed) in recipe.Materials)
+            {
+                _materialStorage.TryChangeMaterialAmount(uid, material, -needed);
+            }
         }
 
         Dirty(uid, component);
@@ -122,11 +132,6 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
         {
             if (_materialStorage.GetMaterialAmount(factory, material) < needed)
                 return false;
-        }
-
-        foreach (var (material, needed) in recipe.Materials)
-        {
-            _materialStorage.TryChangeMaterialAmount(factory, material, -needed);
         }
 
         return true;

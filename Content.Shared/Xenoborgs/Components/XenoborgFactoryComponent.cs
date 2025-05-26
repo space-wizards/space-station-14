@@ -1,3 +1,4 @@
+using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
@@ -13,6 +14,9 @@ public sealed partial class XenoborgFactoryComponent : Component
 {
     [DataField, AutoNetworkedField]
     public ProtoId<LatheRecipePrototype> Recipe;
+
+    [DataField, AutoNetworkedField]
+    public ProtoId<LatheRecipePackPrototype> BorgRecipePack;
 
     /// <summary>
     /// An "enable" toggle for things like interfacing with machine linking
