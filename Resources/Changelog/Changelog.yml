@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Singularity and Whitehole grenades are now in the Disruption category
-      of uplinks.
-    type: Tweak
-  - message: Singularity and Whitehole grenades have had their prices reduced to 2TC
-      each.
-    type: Tweak
-  - message: Whitehole grenade no longer has extremely overtuned strength.
-    type: Fix
-  id: 8059
-  time: '2025-03-13T13:12:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35821
 - author: slarticodefast, ps3moira
   changes:
   - message: Added the paradox clone as a ghostrole antagonist.
@@ -3929,3 +3916,11 @@
   id: 8566
   time: '2025-05-25T18:36:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37756
+- author: Fildrance
+  changes:
+  - message: Spray nozzle now can consume liquids from puddles and put it right into
+      backpacked tank.
+    type: Add
+  id: 8567
+  time: '2025-05-26T03:36:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30600
