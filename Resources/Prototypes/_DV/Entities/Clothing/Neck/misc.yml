@@ -1,7 +1,7 @@
 ﻿# prosecutor
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseObviousBadge ] # imp
   id: ClothingNeckProsecutorbadge
   name: prosecutor badge
   description: A badge to show that the owner is a 'legitimate' prosecutor who passed the NT bar exam required to practice law.
@@ -12,6 +12,8 @@
     sprite: _Impstation/Clothing/Neck/Misc/prosecutorbadge.rsi #imp
   - type: TypingIndicatorClothing
     proto: lawyer
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-law-prosecution
 
 # ponchos
 

@@ -10,3 +10,5 @@
   - type: Clothing
     sprite: _Impstation/Clothing/Neck/Misc/pins.rsi
     equippedPrefix: straight
+  - type: WearerGetsExamineText
+    examineText: obvious-x-pin-straight

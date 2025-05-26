@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared._Impstation.DetailedInspect;
+namespace Content.Shared._Impstation.Examine;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class DetailedInspectComponent : Component
@@ -21,7 +21,7 @@ public sealed partial class DetailedInspectComponent : Component
     public bool LineBreak = true;
 
     /// <summary>
-    /// Whether or not the entries in ExamineText are preceded by ticks. 
+    /// Whether or not the entries in ExamineText are preceded by ticks.
     /// </summary>
     [DataField]
     public bool TickEntries = false;

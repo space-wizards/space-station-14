@@ -1,4 +1,12 @@
 - type: entity
+  id: BaseObviousScarf
+  abstract: true
+  components:
+  - type: WearerGetsExamineText
+    examineText: obvious-desc-colors
+    thing: obvious-thing-scarf
+
+- type: entity
   parent: ClothingScarfBase
   id: ClothingNeckScarfStripedLimeGreen
   name: striped lime-green scarf

@@ -1,10 +1,9 @@
-using Content.Shared.Destructible;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
-namespace Content.Shared._Impstation.DetailedInspect;
+namespace Content.Shared._Impstation.Examine;
 
 public sealed partial class DetailedInspectSystem : EntitySystem
 {

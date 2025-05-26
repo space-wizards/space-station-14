@@ -1,5 +1,13 @@
 - type: entity
-  parent: ClothingNeckBase
+  id: BaseObviousBadge
+  abstract: true
+  components:
+  - type: WearerGetsExamineText
+    examineText: obvious-desc-proves
+    thing: obvious-thing-badge
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseObviousBadge ]
   id: ClothingNeckDefenseAttorneyBadge
   name: defense attorney badge
   description: A badge to show that the owner is a 'legitimate' defense attorney who passed the NT bar exam required to practice law.
@@ -10,6 +18,8 @@
     sprite: _Impstation/Clothing/Neck/Misc/defenseattorneybadge.rsi
   - type: TypingIndicatorClothing
     proto: lawyerblue
+  - type: WearerGetsExamineText
+    thingType: obvious-type-law-defense
 
 # Senior lawyer armbands
 - type: entity
@@ -22,6 +32,8 @@
     sprite: _Impstation/Clothing/Neck/Misc/lawyerarmband.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Neck/Misc/lawyerarmband.rsi
+  - type: WearerGetsExamineText
+    thing: obvious-thing-armband
 
 - type: entity
   parent: ClothingNeckProsecutorbadge
@@ -33,6 +45,8 @@
     sprite: _Impstation/Clothing/Neck/Misc/prosecutorarmband.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Neck/Misc/prosecutorarmband.rsi
+  - type: WearerGetsExamineText
+    thing: obvious-thing-armband
 
 - type: entity
   parent: ClothingNeckDefenseAttorneyBadge
@@ -46,6 +60,8 @@
     sprite: _Impstation/Clothing/Neck/Misc/defenseattorneyarmband.rsi
   - type: TypingIndicatorClothing
     proto: lawyerblue
+  - type: WearerGetsExamineText
+    thing: obvious-thing-armband
 
 # your angel or your devil
 - type: entity
@@ -69,4 +85,3 @@
     sprite: _Impstation/Clothing/Neck/Misc/devilwings.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Neck/Misc/devilwings.rsi
-  
