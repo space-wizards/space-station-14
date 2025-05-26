@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: All roundstart antags now roll before job selection. You are now able
-      to ready up with antag-immune job preferences (Sec/Command/interns) set to High,
-      and if selected for antag you will get an non-antag-immune job instead.
-    type: Tweak
-  id: 8061
-  time: '2025-03-13T20:21:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35823
 - author: Coolsurf6
   changes:
   - message: Added a new and powerful drink called Bacchus' Blessing for all bartenders
@@ -3924,3 +3915,10 @@
   id: 8568
   time: '2025-05-26T07:29:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37700
+- author: jessicamaybe
+  changes:
+  - message: NPC Gorillas can now pry open doors and vault/smash tables!
+    type: Tweak
+  id: 8569
+  time: '2025-05-26T10:49:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37822
