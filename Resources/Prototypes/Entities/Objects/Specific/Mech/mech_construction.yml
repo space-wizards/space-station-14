@@ -624,7 +624,6 @@
   - type: MechAssembly
     finishedPrototype: RipleyMKIIChassis
     requiredParts:
-      RipleyMKIIUpgradeKit: false
       RipleyLArm: false
       RipleyRArm: false
       RipleyLLeg: false
