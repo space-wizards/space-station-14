@@ -31,7 +31,6 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.IO;
 
 namespace Content.Shared.Movement.Pulling.Systems;
 
@@ -323,6 +322,57 @@ public sealed class PullingSystem : EntitySystem
         StopPull((uid, component));
     }
 
+    /// <summary>
+    /// Forces pulling to stop and handles cleanup.
+    /// </summary>
+    public void StopPull(Entity<PullableComponent> pullable)
+    {
+        if (pullable.Comp.Puller == null)
+            return;
+
+        if (!_timing.ApplyingState)
+        {
+            // Joint shutdown
+            if (pullable.Comp.PullJointId != null)
+            {
+                _joints.RemoveJoint(pullable.Owner, pullable.Comp.PullJointId);
+                pullable.Comp.PullJointId = null;
+            }
+
+            if (TryComp<PhysicsComponent>(pullable.Owner, out var pullablePhysics))
+            {
+                _physics.SetFixedRotation(pullable.Owner, pullable.Comp.PrevFixedRotation, body: pullablePhysics);
+            }
+        }
+
+        var oldPuller = pullable.Comp.Puller;
+        if (oldPuller != null)
+            RemComp<ActivePullerComponent>(oldPuller.Value);
+
+        pullable.Comp.PullJointId = null;
+        pullable.Comp.Puller = null;
+        Dirty(pullable.Owner, pullable.Comp);
+
+        // No more joints with puller -> force stop pull.
+        if (TryComp<PullerComponent>(oldPuller, out var pullerComp))
+        {
+            var pullerUid = oldPuller.Value;
+            _alertsSystem.ClearAlert(pullerUid, pullerComp.PullingAlert);
+            pullerComp.Pulling = null;
+            Dirty(oldPuller.Value, pullerComp);
+
+            // Messaging
+            var message = new PullStoppedMessage(pullerUid, pullable.Owner);
+            _modifierSystem.RefreshMovementSpeedModifiers(pullerUid);
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(pullerUid):user} stopped pulling {ToPrettyString(pullable.Owner):target}");
+
+            RaiseLocalEvent(pullerUid, message);
+            RaiseLocalEvent(pullable.Owner, message);
+        }
+
+        _alertsSystem.ClearAlert(pullable.Owner, pullable.Comp.PulledAlert);
+    }
+
     public bool IsPulled(EntityUid uid, PullableComponent? component = null)
     {
         return Resolve(uid, ref component, false) && component.BeingPulled;
@@ -554,56 +604,5 @@ public sealed class PullingSystem : EntitySystem
         if (msg.Cancelled)
             return false;
         return true;
-    }
-
-    /// <summary>
-    /// Forces pulling to stop and handles cleanup.
-    /// </summary>
-    public void StopPull(Entity<PullableComponent> pullable)
-    {
-        if (pullable.Comp.Puller == null)
-            return;
-
-        if (!_timing.ApplyingState)
-        {
-            // Joint shutdown
-            if (pullable.Comp.PullJointId != null)
-            {
-                _joints.RemoveJoint(pullable.Owner, pullable.Comp.PullJointId);
-                pullable.Comp.PullJointId = null;
-            }
-
-            if (TryComp<PhysicsComponent>(pullable.Owner, out var pullablePhysics))
-            {
-                _physics.SetFixedRotation(pullable.Owner, pullable.Comp.PrevFixedRotation, body: pullablePhysics);
-            }
-        }
-
-        var oldPuller = pullable.Comp.Puller;
-        if (oldPuller != null)
-            RemComp<ActivePullerComponent>(oldPuller.Value);
-
-        pullable.Comp.PullJointId = null;
-        pullable.Comp.Puller = null;
-        Dirty(pullable.Owner, pullable.Comp);
-
-        // No more joints with puller -> force stop pull.
-        if (TryComp<PullerComponent>(oldPuller, out var pullerComp))
-        {
-            var pullerUid = oldPuller.Value;
-            _alertsSystem.ClearAlert(pullerUid, pullerComp.PullingAlert);
-            pullerComp.Pulling = null;
-            Dirty(oldPuller.Value, pullerComp);
-
-            // Messaging
-            var message = new PullStoppedMessage(pullerUid, pullable.Owner);
-            _modifierSystem.RefreshMovementSpeedModifiers(pullerUid);
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(pullerUid):user} stopped pulling {ToPrettyString(pullable.Owner):target}");
-
-            RaiseLocalEvent(pullerUid, message);
-            RaiseLocalEvent(pullable.Owner, message);
-        }
-
-        _alertsSystem.ClearAlert(pullable.Owner, pullable.Comp.PulledAlert);
     }
 }

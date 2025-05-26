@@ -444,22 +444,10 @@ public abstract partial class SharedBuckleSystem
         Entity<StrapComponent> strap;
 
         if (!GetStrapfromBuckle(buckle, out strap))
-        {
-            SetBuckledTo(buckle!, null);
             return false;
-        }
 
         if (!CanUnbuckle(buckle, strap, user, popup))
-        {
-            var unbuckleAttempt = new UnbuckleAttemptEvent(strap, buckle!, user, popup);
-            RaiseLocalEvent(buckle, ref unbuckleAttempt);
-            if (unbuckleAttempt.Cancelled)
-                return false;
-
-            var unstrapAttempt = new UnstrapAttemptEvent(strap, buckle!, user, popup);
-            RaiseLocalEvent(strap, ref unstrapAttempt);
-            return !unstrapAttempt.Cancelled;
-        }
+            return false;
 
         Unbuckle(buckle!, strap, user);
         return true;
@@ -578,8 +566,7 @@ public abstract partial class SharedBuckleSystem
         if (!Resolve(buckle.Owner, ref buckle.Comp, false))
             return false;
 
-        Entity<StrapComponent> strap;
-        if (!GetStrapfromBuckle(buckle!, out strap))
+        if (!GetStrapfromBuckle(buckle!, out var strap))
             return false;
 
         return CanUnbuckle(buckle!, strap!, user.Value, popup);
@@ -601,7 +588,15 @@ public abstract partial class SharedBuckleSystem
 
         if (!_interaction.InRangeUnobstructed(user, strap.Owner, buckle.Comp.Range, popup: popup))
             return false;
-        return true;
+
+        var unbuckleAttempt = new UnbuckleAttemptEvent(strap, buckle!, user, popup);
+        RaiseLocalEvent(buckle, ref unbuckleAttempt);
+        if (unbuckleAttempt.Cancelled)
+            return false;
+
+        var unstrapAttempt = new UnstrapAttemptEvent(strap, buckle!, user, popup);
+        RaiseLocalEvent(strap, ref unstrapAttempt);
+        return !unstrapAttempt.Cancelled;
     }
 
     /// <summary>

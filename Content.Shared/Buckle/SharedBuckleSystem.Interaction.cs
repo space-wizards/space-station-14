@@ -85,7 +85,7 @@ public abstract partial class SharedBuckleSystem
         // Buckle self
         if (buckle.Comp.BuckledTo == null && strap.Comp.BuckleOnInteractHand && StrapHasSpace(strap.Owner, buckle, strap.Comp))
         {
-            TryBuckle(args.User, args.User, strap.Owner, true);
+            TryBuckle(buckle.AsNullable(), args.User, strap.AsNullable(), true);
             args.Handled = true;
             return;
         }
@@ -128,8 +128,8 @@ public abstract partial class SharedBuckleSystem
         if (args.Hands == null || !args.CanAccess || !args.CanInteract || !component.Enabled)
             return;
 
-        // Note that for whatever bloody reason, buckle strapComponent has its own interaction range. Additionally, this
-        // range can be set per-strapComponent, so we have to check a modified InRangeUnobstructed for every verb.
+        // Note that for whatever bloody reason, buckle component has its own interaction range. Additionally, this
+        // range can be set per-component, so we have to check a modified InRangeUnobstructed for every verb.
 
         // Add unstrap verbs for every strapped entity.
         foreach (var entity in component.BuckledEntities)
