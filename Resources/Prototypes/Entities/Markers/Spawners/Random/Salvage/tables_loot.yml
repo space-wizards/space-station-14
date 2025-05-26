@@ -77,6 +77,15 @@
       weight: 0.5
     - id: ScrapMopBucket
       weight: 0.5
+    - !type:GroupSelector
+      weight: 2
+      children:
+      - !type:NestedSelector
+        weight: 3
+        tableId: RandomChemicalBarrel
+      - !type:NestedSelector
+        weight: 1
+        tableId: RandomChemicalBarrelRadioactive
 
 # Treasure: High-value scatterables that don't do a ton.
 

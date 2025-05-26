@@ -414,6 +414,17 @@ public abstract partial class SharedMoverController : VirtualController
 
     }
 
+    public void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref float velocity)
+    {
+        if (Math.Abs(velocity) < minimumFrictionSpeed)
+            return;
+
+        // This equation is lifted from the Physics Island solver.
+        // We re-use it here because Kinematic Controllers can't/shouldn't use the Physics Friction
+        velocity *= Math.Clamp(1.0f - frameTime * friction, 0.0f, 1.0f);
+
+    }
+
     /// <summary>
     /// Adjusts the current velocity to the target velocity based on the specified acceleration.
     /// </summary>
@@ -556,7 +567,7 @@ public abstract partial class SharedMoverController : VirtualController
 
         // If the coordinates have a FootstepModifier component
         // i.e. component that emit sound on footsteps emit that sound
-        var anchored = grid.GetAnchoredEntitiesEnumerator(position);
+        var anchored = _mapSystem.GetAnchoredEntitiesEnumerator(xform.GridUid.Value, grid, position);
 
         while (anchored.MoveNext(out var maybeFootstep))
         {
