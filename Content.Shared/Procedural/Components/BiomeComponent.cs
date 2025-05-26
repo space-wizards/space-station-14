@@ -9,9 +9,10 @@ namespace Content.Shared.Procedural.Components;
 public sealed record BiomeMetaLayer
 {
     /// <summary>
-    /// Chunk dimensions for this meta layer.
+    /// Chunk dimensions for this meta layer. Will try to infer it from the first layer of the dungeon if null.
     /// </summary>
-    public int Size = 16;
+    [DataField]
+    public int? Size;
 
     /// <summary>
     /// Meta layers that this one requires to be loaded first.

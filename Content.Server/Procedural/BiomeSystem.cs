@@ -9,6 +9,7 @@ using Content.Shared.Decals;
 using Content.Shared.Ghost;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Components;
+using Content.Shared.Procedural.DungeonGenerators;
 using Content.Shared.Sprite;
 using Content.Shared.Tag;
 using Robust.Server.Player;
@@ -231,10 +232,15 @@ public sealed partial class BiomeSystem : EntitySystem
                 if (!layer.CanUnload)
                     continue;
 
+                var size = GetSize(_protomanager.Index(layer.Dungeon), layer);
+
+                if (size == null)
+                    continue;
+
                 // Go through each loaded chunk and check if they can be unloaded by checking if any players are in range.
                 foreach (var chunk in loadedLayer.Keys)
                 {
-                    var chunkBounds = new Box2i(chunk, chunk + layer.Size);
+                    var chunkBounds = new Box2i(chunk, chunk + size.Value);
                     var canUnload = true;
 
                     foreach (var playerView in biome.LoadedBounds)
@@ -343,9 +349,32 @@ public sealed partial class BiomeSystem : EntitySystem
         biome.LoadedBounds.Add(adjustedBounds);
     }
 
+    public int? GetSize(DungeonConfigPrototype config, BiomeMetaLayer layer)
+    {
+        var size = layer.Size;
+
+        if (size == null && config.Layers[0] is ChunkDunGen chunkGen)
+        {
+            size = chunkGen.Size;
+        }
+        // No size
+        else
+        {
+            Log.Warning($"Unable to infer chunk size for biome {layer} / config {config.ID}");
+            return null;
+        }
+
+        return size.Value;
+    }
+
     public Box2i GetLayerBounds(BiomeMetaLayer layer, Box2i layerBounds)
     {
-        var chunkSize = new Vector2(layer.Size, layer.Size);
+        var size = GetSize(_protomanager.Index(layer.Dungeon), layer);
+
+        if (size == null)
+            return Box2i.Empty;
+
+        var chunkSize = new Vector2(size.Value, size.Value);
 
         // Need to round the bounds to our chunk size to ensure we load whole chunks.
         // We also need to know the minimum bounds for our dependencies to load.
@@ -361,15 +390,20 @@ public sealed partial class BiomeSystem : EntitySystem
  {
      [Dependency] private IEntityManager _entManager = default!;
      [Dependency] private IPrototypeManager _protoManager = default!;
+
      private BiomeSystem System = default!;
+     private DungeonSystem DungeonSystem = default!;
 
-    public Entity<BiomeComponent, MapGridComponent> Grid;
+     public Entity<BiomeComponent, MapGridComponent> Grid;
 
-    public BiomeLoadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
-    {
+     internal ISawmill _sawmill = default!;
+
+     public BiomeLoadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
+     {
         IoCManager.InjectDependencies(this);
         System = _entManager.System<BiomeSystem>();
-    }
+        DungeonSystem = _entManager.System<DungeonSystem>();
+     }
 
     protected override async Task<bool> Process()
     {
@@ -412,6 +446,12 @@ public sealed partial class BiomeSystem : EntitySystem
 
     private async Task LoadLayer(string layerId, BiomeMetaLayer layer, Box2i parentBounds)
     {
+        // Nothing to do
+        var dungeon = _protoManager.Index(layer.Dungeon);
+
+        if (dungeon.Layers.Count == 0)
+            return;
+
         var loadBounds = System.GetLayerBounds(layer, parentBounds);
 
         // Make sure our dependencies are loaded first.
@@ -425,10 +465,17 @@ public sealed partial class BiomeSystem : EntitySystem
             }
         }
 
-        var dungeon = _protoManager.Index(layer.Dungeon);
+        var size = System.GetSize(dungeon, layer);
+
+        if (size == null)
+            return;
+
+        // The reason we do this is so if we dynamically add similar layers (e.g. we add 3 mob layers at runtime)
+        // they don't all have the same seeds.
+        var layerSeed = Grid.Comp1.Seed + layerId.GetHashCode();
 
         // Okay all of our dependencies loaded so we can send it.
-        var chunkEnumerator = new NearestChunkEnumerator(loadBounds, layer.Size);
+        var chunkEnumerator = new NearestChunkEnumerator(loadBounds, size.Value);
 
         while (chunkEnumerator.MoveNext(out var chunk))
         {
@@ -443,9 +490,8 @@ public sealed partial class BiomeSystem : EntitySystem
             }
 
             // Load dungeon here async await and all that jaz.
-            var (_, data) = await WaitAsyncTask(_entManager
-                .System<DungeonSystem>()
-                .GenerateDungeonAsync(_protoManager.Index(layer.Dungeon), Grid.Owner, Grid.Comp2, chunkOrigin, Grid.Comp1.Seed, reservedTiles: Grid.Comp1.ModifiedTiles));
+            var (_, data) = await WaitAsyncTask(DungeonSystem
+                .GenerateDungeonAsync(dungeon, Grid.Owner, Grid.Comp2, chunkOrigin, layerSeed, reservedTiles: Grid.Comp1.ModifiedTiles));
 
             // If we can unload it then store the data to check for later.
             if (layer.CanUnload)
