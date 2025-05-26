@@ -34,6 +34,7 @@
     size: Large
     sprite: Objects/Specific/Janitorial/mop.rsi
   - type: Absorbent
+    cleanedStatistic: MoppedCount
   - type: SolutionContainerManager
     solutions:
       absorbed:
@@ -89,6 +90,7 @@
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
       pickupAmount: 100
+      cleanedStatistic: MoppedCount
     - type: UseDelay
       delay: 1.0
     - type: SolutionRegeneration

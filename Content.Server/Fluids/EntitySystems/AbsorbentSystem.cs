@@ -5,7 +5,9 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
+using Content.Shared.RoundStatistics;
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using Robust.Server.Audio;
@@ -321,6 +323,12 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         localPos = userXform.LocalRotation.RotateVec(localPos);
 
         _melee.DoLunge(user, used, Angle.Zero, localPos, null, false);
+
+        if (absorber.CleanedStatistic is not null)
+        {
+            var evChangeStatsValue = new ChangeStatsValueEvent(absorber.CleanedStatistic, 1);
+            RaiseLocalEvent(ref evChangeStatsValue);
+        }
 
         return true;
     }
