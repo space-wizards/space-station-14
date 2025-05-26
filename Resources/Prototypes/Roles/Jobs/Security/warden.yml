@@ -45,12 +45,12 @@
   job: Warden
   hasMindShield: true
   equipment:
-    head: ClothingHeadHatBeretWarden
+    head: ClothingHeadHatWarden
     mask: ClothingMaskGasSecurity
     outerClothing: ClothingOuterCoatWarden
     jumpsuit: ClothingUniformJumpsuitWarden
-    neck: ClothingNeckScarfStripedBlack
+    neck: Dinkystar
     back: ClothingBackpackSecurity
     belt: ClothingBeltSecurity
-    gloves: ClothingHandsGlovesColorBlack
+    gloves: ClothingHandsGlovesCombat
     shoes: ClothingShoesBootsJack

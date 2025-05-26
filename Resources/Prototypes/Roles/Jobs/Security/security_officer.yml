@@ -38,6 +38,7 @@
   job: SecurityOfficer
   hasMindShield: true
   equipment:
+    head: ClothingHeadHatBeretSecurity
     mask: ClothingMaskGasSecurity
-    neck: ClothingNeckScarfStripedRed
+    neck: Dinkystar
     gloves: ClothingHandsGlovesColorBlack
