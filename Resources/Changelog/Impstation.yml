@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: The religious supplies crate now supplies from a wider variety of religions.
-    type: Tweak
-  id: 1237
-  time: '2025-03-07T00:49:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1849
 - author: widgetbeck
   changes:
   - message: Drones now have fewer toys. It's more fun to find your own supplies.
@@ -4221,3 +4214,16 @@
   id: 1736
   time: '2025-05-26T02:00:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2565
+- author: jtfg-dev
+  changes:
+  - message: Your pride is now clear and obvious to all! Wearing a pin, cloak, medal
+      or scarf now appears in your examine text.
+    type: Add
+  - message: Pins in your pockets can also be seen upon examination! Hooray! No more
+      need to dedicate your neck to your lapel.
+    type: Tweak
+  - message: This is my badge, and it proves that I am a lawyer.
+    type: Tweak
+  id: 1737
+  time: '2025-05-26T23:29:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2462
