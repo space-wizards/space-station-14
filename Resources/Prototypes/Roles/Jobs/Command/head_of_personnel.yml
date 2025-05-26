@@ -75,7 +75,7 @@
   equipment:
     id: HoPPDA
     gloves: ClothingHandsGlovesHop
-    belt: BoxFolderClipboard
+    belt: ClothingBeltPaperworkFilled # imp edit
   storage:
     back:
     - Flash
