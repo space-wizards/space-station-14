@@ -55,6 +55,12 @@ public sealed partial class BiomeComponent : Component
     public Dictionary<string, BiomeMetaLayer> Layers = new();
 
     /// <summary>
+    /// Layer removals that are pending.
+    /// </summary>
+    [DataField]
+    public List<string> PendingRemovals = new();
+
+    /// <summary>
     /// Data that is currently loaded.
     /// </summary>
     [DataField]

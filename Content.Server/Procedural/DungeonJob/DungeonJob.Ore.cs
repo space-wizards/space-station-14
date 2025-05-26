@@ -32,6 +32,11 @@ public sealed partial class DungeonJob
             replacementRemapping = remappingComp.Mask;
         }
 
+        if (gen.Replacement != null)
+        {
+            replacementRemapping[gen.Replacement.Value] = gen.Entity;
+        }
+
         foreach (var dungeon in dungeons)
         {
             foreach (var node in dungeon.AllTiles)

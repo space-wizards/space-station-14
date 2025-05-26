@@ -113,6 +113,21 @@ public sealed partial class BiomeSystem : EntitySystem
         return !_ghostQuery.HasComp(uid) || _tags.HasTag(uid, AllowBiomeLoadingTag);
     }
 
+    public bool RemoveLayer(Entity<BiomeComponent?> biome, string label)
+    {
+        if (!Resolve(biome.Owner, ref biome.Comp))
+            return false;
+
+        if (!biome.Comp.Layers.ContainsKey(label))
+        {
+            return false;
+        }
+
+        // Technically this can race-condition with adds but uhh tell people to not do that.
+        biome.Comp.PendingRemovals.Add(label);
+        return true;
+    }
+
     public void AddLayer(Entity<BiomeComponent?> biome, string label, BiomeMetaLayer layer)
     {
         if (!Resolve(biome.Owner, ref biome.Comp))
@@ -239,6 +254,19 @@ public sealed partial class BiomeSystem : EntitySystem
                         continue;
 
                     toUnload.GetOrNew(layerId).Add(chunk);
+                }
+            }
+
+            if (biome.PendingRemovals.Count > 0)
+            {
+                foreach (var label in biome.PendingRemovals)
+                {
+                    var bounds = toUnload.GetOrNew(label);
+
+                    foreach (var chunkOrigin in biome.LoadedData[label].Keys)
+                    {
+                        bounds.Add(chunkOrigin);
+                    }
                 }
             }
 
@@ -396,6 +424,8 @@ public sealed partial class BiomeSystem : EntitySystem
                 await LoadLayer(sub, actualLayer, loadBounds);
             }
         }
+
+        var dungeon = _protoManager.Index(layer.Dungeon);
 
         // Okay all of our dependencies loaded so we can send it.
         var chunkEnumerator = new NearestChunkEnumerator(loadBounds, layer.Size);
@@ -577,6 +607,8 @@ public sealed class BiomeUnloadJob : Job<bool>
         {
             Biome.Comp2.Loading = false;
         }
+
+        Biome.Comp2.PendingRemovals.Clear();
 
         return true;
     }

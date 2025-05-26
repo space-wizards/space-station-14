@@ -6,7 +6,7 @@
     size: 128
   - !type:OreDunGen
     replacement: WallRock
-    entity: WallRockIron
+    entity: WallRockTin
     count: 30
     minGroupSize: 10
     maxGroupSize: 15
