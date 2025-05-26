@@ -15,7 +15,7 @@
     - to: board
       steps:
       - tag: TurretControlElectronics
-        name: sentry turret control panel electronics
+        name: construction-graph-tag-turret-control-electronics
         icon:
           sprite: Objects/Misc/module.rsi
           state: command
