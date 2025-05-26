@@ -549,3 +549,45 @@
   products:
     Moonrise: 3
 
+- type: reaction
+  id: PoorMansFrezon
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Ice:
+      amount: 1
+    SpaceDrugs:
+      amount: 2
+    Ethanol:
+      amount: 3
+  products:
+    PoorMansFrezon: 6
+
+- type: reaction
+  id: DoubleGreen
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    InsectBlood:
+      amount: 2
+    MindbreakerToxin:
+      amount: 2
+    Moonshine:
+      amount: 1
+  products:
+    DoubleGreen: 5
+
+- type: reaction
+  id: LiquidLunch
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Blood:
+      amount: 3
+    Fiber:
+      amount: 1
+    UncookedAnimalProteins:
+      amount: 2
+  products:
+    LiquidLunch: 6
+

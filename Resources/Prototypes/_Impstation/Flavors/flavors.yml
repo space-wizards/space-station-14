@@ -203,6 +203,21 @@
   flavorType: Complex
   description: flavor-complex-moonrise
 
+- type: flavor
+  id: poormansfrezon
+  flavorType: Complex
+  description: flavor-complex-poormansfrezon
+
+- type: flavor
+  id: doublegreen
+  flavorType: Complex
+  description: flavor-complex-doublegreen
+
+- type: flavor
+  id: liquidlunch
+  flavorType: Complex
+  description: flavor-complex-liquidlunch
+
 # ID Tart
 - type: flavor
   id: armory

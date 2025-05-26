@@ -119,6 +119,7 @@
       - DrinkGatorWineGlass
       - DrinkGenderfluidGlass
       - DrinkHummingBirdGlass
+      - DrinkLiquidLunchGlass
       - DrinkLoveTapGlass
       - DrinkLungCloggerGlass
       - DrinkMinotaursLamentGlass
@@ -149,8 +150,10 @@
       - DrinkBacchusBlessing
       # imp drinks, skipped horsepussy but im looking skeptically at bacchusblessing one line above this
       - DrinkBreathofFreshAirGlass
+      - DrinkDoubleGreenGlass
       - DrinkFeverDreamGlass
       - DrinkLovePotionGlass
+      - DrinkPoorMansFrezonGlass
       - DrinkReaganomicsGlass
       - DrinkRotgutGlass
       - DrinkSalvagersSootheGlass

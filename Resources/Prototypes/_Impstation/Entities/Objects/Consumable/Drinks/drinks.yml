@@ -623,3 +623,51 @@
   - type: Icon
     sprite: _Impstation/Objects/Consumable/Drinks/moonrise.rsi
     state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkPoorMansFrezonGlass
+  suffix: poor man's frezon
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: PoorMansFrezon
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/poormansfrezon.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkDoubleGreenGlass
+  suffix: double green
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: DoubleGreen
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/doublegreen.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkLiquidLunchGlass
+  suffix: liquid lunch
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: LiquidLunch
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/liquidlunch.rsi
+    state: icon

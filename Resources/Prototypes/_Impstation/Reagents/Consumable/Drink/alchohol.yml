@@ -803,3 +803,84 @@
       - !type:Electrocute
         probability: 0.05
   fizziness: .5
+
+- type: reagent
+  id: PoorMansFrezon
+  name: reagent-name-poormansfrezon
+  parent: BaseAlcohol
+  desc: reagent-desc-poormansfrezon
+  physicalDesc: reagent-physical-desc-frosty
+  flavor: poormansfrezon
+  color: "#c9edf2"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/poormansfrezon.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.5
+    Narcotic:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 4
+        refresh: false
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "frezon-euphoric" ]
+        probability: 0.05
+    Poison:
+      effects:
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 200 
+        amount: -7500
+  fizziness: 0.1
+
+- type: reagent
+  id: DoubleGreen
+  name: reagent-name-doublegreen
+  parent: BaseAlcohol
+  slippery: false
+  desc: reagent-desc-doublegreen
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: doublegreen
+  color: "#4e634e"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/doublegreen.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.35
+    Narcotic:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+  fizziness: 0.1

@@ -52,6 +52,10 @@ flavor-complex-supermixerpsych = like a psychiatric appointment
 
 flavor-complex-moonrise = like sweet nostalgia
 
+flavor-complex-poormansfrezon = like a good time
+flavor-complex-doublegreen = bitter and nauseating
+flavor-complex-liquidlunch = like a pureed rat
+
 flavor-complex-armory = like armory access
 flavor-complex-atmospherics = like atmospherics access
 flavor-complex-bar = like bar access

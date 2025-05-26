@@ -84,3 +84,9 @@ reagent-desc-burnchamber = Burns as hot as the real thing. Don't forget a firesu
 
 reagent-name-weldingcoils = weldin' coils
 reagent-desc-weldingcoils = Perfect for drinking away your problems! There's coils to weld.
+
+reagent-name-poormansfrezon = poor man's frezon
+reagent-desc-poormansfrezon = For when you can't get your hands on the real deal.
+
+reagent-name-doublegreen = double green
+reagent-desc-doublegreen = None of these ingredients want to mix.
