@@ -86,6 +86,85 @@
 
 - type: entity
   parent: Jug
+  id: JugPunctTranex
+  categories: [ HideSpawnMenu ]
+  suffix: punct & tranex
+  components:
+  - type: Label
+    currentLabel: reagent-name-puncturase
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Puncturase
+          Quantity: 160
+        - ReagentId: TranexamicAcid
+          Quantity: 40
+
+- type: entity
+  parent: Jug
+  id: JugPyraDerma
+  categories: [ HideSpawnMenu ]
+  suffix: pyra & derma
+  components:
+  - type: Label
+    currentLabel: reagent-name-pyrazine
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Pyrazine
+          Quantity: 50
+        - ReagentId: Dermaline
+          Quantity: 150
+
+- type: entity
+  parent: Jug
+  id: JugTrico
+  categories: [ HideSpawnMenu ]
+  suffix: tricordazine
+  components:
+  - type: Label
+    currentLabel: reagent-name-tricordazine
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Tricordrazine
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  id: JugBlood
+  categories: [ HideSpawnMenu ]
+  suffix: blood
+  components:
+  - type: Label
+    currentLabel: reagent-name-blood
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Blood
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  id: JugWater
+  categories: [ HideSpawnMenu ]
+  suffix: water
+  components:
+  - type: Label
+    currentLabel: reagent-name-water
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Water
+          Quantity: 200
+
+- type: entity
+  parent: Jug
   suffix: carbon
   id: JugCarbon
   categories: [ HideSpawnMenu ]
