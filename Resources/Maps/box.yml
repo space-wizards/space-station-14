@@ -11077,49 +11077,6 @@ entities:
     - type: Transform
       pos: -1.4590547,-61.356407
       parent: 8364
-- proto: ActionToggleInternals
-  entities:
-  - uid: 25167
-    components:
-    - type: Transform
-      parent: 21419
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 21419
-  - uid: 25181
-    components:
-    - type: Transform
-      parent: 20121
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 20121
-- proto: ActionToggleLight
-  entities:
-  - uid: 8712
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 7337
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 7337
-  - uid: 8904
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 5070
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 5070
-  - uid: 16587
-    components:
-    - type: Transform
-      parent: 11756
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 11756
 - proto: AirAlarm
   entities:
   - uid: 2
@@ -90241,114 +90198,36 @@ entities:
     - type: Transform
       pos: 49.481064,16.680466
       parent: 8364
-    - type: HandheldLight
-      toggleActionEntity: 16587
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 16587
-    - type: ActionsContainer
   - uid: 11760
     components:
     - type: Transform
       pos: 70.51346,12.480552
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 11762
     components:
     - type: Transform
       pos: 55.583378,18.000807
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 12267
     components:
     - type: Transform
       pos: -43.273075,5.5487127
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 13851
     components:
     - type: Transform
       pos: -48.703045,1.6598
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 14435
     components:
     - type: Transform
       pos: -19.5,-6.5
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 16301
     components:
     - type: Transform
       pos: -10.388388,-34.587967
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 16744
     components:
     - type: Transform
@@ -90436,20 +90315,6 @@ entities:
     - type: Transform
       pos: 8.604933,42.85379
       parent: 8364
-    - type: HandheldLight
-      toggleActionEntity: 8712
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 8712
-    - type: ActionsContainer
 - proto: FlippoLighter
   entities:
   - uid: 5114
@@ -130766,16 +130631,6 @@ entities:
     - type: Transform
       pos: 63.59359,1.9265842
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 11971
     components:
     - type: Transform
@@ -130798,16 +130653,6 @@ entities:
     - type: Transform
       pos: 20.577366,3.8552704
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LampGold
   entities:
   - uid: 2228
@@ -130815,52 +130660,16 @@ entities:
     - type: Transform
       pos: 27.55192,-19.472286
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 5070
     components:
     - type: Transform
       pos: 5.3890724,53.889565
       parent: 8364
-    - type: HandheldLight
-      toggleActionEntity: 8904
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 8904
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
   - uid: 5679
     components:
     - type: Transform
       pos: 8.514107,-15.335099
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 7674
     components:
     - type: Transform
@@ -130899,76 +130708,26 @@ entities:
     - type: Transform
       pos: 60.5,-6.5
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 10858
     components:
     - type: Transform
       pos: 61.465347,-10.029866
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 10859
     components:
     - type: Transform
       pos: 57.47965,-10.061116
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 12702
     components:
     - type: Transform
       pos: -57.50557,-0.1837722
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 14369
     components:
     - type: Transform
       pos: -57.52329,-8.160038
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 14968
     components:
     - type: Transform
@@ -131017,31 +130776,11 @@ entities:
     - type: Transform
       pos: 68.5,-3.5
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 10809
     components:
     - type: Transform
       pos: 70.5,-3.5
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LargeBeaker
   entities:
   - uid: 1882
@@ -134009,14 +133748,6 @@ entities:
     - type: Transform
       pos: 79.485985,-43.45112
       parent: 8364
-    - type: GasTank
-      toggleActionEntity: 25167
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 25167
 - proto: OxygenTankFilled
   entities:
   - uid: 5466
@@ -134029,14 +133760,6 @@ entities:
     - type: Transform
       pos: 78.58031,-56.4234
       parent: 8364
-    - type: GasTank
-      toggleActionEntity: 25181
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 25181
   - uid: 27619
     components:
     - type: Transform
