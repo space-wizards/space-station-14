@@ -6205,4 +6205,19 @@ Entries:
   id: 859
   time: '2025-05-26T18:10:27.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/681
+- author: Happyrobot33
+  changes:
+  - message: Fixed Vulp tails not toggling between wagging and not wagging properly.
+    type: Fix
+  id: 860
+  time: '2025-05-26T19:03:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/690
+- author: Happyrobot33
+  changes:
+  - message: Fixed tails that can be toggled for wagging losing their glowing state
+      when doing so.
+    type: Fix
+  id: 861
+  time: '2025-05-26T19:03:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/690
 
