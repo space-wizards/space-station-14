@@ -20,6 +20,7 @@
   # Generate biome
   - !type:PrototypeDunGen
     proto: Asteroid
+    inheritDungeons: All
   - !type:OreDunGen
     replacement: AsteroidRock
     entity: AsteroidRockGibtonite
@@ -49,6 +50,7 @@
   # Generate biome
   - !type:PrototypeDunGen
     proto: Asteroid
+    inheritDungeons: All
   - !type:OreDunGen
     replacement: AsteroidRock
     entity: AsteroidRockGibtonite
@@ -78,6 +80,7 @@
   # Generate biome
   - !type:PrototypeDunGen
     proto: Asteroid
+    inheritDungeons: All
   - !type:OreDunGen
     replacement: AsteroidRock
     entity: AsteroidRockGibtonite
@@ -106,6 +109,7 @@
   # Generate biome
   - !type:PrototypeDunGen
     proto: Asteroid
+    inheritDungeons: All
   - !type:OreDunGen
     replacement: AsteroidRock
     entity: AsteroidRockGibtonite

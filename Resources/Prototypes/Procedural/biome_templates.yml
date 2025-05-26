@@ -1,6 +1,7 @@
 # Desert
 - type: entity
   id: BiomeLowDesert
+  categories: [ HideSpawnMenu ]
   components:
   - type: Biome
     layers:
@@ -60,6 +61,7 @@
 
 - type: entity
   id: BiomeGrasslands
+  categories: [ HideSpawnMenu ]
   components:
   - type: Biome
     layers:
@@ -229,6 +231,7 @@
 # Lava
 - type: entity
   id: BiomeLava
+  categories: [ HideSpawnMenu ]
   components:
   - type: Biome
     layers:
@@ -349,6 +352,7 @@
 # Snow
 - type: entity
   id: BiomeSnow
+  categories: [ HideSpawnMenu ]
   components:
   - type: Biome
     layers:
@@ -519,6 +523,7 @@
 # Shadow -> Derived from lava
 - type: entity
   id: BiomeShadow
+  categories: [ HideSpawnMenu ]
   components:
   - type: Biome
     layers:
@@ -614,6 +619,7 @@
 # Caves
 - type: entity
   id: BiomeCaves
+  categories: [ HideSpawnMenu ]
   components:
   - type: Biome
     layers:
@@ -692,6 +698,7 @@
     - !type:SampleTileDunGen
       threshold: -1.0
       tile: FloorAsteroidSand
+      reserveTiles: false
     - !type:SampleEntityDunGen
       threshold: 0.85
       noise:
@@ -719,6 +726,7 @@
       entities:
         - FloraStalagmite
     - !type:SampleEntityDunGen
+      reserveTiles: false
       threshold: -0.6
       invert: true
       noise:

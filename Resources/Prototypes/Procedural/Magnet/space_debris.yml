@@ -38,6 +38,7 @@
     # Generate biome
     - !type:PrototypeDunGen
       proto: SpaceDebris
+      inheritDungeons: All
 
 - type: dungeonConfig
   id: ChunkDebrisSmall
@@ -79,3 +80,4 @@
   # Generate biome
   - !type:PrototypeDunGen
     proto: SpaceDebris
+    inheritDungeons: All
