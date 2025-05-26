@@ -74,7 +74,7 @@
       layers:
         - state: blue
         - sprite: Mobs/Animals/cockroach.rsi
-          state: cockroach_icon
+          state: cockroach-icon
         - state: timed
     - type: TimedSpawner
       prototypes:

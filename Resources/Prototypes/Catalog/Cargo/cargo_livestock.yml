@@ -21,7 +21,7 @@
 - type: cargoProduct
   id: LivestockCat
   icon:
-    sprite: Mobs/Pets/cat.rsi
+    sprite: Mobs/Animals/cat.rsi
     state: cat
   product: CrateNPCCat
   cost: 1200
@@ -61,7 +61,7 @@
 - type: cargoProduct
   id: LivestockCorgi
   icon:
-    sprite: Mobs/Pets/corgi.rsi
+    sprite: Mobs/Animals/corgi.rsi
     state: corgi
   product: CrateNPCCorgi
   cost: 1200
@@ -71,7 +71,7 @@
 - type: cargoProduct
   id: LivestockPupCorgi
   icon:
-    sprite: Mobs/Pets/corgi.rsi
+    sprite: Mobs/Animals/corgi.rsi
     state: puppy
   product: CrateNPCPuppyCorgi
   cost: 1200
@@ -192,7 +192,7 @@
   id: LivestockHamster
   icon:
     sprite: Mobs/Animals/hamster.rsi
-    state: icon-0
+    state: icon
   product: CrateNPCHamster
   cost: 2800
   category: cargoproduct-category-name-livestock

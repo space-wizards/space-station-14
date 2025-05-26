@@ -1,0 +1,14 @@
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobMonkey
+  name: Monkey Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: monkey
+      sprite: Mobs/Ancestors/monkey.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobMonkey
