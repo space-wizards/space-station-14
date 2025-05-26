@@ -298,7 +298,6 @@
       - id: PetCarrier
       - id: DrinkMopwataBottleRandom
       - id: SpectralLocator
-      - id: WehpetInstrument
       - id: LidSalami
         weight: 0.05
 
