@@ -710,8 +710,36 @@ doc-text-printer-request-modernization =
 
 
 
+doc-text-printer-request-ert =
+   ⠀[logo]            [cclogo] 
+
+                             [head=3]NT-CC Consortium Services[/head]
+
+                  [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
+    ────────────────────────────────────────
+   ⠀⠀           [bold]EMERGENCY RESPONSE TEAM REQUEST[/bold]
+    ────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    Position of Document Compiler:
+
+    Threat(s) to the station:
+    ⠀[bullet] ...
+
+    Type of ERT requested:
+    (Security / Engineering / Janitorial / Medical / ...)
+
+    Fatalities (approximate number):
+
+   ⠀ [italic]Warning, abuse of this form may lead to immediate termination[/italic]
+   ⠀ [italic]of the contract of the person(s) involved in this request.[/italic]
+    ────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+
+
+
    
-# Complaintst
+# Complaints
 
 doc-text-printer-complaint-violation-labor-rules =
    ⠀[logo]            [cclogo] 
