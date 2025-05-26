@@ -601,6 +601,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 if (HasComp<HeadRevolutionaryComponent>(uid))
                     continue;
 
+                // Play the deconversion sound for the revolutionary
+                _audioSystem.PlayGlobal("/Audio/_Starlight/Misc/rev_end.ogg", Filter.Entities(uid), false, AudioParams.Default.WithVolume(0f));
+                
                 _npcFaction.RemoveFaction(uid, RevolutionaryNpcFaction);
                 _stun.TryParalyze(uid, stunTime, true);
                 RemCompDeferred<RevolutionaryComponent>(uid);
