@@ -27,14 +27,7 @@
     specialDigestible:
       tags:
       - Trash
-      - Fruit
-      - ReptilianFood
-      - Meat
-      - Pill
-      - Crayon
-      - Paper
-      - VoxFood
-      - Vegetable
+    isSpecialDigestibleExclusive: false
 
 - type: entity
   parent: OrganHumanLiver

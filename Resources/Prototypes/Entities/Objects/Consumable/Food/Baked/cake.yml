@@ -15,18 +15,17 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 55 # flavored cakes have less room for spiking
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 40
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 10
   - type: Item
     size: Normal
   - type: Tag
     tags:
     - Cake
-    - VoxFood
   - type: SecretStash
     maxItemSize: "Normal"
     secretStashName: secret-stash-cake
@@ -54,12 +53,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 8
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 2
   - type: Item
     size: Tiny
   - type: Tag
@@ -116,6 +115,15 @@
     state: plain
   - type: SliceableFood
     slice: FoodCakePlainSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 55
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Vitamin
+          Quantity: 5
 
 # Added in type lines above
 
@@ -126,6 +134,15 @@
   components:
   - type: Sprite
     state: plain-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 1
 # Tastes like sweetness, cake.
 
 - type: entity
@@ -336,14 +353,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 70
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 40
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 20
         - ReagentId: Milk
-          Quantity: 5
+          Quantity: 10
   - type: Tag
     tags:
     - Cake
@@ -367,11 +384,11 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 8
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 4
         - ReagentId: Milk
-          Quantity: 1
+          Quantity: 2
   - type: Tag
     tags:
     - Cake
@@ -391,10 +408,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 55
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 40
         - ReagentId: Theobromine
           Quantity: 5
         - ReagentId: Vitamin
@@ -410,14 +427,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 8
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 8
         - ReagentId: Theobromine
           Quantity: 1
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 2
 # Tastes like sweetness, cake, chocolate.
 
 - type: entity
@@ -493,12 +510,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 32
+          Quantity: 35
         - ReagentId: Vitamin
-          Quantity: 11
+          Quantity: 15
   - type: Tag
     tags:
     - Cake
@@ -518,9 +535,9 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6.4
+          Quantity: 7
         - ReagentId: Vitamin
-          Quantity: 2.2
+          Quantity: 3
   - type: Tag
     tags:
     - Cake
@@ -591,10 +608,10 @@
   - type: SolutionContainerManager #TODO Sprinkles
     solutions:
       food:
-        maxVol: 45
+        maxVol: 55
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 25
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Sugar
@@ -611,14 +628,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 6
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 2
         - ReagentId: Sugar
-          Quantity: 3
+          Quantity: 5
 # Tastes like sweetness, cake, vanilla.
 
 - type: entity
@@ -634,10 +651,10 @@
   - type: SolutionContainerManager #TODO Sprinkles
     solutions:
       food:
-        maxVol: 45
+        maxVol: 55
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 30
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Sugar
@@ -654,14 +671,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 8
         - ReagentId: Vitamin
           Quantity: 1
         - ReagentId: Sugar
-          Quantity: 3
+          Quantity: 5
 # Tastes like sweetness, cake, clown.
 
 - type: entity
@@ -677,10 +694,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 55
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 30
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: PolypyryliumOligomers
@@ -697,10 +714,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 8
         - ReagentId: Vitamin
           Quantity: 1
         - ReagentId: PolypyryliumOligomers
@@ -812,10 +829,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 48
+        maxVol: 125 # SUPER dense cake
         reagents:
         - ReagentId: Nutriment
-          Quantity: 48
+          Quantity: 80
+        - ReagentId: Sugar
+          Quantity: 30
   - type: Food
     transferAmount: 12
   - type: Item
@@ -836,10 +855,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 12
+          Quantity: 10
+        - ReagentId: Sugar
+          Quantity: 5
   - type: Food
     transferAmount: 3
   - type: PointLight

@@ -235,3 +235,25 @@
   - type: Residue
     residueAdjective: residue-slippery
     residueColor: residue-blue
+
+- type: entity
+  name: soap
+  id: SoapBorg # Intended for borg internals, not slippery or food, not a container for soap reagent
+  parent: BaseItem
+  description: A Nanotrasen brand bar of soap. Smells of plasma and machines.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    layers:
+    - state: nt-4
+  - type: Appearance
+  - type: Item
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    storedRotation: -90
+  - type: CleansForensics
+  - type: Residue
+    residueAdjective: residue-slippery
+    residueColor: residue-grey
+  - type: Tag
+    tags:
+    - Soap
