@@ -16,7 +16,7 @@
     # Randomly generated books
     - id: BookRandomStory
       amount: !type:RangeNumberSelector
-        range: 4, 8
+        range: 2, 8
     # Guidebooks
     - !type:NestedSelector
       tableId: RandomGuidebookTable
