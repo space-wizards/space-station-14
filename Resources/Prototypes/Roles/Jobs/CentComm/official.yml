@@ -12,6 +12,9 @@
   - AllAccess
   access:
   - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 - type: startingGear
   id: CentcomGear
@@ -21,7 +24,7 @@
     head: ClothingHeadHatCentcom
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesColorBlack
-    outerClothing: ClothingOuterArmorBasic
+    outerClothing: ClothingOuterArmorCentcommCarapace
     id: CentcomPDA
     ears: ClothingHeadsetAltCentCom
     belt: WeaponPistolN1984

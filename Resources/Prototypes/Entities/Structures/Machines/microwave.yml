@@ -77,6 +77,12 @@
       visible: false
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -115,6 +121,7 @@
   components:
   - type: Microwave
     cookTimeMultiplier: 0.5
+    baseHeatMultiplier: 200
     capacity: 10
     canMicrowaveIdsSafely: false
     explosionChance: 0.3

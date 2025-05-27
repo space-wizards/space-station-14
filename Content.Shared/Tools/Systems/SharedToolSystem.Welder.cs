@@ -29,7 +29,7 @@ public abstract partial class SharedToolSystem
         SubscribeLocalEvent<WelderComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
     }
 
-    public virtual void TurnOn(Entity<WelderComponent> entity, EntityUid? user)
+    public void TurnOn(Entity<WelderComponent> entity, EntityUid? user)
     {
         if (!SolutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.FuelSolutionName, out var solutionComp, out _))
             return;

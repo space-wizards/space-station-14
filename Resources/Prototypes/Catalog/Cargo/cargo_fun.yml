@@ -14,7 +14,7 @@
     sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: tuba
   product: CrateFunInstrumentsBrass
-  cost: 2500
+  cost: 2000
   category: cargoproduct-category-name-fun
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Objects/Fun/Instruments/harmonica.rsi
     state: icon
   product: CrateFunInstrumentsWoodwind
-  cost: 2500
+  cost: 3000
   category: cargoproduct-category-name-fun
   group: market
 
@@ -89,6 +89,16 @@
   group: market
 
 - type: cargoProduct
+  id: CrateFunFoamGuns
+  icon:
+    sprite: Objects/Weapons/Guns/Rifles/foam_rifle.rsi
+    state: icon
+  product: CrateFunFoamGuns
+  cost: 3000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
   id: FunPlushies
   icon:
     sprite: Objects/Fun/toys.rsi
@@ -104,6 +114,16 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
   product: CrateFunLizardPlushieBulk
+  cost: 500
+  category: cargoproduct-category-name-fun
+  group: market
+  
+- type: cargoProduct
+  id: FunSharkPlushies
+  icon:
+    sprite: Objects/Fun/sharkplush.rsi
+    state: blue
+  product: CrateFunSharkPlushieBulk
   cost: 500
   category: cargoproduct-category-name-fun
   group: market

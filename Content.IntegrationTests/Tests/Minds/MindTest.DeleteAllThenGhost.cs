@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Minds;
@@ -37,8 +38,8 @@ public sealed partial class MindTests
         Assert.That(pair.Client.EntMan.EntityCount, Is.EqualTo(0));
 
         // Create a new map.
-        int mapId = 1;
-        await pair.Server.WaitPost(() => conHost.ExecuteCommand($"addmap {mapId}"));
+        MapId mapId = default;
+        await pair.Server.WaitPost(() => pair.Server.System<SharedMapSystem>().CreateMap(out mapId));
         await pair.RunTicksSync(5);
 
         // Client is not attached to anything
@@ -54,7 +55,7 @@ public sealed partial class MindTests
         Assert.That(pair.Client.EntMan.EntityExists(pair.Client.AttachedEntity));
         Assert.That(pair.Server.EntMan.EntityExists(pair.PlayerData?.Mind));
         var xform = pair.Client.Transform(pair.Client.AttachedEntity!.Value);
-        Assert.That(xform.MapID, Is.EqualTo(new MapId(mapId)));
+        Assert.That(xform.MapID, Is.EqualTo(mapId));
 
         await pair.CleanReturnAsync();
     }

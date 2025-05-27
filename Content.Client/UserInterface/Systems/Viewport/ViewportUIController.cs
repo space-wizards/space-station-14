@@ -5,6 +5,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Viewport;
@@ -93,8 +94,11 @@ public sealed class ViewportUIController : UIController
         _entMan.TryGetComponent(ent, out EyeComponent? eye);
 
         if (eye?.Eye == _eyeManager.CurrentEye
-            && _entMan.GetComponent<TransformComponent>(ent.Value).WorldPosition == default)
-            return; // nothing to worry about, the player is just in null space... actually that is probably a problem?
+            && _entMan.GetComponent<TransformComponent>(ent.Value).MapID == MapId.Nullspace)
+        {
+            // nothing to worry about, the player is just in null space... actually that is probably a problem?
+            return;
+        }
 
         // Currently, this shouldn't happen. This likely happened because the main eye was set to null. When this
         // does happen it can create hard to troubleshoot bugs, so lets print some helpful warnings:

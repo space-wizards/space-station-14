@@ -253,10 +253,57 @@ public sealed partial class AtmosAlarmThreshold
                 break;
         }
     }
+
+    /// <summary>
+    ///     Iterates through the changes that these threshold settings would make from a
+    ///     previous instance. Basically, diffs the two settings.
+    /// </summary>
+    public IEnumerable<AtmosAlarmThresholdChange> GetChanges(AtmosAlarmThreshold previous)
+    {
+        if (LowerBound != previous.LowerBound)
+            yield return new AtmosAlarmThresholdChange(AtmosMonitorLimitType.LowerDanger, previous.LowerBound, LowerBound);
+
+        if (LowerWarningBound != previous.LowerWarningBound)
+            yield return new AtmosAlarmThresholdChange(AtmosMonitorLimitType.LowerWarning, previous.LowerWarningBound, LowerWarningBound);
+
+        if (UpperBound != previous.UpperBound)
+            yield return new AtmosAlarmThresholdChange(AtmosMonitorLimitType.UpperDanger, previous.UpperBound, UpperBound);
+
+        if (UpperWarningBound != previous.UpperWarningBound)
+            yield return new AtmosAlarmThresholdChange(AtmosMonitorLimitType.UpperWarning, previous.UpperWarningBound, UpperWarningBound);
+    }
+}
+
+/// <summary>
+///     A change of a single value between two AtmosAlarmThreshold, for a given AtmosMonitorLimitType
+/// </summary>
+public readonly struct AtmosAlarmThresholdChange
+{
+    /// <summary>
+    ///     The type of change between the two threshold sets
+    /// </summary>
+    public readonly AtmosMonitorLimitType Type;
+
+    /// <summary>
+    ///     The value in the old threshold set
+    /// </summary>
+    public readonly AlarmThresholdSetting? Previous;
+
+    /// <summary>
+    ///     The value in the new threshold set
+    /// </summary>
+    public readonly AlarmThresholdSetting Current;
+
+    public AtmosAlarmThresholdChange(AtmosMonitorLimitType type, AlarmThresholdSetting? previous, AlarmThresholdSetting current)
+    {
+        Type = type;
+        Previous = previous;
+        Current = current;
+    }
 }
 
 [DataDefinition, Serializable]
-public readonly partial struct AlarmThresholdSetting
+public readonly partial struct AlarmThresholdSetting: IEquatable<AlarmThresholdSetting>
 {
     [DataField("enabled")]
     public bool Enabled { get; init; } = true;
@@ -288,6 +335,32 @@ public readonly partial struct AlarmThresholdSetting
     public AlarmThresholdSetting WithEnabled(bool enabled)
     {
         return this with {Enabled = enabled};
+    }
+
+    public bool Equals(AlarmThresholdSetting other)
+    {
+        if (Enabled != other.Enabled)
+            return false;
+
+        if (Value != other.Value)
+            return false;
+
+        return true;
+    }
+
+    public static bool operator ==(AlarmThresholdSetting lhs, AlarmThresholdSetting rhs)
+    {
+        return lhs.Equals(rhs);
+    }
+
+    public static bool operator !=(AlarmThresholdSetting lhs, AlarmThresholdSetting rhs)
+    {
+        return !lhs.Equals(rhs);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Enabled, Value);
     }
 }
 

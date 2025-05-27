@@ -1,10 +1,12 @@
 using System.Linq;
 using Content.Server.Administration.Managers;
+using Content.Server.Antag;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -17,6 +19,7 @@ public sealed partial class StationJobsSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IBanManager _banManager = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
 
     private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
     private List<int> _orderedWeights = default!;
@@ -345,6 +348,7 @@ public sealed partial class StationJobsSystem
         foreach (var (player, profile) in profiles)
         {
             var roleBans = _banManager.GetJobBans(player);
+            var antagBlocked = _antag.GetPreSelectedAntagSessions();
             var profileJobs = profile.JobPriorities.Keys.Select(k => new ProtoId<JobPrototype>(k)).ToList();
             var ev = new StationJobsGetCandidatesEvent(player, profileJobs);
             RaiseLocalEvent(ref ev);
@@ -359,6 +363,9 @@ public sealed partial class StationJobsSystem
                     continue;
 
                 if (!_prototypeManager.TryIndex(jobId, out var job))
+                    continue;
+
+                if (!job.CanBeAntag && (!_player.TryGetSessionById(player, out var session) || antagBlocked.Contains(session)))
                     continue;
 
                 if (weight is not null && job.Weight != weight.Value)
