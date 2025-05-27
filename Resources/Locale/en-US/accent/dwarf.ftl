@@ -425,10 +425,10 @@ accent-dwarf-words-148 = a
 accent-dwarf-words-replace-148 = ae
 
 accent-dwarf-words-149 = fucking
-accent-dwarf-words-replace-149 = sodding
+accent-dwarf-words-replace-149 = soding
 
 accent-dwarf-words-150 = fucked
-accent-dwarf-words-replace-150 = sodded
+accent-dwarf-words-replace-150 = soded
 
 accent-dwarf-words-151 = hell
 accent-dwarf-words-replace-151 = ifrinn
@@ -442,38 +442,38 @@ accent-dwarf-words-replace-153 = gaun yersel'
 accent-dwarf-words-154 = leave
 accent-dwarf-words-replace-154 = bolt
 
-accent-dwarf-words-155 = why not
-accent-dwarf-words-replace-155 = how no
+accent-dwarf-words-155 = janitor
+accent-dwarf-words-replace-155 = janny
 
-accent-dwarf-words-156 = janitor
-accent-dwarf-words-replace-156 = janny
+accent-dwarf-words-156 = implant
+accent-dwarf-words-replace-156 = jab
 
-accent-dwarf-words-157 = implant
-accent-dwarf-words-replace-157 = jab
+accent-dwarf-words-157 = implanter
+accent-dwarf-words-replace-157 = jabber
 
-accent-dwarf-words-158 = implanter
-accent-dwarf-words-replace-158 = jabber
+accent-dwarf-words-158 = generator
+accent-dwarf-words-replace-158 = jenny
 
-accent-dwarf-words-159 = generator
+accent-dwarf-words-159 = pacman
 accent-dwarf-words-replace-159 = jenny
 
-accent-dwarf-words-160 = pacman
-accent-dwarf-words-replace-160 = jenny
+accent-dwarf-words-160 = ssd
+accent-dwarf-words-replace-160 = kippy
 
-accent-dwarf-words-161 = ssd
-accent-dwarf-words-replace-161 = kippy
+accent-dwarf-words-161 = arrest
+accent-dwarf-words-replace-161 = lift
 
-accent-dwarf-words-162 = arrest
-accent-dwarf-words-replace-162 = lift
+accent-dwarf-words-162 = arrested
+accent-dwarf-words-replace-162 = lifted
 
-accent-dwarf-words-163 = arrested
-accent-dwarf-words-replace-163 = lifted
+accent-dwarf-words-163 = said
+accent-dwarf-words-replace-163 = wiz like
 
-accent-dwarf-words-164 = said
-accent-dwarf-words-replace-164 = wiz like
+accent-dwarf-words-164 = was not
+accent-dwarf-words-replace-164 = wisnae
 
-accent-dwarf-words-165 = was not
-accent-dwarf-words-replace-165 = wisnae
+accent-dwarf-words-165 = won't
+accent-dwarf-words-replace-165 = winnae
 
 accent-dwarf-words-166 = old
 accent-dwarf-words-replace-166 = auld
@@ -488,7 +488,7 @@ accent-dwarf-words-169 = bastard
 accent-dwarf-words-replace-169 = bastart
 
 accent-dwarf-words-170 = hos
-accent-dwarf-words-replace-169 = big yin
+accent-dwarf-words-replace-170 = big yin
 
 accent-dwarf-words-171 = stab
 accent-dwarf-words-replace-171 = chib
@@ -544,8 +544,5 @@ accent-dwarf-words-replace-187 = raging
 accent-dwarf-words-188 = too
 accent-dwarf-words-replace-188 = tae
 
-accent-dwarf-words-190 = won't
-accent-dwarf-words-replace-190 = winnae
-
-accent-dwarf-words-191 = hi
-accent-dwarf-words-replace-191 = haw
+accent-dwarf-words-189 = hi
+accent-dwarf-words-replace-189 = haw
