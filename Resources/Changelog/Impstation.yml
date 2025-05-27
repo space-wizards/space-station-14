@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: bunch of the guns might look a little different
-    type: Tweak
-  id: 1240
-  time: '2025-03-07T01:31:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1833
 - author: Sha-Seng
   changes:
   - message: CMO can now select standard or paramedic belt from loadout
@@ -4214,3 +4207,10 @@
   id: 1739
   time: '2025-05-27T01:59:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2591
+- author: Pinkbat5
+  changes:
+  - message: Decapoids can now click and chitter like arachnids!
+    type: Add
+  id: 1740
+  time: '2025-05-27T04:06:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2594
