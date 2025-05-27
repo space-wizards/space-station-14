@@ -60,6 +60,7 @@
   components:
   - type: Damageable
     damageContainer: Biological
+    softCritEligible: true
   - type: Destructible
     thresholds:
     - trigger:
