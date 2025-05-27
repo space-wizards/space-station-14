@@ -65,7 +65,7 @@
     children:
     - id: ClothingMaskBreath
     - id: SuitEmergencyPackage
-    - id: !type:GroupSelector
+    - !type:GroupSelector
       children:
       - id: EmergencyNitrogenTankFilled
       - id: NitrogenTankFilled
