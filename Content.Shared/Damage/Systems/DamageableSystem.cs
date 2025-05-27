@@ -41,6 +41,7 @@ namespace Content.Shared.Damage
         public float UniversalThrownDamageModifier { get; private set; } = 1f;
         public float UniversalTopicalsHealModifier { get; private set; } = 1f;
         public float UniversalMobDamageModifier { get; private set; } = 1f;
+        public float UniversalDamageLerpTimeModifier { get; private set; } = 0f;
 
         public override void Initialize()
         {
@@ -100,6 +101,7 @@ namespace Content.Shared.Damage
                 foreach (var type in damageContainerPrototype.SupportedTypes)
                 {
                     component.Damage.DamageDict.TryAdd(type, FixedPoint2.Zero);
+                    component.DamageEffective.DamageDict.TryAdd(type, FixedPoint2.Zero);
                 }
 
                 foreach (var groupId in damageContainerPrototype.SupportedGroups)
@@ -108,6 +110,7 @@ namespace Content.Shared.Damage
                     foreach (var type in group.DamageTypes)
                     {
                         component.Damage.DamageDict.TryAdd(type, FixedPoint2.Zero);
+                        component.DamageEffective.DamageDict.TryAdd(type, FixedPoint2.Zero);
                     }
                 }
             }
@@ -117,11 +120,13 @@ namespace Content.Shared.Damage
                 foreach (var type in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
                 {
                     component.Damage.DamageDict.TryAdd(type.ID, FixedPoint2.Zero);
+                    component.DamageEffective.DamageDict.TryAdd(type.ID, FixedPoint2.Zero);
                 }
             }
 
             component.Damage.GetDamagePerGroup(_prototypeManager, component.DamagePerGroup);
             component.TotalDamage = component.Damage.GetTotal();
+            component.TotalDamageEffective = component.DamageEffective.GetTotal();
         }
 
         /// <summary>
@@ -135,6 +140,49 @@ namespace Content.Shared.Damage
         {
             damageable.Damage = damage;
             DamageChanged(uid, damageable);
+            ResetDamageEffective(uid, damageable);
+        }
+
+        /// <summary>
+        ///     Reset the DamageEffective of a DamageableComponent to the Damage of it.
+        /// </summary>
+        public void ResetDamageEffective(EntityUid uid, DamageableComponent? damageableComponent)
+        {
+            if (!Resolve(uid, ref damageableComponent))
+                return;
+
+            foreach (var (DamageType, Damage) in damageableComponent.Damage.DamageDict)
+            {
+                damageableComponent.DamageEffective.DamageDict[DamageType] = Damage;
+            }
+            DamageEffectiveChanged(uid, damageableComponent);
+        }
+
+        /// <summary>
+        ///     Updates the DamageEffective of a DamageableComponent
+        /// </summary>
+        public void UpdateDamageEffective(EntityUid uid, DamageableComponent? damageableComponent, float Factor)
+        {
+            if (!Resolve(uid, ref damageableComponent))
+                return;
+            foreach (var (DamageType, DamageValue) in damageableComponent.Damage.DamageDict)
+            {
+                if (damageableComponent.DamageEffective.DamageDict.TryGetValue(DamageType, out var ThisValue))
+                    damageableComponent.DamageEffective.DamageDict[DamageType] = ThisValue + (DamageValue - ThisValue) * Factor;
+            }
+            DamageEffectiveChanged(uid, damageableComponent);
+        }
+
+        /// <summary>
+        ///     If the effectivedamage in a DamageableComponent was changed, this function should be called.
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="damageableComponent"></param>
+        public void DamageEffectiveChanged(EntityUid uid, DamageableComponent damageableComponent)
+        {
+            damageableComponent.TotalDamageEffective = damageableComponent.DamageEffective.GetTotal();
+            Dirty(uid, damageableComponent);
+            RaiseLocalEvent(uid, new DamageEffectiveChangedEvent(damageableComponent));
         }
 
         /// <summary>
@@ -447,6 +495,16 @@ namespace Content.Shared.Damage
                 }
             }
             InterruptsDoAfters = interruptsDoAfters && DamageIncreased;
+        }
+    }
+
+    public sealed class DamageEffectiveChangedEvent : EntityEventArgs
+    {
+        public readonly DamageableComponent Damageable;
+
+        public DamageEffectiveChangedEvent(DamageableComponent damageable)
+        {
+            Damageable = damageable;
         }
     }
 }

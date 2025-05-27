@@ -200,6 +200,9 @@
     state: health3
   - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health4
+  overflowIcon:
+    sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health5
   name: alerts-health-name
   description: alerts-health-desc
   minSeverity: 0

@@ -22,6 +22,7 @@ public sealed class MobThresholdSystem : EntitySystem
         SubscribeLocalEvent<MobThresholdsComponent, ComponentShutdown>(MobThresholdShutdown);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentStartup>(MobThresholdStartup);
         SubscribeLocalEvent<MobThresholdsComponent, DamageChangedEvent>(OnDamaged);
+        SubscribeLocalEvent<MobThresholdsComponent, DamageEffectiveChangedEvent>(OnDamagedEffective);
         SubscribeLocalEvent<MobThresholdsComponent, UpdateMobStateEvent>(OnUpdateMobState);
         SubscribeLocalEvent<MobThresholdsComponent, MobStateChangedEvent>(OnThresholdsMobState);
     }
@@ -337,7 +338,7 @@ public sealed class MobThresholdSystem : EntitySystem
     {
         foreach (var (threshold, mobState) in thresholdsComponent.Thresholds.Reverse())
         {
-            if (damageableComponent.TotalDamage < threshold)
+            if (damageableComponent.TotalDamageEffective < threshold)
                 continue;
 
             TriggerThreshold(target, mobState, mobStateComponent, thresholdsComponent, origin);
@@ -405,13 +406,17 @@ public sealed class MobThresholdSystem : EntitySystem
             if (TryGetNextState(target, currentMobState, out var nextState, threshold) &&
                 TryGetPercentageForState(target, nextState.Value, damageable.TotalDamage, out var percentage))
             {
-                percentage = FixedPoint2.Clamp(percentage.Value, 0, 1);
-
-                severity = (short) MathF.Round(
-                    MathHelper.Lerp(
-                        _alerts.GetMinSeverity(currentAlert),
-                        _alerts.GetMaxSeverity(currentAlert),
-                        percentage.Value.Float()));
+                var MaxValue = _alerts.GetMaxSeverity(currentAlert);
+                if (percentage.Value >= 1)
+                    severity = (short)(MaxValue + 1);
+                else
+                {
+                    severity = (short)MathF.Round(
+                        MathHelper.Lerp(
+                            _alerts.GetMinSeverity(currentAlert),
+                            MaxValue,
+                            percentage.Value.Float()));
+                }
             }
             _alerts.ShowAlert(target, currentAlert, severity);
         }
@@ -425,7 +430,18 @@ public sealed class MobThresholdSystem : EntitySystem
     {
         if (!TryComp<MobStateComponent>(target, out var mobState))
             return;
+        thresholds.LastOrigin = args.Origin;
         CheckThresholds(target, mobState, thresholds, args.Damageable, args.Origin);
+        var ev = new MobThresholdChecked(target, mobState, thresholds, args.Damageable);
+        RaiseLocalEvent(target, ref ev, true);
+        UpdateAlerts(target, mobState.CurrentState, thresholds, args.Damageable);
+    }
+
+    private void OnDamagedEffective(EntityUid target, MobThresholdsComponent thresholds, DamageEffectiveChangedEvent args)
+    {
+        if (!TryComp<MobStateComponent>(target, out var mobState))
+            return;
+        CheckThresholds(target, mobState, thresholds, args.Damageable, thresholds.LastOrigin);
         var ev = new MobThresholdChecked(target, mobState, thresholds, args.Damageable);
         RaiseLocalEvent(target, ref ev, true);
         UpdateAlerts(target, mobState.CurrentState, thresholds, args.Damageable);

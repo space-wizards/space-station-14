@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/commits/50689f89a40e5e7a2732a0c5fb38c787b69f7d28/icons/hud/screen_gen.dmi, health4 modified by Errant",
+  "copyright": "https://github.com/tgstation/tgstation/commits/50689f89a40e5e7a2732a0c5fb38c787b69f7d28/icons/hud/screen_gen.dmi, health4 modified by Errant, health5 is a modified human_critical.rsi by notquitehadouken",
   "size": {
     "x": 32,
     "y": 32
@@ -179,6 +179,41 @@
           0.05,
           0.05,
           0.05
+        ]
+      ]
+    },
+    {
+      "name": "health5",
+      "delays": [
+        [
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03
         ]
       ]
     }

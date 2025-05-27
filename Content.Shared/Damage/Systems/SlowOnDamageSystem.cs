@@ -33,12 +33,12 @@ namespace Content.Shared.Damage
             if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damage))
                 return;
 
-            if (damage.TotalDamage == FixedPoint2.Zero)
+            if (damage.TotalDamageEffective == FixedPoint2.Zero)
                 return;
 
             // Get closest threshold
             FixedPoint2 closest = FixedPoint2.Zero;
-            var total = damage.TotalDamage;
+            var total = damage.TotalDamageEffective;
             foreach (var thres in component.SpeedModifierThresholds)
             {
                 if (total >= thres.Key && thres.Key > closest)

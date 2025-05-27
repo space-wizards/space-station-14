@@ -46,6 +46,13 @@ public sealed partial class MobThresholdsComponent : Component
     /// </summary>
     [DataField("allowRevives")]
     public bool AllowRevives;
+
+    /// <summary>
+    /// The last person to attack this mob
+    /// Used for logging
+    /// </summary>
+    [DataField]
+    public EntityUid? LastOrigin;
 }
 
 [Serializable, NetSerializable]

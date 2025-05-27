@@ -23,6 +23,12 @@ public sealed partial class AlertPrototype : IPrototype
     public List<SpriteSpecifier> Icons = new();
 
     /// <summary>
+    /// Icon used when the last severity has been surpassed.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? OverflowIcon;
+
+    /// <summary>
     /// An entity used for displaying the <see cref="Icons"/> in the UI control.
     /// </summary>
     [DataField]
@@ -114,6 +120,8 @@ public sealed partial class AlertPrototype : IPrototype
 
         if (severity > MaxSeverity)
         {
+            if (OverflowIcon is { })
+                return OverflowIcon;
             throw new ArgumentOutOfRangeException(nameof(severity), $"Severity above maximum severity in {AlertKey}.");
         }
 
