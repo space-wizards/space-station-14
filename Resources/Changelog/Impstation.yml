@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: CMO can now select standard or paramedic belt from loadout
-    type: Add
-  - message: CMO can now spawn with loafers if they're the dressy type of doctor
-    type: Add
-  id: 1241
-  time: '2025-03-07T01:32:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1814
 - author: kipdotnet
   changes:
   - message: Tck'tck now has a sprite for when its charging a battery, and can build
@@ -4214,3 +4205,10 @@
   id: 1740
   time: '2025-05-27T04:06:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2594
+- author: Pinkbat5
+  changes:
+  - message: The no contractions accent should now cover more contractions.
+    type: Fix
+  id: 1741
+  time: '2025-05-27T10:32:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2595
