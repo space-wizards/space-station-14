@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: kipdotnet
   changes:
-  - message: Tck'tck now has a sprite for when its charging a battery, and can build
-      lights.
-    type: Tweak
-  id: 1242
-  time: '2025-03-07T01:34:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1815
-- author: kipdotnet
-  changes:
   - message: 'Added five new Apids for cargo to order: A scientist, janitor, admin
       assistant, chaplain, and salvage specialist!'
     type: Add
@@ -4212,3 +4204,12 @@
   id: 1741
   time: '2025-05-27T10:32:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2595
+- author: jtfg-dev
+  changes:
+  - message: The Intergalactic Standards Organization has inspected the hydroponics
+      department. Examine text relating to crops should look a bit cleaner and respect
+      the grammar of Galactic Common.
+    type: Tweak
+  id: 1742
+  time: '2025-05-27T11:28:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2447
