@@ -13,7 +13,7 @@ namespace Content.Client.Doors;
 public sealed class TurnstileSystem : SharedTurnstileSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
-    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private static readonly EntProtoId ExamineArrow = "TurnstileArrow";
 
@@ -29,18 +29,14 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
     {
         if (args.Key == nameof(TurnstileVisualLayers.Indicators))
         {
-            _spriteSystem.LayerSetVisible(ent.Owner, TurnstileVisualLayers.Indicators, false);
+            _sprite.LayerSetVisible(ent.Owner, TurnstileVisualLayers.Indicators, false);
         }
         else if (args.Key != nameof(TurnstileVisualLayers.Spinner))
         {
-            _spriteSystem.LayerSetRsiState(ent.Owner, TurnstileVisualLayers.Spinner, new RSI.StateId(ent.Comp.DefaultState));
+            _sprite.LayerSetRsiState(ent.Owner, TurnstileVisualLayers.Spinner, new RSI.StateId(ent.Comp.DefaultState));
         }
     }
 
-    private void OnExamined(Entity<TurnstileComponent> ent, ref ExaminedEvent args)
-    {
-        Spawn(ExamineArrow, new EntityCoordinates(ent, 0, 0));
-    }
 
     protected override void StopAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
     {
@@ -54,11 +50,15 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
     {
         if (!Resolve(uid, ref player, logMissing: false))
             return;
-
         var ent = (uid, player);
 
         if (_animationPlayer.HasRunningAnimation(player, layer.ToString()))
             _animationPlayer.Stop(ent, layer.ToString());
+    }
+
+    private void OnExamined(Entity<TurnstileComponent> ent, ref ExaminedEvent args)
+    {
+        Spawn(ExamineArrow, new EntityCoordinates(ent, 0, 0));
     }
 
     protected override void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
@@ -88,7 +88,7 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
             Length = TimeSpan.FromSeconds(animLength),
         };
 
-        _spriteSystem.LayerSetVisible(uid, layer, true);
+        _sprite.LayerSetVisible(uid, layer, true);
         _animationPlayer.Play(uid, anim, layer.ToString());
     }
 }

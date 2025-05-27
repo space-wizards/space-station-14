@@ -53,7 +53,7 @@ public sealed partial class PathfindingSystem
         foreach (var change in ev.Changes)
         {
             if (change.OldTile.IsEmpty == change.NewTile.IsEmpty)
-                return;
+                continue;
 
             DirtyChunk(ev.Entity, _maps.GridTileToLocal(ev.Entity, ev.Entity.Comp, change.GridIndices));
         }
