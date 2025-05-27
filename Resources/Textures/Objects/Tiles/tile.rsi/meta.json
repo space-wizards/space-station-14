@@ -137,6 +137,9 @@
       "name": "grassdark"
     },
     {
+      "name": "grasslight"
+    },
+    {
       "name": "grassjungle"
     },
     {
@@ -442,6 +445,14 @@
       "directions": 4
     },
     {
+      "name": "grasslight-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "grasslight-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "snow-inhand-left",
       "directions": 4
     },
@@ -450,11 +461,11 @@
       "directions": 4
     },
     {
-      "name": "darkgrass-inhand-left",
+      "name": "grassdark-inhand-left",
       "directions": 4
     },
     {
-      "name": "darkgrass-inhand-right",
+      "name": "grassdark-inhand-right",
       "directions": 4
     },
     {

@@ -226,6 +226,7 @@ stack-grating-maint-floor = grating maint floor
 stack-web-tile = web tile
 stack-astro-grass-floor = astro-grass floor
 stack-dark-astro-grass-floor = dark astro-grass floor
+stack-light-astro-grass-floor = light astro-grass floor
 stack-mowed-astro-grass-floor = mowed astro-grass floor
 stack-jungle-astro-grass-floor = jungle astro-grass floor
 stack-astro-ice-floor = astro-ice floor

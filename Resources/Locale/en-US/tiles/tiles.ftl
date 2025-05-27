@@ -127,6 +127,7 @@ tiles-web = web tile
 tiles-chromite = chromite
 tiles-astro-grass = astro-grass
 tiles-dark-astro-grass = dark astro-grass
+tiles-light-astro-grass = light astro-grass
 tiles-mowed-astro-grass = mowed astro-grass
 tiles-jungle-astro-grass = jungle astro-grass
 tiles-astro-ice = astro-ice

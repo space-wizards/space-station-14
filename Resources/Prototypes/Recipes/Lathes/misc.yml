@@ -197,6 +197,11 @@
 
 - type: latheRecipe
   parent: BaseFauxTileRecipe
+  id: FauxTileLightAstroGrass
+  result: FloorTileItemLightAstroGrass
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
   id: FauxTileAstroIce
   result: FloorTileItemAstroIce
 

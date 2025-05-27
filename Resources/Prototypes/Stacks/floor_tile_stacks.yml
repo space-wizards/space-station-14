@@ -618,6 +618,12 @@
   maxCount: 30
 
 - type: stack
+  id: FloorTileLightAstroGrass
+  name: stack-light-astro-grass-floor
+  spawn: FloorTileItemLightAstroGrass
+  maxCount: 30
+
+- type: stack
   id: FloorTileAstroIce
   name: stack-astro-ice-floor
   spawn: FloorTileItemAstroIce
