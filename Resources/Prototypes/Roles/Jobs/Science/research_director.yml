@@ -41,6 +41,7 @@
 - type: chameleonOutfit
   id: ResearchDirectorChameleonOutfit
   job: ResearchDirector
+  hasMindShield: true
   equipment:
     head: ClothingHeadHatBeretRND
     eyes: ClothingEyesGlasses

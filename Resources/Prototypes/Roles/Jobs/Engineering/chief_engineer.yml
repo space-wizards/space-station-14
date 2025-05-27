@@ -48,6 +48,7 @@
 - type: chameleonOutfit
   id: ChiefEngineerChameleonOutfit
   job: ChiefEngineer
+  hasMindShield: true
   equipment:
     head: ClothingHeadHatBeretEngineering
     mask: ClothingMaskBreath

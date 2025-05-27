@@ -73,6 +73,7 @@
 - type: chameleonOutfit
   id: HeadOfPersonnelChameleonOutfit
   job: HeadOfPersonnel
+  hasMindShield: true
   equipment:
     head: ClothingHeadHatHopcap
     eyes: ClothingEyesHudCommand
