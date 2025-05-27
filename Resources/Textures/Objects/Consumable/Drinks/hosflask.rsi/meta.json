@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "copyright": "Sprited by MrGreen06#0618 (discord)",
+    "copyright": "Sprited by MrGreen06#0618 (discord), icon modified and icon_open by Prole0 (GitHub)",
     "size": {
         "x": 32,
         "y": 32
@@ -9,6 +9,9 @@
     "states": [
         {
             "name": "icon"
+        },
+        {
+            "name": "icon_open"
         }
     ]
 }
