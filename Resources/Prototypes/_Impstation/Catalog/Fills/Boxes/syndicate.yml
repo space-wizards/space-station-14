@@ -1,8 +1,8 @@
 - type: entity
   parent: [BoxCardboard, Tier3Contraband]
   id: BloodRedRoseBox
-  name: blood red roses box
-  description: A set of 4 Blood Red Roses, perfect to create a stunning display of violence.
+  name: blood-red roses box
+  description: A set of 4 blood-red roses, perfect to create a stunning display of violence.
   components:
   - type: Storage
     grid:

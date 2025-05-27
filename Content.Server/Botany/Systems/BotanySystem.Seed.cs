@@ -16,6 +16,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using System.Text.RegularExpressions; // imp
 
 namespace Content.Server.Botany.Systems;
 
@@ -30,7 +31,6 @@ public sealed partial class BotanySystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -87,7 +87,16 @@ public sealed partial class BotanySystem : EntitySystem
         using (args.PushGroup(nameof(SeedComponent), 1))
         {
             var name = Loc.GetString(seed.DisplayName);
-            args.PushMarkup(Loc.GetString($"seed-component-description", ("seedName", name)));
+
+            //IMP EDIT: support good grammar
+            //supports plural crop descriptions (i.e. "some ears of corn", "an apple tree", "some cannabis"... etc.)
+            var getsArticle = "y";
+            if (seed.IsSingularPluralName)
+                getsArticle = "splur";
+            else if (seed.IsPluralName)
+                getsArticle = "plur";
+            args.PushMarkup(Loc.GetString($"seed-component-description", ("seedName", name), ("getsArticle", getsArticle), ("empty", "")));
+            //end imp edits
             args.PushMarkup(Loc.GetString($"seed-component-plant-yield-text", ("seedYield", seed.Yield)));
             args.PushMarkup(Loc.GetString($"seed-component-plant-potency-text", ("seedPotency", seed.Potency)));
         }

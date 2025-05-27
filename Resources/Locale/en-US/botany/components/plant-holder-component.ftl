@@ -15,8 +15,18 @@ plant-holder-component-dead-plant-message = This plant is dead.
 plant-holder-component-take-sample-message = You take a sample from the {$seedName}.
 plant-holder-component-compost-message = You compost {$usingItem} into {$owner}.
 plant-holder-component-compost-others-message = {$user} composts {$usingItem} into {$owner}.
-plant-holder-component-nothing-planted-message = It has nothing planted in it..
-plant-holder-component-something-already-growing-message = [color=green]{$seedName}[/color] {$toBeForm} growing here.
+# imp fix ..
+plant-holder-component-nothing-planted-message = It has nothing planted in it.
+# imp add
+plant-holder-crop-name = {$getsArticle ->
+                                [true] { CAPITALIZE(INDEFINITE($seedName)) } [color=green]{ $seedName }[/color]
+                                *[false] [color=green]{ CAPITALIZE($seedName) }[/color]
+                        }
+# imp edit
+plant-holder-component-something-already-growing-message = { $seedNameAndArticle } {$count ->
+                                [true] are
+                                *[false] is
+                            } growing here.
 plant-holder-component-something-already-growing-low-health-message = The plant looks [color=red]{$healthState}[/color].
 plant-holder-component-plant-old-adjective = old and wilting
 plant-holder-component-plant-unhealthy-adjective = unhealthy

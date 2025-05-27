@@ -257,7 +257,7 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateHardsuitBundle
   name: syndicate hardsuit bundle
-  description: "Contains the Syndicate's signature blood red hardsuit."
+  description: "Contains the Syndicate's signature blood-red hardsuit." # imp hyphen consistency
   components:
   - type: StorageFill
     contents:

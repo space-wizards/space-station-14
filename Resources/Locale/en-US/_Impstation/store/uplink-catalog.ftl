@@ -28,8 +28,8 @@ uplink-satchel-syndicate-desc = A lightweight explosion-proof satchel for when s
 uplink-fugitivecloak-name = Monochrome cloak
 uplink-fugitivecloak-desc = While this cloak hides your extra appendages, it also will reveal who you REALLY want to kiss under the moonlight.
 
-uplink-bloodredrosekit-name = Blood Red Rose Kit
-uplink-bloodredrosekit-desc = A set of roses for the romantic killer to get close to their dear victims.
+uplink-bloodredrosekit-name = Blood-red rose kit
+uplink-bloodredrosekit-desc = A set of roses for the romantic killer to get close to their dear victims. They'll really take your breath / facial features away.
 
 uplink-saw-ammo-name = Ammunition box (.20 rifle)
 uplink-saw-ammo-desc = A box of 50 cartridges compatible with the L6 Nidhogg light machine gun. Doesn't come with any ammo boxes, load it yourself!

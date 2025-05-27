@@ -1,8 +1,11 @@
+# imp edit across the whole file: plural display names
+
 - type: seed
   id: wheat
   name: seeds-wheat-name
   noun: seeds-noun-seeds
   displayName: seeds-wheat-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/wheat.rsi
   packetPrototype: WheatSeeds
   productPrototypes:
@@ -31,6 +34,7 @@
   name: seeds-meatwheat-name
   noun: seeds-noun-seeds
   displayName: seeds-meatwheat-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/meatwheat.rsi
   packetPrototype: MeatwheatSeeds
   productPrototypes:
@@ -57,6 +61,7 @@
   name: seeds-oat-name
   noun: seeds-noun-seeds
   displayName: seeds-oat-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/oat.rsi
   packetPrototype: OatSeeds
   productPrototypes:
@@ -139,6 +144,7 @@
   name: seeds-carrots-name
   noun: seeds-noun-seeds
   displayName: seeds-carrots-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/carrot.rsi
   packetPrototype: CarrotSeeds
   productPrototypes:
@@ -169,6 +175,7 @@
   name: seeds-laughin-pea-name
   noun: seeds-noun-seeds
   displayName: seeds-laughin-pea-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/laughin_pea.rsi
   packetPrototype: LaughinPeaSeeds
   productPrototypes:
@@ -204,6 +211,7 @@
   name: seeds-lemon-name
   noun: seeds-noun-seeds
   displayName: seeds-lemon-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/lemon.rsi
   packetPrototype: LemonSeeds
   productPrototypes:
@@ -234,6 +242,7 @@
   name: seeds-lemoon-name
   noun: seeds-noun-seeds
   displayName: seeds-lemoon-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/lemoon.rsi
   packetPrototype: LemoonSeeds
   productPrototypes:
@@ -260,6 +269,7 @@
   name: seeds-lime-name
   noun: seeds-noun-seeds
   displayName: seeds-lime-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/lime.rsi
   packetPrototype: LimeSeeds
   productPrototypes:
@@ -289,6 +299,7 @@
   name: seeds-orange-name
   noun: seeds-noun-seeds
   displayName: seeds-orange-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/orange.rsi
   packetPrototype: OrangeSeeds
   productPrototypes:
@@ -319,6 +330,7 @@
   name: seeds-extradimensionalorange-name
   noun: seeds-noun-seeds
   displayName: seeds-extradimensionalorange-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/extradimensional_orange.rsi
   packetPrototype: ExtradimensionalOrangeSeeds
   productPrototypes:
@@ -380,6 +392,7 @@
   name: seeds-potato-name
   noun: seeds-noun-seeds
   displayName: seeds-potato-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/potato.rsi
   packetPrototype: PotatoSeeds
   productPrototypes:
@@ -406,6 +419,7 @@
   name: seeds-sugarcane-name
   noun: seeds-noun-seeds
   displayName: seeds-sugarcane-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/sugarcane.rsi
   packetPrototype: SugarcaneSeeds
   productPrototypes:
@@ -431,6 +445,7 @@
   name: seeds-teaplant-name
   noun: seeds-noun-seeds
   displayName: seeds-teaplant-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/tea_plant.rsi
   packetPrototype: TeaPlantSeeds
   productPrototypes:
@@ -456,6 +471,7 @@
   name: seeds-papercane-name
   noun: seeds-noun-seeds
   displayName: seeds-papercane-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/papercane.rsi
   packetPrototype: PapercaneSeeds
   productPrototypes:
@@ -474,6 +490,7 @@
   name: seeds-towercap-name
   noun: seeds-noun-spores
   displayName: seeds-towercap-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/towercap.rsi
   packetPrototype: TowercapSeeds
   productPrototypes:
@@ -497,6 +514,7 @@
   name: seeds-steelcap-name
   noun: seeds-noun-spores
   displayName: seeds-steelcap-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/steelcap.rsi
   packetPrototype: SteelcapSeeds
   productPrototypes:
@@ -656,6 +674,7 @@
   name: seeds-eggplant-name
   noun: seeds-noun-seeds
   displayName: seeds-eggplant-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/eggplant.rsi
   packetPrototype: EggplantSeeds
   productPrototypes:
@@ -686,6 +705,7 @@
   name: seeds-cabbage-name
   noun: seeds-noun-seeds
   displayName: seeds-cabbage-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/cabbage.rsi
   packetPrototype: CabbageSeeds
   productPrototypes:
@@ -711,6 +731,7 @@
   name: seeds-garlic-name
   noun: seeds-noun-seeds
   displayName: seeds-garlic-display-name
+  singularPlural: true
   plantRsi: Objects/Specific/Hydroponics/garlic.rsi
   packetPrototype: GarlicSeeds
   productPrototypes:
@@ -800,6 +821,7 @@
   name: seeds-corn-name
   noun: seeds-noun-seeds
   displayName: seeds-corn-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/corn.rsi
   packetPrototype: CornSeeds
   productPrototypes:
@@ -828,6 +850,7 @@
   name: seeds-onion-name
   noun: seeds-noun-seeds
   displayName: seeds-onion-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/onion.rsi
   packetPrototype: OnionSeeds
   productPrototypes:
@@ -862,6 +885,7 @@
   name: seeds-onionred-name
   noun: seeds-noun-seeds
   displayName: seeds-onionred-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/onion_red.rsi
   packetPrototype: OnionRedSeeds
   productPrototypes:
@@ -894,6 +918,7 @@
   name: seeds-chanterelle-name
   noun: seeds-noun-spores
   displayName: seeds-chanterelle-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/chanterelle.rsi
   packetPrototype: ChanterelleSeeds
   productPrototypes:
@@ -919,6 +944,7 @@
   name: seeds-eggy-name
   noun: seeds-noun-seeds
   displayName: seeds-eggy-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/eggy.rsi
   packetPrototype: EggySeeds
   productPrototypes:
@@ -943,6 +969,7 @@
   name: seeds-cannabis-name
   noun: seeds-noun-seeds
   displayName: seeds-cannabis-display-name
+  singularPlural: true
   plantRsi: Objects/Specific/Hydroponics/cannabis.rsi
   packetPrototype: CannabisSeeds
   productPrototypes:
@@ -972,6 +999,7 @@
   name: seeds-green-marijuana-name
   noun: seeds-noun-seeds
   displayName: seeds-green-marijuana-display-name
+  singularPlural: true
   plantRsi: Objects/Specific/Hydroponics/cannabis.rsi
   packetPrototype: GreenMarijuanaSeeds
   productPrototypes:
@@ -1000,6 +1028,7 @@
   name: seeds-rainbow-cannabis-name
   noun: seeds-noun-seeds
   displayName: seeds-rainbow-cannabis-display-name
+  singularPlural: true
   plantRsi: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
   packetPrototype: RainbowCannabisSeeds
   productPrototypes:
@@ -1071,6 +1100,7 @@
   name: seeds-nettle-name
   noun: seeds-noun-seeds
   displayName: seeds-nettle-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/nettle.rsi
   packetPrototype: NettleSeeds
   productPrototypes:
@@ -1097,6 +1127,7 @@
   name: seeds-deathnettle-name
   noun: seeds-noun-seeds
   displayName: seeds-deathnettle-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/death_nettle.rsi
   packetPrototype: DeathNettleSeeds
   plantLogImpact: High
@@ -1128,6 +1159,7 @@
   name: seeds-chili-name
   noun: seeds-noun-seeds
   displayName: seeds-chili-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/chili.rsi
   packetPrototype: ChiliSeeds
   productPrototypes:
@@ -1161,6 +1193,7 @@
   name: seeds-chilly-name
   noun: seeds-noun-seeds
   displayName: seeds-chilly-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/chilly.rsi
   packetPrototype: ChillySeeds
   productPrototypes:
@@ -1192,6 +1225,7 @@
   name: seeds-poppy-name
   noun: seeds-noun-seeds
   displayName: seeds-poppy-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/poppy.rsi
   packetPrototype: PoppySeeds
   productPrototypes:
@@ -1220,6 +1254,7 @@
   name: seeds-aloe-name
   noun: seeds-noun-seeds
   displayName: seeds-aloe-display-name
+  singularPlural: true # scholars can debate this one
   plantRsi: Objects/Specific/Hydroponics/aloe.rsi
   packetPrototype: AloeSeeds
   productPrototypes:
@@ -1274,6 +1309,7 @@
   name: seeds-lingzhi-name
   noun: seeds-noun-spores
   displayName: seeds-lingzhi-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/lingzhi.rsi
   packetPrototype: LingzhiSeeds
   productPrototypes:
@@ -1300,6 +1336,7 @@
   name: seeds-ambrosiavulgaris-name
   noun: seeds-noun-seeds
   displayName: seeds-ambrosiavulgaris-display-name
+  singularPlural: true
   plantRsi: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
   packetPrototype: AmbrosiaVulgarisSeeds
   productPrototypes:
@@ -1340,6 +1377,7 @@
   name: seeds-ambrosiadeus-name
   noun: seeds-noun-seeds
   displayName: seeds-ambrosiadeus-display-name
+  singularPlural: true
   plantRsi: Objects/Specific/Hydroponics/ambrosia_deus.rsi
   packetPrototype: AmbrosiaDeusSeeds
   productPrototypes:
@@ -1374,6 +1412,7 @@
   name: seeds-galaxythistle-name
   noun: seeds-noun-seeds
   displayName: seeds-galaxythistle-display-name
+  singularPlural: true
   plantRsi: Objects/Specific/Hydroponics/galaxythistle.rsi
   packetPrototype: GalaxythistleSeeds
   productPrototypes:
@@ -1398,6 +1437,7 @@
   name: seeds-glasstle-name
   noun: seeds-noun-seeds
   displayName: seeds-glasstle-display-name
+  singularPlural: true
   plantRsi: Objects/Specific/Hydroponics/glasstle.rsi
   packetPrototype: GlasstleSeeds
   productPrototypes:
@@ -1420,6 +1460,7 @@
   name: seeds-flyamanita-name
   noun: seeds-noun-spores
   displayName: seeds-flyamanita-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/fly_amanita.rsi
   packetPrototype: FlyAmanitaSeeds
   productPrototypes:
@@ -1528,6 +1569,7 @@
   name: seeds-rice-name
   noun: seeds-noun-seeds
   displayName: seeds-rice-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/rice.rsi
   packetPrototype: RiceSeeds
   productPrototypes:
@@ -1556,6 +1598,7 @@
   name: seeds-soybeans-name
   noun: seeds-noun-seeds
   displayName: seeds-soybeans-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/soybeans.rsi
   packetPrototype: SoybeanSeeds
   productPrototypes:
@@ -1581,6 +1624,7 @@
   name: seeds-spacemans-trumpet-name
   noun: seeds-noun-seeds
   displayName: seeds-spacemans-trumpet-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
   packetPrototype: SpacemansTrumpetSeeds
   productPrototypes:
@@ -1607,6 +1651,7 @@
   name: seeds-koibean-name
   noun: seeds-noun-seeds
   displayName: seeds-koibean-display-name
+  plural: true # imp edited description; this may be false if ported
   plantRsi: Objects/Specific/Hydroponics/koibean.rsi
   packetPrototype: KoibeanSeeds
   productPrototypes:
@@ -1634,6 +1679,7 @@
   name: seeds-grape-name
   noun: seeds-noun-seeds
   displayName: seeds-grape-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/grape.rsi
   packetPrototype: GrapeSeeds
   productPrototypes:
@@ -1659,6 +1705,7 @@
   name: seeds-watermelon-name
   noun: seeds-noun-seeds
   displayName: seeds-watermelon-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/watermelon.rsi
   packetPrototype: WatermelonSeeds
   productPrototypes:
@@ -1690,6 +1737,7 @@
   name: seeds-holymelon-name
   noun: seeds-noun-seeds
   displayName: seeds-holymelon-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/holymelon.rsi
   packetPrototype: HolymelonSeeds
   productPrototypes:
@@ -1802,6 +1850,7 @@
   name: seeds-pea-name
   noun: seeds-noun-seeds
   displayName: seeds-pea-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/pea.rsi
   packetPrototype: PeaSeeds
   productPrototypes:
@@ -1833,6 +1882,7 @@
   name: seeds-worldpea-name
   noun: seeds-noun-seeds
   displayName: seeds-worldpea-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/world_pea.rsi
   packetPrototype: PeaSeeds
   productPrototypes:
@@ -1866,6 +1916,7 @@
   name: seeds-pumpkin-name
   noun: seeds-noun-seeds
   displayName: seeds-pumpkin-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/pumpkin.rsi
   packetPrototype: PumpkinSeeds
   productPrototypes:
@@ -1894,6 +1945,7 @@
   name: seeds-blue-pumpkin-name
   noun: seeds-noun-seeds
   displayName: seeds-blue-pumpkin-display-name
+  plural: true
   plantRsi: Objects/Specific/Hydroponics/blue_pumpkin.rsi
   packetPrototype: BluePumpkinSeeds
   productPrototypes:
@@ -1924,6 +1976,7 @@
   name: seeds-cotton-name
   noun: seeds-noun-seeds
   displayName: seeds-cotton-display-name
+  singularPlural: true
   plantRsi: Objects/Specific/Hydroponics/cotton.rsi
   packetPrototype: CottonSeeds
   productPrototypes:
@@ -1949,6 +2002,7 @@
   name: seeds-pyrotton-name
   noun: seeds-noun-seeds
   displayName: seeds-pyrotton-display-name
+  singularPlural: true
   plantRsi: Objects/Specific/Hydroponics/pyrotton.rsi
   packetPrototype: PyrottonSeeds
   productPrototypes:

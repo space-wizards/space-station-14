@@ -26,10 +26,11 @@ using Content.Server.Labels.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
+using System.Text.RegularExpressions; // imp
 
 namespace Content.Server.Botany.Systems;
 
-public sealed class PlantHolderSystem : EntitySystem
+public sealed partial class PlantHolderSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly BotanySystem _botany = default!;
@@ -45,7 +46,6 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-
 
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
@@ -104,9 +104,15 @@ public sealed class PlantHolderSystem : EntitySystem
             else if (!component.Dead)
             {
                 var displayName = Loc.GetString(component.Seed.DisplayName);
-                args.PushMarkup(Loc.GetString("plant-holder-component-something-already-growing-message",
-                    ("seedName", displayName),
-                    ("toBeForm", displayName.EndsWith('s') ? "are" : "is")));
+                //IMP EDITS: sprucing this shit up (ha, botany pun) to support better grammatical examine
+                //supports plural plant descriptions (i.e. "Ears of corn are", "An apple tree is", "Cannabis is"... etc.)
+                var seedNameAndArticle = Loc.GetString("plant-holder-crop-name", ("seedName", displayName),
+                    ("getsArticle", !(component.Seed.IsPluralName || component.Seed.IsSingularPluralName)));
+                var output = Loc.GetString("plant-holder-component-something-already-growing-message",
+                    ("seedNameAndArticle", seedNameAndArticle),
+                    ("count", component.Seed.IsPluralName)).TrimStart(' ');
+                args.PushMarkup(output);
+                //END IMP EDITS
 
                 if (component.Health <= component.Seed.Endurance / 2)
                 {

@@ -106,6 +106,24 @@ public partial class SeedData
     [DataField("displayName")]
     public string DisplayName { get; private set; } = "";
 
+    /// <summary>
+    ///     IMP ADDITION
+    ///     True if the hydroponics display name is plural in English (i.e. "Ears of corn").
+    ///     Changes how examine text is displayed, slightly.
+    ///     In other languages, this can be used if it applies.
+    /// </summary>
+    [DataField("plural")]
+    public bool IsPluralName;
+
+    /// <summary>
+    ///     IMP ADDITION
+    ///     True if the hydroponics display name is a singular plural in English (i.e. "Cannabis").
+    ///     Changes how examine text is displayed, slightly.
+    ///     In other languages, this can be used if it applies.
+    /// </summary>
+    [DataField("singularPlural")]
+    public bool IsSingularPluralName;
+
     [DataField("mysterious")] public bool Mysterious;
 
     /// <summary>
