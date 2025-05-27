@@ -465,6 +465,7 @@ public abstract partial class SharedMoverController : VirtualController
             if (!PhysicsQuery.TryComp(otherEntity, out var otherCollider))
                 continue;
 
+            // TODO: I don't think we even need top 2 checks anymore?
             // Only allow pushing off of anchored things that have collision.
             if (otherCollider.BodyType != BodyType.Static ||
                 !otherCollider.CanCollide ||
