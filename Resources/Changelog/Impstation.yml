@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Iocanthos, whatston3, and Stagnation
-  changes:
-  - message: Coffee seeds are now available for planting.
-    type: Add
-  - message: Coffee beans can be removed from fruit, roasted, ground and added to
-      hot water to make coffee.
-    type: Add
-  - message: Spiced pumpkin lattes can now be mixed by bartenders.
-    type: Add
-  id: 1244
-  time: '2025-03-07T01:37:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1850
 - author: hivehum, crocodilecarousel
   changes:
   - message: A brand new shipment of Space Blades have arrived at the station.
@@ -4212,3 +4200,13 @@
   id: 1743
   time: '2025-05-27T15:52:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2600
+- author: widgetbeck
+  changes:
+  - message: "The Hive's s\u0337c\u0335o\u0334u\u0336t\u0336s\u0337 have determined\
+      \ t\u0335h\u0337a\u0334t\u0334 \u0338N\u0337T\u0338 \u0338s\u0338p\u0338a\u0336\
+      c\u0335e\u0335 \u0337i\u0338s\u0335 ripe for colonization. You should b\u0337\
+      e\u0338 \u0336h\u0337o\u0335n\u0334o\u0335r\u0337e\u0334d\u0338 to be recycled."
+    type: Add
+  id: 1744
+  time: '2025-05-27T20:51:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2543
