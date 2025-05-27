@@ -87,6 +87,9 @@
   id: BodyBag
 
 - type: Tag
+  id: Boll
+
+- type: Tag
   id: Book
 
 - type: Tag
@@ -376,7 +379,7 @@
 - type: Tag
   id: CoordinatesDisk
 
-- type: Tag
+- type: Tag # designed to let corgis wear things; at present only for SmartCorgi.  View PR 33737 on upstream for more dog wearables
   id: CorgiWearable
 
 - type: Tag #Ohioans die happy
@@ -384,6 +387,9 @@
 
 - type: Tag
   id: CottonBoll
+
+- type: Tag
+  id: CottonBurger
 
 - type: Tag
   id: Cow
@@ -417,6 +423,9 @@
 
 - type: Tag
   id: CrayonYellow
+
+- type: Tag
+  id: Creamsicle
 
 - type: Tag
   id: Crowbar
@@ -462,6 +471,9 @@
 
 - type: Tag
   id: Diagonal
+
+- type: Tag
+  id: Diamond
 
 - type: Tag
   id: Dice
@@ -558,6 +570,33 @@
 
 - type: Tag
   id: EmitterBolt
+
+- type: Tag
+  id: EncryptionCargo
+
+- type: Tag
+  id: EncryptionCommand
+
+- type: Tag
+  id: EncryptionCommon
+
+- type: Tag
+  id: EncryptionElse
+
+- type: Tag
+  id: EncryptionEngineering
+
+- type: Tag
+  id: EncryptionMedical
+
+- type: Tag
+  id: EncryptionScience
+
+- type: Tag
+  id: EncryptionSecurity
+
+- type: Tag
+  id: EncryptionService
 
 - type: Tag
   id: Enzyme
@@ -660,6 +699,9 @@
   id: Goliath
 
 - type: Tag
+  id: GoliathPlate
+
+- type: Tag
   id: GPS
 
 - type: Tag
@@ -703,6 +745,15 @@
 
 - type: Tag
   id: GuideEmbeded
+
+- type: Tag
+  id: GunUpgradeDamage
+
+- type: Tag
+  id: GunUpgradeRange
+
+- type: Tag
+  id: GunUpgradeReloadSpeed
 
 - type: Tag
   id: Hamster
@@ -769,6 +820,9 @@
 
 - type: Tag
   id: HighSecDoor
+
+- type: Tag
+  id: HivelordRemains
 
 - type: Tag
   id: HiViz
@@ -1000,6 +1054,9 @@
   id: Multitool
 
 - type: Tag
+  id: Mushroom
+
+- type: Tag
   id: NoBlockAnchoring
 
 - type: Tag
@@ -1024,6 +1081,21 @@
   id: Ore
 
 - type: Tag
+  id: OreBananium
+
+- type: Tag
+  id: OreGold
+
+- type: Tag
+  id: OrePlasma
+
+- type: Tag
+  id: OreSilver
+
+- type: Tag
+  id: OreUranium
+
+- type: Tag
   id: Packet
 
 - type: Tag
@@ -1037,6 +1109,9 @@
 
 - type: Tag
   id: Pancake
+
+- type: Tag
+  id: ParcelWrapBlacklist
 
 - type: Tag
   id: Payload # for grenade/bomb crafting
@@ -1076,6 +1151,9 @@
 
 - type: Tag
   id: Pizza
+
+- type: Tag
+  id: PKAUpgrade
 
 - type: Tag
   id: PlantAnalyzer
@@ -1200,6 +1278,9 @@
 
 - type: Tag
   id: SalvageExperiment
+
+- type: Tag
+  id: SalvageScrap
 
 - type: Tag
   id: Scarf
@@ -1519,5 +1600,20 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+- type: Tag
+  id: XenoborgModuleEngi
+
+- type: Tag
+  id: XenoborgModuleGeneric
+
+- type: Tag
+  id: XenoborgModuleHeavy
+
+- type: Tag
+  id: XenoborgModuleScout
+
+- type: Tag
+  id: XenoborgModuleStealth
 
 # ALPHABETICAL

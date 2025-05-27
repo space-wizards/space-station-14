@@ -170,10 +170,8 @@
     ammoSlots: [ null, null, null, null, null ]
 
 - type: entity
-  name: pirate revolver
   parent: WeaponRevolverPirate
   id: WeaponRevolverPirateEmpty
-  description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.
   suffix: Empty
   components:
   - type: RevolverAmmoProvider

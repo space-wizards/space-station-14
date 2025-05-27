@@ -35,6 +35,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - Recyclable
     - WhitelistChameleon
   - type: StaticPrice
     price: 50

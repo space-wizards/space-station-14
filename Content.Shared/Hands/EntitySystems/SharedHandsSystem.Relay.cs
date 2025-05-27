@@ -2,6 +2,8 @@ using Content.Shared.Atmos;
 using Content.Shared.Camera;
 using Content.Shared.Hands.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Projectiles;
+using Content.Shared.Weapons.Ranged.Events;
 
 namespace Content.Shared.Hands.EntitySystems;
 
@@ -15,6 +17,8 @@ public abstract partial class SharedHandsSystem
 
         // By-ref events.
         SubscribeLocalEvent<HandsComponent, ExtinguishEvent>(RefRelayEvent);
+        SubscribeLocalEvent<HandsComponent, ProjectileReflectAttemptEvent>(RefRelayEvent);
+        SubscribeLocalEvent<HandsComponent, HitScanReflectAttemptEvent>(RefRelayEvent);
     }
 
     private void RelayEvent<T>(Entity<HandsComponent> entity, ref T args) where T : EntityEventArgs

@@ -27,8 +27,9 @@
     baseLayer: base
     layerStates:
     - icon
-    layerCountStates:
-    - 1
+    layerFunction: Threshold
+  - type: StackLayerThreshold
+    thresholds: [1]
   - type: Sprite
     sprite: _Starlight/Objects/Economy/salvage_ticket.rsi
     state: icon

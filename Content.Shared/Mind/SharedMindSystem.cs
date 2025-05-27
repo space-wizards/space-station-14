@@ -253,6 +253,24 @@ public abstract partial class SharedMindSystem : EntitySystem
         return _mobState.IsDead(mind.OwnedEntity.Value, targetMobState);
     }
 
+    /// <summary>
+    ///     True if the OwnedEntity of this mind is physically unrevivable.
+    ///     This is mainly to check whether a mind is able to inherit their "original" character again without the need for creating a new one.
+    ///     In cases of being a brain, being borged or a zombie they are "unrevivable"
+    /// </summary>
+    public bool IsCharacterUnrevivablePhysically(MindComponent mind)
+    {
+        if (mind.OwnedEntity == null)
+            return true;
+
+        // This entity cannot be dead, alive or crit, so it makes sense it cannot be revived to begin with.
+        if (!HasComp<MobStateComponent>(mind.OwnedEntity))
+            return true;
+
+        // Could use checks for the amount of damage they have, but with chemistry you can never tell what damage means someone is truly "unrevivable".
+        return false;
+    }
+
     public virtual void Visit(EntityUid mindId, EntityUid entity, MindComponent? mind = null)
     {
     }
@@ -557,6 +575,27 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
+    ///     True if this Mind is 'sufficiently unrevivable' IC (Objectives, EndText).
+    ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.
+    ///     "If administrators decide that zombies are unrevivable, this returns true for zombies."
+    ///     Alternative IsCharacterDeadIC that checks for whether they will be able to inherit their body again.
+    ///     State in which they must be given a new body to "live" (borging, being a brain, etc) should count as "unrevivable".
+    /// </summary>
+    public bool IsCharacterUnrevivableIc(MindComponent mind)
+    {
+        if (mind.OwnedEntity is { } owned)
+        {
+            var ev = new GetCharacterUnrevivableIcEvent(null);
+            RaiseLocalEvent(owned, ref ev);
+
+            if (ev.Unrevivable != null)
+                return ev.Unrevivable.Value;
+        }
+
+        return IsCharacterUnrevivablePhysically(mind);
+    }
+
+    /// <summary>
     ///     A string to represent the mind for logging
     /// </summary>
     public string MindOwnerLoggingString(MindComponent mind)
@@ -602,3 +641,11 @@ public abstract partial class SharedMindSystem : EntitySystem
 /// <param name="Dead"></param>
 [ByRefEvent]
 public record struct GetCharactedDeadIcEvent(bool? Dead);
+
+/// <summary>
+/// Raised on an entity to determine whether or not they are "unrevivable" in IC-logic.
+/// Used to check for things such as being borged or a zombie.
+/// </summary>
+/// <param name="Unrevivable"></param>
+[ByRefEvent]
+public record struct GetCharacterUnrevivableIcEvent(bool? Unrevivable);

@@ -100,7 +100,6 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public bool MetamorphicChangeColor { get; private set; } = true;
 
-
         /// <summary>
         /// If not null, makes something slippery. Also defines slippery interactions like stun time and launch mult.
         /// </summary>
@@ -162,7 +161,7 @@ namespace Content.Shared.Chemistry.Reagent
         public float PricePerUnit;
 
         [DataField]
-        public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
+        public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepPuddle");
 
         public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager, List<ReagentData>? data)
         {

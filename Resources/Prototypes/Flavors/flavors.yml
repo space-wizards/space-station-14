@@ -1473,3 +1473,9 @@
   id: dogfood
   flavorType: Base
   description: flavor-dogfood
+
+- type: flavor
+  id: trashy
+  flavorType: Base
+  description: flavor-base-trashy
+

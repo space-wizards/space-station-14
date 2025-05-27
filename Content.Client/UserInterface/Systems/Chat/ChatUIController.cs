@@ -954,6 +954,11 @@ public sealed class ChatUIController : UIController
         _typingIndicator?.ClientChangedChatText();
     }
 
+    public void NotifyChatFocus(bool isFocused)
+    {
+        _typingIndicator?.ClientChangedChatFocus(isFocused);
+    }
+
     public void Repopulate()
     {
         foreach (var chat in _chats)

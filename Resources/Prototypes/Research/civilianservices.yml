@@ -10,8 +10,6 @@
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - BorgModuleGardening
-  - BorgModuleHarvesting
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
   - ReagentGrinderIndustrialMachineCircuitboard
@@ -23,8 +21,8 @@
   id: CritterMechs
   name: research-technology-critter-mechs
   icon:
-    sprite: Objects/Specific/Mech/Mechs/Basic/hamtr.rsi
-    state: base
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: hamtr
   discipline: CivilianServices
   tier: 1
   cost: 7500
@@ -77,18 +75,6 @@
     - JukeboxCircuitBoard
   radioChannels:
   - Service
-
-- type: technology
-  id: RoboticCleanliness
-  name: research-technology-robotic-cleanliness
-  icon:
-    sprite: Mobs/Silicon/chassis.rsi
-    state: janitor
-  discipline: CivilianServices
-  tier: 1
-  cost: 5000
-  recipeUnlocks:
-  - BorgModuleAdvancedCleaning
 
 - type: technology
   id: MeatManipulation
@@ -144,7 +130,7 @@
   radioChannels:
   - Medical
 
-- type: technology
+- type: technology # Merge with other T2 medical research if possible!
   id: MechanizedTreatment
   name: research-technology-mechanized-treatment
   icon:
@@ -154,8 +140,7 @@
   tier: 2
   cost: 5000
   recipeUnlocks:
-  - BorgModuleAdvancedTreatment
-  - BorgModuleDefibrillator
+  - BorgModuleAdvancedChemical
 
 - type: technology
   id: AdvancedCleaning
@@ -169,6 +154,7 @@
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
+  - BorgModuleAdvancedCleaning
   radioChannels:
   - Service
 
@@ -234,6 +220,18 @@
   radioChannels:
   - Supply
 
+- type: technology
+  id: PushHorn
+  name: research-technology-clowning-utilities
+  icon:
+    sprite: Objects/Fun/push_horn.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 2
+  cost: 4000
+  recipeUnlocks:
+  - PushHorn
+
 # Tier 3
 
 - type: technology
@@ -262,5 +260,20 @@
   recipeUnlocks:
   - BluespaceBeaker
   - SyringeBluespace
+  radioChannels:
+  - Medical
+
+- type: technology
+  id: LauncherSyringe
+  name: research-technology-launcher-syringe
+  icon:
+    sprite: Objects/Weapons/Guns/Cannons/syringe_gun.rsi
+    state: syringe_gun
+  discipline: CivilianServices
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - LauncherSyringe
+  - MiniSyringe
   radioChannels:
   - Medical

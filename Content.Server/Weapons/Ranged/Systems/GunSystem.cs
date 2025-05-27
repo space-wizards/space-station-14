@@ -52,6 +52,7 @@ using static Content.Server.Starlight.TextToSpeech.TTSManager;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 using System.Collections.Generic;
+using Content.Server.PowerCell;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 

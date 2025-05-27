@@ -123,6 +123,18 @@
       - state: base-tip-6
         map: [ "enum.GunVisualLayers.Tip" ]
         color: "#D86E2C"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-ammo
+      - state: inhand-left-stripe
+        color: "#ea5800"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-ammo
+      - state: inhand-right-stripe
+        color: "#ea5800"
 
 - type: entity
   id: SpeedLoaderMagnumAP
