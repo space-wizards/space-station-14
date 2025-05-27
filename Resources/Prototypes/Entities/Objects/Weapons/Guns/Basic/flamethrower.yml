@@ -1,5 +1,5 @@
 - type: entity
-  name: FG13 flamethrower
+  name: FG-13 flamethrower
   parent: BaseItem
   id: WeaponFlamethrowerBase
   abstract: true
@@ -50,10 +50,10 @@
     price: 100
 
 - type: entity
-  name: FG13 flamethrower
+  name: FG-13 flamethrower
   parent: [ WeaponFlamethrowerBase, BaseGunWieldable, BaseSyndicateContraband ]
   id: WeaponFlamethrowerFG
-  description: Simple as it is deadly, the Xiuhcoatl fulfills a long-standing craving of the Gorlex Marauders for Nanotrasen Barbeque. Uses welding fuel.
+  description: Simple as it is deadly, the FG-13 fulfills a long-standing craving of the Gorlex Marauders for Nanotrasen Barbeque. Uses welding fuel.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Basic/syndie-flamer.rsi
