@@ -3909,3 +3909,10 @@
   id: 8575
   time: '2025-05-27T16:26:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37881
+- author: ProfRenderer
+  changes:
+  - message: Cluwne ID cards now have a job icon.
+    type: Tweak
+  id: 8576
+  time: '2025-05-27T16:39:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37834
