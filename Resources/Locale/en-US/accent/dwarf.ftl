@@ -432,14 +432,14 @@ accent-dwarf-words-replace-150 = sodded
 accent-dwarf-words-151 = hell
 accent-dwarf-words-replace-151 = ifrinn
 
-accent-dwarf-words-152 = heck
-accent-dwarf-words-replace-152 = 
+accent-dwarf-words-152 = congratulations
+accent-dwarf-words-replace-152 = gaun yersel'
 
-accent-dwarf-words-153 = leave
-accent-dwarf-words-replace-153 = bolt
+accent-dwarf-words-153 = congrats
+accent-dwarf-words-replace-153 = gaun yersel'
 
-accent-dwarf-words-154 = hi
-accent-dwarf-words-replace-154 = haw
+accent-dwarf-words-154 = leave
+accent-dwarf-words-replace-154 = bolt
 
 accent-dwarf-words-155 = why not
 accent-dwarf-words-replace-155 = how no
@@ -480,7 +480,7 @@ accent-dwarf-words-replace-166 = auld
 accent-dwarf-words-167 = bullshit
 accent-dwarf-words-replace-167 = banana boat
 
-accent-dwarf-words-168 = grenader
+accent-dwarf-words-168 = nuke
 accent-dwarf-words-replace-168 = banger
 
 accent-dwarf-words-169 = bastard
@@ -530,3 +530,21 @@ accent-dwarf-words-replace-183 = onybody
 
 accent-dwarf-words-184 = dead
 accent-dwarf-words-replace-184 = panbread
+
+accent-dwarf-words-185 = piss
+accent-dwarf-words-replace-185 = pish
+
+accent-dwarf-words-186 = drunk
+accent-dwarf-words-replace-186 = rat-arsed
+
+accent-dwarf-words-187 = angry
+accent-dwarf-words-replace-187 = raging
+
+accent-dwarf-words-188 = too
+accent-dwarf-words-replace-188 = tae
+
+accent-dwarf-words-190 = won't
+accent-dwarf-words-replace-190 = winnae
+
+accent-dwarf-words-191 = hi
+accent-dwarf-words-replace-192 = haw
