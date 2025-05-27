@@ -612,6 +612,12 @@
   maxCount: 30
 
 - type: stack
+  id: FloorTileDarkAstroGrass
+  name: stack-dark-grass-floor
+  spawn: FloorTileItemDarkAstroGrass
+  maxCount: 30
+
+- type: stack
   id: FloorTileAstroIce
   name: stack-astro-ice-floor
   spawn: FloorTileItemAstroIce
@@ -627,6 +633,12 @@
   id: FloorTileAstroAsteroidSand
   name: stack-asteroid-astro-sand-floor
   spawn: FloorTileItemAstroAsteroidSand
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDesertAstroSand
+  name: stack-desert-astro-sand
+  spawn: FloorTileItemDesertAstroSand
   maxCount: 30
 
 - type: stack
