@@ -8,13 +8,13 @@ public sealed partial class BodycamComponent: Component
     /// <summary>
     /// What state the bodycam is currently in.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public BodycamState State = BodycamState.Disabled;
 
     /// <summary>
     /// The name of the person wearing the bodycam.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string Name = "Unknown";
 }
 
