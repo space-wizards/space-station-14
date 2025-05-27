@@ -25,7 +25,7 @@ public sealed class XAETelepathicSystem : BaseXAESystem<XAETelepathicComponent>
         var component = ent.Comp;
         // try to find victims nearby
         _entities.Clear();
-        _lookup.GetEntitiesInRange(ent, component.Range, _entities);
+        _lookup.GetEntitiesInRange(ent.Owner, component.Range, _entities);
         foreach (var victimUid in _entities)
         {
             if (!HasComp<ActorComponent>(victimUid))
