@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Drones now have fewer toys. It's more fun to find your own supplies.
-    type: Remove
-  id: 1238
-  time: '2025-03-07T01:26:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1846
 - author: DinnerCalzone, EpicToastTM, honeyed_lemons
   changes:
   - message: Hospitality Director has been added, the new head of staff for the service
@@ -4227,3 +4220,11 @@
   id: 1737
   time: '2025-05-26T23:29:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2462
+- author: DinnerCalzone
+  changes:
+  - message: Ambuzol and Ambuzol Plus pills can no longer spawn in randomized pill
+      canisters.
+    type: Remove
+  id: 1738
+  time: '2025-05-27T01:55:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2592
