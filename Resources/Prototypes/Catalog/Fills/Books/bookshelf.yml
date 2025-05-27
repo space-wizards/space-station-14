@@ -22,7 +22,6 @@
       rolls: !type:RangeNumberSelector
         range: 0, 2
       tableId: RandomGuidebookTable
-
     # Handwritten books
     - !type:NestedSelector
       rolls: !type:RangeNumberSelector
