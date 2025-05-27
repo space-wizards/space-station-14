@@ -16,13 +16,13 @@
         - TabletopCard
 
 
-- type: entity
-  parent: CardBoxBase
-  id: CardBoxPoker
-  name: poker card box
-  components:
-  - type: Sprite
-    sprite: Ronstation/Objects/Storage/Fun/Card/poker_card_box.rsi
-    state: icon
-  - type: Item
-    sprite: Ronstation/Objects/Storage/Fun/Card/poker_card_box.rsi
+# - type: entity
+#   parent: CardBoxBase
+#   id: CardBoxPoker
+#   name: poker card box
+#   components:
+#   - type: Sprite
+#     sprite: Ronstation/Objects/Storage/Fun/Card/poker_card_box.rsi
+#     state: icon
+#   - type: Item
+#     sprite: Ronstation/Objects/Storage/Fun/Card/poker_card_box.rsi
