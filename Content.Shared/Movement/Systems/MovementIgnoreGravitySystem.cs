@@ -6,6 +6,7 @@ namespace Content.Shared.Movement.Systems;
 
 public sealed class MovementIgnoreGravitySystem : EntitySystem
 {
+    [Dependency] SharedGravitySystem _gravity = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<MovementAlwaysTouchingComponent, CanWeightlessMoveEvent>(OnWeightless);
@@ -28,7 +29,6 @@ public sealed class MovementIgnoreGravitySystem : EntitySystem
 
     private void OnComponentStartup(Entity<MovementIgnoreGravityComponent> entity, ref ComponentStartup args)
     {
-        if (TryComp<WeightlessnessComponent>(entity, out var comp))
-            comp.Weightless = entity.Comp.Weightless;
+        _gravity.RefreshWeightless(entity.Owner, entity.Comp.Weightless);
     }
 }

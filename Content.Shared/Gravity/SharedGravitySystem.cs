@@ -1,6 +1,7 @@
 using Content.Shared.Alert;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
@@ -93,18 +94,26 @@ namespace Content.Shared.Gravity
             return !EntityGridOrMapHaveGravity((entity, entity.Comp3));
         }
 
+        public void RefreshWeightless(Entity<WeightlessnessComponent?> entity, bool? weightless = null)
+        {
+            if (!Resolve(entity, ref entity.Comp))
+                return;
+
+            // Only update if we're changing our weightless status
+            if (entity.Comp.Weightless == weightless)
+                return;
+
+            entity.Comp.Weightless = TryWeightless(entity);
+            Dirty(entity);
+        }
+
         private void OnEntParentChanged(Entity<WeightlessnessComponent> entity, ref EntParentChangedMessage args)
         {
             // If we've moved but are still on the same grid, then don't do anything.
             if (args.OldParent == args.Transform.GridUid)
                 return;
 
-            if (EntityGridOrMapHaveGravity((entity, args.Transform)) == !entity.Comp.Weightless)
-                return;
-
-            entity.Comp.Weightless = TryWeightless((entity.Owner, entity.Comp));
-
-            Dirty(entity);
+            RefreshWeightless((entity.Owner, entity.Comp), !EntityGridOrMapHaveGravity((entity, args.Transform)));
         }
 
         /// <summary>
