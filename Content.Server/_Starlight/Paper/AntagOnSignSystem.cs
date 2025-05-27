@@ -1,8 +1,6 @@
 using Content.Server.Antag;
-using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Shared._Starlight.Paper;
 using Content.Shared.Paper;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -15,29 +13,30 @@ public sealed class AntagOnSignSystem : EntitySystem
     
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     private ISawmill _sawmill = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    
     
     private readonly EntProtoId _paradoxCloneRuleId = "ParadoxCloneSpawn";
     
     public override void Initialize()
     {
         base.Initialize();
-        _sawmill = Logger.GetSawmill("AntagOnSign");
+        _sawmill = Logger.GetSawmill(this.SawmillName);
         SubscribeLocalEvent<AntagOnSignComponent,PaperSignedEvent>(OnPaperSigned);
     }
 
     private void OnPaperSigned(EntityUid uid, AntagOnSignComponent component, PaperSignedEvent args)
     {
-        if (component.Charges <= 0)
+        if (component.ChargesRemaing <= 0)
             return;
         var signer = args.Signer;
         if (!TryComp(signer, out ActorComponent? actor))
             return;
         if (component.SignedEntityUids.Contains(signer))
             return;
-        component.Charges--;
+        component.ChargesRemaing--;
         component.SignedEntityUids.Add(signer);
 
         if (_random.NextFloat() > component.Chance)
@@ -71,15 +70,6 @@ public sealed class AntagOnSignSystem : EntitySystem
             paradoxCloneRuleComp.OriginalBody = args.Signer; // override the target player
 
             _gameTicker.StartGameRule(ruleEnt);
-        }
-    }
-
-    private void GetGameruleEntPrototyped(string prototype)
-    {
-        var query = EntityQueryEnumerator<AntagSelectionComponent>();
-        while (query.MoveNext(out var euid, out var antagSelection))
-        {
-            
         }
     }
 }
