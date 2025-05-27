@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: 'Added five new Apids for cargo to order: A scientist, janitor, admin
-      assistant, chaplain, and salvage specialist!'
-    type: Add
-  id: 1243
-  time: '2025-03-07T01:35:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1839
 - author: Iocanthos, whatston3, and Stagnation
   changes:
   - message: Coffee seeds are now available for planting.
@@ -4213,3 +4205,10 @@
   id: 1742
   time: '2025-05-27T11:28:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2447
+- author: mqole
+  changes:
+  - message: Hemp bags no longer hold eight times the storage space they take up.
+    type: Fix
+  id: 1743
+  time: '2025-05-27T15:52:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2600
