@@ -25,6 +25,9 @@
         enum.ConstructionVisuals.Layer:
           Primed: { state: primed }
           Unprimed: { state: icon }
+  - type: Tag
+    tags:
+    - HandGrenade
 
 - type: entity
   parent: [ProjectileGrenadeBase, BaseSecurityContraband]

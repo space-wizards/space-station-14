@@ -72,6 +72,14 @@
         damage:
           types:
             Caustic: 2
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ArtifactUnlock
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
 
 - type: reagent
   id: Benzene
@@ -157,7 +165,6 @@
   flavor: bitter
   color: "#E6E6DA"
   physicalDesc: reagent-physical-desc-crystalline
-  slippery: false
 
 - type: reagent
   id: Rororium

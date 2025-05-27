@@ -1,19 +1,19 @@
 # Generic
 - type: latheCategory
-  id: Ammo
-  name: lathe-category-ammo
-
-- type: latheCategory
   id: Circuitry
   name: lathe-category-circuitry
+
+- type: latheCategory
+  id: Clothing
+  name: lathe-category-clothing
 
 - type: latheCategory
   id: Lights
   name: lathe-category-lights
 
 - type: latheCategory
-  id: Mech
-  name: lathe-category-mechs
+  id: Machines
+  name: lathe-category-machines
 
 - type: latheCategory
   id: Parts
@@ -43,6 +43,57 @@
 - type: latheCategory
   id: Materials
   name: lathe-category-materials
+
+# Circuit imprinter
+- type: latheCategory
+  id: Computers
+  name: lathe-category-computers
+
+- type: latheCategory
+  id: Engineering
+  name: lathe-category-engineering
+
+- type: latheCategory
+  id: General
+  name: lathe-category-general
+
+- type: latheCategory
+  id: Medical
+  name: lathe-category-medical
+
+- type: latheCategory
+  id: Research
+  name: lathe-category-research
+
+- type: latheCategory
+  id: Security
+  name: lathe-category-security
+
+- type: latheCategory
+  id: Service
+  name: lathe-category-service
+
+- type: latheCategory
+  id: Supply
+  name: lathe-category-supply
+
+# Science
+- type: latheCategory
+  id: Mech
+  name: lathe-category-mechs
+
+# Sec
+- type: latheCategory
+  id: Ammo
+  name: lathe-category-ammo
+
+- type: latheCategory
+  id: Boxes
+  name: lathe-category-boxes
+
+- type: latheCategory
+  id: Magazines
+  name: lathe-category-magazines
 
 # Uniform printer
 - type: latheCategory

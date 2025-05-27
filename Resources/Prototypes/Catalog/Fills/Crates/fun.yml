@@ -10,6 +10,7 @@
     - id: PlushieNuke
     - id: PlushieSlime
     - id: PlushieSnake
+    - id: PlushieExperiment
     - !type:GroupSelector
       children:
       - id: PlushieLizard
@@ -72,7 +73,7 @@
           amount: !type:ConstantNumberSelector
             value: 3
 
-- type: entity  
+- type: entity
   id: CrateFunSharkPlushieBulk
   parent: CrateGenericSteel
   name: bulk soft toy shark crate
