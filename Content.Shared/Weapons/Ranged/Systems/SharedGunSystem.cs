@@ -386,7 +386,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (userImpulse && TryComp<PhysicsComponent>(user, out var userPhysics))
         {
-            if (_gravity.IsWeightless(user, userPhysics))
+            if (_gravity.IsWeightless(user))
                 CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
         }
     }
