@@ -39,13 +39,13 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
         if (!_delay.TryResetDelay(ent.Owner, true) || ent.Comp.ImplantedEntity == null || !HasComp<ChameleonControllerImplantComponent>(ent))
             return;
 
-        ChangeChameleonClothingToJob(ent.Comp.ImplantedEntity.Value, args.SelectedChameleonOutfit);
+        ChangeChameleonClothingToOutfit(ent.Comp.ImplantedEntity.Value, args.SelectedChameleonOutfit);
     }
 
     /// <summary>
     ///     Switches all the chameleon clothing that the implant user is wearing to look like the selected job.
     /// </summary>
-    private void ChangeChameleonClothingToJob(EntityUid user, ProtoId<ChameleonOutfitPrototype> outfit)
+    private void ChangeChameleonClothingToOutfit(EntityUid user, ProtoId<ChameleonOutfitPrototype> outfit)
     {
         var outfitPrototype = _proto.Index(outfit);
 
@@ -127,13 +127,6 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
     /// <returns>The entity (as a protoid) if there is gear for that slot, null if there isn't.</returns>
     public string? GetGearForSlot(ChameleonOutfitPrototype? chameleonOutfitPrototype, RoleLoadout? customRoleLoadout, RoleLoadout? defaultRoleLoadout, StartingGearPrototype? jobStartingGearPrototype, StartingGearPrototype? startingGearPrototype, string slotName)
     {
-        // Priority is:
-        // 1.) Custom loadout from the player for the slot.
-        // 2.) Chameleon outfit slot equipment.
-        // 3.) Chameleon outfit starting gear equipment.
-        // 4.) Default job equipment.
-        // 5.) Staring equipment for that job.
-
         var customLoadoutGear = _stationSpawningSystem.GetGearForSlot(customRoleLoadout, slotName);
         if (customLoadoutGear != null)
             return customLoadoutGear;

@@ -1,5 +1,4 @@
 ﻿using Content.Shared.StatusIcon;
-using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
