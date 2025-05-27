@@ -1,23 +1,20 @@
 using System.Numerics;
-using Content.Shared.Decals;
-using Content.Server.Spawners.Components;
 using Content.Server.Decals;
-using Content.Shared.Maps;
+using Content.Server.Spawners.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Spawners.EntitySystems;
 
 public sealed class RandomDecalSpawnerSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly DecalSystem _decal = default!;
-    [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefs = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefs = default!;
 
     public override void Initialize()
     {
@@ -63,7 +60,7 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return false;
 
-        var addedDecals = new Dictionary<String, int>();
+        var addedDecals = new Dictionary<string, int>();
 
         for (var i = 0; i < comp.MaxDecals; i++)
         {
@@ -84,7 +81,7 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
             }
 
             var tileRefStr = tileRef.ToString();
-            if (comp.MaxDecalsPerTile != null && comp.MaxDecalsPerTile > 0)
+            if (comp.MaxDecalsPerTile is > 0)
             {
                 addedDecals.TryAdd(tileRefStr, 0);
                 if (addedDecals[tileRefStr] >= comp.MaxDecalsPerTile)
@@ -93,13 +90,13 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
 
             var decalProtoId = _random.Pick(comp.Decals);
             var decalProto = _prototypes.Index(decalProtoId);
-            var snapPosition = comp.SnapPosition == null ? decalProto.DefaultSnap : comp.SnapPosition.Value;
+            var snapPosition = comp.SnapPosition ?? decalProto.DefaultSnap;
             if (snapPosition)
             {
                 position = position.WithPosition(tileRef.GridIndices * grid.TileSize);
             }
 
-            var cleanable = comp.Cleanable == null ? decalProto.DefaultCleanable : comp.Cleanable.Value;
+            var cleanable = comp.Cleanable ?? decalProto.DefaultCleanable;
 
             var rotation = Angle.Zero;
             if (comp.RandomRotation)
@@ -117,14 +114,14 @@ public sealed class RandomDecalSpawnerSystem : EntitySystem
             _decal.TryAddDecal(
                 decalProtoId,
                 position,
-                out var decalId,
+                out _,
                 color,
                 rotation,
                 comp.ZIndex,
                 cleanable
             );
 
-            if (comp.MaxDecalsPerTile != null && comp.MaxDecalsPerTile > 0)
+            if (comp.MaxDecalsPerTile is > 0)
                 addedDecals[tileRefStr]++;
         }
 
