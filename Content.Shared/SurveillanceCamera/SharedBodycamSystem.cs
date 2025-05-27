@@ -5,7 +5,7 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.SurveillanceCamera;
 
-public class SharedBodycamSystem: EntitySystem
+public abstract class SharedBodycamSystem: EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
