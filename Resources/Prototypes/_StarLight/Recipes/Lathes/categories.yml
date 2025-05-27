@@ -37,10 +37,6 @@
   name: lathe-category-orders-and-instructions
 
 - type: latheCategory
-  id: Orders
-  name: lathe-category-orders
-
-- type: latheCategory
   id: Evidence
   name: lathe-category-evidence
 

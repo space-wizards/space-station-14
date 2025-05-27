@@ -276,6 +276,14 @@
     - type: Paper
       content: doc-text-printer-request-ert
       
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentProductOrder
+  name: Product order
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-product-order
 # Complaints
 
 - type: entity
@@ -407,17 +415,6 @@
   components:
     - type: Paper
       content: doc-text-printer-medical-intervention-order
-
-# Orders
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentProductOrder
-  name: Product order
-  categories: [ HideSpawnMenu ]
-  components:
-    - type: Paper
-      content: doc-text-printer-product-order
 
 - type: entity
   id: BoxFolderClipboardFilled

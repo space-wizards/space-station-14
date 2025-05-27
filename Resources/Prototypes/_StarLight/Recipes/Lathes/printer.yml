@@ -294,6 +294,15 @@
   materials:
     SheetPrinter: 100
     
+- type: latheRecipe
+  id: PrintedDocumentProductOrderRecipe
+  result: PrintedDocumentProductOrder
+  categories:
+  - InquiriesAndAppeals
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
 # Complaints
 
 - type: latheRecipe
@@ -442,12 +451,3 @@
     
 # Orders
 
-- type: latheRecipe
-  id: PrintedDocumentProductOrderRecipe
-  result: PrintedDocumentProductOrder
-  categories:
-  - Orders
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
