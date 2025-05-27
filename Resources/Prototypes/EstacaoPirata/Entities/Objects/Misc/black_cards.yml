@@ -76,7 +76,7 @@
 
 - type: entity
   parent: CardBoxBase
-  id: CardBoxBlack
+  id: CardBoxPokerFilled
   name: black deck box
   components:
   - type: Item

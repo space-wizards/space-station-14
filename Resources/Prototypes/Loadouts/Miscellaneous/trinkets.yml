@@ -400,7 +400,7 @@
 
 # misc
 - type: loadout
-  id: CardBoxBlack
+  id: CardBoxPokerFilled
   storage:
     back:
-    - CardBoxBlack
+    - CardBoxPokerFilled

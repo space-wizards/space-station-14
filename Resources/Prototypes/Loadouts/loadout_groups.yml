@@ -52,7 +52,7 @@
   - TowelColorSilver
   - TowelColorWhite
   - TowelColorYellow
-  - CardBoxBlack
+  - CardBoxPokerFilled
 
 - type: loadoutGroup
   id: Glasses
