@@ -69,12 +69,8 @@ namespace Content.Shared.Damage
         ///     Ex: If this is 2 seconds, then a person that has instantly reduced to critical damage from no damage
         ///     would take 1 second to crit, because crit is halfway between perfectly healthy and dead.
         /// </summary>
-        /// <remarks>
-        ///     This is 15 seconds by default because usually you won't going from full health to nearly dead in
-        ///     half a second under most circumstances
-        /// </remarks>
         [DataField]
-        public TimeSpan DamageLerpTimeZeroDamage = TimeSpan.FromSeconds(30);
+        public TimeSpan DamageLerpTimeZeroDamage = TimeSpan.FromSeconds(20);
 
         /// <summary>
         ///     Damage, indexed by <see cref="DamageGroupPrototype"/> ID keys.
