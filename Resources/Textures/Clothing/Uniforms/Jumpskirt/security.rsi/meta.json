@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created by Flareguy using sprites from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039 & the jumpskirt base found in color.rsi.",
+  "copyright": "Edit by Nox38 (github) of secskirt taken from tgstation at commit https://github.com/tgstation/tgstation/commit/7779930358ba4776575975690d2c952f0d05c6cc",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,18 @@
     },
     {
       "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-monkey",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
       "directions": 4
     }
   ]

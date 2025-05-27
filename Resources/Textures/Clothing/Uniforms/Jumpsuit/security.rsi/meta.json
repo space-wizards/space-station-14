@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created by Flareguy using sprites from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039 & the jumpsuit base found in color.rsi.",
+  "copyright": "Edit by Nox38 (github) of secred_s taken from tgstation at pull request https://github.com/tgstation/tgstation/pull/2984, jumpskirt sprite made by Flareguy and edited by Dutch-VanDerLinde.",
   "size": {
     "x": 32,
     "y": 32
@@ -15,11 +15,15 @@
       "directions": 4
     },
     {
-      "name": "overlay-inhand-left",
+      "name": "equipped-INNERCLOTHING-monkey",
       "directions": 4
     },
     {
-      "name": "overlay-inhand-right",
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
       "directions": 4
     }
   ]
