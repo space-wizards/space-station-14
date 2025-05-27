@@ -1,12 +1,12 @@
 {
     "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation at 21e50aebdac3e30b3f85b5e44e552e3e37ed00ea. Modified by K-Dynamic.",
     "size":
     {
         "x": 32,
         "y": 32
     },
-    "copyright": "Taken from https://github.com/tgstation/tgstation at 21e50aebdac3e30b3f85b5e44e552e3e37ed00ea",
-    "license": "CC-BY-SA-3.0",
     "states":
     [
         {
