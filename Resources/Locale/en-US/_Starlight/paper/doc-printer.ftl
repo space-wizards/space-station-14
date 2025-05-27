@@ -738,6 +738,30 @@ doc-text-printer-request-ert =
 
 
 
+doc-text-printer-product-order =
+   ⠀[logo]            [cclogo] 
+
+                             [head=3]NT-CC Consortium Services[/head]
+
+                  [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
+    ────────────────────────────────────────
+   ⠀⠀                                 [bold]PRODUCT ORDER[/bold]
+    ────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    Position of Document Compiler:
+    
+    Request to produce products by the following department:
+
+    List of products required:
+    
+    Reason for order:
+    
+    ────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+
+
+
    
 # Complaints
 
@@ -1095,32 +1119,6 @@ doc-text-printer-medical-intervention-order =
     Person to receive intervention:
 
     Grounds for the intervention:
-    
-    ────────────────────────────────────────
-   ⠀                                    [italic]Place for stamps[/italic]
-
-
-   
-# Orders
-
-doc-text-printer-product-order =
-   ⠀[logo]            [cclogo] 
-
-                             [head=3]NT-CC Consortium Services[/head]
-
-                  [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
-    ────────────────────────────────────────
-   ⠀⠀                                 [bold]PRODUCT ORDER[/bold]
-    ────────────────────────────────────────
-    Time and Date:
-    Compiler of the document:
-    Position of Document Compiler:
-    
-    Request to produce products by the following department:
-
-    List of products required:
-    
-    Reason for order:
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
