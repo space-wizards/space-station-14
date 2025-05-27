@@ -2093,7 +2093,8 @@ entities:
           2,6:
             0: 49183
           3,5:
-            0: 64733
+            0: 64717
+            4: 16
           3,6:
             0: 4099
           4,5:
@@ -2201,6 +2202,21 @@ entities:
           moles:
           - 21.824879
           - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14948
+          moles:
+          - 18.472576
+          - 69.49208
           - 0
           - 0
           - 0
@@ -11467,6 +11483,15 @@ entities:
     - type: Transform
       pos: -8.4079685,16.403774
       parent: 1
+- proto: ClothingNeckCloakAdmin
+  entities:
+  - uid: 1101
+    components:
+    - type: Transform
+      parent: 1100
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ClothingNeckCloakNanotrasen
   entities:
   - uid: 4142
@@ -11579,6 +11604,15 @@ entities:
     components:
     - type: Transform
       parent: 1097
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: ClothingShoeSlippersLizard
+  entities:
+  - uid: 1217
+    components:
+    - type: Transform
+      parent: 1100
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
@@ -13521,6 +13555,13 @@ entities:
     - type: Transform
       pos: 0.6730821,0.60211015
       parent: 1
+- proto: FoodBurgerCat
+  entities:
+  - uid: 1307
+    components:
+    - type: Transform
+      pos: -21.883034,-2.3087924
+      parent: 1
 - proto: FoodBurgerSuper
   entities:
   - uid: 2623
@@ -13534,6 +13575,11 @@ entities:
     components:
     - type: Transform
       pos: -15.579121,9.594656
+      parent: 1
+  - uid: 2683
+    components:
+    - type: Transform
+      pos: 14.525204,17.857536
       parent: 1
 - proto: GasMinerNitrogenStation
   entities:
@@ -14396,15 +14442,6 @@ entities:
     - type: Transform
       pos: 12.5,21.5
       parent: 1
-    - type: Lock
-      locked: False
-  - uid: 1101
-    components:
-    - type: MetaData
-      name: closet
-    - type: Transform
-      pos: 16.5,17.5
-      parent: 1
     - type: EntityStorage
       air:
         volume: 200
@@ -14423,21 +14460,45 @@ entities:
         - 0
         - 0
         - 0
-    - type: Lock
-      locked: False
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - invalid
-          - invalid
-          - invalid
+          - 1101
+          - 1217
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
           ent: null
+    - type: Lock
+      locked: False
+  - uid: 1235
+    components:
+    - type: Transform
+      pos: 16.5,17.5
+      parent: 1
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.1462
+        moles:
+        - 1.606311
+        - 6.042789
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: Lock
+      locked: False
 - proto: LockerSteelLarge
   entities:
   - uid: 133
@@ -14723,7 +14784,7 @@ entities:
       pos: -3.5,1.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -16525.93
+      secondsUntilStateChange: -16645.03
       state: Opening
   - uid: 730
     components:
@@ -14731,7 +14792,7 @@ entities:
       pos: -3.5,2.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -16526.797
+      secondsUntilStateChange: -16645.896
       state: Opening
 - proto: MinimoogInstrument
   entities:
@@ -18243,9 +18304,9 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -17.5,-2.5
       parent: 1
-- proto: SpawnMobCat
+- proto: SpawnMobCatGeneric
   entities:
-  - uid: 2683
+  - uid: 1218
     components:
     - type: Transform
       pos: -20.5,-0.5
@@ -24831,7 +24892,7 @@ entities:
       pos: -15.5,-5.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -18795.492
+      secondsUntilStateChange: -18914.592
       state: Opening
   - uid: 1244
     components:
@@ -24839,6 +24900,6 @@ entities:
       pos: -15.5,-4.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -18795.926
+      secondsUntilStateChange: -18915.025
       state: Opening
 ...
