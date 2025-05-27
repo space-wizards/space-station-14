@@ -1,7 +1,8 @@
 ﻿namespace Content.Server.Objectives.Components;
 
 /// <summary>
-/// 
+/// Marker component for the target of Teach a lesson Objective
+/// Holds HashSet of entities with this objective
 /// </summary>
 
 [RegisterComponent ]

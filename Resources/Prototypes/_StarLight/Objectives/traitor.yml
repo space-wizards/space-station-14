@@ -5,67 +5,23 @@
   description: Ensure they die at least once this shift. They know what they did.
   components:
     - type: Objective
-      difficulty: 1.75
+      difficulty: 1.5
       unique: false
     - type: TargetObjective
       title: objective-condition-teach-lesson-title
     - type: PickRandomPerson
 
-#- type: entity
-#  parent: [BaseTraitorObjective, BaseTeachALessonObjective]
-#  id: TeachRandomHeadObjective
-#  description: We need this head gone and you probably know why. Good luck, agent.
-#  components:
-#    - type: Objective
-#      # technically its still possible for KillRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
-#      difficulty: 3.0
-#      # killing 1 head is enough
-#      unique: true
-#    - type: TargetObjective
-#      title: objective-condition-kill-head-title
-#    - type: PickRandomHead
-#    - type: KillPersonCondition
-#      # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
-#      # if ce flies a shittle to centcom you better find a way onto it
-#      requireDead: true
-
-## Gimmick Objectives
-#- type: entity
-#  parent: [BaseTraitorObjective, BaseFreeObjective]
-#  id: RecoverContrabandObjective
-#  name: Recover Syndicate Contraband
-#  description: Recover any Syndicate contraband that security confiscates this shift.
-#  components:
-#    - type: Objective
-#      icon:
-#        sprite: Objects/Magic/magicactions.rsi
-#
-#- type: entity
-#  parent: [BaseTraitorObjective, BaseFreeObjective]
-#  id: UndergroundWeaponsTradeObjective
-#  name: Underground Weapons Trade
-#  description: Start an underground weapons trading ring.
-#  components:
-#    - type: Objective
-#      icon:
-#        sprite: Objects/Magic/magicactions.rsi
-#        
-#- type: entity
-#  parent: [BaseTraitorObjective, BaseFreeObjective]
-#  id: FrameSyndicateObjective
-#  name: Frame Someone as a Syndicate Agent
-#  description: Plant fake evidence to frame a random crewmember as a Syndicate agent.
-#  components:
-#    - type: Objective
-#      icon:
-#        sprite: Objects/Magic/magicactions.rsi
-#
-#- type: entity
-#  parent: [BaseTraitorObjective, BaseFreeObjective]
-#  id: FrameRevObjective
-#  name: Convince People Someone is a Rev
-#  description: Convince people that someone is leading a covert uprising.
-#  components:
-#    - type: Objective
-#      icon:
-#        sprite: Objects/Magic/magicactions.rsi
+- type: entity
+  parent: [BaseTraitorObjective, BaseTeachALessonObjective]
+  id: TeachRandomHeadObjective
+  description: We need this head gone and you probably know why. Good luck, agent.
+  components:
+    - type: Objective
+      # technically its still possible for TeachRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
+      difficulty: 2.5
+      # killing 1 head is enough
+      unique: true
+    - type: TargetObjective
+      title: objective-condition-teach-lesson-title
+    - type: PickRandomHead
+    - type: KillPersonCondition

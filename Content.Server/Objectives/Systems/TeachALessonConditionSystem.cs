@@ -6,7 +6,7 @@ using Content.Shared.Objectives.Components;
 namespace Content.Server.Objectives.Systems;
 
 /// <summary>
-/// 
+/// Handles Teach a Lesson logic on if a specific entity has died at least once during the round
 /// </summary>
 public sealed class TeachALessonConditionSystem : EntitySystem
 {
