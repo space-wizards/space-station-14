@@ -49,3 +49,35 @@ public sealed partial class QuickPhrasePrototype : IPrototype, IInheritingProtot
     [DataField]
     public string StyleClass = string.Empty;
 }
+
+/// <summary>
+/// Imp. Added this to enable custom AAC vocabularies
+/// </summary>
+[Prototype]
+public sealed partial class QuickPhraseGroupPrototype : IPrototype, IInheritingPrototype
+{
+    /// <summary>
+    /// The "in code name" of the object. Must be unique.
+    /// </summary>
+    [ViewVariables]
+    [IdDataField]
+    public string ID { get; private set; } = default!;
+
+    /// <summary>
+    /// The prototype we inherit from.
+    /// </summary>
+    [ViewVariables]
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<QuickPhraseGroupPrototype>))]
+    public string[]? Parents { get; }
+
+    [ViewVariables]
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; }
+
+    /// <summary>
+    /// List of prototype IDs in this group.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<QuickPhrasePrototype>> Prototypes { get; set; } = default!;
+}

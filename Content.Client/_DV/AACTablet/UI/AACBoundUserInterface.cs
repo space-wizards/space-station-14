@@ -13,13 +13,23 @@ public sealed class AACBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUs
     protected override void Open()
     {
         base.Open();
-        _window?.Close();
-        _window = this.CreateWindow<AACWindow>();
+        _window = new AACWindow(Owner);
+        _window.OpenCentered();
+        _window.OnClose += Close;
         _window.PhraseButtonPressed += OnPhraseButtonPressed;
     }
 
     private void OnPhraseButtonPressed(List<ProtoId<QuickPhrasePrototype>> phraseId)
     {
         SendMessage(new AACTabletSendPhraseMessage(phraseId));
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
+
+        _window?.Parent?.RemoveChild(_window);
     }
 }

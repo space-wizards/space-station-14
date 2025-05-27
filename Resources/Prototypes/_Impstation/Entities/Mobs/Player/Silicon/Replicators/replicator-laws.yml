@@ -12,12 +12,12 @@
 - type: siliconLaw
   id: Replicator1
   order: 1
-  lawString: law-replicator-1 # Defend the nest.
+  lawString: law-replicator-1 # Preserve the hive.
 
 - type: siliconLaw
   id: Replicator2
   order: 2
-  lawString: law-replicator-2 # Defend the hive.
+  lawString: law-replicator-2 # Defend the nest.
 
 - type: siliconLaw
   id: Replicator3

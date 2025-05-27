@@ -40,4 +40,5 @@
   - type: Speech
     speechSounds: Borg
   - type: AACTablet
+    phraseGroup: BasicPhrases
   - type: VoiceMask

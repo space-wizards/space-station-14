@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "AAC tablet from https://github.com/Baystation12/Baystation12/tree/17e84546562b97d775cb26790a08e6d87e7f8077 and edited by portfiend. Base tablet from Baystation12 and heavily modified by Flareguy, edited into icon by KOTOB. Edited for Replicators by Widgetbeck.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "aac_tablet"
+        },
+        {
+            "name": "aac_screen"
+        }
+    ]
+}

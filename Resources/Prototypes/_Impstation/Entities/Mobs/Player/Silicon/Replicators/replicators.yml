@@ -359,8 +359,7 @@
     applySpeedModifier: false
   - type: MovementAlwaysTouching
   - type: MovementSpeedModifier
-    baseWalkSpeed: 0.5 # these fellas are the tanks, they rely on the smaller guys stunning things for them.
-    baseSprintSpeed: 4
+    friction: 30 # these fellas are the tanks, they rely on the smaller guys stunning things for them.
   - type: Sprite
     granularLayersRendering: true
     drawDepth: Mobs
@@ -380,7 +379,7 @@
       Dead:
         Base: dead_level3
   - type: Body
-    prototype: Replicator3
+    prototype: Replicator2
   - type: Loadout
     prototypes:
       - StartingGearReplicatorT3Weapon

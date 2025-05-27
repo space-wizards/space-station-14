@@ -3,12 +3,13 @@
 # the original Bingle PR can be found here: https://github.com/Goob-Station/Goob-Station/pull/1519
 - type: entity
   id: ReplicatorSpawn
-  parent: BaseStationEventShortDelay
+  parent: BaseGameRule
   components:
   - type: StationEvent
     earliestStart: 20
-    weight: 8 # currently not referenced in any scheduler, for testing purposes.
-    duration: 50
-    minimumPlayers: 15
+    weight: 6.5
+    duration: null
+    minimumPlayers: 25
+    maxOccurrences: 1
   - type: RandomSpawnRule
     prototype: SpawnPointGhostReplicatorQueen
