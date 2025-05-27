@@ -99,9 +99,10 @@
       - map: [ "shoes" ]
       - map: [ "ears" ]
       - map: [ "eyes" ]
-      - map: [ "belt" ]
+    #- map: [ "belt" ] Moffstation (Belts Over Outerwear)
       - map: [ "id" ]
       - map: [ "outerClothing" ]
+      - map: [ "belt" ] # Moffstation (Belts Over Outerwear)
       - map: [ "enum.HumanoidVisualLayers.Tail" ] #in the utopian future we should probably have a wings enum inserted here so everyhting doesn't break
       - map: [ "back" ]
       - map: [ "neck" ]
