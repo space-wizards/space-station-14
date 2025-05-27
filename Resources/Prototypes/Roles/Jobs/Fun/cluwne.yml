@@ -18,7 +18,6 @@
   id: CluwneChameleonOutfit
   name: job-title-cluwne
   startingGear: CluwneGear
-  icon: "JobIconClown"
   equipment:
     head: ClothingHeadHatXmasCrown
     eyes: ClothingEyesBlindfold

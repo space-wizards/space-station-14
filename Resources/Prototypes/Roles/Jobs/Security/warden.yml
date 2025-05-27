@@ -50,7 +50,6 @@
     outerClothing: ClothingOuterCoatWarden
     jumpsuit: ClothingUniformJumpsuitWarden
     neck: Dinkystar
-    back: ClothingBackpackSecurity
     belt: ClothingBeltSecurity
     gloves: ClothingHandsGlovesCombat
     shoes: ClothingShoesBootsJack
