@@ -276,7 +276,7 @@
     - type: Paper
       content: doc-text-printer-request-ert
       
-# Complaintst
+# Complaints
 
 - type: entity
   parent: PrintedDocument

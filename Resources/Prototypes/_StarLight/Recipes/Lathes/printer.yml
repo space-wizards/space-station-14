@@ -294,13 +294,13 @@
   materials:
     SheetPrinter: 100
     
-# Complaintst
+# Complaints
 
 - type: latheRecipe
   id: PrintedDocumentComplaintViolationLaborRulesRecipe
   result: PrintedDocumentComplaintViolationLaborRules
   categories:
-  - Complaintst
+  - Complaints
   completetime: 2
   applyMaterialDiscount: false
   materials:
@@ -310,7 +310,7 @@
   id: PrintedDocumentComplaintOffenseRecipe
   result: PrintedDocumentComplaintOffense
   categories:
-  - Complaintst
+  - Complaints
   completetime: 2
   applyMaterialDiscount: false
   materials:

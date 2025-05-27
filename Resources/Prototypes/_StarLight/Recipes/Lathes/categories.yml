@@ -25,7 +25,7 @@
   name: lathe-category-inquiries-and-appeals
 
 - type: latheCategory
-  id: Complaintst
+  id: Complaints
   name: lathe-category-complaints
 
 - type: latheCategory
