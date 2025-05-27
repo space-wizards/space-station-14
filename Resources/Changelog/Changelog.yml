@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Electrocution stun duration decreased overall; LV or hacking from 8 seconds
-      to 5, MV from 10 seconds to 7.5, HV from 12 seconds to 10.
-    type: Tweak
-  id: 8065
-  time: '2025-03-15T15:57:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34578
 - author: sowelipililimute
   changes:
   - message: Added NanoTask
@@ -3916,3 +3908,10 @@
   id: 8576
   time: '2025-05-27T16:39:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37834
+- author: Moomoobeef
+  changes:
+  - message: Bookshelves now contain a more reasonable amount of books.
+    type: Tweak
+  id: 8577
+  time: '2025-05-27T21:21:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37866
