@@ -42,8 +42,6 @@ public sealed class ObjectiveCommandsTest
         var mindSys = server.System<SharedMindSystem>();
         var objectivesSystem = server.System<ObjectivesSystem>();
 
-        var mapData = await pair.CreateTestMap();
-
         await server.AddDummySession(DummyUsername);
         await server.WaitRunTicks(5);
 
