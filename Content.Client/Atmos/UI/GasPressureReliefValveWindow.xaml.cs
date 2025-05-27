@@ -27,9 +27,9 @@ public sealed partial class GasPressureReliefValveWindow : FancyWindow
 
         SetToCurrentPressureButton.OnPressed += _ =>
         {
-            if (TargetPressureLabel.Text != null)
+            if (InletPressureLabel.Text != null)
             {
-                ThresholdInput.Text = TargetPressureLabel.Text;
+                ThresholdInput.Text = InletPressureLabel.Text;
             }
 
             SetThresholdButton.Disabled = false;
