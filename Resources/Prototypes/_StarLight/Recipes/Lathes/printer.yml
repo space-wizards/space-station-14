@@ -303,6 +303,7 @@
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
+    
 # Complaints
 
 - type: latheRecipe
@@ -440,6 +441,16 @@
     SheetPrinter: 100
     
 - type: latheRecipe
+  id: PrintedDocumentExecutionDNROrderRecipe
+  result: PrintedDocumentExecutionDNROrder
+  categories:
+  - OrdersAndInstructions
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+- type: latheRecipe
   id: PrintedDocumentMedicalInterventionOrderRecipe
   result: PrintedDocumentMedicalInterventionOrder
   categories:
@@ -449,5 +460,3 @@
   materials:
     SheetPrinter: 100
     
-# Orders
-
