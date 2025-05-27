@@ -43,6 +43,7 @@
     noRot: false
   - type: Pullable
   - type: DamageExaminable
+  - type: Weightlessness
 
 - type: entity
   name: "storage item"
