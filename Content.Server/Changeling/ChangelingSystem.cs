@@ -173,23 +173,22 @@ public sealed partial class ChangelingSystem : EntitySystem
         Dirty(uid, comp);
         _alerts.ShowAlert(uid, "ChangelingBiomass");
 
-        var random = (int) _rand.Next(1, 3);
+        var random = _rand.Prob(0.5f);
 
         if (comp.Biomass <= 0)
+        {
             // game over, man
             _damage.TryChangeDamage(uid, new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 50), true);
-
-        if (comp.Biomass <= comp.MaxBiomass / 10)
+        }
+        else if (comp.Biomass <= comp.MaxBiomass * comp.BiomassDeficitVomitPercent)
         {
             // THE FUNNY ITCH IS REAL!!
             comp.BonusChemicalRegen = 3f;
             _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-high"), uid, uid, PopupType.LargeCaution);
             _jitter.DoJitter(uid, comp.BiomassUpdateCooldown, true, amplitude: 5, frequency: 10);
-        }
-        else if (comp.Biomass <= comp.MaxBiomass / 3)
-        {
+
             // vomit blood
-            if (random == 1)
+            if (random)
             {
                 if (TryComp<StatusEffectsComponent>(uid, out var status))
                     _stun.TrySlowdown(uid, TimeSpan.FromSeconds(1.5f), true, 0.5f, 0.5f, status);
@@ -204,18 +203,19 @@ public sealed partial class ChangelingSystem : EntitySystem
 
                 _popup.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
             }
-
+        }
+        else if (comp.Biomass <= comp.MaxBiomass * comp.BiomassDeficitJitterPercent)
+        {
             // the funny itch is not real
-            if (random == 3)
+            _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-medium"), uid, uid, PopupType.MediumCaution);
+            if (random)
             {
-                _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-medium"), uid, uid, PopupType.MediumCaution);
                 _jitter.DoJitter(uid, TimeSpan.FromSeconds(.5f), true, amplitude: 5, frequency: 10);
             }
         }
-        else if (comp.Biomass <= comp.MaxBiomass / 2 && random == 3)
+        else if (comp.Biomass <= comp.MaxBiomass * comp.BiomassDeficitWarningPercent) //always do this every update
         {
-            if (random == 1)
-                _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-low"), uid, uid, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-low"), uid, uid, PopupType.SmallCaution);
         }
         else comp.BonusChemicalRegen = 0f;
     }
@@ -615,8 +615,6 @@ public sealed partial class ChangelingSystem : EntitySystem
             _actions.AddAction(uid, actionId);
 
         // making sure things are right in this world
-        comp.Chemicals = comp.MaxChemicals;
-        comp.Biomass = comp.MaxBiomass;
         comp.ChemicalNextUpdateTime = _timing.CurTime + comp.ChemicalUpdateCooldown;
         comp.BiomassNextUpdateTime = _timing.CurTime + comp.BiomassUpdateCooldown;
 

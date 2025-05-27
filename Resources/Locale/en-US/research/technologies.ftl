@@ -15,6 +15,7 @@ research-technology-atmospheric-tech = Atmospherics
 research-technology-shuttlecraft = Shuttlecraft
 research-technology-ripley-aplu = Ripley APLU
 research-technology-ripley-mkii = Ripley MK-II
+research-technology-paddy = Paddy
 research-technology-clarke = Clarke
 research-technology-gygax = Gygax
 research-technology-durand = Durand

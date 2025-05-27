@@ -214,7 +214,7 @@ namespace Content.Server.Disposal.Tube
             var ev = new GetDisposalsConnectableDirectionsEvent();
             RaiseLocalEvent(uid, ref ev);
 
-            if (args.Holder.Tags.Overlaps(component.Tags))
+            if (args.Holder.Tags.Overlaps(component.Tags) || (args.Holder.Tags.Count != 0 && component.Tags.Contains("*")))// starlight, wildcard support
             {
                 args.Next = ev.Connectable[1];
                 return;

@@ -362,11 +362,15 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         {
             volume = solution.Volume / puddleComponent.OverflowVolume;
 
+            //starlight edit, just make all solutions semi-transparent
+            color = solution.GetColor(_prototypeManager);
+            color = color.WithAlpha(0.85f);
+
             // Make blood stand out more
             // Kinda EH
             // Could potentially do alpha per-solution but future problem.
 
-            color = solution.GetColorWithout(_prototypeManager, _standoutReagents);
+            /* color = solution.GetColorWithout(_prototypeManager, _standoutReagents);
             color = color.WithAlpha(0.7f);
 
             foreach (var standout in _standoutReagents)
@@ -378,7 +382,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 var interpolateValue = quantity.Float() / solution.Volume.Float();
                 color = Color.InterpolateBetween(color,
                     _prototypeManager.Index<ReagentPrototype>(standout).SubstanceColor, interpolateValue);
-            }
+            } */
         }
 
         _appearance.SetData(uid, PuddleVisuals.CurrentVolume, volume.Float(), appearance);

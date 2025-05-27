@@ -73,6 +73,12 @@ namespace Content.Shared.Shuttles.Components
 
         [DataField, AutoNetworkedField]
         public bool FTLMassLimits = true;
+
+        /// <summary>
+        /// if set, the shuttle will try to dock to docking ports with this tag when it arrives at its destination if it can.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public string? PriorityTag = null;
         //end starlight
     }
 }

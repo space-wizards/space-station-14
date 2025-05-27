@@ -1027,6 +1027,9 @@
   id: Packet
 
 - type: Tag
+  id: PaddyUpgradeKit
+
+- type: Tag
   id: ParadoxCloneObjectiveBlacklist # objective entities with this tag don't get copied to paradox clones
 
 - type: Tag

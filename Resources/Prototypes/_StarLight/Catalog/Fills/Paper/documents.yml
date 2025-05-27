@@ -267,6 +267,15 @@
     - type: Paper
       content: doc-text-printer-request-modernization
       
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestERT
+  name: Request for ERT
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-request-ert
+      
 # Complaintst
 
 - type: entity

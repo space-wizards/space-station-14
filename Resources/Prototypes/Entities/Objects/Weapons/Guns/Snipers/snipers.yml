@@ -32,6 +32,7 @@
     - suitStorage
   - type: AmmoCounter
   - type: Gun
+    pump: true
     fireRate: 0.75
     selectedMode: SemiAuto
     availableModes:
@@ -78,7 +79,8 @@
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: GunRequiresWield
   - type: Gun
-    fireRate: 0.4
+    pump: true
+    fireRate: 0.5
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto

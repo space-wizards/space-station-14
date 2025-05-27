@@ -145,6 +145,10 @@
   name: lathe-category-mechs-ripleymkii
 
 - type: latheCategory
+  id: Paddy
+  name: lathe-category-mechs-paddy
+
+- type: latheCategory
   id: Clarke
   name: lathe-category-mechs-clarke
 
