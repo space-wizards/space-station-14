@@ -253,4 +253,11 @@
   id: 30
   time: '2025-05-27T23:08:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37859
+- author: Southbridge
+  changes:
+  - message: Added Decal Spawners
+    type: Add
+  id: 31
+  time: '2025-05-27T23:55:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37066
 Order: 1
