@@ -19,7 +19,10 @@
         range: 0, 8
     # Guidebooks
     - !type:NestedSelector
+      rolls: !type:RangeNumberSelector
+        range: 0, 2
       tableId: RandomGuidebookTable
+
     # Handwritten books
     - !type:NestedSelector
       rolls: !type:RangeNumberSelector
