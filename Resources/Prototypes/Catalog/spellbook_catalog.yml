@@ -278,19 +278,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
-- type: listing
-  id: SpellbookIfritImplanter
-  name: spellbook-ifrit-implanter-name
-  description: spellbook-ifrit-implanter-description
-  productEntity: IfritImplanter
-  cost:
-    WizCoin: 2
-  categories:
-  - SpellbookEquipment
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-  disableRefund: true
+# - type: listing
+#   id: SpellbookIfritImplanter
+#   name: spellbook-ifrit-implanter-name
+#   description: spellbook-ifrit-implanter-description
+#   productEntity: IfritImplanter
+#   cost:
+#     WizCoin: 2
+#   categories:
+#   - SpellbookEquipment
+#   conditions:
+#   - !type:ListingLimitedStockCondition
+#     stock: 1
+#   disableRefund: true
 
 # Event
 - type: listing
