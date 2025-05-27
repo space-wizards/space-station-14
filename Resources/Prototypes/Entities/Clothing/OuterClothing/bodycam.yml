@@ -12,6 +12,7 @@
   - type: WiredNetworkConnection
   - type: SurveillanceCamera
     networkSet: true
+    nameSet: true
   - type: Bodycam
 
 - type: entity
