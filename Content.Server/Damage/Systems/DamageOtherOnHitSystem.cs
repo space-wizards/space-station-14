@@ -82,7 +82,7 @@ namespace Content.Server.Damage.Systems
         {
             if (!TryComp<HandsComponent>(args.User, out var hands) || !TryComp<MeleeWeaponComponent>(ent.Owner, out var melee))
                 return;
-            
+
             if (hands.NextThrowTime < melee.NextAttack)
                 _hands.ResetThrowCooldown(args.User, hands, melee.NextAttack);
         }
