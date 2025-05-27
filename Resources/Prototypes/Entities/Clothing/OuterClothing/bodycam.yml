@@ -1,0 +1,20 @@
+- type: entity
+  id: BaseClothingWithBodycam
+  name: bodycam
+  abstract: true
+  components:
+  - type: Eye
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraSecurity
+    transmitFrequencyId: SurveillanceCamera
+    saveableAddress: false
+  - type: WiredNetworkConnection
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  id: ClothingOuterArmorBasicWithBodycam
+  parent: [ ClothingOuterArmorBasic, BaseClothingWithBodycam ]
+  name: armor vest
+  suffix: bodycam
