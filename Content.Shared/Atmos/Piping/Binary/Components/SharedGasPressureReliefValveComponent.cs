@@ -23,15 +23,3 @@ public sealed class GasPressureReliefValveChangeThresholdMessage(float pressure)
     /// </summary>
     public float ThresholdPressure { get; } = pressure;
 }
-
-/// <summary>
-/// Packages and sends down data from the server to the client about the valve.
-/// </summary>
-[Serializable] [NetSerializable]
-public sealed class PressureReliefValveUserMessage(float inletPressure, float outletPressure, float flowRate)
-    : BoundUserInterfaceMessage
-{
-    public float FlowRate = flowRate;
-    public float InletPressure = inletPressure;
-    public float OutletPressure = outletPressure;
-}

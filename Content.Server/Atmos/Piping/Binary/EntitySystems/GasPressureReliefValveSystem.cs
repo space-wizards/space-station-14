@@ -6,10 +6,8 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Piping;
-using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
@@ -27,7 +25,6 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
 
     public override void Initialize()
     {
@@ -36,7 +33,6 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         SubscribeLocalEvent<GasPressureReliefValveComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<GasPressureReliefValveComponent, AtmosDeviceUpdateEvent>(OnReliefValveUpdated);
         SubscribeLocalEvent<GasPressureReliefValveComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<GasPressureReliefValveComponent, BoundUIOpenedEvent>(OnUIOpened);
     }
 
     private void OnMapInit(Entity<GasPressureReliefValveComponent> ent, ref MapInitEvent args)
@@ -44,6 +40,11 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         ent.Comp.NextUiUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
     }
 
+    /// <summary>
+    /// Dirties the valve every second or so, so that the UI can update.
+    /// The UI automatically updates after an AutoHandleStateEvent.
+    /// </summary>
+    /// <param name="frameTime"></param>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -57,37 +58,12 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
             comp.NextUiUpdate += comp.UpdateInterval;
 
-            if (_nodeContainer.TryGetNodes(ent,
-                    comp.InletName,
-                    comp.OutletName,
-                    out PipeNode? inletPipeNode,
-                    out PipeNode? outletPipeNode))
-            {
-                SendUIInfo(inletPipeNode.Air.Pressure,
-                    outletPipeNode.Air.Pressure,
-                    comp.FlowRate,
-                    ent);
-            }
-        }
-    }
-
-    /// <summary>
-    /// Sens UI info down to the client when someone opens the UI.
-    /// </summary>
-    /// <param name="ent"></param>
-    /// <param name="args"></param>
-    private void OnUIOpened(Entity<GasPressureReliefValveComponent> ent, ref BoundUIOpenedEvent args)
-    {
-        if (_nodeContainer.TryGetNodes(ent.Owner,
-                ent.Comp.InletName,
-                ent.Comp.OutletName,
-                out PipeNode? inletPipeNode,
-                out PipeNode? outletPipeNode))
-        {
-            SendUIInfo(inletPipeNode.Air.Pressure,
-                outletPipeNode.Air.Pressure,
-                ent.Comp.FlowRate,
-                ent.Owner);
+            DirtyFields(ent,
+                comp,
+                MetaData(ent),
+                nameof(comp.InletPressure),
+                nameof(comp.OutletPressure),
+                nameof(comp.FlowRate));
         }
     }
 
@@ -110,7 +86,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
                 out PipeNode? inletPipeNode,
                 out PipeNode? outletPipeNode))
         {
-            ChangeStatus(false, valveEntity);
+            ChangeStatus(false, valveEntity, inletPipeNode, outletPipeNode, 0);
             return;
         }
 
@@ -133,7 +109,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         if (p1 <= valveEntity.Comp.Threshold || p2 >= p1)
         {
-            ChangeStatus(false, valveEntity);
+            ChangeStatus(false, valveEntity, inletPipeNode, outletPipeNode, 0);
             return;
         }
 
@@ -168,9 +144,9 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         _atmosphere.Merge(outletPipeNode.Air, removed);
 
         // Calculate the flow rate in L/s for the UI.
-        valveEntity.Comp.FlowRate = MathF.Round(actualVolumeToTransfer * args.dt, 1);
+        var sentFlowRate = MathF.Round(actualVolumeToTransfer * args.dt, 1);
 
-        ChangeStatus(true, valveEntity);
+        ChangeStatus(true, valveEntity, inletPipeNode, outletPipeNode, sentFlowRate);
     }
 
     /// <summary>
@@ -191,39 +167,39 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
     /// <summary>
     /// Updates the valve's appearance and sound based on its current state, while
     /// also preventing network spamming.
+    /// Also prepares data for dirtying.
     /// </summary>
     /// <param name="enabled">The new state to set on the valve</param>
-    /// <param name="valveEntity">The valve to update</param>
-    private void ChangeStatus(bool enabled, Entity<GasPressureReliefValveComponent> valveEntity)
+    /// <param name="ent">The valve to update</param>
+    /// <param name="inletNode">The inlet node of the valve</param>
+    /// <param name="outletNode">The outlet node of the valve</param>
+    /// <param name="flowRate">Current flow rate of the valve</param>
+    private void ChangeStatus(bool enabled,
+        Entity<GasPressureReliefValveComponent> ent,
+        PipeNode? inletNode,
+        PipeNode? outletNode,
+        float flowRate)
     {
+        // First, set data on the component server-side.
+        ent.Comp.InletPressure = inletNode?.Air.Pressure ?? 0f;
+        ent.Comp.OutletPressure = outletNode?.Air.Pressure ?? 0f;
+        ent.Comp.FlowRate = flowRate;
+
         // We need to prevent spamming the network with updates, so only check if we've
         // switched states.
-        if (valveEntity.Comp.Enabled != enabled)
-        {
-            valveEntity.Comp.Enabled = enabled;
-            _ambientSound.SetAmbience(valveEntity, enabled);
-            UpdateAppearance(valveEntity);
+        if (ent.Comp.Enabled == enabled)
+            return;
 
-            if (!enabled)
-                valveEntity.Comp.FlowRate = 0;
+        ent.Comp.Enabled = enabled;
+        _ambientSound.SetAmbience(ent, enabled);
+        UpdateAppearance(ent);
 
-            DirtyField(valveEntity!, nameof(valveEntity.Comp.Enabled));
-        }
-    }
-
-    /// <summary>
-    /// Sends data down to the client for the UI.
-    /// </summary>
-    /// <param name="inletpressure">The pressure value at the inlet of the relief valve.</param>
-    /// <param name="outletpressure">The pressure value at the outlet of the relief valve.</param>
-    /// <param name="flowrate">The flow rate of gas through the valve.</param>
-    /// <param name="uid">Valve EntityUID.</param>
-    private void SendUIInfo(float inletpressure, float outletpressure, float flowrate, EntityUid uid)
-    {
-        var message = new PressureReliefValveUserMessage(inletpressure,
-            outletpressure,
-            flowrate);
-
-        _userInterface.ServerSendUiMessage(uid, GasPressureReliefValveUiKey.Key, message);
+        // The valve has changed state, so we need to dirty all applicable fields *right now* so the UI updates
+        // at the same time as everything else.
+        DirtyFields(ent!,
+            MetaData(ent),
+            nameof(ent.Comp.InletPressure),
+            nameof(ent.Comp.OutletPressure),
+            nameof(ent.Comp.FlowRate));
     }
 }

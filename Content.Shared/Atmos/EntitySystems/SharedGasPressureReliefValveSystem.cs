@@ -41,6 +41,9 @@ public abstract class SharedGasPressureReliefValveSystem : EntitySystem
 
             args.PushMarkup(Loc.GetString("gas-pressure-relief-valve-examined-threshold-pressure",
                 ("threshold", $"{valveEntity.Comp.Threshold:0.#}")));
+
+            args.PushMarkup(Loc.GetString("gas-pressure-relief-valve-examined-flow-rate",
+                ("flowRate", $"{valveEntity.Comp.FlowRate:0.#}")));
         }
     }
 
@@ -48,7 +51,7 @@ public abstract class SharedGasPressureReliefValveSystem : EntitySystem
     /// Validates, logs, and updates the pressure threshold of the valve.
     /// </summary>
     /// <param name="valveEntity">The <see cref="Entity{T}"/> of the valve.</param>
-    /// <param name="args">The recieved pressure from the <see cref="GasPressurePumpChangeOutputPressureMessage"/>message.</param>
+    /// <param name="args">The received pressure from the <see cref="GasPressurePumpChangeOutputPressureMessage"/>message.</param>
     private void OnThresholdChangeMessage(Entity<GasPressureReliefValveComponent> valveEntity,
         ref GasPressureReliefValveChangeThresholdMessage args)
     {

@@ -21,8 +21,8 @@ public sealed class GasPressureReliefValveBoundUserInterface(EntityUid owner, En
 
         _window.ThresholdPressureChanged += OnThresholdChanged;
 
-        if (EntMan.TryGetComponent(Owner, out GasPressureReliefValveComponent? valveComponent))
-            _window.SetThresholdPressureInput(valveComponent.Threshold);
+        if (EntMan.TryGetComponent(Owner, out GasPressureReliefValveComponent? comp))
+            _window.SetThresholdPressureInput(comp.Threshold);
 
         Update();
     }
@@ -34,10 +34,11 @@ public sealed class GasPressureReliefValveBoundUserInterface(EntityUid owner, En
 
         _window.Title = Identity.Name(Owner, EntMan);
 
-        if (!EntMan.TryGetComponent(Owner, out GasPressureReliefValveComponent? valveComponent))
+        if (!EntMan.TryGetComponent(Owner, out GasPressureReliefValveComponent? comp))
             return;
 
-        _window.SetThresholdPressureLabel(valveComponent.Threshold);
+        _window.SetThresholdPressureLabel(comp.Threshold);
+        _window.UpdateInfo(comp.InletPressure, comp.OutletPressure, comp.FlowRate);
     }
 
     private void OnThresholdChanged(string newThreshold)
@@ -54,18 +55,5 @@ public sealed class GasPressureReliefValveBoundUserInterface(EntityUid owner, En
         _window?.SetThresholdPressureInput(sentThreshold);
 
         SendPredictedMessage(new GasPressureReliefValveChangeThresholdMessage(sentThreshold));
-    }
-
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-    {
-        base.ReceiveMessage(message);
-
-        if (_window == null)
-            return;
-
-        if (message is not PressureReliefValveUserMessage cast)
-            return;
-
-        _window.UpdateInfo(cast);
     }
 }

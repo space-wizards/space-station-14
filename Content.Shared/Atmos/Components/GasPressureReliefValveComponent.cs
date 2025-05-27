@@ -21,15 +21,6 @@ public sealed partial class GasPressureReliefValveComponent : Component
     public bool Enabled;
 
     /// <summary>
-    /// The current flow rate of the valve.
-    /// Used for displaying the flow rate in the UI,
-    /// and on examine.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    [DataField, AutoNetworkedField]
-    public float FlowRate;
-
-    /// <summary>
     /// Specifies the pipe node name to be treated as the inlet.
     /// </summary>
     [DataField]
@@ -69,4 +60,29 @@ public sealed partial class GasPressureReliefValveComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+
+    #region UI/Examine Info
+
+    /// <summary>
+    /// The current flow rate of the valve.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField] [AutoNetworkedField]
+    public float FlowRate;
+
+    /// <summary>
+    /// Current inlet pressure the valve.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField] [AutoNetworkedField]
+    public float InletPressure;
+
+    /// <summary>
+    /// Current outlet pressure of the valve.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField] [AutoNetworkedField]
+    public float OutletPressure;
+
+    #endregion
 }
