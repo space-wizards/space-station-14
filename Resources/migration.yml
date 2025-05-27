@@ -131,24 +131,19 @@ DrinkGoldschlagerGlass: DrinkGildlagerGlass
 # 2024-01-07
 ClosetBase: ClosetSteelBase
 
-# 2024-01-08 (Modified 2025-05-22)
+# 2024-01-08
 SalvagePartsT4Spawner: SalvageLootSpawner
 SalvagePartsT3Spawner: SalvageLootSpawner
 SalvagePartsT3T4Spawner: SalvageLootSpawner
 SalvagePartsT2Spawner: SalvageLootSpawner
-
-AdvancedCapacitorStockPart: MicroManipulatorStockPart
-SuperCapacitorStockPart: MicroManipulatorStockPart
-QuadraticCapacitorStockPart: MicroManipulatorStockPart
-
-NanoManipulatorStockPart: MicroManipulatorStockPart
+#SuperCapacitorStockPart: CapacitorStockPart
+#QuadraticCapacitorStockPart: CapacitorStockPart
+#NanoManipulatorStockPart: MicroManipulatorStockPart
 PicoManipulatorStockPart: MicroManipulatorStockPart
 FemtoManipulatorStockPart: MicroManipulatorStockPart
-
-AdvancedMatterBinStockPart: MicroManipulatorStockPart
-SuperMatterBinStockPart: MicroManipulatorStockPart
-BluespaceMatterBinStockPart: MicroManipulatorStockPart
-
+#AdvancedMatterBinStockPart: MatterBinStockPart
+#SuperMatterBinStockPart: MatterBinStockPart
+#BluespaceMatterBinStockPart: MatterBinStockPart
 AnsibleSubspaceStockPart: null
 FilterSubspaceStockPart: null
 AmplifierSubspaceStockPart: null
