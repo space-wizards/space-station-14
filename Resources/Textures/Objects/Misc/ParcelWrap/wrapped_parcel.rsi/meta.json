@@ -1,0 +1,39 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "created for ss14 by ps3moira (github) based on package sprites from vgstation at https://github.com/vgstation-coders/vgstation13/pull/36993",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "parcel-large",
+            "directions": 1
+        },
+        {
+            "name": "parcel-medium",
+            "directions": 1
+        },
+        {
+            "name": "parcel-small",
+            "directions": 1
+        },
+        {
+            "name": "parcel-tiny",
+            "directions": 1
+        },
+        {
+            "name": "locker",
+            "directions": 1
+        },
+        {
+            "name": "crate",
+            "directions": 1
+        },
+        {
+            "name": "tall-crate",
+            "directions": 1
+        }
+    ]
+}

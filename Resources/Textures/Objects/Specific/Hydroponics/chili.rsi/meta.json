@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13",
+  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13, inhands by mubururu_ (github), Growth stages, harvest, dead, and produce sprites created by Chaoticaa (GitHub)",
   "size": {
     "x": 32,
     "y": 32
@@ -36,6 +36,14 @@
     },
     {
       "name": "stage-6"
+    },
+    {
+      "name": "produce-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "produce-inhand-right",
+      "directions": 4
     }
   ]
 }

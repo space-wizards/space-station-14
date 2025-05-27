@@ -13,13 +13,13 @@ public sealed partial class EnsnareableComponent : Component
     /// <summary>
     /// How much should this slow down the entities walk?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float WalkSpeed = 1.0f;
 
     /// <summary>
     /// How much should this slow down the entities sprint?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float SprintSpeed = 1.0f;
 
     /// <summary>

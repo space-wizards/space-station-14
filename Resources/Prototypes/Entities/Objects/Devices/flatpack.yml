@@ -83,8 +83,8 @@
     - state: singularity-generator
   - type: GuideHelp
     guides:
-      - SingularityEngine
-      - Power
+    - SingularityEngine
+    - Power
 
 - type: entity
   parent: BaseFlatpack
@@ -250,3 +250,19 @@
   components:
   - type: Flatpack
     entity: ComputerCrewMonitoring
+
+- type: entity
+  parent: BaseFlatpack
+  id: HydroponicsTrayFlatpack
+  name: hydroponics tray flatpack
+  description: A flatpack used for constructing a hydroponics tray.
+  components:
+  - type: Flatpack
+    entity: hydroponicsTray
+  - type: Sprite
+    layers:
+    - state: hydroponics-tray
+  - type: GuideHelp
+    guides:
+    - Botany
+    - Chemicals

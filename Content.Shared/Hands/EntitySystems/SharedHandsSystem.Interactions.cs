@@ -34,6 +34,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             .Bind(ContentKeyFunctions.UseItemInHand, InputCmdHandler.FromDelegate(HandleUseItem, handle: false, outsidePrediction: false))
             .Bind(ContentKeyFunctions.AltUseItemInHand, InputCmdHandler.FromDelegate(HandleAltUseInHand, handle: false, outsidePrediction: false))
             .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(SwapHandsPressed, handle: false, outsidePrediction: false))
+            .Bind(ContentKeyFunctions.SwapHandsReverse, InputCmdHandler.FromDelegate(SwapHandsReversePressed, handle: false, outsidePrediction: false))
             .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(DropPressed))
             .Register<SharedHandsSystem>();
     }
@@ -83,6 +84,16 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
     private void SwapHandsPressed(ICommonSession? session)
     {
+        SwapHands(session, false);
+    }
+
+    private void SwapHandsReversePressed(ICommonSession? session)
+    {
+        SwapHands(session, true);
+    }
+
+    private void SwapHands(ICommonSession? session, bool reverse)
+    {
         if (!TryComp(session?.AttachedEntity, out HandsComponent? component))
             return;
 
@@ -92,8 +103,9 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (component.ActiveHand == null || component.Hands.Count < 2)
             return;
 
-        var newActiveIndex = component.SortedHands.IndexOf(component.ActiveHand.Name) + 1;
-        var nextHand = component.SortedHands[newActiveIndex % component.Hands.Count];
+        var currentIndex = component.SortedHands.IndexOf(component.ActiveHand.Name);
+        var newActiveIndex = (currentIndex + (reverse ? -1 : 1) + component.Hands.Count) % component.Hands.Count;
+        var nextHand = component.SortedHands[newActiveIndex];
 
         TrySetActiveHand(session.AttachedEntity.Value, nextHand, component);
     }
@@ -191,11 +203,13 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (args.Handled)
             return;
 
-        // TODO: this pattern is super uncommon, but it might be worth changing GetUsedEntityEvent to be recursive.
-        if (TryComp<VirtualItemComponent>(component.ActiveHandEntity, out var virtualItem))
-            args.Used = virtualItem.BlockingEntity;
-        else
-            args.Used = component.ActiveHandEntity;
+        if (component.ActiveHandEntity.HasValue)
+        {
+            // allow for the item to return a different entity, e.g. virtual items
+            RaiseLocalEvent(component.ActiveHandEntity.Value, ref args);
+        }
+
+        args.Used ??= component.ActiveHandEntity;
     }
 
     //TODO: Actually shows all items/clothing/etc.
