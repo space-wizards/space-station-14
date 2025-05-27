@@ -6220,4 +6220,11 @@ Entries:
   id: 861
   time: '2025-05-26T19:03:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/690
+- author: choccy
+  changes:
+  - message: Fixes Nukie outpost
+    type: Fix
+  id: 862
+  time: '2025-05-27T18:16:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/702
 
