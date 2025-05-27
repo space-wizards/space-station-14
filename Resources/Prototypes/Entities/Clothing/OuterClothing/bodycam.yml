@@ -12,6 +12,7 @@
   - type: WiredNetworkConnection
   - type: SurveillanceCamera
     networkSet: true
+  - type: Bodycam
 
 - type: entity
   id: ClothingOuterArmorBasicWithBodycam
