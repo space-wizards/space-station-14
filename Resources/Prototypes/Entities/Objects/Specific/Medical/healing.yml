@@ -342,7 +342,7 @@
 - type: entity
   name: aloe cream
   description: A topical cream for burns.
-  parent: BaseHealingItem 
+  parent: BaseHealingItem
   id: AloeCream
   components:
   - type: Healing
@@ -353,7 +353,7 @@
         Heat: -10
     healingBeginSound:
       path: "/Audio/Items/Toys/ToyFall2.ogg"
-    healingEndSound: 
+    healingEndSound:
       path: "/Audio/Items/Medical/ointment_end.ogg"
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/aloe.rsi
@@ -865,20 +865,22 @@
       prob: 0.10
       maxAmount: 7
       orGroup: RandomPill
-    - id: PillAmbuzol
-      prob: 0.075
-      maxAmount: 7
-      orGroup: RandomPill
-    - id: PillAmbuzolPlus
-      prob: 0.075
-      maxAmount: 7
-      orGroup: RandomPill
+    # imp edit start, removed ambuzol spawns
+    #- id: PillAmbuzol
+    #  prob: 0.075
+    #  maxAmount: 7
+    #  orGroup: RandomPill
+    #- id: PillAmbuzolPlus
+    #  prob: 0.075
+    #  maxAmount: 7
+    #  orGroup: RandomPill
+    # imp edit end
     - id: PillSpaceDrugs
-      prob: 0.075
+      prob: 0.10 #imp edit
       maxAmount: 7
       orGroup: RandomPill
     - id: StrangePill
-      prob: 0.075
+      prob: 0.10 #imp edit
       maxAmount: 7
       orGroup: RandomPill
 
