@@ -1,19 +1,19 @@
-- type: entity
-  parent: BaseStorageItem
-  id: CardBoxBase
-  description: Useful for carrying items in your hands.
-  abstract: true
-  components:
-  - type: Item
-    size: Normal
-  - type: Storage
-    grid:
-    - 0,0,12,4
-    quickInsert: true
-    areaInsert: true
-    whitelist:
-      tags:
-        - TabletopCard
+# - type: entity
+#   parent: BaseStorageItem
+#   id: CardBoxBase
+#   description: Useful for carrying items in your hands.
+#   abstract: true
+#   components:
+#   - type: Item
+#     size: Normal
+#   - type: Storage
+#     grid:
+#     - 0,0,12,4
+#     quickInsert: true
+#     areaInsert: true
+#     whitelist:
+#       tags:
+#         - TabletopCard
 
 
 # - type: entity

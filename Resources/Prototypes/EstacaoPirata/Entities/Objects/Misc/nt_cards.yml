@@ -1,0 +1,690 @@
+
+- type: entity
+  parent: CardBase
+  id: CardBaseNanotrasen
+  name: card
+  components:
+    - type: Card
+      backSpriteLayers:
+      - sprite: EstacaoPirata/Objects/Misc/cards.rsi
+        state: singlecard_down_nanotrasen
+
+- type: entity
+  parent: CardBoxBase
+  id: CardBoxNanotrasen
+  name: nanotrasen deck box
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    layers:
+    - state: nanotrasen_box
+    - state: nanotrasen_box_open
+      map: [ "openLayer" ]
+      visible: false
+  - type: OpenTriggeredStorageFill
+    contents:
+    - id: CardDeckNanotrasen
+      amount: 1
+
+- type: entity
+  parent: CardDeckBase
+  id: CardDeckNanotrasen
+  name: deck of cards
+  components:
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: deck_nanotrasen_full
+  - type: CardStack
+    content:
+    # Clubs
+    - CardScAceOfClubsNanotrasen
+    - CardSc2OfClubsNanotrasen
+    - CardSc3OfClubsNanotrasen
+    - CardSc4OfClubsNanotrasen
+    - CardSc5OfClubsNanotrasen
+    - CardSc6OfClubsNanotrasen
+    - CardSc7OfClubsNanotrasen
+    - CardSc8OfClubsNanotrasen
+    - CardSc9OfClubsNanotrasen
+    - CardSc10OfClubsNanotrasen
+    - CardScJackOfClubsNanotrasen
+    - CardScQueenOfClubsNanotrasen
+    - CardScKingOfClubsNanotrasen
+    # Diamonds
+    - CardScAceOfDiamondsNanotrasen
+    - CardSc2OfDiamondsNanotrasen
+    - CardSc3OfDiamondsNanotrasen
+    - CardSc4OfDiamondsNanotrasen
+    - CardSc5OfDiamondsNanotrasen
+    - CardSc6OfDiamondsNanotrasen
+    - CardSc7OfDiamondsNanotrasen
+    - CardSc8OfDiamondsNanotrasen
+    - CardSc9OfDiamondsNanotrasen
+    - CardSc10OfDiamondsNanotrasen
+    - CardScJackOfDiamondsNanotrasen
+    - CardScQueenOfDiamondsNanotrasen
+    - CardScKingOfDiamondsNanotrasen
+    # Hearts
+    - CardScAceOfHeartsNanotrasen
+    - CardSc2OfHeartsNanotrasen
+    - CardSc3OfHeartsNanotrasen
+    - CardSc4OfHeartsNanotrasen
+    - CardSc5OfHeartsNanotrasen
+    - CardSc6OfHeartsNanotrasen
+    - CardSc7OfHeartsNanotrasen
+    - CardSc8OfHeartsNanotrasen
+    - CardSc9OfHeartsNanotrasen
+    - CardSc10OfHeartsNanotrasen
+    - CardScJackOfHeartsNanotrasen
+    - CardScQueenOfHeartsNanotrasen
+    - CardScKingOfHeartsNanotrasen
+    # Spades
+    - CardScAceOfSpadesNanotrasen
+    - CardSc2OfSpadesNanotrasen
+    - CardSc3OfSpadesNanotrasen
+    - CardSc4OfSpadesNanotrasen
+    - CardSc5OfSpadesNanotrasen
+    - CardSc6OfSpadesNanotrasen
+    - CardSc7OfSpadesNanotrasen
+    - CardSc8OfSpadesNanotrasen
+    - CardSc9OfSpadesNanotrasen
+    - CardSc10OfSpadesNanotrasen
+    - CardScJackOfSpadesNanotrasen
+    - CardScQueenOfSpadesNanotrasen
+    - CardScKingOfSpadesNanotrasen
+    # Joker
+    - CardScJokerNanotrasen
+
+# region Nanotrasen Cards
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc2OfClubsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-2-clubs
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_2_of_Clubs_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc3OfClubsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-3-clubs
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_3_of_Clubs_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc4OfClubsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-4-clubs
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_4_of_Clubs_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc5OfClubsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-5-clubs
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_5_of_Clubs_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc6OfClubsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-6-clubs
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_6_of_Clubs_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc7OfClubsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-7-clubs
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_7_of_Clubs_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc8OfClubsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-8-clubs
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_8_of_Clubs_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc9OfClubsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-9-clubs
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_9_of_Clubs_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc10OfClubsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-10-clubs
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_10_of_Clubs_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScAceOfClubsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-ace-clubs
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_Ace_of_Clubs_nanotrasen
+
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScJackOfClubsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-jack-clubs
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_Jack_of_Clubs_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScKingOfClubsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-king-clubs
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_King_of_Clubs_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScQueenOfClubsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-queen-clubs
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_Queen_of_Clubs_nanotrasen
+
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScJackOfDiamondsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-jack-diamonds
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_Jack_of_Diamonds_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScQueenOfDiamondsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-queen-diamonds
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_Queen_of_Diamonds_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScKingOfDiamondsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-king-diamonds
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_King_of_Diamonds_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScAceOfDiamondsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-ace-diamonds
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_Ace_of_Diamonds_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc2OfDiamondsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-2-diamonds
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_2_of_Diamonds_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc3OfDiamondsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-3-diamonds
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_3_of_Diamonds_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc4OfDiamondsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-4-diamonds
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_4_of_Diamonds_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc5OfDiamondsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-5-diamonds
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_5_of_Diamonds_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc6OfDiamondsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-6-diamonds
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_6_of_Diamonds_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc7OfDiamondsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-7-diamonds
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_7_of_Diamonds_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc8OfDiamondsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-8-diamonds
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_8_of_Diamonds_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc9OfDiamondsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-9-diamonds
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_9_of_Diamonds_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc10OfDiamondsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-10-diamonds
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_10_of_Diamonds_nanotrasen
+
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc2OfHeartsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-2-hearts
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_2_of_Hearts_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc3OfHeartsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-3-hearts
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_3_of_Hearts_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc4OfHeartsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-4-hearts
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_4_of_Hearts_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc5OfHeartsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-5-hearts
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_5_of_Hearts_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc6OfHeartsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-6-hearts
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_6_of_Hearts_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc7OfHeartsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-7-hearts
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_7_of_Hearts_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc8OfHeartsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-8-hearts
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_8_of_Hearts_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc9OfHeartsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-9-hearts
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_9_of_Hearts_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc10OfHeartsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-10-hearts
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_10_of_Hearts_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScKingOfHeartsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-king-hearts
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_King_of_Hearts_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScQueenOfHeartsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-queen-hearts
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_Queen_of_Hearts_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScJackOfHeartsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-jack-hearts
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_Jack_of_Hearts_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScAceOfHeartsNanotrasen
+  components:
+  - type: Card
+    name: card-sc-ace-hearts
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_Ace_of_Hearts_nanotrasen
+
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc2OfSpadesNanotrasen
+  components:
+  - type: Card
+    name: card-sc-2-spades
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_2_of_Spades_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc3OfSpadesNanotrasen
+  components:
+  - type: Card
+    name: card-sc-3-spades
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_3_of_Spades_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc4OfSpadesNanotrasen
+  components:
+  - type: Card
+    name: card-sc-4-spades
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_4_of_Spades_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc5OfSpadesNanotrasen
+  components:
+  - type: Card
+    name: card-sc-5-spades
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_5_of_Spades_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc6OfSpadesNanotrasen
+  components:
+  - type: Card
+    name: card-sc-6-spades
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_6_of_Spades_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc7OfSpadesNanotrasen
+  components:
+  - type: Card
+    name: card-sc-7-spades
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_7_of_Spades_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc8OfSpadesNanotrasen
+  components:
+  - type: Card
+    name: card-sc-8-spades
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_8_of_Spades_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc9OfSpadesNanotrasen
+  components:
+  - type: Card
+    name: card-sc-9-spades
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_9_of_Spades_nanotrasen
+
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardSc10OfSpadesNanotrasen
+  components:
+  - type: Card
+    name: card-sc-10-spades
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_10_of_Spades_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScKingOfSpadesNanotrasen
+  components:
+  - type: Card
+    name: card-sc-king-spades
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_King_of_Spades_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScQueenOfSpadesNanotrasen
+  components:
+  - type: Card
+    name: card-sc-queen-spades
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_Queen_of_Spades_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScJackOfSpadesNanotrasen
+  components:
+  - type: Card
+    name: card-sc-jack-spades
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_Jack_of_Spades_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScAceOfSpadesNanotrasen
+  components:
+  - type: Card
+    name: card-sc-ace-spades
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: sc_Ace_of_Spades_nanotrasen
+
+- type: entity
+  parent: CardBaseNanotrasen
+  categories: [ HideSpawnMenu ]
+  id: CardScJokerNanotrasen
+  components:
+  - type: Card
+    name: card-sc-joker
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: nanotrasen_joker
+
+# endregion Nanotrasen Cards

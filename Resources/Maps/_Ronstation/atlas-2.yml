@@ -18391,7 +18391,7 @@ entities:
     - type: Transform
       pos: -44.5,-3.5
       parent: 30
-- proto: CardBoxPokerFilled
+- proto: CardBoxBlack
   entities:
   - uid: 9201
     components:
