@@ -58,7 +58,7 @@
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentInternalAffairsAgentsReport
-  name: Internal Investigation Report
+  name: Internal investigation report
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
@@ -76,7 +76,7 @@
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentObjectInvestigationReport
-  name: Report on object Investigation
+  name: Report on object investigation
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
@@ -115,7 +115,7 @@
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentStatementAppointmentInterimChapter
-  name: Statement of Appointment to the Interim Chapter
+  name: Statement of appointment to the interim chapter
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
@@ -124,7 +124,7 @@
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentEmploymentStatement
-  name: Statement of Employment
+  name: Statement of employment
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
@@ -133,7 +133,7 @@
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentResignationStatement
-  name: Statement of Resignation
+  name: Statement of resignation
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
@@ -354,7 +354,7 @@
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentSurgeryConsentPermit
-  name: Surgery Consent Permit
+  name: Surgery consent permit
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
