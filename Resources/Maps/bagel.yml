@@ -9561,7 +9561,6 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
     - type: MovedGrids
     - type: Broadphase
