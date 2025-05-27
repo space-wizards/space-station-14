@@ -13,6 +13,8 @@
     - state: icon
     - state: icon-unshaded
       shader: unshaded
+    - state: icon-unshaded
+      shader: shaded
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/hazard.rsi
     clothingVisuals:
@@ -20,6 +22,8 @@
       - state: equipped-OUTERCLOTHING
       - state: equipped-OUTERCLOTHING-unshaded
         shader: unshaded
+      - state: equipped-OUTERCLOTHING-unshaded
+        shader: shaded
   - type: Tag
     tags:
     - HiViz
