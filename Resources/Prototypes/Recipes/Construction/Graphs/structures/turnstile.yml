@@ -1,0 +1,33 @@
+- type: constructionGraph
+  id: Turnstile
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DeleteEntity { }
+    edges:
+    - to: turnstile
+      completed:
+      - !type:SnapToGrid
+      steps:
+      - material: MetalRod
+        amount: 4
+        doAfter: 6
+      - material: Steel
+        amount: 1
+        doAfter: 2
+
+  - node: turnstile
+    entity: Turnstile
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 4
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 4.0
+      - tool: Cutting
+        doAfter: 2.0

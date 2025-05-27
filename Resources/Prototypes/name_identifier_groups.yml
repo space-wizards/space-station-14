@@ -30,6 +30,12 @@
   maxValue: 9999
 
 - type: nameIdentifierGroup
+  id: StationAi
+  prefix: AI
+  minValue: 100
+  maxValue: 999
+
+- type: nameIdentifierGroup
   id: XenoArtifactNode
   minValue: 0
   maxValue: 999

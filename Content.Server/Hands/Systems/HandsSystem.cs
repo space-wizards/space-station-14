@@ -33,7 +33,6 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
-        [Dependency] private readonly VirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
@@ -52,10 +51,7 @@ namespace Content.Server.Hands.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] {typeof(StunSystem), typeof(StaminaSystem)});
-
-            SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
-            SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
+            SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] {typeof(StunSystem), typeof(SharedStaminaSystem)});
 
             SubscribeLocalEvent<HandsComponent, BodyPartAddedEvent>(HandleBodyPartAdded);
             SubscribeLocalEvent<HandsComponent, BodyPartRemovedEvent>(HandleBodyPartRemoved);
@@ -98,7 +94,7 @@ namespace Content.Server.Hands.Systems
             }
         }
 
-        private void OnDisarmed(EntityUid uid, HandsComponent component, DisarmedEvent args)
+        private void OnDisarmed(EntityUid uid, HandsComponent component, ref DisarmedEvent args)
         {
             if (args.Handled)
                 return;
@@ -141,45 +137,6 @@ namespace Content.Server.Hands.Systems
 
             RemoveHand(uid, args.Slot);
         }
-
-        #region pulling
-
-        private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
-        {
-            if (args.PullerUid != uid)
-                return;
-
-            if (TryComp<PullerComponent>(args.PullerUid, out var pullerComp) && !pullerComp.NeedsHands)
-                return;
-
-            if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.PulledUid, uid))
-            {
-                DebugTools.Assert("Unable to find available hand when starting pulling??");
-            }
-        }
-
-        private void HandlePullStopped(EntityUid uid, HandsComponent component, PullStoppedMessage args)
-        {
-            if (args.PullerUid != uid)
-                return;
-
-            // Try find hand that is doing this pull.
-            // and clear it.
-            foreach (var hand in component.Hands.Values)
-            {
-                if (hand.HeldEntity == null
-                    || !TryComp(hand.HeldEntity, out VirtualItemComponent? virtualItem)
-                    || virtualItem.BlockingEntity != args.PulledUid)
-                {
-                    continue;
-                }
-
-                TryDrop(args.PullerUid, hand, handsComp: component);
-                break;
-            }
-        }
-
-        #endregion
 
         #region interactions
 
