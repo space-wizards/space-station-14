@@ -3888,3 +3888,10 @@
   id: 8572
   time: '2025-05-26T13:00:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35235
+- author: metalgearsloth
+  changes:
+  - message: You no longer face items for a single frame when clicking while moving.
+    type: Tweak
+  id: 8573
+  time: '2025-05-27T11:34:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37874
