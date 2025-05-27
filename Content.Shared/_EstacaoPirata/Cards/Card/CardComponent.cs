@@ -14,7 +14,7 @@ public sealed partial class CardComponent : Component
     /// The back of the card
     /// </summary>
     [DataField("backSpriteLayers", readOnly: true)]
-    public List<SpriteSpecifier>? BackSprite = [];
+    public List<SpriteSpecifier> BackSprite = [];
 
     /// <summary>
     /// The front of the card
