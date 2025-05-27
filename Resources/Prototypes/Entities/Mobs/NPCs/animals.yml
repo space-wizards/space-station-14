@@ -962,6 +962,11 @@
     speechVerb: Arachnid
     speechSounds: Arachnid
     allowedEmotes: ['Click', 'Chitter']
+  - type: Vocal # imp
+    sounds:
+      Male: UnisexDecapoid
+      Female: UnisexDecapoid
+      Unsexed: UnisexDecapoid
   - type: DamageStateVisuals
     states:
       Alive:

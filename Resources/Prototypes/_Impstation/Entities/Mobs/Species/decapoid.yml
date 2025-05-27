@@ -183,6 +183,7 @@
             state: neck
   - type: Speech
     speechSounds: Decapoid
+    allowedEmotes: ['Chitter', 'Click']
   - type: TypingIndicator
     proto: robot # todo: custom
   - type: HumanoidAppearance

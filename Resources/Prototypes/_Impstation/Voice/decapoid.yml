@@ -48,6 +48,10 @@
       collection: Wuhey
     Ungh:
       collection: Ungh
+    Chitter:
+      path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
+    Click:
+      path: /Audio/Voice/Arachnid/arachnid_click.ogg
     Gasp:
       path: /Audio/_Impstation/Voice/Decapoid/decapoid_gasp.ogg
     DefaultDeathgasp:
