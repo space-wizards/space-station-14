@@ -1,0 +1,9 @@
+play-local-sound-command-description = Plays a localized sound from your current position for the specified players or for every nearby player if no players are specified.
+play-local-sound-command-help = playlocalsound <path> [volume] [follow] [user 1] ... [user n]
+play-local-sound-command-no-entity = You have no attached entity and you must play sounds.
+play-local-sound-command-player-not-found = Player "{$username}" not found.
+play-local-sound-command-volume-parse = Invalid volume of {$volume} specified.
+play-local-sound-command-arg-path = <path>
+play-local-sound-command-arg-follow = [follow]
+play-local-sound-command-arg-volume = [volume]
+play-local-sound-command-arg-usern = [user {$user}]
