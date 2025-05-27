@@ -2,6 +2,7 @@
 # https://en.wikipedia.org/wiki/Scotticism
 # https://en.wikipedia.org/wiki/Scottish_English
 # https://www.cs.stir.ac.uk/~kjt/general/scots.html
+# https://en.wiktionary.org/wiki/Appendix:Glossary_of_Scottish_slang_and_jargon
 
 accent-dwarf-words-1 = girl
 accent-dwarf-words-replace-1 = lassie
@@ -547,4 +548,4 @@ accent-dwarf-words-190 = won't
 accent-dwarf-words-replace-190 = winnae
 
 accent-dwarf-words-191 = hi
-accent-dwarf-words-replace-192 = haw
+accent-dwarf-words-replace-191 = haw
