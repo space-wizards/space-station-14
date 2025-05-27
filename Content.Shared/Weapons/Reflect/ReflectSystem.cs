@@ -158,9 +158,9 @@ public sealed class ReflectSystem : EntitySystem
         PlayAudioAndPopup(reflector.Comp, user);
 
         // 🌟Starlight🌟 start
-        if (reflect.OverrideAngle is not null)
+        if (reflector.Comp.OverrideAngle is { } newAngle)
         {
-            var overrideAngle = _transform.GetWorldRotation(reflector) + reflect.OverrideAngle.Value;
+            var overrideAngle = _transform.GetWorldRotation(reflector) + newAngle;
             newDirection = new Vector2((float)Math.Cos(overrideAngle), (float)Math.Sin(overrideAngle));
             newDirection = newDirection.Value.Normalized();
         }

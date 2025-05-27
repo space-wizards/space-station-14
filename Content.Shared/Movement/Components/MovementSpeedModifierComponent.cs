@@ -53,36 +53,6 @@ namespace Content.Shared.Movement.Components
         [AutoNetworkedField, DataField]
         public float BaseFriction = DefaultFriction;
 
-        //🌟Starlight🌟 start
-        [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-        public float SpeciesWalkSpeedModifier = 1.0f;
-
-        [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-        public float SpeciesSprintSpeedModifier = 1.0f;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _baseWalkSpeedVV
-        {
-            get => BaseWalkSpeed;
-            set
-            {
-                BaseWalkSpeed = value;
-                Dirty();
-            }
-        }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _baseSprintSpeedVV
-        {
-            get => BaseSprintSpeed;
-            set
-            {
-                BaseSprintSpeed = value;
-                Dirty();
-            }
-        }
-        //🌟Starlight🌟 end
-        
         /// <summary>
         /// Minimum speed a mob has to be moving before applying movement friction.
         /// </summary>
@@ -181,14 +151,6 @@ namespace Content.Shared.Movement.Components
         [AutoNetworkedField, DataField]
         public float? OffGridFriction;
 
-
-        [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-        public float BaseSprintSpeed { get; set; } = DefaultBaseSprintSpeed;
         #endregion
-
-        [ViewVariables]
-        public float CurrentWalkSpeed => WalkSpeedModifier * BaseWalkSpeed * SpeciesWalkSpeedModifier;
-        [ViewVariables]
-        public float CurrentSprintSpeed => SprintSpeedModifier * BaseSprintSpeed * SpeciesSprintSpeedModifier;
     }
 }
