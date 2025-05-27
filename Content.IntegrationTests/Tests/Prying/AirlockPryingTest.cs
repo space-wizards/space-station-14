@@ -19,10 +19,12 @@ public sealed class AirlockPryingTest : InteractionTest
     /// <param name="powered"></param>
     [Test, Combinatorial]
     public async Task GenericAirlockPryingTest(
-        [Values(DoorState.Closed, DoorState.Open, DoorState.Welded)] DoorState initialState,
-        [Values(null, Pry, PryPowered)] string? pryingToolProtoId,
-        [Values(false, true)] bool bolted,
-        [Values(false, true)] bool powered)
+        [Values(DoorState.Closed, DoorState.Open, DoorState.Welded)]
+        DoorState initialState,
+        [Values(null, Pry, PryPowered, ForcedPryer)]
+        string? pryingToolProtoId,
+        [Values] bool bolted,
+        [Values] bool powered)
     {
         var expectedState = GetExpectedState(initialState, pryingToolProtoId, bolted, powered);
         await SpawnTarget(Airlock);
@@ -90,26 +92,39 @@ public sealed class AirlockPryingTest : InteractionTest
             [DoorState.Open] = DoorState.Closing,
         };
 
-        // Nothing can open welded or bolted doors (except forced pry tools which are not tested here yet)
-        if (initialState == DoorState.Welded || bolted)
+        // Nothing can open welded doors
+        if (initialState == DoorState.Welded)
             return initialState;
 
-        // From this point forward we don't have to worry about bolted doors
+        // From this point forward we don't have to worry about welded doors
         switch (pryingToolProtoId)
         {
             // Hand pry
             case null:
-                // Ignore these cases because an interaction will just open the door.
+                // Ignore these cases because an interaction will not initiate a pry action
                 if (powered && !bolted)
                     Assert.Ignore("Hand interaction on powered door will not pry.");
-                // Will work the same as a crowbar in other cases
-                return powered ? initialState : normalTransitions[initialState];
+                // Cannot hand pry bolted or powered doors
+                return bolted || powered
+                    ? initialState
+                    : normalTransitions[initialState];
             case Pry:
-                // If the door is powered, it will fail, otherwise the door state will change
-                return powered ? initialState : normalTransitions[initialState];
+                // Cannot pry bolted or powered doors
+                return bolted || powered
+                    ? initialState
+                    : normalTransitions[initialState];
             case PryPowered:
-                // Will always pry door
-                return normalTransitions[initialState];
+                // Can pry powered doors, but not bolted
+                return bolted
+                    ? initialState
+                    : normalTransitions[initialState];
+            case ForcedPryer:
+                // I don't think this is intended, but forced prying cannot close bolted doors
+                // This is stopped in the "BeforeDoorClosedEvent" handler in SharedBoltSystem
+                // But for now only zombies and some animals can force pry so who cares about prying bolts closed?
+                return bolted && initialState == DoorState.Open
+                    ? initialState
+                    : normalTransitions[initialState];
         }
 
         Assert.Fail("Unknown prying tool");
