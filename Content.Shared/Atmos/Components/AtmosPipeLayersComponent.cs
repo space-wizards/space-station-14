@@ -32,23 +32,26 @@ public sealed partial class AtmosPipeLayersComponent : Component
     public AtmosPipeLayer CurrentPipeLayer = AtmosPipeLayer.Primary;
 
     /// <summary>
-    /// The RSI path that the entity sprite will use for each pipe layer.
-    /// If empty the RSI path does not differ between pipe layers.
+    /// The RSI paths that the entity will use to update its sprite when its pipe layer changes;
+    /// if empty, the entity sprite will not update when it pipe layer changes.
+    /// If you want to set specific sprite layers to update when the pipe layer changes, use
+    /// <see cref="SpriteLayersRsiPaths"/> instead.
     /// </summary>
     /// <remarks>
-    /// If the array is not empty there should be an entry for each pipe layer
-    /// (from 0 to <see cref="NumberOfPipeLayers"/> - 1).
+    /// If the array is not empty there should be an entry for each atmos pipe layer.
     /// </remarks>
     [DataField]
     public Dictionary<AtmosPipeLayer, string> SpriteRsiPaths = [];
 
     /// <summary>
-    /// A dictionary of entity sprite layers that have their
-    /// RSI paths updated when the pipe layer changes.
+    /// Used to update specific sprite layers when the entity's pipe layer changes.
+    /// The dictionary key is the name of the sprite layer to be updated, and its value is
+    /// a second dictionary which contains the RSI paths indexed by pipe layer.
+    /// If you want to change the default RSI path used by the entity, use
+    /// <see cref="SpriteRsiPaths"/> instead.
     /// </summary>
     /// <remarks>
-    /// If an array is not empty there should be an entry for each pipe layer
-    /// (from 0 to <see cref="NumberOfPipeLayers"/> - 1).
+    /// If an array is not empty there should be an entry for each pipe layer.
     /// </remarks>
     [DataField]
     public Dictionary<string, Dictionary<AtmosPipeLayer, string>> SpriteLayersRsiPaths = new();

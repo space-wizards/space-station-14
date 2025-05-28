@@ -195,7 +195,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
                     _vertLinesReversed[color] = vertLinesReversed;
                 }
 
-                var layerFraction = _layerFraction[layer];
+                var layerFraction = _layerFraction[(int)layer];
                 var origin = new Vector2(grid.TileSize * layerFraction, -grid.TileSize * layerFraction);
 
                 // Loop over the chunk

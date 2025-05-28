@@ -411,11 +411,12 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
                 continue;
 
             var netId = GetPipeNodeNetId(pipeNode);
+            var subnet = new AtmosMonitoringConsoleSubnet(netId, pipeNode.CurrentPipeLayer, pipeColor.Color.ToHex());
             var pipeDirection = pipeNode.CurrentPipeDirection;
 
-            chunk.AtmosPipeData.TryGetValue((netId, pipeNode.CurrentPipeLayer, pipeColor.Color.ToHex()), out var atmosPipeData);
+            chunk.AtmosPipeData.TryGetValue(subnet, out var atmosPipeData);
             atmosPipeData |= (ulong)pipeDirection << tileIdx * SharedNavMapSystem.Directions;
-            chunk.AtmosPipeData[(netId, pipeNode.CurrentPipeLayer, pipeColor.Color.ToHex())] = atmosPipeData;
+            chunk.AtmosPipeData[subnet] = atmosPipeData;
         }
     }
 

@@ -243,7 +243,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         var coords = _entManager.GetCoordinates(metaData.NetCoordinates);
 
         if (proto.Placement == NavMapBlipPlacement.Offset && metaData.PipeLayer > 0)
-            coords = coords.Offset(_pipeLayerOffsets[metaData.PipeLayer]);
+            coords = coords.Offset(_pipeLayerOffsets[(int)metaData.PipeLayer]);
 
         var blip = new NavMapBlip(coords, _spriteSystem.Frame0(new SpriteSpecifier.Texture(texture)), color, blinks, proto.Selectable, proto.Scale);
         NavMap.TrackedEntities[metaData.NetEntity] = blip;

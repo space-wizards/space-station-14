@@ -26,7 +26,7 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        var numberOfPipeLayers = TryComp<AtmosPipeLayersComponent>(uid, out var atmosPipeLayers) ? atmosPipeLayers.NumberOfPipeLayers : 1;
+        var numberOfPipeLayers = GetNumberOfPipeLayers(uid, out _);
 
         foreach (var layerKey in Enum.GetValues<PipeConnectionLayer>())
         {
@@ -41,10 +41,9 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         }
     }
 
-    private void HideAllPipeConnection(Entity<SpriteComponent> entity, AtmosPipeLayersComponent? atmosPipeLayers)
+    private void HideAllPipeConnection(Entity<SpriteComponent> entity, AtmosPipeLayersComponent? atmosPipeLayers, int numberOfPipeLayers)
     {
         var sprite = entity.Comp;
-        var numberOfPipeLayers = atmosPipeLayers != null ? atmosPipeLayers.NumberOfPipeLayers : (byte)1;
 
         foreach (var layerKey in Enum.GetValues<PipeConnectionLayer>())
         {
@@ -73,11 +72,11 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
             return;
         }
 
-        var numberOfPipeLayers = TryComp<AtmosPipeLayersComponent>(uid, out var atmosPipeLayers) ? atmosPipeLayers.NumberOfPipeLayers : 1;
+        var numberOfPipeLayers = GetNumberOfPipeLayers(uid, out var atmosPipeLayers);
 
         if (!_appearance.TryGetData<int>(uid, PipeVisuals.VisualState, out var worldConnectedDirections, args.Component))
         {
-            HideAllPipeConnection((uid, args.Sprite), atmosPipeLayers);
+            HideAllPipeConnection((uid, args.Sprite), atmosPipeLayers, numberOfPipeLayers);
             return;
         }
 
@@ -111,6 +110,11 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
                 layer.Color = color;
             }
         }
+    }
+
+    private int GetNumberOfPipeLayers(EntityUid uid, out AtmosPipeLayersComponent? atmosPipeLayers)
+    {
+        return TryComp(uid, out atmosPipeLayers) ? atmosPipeLayers.NumberOfPipeLayers : 1;
     }
 
     private SpriteComponent.DirectionOffset ToOffset(PipeConnectionLayer layer)

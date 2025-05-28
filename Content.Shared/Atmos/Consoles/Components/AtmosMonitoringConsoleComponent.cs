@@ -67,7 +67,7 @@ public struct AtmosPipeChunk(Vector2i origin)
     /// Indexed by the net ID, layer and color hexcode of the pipe
     /// </summary>
     [ViewVariables]
-    public Dictionary<(int, AtmosPipeLayer, string), ulong> AtmosPipeData = new();
+    public Dictionary<AtmosMonitoringConsoleSubnet, ulong> AtmosPipeData = new();
 
     /// <summary>
     /// The last game tick that the chunk was updated
@@ -227,6 +227,16 @@ public struct AtmosMonitoringConsoleEntry
         Address = address;
     }
 }
+
+/// <summary>
+/// Used to group atmos pipe chunks into subnets based on their properties and
+/// improve the efficiency of rendering these chunks on the atmos monitoring console.
+/// </summary>
+/// <param name="NetId">The associated network ID.</param>
+/// <param name="PipeLayer">The associated pipe layer.</param>
+/// <param name="HexCode">The color of the pipe.</param>
+[Serializable, NetSerializable]
+public record AtmosMonitoringConsoleSubnet(int NetId, AtmosPipeLayer PipeLayer, string HexCode);
 
 public enum AtmosPipeChunkDataFacing : byte
 {
