@@ -202,6 +202,8 @@
     - id: RCD
     - id: RCDAmmo
     - id: MetalFoamGrenade
+    - id: EngBag
+      prob: 0.5
 
 - type: entityTable
   id: FillEngineerHardsuit
@@ -211,6 +213,8 @@
     - id: OxygenTankFilled
     - id: ClothingShoesBootsMag
     - id: ClothingMaskBreath
+    - id: EngBag
+      prob: 0.2
 
 - type: entity
   id: ClosetRadiationSuitFilled
