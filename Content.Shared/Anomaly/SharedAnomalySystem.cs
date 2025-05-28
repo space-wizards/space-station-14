@@ -51,13 +51,18 @@ public abstract class SharedAnomalySystem : EntitySystem
             return;
 
         // anomalies are static by default, so we have set them to dynamic to be throwable
-        _physics.SetBodyType(ent, BodyType.Dynamic, body: body);
+        // only regular anomalies are static, so the check is meant to filter out things such as infection anomalies, which affect players
+        if (TryComp<PhysicsComponent>(ent, out var physics) && physics.BodyType == BodyType.Static)
+            _physics.SetBodyType(ent, BodyType.Dynamic, body: body);
         ChangeAnomalyStability(ent, Random.NextFloat(corePowered.StabilityPerThrow.X, corePowered.StabilityPerThrow.Y), ent.Comp);
     }
 
     private void OnLand(Entity<AnomalyComponent> ent, ref LandEvent args)
     {
-        // revert back to static
+        // revert back to static, but only if the object was dynamic (such as thrown anomalies, but not anomaly infected players)
+        if (!TryComp<PhysicsComponent>(ent, out var body) || body.BodyType != BodyType.Dynamic)
+            return;
+
         _physics.SetBodyType(ent, BodyType.Static);
     }
 
@@ -439,7 +444,7 @@ public abstract class SharedAnomalySystem : EntitySystem
 }
 
 [DataRecord]
-public record struct AnomalySpawnSettings()
+public partial record struct AnomalySpawnSettings()
 {
     /// <summary>
     /// should entities block spawning?
