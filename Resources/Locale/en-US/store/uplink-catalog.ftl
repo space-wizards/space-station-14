@@ -259,6 +259,7 @@ uplink-super-surplus-bundle-desc = Contains 125 telecrystals worth of completely
 
 uplink-starter-kit-name = Basic Operative Bundle
 uplink-starter-kit-desc = Contains 40 telecrystals of basic operative gear. For those operatives who just don't know what they should buy.
+uplink-starter-kit-diona-name = Basic Operootive Bundle
 
 # Tools
 uplink-toolbox-name = Toolbox

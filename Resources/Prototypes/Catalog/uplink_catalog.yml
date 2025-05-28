@@ -1115,7 +1115,32 @@
       blacklist:
         components:
         - SurplusBundle
+    - !type:BuyerSpeciesCondition
+        blacklist:
+        - Diona
 
+- type: listing
+  parent: UplinkStarterKit
+  id: UplinkStarterKitDiona
+  name: uplink-starter-kit-diona-name
+  description: uplink-starter-kit-desc
+  productEntity: ClothingBackpackDuffelSyndicateFilledStarterKitDiona
+  cost:
+    Telecrystal: 40
+  categories:
+  - UplinkDisruption
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+  - !type:BuyerSpeciesCondition
+    whitelist:
+    - Diona
 
 - type: listing
   id: UplinkSingarityBeacon
