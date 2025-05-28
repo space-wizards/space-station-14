@@ -6276,4 +6276,12 @@ Entries:
   id: 869
   time: '2025-05-28T20:11:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/708
+- author: deltaVelocity
+  changes:
+  - message: Added Displacements for Head and OuterClothing for Vulpakin-no more snouts
+      and legs sticking out!
+    type: Add
+  id: 870
+  time: '2025-05-28T20:20:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/704
 
