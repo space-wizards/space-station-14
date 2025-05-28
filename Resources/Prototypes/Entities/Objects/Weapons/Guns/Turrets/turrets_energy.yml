@@ -2,7 +2,7 @@
   abstract: true
   parent: [BaseWeaponEnergyTurret, ConstructibleMachine]
   id: WeaponEnergyTurretStationBase
-  name: security turret
+  name: sentry turret
   description: A high-tech autonomous weapons system designed to keep unauthorized personnel out of sensitive areas.
   components:
   - type: Fixtures
@@ -185,7 +185,7 @@
     - Borg
     - BasicSilicon
   - type: Machine
-    board: WeaponEnergyTurretCommandMachineCircuitboard
+    board: WeaponEnergyTurretSecurityMachineCircuitboard
   - type: DeviceNetwork
     receiveFrequencyId: TurretControl
     transmitFrequencyId: Turret

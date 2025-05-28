@@ -48,7 +48,7 @@
   abstract: true
   parent: WeaponEnergyTurretControlPanelFrame
   id: WeaponEnergyTurretStationControlPanelBase
-  name: turret control panel
+  name: sentry turret control panel
   description: A wall-mounted interface for remotely configuring the operational parameters of linked sentry turrets.
   components:
   - type: Appearance
@@ -206,15 +206,6 @@
     - Security
     - BasicSilicon
     - Borg
-  - type: DeployableTurretController
-    accessGroups:
-    - Security
-    - Silicon
-    accessLevels:
-    - Security
-    - BasicSilicon
-    - Borg
-
 
 - type: entity
   parent: WeaponEnergyTurretStationControlPanelBase
@@ -229,14 +220,6 @@
   #    - WeaponEnergyTurretCommandControlPanelElectronics
   - type: TurretTargetSettings
     exemptAccessLevels:
-    - Command
-    - BasicSilicon
-    - Borg
-  - type: DeployableTurretController
-    accessGroups:
-    - Command
-    - Silicon
-    accessLevels:
     - Command
     - BasicSilicon
     - Borg
