@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "copyright": "Taken from /tg/station 13 at https://github.com/tgstation/tgstation/commit/a2c5a0f15bad5c46a828771bbba6ea5752a9d191. Modified by K-Dynamic (github).",
+    "copyright": "Taken from /tg/station 13 at https://github.com/tgstation/tgstation/commit/a2c5a0f15bad5c46a828771bbba6ea5752a9d191. mirror and mirror_broke renamed to antique-mirror and antique_mirror, mirror and mirror_broke modified by K-Dynamic (github), antique-mirror and antique-mirror_broke repositioned by K-Dynamic.",
     "license": "CC-BY-SA-3.0",
     "size": {
         "x": 32,
@@ -11,7 +11,13 @@
             "name": "mirror"
         },
         {
+            "name": "antique-mirror"
+        },
+        {
             "name": "mirror_broke"
+        },
+        {
+            "name": "antique-mirror_broke"
         }
     ]
 }

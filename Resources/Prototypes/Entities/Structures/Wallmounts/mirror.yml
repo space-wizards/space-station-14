@@ -26,3 +26,13 @@
     interfaces:
       enum.MagicMirrorUiKey.Key:
         type: MagicMirrorBoundUserInterface
+
+- type: entity
+  parent: Mirror
+  id: MirrorAntique
+  name: mirror
+  suffix: antique
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/mirror.rsi
+    state: antique-mirror
