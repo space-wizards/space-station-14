@@ -382,7 +382,7 @@
   markingCategory: Tail
   speciesRestriction: []
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi
+  - sprite: Mobs/Customization/Reptilian/reptilian_tails.rsi
     state: tail_large_wagging
 
 - type: marking
