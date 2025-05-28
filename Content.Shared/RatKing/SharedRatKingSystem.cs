@@ -61,7 +61,7 @@ public abstract class SharedRatKingSystem : EntitySystem
         if (!TryComp(uid, out ActionsComponent? comp))
             return;
 
-        var actions = new Entity(uid, comp);
+        var actions = new Entity<ActionsComponent>(uid, comp);
         _action.RemoveAction(actions, component.ActionRaiseArmyEntity);
         _action.RemoveAction(actions, component.ActionDomainEntity);
         _action.RemoveAction(actions, component.ActionOrderStayEntity);
