@@ -4,8 +4,8 @@ meta:
   engineVersion: 260.2.0
   forkId: ""
   forkVersion: ""
-  time: 05/28/2025 07:15:53
-  entityCount: 1093
+  time: 05/28/2025 08:16:27
+  entityCount: 1096
 maps: []
 grids:
 - 2
@@ -3160,6 +3160,20 @@ entities:
     - type: Transform
       pos: 6.5,-16.5
       parent: 2
+- proto: ClothingNeckCloakCe
+  entities:
+  - uid: 1096
+    components:
+    - type: Transform
+      pos: 3.5963347,-25.420385
+      parent: 2
+- proto: ClothingNeckCloakTrans
+  entities:
+  - uid: 253
+    components:
+    - type: Transform
+      pos: 1.5464499,-25.441368
+      parent: 2
 - proto: ComfyChair
   entities:
   - uid: 384
@@ -4669,6 +4683,13 @@ entities:
     - type: Transform
       pos: 5.5,-23.5
       parent: 2
+- proto: GravityGeneratorMini
+  entities:
+  - uid: 725
+    components:
+    - type: Transform
+      pos: 9.5,-21.5
+      parent: 2
 - proto: Grille
   entities:
   - uid: 14
@@ -5446,21 +5467,21 @@ entities:
   - uid: 763
     components:
     - type: Transform
-      pos: 3.4958615,-25.41646
+      pos: 3.4869597,-25.514135
       parent: 2
-- proto: PlushieSharkPink
+- proto: PlushieSharkBlue
   entities:
-  - uid: 725
+  - uid: 1095
     components:
     - type: Transform
-      pos: 1.5491161,-25.699451
+      pos: 1.6245749,-25.800743
       parent: 2
 - proto: PlushieSlime
   entities:
   - uid: 772
     components:
     - type: Transform
-      pos: 1.5003853,-25.306501
+      pos: 1.5933249,-25.519493
       parent: 2
 - proto: PosterContrabandUnreadableAnnouncement
   entities:
