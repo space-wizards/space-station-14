@@ -1,0 +1,239 @@
+# Flavors for lollipops and gumballs
+
+- type: candyFlavor
+  id: berry
+  name: berry
+  color: '#800080'
+  flavors:
+  - berry
+
+- type: candyFlavor
+  id: ginger
+  name: ginger
+  color: '#fbdba0'
+  flavors:
+  - gingersoda
+
+- type: candyFlavor
+  id: bananashake
+  name: banana shake
+  color: '#ffe135'
+  flavors:
+  - bananahonk
+
+- type: candyFlavor
+  id: orange
+  name: orange
+  color: '#fa7000'
+  flavors:
+  - orange
+
+- type: candyFlavor
+  id: watermelon
+  name: watermelon
+  color: '#009345'
+  flavors:
+  - watermelon
+
+- type: candyFlavor
+  id: pineapple
+  name: pineapple
+  color: '#e6ae25'
+  flavors:
+  - pineapple
+
+- type: candyFlavor
+  id: rootbeer
+  name: root beer
+  color: '#290e05'
+  flavors:
+  - rootbeersoda
+
+- type: candyFlavor
+  id: cola
+  name: cola
+  color: '#3c3024'
+  flavors:
+  - cola
+
+- type: candyFlavor
+  id: icedtea
+  name: iced tea
+  color: '#e0a779'
+  flavors:
+  - icedtea
+
+- type: candyFlavor
+  id: peppermint
+  name: peppermint
+  color: '#47e7ad'
+  flavors:
+  - minty
+
+- type: candyFlavor
+  id: spearmint
+  name: spearmint
+  color: '#47e75b'
+  flavors:
+  - minty
+
+- type: candyFlavor
+  id: apple
+  name: apple
+  color: '#dd1533'
+  flavors:
+  - apple
+
+- type: candyFlavor
+  id: honey
+  name: honey
+  color: '#e79a3f'
+  flavors:
+  - honey
+
+- type: candyFlavor
+  id: bungo
+  name: bungo
+  color: '#ffe017'
+  flavors:
+  - bungo
+
+- type: candyFlavor
+  id: grape
+  name: grape
+  color: '#6c3461'
+  flavors:
+  - grape
+
+- type: candyFlavor
+  id: mystery
+  name: mystery flavor
+  color: '#202020'
+  flavors:
+  - spaceshroom # it's a "mysterious" flavor
+
+- type: candyFlavor
+  id: sourapple
+  name: sour apple # mouth-puckering!
+  color: '#68aa2e'
+  flavors:
+  - sour
+  - apple
+
+- type: candyFlavor
+  id: chilibungo
+  name: chili bungo # don't ask, i found chili mango lollipops on google, and bungos supposedly taste similar to mango
+  color: '#813c23'
+  flavors:
+  - spicy
+  - bungo
+
+- type: candyFlavor
+  id: tequilasunrise
+  name: tequila sunrise
+  color: '#ffe48c'
+  flavors:
+  - tequilasunrise
+
+- type: candyFlavor
+  id: mime
+  name: mime
+  color: '#eeeeee'
+  flavors:
+  - nothing
+
+- type: candyFlavor
+  id: honeylemonginger
+  name: honey lemon ginger
+  color: '#e6d781'
+  flavors:
+  - sour
+  - honey
+  - gingersoda
+
+# weird flavors below!
+
+- type: candyFlavor
+  id: feline
+  name: cat-flavored
+  color: '#7c4511'
+  flavors:
+  - cat
+
+- type: candyFlavor
+  id: stale
+  name: stale
+  color: '#96818e'
+  flavors:
+  - terrible
+  - sadness
+
+- type: candyFlavor
+  id: weh
+  name: weh # sorry, doesn't actually make you weh!
+  color: '#59b23a'
+  flavors:
+  - weh
+
+# Commenting out unique DeltaV flavours
+
+# - type: candyFlavor
+#   id: bubbletea
+#   name: bubble tea
+#   color: '#d2b18c'
+#   flavors:
+#   - bubbletea
+
+# - type: candyFlavor
+#   id: creamystrawberry
+#   name: creamy strawberry
+#   color: '#f8d9df'
+#   flavors:
+#   - creamy
+#   - candystrawberry
+
+# - type: candyFlavor
+#   id: strawberryyogurt
+#   name: strawberry yogurt
+#   color: '#f8d9df'
+#   flavors:
+#   - sour
+#   - candystrawberry
+#   - milk
+
+# - type: candyFlavor
+#   id: bubblegum
+#   name: bubble gum
+#   color: '#f988d9'
+#   flavors:
+#   - candybubblegum
+
+# - type: candyFlavor
+#   id: foof
+#   name: foof
+#   color: '#ff00ff'
+#   flavors:
+#   - pinkdrink
+
+# - type: candyFlavor
+#   id: blellow
+#   name: blellow
+#   color: '#737373'
+#   flavors:
+#   - blellow
+
+# - type: candyFlavor
+#   id: lemon
+#   name: lemon
+#   color: '#fef250'
+#   flavors:
+#   - lemondrop
+
+# - type: candyFlavor
+#   id: vanilla
+#   name: vanilla
+#   color: '#f9e5bc'
+#   flavors:
+#   - creamy
+#   - vanilla
+

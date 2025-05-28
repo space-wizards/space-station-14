@@ -169,6 +169,9 @@
   - type: ShowHealthIcons
     damageContainers:
     - Biological
+  - type: FabricateCandy # Borg Candy - DeltaV
+    actions:
+    - ActionFabricateGumball
 
   # Visual
   inventoryTemplateId: borgDutch
