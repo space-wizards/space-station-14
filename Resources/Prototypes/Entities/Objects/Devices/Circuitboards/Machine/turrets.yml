@@ -14,7 +14,7 @@
       TurretCompatibleWeapon:
         amount: 1
         defaultPrototype: WeaponLaserCannon
-        examineName: construction-insert-info-examine-name-laser-cannon 
+        examineName: construction-insert-info-examine-name-laser-cannon
       ProximitySensor:
         amount: 1
         defaultPrototype: ProximitySensor
@@ -22,8 +22,8 @@
       PowerCell:
         amount: 1
         defaultPrototype: PowerCellMedium
-        examineName: construction-insert-info-examine-name-power-cell 
-        
+        examineName: construction-insert-info-examine-name-power-cell
+
 - type: entity
   parent: WeaponEnergyTurretStationMachineCircuitboardBase
   id: WeaponEnergyTurretAIMachineCircuitboard
