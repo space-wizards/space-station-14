@@ -1155,5 +1155,13 @@ Entries:
   id: 139
   time: '2025-05-26T02:37:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37836
+- author: perryprog
+  changes:
+  - message: The server shutdown button in the admin window now requires confirmation.
+      This can be bypassed by using the console.
+    type: Tweak
+  id: 140
+  time: '2025-05-27T23:44:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37849
 Name: Admin
 Order: 2

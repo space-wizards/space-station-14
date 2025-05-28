@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Electrocution stun duration decreased overall; LV or hacking from 8 seconds
-      to 5, MV from 10 seconds to 7.5, HV from 12 seconds to 10.
-    type: Tweak
-  id: 8065
-  time: '2025-03-15T15:57:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34578
-- author: sowelipililimute
-  changes:
-  - message: Added NanoTask
-    type: Add
-  id: 8066
-  time: '2025-03-15T16:24:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34095
-- author: K-Dynamic
-  changes:
-  - message: Renamed "shell box (X)" to "ammunition box (.50 X)" to match existing
-      naming scheme, and are thus easier to find in certain vendors and fabricators.
-    type: Tweak
-  id: 8067
-  time: '2025-03-15T16:43:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35326
-- author: VerinSenpai
-  changes:
-  - message: Holopads now collide with walls instead of phasing through them.
-    type: Fix
-  id: 8068
-  time: '2025-03-16T00:41:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34300
 - author: Tayrtahn
   changes:
   - message: Cyborgs no longer have their brains removed if the salvage site they
@@ -3902,3 +3872,48 @@
   id: 8574
   time: '2025-05-27T11:47:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37725
+- author: PicklOH
+  changes:
+  - message: Gas Pipes are now named as such in the construction menu.
+    type: Tweak
+  id: 8575
+  time: '2025-05-27T16:26:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37881
+- author: ProfRenderer
+  changes:
+  - message: Cluwne ID cards now have a job icon.
+    type: Tweak
+  id: 8576
+  time: '2025-05-27T16:39:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37834
+- author: Moomoobeef
+  changes:
+  - message: Bookshelves now contain a more reasonable amount of books.
+    type: Tweak
+  id: 8577
+  time: '2025-05-27T21:21:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37866
+- author: SlamBamActionman
+  changes:
+  - message: Seismic Charges now trigger the timer when sent a signal, instead of
+      detonating instantly.
+    type: Tweak
+  - message: Signal Triggers for modular grenades now detonate after a 3 second delay.
+    type: Tweak
+  id: 8578
+  time: '2025-05-28T07:31:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34465
+- author: Minemoder5000
+  changes:
+  - message: Grape juice cups now contain grape juice.
+    type: Fix
+  id: 8579
+  time: '2025-05-28T09:32:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37895
+- author: Moomoobeef
+  changes:
+  - message: Made high-viz vest less visible.
+    type: Tweak
+  id: 8580
+  time: '2025-05-28T09:39:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37869
