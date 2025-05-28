@@ -281,7 +281,7 @@
   name: Dolby
   parent: MobCorgiPuppy
   id: MobDolby
-  description: Dobie Digital.
+  description: Dobie Digital. Now with Frost Shield!
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -339,6 +339,9 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalWalter
+  - type: Reflect
+    reflectProb: 1
+    spread: 75
 
 - type: entity
   name: Oswald
