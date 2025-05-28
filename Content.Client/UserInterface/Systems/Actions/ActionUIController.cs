@@ -184,7 +184,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         EntityManager.EventBus.RaiseLocalEvent(action, ref ev);
         if (!ev.Handled)
         {
-            Logger.Error($"Action {EntityManager.ToPrettyString(actionId)} did not handle ActionTargetAttemptEvent!");
+            Log.Error($"Action {EntityManager.ToPrettyString(actionId)} did not handle ActionTargetAttemptEvent!");
             return false;
         }
 
