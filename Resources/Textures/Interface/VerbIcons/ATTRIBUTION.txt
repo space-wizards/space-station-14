@@ -2,10 +2,10 @@ All icons are public domain.
 
 Pulled mostly from this source https://github.com/apancik/public-domain-icons.
 
-lock.svg by Lorc under CC BY 3.0
+lock.svg and lock-red.svg by Lorc under CC BY 3.0
 https://game-icons.net/1x1/lorc/padlock.html
 
-unlock.svg by Delapouite under CC BY 3.0
+unlock.svg and unlock-green by Delapouite under CC BY 3.0
 https://game-icons.net/1x1/delapouite/padlock-open.html
 
 bubbles.svg by Lorc under CC BY 3.0

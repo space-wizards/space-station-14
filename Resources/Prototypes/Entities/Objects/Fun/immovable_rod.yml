@@ -14,6 +14,8 @@
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
+  - type: TileFrictionModifier
+    modifier: 0
   - type: PointLight
     radius: 3
     color: red
@@ -32,6 +34,9 @@
   - type: WarpPoint
     follow: true
     location: immovable rod
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: ImmovableRodDespawn
@@ -77,11 +82,11 @@
     gravityState: true
   - type: InputMover
   - type: MovementSpeedModifier
-    weightlessAcceleration: 5
-    weightlessModifier: 2
-    weightlessFriction: 0
-    friction: 0
-    frictionNoInput: 0
+    baseWeightlessAcceleration: 5
+    baseWeightlessModifier: 2
+    baseWeightlessFriction: 0
+    baseFriction: 0
+    offGridFriction: 0
   - type: CanMoveInAir
   - type: MovementAlwaysTouching
   - type: NoSlip

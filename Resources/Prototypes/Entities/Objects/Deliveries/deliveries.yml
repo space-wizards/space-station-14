@@ -14,14 +14,11 @@
         enum.DeliveryVisualLayers.Lock:
           True: { visible: true }
           False: { visible: false }
-      enum.DeliveryVisuals.IsPriority:
+      enum.DeliveryVisuals.PriorityState:
         enum.DeliveryVisualLayers.PriorityTape:
-          True: { visible: true }
-          False: { visible: false }
-      enum.DeliveryVisuals.IsPriorityInactive:
-        enum.DeliveryVisualLayers.PriorityTape:
-          True: { shader: shaded, state: priority_inactive }
-          False: { shader: unshaded, state: priority }
+          Off: { visible: false }
+          Active: { visible: true, shader: unshaded, state: priority }
+          Inactive: { visible: true, shader: shaded, state: priority_inactive }
       enum.DeliveryVisuals.IsBroken:
         enum.DeliveryVisualLayers.Breakage:
           True: { visible: true }
@@ -30,17 +27,33 @@
         enum.DeliveryVisualLayers.Trash:
           True: { visible: true }
           False: { visible: false }
+      enum.DeliveryVisuals.IsBomb:
+        enum.DeliveryVisualLayers.Bomb:
+          Off: { visible: false }
+          Inactive: { visible: true }
+          Primed: { visible: true }
+        enum.DeliveryVisualLayers.BombPrimed:
+          Off: { visible: false }
+          Inactive: { visible: false }
+          Primed: { visible: true }
   - type: Label
     examinable: false
   - type: FingerprintReader
     failPopup: fingerprint-reader-fail
     failGlovesPopup: fingerprint-reader-fail-gloves
   - type: Delivery
+  - type: DeliveryRandomMultiplier
   - type: ContainerContainer
     containers:
       delivery: !type:Container
   - type: StealTarget
     stealGroup: Mail
+  - type: SimpleToolUsage
+    doAfter: 4
+    usageVerb: delivery-slice-verb
+  - type: ComponentTable
+    table: !type:NestedSelector
+      tableId: DeliveryModifierTable
 
 - type: entity
   parent: BaseDelivery
@@ -55,26 +68,38 @@
     - state: trash
       map: [ "enum.DeliveryVisualLayers.Trash" ]
       visible: false
-    - state: postmark
-    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
-      offset: -0.21875, -0.25
-    - state: fragile
-      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
-      visible: false
-    - state: locked
-      map: [ "enum.DeliveryVisualLayers.Lock" ]
     - state: priority
       map: [ "enum.DeliveryVisualLayers.PriorityTape" ]
       visible: false
       shader: unshaded
+    - state: fragile
+      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
+      visible: false
+    - state: postmark
+    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
+      offset: -0.21875, -0.25
+    - state: locked
+      map: [ "enum.DeliveryVisualLayers.Lock" ]
     - state: broken
       map: [ "enum.DeliveryVisualLayers.Breakage" ]
+      visible: false
+    - state: bomb
+      map: [ "enum.DeliveryVisualLayers.Bomb" ]
+      visible: false
+    - state: bomb_unshaded
+      map: [ "enum.DeliveryVisualLayers.BombPrimed" ]
+      shader: unshaded
       visible: false
   - type: MultiHandedItem
   - type: Item
     size: Huge
   - type: Delivery
-    spesoReward: 800
+    baseSpesoReward: 1000
+    baseSpesoPenalty: 250 # So low due to dept economy splitting all the earnings, but not splitting the penalty.
+  - type: Speech
+    speechVerb: Robotic
+  - type: SimpleToolUsage
+    doAfter: 6
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
@@ -93,26 +118,105 @@
     - state: trash
       map: [ "enum.DeliveryVisualLayers.Trash" ]
       visible: false
-    - state: postmark
-    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
-      offset: -0.125, -0.0625
-    - state: fragile
-      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
-      visible: false
-    - state: locked
-      map: [ "enum.DeliveryVisualLayers.Lock" ]
     - state: priority
       map: [ "enum.DeliveryVisualLayers.PriorityTape" ]
       visible: false
       shader: unshaded
+    - state: fragile
+      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
+      visible: false
+    - state: postmark
+    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
+      offset: -0.125, -0.0625
+    - state: locked
+      map: [ "enum.DeliveryVisualLayers.Lock" ]
     - state: broken
       map: [ "enum.DeliveryVisualLayers.Breakage" ]
+      visible: false
+    - state: bomb
+      map: [ "enum.DeliveryVisualLayers.Bomb" ]
+      visible: false
+    - state: bomb_unshaded
+      map: [ "enum.DeliveryVisualLayers.BombPrimed" ]
+      shader: unshaded
       visible: false
   - type: Item
     storedRotation: 90
   - type: Delivery
-    spesoReward: 400
+    baseSpesoReward: 500
+    baseSpesoPenalty: 125 # So low due to dept economy splitting all the earnings, but not splitting the penalty.
+  - type: Speech
+    speechVerb: Robotic
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
         tableId: LetterDeliveryRewards
+
+
+# Modifier Tables
+- type: entityTable
+  id: DeliveryModifierTable
+  table: !type:AllSelector
+    children:
+    - id: DeliveryModifierPriority
+      prob: 0.25
+    - id: DeliveryModifierFragile
+      prob: 0.25
+    - id: DeliveryModifierBomb
+      prob: 0.02 # Should happen maybe once or twice per game.
+
+- type: entity
+  id: DeliveryModifierPriority
+  description: Components to add when a delivery is rolled as priority.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: DeliveryPriority
+
+- type: entity
+  id: DeliveryModifierFragile
+  description: Components to add when a delivery is rolled as fragile.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: DeliveryFragile
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
+    soundHit:
+      collection: WeakHit
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: DeliveryOpenSounds
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+
+- type: entity
+  id: DeliveryModifierBomb
+  description: Components to add when a delivery is rolled as a bomb.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: DeliveryBomb
+  - type: AmbientSound
+    enabled: false
+    range: 8
+    sound:
+      path: /Audio/Effects/lightburn.ogg
+  - type: Explosive
+    explosionType: MicroBomb
+    totalIntensity: 120
+    intensitySlope: 4
+    maxIntensity: 30
+    canCreateVacuum: false
