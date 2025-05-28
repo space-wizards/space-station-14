@@ -1,0 +1,53 @@
+#theyre leg markings cuz im afraid i might break something if i tried making a new category for them
+
+- type: marking
+  id: BasicLeftSock
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, SlimePerson]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: _Ronstation/Mobs/Customization/socks.rsi
+    state: leftsock
+
+- type: marking
+  id: BasicRightSock
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, SlimePerson]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: _Ronstation/Mobs/Customization/socks.rsi
+    state: rightsock
+
+- type: marking
+  id: VoxLeftSock
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: _Ronstation/Mobs/Customization/socks.rsi
+    state: voxleftsock
+
+- type: marking
+  id: VoxRightSock
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: _Ronstation/Mobs/Customization/socks.rsi
+    state: voxrightsock
