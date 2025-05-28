@@ -28,7 +28,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: Nuclear Operative Outpost
+      name: grid
     - type: Transform
       pos: -0.9923513,-0.44010204
       parent: 1295
@@ -2089,11 +2089,13 @@ entities:
           1,6:
             0: 31880
           2,5:
-            0: 61661
+            0: 61645
+            4: 16
           2,6:
             0: 49183
           3,5:
-            0: 64733
+            0: 64717
+            4: 16
           3,6:
             0: 4099
           4,5:
@@ -2212,6 +2214,21 @@ entities:
           - 0
           - 0
         - volume: 2500
+          temperature: 293.14948
+          moles:
+          - 16.99477
+          - 63.932716
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
           temperature: 293.14975
           moles:
           - 20.078888
@@ -2232,7 +2249,6 @@ entities:
   - uid: 1295
     components:
     - type: MetaData
-      name: Nuclear Operative Outpost
     - type: Transform
     - type: Map
       mapPaused: True
@@ -11203,6 +11219,20 @@ entities:
     - type: Transform
       pos: 7.2963314,6.6780577
       parent: 1
+- proto: CigPackSyndicate
+  entities:
+  - uid: 4123
+    components:
+    - type: Transform
+      pos: -21.437492,-3.2795863
+      parent: 1
+- proto: Katana
+  entities:
+  - uid: 4151
+    components:
+    - type: Transform
+      pos: 0.47005105,16.491287
+      parent: 1
 - proto: CleanerDispenser
   entities:
   - uid: 947
@@ -11246,6 +11276,15 @@ entities:
     - type: Transform
       pos: 17.540028,-1.3454366
       parent: 1
+- proto: ClothingBackpackDuffelSyndicateCostumeClown
+  entities:
+  - uid: 4121
+    components:
+    - type: Transform
+      parent: 1131
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ClothingBackpackDuffelSyndicateFilledMedical
   entities:
   - uid: 553
@@ -11416,6 +11455,13 @@ entities:
       parent: 1051
     - type: Physics
       canCollide: False
+- proto: ClothingHeadHatRichard
+  entities:
+  - uid: 4150
+    components:
+    - type: Transform
+      pos: -17.45758,-10.959807
+      parent: 1
 - proto: ClothingHeadHatSyndieMAA
   entities:
   - uid: 1084
@@ -11467,6 +11513,15 @@ entities:
     - type: Transform
       pos: -8.4079685,16.403774
       parent: 1
+- proto: ClothingNeckCloakAdmin
+  entities:
+  - uid: 847
+    components:
+    - type: Transform
+      parent: 1100
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ClothingNeckCloakNanotrasen
   entities:
   - uid: 4142
@@ -11493,6 +11548,51 @@ entities:
     - type: Transform
       pos: 3.4606102,-16.581186
       parent: 1
+- proto: ClothingOuterBattlesuitClown
+  entities:
+  - uid: 4119
+    components:
+    - type: Transform
+      parent: 1131
+    - type: GroupExamine
+      group:
+      - hoverMessage: ""
+        contextText: verb-examine-group-other
+        icon: /Textures/Interface/examine-star.png
+        components:
+        - Armor
+        - ClothingSpeedModifier
+        entries:
+        - message: >-
+            This decreases your running speed by [color=yellow]20%[/color].
+
+            This decreases your walking speed by [color=yellow]15%[/color].
+          priority: 0
+          component: ClothingSpeedModifier
+        - message: >-
+            It provides the following protection:
+
+            - [color=yellow]Blunt[/color] damage reduced by [color=lightblue]40%[/color].
+
+            - [color=yellow]Slash[/color] damage reduced by [color=lightblue]40%[/color].
+
+            - [color=yellow]Piercing[/color] damage reduced by [color=lightblue]50%[/color].
+
+            - [color=yellow]Caustic[/color] damage reduced by [color=lightblue]30%[/color].
+
+            - [color=yellow]Heat[/color] damage reduced by [color=lightblue]50%[/color].
+
+            - [color=yellow]Radiation[/color] damage reduced by [color=lightblue]90%[/color].
+
+            - [color=blue]Stamina[/color] damage reduced by [color=lightblue]30%[/color].
+
+            - [color=orange]Explosion[/color] damage reduced by [color=lightblue]60%[/color].
+          priority: 0
+          component: Armor
+        title: null
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ClothingOuterHardsuitSyndie
   entities:
   - uid: 1550
@@ -11582,6 +11682,15 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: ClothingShoeSlippersLizard
+  entities:
+  - uid: 1101
+    components:
+    - type: Transform
+      parent: 1100
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ClothingUniformJumpskirtTacticalMaid
   entities:
   - uid: 1081
@@ -11623,6 +11732,15 @@ entities:
       inSlot: jumpsuit
     - type: Physics
       canCollide: False
+- proto: ClownRecorder
+  entities:
+  - uid: 4120
+    components:
+    - type: Transform
+      parent: 1131
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: CombatKnife
   entities:
   - uid: 3879
@@ -11894,6 +12012,13 @@ entities:
     components:
     - type: Transform
       pos: 17.637136,2.0634985
+      parent: 1
+- proto: DefibrillatorSyndicate
+  entities:
+  - uid: 4122
+    components:
+    - type: Transform
+      pos: 3.5050516,-17.289484
       parent: 1
 - proto: DiceBag
   entities:
@@ -13535,6 +13660,104 @@ entities:
     - type: Transform
       pos: -15.579121,9.594656
       parent: 1
+- proto: FoodPieBananaCream
+  entities:
+  - uid: 1218
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 1235
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 1307
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 2631
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 2681
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 2683
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 4109
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 4110
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 4111
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 4112
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 4113
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 4114
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 4115
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 4116
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 4117
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
+  - uid: 4118
+    components:
+    - type: Transform
+      parent: 1217
+    - type: Physics
+      canCollide: False
 - proto: GasMinerNitrogenStation
   entities:
   - uid: 2402
@@ -14300,12 +14523,12 @@ entities:
       parent: 1
     - type: Pullable
       prevFixedRotation: True
-- proto: Katana
+- proto: Intellicard
   entities:
-  - uid: 2631
+  - uid: 846
     components:
     - type: Transform
-      pos: 0.5366156,16.340948
+      pos: 2.386428,0.67040086
       parent: 1
 - proto: KitchenKnife
   entities:
@@ -14342,6 +14565,87 @@ entities:
     - type: Transform
       pos: -21.39071,-6.821676
       parent: 1
+- proto: LauncherCreamPie
+  entities:
+  - uid: 1217
+    components:
+    - type: Transform
+      parent: 1131
+    - type: Storage
+      storedItems:
+        1218:
+          position: 0,0
+          _rotation: East
+        1235:
+          position: 2,0
+          _rotation: East
+        1307:
+          position: 4,0
+          _rotation: East
+        2631:
+          position: 6,0
+          _rotation: East
+        2681:
+          position: 0,1
+          _rotation: East
+        2683:
+          position: 2,1
+          _rotation: East
+        4109:
+          position: 4,1
+          _rotation: East
+        4110:
+          position: 6,1
+          _rotation: East
+        4111:
+          position: 0,2
+          _rotation: East
+        4112:
+          position: 2,2
+          _rotation: East
+        4113:
+          position: 4,2
+          _rotation: East
+        4114:
+          position: 6,2
+          _rotation: East
+        4115:
+          position: 0,3
+          _rotation: East
+        4116:
+          position: 2,3
+          _rotation: East
+        4117:
+          position: 4,3
+          _rotation: East
+        4118:
+          position: 6,3
+          _rotation: East
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 1218
+          - 1235
+          - 1307
+          - 2631
+          - 2681
+          - 2683
+          - 4109
+          - 4110
+          - 4111
+          - 4112
+          - 4113
+          - 4114
+          - 4115
+          - 4116
+          - 4117
+          - 4118
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: LiquidNitrogenCanister
   entities:
   - uid: 1262
@@ -14375,36 +14679,6 @@ entities:
     - type: Transform
       pos: 8.5,21.5
       parent: 1
-    - type: Lock
-      locked: False
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1099
-          - 1098
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 1100
-    components:
-    - type: MetaData
-      name: closet
-    - type: Transform
-      pos: 12.5,21.5
-      parent: 1
-    - type: Lock
-      locked: False
-  - uid: 1101
-    components:
-    - type: MetaData
-      name: closet
-    - type: Transform
-      pos: 16.5,17.5
-      parent: 1
     - type: EntityStorage
       air:
         volume: 200
@@ -14431,9 +14705,86 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - invalid
-          - invalid
-          - invalid
+          - 1098
+          - 1099
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+  - uid: 1100
+    components:
+    - type: MetaData
+      name: closet
+    - type: Transform
+      pos: 12.5,21.5
+      parent: 1
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 847
+          - 1101
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+    - type: Lock
+      locked: False
+  - uid: 1131
+    components:
+    - type: Transform
+      pos: 16.5,17.5
+      parent: 1
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14594
+        moles:
+        - 1.4778061
+        - 5.559366
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: Lock
+      locked: False
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 1217
+          - 4119
+          - 4120
+          - 4121
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -14521,7 +14872,7 @@ entities:
     - type: Transform
       pos: 0.55076575,15.708136
       parent: 1
-- proto: MailSpamLetter
+- proto: MailSyndicateSpam
   entities:
   - uid: 1418
     components:
@@ -14723,7 +15074,7 @@ entities:
       pos: -3.5,1.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -16525.93
+      secondsUntilStateChange: -16496.336
       state: Opening
   - uid: 730
     components:
@@ -14731,7 +15082,7 @@ entities:
       pos: -3.5,2.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -16526.797
+      secondsUntilStateChange: -16497.203
       state: Opening
 - proto: MinimoogInstrument
   entities:
@@ -15295,18 +15646,6 @@ entities:
     components:
     - type: Transform
       pos: -21.5,-0.5
-      parent: 1
-- proto: PowerCellHigh
-  entities:
-  - uid: 846
-    components:
-    - type: Transform
-      pos: 3.3881893,-17.49267
-      parent: 1
-  - uid: 847
-    components:
-    - type: Transform
-      pos: 3.5600643,-17.133295
       parent: 1
 - proto: PowerCellMicroreactor
   entities:
@@ -17975,29 +18314,21 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         118:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         119:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         120:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         117:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         116:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         121:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         122:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         123:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 1277
     components:
     - type: MetaData
@@ -18009,11 +18340,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1273:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1274:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignalButtonDirectional
   entities:
   - uid: 1568
@@ -18027,29 +18356,21 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1559:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1560:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1561:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1562:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1569:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1570:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1571:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1572:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignalTrigger
   entities:
   - uid: 582
@@ -18243,9 +18564,9 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -17.5,-2.5
       parent: 1
-- proto: SpawnMobCat
+- proto: SpawnMobCatGeneric
   entities:
-  - uid: 2683
+  - uid: 4125
     components:
     - type: Transform
       pos: -20.5,-0.5
@@ -18259,10 +18580,10 @@ entities:
       parent: 1
 - proto: SpawnMobCleanBot
   entities:
-  - uid: 2681
+  - uid: 4124
     components:
     - type: Transform
-      pos: -18.5,-1.5
+      pos: -23.5,-4.5
       parent: 1
 - proto: SpawnMobMedibot
   entities:
@@ -24526,15 +24847,6 @@ entities:
     - type: Transform
       pos: 0.5,-21.5
       parent: 1
-- proto: WarpPoint
-  entities:
-  - uid: 1131
-    components:
-    - type: Transform
-      pos: 1.5,2.5
-      parent: 1
-    - type: WarpPoint
-      location: Nuclear Operative Outpost
 - proto: WaterCooler
   entities:
   - uid: 2670
@@ -24831,7 +25143,7 @@ entities:
       pos: -15.5,-5.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -18795.492
+      secondsUntilStateChange: -18765.898
       state: Opening
   - uid: 1244
     components:
@@ -24839,6 +25151,6 @@ entities:
       pos: -15.5,-4.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -18795.926
+      secondsUntilStateChange: -18766.332
       state: Opening
 ...
