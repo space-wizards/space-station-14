@@ -10,18 +10,16 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class PlayLocalSoundCommand : IConsoleCommand
+public sealed class PlayLocalSoundCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IResourceManager _res = default!;
 
-    public string Command => "playlocalsound";
-    public string Description => Loc.GetString("play-local-sound-command-description");
-    public string Help => Loc.GetString("play-local-sound-command-help");
+    public override string Command => "playlocalsound";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var filter = Filter.Empty();
         var audio = AudioParams.Default;
@@ -32,13 +30,13 @@ public sealed class PlayLocalSoundCommand : IConsoleCommand
         var playerEntity = shell.Player?.AttachedEntity;
         if (playerEntity == null)
         {
-            shell.WriteLine(Loc.GetString("play-local-sound-command-no-entity"));
+            shell.WriteLine(Loc.GetString("cmd-playlocalsound-no-entity"));
             return;
         }
 
         if (args.Length == 0) // No arguments, show command help.
         {
-            shell.WriteLine(Loc.GetString("play-local-sound-command-help"));
+            shell.WriteLine(Loc.GetString("cmd-playlocalsound-help"));
             return;
         }
 
@@ -58,7 +56,7 @@ public sealed class PlayLocalSoundCommand : IConsoleCommand
             }
             else
             {
-                shell.WriteError(Loc.GetString("play-local-sound-command-volume-parse", ("volume", args[1])));
+                shell.WriteError(Loc.GetString("cmd-playlocalsound-volume-parse", ("volume", args[1])));
                 return;
             }
         }
@@ -81,7 +79,7 @@ public sealed class PlayLocalSoundCommand : IConsoleCommand
 
                 if (!_playerManager.TryGetSessionByUsername(username, out var session))
                 {
-                    shell.WriteError(Loc.GetString("play-local-sound-command-player-not-found",
+                    shell.WriteError(Loc.GetString("cmd-playlocalsound-player-not-found",
                         ("username", username)));
                     continue; // Still use remaining names
                 }
@@ -93,35 +91,33 @@ public sealed class PlayLocalSoundCommand : IConsoleCommand
         audio = audio.AddVolume(-8); // Matching /playglobalsound
         var sound = new SoundPathSpecifier(args[0], audio);
 
-        var sysMan = IoCManager.Resolve<IEntitySystemManager>();
-        var audioSys = sysMan.GetEntitySystem<SharedAudioSystem>();
         if (followRunner)
         {
             // Note: if playerEntity isn't in a client's PVS (the runner could be a ghost), they will
             // never hear this. This is not true if followRunner is false. This is not totally ideal.
-            audioSys.PlayEntity(sound, filter, playerEntity.Value, replay);
+            _audioSystem.PlayEntity(sound, filter, playerEntity.Value, replay);
         }
         else
         {
             // Whatever the runner's parent is is /probably/ what we want to be stationary to.
-            var coords = _entManager.GetComponent<TransformComponent>(playerEntity.Value).Coordinates;
-            audioSys.PlayStatic(sound, filter, coords, replay);
+            var coords = EntityManager.GetComponent<TransformComponent>(playerEntity.Value).Coordinates;
+            _audioSystem.PlayStatic(sound, filter, coords, replay);
         }
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         return args.Length switch
         {
             1 => CompletionResult.FromHintOptions(CompletionHelper.AudioFilePath(args[0], _protoManager, _res),
-                Loc.GetString("play-local-sound-command-arg-path")),
+                Loc.GetString("cmd-playlocalsound-arg-path")),
 
-            2 => CompletionResult.FromHint(Loc.GetString("play-local-sound-command-arg-volume")),
+            2 => CompletionResult.FromHint(Loc.GetString("cmd-playlocalsound-arg-volume")),
 
-            3 => CompletionResult.FromHint(Loc.GetString("play-local-sound-command-arg-follow")),
+            3 => CompletionResult.FromHint(Loc.GetString("cmd-playlocalsound-arg-follow")),
 
             >= 4 => CompletionResult.FromHintOptions(CompletionHelper.SessionNames(),
-                Loc.GetString("play-local-sound-command-arg-usern", ("user", args.Length - 3))),
+                Loc.GetString("cmd-playlocalsound-arg-usern", ("user", args.Length - 3))),
 
             _ => CompletionResult.Empty,
         };
