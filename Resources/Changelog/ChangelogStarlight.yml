@@ -6269,4 +6269,11 @@ Entries:
   id: 868
   time: '2025-05-28T20:09:33.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/706
+- author: Happyrobot33
+  changes:
+  - message: Fixed Nukies. Again.
+    type: Fix
+  id: 869
+  time: '2025-05-28T20:11:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/708
 
