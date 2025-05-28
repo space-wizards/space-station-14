@@ -980,6 +980,17 @@
   - type: VaporVisuals
 
 - type: entity
+  id: BulletHivebot
+  name: hivebot bullet
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 10
+
+- type: entity
   id: BulletCannonBall
   name: cannonball
   parent: BaseBulletTrigger
