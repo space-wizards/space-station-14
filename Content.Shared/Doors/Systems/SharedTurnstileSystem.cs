@@ -55,7 +55,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
         {
             var pullerPulled = pullerMethod is EntranceMethod.Pulled or EntranceMethod.ChainPulled;
             var method = pullerPulled ? EntranceMethod.ChainPulled : EntranceMethod.Pulled;
-            ent.Comp.CollideExceptions.Add(args.OtherEntity, method);
+            ent.Comp.CollideExceptions[args.OtherEntity] = method;
             Dirty(ent);
             args.Cancelled = true;
             return;
@@ -70,9 +70,9 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
         if (ent.Comp.PriedExceptions.ContainsKey(args.OtherEntity))
         {
-            ent.Comp.CollideExceptions.Add(args.OtherEntity, EntranceMethod.Forced);
+            ent.Comp.CollideExceptions[args.OtherEntity] = EntranceMethod.Forced;
             if (_pulling.GetPulling(args.OtherEntity) is { } uid)
-                ent.Comp.CollideExceptions.Add(uid, EntranceMethod.Pulled);
+                ent.Comp.CollideExceptions[uid] = EntranceMethod.Pulled;
 
             ent.Comp.PriedExceptions.Remove(args.OtherEntity);
             args.Cancelled = true;
@@ -87,7 +87,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
             ent.Comp.CollideExceptions.Add(args.OtherEntity, EntranceMethod.Access);
             if (_pulling.GetPulling(args.OtherEntity) is { } uid)
-                ent.Comp.CollideExceptions.Add(uid, EntranceMethod.Pulled);
+                ent.Comp.CollideExceptions[uid] = EntranceMethod.Pulled;
 
             args.Cancelled = true;
             Dirty(ent);
@@ -186,8 +186,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
     private void OnAfterPry(Entity<TurnstileComponent> ent, ref PriedEvent args)
     {
-        ent.Comp.PriedExceptions.Remove(args.User);
-        ent.Comp.PriedExceptions.Add(args.User, _timing.CurTime + ent.Comp.PryExpirationTime);
+        ent.Comp.PriedExceptions[args.User] = _timing.CurTime + ent.Comp.PryExpirationTime;
         _popup.PopupClient(Loc.GetString("turnstile-component-popup-forced", ("turnstile", ent.Owner)), ent.Owner, args.User);
         Dirty(ent);
     }
