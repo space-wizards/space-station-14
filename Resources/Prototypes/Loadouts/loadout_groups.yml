@@ -962,6 +962,7 @@
   id: AtmosphericTechnicianShoes
   name: loadout-group-atmospheric-technician-shoes
   loadouts:
+  - WorkBoots #imp
   - WhiteShoes
   - EngineeringWinterBoots
 
