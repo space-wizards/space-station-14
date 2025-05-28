@@ -1,3 +1,5 @@
+# TODO: autogenerate these, bottles, pills, and vials based on the reagent definitions and not explicitly like this
+
 - type: entity
   name: jug
   parent: BaseItem
@@ -418,4 +420,88 @@
       beaker:
         reagents:
         - ReagentId: WeldingFuel
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: bicaridine
+  id: JugBicaridine
+  components:
+  - type: Label
+    currentLabel: reagent-name-bicaridine
+  - type: SolutionContainerManager
+    solutions:
+      beakers:
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dermaline
+  id: JugDermaline
+  components:
+  - type: Label
+    currentLabel: reagent-name-dermaline
+  - type: SolutionContainerManager
+    solutions:
+      beakers:
+        reagents:
+        - ReagentId: Dermaline
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dexalin
+  id: JugDexalin
+  components:
+  - type: Label
+    currentLabel: reagent-name-dexalin
+  - type: SolutionContainerManager
+    solutions:
+      beakers:
+        reagents:
+        - ReagentId: Dexalin
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dexalin+
+  id: JugDexalinPlus
+  components:
+  - type: Label
+    currentLabel: reagent-name-dexalin-plus
+  - type: SolutionContainerManager
+    solutions:
+      beakers:
+        reagents:
+        - ReagentId: DexalinPlus
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dylovene
+  id: JugDylovene
+  components:
+  - type: Label
+    currentLabel: reagent-name-dylovene
+  - type: SolutionContainerManager
+    solutions:
+      beakers:
+        reagents:
+        - ReagentId: Dylovene
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: saline
+  id: JugSaline
+  components:
+  - type: Label
+    currentLabel: reagent-name-saline
+  - type: SolutionContainerManager
+    solutions:
+      beakers:
+        reagents:
+        - ReagentId: Saline
           Quantity: 200
