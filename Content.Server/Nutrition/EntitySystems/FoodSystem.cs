@@ -52,7 +52,6 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly ReactiveSystem _reaction = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedDestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
@@ -442,8 +441,10 @@ public sealed class FoodSystem : EntitySystem
             // Check if the food is in the whitelist
             if (_whitelistSystem.IsWhitelistPass(ent.Comp1.SpecialDigestible, food))
                 return true;
-            // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
-            return false;
+
+            // If their diet is whitelist exclusive, then they cannot eat anything but what follows their whitelisted tags. Else, they can eat their tags AND human food.
+            if (ent.Comp1.IsSpecialDigestibleExclusive)
+                return false;
         }
 
         if (component.RequiresSpecialDigestion)

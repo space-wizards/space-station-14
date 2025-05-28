@@ -10,8 +10,8 @@ namespace Content.Server.Atmos.Piping.EntitySystems;
 
 public sealed class AtmosPipeAppearanceSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override void Initialize()
     {
