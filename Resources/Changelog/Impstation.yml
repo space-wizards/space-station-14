@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Command dressers now have a much larger variety of clothing!
-    type: Tweak
-  - message: Command mantles count for a thief's objective to steal Command cloaks.
-    type: Tweak
-  id: 1247
-  time: '2025-03-07T01:42:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1840
 - author: honeyed-lemons
   changes:
   - message: adds Synthflesh and a new Cryo chem, Brutoxidone, which heals brute.
@@ -4210,3 +4201,13 @@
   id: 1746
   time: '2025-05-28T07:08:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2601
+- author: Tomce795
+  changes:
+  - message: Imported healthy gumballs from the Delta sector! Look for them in your
+      nearest medical cyborg.
+    type: Add
+  - message: We have figured out how to put lollipops in our mouths.
+    type: Add
+  id: 1747
+  time: '2025-05-28T09:05:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2518
