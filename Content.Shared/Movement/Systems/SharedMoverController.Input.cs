@@ -5,11 +5,12 @@ using Content.Shared.Follower.Components;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Robust.Shared.Maths;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -195,6 +196,12 @@ namespace Content.Shared.Movement.Systems
 
         private bool TryUpdateRelative(EntityUid uid, InputMoverComponent mover, TransformComponent xform)
         {
+            // Starlight Start
+            if (RelayQuery.TryComp(uid, out var relay)
+                && XformQuery.TryComp(relay.RelayEntity, out var relayXform))
+                xform = relayXform;
+            // Starlight End
+
             var relative = xform.GridUid;
             relative ??= xform.MapUid;
 
