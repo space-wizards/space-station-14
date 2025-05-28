@@ -246,4 +246,26 @@
   id: 29
   time: '2025-05-21T07:51:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37669
+- author: Southbridge
+  changes:
+  - message: On Amber, added sentry turrets to the AI core, armory, and vault.
+    type: Add
+  id: 30
+  time: '2025-05-27T23:08:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37859
+- author: Southbridge
+  changes:
+  - message: Added Decal Spawners
+    type: Add
+  id: 31
+  time: '2025-05-27T23:55:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37066
+- author: ArtisticRoomba
+  changes:
+  - message: The ATS has been updated to allow atmos techs to easily refill the ATS
+      with air after a spacing.
+    type: Tweak
+  id: 32
+  time: '2025-05-28T07:52:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37891
 Order: 1
