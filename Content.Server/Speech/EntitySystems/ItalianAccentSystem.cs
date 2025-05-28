@@ -1,4 +1,3 @@
-using System.Text;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
@@ -8,7 +7,6 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class ItalianAccentSystem : EntitySystem
 {
-    private static readonly Regex RegexProsciutto = new(@"(?<=\s|^)prosciutto(?=\s|$)", RegexOptions.IgnoreCase);
     private static readonly Regex RegexFirstWord = new(@"^(\S+)");
 
 
@@ -27,25 +25,18 @@ public sealed class ItalianAccentSystem : EntitySystem
         // Order:
         // Do text manipulations
         // Then alternative meat
-        // Last prefix funnyies
+        // Last prefix funnies
 
         // direct word replacements
-        var msg = _replacement.ApplyReplacements(message, "italian");
+        var msg = message;
 
-        // Half the time meat should be "pepperoni" instead of "prosciutto"
-        foreach (Match match in RegexProsciutto.Matches(msg))
-        {
-            if (_random.Prob(0.5f))
-            {
-                msg = msg.Remove(match.Index, match.Length).Insert(match.Index, "pepperoni");
-            }
-        }
+        msg = _replacement.ApplyReplacements(msg, "italian");
 
         // Prefix
         if (_random.Prob(0.05f))
         {
             //Checks if the first word of the sentence is all caps
-            //So the prefix can be allcapped and to not resanitize the captial
+            //So the prefix can be all-capped and to not re-sanitize the capital
             var firstWordAllCaps = !RegexFirstWord.Match(msg).Value.Any(char.IsLower);
             var pick = _random.Next(1, 5);
 
