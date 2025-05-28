@@ -550,7 +550,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 InvalidateVisuals(ent, otherTile);
-                HandleDecompressionFloorRip(mapGrid, otherTile, otherTile.MonstermosInfo.CurrentTransferAmount);
+                HandleDecompressionFloorRip((owner, mapGrid), otherTile, otherTile.MonstermosInfo.CurrentTransferAmount);
             }
 
             if (GridImpulse && tileCount > 0)
