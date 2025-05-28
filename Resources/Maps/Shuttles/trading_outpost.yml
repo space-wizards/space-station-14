@@ -4,8 +4,8 @@ meta:
   engineVersion: 260.2.0
   forkId: ""
   forkVersion: ""
-  time: 05/28/2025 07:05:21
-  entityCount: 1094
+  time: 05/28/2025 07:15:53
+  entityCount: 1093
 maps: []
 grids:
 - 2
@@ -5657,12 +5657,6 @@ entities:
       parent: 2
 - proto: PoweredSmallLight
   entities:
-  - uid: 253
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,4.5
-      parent: 2
   - uid: 259
     components:
     - type: Transform
