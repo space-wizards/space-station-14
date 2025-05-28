@@ -32,3 +32,6 @@
       mix: '#947507'
   - type: StaticPrice
     price: 40
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100

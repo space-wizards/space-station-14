@@ -115,11 +115,12 @@
   description: A medium voltage power cable.
   components:
   - type: Sprite
-    color: Yellow
     sprite: Structures/Power/Cables/mv_cable.rsi
-    state: mvcable_0
+    layers:
+    - state: mvcable_0
+      color: Yellow
+    - state: mvstripes_0
   - type: Icon
-    color: Yellow
     sprite: Structures/Power/Cables/mv_cable.rsi
     state: mvcable_4
   - type: NodeContainer
@@ -151,6 +152,7 @@
         acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: mvcable_
+    extraLayerPrefix: mvstripes_
 
 - type: entity
   id: CableMVUncuttable

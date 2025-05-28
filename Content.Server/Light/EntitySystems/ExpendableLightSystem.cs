@@ -1,10 +1,14 @@
 using Content.Server.Light.Components;
+using Content.Server.Stack;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IgnitionSource;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light.Components;
+using Content.Shared.NameModifier.EntitySystems;
+using Content.Shared.Stacks;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -23,7 +27,8 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly StackSystem _stackSystem = default!;
+        [Dependency] private readonly NameModifierSystem _nameModifier = default!;
 
         private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
 
@@ -34,6 +39,8 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<ExpendableLightComponent, ComponentInit>(OnExpLightInit);
             SubscribeLocalEvent<ExpendableLightComponent, UseInHandEvent>(OnExpLightUse);
             SubscribeLocalEvent<ExpendableLightComponent, GetVerbsEvent<ActivationVerb>>(AddIgniteVerb);
+            SubscribeLocalEvent<ExpendableLightComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<ExpendableLightComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
         }
 
         public override void Update(float frameTime)
@@ -59,7 +66,7 @@ namespace Content.Server.Light.EntitySystems
                 {
                     case ExpendableLightState.Lit:
                         component.CurrentState = ExpendableLightState.Fading;
-                        component.StateExpiryTime = component.FadeOutDuration;
+                        component.StateExpiryTime = (float)component.FadeOutDuration.TotalSeconds;
 
                         UpdateVisualizer(ent);
 
@@ -68,9 +75,7 @@ namespace Content.Server.Light.EntitySystems
                     default:
                     case ExpendableLightState.Fading:
                         component.CurrentState = ExpendableLightState.Dead;
-                        var meta = MetaData(ent);
-                        _metaData.SetEntityName(ent, Loc.GetString(component.SpentName), meta);
-                        _metaData.SetEntityDescription(ent, Loc.GetString(component.SpentDesc), meta);
+                        _nameModifier.RefreshNameModifiers(ent.Owner);
 
                         _tagSystem.AddTag(ent, TrashTag);
 
@@ -104,15 +109,47 @@ namespace Content.Server.Light.EntitySystems
                 RaiseLocalEvent(ent, ref ignite);
 
                 component.CurrentState = ExpendableLightState.Lit;
-                component.StateExpiryTime = component.GlowDuration;
 
                 UpdateSounds(ent);
                 UpdateVisualizer(ent);
+            }
+            return true;
+        }
 
-                return true;
+        private void OnInteractUsing(EntityUid uid, ExpendableLightComponent component, ref InteractUsingEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (!TryComp(args.Used, out StackComponent? stack))
+                return;
+
+            if (stack.StackTypeId != component.RefuelMaterialID)
+                return;
+
+            if (component.StateExpiryTime + component.RefuelMaterialTime.TotalSeconds >= component.RefuelMaximumDuration.TotalSeconds)
+                return;
+
+            if (component.CurrentState is ExpendableLightState.Dead)
+            {
+                component.CurrentState = ExpendableLightState.BrandNew;
+                component.StateExpiryTime = (float)component.RefuelMaterialTime.TotalSeconds;
+
+                _nameModifier.RefreshNameModifiers(uid);
+                _stackSystem.SetCount(args.Used, stack.Count - 1, stack);
+                UpdateVisualizer((uid, component));
+                return;
             }
 
-            return false;
+            component.StateExpiryTime += (float)component.RefuelMaterialTime.TotalSeconds;
+            _stackSystem.SetCount(args.Used, stack.Count - 1, stack);
+            args.Handled = true;
+        }
+
+        private void OnRefreshNameModifiers(Entity<ExpendableLightComponent> entity, ref RefreshNameModifiersEvent args)
+        {
+            if (entity.Comp.CurrentState is ExpendableLightState.Dead)
+                args.AddModifier("expendable-light-spent-prefix");
         }
 
         private void UpdateVisualizer(Entity<ExpendableLightComponent> ent, AppearanceComponent? appearance = null)
@@ -171,6 +208,7 @@ namespace Content.Server.Light.EntitySystems
             }
 
             component.CurrentState = ExpendableLightState.BrandNew;
+            component.StateExpiryTime = (float)component.GlowDuration.TotalSeconds;
             EntityManager.EnsureComponent<PointLightComponent>(uid);
         }
 
