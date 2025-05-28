@@ -4,8 +4,8 @@ meta:
   engineVersion: 251.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/19/2025 19:34:20
-  entityCount: 27190
+  time: 05/27/2025 14:40:55
+  entityCount: 27194
 maps:
 - 1
 grids:
@@ -8608,7 +8608,7 @@ entities:
       pos: 11.5,-27.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -28208.31
+      secondsUntilStateChange: -29469.656
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12690,6 +12690,34 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-18.5
+      parent: 2
+- proto: BaseComputer
+  entities:
+  - uid: 366
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 23.5,-24.5
+      parent: 2
+  - uid: 3461
+    components:
+    - type: Transform
+      pos: 17.5,41.5
+      parent: 2
+  - uid: 5542
+    components:
+    - type: Transform
+      pos: -5.5,42.5
+      parent: 2
+  - uid: 5543
+    components:
+    - type: Transform
+      pos: 6.5,56.5
+      parent: 2
+  - uid: 5546
+    components:
+    - type: Transform
+      pos: -25.5,14.5
       parent: 2
 - proto: BaseSeclinkRadio
   entities:
@@ -56265,7 +56293,7 @@ entities:
   - uid: 27335
     components:
     - type: Transform
-      pos: -24.825985,14.546488
+      pos: -24.486248,14.395884
       parent: 2
 - proto: ClothingHandsGlovesColorYellowBudget
   entities:
@@ -56356,7 +56384,7 @@ entities:
   - uid: 612
     components:
     - type: Transform
-      pos: 7.3366795,43.344315
+      pos: -40.579662,41.311012
       parent: 2
 - proto: ClothingHeadHatCircusClown
   entities:
@@ -72234,6 +72262,23 @@ entities:
     - type: Transform
       pos: 31.414724,-47.631306
       parent: 2
+- proto: DVSmartFridge
+  entities:
+  - uid: 2239
+    components:
+    - type: Transform
+      pos: 11.5,34.5
+      parent: 2
+  - uid: 2249
+    components:
+    - type: Transform
+      pos: 6.5,33.5
+      parent: 2
+  - uid: 5891
+    components:
+    - type: Transform
+      pos: 10.5,-28.5
+      parent: 2
 - proto: EmergencyLight
   entities:
   - uid: 26499
@@ -76744,13 +76789,6 @@ entities:
     - type: Transform
       pos: -43.5,14.5
       parent: 2
-- proto: FishingRodBase
-  entities:
-  - uid: 8662
-    components:
-    - type: Transform
-      pos: -3.4552345,-43.4991
-      parent: 2
 - proto: Flash
   entities:
   - uid: 7873
@@ -77130,15 +77168,6 @@ entities:
     - type: Transform
       pos: 9.408353,87.69144
       parent: 2
-- proto: FoodBurgerBacon
-  entities:
-  - uid: 5546
-    components:
-    - type: Transform
-      parent: 366
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: FoodBurgerBig
   entities:
   - uid: 20140
@@ -120637,13 +120666,6 @@ entities:
     - type: Transform
       pos: 54.5,85.5
       parent: 2
-- proto: LockerFreezer
-  entities:
-  - uid: 3461
-    components:
-    - type: Transform
-      pos: 10.5,-28.5
-      parent: 2
 - proto: LockerFreezerBase
   entities:
   - uid: 15441
@@ -120730,11 +120752,6 @@ entities:
       parent: 2
     - type: Lock
       locked: False
-  - uid: 24479
-    components:
-    - type: Transform
-      pos: 17.5,41.5
-      parent: 2
   - uid: 24481
     components:
     - type: Transform
@@ -121090,11 +121107,6 @@ entities:
       parent: 2
 - proto: MachineFrame
   entities:
-  - uid: 3079
-    components:
-    - type: Transform
-      pos: -5.5,42.5
-      parent: 2
   - uid: 8778
     components:
     - type: Transform
@@ -122605,6 +122617,88 @@ entities:
       parent: 2
     - type: Paper
       content: Why the FUCK is this substation room so long?
+  - uid: 9609
+    components:
+    - type: Transform
+      pos: -3.9974794,71.87125
+      parent: 2
+    - type: Paper
+      stampState: paper_stamp-signature
+      stampedBy:
+      - hasIcon: False
+        stampFont: Default
+        stampLargeIcon: null
+        stampedColor: '#009100FF'
+        stampedName: Bladud Moeller
+      content: >-
+        Dear Contracted Apid Workers, 
+
+
+        We hope you enjoy this repurposed drone room as your own personal rest and recuperation area. The NT Luna engineering department is located south from here in the maintenance tunnels. Once you're near it, you'll find lit paths. These lit paths lead both to engineering and to the nearest exit from the maintenance tunnel. 
+
+
+        You also receive ONE free lunch box each for consumption during your set working period. 
+
+
+        Enjoy!
+
+
+        Sincerely, 
+
+
+        Director of Maintenance Bladud Moeller
+  - uid: 9624
+    components:
+    - type: Transform
+      pos: 23.317932,-24.343555
+      parent: 2
+    - type: Paper
+      stampState: paper_stamp-signature
+      stampedBy:
+      - hasIcon: False
+        stampFont: Default
+        stampLargeIcon: null
+        stampedColor: '#009100FF'
+        stampedName: Bladud Moeller
+      content: "Dear Service Workers, \n\nYour previously allowed fridge for personal use has been removed and discontinued to make room for future NT rennovations.\n\nPlease wait warmly, \n\nDirector of Maintenance Bladud Moeller. "
+  - uid: 9752
+    components:
+    - type: Transform
+      pos: 15.485344,52.819977
+      parent: 2
+    - type: Paper
+      stampState: paper_stamp-signature
+      stampedBy:
+      - hasIcon: False
+        stampFont: Default
+        stampLargeIcon: null
+        stampedColor: '#009100FF'
+        stampedName: Bladud Moeller
+      content: "NOTICE OF FUTURE RENNOVATIONS \n\nDear Head of Security, \n\nPlease be aware of future rennovations that will be coming to your department. Presently we have made room for a new departmental console for future NT restructuring. Your present bring will be rennovated into a fully functional medical and what you presently refer to as 'Perma' will be overhauled for its new purpose as 'General Holding'. \n\nPlease wait warmly, \n\nDirector of Maintenance Bladud Moeller\n\n\nP.S\n\nI am aware of the modication made to your room and simply ask you assure its secrecy is better maintained. "
+  - uid: 9753
+    components:
+    - type: Transform
+      pos: -25.469412,14.443165
+      parent: 2
+    - type: Paper
+      stampState: paper_stamp-signature
+      stampedBy:
+      - hasIcon: False
+        stampFont: Default
+        stampLargeIcon: null
+        stampedColor: '#009100FF'
+        stampedName: Bladud Moeller
+      content: >-
+        Dear Engineering,
+
+
+        Please wait warmly while we install new NT logistical structures into your department. 
+
+
+        Sincerely, 
+
+
+        Director of Maintenance Bladud Moeller
   - uid: 25837
     components:
     - type: Transform
@@ -136404,50 +136498,6 @@ entities:
     - type: Transform
       pos: 40.5,47.5
       parent: 2
-- proto: SmartFridge
-  entities:
-  - uid: 366
-    components:
-    - type: Transform
-      pos: 23.5,-24.5
-      parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.7459903
-        - 6.568249
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 5542
-          - 5543
-          - 5546
-  - uid: 2239
-    components:
-    - type: Transform
-      pos: 11.5,34.5
-      parent: 2
-  - uid: 2249
-    components:
-    - type: Transform
-      pos: 6.5,33.5
-      parent: 2
 - proto: SMESAdvanced
   entities:
   - uid: 5893
@@ -138006,7 +138056,7 @@ entities:
       pos: 0.5,-46.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -28638.564
+      secondsUntilStateChange: -29899.91
       state: Opening
   - uid: 7274
     components:
@@ -139521,22 +139571,30 @@ entities:
       parent: 2
 - proto: SteelLunchbox
   entities:
-  - uid: 5543
+  - uid: 9473
     components:
     - type: Transform
-      parent: 366
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
+      pos: 7.2288027,-26.497282
+      parent: 2
+- proto: SteelLunchboxApidFilled
+  entities:
+  - uid: 8662
+    components:
+    - type: Transform
+      pos: -4.49309,72.44937
+      parent: 2
+  - uid: 9474
+    components:
+    - type: Transform
+      pos: -4.43059,71.5275
+      parent: 2
 - proto: SteelLunchboxBlue
   entities:
-  - uid: 5542
+  - uid: 3079
     components:
     - type: Transform
-      parent: 366
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
+      pos: 7.4319277,-26.731657
+      parent: 2
 - proto: Stool
   entities:
   - uid: 1082
@@ -142940,12 +142998,6 @@ entities:
     - type: Transform
       pos: 36.5,82.5
       parent: 2
-  - uid: 10967
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 6.5,56.5
-      parent: 2
   - uid: 11194
     components:
     - type: Transform
@@ -143113,11 +143165,6 @@ entities:
     components:
     - type: Transform
       pos: -24.5,14.5
-      parent: 2
-  - uid: 27333
-    components:
-    - type: Transform
-      pos: -25.5,14.5
       parent: 2
 - proto: TableReinforcedGlass
   entities:
@@ -166627,8 +166674,7 @@ entities:
   - uid: 27334
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -25.419735,14.499613
+      pos: -24.642498,14.755259
       parent: 2
 - proto: Wristwatch
   entities:
