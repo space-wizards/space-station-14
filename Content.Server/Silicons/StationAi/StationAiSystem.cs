@@ -1,6 +1,6 @@
 using Content.Server.Chat.Systems;
-using Content.Server.DeviceNetwork.Components;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
 using Content.Shared.Turrets;
