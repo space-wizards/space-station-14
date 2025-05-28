@@ -114,11 +114,4 @@ public partial class AtmosphereSystem
 
         _tile.PryTile(tileRef);
     }
-
-    /// <inheritdoc cref="PryTile(Entity{MapGridComponent}, Vector2i)"/>
-    [Obsolete("please use the Entity<MapGridComponent> override")]
-    private void PryTile(MapGridComponent mapGrid, Vector2i tile)
-    {
-        PryTile((mapGrid.Owner, mapGrid), tile);
-    }
 }

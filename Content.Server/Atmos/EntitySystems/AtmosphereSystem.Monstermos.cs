@@ -693,12 +693,6 @@ namespace Content.Server.Atmos.EntitySystems
                 PryTile(mapGrid, tile.GridIndices);
         }
 
-        [Obsolete("This method is obsolete, please use the Entity<T> override")]
-        private void HandleDecompressionFloorRip(MapGridComponent mapGrid, TileAtmosphere tile, float sum)
-        {
-            HandleDecompressionFloorRip((mapGrid.Owner, mapGrid), tile, sum);
-        }
-
         private sealed class TileAtmosphereComparer : IComparer<TileAtmosphere?>
         {
             public int Compare(TileAtmosphere? a, TileAtmosphere? b)
