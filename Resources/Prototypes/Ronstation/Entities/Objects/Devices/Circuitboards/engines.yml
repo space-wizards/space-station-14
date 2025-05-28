@@ -8,8 +8,7 @@
   - type: MachineBoard
     prototype: TegCenter
     stackRequirements:
-      Capacitor: 4
-      MatterBin: 1
+      Manipulator: 5
       Steel: 6
       Cable: 4
 
@@ -23,7 +22,7 @@
   - type: MachineBoard
     prototype: TegCirculator
     stackRequirements:
-      Capacitor: 2
+      Manipulator: 2
       Steel: 3
     tagRequirements:
       Pipe:
