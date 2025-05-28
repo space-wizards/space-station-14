@@ -4,6 +4,9 @@ station-beacon-paramedic = Paramedic
 # Science
 station-beacon-xenoarchaeology = Xenoarch
 
+# Security
+station-beacon-evidence = Evidence
+
 # Supply
 station-beacon-mailroom = Mail
 
