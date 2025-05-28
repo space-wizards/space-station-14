@@ -1191,6 +1191,24 @@
     state: drillruru
 
 - type: marking
+  id: ThavenHairDyedLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: dyedlong1
+
+- type: marking
+  id: ThavenHairDyedShort
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: dyedshort1
+
+- type: marking
   id: ThavenHairEmo2
   bodyPart: Hair
   markingCategory: Hair
@@ -2481,6 +2499,17 @@
     state: bigfins2
 
 - type: marking
+  id: ThavenEarsTwinFins
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Thaven ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/headside.rsi
+    state: twinfin
+
+- type: marking
   id: ThavenFishEars
   bodyPart: HeadSide
   markingCategory: HeadSide
@@ -2501,6 +2530,22 @@
     state: noears
 
 # HeadTop
+
+- type: marking
+  id: ThavenHibiscus
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+        negative: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/headtop.rsi
+    state: hibiscus1
+  - sprite: _Impstation/Mobs/Customization/Thaven/headtop.rsi
+    state: hibiscus2
 
 - type: marking
   id: ThavenPiercings
@@ -2613,5 +2658,17 @@
     state: stub1
   - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
     state: stub2
+
+- type: marking
+  id: ThavenTailThresher
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Thaven ]
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: thresher1
+  - sprite: _Impstation/Mobs/Customization/Thaven/tail.rsi
+    state: thresher2
 
 # RArmExtension

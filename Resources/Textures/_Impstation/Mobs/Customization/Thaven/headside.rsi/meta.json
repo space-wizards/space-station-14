@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "ears 1-4 by widgetbeck, fins, fishears and noears by crocodilecarousel (github)",
+    "copyright": "ears 1-4 by widgetbeck, fins, fishears and noears by crocodilecarousel (github), twinfin by Faeling",
     "size": {
         "x": 32,
         "y": 32
@@ -37,6 +37,10 @@
         },
         {
             "name": "noears",
+            "directions": 4
+        },
+        {
+            "name": "twinfin",
             "directions": 4
         }
     ]
