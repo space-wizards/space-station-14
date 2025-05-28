@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Renamed "shell box (X)" to "ammunition box (.50 X)" to match existing
-      naming scheme, and are thus easier to find in certain vendors and fabricators.
-    type: Tweak
-  id: 8067
-  time: '2025-03-15T16:43:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35326
 - author: VerinSenpai
   changes:
   - message: Holopads now collide with walls instead of phasing through them.
@@ -3918,3 +3910,10 @@
   id: 8578
   time: '2025-05-28T07:31:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34465
+- author: Minemoder5000
+  changes:
+  - message: Grape juice cups now contain grape juice.
+    type: Fix
+  id: 8579
+  time: '2025-05-28T09:32:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37895
