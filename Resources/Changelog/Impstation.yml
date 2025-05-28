@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: hivehum, crocodilecarousel
-  changes:
-  - message: A brand new shipment of Space Blades have arrived at the station.
-    type: Add
-  id: 1245
-  time: '2025-03-07T01:41:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1828
-- author: Sha-Seng
-  changes:
-  - message: Spiders have been given more customization options, including eyes! See
-      GitHub for more
-    type: Add
-  - message: Default spider fluff is now optional as an Overlay marking (called Fluffy)
-    type: Tweak
-  id: 1246
-  time: '2025-03-07T01:41:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1847
 - author: hivehum
   changes:
   - message: Command dressers now have a much larger variety of clothing!
@@ -4210,3 +4193,20 @@
   id: 1744
   time: '2025-05-27T20:51:02.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2543
+- author: meridiadottxt
+  changes:
+  - message: dolby has learned frost shield! be careful when discharging your weapon
+      at him!
+    type: Add
+  id: 1745
+  time: '2025-05-28T07:08:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2604
+- author: SixValentine
+  changes:
+  - message: Luna now has some new computers.
+    type: Tweak
+  - message: Luna bunny ears have moved again.
+    type: Tweak
+  id: 1746
+  time: '2025-05-28T07:08:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2601
