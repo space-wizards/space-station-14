@@ -682,7 +682,7 @@ namespace Content.Server.Atmos.EntitySystems
             adj.MonstermosInfo[idx.ToOppositeDir()] -= amount;
         }
 
-        private void HandleDecompressionFloorRip(MapGridComponent mapGrid, TileAtmosphere tile, float sum)
+        private void HandleDecompressionFloorRip(Entity<MapGridComponent> mapGrid, TileAtmosphere tile, float sum)
         {
             if (!MonstermosRipTiles)
                 return;
@@ -691,6 +691,12 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (sum > 20 && _random.Prob(chance))
                 PryTile(mapGrid, tile.GridIndices);
+        }
+
+        [Obsolete("This method is obsolete, please use the Entity<T> override")]
+        private void HandleDecompressionFloorRip(MapGridComponent mapGrid, TileAtmosphere tile, float sum)
+        {
+            HandleDecompressionFloorRip((mapGrid.Owner, mapGrid), tile, sum);
         }
 
         private sealed class TileAtmosphereComparer : IComparer<TileAtmosphere?>
