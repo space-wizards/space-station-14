@@ -68,12 +68,7 @@ namespace Content.Shared.Friction
                 if (body.LinearVelocity.Equals(Vector2.Zero) && body.AngularVelocity.Equals(0f))
                     continue;
 
-                if (!_xformQuery.TryGetComponent(uid, out var xform))
-                {
-                    Log.Error($"Unable to get transform for {ToPrettyString(uid)} in tilefrictioncontroller");
-                    continue;
-                }
-
+                var xform = ent.Comp2;
                 float friction;
 
                 // If we're not touching the ground, don't use tileFriction.
