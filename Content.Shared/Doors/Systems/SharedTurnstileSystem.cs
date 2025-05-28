@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors.Components;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
@@ -33,6 +34,7 @@ public abstract class SharedTurnstileSystem : EntitySystem
         SubscribeLocalEvent<TurnstileComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<TurnstileComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<TurnstileComponent, EndCollideEvent>(OnEndCollide);
+        SubscribeLocalEvent<TurnstileComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<TurnstileComponent, BeforePryEvent>(OnBeforePry);
         SubscribeLocalEvent<TurnstileComponent, GetPryTimeModifierEvent>(OnGetPryMod);
         SubscribeLocalEvent<TurnstileComponent, PriedEvent>(OnAfterPry);
@@ -82,10 +84,13 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
         if (CanPassDirection(ent, args.OtherEntity))
         {
-            if (!_accessReader.IsAllowed(args.OtherEntity, ent))
+            var knownAccessBroken = ent.Comp.ObviouslyAccessBroken || ent.Comp.AccessBroken;
+
+            if (!knownAccessBroken && !_accessReader.IsAllowed(args.OtherEntity, ent))
                 return;
 
-            ent.Comp.CollideExceptions.Add(args.OtherEntity, EntranceMethod.Access);
+            var method = knownAccessBroken ? EntranceMethod.AccessBroken : EntranceMethod.Access;
+            ent.Comp.CollideExceptions[args.OtherEntity] = method;
             if (_pulling.GetPulling(args.OtherEntity) is { } uid)
                 ent.Comp.CollideExceptions[uid] = EntranceMethod.Pulled;
 
@@ -105,33 +110,48 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
     private void OnStartCollide(Entity<TurnstileComponent> ent, ref StartCollideEvent args)
     {
+        var knownAccessBroken = ent.Comp.AccessBroken || ent.Comp.ObviouslyAccessBroken;
         if (!ent.Comp.CollideExceptions.TryGetValue(args.OtherEntity, out var method))
         {
-            if (CanPassDirection(ent, args.OtherEntity))
-            {
-                if (!_accessReader.IsAllowed(args.OtherEntity, ent))
-                {
-                    _audio.PlayPredicted(ent.Comp.DenySound, ent, args.OtherEntity);
-                    PlayAnimation(ent, TurnstileVisualLayers.Indicators, ent.Comp.DenyState);
-                }
-            }
+            // Will not be allowed through!
+
+            // If entered from the wrong direction, no animation or anything
+            if (!CanPassDirection(ent, args.OtherEntity))
+                return;
+
+            // If we know that access is broken, don't play a deny sound
+            if (knownAccessBroken)
+                return;
+
+            // Don't play a deny sound if access is allowed
+            if (_accessReader.IsAllowed(args.OtherEntity, ent))
+                return;
+
+            // Finally, play a denial sound and animation
+            _audio.PlayPredicted(ent.Comp.DenySound, ent, args.OtherEntity);
+            PlayAnimation(ent, TurnstileVisualLayers.Indicators, ent.Comp.DenyState);
 
             return;
         }
+
         // if they passed through:
-        PlayAnimation(ent, TurnstileVisualLayers.Spinner, ent.Comp.SpinState);
-        if(method == EntranceMethod.Access)
+        if(!knownAccessBroken)  // it's already spinnin', don't play animation
+            PlayAnimation(ent, TurnstileVisualLayers.Spinner, ent.Comp.SpinState);
+
+        if(method == EntranceMethod.Access) // The access reader was used, show the indicator lights
             PlayAnimation(ent, TurnstileVisualLayers.Indicators, ent.Comp.GrantedState);
+
+        // Always play the turn sound!
         _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity);
     }
 
     private void OnEndCollide(Entity<TurnstileComponent> ent, ref EndCollideEvent args)
     {
-        if (!args.OurFixture.Hard)
-        {
-            ent.Comp.CollideExceptions.Remove(args.OtherEntity);
-            Dirty(ent);
-        }
+        if (args.OurFixture.Hard)
+            return;
+
+        ent.Comp.CollideExceptions.Remove(args.OtherEntity);
+        Dirty(ent);
     }
 
     private bool CanPassDirection(Entity<TurnstileComponent> ent, EntityUid other)
@@ -140,6 +160,8 @@ public abstract class SharedTurnstileSystem : EntitySystem
         var otherXform = Transform(other);
 
         var (pos, rot) = _transform.GetWorldPositionRotation(xform);
+        if(ent.Comp.Flipped)
+            rot += Angle.FromDegrees(180);
         var otherPos = _transform.GetWorldPosition(otherXform);
 
         var approachAngle = (pos - otherPos).ToAngle();
@@ -155,7 +177,26 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
     protected virtual void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId) { }
 
-    protected virtual void StopAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId) { }
+    private void OnEmagged(Entity<TurnstileComponent> ent, ref GotEmaggedEvent args)
+    {
+        switch (args.Type)
+        {
+            case EmagType.Interaction:
+                ent.Comp.Flipped = !ent.Comp.Flipped;
+                break;
+            case EmagType.Access:
+                ent.Comp.AccessBroken = true;
+                ent.Comp.ObviouslyAccessBroken = true;
+                _appearance.SetData(ent, TurnstileVisuals.AccessBrokenSpinning, true);
+                break;
+            case EmagType.None:
+            default:
+                return;
+        }
+        args.Handled = true;
+        args.Repeatable = true;
+        Dirty(ent);
+    }
 
     public void SetSolenoidBypassed(Entity<TurnstileComponent> ent, bool value)
     {

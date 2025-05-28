@@ -3,7 +3,6 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Examine;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -13,7 +12,7 @@ namespace Content.Client.Doors;
 public sealed class TurnstileSystem : SharedTurnstileSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
-    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private static readonly EntProtoId ExamineArrow = "TurnstileArrow";
 
@@ -23,33 +22,47 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
 
         SubscribeLocalEvent<TurnstileComponent, AnimationCompletedEvent>(OnAnimationCompleted);
         SubscribeLocalEvent<TurnstileComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<TurnstileComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<TurnstileComponent, AppearanceChangeEvent>(OnAppearanceChanged);
+    }
+
+    private void OnComponentStartup(Entity<TurnstileComponent> ent, ref ComponentStartup args)
+    {
+        Entity<SpriteComponent?> spriteEnt = (ent.Owner, null);
+
+        if (!Resolve(spriteEnt, ref spriteEnt.Comp))
+            return;
+
+        if (!_sprite.TryGetLayer(spriteEnt, TurnstileVisualLayers.Spinner, out var layer, true))
+            return;
+
+        SetSpinnerAutoAnimation(ent, false);
+    }
+
+    private void OnAppearanceChanged(Entity<TurnstileComponent> ent, ref AppearanceChangeEvent args)
+    {
+        args.AppearanceData.TryGetValue(TurnstileVisuals.AccessBrokenSpinning, out var brokenSpinningObj);
+
+        if (brokenSpinningObj is not bool brokenSpinning)
+            return;
+
+        SetSpinnerAutoAnimation(ent, brokenSpinning);
     }
 
     private void OnAnimationCompleted(Entity<TurnstileComponent> ent, ref AnimationCompletedEvent args)
     {
-        if (args.Key == nameof(TurnstileVisualLayers.Indicators))
+        if (args.Key == $"turnstile-anim-{nameof(TurnstileVisualLayers.Indicators)}")
         {
-            _spriteSystem.LayerSetVisible(ent.Owner, TurnstileVisualLayers.Indicators, false);
+            _sprite.LayerSetVisible(ent.Owner, TurnstileVisualLayers.Indicators, false);
         }
-        else if (args.Key != nameof(TurnstileVisualLayers.Spinner))
+        else if (args.Key != $"turnstile-anim-{nameof(TurnstileVisualLayers.Spinner)}")
         {
-            _spriteSystem.LayerSetRsiState(ent.Owner, TurnstileVisualLayers.Spinner, new RSI.StateId(ent.Comp.DefaultState));
+            SetSpinnerAutoAnimation(ent, false);
         }
-    }
-
-    private void OnExamined(Entity<TurnstileComponent> ent, ref ExaminedEvent args)
-    {
-        Spawn(ExamineArrow, new EntityCoordinates(ent, 0, 0));
-    }
-
-    protected override void StopAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
-    {
-        StopAnimation(uid, layer, stateId, null);
     }
 
     private void StopAnimation(EntityUid uid,
         TurnstileVisualLayers layer,
-        string stateId,
         AnimationPlayerComponent? player = null)
     {
         if (!Resolve(uid, ref player, logMissing: false))
@@ -57,8 +70,26 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
 
         var ent = (uid, player);
 
-        if (_animationPlayer.HasRunningAnimation(player, layer.ToString()))
-            _animationPlayer.Stop(ent, layer.ToString());
+        // Use the name of the layer for the animation key
+        var animKey = $"turnstile-anim-{layer.ToString()}";
+        if (_animationPlayer.HasRunningAnimation(player, animKey))
+            _animationPlayer.Stop(ent, animKey);
+    }
+
+    private void SetSpinnerAutoAnimation(Entity<TurnstileComponent> ent, bool value)
+    {
+        if (value) // Cancel currently running animation
+            StopAnimation(ent, TurnstileVisualLayers.Spinner);
+        else // Reset back to frame 0
+            _sprite.LayerSetAnimationTime(ent.Owner, TurnstileVisualLayers.Spinner, 0f);
+
+        // Set or unset constant repeating animation mode
+        _sprite.LayerSetAutoAnimated(ent.Owner, TurnstileVisualLayers.Spinner, value);
+    }
+
+    private void OnExamined(Entity<TurnstileComponent> ent, ref ExaminedEvent args)
+    {
+        Spawn(ExamineArrow, new EntityCoordinates(ent, 0, 0));
     }
 
     protected override void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId)
@@ -66,7 +97,7 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
         if (!TryComp<AnimationPlayerComponent>(uid, out var animation) || !TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        StopAnimation(uid, layer, stateId, animation);
+        StopAnimation(uid, layer, animation);
 
         if (sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(stateId, out var state))
             return;
@@ -88,7 +119,7 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
             Length = TimeSpan.FromSeconds(animLength),
         };
 
-        _spriteSystem.LayerSetVisible(uid, layer, true);
-        _animationPlayer.Play(uid, anim, layer.ToString());
+        _sprite.LayerSetVisible(uid, layer, true);
+        _animationPlayer.Play(uid, anim, $"turnstile-anim-{layer.ToString()}");
     }
 }

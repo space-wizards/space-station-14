@@ -78,7 +78,7 @@
     layers:
     - state: turnstile
       map: [ "enum.TurnstileVisualLayers.Base" ]
-    - state: turnstile_idle
+    - state: operate
       map: [ "enum.TurnstileVisualLayers.Spinner" ]
     - map: [ "enum.TurnstileVisualLayers.Indicators" ]
       shader: unshaded
