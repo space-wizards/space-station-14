@@ -14582,13 +14582,6 @@ entities:
     - type: Transform
       pos: 0.55076575,15.708136
       parent: 1
-- proto: MailSpamLetter
-  entities:
-  - uid: 1418
-    components:
-    - type: Transform
-      pos: -14.72777,8.641857
-      parent: 1
 - proto: Mannequin
   entities:
   - uid: 1080
