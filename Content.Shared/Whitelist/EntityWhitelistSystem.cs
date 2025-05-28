@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Tag;
 
@@ -7,6 +8,7 @@ namespace Content.Shared.Whitelist;
 public sealed class EntityWhitelistSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
 
@@ -190,5 +192,30 @@ public sealed class EntityWhitelistSystem : EntitySystem
         }
 
         return list;
+    }
+
+    /// <summary>
+    /// function to determine if Whitelist is not null and if any entity in an inventory is on the list
+    /// </summary>
+    public bool IsWhitelistPassInventory(EntityWhitelist? whitelist, EntityUid uid, SlotFlags slots = SlotFlags.WITHOUT_POCKET)
+    {
+        if (whitelist == null)
+            return false;
+
+        var slotValid = false;
+        var enumerator = _inventory.GetSlotEnumerator(uid, slots);
+        while (enumerator.MoveNext(out var slot))
+        {
+            if (!slot.ContainedEntity.HasValue)
+                continue;
+
+            if (IsValid(whitelist, slot.ContainedEntity.Value))
+            {
+                slotValid = true;
+                break;
+            }
+        }
+
+        return slotValid;
     }
 }
