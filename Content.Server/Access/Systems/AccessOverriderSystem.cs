@@ -233,8 +233,6 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
 
         var ev = new OnAccessOverriderAccessUpdatedEvent(player);
         RaiseLocalEvent(component.TargetAccessReaderId, ref ev);
-
-        Dirty(accessReaderEnt.Value);
     }
 
     /// <summary>

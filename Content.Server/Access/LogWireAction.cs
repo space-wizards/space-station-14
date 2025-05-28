@@ -38,7 +38,7 @@ public sealed partial class LogWireAction : ComponentWireAction<AccessReaderComp
     {
         WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
         EntityManager.System<AccessReaderSystem>().SetLoggingActive((wire.Owner, comp), false);
-        EntityManager.Dirty(wire.Owner, comp);
+
         return true;
     }
 
