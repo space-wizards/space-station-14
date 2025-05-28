@@ -202,20 +202,27 @@ public sealed class EntityWhitelistSystem : EntitySystem
         if (whitelist == null)
             return false;
 
-        var slotValid = false;
-        var enumerator = _inventory.GetSlotEnumerator(uid, slots);
-        while (enumerator.MoveNext(out var slot))
-        {
-            if (!slot.ContainedEntity.HasValue)
-                continue;
+        var ev = new CheckWhitelistInventoryEvent(whitelist, slots);
+        RaiseLocalEvent(uid, ev);
 
-            if (IsValid(whitelist, slot.ContainedEntity.Value))
-            {
-                slotValid = true;
-                break;
-            }
-        }
+        if (ev.WhitelistHit)
+            return true;
 
-        return slotValid;
+        return false;
     }
+}
+
+public sealed class CheckWhitelistInventoryEvent(EntityWhitelist list, SlotFlags slots) : IInventoryRelayEvent
+{
+    /// <summary>
+    /// Whitelist to be checked against
+    /// </summary>
+    public EntityWhitelist Whitelist => list;
+
+    /// <summary>
+    /// Helper function to determine if Whitelist is not null and entity is on list
+    /// </summary>
+    public bool WhitelistHit = false;
+
+    SlotFlags IInventoryRelayEvent.TargetSlots => slots;
 }
