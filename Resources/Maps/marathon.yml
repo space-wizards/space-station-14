@@ -12236,8 +12236,6 @@ entities:
       pos: -15.5,-5.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 8267
   - uid: 2029
@@ -98217,8 +98215,6 @@ entities:
       pos: -14.5,-4.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 8267
     - type: AtmosPipeColor
@@ -98232,8 +98228,6 @@ entities:
       pos: -14.5,-5.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 8267
     - type: AtmosPipeColor
