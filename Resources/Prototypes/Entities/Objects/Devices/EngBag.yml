@@ -1,0 +1,29 @@
+- type: entity
+  name: engineer bag
+  id: EngBag
+  parent: BaseStorageItem
+  description: A bag to easily move electrical.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/Equipment/ing_bag.rsi
+    state: icon
+  - type: Item
+    storedRotation: -90
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - belt
+  - type: Storage
+    grid:
+    - 0,0,7,4
+    maxItemSize: Normal
+    quickInsert: true
+    areaInsert: true
+    whitelist:
+      components:
+        - LightBulb
+        - Battery
+        - Document
+        - Material
+        - Transform
+  - type: Dumpable
