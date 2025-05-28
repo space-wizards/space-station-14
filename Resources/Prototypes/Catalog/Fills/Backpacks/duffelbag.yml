@@ -344,9 +344,9 @@
   - type: StorageFill
     contents:
       - id: WeaponSubMachineGunC20r
-      - id: MagazinePistolSubMachineGun
+      - id: MagazinePistolSubMachineGunSP
         amount: 3
-      - id: MagazinePistol
+      - id: MagazinePistolSP
       - id: SyndicateJawsOfLife
       - id: C4
         amount: 2

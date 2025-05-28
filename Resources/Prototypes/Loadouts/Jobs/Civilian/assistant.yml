@@ -53,7 +53,7 @@
   id: RainbowJumpskirt
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: HonoredAssistant
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorRainbow
 

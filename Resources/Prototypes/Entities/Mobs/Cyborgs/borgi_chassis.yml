@@ -537,7 +537,7 @@
       - BorgModuleTool
       - BorgModuleAdvancedTool
       - BorgModuleSyndicateWeapon
-      - BorgModuleTreatment
+      - BorgModuleMedical
       - BorgModuleFireExtinguisher
   - type: NpcFactionMember
     factions:
@@ -628,7 +628,7 @@
       - BorgModuleTool
       - BorgModuleAdvancedTool
       - BorgModuleSyndicateWeapon
-      - BorgModuleTreatment
+      - BorgModuleMedical
       - BorgModuleFireExtinguisher
   - type: NpcFactionMember
     factions:

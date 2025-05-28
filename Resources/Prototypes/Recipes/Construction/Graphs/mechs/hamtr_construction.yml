@@ -110,7 +110,7 @@
           data: 17
 
       - tag: MechAirTank
-        name: exosuit air tank
+        name: construction-graph-tag-exosuit-air-tank
         store: gas-tank-container
         icon:
           sprite: Objects/Specific/Mech/mecha_equipment.rsi

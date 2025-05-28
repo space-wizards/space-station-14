@@ -96,6 +96,33 @@ construction-graph-tag-honk-weapon-control-and-targeting-module = H.O.N.K. weapo
 construction-graph-tag-ripley-central-control-module = ripley central control module
 construction-graph-tag-ripley-peripherals-control-module = ripley peripherals control module
 
+#SL Start
+construction-graph-tag-exosuit-air-tank = exosuit air tank
+construction-graph-tag-exosuit-thruster = exosuit thruster
+
+construction-graph-tag-exosuit-upgrade-kit = Exosuit Upgrade Kit
+construction-graph-tag-paddy-conversion-kit = Paddy Conversion Kit
+
+construction-graph-tag-gygax-central-control = gygax central control module
+construction-graph-tag-gygax-peripherals-control = gygax peripherals control module
+construction-graph-tag-gygax-weapon-targeting = gygax weapon control and targeting module
+construction-graph-tag-gygax-armor-plates = gygax armor plates
+
+construction-graph-tag-durand-central-control = durand central control module
+construction-graph-tag-durand-peripherals-control = durand peripherals control module
+construction-graph-tag-durand-weapon-targeting = durand weapon control and targeting module
+construction-graph-tag-durand-armor-plates = durand armor plates
+
+construction-graph-tag-clarke-central-control = clarke central control module
+construction-graph-tag-clarke-peripherals-control = clarke peripherals control module
+
+construction-graph-tag-ripley-central-control = ripley central control module
+construction-graph-tag-ripley-peripherals-control = ripley peripherals control module
+
+
+
+#SL End
+
 # structures
 construction-graph-tag-door-electronics-circuit-board = door electronics circuit board
 construction-graph-tag-firelock-electronics-circuit-board = firelock electronics circuit board
