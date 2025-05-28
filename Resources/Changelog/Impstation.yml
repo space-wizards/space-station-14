@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: bigsantino1
-  changes:
-  - message: The salvage magnet now tells you what got pulled.
-    type: Tweak
-  id: 1249
-  time: '2025-03-07T02:22:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1836
 - author: britno
   changes:
   - message: Added a transatlantic accent for your hard-boiled dicks and peppy newshawks!
@@ -4211,3 +4204,10 @@
   id: 1748
   time: '2025-05-28T17:00:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2593
+- author: CombustibleToast
+  changes:
+  - message: Atmos techs can now equip workboots
+    type: Add
+  id: 1749
+  time: '2025-05-28T17:03:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2587
