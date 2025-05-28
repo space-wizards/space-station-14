@@ -2,8 +2,10 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Client.Atmos.EntitySystems;
 
@@ -13,6 +15,7 @@ namespace Content.Client.Atmos.EntitySystems;
 public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly IReflectionManager _reflection = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
@@ -38,8 +41,16 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
         {
             foreach (var (layerKey, rsiPath) in pipeState)
             {
-                _sprite.LayerSetRsi((ent, sprite), layerKey, new ResPath(rsiPath));
+                if (TryParseKey(layerKey, out var @enum))
+                    _sprite.LayerSetRsi((ent, sprite), @enum, new ResPath(rsiPath));
+                else
+                    _sprite.LayerSetRsi((ent, sprite), layerKey, new ResPath(rsiPath));
             }
         }
+    }
+
+    private bool TryParseKey(string keyString, [NotNullWhen(true)] out Enum? @enum)
+    {
+        return _reflection.TryParseEnumReference(keyString, out @enum);
     }
 }

@@ -74,9 +74,9 @@
   - type: AtmosPipeLayers
     spriteLayersRsiPaths:
       enum.PipeVisualLayers.Pipe:
-        - Structures/Piping/Atmospherics/pipe.rsi
-        - Structures/Piping/Atmospherics/pipe_alt1.rsi
-        - Structures/Piping/Atmospherics/pipe_alt2.rsi
+        Primary: Structures/Piping/Atmospherics/pipe.rsi
+        Secondary: Structures/Piping/Atmospherics/pipe_alt1.rsi
+        Tertiary: Structures/Piping/Atmospherics/pipe_alt2.rsi
 
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 
@@ -99,9 +99,9 @@
       map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
     alternativePrototypes:
-    - GasPipeHalf
-    - GasPipeHalfAlt1
-    - GasPipeHalfAlt2
+      Primary: GasPipeHalf
+      Secondary: GasPipeHalfAlt1
+      Tertiary: GasPipeHalfAlt2
   - type: Construction
     graph: GasPipe
     node: half
@@ -134,9 +134,9 @@
       map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
     alternativePrototypes:
-    - GasPipeStraight
-    - GasPipeStraightAlt1
-    - GasPipeStraightAlt2
+      Primary: GasPipeStraight
+      Secondary: GasPipeStraightAlt1
+      Tertiary: GasPipeStraightAlt2
   - type: Construction
     graph: GasPipe
     node: straight
@@ -177,9 +177,9 @@
         map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
     alternativePrototypes:
-    - GasPipeBend
-    - GasPipeBendAlt1
-    - GasPipeBendAlt2
+      Primary: GasPipeBend
+      Secondary: GasPipeBendAlt1
+      Tertiary: GasPipeBendAlt2
   - type: Construction
     graph: GasPipe
     node: bend
@@ -227,9 +227,9 @@
         map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
     alternativePrototypes:
-    - GasPipeTJunction
-    - GasPipeTJunctionAlt1
-    - GasPipeTJunctionAlt2
+      Primary: GasPipeTJunction
+      Secondary: GasPipeTJunctionAlt1
+      Tertiary: GasPipeTJunctionAlt2
   - type: Construction
     graph: GasPipe
     node: tjunction
@@ -272,9 +272,9 @@
         map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
     alternativePrototypes:
-    - GasPipeFourway
-    - GasPipeFourwayAlt1
-    - GasPipeFourwayAlt2
+      Primary: GasPipeFourway
+      Secondary: GasPipeFourwayAlt1
+      Tertiary: GasPipeFourwayAlt2
   - type: Construction
     graph: GasPipe
     node: fourway

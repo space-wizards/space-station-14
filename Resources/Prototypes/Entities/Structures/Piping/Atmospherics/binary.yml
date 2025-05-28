@@ -24,9 +24,9 @@
         pipeDirection: South
   - type: AtmosPipeLayers
     spriteRsiPaths:
-    - Structures/Piping/Atmospherics/pump.rsi
-    - Structures/Piping/Atmospherics/pump_alt1.rsi
-    - Structures/Piping/Atmospherics/pump_alt2.rsi
+      Primary: Structures/Piping/Atmospherics/pump.rsi
+      Secondary: Structures/Piping/Atmospherics/pump_alt1.rsi
+      Tertiary: Structures/Piping/Atmospherics/pump_alt2.rsi
 
 - type: entity
   parent: GasBinaryBase
@@ -335,7 +335,7 @@
         - state: gasCanisterPort
           map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: AtmosPipeLayers
-      spriteRsiPaths: []
+      spriteRsiPaths: {}
     - type: Appearance
     - type: PipeColorVisuals
     - type: GasPort
@@ -375,7 +375,7 @@
         - state: vent_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
     - type: AtmosPipeLayers
-      spriteRsiPaths: []
+      spriteRsiPaths: {}
     - type: GenericVisualizer
       visuals:
         enum.VentPumpVisuals.State:
@@ -440,9 +440,9 @@
   - type: AtmosPipeLayers
     spriteLayersRsiPaths:
       enum.PipeVisualLayers.Pipe:
-        - Structures/Piping/Atmospherics/pipe.rsi
-        - Structures/Piping/Atmospherics/pipe_alt1.rsi
-        - Structures/Piping/Atmospherics/pipe_alt2.rsi
+        Primary: Structures/Piping/Atmospherics/pipe.rsi
+        Secondary: Structures/Piping/Atmospherics/pipe_alt1.rsi
+        Tertiary: Structures/Piping/Atmospherics/pipe_alt2.rsi
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -510,7 +510,7 @@
     - state: heStraight
       map: [ "enum.SubfloorLayers.FirstLayer" ]
   - type: AtmosPipeLayers
-    spriteRsiPaths: []
+    spriteRsiPaths: {}
     numberOfPipeLayers: 1
   - type: SubFloorHide
     visibleLayers:

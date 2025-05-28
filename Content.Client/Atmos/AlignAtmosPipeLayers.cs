@@ -1,5 +1,6 @@
 using Content.Client.Construction;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Construction.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -31,6 +32,8 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
 
     private readonly SharedMapSystem _mapSystem;
     private readonly SharedTransformSystem _transformSystem;
+    private readonly SharedAtmosPipeLayersSystem _pipeLayersSystem;
+    private readonly SpriteSystem _spriteSystem;
 
     private const float SearchBoxSize = 2f;
     private EntityCoordinates _unalignedMouseCoords = default;
@@ -46,6 +49,8 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
 
         _mapSystem = _entityManager.System<SharedMapSystem>();
         _transformSystem = _entityManager.System<SharedTransformSystem>();
+        _pipeLayersSystem = _entityManager.System<SharedAtmosPipeLayersSystem>();
+        _spriteSystem = _entityManager.System<SpriteSystem>();
     }
 
     /// <inheritdoc/>
@@ -100,13 +105,13 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
 
         // Calculate the position of the mouse cursor with respect to the center of the tile to determine which layer to use
         var mouseCoordsDiff = _unalignedMouseCoords.Position - MouseCoords.Position;
-        var layer = 0;
+        var layer = AtmosPipeLayer.Primary;
 
         if (mouseCoordsDiff.Length() > MouseDeadzoneRadius)
         {
             // Determine the direction of the mouse is relative to the center of the tile, adjusting for the player eye and grid rotation
             var direction = (new Angle(mouseCoordsDiff) + _eyeManager.CurrentEye.Rotation + gridRotation + Math.PI / 2).GetCardinalDir();
-            layer = (direction == Direction.North || direction == Direction.East) ? 1 : 2;
+            layer = (direction == Direction.North || direction == Direction.East) ? AtmosPipeLayer.Secondary : AtmosPipeLayer.Tertiary;
         }
 
         // Update the construction menu placer
@@ -118,16 +123,16 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
             UpdatePlacer(layer);
     }
 
-    private void UpdateHijackedPlacer(int layer, ScreenCoordinates mouseScreen)
+    private void UpdateHijackedPlacer(AtmosPipeLayer layer, ScreenCoordinates mouseScreen)
     {
         // Try to get alternative prototypes from the construction prototype
         var constructionSystem = (pManager.Hijack as ConstructionPlacementHijack)?.CurrentConstructionSystem;
         var altPrototypes = (pManager.Hijack as ConstructionPlacementHijack)?.CurrentPrototype?.AlternativePrototypes;
 
-        if (constructionSystem == null || altPrototypes == null || layer >= altPrototypes.Length)
+        if (constructionSystem == null || altPrototypes == null || (int)layer >= altPrototypes.Length)
             return;
 
-        var newProtoId = altPrototypes[layer];
+        var newProtoId = altPrototypes[(int)layer];
 
         if (!_protoManager.TryIndex(newProtoId, out var newProto))
             return;
@@ -155,7 +160,7 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
         constructionSystem.GetGuide(newProto);
     }
 
-    private void UpdatePlacer(int layer)
+    private void UpdatePlacer(AtmosPipeLayer layer)
     {
         // Try to get alternative prototypes from the entity atmos pipe layer component
         if (pManager.CurrentPermission?.EntityType == null)
@@ -167,10 +172,8 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
         if (!currentProto.TryGetComponent<AtmosPipeLayersComponent>(out var atmosPipeLayers, _entityManager.ComponentFactory))
             return;
 
-        if (layer >= atmosPipeLayers.AlternativePrototypes.Length)
+        if (!_pipeLayersSystem.TryGetAlternativePrototype(atmosPipeLayers, layer, out var newProtoId))
             return;
-
-        var newProtoId = atmosPipeLayers.AlternativePrototypes[layer];
 
         if (_protoManager.TryIndex<EntityPrototype>(newProtoId, out var newProto))
         {
@@ -185,7 +188,7 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
                 foreach (var spriteLayer in sprite.AllLayers)
                 {
                     if (spriteLayer.ActualRsi?.Path != null && spriteLayer.RsiState.Name != null)
-                        textures.Add(new SpriteSpecifier.Rsi(spriteLayer.ActualRsi.Path, spriteLayer.RsiState.Name).DirFrame0());
+                        textures.Add(_spriteSystem.RsiStateLike(new SpriteSpecifier.Rsi(spriteLayer.ActualRsi.Path, spriteLayer.RsiState.Name)));
                 }
 
                 pManager.CurrentTextures = textures;

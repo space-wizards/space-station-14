@@ -38,10 +38,10 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// <see cref="SpriteLayersRsiPaths"/> instead.
     /// </summary>
     /// <remarks>
-    /// If the array is not empty there should be an entry for each atmos pipe layer.
+    /// If the dictionary is not empty there should be an entry for each atmos pipe layer.
     /// </remarks>
     [DataField]
-    public Dictionary<AtmosPipeLayer, string> SpriteRsiPaths = [];
+    public Dictionary<AtmosPipeLayer, string> SpriteRsiPaths = new();
 
     /// <summary>
     /// Used to update specific sprite layers when the entity's pipe layer changes.
@@ -51,21 +51,20 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// <see cref="SpriteRsiPaths"/> instead.
     /// </summary>
     /// <remarks>
-    /// If an array is not empty there should be an entry for each pipe layer.
+    /// If an dictionary is not empty there should be an entry for each pipe layer.
     /// </remarks>
     [DataField]
     public Dictionary<string, Dictionary<AtmosPipeLayer, string>> SpriteLayersRsiPaths = new();
 
     /// <summary>
-    /// Entity prototypes with alternative layers; will replace the current
-    /// one when using position dependent entity placement via AlignAtmosPipeLayers.
+    /// Entity prototypes that will be used to replace the current one when using
+    /// position dependent entity placement via AlignAtmosPipeLayers.
     /// </summary>
     /// <remarks>
-    /// If an array is not empty there should be an entry for each pipe layer
-    /// (from 0 to <see cref="MaxPipeLayer"/>).
+    /// If the dictionary is not empty there should be an entry for each atmos pipe layer.
     /// </remarks>
     [DataField]
-    public EntProtoId[] AlternativePrototypes = [];
+    public Dictionary<AtmosPipeLayer, EntProtoId> AlternativePrototypes = new();
 
     /// <summary>
     /// The pipe layers of this entity cannot be changed when this value is true.

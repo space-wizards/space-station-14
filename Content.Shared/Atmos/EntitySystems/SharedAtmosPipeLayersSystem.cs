@@ -105,7 +105,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
                     DoContactInteraction = true,
                     Act = () =>
                     {
-                        _tool.UseTool(tool.Value, user, ent, ent.Comp.Delay, tool.Value.Comp.Qualities, new TrySettingPipeLayerCompletedEvent(ent.Comp.CurrentPipeLayer));
+                        _tool.UseTool(tool.Value, user, ent, ent.Comp.Delay, tool.Value.Comp.Qualities, new TrySettingPipeLayerCompletedEvent((AtmosPipeLayer)index));
                     }
                 };
 
@@ -214,11 +214,23 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
         if (user != null)
         {
-            var layerName = Loc.GetString("atmos-pipe-layers-component-layer-" + ent.Comp.CurrentPipeLayer);
+            var layerName = Loc.GetString("atmos-pipe-layers-component-layer-" + (int)ent.Comp.CurrentPipeLayer);
             var message = Loc.GetString("atmos-pipe-layers-component-change-layer", ("layerName", layerName));
 
             _popup.PopupPredicted(message, ent, user);
         }
+    }
+
+    /// <summary>
+    /// Try to find an entity prototype associated with a specified <see cref="AtmosPipeLayer"/>.
+    /// </summary>
+    /// <param name="component">The <see cref="AtmosPipeLayersComponent"/> with the alternative prototypes data.</param>
+    /// <param name="layer">The atmos pipe layer associated with the entity prototype.</param>
+    /// <param name="proto">The returned entity prototype.</param>
+    /// <returns>True if there was an entity prototype associated with the layer.</returns>
+    public bool TryGetAlternativePrototype(AtmosPipeLayersComponent component, AtmosPipeLayer layer, out EntProtoId proto)
+    {
+        return component.AlternativePrototypes.TryGetValue(layer, out proto);
     }
 
     /// <summary>

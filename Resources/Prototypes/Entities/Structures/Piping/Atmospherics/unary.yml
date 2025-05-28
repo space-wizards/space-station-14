@@ -231,9 +231,9 @@
     - type: AtmosPipeLayers
       spriteLayersRsiPaths:
         enum.PipeVisualLayers.Pipe:
-          - Structures/Piping/Atmospherics/thermomachine.rsi
-          - Structures/Piping/Atmospherics/thermomachine_alt1.rsi
-          - Structures/Piping/Atmospherics/thermomachine_alt2.rsi
+          Primary: Structures/Piping/Atmospherics/thermomachine.rsi
+          Secondary: Structures/Piping/Atmospherics/thermomachine_alt1.rsi
+          Tertiary: Structures/Piping/Atmospherics/thermomachine_alt2.rsi
     - type: AtmosDevice
     - type: UserInterface
       interfaces:
@@ -428,9 +428,9 @@
   - type: AtmosPipeLayers
     spriteLayersRsiPaths:
       enum.PipeVisualLayers.Pipe:
-        - Structures/Piping/Atmospherics/condenser.rsi
-        - Structures/Piping/Atmospherics/condenser_alt1.rsi
-        - Structures/Piping/Atmospherics/condenser_alt2.rsi
+        Primary: Structures/Piping/Atmospherics/condenser.rsi
+        Secondary: Structures/Piping/Atmospherics/condenser_alt1.rsi
+        Tertiary: Structures/Piping/Atmospherics/condenser_alt2.rsi
   - type: AtmosDevice
   - type: PipeRestrictOverlap
   - type: ApcPowerReceiver

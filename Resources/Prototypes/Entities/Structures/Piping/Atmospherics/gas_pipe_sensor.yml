@@ -20,9 +20,9 @@
       shader: unshaded
   - type: AtmosPipeLayers
     spriteRsiPaths:
-    - Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
-    - Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
-    - Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
+      Primary: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
+      Secondary: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
+      Tertiary: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
   - type: Appearance
   - type: GenericVisualizer
     visuals:
