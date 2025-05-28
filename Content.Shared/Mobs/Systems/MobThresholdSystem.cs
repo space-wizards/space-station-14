@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Events;
@@ -13,6 +15,7 @@ public sealed class MobThresholdSystem : EntitySystem
 {
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly SoftCritSystem _softCrit = default!;
 
     public override void Initialize()
     {
@@ -308,12 +311,14 @@ public sealed class MobThresholdSystem : EntitySystem
     /// <param name="mobState">MobState Component owned by the Target</param>
     /// <param name="damageable">Damageable Component owned by the Target</param>
     public void VerifyThresholds(EntityUid target, MobThresholdsComponent? threshold = null,
-        MobStateComponent? mobState = null, DamageableComponent? damageable = null)
+        MobStateComponent? mobState = null, DamageableComponent? damageable = null, SoftCritComponent? softCrit = null)
     {
         if (!Resolve(target, ref mobState, ref threshold, ref damageable))
             return;
 
-        CheckThresholds(target, mobState, threshold, damageable);
+        Resolve(target, ref softCrit, logMissing: false);
+
+        CheckThresholds(target, mobState, threshold, damageable, softCrit);
 
         var ev = new MobThresholdChecked(target, mobState, threshold, damageable);
         RaiseLocalEvent(target, ref ev, true);
@@ -333,12 +338,17 @@ public sealed class MobThresholdSystem : EntitySystem
 
     #region Private Implementation
 
-    private void CheckThresholds(EntityUid target, MobStateComponent mobStateComponent,
-        MobThresholdsComponent thresholdsComponent, DamageableComponent damageableComponent, EntityUid? origin = null)
+    private void CheckThresholds(EntityUid target,
+        MobStateComponent mobStateComponent,
+        MobThresholdsComponent thresholdsComponent,
+        DamageableComponent damageableComponent,
+        SoftCritComponent? softCritComponent = null,
+        EntityUid? origin = null)
     {
+        var TotalDamage = _softCrit.GetEffectiveDamage(target, damageableComponent, softCritComponent);
         foreach (var (threshold, mobState) in thresholdsComponent.Thresholds.Reverse())
         {
-            if (damageableComponent.TotalDamageEffective < threshold)
+            if (TotalDamage < threshold)
                 continue;
 
             TriggerThreshold(target, mobState, mobStateComponent, thresholdsComponent, origin);
@@ -430,8 +440,9 @@ public sealed class MobThresholdSystem : EntitySystem
     {
         if (!TryComp<MobStateComponent>(target, out var mobState))
             return;
+        TryComp(target, out SoftCritComponent? softCritComponent);
         thresholds.LastOrigin = args.Origin;
-        CheckThresholds(target, mobState, thresholds, args.Damageable, args.Origin);
+        CheckThresholds(target, mobState, thresholds, args.Damageable, softCritComponent, args.Origin);
         var ev = new MobThresholdChecked(target, mobState, thresholds, args.Damageable);
         RaiseLocalEvent(target, ref ev, true);
         UpdateAlerts(target, mobState.CurrentState, thresholds, args.Damageable);
@@ -439,19 +450,21 @@ public sealed class MobThresholdSystem : EntitySystem
 
     private void OnDamagedEffective(EntityUid target, MobThresholdsComponent thresholds, DamageEffectiveChangedEvent args)
     {
-        if (!TryComp<MobStateComponent>(target, out var mobState))
+        if (!TryComp<MobStateComponent>(target, out var mobState) ||
+            !TryComp(target, out DamageableComponent? damageableComponent))
             return;
-        CheckThresholds(target, mobState, thresholds, args.Damageable, thresholds.LastOrigin);
-        var ev = new MobThresholdChecked(target, mobState, thresholds, args.Damageable);
+        CheckThresholds(target, mobState, thresholds, damageableComponent, args.Damageable, thresholds.LastOrigin);
+        var ev = new MobThresholdChecked(target, mobState, thresholds, damageableComponent);
         RaiseLocalEvent(target, ref ev, true);
-        UpdateAlerts(target, mobState.CurrentState, thresholds, args.Damageable);
+        UpdateAlerts(target, mobState.CurrentState, thresholds, damageableComponent);
     }
 
     private void MobThresholdStartup(EntityUid target, MobThresholdsComponent thresholds, ComponentStartup args)
     {
         if (!TryComp<MobStateComponent>(target, out var mobState) || !TryComp<DamageableComponent>(target, out var damageable))
             return;
-        CheckThresholds(target, mobState, thresholds, damageable);
+        TryComp(target, out SoftCritComponent? softCritComponent);
+        CheckThresholds(target, mobState, thresholds, damageable, softCritComponent);
         UpdateAllEffects((target, thresholds, mobState, damageable), mobState.CurrentState);
     }
 

@@ -48,31 +48,6 @@ namespace Content.Shared.Damage
         public DamageSpecifier Damage = new();
 
         /// <summary>
-        ///     The current damage used for things like state calculations
-        /// </summary>
-        /// <remarks>
-        ///     Only used on certain damage containers (E.G. People and mice, not vending machines)
-        /// </remarks>
-        [DataField]
-        public DamageSpecifier DamageEffective = new();
-
-        /// <summary>
-        ///     If whatever entity this component is contained is should experience softcrit
-        /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public bool SoftCritEligible = false;
-
-        /// <summary>
-        ///     The amount of time it takes for <see cref="DamageEffective"/> to catch up with <see cref="Damage"/>
-        ///     This value is decreased with respect to how much damage a biological container has taken,
-        ///     becoming 0 if it has died
-        ///     Ex: If this is 2 seconds, then a person that has instantly reduced to critical damage from no damage
-        ///     would take 1 second to crit, because crit is halfway between perfectly healthy and dead.
-        /// </summary>
-        [DataField]
-        public TimeSpan DamageLerpTimeZeroDamage = TimeSpan.FromSeconds(20);
-
-        /// <summary>
         ///     Damage, indexed by <see cref="DamageGroupPrototype"/> ID keys.
         /// </summary>
         /// <remarks>
@@ -86,9 +61,6 @@ namespace Content.Shared.Damage
         /// </summary>
         [ViewVariables]
         public FixedPoint2 TotalDamage;
-
-        [ViewVariables]
-        public FixedPoint2 TotalDamageEffective;
 
         [DataField("radiationDamageTypes")]
         public List<ProtoId<DamageTypePrototype>> RadiationDamageTypeIDs = new() { "Radiation" };

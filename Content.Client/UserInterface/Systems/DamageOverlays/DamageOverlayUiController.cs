@@ -1,4 +1,6 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -72,12 +74,14 @@ public sealed class DamageOverlayUiController : UIController
     }
 
     //TODO: Jezi: adjust oxygen and hp overlays to use appropriate systems once bodysim is implemented
-    private void UpdateOverlays(EntityUid entity, MobStateComponent? mobState, DamageableComponent? damageable = null, MobThresholdsComponent? thresholds = null)
+    private void UpdateOverlays(EntityUid entity, MobStateComponent? mobState, DamageableComponent? damageable = null, MobThresholdsComponent? thresholds = null, SoftCritComponent? softCrit = null)
     {
         if (mobState == null && !EntityManager.TryGetComponent(entity, out mobState) ||
             thresholds == null && !EntityManager.TryGetComponent(entity, out thresholds) ||
             damageable == null && !EntityManager.TryGetComponent(entity, out  damageable))
             return;
+
+        softCrit ??= EntityManager.GetComponentOrNull<SoftCritComponent>(entity);
 
         if (!_mobThresholdSystem.TryGetIncapThreshold(entity, out var foundThreshold, thresholds))
             return; //this entity cannot die or crit!!
@@ -124,8 +128,9 @@ public sealed class DamageOverlayUiController : UIController
             }
             case MobState.Critical:
             {
+
                 if (!_mobThresholdSystem.TryGetDeadPercentage(entity,
-                        FixedPoint2.Max(0.0, damageable.TotalDamageEffective), out var critLevel))
+                        FixedPoint2.Max(0.0, softCrit?.TotalDamageEffective ?? damageable.TotalDamage), out var critLevel))
                     return;
                 _overlay.CritLevel = critLevel.Value.Float();
 

@@ -489,7 +489,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         var spriteComponent = entity.Comp2;
         var damageVisComp = entity.Comp3;
 
-        if (!CheckThresholdBoundary(damageComponent.TotalDamageEffective, damageVisComp.LastDamageThreshold, damageVisComp, out var threshold))
+        if (!CheckThresholdBoundary(damageComponent.TotalDamage, damageVisComp.LastDamageThreshold, damageVisComp, out var threshold))
             return;
 
         damageVisComp.LastDamageThreshold = threshold;

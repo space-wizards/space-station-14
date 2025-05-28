@@ -1,5 +1,6 @@
 using Content.Shared.Clothing;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
@@ -10,6 +11,7 @@ namespace Content.Shared.Damage
     public sealed class SlowOnDamageSystem : EntitySystem
     {
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+        [Dependency] private readonly SoftCritSystem _softCrit = default!;
 
         public override void Initialize()
         {
@@ -33,12 +35,13 @@ namespace Content.Shared.Damage
             if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damage))
                 return;
 
-            if (damage.TotalDamageEffective == FixedPoint2.Zero)
+            var total = _softCrit.GetEffectiveDamage(uid, damage);
+
+            if (total == FixedPoint2.Zero)
                 return;
 
             // Get closest threshold
             FixedPoint2 closest = FixedPoint2.Zero;
-            var total = damage.TotalDamageEffective;
             foreach (var thres in component.SpeedModifierThresholds)
             {
                 if (total >= thres.Key && thres.Key > closest)
