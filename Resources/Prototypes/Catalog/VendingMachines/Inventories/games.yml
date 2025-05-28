@@ -4,7 +4,6 @@
     DiceBag: 6
     Paper: 8
     d6Dice: 8
-    CardBoxPokerFilled: 2
     ChessBoard: 1
     BackgammonBoard: 1
     ParchisBoard: 1
@@ -17,7 +16,7 @@
     PaperCNCSheet: 6
     MysteryFigureBox: 2
     BooksBag: 3
-    # CardBoxPokerFilled: 4
+    CardBoxPokerFilled: 4
   contrabandInventory:
     Basketball: 1
     FoodSnackBoritos: 3
