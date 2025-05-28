@@ -75,7 +75,6 @@
       left:
       - state: inhand-left
         color: "#a12349"
-      - state: inhand-left-flame
       right:
       - state: inhand-right
         color: "#a12349"
