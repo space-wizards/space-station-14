@@ -628,5 +628,16 @@ ClothingOuterHardsuitBasic: ClothingOuterHardsuitEVA
 ClothingHeadHelmetHardsuitBasic: null
 SuitStorageBasic: SuitStorageEVA
 
+# 🌟Starlight🌟 start
+BoxMagazineRifle: BoxMagazineRifleSP
+MagazineBoxLightRifle: MagazineBoxLightRifleSP
+MagazineBoxPistol: MagazineBoxPistolSP
+MagazineLightRifleBox: MagazineLightRifleBoxSP
+MagazineLightRifle: MagazineLightRifleSP
+MagazinePistolSubMachineGun: MagazinePistolSubMachineGunSP
+MagazineRifle: MagazineRifleSP
+# 🌟Starlight🌟 end
+
 # 2025-05-18
 ClothingNeckCloakMiner: null
+

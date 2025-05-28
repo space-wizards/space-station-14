@@ -21,8 +21,8 @@
   id: CritterMechs
   name: research-technology-critter-mechs
   icon:
-    sprite: Objects/Specific/Mech/mecha.rsi
-    state: hamtr
+    sprite: Objects/Specific/Mech/Mechs/Basic/hamtr.rsi
+    state: base-open
   discipline: CivilianServices
   tier: 1
   cost: 7500

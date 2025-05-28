@@ -500,7 +500,6 @@
           - !type:OrganType
             type: Vox
             shouldHave: false
-            shouldHave: false
       - !type:HealthChange
         conditions:
         - !type:OrganType
