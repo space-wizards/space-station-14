@@ -213,8 +213,8 @@
   components:
   - type: Item
     size: Huge
-    shape: # Carbine size.
-    - 0,0,3,2
+    shape: # Carbine size, but lighter.
+    - 0,0,3,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     layers:
@@ -294,8 +294,8 @@
   components:
   - type: Item
     size: Huge
-    shape: # Carbine Size.
-    - 0,0,3,2
+    shape: # Carbine size, but lighter.
+    - 0,0,3,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
     layers:
