@@ -2251,7 +2251,6 @@ entities:
       name: Nuclear Operative Outpost
     - type: Transform
     - type: Map
-      mapPaused: True
     - type: PhysicsMap
     - type: GridTree
     - type: MovedGrids
@@ -14582,13 +14581,6 @@ entities:
     - type: Transform
       pos: 0.55076575,15.708136
       parent: 1
-- proto: MailSpamLetter
-  entities:
-  - uid: 1418
-    components:
-    - type: Transform
-      pos: -14.72777,8.641857
-      parent: 1
 - proto: Mannequin
   entities:
   - uid: 1080
@@ -18036,29 +18028,21 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         118:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         119:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         120:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         117:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         116:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         121:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         122:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         123:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 1277
     components:
     - type: MetaData
@@ -18070,11 +18054,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1273:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1274:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignalButtonDirectional
   entities:
   - uid: 1568
@@ -18088,29 +18070,21 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1559:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1560:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1561:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1562:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1569:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1570:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1571:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1572:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignalTrigger
   entities:
   - uid: 582
