@@ -14,7 +14,7 @@ public sealed partial class TeleportMenu : DefaultWindow
 
     public HashSet<TeleportPoint> Warps = new();
 
-    public event Action<NetEntity, string>? TeleportClicked;
+    public event Action<EntityUid, string>? TeleportClicked;
 
     public TeleportMenu()
     {
