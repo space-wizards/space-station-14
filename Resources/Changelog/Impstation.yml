@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: britno
-  changes:
-  - message: Added a transatlantic accent for your hard-boiled dicks and peppy newshawks!
-    type: Add
-  id: 1250
-  time: '2025-03-07T02:30:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1848
 - author: mqole
   changes:
   - message: Code Octarine has been added to your guidebook's Alert Procedure page.
@@ -4211,3 +4204,11 @@
   id: 1749
   time: '2025-05-28T17:03:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2587
+- author: Faeling, Sha-Seng
+  changes:
+  - message: Five new thaven markings (two Dyed hairs, headtop, headside, and a new
+      tail)
+    type: Add
+  id: 1750
+  time: '2025-05-28T21:49:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2562
