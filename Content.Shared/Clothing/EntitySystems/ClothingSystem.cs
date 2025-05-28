@@ -149,6 +149,9 @@ public abstract class ClothingSystem : EntitySystem
 
     private void OnWhitelistInventoryCheck(Entity<ClothingComponent> ent, ref InventoryRelayedEvent<CheckWhitelistInventoryEvent> args)
     {
+        if (args.Args.WhitelistHit)
+            return;
+
         if (_whitelistSystem.IsValid(args.Args.Whitelist, ent))
             args.Args.WhitelistHit = true;
     }
