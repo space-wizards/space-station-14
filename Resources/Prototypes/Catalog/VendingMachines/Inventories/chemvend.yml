@@ -33,9 +33,13 @@
   startingInventory:
     Jug: 4
     JugAluminium: 2
+    JugBicaridine: 1
     JugCarbon: 4
     JugChlorine: 1
     JugCopper: 2
+    JugDermaline: 1
+    JugDexalinePlus: 1
+    JugDylovene: 1
     JugEthanol: 2
     JugFluorine: 1
     JugHydrogen: 3
@@ -48,6 +52,7 @@
     JugPhosphorus: 1
     JugPotassium: 2
     JugRadium: 1
+    JugSaline: 1
     JugSilicon: 2
     JugSodium: 2
     JugSugar: 3
